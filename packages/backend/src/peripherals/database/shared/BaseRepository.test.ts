@@ -1,14 +1,12 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import { expect } from 'earl'
 import { describe } from 'mocha'
 
-import { setupDatabaseTestSuite } from '../../../test/database'
+import { describeDatabase } from '../../../test/database'
 import { BaseRepository, CheckConvention } from './BaseRepository'
 import { Database } from './Database'
 
-describe(BaseRepository.name, () => {
-  const { database } = setupDatabaseTestSuite()
-
+describeDatabase(BaseRepository.name, (database) => {
   describe(BaseRepository.prototype.autoWrap.name, () => {
     it('should wrap all methods', () => {
       class DummyRepository extends BaseRepository {
@@ -127,25 +125,6 @@ describe(BaseRepository.name, () => {
         })
       })
 
-      describe('AddMethod', () => {
-        it('should show error if convention is wrong', () => {
-          class DummyRepository extends BaseRepository {
-            constructor(database: Database, logger: Logger) {
-              super(database, logger)
-              // @ts-expect-error add method should take only one argument
-              this.autoWrap<CheckConvention<DummyRepository>>(this)
-            }
-
-            async addWithTooMuchArguments(
-              a: string,
-              b: string,
-            ): Promise<number> {
-              return 1
-            }
-          }
-        })
-      })
-
       describe('AddManyMethod', () => {
         it('should show error if return type is wrong', () => {
           class DummyRepository extends BaseRepository {
@@ -170,23 +149,6 @@ describe(BaseRepository.name, () => {
             }
 
             async addManyWithWrongArgumentType(a: string): Promise<number> {
-              return 1
-            }
-          }
-        })
-
-        it('should show error if function takes too much arguments', () => {
-          class DummyRepository extends BaseRepository {
-            constructor(database: Database, logger: Logger) {
-              super(database, logger)
-              // @ts-expect-error addMany method should take only one argument
-              this.autoWrap<CheckConvention<DummyRepository>>(this)
-            }
-
-            async addManyWithTooMuchArguments(
-              a: string[],
-              b: string,
-            ): Promise<number> {
               return 1
             }
           }

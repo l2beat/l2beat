@@ -1,9 +1,10 @@
 import Router from '@koa/router'
-import { Logger } from '@l2beat/shared'
-import Koa, { Context } from 'koa'
+import { Logger } from '@l2beat/backend-tools'
+import Koa from 'koa'
 import conditional from 'koa-conditional-get'
 import etag from 'koa-etag'
 
+import { BugsnagPluginKoaResult } from '../tools/ErrorReporter'
 import { createApiLogger } from './middleware/logger'
 import { createApiMetrics } from './middleware/metrics'
 
@@ -14,10 +15,20 @@ export class ApiServer {
     private readonly port: number,
     private readonly logger: Logger,
     routers: Router[],
-    handleServerError?: (logger: Logger, error: Error, ctx: Context) => void,
+    errorReporterMiddleware?: BugsnagPluginKoaResult,
   ) {
     this.logger = this.logger.for(this)
     this.app = new Koa()
+
+    if (errorReporterMiddleware) {
+      // This must be the first piece of middleware in the stack.
+      // It can only capture errors in downstream middleware
+      this.app.use(errorReporterMiddleware.requestHandler)
+
+      // This handles any errors that Koa catches
+      this.app.on('error', errorReporterMiddleware.errorHandler)
+      logger.info('Bugsnag koa integration enabled')
+    }
 
     this.app.use(createApiMetrics())
     this.app.use(createApiLogger(this.logger))
@@ -32,12 +43,6 @@ export class ApiServer {
 
     this.app.use(router.routes())
     this.app.use(router.allowedMethods())
-
-    if (handleServerError) {
-      this.app.on('error', (err: Error, ctx: Context) =>
-        handleServerError(this.logger, err, ctx),
-      )
-    }
   }
 
   listen() {

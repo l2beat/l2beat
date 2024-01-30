@@ -3,21 +3,25 @@ import {
   ConfigReader,
   DiscoveryEngine,
   DiscoveryLogger,
-  DiscoveryProvider,
   EtherscanLikeClient,
   HandlerExecutor,
   HttpClient,
+  MulticallClient,
+  ProviderWithCache,
   ProxyDetector,
   SourceCodeService,
 } from '@l2beat/discovery'
 import { providers } from 'ethers'
 
 import { UpdateMonitorChainConfig } from '../../config/Config'
+import { DiscoveryCacheRepository } from '../../peripherals/database/DiscoveryCacheRepository'
+import { DiscoveryCache } from './DiscoveryCache'
 import { DiscoveryRunner } from './DiscoveryRunner'
 
 export function createDiscoveryRunner(
   http: HttpClient,
   configReader: ConfigReader,
+  discoveryCacheRepository: DiscoveryCacheRepository,
   discoveryLogger: DiscoveryLogger,
   chainConfig: UpdateMonitorChainConfig,
 ) {
@@ -26,14 +30,30 @@ export function createDiscoveryRunner(
     http,
     chainConfig.etherscanUrl,
     chainConfig.etherscanApiKey,
+    chainConfig.etherscanUnsupported,
   )
 
-  const discoveryProvider = new DiscoveryProvider(provider, etherscanLikeClient)
+  const discoveryCache = new DiscoveryCache(discoveryCacheRepository)
+
+  const discoveryProvider = new ProviderWithCache(
+    provider,
+    etherscanLikeClient,
+    discoveryLogger,
+    chainConfig.chain,
+    discoveryCache,
+    chainConfig.rpcGetLogsMaxRange,
+    chainConfig.reorgSafeDepth,
+  )
 
   const proxyDetector = new ProxyDetector(discoveryProvider, discoveryLogger)
   const sourceCodeService = new SourceCodeService(discoveryProvider)
+  const multicallClient = new MulticallClient(
+    discoveryProvider,
+    chainConfig.multicall,
+  )
   const handlerExecutor = new HandlerExecutor(
     discoveryProvider,
+    multicallClient,
     discoveryLogger,
   )
   const addressAnalyzer = new AddressAnalyzer(
@@ -48,7 +68,7 @@ export function createDiscoveryRunner(
     discoveryProvider,
     discoveryEngine,
     configReader,
-    chainConfig.chainId,
+    chainConfig.chain,
   )
 
   return discoveryRunner

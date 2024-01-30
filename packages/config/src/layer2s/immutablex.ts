@@ -1,14 +1,10 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
-  getCommittee,
-  getProxyGovernance,
-  getSHARPVerifierContracts,
-  getSHARPVerifierGovernors,
-} from '../discovery/starkware'
-import { delayDescriptionFromString } from '../utils/delayDescription'
-import { formatSeconds } from '../utils/formatSeconds'
+  EthereumAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
+
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -20,16 +16,24 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import {
+  getCommittee,
+  getProxyGovernance,
+  getSHARPVerifierContracts,
+  getSHARPVerifierGovernors,
+} from '../discovery/starkware'
+import { delayDescriptionFromString } from '../utils/delayDescription'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('immutablex')
 
-const delaySeconds = discovery.getContractUpgradeabilityParam(
+const upgradeDelaySeconds = discovery.getContractUpgradeabilityParam(
   'StarkExchange',
   'upgradeDelay',
 )
-const delay = formatSeconds(delaySeconds)
+const upgradeDelay = formatSeconds(upgradeDelaySeconds)
 const verifierAddress = discovery.getAddressFromValue(
   'GpsFactRegistryAdapter',
   'gpsContract',
@@ -47,14 +51,17 @@ export const immutablex: Layer2 = {
     name: 'Immutable X',
     slug: 'immutablex',
     description:
-      'Immutable X claims to be the first Layer 2 for NFTs on Ethereum. It promises zero gas fees, instant trades and scalability for games, applications, marketplaces, without compromise.',
-    purpose: 'NFT, Exchange',
+      'Immutable X is a NFT-focused Validium providing zero gas fees, instant trades and scalability for applications.',
+    purposes: ['NFT', 'Exchange'],
     provider: 'StarkEx',
     category: 'Validium',
+    dataAvailabilityMode: 'NotApplicable',
     links: {
-      websites: ['https://www.immutable.com/'],
-      apps: ['https://market.x.immutable.com/'],
-      documentation: ['https://docs.starkware.co/starkex-docs-v2/'],
+      websites: ['https://immutable.com/'],
+      apps: ['https://market.immutable.com/'],
+      documentation: [
+        'https://docs.starkware.co/starkex/perpetual/perpetual_overview.html',
+      ],
       explorers: ['https://immutascan.io/'],
       repositories: ['https://github.com/starkware-libs/starkex-contracts'],
       socialMedia: [
@@ -79,7 +86,7 @@ export const immutablex: Layer2 = {
     ],
     transactionApi: {
       type: 'starkex',
-      product: 'immutable',
+      product: ['immutable'],
       sinceTimestamp: new UnixTime(1615389188),
       resyncLastDays: 7,
     },
@@ -103,10 +110,7 @@ export const immutablex: Layer2 = {
         },
       ],
     },
-    upgradeability: RISK_VIEW.UPGRADE_DELAY_SECONDS(
-      delaySeconds,
-      freezeGracePeriod,
-    ),
+    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelaySeconds, freezeGracePeriod),
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(freezeGracePeriod),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP_NFT,
     destinationToken: RISK_VIEW.CANONICAL,
@@ -129,7 +133,7 @@ export const immutablex: Layer2 = {
       ),
       ...getSHARPVerifierContracts(discovery, verifierAddress),
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(delaySeconds)],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(upgradeDelaySeconds)],
   },
   permissions: [
     {
@@ -137,7 +141,7 @@ export const immutablex: Layer2 = {
       accounts: getProxyGovernance(discovery, 'StarkExchange'),
       description:
         'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
-        delayDescriptionFromString(delay),
+        delayDescriptionFromString(upgradeDelay),
     },
     getCommittee(discovery),
     ...getSHARPVerifierGovernors(discovery, verifierAddress),

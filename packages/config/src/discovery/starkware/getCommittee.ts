@@ -1,13 +1,17 @@
 import { ProjectDiscovery } from '../ProjectDiscovery'
 
-export function getCommittee(discovery: ProjectDiscovery) {
+export function getCommittee(
+  discovery: ProjectDiscovery,
+  committeeName = 'Committee',
+  name = 'Data Availability Committee',
+) {
   const accounts = discovery
-    .getConstructorArg<string[]>('Committee', 0)
+    .getConstructorArg<string[]>(committeeName, 0)
     .map(discovery.formatPermissionedAccount.bind(discovery))
 
-  const minSigners = discovery.getConstructorArg<string>('Committee', 1)
+  const minSigners = discovery.getConstructorArg<string>(committeeName, 1)
   return {
-    name: 'Data Availability Committee',
+    name,
     accounts,
     description: `Validity proof must be signed by at least ${minSigners} of these addresses to approve state update.`,
   }

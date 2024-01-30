@@ -1,15 +1,15 @@
-import { RpcTransactionApi } from '@l2beat/config'
-import { Logger } from '@l2beat/shared'
-import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { Logger } from '@l2beat/backend-tools'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 import { range } from 'lodash'
 
 import { BlockTransactionCountRepository } from '../../../peripherals/database/activity/BlockTransactionCountRepository'
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
-import { EthereumClient } from '../../../peripherals/ethereum/EthereumClient'
+import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { Clock } from '../../Clock'
 import { promiseAllPlus } from '../../queue/promiseAllPlus'
 import { SequenceProcessor } from '../../SequenceProcessor'
+import { RpcActivityTransactionConfig } from '../ActivityTransactionConfig'
 import { TransactionCounter } from '../TransactionCounter'
 import { createBlockTransactionCounter } from './BlockTransactionCounter'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
@@ -20,21 +20,17 @@ export function createRpcCounter(
   sequenceProcessorRepository: SequenceProcessorRepository,
   logger: Logger,
   clock: Clock,
-  transactionApi: RpcTransactionApi,
+  options: RpcActivityTransactionConfig,
 ): TransactionCounter {
-  const callsPerMinute = transactionApi.callsPerMinute ?? 60
-  const timeout = transactionApi.timeout ?? 15_000
-  const batchSize = getBatchSizeFromCallsPerMinute(callsPerMinute)
-  const url = transactionApi.url
-  assert(url, `Url for rpc client must be defined for ${projectId.toString()}`)
+  const batchSize = getBatchSizeFromCallsPerMinute(options.callsPerMinute)
   const provider = new providers.StaticJsonRpcProvider({
-    url,
-    timeout,
+    url: options.url,
+    timeout: 15_000,
   })
-  const client = new EthereumClient(
+  const client = new RpcClient(
     provider,
     logger.for(`RpcProcessor[${projectId.toString()}]`),
-    callsPerMinute,
+    options.callsPerMinute,
   )
 
   const processor = new SequenceProcessor(
@@ -43,7 +39,7 @@ export function createRpcCounter(
     sequenceProcessorRepository,
     {
       batchSize,
-      startFrom: transactionApi.startBlock ?? 0,
+      startFrom: options.startBlock ?? 0,
       getLatest: (previousLatest) =>
         client.getBlockNumberAtOrBefore(clock.getLastHour(), previousLatest),
       processRange: async (from, to, trx, logger) => {
@@ -56,10 +52,8 @@ export function createRpcCounter(
             blockNumber,
             timestamp,
             count:
-              transactionApi.assessCount?.(
-                block.transactions.length,
-                blockNumber,
-              ) ?? block.transactions.length,
+              options.assessCount?.(block.transactions.length, blockNumber) ??
+              block.transactions.length,
           }
         })
 

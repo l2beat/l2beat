@@ -1,5 +1,4 @@
-import { StarkexTransactionApi } from '@l2beat/config'
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 
@@ -9,10 +8,12 @@ import { StarkexClient } from '../../../peripherals/starkex'
 import { Clock } from '../../Clock'
 import { promiseAllPlus } from '../../queue/promiseAllPlus'
 import { SequenceProcessor } from '../../SequenceProcessor'
+import { StarkexActivityTransactionConfig } from '../ActivityTransactionConfig'
 import { TransactionCounter } from '../TransactionCounter'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 
-export interface StarkexProcessorOptions extends StarkexTransactionApi {
+export interface StarkexProcessorOptions
+  extends StarkexActivityTransactionConfig {
   singleStarkexCPM: number
 }
 
@@ -35,14 +36,20 @@ export function createStarkexCounter(
     {
       batchSize,
       startFrom: startDay,
-      uncertaintyBuffer: options.resyncLastDays, // starkex APIs are not stable and can change from the past. With this we make sure to scrape them again
+      // starkex APIs are not stable and can change from the past. With this we make sure to scrape them again
+      uncertaintyBuffer: options.resyncLastDays,
       getLatest: () => getStarkexLastDay(clock.getLastHour()),
       processRange: async (from, to, trx, logger) => {
         const queries = range(from, to + 1).map((day) => async () => {
-          const count = await starkexClient.getDailyCount(day, options.product)
+          const counts = await Promise.all(
+            options.product.map(
+              async (product) =>
+                await starkexClient.getDailyCount(day, product),
+            ),
+          )
 
           return {
-            count,
+            count: counts.reduce((a, b) => a + b, 0),
             timestamp: UnixTime.fromDays(day),
             projectId: projectId,
           }

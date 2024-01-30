@@ -1,15 +1,11 @@
-import React from 'react'
+import { Meta, StoryObj } from '@storybook/react'
 
 import { UpcomingBar as UpcomingBarComponent } from './UpcomingBar'
 
-export default {
-  title: 'Components/Project/UpcomingBar',
+const meta: Meta<typeof UpcomingBarComponent> = {
+  component: UpcomingBarComponent,
 }
+export default meta
+type Story = StoryObj<typeof UpcomingBarComponent>
 
-export function UpcomingBar() {
-  return (
-    <div className="p-4">
-      <UpcomingBarComponent />
-    </div>
-  )
-}
+export const UpcomingBar: Story = {}

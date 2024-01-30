@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import { NUGGETS } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { NUGGETS } from '../layer2s'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
@@ -16,10 +16,7 @@ export const connext: Bridge = {
     slug: 'connext-legacy',
     category: 'Liquidity Network',
     links: {
-      websites: [
-        'https://bridge.connext.network/',
-        'https://www.connext.network/',
-      ],
+      websites: ['https://bridge.connext.network/', 'https://connext.network/'],
       apps: ['https://bridge.connext.network/'],
       explorers: ['https://connextscan.io/'],
       socialMedia: [

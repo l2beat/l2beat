@@ -1,21 +1,23 @@
-import cx from 'classnames'
 import React from 'react'
 
+import { cn } from '../../utils/cn'
 import { RiskValues } from '../../utils/risks/types'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { ProjectLink } from '../icons'
-import { Link } from '../Link'
 import { ArchivedBar } from '../project/ArchivedBar'
 import { UnderReviewBar } from '../project/UnderReviewBar'
 import { UpcomingBar } from '../project/UpcomingBar'
 import { WarningBar } from '../project/WarningBar'
 import { BigRosette } from '../rosette'
-import { FullSummaryStats, Summary } from './Summary'
+import { DesktopProjectLinks } from './DesktopProjectLinks'
+import { MobileProjectLinks } from './MobileProjectLinks'
+import { ProjectSummary, ProjectSummaryStat } from './ProjectSummary'
+import { TvlStats, TvlSummary } from './TvlSummary'
 
 export interface HeaderProps {
   title: string
-  titleLength?: 'long' | 'very-long'
   titleClassName?: string
+  description: string | undefined
   icon?: string
   stats: FullSummaryStats
   isArchived?: boolean
@@ -26,10 +28,13 @@ export interface HeaderProps {
   showProjectUnderReview?: boolean
   risks?: RiskValues
   links: ProjectLink[]
-  type: 'bridge' | 'layer2'
-  stagesEnabled?: boolean
-  detailedTvlEnabled?: boolean
+  type: 'bridge' | 'layer2' | 'layer3'
   warning?: string | { text: string; href: string }
+}
+
+export interface FullSummaryStats {
+  summary: ProjectSummaryStat[]
+  l2Tvl?: TvlStats
 }
 
 export function DetailsHeader(props: HeaderProps) {
@@ -41,60 +46,82 @@ export function DetailsHeader(props: HeaderProps) {
         )
       })
     : undefined
-
+  const isL2orL3 = props.type === 'layer2' || props.type === 'layer3'
   return (
     <>
-      <header className="md:mt-15 mt-6 flex flex-row justify-end gap-3 md:gap-0">
-        <div className="flex w-full flex-wrap gap-6 md:gap-4">
-          <h1
-            className={cx(
-              'relative mb-0 flex items-center justify-start gap-3',
-              'whitespace-pre px-4 text-3xl font-bold md:px-0 md:text-4xl',
-              props.titleLength,
-              props.titleClassName,
+      <header className="flex flex-row justify-end gap-3 bg-gray-100 pt-6 dark:bg-zinc-900 md:gap-0 md:bg-transparent md:dark:bg-transparent">
+        <div className="flex w-full flex-wrap divide-y divide-gray-200 dark:divide-gray-850 md:gap-4 md:divide-y-0">
+          <div className="mb-4 flex w-full flex-col gap-2 px-4 md:mb-0 md:px-0">
+            <h1
+              className={cn(
+                'relative mb-0 flex items-center justify-start gap-3',
+                'whitespace-pre text-3xl font-bold md:text-4xl',
+                props.titleClassName,
+              )}
+            >
+              {props.icon && (
+                <img
+                  className="size-8 md:size-10"
+                  src={props.icon}
+                  alt={`${props.title} logo`}
+                />
+              )}
+              {props.title}
+            </h1>
+            {props.description && (
+              <div className="mt-4 text-base">{props.description}</div>
             )}
-          >
-            {props.icon && (
-              <img
-                className="h-8 w-8 md:h-10 md:w-10"
-                src={props.icon}
-                alt={`${props.title} logo`}
+            {props.isArchived && <ArchivedBar className="w-full" />}
+            {props.isUpcoming && <UpcomingBar className="w-full" />}
+            {props.showProjectUnderReview && (
+              <UnderReviewBar className="w-full" />
+            )}
+            {props.warning && (
+              <WarningBar
+                text={
+                  typeof props.warning === 'string'
+                    ? props.warning
+                    : props.warning.text
+                }
+                href={
+                  typeof props.warning !== 'string'
+                    ? props.warning.href
+                    : undefined
+                }
+                color="yellow"
+                isCritical={false}
+                className="w-full items-center justify-center p-2.5 text-xs md:text-base"
               />
             )}
-            {props.title}
-          </h1>
-          {props.isArchived && <ArchivedBar className="mx-4 w-full md:mx-0" />}
-          {props.isUpcoming && <UpcomingBar className="mx-4 w-full md:mx-0" />}
-          {props.showProjectUnderReview && (
-            <UnderReviewBar className="mx-4 w-full md:mx-0" />
-          )}
-          {props.warning && (
-            <WarningBar
-              text={
-                typeof props.warning === 'string'
-                  ? props.warning
-                  : props.warning.text
-              }
-              href={
-                typeof props.warning !== 'string'
-                  ? props.warning.href
-                  : undefined
-              }
-              color="yellow"
-              isCritical={false}
-              className="mx-4 w-full items-center justify-center py-2.5 px-2.5 text-xs md:mx-0 md:px-4 md:text-base"
+          </div>
+
+          <div className="my-2 hidden w-full md:block">
+            <DesktopProjectLinks projectLinks={props.links} />
+          </div>
+          <div
+            className={cn(
+              'grid w-full divide-y divide-gray-200 dark:divide-gray-850 md:gap-4 md:divide-y-0 ',
+              isL2orL3 && 'md:grid-cols-3',
+            )}
+          >
+            {isL2orL3 && (
+              <TvlSummary
+                stats={props.stats.l2Tvl}
+                tvlBreakdownHref={props.tvlBreakdownHref}
+                showTvlBreakdown={props.showTvlBreakdown}
+                isArchived={props.isArchived}
+                type={props.type}
+              />
+            )}
+            <ProjectSummary
+              stats={props.stats.summary}
+              type={props.type}
+              className="md:col-span-2"
             />
-          )}
-          <Summary
-            type={props.type}
-            stats={props.stats}
-            links={props.links}
-            isUpcoming={props.isUpcoming}
-            stagesEnabled={props.stagesEnabled}
-            detailedTvlEnabled={props.detailedTvlEnabled}
-            tvlBreakdownHref={props.tvlBreakdownHref}
-            showTvlBreakdown={props.showTvlBreakdown}
-          />
+          </div>
+          <div className="w-full px-4 md:hidden md:px-0">
+            <MobileProjectLinks projectLinks={props.links} />
+          </div>
         </div>
         {props.risks && (
           <div className="ml-8 mt-auto hidden lg:block">
@@ -103,19 +130,10 @@ export function DetailsHeader(props: HeaderProps) {
               isUpcoming={props.isUpcoming ?? areAllRisksUpcoming}
               isUnderReview={props.isUnderReview}
             />
-            {!props.isUpcoming && !props.isUnderReview && (
-              <Link
-                href="#risk-analysis"
-                className="mt-3 block text-center text-sm"
-                showArrow
-              >
-                Learn more about Risks analysis
-              </Link>
-            )}
           </div>
         )}
       </header>
-      <HorizontalSeparator className="md:mt-6" />
+      <HorizontalSeparator className="hidden md:mt-6 md:block" />
     </>
   )
 }

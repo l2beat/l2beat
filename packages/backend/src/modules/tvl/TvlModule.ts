@@ -1,17 +1,23 @@
-import { CoingeckoClient, HttpClient, Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
+import {
+  CoingeckoClient,
+  CoingeckoQueryService,
+  HttpClient,
+} from '@l2beat/shared'
+import { notUndefined } from '@l2beat/shared-pure'
 
 import { BlocksController } from '../../api/controllers/BlocksController'
 import { DydxController } from '../../api/controllers/DydxController'
-import { DetailedTvlController } from '../../api/controllers/tvl/DetailedTvlController'
 import { TvlController } from '../../api/controllers/tvl/TvlController'
 import { createBlocksRouter } from '../../api/routers/BlocksRouter'
 import { createDydxRouter } from '../../api/routers/DydxRouter'
 import { createTvlRouter } from '../../api/routers/TvlRouter'
+import { createTvlStatusRouter } from '../../api/routers/TvlStatusRouter'
 import { Config } from '../../config'
+import { ChainTvlConfig } from '../../config/Config'
 import { Clock } from '../../core/Clock'
 import { PriceUpdater } from '../../core/PriceUpdater'
 import { AggregatedReportUpdater } from '../../core/reports/AggregatedReportUpdater'
-import { CoingeckoQueryService } from '../../peripherals/coingecko/CoingeckoQueryService'
 import { AggregatedReportRepository } from '../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../peripherals/database/AggregatedReportStatusRepository'
 import { BalanceRepository } from '../../peripherals/database/BalanceRepository'
@@ -24,11 +30,9 @@ import { ReportStatusRepository } from '../../peripherals/database/ReportStatusR
 import { Database } from '../../peripherals/database/shared/Database'
 import { TotalSupplyRepository } from '../../peripherals/database/TotalSupplyRepository'
 import { TotalSupplyStatusRepository } from '../../peripherals/database/TotalSupplyStatusRepository'
-import { ApplicationModule, TvlSubmodule } from '../ApplicationModule'
-import { createArbitrumTvlSubmodule } from './ArbitrumTvlSubmodule'
-import { createBaseTvlSubmodule } from './BaseTvlSubmodule'
-import { createEthereumTvlSubmodule } from './EthereumTvlSubmodule'
-import { createOptimismTvlSubmodule } from './OptimismTvlSubmodule'
+import { ApplicationModule } from '../ApplicationModule'
+import { chainTvlModule } from './ChainTvlModule'
+import { createEthereumTvlModule } from './EthereumTvlModule'
 import { TvlDatabase } from './types'
 
 export function createTvlModule(
@@ -87,43 +91,30 @@ export function createTvlModule(
   )
 
   // #endregion
-  // #region submodules
+  // #region modules
 
-  const submodules: (TvlSubmodule | undefined)[] = [
-    createEthereumTvlSubmodule(db, priceUpdater, config, logger, http, clock),
-    createArbitrumTvlSubmodule(
-      db,
-      priceUpdater,
-      coingeckoQueryService,
-      config,
-      logger,
-      http,
-      clock,
-    ),
-    createOptimismTvlSubmodule(
-      db,
-      priceUpdater,
-      coingeckoQueryService,
-      config,
-      logger,
-      http,
-      clock,
-    ),
-    createBaseTvlSubmodule(
-      db,
-      priceUpdater,
-      coingeckoQueryService,
-      config,
-      logger,
-      http,
-      clock,
-    ),
-  ]
+  const createChainTvlModule = (tvlConfig: ChainTvlConfig) =>
+    tvlConfig.chain === 'ethereum'
+      ? createEthereumTvlModule(db, priceUpdater, config, logger, http, clock)
+      : chainTvlModule(
+          tvlConfig,
+          config.tokens,
+          db,
+          priceUpdater,
+          coingeckoQueryService,
+          http,
+          clock,
+          logger,
+        )
+
+  const modules = config.tvl.modules
+    .map(createChainTvlModule)
+    .filter(notUndefined)
 
   // #endregion
 
   const aggregatedReportUpdater = new AggregatedReportUpdater(
-    submodules.flatMap((x) => x?.assetUpdaters ?? []),
+    modules.flatMap((x) => x.reportUpdaters ?? []),
     db.aggregatedReportRepository,
     db.aggregatedReportStatusRepository,
     clock,
@@ -133,18 +124,8 @@ export function createTvlModule(
 
   // #region api
   const blocksController = new BlocksController(db.blockNumberRepository)
-  const tvlController = new TvlController(
-    db.reportRepository,
-    db.aggregatedReportRepository,
-    db.aggregatedReportStatusRepository,
-    config.projects,
-    config.tokens,
-    aggregatedReportUpdater.getConfigHash(),
-    { errorOnUnsyncedTvl: false },
-    logger,
-  )
 
-  const detailedTvlController = new DetailedTvlController(
+  const tvlController = new TvlController(
     db.aggregatedReportRepository,
     db.reportRepository,
     db.aggregatedReportStatusRepository,
@@ -154,16 +135,20 @@ export function createTvlModule(
     config.tokens,
     logger,
     aggregatedReportUpdater.getConfigHash(),
-    { errorOnUnsyncedDetailedTvl: config.tvl.errorOnUnsyncedDetailedTvl },
+    { errorOnUnsyncedTvl: config.tvl.errorOnUnsyncedTvl },
   )
 
   const dydxController = new DydxController(db.aggregatedReportRepository)
 
   const blocksRouter = createBlocksRouter(blocksController)
-  const tvlRouter = createTvlRouter(tvlController, detailedTvlController, {
-    detailedTvlEnabled: config.tvl.detailedTvlEnabled,
-  })
+  const tvlRouter = createTvlRouter(tvlController)
   const dydxRouter = createDydxRouter(dydxController)
+  const tvlStatusRouter = createTvlStatusRouter(
+    clock,
+    priceUpdater,
+    aggregatedReportUpdater,
+    modules,
+  )
 
   // #endregion
 
@@ -173,10 +158,10 @@ export function createTvlModule(
 
     priceUpdater.start()
 
-    logger.info('Starting submodules...')
+    logger.info('Starting modules...')
 
-    for (const submodule of submodules) {
-      await submodule?.start?.()
+    for (const module of modules) {
+      await module.start?.()
     }
 
     await aggregatedReportUpdater.start()
@@ -185,7 +170,7 @@ export function createTvlModule(
   }
 
   return {
-    routers: [blocksRouter, tvlRouter, dydxRouter],
+    routers: [blocksRouter, tvlRouter, dydxRouter, tvlStatusRouter],
     start,
   }
 }

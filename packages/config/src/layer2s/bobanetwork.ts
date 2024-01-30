@@ -1,6 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
   CONTRACTS,
   DATA_AVAILABILITY,
@@ -10,7 +9,9 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -28,22 +29,28 @@ const upgradesAddressManager = {
     'The AddressManager can be used to replace this contract.',
 }
 
+const upgradeDelay = 0
+
+const challengePeriod = discovery.getContractValue<number>(
+  'StateCommitmentChain',
+  'FRAUD_PROOF_WINDOW',
+)
+
 export const bobanetwork: Layer2 = {
   type: 'layer2',
   id: ProjectId('bobanetwork'),
   display: {
     name: 'Boba Network',
+    shortName: 'Boba',
     slug: 'bobanetwork',
     warning:
       'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
     description:
-      'Boba is an L2 Ethereum scaling & augmenting solution built by the Enya team as core contributors to the Boba Foundation. Boba is an EVM-compatible Optimistic Rollup chain \
-    forked from Optimism. Two notable features are fast withdrawal facility that allows users to remove funds immediately without waiting for the end of the 7-day fraud proof window. \
-    This facility is using funds from liquidity providers. The second is Hybrid Compute technology that enables Ethereum developers to build dApps that trigger code executed on web-scale infrastructure. \
-    Boba Network operates on multiple Layer 1 blockchains.',
-    purpose: 'Universal',
+      'Boba is an EVM-compatible Optimistic Rollup forked from Optimism and built by the Enya team as core contributors to the Boba Foundation.',
+    purposes: ['Universal'],
     provider: 'OVM',
     category: 'Optimistic Rollup',
+    dataAvailabilityMode: 'TxData',
     links: {
       websites: ['https://boba.network'],
       apps: [],
@@ -51,15 +58,22 @@ export const bobanetwork: Layer2 = {
       explorers: ['https://bobascan.com/'],
       repositories: ['https://github.com/bobanetwork/boba'],
       socialMedia: [
-        'https://boba.network/#news',
+        'https://boba.network/',
         'https://boba.network/blog/',
-        'https://www.enya.ai/company/media',
+        'https://enya.ai/about-us/',
         'https://twitter.com/bobanetwork',
         'https://t.me/bobanetwork',
-        'https://discord.gg/m7NysJjKhm',
+        'https://discord.com/invite/Hvu3zpFwWd',
       ],
     },
     activityDataSource: 'Blockchain RPC',
+    liveness: {
+      warnings: {
+        stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
+      },
+      explanation:
+        'Boba Network is an Optimistic rollup based on Optimism’s OVM that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1, but the owner is always allowed to delete them.',
+    },
   },
   config: {
     associatedTokens: ['BOBA', 'OMG'],
@@ -81,9 +95,35 @@ export const bobanetwork: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
-      url: 'https://mainnet.boba.network/',
-      callsPerMinute: 200,
+      defaultUrl: 'https://mainnet.boba.network/',
+      defaultCallsPerMinute: 200,
       startBlock: 1,
+    },
+    liveness: {
+      proofSubmissions: [],
+      batchSubmissions: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xfBd2541e316948B259264c02f370eD088E04c3Db',
+          ),
+          selector: '0xd0f89344',
+          functionSignature: 'function appendSequencerBatch()',
+          sinceTimestamp: new UnixTime(1635386025),
+        },
+      ],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xdE7355C971A5B733fe2133753Abd7e5441d441Ec',
+          ),
+          selector: '0x8ca5cbb9',
+          functionSignature:
+            'function appendStateBatch(bytes32[] _batch,uint256 _shouldStartAtElement)',
+          sinceTimestamp: new UnixTime(1635386294),
+        },
+      ],
     },
   },
   riskView: makeBridgeCompatible({
@@ -99,8 +139,8 @@ export const bobanetwork: Layer2 = {
         },
       ],
     },
-    upgradeability: {
-      ...RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, challengePeriod),
       sources: [
         {
           contract: 'L1CrossDomainMessenger_1',
@@ -135,26 +175,31 @@ export const bobanetwork: Layer2 = {
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL('ETH and BOBA', 'are'),
   }),
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: true,
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        stateVerificationOnL1: false,
+        fraudProofSystemAtLeast5Outsiders: null,
+        usersHave7DaysToExit: false,
+        usersCanExitWithoutCooperation: false,
+        securityCouncilProperlySetUp: null,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: null,
+        fraudProofSystemIsPermissionless: false,
+        delayWith30DExitWindow: false,
+      },
     },
-    stage1: {
-      stateVerificationOnL1: false,
-      fraudProofSystemAtLeast5Outsiders: null,
-      usersHave7DaysToExit: false,
-      usersCanExitWithoutCooperation: false,
-      securityCouncilProperlySetUp: null,
+    {
+      rollupNodeLink: 'https://github.com/bobanetwork/boba',
     },
-    stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: null,
-      fraudProofSystemIsPermissionless: false,
-      delayWith30DExitWindow: false,
-    },
-  }),
+  ),
   technology: {
     stateCorrectness: {
       name: 'Fraud proofs are in development',
@@ -183,7 +228,7 @@ export const bobanetwork: Layer2 = {
       references: [
         {
           text: 'Data Availability Batches - Paradigm Research',
-          href: 'https://research.paradigm.xyz/optimism#data-availability-batches',
+          href: 'https://www.paradigm.xyz/2021/01/how-does-optimisms-rollup-really-work#data-availability-batches',
         },
         {
           text: 'CanonicalTransactionChain.sol#L219 - Etherscan source code, appendSequencerBatch function',
@@ -219,7 +264,7 @@ export const bobanetwork: Layer2 = {
         references: [
           {
             text: 'The Standard Bridge - Boba documentation',
-            href: 'https://docs.boba.network/developer-docs/bridging-l1-l2#the-standardtm-bridge',
+            href: 'https://docs.boba.network/for-developers/boba-basics/bridge-basics/standard-bridge',
           },
           {
             text: 'BondManager.sol#L31 - Etherscan source code, isCollateralized function',
@@ -235,11 +280,12 @@ export const bobanetwork: Layer2 = {
         references: [
           {
             text: 'The LP Bridge - Boba documentation',
-            href: 'https://docs.boba.network/developer-docs/bridging-l1-l2#the-standardtm-bridge-1',
+            href: 'https://docs.boba.network/for-developers/boba-basics/bridge-basics/fast-bridge',
           },
         ],
         risks: [],
       },
+      EXITS.FORCED('forced-withdrawals'),
     ],
     smartContracts: {
       name: 'EVM compatible smart contracts are supported',
@@ -344,6 +390,15 @@ export const bobanetwork: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
+  stateDerivation: {
+    nodeSoftware:
+      'Node software source code can be found [here](https://github.com/bobanetwork/boba).',
+    compressionScheme: `They utilize a general-purpose data compression algorithm known as [Brotli](https://github.com/google/brotli) for calldata compression.`,
+    genesisState:
+      'Genesis state file can be found [here](https://github.com/bobanetwork/boba/blob/develop/boba_community/boba-node/state-dumps/mainnet/state-dump.latest.json).',
+    dataFormat:
+      'Refer to [this link](https://github.com/bobanetwork/boba/blob/develop/packages/contracts/contracts/L1/rollup/CanonicalTransactionChain.sol) for the reference implementation.',
+  },
   permissions: [
     {
       name: 'Owner',
@@ -370,32 +425,32 @@ export const bobanetwork: Layer2 = {
     {
       name: 'Boba launches L2 on BNB',
       date: '2022-11-01T00:00:00Z',
-      link: 'https://boba.network/boba-network-bnb-chain-l2-live/',
+      link: 'https://boba.network/education/multichain/bobabnb/',
       description: 'Boba launches on BnB.',
     },
     {
       name: 'Boba launches L2 on Avalanche',
       date: '2022-09-21T00:00:00Z',
-      link: 'https://boba.network/an-avalanche-of-boba-is-coming/',
+      link: 'https://boba.network/blog/an-avalanche-of-boba-is-coming/',
       description: 'Boba launches on Avalanche.',
     },
     {
       name: 'Boba launches L2 on Moonbeam and Fantom',
       date: '2022-06-02T00:00:00Z',
-      link: 'https://boba.network/boba-network-multichain-announcement/',
+      link: 'https://boba.network/education/boba-basics/multichain/',
       description: 'Boba launches on Moonbeam and Fantom.',
     },
     {
       name: 'Call data compression',
       date: '2022-10-08T00:00:00Z',
-      link: 'https://boba.network/boba-call-data-compression/',
+      link: 'https://boba.network/blog/boba-call-data-compression/',
       description:
         'The Boba Tree From (v0.1.0) release introduces Brotli compression for call data.',
     },
     {
       name: 'Hybrid Compute',
       date: '2022-03-18T00:00:00Z',
-      link: 'https://boba.network/turing-hybrid-compute/',
+      link: 'https://boba.network/education/boba-basics/hybrid-compute/',
       description:
         'Boba’s proprietary technology enables dApps that trigger code executed on web-scale infrastructure.',
     },

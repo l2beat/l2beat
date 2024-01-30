@@ -1,6 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
   CONTRACTS,
   EXITS,
@@ -8,42 +7,44 @@ import {
   makeBridgeCompatible,
   OPERATOR,
   RISK_VIEW,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('metis')
+
+const upgradeDelay = 0
 
 export const metis: Layer2 = {
   type: 'layer2',
   id: ProjectId('metis'),
   display: {
     name: 'Metis Andromeda',
+    shortName: 'Metis',
     slug: 'metis',
-    warning:
-      'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots. \
-      Since April 2022 the transaction data is no longer kept on-chain, instead it is kept in MEMO distributed data storage system. \
-      The optimistic challenge mechanism that allows Validators to force Sequencer to post missing data is not fully implemented yet.',
     description:
-      'Metis is an EVM-equivalent Scaling Solution originally forked from Optimism. It provides support for multiple, \
-      interconnected L2 chains with main focus on supporting easy creation of DACs (Decentralized Autonomous Companies). \
-      The risk analysis below relates to the default chain with chainId=1088 called Andromeda. Since April 2022 Andromeda \
-      uses "optimistic data availability" scheme in which transaction data is kept off-chain in MEMO while Validators can \
-      request tx data from Sequencer via L1 challenge mechanism if it does not make it available for validation off-chain.',
-    purpose: 'Universal',
+      'Metis Andromeda is an EVM-equivalent solution originally forked from Optimism OVM.',
+    warning:
+      'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
+    purposes: ['Universal'],
     provider: 'OVM',
     category: 'Optimium',
+    dataAvailabilityMode: 'NotApplicable',
     links: {
-      websites: ['https://www.metis.io'],
+      websites: ['https://metis.io'],
       apps: [],
       documentation: ['https://docs.metis.io'],
-      explorers: ['https://andromeda-explorer.metis.io'],
+      explorers: [
+        'https://andromeda-explorer.metis.io',
+        'https://explorer.metis.io',
+      ],
       repositories: ['https://github.com/MetisProtocol'],
       socialMedia: [
-        'https://medium.com/@MetisDAO',
-        'https://twitter.com/MetisDAO',
-        'https://discord.gg/RqfEJZXnxd',
-        'https://youtube.com/c/MetisDAO',
-        'https://t.me/MetisDAO',
+        'https://metisl2.medium.com/',
+        'https://twitter.com/MetisL2',
+        'https://discord.com/invite/metis',
+        'https://youtube.com/@Metis_L2',
+        'https://t.me/MetisL2',
       ],
     },
     activityDataSource: 'Blockchain RPC',
@@ -62,14 +63,15 @@ export const metis: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
-      url: 'https://andromeda.metis.io/',
+      defaultUrl: 'https://andromeda.metis.io/',
+      defaultCallsPerMinute: 1500,
       startBlock: 1,
     },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_MEMO,
-    upgradeability: RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_ENQUEUE_VIA_L1,
       sources: [
@@ -153,6 +155,7 @@ export const metis: Layer2 = {
         ],
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],
       },
+      EXITS.FORCED('forced-withdrawals'),
     ],
     smartContracts: {
       name: 'EVM compatible smart contracts are supported',
@@ -185,7 +188,7 @@ export const metis: Layer2 = {
           '_1088_MVM_Sequencer_Wrapper',
         ),
       ],
-      description: 'Central actor allowed to commit L2 transactions to L1.',
+      description: 'Central actor allowed to commit transactions to L1.',
     },
     {
       name: 'State Root Proposer',
@@ -195,7 +198,7 @@ export const metis: Layer2 = {
           '_1088_MVM_Proposer',
         ),
       ],
-      description: 'Central actor to post new L2 state roots to L1.',
+      description: 'Central actor to post new state roots to L1.',
     },
     {
       name: 'Data Availability Verifiers',
@@ -234,7 +237,7 @@ export const metis: Layer2 = {
       ),
       discovery.getContractDetails(
         'CanonicalTransactionChain',
-        'The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. It defines the ordering of transactions by writing them to the CTC:batches instance of the Chain Storage Container. CTC batches can only be submitted by OVM_Sequencer. The CTC also allows any account to enqueue() an L2 transaction, which the Sequencer must eventually append to the rollup state.',
+        'The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. It defines the ordering of transactions by writing them to the CTC:batches instance of the Chain Storage Container. CTC batches can only be submitted by OVM_Sequencer. The CTC also allows any account to enqueue() a transaction, which the Sequencer must eventually append to the rollup state.',
       ),
       discovery.getContractDetails(
         'StateCommitmentChain',
@@ -258,11 +261,11 @@ export const metis: Layer2 = {
       ),
       discovery.getContractDetails(
         'L1CrossDomainMessenger',
-        "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
+        "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to Metis, and relays messages from Metis onto L1. In the event that a message sent from L1 to Metis is rejected for exceeding the Metis epoch gas limit, it can be resubmitted via this contract's replay function.",
       ),
       discovery.getContractDetails(
         'MVM_DiscountOracle',
-        'Oracle specifying user fees for sending L1 -> L2 messages and other parameters for cross-chain communication.',
+        'Oracle specifying user fees for sending L1 -> Metis messages and other parameters for cross-chain communication.',
       ),
       discovery.getContractDetails(
         'Lib_AddressManager',

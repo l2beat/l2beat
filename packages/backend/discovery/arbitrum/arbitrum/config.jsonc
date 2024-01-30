@@ -1,0 +1,98 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "arbitrum",
+  "name": "arbitrum",
+  "initialAddresses": [
+    "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933", // L2GatewayRouter
+    "0x096760F208390250649E3e8763348E783AEF5562",
+    "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0", // L2 TimeLock
+    "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4", // TreasuryGovernor
+    "0xF3FC178157fb3c87548bAA86F9d24BA38E649B58", // DAO Treasury
+    "0xCaD7828a19b363A2B44717AFB1786B5196974D8E" // ARB Gateway
+  ],
+  "names": {
+    "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933": "L2GatewayRouter",
+    "0x09e9222E96E7B4AE2a407B98d48e330053351EEe": "L2ERC20Gateway",
+    "0x096760F208390250649E3e8763348E783AEF5562": "L2CustomGateway",
+    "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827": "UpgradeExecutor",
+    "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0": "L2CoreTimelock",
+    "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641": "SC9",
+    "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941": "SC7",
+    "0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a": "UpgradeExecRouteBuilder",
+    "0x912CE59144191C1204E64559FE8253a0e49E6548": "L2ArbitrumToken",
+    "0x9BF7b8884Fa381a45f8CB2525905fb36C996297a": "SecurityCouncilMemberSyncAction",
+    "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9": "CoreGovernor",
+    "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4": "TreasuryGovernor",
+    "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC": "SecurityCouncilManager",
+    "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58": "L2TreasuryTimelock",
+    "0xCaD7828a19b363A2B44717AFB1786B5196974D8E": "L2ReverseCustomGateway"
+  },
+  "overrides": {
+    "L2ReverseCustomGateway": {
+      "ignoreRelatives": ["counterpartGateway"]
+    },
+    "L2CustomGateway": {
+      "ignoreRelatives": ["counterpartGateway"]
+    },
+    "L2ERC20Gateway": {
+      "ignoreRelatives": ["counterpartGateway"]
+    },
+    "L2GatewayRouter": {
+      "ignoreRelatives": ["counterpartGateway"]
+    },
+    "UpgradeExecutor": {
+      "fields": {
+        "accessControl": {
+          "type": "accessControl"
+        }
+      }
+    },
+    "L2CoreTimelock": {
+      "fields": {
+        "accessControl": {
+          "type": "accessControl"
+        }
+      }
+    },
+    "L2TreasuryTimelock": {
+      "fields": {
+        "accessControl": {
+          "type": "accessControl"
+        }
+      }
+    },
+    "UpgradeExecRouteBuilder": {
+      "ignoreMethods": ["upExecLocationExists", "upExecLocations"]
+    },
+    "L2ArbitrumToken": {
+      "ignoreMethods": ["getPastTotalSupply"]
+    },
+    "SecurityCouncilMemberSyncAction": {
+      "ignoreMethods": ["computeKey"],
+      "ignoreRelatives": ["store"]
+    },
+    "CoreGovernor": {
+      "ignoreMethods": [
+        "getPastCirculatingSupply",
+        "proposalDeadline",
+        "proposalEta",
+        "proposalSnapshot",
+        "proposalVotes",
+        "quorum"
+      ]
+    },
+    "TreasuryGovernor": {
+      "ignoreMethods": [
+        "getPastCirculatingSupply",
+        "proposalDeadline",
+        "proposalEta",
+        "proposalSnapshot",
+        "proposalVotes",
+        "quorum"
+      ]
+    },
+    "SecurityCouncilManager": {
+      "ignoreMethods": ["getScheduleUpdateInnerData"]
+    }
+  }
+}

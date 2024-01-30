@@ -1,16 +1,20 @@
 {
-  "chain": "ethereum",
   "name": "hop",
+  "chain": "ethereum",
   "blockNumber": 16154924,
-  "configHash": "0x0a88b91a8c286dec34e7b69f534199ba36da7672dafdc8ba4a70fe617319dfd6",
+  "configHash": "0xbf31afcbbe4efbebdaec2f4ef0eba1b74088986f609e90c48394f25ad5685404",
+  "version": 3,
   "contracts": [
     {
       "name": "Hop Multisig",
       "address": "0x1ec078551A5ac8F0f51fAc57Ffc48Ea7d9A86E9d",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"
+        "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
+        "modules": []
       },
+      "implementations": ["0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"],
+      "sinceTimestamp": 1625076853,
       "values": {
         "domainSeparator": "0x62766f0ec4bb63fc0cf61622e436018804fdac93d59b3a03e6318b6bf34dd76c",
         "getModules": [],
@@ -32,6 +36,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1628225875,
       "values": {
         "CHALLENGE_AMOUNT_DIVISOR": 10,
         "challengePeriod": 86400,
@@ -50,6 +55,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1625550046,
       "values": {
         "admin": "0x1ec078551A5ac8F0f51fAc57Ffc48Ea7d9A86E9d",
         "delay": 86400,
@@ -65,6 +71,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1623907245,
       "values": {
         "CHALLENGE_AMOUNT_DIVISOR": 10,
         "challengePeriod": 86400,
@@ -83,6 +90,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1631654328,
       "values": {
         "CHALLENGE_AMOUNT_DIVISOR": 10,
         "challengePeriod": 86400,
@@ -101,6 +109,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1626739308,
       "values": {
         "CHALLENGE_AMOUNT_DIVISOR": 10,
         "challengePeriod": 86400,
@@ -119,6 +128,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1664398079,
       "values": {
         "CHALLENGE_AMOUNT_DIVISOR": 10,
         "challengePeriod": 86400,
@@ -137,6 +147,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1663897247,
       "values": {
         "CHALLENGE_AMOUNT_DIVISOR": 10,
         "challengePeriod": 86400,
@@ -156,6 +167,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1633066189,
       "values": {
         "CHALLENGE_AMOUNT_DIVISOR": 10,
         "challengePeriod": 86400,
@@ -173,6 +185,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1635022634,
       "values": {
         "CHALLENGE_AMOUNT_DIVISOR": 10,
         "challengePeriod": 86400,
@@ -191,6 +204,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1654646429,
       "values": {
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
@@ -213,6 +227,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1654646382,
       "values": {
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {

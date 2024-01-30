@@ -7,7 +7,7 @@ export interface FaqItem {
   answer: React.ReactNode
 }
 
-export function getFaqItems(enabledDetailTvl: boolean): FaqItem[] {
+export function getFaqItems(): FaqItem[] {
   return [
     {
       question: 'What is the overall purpose of this site?',
@@ -35,21 +35,21 @@ export function getFaqItems(enabledDetailTvl: boolean): FaqItem[] {
         <div>
           <p className="mt-4">
             L2BEAT and DefiLlama use different methodologies for calculating
-            TVL. L2BEAT accounts for all assets locked in Ethereum contracts,
-            including L2-native governance tokens (ARB, OP), while DefiLlama
-            focuses on assets actively engaged in dApps on specific networks.
+            TVL. The TVL on L2BEAT is a sum of canonically bridged, externally
+            bridged, and natively minted assets (e.g. L2-native governance
+            tokens like ARB and OP), while DefiLlama focuses on assets actively
+            engaged in dApps on specific networks.
           </p>
           <p className="mt-4">
-            Let's assume L2BEAT reports a TVL of 2.5 billion, while DefiLlama
-            reports a TVL of 1 billion for the same Layer 2 network (e.g.,
-            Arbitrum). This suggests that 1.5 billion worth of assets have been
-            bridged to Arbitrum from Layer 1 (Ethereum), but are not yet being
-            used in any dApps listed by DefiLlama. For instance, if you deposit
-            1 ETH to Optimism, L2BEAT would include it in their TVL calculation,
-            but DefiLlama would not. However, if you use that 1 ETH on Optimism
-            to provide liquidity on Uniswap, DefiLlama would then include it in
-            their TVL calculation. Also, at L2BEAT, the value of L2-native
-            governance tokens is included, which adds to the discrepancy.
+            Example: let's assume L2BEAT reports a TVL of 2.5 billion, while
+            DefiLlama reports a TVL of 1 billion for the same Layer 2 network
+            (e.g., Arbitrum). This suggests that 1.5 billion worth of assets
+            have been bridged (canonically or externally) or natively minted on
+            Arbitrum, but are not yet being used in any dApps listed by
+            DefiLlama. For instance, if you deposit 1 ETH to Optimism, L2BEAT
+            would include it in their TVL calculation, but DefiLlama would not.
+            However, if you use that 1 ETH on Optimism to provide liquidity on
+            Uniswap, DefiLlama would then include it in their TVL calculation.
           </p>
           <p className="mt-4">
             The discrepancy in reported TVL between L2BEAT and DefiLlama is due
@@ -82,7 +82,7 @@ export function getFaqItems(enabledDetailTvl: boolean): FaqItem[] {
     },
     {
       question:
-        'Why does the main table contain projects than are not trust-minimized L2s yet?',
+        'Why does the main table contain projects that are not trust-minimized L2s yet?',
       answer: (
         <div>
           <p className="mt-4">
@@ -177,7 +177,7 @@ export function getFaqItems(enabledDetailTvl: boolean): FaqItem[] {
     },
     {
       question:
-        'What if an L2 proposer submit a fraudulent state commit to L1?',
+        'What if an L2 proposer submits a fraudulent state commit to L1?',
       answer: (
         <>
           A state root from L2 is typically used to check coin ownership on L2
@@ -281,7 +281,7 @@ export function getFaqItems(enabledDetailTvl: boolean): FaqItem[] {
     },
     {
       question: 'How exactly do you calculate metrics like TVL?',
-      answer: enabledDetailTvl ? (
+      answer: (
         <div>
           <p className="mt-4">
             It varies from project to project but in general, the TVL is defined
@@ -313,69 +313,48 @@ export function getFaqItems(enabledDetailTvl: boolean): FaqItem[] {
             for some tokens)
           </p>
         </div>
-      ) : (
+      ),
+    },
+    {
+      question: 'What do the values in the TVL breakdown mean?',
+      answer: (
         <div>
+          <UnorderedList>
+            <li>
+              <Strong>Canonically Bridged Value (CBV) </Strong>is the value of
+              assets that use L1 Ethereum as their main ledger and are bridged
+              to L2 via a canonical bridge locking tokens in L1 escrow and
+              minting on L2 an IOU representation of that token.
+            </li>
+            <li>
+              <Strong>Externally Bridged Value (EBV) </Strong>is the value of
+              assets that use some external blockchain as their main ledger and
+              are bridged to L2 via a non-canonical bridge. Tokens are locked on
+              their native ledger and the bridge is minting on L2 an IOU
+              representation of that token.
+            </li>
+            <li>
+              <Strong>Natively Minted Value (NMV) </Strong>is the value of
+              assets that use an L2 as their ledger and are minted directly on
+              the L2. Note that for some tokens (omnichain tokens) their ledger
+              is distributed across many blockchains and they can be moved to L2
+              via a burn-mint bridge.
+            </li>
+          </UnorderedList>
           <p className="mt-4">
-            It varies from project to project but we generally track the amount
-            of tokens locked in all token escrow contracts for a given L2.
-            Sometimes it's a single token escrow like for zkSync but sometimes
-            these are multiple token escrows for a single L2 (Optimism).
-          </p>
-          <p className="mt-4">
-            For more details see our{' '}
-            <Link href="https://github.com/l2beat/l2beat/tree/master/packages/config/src">
-              project definitions
+            For more information read the{' '}
+            <Link href="https://medium.com/l2beat/redefining-total-value-locked-for-l2s-756160602747">
+              L2 Assets blog post
             </Link>
             .
           </p>
         </div>
       ),
     },
-    ...(enabledDetailTvl
-      ? [
-          {
-            question: 'What do the values in the TVL breakdown mean?',
-            answer: (
-              <div>
-                <UnorderedList>
-                  <li>
-                    <Strong>Canonically Bridged Value (CBV) </Strong>is the
-                    value of assets that use L1 Ethereum as their main ledger
-                    and are bridged to L2 via a canonical bridge locking tokens
-                    in L1 escrow and minting on L2 an IOU representation of that
-                    token.
-                  </li>
-                  <li>
-                    <Strong>Externally Bridged Value (EBV) </Strong>is the value
-                    of assets that use some external blockchain as their main
-                    ledger and are bridged to L2 via a non-canonical bridge.
-                    Tokens are locked on their native ledger and the bridge is
-                    minting on L2 an IOU representation of that token.
-                  </li>
-                  <li>
-                    <Strong>Natively Minted Value (NMV) </Strong>is the value of
-                    assets that use an L2 as their ledger and are minted
-                    directly on the L2. Note that for some tokens (omnichain
-                    tokens) their ledger is distributed across many blockchains
-                    and they can be moved to L2 via a burn-mint bridge.
-                  </li>
-                </UnorderedList>
-                <p className="mt-4">
-                  For more information read the{' '}
-                  <Link href="https://medium.com/l2beat/redefining-total-value-locked-for-l2s-756160602747">
-                    L2 Assets blog post
-                  </Link>
-                  .
-                </p>
-              </div>
-            ),
-          },
-        ]
-      : []),
     {
       question: 'Apart from TVL, what is L2BEAT aiming to track?',
       answer:
-        "We will continuously monitor different L2 technologies with the primary focus on user funds' security. To this end we will track not just the usage of a particular L2 (TVL, frequency of state root commits, number of transactions, gas cost, etc...) but we will try highlight main risks related to their implementation that may affect user's funds security.",
+        "We will continuously monitor different L2 technologies with the primary focus on user funds' security. To this end we will track not just the usage of a particular L2 (TVL, frequency of state root commits, number of transactions, gas cost, etc...) but we will try to highlight the main risks related to their implementation that may affect user's funds security.",
     },
     {
       question: 'Is L2BEAT performing a security audit for each L2?',
@@ -421,7 +400,7 @@ export function getFaqItems(enabledDetailTvl: boolean): FaqItem[] {
             <Link href="https://github.com/l2beat/l2beat">open source</Link>{' '}
             &ndash; just create a PR. If you want to add a new project you
             should read our {''}
-            <Link href="https://github.com/l2beat/l2beat/tree/master/CONTRIBUTING.md">
+            <Link href="https://github.com/l2beat/l2beat/tree/main/CONTRIBUTING.md">
               contributing guidelines
             </Link>
             .

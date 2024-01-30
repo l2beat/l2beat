@@ -6,8 +6,7 @@ export function getStagingConfig(): Config {
     ...common,
     features: {
       ...common.features,
-      detailedTvl: true,
-      tvlBreakdown: true,
+      diffHistory: true,
       buildAllProjectPages: true,
     },
     backend: {

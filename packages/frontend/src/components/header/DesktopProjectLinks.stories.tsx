@@ -1,19 +1,25 @@
-import React, { useEffect } from 'react'
+import { Meta, StoryObj } from '@storybook/react'
 
-import { configureHoverableDropdown } from '../../scripts/configureHoverableDropdown'
-import { hoverOver } from '../../utils/storybook/hoverOver'
+import { onlyDesktopModes } from '../../../.storybook/modes'
 import { ProjectLink } from '../icons'
 import { DesktopProjectLinks as DesktopProjectLinksComponent } from './DesktopProjectLinks'
 
-export default {
-  title: 'Components/DesktopProjectLinks',
+const meta: Meta<typeof DesktopProjectLinksComponent> = {
+  component: DesktopProjectLinksComponent,
+  parameters: {
+    chromatic: {
+      modes: onlyDesktopModes,
+    },
+  },
 }
+export default meta
+type Story = StoryObj<typeof DesktopProjectLinksComponent>
 
 const links: ProjectLink[] = [
   { name: 'Website', links: ['https://bridge.gnosischain.com/'] },
   { name: 'App', links: ['https://bridge.gnosischain.com/'] },
   {
-    name: 'Documentation',
+    name: 'Docs',
     links: ['https://docs.gnosischain.com/bridges/tokenbridge/xdai-bridge'],
   },
   {
@@ -35,13 +41,14 @@ const links: ProjectLink[] = [
       'https://t.me/gnosischain',
     ],
   },
+  {
+    name: 'rollup.codes',
+    links: ['https://rollup.codes/arbitrum-one'],
+  },
 ]
 
-export const DesktopProjectLinks = () => {
-  useEffect(() => {
-    configureHoverableDropdown()
-    hoverOver('.HoverableDropdownToggle')
-  }, [])
-
-  return <DesktopProjectLinksComponent projectLinks={links} />
+export const DesktopProjectLinks: Story = {
+  args: {
+    projectLinks: links,
+  },
 }

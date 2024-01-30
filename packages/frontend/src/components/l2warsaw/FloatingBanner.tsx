@@ -4,27 +4,29 @@ import { CloseIcon } from '../icons/CloseIcon'
 
 export function FloatingBanner() {
   return (
-    <div className="FloatingBanner fixed bottom-0 left-0 z-110 m-4 flex overflow-hidden rounded-md bg-gray-100 pr-4 dark:bg-zinc-800">
+    <div
+      className="fixed inset-x-0 bottom-0 z-110 m-4 hidden max-h-[178px] overflow-hidden rounded-md bg-gray-200 shadow-lg data-[state=visible]:flex dark:bg-zinc-800 xs:right-[unset] xs:m-6 sm:max-h-[201px]"
+      data-role="floating-banner"
+    >
       <Close />
-      <div className="flex max-w-[182px] bg-[#2C7265] py-2 px-3 md:px-5 md:py-4">
-        <img src={'/images/announcements/l2-warsaw-floating.png'} />
-      </div>
-      <div className="flex max-w-[300px] flex-col justify-center px-3 sm:pr-5">
-        <div className="mb-2 text-xs font-medium uppercase text-gray-550 dark:text-gray-50 md:text-sm">
-          Upcoming event
+      <img
+        src="/images/announcements/gitcoin-19-floating.png"
+        className="max-w-[140px] sm:max-w-[158px]"
+      />
+      <div className="flex w-full flex-col  justify-center px-4 pb-5 pt-9 xs:px-7 sm:px-11">
+        <div className="text-2xs font-medium uppercase  text-gray-550 sm:text-base">
+          Support us
         </div>
-        <div className="text-xl font-semibold leading-tight tracking-normal text-black dark:text-white md:text-2xl">
-          L2Warsaw
+        <div className="text-lg font-extrabold  tracking-normal sm:text-2xl">
+          Gitcoin Grants 19
         </div>
-        <div className="mb-4 text-xs sm:text-base">
-          Technical conference dedicated to Ethereum L2 scaling
-        </div>
+        <div className="mb-7 text-sm font-extrabold">November 15-29, 2023</div>
         <a
-          className="w-full max-w-[135px] rounded-md bg-pink-900 py-[8px] text-center text-base font-medium text-white transition-colors hover:bg-pink-800 md:w-40"
-          href="https://warsaw.l2beat.com"
+          className="w-full max-w-[142px] rounded-md bg-[#008B84] py-[8px] text-center text-base font-medium text-white transition-all hover:bg-[#008B84]/60  md:w-40"
+          href="https://explorer.gitcoin.co/#/round/137/0xa1d52f9b5339792651861329a046dd912761e9a9/0xa1d52f9b5339792651861329a046dd912761e9a9-15"
           target="_blank"
         >
-          Get tickets
+          Donate here
         </a>
       </div>
     </div>
@@ -33,8 +35,11 @@ export function FloatingBanner() {
 
 function Close() {
   return (
-    <div className="FloatingBanner-Close absolute top-0 right-0 mt-4 mr-4 cursor-pointer">
-      <CloseIcon className="fill-gray-550 dark:fill-gray-50" />
+    <div
+      className="group absolute right-0 top-0 cursor-pointer p-4"
+      data-role="floating-banner-close"
+    >
+      <CloseIcon className="fill-gray-550 transition-all group-hover:fill-gray-700 dark:group-hover:fill-gray-400" />
     </div>
   )
 }

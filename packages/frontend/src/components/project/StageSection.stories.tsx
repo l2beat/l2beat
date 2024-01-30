@@ -1,78 +1,179 @@
-import { StageConfig, UsableStageConfig } from '@l2beat/config'
-import { Story } from '@storybook/react'
-import React, { useEffect } from 'react'
+import { Meta, StoryObj } from '@storybook/react'
 
-import { configureDropdowns } from '../../scripts/configureDropdowns'
 import { StageSection as StageSectionComponent } from './StageSection'
 
-export default {
-  title: 'Components/Project/StageSection',
-}
-
-const item: StageConfig = {
-  stage: 'Stage 1',
-  missing: {
-    nextStage: 'Stage 2',
-    requirements: ['C requirement'],
+const meta: Meta<typeof StageSectionComponent> = {
+  component: StageSectionComponent,
+  args: {
+    title: 'Rollup stage',
+    id: 'stage',
+    sectionOrder: 1,
+    icon: '/icons/arbitrum.png',
+    name: 'Arbitrum One',
+    type: 'Optimistic Rollup',
   },
-  summary: [
-    {
-      stage: 'Stage 0',
-      requirements: [
-        {
-          satisfied: true,
-          description: 'A requirement',
-        },
-        {
-          satisfied: true,
-          description: 'AA requirement',
-        },
-      ],
-    },
-    {
+}
+export default meta
+type Story = StoryObj<typeof StageSectionComponent>
+
+export const Primary: Story = {
+  args: {
+    stageConfig: {
       stage: 'Stage 1',
-      requirements: [
+      message: undefined,
+      missing: {
+        nextStage: 'Stage 2',
+        requirements: ['C requirement'],
+      },
+      summary: [
         {
-          satisfied: true,
-          description: 'B requirement',
+          stage: 'Stage 0',
+          requirements: [
+            {
+              satisfied: true,
+              description: 'A requirement',
+            },
+            {
+              satisfied: true,
+              description: 'AA requirement',
+            },
+          ],
         },
         {
-          satisfied: true,
-          description: 'BB requirement',
+          stage: 'Stage 1',
+          requirements: [
+            {
+              satisfied: true,
+              description: 'B requirement',
+            },
+            {
+              satisfied: true,
+              description: 'BB requirement',
+            },
+          ],
+        },
+        {
+          stage: 'Stage 2',
+          requirements: [
+            {
+              satisfied: false,
+              description: 'C requirement',
+            },
+          ],
         },
       ],
     },
-    {
-      stage: 'Stage 2',
-      requirements: [
+  },
+}
+
+export const WithWarningIcon: Story = {
+  args: {
+    stageConfig: {
+      stage: 'Stage 0',
+      message: {
+        type: 'warning',
+        text: 'Eu proident velit nostrud veniam. Et aliquip magna deserunt exercitation cillum dolore elit fugiat. Esse mollit aute aliqua Lorem enim fugiat et ipsum. Non ut nulla cillum ipsum pariatur ut aliqua veniam quis dolore excepteur quis excepteur et.x',
+      },
+      missing: {
+        nextStage: 'Stage 1',
+        requirements: ['B requirement'],
+      },
+
+      summary: [
         {
-          satisfied: false,
-          description: 'C requirement',
+          stage: 'Stage 0',
+          requirements: [
+            {
+              satisfied: true,
+              description: 'A requirement',
+            },
+            {
+              satisfied: false,
+              description: 'AA requirement',
+            },
+          ],
+        },
+        {
+          stage: 'Stage 1',
+          requirements: [
+            {
+              satisfied: false,
+              description: 'B requirement',
+            },
+            {
+              satisfied: true,
+              description: 'BB requirement',
+            },
+          ],
+        },
+        {
+          stage: 'Stage 2',
+          requirements: [
+            {
+              satisfied: false,
+              description: 'C requirement',
+            },
+          ],
         },
       ],
     },
-  ],
-}
-function Template(stage: UsableStageConfig) {
-  useEffect(() => {
-    configureDropdowns()
-  }, [])
-  return (
-    <div className="p-4 leading-normal">
-      <StageSectionComponent
-        title="Rollup stage"
-        id="stage"
-        stage={stage}
-        icon="/icons/arbitrum.png"
-        name="Arbitrum One"
-        type="Optimistic Rollup"
-      />
-    </div>
-  )
+  },
 }
 
-export const StageSection: Story<StageConfig> = Template.bind({})
-StageSection.args = item
+export const WithUnderReviewIcon: Story = {
+  args: {
+    stageConfig: {
+      stage: 'Stage 0',
+      message: {
+        type: 'underReview',
+        text: 'Eu proident velit nostrud veniam. Et aliquip magna deserunt exercitation cillum dolore elit fugiat. Esse mollit aute aliqua Lorem enim fugiat et ipsum. Non ut nulla cillum ipsum pariatur ut aliqua veniam quis dolore excepteur quis excepteur et.x',
+      },
+      missing: {
+        nextStage: 'Stage 1',
+        requirements: ['B requirement'],
+      },
 
-export const StageSectionUnderReview: Story<StageConfig> = Template.bind({})
-StageSectionUnderReview.args = { stage: 'UnderReview' }
+      summary: [
+        {
+          stage: 'Stage 0',
+          requirements: [
+            {
+              satisfied: true,
+              description: 'A requirement',
+            },
+            {
+              satisfied: 'UnderReview',
+              description: 'AA requirement',
+            },
+          ],
+        },
+        {
+          stage: 'Stage 1',
+          requirements: [
+            {
+              satisfied: false,
+              description: 'B requirement',
+            },
+            {
+              satisfied: true,
+              description: 'BB requirement',
+            },
+          ],
+        },
+        {
+          stage: 'Stage 2',
+          requirements: [
+            {
+              satisfied: false,
+              description: 'C requirement',
+            },
+          ],
+        },
+      ],
+    },
+  },
+}
+
+export const UnderReview: Story = {
+  args: { stageConfig: { stage: 'UnderReview' } },
+}

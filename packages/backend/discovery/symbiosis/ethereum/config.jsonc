@@ -12,7 +12,8 @@
     "0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8": "Portal",
     "0x5112EbA9bc2468Bb5134CBfbEAb9334EdaE7106a": "Multisig",
     "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75": "ProxyAdminBridgeV2",
-    "0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA": "ProxyAdminBridge"
+    "0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA": "ProxyAdminBridge",
+    "0xf621Fb08BBE51aF70e7E0F4EA63496894166Ff7F": "MetaRouter"
   },
   "overrides": {
     "Portal": {
@@ -23,7 +24,7 @@
       "ignoreInWatchMode": ["nonce"]
     },
     "BridgeV2": {
-      "ignoreInWatchMode": ["newMPCEffectiveTime"]
+      "ignoreInWatchMode": ["newMPCEffectiveTime", "mpc", "newMPC", "oldMPC"]
     }
   }
 }

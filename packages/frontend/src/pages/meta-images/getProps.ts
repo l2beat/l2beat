@@ -1,10 +1,8 @@
 import { Bridge, Layer2 } from '@l2beat/config'
-import {
-  ActivityApiResponse,
-  DetailedTvlApiResponse,
-  TvlApiResponse,
-} from '@l2beat/shared-pure'
+import { ActivityApiResponse, TvlApiResponse } from '@l2beat/shared-pure'
 
+import { getChartUrl } from '../../scripts/charts/data-controller/ChartDataController'
+import { ChartType } from '../../scripts/charts/types'
 import { getTpsDaily } from '../../utils/activity/getTpsDaily'
 import { formatUSD, getPercentageChange } from '../../utils/utils'
 import { Wrapped } from '../Page'
@@ -23,7 +21,7 @@ export function assert(
 }
 
 export function getProps(
-  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
+  tvlApiResponse: TvlApiResponse,
   project: Layer2 | Bridge | undefined,
   type: 'layers2s' | 'bridges',
 ): Wrapped<TvlMetaImageProps> {
@@ -34,25 +32,26 @@ export function getProps(
   const tvlSevenDaysAgo = daily.at(-8)?.[1] ?? 0
   const sevenDayChange = getPercentageChange(tvl, tvlSevenDaysAgo)
 
-  const apiPath = project
-    ? `${project.display.slug}-tvl`
+  const chartType: ChartType = project
+    ? { type: 'project-tvl', slug: project.display.slug }
     : type === 'layers2s'
-    ? 'scaling-tvl'
-    : 'bridges-tvl'
+    ? { type: 'layer2-tvl' }
+    : { type: 'bridges-tvl', includeCanonical: false }
 
-  const tvlEndpoint = `/api/${apiPath}.json`
   return {
     props: {
       tvl: formatUSD(tvl),
       sevenDayChange,
       name: project?.display.name,
       icon: project && `/icons/${project.display.slug}.png`,
-      tvlEndpoint,
+      chartType,
     },
     wrapper: {
-      htmlClassName: 'light meta',
+      htmlClassName: 'light overflow-hidden h-[100vh] meta',
+      bodyClassName: 'overflow-hidden h-[100vh]',
       metadata: { title: 'Meta Image', description: '', image: '', url: '' },
-      preloadApi: tvlEndpoint,
+      preloadApi: getChartUrl(chartType),
+      banner: false,
     },
   }
 }
@@ -60,60 +59,61 @@ export function getProps(
 export function getPropsActivity(
   activityApiResponse: ActivityApiResponse,
 ): Wrapped<ActivityMetaImageProps> {
-  const activityData = activityApiResponse.combined.data
-  const activityNow = getTpsDaily(activityData)
+  const activityData = activityApiResponse.combined.daily.data
+  const activityNow = getTpsDaily(activityData, 'project')
   assert(activityNow, "Can't get current daily TPS")
-  const activitySevenDaysAgo = getTpsDaily(activityData, 8)
+  const activitySevenDaysAgo = getTpsDaily(activityData, 'project', 8)
   assert(activitySevenDaysAgo, "Can't get past daily TPS")
   const weeklyChange = getPercentageChange(activityNow, activitySevenDaysAgo)
 
-  const activityEndpoint = `/api/activity/combined.json`
   return {
     props: {
       tpsDaily: activityNow.toFixed(2),
       tpsWeeklyChange: weeklyChange,
-      activityEndpoint,
     },
     wrapper: {
-      htmlClassName: 'light meta',
+      htmlClassName: 'light overflow-hidden h-[100vh] meta',
+      bodyClassName: 'overflow-hidden h-[100vh]',
       metadata: { title: 'Meta Image', description: '', image: '', url: '' },
-      preloadApi: activityEndpoint,
+      preloadApi: getChartUrl({ type: 'layer2-activity' }),
+      banner: false,
     },
   }
 }
 
 export function getPropsDetailed(
-  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
+  tvlApiResponse: TvlApiResponse,
   project: Layer2 | Bridge | undefined,
   type: 'layers2s' | 'bridges',
 ): Wrapped<DetailedTvlMetaImageProps> {
   const daily = project
     ? tvlApiResponse.projects[project.id.toString()]?.charts.daily.data ?? []
     : tvlApiResponse[type].daily.data
-  assert(daily[0].length === 9)
+
   const tvl = daily.at(-1)?.[1] ?? 0
   const tvlSevenDaysAgo = daily.at(-8)?.[1] ?? 0
   const sevenDayChange = getPercentageChange(tvl, tvlSevenDaysAgo)
 
-  const apiPath = project
-    ? `${project.display.slug}-detailed-tvl`
+  const chartType: ChartType = project
+    ? { type: 'project-detailed-tvl', slug: project.display.slug }
     : type === 'layers2s'
-    ? 'scaling-detailed-tvl'
-    : 'bridges-detailed-tvl'
+    ? { type: 'layer2-detailed-tvl' }
+    : { type: 'bridges-tvl', includeCanonical: false }
 
-  const detailedTvlEndpoint = `/api/${apiPath}.json`
   return {
     props: {
       tvl: formatUSD(tvl),
       sevenDayChange,
       name: project?.display.name,
       icon: project && `/icons/${project.display.slug}.png`,
-      detailedTvlEndpoint,
+      chartType,
     },
     wrapper: {
-      htmlClassName: 'light meta',
+      htmlClassName: 'light overflow-hidden h-[100vh] meta',
+      bodyClassName: 'overflow-hidden h-[100vh]',
       metadata: { title: 'Meta Image', description: '', image: '', url: '' },
-      preloadApi: detailedTvlEndpoint,
+      preloadApi: getChartUrl(chartType),
+      banner: false,
     },
   }
 }

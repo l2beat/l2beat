@@ -1,7 +1,8 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import { assert, ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
+import { UpdaterStatus } from '../../api/controllers/status/view/TvlStatusPage'
 import {
   BalanceRecord,
   BalanceRepository,
@@ -10,6 +11,7 @@ import { BalanceStatusRepository } from '../../peripherals/database/BalanceStatu
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
+import { getStatus } from '../reports/getStatus'
 import { BalanceProject } from './BalanceProject'
 import { BalanceProvider, BalanceQuery } from './BalanceProvider'
 import { getBalanceConfigHash } from './getBalanceConfigHash'
@@ -48,6 +50,16 @@ export class BalanceUpdater {
 
   getMinTimestamp() {
     return this.minTimestamp
+  }
+
+  getStatus(): UpdaterStatus {
+    return getStatus(
+      this.constructor.name,
+      this.clock.getFirstHour(),
+      this.clock.getLastHour(),
+      this.knownSet,
+      this.minTimestamp,
+    )
   }
 
   async getBalancesWhenReady(timestamp: UnixTime, refreshIntervalMs = 1000) {

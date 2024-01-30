@@ -17,11 +17,11 @@ export function RiskList({ risks }: RiskList) {
   }
 
   return (
-    <ul className="mt-4 rounded-lg bg-red-600 bg-opacity-20 p-4 md:mt-6">
+    <ul className="mt-4 rounded-lg bg-red-600/20 p-4 md:mt-6">
       {risks.map((risk, i) => (
         <li className="mt-2 flex gap-3 first:mt-0" key={i}>
           <ShieldIcon className="shrink-0 fill-red-300" />
-          <p>
+          <p className="leading-snug">
             {risk.isCritical ? (
               <>
                 {risk.text.slice(0, -1)}{' '}

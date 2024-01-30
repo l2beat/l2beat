@@ -1,5 +1,4 @@
 import {
-  DetailedTvlApiResponse,
   ProjectAssetsBreakdownApiResponse,
   ProjectId,
   TvlApiResponse,
@@ -9,14 +8,9 @@ export function getIncludedProjectsTvlBreakdown<
   T extends { id: ProjectId; isUpcoming?: boolean; type: 'bridge' | 'layer2' },
 >(
   projects: T[],
-  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
+  tvlApiResponse: TvlApiResponse,
   tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse,
-  buildAllProjectPages = false,
 ) {
-  if (buildAllProjectPages) {
-    return projects
-  }
-
   const included = projects
     .filter((x) => !x.isUpcoming)
     .filter(
@@ -25,10 +19,6 @@ export function getIncludedProjectsTvlBreakdown<
         // eslint-disable-next-line
         !!tvlBreakdownApiResponse.breakdowns[x.id.toString()],
     )
-
-  if (projects.every((x) => x.type === 'layer2')) {
-    included.push(...projects.filter((x) => x.isUpcoming))
-  }
 
   return included
 }

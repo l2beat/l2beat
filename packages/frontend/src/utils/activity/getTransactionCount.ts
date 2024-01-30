@@ -1,13 +1,14 @@
 import { ActivityApiChartPoint } from '@l2beat/shared-pure'
 
 export function getTransactionCount(
-  data: ActivityApiChartPoint[] | undefined,
+  data: ActivityApiChartPoint[],
+  type: 'project' | 'ethereum',
   period: 'month' | 'week',
-): number | undefined {
-  if (data === undefined) {
-    return undefined
-  }
+): number {
+  const dataIndex = type === 'ethereum' ? 2 : 1
   const length = period === 'month' ? 30 : 7
   const lastSevenDays = data.slice(-length)
-  return lastSevenDays.map((d) => d[1]).reduce((prev, curr) => prev + curr, 0)
+  return lastSevenDays
+    .map((d) => d[dataIndex])
+    .reduce((prev, curr) => prev + curr, 0)
 }

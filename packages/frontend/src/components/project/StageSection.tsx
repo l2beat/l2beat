@@ -4,39 +4,47 @@ import React from 'react'
 import {
   ChevronDownIcon,
   MissingIcon,
+  RoundedWarningIcon,
   SatisfiedIcon,
   UnderReviewIcon,
 } from '../icons'
 import { Link } from '../Link'
+import { Markdown } from '../Markdown'
 import { StageBadge } from '../stages/StageBadge'
 import { StageDisclaimer } from '../stages/StageDisclaimer'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
-import { SectionId } from './sectionId'
+import { ProjectSectionId } from './sectionId'
 import { UnderReviewCallout } from './UnderReviewCallout'
+import { WarningBar } from './WarningBar'
 
 export interface StageSectionProps {
   title: string
-  id: SectionId
+  id: ProjectSectionId
+  sectionOrder: number
   icon: string
   name: string
   type: string
-  stage: UsableStageConfig
+  stageConfig: UsableStageConfig
   isUnderReview?: boolean
 }
 
 export function StageSection(props: StageSectionProps) {
-  if (props.stage.stage === 'UnderReview' || props.isUnderReview) {
+  if (props.stageConfig.stage === 'UnderReview' || props.isUnderReview) {
     return (
-      <ProjectDetailsSection title={props.title} id={props.id} className="mt-4">
+      <ProjectDetailsSection
+        title={props.title}
+        id={props.id}
+        sectionOrder={props.sectionOrder}
+      >
         <div className="mb-6 font-medium">
           <img
             src={props.icon}
             alt={props.name}
-            className="relative -top-0.5 mr-2 inline-block h-6 w-6"
+            className="relative -top-0.5 mr-2 inline-block size-6"
           />
           {props.name} is currently
           <StageBadge
-            stage={props.stage.stage}
+            stage={props.stageConfig.stage}
             big
             className="mx-1 md:mx-1.5"
           />
@@ -47,19 +55,41 @@ export function StageSection(props: StageSectionProps) {
     )
   }
 
+  const warningBarIcon =
+    props.stageConfig.message?.type === 'warning'
+      ? RoundedWarningIcon
+      : UnderReviewIcon
+
   return (
-    <ProjectDetailsSection title={props.title} id={props.id} className="mt-4">
+    <ProjectDetailsSection
+      title={props.title}
+      id={props.id}
+      sectionOrder={props.sectionOrder}
+    >
       <div className="mb-6 font-medium">
         <img
           src={props.icon}
           alt={props.name}
-          className="relative -top-0.5 mr-2 inline-block h-6 w-6"
+          className="relative -top-0.5 mr-2 inline-block size-6"
         />
-        {props.name} is a
-        <StageBadge stage={props.stage.stage} big className="mx-2" />
-        <span className="lowercase">{props.type}</span>.
+        {props.name} is a{' '}
+        <StageBadge
+          stage={props.stageConfig.stage}
+          icon={props.stageConfig.message?.type}
+          big
+          className="mx-1"
+        />
+        <span className="lowercase"> {props.type}</span>.
       </div>
-      {props.stage.summary.map((stage) => {
+      {props.stageConfig.message && (
+        <WarningBar
+          color="yellow"
+          className="mb-6"
+          icon={warningBarIcon}
+          text={props.stageConfig.message.text}
+        />
+      )}
+      {props.stageConfig.summary.map((stage) => {
         const satisfied = stage.requirements.filter((r) => r.satisfied === true)
         const missing = stage.requirements.filter((r) => r.satisfied === false)
         const underReview = stage.requirements.filter(
@@ -69,15 +99,17 @@ export function StageSection(props: StageSectionProps) {
         return (
           <div
             key={stage.stage}
-            className="Dropdown mb-4 rounded-lg bg-gray-100 dark:bg-neutral-700"
+            className="mb-4 rounded-lg bg-gray-200 dark:bg-zinc-700"
+            data-role="dropdown"
           >
             <label className="flex cursor-pointer items-center justify-between p-4">
               <input
                 type="checkbox"
                 autoComplete="off"
-                className=" Dropdown-Button peer hidden"
+                className="peer hidden"
+                data-role="dropdown-button"
               />
-              <div className="flex items-center gap-3">
+              <div className="flex select-none items-center gap-3">
                 <StageBadge stage={stage.stage} big />
                 {missing.length === 0 ? (
                   <div className="flex flex-col gap-3 md:flex-row">
@@ -94,30 +126,47 @@ export function StageSection(props: StageSectionProps) {
                   </div>
                 ) : (
                   <div className="flex items-center gap-2">
-                    <MissingIcon className="shrink-0" />
+                    {stage.stage === 'Stage 0' ? (
+                      <RoundedWarningIcon className="size-4 shrink-0 fill-yellow-300" />
+                    ) : (
+                      <MissingIcon className="shrink-0" />
+                    )}
                     <span>{reqTextMissing(missing.length)}</span>
                   </div>
                 )}
               </div>
               <ChevronDownIcon className="transition-transform duration-300 peer-checked:-rotate-180" />
             </label>
-            <ul className="Dropdown-Item pointer-events-none mx-4 hidden space-y-2 pb-4 md:px-4 md:pb-6">
+            <ul
+              className="pointer-events-none mx-4 hidden space-y-2 pb-4 md:px-4 md:pb-6"
+              data-role="dropdown-item"
+            >
               {satisfied.map((req, i) => (
                 <li key={i} className="flex">
                   <SatisfiedIcon className="relative top-0.5 shrink-0" />
-                  <span className="ml-2 inline-block">{req.description}</span>
+                  <Markdown className="ml-2" inline>
+                    {req.description}
+                  </Markdown>
                 </li>
               ))}
               {underReview.map((req, i) => (
                 <li key={i} className="flex">
                   <UnderReviewIcon className="relative top-0.5 shrink-0 " />
-                  <span className="ml-2 inline-block">{req.description}</span>
+                  <Markdown className="ml-2" inline>
+                    {req.description}
+                  </Markdown>
                 </li>
               ))}
               {missing.map((req, i) => (
                 <li key={i} className="flex">
-                  <MissingIcon className=" relative top-0.5 shrink-0" />
-                  <span className="ml-2 inline-block">{req.description}</span>
+                  {stage.stage === 'Stage 0' ? (
+                    <RoundedWarningIcon className="size-4 shrink-0 fill-yellow-300" />
+                  ) : (
+                    <MissingIcon className="relative top-0.5 shrink-0" />
+                  )}
+                  <Markdown className="ml-2" inline>
+                    {req.description}
+                  </Markdown>
                 </li>
               ))}
             </ul>
@@ -132,7 +181,7 @@ export function StageSection(props: StageSectionProps) {
         Learn more about Rollup stages
       </Link>
       <StageDisclaimer
-        className="mt-6"
+        className="mt-6 leading-snug"
         text="Please keep in mind that these stages do not reflect rollup security, this is an opinionated assessment of rollup maturity based on subjective criteria, created with a goal of incentivizing projects to push toward better decentralization. Each team may have taken different paths to achieve this goal."
       />
     </ProjectDetailsSection>

@@ -1,8 +1,41 @@
-/** @type import("tailwindcss/types").Config */
+/** @type {import('tailwindcss').Config} */
 module.exports = {
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
   content: ['./src/**/*.{html,ts,tsx,md,css}'],
   darkMode: 'class',
   theme: {
+    keyframes: {
+      'fade-in': {
+        '0%': { opacity: '0' },
+        '100%': { opacity: '1' },
+      },
+      pulse: {
+        '0%': {
+          transform: 'scale(1,1)',
+        },
+        '80%': {
+          transform: 'scale(1, 1)',
+        },
+        '85%': {
+          transform: 'scale(1.05, 1.05)',
+        },
+        '90%': {
+          transform: 'scale(1, 1)',
+        },
+        '95%': {
+          transform: 'scale(1.05, 1.05)',
+        },
+        '100%': {
+          transform: 'scale(1, 1)',
+        },
+      },
+    },
+    animation: {
+      'quick-fade-in': 'fade-in 0.1s ease-in-out',
+      pulse: 'pulse 5s ease-in-out infinite forwards',
+    },
     fontSize: {
       '3xs': ['8px', '12px'],
       '2xs': ['12px', '16px'],
@@ -19,12 +52,21 @@ module.exports = {
     colors: {
       current: 'currentColor',
       transparent: 'transparent',
+      brand: {
+        red: '#F9347B',
+        'red-dark': '#BD114F',
+        black: '#222222',
+      },
       white: '#FAFAFA',
       neutral: {
         700: '#323539',
+        900: '#131215',
       },
       zinc: {
+        500: '#5F6470',
+        700: '#393C43',
         800: '#272A2F',
+        900: '#1D1E22',
       },
       gray: {
         50: '#AEAEAE',
@@ -82,6 +124,7 @@ module.exports = {
         600: '#11CC00',
         700: '#007408',
         800: '#34762F',
+        900: '#125D19',
       },
       red: {
         100: '#FDD9D9',
@@ -107,6 +150,18 @@ module.exports = {
         800: '#083575',
         900: '#112944',
       },
+      slate: {
+        600: '#525C6A',
+      },
+      rose: {
+        500: '#E33B4F',
+        700: '#BB1B41',
+      },
+      teal: {
+        400: '#2EC4B6',
+        500: '#27AC9F',
+      },
+      sky: { 600: '#2083C1' },
     },
     screens: {
       xs: '400px',
@@ -118,6 +173,7 @@ module.exports = {
       1: '1',
       10: '10', // Chart logo and Y axis, Borders (TvlActivityToggle and DesktopTabs)
       20: '20', // Chart canvas and loader, Items (DesktopTabs, TvlActivityToggle)
+      25: '25',
       30: '30', // Chart hover line
       40: '40', // Milestones, Chart hover line point (squares and circles)
       50: '50', // Chart hover content
@@ -129,9 +185,13 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['Roboto', 'Arial', 'sans-serif'],
+        lora: ['Lora', 'serif'],
       },
       spacing: {
         '2/3': '66.666666%',
+      },
+      opacity: {
+        15: '0.15',
       },
       transitionProperty: {
         height: 'height',

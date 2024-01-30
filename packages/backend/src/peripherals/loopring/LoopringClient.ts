@@ -1,4 +1,5 @@
-import { HttpClient, Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
+import { HttpClient } from '@l2beat/shared'
 import { getErrorMessage, RateLimiter } from '@l2beat/shared-pure'
 
 import { LoopringResponse } from './schemas'
@@ -13,6 +14,7 @@ export class LoopringClient {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly logger: Logger,
+    private readonly url: string,
     opts?: LoopringClientOpts,
   ) {
     this.logger = logger.for(this)
@@ -35,7 +37,7 @@ export class LoopringClient {
 
   private async call(block: Block) {
     const query = new URLSearchParams({ id: block.toString() })
-    const url = `https://api3.loopring.io/api/v3/block/getBlock?${query.toString()}`
+    const url = `${this.url}/block/getBlock?${query.toString()}`
 
     const start = Date.now()
     const { httpResponse, error } = await this.httpClient

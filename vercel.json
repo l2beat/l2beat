@@ -2,12 +2,17 @@
   "redirects": [
     {
       "source": "/",
-      "destination": "scaling/summary/",
+      "destination": "/scaling/summary",
       "permanent": true
     },
     {
-      "source": "/scaling/tvl",
-      "destination": "/scaling/summary/",
+      "source": "/scaling",
+      "destination": "/scaling/summary",
+      "permanent": true
+    },
+    {
+      "source": "/scaling/detailedTvl",
+      "destination": "/scaling/tvl",
       "permanent": true
     },
     {
@@ -62,7 +67,12 @@
     },
     {
       "source": "/bridges/tvl",
-      "destination": "bridges/summary/",
+      "destination": "/bridges/summary",
+      "permanent": true
+    },
+    {
+      "source": "/bridges",
+      "destination": "/bridges/summary",
       "permanent": true
     },
     {
@@ -89,6 +99,24 @@
     {
       "source": "/api/projects/:project/tvl/chains/:chain/assets/:asset/types/:type",
       "destination": "https://api.l2beat.com/api/projects/:project/tvl/chains/:chain/assets/:asset/types/:type"
+    },
+    {
+      "source": "/api/tvl/aggregate",
+      "has": [{ "type": "host", "value": ".*l2beat-staging.*" }],
+      "destination": "https://staging.l2beat.com/api/tvl/aggregate"
+    },
+    {
+      "source": "/api/tvl/aggregate",
+      "destination": "https://api.l2beat.com/api/tvl/aggregate"
+    },
+    {
+      "source": "/api/activity/aggregate",
+      "has": [{ "type": "host", "value": ".*l2beat-staging.*" }],
+      "destination": "https://staging.l2beat.com/api/activity/aggregate"
+    },
+    {
+      "source": "/api/activity/aggregate",
+      "destination": "https://api.l2beat.com/api/activity/aggregate"
     }
   ],
   "trailingSlash": false

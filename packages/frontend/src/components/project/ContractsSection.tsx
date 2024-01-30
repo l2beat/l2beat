@@ -1,18 +1,21 @@
-import { VerificationStatus } from '@l2beat/shared-pure'
+import {
+  ManuallyVerifiedContracts,
+  VerificationStatus,
+} from '@l2beat/shared-pure'
 import React from 'react'
 
 import { ContractEntry, TechnologyContract } from './ContractEntry'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
 import { ReferenceList, TechnologyReference } from './ReferenceList'
 import { RiskList, TechnologyRisk } from './RiskList'
-import { SectionId } from './sectionId'
+import { ProjectSectionId } from './sectionId'
 import { TechnologyIncompleteShort } from './TechnologyIncomplete'
-import { TokenEntry } from './TokenEntry'
 import { UnderReviewCallout } from './UnderReviewCallout'
 
 export interface ContractsSectionProps {
-  id: SectionId
+  id: ProjectSectionId
   title: string
+  sectionOrder: number
   contracts: TechnologyContract[]
   escrows: TechnologyContract[]
   risks: TechnologyRisk[]
@@ -21,24 +24,29 @@ export interface ContractsSectionProps {
   isIncomplete?: boolean
   isUnderReview?: boolean
   verificationStatus: VerificationStatus
-  nativeL2TokensIncludedInTVL: string[]
+  manuallyVerifiedContracts: ManuallyVerifiedContracts
 }
 
 export function ContractsSection(props: ContractsSectionProps) {
   if (
     props.contracts.length === 0 &&
     props.escrows.length === 0 &&
-    props.risks.length === 0
+    props.risks.length === 0 &&
+    !props.isUnderReview
   ) {
     return null
   }
 
   return (
-    <ProjectDetailsSection title={props.title} id={props.id}>
+    <ProjectDetailsSection
+      title={props.title}
+      id={props.id}
+      sectionOrder={props.sectionOrder}
+    >
       {props.isUnderReview ? <UnderReviewCallout className="mb-4" /> : null}
       {props.isIncomplete && <TechnologyIncompleteShort />}
       {props.architectureImage && (
-        <figure className="mt-4 mb-8 text-center">
+        <figure className="mb-8 mt-4 text-center">
           <img
             className="inline max-w-full align-[unset] dark:invert"
             src={props.architectureImage}
@@ -51,16 +59,17 @@ export function ContractsSection(props: ContractsSectionProps) {
       )}
       {props.contracts.length > 0 && (
         <>
-          <h3 className="md:text-md font-bold">
+          <h3 className="font-bold">
             The system consists of the following smart contracts:
           </h3>
-          <div className="mt-4 mb-4">
+          <div className="my-4">
             {props.contracts.map((contract, i) => (
               <React.Fragment key={i}>
                 <ContractEntry
                   contract={contract}
                   verificationStatus={props.verificationStatus}
-                  className="mt-4 mb-4"
+                  manuallyVerifiedContracts={props.manuallyVerifiedContracts}
+                  className="my-4"
                 />
               </React.Fragment>
             ))}
@@ -70,26 +79,21 @@ export function ContractsSection(props: ContractsSectionProps) {
       {/* @todo: this "if" can be dropped when all escrows will migrate to new form */}
       {props.escrows.length > 0 && (
         <>
-          <h3 className="md:text-md font-bold">
+          <h3 className="font-bold">
             Value Locked is calculated based on these smart contracts and
             tokens:
           </h3>
-          <div className="mt-4 mb-4">
+          <div className="my-4">
             {props.escrows.map((contract, i) => (
               <React.Fragment key={i}>
                 <ContractEntry
                   contract={contract}
                   verificationStatus={props.verificationStatus}
-                  className="mt-4 mb-4"
+                  manuallyVerifiedContracts={props.manuallyVerifiedContracts}
+                  className="my-4"
                 />
               </React.Fragment>
             ))}
-            {props.nativeL2TokensIncludedInTVL.length > 0 && (
-              <TokenEntry
-                l2Tokens={props.nativeL2TokensIncludedInTVL}
-                className="mt-4 mb-4"
-              />
-            )}
           </div>
         </>
       )}

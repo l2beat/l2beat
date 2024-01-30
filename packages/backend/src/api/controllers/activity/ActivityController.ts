@@ -1,4 +1,5 @@
 import {
+  ActivityApiCharts,
   ActivityApiResponse,
   assert,
   json,
@@ -8,10 +9,10 @@ import {
 import { TransactionCounter } from '../../../core/activity/TransactionCounter'
 import { Clock } from '../../../core/Clock'
 import { DailyTransactionCountViewRepository } from '../../../peripherals/database/activity/DailyTransactionCountViewRepository'
-import { countsToChart } from './countsToChart'
+import { alignActivityData } from './alignActivityData'
+import { formatActivityChart } from './formatActivityChart'
 import { postprocessCounts } from './postprocessCounts'
 import { toCombinedActivity } from './toCombinedActivity'
-import { toProjectsActivity } from './toProjectsActivity'
 import {
   DailyTransactionCount,
   DailyTransactionCountProjectsMap,
@@ -42,11 +43,42 @@ export class ActivityController {
     }
     assert(ethereumCounts, 'Ethereum missing in daily transaction count')
 
-    return {
-      combined: toCombinedActivity(layer2sCounts),
-      projects: toProjectsActivity(layer2sCounts),
-      ethereum: countsToChart(ethereumCounts),
+    const combinedChartPoints = alignActivityData(
+      toCombinedActivity(layer2sCounts),
+      ethereumCounts,
+    )
+
+    const projects: ActivityApiResponse['projects'] = {}
+    for (const [projectId, counts] of layer2sCounts.entries()) {
+      projects[projectId.toString()] = formatActivityChart(
+        alignActivityData(counts, ethereumCounts),
+      )
     }
+
+    return {
+      combined: formatActivityChart(combinedChartPoints),
+      projects,
+    }
+  }
+
+  async getAggregatedActivity(
+    projects: ProjectId[],
+  ): Promise<ActivityApiCharts> {
+    const [aggregatedDailyCounts, ethereumCounts] = await Promise.all([
+      await this.viewRepository.getProjectsAggregatedDailyCount(projects),
+      await this.viewRepository.getDailyCountsPerProject(ProjectId.ETHEREUM),
+    ])
+    const now = this.clock.getLastHour()
+
+    const processedCounts = postprocessCounts(aggregatedDailyCounts, true, now)
+    const processedEthereumCounts = postprocessCounts(ethereumCounts, true, now)
+
+    const chartPoints = alignActivityData(
+      processedCounts,
+      processedEthereumCounts,
+    )
+
+    return formatActivityChart(chartPoints)
   }
 
   async getStatus(): Promise<json> {

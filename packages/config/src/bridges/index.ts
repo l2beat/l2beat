@@ -5,6 +5,7 @@ import { aptos } from './aptos'
 import { avalanche } from './avalanche'
 import { beamerbridgev2 } from './beamerBridgeV2'
 import { cBridge } from './cBridge'
+import { chainport } from './chainport'
 import { connext } from './connext'
 import { debridge } from './debridge'
 import { gravity } from './gravity'
@@ -29,6 +30,7 @@ import { pulseChain } from './pulseChain'
 import { ronin } from './ronin'
 import { satellite } from './satellite'
 import { skaleIMA } from './skaleIMA'
+import { socket } from './socket'
 import { sollet } from './sollet'
 import { stargate } from './stargate'
 import { symbiosis } from './symbiosis'
@@ -51,6 +53,7 @@ export const bridges: Bridge[] = [
   debridge,
   gravity,
   harmony,
+  chainport,
   hop,
   hyphen,
   lzOmnichain,
@@ -70,6 +73,7 @@ export const bridges: Bridge[] = [
   ronin,
   satellite,
   skaleIMA,
+  socket,
   sollet,
   stargate,
   synapse,

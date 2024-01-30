@@ -1,8 +1,9 @@
 {
-  "chain": "ethereum",
   "name": "myria",
+  "chain": "ethereum",
   "blockNumber": 17039298,
-  "configHash": "0x3a9dc943b43efbe78df09c89e26fd75fd12cff9b3dc9b74adeea7fe25c550c39",
+  "configHash": "0x077baa6b8fe50a71e1ea24dd724184a5efc8dcd5c5866970907b8fddd6bc243b",
+  "version": 3,
   "contracts": [
     {
       "name": "Committee",
@@ -10,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1659542607,
       "values": {
         "constructorArgs": [
           [
@@ -45,6 +47,16 @@
         },
         "proxyGovernance": ["0xc49Ec6Bb817E17a9Ca5B738ca330db403cc74245"]
       },
+      "implementations": [
+        "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
+        "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
+        "0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb",
+        "0x67e198743BC19fa4757720eDd0e769f8291e1F1D",
+        "0x613ee54C54D5548627064B4D648942bF3648f376",
+        "0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
+        "0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
+      ],
+      "sinceTimestamp": 1659542607,
       "values": {
         "defaultVaultWithdrawalLock": 0,
         "DEPOSIT_CANCEL_DELAY": 172800,
@@ -89,6 +101,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1657453372,
       "values": {
         "gpsContract": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
         "hasRegisteredFact": true,
@@ -102,6 +115,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1657453372,
       "values": {
         "hasRegisteredFact": false,
         "identify": "StarkWare_OrderRegistry_2021_1"

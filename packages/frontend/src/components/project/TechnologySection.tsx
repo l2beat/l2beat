@@ -1,15 +1,17 @@
 import React from 'react'
 
+import { Markdown } from '../Markdown'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
 import { ReferenceList, TechnologyReference } from './ReferenceList'
 import { RiskList, TechnologyRisk } from './RiskList'
-import { SectionId } from './sectionId'
+import { ProjectSectionId } from './sectionId'
 import { TechnologyIncompleteShort } from './TechnologyIncomplete'
 import { UnderReviewCallout } from './UnderReviewCallout'
 
 export interface TechnologySectionProps {
-  id: SectionId
+  id: ProjectSectionId
   title: string
+  sectionOrder: number
   items: TechnologyChoice[]
   isUnderReview?: boolean
 }
@@ -27,11 +29,17 @@ export interface TechnologyChoice {
 export function TechnologySection({
   id,
   title,
+  sectionOrder,
   items,
   isUnderReview,
 }: TechnologySectionProps) {
   return (
-    <ProjectDetailsSection title={title} id={id} isUnderReview={isUnderReview}>
+    <ProjectDetailsSection
+      title={title}
+      id={id}
+      sectionOrder={sectionOrder}
+      isUnderReview={isUnderReview}
+    >
       {items.map((item, i) => (
         <div className="mt-4 md:mt-6" key={i}>
           <h3 id={item.id} className="text-xl font-bold">
@@ -42,9 +50,9 @@ export function TechnologySection({
             <UnderReviewCallout />
           ) : (
             <>
-              <p className="mt-2 text-gray-850 dark:text-gray-400">
+              <Markdown className="mt-2 leading-snug text-gray-850 dark:text-gray-400">
                 {item.description}
-              </p>
+              </Markdown>
               <RiskList risks={item.risks} />
               <ReferenceList references={item.references} />{' '}
             </>

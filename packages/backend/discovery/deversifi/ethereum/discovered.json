@@ -2,8 +2,8 @@
   "name": "deversifi",
   "chain": "ethereum",
   "blockNumber": 17968886,
-  "configHash": "0x49293ad07e522b8e81cc67951023c79b9dbc188acb13f998535dd92fd197676f",
-  "version": 1,
+  "configHash": "0x39749206ac0db43403f2640bed50d943aa67053425f3d071cb5631ec668fe616",
+  "version": 3,
   "contracts": [
     {
       "name": "Committee",
@@ -11,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1603626845,
       "values": {
         "constructorArgs": [
           [
@@ -36,6 +37,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1691481095,
       "values": {
         "gpsContract": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
         "hasRegisteredFact": true,
@@ -49,6 +51,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1626352379,
       "values": {
         "hasRegisteredFact": true,
         "identify": "StarkWare_OrderRegistry_2021_1"
@@ -75,6 +78,16 @@
           "0xCCa5De1e10c05c50C51ac551D9182cd31aca1889"
         ]
       },
+      "implementations": [
+        "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
+        "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
+        "0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb",
+        "0x67e198743BC19fa4757720eDd0e769f8291e1F1D",
+        "0x613ee54C54D5548627064B4D648942bF3648f376",
+        "0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
+        "0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
+      ],
+      "sinceTimestamp": 1590491810,
       "values": {
         "defaultVaultWithdrawalLock": 0,
         "DEPOSIT_CANCEL_DELAY": 172800,
@@ -117,8 +130,11 @@
       "address": "0xCCa5De1e10c05c50C51ac551D9182cd31aca1889",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": []
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
+      "sinceTimestamp": 1683214307,
       "values": {
         "domainSeparator": "0x00e7276e9f285a9b73208ee52227fedeba51adac2fc7b3bb3b5c2a78ea7234df",
         "getChainId": 1,

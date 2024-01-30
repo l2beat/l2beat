@@ -1,9 +1,12 @@
-import { Layer2TransactionApi } from '@l2beat/config'
-import { LogLevel } from '@l2beat/shared'
-import { ChainId, Token, UnixTime } from '@l2beat/shared-pure'
+import { LoggerOptions } from '@l2beat/backend-tools'
+import { DiscoveryChainConfig } from '@l2beat/discovery'
+import { ChainId, ProjectId, Token, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
+import { ActivityTransactionConfig } from '../core/activity/ActivityTransactionConfig'
 import { Project } from '../model'
+import { MulticallConfigEntry } from '../peripherals/multicall/types'
+import { ResolvedFeatureFlag } from './FeatureFlags'
 
 export interface Config {
   readonly name: string
@@ -17,20 +20,23 @@ export interface Config {
   readonly api: ApiConfig
   readonly health: HealthConfig
   readonly tvl: TvlConfig
+  readonly liveness: LivenessConfig | false
+  readonly finality: boolean
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
+  readonly diffHistory: DiffHistoryConfig | false
   readonly statusEnabled: boolean
+  readonly chains: { name: string; chainId: ChainId }[]
+  readonly flags: ResolvedFeatureFlag[]
 }
 
-export interface LoggerConfig {
-  readonly logLevel: LogLevel
-  readonly format: 'pretty' | 'json'
-}
+export type LoggerConfig = Pick<LoggerOptions, 'logLevel' | 'format'> &
+  Partial<LoggerOptions>
 
 export interface LogThrottlerConfig {
-  readonly threshold: number
-  readonly thresholdTimeInMs: number
-  readonly throttleTimeInMs: number
+  readonly callsUntilThrottle: number
+  readonly clearIntervalMs: number
+  readonly throttleTimeMs: number
 }
 
 export interface ApiConfig {
@@ -53,21 +59,47 @@ export interface ClockConfig {
 
 export interface TvlConfig {
   readonly enabled: boolean
-  readonly detailedTvlEnabled: boolean
-  readonly errorOnUnsyncedDetailedTvl: boolean
+  readonly errorOnUnsyncedTvl: boolean
   readonly coingeckoApiKey: string | undefined
-  readonly ethereum: ChainTvlConfig | false
-  readonly arbitrum: ChainTvlConfig | false
-  readonly optimism: ChainTvlConfig | false
-  readonly base: ChainTvlConfig | false
+  readonly ethereum: ChainTvlConfig
+  readonly modules: ChainTvlConfig[]
+}
+
+export interface LivenessConfig {
+  readonly bigQuery: {
+    readonly clientEmail: string
+    readonly privateKey: string
+    readonly projectId: string
+    readonly queryLimitGb: number
+    readonly queryWarningLimitGb: number
+  }
+  readonly minTimestamp: UnixTime
+}
+
+export interface BlockscoutChainConfig {
+  readonly type: 'blockscout'
+  readonly blockscoutApiUrl: string
+}
+
+export interface EtherscanChainConfig {
+  readonly type: 'etherscan'
+  readonly etherscanApiKey: string
+  readonly etherscanApiUrl: string
 }
 
 export interface ChainTvlConfig {
-  readonly providerUrl: string
-  readonly providerCallsPerMinute: number
-  readonly etherscanApiKey: string
-  readonly etherscanApiUrl: string
-  readonly minBlockTimestamp: UnixTime
+  readonly chain: string
+  readonly config?: {
+    readonly projectId: ProjectId
+    readonly chainId: ChainId
+    readonly providerUrl: string
+    readonly providerCallsPerMinute: number
+    readonly minBlockTimestamp: UnixTime
+    readonly blockNumberProviderConfig:
+      | EtherscanChainConfig
+      | BlockscoutChainConfig
+    readonly multicallConfig: MulticallConfigEntry[]
+  }
 }
 
 export interface HealthConfig {
@@ -78,10 +110,9 @@ export interface HealthConfig {
 export interface ActivityConfig {
   readonly starkexApiKey: string
   readonly starkexCallsPerMinute: number
-  readonly skipExplicitExclusion: boolean
   readonly projectsExcludedFromAPI: string[]
   readonly allowedProjectIds?: string[]
-  readonly projects: Record<string, Layer2TransactionApi | undefined>
+  readonly projects: { id: ProjectId; config: ActivityTransactionConfig }[]
 }
 
 export interface MetricsAuthConfig {
@@ -95,6 +126,10 @@ export interface UpdateMonitorConfig {
   readonly discord: DiscordConfig | false
 }
 
+export interface DiffHistoryConfig {
+  readonly chains: DiffHistoryChainConfig[]
+}
+
 export interface DiscordConfig {
   readonly token: string
   readonly publicChannelId?: string
@@ -102,10 +137,11 @@ export interface DiscordConfig {
   readonly callsPerMinute: number
 }
 
-export interface UpdateMonitorChainConfig {
-  chainId: ChainId
-  rpcUrl: string
-  etherscanApiKey: string
-  etherscanUrl: string
-  minTimestamp: UnixTime
+export interface DiscoveryCacheChainConfig {
+  reorgSafeDepth?: number
 }
+
+export type UpdateMonitorChainConfig = DiscoveryChainConfig &
+  DiscoveryCacheChainConfig
+
+export type DiffHistoryChainConfig = UpdateMonitorChainConfig

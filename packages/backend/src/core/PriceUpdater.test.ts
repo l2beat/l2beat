@@ -1,4 +1,5 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
+import { CoingeckoQueryService } from '@l2beat/shared'
 import {
   AssetId,
   ChainId,
@@ -11,7 +12,6 @@ import { expect, mockFn, mockObject } from 'earl'
 import { setTimeout } from 'timers/promises'
 import waitForExpect from 'wait-for-expect'
 
-import { CoingeckoQueryService } from '../peripherals/coingecko/CoingeckoQueryService'
 import {
   PriceRecord,
   PriceRepository,
@@ -160,28 +160,28 @@ describe(PriceUpdater.name, () => {
       expect(coingeckoQueryService.getUsdPriceHistory).toHaveBeenNthCalledWith(
         1,
         tokens[0].coingeckoId,
-        HOUR_09.add(-7, 'days'),
+        HOUR_09,
         HOUR_09,
         tokens[0].address,
       )
       expect(coingeckoQueryService.getUsdPriceHistory).toHaveBeenNthCalledWith(
         2,
         tokens[1].coingeckoId,
-        HOUR_13.add(-7, 'days'),
+        HOUR_13,
         HOUR_13,
         tokens[1].address,
       )
       expect(coingeckoQueryService.getUsdPriceHistory).toHaveBeenNthCalledWith(
         3,
         tokens[2].coingeckoId,
-        HOUR_09.add(-7, 'days'),
+        HOUR_09,
         HOUR_13,
         tokens[2].address,
       )
       expect(coingeckoQueryService.getUsdPriceHistory).toHaveBeenNthCalledWith(
         4,
         tokens[0].coingeckoId,
-        HOUR_13.add(-7, 'days'),
+        HOUR_13,
         HOUR_13,
         tokens[0].address,
       )
@@ -219,7 +219,7 @@ describe(PriceUpdater.name, () => {
       expect(coingeckoQueryService.getUsdPriceHistory).toHaveBeenNthCalledWith(
         1,
         tokens[0].coingeckoId,
-        HOUR_10.add(-7, 'days'),
+        HOUR_10,
         HOUR_13,
         tokens[0].address,
       )
@@ -258,7 +258,7 @@ describe(PriceUpdater.name, () => {
           coingeckoQueryService.getUsdPriceHistory,
         ).toHaveBeenOnlyCalledWith(
           TOKEN_COINGECKO_ID,
-          HOUR_09.add(-7, 'days'),
+          HOUR_09,
           HOUR_13,
           undefined,
         )
@@ -278,7 +278,7 @@ describe(PriceUpdater.name, () => {
           coingeckoQueryService.getUsdPriceHistory,
         ).toHaveBeenOnlyCalledWith(
           TOKEN_COINGECKO_ID,
-          HOUR_09.add(-7, 'days'),
+          HOUR_09,
           HOUR_09,
           undefined,
         )
@@ -291,7 +291,7 @@ describe(PriceUpdater.name, () => {
           coingeckoQueryService.getUsdPriceHistory,
         ).toHaveBeenOnlyCalledWith(
           TOKEN_COINGECKO_ID,
-          HOUR_13.add(-7, 'days'),
+          HOUR_13,
           HOUR_13,
           undefined,
         )
@@ -316,7 +316,7 @@ describe(PriceUpdater.name, () => {
         ).toHaveBeenNthCalledWith(
           1,
           TOKEN_COINGECKO_ID,
-          HOUR_09.add(-7, 'days'),
+          HOUR_09,
           HOUR_09,
           undefined,
         )
@@ -325,7 +325,7 @@ describe(PriceUpdater.name, () => {
         ).toHaveBeenNthCalledWith(
           2,
           TOKEN_COINGECKO_ID,
-          HOUR_13.add(-7, 'days'),
+          HOUR_13,
           HOUR_13,
           undefined,
         )
@@ -370,7 +370,7 @@ describe(PriceUpdater.name, () => {
 
       expect(coingeckoQueryService.getUsdPriceHistory).toHaveBeenOnlyCalledWith(
         tokens[0].coingeckoId,
-        from.add(-7, 'days'),
+        from,
         from.add(2, 'hours'),
         undefined,
       )

@@ -12,7 +12,10 @@
     "0x50efaC9619225d7fB4703C5872da978849B6E7cC": "ProposerV2",
     "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5": "Ethereum_SpokePool",
     "0xB524735356985D2f267FA010D681f061DfF03715": "HubPool Multisig",
-    "0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea": "BondToken"
+    "0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea": "BondToken",
+    "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE": "OptimisticOracleV3",
+    "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "USDC",
+    "0x8692B776d1Ff0664177c90465038056Dc64f8991": "OptimisticGovernor"
   },
   "overrides": {
     "HubPool": {
@@ -152,6 +155,19 @@
     "0x39Ea01a0298C315d149a490E34B59Dbf2EC7e48F": {
       // Optimism: SNX Bridge
       "ignoreDiscovery": true
+    },
+    "0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac": {
+      // OptimisticOracleV3 cachedOracle
+      "ignoreDiscovery": true
+    },
+    "USDC": {
+      "ignoreDiscovery": true
+    },
+    "OptimisticGovernor": {
+      "ignoreMethods": ["getCurrentTime"]
+    },
+    "OptimisticOracleV3": {
+      "ignoreMethods": ["getCurrentTime"]
     }
   }
 }

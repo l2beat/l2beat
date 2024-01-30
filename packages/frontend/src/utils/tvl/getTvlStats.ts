@@ -1,10 +1,4 @@
-import {
-  ChainId,
-  DetailedTvlApiProject,
-  DetailedTvlApiToken,
-  TvlApiProject,
-  TvlApiToken,
-} from '@l2beat/shared-pure'
+import { TvlApiProject, TvlApiToken } from '@l2beat/shared-pure'
 
 import { getPercentageChange } from '../utils'
 import { getTvlBreakdown } from './getTVLBreakdown'
@@ -12,26 +6,35 @@ import { getTvlBreakdown } from './getTVLBreakdown'
 export type TvlStats = ReturnType<typeof getTvlStats>
 
 export function getTvlStats(
-  tvlProject: TvlApiProject | DetailedTvlApiProject,
+  tvlProject: TvlApiProject,
   name: string,
   associatedTokens: string[],
 ) {
-  const aggregate = tvlProject.charts.hourly.data
-  const tvl = aggregate.at(-1)?.[1] ?? 0
-  const tvlOneDayAgo = aggregate.at(-25)?.[1] ?? 0
-  // This assumes that hourly data spans exactly 7 days
-  const tvlSevenDaysAgo = aggregate.at(0)?.[1] ?? 0
+  const { latestTvl, oneDayAgo, sevenDaysAgo } = getTvlRangeData(tvlProject)
 
   return {
-    tvl,
+    latestTvl,
     tvlBreakdown: getTvlBreakdown(
       name,
       associatedTokens,
-      tvl,
+      latestTvl,
       unifyTokensResponse(tvlProject.tokens),
     ),
-    oneDayChange: getPercentageChange(tvl, tvlOneDayAgo),
-    sevenDayChange: getPercentageChange(tvl, tvlSevenDaysAgo),
+    oneDayChange: getPercentageChange(latestTvl, oneDayAgo),
+    sevenDayChange: getPercentageChange(latestTvl, sevenDaysAgo),
+  }
+}
+
+export function getTvlRangeData(tvlProject: TvlApiProject) {
+  const hourlyData = tvlProject.charts.hourly.data
+  const latestTvl = hourlyData.at(-1)?.[1] ?? 0
+  const oneDayAgo = hourlyData.at(-25)?.[1] ?? 0
+  // This assumes that hourly data spans exactly 7 days
+  const sevenDaysAgo = hourlyData.at(0)?.[1] ?? 0
+  return {
+    latestTvl,
+    oneDayAgo,
+    sevenDaysAgo,
   }
 }
 
@@ -40,19 +43,10 @@ export function getTvlStats(
  * @notice Remove once classic TVL API is deprecated
  */
 export function unifyTokensResponse(
-  tokens?: TvlApiToken[] | DetailedTvlApiProject['tokens'],
-): DetailedTvlApiToken[] {
+  tokens?: TvlApiProject['tokens'],
+): TvlApiToken[] {
   if (!tokens) {
     return []
-  }
-
-  if (Array.isArray(tokens)) {
-    return tokens.map((token) => ({
-      assetId: token.assetId,
-      chainId: ChainId.ETHEREUM,
-      usdValue: token.tvl,
-      assetType: 'CBV',
-    }))
   }
 
   return Object.values(tokens)

@@ -1,0 +1,10 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "extends": ["//"],
+  "pipeline": {
+    "build": {
+      "env": ["DEPLOYMENT_ENV", "NODE_ENV", "GENERATE_METAIMAGES"],
+      "cache": false
+    }
+  }
+}

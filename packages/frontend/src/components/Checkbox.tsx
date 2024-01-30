@@ -1,10 +1,11 @@
-import cx from 'classnames'
 import React, { ReactNode } from 'react'
 
+import { cn } from '../utils/cn'
 import { CheckIcon } from './icons'
 
-export interface IncludeLayer2sCheckboxProps {
+export interface CheckboxProps {
   className?: string
+  checkIconClassName?: string
   label: ReactNode
   role: string
   id: string
@@ -13,16 +14,18 @@ export interface IncludeLayer2sCheckboxProps {
 
 export function Checkbox({
   className,
+  checkIconClassName,
   label,
   role,
   id,
   defaultChecked,
-}: IncludeLayer2sCheckboxProps) {
+  ...rest
+}: CheckboxProps) {
   return (
     <label
-      className={cx(
-        'bg-gray-200 text-base font-semibold dark:bg-gray-750',
-        'inline-flex cursor-pointer select-none items-center gap-2 rounded-lg p-2',
+      className={cn(
+        'bg-gray-200 text-base font-semibold dark:bg-zinc-700',
+        'inline-flex cursor-pointer select-none items-center gap-2 rounded-lg py-1 pl-2 pr-3',
         className,
       )}
     >
@@ -33,9 +36,10 @@ export function Checkbox({
         autoComplete="off"
         className="peer hidden"
         defaultChecked={defaultChecked}
+        {...rest}
       />
-      <CheckIcon />
-      <span>{label}</span>
+      <CheckIcon className={cn('shrink-0', checkIconClassName)} />
+      <span className="whitespace-pre">{label}</span>
     </label>
   )
 }

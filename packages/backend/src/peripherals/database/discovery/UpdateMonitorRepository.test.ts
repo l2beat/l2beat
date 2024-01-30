@@ -1,8 +1,8 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import { ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { setupDatabaseTestSuite } from '../../../test/database'
+import { describeDatabase } from '../../../test/database'
 import {
   UpdateMonitorRecord,
   UpdateMonitorRepository,
@@ -10,8 +10,7 @@ import {
 
 const CONFIG_HASH = Hash256.random()
 
-describe(UpdateMonitorRepository.name, () => {
-  const { database } = setupDatabaseTestSuite()
+describeDatabase(UpdateMonitorRepository.name, (database) => {
   const repository = new UpdateMonitorRepository(database, Logger.SILENT)
 
   beforeEach(async () => {
@@ -28,7 +27,7 @@ describe(UpdateMonitorRepository.name, () => {
       timestamp: new UnixTime(0),
       discovery: {
         name: projectName,
-        chain: ChainId.getName(ChainId.ETHEREUM),
+        chain: 'ethereum',
         blockNumber: -1,
         configHash: Hash256.random(),
         contracts: [],
@@ -47,7 +46,7 @@ describe(UpdateMonitorRepository.name, () => {
       timestamp: new UnixTime(0),
       discovery: {
         name: projectName,
-        chain: ChainId.getName(ChainId.ETHEREUM),
+        chain: 'ethereum',
         blockNumber: -1,
         configHash: Hash256.random(),
         contracts: [],
@@ -79,7 +78,7 @@ describe(UpdateMonitorRepository.name, () => {
       timestamp: new UnixTime(0),
       discovery: {
         name: projectName,
-        chain: ChainId.getName(ChainId.ETHEREUM),
+        chain: 'ethereum',
         blockNumber: -1,
         configHash: Hash256.random(),
         contracts: [],

@@ -1,10 +1,13 @@
-import { BlockNumberProvider, Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
+import { BlockNumberProvider } from '@l2beat/shared'
 import { assert, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
+import { UpdaterStatus } from '../api/controllers/status/view/TvlStatusPage'
 import { BlockNumberRepository } from '../peripherals/database/BlockNumberRepository'
 import { Clock } from './Clock'
 import { TaskQueue } from './queue/TaskQueue'
+import { getStatus } from './reports/getStatus'
 
 export class BlockNumberUpdater {
   private readonly blocksByTimestamp = new Map<number, number>()
@@ -29,12 +32,28 @@ export class BlockNumberUpdater {
 
     assert(
       this.chainId === blockNumberProvider.getChainId(),
-      'chainId mismatch between blockNumberProvider and consturctor argument',
+      'chainId mismatch between blockNumberProvider and constructor argument',
     )
   }
 
   getMinTimestamp() {
     return this.minTimestamp
+  }
+
+  getStatus(): UpdaterStatus {
+    const knownSet = new Set<number>()
+
+    for (const timestamp of this.blocksByTimestamp.keys()) {
+      knownSet.add(timestamp)
+    }
+
+    return getStatus(
+      this.constructor.name,
+      this.clock.getFirstHour(),
+      this.clock.getLastHour(),
+      knownSet,
+      this.minTimestamp,
+    )
   }
 
   async getBlockNumberWhenReady(timestamp: UnixTime, refreshIntervalMs = 1000) {

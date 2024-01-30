@@ -1,9 +1,9 @@
 {
   "name": "cbridge",
   "chain": "ethereum",
-  "blockNumber": 17968909,
-  "configHash": "0x1b184212aa0d5c3fd99aa51935f3e128390b685777201707fc6dec79b09acafa",
-  "version": 1,
+  "blockNumber": 18163828,
+  "configHash": "0xaefd4ad630423ac7314704b457cb0518fe5a5ccfa2e6d8dc6956c0c61e5a129a",
+  "version": 3,
   "contracts": [
     {
       "name": "PeggedTokenBridge",
@@ -11,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1639581534,
       "values": {
         "delayPeriod": 1800,
         "epochLength": 1800,
@@ -27,6 +28,8 @@
         "implementation": "0x479ec366ae4EC016cE25B918BdEa8f78d4fa5dd8",
         "admin": "0x520d812604E7b2ce71819FDBFE9aC40E56327F8f"
       },
+      "implementations": ["0x479ec366ae4EC016cE25B918BdEa8f78d4fa5dd8"],
+      "sinceTimestamp": 1649432556,
       "values": {
         "feeBase": 15000000000000,
         "feePerByte": 150000000000,
@@ -46,6 +49,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1649432377,
       "values": {
         "owner": "0x0000000000000000000000000000000000000000"
       }
@@ -56,6 +60,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1650529338,
       "values": {
         "delayPeriod": 1800,
         "epochLength": 1800,
@@ -70,8 +75,9 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1638346811,
       "values": {
-        "addseq": 5079,
+        "addseq": 5080,
         "delayPeriod": 1800,
         "epochLength": 1800,
         "governors": [
@@ -92,12 +98,11 @@
           "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2",
           "0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C",
           "0xED9fdF5B16F9F254bec5Ad389B80B48225186655",
-          "0xE45CB56CEe56Dd1A94F7E5fBDFaa5BaFB3C053d3",
           "0xF140024969F6c76494a78518D9a99c8776B55f70"
         ],
         "resetTime": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "ssHash": "0xb4a163d6a807a61c6f9179af88b0cecc49ac1cf971eeb599c8ee054d25ed4649",
-        "triggerTime": 1692534462
+        "ssHash": "0x4830ba2c3e2994baf31ad7fe644c13157ea804d951b2e68edc2ae9dff50d0013",
+        "triggerTime": 1694779181
       },
       "derivedName": "Bridge"
     },
@@ -107,6 +112,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1676671175,
       "values": {
         "getVoters": [
           [
@@ -130,6 +136,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1651661389,
       "values": {
         "delayPeriod": 1800,
         "epochLength": 1800,
@@ -145,6 +152,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1690520231,
       "values": {
         "owner": "0x1b9dFC56e38b0F92448659C114e2347Bd803911c"
       },
@@ -156,6 +164,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1666193927,
       "values": {
         "owner": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575"
       }
@@ -166,6 +175,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1639553135,
       "values": {
         "delayPeriod": 1800,
         "epochLength": 1800,
@@ -184,7 +194,6 @@
           "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2",
           "0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C",
           "0xED9fdF5B16F9F254bec5Ad389B80B48225186655",
-          "0xE45CB56CEe56Dd1A94F7E5fBDFaa5BaFB3C053d3",
           "0xF140024969F6c76494a78518D9a99c8776B55f70"
         ],
         "sigsVerifier": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
@@ -199,6 +208,8 @@
         "implementation": "0xaE41e6a597f4c65646e94E330D8BAd218Bec7896",
         "admin": "0x8E339115b295DeD49880eA62C1F06d1dbec3496b"
       },
+      "implementations": ["0xaE41e6a597f4c65646e94E330D8BAd218Bec7896"],
+      "sinceTimestamp": 1691384579,
       "values": {
         "governors": [
           "0xED9fdF5B16F9F254bec5Ad389B80B48225186655",
@@ -235,6 +246,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1656926298,
       "values": {
         "getVoters": [
           [
@@ -249,7 +261,7 @@
         ],
         "MAX_ACTIVE_PERIOD": 2419200,
         "MIN_ACTIVE_PERIOD": 3600,
-        "nextProposalId": 86,
+        "nextProposalId": 91,
         "THRESHOLD_DECIMAL": 100
       },
       "derivedName": "SimpleGovernance"

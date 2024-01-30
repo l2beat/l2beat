@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { BlockTransactionCountRow } from 'knex/types/tables'
@@ -43,7 +43,7 @@ export class BlockTransactionCountRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('activity.block').delete()
+    return knex('activity.block').delete()
   }
 
   async findLastTimestampByProjectId(

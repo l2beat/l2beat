@@ -1,11 +1,11 @@
-import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   DATA_AVAILABILITY,
   FORCE_TRANSACTIONS,
   OPERATOR,
   RISK_VIEW,
-} from '../../layer2s/common'
+} from '../../common'
 import { Layer2 } from '../../layer2s/types'
 
 export const layer2aWithDups: Layer2 = {
@@ -15,9 +15,10 @@ export const layer2aWithDups: Layer2 = {
     name: 'Layer2a',
     slug: 'layer2a',
     description: '',
-    purpose: 'Universal',
+    purposes: ['Universal'],
     provider: 'OP Stack',
     category: 'Optimistic Rollup',
+    dataAvailabilityMode: 'TxData',
     links: {
       websites: [],
       apps: [],
@@ -26,17 +27,41 @@ export const layer2aWithDups: Layer2 = {
       repositories: [],
       socialMedia: [],
     },
+    finality: {
+      warning:
+        "It's assumed that transaction data batches are submitted sequentially.",
+    },
   },
   stage: {
     stage: 'NotApplicable',
   },
   config: {
-    escrows: [],
+    escrows: [
+      {
+        // this is an old version, so it is not visible on frontend
+        address: EthereumAddress('0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f'),
+        contract: {
+          name: 'SynthetixBridgeEscrow',
+        },
+        sinceTimestamp: new UnixTime(1609459200),
+        tokens: ['SNX'],
+      },
+      {
+        // this is a new version, so it is visible on frontend and should be included in verification script output
+        address: EthereumAddress('0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65'),
+        newVersion: true,
+        contract: {
+          name: 'L1Escrow',
+        },
+        sinceTimestamp: new UnixTime(1609459200),
+        tokens: ['SNX'],
+      },
+    ],
   },
   riskView: {
     stateValidation: RISK_VIEW.STATE_FP,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    upgradeability: RISK_VIEW.UPGRADABLE_YES,
+    exitWindow: RISK_VIEW.EXIT_WINDOW_UNKNOWN,
     sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA_L1,
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
@@ -181,6 +206,11 @@ export const layer2aWithDups: Layer2 = {
   contracts: {
     addresses: [
       {
+        address: EthereumAddress('0xB37D31b2A74029B5951a2778F959282E2D518595'),
+        name: 'L2 Contract',
+        chain: 'optimism',
+      },
+      {
         address: EthereumAddress('0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e'),
         name: 'Duplicate ForeignAMB Proxy',
         upgradeability: {
@@ -246,16 +276,8 @@ export const layer2aWithDups: Layer2 = {
         address: EthereumAddress('0xCd9D4988C0AE61887B075bA77f08cbFAd2b65068'),
       },
       {
-        name: 'SynthetixBridgeEscrow',
-        address: EthereumAddress('0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f'),
-      },
-      {
         name: 'L1DaiGateway',
         address: EthereumAddress('0x10E6593CDda8c58a1d0f14C5164B376352a55f2F'),
-      },
-      {
-        name: 'L1Escrow',
-        address: EthereumAddress('0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65'),
       },
     ],
     risks: [],

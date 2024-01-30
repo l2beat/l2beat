@@ -1,4 +1,5 @@
-import { EventTracker, Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
+import { EventTracker } from '@l2beat/shared'
 import { Retries } from '@l2beat/shared-pure'
 import { install, InstalledClock } from '@sinonjs/fake-timers'
 import { expect, mockFn, mockObject } from 'earl'
@@ -49,7 +50,7 @@ describe(TaskQueue.name, () => {
     }
 
     const queue = new TaskQueue(execute, Logger.SILENT, {
-      shouldRetry: Retries.always,
+      shouldRetry: Retries.always(),
       metricsId: 'test',
     })
 
@@ -62,7 +63,7 @@ describe(TaskQueue.name, () => {
     expect(completed).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
   })
 
-  it('can handle permanent failure', async () => {
+  it('can stop on permanent failure', async () => {
     const eventTracker = mockObject<EventTracker<string>>({
       record: mockFn().returns(undefined),
     })
@@ -82,7 +83,6 @@ describe(TaskQueue.name, () => {
       shouldRetry: Retries.maxAttempts(1),
       metricsId: 'test',
       eventTracker,
-      shouldHaltAfterFailedRetries: false,
     })
 
     for (let i = 0; i < 3; i++) {
@@ -90,43 +90,68 @@ describe(TaskQueue.name, () => {
     }
 
     await time.runAllAsync()
-    await queue.waitTillEmpty()
 
-    expect(completed).toEqual([0, 2]) // 1 was dropped
+    expect(queue.isStopped()).toEqual(true)
+    expect(completed).toEqual([0]) // everything after task '1' was dropped
     expect(eventTracker.record).toHaveBeenCalledWith('error')
   })
 
-  it('can halt on permanent failure', async () => {
+  it('notifies after configured threshold is reached', async () => {
     const eventTracker = mockObject<EventTracker<string>>({
       record: mockFn().returns(undefined),
     })
 
-    const completed: number[] = []
+    const error = new Error('oops')
 
-    async function execute(i: number) {
-      await wait(1)
-      if (i === 1) {
-        throw new Error('oops')
-      }
-
-      completed.push(i)
+    async function execute() {
+      throw error
     }
 
-    const queue = new TaskQueue(execute, Logger.SILENT, {
-      shouldRetry: Retries.maxAttempts(1),
-      metricsId: 'test',
-      eventTracker,
-      shouldHaltAfterFailedRetries: true,
+    const logger = mockObject<Logger>({
+      error: () => undefined,
+      warn: () => undefined,
+      debug: () => undefined,
+      info: () => undefined,
     })
 
-    for (let i = 0; i < 3; i++) {
-      queue.addToBack(i)
-    }
+    const queue = new TaskQueue(execute, logger, {
+      shouldRetry: Retries.exponentialBackOff({
+        stepMs: 1,
+        maxDistanceMs: Infinity,
+        maxAttempts: 5,
+        notifyAfterAttempts: 2,
+      }),
+      metricsId: 'test',
+      eventTracker,
+    })
+    queue.addToBack(0)
 
     await time.runAllAsync()
 
-    expect(queue.isHalted()).toEqual(true)
-    expect(completed).toEqual([0]) // everything after task '1' was dropped
+    // max attempts = 5
+    // notify after attempts = 2
+    // 1st attempt: retry
+    // 2nd attempt: retry
+    // 3rd attempt: retry + notify
+    // 4th attempt: retry + notify
+    // 5th attempt: stop queue
+
+    // 3 notifications + 1 error when stopping queue
+    expect(logger.error).toHaveBeenCalledTimes(3)
+    expect(logger.error).toHaveBeenNthCalledWith(1, error, {
+      job: expect.a(Object),
+    })
+    expect(logger.error).toHaveBeenNthCalledWith(2, error, {
+      job: expect.a(Object),
+    })
+    expect(logger.error).toHaveBeenNthCalledWith(
+      3,
+      'Stopping queue because of error',
+      {
+        job: expect.a(Object),
+        error,
+      },
+    )
     expect(eventTracker.record).toHaveBeenCalledWith('error')
   })
 
@@ -232,78 +257,6 @@ describe(TaskQueue.name, () => {
     await queue.waitTillEmpty()
 
     expect(queue.length).toEqual(0)
-  })
-
-  describe(TaskQueue.prototype.unhaltIfNeeded.name, () => {
-    it('can clear and unhalt queue', async () => {
-      const eventTracker = mockObject<EventTracker<string>>({
-        record: mockFn().returns(undefined),
-      })
-
-      const completed: number[] = []
-
-      async function execute(i: number) {
-        await wait(1)
-        if (i === 1) {
-          throw new Error('oops')
-        }
-
-        completed.push(i)
-      }
-
-      const queue = new TaskQueue(execute, Logger.SILENT, {
-        shouldRetry: Retries.maxAttempts(1),
-        metricsId: 'test',
-        eventTracker,
-        shouldHaltAfterFailedRetries: true,
-      })
-
-      for (let i = 0; i < 3; i++) {
-        queue.addToBack(i)
-      }
-
-      await time.runAllAsync()
-
-      expect(queue.isHalted()).toEqual(true)
-
-      queue.unhaltIfNeeded()
-
-      expect(queue.isHalted()).toEqual(false)
-      expect(queue.length).toEqual(0)
-    })
-
-    it('will not clear unhalted queue', async () => {
-      const eventTracker = mockObject<EventTracker<string>>({
-        record: mockFn().returns(undefined),
-      })
-
-      const completed: number[] = []
-
-      async function execute(i: number) {
-        await wait(1)
-        if (i === 1) {
-          throw new Error('oops')
-        }
-
-        completed.push(i)
-      }
-
-      const queue = new TaskQueue(execute, Logger.SILENT, {
-        shouldRetry: Retries.maxAttempts(1),
-        metricsId: 'test',
-        eventTracker,
-        shouldHaltAfterFailedRetries: true,
-      })
-
-      queue.addToBack(0)
-
-      expect(queue.isHalted()).toEqual(false)
-
-      queue.unhaltIfNeeded()
-
-      expect(queue.isHalted()).toEqual(false)
-      expect(queue.length).toEqual(1)
-    })
   })
 })
 

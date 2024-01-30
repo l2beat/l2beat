@@ -1,12 +1,11 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { setupDatabaseTestSuite } from '../../test/database'
+import { describeDatabase } from '../../test/database'
 import { BlockNumberRepository } from './BlockNumberRepository'
 
-describe(BlockNumberRepository.name, () => {
-  const { database } = setupDatabaseTestSuite()
+describeDatabase(BlockNumberRepository.name, (database) => {
   const repository = new BlockNumberRepository(database, Logger.SILENT)
 
   beforeEach(async () => {

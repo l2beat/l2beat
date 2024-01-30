@@ -4,14 +4,11 @@ import { formatPercent, getPercentageChange } from '../utils'
 import { getTpsDaily } from './getTpsDaily'
 
 export function getTpsWeeklyChange(
-  data: ActivityApiChartPoint[] | undefined,
+  data: ActivityApiChartPoint[],
+  type: 'project' | 'ethereum',
 ): string {
-  const tps = getTpsDaily(data)
-  const tpsSevenDaysAgo = getTpsDaily(data, 7)
-
-  if (tps === undefined || tpsSevenDaysAgo === undefined) {
-    return ''
-  }
+  const tps = getTpsDaily(data, type)
+  const tpsSevenDaysAgo = getTpsDaily(data, type, 7)
 
   if (tpsSevenDaysAgo === 0) {
     return '+' + formatPercent(0)

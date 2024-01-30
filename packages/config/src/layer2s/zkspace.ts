@@ -1,14 +1,18 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { HARDCODED } from '../discovery/values/hardcoded'
-import { formatSeconds } from '../utils/formatSeconds'
 import {
   CONTRACTS,
   makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { HARDCODED } from '../discovery/values/hardcoded'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 import { zkswap } from './zkswap'
@@ -31,10 +35,11 @@ export const zkspace: Layer2 = {
     name: 'ZKSpace',
     slug: 'zkspace',
     description:
-      'The ZKSpace platform consists of three main parts: a Layer 2 AMM DEX utilizing ZK-Rollups technology ZKSwap v3, a payment service called ZKSquare, and an NFT marketplace called ZKSea.',
-    purpose: 'Tokens, NFTs, AMM',
-    provider: 'zkSync',
-    category: zkswap.display.category,
+      'ZKSpace consists of three main parts: an AMM DEX utilizing ZK Rollups technology ZKSwap v3, a payment service called ZKSquare, and an NFT marketplace called ZKSea.',
+    purposes: ['NFT', 'AMM', 'Payments'],
+    provider: 'zkSync Lite',
+    category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
     links: {
       websites: ['https://zks.org/'],
       apps: ['https://zks.app'],
@@ -49,6 +54,10 @@ export const zkspace: Layer2 = {
         'https://reddit.com/r/ZKSwap_Official/',
       ],
     },
+    liveness: {
+      explanation:
+        'ZK Space is a ZK rollup based on zkSync Lite’s code base that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
+    },
   },
   config: {
     associatedTokens: ['ZKS'],
@@ -59,6 +68,28 @@ export const zkspace: Layer2 = {
         tokens: '*',
       }),
     ],
+    liveness: {
+      duplicateData: [
+        {
+          from: 'stateUpdates',
+          to: 'proofSubmissions',
+        },
+      ],
+      proofSubmissions: [],
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8',
+          ),
+          selector: '0x6898e6fc',
+          functionSignature:
+            'function verifyBlocks(uint32 _blockNumberFrom, uint32 _blockNumberTo, uint256[] _recursiveInput, uint256[] _proof, uint256[] _subProofLimbs)',
+          sinceTimestamp: new UnixTime(1639569183),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
@@ -83,8 +114,8 @@ export const zkspace: Layer2 = {
         },
       ],
     },
-    upgradeability: {
-      ...RISK_VIEW.UPGRADE_DELAY_SECONDS(upgradeDelay, forcedWithdrawalDelay),
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(upgradeDelay, forcedWithdrawalDelay),
       sources: [
         {
           contract: 'ZkSync',
@@ -126,7 +157,7 @@ export const zkspace: Layer2 = {
       callsItselfRollup: true,
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: 'UnderReview',
+      rollupNodeSourceAvailable: false,
     },
     stage1: {
       stateVerificationOnL1: true,
@@ -161,7 +192,7 @@ export const zkspace: Layer2 = {
     addresses: [
       discovery.getContractDetails('ZkSync', {
         description:
-          'The main Rollup contract. Operator commits blocks, provides zkProof which is validated by the Verifier contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines the upgrade delay in the UPGRADE_NOTICE_PERIOD constant that is currently set to 8 days.',
+          'The main Rollup contract. Operator commits blocks, provides ZK proof which is validated by the Verifier contract and process withdrawals (executes blocks). Users deposit ETH and ERC20 tokens. This contract defines the upgrade delay in the UPGRADE_NOTICE_PERIOD constant that is currently set to 8 days.',
         ...upgradeability,
       }),
       discovery.getContractDetails('Governance', {
@@ -178,11 +209,11 @@ export const zkspace: Layer2 = {
         ...upgradeability,
       }),
       discovery.getContractDetails('Verifier', {
-        description: 'zk-SNARK Plonk Verifier.',
+        description: 'zkSNARK Plonk Verifier.',
         ...upgradeability,
       }),
       discovery.getContractDetails('VerifierExit', {
-        description: 'zk-SNARK Verifier for the escape hatch.',
+        description: 'zkSNARK Verifier for the escape hatch.',
         ...upgradeability,
       }),
       discovery.getContractDetails(

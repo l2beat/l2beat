@@ -1,9 +1,9 @@
 {
   "name": "mantle",
   "chain": "ethereum",
-  "blockNumber": 18128280,
-  "configHash": "0x4c744122b7570555a99223855f92941d97712a643f1232a1aa33b5f8456fabc5",
-  "version": 2,
+  "blockNumber": 18469566,
+  "configHash": "0x1c1649b53f9974726cd60ae9202d6f757fb8d8e80ffaa33b8eec21ffab67c605",
+  "version": 3,
   "contracts": [
     {
       "name": "PauserRegistry",
@@ -11,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1687930847,
       "values": {
         "pauser": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
         "unpauser": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
@@ -23,6 +24,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1687241639,
       "values": {
         "owner": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
       },
@@ -36,6 +38,8 @@
         "implementation": "0x64F4244eEA17a361bb919A28F614C3ad1aC565ad",
         "admin": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
       },
+      "implementations": ["0x64F4244eEA17a361bb919A28F614C3ad1aC565ad"],
+      "sinceTimestamp": 1687932047,
       "values": {
         "delegation": "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798",
         "forceDeregister": "0x0000000000000000000000000000000000000000",
@@ -45,11 +49,6 @@
         "minimumStakeSecondQuorum": 0,
         "NUMBER_OF_QUORUMS": 2,
         "numOperators": 10,
-        "owner": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
-        "permissionManager": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
-        "pubkeyCompendium": "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a",
-        "serviceManager": "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1",
-        "strategiesConsideredAndMultipliersLength": [1, 1],
         "operatorList": [
           "0x1888e4aC2Ab37A73B33448B87bABdD1ce1dcBAbe",
           "0x717c3DC6Df69c316d6Ac593077BC84Cc86f214A4",
@@ -61,7 +60,12 @@
           "0xcEb157a9bB9c80a845d5924e8CEAA591Caf705a5",
           "0x0B6F2C77C3740A5e6f88A4eCdd02C10BE8a2e323",
           "0x8A3D6c77E5BAcE8cb0822B28E4Fc56FC06fB5645"
-        ]
+        ],
+        "owner": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
+        "permissionManager": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
+        "pubkeyCompendium": "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a",
+        "serviceManager": "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1",
+        "strategiesConsideredAndMultipliersLength": [1, 1]
       },
       "derivedName": "BLSRegistry"
     },
@@ -73,6 +77,8 @@
         "implementation": "0x7C4813A9AF2FEA4ca765a26b05d128926E94e72E",
         "admin": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
       },
+      "implementations": ["0x7C4813A9AF2FEA4ca765a26b05d128926E94e72E"],
+      "sinceTimestamp": 1687930955,
       "values": {
         "delegation": "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798",
         "DEPOSIT_TYPEHASH": "0x0a564d4cfe5cb0d4ee082aab2ca54b8c48e129485a8f7c77766ab5ef0c3566f1",
@@ -91,17 +97,18 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1687952507,
       "values": {
         "batches": "0x5Dd48eF85B99E3e3d711Ca8B41cBC07dA1677F3E",
         "enqueueGasCost": 60000,
         "enqueueL2GasPrepaid": 1920000,
-        "getLastBlockNumber": 18128154,
-        "getLastTimestamp": 1694618216,
-        "getNextQueueIndex": 20266,
-        "getNumPendingQueueElements": 5,
-        "getQueueLength": 20271,
-        "getTotalBatches": 9474,
-        "getTotalElements": 6797502,
+        "getLastBlockNumber": 18469292,
+        "getLastTimestamp": 1698745379,
+        "getNextQueueIndex": 29853,
+        "getNumPendingQueueElements": 2,
+        "getQueueLength": 29855,
+        "getTotalBatches": 13007,
+        "getTotalElements": 18502887,
         "l2GasDiscountDivisor": 32,
         "libAddressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
         "MAX_ROLLUP_TX_SIZE": 50000,
@@ -116,6 +123,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1687930823,
       "values": {
         "owner": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
       }
@@ -125,22 +133,25 @@
       "address": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": []
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
+      "sinceTimestamp": 1686902471,
       "values": {
         "domainSeparator": "0x509138b8efbf4ec65dfd2396c0fbf689e8a0193b00f12ce81d154ffd0de8f6af",
         "getChainId": 1,
         "getOwners": [
+          "0xC37642355c18ec9c3b3268AAC67e33516aa115eb",
           "0x207E804758e28F2b3fD6E4219671B327100b82f8",
           "0x5a021DC06A9630bb56099b8aEdfaDC2dEa7eB317",
-          "0x895562F29cd2d6B46Da776B3a7778f77E99DbDEE",
           "0x66f13847536153eFFFFdfD7Bd4Dea5eD3F60f639",
           "0xbE73dea9c8DcDdB6b03F7e5797b85982065fe34e",
           "0x3Dc5FcB0Ad5835C6059112e51A75b57DBA668eB8",
           "0x915dc866e2e5E64f912A5ac1D40E3be4597F172a"
         ],
         "getThreshold": 3,
-        "nonce": 54,
+        "nonce": 60,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -151,6 +162,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1687952795,
       "values": {
         "libAddressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42"
       }
@@ -163,6 +175,8 @@
         "implementation": "0xF7576237087F808eB39531cA490b4F8eFd4a0c69",
         "admin": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
       },
+      "implementations": ["0xF7576237087F808eB39531cA490b4F8eFd4a0c69"],
+      "sinceTimestamp": 1687956143,
       "values": {
         "getTssGroupInfo": [
           1,
@@ -219,6 +233,8 @@
         "implementation": "0xCd368c1d80120b0Dd92447c87eB570154f8e685c",
         "admin": "0x0cac2B1a172ac24012621101634DD5ABD6399ADd"
       },
+      "implementations": ["0xCd368c1d80120b0Dd92447c87eB570154f8e685c"],
+      "sinceTimestamp": 1687241795,
       "values": {
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x4657b7bac12b34fb80f1848c560d6e440dfccdffe8b83f2dc958a534c89b0622",
@@ -242,6 +258,8 @@
         "implementation": "0xA1C7B28B4743248584725fEf31516fD4Ea72aEA8",
         "admin": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
       },
+      "implementations": ["0xA1C7B28B4743248584725fEf31516fD4Ea72aEA8"],
+      "sinceTimestamp": 1687961051,
       "values": {
         "blockFinalizationVerifier": "0x0000000000000000000000000000000000000000",
         "blockInitiationVerifier": "0x0000000000000000000000000000000000000000",
@@ -261,8 +279,11 @@
       "address": "0x47336ae44F573a7C3C41a9ae04A9D48E5dFD8f8E",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": []
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
+      "sinceTimestamp": 1686825851,
       "values": {
         "domainSeparator": "0xdb0a463cc9b4cc346b69933f9ff0173d72743028edaa3a32cb04fecaf0d12dcc",
         "getChainId": 1,
@@ -286,6 +307,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1687931879,
       "values": {
         "owner": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
       }
@@ -296,6 +318,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1687931903,
       "values": {
         "pauser": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
         "unpauser": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
@@ -307,8 +330,11 @@
       "address": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": []
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
+      "sinceTimestamp": 1683509999,
       "values": {
         "domainSeparator": "0xc2040462c2819b7e5f0c5e3926088f96c882d435e0b03cef5b72ef73cdfaf7d4",
         "getChainId": 1,
@@ -341,19 +367,21 @@
         "implementation": "0xDF401d4229Fc6cA52238f7e55A04FA8EBc24C55a",
         "admin": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
       },
+      "implementations": ["0xDF401d4229Fc6cA52238f7e55A04FA8EBc24C55a"],
+      "sinceTimestamp": 1688282303,
       "values": {
         "BLOCK_STALE_MEASURE": 500,
         "dataManageAddress": "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1",
         "FRAUD_STRING": "0x2d2d5468697320697320612062616420737472696e672e204e6f626f64792073617973207468697320737472696e672e2d2d",
         "fraudProofPeriod": 3600,
-        "getL2ConfirmedBlockNumber": 6797503,
-        "getL2StoredBlockNumber": 6797503,
-        "l2ConfirmedBlockNumber": 6797503,
-        "l2StoredBlockNumber": 6797503,
+        "getL2ConfirmedBlockNumber": 18502888,
+        "getL2StoredBlockNumber": 18502888,
+        "l2ConfirmedBlockNumber": 18502888,
+        "l2StoredBlockNumber": 18502888,
         "owner": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
         "reRollupIndex": 0,
         "reSubmitterAddress": "0x630E93130809c4acE55249229Ee6B043b929A9Ad",
-        "rollupBatchIndex": 8004,
+        "rollupBatchIndex": 11540,
         "sequencer": "0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749"
       },
       "derivedName": "BVM_EigenDataLayrChain"
@@ -366,6 +394,8 @@
         "implementation": "0xAB42127980a3bff124E6465e097a5fC97228827e",
         "admin": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
       },
+      "implementations": ["0xAB42127980a3bff124E6465e097a5fC97228827e"],
+      "sinceTimestamp": 1687931975,
       "values": {
         "adversaryThresholdBasisPoints": 4000,
         "BIP_MULTIPLIER": 10000,
@@ -375,7 +405,7 @@
         "dataLayrBombVerifier": "0x0000000000000000000000000000000000000000",
         "dataLayrChallenge": "0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94",
         "dataPermissionManager": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
-        "dataStoresForDuration": [8128, 0, 0, 0, 0, 0, 0, 8129, 1694621855],
+        "dataStoresForDuration": [11693, 0, 0, 0, 0, 0, 0, 11694, 1698751151],
         "DURATION_SCALE": 3600,
         "eigenLayrDelegation": "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798",
         "feePerBytePerTime": 1,
@@ -400,9 +430,10 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1687951931,
       "values": {
-        "getGlobalMetadata": "0x000000000000000001149d1a006501d2680000004f2a000067b8be",
-        "length": 9474,
+        "getGlobalMetadata": "0x00000000000000000119d1ac006540cc23000000749d00011a54e7",
+        "length": 13007,
         "libAddressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
         "owner": "CanonicalTransactionChain"
       },
@@ -417,6 +448,8 @@
         "implementationName": "BVM_L1CrossDomainMessenger",
         "implementation": "0x4692363048d0F32a2dE7816860D48fff0c61B24B"
       },
+      "implementations": ["0x4692363048d0F32a2dE7816860D48fff0c61B24B"],
+      "sinceTimestamp": 1687953527,
       "values": {
         "getPauseOwner": "0x2F44BD2a54aC3fB20cd7783cF94334069641daC9",
         "libAddressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
@@ -431,6 +464,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1687951883,
       "values": {
         "BondManager": "0x31aBe1c466C2A8b95fd84258dD1471472979B650",
         "CanonicalTransactionChain": "0x291dc3819b863e19b0a9b9809F8025d2EB4aaE93",
@@ -458,8 +492,11 @@
       "address": "0x7735cDcc85E63A7684C29652DbE8B845e0b4635A",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": []
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
+      "sinceTimestamp": 1684377983,
       "values": {
         "domainSeparator": "0xc1d265aa3661784e967614a86ab34bbccd5c4a901612dfe9cde9f949b055b09f",
         "getChainId": 1,
@@ -480,6 +517,8 @@
         "implementation": "0x09b276F9EcB83Fb6a37970e655863B04143Dc431",
         "admin": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
       },
+      "implementations": ["0x09b276F9EcB83Fb6a37970e655863B04143Dc431"],
+      "sinceTimestamp": 1687956431,
       "values": {
         "delegation": "0xd4B5E3D46D202C3523C3Ad89dfe74eC272BFC96A",
         "delegationManager": "0xA90FCe37D274e673f3850b835F18790542b1755d",
@@ -510,8 +549,11 @@
       "address": "0x84A628347537d4900a0b720Ee294445F90c3887a",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": []
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
+      "sinceTimestamp": 1686827603,
       "values": {
         "domainSeparator": "0x7d78093058bf4da0080823e097f898933ef67a743628dcf5350d61aafd425780",
         "getChainId": 1,
@@ -535,13 +577,14 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1687953815,
       "values": {
         "batches": "0xd3f0BD982D72e28cccc69e0A9dA439e9D587b3bD",
         "FRAUD_PROOF_WINDOW": 604800,
         "getFraudProofWindow": 604800,
-        "getLastSequencerTimestamp": 1694618195,
-        "getTotalBatches": 4333,
-        "getTotalElements": 6795466,
+        "getLastSequencerTimestamp": 1698748451,
+        "getTotalBatches": 7709,
+        "getTotalElements": 18502668,
         "libAddressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
         "messenger": "0x676A795fe6E43C17c668de16730c3F690FEB7120",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
@@ -556,6 +599,8 @@
         "implementation": "0xC159F0B28a7bd4b4924e762207275a4475C09fd5",
         "admin": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
       },
+      "implementations": ["0xC159F0B28a7bd4b4924e762207275a4475C09fd5"],
+      "sinceTimestamp": 1687955255,
       "values": {
         "delegation": "0xd4B5E3D46D202C3523C3Ad89dfe74eC272BFC96A",
         "investmentManager": "0xA90FCe37D274e673f3850b835F18790542b1755d",
@@ -571,6 +616,8 @@
         "implementation": "0x18Dd3cBE484f955217165FEaC6fe928D04a56a72",
         "admin": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
       },
+      "implementations": ["0x18Dd3cBE484f955217165FEaC6fe928D04a56a72"],
+      "sinceTimestamp": 1687931999,
       "values": {
         "IS_TEST": false,
         "permissionManager": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01"
@@ -585,6 +632,8 @@
         "implementation": "0x6B6e0dC564d4603452E40752ecDAa0e9630B38A2",
         "admin": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
       },
+      "implementations": ["0x6B6e0dC564d4603452E40752ecDAa0e9630B38A2"],
+      "sinceTimestamp": 1687954103,
       "values": {
         "l1MantleAddress": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
@@ -600,6 +649,8 @@
         "implementation": "0x1872Ce78A362c58D093EE107cAdeE2667b7Bd993",
         "admin": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
       },
+      "implementations": ["0x1872Ce78A362c58D093EE107cAdeE2667b7Bd993"],
+      "sinceTimestamp": 1687960751,
       "values": {
         "rollupAddress": "0xD1328C9167e0693B689b5aa5a024379d4e437858"
       },
@@ -613,6 +664,8 @@
         "implementation": "0x988DdC2b0ad9Ba5Ade892E1BF848308e8c7A9187",
         "admin": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
       },
+      "implementations": ["0x988DdC2b0ad9Ba5Ade892E1BF848308e8c7A9187"],
+      "sinceTimestamp": 1687954967,
       "values": {
         "delegation": "0xd4B5E3D46D202C3523C3Ad89dfe74eC272BFC96A",
         "delegationSlasher": "0x910265C29c099eAc87EF6d374b6f3bE45B516EB7",
@@ -636,6 +689,8 @@
         "implementation": "0x9FEcF38689349a5CFf97526610CdB27618edc6b9",
         "admin": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
       },
+      "implementations": ["0x9FEcF38689349a5CFf97526610CdB27618edc6b9"],
+      "sinceTimestamp": 1687931291,
       "values": {
         "explanation": "Base InvestmentStrategy implementation to inherit from for more complex implementations",
         "investmentManager": "0x23754725a49c0f003C349A6C7869fF8609a7CEfd",
@@ -656,6 +711,8 @@
         "implementation": "0xAb00B934DE01c1b4931047125C2ba5B3d6186b85",
         "admin": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
       },
+      "implementations": ["0xAb00B934DE01c1b4931047125C2ba5B3d6186b85"],
+      "sinceTimestamp": 1687930979,
       "values": {
         "owner": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
         "permissionPerson": "0x207E804758e28F2b3fD6E4219671B327100b82f8"
@@ -670,6 +727,8 @@
         "implementation": "0x6EE53D3d6e622Ac0296369445AFB3CBBDc57C066",
         "admin": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
       },
+      "implementations": ["0x6EE53D3d6e622Ac0296369445AFB3CBBDc57C066"],
+      "sinceTimestamp": 1687932023,
       "values": {
         "challengeUtils": "0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D",
         "dataLayrServiceManager": "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1",
@@ -685,6 +744,8 @@
         "implementation": "0x9FEcF38689349a5CFf97526610CdB27618edc6b9",
         "admin": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
       },
+      "implementations": ["0x9FEcF38689349a5CFf97526610CdB27618edc6b9"],
+      "sinceTimestamp": 1687931243,
       "values": {
         "explanation": "Base InvestmentStrategy implementation to inherit from for more complex implementations",
         "investmentManager": "0x23754725a49c0f003C349A6C7869fF8609a7CEfd",
@@ -705,6 +766,8 @@
         "implementation": "0xd8d731624d97a66e012E62208cFc921d7033c564",
         "admin": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb"
       },
+      "implementations": ["0xd8d731624d97a66e012E62208cFc921d7033c564"],
+      "sinceTimestamp": 1687931951,
       "values": {
         "getZeroPolyMerkleRoot": []
       },
@@ -718,6 +781,8 @@
         "implementation": "0x242a33ca49C564caFC9C83C700b79f1074c42A0D",
         "admin": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
       },
+      "implementations": ["0x242a33ca49C564caFC9C83C700b79f1074c42A0D"],
+      "sinceTimestamp": 1687961351,
       "values": {
         "assertions": "0xa0d79E982bfD3C2ccD09D2E374ddC75fe328f317",
         "baseStakeAmount": 0,
@@ -729,11 +794,11 @@
           0,
           0
         ],
-        "confirmedInboxSize": 6795466,
+        "confirmedInboxSize": 18502668,
         "currentRequiredStake": 0,
-        "lastConfirmedAssertionID": 4333,
-        "lastCreatedAssertionID": 4333,
-        "lastResolvedAssertionID": 4333,
+        "lastConfirmedAssertionID": 7709,
+        "lastCreatedAssertionID": 7709,
+        "lastResolvedAssertionID": 7709,
         "libAddressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
         "minimumAssertionPeriod": 0,
         "numStakers": 2,
@@ -758,9 +823,10 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1687952219,
       "values": {
-        "getGlobalMetadata": "0x0000000000000000000000000000000000006501d253000067b0ca",
-        "length": 4333,
+        "getGlobalMetadata": "0x0000000000000000000000000000000000006540d82300011a540c",
+        "length": 7709,
         "libAddressManager": "0x6968f3F16C3e64003F02E121cf0D5CCBf5625a42",
         "owner": "StateCommitmentChain"
       },
@@ -774,6 +840,8 @@
         "implementation": "0x7126F676ac359eCE8D5244120FF9E78eD3222246",
         "admin": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
       },
+      "implementations": ["0x7126F676ac359eCE8D5244120FF9E78eD3222246"],
+      "sinceTimestamp": 1687954679,
       "values": {
         "DELEGATION_TYPEHASH": "0xb2a21c2f78b6ef501475a2971550fe4cedb86f0dec990e23909bfb01fd61c54c",
         "delegationManager": "0xA90FCe37D274e673f3850b835F18790542b1755d",
@@ -792,6 +860,8 @@
         "implementation": "0xAdA69A18B30B3B9235AB2748116bB9195e16aDba",
         "admin": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83"
       },
+      "implementations": ["0xAdA69A18B30B3B9235AB2748116bB9195e16aDba"],
+      "sinceTimestamp": 1687930907,
       "values": {
         "DELEGATION_TYPEHASH": "0xb2a21c2f78b6ef501475a2971550fe4cedb86f0dec990e23909bfb01fd61c54c",
         "DOMAIN_SEPARATOR": "0xbc7bcb096dfed433b8cff98aee0d5bcc22202e4870ee9b36c93c2fb0303b87e6",
@@ -842,6 +912,7 @@
     "0xBbDbE7F5aC524078ac72c1d4d39cD9b40cb4b9aD",
     "0xbE73dea9c8DcDdB6b03F7e5797b85982065fe34e",
     "0xc1dEd495E1dDf089B2b41d6397C0aBa04BDA1A21",
+    "0xC37642355c18ec9c3b3268AAC67e33516aa115eb",
     "0xc4143711aA5bd6d37F1b0A690120AA5859e32A93",
     "0xc828De4e817e1705CC539267D5F28BE8dbeF28DE",
     "0xcEb157a9bB9c80a845d5924e8CEAA591Caf705a5",

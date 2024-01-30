@@ -1,18 +1,17 @@
-import { Logger, LoggerOptions, LogLevel } from '@l2beat/shared'
+import { Logger, LoggerOptions } from '@l2beat/backend-tools'
 import { install, InstalledClock } from '@sinonjs/fake-timers'
 import { expect, mockFn, MockFunction } from 'earl'
 import { once } from 'events'
 
 import { SequenceProcessorRepository } from '../peripherals/database/SequenceProcessorRepository'
-import { setupDatabaseTestSuite } from '../test/database'
+import { describeDatabase } from '../test/database'
 import {
   ALL_PROCESSED_EVENT,
   SequenceProcessor,
   SequenceProcessorOpts,
 } from './SequenceProcessor'
 
-describe(SequenceProcessor.name, () => {
-  const { database } = setupDatabaseTestSuite()
+describeDatabase(SequenceProcessor.name, (database) => {
   const repository = new SequenceProcessorRepository(database, Logger.SILENT)
   const PROCESSOR_ID = 'test'
   let sequenceProcessor: SequenceProcessor
@@ -37,7 +36,7 @@ describe(SequenceProcessor.name, () => {
     return new SequenceProcessor(
       PROCESSOR_ID,
       new Logger({
-        logLevel: LogLevel.ERROR, // tests rely on error being logged -- do not change
+        logLevel: 'ERROR', // tests rely on error being logged -- do not change
         format: 'pretty',
         reportError,
       }),
@@ -230,8 +229,14 @@ describe(SequenceProcessor.name, () => {
       await waitForErrorReport(time, reportErrorMock)
 
       time.uninstall()
+      sequenceProcessor._TEST_ONLY_stopQueue()
 
-      expect(reportErrorMock).toHaveBeenOnlyCalledWith(expect.a(Error))
+      expect(reportErrorMock.calls[0].args[0].error).toEqual(
+        new Error(
+          'Assertion Error: getLatest returned sequence member that was already processed. from=2, latest=0',
+        ),
+      )
+      expect(reportErrorMock).toHaveBeenCalledTimes(1)
     })
 
     it('works when processRange throws', async () => {
@@ -258,8 +263,12 @@ describe(SequenceProcessor.name, () => {
       await waitForErrorReport(time, reportErrorMock)
 
       time.uninstall()
+      sequenceProcessor._TEST_ONLY_stopQueue()
 
-      expect(reportErrorMock).toHaveBeenOnlyCalledWith(expect.a(Error))
+      expect(reportErrorMock.calls[0].args[0].error).toEqual(
+        new Error('Force-failing during tests!'),
+      )
+      expect(reportErrorMock).toHaveBeenCalledTimes(1)
     })
 
     it('does not process anything when already done', async () => {

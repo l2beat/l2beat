@@ -1,16 +1,11 @@
-import React from 'react'
+import { Meta, StoryObj } from '@storybook/react'
 
-import { PageContent } from '../PageContent'
 import { OtherSites as OtherSitesComponent } from './OtherSites'
 
-export default {
-  title: 'Components/OtherSites',
+const meta: Meta<typeof OtherSitesComponent> = {
+  component: OtherSitesComponent,
 }
+export default meta
+type Story = StoryObj<typeof OtherSitesComponent>
 
-export function OtherSites() {
-  return (
-    <PageContent>
-      <OtherSitesComponent />
-    </PageContent>
-  )
-}
+export const OtherSites: Story = {}

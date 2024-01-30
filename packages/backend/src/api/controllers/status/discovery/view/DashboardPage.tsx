@@ -7,36 +7,30 @@ import { getHardcoded } from '../props/utils/getHardcoded'
 import { DASHBOARD_COLORS } from './constants'
 
 interface DashboardPageProps {
-  projects: DashboardProject[]
-  projectsList: string[]
+  projects: Record<string, DashboardProject[]>
 }
 
 export function DashboardPage(props: DashboardPageProps) {
   const hardcoded = getHardcoded()
 
-  const projects = props.projects
-    .concat(
-      props.projectsList
-        .filter(
-          (project) => !props.projects.map((x) => x.name).includes(project),
-        )
-        .map((p) => ({ name: p })),
-    )
-    .sort((a, b) => a.name.localeCompare(b.name))
-
+  const ethereumProjects = props.projects.ethereum
+  const configuredEthereumProjects = ethereumProjects.filter(
+    (p) => p.configured,
+  )
   return (
     <Page title="Discovery">
       <meter
         id="configs-created"
         min={0}
-        max={props.projectsList.length}
-        low={props.projectsList.length}
-        high={props.projectsList.length}
-        optimum={props.projectsList.length}
-        value={props.projects.length}
+        max={ethereumProjects.length}
+        low={ethereumProjects.length}
+        high={ethereumProjects.length}
+        optimum={ethereumProjects.length}
+        value={configuredEthereumProjects.length}
       />
       <label style={{ marginLeft: '8px' }} htmlFor="configs-created">
-        {props.projects.length}/{props.projectsList.length} configs created
+        {configuredEthereumProjects.length}/{ethereumProjects.length} configs
+        created
       </label>
       <table>
         <thead>
@@ -80,84 +74,112 @@ export function DashboardPage(props: DashboardPageProps) {
           </tr>
         </thead>
         <tbody>
-          {projects.map((project, index) => (
-            <tr key={index} style={{ padding: '0px', textAlign: 'left' }}>
-              <TableData
-                value={
-                  project.diff && project.diff.length > 0 ? (
-                    <span
-                      data-tooltip={
-                        'Bot has detected changes in the following contracts:\n' +
-                        project.diff
-                          .filter((d) => (d.diff ?? []).length > 0)
-                          .map((d) => `- ${d.name}`)
-                          .join('\n')
-                      }
-                    >
-                      <a href={`/status/discovery/${project.name}`}>⚠️</a>
-                    </span>
-                  ) : (
-                    ''
-                  )
-                }
-              />
-              <TableData
-                value={
-                  project.discoveredCount !== undefined ? (
-                    <a href={`/status/discovery/${project.name}`}>
-                      {project.name}
-                    </a>
-                  ) : (
-                    <span key={index}>{project.name}</span>
-                  )
-                }
-              />
-              <TableData
-                value={
-                  hardcoded[project.name] === 0 ? (
-                    <span style={{ color: DASHBOARD_COLORS.WATCHED }}>0</span>
-                  ) : (
-                    <span style={{ color: DASHBOARD_COLORS.UNVERIFIED }}>
-                      {hardcoded[project.name]}
-                    </span>
-                  )
-                }
-              />
-              <TableData value={project.discoveredCount} />
-              <TableData
-                value={project.initialAddressesCount}
-                color={DASHBOARD_COLORS.INITIAL}
-              />
-              <TableData
-                value={
-                  project.discoveredCount && project.initialAddressesCount
-                    ? project.discoveredCount - project.initialAddressesCount
-                    : undefined
-                }
-                color={DASHBOARD_COLORS.DISCOVERED}
-              />
-              <TableData
-                value={project.unverifiedCount}
-                color={DASHBOARD_COLORS.UNVERIFIED}
-              />
-              <TableData />
-              <TableData
-                value={project.watchedCount}
-                color={DASHBOARD_COLORS.WATCHED}
-              />
-              <TableData
-                value={project.ignoredInWatchModeCount}
-                color={DASHBOARD_COLORS.IGNORED_IN_WATCH_MODE}
-              />
-              <TableData
-                value={project.ignoredCount}
-                color={DASHBOARD_COLORS.IGNORED}
-              />
-              <TableData
-                value={project.notHandledCount}
-                color={DASHBOARD_COLORS.NOT_HANDLED}
-              />
-            </tr>
+          {Object.entries(props.projects).map(([chainName, projects]) => (
+            <>
+              <tr
+                style={{
+                  padding: '0px',
+                  textAlign: 'left',
+                  background: '#363636',
+                }}
+              >
+                <th
+                  colSpan={12}
+                  scope="colgroup"
+                  style={{ padding: '0px', textAlign: 'left' }}
+                >
+                  {`Chain ${chainName}`}
+                </th>
+              </tr>
+              {projects.map((project, index) => (
+                <tr key={index} style={{ padding: '0px', textAlign: 'left' }}>
+                  <TableData
+                    value={
+                      project.diff && project.diff.length > 0 ? (
+                        <span
+                          data-tooltip={
+                            'Bot has detected changes in the following contracts:\n' +
+                            project.diff
+                              .filter((d) => (d.diff ?? []).length > 0)
+                              .map((d) => `- ${d.name}`)
+                              .join('\n')
+                          }
+                        >
+                          <a
+                            href={`/status/discovery/${chainName}/${project.name}`}
+                          >
+                            ⚠️
+                          </a>
+                        </span>
+                      ) : (
+                        ''
+                      )
+                    }
+                  />
+                  <TableData
+                    value={
+                      project.discoveredCount !== undefined ? (
+                        <a
+                          href={`/status/discovery/${chainName}/${project.name}`}
+                        >
+                          {project.name}
+                        </a>
+                      ) : (
+                        <span key={index}>{project.name}</span>
+                      )
+                    }
+                  />
+                  <TableData
+                    value={
+                      hardcoded[project.name] === 0 ? (
+                        <span style={{ color: DASHBOARD_COLORS.WATCHED }}>
+                          0
+                        </span>
+                      ) : (
+                        <span style={{ color: DASHBOARD_COLORS.UNVERIFIED }}>
+                          {hardcoded[project.name]}
+                        </span>
+                      )
+                    }
+                  />
+                  <TableData value={project.discoveredCount} />
+                  <TableData
+                    value={project.initialAddressesCount}
+                    color={DASHBOARD_COLORS.INITIAL}
+                  />
+                  <TableData
+                    value={
+                      project.discoveredCount && project.initialAddressesCount
+                        ? project.discoveredCount -
+                          project.initialAddressesCount
+                        : undefined
+                    }
+                    color={DASHBOARD_COLORS.DISCOVERED}
+                  />
+                  <TableData
+                    value={project.unverifiedCount}
+                    color={DASHBOARD_COLORS.UNVERIFIED}
+                  />
+                  <TableData />
+                  <TableData
+                    value={project.watchedCount}
+                    color={DASHBOARD_COLORS.WATCHED}
+                  />
+                  <TableData
+                    value={project.ignoredInWatchModeCount}
+                    color={DASHBOARD_COLORS.IGNORED_IN_WATCH_MODE}
+                  />
+                  <TableData
+                    value={project.ignoredCount}
+                    color={DASHBOARD_COLORS.IGNORED}
+                  />
+                  <TableData
+                    value={project.notHandledCount}
+                    color={DASHBOARD_COLORS.NOT_HANDLED}
+                  />
+                </tr>
+              ))}
+            </>
           ))}
         </tbody>
       </table>

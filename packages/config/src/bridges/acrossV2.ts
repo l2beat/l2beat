@@ -1,12 +1,22 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
+import { NUGGETS } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { NUGGETS } from '../layer2s'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
 const PROJECT_ID = ProjectId('across-v2')
 const discovery = new ProjectDiscovery(PROJECT_ID.toString())
+
+const finalizationDelaySeconds = discovery.getContractValue<number>(
+  'HubPool',
+  'liveness',
+)
 
 export const acrossV2: Bridge = {
   type: 'bridge',
@@ -27,7 +37,9 @@ export const acrossV2: Bridge = {
       ],
     },
     description:
-      'Across V2 is a cross-chain optimistic bridge that uses actors called Relayers to fulfill user transfer requests on the destination chain. Relayers are later reimbursed by providing a proof of their action to an Optimistic Oracle on Ethereum. The architecture leverages a single liquidity pool on Ethereum and separate deposit/reimburse pools on destination chains that are rebalanced using canonical bridges.',
+      'Across V2 is a cross-chain optimistic bridge that uses actors called Relayers to fulfill user transfer requests on the destination chain.',
+    detailedDescription:
+      'Relayers are later reimbursed by providing a proof of their action to an Optimistic Oracle on Ethereum. The architecture leverages a single liquidity pool on Ethereum and separate deposit/reimburse pools on destination chains that are rebalanced using canonical bridges.',
   },
   config: {
     escrows: [
@@ -102,7 +114,7 @@ export const acrossV2: Bridge = {
       references: [
         {
           text: 'Across V2 Optimistic Oracle documentation',
-          href: 'https://docs.across.to/v2/how-does-across-work/optimistic-oracle',
+          href: 'https://docs.across.to/how-across-works/security-model',
         },
       ],
     },
@@ -118,7 +130,9 @@ export const acrossV2: Bridge = {
     addresses: [
       discovery.getContractDetails(
         'HubPool',
-        'Escrow contract for ERC20 tokens and administration of other contracts.',
+        `Escrow contract for ERC20 tokens and administration of other contracts. There is a ${formatSeconds(
+          finalizationDelaySeconds,
+        )} delay before a bundle proposal is considered finalized.`,
       ),
       discovery.getContractDetails(
         'BondToken',

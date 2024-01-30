@@ -1,19 +1,19 @@
-import { Layer2RiskView } from '@l2beat/config'
+import { ScalingProjectRiskView } from '@l2beat/config'
 
 import { RiskSentiments, RiskValues } from './types'
 
-export function getRiskValues(riskView: Layer2RiskView): RiskValues {
+export function getRiskValues(riskView: ScalingProjectRiskView): RiskValues {
   return {
     dataAvailability: riskView.dataAvailability,
     sequencerFailure: riskView.sequencerFailure,
     stateValidation: riskView.stateValidation,
-    upgradeability: riskView.upgradeability,
+    exitWindow: riskView.exitWindow,
     proposerFailure: riskView.proposerFailure,
   }
 }
 
 export function getRiskSentiments(
-  riskView: Layer2RiskView | RiskValues,
+  riskView: ScalingProjectRiskView | RiskValues,
   isUnderReview?: boolean,
 ): RiskSentiments {
   if (isUnderReview) {
@@ -21,7 +21,7 @@ export function getRiskSentiments(
       sequencerFailure: 'UnderReview',
       stateValidation: 'UnderReview',
       dataAvailability: 'UnderReview',
-      upgradeability: 'UnderReview',
+      exitWindow: 'UnderReview',
       proposerFailure: 'UnderReview',
     }
   }
@@ -29,7 +29,7 @@ export function getRiskSentiments(
     sequencerFailure: riskView.sequencerFailure.sentiment,
     stateValidation: riskView.stateValidation.sentiment,
     dataAvailability: riskView.dataAvailability.sentiment,
-    upgradeability: riskView.upgradeability.sentiment,
+    exitWindow: riskView.exitWindow.sentiment,
     proposerFailure: riskView.proposerFailure.sentiment,
   }
 }

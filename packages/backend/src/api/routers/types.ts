@@ -12,7 +12,7 @@ interface ParsedContext extends Context {
 
 export function withTypedContext<T extends z.AnyZodObject>(
   parser: T,
-  handler: (ctx: ParsedContext & z.infer<T>) => Promise<void>,
+  handler: (ctx: ParsedContext & z.infer<T>) => Promise<void> | void,
 ): Middleware {
   return async (ctx) => {
     const parseResult = parser.safeParse({

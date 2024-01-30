@@ -6,7 +6,6 @@ import {
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
   DATA_AVAILABILITY,
   EXITS,
@@ -16,7 +15,8 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
-} from './common'
+} from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -47,16 +47,20 @@ const maxForcedWithdrawalFeeString = `${utils.formatEther(
 )} ETH`
 
 export const degate: Layer2 = {
+  isArchived: true,
   type: 'layer2',
   id: ProjectId('degate'),
   display: {
-    name: 'DeGate V1',
+    name: 'DeGate Legacy',
     slug: 'degate',
+    headerWarning: 'This project is in shutdown mode and no longer active.',
     description:
-      'DeGate is an app-specific ZK rollup that enables a trustless, fast and low-fee decentralized order book exchange, helping users to trade easy and sleep easy. DeGate smart contracts are forked from Loopring V3.',
-    purpose: 'Exchange',
-    provider: 'loopring',
+      'DeGate is an app-specific ZK Rollup that enables a trustless, fast and low-fee decentralized order book exchange, helping users to trade easy and sleep easy. DeGate smart contracts are forked from Loopring V3.',
+    purposes: ['Exchange'],
+    provider: 'Loopring',
     category: 'ZK Rollup',
+    dataAvailabilityMode: 'StateDiffs',
+
     links: {
       websites: ['https://degate.com/'],
       apps: ['https://app.degate.com/'],
@@ -65,7 +69,7 @@ export const degate: Layer2 = {
       repositories: ['https://github.com/degatedev/protocols'],
       socialMedia: [
         'https://twitter.com/DeGateDex',
-        'https://discord.gg/RFVDKGemJb',
+        'https://discord.gg/degate',
         'https://youtube.com/@degatedex1718',
         'https://medium.com/degate',
         'https://mirror.xyz/0x078a601f492043C8e7D0E15B0F8815f58b4c342f',
@@ -81,11 +85,28 @@ export const degate: Layer2 = {
         tokens: '*',
       }),
     ],
+    liveness: {
+      proofSubmissions: [],
+      batchSubmissions: [],
+      stateUpdates: [
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x6B937A5920726e70c5bF1d4d4E18EEeEd46FaE83',
+          ),
+          selector: '0x377bb770',
+          functionSignature:
+            'function submitBlocks(bool isDataCompressed,bytes data)',
+          sinceTimestamp: new UnixTime(1681993655),
+          untilTimestamp: new UnixTime(1695902495),
+        },
+      ],
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    upgradeability: RISK_VIEW.UPGRADABLE_NO,
+    exitWindow: RISK_VIEW.EXIT_WINDOW_NON_UPGRADABLE,
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_FORCE_VIA_L1_LOOPRING(
         forcedWithdrawalDelay,
@@ -116,29 +137,34 @@ export const degate: Layer2 = {
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
-  stage: getStage({
-    stage0: {
-      callsItselfRollup: true,
-      stateRootsPostedToL1: true,
-      dataAvailabilityOnL1: true,
-      rollupNodeSourceAvailable: 'UnderReview',
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
+        usersHave7DaysToExit: null,
+        usersCanExitWithoutCooperation: true,
+        securityCouncilProperlySetUp: null,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: null,
+        fraudProofSystemIsPermissionless: null,
+        delayWith30DExitWindow: [
+          true,
+          'Users have at least 30d to exit as the system cannot be upgraded.',
+        ],
+      },
     },
-    stage1: {
-      stateVerificationOnL1: true,
-      fraudProofSystemAtLeast5Outsiders: null,
-      usersHave7DaysToExit: null,
-      usersCanExitWithoutCooperation: true,
-      securityCouncilProperlySetUp: null,
+    {
+      rollupNodeLink: 'https://github.com/degatedev/degate-state-recover',
     },
-    stage2: {
-      proofSystemOverriddenOnlyInCaseOfABug: null,
-      fraudProofSystemIsPermissionless: null,
-      delayWith30DExitWindow: [
-        true,
-        'Users have at least 30d to exit as the system cannot be upgraded.',
-      ],
-    },
-  }),
+  ),
   technology: {
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
@@ -200,7 +226,7 @@ export const degate: Layer2 = {
         ],
       },
       {
-        ...EXITS.FORCED,
+        ...EXITS.FORCED(),
         references: [
           {
             text: 'Forced Request Handling - DeGate design doc',
@@ -231,6 +257,15 @@ export const degate: Layer2 = {
         ],
       },
     ],
+  },
+  stateDerivation: {
+    nodeSoftware:
+      'Node software source code can be found [here](https://github.com/degatedev/degate-state-recover).',
+    compressionScheme: 'No compression is used.',
+    genesisState:
+      'The system does not begin with a genesis state; instead, it initiates from a zero state, as referenced in [`CreateEmptyState`](https://github.com/degatedev/degate-state-recover/blob/main/statemanager/state.go#L28).',
+    dataFormat:
+      'DeGate bundles off-chain transactions into [zkBlocks](https://github.com/degatedev/protocols/blob/degate_mainnet/Circuit%20Design.md#zkblock) and submits them to the blockchain. zkBlock data definition is documented [here](https://github.com/degatedev/protocols/blob/degate_mainnet/Smart%20Contract%20Design.md#zkblock-data-definition).',
   },
   permissions: [
     {

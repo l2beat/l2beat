@@ -1,4 +1,5 @@
-import { EventTracker, Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
+import { EventTracker } from '@l2beat/shared'
 import { assert, json } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { Gauge } from 'prom-client'
@@ -85,8 +86,7 @@ export class SequenceProcessor extends EventEmitter {
     super()
 
     assert(opts.batchSize > 0)
-
-    this.logger = logger.for(`${SequenceProcessor.name}[${this.id}]`)
+    this.logger = logger.for(this).tag(this.id)
     this.processQueue = new TaskQueue<void>(
       () => this.process(),
       this.logger.for('updateQueue'),
@@ -111,7 +111,6 @@ export class SequenceProcessor extends EventEmitter {
     await this.loadState()
     this.processQueue.addIfEmpty()
     this.refreshId = setInterval(() => {
-      this.processQueue.unhaltIfNeeded()
       this.processQueue.addIfEmpty()
     }, this.scheduleInterval)
   }
@@ -217,5 +216,13 @@ export class SequenceProcessor extends EventEmitter {
     activityLast.labels({ project: this.id }).set(state.lastProcessed)
     activityLatest.labels({ project: this.id }).set(state.latest)
     this.state = state
+  }
+
+  /**
+   * WARNING: this method should be used only in tests
+   */
+  _TEST_ONLY_stopQueue(): void {
+    this.processQueue._TEST_ONLY_stop()
+    this.processQueue._TEST_ONLY_clear()
   }
 }

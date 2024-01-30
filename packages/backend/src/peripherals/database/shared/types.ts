@@ -85,7 +85,22 @@ declare module 'knex/types/tables' {
     unix_timestamp: Date
   }
 
+  type ProjectsAggregatedDailyCountRow = Omit<
+    DailyTransactionCountRow,
+    'project_id'
+  >
+
   interface UpdateMonitorRow {
+    project_name: string
+    chain_id: number
+    block_number: number
+    unix_timestamp: Date
+    discovery_json_blob: string
+    config_hash: string
+    version: number
+  }
+
+  interface DiscoveryHistoryRow {
     project_name: string
     chain_id: number
     block_number: number
@@ -102,6 +117,7 @@ declare module 'knex/types/tables' {
     project_name: string
     block_number: number
     diff_json_blob: string
+    chain_id: number
   }
 
   interface TotalSupplyRow {
@@ -130,6 +146,36 @@ declare module 'knex/types/tables' {
     unix_timestamp: Date
   }
 
+  interface LivenessRow {
+    timestamp: Date
+    block_number: number
+    tx_hash: string
+    liveness_id: string
+  }
+
+  interface LivenessConfigurationRow {
+    id: string
+    project_id: string
+    type: string
+    since_timestamp: Date
+    until_timestamp: Date | null
+    last_synced_timestamp: Date | null
+    debug_info: string
+  }
+
+  interface DiscoveryCacheRow {
+    key: string
+    value: string
+    chain: string
+    block_number: number
+  }
+
+  interface IndexerStateRow {
+    indexer_id: string
+    safe_height: number
+    min_timestamp: Date | undefined
+  }
+
   interface Tables {
     coingecko_prices: PriceRow
     block_numbers: BlockNumberRow
@@ -150,6 +196,11 @@ declare module 'knex/types/tables' {
     total_supplies_status: TotalSupplyStatusRow
     circulating_supplies: CirculatingSupplyRow
     circulating_supplies_status: CirculatingSupplyStatusRow
+    liveness: LivenessRow
+    discovery_cache: DiscoveryCacheRow
+    daily_discovery: DiscoveryHistoryRow
+    liveness_configuration: LivenessConfigurationRow
+    indexer_state: IndexerStateRow
   }
 }
 

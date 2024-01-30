@@ -1,14 +1,18 @@
-import cx from 'classnames'
 import React, { SVGAttributes } from 'react'
 
+import { cn } from '../../../utils/cn'
 import { Icon } from '../Icon'
 
+/*  IMPORTANT
+  If you change this file you need to update POINT_CLASS_NAMES.pinkSquare in the following file too:
+  * packages/frontend/src/scripts/charts/styles.ts
+*/
 export function NativeIcon(props: SVGAttributes<SVGElement>) {
   return (
     <Icon
       aria-label="Native asset icon"
       {...props}
-      className={cx(props.className, 'h-2 w-2 stroke-black dark:stroke-white')}
+      className={cn('size-2 stroke-black dark:stroke-white', props.className)}
       height="9"
       width="9"
       viewBox="0 0 9 9"

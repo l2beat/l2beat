@@ -1,12 +1,11 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import { AssetId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { setupDatabaseTestSuite } from '../../test/database'
+import { describeDatabase } from '../../test/database'
 import { PriceRecord, PriceRepository } from './PriceRepository'
 
-describe(PriceRepository.name, () => {
-  const { database } = setupDatabaseTestSuite()
+describeDatabase(PriceRepository.name, (database) => {
   const repository = new PriceRepository(database, Logger.SILENT)
 
   const START = UnixTime.now()
@@ -39,8 +38,11 @@ describe(PriceRepository.name, () => {
   ]
 
   beforeEach(async () => {
-    await repository.deleteAll()
     await repository.addMany(DATA)
+  })
+
+  afterEach(async () => {
+    await repository.deleteAll()
   })
 
   describe(PriceRepository.prototype.addMany.name, () => {

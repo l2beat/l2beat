@@ -1,8 +1,12 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
+import { CONTRACTS } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { CONTRACTS } from '../layer2s/common'
-import { formatSeconds } from '../utils/formatSeconds'
 import { RISK_VIEW } from './common'
 import { polygonpos } from './polygonpos'
 import { Bridge } from './types'
@@ -26,7 +30,9 @@ export const polygonplasma: Bridge = {
     slug: 'polygon-plasma',
     links: polygonpos.display.links,
     description:
-      'Polygon Plasma is the official bridge provided by the Polygon team to bridge MATIC tokens from Ethereum to Polygon chain. Originally it was also used to bridge DAI, but now Polygon PoS bridge is recommended. Tokens are bridged to the same Polygon sidechain as if Polygon PoS bridge was used, the only difference is a required 7-day withdrawal delay. This delay was originally designed to allow users to challenge the withdrawal, however this functionality is not deployed.',
+      'Polygon Plasma is the official bridge provided by the Polygon team to bridge MATIC tokens from Ethereum to Polygon chain.',
+    detailedDescription:
+      'Originally it was also used to bridge DAI, but now Polygon PoS bridge is recommended. Tokens are bridged to the same Polygon sidechain as if Polygon PoS bridge was used, the only difference is a required 7-day withdrawal delay. This delay was originally designed to allow users to challenge the withdrawal, however this functionality is not deployed.',
     category: 'Token Bridge',
   },
   config: {
@@ -124,7 +130,7 @@ export const polygonplasma: Bridge = {
       }),
       discovery.getContractDetails('Registry', {
         description:
-          'Contract mantaining the addresses of the contracts used in the system.',
+          'Contract maintaining the addresses of the contracts used in the system.',
       }),
       discovery.getContractDetails('StakeManager', {
         description:

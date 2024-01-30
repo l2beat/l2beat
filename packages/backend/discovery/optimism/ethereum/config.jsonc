@@ -8,7 +8,8 @@
     "0xBe5dAb4A2e9cd0F27300dB4aB94BeE3A233AEB19",
     "0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f",
     "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F",
-    "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed"
+    "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
+    "0x76943C0D61395d8F2edF9060e1533529cAe05dE6"
   ],
   "names": {
     "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": "AddressManager",
@@ -20,13 +21,16 @@
     "0xD16463EF9b0338CE3D73309028ef1714D220c024": "CTCStorageContainerBatches",
     "0xb0ddFf09c4019e31960de11bD845E836078E8EbE": "SCCStorageContainerBatches",
     "0x4BF681894abEc828B212C906082B444Ceb2f6cf6": "CanonicalTransactionChain_OLD",
-    "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1": "L1CrossDomainMessengerProxy",
+    "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1": "L1CrossDomainMessenger",
     "0xdfe97868233d1aa22e815a266982f2cf17685a27": "L2OutputOracle",
     "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "OptimismMultisig",
     "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F": "L1DAITokenBridge",
     "0xEb3107117FEAd7de89Cd14D463D340A2E6917769": "SynthetixMultisig",
     "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed": "OptimismPortal",
-    "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290": "SystemConfig"
+    "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290": "SystemConfig",
+    "0x76943C0D61395d8F2edF9060e1533529cAe05dE6": "wstETHEscrow",
+    "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": "wstETHEscrowAdmin",
+    "0x73b047fe6337183A454c5217241D780a932777bD": "LidoEmergencyBrakeMultisig"
   },
   "overrides": {
     "AddressManager": {
@@ -196,13 +200,20 @@
         "nextOutputIndex",
         "latestBlockNumber",
         "latestOutputIndex"
-      ]
+      ],
+      "fields": {
+        "deletedOutputs": {
+          "type": "stateFromEvent",
+          "event": "OutputsDeleted",
+          "returnParams": ["prevNextOutputIndex", "newNextOutputIndex"]
+        }
+      }
     },
     "OptimismPortal": {
       "ignoreMethods": ["isOutputFinalized"],
       "ignoreInWatchMode": ["params"]
     },
-    "L1CrossDomainMessengerProxy": {
+    "L1CrossDomainMessenger": {
       "ignoreMethods": ["xDomainMessageSender"],
       "ignoreInWatchMode": ["messageNonce"]
     },
@@ -213,8 +224,26 @@
           "type": "call",
           "method": "function batcherHash() view returns (address)",
           "args": []
+        },
+        "opStackDA": {
+          "type": "opStackDA",
+          "sequencerAddress": "{{ batcherHash }}"
         }
       }
+    },
+    "wstETHEscrow": {
+      "ignoreRelatives": ["l2Token", "l1Token"],
+      "fields": {
+        "accessControl": {
+          "type": "accessControl"
+        }
+      }
+    },
+    "wstETHEscrowAdmin": {
+      "ignoreDiscovery": true
+    },
+    "LidoEmergencyBrakeMultisig": {
+      "ignoreDiscovery": true
     }
   }
 }

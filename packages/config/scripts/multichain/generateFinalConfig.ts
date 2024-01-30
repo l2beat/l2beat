@@ -1,9 +1,11 @@
+import { notUndefined } from '@l2beat/shared-pure'
+
 import { tokenList } from '../../src'
 import { escrowTimestamps } from './escrowTimestamps'
 import { IntermediateConfig } from './generateIntermediateConfig'
 
 export function generateFinalConfig(config: IntermediateConfig) {
-  const destinations = config.chains.map((x) => x.name).filter(noUndefined)
+  const destinations = config.chains.map((x) => x.name).filter(notUndefined)
 
   const escrows = config.escrows
     .map((escrow) => ({
@@ -14,7 +16,7 @@ export function generateFinalConfig(config: IntermediateConfig) {
             ? 'ETH'
             : tokenList.find((y) => y.address === address)?.symbol,
         )
-        .filter(noUndefined),
+        .filter(notUndefined),
     }))
     .filter((escrow) => escrow.tokens.length > 0)
     .map((escrow) => ({
@@ -32,8 +34,4 @@ export function generateFinalConfig(config: IntermediateConfig) {
     destinations,
     escrows,
   }
-}
-
-function noUndefined<T>(value: T | undefined): value is T {
-  return value !== undefined
 }

@@ -1,7 +1,6 @@
-import { load } from 'cheerio'
 import fetch from 'node-fetch'
 
-import { getEnv } from '../checkVerifiedContracts/utils'
+import { scrapEtherscanForTvl } from '../utils/scrapEtherscanForTvl'
 
 export interface LZData {
   address: string
@@ -13,7 +12,10 @@ export interface LZData {
   isERC20: string
 }
 
-export async function getLZ(blockNumber: number): Promise<LZData[]> {
+export async function getLZ(
+  blockNumber: number,
+  etherscanApiKey: string,
+): Promise<LZData[]> {
   const internalTxs = []
   const start = 14388880
   const end = blockNumber
@@ -32,7 +34,11 @@ export async function getLZ(blockNumber: number): Promise<LZData[]> {
   for (let i = start; i < end; i += batchSize) {
     console.log('fetching from', i, 'to', i + batchSize, '...')
 
-    const fetchedInternalTxs = await fetchInternalTxs(i, batchSize)
+    const fetchedInternalTxs = await fetchInternalTxs(
+      i,
+      batchSize,
+      etherscanApiKey,
+    )
     internalTxs.push(...fetchedInternalTxs)
 
     console.log('fetched results size', fetchedInternalTxs.length, '\n')
@@ -55,13 +61,13 @@ export async function getLZ(blockNumber: number): Promise<LZData[]> {
     index++
 
     console.log('scraping Etherscan page for', address, '...')
-    const { tvl, ethValue } = await scrapEtherscan(address)
+    const { tvl, ethValue } = await scrapEtherscanForTvl(address)
 
     console.log('fetching deployer for', address, '...')
-    const deployer = await fetchDeployer(address)
+    const deployer = await fetchDeployer(address, etherscanApiKey)
 
     console.log('fetching name and ABI for', address, '...')
-    const { name, isERC20 } = await fetchNameAndABI(address)
+    const { name, isERC20 } = await fetchNameAndABI(address, etherscanApiKey)
 
     lzData.push({
       address,
@@ -78,13 +84,15 @@ export async function getLZ(blockNumber: number): Promise<LZData[]> {
   return lzData
 }
 
-async function fetchInternalTxs(i: number, batchSize: number) {
+async function fetchInternalTxs(
+  i: number,
+  batchSize: number,
+  etherscanApiKey: string,
+) {
   const response = await fetch(
     `https://api.etherscan.io/api?module=account&startblock=${i - 1}&endblock=${
       i + batchSize
-    }&action=txlistinternal&address=${'0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675'}&apikey=${getEnv(
-      'ETHERSCAN_API_KEY',
-    )})}`,
+    }&action=txlistinternal&address=${'0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675'}&apikey=${etherscanApiKey})}`,
   )
 
   const data = (await response.json()) as unknown as {
@@ -112,39 +120,12 @@ async function avoidRateLimiting() {
   await new Promise((resolve) => setTimeout(resolve, 1000))
 }
 
-async function scrapEtherscan(
+async function fetchDeployer(
   address: string,
-): Promise<{ tvl: string; ethValue: string }> {
-  const result = { tvl: '0', ethValue: '0' }
-
-  const etherscanPage = await fetch(`https://etherscan.io/address/${address}`)
-
-  const $ = load(await etherscanPage.text())
-
-  const button = $('#dropdownMenuBalance')
-  if (button.text().length > 0) {
-    result.tvl = button.text().slice(2).split('\n')[0]
-  }
-
-  const ethValue = $('div:contains("Eth Value")')
-    .last()
-    .text()
-    .split('$')[1]
-    .trim()
-    .split(' ')[0]
-
-  if (ethValue) {
-    result.ethValue = ethValue
-  }
-
-  return result
-}
-
-async function fetchDeployer(address: string): Promise<string> {
+  etherscanApiKey: string,
+): Promise<string> {
   const response = await fetch(
-    `https://api.etherscan.io/api?module=contract&action=getcontractcreation&contractaddresses=${address}&apikey=${getEnv(
-      'ETHERSCAN_API_KEY',
-    )})}`,
+    `https://api.etherscan.io/api?module=contract&action=getcontractcreation&contractaddresses=${address}&apikey=${etherscanApiKey})}`,
   )
   const data = (await response.json()) as unknown as {
     result: { contractCreator: string }[]
@@ -155,13 +136,12 @@ async function fetchDeployer(address: string): Promise<string> {
 
 async function fetchNameAndABI(
   address: string,
+  etherscanApiKey: string,
 ): Promise<{ name: string; isERC20: string }> {
   const result = { name: '', isERC20: '' }
 
   const response = await fetch(
-    `https://api.etherscan.io/api?module=contract&action=getsourcecode&address=${address}&apikey=${getEnv(
-      'ETHERSCAN_API_KEY',
-    )})}`,
+    `https://api.etherscan.io/api?module=contract&action=getsourcecode&address=${address}&apikey=${etherscanApiKey})}`,
   )
   const data = (await response.json()) as unknown as {
     result: { ABI: string; ContractName: string }[]

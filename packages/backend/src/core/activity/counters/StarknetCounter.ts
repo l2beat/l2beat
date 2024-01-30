@@ -1,6 +1,6 @@
-import { StarknetTransactionApi } from '@l2beat/config'
-import { HttpClient, Logger } from '@l2beat/shared'
-import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { Logger } from '@l2beat/backend-tools'
+import { HttpClient } from '@l2beat/shared'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 
 import { BlockTransactionCountRepository } from '../../../peripherals/database/activity/BlockTransactionCountRepository'
@@ -9,6 +9,7 @@ import { StarknetClient } from '../../../peripherals/starknet/StarknetClient'
 import { Clock } from '../../Clock'
 import { promiseAllPlus } from '../../queue/promiseAllPlus'
 import { SequenceProcessor } from '../../SequenceProcessor'
+import { SimpleActivityTransactionConfig } from '../ActivityTransactionConfig'
 import { TransactionCounter } from '../TransactionCounter'
 import { createBlockTransactionCounter } from './BlockTransactionCounter'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
@@ -20,14 +21,11 @@ export function createStarknetCounter(
   sequenceProcessorRepository: SequenceProcessorRepository,
   logger: Logger,
   clock: Clock,
-  transactionApi: StarknetTransactionApi,
+  options: SimpleActivityTransactionConfig<'starknet'>,
 ): TransactionCounter {
-  const callsPerMinute = transactionApi.callsPerMinute ?? 60
-  const batchSize = getBatchSizeFromCallsPerMinute(callsPerMinute)
-  const url = transactionApi.url
-  assert(url, `Url must be defined for ${projectId.toString()}`)
-  const client = new StarknetClient(url, http, {
-    callsPerMinute,
+  const batchSize = getBatchSizeFromCallsPerMinute(options.callsPerMinute)
+  const client = new StarknetClient(options.url, http, {
+    callsPerMinute: options.callsPerMinute,
   })
 
   const processor = new SequenceProcessor(

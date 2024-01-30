@@ -1,3 +1,4 @@
+import { assert } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { formatLink } from '../../utils/formatLink'
@@ -8,6 +9,7 @@ import {
   ProjectLink,
   ProjectLinkIcon,
 } from '../icons'
+import { Link } from '../Link'
 import { OutLink } from '../OutLink'
 import { parseSocial } from '../project/links/LinkSectionLink'
 
@@ -17,7 +19,7 @@ interface LinkSectionProps {
 
 export function DesktopProjectLinks(props: LinkSectionProps) {
   return (
-    <div className="flex flex-row gap-1.5">
+    <div className="flex flex-row flex-wrap gap-1.5">
       {props.projectLinks.map((link) => {
         return <ProjectLinkItem key={link.name} projectLink={link} />
       })}
@@ -30,9 +32,13 @@ interface LinkSectionItemProps {
 }
 
 function ProjectLinkItem({ projectLink }: LinkSectionItemProps) {
-  if (projectLink.links.length === 1 && projectLink.name !== 'Social') {
+  if (
+    projectLink.links.length === 1 &&
+    projectLink.name !== 'Social' &&
+    projectLink.name !== 'Changelog'
+  ) {
     return (
-      <div className="flex cursor-pointer flex-row items-center gap-1.5 rounded-lg bg-gray-100 py-1.5 px-2 text-xs font-medium transition-colors hover:bg-gray-50 dark:bg-neutral-700 dark:hover:bg-gray-750">
+      <div className="flex cursor-pointer flex-row items-center gap-1.5 rounded-lg bg-gray-100 px-2 py-1.5 text-xs font-medium transition-colors hover:bg-gray-200 dark:bg-zinc-900 dark:hover:bg-zinc-700">
         <OutLink
           href={projectLink.links[0]}
           className="flex flex-row items-center gap-1.5"
@@ -40,6 +46,22 @@ function ProjectLinkItem({ projectLink }: LinkSectionItemProps) {
           <ProjectLinkIcon name={projectLink.name} />
           {projectLink.name} <OutLinkIcon />
         </OutLink>
+      </div>
+    )
+  }
+
+  if (projectLink.name === 'Changelog') {
+    assert(projectLink.links.length === 1)
+    return (
+      <div className="flex cursor-pointer flex-row items-center gap-1.5 rounded-lg bg-gradient-to-r from-purple-100 to-pink-100 px-2 py-1.5 text-xs font-medium text-white transition-colors">
+        <Link
+          href={projectLink.links[0]}
+          className="flex flex-row items-center gap-1.5"
+          underline={false}
+        >
+          <ProjectLinkIcon name={projectLink.name} />
+          <span className="text-white">{projectLink.name}</span>
+        </Link>
       </div>
     )
   }
@@ -60,7 +82,7 @@ function ProjectLinkItem({ projectLink }: LinkSectionItemProps) {
           <OutLink
             key={link}
             href={link}
-            className="flex items-center gap-1.5 rounded-lg py-1.5 px-3 text-xs font-medium transition-colors hover:bg-gray-200 dark:hover:bg-gray-750"
+            className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors hover:bg-gray-200 dark:hover:bg-zinc-700"
           >
             {parsedSocial?.platform && (
               <ProductIcon

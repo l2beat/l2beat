@@ -1,15 +1,11 @@
-import React from 'react'
+import { Meta, StoryObj } from '@storybook/react'
 
 import { ArchivedBar as ArchivedBarComponent } from './ArchivedBar'
 
-export default {
-  title: 'Components/Project/ArchivedBar',
+const meta: Meta<typeof ArchivedBarComponent> = {
+  component: ArchivedBarComponent,
 }
+export default meta
+type Story = StoryObj<typeof ArchivedBarComponent>
 
-export function ArchivedBar() {
-  return (
-    <div className="p-4">
-      <ArchivedBarComponent />
-    </div>
-  )
-}
+export const ArchivedBar: Story = {}

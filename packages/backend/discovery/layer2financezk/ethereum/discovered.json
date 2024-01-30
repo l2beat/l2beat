@@ -1,16 +1,20 @@
 {
-  "chain": "ethereum",
   "name": "layer2financezk",
-  "blockNumber": 17271618,
-  "configHash": "0xcaa1cbc5c03ede6a2281b93df0293fc741b921d5ec4594bef060e7fddcf5817c",
+  "chain": "ethereum",
+  "blockNumber": 19063883,
+  "configHash": "0xa0de4e7b1302158244a7d2ab02906eb9ce59fc871ffa558a1611017d602be597",
+  "version": 3,
   "contracts": [
     {
       "name": "GnosisSafe",
       "address": "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": []
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
+      "sinceTimestamp": 1678120703,
       "values": {
         "domainSeparator": "0xdc841842a6a324de5b6a29714a4394558c78638216ef50f533783d49856a58c0",
         "getChainId": 1,
@@ -20,7 +24,7 @@
           "0x955B978F3ee7818dA71fA25c676062E6BC462Fec"
         ],
         "getThreshold": 2,
-        "nonce": 2,
+        "nonce": 3,
         "VERSION": "1.3.0"
       }
     },
@@ -38,6 +42,8 @@
           "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"
         ]
       },
+      "implementations": ["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"],
+      "sinceTimestamp": 1635077695,
       "values": {
         "CALL_PROXY_VERSION": "3.1.0",
         "callProxyImplementation": "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
@@ -56,6 +62,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1626352379,
       "values": {
         "hasRegisteredFact": true,
         "identify": "StarkWare_OrderRegistry_2021_1"
@@ -67,6 +74,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1674001487,
       "values": {
         "getBootloaderConfig": [
           "2962621603719000361370283216422448934312521782617806945663080079725495842070",
@@ -87,6 +95,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1640107463,
       "values": {
         "gpsContract": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
         "hasRegisteredFact": true,
@@ -112,6 +121,16 @@
         },
         "proxyGovernance": ["0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e"]
       },
+      "implementations": [
+        "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
+        "0x62BCA4DB742A99c834e2c24b609656A70EA25379",
+        "0x8536850750956c2FEebeCAB786d82271a5467687",
+        "0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2",
+        "0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1",
+        "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339",
+        "0xB3788a88F063B217227E27ae16Ba550db3132bE6"
+      ],
+      "sinceTimestamp": 1645130774,
       "values": {
         "defaultVaultWithdrawalLock": 0,
         "DEPOSIT_CANCEL_DELAY": 172800,
@@ -160,6 +179,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1648452641,
       "values": {
         "EXP_TIME": 2000000,
         "nonce": 23,
@@ -175,7 +195,8 @@
       "unverified": true,
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1650870230
     }
   ],
   "eoas": [

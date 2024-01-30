@@ -5,15 +5,24 @@ import {
   TvlApiChart,
   TvlApiChartPoint,
   TvlApiCharts,
-  TvlApiToken,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { AggregatedReportRecord } from '../../../peripherals/database/AggregatedReportRepository'
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'
-import { asNumber } from './asNumber'
-import { generateTvlApiResponse } from './generateTvlApiResponse'
+import {
+  extractReportTypeSet,
+  generateAggregatedTvlApiResponse,
+  generateTvlApiResponse,
+  getProjectChartData,
+  TYPE_LABELS,
+} from './generateTvlApiResponse'
+import {
+  getProjectTokensCharts,
+  groupByProjectIdAndAssetType,
+  groupByProjectIdAndTimestamp,
+} from './tvl'
 
 describe(generateTvlApiResponse.name, () => {
   it('returns the correct groupings', () => {
@@ -26,62 +35,89 @@ describe(generateTvlApiResponse.name, () => {
       ProjectId.LAYER2S,
     ])
     const result = generateTvlApiResponse(
-      reports.hourly.all,
-      reports.sixHourly.all,
-      reports.daily.all,
-      reports.latest.all,
+      reports.hourly,
+      reports.sixHourly,
+      reports.daily,
+      reports.latest,
       [ProjectId('arbitrum'), ProjectId('optimism'), ProjectId('avalanche')],
     )
-    expect(result).toEqual({
+
+    const expected = {
       layers2s: charts(reports, ProjectId.LAYER2S),
       bridges: charts(reports, ProjectId.BRIDGES),
       combined: charts(reports, ProjectId.ALL),
       projects: {
         arbitrum: {
           charts: charts(reports, ProjectId('arbitrum')),
-          tokens: reports.latest.arbitrum,
+          tokens: tokens(reports, ProjectId('arbitrum')),
         },
         optimism: {
           charts: charts(reports, ProjectId('optimism')),
-          tokens: reports.latest.optimism,
+          tokens: tokens(reports, ProjectId('optimism')),
         },
         avalanche: {
           charts: charts(reports, ProjectId('avalanche')),
-          tokens: reports.latest.avalanche,
+          tokens: tokens(reports, ProjectId('avalanche')),
         },
       },
-    })
+    }
+
+    expect(result).toEqual(expected)
   })
 
   function charts(
     reports: ReturnType<typeof fakeReports>,
     projectId: ProjectId,
   ): TvlApiCharts {
-    const types: TvlApiChart['types'] = ['timestamp', 'usd', 'eth']
+    const types: TvlApiChart['types'] = [
+      'timestamp',
+      'valueUsd',
+      'cbvUsd',
+      'ebvUsd',
+      'nmvUsd',
+      'valueEth',
+      'cbvEth',
+      'ebvEth',
+      'nmvEth',
+    ]
+
     return {
       hourly: {
         types,
-        data: reports.hourly[projectId.toString()],
+        data: getProjectChartData(reports.hourly, projectId, 1),
       },
       sixHourly: {
         types,
-        data: reports.sixHourly[projectId.toString()],
+        data: getProjectChartData(reports.sixHourly, projectId, 6),
       },
       daily: {
-        types: types,
-        data: reports.daily[projectId.toString()],
+        types,
+        data: getProjectChartData(reports.daily, projectId, 24),
       },
     }
+  }
+
+  function tokens(
+    reports: ReturnType<typeof fakeReports>,
+    projectId: ProjectId,
+  ) {
+    return getProjectTokensCharts(reports.latest, projectId)
   }
 
   function fakeReports(projectIds: ProjectId[]) {
     const now = UnixTime.now().toStartOf('day')
 
     return {
-      hourly: fakeTimePeriodReports(now, 1, 1, projectIds),
-      sixHourly: fakeTimePeriodReports(now, 6, 1, projectIds),
-      daily: fakeTimePeriodReports(now, 24, 1, projectIds),
-      latest: fakeLatestReports(now, projectIds),
+      hourly: groupByProjectIdAndTimestamp(
+        fakeTimePeriodReports(now, 1, 1, projectIds),
+      ),
+      sixHourly: groupByProjectIdAndTimestamp(
+        fakeTimePeriodReports(now, 6, 1, projectIds),
+      ),
+      daily: groupByProjectIdAndTimestamp(
+        fakeTimePeriodReports(now, 24, 1, projectIds),
+      ),
+      latest: groupByProjectIdAndAssetType(fakeLatestReports(now, projectIds)),
     }
   }
 
@@ -91,32 +127,54 @@ describe(generateTvlApiResponse.name, () => {
     count: number,
     projectIds: ProjectId[],
   ) {
-    const result: Record<string, TvlApiChartPoint[]> & {
-      all: AggregatedReportRecord[]
-    } = {
-      all: [],
-    }
-    for (const projectId of projectIds) {
-      result[projectId.toString()] = []
-    }
+    const result: AggregatedReportRecord[] = []
+
     for (let i = 0; i < count; i++) {
       const timestamp = now.add(-i * offsetHours, 'hours')
       for (const projectId of projectIds) {
-        const usdValue = BigInt(Math.floor(Math.random() * 20_000 + 5_000))
-        const ethValue = usdValue * 1000n
-        const reportType = 'TVL'
-        result.all.push({
+        const usdEbv = BigInt(Math.floor(Math.random() * 20_000 + 5_000))
+        const usdCbv = BigInt(Math.floor(Math.random() * 20_000 + 5_000))
+        const usdNmv = BigInt(Math.floor(Math.random() * 20_000 + 5_000))
+
+        const usdTvl = usdEbv + usdCbv + usdNmv
+
+        const ethEbv = usdEbv * 1000n
+        const ethCbv = usdCbv * 1000n
+        const ethNmv = usdNmv * 1000n
+
+        const ethTvl = ethEbv + ethCbv + ethNmv
+
+        result.push({
           timestamp,
           projectId,
-          usdValue,
-          ethValue,
-          reportType,
+          usdValue: usdEbv,
+          ethValue: ethEbv,
+          reportType: 'EBV',
         })
-        result[projectId.toString()].push([
+
+        result.push({
           timestamp,
-          asNumber(usdValue, 2),
-          asNumber(ethValue, 6),
-        ])
+          projectId,
+          usdValue: usdCbv,
+          ethValue: ethCbv,
+          reportType: 'CBV',
+        })
+
+        result.push({
+          timestamp,
+          projectId,
+          usdValue: usdNmv,
+          ethValue: ethNmv,
+          reportType: 'NMV',
+        })
+
+        result.push({
+          timestamp,
+          projectId,
+          usdValue: usdTvl,
+          ethValue: ethTvl,
+          reportType: 'TVL',
+        })
       }
     }
     return result
@@ -124,20 +182,13 @@ describe(generateTvlApiResponse.name, () => {
 
   function fakeLatestReports(now: UnixTime, projectIds: ProjectId[]) {
     const assets = [AssetId.ETH, AssetId.DAI]
-    const result: Record<string, TvlApiToken[]> & {
-      all: ReportRecord[]
-    } = {
-      all: [],
-    }
-    for (const projectId of projectIds) {
-      result[projectId.toString()] = []
-    }
+    const result: ReportRecord[] = []
     for (const projectId of projectIds) {
       for (const assetId of assets) {
         const balanceUsd = BigInt(Math.floor(Math.random() * 20_000 + 5_000))
-        result.all.push({
+        result.push({
           asset: assetId,
-          chainId: ChainId.ETHEREUM,
+          chainId: ChainId.ARBITRUM, // ignored - not grouped
           reportType: 'CBV',
           amount: 0n, // ignored
           ethValue: 0n, // ignored
@@ -145,12 +196,192 @@ describe(generateTvlApiResponse.name, () => {
           projectId,
           timestamp: now,
         })
-        result[projectId.toString()].push({
-          assetId,
-          tvl: asNumber(balanceUsd, 2),
-        })
       }
     }
     return result
+  }
+})
+
+describe(extractReportTypeSet.name, () => {
+  it('fills in missing values', () => {
+    const timestamp = UnixTime.now()
+    const usdValue = 1_000n
+    const ethValue = 1_000_000n
+
+    const filledUsdValue = 0n
+    const filledEthValue = 0n
+
+    // NMV missing
+    const mockReports: AggregatedReportRecord[] = [
+      {
+        timestamp,
+        projectId: ProjectId.ARBITRUM,
+        usdValue,
+        ethValue,
+        reportType: 'TVL',
+      },
+      {
+        timestamp,
+        projectId: ProjectId.ARBITRUM,
+        usdValue,
+        ethValue,
+        reportType: 'CBV',
+      },
+      {
+        timestamp,
+        projectId: ProjectId.ARBITRUM,
+        usdValue,
+        ethValue,
+        reportType: 'EBV',
+      },
+    ]
+
+    const result = extractReportTypeSet(mockReports)
+
+    expect(result).toEqual({
+      ebvReport: {
+        usdValue,
+        ethValue,
+      },
+      cbvReport: {
+        usdValue,
+        ethValue,
+      },
+      tvlReport: {
+        usdValue,
+        ethValue,
+      },
+      nmvReport: {
+        usdValue: filledUsdValue,
+        ethValue: filledEthValue,
+      },
+    })
+  })
+})
+
+describe(generateAggregatedTvlApiResponse.name, () => {
+  const timestamps = [
+    0, // Zero Time
+    UnixTime.SIX_HOURS,
+    UnixTime.DAY,
+  ]
+
+  it('aggregates projects values together', () => {
+    const mock: AggregatedReportRecord[] = (
+      [
+        [ProjectId('aaa'), [10, 100, 1000]],
+        [ProjectId('bbb'), [20, 200, 2000]],
+        [ProjectId('ccc'), [40, 400, 4000]],
+      ] as [ProjectId, number[]][]
+    )
+      .map(([projectId, tvls]) =>
+        tvls
+          .map((tvl, i) => {
+            return getMockPoints(projectId, new UnixTime(timestamps[i]), tvl)
+          })
+          .flat(),
+      )
+      .flat()
+
+    const result = generateAggregatedTvlApiResponse(
+      groupByProjectIdAndTimestamp(mock),
+      groupByProjectIdAndTimestamp(mock),
+      groupByProjectIdAndTimestamp(mock),
+      [ProjectId('aaa'), ProjectId('bbb')],
+    )
+
+    const [zeroTime, sixHour, oneDay] = getData([
+      10 + 20,
+      100 + 200,
+      1000 + 2000,
+    ])
+
+    const setPointTimeMapper = (interval: number) => {
+      return (point: TvlApiChartPoint, i: number) => {
+        return [
+          new UnixTime(i * interval),
+          ...point.slice(1),
+        ] as TvlApiChartPoint
+      }
+    }
+    const expectedResult: TvlApiCharts = {
+      hourly: {
+        types: TYPE_LABELS,
+        data: [
+          ...new Array(6).fill(zeroTime),
+          ...new Array(18).fill(sixHour),
+          oneDay,
+        ].map(setPointTimeMapper(UnixTime.HOUR)),
+      },
+      sixHourly: {
+        types: TYPE_LABELS,
+        data: [zeroTime, sixHour, sixHour, sixHour, oneDay].map(
+          setPointTimeMapper(UnixTime.SIX_HOURS),
+        ),
+      },
+      daily: {
+        types: TYPE_LABELS,
+        data: [zeroTime, oneDay].map(setPointTimeMapper(UnixTime.DAY)),
+      },
+    }
+
+    expect(result).toEqual(expectedResult)
+  })
+
+  function getData(tvls: number[]): TvlApiChartPoint[] {
+    return tvls.map((tvl, i) => {
+      return [
+        new UnixTime(timestamps[i]),
+        tvl,
+        tvl * 0.6,
+        tvl * 0.1,
+        tvl * 0.3,
+        tvl,
+        tvl * 0.6,
+        tvl * 0.1,
+        tvl * 0.3,
+      ]
+    })
+  }
+
+  function getMockPoints(
+    projectId: ProjectId,
+    timestamp: UnixTime,
+    value: number,
+  ): AggregatedReportRecord[] {
+    const tvl = value
+    const cbv = value * 0.6
+    const ebv = value * 0.1
+    const nmv = value * 0.3
+    return [
+      {
+        timestamp,
+        projectId,
+        usdValue: BigInt(tvl * 100),
+        ethValue: BigInt(tvl * 1_000_000),
+        reportType: 'TVL',
+      },
+      {
+        timestamp,
+        projectId,
+        usdValue: BigInt(cbv * 100),
+        ethValue: BigInt(cbv * 1_000_000),
+        reportType: 'CBV',
+      },
+      {
+        timestamp,
+        projectId,
+        usdValue: BigInt(ebv * 100),
+        ethValue: BigInt(ebv * 1_000_000),
+        reportType: 'EBV',
+      },
+      {
+        timestamp,
+        projectId,
+        usdValue: BigInt(nmv * 100),
+        ethValue: BigInt(nmv * 1_000_000),
+        reportType: 'NMV',
+      },
+    ]
   }
 })

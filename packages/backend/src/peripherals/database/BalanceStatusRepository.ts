@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import { ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
 
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'
@@ -49,7 +49,7 @@ export class BalanceStatusRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('balances_status').delete()
+    return knex('balances_status').delete()
   }
 
   async getBetween(

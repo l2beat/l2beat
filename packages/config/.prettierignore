@@ -1,6 +1,8 @@
 node_modules
 build
 src/bridges/multichain-config.json
-src/verified.json
+src/bridges/socket-vaults.json
+src/verification/*/verified.json
+src/verification/*/manuallyVerified.jsonc
 scripts/multichain/cache.json
 scripts/multichain/intermediate.json

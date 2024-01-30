@@ -1,3 +1,4 @@
+import { Logger } from '@l2beat/backend-tools'
 import {
   ConfigReader,
   diffDiscovery,
@@ -5,37 +6,41 @@ import {
   DiscoveryEngine,
   DiscoveryProvider,
   toDiscoveryOutput,
+  UnixTime as DiscoveryUnixTime,
 } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
-import { ChainId } from '@l2beat/shared-pure'
-import { assert } from 'console'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { isEqual, isError } from 'lodash'
 import { Gauge, Histogram } from 'prom-client'
 
 export interface DiscoveryRunnerOptions {
+  logger: Logger
   injectInitialAddresses: boolean
   runSanityCheck: boolean
   maxRetries?: number
   retryDelayMs?: number
 }
 
-const MAX_RETRIES = 6
-const RETRY_DELAY_MS = 10_000
+// 10 minutes
+const MAX_RETRIES = 30
+const RETRY_DELAY_MS = 20_000
 
 export class DiscoveryRunner {
   constructor(
     private readonly discoveryProvider: DiscoveryProvider,
     private readonly discoveryEngine: DiscoveryEngine,
     private readonly configReader: ConfigReader,
-    private readonly chainId: ChainId,
+    readonly chain: string,
   ) {}
 
   async getBlockNumber(): Promise<number> {
     return this.discoveryProvider.getBlockNumber()
   }
 
-  getChainId(): ChainId {
-    return this.chainId
+  async getBlockNumberAt(timestamp: UnixTime): Promise<number> {
+    return this.discoveryProvider.getBlockNumberAt(
+      new DiscoveryUnixTime(timestamp.toNumber()),
+    )
   }
 
   async run(
@@ -50,18 +55,19 @@ export class DiscoveryRunner {
     const discovery = await this.discoverWithRetry(
       config,
       blockNumber,
+      options.logger,
       options.maxRetries,
       options.retryDelayMs,
     )
 
     if (options.runSanityCheck) {
-      await this.sanityCheck(discovery, config, blockNumber)
+      await this.sanityCheck(discovery, config, blockNumber, options)
     }
 
     return discovery
   }
 
-  async discover(
+  private async discover(
     config: DiscoveryConfig,
     blockNumber: number,
   ): Promise<DiscoveryOutput> {
@@ -74,7 +80,7 @@ export class DiscoveryRunner {
 
     return toDiscoveryOutput(
       config.name,
-      config.chainId,
+      config.chain,
       config.hash,
       blockNumber,
       result,
@@ -84,6 +90,7 @@ export class DiscoveryRunner {
   async discoverWithRetry(
     config: DiscoveryConfig,
     blockNumber: number,
+    logger: Logger,
     maxRetries = MAX_RETRIES,
     delayMs = RETRY_DELAY_MS,
   ): Promise<DiscoveryOutput> {
@@ -98,10 +105,13 @@ export class DiscoveryRunner {
         err = isError(err) ? (error as Error) : new Error(JSON.stringify(error))
       }
 
-      console.log(
-        `DiscoveryRunner: Retrying ${config.name} (chain: ${ChainId.getName(
-          config.chainId,
-        )}) | attempt:${i}`,
+      const errorString = JSON.stringify(
+        err,
+        Object.getOwnPropertyNames(err),
+        2,
+      )
+      logger.warn(
+        `DiscoveryRunner: Retrying ${config.name} (chain: ${config.chain}) | attempt:${i} | error:${errorString}`,
       )
       await new Promise((resolve) => setTimeout(resolve, delayMs))
     }
@@ -124,8 +134,15 @@ export class DiscoveryRunner {
     discovery: DiscoveryOutput,
     projectConfig: DiscoveryConfig,
     blockNumber: number,
+    options: DiscoveryRunnerOptions,
   ) {
-    const secondDiscovery = await this.discover(projectConfig, blockNumber)
+    const secondDiscovery = await this.discoverWithRetry(
+      projectConfig,
+      blockNumber,
+      options.logger,
+      options.maxRetries,
+      options.retryDelayMs,
+    )
 
     if (!isEqual(discovery, secondDiscovery)) {
       const diff = diffDiscovery(
@@ -149,7 +166,7 @@ export class DiscoveryRunner {
   async updateInitialAddresses(config: DiscoveryConfig) {
     const discovery = await this.configReader.readDiscovery(
       config.name,
-      ChainId.ETHEREUM,
+      this.chain,
     )
     const initialAddresses = discovery.contracts.map((c) => c.address)
     return new DiscoveryConfig({

@@ -1,7 +1,7 @@
-import cx from 'classnames'
 import React from 'react'
 
 import { Config } from '../build/config'
+import { cn } from '../utils/cn'
 import { Link } from './Link'
 import {
   getSocialLinksProps,
@@ -11,6 +11,7 @@ import {
 
 export interface FooterProps extends SocialLinksProps {
   narrow?: boolean
+  className?: string
 }
 
 export function getFooterProps(config: Config): FooterProps {
@@ -19,9 +20,14 @@ export function getFooterProps(config: Config): FooterProps {
 
 export function Footer(props: FooterProps) {
   return (
-    <footer className="mt-20 border-t border-gray-200 py-8 dark:border-gray-850">
+    <footer
+      className={cn(
+        'mt-20 border-t border-gray-200 py-8 dark:border-gray-850',
+        props.className,
+      )}
+    >
       <div
-        className={cx(
+        className={cn(
           props.narrow ? 'max-w-[1064px]' : 'max-w-[1216px]',
           'mx-auto flex grid-cols-3 flex-col gap-4 px-4 md:grid md:px-12',
         )}

@@ -1,35 +1,45 @@
-import { configureCharts } from '../components/chart/configure'
-import { configureDarkThemeToggle } from '../components/navbar/configureDarkThemeToggle'
-import { configureSidebarMenu } from '../components/navbar/configureSidebarMenu'
-import { configureCanonicalBridgesFilter } from './configureCanonicalBridgesFilter'
+import { configureCharts } from './charts'
+import { configureBridgesAndCombinedOnly } from './configureBridgesAndCombinedOnly'
 import { configureDropdowns } from './configureDropdowns'
+import { configureEtherscanLinks } from './configureEtherscanLinks'
 import { configureExpandableContainer } from './configureExpandableContainer'
 import { configureFloatingBanner } from './configureFloatingBanner'
 import { configureHoverableDropdown } from './configureHoverableDropdown'
-import { configureRollupsOnlyFilter } from './configureRollupsOnlyFilter'
+import { configureLivenessTimeRangeControls } from './configureLivenessTimeRangeControls'
+import { configureMultipleEscrowsButton } from './configureMultipleEscrowsButton'
+import { configureOverflowWrappers } from './configureOverflowWrappers'
+import { configureProjectFilters } from './configureProjectFilters'
+import { configureRichSelects } from './configureRichSelect'
 import { configureRosetteOverlay } from './configureRosetteOverlay'
-import { configureSlideCards } from './configureSlideCard'
-import { configureTableIndexRerender } from './configureTableIndexRerender'
+import { configureSidebarMenu } from './configureSidebarMenu'
 import { configureTabs } from './configureTabs'
+import { configureThemeToggle } from './configureThemeToggle'
 import { configureTooltips } from './configureTooltips'
 import { configureTopBars } from './configureTopBars'
 import { configureUpgradeDescriptions } from './configureUpgradeDescriptions'
 import { configureProjectNavigation } from './section-navigation'
+import { configureSorting } from './table/configureSorting'
+import { configureTables } from './table/configureTables'
 
-configureDarkThemeToggle()
+configureThemeToggle()
+configureFloatingBanner()
+configureTables()
+configureProjectFilters()
 configureSidebarMenu()
 configureTooltips()
 configureCharts()
 configureDropdowns()
-configureSlideCards()
 configureRosetteOverlay()
-configureFloatingBanner()
 configureHoverableDropdown()
 configureProjectNavigation()
 configureExpandableContainer()
 configureTabs()
-configureCanonicalBridgesFilter()
-configureRollupsOnlyFilter()
-configureTableIndexRerender()
 configureUpgradeDescriptions()
 configureTopBars()
+configureMultipleEscrowsButton()
+configureRichSelects()
+configureBridgesAndCombinedOnly()
+configureLivenessTimeRangeControls()
+configureOverflowWrappers()
+configureSorting()
+configureEtherscanLinks()

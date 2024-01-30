@@ -4,17 +4,16 @@ import path from 'path'
 
 import { MultichainConfig } from './types'
 
-const USE_CACHE = !!process.env.USE_CACHE
 const CACHE_FILE = path.join(__dirname, 'cache.json')
 
-export async function fetchMultichainConfig() {
-  const json = await fetchWithCache()
+export async function fetchMultichainConfig(useCache?: boolean) {
+  const json = await fetchWithCache(useCache)
   return MultichainConfig.parse(json)
 }
 
-async function fetchWithCache(): Promise<unknown> {
+async function fetchWithCache(useCache?: boolean): Promise<unknown> {
   try {
-    if (USE_CACHE) {
+    if (useCache) {
       const content = await readFile(CACHE_FILE, 'utf-8')
       return JSON.parse(content) as unknown
     }
@@ -25,7 +24,7 @@ async function fetchWithCache(): Promise<unknown> {
     'https://bridgeapi.anyswap.exchange/v4/tokenlistv4/all',
   )
   const json = (await res.json()) as unknown
-  if (USE_CACHE) {
+  if (useCache) {
     await writeFile(CACHE_FILE, JSON.stringify(json))
   }
   return json

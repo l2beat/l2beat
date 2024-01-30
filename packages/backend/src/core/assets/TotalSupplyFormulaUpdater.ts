@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import {
   assert,
   ChainId,
@@ -9,6 +9,7 @@ import {
 } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
+import { UpdaterStatus } from '../../api/controllers/status/view/TvlStatusPage'
 import {
   ReportRecord,
   ReportRepository,
@@ -18,11 +19,12 @@ import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
 import { createFormulaReports } from '../reports/createFormulaReports'
+import { getStatus } from '../reports/getStatus'
 import { getTokensConfigHash } from '../reports/getTokensConfigHash'
 import { TotalSupplyUpdater } from '../totalSupply/TotalSupplyUpdater'
-import { AssetUpdater } from './AssetUpdater'
+import { ReportUpdater } from './Updater'
 
-export class TotalSupplyFormulaUpdater implements AssetUpdater {
+export class TotalSupplyFormulaUpdater implements ReportUpdater {
   private readonly configHash: Hash256
   private readonly taskQueue: TaskQueue<UnixTime>
   private readonly knownSet = new Set<number>()
@@ -68,6 +70,16 @@ export class TotalSupplyFormulaUpdater implements AssetUpdater {
 
   getMinTimestamp() {
     return this.minTimestamp
+  }
+
+  getStatus(): UpdaterStatus {
+    return getStatus(
+      this.constructor.name,
+      this.clock.getFirstHour(),
+      this.clock.getLastHour(),
+      this.knownSet,
+      this.minTimestamp,
+    )
   }
 
   async start() {

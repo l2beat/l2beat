@@ -1,24 +1,36 @@
-import cx from 'classnames'
 import React from 'react'
 
+import { cn } from '../../utils/cn'
 import { sentimentToTextColor } from '../../utils/risks/color'
 import { RiskValue, RiskValues } from '../../utils/risks/types'
 import { UnderReviewBadge } from '../badge/UnderReviewBadge'
+import { RoundedWarningIcon, ShieldIcon } from '../icons'
+import { UnverifiedIcon } from '../icons/symbols/UnverifiedIcon'
+import { Markdown } from '../Markdown'
 import { BigRosette } from '../rosette'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
-import { SectionId } from './sectionId'
+import { ProjectSectionId } from './sectionId'
+import { WarningBar } from './WarningBar'
 
 export interface RiskAnalysisProps {
-  id: SectionId
+  id: ProjectSectionId
   title: string
+  sectionOrder: number
   riskValues: RiskValues
+  warning: string | undefined
+  isVerified: boolean | undefined
+  redWarning: string | undefined
   isUnderReview?: boolean
 }
 
 export function RiskAnalysis({
   id,
   title,
+  sectionOrder,
   riskValues,
+  isVerified,
+  warning,
+  redWarning,
   isUnderReview,
 }: RiskAnalysisProps) {
   isUnderReview =
@@ -30,9 +42,34 @@ export function RiskAnalysis({
     <ProjectDetailsSection
       title={title}
       id={id}
-      className="mt-4"
+      sectionOrder={sectionOrder}
       isUnderReview={isUnderReview}
     >
+      {isVerified === false && (
+        <WarningBar
+          text="This project includes unverified contracts."
+          color="red"
+          isCritical={true}
+          className="mt-4"
+          icon={UnverifiedIcon}
+        />
+      )}
+      {redWarning && (
+        <WarningBar
+          text={redWarning}
+          color="red"
+          className="mt-4"
+          icon={ShieldIcon}
+        />
+      )}
+      {warning && (
+        <WarningBar
+          text={warning}
+          color="yellow"
+          isCritical={false}
+          className="mt-4"
+        />
+      )}
       <BigRosette risks={riskValues} className="mx-auto my-6 lg:hidden" />
       <SingleRisk
         name="State validation"
@@ -42,7 +79,7 @@ export function RiskAnalysis({
         name="Data availability"
         riskValue={riskValues.dataAvailability}
       />
-      <SingleRisk name="Upgradeability" riskValue={riskValues.upgradeability} />
+      <SingleRisk name="Exit window" riskValue={riskValues.exitWindow} />
       <SingleRisk
         name="Sequencer failure"
         riskValue={riskValues.sequencerFailure}
@@ -54,6 +91,7 @@ export function RiskAnalysis({
     </ProjectDetailsSection>
   )
 }
+
 function SingleRisk({
   name,
   riskValue,
@@ -71,16 +109,26 @@ function SingleRisk({
       ) : (
         <>
           <span
-            className={cx(
+            className={cn(
               sentimentToTextColor(riskValue.sentiment),
               'mt-2 block text-xl font-bold md:text-2xl',
             )}
           >
             {riskValue.value}
           </span>
-          <p className="mt-2 text-gray-850 dark:text-gray-400">
-            {riskValue.description}
-          </p>
+          {riskValue.warning && (
+            <WarningBar
+              className="my-2"
+              icon={RoundedWarningIcon}
+              text={riskValue.warning.text}
+              color={riskValue.warning.sentiment === 'bad' ? 'red' : 'yellow'}
+            />
+          )}
+          {riskValue.description && (
+            <Markdown className="mt-2 leading-snug text-gray-850 dark:text-gray-400">
+              {riskValue.description}
+            </Markdown>
+          )}
         </>
       )}
     </div>

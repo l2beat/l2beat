@@ -14,10 +14,10 @@ export const gravity: Bridge = {
     slug: 'gravity',
     category: 'Token Bridge',
     links: {
-      websites: ['https://www.gravitybridge.net/'],
+      websites: ['https://gravitybridge.net/'],
       explorers: [
-        'https://www.mintscan.io/gravity-bridge',
-        'https://www.skynetexplorers.com/gravity-bridge',
+        'https://mintscan.io/gravity-bridge',
+        'https://skynetexplorers.com/gravity-bridge',
       ],
       apps: [
         'https://spacestation.zone/',
@@ -25,7 +25,7 @@ export const gravity: Bridge = {
       ],
       repositories: ['https://github.com/Gravity-Bridge'],
       documentation: [
-        'https://www.gravitybridge.net/faq',
+        'https://gravitybridge.net/faq',
         'https://github.com/Gravity-Bridge/Gravity-Docs',
       ],
       socialMedia: [

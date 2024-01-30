@@ -1,8 +1,8 @@
 import React from 'react'
-import { renderToStaticMarkup } from 'react-dom/server'
 
 import { isZeroUSD } from '../../utils/utils'
-import { TokenControl } from '../chart/CommonTokenControls'
+import { TokenControl } from '../chart/TokenControls'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { NumberCell } from './NumberCell'
 
 export interface ValueWithPercentageCellProps {
@@ -21,22 +21,25 @@ export function ValueWithPercentageCell(props: ValueWithPercentageCellProps) {
       {props.value && !isZeroUSD(props.value) ? (
         <>
           {props.tokens ? (
-            <div
-              className="Tooltip"
-              title={renderToStaticMarkup(
-                <TokenGridTooltip tokens={props.tokens} />,
-              )}
-              data-tooltip-big
-            >
-              <NumberCell className="font-bold">{props.value}</NumberCell>
-              <NumberCell signed className="w-18 ml-1 !text-base font-medium ">
-                {props.percentChange}
-              </NumberCell>
-            </div>
+            <Tooltip big>
+              <TooltipTrigger>
+                <NumberCell className="inline font-bold">
+                  {props.value}
+                </NumberCell>
+                <NumberCell signed className="ml-1 !text-base font-medium ">
+                  {props.percentChange}
+                </NumberCell>
+              </TooltipTrigger>
+              <TooltipContent>
+                <TokenGridTooltip tokens={props.tokens} />
+              </TooltipContent>
+            </Tooltip>
           ) : (
             <div>
-              <NumberCell className="font-bold">{props.value}</NumberCell>
-              <NumberCell signed className="w-18 ml-1 !text-base font-medium ">
+              <NumberCell className="inline font-bold">
+                {props.value}
+              </NumberCell>
+              <NumberCell signed className="ml-1 !text-base font-medium ">
                 {props.percentChange}
               </NumberCell>
             </div>
@@ -74,8 +77,8 @@ function TokenGridTooltip({ tokens }: TokenGridTooltipProps) {
     <div className={styling}>
       {top15.map((t, i) => (
         <div className="flex items-center gap-1.5" key={i}>
-          <img src={t.iconUrl} className="h-4 w-4 rounded-full" />
-          <span className="text-xs font-bold">{t.symbol}</span>
+          <img src={t.iconUrl} className="size-4 rounded-full" />
+          <span className="text-xs font-bold">{t.info.symbol}</span>
         </div>
       ))}
       {tokens.length > 15 && (

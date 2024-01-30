@@ -1,15 +1,17 @@
 {
-  "chain": "ethereum",
   "name": "nova",
-  "blockNumber": 17334354,
-  "configHash": "0xd4b348366a8456f491830ae0fdf771dd5ea73bc386089f18146979b5640add06",
+  "chain": "ethereum",
+  "blockNumber": 19119504,
+  "configHash": "0x7c09e5992e6255b2cbe890a6bfdf3f40c888131f63feb9c49ec37d6df427981e",
+  "version": 3,
   "contracts": [
     {
       "name": "OneStepProverMath",
       "address": "0x1efb116EBC38CE895Eb2E5e009234E0E0836f2F5",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1656050046
     },
     {
       "name": "SequencerInbox",
@@ -19,14 +21,17 @@
         "implementation": "0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9",
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
       },
+      "implementations": ["0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9"],
+      "sinceTimestamp": 1656050353,
       "values": {
-        "batchCount": 14343,
+        "batchCount": 28091,
         "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
         "maxTimeVariation": [5760, 12, 86400, 3600],
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
-        "totalDelayedMessagesRead": 214866
+        "sequencerVersion": "0x88",
+        "totalDelayedMessagesRead": 268908
       }
     },
     {
@@ -37,6 +42,8 @@
         "implementation": "0xC8D26aB9e132C79140b3376a0Ac7932E4680Aa45",
         "admin": "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
       },
+      "implementations": ["0xC8D26aB9e132C79140b3376a0Ac7932E4680Aa45"],
+      "sinceTimestamp": 1656312893,
       "values": {
         "counterpartGateway": "0xbf544970E6BD77b21C6492C281AB60d0770451F4",
         "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
@@ -51,6 +58,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1656050159,
       "values": {
         "NOVA_STAKERS": [
           [
@@ -70,38 +78,11 @@
         "implementation": "0x32642eE509001D02615951090c7c56D6000e22C2",
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
       },
+      "implementations": ["0x32642eE509001D02615951090c7c56D6000e22C2"],
+      "sinceTimestamp": 1656050353,
       "values": {
         "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88"
-      }
-    },
-    {
-      "name": "GnosisSafe",
-      "address": "0x3666a60ff589873ced457a9a8a0aA6F83D708767",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
-      },
-      "values": {
-        "domainSeparator": "0xe7aee79ca5c88cfa7da718e084d199a66001a7d10e0b1be3933b4dacf212dcc3",
-        "getChainId": 1,
-        "getOwners": [
-          "0x475816ca2a31D601B4e336f5c2418A67978aBf09",
-          "0xf6B6F07862A02C85628B3A9688beae07fEA9C863",
-          "0x5A1FD562271aAC2Dadb51BAAb7760b949D9D81dF",
-          "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
-          "0x5280406912EB8Ec677Df66C326BE48f938DC2e44",
-          "0x566a07C3c932aE6AF74d77c29e5c30D8B1853710",
-          "0x8e6247239CBeB3Eaf9d9a691D01A67e2A9Fea3C5",
-          "0x88910996671162953E89DdcE5C8137f9077da217",
-          "0x8688515028955734350067695939423222009623",
-          "0x0E5011001cF9c89b0259BC3B050785067495eBf5",
-          "0x526C0DA9970E7331d171f86AeD28FAFB5D8A49EF",
-          "0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd"
-        ],
-        "getThreshold": 9,
-        "nonce": 13,
-        "VERSION": "1.3.0"
       }
     },
     {
@@ -112,6 +93,8 @@
         "implementation": "0x86f0cf42Ad673B3D666d103E009EC142D1298a17",
         "admin": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
       },
+      "implementations": ["0x86f0cf42Ad673B3D666d103E009EC142D1298a17"],
+      "sinceTimestamp": 1678968515,
       "values": {
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -126,7 +109,7 @@
             "adminRole": "ADMIN_ROLE",
             "members": [
               "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
-              "0x3666a60ff589873ced457a9a8a0aA6F83D708767"
+              "0xF06E95eF589D9c38af242a8AAee8375f14023F85"
             ]
           }
         },
@@ -141,6 +124,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1678968395,
       "values": {
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
       },
@@ -152,6 +136,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1656050166,
       "values": {
         "owner": "0x0000000000000000000000000000000000000000"
       }
@@ -162,6 +147,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1656050353,
       "values": {
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
       },
@@ -172,7 +158,8 @@
       "address": "0x7a6C0503107858f82a790E481024134092e19979",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1656050046
     },
     {
       "name": "OneStepProofEntry",
@@ -180,6 +167,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1656050046,
       "values": {
         "prover0": "0x8323B58C522690E6aFae94044825F0c79A93d236",
         "proverHostIo": "0x9CBC3F14a57CE6eAD0e770F528E2f1E8b8C37613",
@@ -192,7 +180,8 @@
       "address": "0x8323B58C522690E6aFae94044825F0c79A93d236",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1656050037
     },
     {
       "name": "L1DaiGateway",
@@ -200,6 +189,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1659620276,
       "values": {
         "counterpartGateway": "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F",
         "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
@@ -217,14 +207,16 @@
       "address": "0x9CBC3F14a57CE6eAD0e770F528E2f1E8b8C37613",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1656050046
     },
     {
       "name": "L1Escrow",
       "address": "0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3",
       "upgradeability": {
         "type": "immutable"
-      }
+      },
+      "sinceTimestamp": 1659620187
     },
     {
       "name": "ChallengeManager",
@@ -234,6 +226,8 @@
         "implementation": "0x7a18bB9DbAF1202F3fc977e42E3C360d522e4566",
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
       },
+      "implementations": ["0x7a18bB9DbAF1202F3fc977e42E3C360d522e4566"],
+      "sinceTimestamp": 1656050353,
       "values": {
         "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
         "osp": "0x7AdcA86896c4220f19B2f7f9746e7A99E57B0Fc5",
@@ -248,6 +242,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1656312664,
       "values": {
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
       },
@@ -261,6 +256,8 @@
         "implementation": "0xb4299A1F5f26fF6a98B7BA35572290C359fde900",
         "admin": "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
       },
+      "implementations": ["0xb4299A1F5f26fF6a98B7BA35572290C359fde900"],
+      "sinceTimestamp": 1656312805,
       "values": {
         "cloneableProxyHash": "0xe95e7b13b0b76934e55320c0f1a812918ec818f61a9b36660d64d803eeecb91a",
         "counterpartGateway": "0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257",
@@ -278,6 +275,8 @@
         "implementation": "0x1066CEcC8880948FE55e427E94F1FF221d626591",
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
       },
+      "implementations": ["0x1066CEcC8880948FE55e427E94F1FF221d626591"],
+      "sinceTimestamp": 1656050353,
       "values": {
         "activeOutbox": "0x0000000000000000000000000000000000000000",
         "allowedDelayedInboxList": [
@@ -285,11 +284,11 @@
           "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
         ],
         "allowedOutboxList": ["0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
-        "delayedMessageCount": 214885,
+        "delayedMessageCount": 268909,
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "sequencerMessageCount": 14343,
-        "sequencerReportedSubMessageCount": 9565822
+        "sequencerMessageCount": 28091,
+        "sequencerReportedSubMessageCount": 44034488
       }
     },
     {
@@ -300,6 +299,8 @@
         "implementation": "0x1b2676D32E2f7430a564DD4560641F990dFE3D6a",
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
       },
+      "implementations": ["0x1b2676D32E2f7430a564DD4560641F990dFE3D6a"],
+      "sinceTimestamp": 1656050353,
       "values": {
         "allowListEnabled": false,
         "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
@@ -315,6 +316,8 @@
         "implementation": "0x52595021fA01B3E14EC6C88953AFc8E35dFf423c",
         "admin": "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560"
       },
+      "implementations": ["0x52595021fA01B3E14EC6C88953AFc8E35dFf423c"],
+      "sinceTimestamp": 1656312748,
       "values": {
         "counterpartGateway": "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8",
         "defaultGateway": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
@@ -332,6 +335,8 @@
         "implementation": "0x7439d8d4F3b9d9B6222f3E9760c75a47e08a7b3f",
         "admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148"
       },
+      "implementations": ["0x7439d8d4F3b9d9B6222f3E9760c75a47e08a7b3f"],
+      "sinceTimestamp": 1656050353,
       "values": {
         "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
         "l2ToL1BatchNum": 0,
@@ -350,6 +355,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1656050166,
       "values": {
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
         "template": "0x6Ab7A2f1a4febCD40A58b0205bFDA9CAf614b779"
@@ -360,9 +366,11 @@
       "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49",
       "upgradeability": {
         "type": "EIP1967 proxy",
-        "implementation": "0x962d70fc48F3465404bC77B03f104746B25a1d1b",
+        "implementation": "0x61dC65001A8De4138DAD5167e43FF0FB0AB8D3B3",
         "admin": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678"
       },
+      "implementations": ["0x61dC65001A8De4138DAD5167e43FF0FB0AB8D3B3"],
+      "sinceTimestamp": 1678968515,
       "values": {
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -383,7 +391,7 @@
           },
           "CANCELLER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x3666a60ff589873ced457a9a8a0aA6F83D708767"]
+            "members": ["0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"]
           }
         },
         "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
@@ -398,6 +406,38 @@
       }
     },
     {
+      "name": "GnosisSafe",
+      "address": "0xF06E95eF589D9c38af242a8AAee8375f14023F85",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": ["0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"]
+      },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
+      "sinceTimestamp": 1692138791,
+      "values": {
+        "domainSeparator": "0x24555dff42c3faa8a2ff9680ac37e71d6f765373e9cf30c226d13e5c1cebe593",
+        "getChainId": 1,
+        "getOwners": [
+          "0x8F10e3413586c4a8DCfcE19D009872b19e9cd8E3",
+          "0xb71ca4FFbB7b58d75Ba29891ab45e9Dc12B444Ed",
+          "0x3E286452b1C66abB08Eb5494c3894F40aB5a59AF",
+          "0xb07dc9103328A51128bC6Cc1049d1137035f5E28",
+          "0x3Bd8e2AC65ad6f0F094BA6766cBd9484AB49eF23",
+          "0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd",
+          "0x566a07C3c932aE6AF74d77c29e5c30D8B1853710",
+          "0x5280406912EB8Ec677Df66C326BE48f938DC2e44",
+          "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
+          "0x5A1FD562271aAC2Dadb51BAAb7760b949D9D81dF",
+          "0xf6B6F07862A02C85628B3A9688beae07fEA9C863",
+          "0x475816ca2a31D601B4e336f5c2418A67978aBf09"
+        ],
+        "getThreshold": 9,
+        "nonce": 2,
+        "VERSION": "1.3.0"
+      }
+    },
+    {
       "name": "ArbitrumProxy",
       "address": "0xFb209827c58283535b744575e11953DCC4bEAD88",
       "upgradeability": {
@@ -406,6 +446,11 @@
         "adminImplementation": "0x72f193d0F305F532C87a4B9D0A2F407a3F4f585f",
         "userImplementation": "0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff"
       },
+      "implementations": [
+        "0x72f193d0F305F532C87a4B9D0A2F407a3F4f585f",
+        "0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff"
+      ],
+      "sinceTimestamp": 1656050353,
       "values": {
         "baseStake": "1000000000000000000",
         "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
@@ -414,19 +459,17 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 7633,
+        "firstUnresolvedNode": 13585,
         "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "isERC20Enabled": false,
         "lastStakeBlock": 17257726,
-        "latestConfirmed": 7632,
-        "latestNodeCreated": 7786,
+        "latestConfirmed": 13584,
+        "latestNodeCreated": 13738,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
         "paused": false,
-        "requireUnresolved": [],
-        "requireUnresolvedExists": [],
         "rollupDeploymentBlock": 15016829,
         "rollupEventInbox": "0x304807A7ed6c1296df2128E6ff3836e477329CD2",
         "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
@@ -437,7 +480,7 @@
         "validatorUtils": "0x2B081fbaB646D9013f2699BebEf62B7e7d7F0976",
         "validatorWalletCreator": "0xe05465Aab36ba1277dAE36aa27a7B74830e74DE4",
         "validatorWhitelistDisabled": false,
-        "wasmModuleRoot": "0x6b94a7fc388fd8ef3def759297828dc311761e88d8179c7ee8d3887dc554f3c3",
+        "wasmModuleRoot": "0xf4389b835497a910d7ba3ebfb77aa93da985634f3c052de1290360635be40c4a",
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
@@ -446,16 +489,16 @@
   ],
   "eoas": [
     "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
-    "0x0E5011001cF9c89b0259BC3B050785067495eBf5",
+    "0x3Bd8e2AC65ad6f0F094BA6766cBd9484AB49eF23",
+    "0x3E286452b1C66abB08Eb5494c3894F40aB5a59AF",
     "0x475816ca2a31D601B4e336f5c2418A67978aBf09",
-    "0x526C0DA9970E7331d171f86AeD28FAFB5D8A49EF",
     "0x5280406912EB8Ec677Df66C326BE48f938DC2e44",
     "0x566a07C3c932aE6AF74d77c29e5c30D8B1853710",
     "0x5A1FD562271aAC2Dadb51BAAb7760b949D9D81dF",
-    "0x8688515028955734350067695939423222009623",
-    "0x88910996671162953E89DdcE5C8137f9077da217",
-    "0x8e6247239CBeB3Eaf9d9a691D01A67e2A9Fea3C5",
+    "0x8F10e3413586c4a8DCfcE19D009872b19e9cd8E3",
     "0xa723C008e76E379c55599D2E4d93879BeaFDa79C",
+    "0xb07dc9103328A51128bC6Cc1049d1137035f5E28",
+    "0xb71ca4FFbB7b58d75Ba29891ab45e9Dc12B444Ed",
     "0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3",
     "0xf6B6F07862A02C85628B3A9688beae07fEA9C863",
     "0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd"
@@ -598,9 +641,6 @@
       "function rollup() view returns (address)",
       "function rollupInitialized(uint256 chainId)"
     ],
-    "0x3666a60ff589873ced457a9a8a0aA6F83D708767": [
-      "constructor(address _singleton)"
-    ],
     "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -651,6 +691,51 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "0x61dC65001A8De4138DAD5167e43FF0FB0AB8D3B3": [
+      "constructor()",
+      "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
+      "event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)",
+      "event Cancelled(bytes32 indexed id)",
+      "event Initialized(uint8 version)",
+      "event MinDelayChange(uint256 oldDuration, uint256 newDuration)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event TxToL2(address indexed _from, address indexed _to, uint256 indexed _seqNum, bytes _data)",
+      "function CANCELLER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function EXECUTOR_ROLE() view returns (bytes32)",
+      "function PROPOSER_ROLE() view returns (bytes32)",
+      "function RETRYABLE_TICKET_MAGIC() view returns (address)",
+      "function TIMELOCK_ADMIN_ROLE() view returns (bytes32)",
+      "function cancel(bytes32 id)",
+      "function execute(address target, uint256 value, bytes payload, bytes32 predecessor, bytes32 salt) payable",
+      "function executeBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) payable",
+      "function getMinDelay() view returns (uint256 duration)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getTimestamp(bytes32 id) view returns (uint256 timestamp)",
+      "function governanceChainInbox() view returns (address)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function hashOperation(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt) pure returns (bytes32 hash)",
+      "function hashOperationBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) pure returns (bytes32 hash)",
+      "function initialize(uint256 minDelay, address[] proposers, address[] executors)",
+      "function initialize(uint256 minDelay, address[] executors, address _governanceChainInbox, address _l2Timelock)",
+      "function isOperation(bytes32 id) view returns (bool registered)",
+      "function isOperationDone(bytes32 id) view returns (bool done)",
+      "function isOperationPending(bytes32 id) view returns (bool pending)",
+      "function isOperationReady(bytes32 id) view returns (bool ready)",
+      "function l2Timelock() view returns (address)",
+      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
+      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
+      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function schedule(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function updateDelay(uint256 newDelay)"
     ],
     "0x6Ab7A2f1a4febCD40A58b0205bFDA9CAf614b779": [
       "error BadArrayLength(uint256 expected, uint256 actual)",
@@ -861,51 +946,6 @@
       "function renounceRole(bytes32 role, address account)",
       "function revokeRole(bytes32 role, address account)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
-    ],
-    "0x962d70fc48F3465404bC77B03f104746B25a1d1b": [
-      "constructor()",
-      "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
-      "event CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)",
-      "event Cancelled(bytes32 indexed id)",
-      "event Initialized(uint8 version)",
-      "event MinDelayChange(uint256 oldDuration, uint256 newDuration)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event TxToL2(address indexed _from, address indexed _to, uint256 indexed _seqNum, bytes _data)",
-      "function CANCELLER_ROLE() view returns (bytes32)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function EXECUTOR_ROLE() view returns (bytes32)",
-      "function PROPOSER_ROLE() view returns (bytes32)",
-      "function RETRYABLE_TICKET_MAGIC() view returns (address)",
-      "function TIMELOCK_ADMIN_ROLE() view returns (bytes32)",
-      "function cancel(bytes32 id)",
-      "function execute(address target, uint256 value, bytes payload, bytes32 predecessor, bytes32 salt) payable",
-      "function executeBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) payable",
-      "function getMinDelay() view returns (uint256 duration)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function getTimestamp(bytes32 id) view returns (uint256 timestamp)",
-      "function governanceChainInbox() view returns (address)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function hashOperation(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt) pure returns (bytes32 hash)",
-      "function hashOperationBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) pure returns (bytes32 hash)",
-      "function initialize(uint256 minDelay, address[] proposers, address[] executors)",
-      "function initialize(uint256 minDelay, address[] executors, address _governanceChainInbox, address _l2Timelock)",
-      "function isOperation(bytes32 id) view returns (bool registered)",
-      "function isOperationDone(bytes32 id) view returns (bool done)",
-      "function isOperationPending(bytes32 id) view returns (bool pending)",
-      "function isOperationReady(bytes32 id) view returns (bool ready)",
-      "function l2Timelock() view returns (address)",
-      "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
-      "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
-      "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function schedule(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt, uint256 delay)",
-      "function scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function updateDelay(uint256 newDelay)"
     ],
     "0x97f63339374fCe157Aa8Ee27830172d2AF76A786": [
       "constructor(address _l2Counterpart, address _l1Router, address _inbox, address _l1Dai, address _l2Dai, address _l1Escrow)",
@@ -1276,6 +1316,9 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xF06E95eF589D9c38af242a8AAee8375f14023F85": [
+      "constructor(address _singleton)"
     ],
     "0xFb209827c58283535b744575e11953DCC4bEAD88": [
       "constructor(tuple(uint64 confirmPeriodBlocks, uint64 extraChallengeTimeBlocks, address stakeToken, uint256 baseStake, bytes32 wasmModuleRoot, address owner, address loserStakeEscrow, uint256 chainId, tuple(uint256 delayBlocks, uint256 futureBlocks, uint256 delaySeconds, uint256 futureSeconds) sequencerInboxMaxTimeVariation) config, tuple(address bridge, address sequencerInbox, address inbox, address outbox, address rollupEventInbox, address challengeManager, address rollupAdminLogic, address rollupUserLogic, address validatorUtils, address validatorWalletCreator) connectedContracts)",

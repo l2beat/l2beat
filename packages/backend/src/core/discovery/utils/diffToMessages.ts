@@ -1,11 +1,10 @@
 import { DiscoveryDiff, FieldDiff } from '@l2beat/discovery'
-import { ChainId } from '@l2beat/shared-pure'
 
 import { MAX_MESSAGE_LENGTH } from '../../../peripherals/discord/DiscordClient'
 
 export interface DiffMetadata {
   blockNumber: number
-  chainId: ChainId
+  chain: string
   dependents: string[]
   nonce?: number
 }
@@ -17,7 +16,7 @@ export function diffToMessages(
 ): string[] {
   const header = getHeader(
     name,
-    metadata.chainId,
+    metadata.chain,
     metadata.blockNumber,
     metadata.nonce,
   )
@@ -50,11 +49,12 @@ export function contractDiffToMessages(
   }
 
   const contractHeader = `${diff.name} | ${diff.address.toString()}\n\n`
-  const messages = diff.diff?.map(fieldDiffToMessage) ?? []
+  const maxLengthAdjusted = maxLength - contractHeader.length
+  const messages =
+    diff.diff?.map((d) => fieldDiffToMessage(d, maxLengthAdjusted)) ?? []
 
   //bundle message is called second time to handle situation when
   //diff in a single contract would result in a message larger than MAX_MESSAGE_LENGTH
-  const maxLengthAdjusted = maxLength - contractHeader.length
   const bundledMessages = bundleMessages(messages, maxLengthAdjusted)
 
   return bundledMessages.map((m) => `${contractHeader}${m}`)
@@ -80,7 +80,18 @@ export function bundleMessages(
   return bundle
 }
 
-export function fieldDiffToMessage(diff: FieldDiff): string {
+function hideOverflow(str: string, maxLength: number) {
+  if (str.length <= maxLength) {
+    return str
+  }
+
+  return `${str.substring(0, maxLength - 3)}...`
+}
+
+export function fieldDiffToMessage(
+  diff: FieldDiff,
+  maxLength = MAX_MESSAGE_LENGTH,
+): string {
   let message = ''
 
   if (diff.key !== undefined) {
@@ -93,6 +104,14 @@ export function fieldDiffToMessage(diff: FieldDiff): string {
     message += `+ ${diff.after ?? 'undefined'}\n`
   }
 
+  const NEW_LINE_BIAS = 1
+  if (message.length + NEW_LINE_BIAS > maxLength) {
+    const warningMessage = 'Warning: Message has been truncated\n'
+    message =
+      warningMessage +
+      hideOverflow(message, maxLength - warningMessage.length - NEW_LINE_BIAS)
+  }
+
   message += '\n'
 
   return message
@@ -100,24 +119,18 @@ export function fieldDiffToMessage(diff: FieldDiff): string {
 
 function getHeader(
   name: string,
-  chainId: ChainId,
+  chain: string,
   blockNumber: number,
   nonce?: number,
 ) {
+  name = wrapBoldAndItalic(name)
+  chain = wrapBoldAndItalic(chain)
   if (nonce === undefined) {
-    return `${wrapBoldAndItalic(
-      name,
-    )} | detected changes on chain: ${wrapBoldAndItalic(
-      ChainId.getName(chainId),
-    )}`
+    return `${name} | detected changes on chain: ${chain}`
   }
   return `> ${formatNonce(
     nonce,
-  )} (block_number=${blockNumber})\n\n${wrapBoldAndItalic(
-    name,
-  )} | detected changes on chain: ${wrapBoldAndItalic(
-    ChainId.getName(chainId),
-  )}`
+  )} (block_number=${blockNumber})\n\n${name} | detected changes on chain: ${chain}`
 }
 
 function getDependentsMessage(dependents: string[]) {

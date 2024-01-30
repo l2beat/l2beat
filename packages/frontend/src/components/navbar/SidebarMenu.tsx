@@ -1,6 +1,8 @@
 import React from 'react'
 
-import { ActivityIcon, RiskIcon, SummaryIcon } from '../icons'
+import { ActivityIcon, RiskIcon, SummaryIcon, TvlIcon } from '../icons'
+import { FinalityIcon } from '../icons/pages/FinalityIcon'
+import { LivenessIcon } from '../icons/pages/LivenessIcon'
 import { MenuCloseIcon } from '../icons/symbols/MenuCloseIcon'
 import { Logo } from '../Logo'
 import { OutLink } from '../OutLink'
@@ -12,6 +14,8 @@ import { NavbarPage } from './types'
 export interface SidebarMenuProps {
   selectedPage: NavbarPage
   showActivity: boolean
+  showFinality: boolean
+  showLiveness: boolean
   showHiringBadge: boolean
   forumLink: string
   socialLinks: SocialLinksProps
@@ -21,7 +25,7 @@ export function SidebarMenu(props: SidebarMenuProps) {
   return (
     <div
       id="sidebar-menu"
-      className="fixed left-0 bottom-0 top-0 z-999 flex w-full translate-x-full flex-col bg-white text-base transition-transform duration-300 dark:bg-black lg:hidden"
+      className="fixed inset-y-0 left-0 z-999 flex w-full translate-x-full flex-col bg-white text-base transition-transform duration-300 dark:bg-black lg:hidden"
     >
       <div className="mt-[11.5px] flex items-center justify-between px-4">
         <a href={props.selectedPage === 'bridges' ? '/bridges/summary' : '/'}>
@@ -46,9 +50,25 @@ export function SidebarMenu(props: SidebarMenuProps) {
                 <a href="/scaling/summary">Summary</a>
               </li>
               <li className="flex gap-2 font-medium">
+                <TvlIcon className="h-auto w-4" />
+                <a href="/scaling/tvl">Value Locked</a>
+              </li>
+              <li className="flex gap-2 font-medium">
                 <RiskIcon className="h-auto w-4" />
                 <a href="/scaling/risk">Risks</a>
               </li>
+              {props.showLiveness && (
+                <li className="flex gap-2 font-medium">
+                  <LivenessIcon className="h-auto w-4" />
+                  <a href="/scaling/liveness">Liveness</a>
+                </li>
+              )}
+              {props.showFinality && (
+                <li className="flex gap-2 font-medium">
+                  <FinalityIcon className="h-auto w-4" />
+                  <a href="/scaling/finality">Finality</a>
+                </li>
+              )}
               {props.showActivity && (
                 <li className="flex items-center gap-2 font-medium">
                   <ActivityIcon className="h-auto w-4" />
@@ -77,7 +97,7 @@ export function SidebarMenu(props: SidebarMenuProps) {
             </ul>
           </li>
         </ul>
-        <hr className="mt-8 mb-6 w-full border-gray-200 dark:border-gray-850" />
+        <hr className="mb-6 mt-8 w-full border-gray-200 dark:border-gray-850" />
         <ul className="flex flex-col gap-4 px-6 text-sm font-medium">
           <li>
             <OutLink href={props.forumLink}>Forum</OutLink>

@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { ZksyncTransactionRow } from 'knex/types/tables'
@@ -39,7 +39,7 @@ export class ZksyncTransactionRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('activity.zksync').delete()
+    return knex('activity.zksync').delete()
   }
 
   async findLastTimestamp(): Promise<UnixTime | undefined> {

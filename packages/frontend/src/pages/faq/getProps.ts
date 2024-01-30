@@ -9,7 +9,7 @@ export function getProps(config: Config): Wrapped<FaqPageProps> {
     props: {
       navbar: getNavbarProps(config, 'faq'),
       title: 'Frequently Asked Questions',
-      items: getFaqItems(config.features.detailedTvl),
+      items: getFaqItems(),
       footer: getFooterProps(config),
     },
     wrapper: {
@@ -20,6 +20,7 @@ export function getProps(config: Config): Wrapped<FaqPageProps> {
         image: 'https://l2beat.com/meta-images/overview-scaling.png',
         url: 'https://l2beat.com/faq/',
       },
+      banner: config.features.banner,
     },
   }
 }

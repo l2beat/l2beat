@@ -1,8 +1,8 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import { AssetId, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { setupDatabaseTestSuite } from '../../test/database'
+import { describeDatabase } from '../../test/database'
 import {
   CirculatingSupplyRecord,
   CirculatingSupplyRepository,
@@ -23,8 +23,7 @@ const mockCirculatingSupply = (
   }
 }
 
-describe(CirculatingSupplyRepository.name, () => {
-  const { database } = setupDatabaseTestSuite()
+describeDatabase(CirculatingSupplyRepository.name, (database) => {
   const repository = new CirculatingSupplyRepository(database, Logger.SILENT)
 
   const ASSET_1 = AssetId('dai-dai-stablecoin')
@@ -36,8 +35,11 @@ describe(CirculatingSupplyRepository.name, () => {
   ]
 
   beforeEach(async () => {
-    await repository.deleteAll()
     await repository.addMany(DATA)
+  })
+
+  afterEach(async () => {
+    await repository.deleteAll()
   })
 
   describe(CirculatingSupplyRepository.prototype.getByTimestamp.name, () => {

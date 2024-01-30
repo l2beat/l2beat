@@ -42,7 +42,14 @@
         "getLastSequencerTimestamp",
         "getTotalBatches",
         "getTotalElements"
-      ]
+      ],
+      "fields": {
+        "deletedStateBatches": {
+          "type": "stateFromEvent",
+          "event": "StateBatchDeleted",
+          "returnParams": ["_batchIndex", "_batchRoot"]
+        }
+      }
     },
     "CanonicalTransactionChain": {
       "ignoreMethods": ["getQueueElement"],

@@ -1,9 +1,9 @@
 {
   "name": "zora",
   "chain": "ethereum",
-  "blockNumber": 18083967,
-  "configHash": "0x11a78f39c3de4b930a11851a87481fade694a707bca1f55e550a581c6b17b336",
-  "version": 2,
+  "blockNumber": 19090324,
+  "configHash": "0xd5f583d684e842d99a65e370631b81bb66f8c7c23bce38d3ebf462fc1d01a7d1",
+  "version": 3,
   "contracts": [
     {
       "name": "OptimismPortal",
@@ -13,11 +13,13 @@
         "implementation": "0x43260ee547c3965bb2a0174763bb8FEcC650BA4A",
         "admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"
       },
+      "implementations": ["0x43260ee547c3965bb2a0174763bb8FEcC650BA4A"],
+      "sinceTimestamp": 1686694031,
       "values": {
         "GUARDIAN": "0xC72aE5c7cc9a332699305E29F68Be66c73b60542",
         "L2_ORACLE": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 100000, 18083965],
+        "params": [1000000000, 100000, 19090306],
         "paused": false,
         "SYSTEM_CONFIG": "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86",
         "version": "1.6.0"
@@ -32,6 +34,8 @@
         "implementation": "0xbF6acaF315477b15D638bf4d91eA48FA79b58335",
         "admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"
       },
+      "implementations": ["0xbF6acaF315477b15D638bf4d91eA48FA79b58335"],
+      "sinceTimestamp": 1686693995,
       "values": {
         "l2TokenBridge": "0x4200000000000000000000000000000000000010",
         "messenger": "0xdC40a14d9abd6F410226f1E6de71aE03441ca506",
@@ -49,6 +53,8 @@
         "implementation": "0xDBCdA21518AF39E7feb9748F6718D3db11591461",
         "admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"
       },
+      "implementations": ["0xDBCdA21518AF39E7feb9748F6718D3db11591461"],
+      "sinceTimestamp": 1686694055,
       "values": {
         "messenger": "0xdC40a14d9abd6F410226f1E6de71aE03441ca506",
         "MESSENGER": "0xdC40a14d9abd6F410226f1E6de71aE03441ca506",
@@ -65,14 +71,17 @@
         "implementation": "0x9eedde6b4D3263b97209Ba860eDF3Fc6a8fB6a44",
         "admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"
       },
+      "implementations": ["0x9eedde6b4D3263b97209Ba860eDF3Fc6a8fB6a44"],
+      "sinceTimestamp": 1686694007,
       "values": {
         "CHALLENGER": "0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72",
+        "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 3691980,
-        "latestOutputIndex": 2275,
-        "nextBlockNumber": 3693780,
-        "nextOutputIndex": 2276,
+        "latestBlockNumber": 9784980,
+        "latestOutputIndex": 5660,
+        "nextBlockNumber": 9786780,
+        "nextOutputIndex": 5661,
         "PROPOSER": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
         "startingBlockNumber": 0,
         "startingTimestamp": 1686693839,
@@ -89,10 +98,16 @@
         "implementation": "0x17fb7c8Ce213F1A7691ee41EA880ABf6eBC6fa95",
         "admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"
       },
+      "implementations": ["0x17fb7c8Ce213F1A7691ee41EA880ABf6eBC6fa95"],
+      "sinceTimestamp": 1686694067,
       "values": {
         "batcherHash": "0x625726c858dBF78c0125436C943Bf4b4bE9d9033",
         "gasLimit": 30000000,
         "minimumGasLimit": 21000000,
+        "opStackDA": {
+          "isAllTxsLengthEqualToCelestiaDAExample": false,
+          "isSomeTxsLengthEqualToCelestiaDAExample": false
+        },
         "overhead": 188,
         "owner": "0xC72aE5c7cc9a332699305E29F68Be66c73b60542",
         "resourceConfig": [
@@ -119,6 +134,8 @@
         "implementation": "0x84ee4b9673598ca2FbDad4Ba4a27A58D6328Ec46",
         "admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"
       },
+      "implementations": ["0x84ee4b9673598ca2FbDad4Ba4a27A58D6328Ec46"],
+      "sinceTimestamp": 1686694043,
       "values": {
         "BRIDGE": "0x3e2Ea9B92B7E48A52296fD261dc26fd995284631",
         "version": "1.1.0"
@@ -129,8 +146,11 @@
       "address": "0xC72aE5c7cc9a332699305E29F68Be66c73b60542",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": []
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
+      "sinceTimestamp": 1686592343,
       "values": {
         "domainSeparator": "0x04d8b03931757beb3d5d2234a3218674c5274d5c0532403b2f9d22ee0cecb958",
         "getChainId": 1,
@@ -153,8 +173,11 @@
       "address": "0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": []
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
+      "sinceTimestamp": 1686592547,
       "values": {
         "domainSeparator": "0xac8a89558305fc00b7a2686ab2bda0fb7e97f96a30b075fcc453b727c8172bda",
         "getChainId": 1,
@@ -178,6 +201,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1686693947,
       "values": {
         "addressManager": "0xEF8115F2733fb2033a7c756402Fc1deaa56550Ef",
         "isUpgrading": false,
@@ -193,9 +217,11 @@
         "implementationName": "OVM_L1CrossDomainMessenger",
         "implementation": "0x363B4B1ADa52E50353f746999bd9E94395190d2C"
       },
+      "implementations": ["0x363B4B1ADa52E50353f746999bd9E94395190d2C"],
+      "sinceTimestamp": 1686694019,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620217",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621015",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -215,6 +241,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1686693947,
       "values": {
         "owner": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"
       },

@@ -1,8 +1,8 @@
-import cx from 'classnames'
 import React from 'react'
 
-import { renderInlineMarkdown } from '../../utils/utils'
+import { cn } from '../../utils/cn'
 import { OutLinkIcon, ShieldIcon } from '../icons'
+import { Markdown } from '../Markdown'
 import { OutLink } from '../OutLink'
 import { Callout } from './Callout'
 
@@ -10,13 +10,15 @@ export interface WarningBarProps {
   color: 'red' | 'yellow'
   text: string
   href?: string
-  isCritical: boolean
+  icon?: (props: { className?: string }) => JSX.Element
+  isCritical?: boolean
   className?: string
 }
 
 export function WarningBar({
   color,
   text,
+  icon,
   href,
   isCritical,
   className,
@@ -24,25 +26,23 @@ export function WarningBar({
   const iconFill =
     color === 'red' ? 'fill-red-300' : 'fill-yellow-700 dark:fill-yellow-300'
 
-  const renderedText = renderInlineMarkdown(text)
-
-  const textElement = isCritical ? (
+  const textElement = (
     <>
-      <span dangerouslySetInnerHTML={{ __html: renderedText }} />
-      <span className="text-red-300">(CRITICAL)</span>
+      <Markdown className="leading-snug" inline>
+        {text}
+      </Markdown>
+      {isCritical && <span className="text-red-300"> (CRITICAL)</span>}
     </>
-  ) : (
-    <span dangerouslySetInnerHTML={{ __html: renderedText }} />
   )
-
+  const Icon = icon ?? ShieldIcon
   if (href) {
     return (
       <OutLink href={href}>
         <Callout
-          className={cx('p-4', className)}
+          className={cn('p-4', className)}
           color={color}
           hoverable
-          icon={<ShieldIcon className={cx(iconFill)} />}
+          icon={<Icon className={cn('size-5', iconFill)} />}
           body={
             <div className="flex items-center gap-1">
               {textElement}
@@ -56,9 +56,9 @@ export function WarningBar({
 
   return (
     <Callout
-      className={cx('p-4', className)}
+      className={cn('p-4', className)}
       color={color}
-      icon={<ShieldIcon className={cx(iconFill)} />}
+      icon={<Icon className={cn('size-5', iconFill)} />}
       body={textElement}
     />
   )

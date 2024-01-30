@@ -5,7 +5,7 @@
   "initialAddresses": ["0x50002CdFe7CCb0C41F519c6Eb0653158d11cd907"],
   "names": {
     "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92": "LayerZero Multisig",
-    "0x971016EF5Bd9C71fA4ff34D731974d03cEFf5F05": "Aptos Multisig",
+    "0x65bb797c2B9830d891D87288F029ed8dACc19705": "Aptos Multisig",
     // Other
     "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH"
   },

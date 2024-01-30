@@ -1,48 +1,68 @@
-import { Bridge, Layer2, safeGetTokenByAssetId } from '@l2beat/config'
+import { Bridge, Layer2, Layer3, safeGetTokenByAssetId } from '@l2beat/config'
 import {
   ActivityApiResponse,
-  DetailedTvlApiResponse,
+  AssetId,
+  AssetType,
+  ChainId,
   ProjectId,
   TvlApiResponse,
 } from '@l2beat/shared-pure'
 
 import { Config } from '../../build/config'
 import { ChartProps } from '../../components'
-import { TokenControl } from '../../components/chart/CommonTokenControls'
+import { TokenControl } from '../../components/chart/TokenControls'
+import { ChartType, TokenInfo } from '../../scripts/charts/types'
 import { unifyTokensResponse } from '../tvl/getTvlStats'
 
 export function getChart(
-  project: Layer2 | Bridge,
-  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
+  project: Layer2 | Layer3 | Bridge,
+  tvlApiResponse: TvlApiResponse,
   config?: Config,
   activityApiResponse?: ActivityApiResponse,
 ): ChartProps {
+  const hasActivity =
+    config?.features.activity &&
+    !!activityApiResponse?.projects[project.id.toString()]
+  const hasTvl =
+    project.config.escrows.length !== 0 &&
+    !!tvlApiResponse.projects[project.id.toString()]
+
   return {
-    type:
-      config?.features.detailedTvl && project.type === 'layer2'
-        ? 'detailedTvl'
-        : 'tvl',
-    tvlEndpoint: `/api/${project.display.slug}-tvl.json`,
-    detailedTvlEndpoint: `/api/${project.display.slug}-detailed-tvl.json`,
-    activityEndpoint: `/api/activity/${project.display.slug}.json`,
-    tokens: getTokens(
-      project.id,
-      tvlApiResponse,
-      config?.features.detailedTvl ?? false,
-    ),
-    hasActivity:
-      config?.features.activity &&
-      !!activityApiResponse?.projects[project.id.toString()],
-    hasDetailedTvl: config?.features.detailedTvl,
+    settingsId: `project-${project.display.slug}`,
+    initialType: getInitialType(project, hasTvl, !!hasActivity),
+    tokens: getTokens(project.id, tvlApiResponse, project.type === 'layer2'),
+    tvlBreakdownHref:
+      (project.type === 'layer2' || project.type === 'layer3') &&
+      !project.isUpcoming
+        ? `/scaling/projects/${project.display.slug}/tvl-breakdown`
+        : undefined,
+    hasTvl,
+    hasActivity,
     milestones: project.milestones,
-    isUpcoming: project.isUpcoming ?? project.config.escrows.length === 0,
+    showComingSoon: !hasTvl && !hasActivity,
+  }
+}
+
+function getInitialType(
+  project: Layer2 | Layer3 | Bridge,
+  hasTvl: boolean,
+  hasActivity: boolean,
+): ChartType {
+  if (project.type === 'layer2' || project.type === 'layer3') {
+    if (hasActivity && !hasTvl) {
+      return { type: 'project-activity', slug: project.display.slug }
+    } else {
+      return { type: 'project-detailed-tvl', slug: project.display.slug }
+    }
+  } else {
+    return { type: 'project-tvl', slug: project.display.slug }
   }
 }
 
 export function getTokens(
   projectId: ProjectId,
-  tvlApiResponse: TvlApiResponse | DetailedTvlApiResponse,
-  hasDetailedTVL: boolean,
+  tvlApiResponse: TvlApiResponse,
+  isLayer2orLayer3: boolean,
 ): TokenControl[] {
   const tokens = tvlApiResponse.projects[projectId.toString()]?.tokens
 
@@ -67,23 +87,56 @@ export function getTokens(
       const iconUrl = token?.iconUrl ?? ''
 
       if (symbol && name) {
-        const tvlEndpoint = hasDetailedTVL
-          ? `/api/projects/${projectId.toString()}/tvl/chains/${chainId.toString()}/assets/${assetId.toString()}/types/${assetType}`
-          : `/api/projects/${projectId.toString()}/tvl/assets/${assetId.toString()}`
-
         return {
           address: address?.toString(),
           iconUrl,
-          symbol,
           name,
-          assetType,
-          tvlEndpoint,
+          info: getTokenInfo(
+            projectId,
+            assetId,
+            assetType,
+            chainId,
+            symbol,
+            isLayer2orLayer3,
+          ),
           tvl: usdValue,
         }
       }
     })
     .filter(notUndefined)
     .sort((a, b) => b.tvl - a.tvl)
+}
+
+function getTokenInfo(
+  projectId: ProjectId,
+  assetId: AssetId,
+  assetType: AssetType,
+  chainId: ChainId,
+  symbol: string,
+  isLayer2orLayer3: boolean,
+): TokenInfo {
+  if (!isLayer2orLayer3) {
+    return {
+      type: 'regular',
+      projectId: projectId.toString(),
+      assetId: assetId.toString(),
+      symbol,
+    }
+  }
+  return assetType === 'CBV'
+    ? {
+        type: 'CBV',
+        projectId: projectId.toString(),
+        assetId: assetId.toString(),
+        symbol,
+      }
+    : {
+        type: assetType === 'EBV' ? 'EBV' : 'NMV',
+        projectId: projectId.toString(),
+        assetId: assetId.toString(),
+        chainId: chainId.valueOf(),
+        symbol,
+      }
 }
 
 function notUndefined<T>(x: T | undefined): x is T {

@@ -1,35 +1,50 @@
-import cx from 'classnames'
 import React from 'react'
 
-import { Chart, Header, Logo } from '../../components'
+import { Chart, Logo } from '../../components'
+import { ChartType } from '../../scripts/charts/types'
+import { cn } from '../../utils/cn'
+import { MetaImageHeader } from './MetaImageHeader'
 
 export interface TvlMetaImageProps {
   tvl: string
   sevenDayChange: string
+  chartType: Extract<
+    ChartType,
+    { type: 'project-tvl' } | { type: 'layer2-tvl' } | { type: 'bridges-tvl' }
+  >
   name?: string
   icon?: string
-  tvlEndpoint: string
+  fake?: boolean
 }
 
 export function TvlMetaImage(props: TvlMetaImageProps) {
+  const isProject = !!props.name
   const name = props.name ?? 'Overview'
 
   return (
-    <div
-      className={cx(
-        'MetaImage leading-[1.15]',
-        !props.name ? 'overview' : 'project',
-      )}
-    >
-      <Header
+    <div>
+      <MetaImageHeader
         title={name}
-        titleClassName={name.length > 12 ? '!text-5xl' : undefined}
+        isProject={isProject}
         icon={props.icon}
         tvl={props.tvl}
         tvlWeeklyChange={props.sevenDayChange}
       />
-      <Chart tvlEndpoint={props.tvlEndpoint} metaChart />
-      <Logo />
+      <Chart
+        settingsId="meta"
+        initialType={
+          props.fake ? { type: 'storybook-fake-tvl' } : props.chartType
+        }
+        metaChart
+      />
+      <Logo
+        className={cn(
+          isProject && 'absolute left-4 top-6',
+          !isProject &&
+            'absolute left-1/2 top-1/2 z-100 h-auto w-[250px] -translate-x-1/2 -translate-y-1/2',
+        )}
+        animated={false}
+      />
     </div>
   )
 }

@@ -1,12 +1,11 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import { AssetId, ChainId, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { setupDatabaseTestSuite } from '../../test/database'
+import { describeDatabase } from '../../test/database'
 import { ReportRecord, ReportRepository } from './ReportRepository'
 
-describe(ReportRepository.name, () => {
-  const { database } = setupDatabaseTestSuite()
+describeDatabase(ReportRepository.name, (database) => {
   const repository = new ReportRepository(database, Logger.SILENT)
 
   const TIME_0 = UnixTime.now().toStartOf('day')
@@ -58,6 +57,23 @@ describe(ReportRepository.name, () => {
         ]),
       ).toBeRejectedWith('Assertion Error: Timestamps must match')
     })
+
+    it('batches insert', async () => {
+      const records: ReportRecord[] = []
+      for (let i = 1; i < 10_000; i++) {
+        records.push(
+          fakeReport({
+            asset: AssetId('asset' + i.toString()),
+            timestamp: TIME_0,
+            amount: 1n,
+          }),
+        )
+      }
+      await repository.addOrUpdateMany(records)
+      const expected = await repository.getAll()
+
+      expect(expected).toEqualUnsorted(records)
+    })
   })
 
   describe(ReportRepository.prototype.getAll.name, () => {
@@ -82,107 +98,6 @@ describe(ReportRepository.name, () => {
       await repository.deleteAll()
       const results = await repository.getAll()
       expect(results).toEqual([])
-    })
-  })
-
-  describe(ReportRepository.prototype.getDailyByProjectAndAsset.name, () => {
-    it('returns all daily reports for a given asset and project', async () => {
-      const asset = AssetId('my-asset')
-      const report = fakeReport({
-        projectId: PROJECT_A,
-        asset,
-        timestamp: TIME_0,
-      })
-      await repository.addOrUpdateMany([
-        report,
-        fakeReport({ projectId: PROJECT_B, timestamp: TIME_0 }),
-      ])
-      await repository.addOrUpdateMany([
-        fakeReport({ projectId: PROJECT_A, timestamp: TIME_1 }),
-        fakeReport({ projectId: PROJECT_B, timestamp: TIME_1 }),
-      ])
-      const result = await repository.getDailyByProjectAndAsset(
-        PROJECT_A,
-        asset,
-      )
-      expect(result).toEqual([report])
-    })
-  })
-
-  describe(
-    ReportRepository.prototype.getSixHourlyByProjectAndAsset.name,
-    () => {
-      it('returns six hourly reports for a given asset and project', async () => {
-        const asset = AssetId('my-asset')
-        const report = fakeReport({
-          projectId: PROJECT_A,
-          asset,
-          timestamp: TIME_0.add(6, 'hours'),
-        })
-        await repository.addOrUpdateMany([
-          report,
-          fakeReport({
-            projectId: PROJECT_B,
-            timestamp: TIME_0.add(6, 'hours'),
-          }),
-        ])
-        await repository.addOrUpdateMany([
-          fakeReport({
-            projectId: PROJECT_A,
-            timestamp: TIME_0.add(16, 'hours'),
-          }),
-          fakeReport({
-            projectId: PROJECT_B,
-            timestamp: TIME_0.add(16, 'hours'),
-          }),
-        ])
-        await repository.addOrUpdateMany([
-          { ...report, timestamp: TIME_0.add(-90, 'days').add(-1, 'minutes') },
-        ])
-        const result = await repository.getSixHourlyByProjectAndAsset(
-          PROJECT_A,
-          asset,
-          TIME_0.add(-1, 'days'),
-        )
-        expect(result).toEqual([report])
-      })
-    },
-  )
-
-  describe(ReportRepository.prototype.getHourlyByProjectAndAsset.name, () => {
-    it('returns hourly reports for a given asset and project', async () => {
-      const asset = AssetId('my-asset')
-      const report = fakeReport({
-        projectId: PROJECT_A,
-        asset,
-        timestamp: TIME_0.add(1, 'hours'),
-      })
-      await repository.addOrUpdateMany([
-        report,
-        fakeReport({
-          projectId: PROJECT_B,
-          timestamp: TIME_0.add(1, 'hours'),
-        }),
-      ])
-      await repository.addOrUpdateMany([
-        fakeReport({
-          projectId: PROJECT_A,
-          timestamp: TIME_0.add(3, 'hours'),
-        }),
-        fakeReport({
-          projectId: PROJECT_B,
-          timestamp: TIME_0.add(3, 'hours'),
-        }),
-      ])
-      await repository.addOrUpdateMany([
-        { ...report, timestamp: TIME_0.add(-7, 'days').add(-1, 'minutes') },
-      ])
-      const result = await repository.getHourlyByProjectAndAsset(
-        PROJECT_A,
-        asset,
-        TIME_0.add(-1, 'days'),
-      )
-      expect(result).toEqual([report])
     })
   })
 })

@@ -1,9 +1,9 @@
 {
   "name": "degate2",
   "chain": "ethereum",
-  "blockNumber": 18169374,
-  "configHash": "0x300b7d3ec9e107e1c598adc2f63825859bcf11a5d23225d52055da45b7bcb9e1",
-  "version": 2,
+  "blockNumber": 18554408,
+  "configHash": "0x509c519cd5b2b1e4b02aa706ce7e5baa6e51783532b618fa90b3e3fdd72f6a48",
+  "version": 3,
   "contracts": [
     {
       "name": "LoopringIOExchangeOwner",
@@ -11,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1693304819,
       "values": {
         "blockSubmitters": ["0x4e3FE240B50A445fc6137a6363aC3593Af173b8a"],
         "open": false,
@@ -26,6 +27,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1693304687,
       "values": {
         "blockVerifierAddress": "0x707B12e8921b442D4015eb03c86E66F3b8042Dd2",
         "forcedWithdrawalFee": "10000000000000000",
@@ -44,6 +46,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1693304675,
       "values": {
         "owner": "0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
@@ -55,6 +58,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1614841682,
       "values": {
         "getOwners": [
           "0xf5020ADf433645c451A4809eac0d6F680709f11B",
@@ -66,7 +70,7 @@
         ],
         "MAX_OWNER_COUNT": 50,
         "required": 4,
-        "transactionCount": 98
+        "transactionCount": 105
       },
       "derivedName": "MultiSigWallet"
     },
@@ -76,10 +80,11 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1693304795,
       "values": {
         "allowOnchainTransferFrom": false,
         "domainSeparator": "0xe28bada2629b92fae534318e0ab97ecdfab14b258848e76b6e6282f6fbbdb0dd",
-        "getBlockHeight": 64,
+        "getBlockHeight": 669,
         "getConstants": [
           "21888242871839275222246405745257275088548364400416034343698204186575808495617",
           1000000,
@@ -99,15 +104,20 @@
         "getExchangeStake": 0,
         "getFreeDepositRemained": 4999,
         "getMaxAgeDepositUntilWithdrawable": 1296000,
-        "getMerkleAssetRoot": "0x21af8e416371d3598e2eb19a0242984de1db3f22e34d92be75809490c37e67ae",
-        "getMerkleRoot": "0x18d158322039b5ce9926fdcf63a03393e2bee4d8fa86a8e5647944b6bbe1ec99",
+        "getMerkleAssetRoot": "0x283ac2bab64178991cdb4156f843b367540c45c11400983c570a1bd56ef6a6e3",
+        "getMerkleRoot": "0x1b679a6541cc6fff615954e4fd3bac89b29feb4ad7878d2d93e2c91d46740a09",
         "getNumAvailableForcedSlots": 1000000,
         "getProtocolFeeValues": [0, 18, 18, 0, 18],
         "isInWithdrawalMode": false,
-        "isShutdown": false,
+        "isShutdown": true,
         "loopringV3": "0x5F412bf72ceE6ceB3e9f8b0F966429b59255a9B7",
         "owner": "0x2CFd271e9b4d0344Fd2Aa0cb1ffd4f6b85c0B215",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "shutdownTriggered": [
+          {
+            "timestamp": 1699762379
+          }
+        ],
         "state": [
           1296000,
           "0xe28bada2629b92fae534318e0ab97ecdfab14b258848e76b6e6282f6fbbdb0dd",
@@ -115,13 +125,13 @@
           "0x707B12e8921b442D4015eb03c86E66F3b8042Dd2",
           "0x0000000000000000000000000000000000000000",
           "0xF13e21653AEB763595D5E4baA1dC115689Da49b9",
-          [5000, 4999, 18141604, 1, 4480000000000000],
-          "0x18d158322039b5ce9926fdcf63a03393e2bee4d8fa86a8e5647944b6bbe1ec99",
-          "0x21af8e416371d3598e2eb19a0242984de1db3f22e34d92be75809490c37e67ae",
-          64,
+          [5000, 4999, 18345986, 1, 4480000000000000],
+          "0x1b679a6541cc6fff615954e4fd3bac89b29feb4ad7878d2d93e2c91d46740a09",
+          "0x283ac2bab64178991cdb4156f843b367540c45c11400983c570a1bd56ef6a6e3",
+          669,
           0,
           [0, 18, 18, 0, 18],
-          [0, 0]
+          [1699762379, 0]
         ],
         "version": "0.1.0"
       },
@@ -133,6 +143,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1693304807,
       "values": {
         "exchange": "0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7",
         "owner": "0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82",

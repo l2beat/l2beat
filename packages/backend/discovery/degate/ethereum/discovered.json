@@ -1,9 +1,9 @@
 {
-  "chain": "ethereum",
   "name": "degate",
-  "blockNumber": 17434695,
-  "configHash": "0xadf196f9058092e27299c4f7165d10c2012663548dc91fb005ef32fa8beb5e31",
-  "version": 1,
+  "chain": "ethereum",
+  "blockNumber": 18939731,
+  "configHash": "0x4e152143726c3be93a944002af8720d8d394f48b70660ca5d130f9576abe495d",
+  "version": 3,
   "contracts": [
     {
       "name": "BlockVerifier",
@@ -11,6 +11,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1681985879,
       "values": {
         "owner": "0xd8C695DfAab475f55327Ce269096923EFECa2e0F",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
@@ -22,6 +23,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1684401563,
       "values": {
         "getOwners": [
           "0xf5020ADf433645c451A4809eac0d6F680709f11B",
@@ -33,7 +35,7 @@
         ],
         "MAX_OWNER_COUNT": 50,
         "required": 4,
-        "transactionCount": 4
+        "transactionCount": 8
       },
       "derivedName": "MultiSigWallet"
     },
@@ -43,6 +45,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1681989995,
       "values": {
         "blockVerifierAddress": "0x1c602313cDDC68C5789aCb7df0C92a93B0E04C9e",
         "forcedWithdrawalFee": "10000000000000000",
@@ -61,6 +64,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1681993655,
       "values": {
         "blockSubmitters": [
           "0x84A00D39C3c95e839202E19F892F17743d6370a0",
@@ -79,6 +83,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1614841682,
       "values": {
         "getOwners": [
           "0xf5020ADf433645c451A4809eac0d6F680709f11B",
@@ -90,7 +95,7 @@
         ],
         "MAX_OWNER_COUNT": 50,
         "required": 4,
-        "transactionCount": 91
+        "transactionCount": 110
       },
       "derivedName": "MultiSigWallet"
     },
@@ -100,6 +105,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1681991243,
       "values": {
         "exchange": "0xe63602a9B3DFE983187525AC985Fec4F57B24eD5",
         "owner": "0x2028834B2c0A36A918c10937EeA71BE4f932da52",
@@ -112,10 +118,11 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1681991219,
       "values": {
         "allowOnchainTransferFrom": false,
         "domainSeparator": "0x5630f2c00e81e2223458dcd1f7c1a754cd6cc2a258d90b829e325489c7002912",
-        "getBlockHeight": 937,
+        "getBlockHeight": 1937,
         "getConstants": [
           "21888242871839275222246405745257275088548364400416034343698204186575808495617",
           1000000,
@@ -135,15 +142,20 @@
         "getExchangeStake": 0,
         "getFreeDepositRemained": 4999,
         "getMaxAgeDepositUntilWithdrawable": 1296000,
-        "getMerkleAssetRoot": "0x2e88ccd11b444094be16bd83c9aaf90875716c0618368f34a7587b1ef05676d1",
-        "getMerkleRoot": "0x066d0c79ec44a463f267d0dc60814b71a6a2b3b383b4869bbf8f58e1c8be9637",
+        "getMerkleAssetRoot": "0x0ae7ad5c6366c62c5720df012b9167590bc55d1e73692daad2edbb1cb7844dfd",
+        "getMerkleRoot": "0x0329f584d4e90f11364ce643cf23baec556325b86582d2a3f154ee95123034eb",
         "getNumAvailableForcedSlots": 1000000,
         "getProtocolFeeValues": [0, 18, 18, 0, 18],
         "isInWithdrawalMode": false,
-        "isShutdown": false,
+        "isShutdown": true,
         "loopringV3": "0x4d707cae77c5E82a00BF9572A55d3ef3a4e0c458",
         "owner": "0x6B937A5920726e70c5bF1d4d4E18EEeEd46FaE83",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "shutdownTriggered": [
+          {
+            "timestamp": 1695894359
+          }
+        ],
         "state": [
           1296000,
           "0x5630f2c00e81e2223458dcd1f7c1a754cd6cc2a258d90b829e325489c7002912",
@@ -151,13 +163,13 @@
           "0x1c602313cDDC68C5789aCb7df0C92a93B0E04C9e",
           "0x0000000000000000000000000000000000000000",
           "0x814d0c1903D69EB1c7ceB8F5190B20A06892d1dA",
-          [5000, 4999, 17429470, 1, 4480000000000000],
-          "0x066d0c79ec44a463f267d0dc60814b71a6a2b3b383b4869bbf8f58e1c8be9637",
-          "0x2e88ccd11b444094be16bd83c9aaf90875716c0618368f34a7587b1ef05676d1",
-          937,
+          [5000, 4999, 18041575, 1, 4480000000000000],
+          "0x0329f584d4e90f11364ce643cf23baec556325b86582d2a3f154ee95123034eb",
+          "0x0ae7ad5c6366c62c5720df012b9167590bc55d1e73692daad2edbb1cb7844dfd",
+          1937,
           0,
           [0, 18, 18, 0, 18],
-          [0, 0]
+          [1695894359, 0]
         ],
         "version": "0.1.0"
       },

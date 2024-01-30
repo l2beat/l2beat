@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import { AssetId, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { TotalSupplyRow } from 'knex/types/tables'
 
@@ -54,7 +54,7 @@ export class TotalSupplyRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return await knex('total_supplies').delete()
+    return knex('total_supplies').delete()
   }
 }
 

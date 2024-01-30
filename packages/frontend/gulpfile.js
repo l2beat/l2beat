@@ -1,12 +1,8 @@
 const gulp = require('gulp')
-const sass = require('gulp-sass')(require('sass'))
 const del = require('del')
 const child_process = require('child_process')
 const path = require('path')
 const express = require('express')
-const postcss = require('gulp-postcss')
-const autoprefixer = require('autoprefixer')
-const cssnano = require('cssnano')
 const { createProxyMiddleware } = require('http-proxy-middleware')
 
 function clean() {
@@ -14,25 +10,14 @@ function clean() {
 }
 
 function buildScripts() {
-  return exec(
+  return multipleExec(
     `esbuild --bundle src/scripts/index.ts --outfile=build/scripts/main.js --minify`,
+    'esbuild --bundle src/scripts/prerenderIndex.ts --outfile=build/scripts/prerender.js --minify',
   )
 }
 
 function watchScripts() {
   return gulp.watch(['src/**/*.ts'], buildScripts)
-}
-
-function buildSass() {
-  return gulp
-    .src('src/styles/**/*.scss')
-    .pipe(sass.sync().on('error', sass.logError))
-    .pipe(postcss([autoprefixer(), cssnano()]))
-    .pipe(gulp.dest('build/styles'))
-}
-
-function watchSass() {
-  return gulp.watch('src/styles/**/*.scss', buildSass)
 }
 
 function buildStyles() {
@@ -68,6 +53,12 @@ function generateMetaImages() {
   return exec('node -r esbuild-register src/build/buildMetaImages.ts')
 }
 
+const proxyUrls = [
+  '/api/projects',
+  '/api/tvl/aggregate',
+  '/api/activity/aggregate',
+]
+
 function serve() {
   const app = express()
   app.use(express.static('build'))
@@ -86,13 +77,16 @@ function serve() {
     throw new Error('Unknown environment: ' + deploymentEnvironment)
   }
 
-  app.use(
-    '/api/projects',
-    createProxyMiddleware({
-      target: apiUrl,
-      changeOrigin: true,
-    }),
-  )
+  for (const proxyUrl of proxyUrls) {
+    app.use(
+      proxyUrl,
+      createProxyMiddleware({
+        target: apiUrl,
+        changeOrigin: true,
+      }),
+    )
+  }
+
   const server = app.listen(8080, '0.0.0.0')
   console.log('Listening on http://localhost:8080')
   return server
@@ -100,20 +94,13 @@ function serve() {
 
 const build = gulp.series(
   clean,
-  gulp.parallel(buildScripts, buildSass, buildStyles, buildContent, copyStatic),
-  generateMetaImages,
+  gulp.parallel(buildScripts, buildStyles, buildContent, copyStatic),
+  ...(process.env.GENERATE_METAIMAGES ? [generateMetaImages] : []),
 )
 
 const watch = gulp.series(
-  gulp.parallel(buildScripts, buildSass, buildStyles, buildContent, copyStatic),
-  gulp.parallel(
-    watchScripts,
-    watchSass,
-    watchStyles,
-    watchContent,
-    watchStatic,
-    serve,
-  ),
+  gulp.parallel(buildScripts, buildStyles, buildContent, copyStatic),
+  gulp.parallel(watchScripts, watchStyles, watchContent, watchStatic, serve),
 )
 
 module.exports = {
@@ -123,6 +110,10 @@ module.exports = {
 }
 
 // Utilities
+
+function multipleExec(...commands) {
+  return Promise.all(commands.map((command) => exec(command)))
+}
 
 function exec(command) {
   const nodeModulesHere = path.join(__dirname, './node_modules/.bin')

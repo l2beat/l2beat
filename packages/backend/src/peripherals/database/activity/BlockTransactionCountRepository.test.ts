@@ -1,15 +1,14 @@
-import { Logger } from '@l2beat/shared'
+import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { setupDatabaseTestSuite } from '../../../test/database'
+import { describeDatabase } from '../../../test/database'
 import { BlockTransactionCountRepository } from './BlockTransactionCountRepository'
 
 const PROJECT_A = ProjectId('project-a')
 const PROJECT_B = ProjectId('project-b')
 
-describe(BlockTransactionCountRepository.name, () => {
-  const { database } = setupDatabaseTestSuite()
+describeDatabase(BlockTransactionCountRepository.name, (database) => {
   const repository = new BlockTransactionCountRepository(
     database,
     Logger.SILENT,

@@ -1,10 +1,17 @@
-import React from 'react'
+import { Meta, StoryObj } from '@storybook/react'
 
 import { KnowledgeNuggetsSection as KnowledgeNuggetsComponent } from './KnowledgeNuggetsSection'
 
-export default {
-  title: 'Components/Project/KnowledgeNuggetsSection',
+const meta: Meta<typeof KnowledgeNuggetsComponent> = {
+  component: KnowledgeNuggetsComponent,
+  args: {
+    title: 'Knowledge nuggets',
+    id: 'knowledge-nuggets',
+    sectionOrder: 1,
+  },
 }
+export default meta
+type Story = StoryObj<typeof KnowledgeNuggetsComponent>
 
 const knowledgeNuggetsExample = [
   {
@@ -19,14 +26,8 @@ const knowledgeNuggetsExample = [
   },
 ]
 
-export function KnowledgeNuggets() {
-  return (
-    <div className="p-4">
-      <KnowledgeNuggetsComponent
-        title="Knowledge nuggets"
-        id="knowledge-nuggets"
-        knowledgeNuggets={knowledgeNuggetsExample}
-      />
-    </div>
-  )
+export const KnowledgeNuggets: Story = {
+  args: {
+    knowledgeNuggets: knowledgeNuggetsExample,
+  },
 }

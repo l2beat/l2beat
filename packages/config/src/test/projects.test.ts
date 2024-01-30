@@ -149,7 +149,7 @@ describe('projects', () => {
           } else if (link.includes('gitter')) {
             expect(link).toMatchRegex(/^https:\/\/gitter\.im\/[\w-/]+$/)
           } else if (link.includes('instagram')) {
-            expect(link).toMatchRegex(/^https:\/\/instagram\.com\/[\w-/]+$/)
+            expect(link).toMatchRegex(/^https:\/\/instagram\.com\/[\w-./]+$/)
           }
         })
       }

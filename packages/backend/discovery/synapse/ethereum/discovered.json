@@ -1,9 +1,9 @@
 {
-  "chain": "ethereum",
   "name": "synapse",
+  "chain": "ethereum",
   "blockNumber": 17620009,
-  "configHash": "0x7f5b5661d230aca74956b184647ad600ae0db124a982bff7a24f73c9193dd9a5",
-  "version": 1,
+  "configHash": "0xf9095692a7adaa54b66d921fdf4d38dd052b4b9e06323a767734c08937ed6079",
+  "version": 3,
   "contracts": [
     {
       "name": "SynapseBridge",
@@ -13,6 +13,8 @@
         "implementation": "0x31fe393815822edacBd81C2262467402199EFD0D",
         "admin": "0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2"
       },
+      "implementations": ["0x31fe393815822edacBd81C2262467402199EFD0D"],
+      "sinceTimestamp": 1629082107,
       "values": {
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -41,6 +43,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1630038897,
       "values": {
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
@@ -71,8 +74,11 @@
       "address": "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": ["0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134"]
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
+      "sinceTimestamp": 1628970480,
       "values": {
         "domainSeparator": "0x8c2034447704652155262224ded80d817537f663fe2aa23efb2f627783672c6c",
         "getChainId": 1,
@@ -93,8 +99,24 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1629075985,
       "values": {
         "owner": "0x647489df0673E17dB3163c47d5233EBB6F5cAc70"
+      }
+    },
+    {
+      "name": "AllowanceModule",
+      "address": "0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1603880884,
+      "values": {
+        "ALLOWANCE_TRANSFER_TYPEHASH": "0x80b006280932094e7cc965863eb5118dc07e5d272c6670c4a7c87299e04fceeb",
+        "DOMAIN_SEPARATOR_TYPEHASH": "0x47e79534a245952e8b16893a336b85a3d9ea9fa8c573f3d803afb92a79469218",
+        "getChainId": 1,
+        "NAME": "Allowance Module",
+        "VERSION": "0.1.0"
       }
     }
   ],
@@ -214,6 +236,34 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134": [
+      "event AddDelegate(address indexed safe, address delegate)",
+      "event DeleteAllowance(address indexed safe, address delegate, address token)",
+      "event ExecuteAllowanceTransfer(address indexed safe, address delegate, address token, address to, uint96 value, uint16 nonce)",
+      "event PayAllowanceTransfer(address indexed safe, address delegate, address paymentToken, address paymentReceiver, uint96 payment)",
+      "event RemoveDelegate(address indexed safe, address delegate)",
+      "event ResetAllowance(address indexed safe, address delegate, address token)",
+      "event SetAllowance(address indexed safe, address delegate, address token, uint96 allowanceAmount, uint16 resetTime)",
+      "function ALLOWANCE_TRANSFER_TYPEHASH() view returns (bytes32)",
+      "function DOMAIN_SEPARATOR_TYPEHASH() view returns (bytes32)",
+      "function NAME() view returns (string)",
+      "function VERSION() view returns (string)",
+      "function addDelegate(address delegate)",
+      "function allowances(address, address, address) view returns (uint96 amount, uint96 spent, uint16 resetTimeMin, uint32 lastResetMin, uint16 nonce)",
+      "function delegates(address, uint48) view returns (address delegate, uint48 prev, uint48 next)",
+      "function delegatesStart(address) view returns (uint48)",
+      "function deleteAllowance(address delegate, address token)",
+      "function executeAllowanceTransfer(address safe, address token, address to, uint96 amount, address paymentToken, uint96 payment, address delegate, bytes signature)",
+      "function generateTransferHash(address safe, address token, address to, uint96 amount, address paymentToken, uint96 payment, uint16 nonce) view returns (bytes32)",
+      "function getChainId() pure returns (uint256)",
+      "function getDelegates(address safe, uint48 start, uint8 pageSize) view returns (address[] results, uint48 next)",
+      "function getTokenAllowance(address safe, address delegate, address token) view returns (uint256[5])",
+      "function getTokens(address safe, address delegate) view returns (address[])",
+      "function removeDelegate(address delegate, bool removeAllowances)",
+      "function resetAllowance(address delegate, address token)",
+      "function setAllowance(address delegate, address token, uint96 allowanceAmount, uint16 resetTimeMin, uint32 resetBaseMin)",
+      "function tokens(address, address, uint256) view returns (address)"
     ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",

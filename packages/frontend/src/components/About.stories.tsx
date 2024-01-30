@@ -1,16 +1,11 @@
-import React from 'react'
+import { Meta, StoryObj } from '@storybook/react'
 
 import { About as AboutComponent } from './About'
-import { PageContent } from './PageContent'
 
-export default {
-  title: 'Components/About',
+const meta: Meta<typeof AboutComponent> = {
+  component: AboutComponent,
 }
+export default meta
+type Story = StoryObj<typeof AboutComponent>
 
-export function About() {
-  return (
-    <PageContent>
-      <AboutComponent />
-    </PageContent>
-  )
-}
+export const About: Story = {}

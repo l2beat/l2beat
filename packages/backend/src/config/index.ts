@@ -1,24 +1,28 @@
+import { getEnv } from '@l2beat/backend-tools'
+import { UnixTime } from '@l2beat/shared-pure'
+
 import { Config } from './Config'
-import { getLocalConfig } from './config.local'
-import { getProductionConfig } from './config.production'
-import { getStagingConfig } from './config.staging'
+import { makeConfig } from './makeConfig'
 
 export type { Config }
 
 export function getConfig(): Config {
-  const env =
-    process.env.DEPLOYMENT_ENV ??
-    (process.env.NODE_ENV === 'production' ? 'production' : 'local')
-  console.log('Loading config for:', env)
+  const env = getEnv()
+  const deploymentEnv = env.optionalString('DEPLOYMENT_ENV') ?? 'local'
+  console.log('Loading config for:', deploymentEnv)
 
-  switch (env) {
+  switch (deploymentEnv) {
     case 'local':
-      return getLocalConfig()
+      return makeConfig(env, {
+        name: 'Backend/Local',
+        isLocal: true,
+        minTimestampOverride: UnixTime.now().add(-7, 'days').toStartOf('hour'),
+      })
     case 'staging':
-      return getStagingConfig()
+      return makeConfig(env, { name: 'Backend/Staging' })
     case 'production':
-      return getProductionConfig()
+      return makeConfig(env, { name: 'Backend/Production' })
   }
 
-  throw new TypeError(`Unrecognized env: ${env}!`)
+  throw new TypeError(`Unrecognized env: ${deploymentEnv}!`)
 }

@@ -1,14 +1,8 @@
-import { Logger } from '@l2beat/shared'
-import {
-  assert,
-  AssetId,
-  ChainId,
-  Hash256,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { Logger } from '@l2beat/backend-tools'
+import { assert, ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
+import { UpdaterStatus } from '../../api/controllers/status/view/TvlStatusPage'
 import {
   ReportRecord,
   ReportRepository,
@@ -20,10 +14,11 @@ import { PriceUpdater } from '../PriceUpdater'
 import { TaskQueue } from '../queue/TaskQueue'
 import { createReports } from '../reports/createReports'
 import { getReportConfigHash } from '../reports/getReportConfigHash'
+import { getStatus } from '../reports/getStatus'
 import { ReportProject } from '../reports/ReportProject'
-import { AssetUpdater } from './AssetUpdater'
+import { ReportUpdater } from './Updater'
 
-export class CBVUpdater implements AssetUpdater {
+export class CBVUpdater implements ReportUpdater {
   private readonly configHash: Hash256
   private readonly taskQueue: TaskQueue<UnixTime>
   private readonly knownSet = new Set<number>()
@@ -39,6 +34,7 @@ export class CBVUpdater implements AssetUpdater {
     private readonly minTimestamp: UnixTime,
   ) {
     this.logger = this.logger.for(this)
+
     // TODO(radomski): This config hash should be generated from only CBV projects
     this.configHash = getReportConfigHash(projects)
     this.taskQueue = new TaskQueue(
@@ -49,6 +45,7 @@ export class CBVUpdater implements AssetUpdater {
       },
     )
   }
+
   getChainId() {
     return ChainId.ETHEREUM
   }
@@ -59,6 +56,16 @@ export class CBVUpdater implements AssetUpdater {
 
   getMinTimestamp() {
     return this.minTimestamp
+  }
+
+  getStatus(): UpdaterStatus {
+    return getStatus(
+      this.constructor.name,
+      this.clock.getFirstHour(),
+      this.clock.getLastHour(),
+      this.knownSet,
+      this.minTimestamp,
+    )
   }
 
   async start() {
@@ -94,14 +101,12 @@ export class CBVUpdater implements AssetUpdater {
     ])
     this.logger.debug('Prices and balances ready')
 
-    let reports = createReports(
+    const reports = createReports(
       prices,
       balances,
       this.projects,
       this.getChainId(),
     )
-    // TODO(radomski): This really needs to be refactored
-    reports = filterOutNVMReports(reports)
 
     await this.reportRepository.addOrUpdateMany(reports)
 
@@ -155,14 +160,4 @@ export class CBVUpdater implements AssetUpdater {
       return true
     })
   }
-}
-
-function filterOutNVMReports(reports: ReportRecord[]): ReportRecord[] {
-  return reports.filter((r) => {
-    const isOpNative =
-      r.asset === AssetId.OP && r.projectId === ProjectId.OPTIMISM
-    const isArbNative =
-      r.asset === AssetId.ARB && r.projectId === ProjectId.ARBITRUM
-    return !isOpNative && !isArbNative
-  })
 }

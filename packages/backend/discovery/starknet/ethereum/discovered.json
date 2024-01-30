@@ -1,30 +1,48 @@
 {
   "name": "starknet",
   "chain": "ethereum",
-  "blockNumber": 18083455,
-  "configHash": "0xa02a89a2ccb87ec58298cdb9c61ed63ab6bc885c1783d886cfe3f4c4d74aa05d",
-  "version": 2,
+  "blockNumber": 19025063,
+  "configHash": "0xe8c179f10814edca3adf096dc7ae6f918026601e3ae541160d5a90e9a3324edf",
+  "version": 3,
   "contracts": [
     {
       "name": "BridgeMultisig",
       "address": "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": []
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
+      "sinceTimestamp": 1692867743,
       "values": {
         "domainSeparator": "0x07112ea70e3b813e71d47e25500e17035517d3b51bd3c8d3500ccf54424e8f00",
         "getChainId": 1,
         "getOwners": [
+          "0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8",
           "0x59232aC80E6d403b6381393e52f4665ECA328558",
           "0xCe958D997F4a5824D4d503A128216322C6C223a0",
           "0x64F4396bb0669C72858Cc50C779b48EB25F45770"
         ],
-        "getThreshold": 1,
-        "nonce": 3,
+        "getThreshold": 2,
+        "nonce": 6,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "LORDS Bridge",
+      "address": "0x023A2aAc5d0fa69E3243994672822BA43E34E5C9",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1687524587,
+      "values": {
+        "l1Token": "0x686f2404e77Ab0d9070a46cdfb0B7feCDD2318b0",
+        "l2Bridge": "3518527153270494256475755541726550738597926965391766941271488561627919771187",
+        "starknet": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+      },
+      "derivedName": "LordsL1Bridge"
     },
     {
       "name": "DAI Bridge",
@@ -32,6 +50,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1652101038,
       "derivedName": "L1Escrow"
     },
     {
@@ -47,6 +66,8 @@
           "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
         ]
       },
+      "implementations": ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"],
+      "sinceTimestamp": 1657137600,
       "values": {
         "getUpgradeActivationDelay": 604800,
         "governors": [
@@ -59,7 +80,7 @@
         "isFrozen": false,
         "isNotFinalized": true,
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "maxTotalBalance": 20000000000,
+        "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
@@ -67,22 +88,73 @@
       "derivedName": "StarknetERC20Bridge"
     },
     {
+      "name": "FXS Bridge",
+      "address": "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
+      "upgradeability": {
+        "type": "StarkWare proxy",
+        "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
+        "upgradeDelay": 0,
+        "isFinal": false,
+        "proxyGovernance": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      },
+      "implementations": ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"],
+      "sinceTimestamp": 1692689267,
+      "values": {
+        "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
+        "getUpgradeActivationDelay": 0,
+        "identify": "StarkWare_StarknetERC20Bridge_2023_1",
+        "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
+        "isActive": true,
+        "isFrozen": false,
+        "isNotFinalized": true,
+        "MAX_UPGRADE_DELAY": 15552000,
+        "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
+        "PROXY_VERSION": "3.0.2",
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+      },
+      "derivedName": "StarknetERC20Bridge"
+    },
+    {
+      "name": "TheLordsToken",
+      "address": "0x686f2404e77Ab0d9070a46cdfb0B7feCDD2318b0",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1639089737,
+      "values": {
+        "cap": "500000000000000000000000000",
+        "decimals": 18,
+        "name": "Lords",
+        "owner": "0x0000000000000000000000000000000000000000",
+        "paused": false,
+        "symbol": "LORDS",
+        "totalSupply": "500000000000000000000000000",
+        "totalSupplyAt": []
+      }
+    },
+    {
       "name": "Proxy Multisig",
       "address": "0x83C0A700114101D1283D1405E2c8f21D3F03e988",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": []
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
+      "sinceTimestamp": 1672587635,
       "values": {
         "domainSeparator": "0xfbf46e0cae4a0b01c142fd1c393d4058f5af0efa75d9b1a23dee605fdb7aaf81",
         "getChainId": 1,
         "getOwners": [
+          "0x2871B956bC19D25961E9a7519f32D7fDaA21B403",
           "0x64F4396bb0669C72858Cc50C779b48EB25F45770",
           "0x59232aC80E6d403b6381393e52f4665ECA328558",
           "0xCe958D997F4a5824D4d503A128216322C6C223a0"
         ],
         "getThreshold": 2,
-        "nonce": 10,
+        "nonce": 11,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -92,18 +164,23 @@
       "address": "0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": []
       },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
+      "sinceTimestamp": 1672587815,
       "values": {
         "domainSeparator": "0xb6cf2054f0384f47744cb3c2cbc3f6a9881e00205c03bf14afc7a6a862a8b9c6",
         "getChainId": 1,
         "getOwners": [
+          "0x804d60CB1ade94511f7915A2062948685Ca8C81f",
+          "0x2871B956bC19D25961E9a7519f32D7fDaA21B403",
           "0x64F4396bb0669C72858Cc50C779b48EB25F45770",
           "0x59232aC80E6d403b6381393e52f4665ECA328558",
           "0xCe958D997F4a5824D4d503A128216322C6C223a0"
         ],
         "getThreshold": 2,
-        "nonce": 14,
+        "nonce": 19,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -114,6 +191,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "sinceTimestamp": 1666446647,
       "values": {
         "ceiling": "5000000000000000000000000",
         "dai": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
@@ -139,6 +217,8 @@
           "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
         ]
       },
+      "implementations": ["0x455603AD9ae671F6c1f0f746F24d7904cA603581"],
+      "sinceTimestamp": 1647857148,
       "values": {
         "bridgedToken": "0x0000000000000000000000000000000000000000",
         "depositorAddress": "0x0000000000000000000000000000000000000000",
@@ -154,7 +234,7 @@
         "isNotFinalized": true,
         "l2TokenContract": "0xd4C972C4e0A9946bEF9dabF4EF84EDa8EF542b82",
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "maxTotalBalance": "150000000000000000000000",
+        "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "messagingContract": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
@@ -175,6 +255,8 @@
           "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
         ]
       },
+      "implementations": ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"],
+      "sinceTimestamp": 1657137615,
       "values": {
         "getUpgradeActivationDelay": 604800,
         "governors": [
@@ -187,7 +269,7 @@
         "isFrozen": false,
         "isNotFinalized": true,
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "maxTotalBalance": 20000000000000,
+        "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
@@ -204,6 +286,8 @@
         "isFinal": false,
         "proxyGovernance": ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A"]
       },
+      "implementations": ["0xEf3525a1081a4cf6f76E0B202a575195cEE083a2"],
+      "sinceTimestamp": 1685452751,
       "values": {
         "getUpgradeActivationDelay": 0,
         "governors": ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A"],
@@ -213,7 +297,7 @@
         "isFrozen": false,
         "isNotFinalized": true,
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "maxTotalBalance": "5000000000000000000000",
+        "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
@@ -233,8 +317,10 @@
           "0x83C0A700114101D1283D1405E2c8f21D3F03e988"
         ]
       },
+      "implementations": ["0x16938E4b59297060484Fa56a12594d8D6F4177e8"],
+      "sinceTimestamp": 1636978914,
       "values": {
-        "configHash": "671483050609816861429812414688707376174032882875357307847551691140236175837",
+        "configHash": "2590421891839256512113614983194993186457498815986333310670788206383913888162",
         "getMaxL1MsgFee": "1000000000000000000",
         "getUpgradeActivationDelay": 0,
         "governedFinalized": 0,
@@ -247,18 +333,18 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1123369,
+        "l1ToL2MessageNonce": 1616141,
         "messageCancellationDelay": 432100,
         "operators": [
           "0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591",
           "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7"
         ],
-        "programHash": "1865367024509426979036104162713508294334262484507712987283009063059134893433",
+        "programHash": "2479841346739966073527450029179698923866252973805981504232089731754042431018",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
-        "stateBlockHash": "527799938335731516504965174235434313554963632350562133572338364932134099565",
-        "stateBlockNumber": 200462,
-        "stateRoot": "153651547755833153678176034101276069719035595753260911256013810378765063118",
+        "stateBlockHash": "910032522151212303576202222396385256163809489645537403754258961743789240139",
+        "stateBlockNumber": 508554,
+        "stateRoot": "1261236869645190778338642385304585001979866293939917392961996780950464056349",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -274,6 +360,8 @@
         "isFinal": false,
         "proxyGovernance": ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A"]
       },
+      "implementations": ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"],
+      "sinceTimestamp": 1685880791,
       "values": {
         "getUpgradeActivationDelay": 0,
         "governors": ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A"],
@@ -284,7 +372,93 @@
         "isNotFinalized": true,
         "MAX_UPGRADE_DELAY": 15552000,
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "maxTotalBalance": "10000000000000000000000",
+        "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
+        "PROXY_VERSION": "3.0.2",
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+      },
+      "derivedName": "StarknetERC20Bridge"
+    },
+    {
+      "name": "sfrxETH Bridge",
+      "address": "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
+      "upgradeability": {
+        "type": "StarkWare proxy",
+        "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
+        "upgradeDelay": 0,
+        "isFinal": false,
+        "proxyGovernance": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      },
+      "implementations": ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"],
+      "sinceTimestamp": 1692689279,
+      "values": {
+        "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
+        "getUpgradeActivationDelay": 0,
+        "identify": "StarkWare_StarknetERC20Bridge_2023_1",
+        "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
+        "isActive": true,
+        "isFrozen": false,
+        "isNotFinalized": true,
+        "MAX_UPGRADE_DELAY": 15552000,
+        "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
+        "PROXY_VERSION": "3.0.2",
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+      },
+      "derivedName": "StarknetERC20Bridge"
+    },
+    {
+      "name": "FRAX Bridge",
+      "address": "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
+      "upgradeability": {
+        "type": "StarkWare proxy",
+        "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
+        "upgradeDelay": 0,
+        "isFinal": false,
+        "proxyGovernance": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      },
+      "implementations": ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"],
+      "sinceTimestamp": 1692689255,
+      "values": {
+        "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
+        "getUpgradeActivationDelay": 0,
+        "identify": "StarkWare_StarknetERC20Bridge_2023_1",
+        "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
+        "isActive": true,
+        "isFrozen": false,
+        "isNotFinalized": true,
+        "MAX_UPGRADE_DELAY": 15552000,
+        "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
+        "PROXY_VERSION": "3.0.2",
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+      },
+      "derivedName": "StarknetERC20Bridge"
+    },
+    {
+      "name": "LUSD Bridge",
+      "address": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
+      "upgradeability": {
+        "type": "StarkWare proxy",
+        "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
+        "upgradeDelay": 0,
+        "isFinal": false,
+        "proxyGovernance": ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A"]
+      },
+      "implementations": ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"],
+      "sinceTimestamp": 1688046071,
+      "values": {
+        "getUpgradeActivationDelay": 0,
+        "identify": "StarkWare_StarknetERC20Bridge_2023_1",
+        "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
+        "isActive": true,
+        "isFrozen": false,
+        "isNotFinalized": true,
+        "MAX_UPGRADE_DELAY": 15552000,
+        "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
@@ -304,6 +478,8 @@
           "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
         ]
       },
+      "implementations": ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"],
+      "sinceTimestamp": 1657137639,
       "values": {
         "getUpgradeActivationDelay": 604800,
         "governors": [
@@ -316,9 +492,38 @@
         "isFrozen": false,
         "isNotFinalized": true,
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "maxTotalBalance": 40000000000000,
+        "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
+        "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
+      },
+      "derivedName": "StarknetERC20Bridge"
+    },
+    {
+      "name": "UNI Bridge",
+      "address": "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
+      "upgradeability": {
+        "type": "StarkWare proxy",
+        "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
+        "upgradeDelay": 0,
+        "isFinal": false,
+        "proxyGovernance": []
+      },
+      "implementations": ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"],
+      "sinceTimestamp": 1698061847,
+      "values": {
+        "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
+        "getEnableWindowDuration": 1209600,
+        "getUpgradeActivationDelay": 0,
+        "identify": "StarkWare_StarknetERC20Bridge_2023_1",
+        "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
+        "isActive": true,
+        "isFrozen": false,
+        "isNotFinalized": true,
+        "MAX_UPGRADE_DELAY": 15552000,
+        "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "PROXY_VERSION": "5.0.0",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
       },
       "derivedName": "StarknetERC20Bridge"
@@ -326,15 +531,18 @@
   ],
   "eoas": [
     "0x16C8B90390468c1AA81f68B2Fb9fcc3d46e0eA3E",
+    "0x2871B956bC19D25961E9a7519f32D7fDaA21B403",
     "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
     "0x3ADfc0aBd0eBD4e61281d991F87134eE3231dB13",
     "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
     "0x59232aC80E6d403b6381393e52f4665ECA328558",
     "0x64F4396bb0669C72858Cc50C779b48EB25F45770",
     "0x6A03F3F0943eb686a4EF94e7B6f6CA3332580b5C",
+    "0x804d60CB1ade94511f7915A2062948685Ca8C81f",
     "0x8dB2469f3355d6769932B853F29e32df06122981",
     "0xC91EC49Ad0843E5Cca55b4c4e5f68de54F6cB2Ae",
     "0xCe958D997F4a5824D4d503A128216322C6C223a0",
+    "0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8",
     "0xd4C972C4e0A9946bEF9dabF4EF84EDa8EF542b82",
     "0xD5fB66CaEE881367Df4409B17Fd53a2Ef0D9B263",
     "0xdc29f0F7742ec462Af475AceeCECC57601991D23",
@@ -346,6 +554,16 @@
   "abis": {
     "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec": [
       "constructor(address _singleton)"
+    ],
+    "0x023A2aAc5d0fa69E3243994672822BA43E34E5C9": [
+      "constructor(address _starknet, address _l1Token, uint256 _l2Bridge)",
+      "event LogDeposit(address indexed l1Sender, uint256 amount, uint256 l2Recipient)",
+      "event LogWithdrawal(address indexed l1Recipient, uint256 amount)",
+      "function deposit(uint256 amount, uint256 l2Recipient, uint256 fee) payable",
+      "function l1Token() view returns (address)",
+      "function l2Bridge() view returns (uint256)",
+      "function starknet() view returns (address)",
+      "function withdraw(uint256 amount, address l1Recipient)"
     ],
     "0x0437465dfb5B79726e35F08559B0cBea55bb585C": [
       "constructor()",
@@ -467,6 +685,67 @@
       "function setMaxTotalBalance(uint256 maxTotalBalance_)",
       "function withdraw(uint256 amount, address recipient)",
       "function withdraw(uint256 amount)"
+    ],
+    "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C": [
+      "constructor(uint256 upgradeActivationDelay)",
+      "event FinalizedImplementation(address indexed implementation)",
+      "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationRemoved(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationUpgraded(address indexed implementation, bytes initializer)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogNominatedGovernor(address nominatedGovernor)",
+      "event LogNominationCancelled()",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "function ENABLE_WINDOW_DURATION_SLOT() view returns (bytes32)",
+      "function MAX_UPGRADE_DELAY() view returns (uint256)",
+      "function PROXY_GOVERNANCE_TAG() view returns (string)",
+      "function PROXY_VERSION() view returns (string)",
+      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
+      "function addImplementation(address newImplementation, bytes data, bool finalize)",
+      "function getUpgradeActivationDelay() view returns (uint256 delay)",
+      "function implementation() view returns (address _implementation)",
+      "function initialize(bytes) pure",
+      "function isNotFinalized() view returns (bool notFinal)",
+      "function proxyAcceptGovernance()",
+      "function proxyCancelNomination()",
+      "function proxyIsGovernor(address user) view returns (bool)",
+      "function proxyNominateNewGovernor(address newGovernor)",
+      "function proxyRemoveGovernor(address governorForRemoval)",
+      "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
+      "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
+    ],
+    "0x686f2404e77Ab0d9070a46cdfb0B7feCDD2318b0": [
+      "constructor(uint256 _cap)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event Snapshot(uint256 id)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Unpaused(address account)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function balanceOfAt(address account, uint256 snapshotId) view returns (uint256)",
+      "function burn(uint256 amount)",
+      "function burnFrom(address account, uint256 amount)",
+      "function cap() view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function mint(address to, uint256 amount)",
+      "function name() view returns (string)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function renounceOwnership()",
+      "function snapshot()",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function totalSupplyAt(uint256 snapshotId) view returns (uint256)",
+      "function transfer(address recipient, uint256 amount) returns (bool)",
+      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()"
     ],
     "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB": [
       "event LogBridgeActivated()",
@@ -670,6 +949,34 @@
       "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
       "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
     ],
+    "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8": [
+      "constructor(uint256 upgradeActivationDelay)",
+      "event FinalizedImplementation(address indexed implementation)",
+      "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationRemoved(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationUpgraded(address indexed implementation, bytes initializer)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogNominatedGovernor(address nominatedGovernor)",
+      "event LogNominationCancelled()",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "function ENABLE_WINDOW_DURATION_SLOT() view returns (bytes32)",
+      "function MAX_UPGRADE_DELAY() view returns (uint256)",
+      "function PROXY_GOVERNANCE_TAG() view returns (string)",
+      "function PROXY_VERSION() view returns (string)",
+      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
+      "function addImplementation(address newImplementation, bytes data, bool finalize)",
+      "function getUpgradeActivationDelay() view returns (uint256 delay)",
+      "function implementation() view returns (address _implementation)",
+      "function initialize(bytes) pure",
+      "function isNotFinalized() view returns (bool notFinal)",
+      "function proxyAcceptGovernance()",
+      "function proxyCancelNomination()",
+      "function proxyIsGovernor(address user) view returns (bool)",
+      "function proxyNominateNewGovernor(address newGovernor)",
+      "function proxyRemoveGovernor(address governorForRemoval)",
+      "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
+      "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
+    ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
@@ -719,6 +1026,34 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
+    "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb": [
+      "constructor(uint256 upgradeActivationDelay)",
+      "event FinalizedImplementation(address indexed implementation)",
+      "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationRemoved(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationUpgraded(address indexed implementation, bytes initializer)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogNominatedGovernor(address nominatedGovernor)",
+      "event LogNominationCancelled()",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "function ENABLE_WINDOW_DURATION_SLOT() view returns (bytes32)",
+      "function MAX_UPGRADE_DELAY() view returns (uint256)",
+      "function PROXY_GOVERNANCE_TAG() view returns (string)",
+      "function PROXY_VERSION() view returns (string)",
+      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
+      "function addImplementation(address newImplementation, bytes data, bool finalize)",
+      "function getUpgradeActivationDelay() view returns (uint256 delay)",
+      "function implementation() view returns (address _implementation)",
+      "function initialize(bytes) pure",
+      "function isNotFinalized() view returns (bool notFinal)",
+      "function proxyAcceptGovernance()",
+      "function proxyCancelNomination()",
+      "function proxyIsGovernor(address user) view returns (bool)",
+      "function proxyNominateNewGovernor(address newGovernor)",
+      "function proxyRemoveGovernor(address governorForRemoval)",
+      "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
+      "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
+    ],
     "0xEf3525a1081a4cf6f76E0B202a575195cEE083a2": [
       "event LogBridgeActivated()",
       "event LogDeposit(address indexed sender, uint256 amount, uint256 indexed l2Recipient, uint256 nonce, uint256 fee)",
@@ -752,6 +1087,33 @@
       "function withdraw(uint256 amount, address recipient)",
       "function withdraw(uint256 amount)"
     ],
+    "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5": [
+      "constructor(uint256 upgradeActivationDelay)",
+      "event FinalizedImplementation(address indexed implementation)",
+      "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationRemoved(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationUpgraded(address indexed implementation, bytes initializer)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogNominatedGovernor(address nominatedGovernor)",
+      "event LogNominationCancelled()",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "function MAX_UPGRADE_DELAY() view returns (uint256)",
+      "function PROXY_GOVERNANCE_TAG() view returns (string)",
+      "function PROXY_VERSION() view returns (string)",
+      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
+      "function addImplementation(address newImplementation, bytes data, bool finalize)",
+      "function getUpgradeActivationDelay() view returns (uint256 delay)",
+      "function implementation() view returns (address _implementation)",
+      "function initialize(bytes) pure",
+      "function isNotFinalized() view returns (bool notFinal)",
+      "function proxyAcceptGovernance()",
+      "function proxyCancelNomination()",
+      "function proxyIsGovernor(address user) view returns (bool)",
+      "function proxyNominateNewGovernor(address newGovernor)",
+      "function proxyRemoveGovernor(address governorForRemoval)",
+      "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
+      "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
+    ],
     "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816": [
       "constructor(uint256 upgradeActivationDelay)",
       "event FinalizedImplementation(address indexed implementation)",
@@ -776,6 +1138,47 @@
       "function proxyNominateNewGovernor(address newGovernor)",
       "function proxyRemoveGovernor(address governorForRemoval)",
       "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
+      "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
+    ],
+    "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B": [
+      "constructor(uint256 upgradeActivationDelay)",
+      "event FinalizedImplementation(address indexed implementation)",
+      "event ImplementationAdded(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationRemoved(address indexed implementation, bytes initializer, bool finalize)",
+      "event ImplementationUpgraded(address indexed implementation, bytes initializer)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function ENABLE_WINDOW_DURATION_SLOT() view returns (bytes32)",
+      "function MAX_UPGRADE_DELAY() view returns (uint256)",
+      "function PROXY_VERSION() view returns (string)",
+      "function UPGRADE_DELAY_SLOT() view returns (bytes32)",
+      "function addImplementation(address newImplementation, bytes data, bool finalize)",
+      "function getEnableWindowDuration() view returns (uint256 duration)",
+      "function getUpgradeActivationDelay() view returns (uint256 delay)",
+      "function implementation() view returns (address _implementation)",
+      "function initialize(bytes) pure",
+      "function isAppGovernor(address account) view returns (bool)",
+      "function isAppRoleAdmin(address account) view returns (bool)",
+      "function isGovernanceAdmin(address account) view returns (bool)",
+      "function isNotFinalized() view returns (bool notFinal)",
+      "function isOperator(address account) view returns (bool)",
+      "function isTokenAdmin(address account) view returns (bool)",
+      "function isUpgradeGovernor(address account) view returns (bool)",
+      "function registerAppGovernor(address account)",
+      "function registerAppRoleAdmin(address account)",
+      "function registerGovernanceAdmin(address account)",
+      "function registerOperator(address account)",
+      "function registerTokenAdmin(address account)",
+      "function registerUpgradeGovernor(address account)",
+      "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeAppGovernor(address account)",
+      "function revokeAppRoleAdmin(address account)",
+      "function revokeGovernanceAdmin(address account)",
+      "function revokeOperator(address account)",
+      "function revokeTokenAdmin(address account)",
+      "function revokeUpgradeGovernor(address account)",
       "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
     ]
   }

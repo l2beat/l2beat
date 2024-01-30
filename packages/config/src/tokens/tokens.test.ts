@@ -3,9 +3,9 @@ import { AssetId, CoingeckoId, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { Contract, providers, utils } from 'ethers'
 
+import { bridges } from '../bridges'
 import { config } from '../test/config'
-import { tokenList } from './tokens'
-import { getCanonicalTokens } from './types'
+import { canonicalTokenList, tokenList } from './tokens'
 
 describe('tokens', () => {
   it('every token has a unique address', () => {
@@ -20,15 +20,9 @@ describe('tokens', () => {
     expect(everyUnique).toEqual(true)
   })
 
-  it('tokens are ordered alphabetically', () => {
-    const names = tokenList.map((x) => x.name)
-    const sorted = [...names].sort((a, b) => a.localeCompare(b))
-    expect(names).toEqual(sorted)
-  })
-
   describe('canonical', () => {
     it('every token has a unique symbol', () => {
-      const symbols = getCanonicalTokens().map((x) => x.symbol)
+      const symbols = canonicalTokenList.map((x) => x.symbol)
       const everyUnique = symbols.every((x, i) => symbols.indexOf(x) === i)
       expect(everyUnique).toEqual(true)
     })
@@ -53,7 +47,7 @@ describe('tokens', () => {
         decimals: number
       }
       const results: Record<string, Metadata> = {}
-      const checkedTokens = getCanonicalTokens().filter(
+      const checkedTokens = canonicalTokenList.filter(
         (x) => x.id !== AssetId('op-optimism'),
       )
 
@@ -73,8 +67,25 @@ describe('tokens', () => {
                 [x.address, DECIMALS],
               ],
         )
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        const data: string[] = (await contract.functions.aggregate(calls))[1]
+        let data: string[] = []
+
+        try {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+          data = (await contract.functions.aggregate(calls))[1]
+        } catch (error) {
+          // @ts-expect-error Alchemy error is not typed
+          const errorBody = error.error.body
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+          const message = JSON.parse(errorBody).error.message
+
+          if (message) {
+            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+            throw new Error('Multicall failed. Alchemy error: ' + message)
+          } else {
+            throw error
+          }
+        }
+
         for (let i = 0; i < calls.length; i += 3) {
           const nameResult = data[i]
           const symbolResult = data[i + 1]
@@ -127,10 +138,7 @@ describe('tokens', () => {
       this.timeout(10000)
 
       const http = new HttpClient()
-      const coingeckoClient = new CoingeckoClient(
-        http,
-        process.env.COINGECKO_API_KEY,
-      )
+      const coingeckoClient = new CoingeckoClient(http, config.coingeckoApiKey)
 
       const coinsList = await coingeckoClient.getCoinList({
         includePlatform: true,
@@ -143,9 +151,35 @@ describe('tokens', () => {
           result.set(EthereumAddress(coin.platforms.ethereum), coin.id)
       })
 
-      getCanonicalTokens().map((token) => {
+      canonicalTokenList.map((token) => {
         if (token.symbol === 'ETH') {
           expect(token.coingeckoId).toEqual(CoingeckoId('ethereum'))
+        } else if (
+          token.id === AssetId('wusdm-wrapped-mountain-protocol-usd')
+        ) {
+          // TODO(radomski): This is a short term solution to the problem of
+          // wrapped token prices. wUSDM is ~15% of Manta Pacific TVL but the
+          // Coingecko price chart for the _WRAPPED_ version of this token is
+          // broken. After an investigation we've decided to temporally
+          // approximate the price of the wUSDM to be the same as the
+          // non-wrapped source (USDM). In reality at the time of writing this
+          // comment it's more like
+          //
+          // 1wUSDM = 1.0118 USDM
+          //
+          // A more generalized solution is required. But since we can't
+          // stall forever until the perfect solution is ready we accept this
+          // approximation. A generalized solution would determine the price
+          // of a token based on the price of a different token times some
+          // multiplier. Where the multiplier can be dynamic, that means it
+          // requires calling a custom typescript function. Further work will
+          // be cooperated by @antooni, refer to him for further questions
+          //
+          // - 3 January 2024
+          //
+          expect(token.coingeckoId).toEqual(
+            CoingeckoId('mountain-protocol-usdm'),
+          )
         } else {
           const expectedId = token.address && result.get(token.address)
           if (expectedId) {
@@ -153,6 +187,25 @@ describe('tokens', () => {
           }
         }
       })
+    })
+  })
+  describe('external', () => {
+    it('every external token has a bridgedUsing property', () => {
+      const externalTokens = tokenList
+        .filter((token) => token.type === 'EBV' && !token.bridgedUsing)
+        .map((token) => token.symbol)
+      expect(externalTokens).toHaveLength(0)
+    })
+    it('every bridge slug in bridgedUsing property is valid', () => {
+      const tokenSlugs = tokenList
+        .filter((token) => token.type === 'EBV' && token.bridgedUsing?.slug)
+        .map((token) => token.bridgedUsing?.slug)
+      const bridgesSlugs = bridges.map((bridge) => bridge.display.slug)
+      const invalidSlugs = tokenSlugs.filter(
+        (slug) => !bridgesSlugs.includes(slug!),
+      )
+
+      expect(invalidSlugs).toHaveLength(0)
     })
   })
 })

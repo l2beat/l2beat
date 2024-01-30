@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import { CONTRACTS } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { CONTRACTS } from '../layer2s/common'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
@@ -37,7 +37,9 @@ export const polynetwork: Bridge = {
       ],
     },
     description:
-      'Poly Bridge allows users to transfer assets between different blockchains using Lock-Mint swap. It uses a PolyNetwork chain to verify and coordinate message passing between Relayers on supported chains. Each chain has a set of Relayers, while PolyNetwork chain has a set of Keepers that sign cross-chain messages. Chains integrated with Poly Bridge need to support light client verification, since validation of cross-chain messages includes verifying block headers and transactions via Merkle proofs. Some of the smart contracts used by the bridge infrastructure are not verified on Etherscan.',
+      'Poly Bridge allows users to transfer assets between different blockchains using Lock-Mint swap.',
+    detailedDescription:
+      'It uses a PolyNetwork chain to verify and coordinate message passing between Relayers on supported chains. Each chain has a set of Relayers, while PolyNetwork chain has a set of Keepers that sign cross-chain messages. Chains integrated with Poly Bridge need to support light client verification, since validation of cross-chain messages includes verifying block headers and transactions via Merkle proofs. Some of the smart contracts used by the bridge infrastructure are not verified on Etherscan.',
     category: 'Token Bridge',
   },
   riskView: {
