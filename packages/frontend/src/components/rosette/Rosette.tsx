@@ -158,7 +158,7 @@ export function BigRosette({
 
   return (
     <div
-    data-role="rosette"
+      data-role="rosette"
       className={cn('relative w-[272px] p-12', className)}
       data-rosette-hover-disabled={isUnderReview || (isUpcoming ?? false)}
     >

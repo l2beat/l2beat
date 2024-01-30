@@ -19,11 +19,7 @@ export function MobileTabs({ pages }: MobileTabsProps) {
       <OverflowWrapper className="mx-4" within="nav-tabs">
         <ul className="mx-auto flex w-min items-center gap-2 py-2">
           {pages.map((page, i) => (
-            <li
-              key={i}
-              className="flex shrink-0"
-              data-selected={page.selected}
-            >
+            <li key={i} className="flex shrink-0" data-selected={page.selected}>
               <a
                 href={page.link}
                 className={cn(
