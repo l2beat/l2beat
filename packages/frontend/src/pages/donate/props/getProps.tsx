@@ -2,12 +2,12 @@ import compact from 'lodash/compact'
 import { toDataURL } from 'qrcode'
 import React from 'react'
 
-import { Config } from '../../build/config'
-import { getFooterProps, getNavbarProps } from '../../components'
-import { Link } from '../../components/Link'
-import { Wrapped } from '../Page'
-import { DonateFundingSourcesProps } from './DonateFundingSources'
-import { DonatePageProps } from './DonatePage'
+import { Config } from '../../../build/config'
+import { getFooterProps, getNavbarProps } from '../../../components'
+import { Link } from '../../../components/Link'
+import { Wrapped } from '../../Page'
+import { DonateFundingSourcesProps } from '../view/DonateFundingSources'
+import { DonatePageProps } from '../view/DonatePage'
 
 export async function getProps(
   config: Config,
@@ -70,7 +70,7 @@ function getFundingSources(): DonateFundingSourcesProps {
       {
         source: 'Ethereum Foundation',
         tier: 'Significant',
-        description: 'Different grants in years 2021-2023',
+        description: 'Different grants in years 2021-2024',
       },
       {
         source: 'Optimism RPGF',
@@ -82,12 +82,12 @@ function getFundingSources(): DonateFundingSourcesProps {
           'Rewards & compensation for participating in L2 governance frameworks',
         tier: 'Medium',
         description:
-          'We are participating in the governance of Arbitrum, Optimism, Hop, Polygon, Uniswap and Connext',
+          'We are participating in the governance of Arbitrum, Optimism, Hop, Polygon, Uniswap and Connext, and more',
       },
       {
         source: 'Gitcoin',
         tier: 'Medium',
-        description: 'Gitcoin rounds in 2022-2023',
+        description: 'Gitcoin rounds in 2022-2024',
       },
       {
         source: 'Direct community donations',
@@ -125,7 +125,7 @@ function getFundingSources(): DonateFundingSourcesProps {
         ),
       },
       {
-        source: 'Upgradeability of Ethereum L2s” report',
+        source: '"Upgradeability of Ethereum L2s" report',
         tier: 'Small',
         description: 'Funded by Polygon Labs',
       },

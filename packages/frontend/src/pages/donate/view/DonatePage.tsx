@@ -1,9 +1,9 @@
 import React from 'react'
 
-import { Footer, FooterProps, Navbar, NavbarProps } from '../../components'
-import { OutLinkIcon } from '../../components/icons'
-import { Link } from '../../components/Link'
-import { PageContent } from '../../components/PageContent'
+import { Footer, FooterProps, Navbar, NavbarProps } from '../../../components'
+import { OutLinkIcon } from '../../../components/icons'
+import { Link } from '../../../components/Link'
+import { PageContent } from '../../../components/PageContent'
 import {
   DonateFundingSources,
   DonateFundingSourcesProps,
