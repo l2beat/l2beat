@@ -35,10 +35,8 @@ export const rari: Layer3 = orbitStackL3({
       repositories: ['https://github.com/OffchainLabs/nitro'],
       socialMedia: ['https://twitter.com/RariChain'],
     },
-    // dataAvailabilityMode: 'NotApplicable', // TODO: should be 'NotApplicable' but it's not supported yet
   },
-  escrows: [
-    // TODO: change the name to nonTemplateEscrows to be consistent with opStack template
+  nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6'),
       tokens: '*',

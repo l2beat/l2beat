@@ -26,7 +26,7 @@ export interface OrbitStackConfigCommon {
   discovery: ProjectDiscovery
   associatedTokens?: string[]
 
-  escrows?: ScalingProjectEscrow[]
+  nonTemplateEscrows?: ScalingProjectEscrow[]
   bridge: ContractParameters
   rollupProxy: ContractParameters
   sequencerInbox: ContractParameters
@@ -272,7 +272,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
           description:
             'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
         }),
-        ...(templateVars.escrows ?? []),
+        ...(templateVars.nonTemplateEscrows ?? []),
       ],
     },
     milestones: [],
@@ -359,7 +359,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           description:
             'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
         }),
-        ...(templateVars.escrows ?? []),
+        ...(templateVars.nonTemplateEscrows ?? []),
       ],
     },
   }
