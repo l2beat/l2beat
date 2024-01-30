@@ -6,11 +6,6 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('mode')
 
-const FINALIZATION_PERIOD_SECONDS = discovery.getContractValue<number>(
-  'L2OutputOracle',
-  'FINALIZATION_PERIOD_SECONDS',
-)
-
 const upgradeability = {
   upgradableBy: ['ProxyAdmin'],
   upgradeDelay: 'No delay',
