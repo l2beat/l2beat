@@ -27,7 +27,7 @@ export const mode: Layer2 = opStack({
     warning:
       'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:
-      'Mode is the Ethereum L2 designed for builders and users to grow as the network grows.',
+      'Mode is an Optimistic Rollup based on the OP Stack. The L2 is focused on building new economic systems for financial applications to grow.',
     purposes: ['Universal'],
     links: {
       websites: ['https://mode.network/'],
@@ -47,6 +47,7 @@ export const mode: Layer2 = opStack({
   l1StandardBridgeEscrow: EthereumAddress(
     '0x735aDBbE72226BD52e818E7181953f42E3b0FF21',
   ),
+  rpcUrl: 'https://mainnet.mode.network/',
   sequencerAddress: EthereumAddress(
     discovery.getContractValue('SystemConfig', 'batcherHash'),
   ),
@@ -59,9 +60,9 @@ export const mode: Layer2 = opStack({
   isNodeAvailable: true,
   milestones: [
     {
-      name: 'Mode Network Launch',
-      link: 'https://twitter.com/ourZORA/status/1671602234994622464',
-      date: '2024-06-29T00:00:00Z',
+      name: 'Mode Network Mainnet Launch',
+      link: 'https://twitter.com/modenetwork/status/1751993397999477003',
+      date: '2024-01-30T00:00:00Z',
       description: 'Mode Network is live on mainnet.',
     },
   ],
