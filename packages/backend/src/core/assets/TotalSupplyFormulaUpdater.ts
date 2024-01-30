@@ -10,7 +10,6 @@ import {
 import { setTimeout } from 'timers/promises'
 
 import { UpdaterStatus } from '../../api/controllers/status/view/TvlStatusPage'
-import { getChainMinTimestamp } from '../../config/chains'
 import {
   ReportRecord,
   ReportRepository,
@@ -49,9 +48,7 @@ export class TotalSupplyFormulaUpdater implements ReportUpdater {
       ),
       'Programmer error: all tokens must be using totalSupply formula have the same chainId',
     )
-    this.logger = this.logger.for(
-      `${this.constructor.name}.${ChainId.getName(chainId)}`,
-    )
+    this.logger = this.logger.for(this)
     this.configHash = getTokensConfigHash(this.tokens)
 
     this.taskQueue = new TaskQueue(
@@ -81,7 +78,7 @@ export class TotalSupplyFormulaUpdater implements ReportUpdater {
       this.clock.getFirstHour(),
       this.clock.getLastHour(),
       this.knownSet,
-      getChainMinTimestamp(this.chainId),
+      this.minTimestamp,
     )
   }
 

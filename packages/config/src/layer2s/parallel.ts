@@ -1,22 +1,30 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 
+import { ScalingProjectPermissionedAccount } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { underReview } from './templates/underReview'
+import { orbitStackL2 } from './templates/orbitStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('parallel')
 
-export const parallel: Layer2 = underReview({
-  id: 'parallel',
+const roles = discovery.getContractValue<{
+  EXECUTOR_ROLE: { members: string[] }
+}>('UpgradeExecutor', 'accessControl')
+
+const EOAExecutor: ScalingProjectPermissionedAccount = {
+  address: EthereumAddress(roles.EXECUTOR_ROLE.members[0]),
+  type: 'EOA',
+}
+
+export const parallel: Layer2 = orbitStackL2({
+  discovery,
   display: {
     name: 'Parallel',
     slug: 'parallel',
     headerWarning: '',
     description:
-      'Parallel will launch an Ethereum L2 solution utilizing Arbitrum Nitro technology. More information coming soon.',
+      'Parallel is an Ethereum L2 solution utilizing Arbitrum Nitro technology.',
     purposes: ['Universal', 'DeFi'],
-    category: 'Optimistic Rollup',
-    provider: 'Arbitrum',
     links: {
       websites: ['https://parallel.fi'],
       apps: ['https://parallel.fi/airdrop'],
@@ -32,13 +40,8 @@ export const parallel: Layer2 = underReview({
       ],
     },
   },
+
   escrows: [
-    discovery.getEscrowDetails({
-      address: EthereumAddress('0x5a961c7D162195a9Dc5a357Cc168b0694283382E'),
-      tokens: ['ETH'],
-      description:
-        'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
-    }),
     discovery.getEscrowDetails({
       address: EthereumAddress('0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d'),
       tokens: '*',
@@ -56,5 +59,29 @@ export const parallel: Layer2 = underReview({
       tokens: ['WETH'],
       description: 'Escrow for WETH sent to L2.',
     }),
+  ],
+  bridge: discovery.getContract('Bridge'),
+  rollupProxy: discovery.getContract('RollupProxy'),
+  sequencerInbox: discovery.getContract('SequencerInbox'),
+
+  nonTemplatePermissions: [
+    ...discovery.getMultisigPermission(
+      'OwnerMultisig',
+      'Multisig that can execute upgrades via the UpgradeExecutor.',
+    ),
+    {
+      name: 'RollupOwner',
+      accounts: [EOAExecutor],
+      description: 'EOA that can execute upgrades via the UpgradeExecutor.',
+    },
+  ],
+
+  milestones: [
+    {
+      name: 'Parallel Mainnet closed launch',
+      link: 'https://twitter.com/ParallelFi/status/1743048283684237574',
+      date: '2024-01-05T00:00:00Z',
+      description: 'Parallel Mainnet is open for developers.',
+    },
   ],
 })

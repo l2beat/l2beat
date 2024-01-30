@@ -1,4 +1,4 @@
-import { Bridge, Layer2, safeGetTokenByAssetId } from '@l2beat/config'
+import { Bridge, Layer2, Layer3, safeGetTokenByAssetId } from '@l2beat/config'
 import {
   ActivityApiResponse,
   AssetId,
@@ -11,38 +11,58 @@ import {
 import { Config } from '../../build/config'
 import { ChartProps } from '../../components'
 import { TokenControl } from '../../components/chart/TokenControls'
-import { TokenInfo } from '../../scripts/charts/types'
+import { ChartType, TokenInfo } from '../../scripts/charts/types'
 import { unifyTokensResponse } from '../tvl/getTvlStats'
 
 export function getChart(
-  project: Layer2 | Bridge,
+  project: Layer2 | Layer3 | Bridge,
   tvlApiResponse: TvlApiResponse,
   config?: Config,
   activityApiResponse?: ActivityApiResponse,
 ): ChartProps {
+  const hasActivity =
+    config?.features.activity &&
+    !!activityApiResponse?.projects[project.id.toString()]
+  const hasTvl =
+    project.config.escrows.length !== 0 &&
+    !!tvlApiResponse.projects[project.id.toString()]
+
   return {
     settingsId: `project-${project.display.slug}`,
-    initialType:
-      project.type === 'layer2'
-        ? { type: 'project-detailed-tvl', slug: project.display.slug }
-        : { type: 'project-tvl', slug: project.display.slug },
+    initialType: getInitialType(project, hasTvl, !!hasActivity),
     tokens: getTokens(project.id, tvlApiResponse, project.type === 'layer2'),
     tvlBreakdownHref:
-      project.type === 'layer2' && !project.isUpcoming
+      (project.type === 'layer2' || project.type === 'layer3') &&
+      !project.isUpcoming
         ? `/scaling/projects/${project.display.slug}/tvl-breakdown`
         : undefined,
-    hasActivity:
-      config?.features.activity &&
-      !!activityApiResponse?.projects[project.id.toString()],
+    hasTvl,
+    hasActivity,
     milestones: project.milestones,
-    showComingSoon: project.config.escrows.length === 0,
+    showComingSoon: !hasTvl && !hasActivity,
+  }
+}
+
+function getInitialType(
+  project: Layer2 | Layer3 | Bridge,
+  hasTvl: boolean,
+  hasActivity: boolean,
+): ChartType {
+  if (project.type === 'layer2' || project.type === 'layer3') {
+    if (hasActivity && !hasTvl) {
+      return { type: 'project-activity', slug: project.display.slug }
+    } else {
+      return { type: 'project-detailed-tvl', slug: project.display.slug }
+    }
+  } else {
+    return { type: 'project-tvl', slug: project.display.slug }
   }
 }
 
 export function getTokens(
   projectId: ProjectId,
   tvlApiResponse: TvlApiResponse,
-  isLayer2: boolean,
+  isLayer2orLayer3: boolean,
 ): TokenControl[] {
   const tokens = tvlApiResponse.projects[projectId.toString()]?.tokens
 
@@ -77,7 +97,7 @@ export function getTokens(
             assetType,
             chainId,
             symbol,
-            isLayer2,
+            isLayer2orLayer3,
           ),
           tvl: usdValue,
         }
@@ -93,9 +113,9 @@ function getTokenInfo(
   assetType: AssetType,
   chainId: ChainId,
   symbol: string,
-  isLayer2: boolean,
+  isLayer2orLayer3: boolean,
 ): TokenInfo {
-  if (!isLayer2) {
+  if (!isLayer2orLayer3) {
     return {
       type: 'regular',
       projectId: projectId.toString(),

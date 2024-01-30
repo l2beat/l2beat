@@ -6,7 +6,7 @@ import {
   StageConfig,
 } from '@l2beat/config'
 
-import { TVLBreakdownProps } from '../../../components/TVLBreakdown'
+import { TokenBreakdownProps } from '../../../components/TokenBreakdown'
 import { RiskValues } from '../../../utils/risks/types'
 import { ValueWithDisplayValue } from '../../types'
 
@@ -29,7 +29,7 @@ export interface ScalingL2SummaryViewEntry extends ScalingSummaryViewEntryBase {
   stage: StageConfig
   tvl?: ValueWithDisplayValue
   tvlTooltip?: string
-  tvlBreakdown?: TVLBreakdownProps
+  tvlBreakdown?: TokenBreakdownProps
   oneDayChange?: string
   sevenDayChange?: string
   marketShare?: ValueWithDisplayValue

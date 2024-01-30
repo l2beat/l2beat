@@ -4,6 +4,7 @@ import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { UpdateNotifierRepository } from '../../peripherals/database/discovery/UpdateNotifierRepository'
 import { Channel, DiscordClient } from '../../peripherals/discord/DiscordClient'
+import { ChainConverter } from '../ChainConverter'
 import { fieldThrottleDiff } from './fieldThrottleDiff'
 import { diffToMessages } from './utils/diffToMessages'
 import { filterDiff } from './utils/filterDiff'
@@ -23,6 +24,7 @@ export class UpdateNotifier {
   constructor(
     private readonly updateNotifierRepository: UpdateNotifierRepository,
     private readonly discordClient: DiscordClient | undefined,
+    private readonly chainConverter: ChainConverter,
     private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
@@ -71,7 +73,7 @@ export class UpdateNotifier {
     const messages = diffToMessages(name, throttled, {
       dependents: metadata.dependents,
       blockNumber: metadata.blockNumber,
-      chainId: metadata.chainId,
+      chain: this.chainConverter.toName(metadata.chainId),
       nonce,
     })
     await this.notify(messages, 'INTERNAL')
@@ -88,7 +90,7 @@ export class UpdateNotifier {
     const filteredMessages = diffToMessages(name, filteredDiff, {
       dependents: metadata.dependents,
       blockNumber: metadata.blockNumber,
-      chainId: metadata.chainId,
+      chain: this.chainConverter.toName(metadata.chainId),
     })
     await this.notify(filteredMessages, 'PUBLIC')
     this.logger.info('Updates detected, notification sent [PUBLIC]', {
@@ -132,7 +134,7 @@ export class UpdateNotifier {
   }
 
   async sendDailyReminder(
-    reminders: Record<string, ChainId[]>,
+    reminders: Record<string, string[]>,
     timestamp: UnixTime,
   ): Promise<void> {
     if (!isNineAM(timestamp, 'CET')) {
@@ -141,14 +143,12 @@ export class UpdateNotifier {
 
     let internals = ''
     if (Object.entries(reminders).length > 0) {
-      const longestProjectName = Math.max(
+      const maxLength = Math.max(
         ...Object.keys(reminders).map((name) => name.length),
       )
       const messages = Object.entries(reminders).map(
         ([project, chains]) =>
-          `- ${project.padEnd(longestProjectName, ' ')} (${chains
-            .map((c) => ChainId.getName(c))
-            .join(', ')})`,
+          `- ${project.padEnd(maxLength, ' ')} (${chains.join(', ')})`,
       )
 
       internals = `\`\`\`\n${messages.join('\n')}\n\`\`\``

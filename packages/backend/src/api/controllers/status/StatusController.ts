@@ -10,6 +10,7 @@ import {
 } from '@l2beat/shared-pure'
 
 import { getBalanceConfigHash } from '../../../core/balances/getBalanceConfigHash'
+import { ChainConverter } from '../../../core/ChainConverter'
 import { Clock } from '../../../core/Clock'
 import { getReportConfigHash } from '../../../core/reports/getReportConfigHash'
 import { getTotalSupplyConfigHash } from '../../../core/totalSupply/getTotalSupplyConfigHash'
@@ -60,23 +61,20 @@ export class StatusController {
     private readonly configReader: ConfigReader,
     private readonly indexerStateRepository: IndexerStateRepository,
     private readonly livenessConfigurationRepository: LivenessConfigurationRepository,
+    private readonly chainConverter: ChainConverter,
   ) {}
 
   async getDiscoveryDashboard(): Promise<string> {
     const projects: Record<string, DashboardProject[]> = {}
-    for (const chainId of ChainId.getAll()) {
-      // TODO(radomski): This issue is because there is a disconnect between
-      // the ChainId in L2BEAT and in discovery. See L2B-3202
-      if (chainId === ChainId.MANTA_PACIFIC) {
-        continue
-      }
-
-      const projectsToFill = chainId === ChainId.ETHEREUM ? this.projects : []
-      projects[ChainId.getName(chainId)] = await getDashboardProjects(
+    const chains = this.configReader.readAllChains()
+    for (const chain of chains) {
+      const projectsToFill = chain === 'ethereum' ? this.projects : []
+      projects[chain] = await getDashboardProjects(
         projectsToFill,
         this.configReader,
         this.updateMonitorRepository,
-        chainId,
+        chain,
+        this.chainConverter.toChainId(chain),
       )
     }
 
@@ -85,17 +83,17 @@ export class StatusController {
 
   async getDiscoveryDashboardProject(
     project: string,
-    chainId: ChainId,
+    chain: string,
   ): Promise<string> {
-    const discovery = await this.configReader.readDiscovery(project, chainId)
-    const config = await this.configReader.readConfig(project, chainId)
+    const discovery = await this.configReader.readDiscovery(project, chain)
+    const config = await this.configReader.readConfig(project, chain)
     const contracts = getDashboardContracts(discovery, config)
 
     const diff: DiscoveryDiff[] = await getDiff(
       this.updateMonitorRepository,
       discovery,
       config,
-      chainId,
+      this.chainConverter.toChainId(chain),
     )
 
     return renderDashboardProjectPage({

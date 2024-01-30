@@ -1,7 +1,9 @@
+Generated with discovered.json: 0x458592c7ff46f3e95422b638c0a5a7e9033c8c53
+
 # Diff at Tue, 21 Nov 2023 15:45:04 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@c91f8874e3c01dd4c477491e11cff7b3c664ef34
+- comparing to: main@c91f8874e3c01dd4c477491e11cff7b3c664ef34
 
 ## Description
 
@@ -19,7 +21,7 @@ Change in the zkSync Era Multisig owners - one address is removed, which makes i
 # Diff at Fri, 13 Oct 2023 12:28:20 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@94e530cf4d7e9cfd400a51f99572fc352ba85712
+- comparing to: main@94e530cf4d7e9cfd400a51f99572fc352ba85712
 
 ## Description
 
@@ -56,7 +58,7 @@ Updated verification keys. There are also some other changes in Config.sol, but 
 # Diff at Mon, 02 Oct 2023 13:57:17 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@10dbc30af490bd7af5cfca51b827ce3f10182f4d
+- comparing to: main@10dbc30af490bd7af5cfca51b827ce3f10182f4d
 
 ## Watched changes
 
@@ -71,7 +73,7 @@ Updated verification keys. There are also some other changes in Config.sol, but 
 # Diff at Tue, 26 Sep 2023 13:05:32 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@cfd4e281f2af40c7c69302b16c1308c0c5651be0
+- comparing to: main@cfd4e281f2af40c7c69302b16c1308c0c5651be0
 
 ## Watched changes
 

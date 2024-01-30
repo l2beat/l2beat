@@ -1,25 +1,31 @@
-import classNames from 'classnames'
 import React, { ReactNode } from 'react'
 
+import { cn } from '../utils/cn'
 import { ChevronDownIcon } from './icons'
 
 interface ExpandableContainerProps {
   children: ReactNode
   className?: string
+  gradientClassName?: string
 }
 
 export function ExpandableContainer(props: ExpandableContainerProps) {
   return (
     <div className="ExpandableContainer">
       <div
-        className={classNames(
+        className={cn(
           'ExpandableContainerContent relative overflow-y-hidden transition-max-height duration-300',
           props.className,
           !props.className?.includes('max-h-') && 'max-h-80',
         )}
       >
         <div>{props.children}</div>
-        <div className="ExpandableContainerContentGradient pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-gradient-to-b from-transparent to-white dark:to-neutral-900 " />
+        <div
+          className={cn(
+            'ExpandableContainerContentGradient pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-white dark:from-neutral-900',
+            props.gradientClassName,
+          )}
+        />
       </div>
       <div className="ExpandableContainerButton mx-auto mt-1 flex w-min cursor-pointer items-center justify-center rounded-md border border-pink-900 px-8 py-2 transition hover:bg-pink-900 hover:bg-opacity-25">
         <div className="flex gap-2.5">

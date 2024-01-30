@@ -1,8 +1,8 @@
 {
   "name": "lyra",
   "chain": "ethereum",
-  "blockNumber": 18927731,
-  "configHash": "0x2f3258454d92cf904e076447728d92a320cd58ddd79e34cf830a74e2338f78a3",
+  "blockNumber": 19090320,
+  "configHash": "0xec9385b717e1a0b77286358ad7023889f42ad3b65ee1f88a54fd3bab6fe1e8d0",
   "version": 3,
   "contracts": [
     {
@@ -34,6 +34,10 @@
         "batcherHash": "0x14e4E97bDc195d399Ad8E7FC14451C279FE04c8e",
         "gasLimit": 30000000,
         "minimumGasLimit": 21000000,
+        "opStackDA": {
+          "isAllTxsLengthEqualToCelestiaDAExample": true,
+          "isSomeTxsLengthEqualToCelestiaDAExample": true
+        },
         "overhead": 188,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "resourceConfig": [
@@ -44,7 +48,7 @@
           1000000,
           "340282366920938463463374607431768211455"
         ],
-        "scalar": 684000,
+        "scalar": 68400,
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
         "unsafeBlockSigner": "0xB71B58FfE538628557433dbBfA08d45ee5a69B44",
         "version": "1.3.1",
@@ -67,10 +71,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 2134800,
-        "latestOutputIndex": 1185,
-        "nextBlockNumber": 2136600,
-        "nextOutputIndex": 1186,
+        "latestBlockNumber": 3121200,
+        "latestOutputIndex": 1733,
+        "nextBlockNumber": 3123000,
+        "nextOutputIndex": 1734,
         "PROPOSER": "0x03e820562ffd2e0390787caD706EaF1FF98C2608",
         "startingBlockNumber": 0,
         "startingTimestamp": 1700021615,
@@ -113,7 +117,7 @@
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
         ],
         "getThreshold": 3,
-        "nonce": 9,
+        "nonce": 10,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -131,7 +135,7 @@
       "sinceTimestamp": 1700021675,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619822",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619853",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -196,7 +200,7 @@
         "GUARDIAN": "0x91F4be0C264FAFA1fEd75c4440910Cba2cAd98e8",
         "L2_ORACLE": "0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 590849, 18888999],
+        "params": [1000000000, 590849, 19062597],
         "paused": false,
         "SYSTEM_CONFIG": "0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e",
         "version": "1.7.2"

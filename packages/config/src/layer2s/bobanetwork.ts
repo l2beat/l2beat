@@ -392,7 +392,7 @@ export const bobanetwork: Layer2 = {
   },
   stateDerivation: {
     nodeSoftware:
-      'Node sofware source code can be found [here](https://github.com/bobanetwork/boba).',
+      'Node software source code can be found [here](https://github.com/bobanetwork/boba).',
     compressionScheme: `They utilize a general-purpose data compression algorithm known as [Brotli](https://github.com/google/brotli) for calldata compression.`,
     genesisState:
       'Genesis state file can be found [here](https://github.com/bobanetwork/boba/blob/develop/boba_community/boba-node/state-dumps/mainnet/state-dump.latest.json).',
@@ -425,32 +425,32 @@ export const bobanetwork: Layer2 = {
     {
       name: 'Boba launches L2 on BNB',
       date: '2022-11-01T00:00:00Z',
-      link: 'https://boba.network/boba-network-bnb-chain-l2-live/',
+      link: 'https://boba.network/education/multichain/bobabnb/',
       description: 'Boba launches on BnB.',
     },
     {
       name: 'Boba launches L2 on Avalanche',
       date: '2022-09-21T00:00:00Z',
-      link: 'https://boba.network/an-avalanche-of-boba-is-coming/',
+      link: 'https://boba.network/blog/an-avalanche-of-boba-is-coming/',
       description: 'Boba launches on Avalanche.',
     },
     {
       name: 'Boba launches L2 on Moonbeam and Fantom',
       date: '2022-06-02T00:00:00Z',
-      link: 'https://boba.network/boba-network-multichain-announcement/',
+      link: 'https://boba.network/education/boba-basics/multichain/',
       description: 'Boba launches on Moonbeam and Fantom.',
     },
     {
       name: 'Call data compression',
       date: '2022-10-08T00:00:00Z',
-      link: 'https://boba.network/boba-call-data-compression/',
+      link: 'https://boba.network/blog/boba-call-data-compression/',
       description:
         'The Boba Tree From (v0.1.0) release introduces Brotli compression for call data.',
     },
     {
       name: 'Hybrid Compute',
       date: '2022-03-18T00:00:00Z',
-      link: 'https://boba.network/turing-hybrid-compute/',
+      link: 'https://boba.network/education/boba-basics/hybrid-compute/',
       description:
         'Boba’s proprietary technology enables dApps that trigger code executed on web-scale infrastructure.',
     },

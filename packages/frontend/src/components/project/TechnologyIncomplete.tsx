@@ -1,6 +1,6 @@
-import cx from 'classnames'
 import React from 'react'
 
+import { cn } from '../../utils/cn'
 import { Link } from '../Link'
 
 export interface TechnologyIncompleteProps {
@@ -33,8 +33,8 @@ export function TechnologyIncomplete(props: TechnologyIncompleteProps) {
 export function TechnologyIncompleteShort() {
   return (
     <div
-      className={cx(
-        'mt-2 mb-2 rounded-lg py-1 px-2 text-xs md:text-base',
+      className={cn(
+        'mb-2 mt-2 rounded-lg px-2 py-1 text-xs md:text-base',
         'bg-blue-450 bg-opacity-20 text-blue-700 dark:text-blue-300',
       )}
     >

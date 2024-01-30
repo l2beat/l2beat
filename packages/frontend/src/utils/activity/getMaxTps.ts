@@ -5,18 +5,12 @@ import { formatTimestamp } from '../dates'
 const SECONDS_IN_A_DAY = 24 * 60 * 60
 
 export function getMaxTps(
-  data: ActivityApiChartPoint[] | undefined,
+  data: ActivityApiChartPoint[],
   type: 'project' | 'ethereum',
 ): {
-  maxTps: number | undefined
-  maxTpsDate: string | undefined
+  maxTps: number
+  maxTpsDate: string
 } {
-  if (!data || data.length === 0) {
-    return {
-      maxTps: undefined,
-      maxTpsDate: undefined,
-    }
-  }
   const dataIndex = type === 'ethereum' ? 2 : 1
 
   const maxEntry = data.reduce((max, current) =>

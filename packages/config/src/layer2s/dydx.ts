@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -15,7 +20,6 @@ import {
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { getCommittee } from '../discovery/starkware'
 import { delayDescriptionFromSeconds } from '../utils/delayDescription'
-import { formatSeconds } from '../utils/formatSeconds'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -99,7 +103,7 @@ export const dydx: Layer2 = {
       socialMedia: [
         'https://dydx.exchange/blog',
         'https://twitter.com/dYdX',
-        'https://discord.gg/Tuze6tY',
+        'https://discord.gg/dydx',
         'https://youtube.com/c/dydxprotocol',
         'https://reddit.com/r/dydxprotocol/',
         'https://linkedin.com/company/dydx',

@@ -1,4 +1,4 @@
-/** @type import("tailwindcss/types").Config */
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   future: {
     hoverOnlyWhenSupported: true,
@@ -37,6 +37,7 @@ module.exports = {
         900: '#131215',
       },
       zinc: {
+        500: '#5F6470',
         700: '#393C43',
         800: '#272A2F',
         900: '#1D1E22',
@@ -97,6 +98,7 @@ module.exports = {
         600: '#11CC00',
         700: '#007408',
         800: '#34762F',
+        900: '#125D19',
       },
       red: {
         100: '#FDD9D9',
@@ -125,6 +127,15 @@ module.exports = {
       slate: {
         600: '#525C6A',
       },
+      rose: {
+        500: '#E33B4F',
+        700: '#BB1B41',
+      },
+      teal: {
+        400: '#2EC4B6',
+        500: '#27AC9F',
+      },
+      sky: { 600: '#2083C1' },
     },
     screens: {
       xs: '400px',

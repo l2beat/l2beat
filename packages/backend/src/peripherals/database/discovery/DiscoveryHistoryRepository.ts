@@ -3,6 +3,7 @@ import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { DiscoveryHistoryRow } from 'knex/types/tables'
 
+import { sanitizeDiscoveryOutput } from '../../../core/discovery/sanitizeDiscoveryOutput'
 import { BaseRepository, CheckConvention } from '../shared/BaseRepository'
 import { Database } from '../shared/Database'
 
@@ -66,6 +67,51 @@ export class DiscoveryHistoryRepository extends BaseRepository {
     } | block_number:  ${record.blockNumber.toString()}`
   }
 
+  async getAvailableProjects(): Promise<
+    Pick<DiscoveryHistoryRecord, 'projectName' | 'chainId'>[]
+  > {
+    const knex = await this.knex()
+
+    const rows = await knex('daily_discovery')
+      .select('project_name', 'chain_id')
+      .groupBy('project_name', 'chain_id')
+
+    return rows.map((row) => ({
+      projectName: row.project_name,
+      chainId: ChainId(row.chain_id),
+    }))
+  }
+
+  async deleteStaleProjectDiscoveries(
+    projectName: string,
+    chainId: ChainId,
+    configHash: Hash256,
+  ): Promise<number> {
+    const knex = await this.knex()
+
+    return await knex('daily_discovery')
+      .where({
+        project_name: projectName,
+        chain_id: +chainId,
+      })
+      .andWhere('config_hash', '!=', configHash.toString())
+      .delete()
+  }
+
+  async getProject(
+    projectName: string,
+    chainId: ChainId,
+  ): Promise<DiscoveryHistoryRecord[]> {
+    const knex = await this.knex()
+
+    const rows = await knex('daily_discovery').where({
+      project_name: projectName,
+      chain_id: +chainId,
+    })
+
+    return rows.map(toRecord)
+  }
+
   async getAll(): Promise<DiscoveryHistoryRecord[]> {
     const knex = await this.knex()
     const rows = await knex('daily_discovery')
@@ -80,7 +126,7 @@ export class DiscoveryHistoryRepository extends BaseRepository {
 }
 
 function toRecord(row: DiscoveryHistoryRow): DiscoveryHistoryRecord {
-  return {
+  const result = {
     projectName: row.project_name,
     chainId: ChainId(row.chain_id),
     blockNumber: row.block_number,
@@ -89,6 +135,14 @@ function toRecord(row: DiscoveryHistoryRow): DiscoveryHistoryRecord {
     configHash: Hash256(row.config_hash),
     version: row.version,
   }
+
+  // NOTE(radomski): This has to be here, otherwise the risk of exposing our
+  // API keys goes way up. Putting this in the database gives us the highest
+  // chance of being secure. We still want to show that there was an error
+  // so sanitize it to expose minimal information.
+  result.discovery = sanitizeDiscoveryOutput(result.discovery)
+
+  return result
 }
 
 function toRow(record: DiscoveryHistoryRecord): DiscoveryHistoryRow {

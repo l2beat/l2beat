@@ -1,7 +1,42 @@
+Generated with discovered.json: 0x8241e5999c5993c8094f03fe673e1a35f2b5b13f
+
+# Diff at Thu, 11 Jan 2024 15:48:40 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@d79128df189c297a74fb89b3a58b7e0d6edd88f4 block: 18968776
+- current block number: 18984674
+
+## Description
+
+The EscrowsAdmin multisig threshold is updated - now 5/10. Nonce is ignored.
+
+## Watched changes
+
+```diff
+    contract EscrowsAdmin (0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904) {
+      values.getThreshold:
+-        1
++        5
+    }
+```
+
+## Config related changes
+
+Following changes come from updates made to the config file,
+not from differences found during discovery. Values are
+for block 18968776 (main branch discovery), not current.
+
+```diff
+    contract EscrowsAdmin (0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904) {
+      values.nonce:
+-        0
+    }
+```
+
 # Diff at Fri, 10 Nov 2023 10:41:51 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: master@8c81bbc286f1a0d260de84887d123cd5eda48a86
+- comparing to: main@8c81bbc286f1a0d260de84887d123cd5eda48a86
 
 ## Description
 
@@ -64,7 +99,7 @@ actual change that took place because it's around the zk circuit.
 # Diff at Mon, 02 Oct 2023 13:55:19 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@10dbc30af490bd7af5cfca51b827ce3f10182f4d
+- comparing to: main@10dbc30af490bd7af5cfca51b827ce3f10182f4d
 
 ## Watched changes
 
@@ -79,7 +114,7 @@ actual change that took place because it's around the zk circuit.
 # Diff at Tue, 26 Sep 2023 13:22:27 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@cfd4e281f2af40c7c69302b16c1308c0c5651be0
+- comparing to: main@cfd4e281f2af40c7c69302b16c1308c0c5651be0
 
 ## Watched changes
 
@@ -100,7 +135,7 @@ actual change that took place because it's around the zk circuit.
 # Diff at Fri, 22 Sep 2023 11:25:03 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@1312187d41931ca505cc65eca063068109ff1771
+- comparing to: main@1312187d41931ca505cc65eca063068109ff1771
 
 ## Watched changes
 

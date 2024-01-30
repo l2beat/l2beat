@@ -11,7 +11,6 @@ import {
 import { setTimeout } from 'timers/promises'
 
 import { UpdaterStatus } from '../../api/controllers/status/view/TvlStatusPage'
-import { getChainMinTimestamp } from '../../config/chains'
 import {
   CirculatingSupplyRecord,
   CirculatingSupplyRepository,
@@ -32,10 +31,9 @@ export class CirculatingSupplyUpdater {
     private readonly tokens: Token[],
     private readonly chainId: ChainId,
     private readonly logger: Logger,
+    private readonly minTimestamp: UnixTime,
   ) {
-    this.logger = this.logger.for(
-      `${this.constructor.name}.${ChainId.getName(chainId)}`,
-    )
+    this.logger = this.logger.for(this)
     this.taskQueue = new TaskQueue(
       () => this.update(),
       this.logger.for('taskQueue'),
@@ -59,7 +57,7 @@ export class CirculatingSupplyUpdater {
       this.clock.getFirstHour(),
       this.clock.getLastHour(),
       this.knownSet,
-      getChainMinTimestamp(this.chainId),
+      this.minTimestamp,
     )
   }
 

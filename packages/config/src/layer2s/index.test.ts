@@ -84,6 +84,17 @@ describe('layer2s', () => {
     })
   })
 
+  describe('chain name equals project id', () => {
+    for (const layer2 of layer2s) {
+      const name = layer2.chainConfig?.name
+      if (name !== undefined) {
+        it(layer2.id.toString(), () => {
+          expect(name).toEqual(layer2.id.toString())
+        })
+      }
+    }
+  })
+
   describe('liveness', () => {
     it('every project has valid signatures', () => {
       for (const project of layer2s) {
@@ -120,6 +131,17 @@ describe('layer2s', () => {
             )
           })
         }
+      }
+    })
+  })
+
+  describe('finality', () => {
+    describe('every project with finality enabled has finalizationPeriod property', () => {
+      const projectsWithFinality = layer2s.filter((p) => p.config.finality)
+      for (const project of projectsWithFinality) {
+        it(project.id.toString(), () => {
+          expect(project.display.finality?.finalizationPeriod).not.toBeNullish()
+        })
       }
     })
   })

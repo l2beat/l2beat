@@ -1,28 +1,15 @@
+import { StackPermissionTemplate } from './StackTemplateTypes'
+
 export type OpStackContractName =
   | 'L2OutputOracle'
   | 'OptimismPortal'
   | 'SystemConfig'
   | 'L1CrossDomainMessenger'
-
-export type OpStackPermissionName = 'Sequencer' | 'Proposer' | 'ProxyAdmin'
+  | 'L1StandardBridge'
 
 export interface OPStackContractTemplate {
   name: OpStackContractName
   coreDescription: string
-}
-
-export type OpStackTag = 'admin' | 'owner' | 'owned'
-
-export const OpStackTagDescription: Record<OpStackTag, string> = {
-  admin: 'Admin of {0}.',
-  owner: 'Owner of {0}.',
-  owned: 'Owned by {0}.',
-}
-
-export interface OPStackPermissionTemplate {
-  role: { value: string; contract: string }
-  description?: string
-  tags?: OpStackTag[]
 }
 
 export const OP_STACK_CONTRACT_DESCRIPTION: OPStackContractTemplate[] = [
@@ -46,9 +33,14 @@ export const OP_STACK_CONTRACT_DESCRIPTION: OPStackContractTemplate[] = [
     coreDescription:
       "The {0} (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
   },
+  {
+    name: 'L1StandardBridge',
+    coreDescription:
+      'The {0} contract is the main entry point to deposit ERC20 tokens from L1 to L2.',
+  },
 ]
 
-export const OP_STACK_PERMISSION_TEMPLATES: OPStackPermissionTemplate[] = [
+export const OP_STACK_PERMISSION_TEMPLATES: StackPermissionTemplate[] = [
   {
     role: { value: 'owner', contract: 'AddressManager' },
     tags: ['owner'],

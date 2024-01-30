@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -13,7 +18,6 @@ import {
   STATE_CORRECTNESS,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { formatSeconds } from '../utils/formatSeconds'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -66,8 +70,11 @@ const exitWindowRisk = {
   description: `Even though there is a ${upgradeDelayString} Timelock for upgrades, forced transactions are disabled. Even if they were to be enabled, user withdrawals can be censored up to ${formatSeconds(
     trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
   )}.`,
-  warning: 'The Security Council can upgrade with no delay.',
-}
+  warning: {
+    text: 'The Security Council can upgrade with no delay.',
+    sentiment: 'bad',
+  },
+} as const
 
 const timelockUpgrades = {
   upgradableBy: ['AdminMultisig'],
@@ -197,6 +204,23 @@ export const polygonzkevm: Layer2 = {
         },
       ],
     },
+  },
+  chainConfig: {
+    name: 'polygonzkevm',
+    chainId: 1101,
+    explorerUrl: 'https://zkevm.polygonscan.com',
+    explorerApi: {
+      url: 'https://api-zkevm.polygonscan.com/api',
+      type: 'etherscan',
+    },
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 57746,
+        version: '3',
+      },
+    ],
   },
   riskView: makeBridgeCompatible({
     stateValidation: {

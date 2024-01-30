@@ -1,12 +1,7 @@
-import { ContractValue } from '@l2beat/discovery-types'
 import {
-  assert,
-  AssetId,
-  ChainId,
-  CoingeckoId,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
-  Token,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
@@ -23,7 +18,6 @@ import {
   STATE_CORRECTNESS,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { formatSeconds } from '../utils/formatSeconds'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -49,6 +43,14 @@ const roles = discovery.getContractValue<{
   OPERATOR_ROLE: { members: string[] }
   PAUSE_MANAGER_ROLE: { members: string[] }
 }>('zkEVM', 'accessControl')
+
+const zodiacRoles = discovery.getContractValue<{
+  roles: Record<string, Record<string, boolean>>
+}>('Roles', 'roles')
+const zodiacPauserRole = '1'
+const zodiacPausers: ScalingProjectPermissionedAccount[] = Object.keys(
+  zodiacRoles.roles[zodiacPauserRole].members,
+).map((zodiacPauser) => discovery.formatPermissionedAccount(zodiacPauser))
 
 const operators: ScalingProjectPermissionedAccount[] =
   roles.OPERATOR_ROLE.members.map((address) => ({
@@ -77,27 +79,6 @@ const withdrawalLimitString = `Currently, there is a general limit of ${utils.fo
 )} ETH that can be withdrawn within each ${formatSeconds(
   periodInSeconds,
 )} time window.`
-
-const TOKENS: Omit<Token, 'chainId'>[] = [
-  {
-    id: AssetId('lyra:stone-stakestone-ether'),
-    name: 'StakeStone Ether',
-    symbol: 'STONE',
-    decimals: 18,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/33103/large/200_200.png?1702602672',
-    address: EthereumAddress('0x93F4d0ab6a8B4271f4a28Db399b5E30612D21116'),
-    coingeckoId: CoingeckoId('stakestone-ether'),
-    sinceTimestamp: new UnixTime(1699781729),
-    category: 'other',
-    type: 'EBV',
-    formula: 'totalSupply',
-    bridgedUsing: {
-      bridge: 'Layer Zero',
-      slug: 'omnichain',
-    },
-  },
-]
 
 export const linea: Layer2 = {
   type: 'layer2',
@@ -131,7 +112,6 @@ export const linea: Layer2 = {
     },
   },
   config: {
-    tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.LINEA })),
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xd19d4B5d358258f05D7B411E21A1460D11B0876F'),
@@ -179,6 +159,27 @@ export const linea: Layer2 = {
         },
       ],
     },
+  },
+  chainConfig: {
+    name: 'linea',
+    chainId: 59144,
+    explorerUrl: 'https://lineascan.build',
+    explorerApi: {
+      url: 'https://api.lineascan.build/api',
+      type: 'etherscan',
+    },
+    // ~ Timestamp of block number 0 on Linea
+    // https://lineascan.build/block/0
+    minTimestampForTvl: UnixTime.fromDate(new Date('2023-07-06T14:00:00Z')),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 42,
+        version: '3',
+      },
+    ],
+    coingeckoPlatform: 'linea',
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
@@ -298,22 +299,20 @@ export const linea: Layer2 = {
     ),
     discovery.contractAsPermissioned(
       discovery.getContract('Roles'),
-      `Module to the AdminMultisig. Allows to add additional members to the multisig via permissions to call functions specified by roles. ${(() => {
-        const roles = discovery.getContract('Roles')
-        assert(roles.values !== undefined)
-        const rolesCount = Object.entries(
-          roles.values.roles['roles' as keyof ContractValue],
-        ).length
-        assert(rolesCount === 0)
-
-        return 'Currently there are no additional members.'
-      })()}`,
+      `Module to the AdminMultisig. Allows to add additional members to the multisig via permissions to call functions specified by roles.`,
     ),
     {
       accounts: operators,
       name: 'Operators',
       description:
         'The operators are allowed to prove blocks and post the corresponding transaction data.',
+    },
+
+    {
+      accounts: zodiacPausers,
+      name: 'Pauser',
+      description:
+        'Address allowed to pause the ERC20Bridge, the USDCBridge and the core functionalities of the project.',
     },
   ],
   contracts: {

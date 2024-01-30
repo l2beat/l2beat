@@ -7,7 +7,8 @@ export interface ApplicationModule {
   start?: () => Promise<void> | void
 }
 
-export interface TvlSubmodule {
+export interface TvlModule {
+  chain: string
   reportUpdaters?: ReportUpdater[]
   dataUpdaters?: DataUpdater[]
   start?: () => Promise<void> | void

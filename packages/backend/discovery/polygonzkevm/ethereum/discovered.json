@@ -1,8 +1,8 @@
 {
   "name": "polygonzkevm",
   "chain": "ethereum",
-  "blockNumber": 18968776,
-  "configHash": "0xdcc57498fdfc78cbaafe06569c130434bee15b10e7b7d6a51c916b20dfee1406",
+  "blockNumber": 19018668,
+  "configHash": "0x93fd40001c492e94b0a5e0ea95ecdee6b2eb4f5d169fc13e7449c52ea7fce2e8",
   "version": 3,
   "contracts": [
     {
@@ -113,7 +113,7 @@
         ],
         "pendingDefaultAdminDelay": [0, 0],
         "sdai": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
-        "totalBridgedDAI": "12850000000000000000",
+        "totalBridgedDAI": "62850000000000000000",
         "totalProtocolDAI": "1000000000000000000",
         "zkEvmBridge": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
       },
@@ -305,8 +305,7 @@
           "0x4DE44Aa0Ef9DB64DF3eB3465d35D73d0409d44ed",
           "0x4E83124eD15b13265240B61EC9627797CCE1032E"
         ],
-        "getThreshold": 1,
-        "nonce": 0,
+        "getThreshold": 5,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

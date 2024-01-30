@@ -1,4 +1,3 @@
-import classNames from 'classnames'
 import React from 'react'
 
 import { unifyPercentagesAsIntegers } from '../../utils'
@@ -20,6 +19,8 @@ export interface TvlSummaryProps {
   stats?: TvlStats
   tvlBreakdownHref?: string
   showTvlBreakdown?: boolean
+  isArchived?: boolean
+  type?: 'bridge' | 'layer2' | 'layer3'
 }
 
 export function TvlSummary(props: TvlSummaryProps) {
@@ -73,12 +74,7 @@ export function TvlSummary(props: TvlSummaryProps) {
 
   return (
     <div className="bg-gray-100 p-4 dark:bg-zinc-900 md:flex md:flex-col md:gap-3 md:rounded-lg md:px-6 md:py-4">
-      <div
-        className={classNames(
-          'flex w-full flex-wrap items-baseline justify-between',
-          'md:gap-2',
-        )}
-      >
+      <div className="flex w-full flex-wrap items-baseline justify-between md:gap-2">
         <span className="text-lg font-medium md:hidden md:text-xs md:font-normal md:text-gray-500 md:dark:text-gray-600">
           Value Locked
         </span>
@@ -86,7 +82,7 @@ export function TvlSummary(props: TvlSummaryProps) {
           TVL
         </span>
 
-        {props.stats ? (
+        {props.stats && (props.stats.tvl > 0 || props.isArchived) ? (
           <div className="flex items-center gap-2 md:gap-1">
             <p className="text-lg font-bold md:text-2xl md:leading-none">
               {formatUSD(props.stats.tvl)}

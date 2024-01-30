@@ -7,6 +7,7 @@ import { ProjectSectionId } from './sectionId'
 export interface DetailedDescriptionSectionProps {
   id: ProjectSectionId
   title: string
+  sectionOrder: number
   description: string
   detailedDescription: string | undefined
 }
@@ -15,7 +16,11 @@ export function DetailedDescriptionSection(
   props: DetailedDescriptionSectionProps,
 ) {
   return (
-    <ProjectDetailsSection title={props.title} id={props.id}>
+    <ProjectDetailsSection
+      title={props.title}
+      id={props.id}
+      sectionOrder={props.sectionOrder}
+    >
       <div className="mt-4 leading-snug text-gray-850 dark:text-gray-400">
         <Markdown>{props.description}</Markdown>
         {props.detailedDescription && (

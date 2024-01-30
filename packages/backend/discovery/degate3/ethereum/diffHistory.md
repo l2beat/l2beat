@@ -1,7 +1,9 @@
+Generated with discovered.json: 0x98fc49eab6c1c972dfa8d352a7e3d2cd727b8ae8
+
 # Diff at Fri, 05 Jan 2024 07:55:50 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@c161bc667faec740460d4a22b06cd4ecc322dbfd
+- comparing to: main@c161bc667faec740460d4a22b06cd4ecc322dbfd
 
 ## Description
 
@@ -45,11 +47,11 @@ The owner has accepted the ownership of the contract, which is now the same mult
 # Diff at Thu, 21 Dec 2023 13:24:40 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@10f854f818ad64712b787aaf697a6953e41185cf
+- comparing to: main@10f854f818ad64712b787aaf697a6953e41185cf
 
 ## Description
 
-Owner is being changed. They are using Claimable istead of Ownable, which is the same thing but the new pending owner has to accept the ownership.
+Owner is being changed. They are using Claimable instead of Ownable, which is the same thing but the new pending owner has to accept the ownership.
 
 ## Watched changes
 
@@ -80,7 +82,7 @@ Owner is being changed. They are using Claimable istead of Ownable, which is the
 # Diff at Tue, 21 Nov 2023 13:17:02 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@
+- comparing to: main@
 
 ## Description
 

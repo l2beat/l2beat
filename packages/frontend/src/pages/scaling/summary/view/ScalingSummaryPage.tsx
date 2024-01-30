@@ -17,16 +17,17 @@ import {
   ScalingSummaryViewProps,
 } from './ScalingSummaryView'
 
-export interface TvlPageProps {
+export interface SummaryPageProps {
   tvlView: ScalingSummaryViewProps
   navbar: NavbarProps
   footer: FooterProps
   showActivity: boolean
   showLiveness: boolean
+  showFinality: boolean
   milestones?: Milestone[]
 }
 
-export function ScalingSummaryPage(props: TvlPageProps) {
+export function ScalingSummaryPage(props: SummaryPageProps) {
   return (
     <>
       <Navbar {...props.navbar} />
@@ -34,6 +35,7 @@ export function ScalingSummaryPage(props: TvlPageProps) {
         <ScalingNavigationTabs
           showActivity={props.showActivity}
           showLiveness={props.showLiveness}
+          showFinality={props.showFinality}
           selected="summary"
         />
         <main className="mt-4 md:mt-12">

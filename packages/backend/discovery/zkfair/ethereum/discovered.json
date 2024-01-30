@@ -1,8 +1,8 @@
 {
   "name": "zkfair",
   "chain": "ethereum",
-  "blockNumber": 18841455,
-  "configHash": "0x0c842caf3e79f85c091e3c41b5d139eed63005756a476f89d1fcda10cf4e137f",
+  "blockNumber": 18991587,
+  "configHash": "0xd49e5be91a643e5b2f4a8647e167c445fbc4e130895ffc2d50ede4fdc44b8a7f",
   "version": 3,
   "contracts": [
     {
@@ -156,7 +156,6 @@
     {
       "name": "DataAvailabilityCommittee",
       "address": "0x997CfB0838544f68E59f877EDc905001456F125b",
-      "unverified": true,
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x63150fA72c1c9fF8Fe4438f8355927D3415b0FDc",
@@ -164,7 +163,35 @@
       },
       "implementations": ["0x63150fA72c1c9fF8Fe4438f8355927D3415b0FDc"],
       "sinceTimestamp": 1702879319,
-      "derivedName": ""
+      "values": {
+        "committeeHash": "0xba409e01b8959e09c11202ce45dd3e4ac8aa7e21440e86c1e9dc924369151fca",
+        "getAmountOfMembers": 5,
+        "members": [
+          [
+            "http://ec2-18-166-77-46.ap-east-1.compute.amazonaws.com:8444",
+            "0x033A75B6B0fc26eDf60e99c4172eB5f87E733ca2"
+          ],
+          [
+            "http://ec2-18-163-181-171.ap-east-1.compute.amazonaws.com:8444",
+            "0x061D273bEf947BD0ef2B828526e710eEa0f297ae"
+          ],
+          [
+            "http://ec2-43-198-25-156.ap-east-1.compute.amazonaws.com:8444",
+            "0x9231622437bD57349cC9a15CDEc5383627DEbA17"
+          ],
+          [
+            "http://ec2-18-167-116-200.ap-east-1.compute.amazonaws.com:8444",
+            "0x9d8616545C9941138832EebC58Cb498E0ef21a13"
+          ],
+          [
+            "http://ec2-18-163-127-148.ap-east-1.compute.amazonaws.com:8444",
+            "0xFe1da7CAd939805d4A889822357c348177a5118d"
+          ]
+        ],
+        "owner": "0xa57c2B747193fe3F9CC8bea89103B7d76B8A0c70",
+        "requiredAmountOfSignatures": 3
+      },
+      "derivedName": "CDKDataCommittee"
     },
     {
       "name": "Bridge",
@@ -228,6 +255,8 @@
     }
   ],
   "eoas": [
+    "0x033A75B6B0fc26eDf60e99c4172eB5f87E733ca2",
+    "0x061D273bEf947BD0ef2B828526e710eEa0f297ae",
     "0x3226ECf79dc7007063599A334832d015B48aBDBc",
     "0x39FcAEb9870cB015f2165e93c51f4663AE970953",
     "0x44fb52EB2bdDAf1c8b6D441e0b5DCa123A345292",
@@ -237,12 +266,15 @@
     "0x540C913ad8b197152EB041bC56f9c6Ab314D25Ba",
     "0x689752C198f0cEbe9993ee3E13AF0e565C068c25",
     "0x75575Dc1adD71eA794A52D83f836a13F7891C527",
+    "0x9231622437bD57349cC9a15CDEc5383627DEbA17",
+    "0x9d8616545C9941138832EebC58Cb498E0ef21a13",
     "0x9eed06d1566F0cAfdA3df624E2376864cA84Db6c",
     "0x9fAe81C21be8D1Ad91c3617A7b0140dfe0DCe6C7",
     "0xa57c2B747193fe3F9CC8bea89103B7d76B8A0c70",
     "0xcf6226d0264496abB69eF8BC1DF366c9E00f5b87",
     "0xd6888c41EeAcc94f4A1CEe7A99E1557aa41FA027",
     "0xe1229a2716D19eC9aF74017418Fc9E165b80c7aF",
+    "0xFe1da7CAd939805d4A889822357c348177a5118d",
     "0xfED4D68744115A50ed22a6DA32DBA42eCaB5CF8D"
   ],
   "abis": {
@@ -298,6 +330,28 @@
       "function scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateDelay(uint256 newDelay)"
+    ],
+    "0x63150fA72c1c9fF8Fe4438f8355927D3415b0FDc": [
+      "error CommitteeAddressDoesntExist()",
+      "error EmptyURLNotAllowed()",
+      "error TooManyRequiredSignatures()",
+      "error UnexpectedAddrsAndSignaturesSize()",
+      "error UnexpectedAddrsBytesLength()",
+      "error UnexpectedCommitteeHash()",
+      "error WrongAddrOrder()",
+      "event CommitteeUpdated(bytes32 committeeHash)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function committeeHash() view returns (bytes32)",
+      "function getAmountOfMembers() view returns (uint256)",
+      "function initialize()",
+      "function members(uint256) view returns (string url, address addr)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function requiredAmountOfSignatures() view returns (uint256)",
+      "function setupCommittee(uint256 _requiredAmountOfSignatures, string[] urls, bytes addrsBytes)",
+      "function transferOwnership(address newOwner)",
+      "function verifySignatures(bytes32 signedHash, bytes signaturesAndAddrs) view"
     ],
     "0x668965757127549f8755D2eEd10494B06420213b": [
       "constructor(address _globalExitRootManager, address _matic, address _rollupVerifier, address _bridgeAddress, address _dataCommitteeAddress, uint64 _chainID, uint64 _forkID)",

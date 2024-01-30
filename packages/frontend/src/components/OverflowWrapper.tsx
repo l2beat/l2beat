@@ -1,6 +1,6 @@
-import classNames from 'classnames'
 import React from 'react'
 
+import { cn } from '../utils/cn'
 import { ChevronLeftIcon, ChevronRightIcon } from './icons'
 
 interface OverflowWrapperProps {
@@ -16,10 +16,10 @@ export function OverflowWrapper(props: OverflowWrapperProps) {
     <div
       data-role="overflow-wrapper"
       data-scroll-on-load={!props.disableScrollOnLoad}
-      className={classNames('group/overflow-wrapper relative', props.className)}
+      className={cn('group/overflow-wrapper relative', props.className)}
     >
       <div
-        className={classNames(
+        className={cn(
           'pointer-events-none absolute inset-y-0 left-0 z-10 w-6 bg-gradient-to-r opacity-0 transition-opacity group-data-[arrow-left-visible=true]/overflow-wrapper:pointer-events-auto group-data-[arrow-left-visible=true]/overflow-wrapper:opacity-100',
           !props.within &&
             'from-white via-white dark:from-neutral-900 dark:via-neutral-900',
@@ -33,7 +33,7 @@ export function OverflowWrapper(props: OverflowWrapperProps) {
         </div>
       </div>
       <div
-        className={classNames(
+        className={cn(
           'scrollbar-hide overflow-x-auto',
           props.childrenClassName,
         )}
@@ -42,7 +42,7 @@ export function OverflowWrapper(props: OverflowWrapperProps) {
         {props.children}
       </div>
       <div
-        className={classNames(
+        className={cn(
           'pointer-events-none absolute inset-y-0 right-0 z-10 w-6 bg-gradient-to-l opacity-0 transition-opacity group-data-[arrow-right-visible=true]/overflow-wrapper:pointer-events-auto group-data-[arrow-right-visible=true]/overflow-wrapper:opacity-100',
           !props.within &&
             'from-white via-white dark:from-neutral-900 dark:via-neutral-900',

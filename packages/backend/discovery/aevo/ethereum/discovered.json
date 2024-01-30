@@ -1,8 +1,8 @@
 {
   "name": "aevo",
   "chain": "ethereum",
-  "blockNumber": 18933723,
-  "configHash": "0x2fbd84117e6e451cc199f99dbefc30a6e7b6c6a179bafd7965442eec6d6adae4",
+  "blockNumber": 19090313,
+  "configHash": "0x18a30e4418ca8474c643d67f158a87ea3acb77a6718310184d8eb6cea8997304",
   "version": 3,
   "contracts": [
     {
@@ -18,7 +18,7 @@
       "sinceTimestamp": 1679193095,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292628239",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292630398",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -86,7 +86,7 @@
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
         ],
         "getThreshold": 3,
-        "nonce": 9,
+        "nonce": 10,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -105,7 +105,7 @@
         "GUARDIAN": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "L2_ORACLE": "0x909E51211e959339EFb14b36f5A50955a8ae3770",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 694997, 18933380],
+        "params": [1000000000, 694997, 19090112],
         "paused": false,
         "SYSTEM_CONFIG": "0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca",
         "version": "1.7.2"
@@ -139,10 +139,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 3600,
         "L2_BLOCK_TIME": 10,
-        "latestBlockNumber": 2517000,
-        "latestOutputIndex": 4194,
-        "nextBlockNumber": 2517600,
-        "nextOutputIndex": 4195,
+        "latestBlockNumber": 2706600,
+        "latestOutputIndex": 4510,
+        "nextBlockNumber": 2707200,
+        "nextOutputIndex": 4511,
         "PROPOSER": "0x75ACb7ae6C76B3f5cA049431FE2c0797dD002b90",
         "startingBlockNumber": 0,
         "startingTimestamp": 1679193011,
@@ -165,7 +165,11 @@
         "batcherHash": "0x889e21d7BA3d6dD62e75d4980A4Ad1349c61599d",
         "gasLimit": 30000000,
         "minimumGasLimit": 21000000,
-        "overhead": 2100,
+        "opStackDA": {
+          "isAllTxsLengthEqualToCelestiaDAExample": true,
+          "isSomeTxsLengthEqualToCelestiaDAExample": true
+        },
+        "overhead": 188,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "resourceConfig": [
           20000000,
@@ -175,7 +179,7 @@
           1000000,
           "340282366920938463463374607431768211455"
         ],
-        "scalar": 1000000,
+        "scalar": 68400,
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
         "unsafeBlockSigner": "0xE3e57f917E788F3921528CAABf76EEaF781d3326",
         "version": "1.3.1",

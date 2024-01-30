@@ -1,14 +1,14 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
-import cx from 'classnames'
 import React from 'react'
 
 import { TVLProjectBreakdown } from '../../../pages/scaling/projects-tvl-breakdown/props/getTvlBreakdownView'
+import { cn } from '../../../utils/cn'
 import { formatAddress } from '../../../utils/utils'
 import { ChevronDownIcon, OutLinkIcon } from '../../icons'
 
 interface EscrowsCellProps {
   escrows: TVLProjectBreakdown['canonical'][number]['escrows']
-  explorer: string
+  explorer?: string
   assetId: string
 }
 export function EscrowsCell(props: EscrowsCellProps) {
@@ -39,17 +39,29 @@ export function EscrowsCell(props: EscrowsCellProps) {
 
 interface EscrowLinkProps {
   escrowAddress: EthereumAddress
-  explorer: string
+  explorer?: string
   hidden?: boolean
   assetId?: string
 }
 
 function EscrowLink(props: EscrowLinkProps) {
+  if (!props.explorer) {
+    return (
+      <span
+        className={cn(
+          'text-xs font-medium',
+          props.hidden && 'MultipleEscrowsHidden hidden',
+        )}
+      >
+        {formatAddress(props.escrowAddress)}
+      </span>
+    )
+  }
   return (
     <a
       href={`${props.explorer}/address/${props.escrowAddress.toString()}`}
       target="_blank"
-      className={cx(
+      className={cn(
         'flex gap-1 text-xs font-medium text-blue-700 underline dark:text-blue-500',
         props.hidden && 'MultipleEscrowsHidden hidden',
       )}

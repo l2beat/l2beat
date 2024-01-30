@@ -1,8 +1,8 @@
 {
   "name": "amarok",
   "chain": "ethereum",
-  "blockNumber": 18941290,
-  "configHash": "0xf92557914378a70b30d8649a6c938f90c09d58671e54a8d545bea8b301ec1bb7",
+  "blockNumber": 18990101,
+  "configHash": "0xb540d22c3b9f515d86a62f81959bd5c7d0ab992dec8eb34ec5ca7e4e947021ca",
   "version": 3,
   "contracts": [
     {
@@ -19,7 +19,7 @@
         "disputeBlocks": 120,
         "DOMAIN": 6648936,
         "FINALIZED_HASH": "0x0000000000000000000000000000000000000000000000000000000000000001",
-        "getLastCompletedSnapshotId": 946922,
+        "getLastCompletedSnapshotId": 947252,
         "getSnapshotDuration": 1800,
         "home": "0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc",
         "lastSentBlock": 18825636,
@@ -29,7 +29,7 @@
         "MIRROR_DOMAIN": 6648936,
         "mirrorConnector": "0x0000000000000000000000000000000000000000",
         "optimisticMode": true,
-        "outboundRoot": "0x0fded83e62db84c7d4d46aa3fe5197bb1137049078a6cae6d31ca2e792cf86f6",
+        "outboundRoot": "0xf494dacac1c3c51b61425957173ed381cf47ad10f31dcf117f6713b888aeb38a",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "PROCESS_GAS": 850000,
@@ -56,7 +56,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "117343636837937684378095334",
+        "totalSupply": "117392568281808845686689115",
         "totalSupplyAt": []
       }
     },
@@ -139,7 +139,7 @@
           "0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f"
         ],
         "getThreshold": 8,
-        "nonce": 57,
+        "nonce": 58,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -154,7 +154,7 @@
       "values": {
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1704460343,
+        "getCurrentTime": 1705053851,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -192,7 +192,7 @@
         "getPendingInboundRootsCount": 0,
         "getSnapshotDuration": 1800,
         "hubDomain": 6648936,
-        "lastSavedAggregateRootTimestamp": 1704457559,
+        "lastSavedAggregateRootTimestamp": 1705053059,
         "MAX_DOMAINS": 500,
         "MERKLE": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
         "minDisputeBlocks": 60,
@@ -318,7 +318,7 @@
           "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
         ],
         "getThreshold": 2,
-        "nonce": 520,
+        "nonce": 523,
         "VERSION": "1.3.0"
       }
     },
@@ -590,7 +590,7 @@
         "LIQUIDITY_FEE_NUMERATOR": 9995,
         "lpTokenTargetAddress": "0xf7DE5aCeEeE6091d1103209C337fA00D0B4b9092",
         "maxRoutersPerTransfer": 5,
-        "nonce": 18768,
+        "nonce": 19496,
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "proposed": "0x0000000000000000000000000000000000000000",
@@ -637,7 +637,8 @@
           "0x49a9E7ec76Bc8fDF658d09557305170d9F01D2fA",
           "0x5d527765252003AceE6545416F6a9C8D15ae8402",
           "0x76CF58cE587bC928fcc5aD895555fd040E06C61a",
-          "0x96D38b113b1bC6a21d1137676f2f05DfcAce24e8"
+          "0x96D38b113b1bC6a21d1137676f2f05DfcAce24e8",
+          "0xBa11aA59645a56031fedBcCF60D4f111534f2502"
         ],
         "SEQUENCERS": ["0x4fFA5968857a6C8242E4A6Ded2418155D33e82E7"],
         "xAppConnectionManager": "0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc"
@@ -756,7 +757,7 @@
           "0xf8d8aF083aC452b05b0D2eb4499AD900324b5754"
         ],
         "getThreshold": 3,
-        "nonce": 23,
+        "nonce": 24,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -818,6 +819,7 @@
     "0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f",
     "0x9c77788d761ee0347Ab550883237CeD274a0F248",
     "0xade09131C6f43fe22C2CbABb759636C43cFc181e",
+    "0xBa11aA59645a56031fedBcCF60D4f111534f2502",
     "0xBE7BC00382a50A711D037eAeCAD799bb8805Dfa8",
     "0xC4Ae07F276768A3b74AE8c47bc108a2aF0e40eBa",
     "0xC832bB8015762B4857459551057EB61c68B93608",

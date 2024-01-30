@@ -1,7 +1,54 @@
+Generated with discovered.json: 0x4503a45a15552e2f0c5fac881fdbb0f026d5f650
+
+# Diff at Fri, 26 Jan 2024 10:56:14 GMT:
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: main@bb037f7100968a00265a4787338e51ca81aafe9b block: 19032828
+- current block number: 19090320
+
+## Description
+
+Added opStackDa handler
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19032828 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e) {
+      values.opStackDA:
++        {"isAllTxsLengthEqualToCelestiaDAExample":true,"isSomeTxsLengthEqualToCelestiaDAExample":true}
+    }
+```
+
+Generated with discovered.json: 0xf25c1536731bdb55d1cbfab87638b709e4c1b961
+
+# Diff at Thu, 18 Jan 2024 09:23:11 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@0cb1eb82b45ad89a272a3c1b8f8f24ae020627cc block: 18927731
+- current block number: 19032828
+
+## Description
+
+Dynamic fee overhead has been changed.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e) {
+      values.scalar:
+-        684000
++        68400
+    }
+```
+
 # Diff at Wed, 03 Jan 2024 15:30:59 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@e8eb03b39061a86a8ec01e26d970e40d080ad225
+- comparing to: main@e8eb03b39061a86a8ec01e26d970e40d080ad225
 
 ## Description
 
@@ -32,7 +79,7 @@ One owner is removed and another is added to LyraMultisig.
 # Diff at Tue, 19 Dec 2023 08:25:57 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@
+- comparing to: main@
 
 ## Description
 

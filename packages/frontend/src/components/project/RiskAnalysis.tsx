@@ -1,10 +1,10 @@
-import cx from 'classnames'
 import React from 'react'
 
+import { cn } from '../../utils/cn'
 import { sentimentToTextColor } from '../../utils/risks/color'
 import { RiskValue, RiskValues } from '../../utils/risks/types'
 import { UnderReviewBadge } from '../badge/UnderReviewBadge'
-import { ShieldIcon } from '../icons'
+import { RoundedWarningIcon, ShieldIcon } from '../icons'
 import { UnverifiedIcon } from '../icons/symbols/UnverifiedIcon'
 import { Markdown } from '../Markdown'
 import { BigRosette } from '../rosette'
@@ -15,6 +15,7 @@ import { WarningBar } from './WarningBar'
 export interface RiskAnalysisProps {
   id: ProjectSectionId
   title: string
+  sectionOrder: number
   riskValues: RiskValues
   warning: string | undefined
   isVerified: boolean | undefined
@@ -25,6 +26,7 @@ export interface RiskAnalysisProps {
 export function RiskAnalysis({
   id,
   title,
+  sectionOrder,
   riskValues,
   isVerified,
   warning,
@@ -40,7 +42,7 @@ export function RiskAnalysis({
     <ProjectDetailsSection
       title={title}
       id={id}
-      className="mt-4"
+      sectionOrder={sectionOrder}
       isUnderReview={isUnderReview}
     >
       {isVerified === false && (
@@ -107,13 +109,21 @@ function SingleRisk({
       ) : (
         <>
           <span
-            className={cx(
+            className={cn(
               sentimentToTextColor(riskValue.sentiment),
               'mt-2 block text-xl font-bold md:text-2xl',
             )}
           >
             {riskValue.value}
           </span>
+          {riskValue.warning && (
+            <WarningBar
+              className="my-2"
+              icon={RoundedWarningIcon}
+              text={riskValue.warning.text}
+              color={riskValue.warning.sentiment === 'bad' ? 'red' : 'yellow'}
+            />
+          )}
           {riskValue.description && (
             <Markdown className="mt-2 leading-snug text-gray-850 dark:text-gray-400">
               {riskValue.description}

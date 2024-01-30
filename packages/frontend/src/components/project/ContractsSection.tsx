@@ -15,6 +15,7 @@ import { UnderReviewCallout } from './UnderReviewCallout'
 export interface ContractsSectionProps {
   id: ProjectSectionId
   title: string
+  sectionOrder: number
   contracts: TechnologyContract[]
   escrows: TechnologyContract[]
   risks: TechnologyRisk[]
@@ -37,11 +38,15 @@ export function ContractsSection(props: ContractsSectionProps) {
   }
 
   return (
-    <ProjectDetailsSection title={props.title} id={props.id}>
+    <ProjectDetailsSection
+      title={props.title}
+      id={props.id}
+      sectionOrder={props.sectionOrder}
+    >
       {props.isUnderReview ? <UnderReviewCallout className="mb-4" /> : null}
       {props.isIncomplete && <TechnologyIncompleteShort />}
       {props.architectureImage && (
-        <figure className="mt-4 mb-8 text-center">
+        <figure className="mb-8 mt-4 text-center">
           <img
             className="inline max-w-full align-[unset] dark:invert"
             src={props.architectureImage}
@@ -57,14 +62,14 @@ export function ContractsSection(props: ContractsSectionProps) {
           <h3 className="md:text-md font-bold">
             The system consists of the following smart contracts:
           </h3>
-          <div className="mt-4 mb-4">
+          <div className="mb-4 mt-4">
             {props.contracts.map((contract, i) => (
               <React.Fragment key={i}>
                 <ContractEntry
                   contract={contract}
                   verificationStatus={props.verificationStatus}
                   manuallyVerifiedContracts={props.manuallyVerifiedContracts}
-                  className="mt-4 mb-4"
+                  className="mb-4 mt-4"
                 />
               </React.Fragment>
             ))}
@@ -78,14 +83,14 @@ export function ContractsSection(props: ContractsSectionProps) {
             Value Locked is calculated based on these smart contracts and
             tokens:
           </h3>
-          <div className="mt-4 mb-4">
+          <div className="mb-4 mt-4">
             {props.escrows.map((contract, i) => (
               <React.Fragment key={i}>
                 <ContractEntry
                   contract={contract}
                   verificationStatus={props.verificationStatus}
                   manuallyVerifiedContracts={props.manuallyVerifiedContracts}
-                  className="mt-4 mb-4"
+                  className="mb-4 mt-4"
                 />
               </React.Fragment>
             ))}

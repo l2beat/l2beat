@@ -1,7 +1,34 @@
+Generated with discovered.json: 0x9b43f3f8ad93357d8d4fc17bfc3e4610e8f1d755
+
+# Diff at Fri, 26 Jan 2024 10:55:04 GMT:
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: main@bb037f7100968a00265a4787338e51ca81aafe9b block: 18833387
+- current block number: 19090314
+
+## Description
+
+Added opStackDa handler
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18833387 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+      values.opStackDA:
++        {"isAllTxsLengthEqualToCelestiaDAExample":false,"isSomeTxsLengthEqualToCelestiaDAExample":false}
+    }
+```
+
+Generated with discovered.json: 0x54cf34180e6362e6e293f64a076bc1ff11895384
+
 # Diff at Thu, 21 Dec 2023 09:37:29 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@c849b812aca217350f93ffb1795822cdf02a8dcb
+- comparing to: main@c849b812aca217350f93ffb1795822cdf02a8dcb
 
 ## Description
 
@@ -39,7 +66,7 @@ Two new owners (EOAs) are added to GuardianMultisig (now 3/8).
 # Diff at Fri, 01 Dec 2023 12:33:59 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@1f8562341e47f5b1eafc343e15aa93bc264ed786
+- comparing to: main@1f8562341e47f5b1eafc343e15aa93bc264ed786
 
 ## Description
 
@@ -88,7 +115,7 @@ Added wstETHEscrow contract.
 # Diff at Tue, 26 Sep 2023 08:12:33 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@cfd4e281f2af40c7c69302b16c1308c0c5651be0
+- comparing to: main@cfd4e281f2af40c7c69302b16c1308c0c5651be0
 
 ## Watched changes
 

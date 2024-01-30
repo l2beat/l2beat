@@ -33,7 +33,33 @@ export const Primary: Story = {
         <TooltipContent>
           Et sunt qui cupidatat minim aliqua occaecat labore elit. Reprehenderit
           cupidatat culpa aliqua mollit. Adipisicing tempor reprehenderit
-          laborum enim aliquip Lorem excepteur.
+          laborum enim aliquip Lorem excepteur. Et sunt qui cupidatat minim
+          aliqua occaecat labore elit. Reprehenderit cupidatat culpa aliqua
+          mollit. Adipisicing tempor reprehenderit laborum enim aliquip Lorem
+          excepteur.
+        </TooltipContent>
+      </Tooltip>
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    // Wait for the tooltip to appear
+    await new Promise((resolve) => setTimeout(resolve, 200))
+    await waitFor(async () => {
+      await userEvent.hover(canvas.getByText('Element with tooltip'))
+    })
+  },
+}
+
+export const WithLineBreak: Story = {
+  render: () => (
+    <div className="m-4 ml-32">
+      <Tooltip className="inline-block">
+        <TooltipTrigger>Element with tooltip</TooltipTrigger>
+        <TooltipContent>
+          {
+            'Et sunt qui cupidatat minim aliqua occaecat labore elit. Reprehenderit cupidatat culpa aliqua mollit. Adipisicing tempor reprehenderit laborum enim aliquip Lorem excepteur. Et sunt qui cupidatat minim aliqua occaecat labore elit.\nReprehenderit cupidatat culpa aliqua mollit. Adipisicing tempor reprehenderit laborum enim aliquip Lorem excepteur.'
+          }
         </TooltipContent>
       </Tooltip>
     </div>

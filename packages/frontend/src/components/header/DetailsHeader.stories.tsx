@@ -135,7 +135,16 @@ export const UpcomingHeader: Story = {
     title: project.display.name,
     description: project.display.description,
     icon: `/icons/${project.display.slug}.png`,
-    stats: { summary: stats },
+    stats: {
+      summary: stats,
+      l2Tvl: {
+        canonical: 0,
+        external: 0,
+        native: 0,
+        tvl: 0,
+        tvlChange: '+0%',
+      },
+    },
     links,
     isUpcoming: true,
     type: 'layer2',

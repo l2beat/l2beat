@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import { EthereumAddress, formatSeconds, ProjectId } from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -20,7 +20,6 @@ import {
   getSHARPVerifierGovernors,
 } from '../discovery/starkware'
 import { delayDescriptionFromString } from '../utils/delayDescription'
-import { formatSeconds } from '../utils/formatSeconds'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('reddioex')
@@ -46,14 +45,15 @@ export const reddioex: Layer2 = {
   display: {
     name: 'ReddioEx',
     slug: 'reddioex',
-    description: 'ReddioEx is a Validium based on the StarkEx technology.',
-    purposes: ['Universal'],
+    description:
+      'ReddioEx is a Validium based on the StarkEx technology. Its goal is to power the next generation of web3 apps and games by providing developers with the ability to create digital assets (NFTs) and easily integrate them in-game.',
+    purposes: ['Exchange', 'NFT', 'Gaming'],
     provider: 'StarkEx',
     category: 'Validium',
     dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://reddio.com/'],
-      apps: ['https://reddio.com/explore'],
+      apps: ['https://reddio.com/explore', 'https://dashboard.reddio.com'],
       documentation: ['https://docs.reddio.com/'],
       explorers: ['https://explorer.reddio.com/'],
       repositories: ['https://github.com/reddio-com/starkex-contracts-source'],
@@ -61,6 +61,7 @@ export const reddioex: Layer2 = {
         'https://twitter.com/reddio_com',
         'https://facebook.com/reddiocom',
         'https://linkedin.com/company/reddio',
+        'https://discord.com/invite/SjNAJ4qkK3',
       ],
     },
   },

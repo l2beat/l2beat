@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -13,7 +18,6 @@ import { subtractOne } from '../common/assessCount'
 import { RISK_VIEW } from '../common/riskView'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
-import { formatSeconds } from '../utils/formatSeconds'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
@@ -102,6 +106,11 @@ export const kroma: Layer2 = {
         finalizationPeriod,
       )} after it has been posted.`,
     },
+    finality: {
+      warning:
+        "It's assumed that transaction data batches are submitted sequentially.",
+      finalizationPeriod,
+    },
   },
   config: {
     escrows: [
@@ -148,6 +157,10 @@ export const kroma: Layer2 = {
           sinceTimestamp: new UnixTime(1693880579),
         },
       ],
+    },
+    finality: {
+      type: 'OPStack',
+      lag: 0,
     },
   },
   riskView: makeBridgeCompatible({
@@ -311,7 +324,7 @@ export const kroma: Layer2 = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR('optimistic', 'merkle proof'),
+        ...EXITS.REGULAR('optimistic', 'merkle proof', finalizationPeriod),
         references: [
           {
             text: 'KromaPortal.sol#L241 - Etherscan source code, proveWithdrawalTransaction function',
@@ -340,7 +353,7 @@ export const kroma: Layer2 = {
   },
   stateDerivation: {
     nodeSoftware:
-      'Kroma nodes source code, including full node, proposer and validator, can be found [here](https://github.com/kroma-network/kroma). Also, the geth server, source maintained [here](https://github.com/kroma-network/go-ethereum), is a fork of go-ethereum. For more details on how they are different from the Optimism implementation, see [here](https://github.com/kroma-network/kroma/blob/main/specs/differences-from-optimism-bedrock.md).' +
+      'Kroma nodes source code, including full node, proposer and validator, can be found [here](https://github.com/kroma-network/kroma). Also, the geth server, source maintained [here](https://github.com/kroma-network/go-ethereum), is a fork of go-ethereum. For more details on how they are different from the Optimism implementation, see [here](https://github.com/kroma-network/kroma/blob/dev/specs/differences-from-optimism.md).' +
       '\n' +
       'The instructions to run the proposer (called validator) and the ZK prover, are documented [here](https://docs.kroma.network/developers/running-nodes-on-kroma).',
     compressionScheme:

@@ -14,6 +14,7 @@ interface LinkNameIconProps {
 
 export interface ProjectLink {
   name:
+    | 'Changelog'
     | 'Website'
     | 'App'
     | 'Docs'
@@ -26,6 +27,8 @@ export interface ProjectLink {
 
 export function ProjectLinkIcon({ name }: LinkNameIconProps) {
   switch (name) {
+    case 'Changelog':
+      return <></>
     case 'Website':
       return <GlobeIcon />
     case 'App':

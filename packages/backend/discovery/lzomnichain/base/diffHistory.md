@@ -1,7 +1,63 @@
-# Diff at Tue, 09 Jan 2024 16:44:11 GMT:
+Generated with discovered.json: 0xde203ee297f219fbe60029e3a1b67ff9511ee0d6
+
+# Diff at Mon, 22 Jan 2024 17:18:02 GMT
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@f58cc44bf923844f52038487bcd5a563329f4b43 block: 9014644
+- current block number: 9577249
+
+## Description
+
+Default lib switched to FPValidator.
+New path-ways added.
+
+## Watched changes
+
+```diff
+    contract UltraLightNodeV2 (0x38dE71124f7a447a01D67945a51eDcE9FF491251) {
+      values.chainAddressSizeMap.150:
++        20
+      values.chainAddressSizeMap.159:
++        20
+      values.chainAddressSizeMap.234:
++        20
+      values.defaultAdapterParams.150:
++        {"proofType":2,"adapterParams":"0x00010000000000000000000000000000000000000000000000000000000000030d40"}
+      values.defaultAdapterParams.159:
++        {"proofType":2,"adapterParams":"0x00010000000000000000000000000000000000000000000000000000000000030d40"}
+      values.defaultAdapterParams.234:
++        {"proofType":2,"adapterParams":"0x00010000000000000000000000000000000000000000000000000000000000030d40"}
+      values.defaultAppConfig.150:
++        {"inboundProofLib":2,"inboundBlockConfirm":5,"outboundProofType":2,"outboundBlockConfirm":10,"oracle":"0xAaB5A48CFC03Efa9cC34A2C1aAcCCB84b4b770e4","relayer":"0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"}
+      values.defaultAppConfig.159:
++        {"inboundProofLib":2,"inboundBlockConfirm":2,"outboundProofType":2,"outboundBlockConfirm":10,"oracle":"0xAaB5A48CFC03Efa9cC34A2C1aAcCCB84b4b770e4","relayer":"0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"}
+      values.defaultAppConfig.234:
++        {"inboundProofLib":2,"inboundBlockConfirm":5,"outboundProofType":2,"outboundBlockConfirm":10,"oracle":"0xAaB5A48CFC03Efa9cC34A2C1aAcCCB84b4b770e4","relayer":"0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"}
+      values.inboundProofLibrary.150:
++        ["0x2D61DCDD36F10b22176E0433B86F74567d529aAa","0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"]
+      values.inboundProofLibrary.159:
++        ["0x2D61DCDD36F10b22176E0433B86F74567d529aAa","0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"]
+      values.inboundProofLibrary.234:
++        ["0x2D61DCDD36F10b22176E0433B86F74567d529aAa","0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"]
+      values.supportedOutboundProof.150:
++        2
+      values.supportedOutboundProof.159:
++        2
+      values.supportedOutboundProof.234:
++        2
+      values.ulnLookup.150:
++        "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251"
+      values.ulnLookup.159:
++        "0x000000000000000000000000c1b15d3b262beec0e3565c11c9e0f6134bdacb36"
+      values.ulnLookup.234:
++        "0x000000000000000000000000980205d352f198748b626f6f7c38a8a5663ec981"
+    }
+```
+
+# Diff at Tue, 09 Jan 2024 16:44:11 GMT
 
 - author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
-- comparing to: master@0b578574e6a64020b5157f700c09de14e6b3eed3 block: 2177243
+- comparing to: main@0b578574e6a64020b5157f700c09de14e6b3eed3 block: 2177243
 - current block number: 9014644
 
 ## Description

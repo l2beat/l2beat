@@ -23,10 +23,14 @@ export interface ActivityViewEntry {
   isVerified: boolean | undefined
   showProjectUnderReview: boolean | undefined
   dataSource: string | undefined
-  tpsDaily: number | undefined
-  tpsWeeklyChange: string
-  transactionsMonthlyCount: number | undefined
-  maxTps: number | undefined
-  maxTpsDate: string | undefined
+  data: ActivityViewEntryData | undefined
   stage: StageConfig | undefined
+}
+
+export interface ActivityViewEntryData {
+  tpsDaily: number
+  tpsWeeklyChange: string
+  transactionsMonthlyCount: number
+  maxTps: number
+  maxTpsDate: string
 }

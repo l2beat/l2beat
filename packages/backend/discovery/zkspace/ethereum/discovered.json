@@ -1,8 +1,8 @@
 {
   "name": "zkspace",
   "chain": "ethereum",
-  "blockNumber": 18220342,
-  "configHash": "0x1bf79f76eb9cd111b4d19cceabf7272c4ccc06359bf74943b5c2fca2653ab68e",
+  "blockNumber": 19019529,
+  "configHash": "0xeb80b0c20104824cf61df9675318bff0905823757e93721b9574fb48ae3f3060",
   "version": 3,
   "contracts": [
     {
@@ -43,8 +43,8 @@
       "values": {
         "EMPTY_STRING_KECCAK": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
         "exodusMode": false,
-        "firstPendingWithdrawalIndex": 504,
-        "firstPriorityRequestId": 1269,
+        "firstPendingWithdrawalIndex": 543,
+        "firstPriorityRequestId": 1284,
         "getMaster": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
         "getTarget": "0x467a2B91f231D930F5eeB6B982C7666E81DA8626",
         "governance": "0x83Cb1531Ec8447366501aE440478da245EcffB89",
@@ -57,12 +57,11 @@
             "totalBlocksVerified": 13461
           }
         ],
-        "totalBlocksChecked": 37703,
-        "totalBlocksCommitted": 37718,
-        "totalBlocksVerified": 37718,
+        "totalBlocksChecked": 39529,
+        "totalBlocksCommitted": 39532,
+        "totalBlocksVerified": 39532,
         "totalCommittedPriorityRequests": 0,
         "totalOpenPriorityRequests": 0,
-        "totalPairTokens": 64,
         "upgradePreparationActivationTime": 0,
         "upgradePreparationActive": false,
         "verifier": "0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af",
@@ -92,7 +91,6 @@
         "networkGovernor": "0xfCAE399eA757DDf0a4020198C59BF2270c2B05Be",
         "tokenLister": "0x8aA2C56dca9d59F4317c2fad632c192b18127709",
         "totalFeeTokens": 8,
-        "totalUserTokens": 41,
         "validators": ["0x5bd9404260D2B0D55081E599e4e085BE080141E2"]
       },
       "derivedName": "Governance"
@@ -106,7 +104,6 @@
       "sinceTimestamp": 1639573625,
       "values": {
         "listingCap": 1000,
-        "listingCount": 64,
         "listingFeeAmount": 0,
         "listingFeeReceiver": "0x961B513dfD3e363c238E0f98219eE02552A847BD",
         "listingFeeToken": "0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6",
@@ -115,7 +112,8 @@
         "tokenDecimalsLimit": 32,
         "tokenNameLimit": 64,
         "tokenSymbolLimit": 64
-      }
+      },
+      "derivedName": "ZkSwapListing"
     },
     {
       "name": "UpgradeGatekeeper",
@@ -167,7 +165,6 @@
       "implementations": ["0x5f3bE7846efC473552C5619b929F7d4aa640fb54"],
       "sinceTimestamp": 1639569183,
       "values": {
-        "allPairsLength": 64,
         "getMaster": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
         "getTarget": "0x5f3bE7846efC473552C5619b929F7d4aa640fb54",
         "zkSyncAddress": "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8"

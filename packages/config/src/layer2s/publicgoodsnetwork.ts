@@ -1,9 +1,8 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
-import { formatSeconds } from '../utils/formatSeconds'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { opStack } from './templates/opStack'
 import { Layer2 } from './types'
@@ -21,6 +20,7 @@ const upgradeability = {
 }
 
 export const publicgoodsnetwork: Layer2 = opStack({
+  daProvider: 'Celestia',
   discovery,
   display: {
     name: 'Public Goods Network',
@@ -56,16 +56,23 @@ export const publicgoodsnetwork: Layer2 = opStack({
         FINALIZATION_PERIOD_SECONDS,
       )} after it has been posted.`,
     },
+    finality: {
+      finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
+    },
   },
   upgradeability,
   l1StandardBridgeEscrow: EthereumAddress(
     '0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b',
   ),
-  apiUrl: 'https://rpc.publicgoods.network',
+  rpcUrl: 'https://rpc.publicgoods.network',
   sequencerAddress: EthereumAddress(
     discovery.getContractValue('SystemConfig', 'batcherHash'),
   ),
   inboxAddress: EthereumAddress('0xC1B90E1e459aBBDcEc4DCF90dA45ba077d83BFc5'),
+  finality: {
+    type: 'OPStack',
+    lag: 0,
+  },
   genesisTimestamp: new UnixTime(1689108083),
   l2OutputOracle: discovery.getContract('L2OutputOracle'),
   portal: discovery.getContract('OptimismPortal'),
@@ -77,6 +84,11 @@ export const publicgoodsnetwork: Layer2 = opStack({
       link: 'https://twitter.com/pgn_eth/status/1676972199423668228',
       date: '2023-07-06T00:00:00.00Z',
       description: 'The Public Goods Network is live on mainnet.',
+    },
+    {
+      name: 'PGN switches to Celestia',
+      link: 'https://x.com/conduitxyz/status/1750596065609572398',
+      date: '2024-01-26T00:00:00.00Z',
     },
   ],
   knowledgeNuggets: [],

@@ -11,11 +11,14 @@ type Story = StoryObj<typeof ScalingNavigationTabsComponent>
 export const ScalingNavigationTabs: Story = {
   args: {
     selected: 'summary',
+    showActivity: true,
+    showFinality: true,
+    showLiveness: true,
   },
   argTypes: {
     selected: {
       control: 'radio',
-      options: ['summary', 'risk', 'activity'],
+      options: ['summary', 'risk', 'activity', 'liveness', 'finality', 'tvl'],
     },
   },
 }

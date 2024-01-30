@@ -34,12 +34,12 @@ export function rerenderTable(table: HTMLElement, slugsToShow?: string[]) {
 function rerenderRows(table: HTMLElement, slugs?: string[]) {
   const { $$ } = makeQuery(table)
   const rows = $$('tbody tr[data-slug]')
-  rows.forEach((row) => manageRowVisiblity(row, slugs))
+  rows.forEach((row) => manageRowVisibility(row, slugs))
 
   return reorderIndexes(table)
 }
 
-function manageRowVisiblity(row: HTMLElement, slugs?: string[]) {
+function manageRowVisibility(row: HTMLElement, slugs?: string[]) {
   const slug = row.dataset.slug
   if (!slug) {
     throw new Error('No slug found')

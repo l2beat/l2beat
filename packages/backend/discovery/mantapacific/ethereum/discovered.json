@@ -1,8 +1,8 @@
 {
   "name": "mantapacific",
   "chain": "ethereum",
-  "blockNumber": 18927709,
-  "configHash": "0x12ff72fc2b7d2394b395e51f26feaa392717a99a81ba83f659a327d5c59d06c2",
+  "blockNumber": 19090321,
+  "configHash": "0x4a40630049075c3708d1efc2d6ed98a1907453b18a795ec6021a010b938ddee0",
   "version": 3,
   "contracts": [
     {
@@ -20,10 +20,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 259200,
         "L2_BLOCK_TIME": 10,
-        "latestBlockNumber": 1006920,
-        "latestOutputIndex": 8390,
-        "nextBlockNumber": 1007040,
-        "nextOutputIndex": 8391,
+        "latestBlockNumber": 1204080,
+        "latestOutputIndex": 10033,
+        "nextBlockNumber": 1204200,
+        "nextOutputIndex": 10034,
         "PROPOSER": "0x853bDfF715eFeDc280C16241dD30A6d651f90aCa",
         "startingBlockNumber": 0,
         "startingTimestamp": 1694223959,
@@ -103,7 +103,7 @@
       "sinceTimestamp": 1694224919,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660176",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292669067",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -129,8 +129,12 @@
       "sinceTimestamp": 1694224895,
       "values": {
         "batcherHash": "0xA76E31D8471D569EfDd3D95d1b11Ce6710f4533F",
-        "gasLimit": 30000000,
+        "gasLimit": 50000000,
         "minimumGasLimit": 21000000,
+        "opStackDA": {
+          "isAllTxsLengthEqualToCelestiaDAExample": true,
+          "isSomeTxsLengthEqualToCelestiaDAExample": true
+        },
         "overhead": 1000,
         "owner": "0x4b1A788B20bb85eb19f8e9B69B8a584e7fA29fe5",
         "resourceConfig": [
@@ -163,7 +167,7 @@
         "GUARDIAN": "0x4b1A788B20bb85eb19f8e9B69B8a584e7fA29fe5",
         "L2_ORACLE": "0x30c789674ad3B458886BBC9abf42EEe19EA05C1D",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 490798, 18927695],
+        "params": [1000000000, 1135001, 19090224],
         "paused": false,
         "SYSTEM_CONFIG": "0x895E00269A05848F3c9889EfA677D02fF7351a5D",
         "version": "1.7.2"

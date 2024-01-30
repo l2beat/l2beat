@@ -101,9 +101,13 @@
     },
     "daiBridge": {
       "ignoreRelatives": ["dai", "destAddress", "sdai"],
-      "ignoreMethods": ["proxiableUUID"]
+      "ignoreMethods": ["proxiableUUID"],
+      "ignoreInWatchMode": ["totalBridgedDAI"]
     },
     "AdminMultisig": {
+      "ignoreMethods": ["nonce"]
+    },
+    "EscrowsAdmin": {
       "ignoreMethods": ["nonce"]
     },
     "MaticToken": { "ignoreDiscovery": true }

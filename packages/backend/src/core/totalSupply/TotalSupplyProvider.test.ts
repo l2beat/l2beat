@@ -7,7 +7,7 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import { MulticallClient } from '../../peripherals/ethereum/multicall/MulticallClient'
+import { MulticallClient } from '../../peripherals/multicall/MulticallClient'
 import {
   decodeErc20TotalSupplyQuery,
   encodeErc20TotalSupplyQuery,

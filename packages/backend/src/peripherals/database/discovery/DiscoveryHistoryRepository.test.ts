@@ -1,8 +1,13 @@
 import { Logger } from '@l2beat/backend-tools'
-import { ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainId,
+  EthereumAddress,
+  Hash256,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { setupDatabaseTestSuite } from '../../../test/database'
+import { describeDatabase } from '../../../test/database'
 import {
   DiscoveryHistoryRecord,
   DiscoveryHistoryRepository,
@@ -10,8 +15,7 @@ import {
 
 const CONFIG_HASH = Hash256.random()
 
-describe(DiscoveryHistoryRepository.name, () => {
-  const { database } = setupDatabaseTestSuite()
+describeDatabase(DiscoveryHistoryRepository.name, (database) => {
   const repository = new DiscoveryHistoryRepository(database, Logger.SILENT)
 
   beforeEach(async () => {
@@ -28,7 +32,7 @@ describe(DiscoveryHistoryRepository.name, () => {
       timestamp: new UnixTime(1),
       discovery: {
         name: projectName,
-        chain: ChainId.getName(ChainId.ETHEREUM),
+        chain: 'ethereum',
         blockNumber: -1,
         configHash: Hash256.random(),
         contracts: [],
@@ -47,7 +51,7 @@ describe(DiscoveryHistoryRepository.name, () => {
       timestamp: new UnixTime(0),
       discovery: {
         name: projectName,
-        chain: ChainId.getName(ChainId.ETHEREUM),
+        chain: 'ethereum',
         blockNumber: -1,
         configHash: Hash256.random(),
         contracts: [],
@@ -66,7 +70,7 @@ describe(DiscoveryHistoryRepository.name, () => {
       timestamp: new UnixTime(0),
       discovery: {
         name: projectName,
-        chain: ChainId.getName(ChainId.ETHEREUM),
+        chain: 'ethereum',
         blockNumber: -1,
         configHash: Hash256.random(),
         contracts: [],
@@ -99,7 +103,7 @@ describe(DiscoveryHistoryRepository.name, () => {
       timestamp: new UnixTime(0),
       discovery: {
         name: projectName,
-        chain: ChainId.getName(ChainId.ETHEREUM),
+        chain: 'ethereum',
         blockNumber: -1,
         configHash: Hash256.random(),
         contracts: [],
@@ -123,4 +127,108 @@ describe(DiscoveryHistoryRepository.name, () => {
 
     expect(timestamps).toEqual([discovery.timestamp, discovery2.timestamp])
   })
+
+  describe(DiscoveryHistoryRepository.prototype.getProject.name, () => {
+    it('sanitizes errors', async () => {
+      const projectName = 'project'
+
+      const mockContractWithoutError: DiscoveryHistoryRecord['discovery']['contracts'][0] =
+        {
+          name: 'MockContract1',
+          address: EthereumAddress.random(),
+          upgradeability: { type: 'immutable' },
+        }
+      const mockContractWithError: DiscoveryHistoryRecord['discovery']['contracts'][0] =
+        {
+          name: 'MockContract2',
+          address: EthereumAddress.random(),
+          upgradeability: { type: 'immutable' },
+          errors: {
+            nonce: 'https://endpoint.com/potential-api-key',
+            totalLiquidity: 'https://endpoint.com/potential-api-key2',
+          },
+        }
+
+      const discovery: DiscoveryHistoryRecord = {
+        projectName,
+        chainId: ChainId.ETHEREUM,
+        blockNumber: -1,
+        timestamp: new UnixTime(0),
+        discovery: {
+          name: projectName,
+          chain: 'ethereum',
+          blockNumber: -1,
+          configHash: Hash256.random(),
+          contracts: [mockContractWithoutError, mockContractWithError],
+          eoas: [],
+          abis: {},
+          version: 0,
+        },
+        configHash: CONFIG_HASH,
+        version: 0,
+      }
+
+      await repository.addOrUpdate(discovery)
+
+      const result = await repository.getProject(projectName, ChainId.ETHEREUM)
+      expect(result.length).toEqual(1)
+      expect(result[0].discovery.contracts).toEqual([
+        mockContractWithoutError,
+        {
+          ...mockContractWithError,
+          errors: {
+            nonce: 'Processing error occurred.',
+            totalLiquidity: 'Processing error occurred.',
+          },
+        },
+      ])
+    })
+  })
+
+  describe(
+    DiscoveryHistoryRepository.prototype.deleteStaleProjectDiscoveries.name,
+    () => {
+      it('removes stale discoveries', async () => {
+        const projectName = 'project'
+        const hash = Hash256.random()
+
+        const contract: DiscoveryHistoryRecord['discovery']['contracts'][0] = {
+          name: 'MockContract1',
+          address: EthereumAddress.random(),
+          upgradeability: { type: 'immutable' },
+        }
+
+        const discovery: DiscoveryHistoryRecord = {
+          projectName,
+          chainId: ChainId.ETHEREUM,
+          blockNumber: -1,
+          timestamp: new UnixTime(0),
+          discovery: {
+            name: projectName,
+            chain: 'ethereum',
+            blockNumber: -1,
+            configHash: hash,
+            contracts: [contract],
+            eoas: [],
+            abis: {},
+            version: 0,
+          },
+          configHash: CONFIG_HASH,
+          version: 0,
+        }
+
+        await repository.addOrUpdate(discovery)
+        const stale = await repository.getProject(projectName, ChainId.ETHEREUM)
+        expect(stale).toEqual([discovery])
+
+        await repository.deleteStaleProjectDiscoveries(
+          projectName,
+          ChainId.ETHEREUM,
+          hash,
+        )
+        const fresh = await repository.getProject(projectName, ChainId.ETHEREUM)
+        expect(fresh).toEqual([])
+      })
+    },
+  )
 })

@@ -1,6 +1,6 @@
-import classNames from 'classnames'
 import React, { ReactNode } from 'react'
 
+import { cn } from '../utils/cn'
 import { CheckIcon } from './icons'
 
 export interface CheckboxProps {
@@ -23,8 +23,8 @@ export function Checkbox({
 }: CheckboxProps) {
   return (
     <label
-      className={classNames(
-        'bg-gray-200 text-base font-semibold dark:bg-gray-750',
+      className={cn(
+        'bg-gray-200 text-base font-semibold dark:bg-zinc-700',
         'inline-flex cursor-pointer select-none items-center gap-2 rounded-lg py-1 pl-2 pr-3',
         className,
       )}
@@ -38,7 +38,7 @@ export function Checkbox({
         defaultChecked={defaultChecked}
         {...rest}
       />
-      <CheckIcon className={classNames('flex-shrink-0', checkIconClassName)} />
+      <CheckIcon className={cn('flex-shrink-0', checkIconClassName)} />
       <span className="whitespace-pre">{label}</span>
     </label>
   )

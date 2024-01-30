@@ -1,8 +1,10 @@
 import { bridges, layer2s, layer3s, onChainProjects } from '@l2beat/config'
-import { ChainId, ConfigReader, DiscoveryConfig } from '@l2beat/discovery'
+import { ConfigReader, DiscoveryConfig } from '@l2beat/discovery'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { isEqual } from 'lodash'
+
+import { getDiffHistoryHash, getDiscoveryHash } from '../utils/hashing'
 
 describe('discovery config.jsonc', () => {
   const configReader = new ConfigReader()
@@ -16,9 +18,9 @@ describe('discovery config.jsonc', () => {
 
   before(async () => {
     chainConfigs = await Promise.all(
-      ChainId.getAll().map(
-        async (chainId) => await configReader.readAllConfigsForChain(chainId),
-      ),
+      configReader
+        .readAllChains()
+        .map((chain) => configReader.readAllConfigsForChain(chain)),
     )
   })
 
@@ -44,7 +46,7 @@ describe('discovery config.jsonc', () => {
     for (const configs of chainConfigs ?? []) {
       if (configs.length > 0) {
         for (const c of configs) {
-          const discovery = await configReader.readDiscovery(c.name, c.chainId)
+          const discovery = await configReader.readDiscovery(c.name, c.chain)
           if (discovery.name !== c.name) {
             notEqual.push(c.name)
           }
@@ -61,7 +63,7 @@ describe('discovery config.jsonc', () => {
   it('fields inside ignoreInWatchMode exist in discovery', async () => {
     for (const configs of chainConfigs ?? []) {
       for (const c of configs) {
-        const discovery = await configReader.readDiscovery(c.name, c.chainId)
+        const discovery = await configReader.readDiscovery(c.name, c.chain)
 
         for (const override of c.overrides) {
           if (override.ignoreDiscovery === true) {
@@ -76,9 +78,9 @@ describe('discovery config.jsonc', () => {
             (c) => c.address === override.address,
           )
 
-          const errorPrefix = `${c.name} (chain: ${ChainId.getName(
-            c.chainId,
-          )}) - ${override.address.toString()}`
+          const errorPrefix = `${c.name} (chain: ${
+            c.chain
+          }) - ${override.address.toString()}`
 
           assert(
             contract,
@@ -109,7 +111,7 @@ describe('discovery config.jsonc', () => {
 
     for (const configs of chainConfigs ?? []) {
       for (const c of configs) {
-        const discovery = await configReader.readDiscovery(c.name, c.chainId)
+        const discovery = await configReader.readDiscovery(c.name, c.chain)
 
         if (
           !isEqual(
@@ -135,10 +137,10 @@ describe('discovery config.jsonc', () => {
     const outdatedHashes: string[] = []
     for (const configs of chainConfigs ?? []) {
       for (const c of configs) {
-        const discovery = await configReader.readDiscovery(c.name, c.chainId)
+        const discovery = await configReader.readDiscovery(c.name, c.chain)
 
         if (discovery.configHash !== c.hash) {
-          outdatedHashes.push(`${ChainId.getName(c.chainId)}-${c.name}`)
+          outdatedHashes.push(`${c.chain}-${c.name}`)
         }
       }
       assert(
@@ -153,7 +155,7 @@ describe('discovery config.jsonc', () => {
   it('discovery.json does not include errors', async () => {
     for (const configs of chainConfigs ?? []) {
       for (const c of configs) {
-        const discovery = await configReader.readDiscovery(c.name, c.chainId)
+        const discovery = await configReader.readDiscovery(c.name, c.chain)
 
         assert(
           discovery.contracts.every((c) => c.errors === undefined),
@@ -229,6 +231,30 @@ describe('discovery config.jsonc', () => {
               Object.values(c.raw.names).length,
             `names field in ${c.name} configuration includes duplicate names`,
           )
+        }
+      }
+    })
+  })
+
+  describe('discovered.json hashes', () => {
+    it('hashes match', async () => {
+      for (const configs of chainConfigs ?? []) {
+        if (configs.length > 0) {
+          for (const c of configs) {
+            const diffHistoryPath = `./discovery/${c.name}/${c.chain}/diffHistory.md`
+            const currentHash = await getDiscoveryHash(c.name, c.chain)
+            const savedHash = getDiffHistoryHash(diffHistoryPath)
+            assert(
+              savedHash !== undefined,
+              `The diffHistory.md of ${c.chain}:${c.name} has to contain a hash of the discovered.json. Perhaps you generated the discovered.json without generating the diffHistory.md?`,
+            )
+            assert(
+              currentHash === savedHash,
+              `The hash for ${c.chain}:${
+                c.name
+              } of your local discovered.json (${currentHash.toString()}) does not match the hash stored in the diffHistory.md (${savedHash.toString()}). Perhaps you generated the discovered.json without generating the diffHistory.md?`,
+            )
+          }
         }
       }
     })

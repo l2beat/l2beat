@@ -1,9 +1,8 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
-import { formatSeconds } from '../utils/formatSeconds'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { opStack } from './templates/opStack'
 import { Layer2 } from './types'
@@ -56,16 +55,23 @@ export const zora: Layer2 = opStack({
         FINALIZATION_PERIOD_SECONDS,
       )} after it has been posted.`,
     },
+    finality: {
+      finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
+    },
   },
   upgradeability,
   l1StandardBridgeEscrow: EthereumAddress(
     '0x3e2Ea9B92B7E48A52296fD261dc26fd995284631',
   ),
-  apiUrl: 'https://rpc.zora.co',
+  rpcUrl: 'https://rpc.zora.co',
   sequencerAddress: EthereumAddress(
     discovery.getContractValue('SystemConfig', 'batcherHash'),
   ),
   inboxAddress: EthereumAddress('0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf'),
+  finality: {
+    type: 'OPStack',
+    lag: 0,
+  },
   genesisTimestamp: new UnixTime(1686695915),
   l2OutputOracle: discovery.getContract('L2OutputOracle'),
   portal: discovery.getContract('OptimismPortal'),
@@ -100,11 +106,6 @@ export const zora: Layer2 = opStack({
     discovery.getContractDetails('L1ERC721Bridge', {
       description:
         'The L1ERC721Bridge contract is the main entry point to deposit ERC721 tokens from L1 to L2.',
-      ...upgradeability,
-    }),
-    discovery.getContractDetails('L1StandardBridge', {
-      description:
-        'The L1StandardBridge contract is the main entry point to deposit ERC20 tokens from L1 to L2.',
       ...upgradeability,
     }),
   ],

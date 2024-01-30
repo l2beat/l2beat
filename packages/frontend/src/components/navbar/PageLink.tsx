@@ -1,5 +1,6 @@
-import cx from 'classnames'
 import React, { ReactNode } from 'react'
+
+import { cn } from '../../utils/cn'
 
 export interface PageLinkProps {
   href: string
@@ -12,7 +13,7 @@ export interface PageLinkProps {
 export function PageLink(props: PageLinkProps) {
   return (
     <a
-      className={cx(
+      className={cn(
         'flex h-full items-center font-medium',
         props.large ? 'px-2 text-base md:px-4 md:text-lg' : 'px-2',
         props.selected &&

@@ -7,6 +7,7 @@ import { Clock } from './core/Clock'
 import { createActivityModule } from './modules/activity/ActivityModule'
 import { ApplicationModule } from './modules/ApplicationModule'
 import { createDiffHistoryModule } from './modules/diff-history/createDiffHistoryModule'
+import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createHealthModule } from './modules/health/HealthModule'
 import { createLivenessModule } from './modules/liveness/LivenessModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
@@ -14,7 +15,7 @@ import { createStatusModule } from './modules/status/StatusModule'
 import { createTvlModule } from './modules/tvl/TvlModule'
 import { createUpdateMonitorModule } from './modules/update-monitor/UpdateMonitorModule'
 import { Database } from './peripherals/database/shared/Database'
-import { reportError } from './tools/ErrorReporter'
+import { getErrorReportingMiddleware, reportError } from './tools/ErrorReporter'
 
 export class Application {
   start: () => Promise<void>
@@ -51,16 +52,18 @@ export class Application {
       createDiffHistoryModule(config, logger, database),
       createStatusModule(config, logger, database, clock),
       createLivenessModule(config, logger, database, clock),
+      createFinalityModule(config, logger, database, clock),
     ]
 
     const apiServer = new ApiServer(
       config.api.port,
       logger,
       modules.flatMap((x) => x?.routers ?? []),
+      getErrorReportingMiddleware(),
     )
 
     this.start = async () => {
-      logger.for(this).info('Starting')
+      logger.for(this).info('Starting', { features: config.flags })
 
       await apiServer.listen()
 
