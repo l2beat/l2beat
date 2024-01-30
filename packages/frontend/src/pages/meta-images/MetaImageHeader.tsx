@@ -15,7 +15,7 @@ export interface HeaderProps {
 
 export function MetaImageHeader(props: HeaderProps) {
   return (
-    <header className="mt-6 flex justify-between px-4">
+    <header className="flex justify-between px-4">
       <h1
         className={cn(
           'relative flex items-center justify-start whitespace-pre text-[42px] font-bold leading-[1.15]',
