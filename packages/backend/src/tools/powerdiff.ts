@@ -174,7 +174,10 @@ const HTML_START = `
 
 const HTML_END = '<br><br></body></html>'
 
-console.log('>>>> Powerdiff <<<<')
+console.log('>>>> Powerdiff <<<<\n')
+console.log(
+  'Usage: yarn powerdiff <dir-path1> <dir-path2> [optional path to difft]\n',
+)
 const htmlContent = diffToHtml()
 
 const server = http.createServer((req, res) => {
@@ -184,6 +187,7 @@ const server = http.createServer((req, res) => {
 
 const PORT = 30123
 server.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`)
+  console.log('')
+  console.log(`Diff is served on http://localhost:${PORT}`)
   console.log('Use Ctrl+C to stop the server.')
 })
