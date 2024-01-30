@@ -27,6 +27,7 @@ import {
   ProjectDetailsTechnologyIncompleteNote,
   ProjectDetailsTechnologySection,
   ProjectDetailsUpcomingDisclaimer,
+  ProjectDetailsUpgradesAndGovernanceSection,
 } from '../../../types'
 import { getTechnologyOverview } from './getTechnologyOverview'
 
@@ -163,6 +164,16 @@ export function getProjectDetails(
       }),
     )
 
+    if (project.upgradesAndGovernance) {
+      items.push({
+        type: 'UpgradesAndGovernanceSection',
+        props: {
+          id: 'upgrades-and-governance',
+          title: 'Upgrades & governance',
+          content: project.upgradesAndGovernance,
+        },
+      })
+    }
     if (permissionsSection) {
       items.push({
         type: 'PermissionsSection',
@@ -230,3 +241,4 @@ export type ScalingDetailsSection =
   | ProjectDetailsPermissionsSection
   | ProjectDetailsContractsSection
   | ProjectDetailsStageSection
+  | ProjectDetailsUpgradesAndGovernanceSection

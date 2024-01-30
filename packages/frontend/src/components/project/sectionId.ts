@@ -12,4 +12,5 @@ export type ProjectSectionId =
   | 'other-considerations'
   | 'permissions'
   | 'contracts'
+  | 'upgrades-and-governance'
   | 'stage'
