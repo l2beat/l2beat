@@ -95,7 +95,7 @@ function powerdiff() {
     console.log('&#8595;') // arrow down
     console.log(filePaths[1])
     console.log()
-    console.log(new Convert().toHtml(diff ?? ''))
+    console.log(new Convert().toHtml(diff))
     console.log('</pre>')
     console.log('</div>')
   }
