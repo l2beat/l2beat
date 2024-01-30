@@ -1,8 +1,8 @@
 {
   "name": "pNetwork",
   "chain": "ethereum",
-  "blockNumber": 19076850,
-  "configHash": "0xffabb33ca972ea826f838c79eca434157a4901d135e57d239dbd2e890ac7dfa1",
+  "blockNumber": 19118450,
+  "configHash": "0xc12f151d384d4d14f3487d41f29326cbae9c990c180b055c38a6e6c17942d9b9",
   "version": 3,
   "contracts": [
     {
@@ -18,7 +18,7 @@
       "derivedName": "Erc20Vault"
     },
     {
-      "name": "DandelionVoting",
+      "name": "pNetworkDAOVoting",
       "address": "0x2211bFD97b1c02aE8Ac305d206e9780ba7D8BfF4",
       "upgradeability": {
         "type": "EIP897 proxy",
@@ -55,8 +55,9 @@
         "proxyType": 2,
         "supportRequiredPct": "510000000000000000",
         "token": "0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E",
-        "votesLength": 34
-      }
+        "votesLength": 35
+      },
+      "derivedName": "DandelionVoting"
     },
     {
       "name": "Kernel",
