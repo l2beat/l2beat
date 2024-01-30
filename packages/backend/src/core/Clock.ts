@@ -41,12 +41,25 @@ export class Clock {
     return UnixTime.now().add(-this.delayInSeconds, 'seconds').toStartOf('day')
   }
 
-  onEveryHour(callback: (timestamp: UnixTime) => void) {
+  /**
+   * WARNING: this method should be used only in TVL module
+   */
+  _TVL_ONLY_onEveryHour(callback: (timestamp: UnixTime) => void) {
     let next = this.getFirstHour()
     const onNewTimestamps = () => {
       const last = this.getLastHour()
       while (next.lte(last)) {
-        callback(next)
+        if (next.add(7, 'days').gte(last)) {
+          callback(next)
+        } else if (next.add(90, 'days').gte(last)) {
+          if (next.isFull('six hours')) {
+            callback(next)
+          }
+        } else {
+          if (next.isFull('day')) {
+            callback(next)
+          }
+        }
         next = next.add(1, 'hours')
       }
     }

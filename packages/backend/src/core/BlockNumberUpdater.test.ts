@@ -31,7 +31,7 @@ describe(BlockNumberUpdater.name, () => {
         add: mockFn().returns([]),
       })
       const clock = mockObject<Clock>({
-        onEveryHour: (callback) => {
+        _TVL_ONLY_onEveryHour: (callback) => {
           callback(TIME_0)
           callback(TIME_1)
           callback(TIME_2)
