@@ -120,9 +120,7 @@ export const kroma: Layer2 = {
       url: 'https://api.kromascan.com/api',
       type: 'etherscan',
     },
-    multicallContracts: [
-      // TODO: add multicall contracts
-    ],
+    multicallContracts: [],
     minTimestampForTvl: UnixTime.fromDate(new Date('2023-09-05T03:00:00Z')),
   },
   config: {
