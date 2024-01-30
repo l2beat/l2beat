@@ -169,7 +169,7 @@ export function getProjectDetails(
         type: 'UpgradesAndGovernanceSection',
         props: {
           id: 'upgrades-and-governance',
-          title: 'Upgrades & governance',
+          title: 'Upgrades & Governance',
           content: project.upgradesAndGovernance,
         },
       })
