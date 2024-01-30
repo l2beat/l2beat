@@ -12,7 +12,7 @@
     },
     "test": {
       "dependsOn": ["^build"],
-      "inputs": ["**/*.ts", "**/*.test.ts"]
+      "inputs": ["**/*.ts", "**/*.test.ts", "**/*.json", "**/*.jsonc"]
     },
     "lint": {
       "dependsOn": ["^build"]

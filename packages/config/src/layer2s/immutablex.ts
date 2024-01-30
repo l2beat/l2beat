@@ -58,8 +58,10 @@ export const immutablex: Layer2 = {
     dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://immutable.com/'],
-      apps: ['https://market.x.immutable.com/'],
-      documentation: ['https://docs.starkware.co/starkex-docs-v2/'],
+      apps: ['https://market.immutable.com/'],
+      documentation: [
+        'https://docs.starkware.co/starkex/perpetual/perpetual_overview.html',
+      ],
       explorers: ['https://immutascan.io/'],
       repositories: ['https://github.com/starkware-libs/starkex-contracts'],
       socialMedia: [

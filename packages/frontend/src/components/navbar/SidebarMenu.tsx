@@ -25,7 +25,7 @@ export function SidebarMenu(props: SidebarMenuProps) {
   return (
     <div
       id="sidebar-menu"
-      className="fixed left-0 bottom-0 top-0 z-999 flex w-full translate-x-full flex-col bg-white text-base transition-transform duration-300 dark:bg-black lg:hidden"
+      className="fixed bottom-0 left-0 top-0 z-999 flex w-full translate-x-full flex-col bg-white text-base transition-transform duration-300 dark:bg-black lg:hidden"
     >
       <div className="mt-[11.5px] flex items-center justify-between px-4">
         <a href={props.selectedPage === 'bridges' ? '/bridges/summary' : '/'}>
@@ -97,7 +97,7 @@ export function SidebarMenu(props: SidebarMenuProps) {
             </ul>
           </li>
         </ul>
-        <hr className="mt-8 mb-6 w-full border-gray-200 dark:border-gray-850" />
+        <hr className="mb-6 mt-8 w-full border-gray-200 dark:border-gray-850" />
         <ul className="flex flex-col gap-4 px-6 text-sm font-medium">
           <li>
             <OutLink href={props.forumLink}>Forum</OutLink>

@@ -7,7 +7,7 @@ import { groupRisks } from '../../../../utils/project/groupRisks'
 export function getRiskSection(
   project: Bridge,
   verificationStatus: VerificationStatus,
-): RiskSectionProps {
+): Omit<RiskSectionProps, 'sectionOrder'> {
   const sections = [
     {
       id: 'principle-of-operation',

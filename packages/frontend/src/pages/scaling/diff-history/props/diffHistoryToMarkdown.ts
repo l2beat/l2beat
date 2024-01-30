@@ -41,10 +41,23 @@ function discoveryDiffToMarkdown(diffs: DiscoveryDiff[]): string {
   return result.join('\n\n')
 }
 
+function removeCreationAndDeletionDiffs(
+  diffs: DiscoveryDiff[],
+): DiscoveryDiff[] {
+  return diffs.filter(
+    (diff) => diff.type !== 'created' && diff.type !== 'deleted',
+  )
+}
+
 export function diffHistoryToMarkdown(
   changes: DiffHistoryApiResponse[0]['changes'],
 ): string {
   return changes
+    .map((change) => ({
+      ...change,
+      diffs: removeCreationAndDeletionDiffs(change.diffs),
+    }))
+    .filter((c) => c.diffs.length > 0)
     .map((change) => {
       return `## ${new UnixTime(
         +change.timestamp,

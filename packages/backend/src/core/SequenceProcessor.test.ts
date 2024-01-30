@@ -4,15 +4,14 @@ import { expect, mockFn, MockFunction } from 'earl'
 import { once } from 'events'
 
 import { SequenceProcessorRepository } from '../peripherals/database/SequenceProcessorRepository'
-import { setupDatabaseTestSuite } from '../test/database'
+import { describeDatabase } from '../test/database'
 import {
   ALL_PROCESSED_EVENT,
   SequenceProcessor,
   SequenceProcessorOpts,
 } from './SequenceProcessor'
 
-describe(SequenceProcessor.name, () => {
-  const { database } = setupDatabaseTestSuite()
+describeDatabase(SequenceProcessor.name, (database) => {
   const repository = new SequenceProcessorRepository(database, Logger.SILENT)
   const PROCESSOR_ID = 'test'
   let sequenceProcessor: SequenceProcessor

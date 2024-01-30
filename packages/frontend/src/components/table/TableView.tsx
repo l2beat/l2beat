@@ -39,7 +39,7 @@ export function TableView<T>({
           {groupedColumns && (
             <GroupedColumnsHeaders groupedColumns={groupedColumns} />
           )}
-          <tr className="border-b border-b-gray-200 dark:border-b-gray-800">
+          <tr className="border-b border-b-gray-200 dark:border-b-zinc-700">
             {columnsConfig.map((columnConfig, i) => {
               const isLastColumn = i === columnsConfig.length - 1
               if (columnConfig.type === 'group') {
@@ -78,7 +78,7 @@ export function TableView<T>({
                 key={i}
                 {...rest}
                 className={cn(
-                  'group/table-row cursor-pointer border-b border-b-gray-200 dark:border-b-gray-800',
+                  'group/table-row cursor-pointer border-b border-b-gray-200 dark:border-b-zinc-700',
                   'hover:bg-black/[0.05] hover:shadow-sm dark:hover:bg-white/[0.1]',
                   rowClassName,
                 )}
@@ -118,7 +118,7 @@ export function TableView<T>({
           {groupedColumns && <EmptyRow groupedColumns={groupedColumns} />}
         </tbody>
       </table>
-      <div className="hidden flex-col items-center justify-center rounded-b-lg bg-blue-700 bg-opacity-15 pt-10 pb-10 group-data-[state=empty]/tableview:flex">
+      <div className="hidden flex-col items-center justify-center rounded-b-lg bg-blue-700 bg-opacity-15 pb-10 pt-10 group-data-[state=empty]/tableview:flex">
         <span className="mb-4 text-2xl font-semibold">No results</span>
         <span className="mb-6">There are no results meeting the criteria</span>
         <Link className="ProjectFilters-ResetButton cursor-pointer">

@@ -1,7 +1,34 @@
+Generated with discovered.json: 0xdbe6ce9040494aceffa3835445396479993d2e68
+
+# Diff at Fri, 26 Jan 2024 10:54:51 GMT:
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: main@bb037f7100968a00265a4787338e51ca81aafe9b block: 19032812
+- current block number: 19090313
+
+## Description
+
+Added opStackDa handler
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19032812 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca) {
+      values.opStackDA:
++        {"isAllTxsLengthEqualToCelestiaDAExample":true,"isSomeTxsLengthEqualToCelestiaDAExample":true}
+    }
+```
+
+Generated with discovered.json: 0x7c9f89d35918320ff94fc04fa034065255687352
+
 # Diff at Thu, 18 Jan 2024 09:19:36 GMT:
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: master@0cb1eb82b45ad89a272a3c1b8f8f24ae020627cc block: 18933723
+- comparing to: main@0cb1eb82b45ad89a272a3c1b8f8f24ae020627cc block: 18933723
 - current block number: 19032812
 
 ## Description
@@ -25,7 +52,7 @@ Ignoring multisig nonce.
 # Diff at Thu, 04 Jan 2024 11:38:42 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@45fa22227d0d99394ce6d0a25e40e8ceeca18cb3
+- comparing to: main@45fa22227d0d99394ce6d0a25e40e8ceeca18cb3
 
 ## Description
 
@@ -59,7 +86,7 @@ One owner is removed and another is added to AevoMultiSig.
 # Diff at Tue, 26 Sep 2023 09:30:32 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@cfd4e281f2af40c7c69302b16c1308c0c5651be0
+- comparing to: main@cfd4e281f2af40c7c69302b16c1308c0c5651be0
 
 ## Watched changes
 

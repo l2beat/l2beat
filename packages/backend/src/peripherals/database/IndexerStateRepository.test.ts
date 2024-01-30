@@ -2,11 +2,10 @@ import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { setupDatabaseTestSuite } from '../../test/database'
+import { describeDatabase } from '../../test/database'
 import { IndexerStateRepository } from './IndexerStateRepository'
 
-describe(IndexerStateRepository.name, () => {
-  const { database } = setupDatabaseTestSuite()
+describeDatabase(IndexerStateRepository.name, (database) => {
   const repository = new IndexerStateRepository(database, Logger.SILENT)
 
   beforeEach(async () => {

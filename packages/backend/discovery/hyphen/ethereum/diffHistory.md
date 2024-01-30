@@ -1,7 +1,9 @@
+Generated with discovered.json: 0xe7c918d68b1a0189e5d881fee3ce3f5231bafc77
+
 # Diff at Mon, 22 Jan 2024 13:06:40 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: master@42f07246c25b819542d5b57f09b8ddcdcc321c42 block: 16154924
+- comparing to: main@42f07246c25b819542d5b57f09b8ddcdcc321c42 block: 16154924
 - current block number: 19062459
 
 ## Description

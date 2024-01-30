@@ -10,7 +10,7 @@ export function sentimentToFillColor(sentiment: Sentiment): string {
       return 'fill-green-300 dark:fill-green-450'
     case 'neutral':
     case 'UnderReview':
-      return 'fill-gray-400 dark:fill-gray-750'
+      return 'fill-gray-400 dark:fill-zinc-700'
   }
 }
 

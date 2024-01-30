@@ -7,6 +7,7 @@ const meta: Meta<typeof RiskSectionComponent> = {
   args: {
     id: 'risk-analysis',
     title: 'Risks summary',
+    sectionOrder: 1,
   },
 }
 export default meta

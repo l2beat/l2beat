@@ -7,7 +7,7 @@ import {
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { setupDatabaseTestSuite } from '../../../test/database'
+import { describeDatabase } from '../../../test/database'
 import {
   DiscoveryHistoryRecord,
   DiscoveryHistoryRepository,
@@ -15,8 +15,7 @@ import {
 
 const CONFIG_HASH = Hash256.random()
 
-describe(DiscoveryHistoryRepository.name, () => {
-  const { database } = setupDatabaseTestSuite()
+describeDatabase(DiscoveryHistoryRepository.name, (database) => {
   const repository = new DiscoveryHistoryRepository(database, Logger.SILENT)
 
   beforeEach(async () => {
@@ -33,7 +32,7 @@ describe(DiscoveryHistoryRepository.name, () => {
       timestamp: new UnixTime(1),
       discovery: {
         name: projectName,
-        chain: ChainId.getName(ChainId.ETHEREUM),
+        chain: 'ethereum',
         blockNumber: -1,
         configHash: Hash256.random(),
         contracts: [],
@@ -52,7 +51,7 @@ describe(DiscoveryHistoryRepository.name, () => {
       timestamp: new UnixTime(0),
       discovery: {
         name: projectName,
-        chain: ChainId.getName(ChainId.ETHEREUM),
+        chain: 'ethereum',
         blockNumber: -1,
         configHash: Hash256.random(),
         contracts: [],
@@ -71,7 +70,7 @@ describe(DiscoveryHistoryRepository.name, () => {
       timestamp: new UnixTime(0),
       discovery: {
         name: projectName,
-        chain: ChainId.getName(ChainId.ETHEREUM),
+        chain: 'ethereum',
         blockNumber: -1,
         configHash: Hash256.random(),
         contracts: [],
@@ -104,7 +103,7 @@ describe(DiscoveryHistoryRepository.name, () => {
       timestamp: new UnixTime(0),
       discovery: {
         name: projectName,
-        chain: ChainId.getName(ChainId.ETHEREUM),
+        chain: 'ethereum',
         blockNumber: -1,
         configHash: Hash256.random(),
         contracts: [],
@@ -157,7 +156,7 @@ describe(DiscoveryHistoryRepository.name, () => {
         timestamp: new UnixTime(0),
         discovery: {
           name: projectName,
-          chain: ChainId.getName(ChainId.ETHEREUM),
+          chain: 'ethereum',
           blockNumber: -1,
           configHash: Hash256.random(),
           contracts: [mockContractWithoutError, mockContractWithError],
@@ -206,7 +205,7 @@ describe(DiscoveryHistoryRepository.name, () => {
           timestamp: new UnixTime(0),
           discovery: {
             name: projectName,
-            chain: ChainId.getName(ChainId.ETHEREUM),
+            chain: 'ethereum',
             blockNumber: -1,
             configHash: hash,
             contracts: [contract],

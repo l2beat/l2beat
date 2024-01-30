@@ -4,6 +4,11 @@ import { MilestonesSection } from './MilestonesSection'
 
 const meta: Meta<typeof MilestonesSection> = {
   component: MilestonesSection,
+  args: {
+    id: 'milestones',
+    title: 'Milestones',
+    sectionOrder: 1,
+  },
 }
 export default meta
 type Story = StoryObj<typeof MilestonesSection>

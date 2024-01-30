@@ -18,6 +18,8 @@ import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
 import { toUpper } from 'lodash'
 import { rimraf } from 'rimraf'
 
+import { updateDiffHistoryHash } from '../core/discovery/utils/hashing'
+
 // This is a CLI tool. Run logic immediately.
 void updateDiffHistoryFile()
 
@@ -68,8 +70,8 @@ async function updateDiffHistoryFile() {
     config,
   )
 
+  const diffHistoryPath = `${discoveryFolder}/diffHistory.md`
   if (diff.length > 0 || configRelatedDiff.length > 0) {
-    const diffHistoryPath = `${discoveryFolder}/diffHistory.md`
     const { content: historyFileFromMainBranch } =
       getFileVersionOnMainBranch(diffHistoryPath)
 
@@ -88,6 +90,7 @@ async function updateDiffHistoryFile() {
       codeDiff,
       description,
     )
+
     const diffHistory =
       historyFileFromMainBranch === ''
         ? newHistoryEntry
@@ -98,7 +101,7 @@ async function updateDiffHistoryFile() {
     console.log('No changes found')
   }
 
-  await updateHashes(projectName, chain)
+  await updateDiffHistoryHash(diffHistoryPath, projectName, chain)
 }
 
 async function performDiscoveryOnPreviousBlock(
@@ -146,13 +149,14 @@ async function performDiscoveryOnPreviousBlock(
 
 function getMainBranchName(): 'main' | 'master' {
   try {
-    if (execSync('git show-ref --verify refs/heads/master').toString().trim()) {
-      return 'master'
-    }
+    execSync('git show-ref --verify refs/heads/master', {
+      stdio: 'ignore',
+    })
+    return 'master'
   } catch (error) {
     // If error, it means 'master' doesn't exist, so we'll stick with 'main'
+    return 'main'
   }
-  return 'main'
 }
 
 function compareFolders(path1: string, path2: string): string {
@@ -349,8 +353,4 @@ function findDescription(
   }
 
   return followingLines.slice(0, lastIndex).join('\n')
-}
-
-async function updateHashes(_projectName: string, _chainName: string) {
-  // TODO(radomski): no-op for now, look at L2B-3554
 }

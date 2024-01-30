@@ -1,9 +1,10 @@
 import { assert, Logger } from '@l2beat/backend-tools'
 import { ConfigReader, DiscoveryConfig } from '@l2beat/discovery'
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
 import { DiscoveryHistoryRepository } from '../../peripherals/database/discovery/DiscoveryHistoryRepository'
+import { ChainConverter } from '../ChainConverter'
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
 import { DiscoveryRunner } from './DiscoveryRunner'
@@ -20,6 +21,7 @@ export class ProjectDiscoverer {
     private readonly configReader: ConfigReader,
     private readonly repository: DiscoveryHistoryRepository,
     private readonly clock: Clock,
+    private readonly chainConverter: ChainConverter,
     private readonly logger: Logger,
     private readonly version: number,
   ) {
@@ -38,7 +40,7 @@ export class ProjectDiscoverer {
 
     const known = await this.repository.getTimestamps(
       this.projectName,
-      ChainId.fromName(this.chain),
+      this.chainConverter.toChainId(this.chain),
     )
 
     this.projectConfig = await this.configReader.readConfig(
@@ -48,7 +50,7 @@ export class ProjectDiscoverer {
 
     await this.repository.deleteStaleProjectDiscoveries(
       this.projectName,
-      ChainId.fromName(this.chain),
+      this.chainConverter.toChainId(this.chain),
       this.projectConfig.hash,
     )
 
@@ -103,7 +105,7 @@ export class ProjectDiscoverer {
 
     await this.repository.addOrUpdate({
       projectName: this.projectName,
-      chainId: ChainId.fromName(this.chain),
+      chainId: this.chainConverter.toChainId(this.chain),
       timestamp,
       blockNumber,
       discovery,

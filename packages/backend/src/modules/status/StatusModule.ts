@@ -5,6 +5,7 @@ import { ConfigReader } from '@l2beat/discovery'
 import { StatusController } from '../../api/controllers/status/StatusController'
 import { createStatusRouter } from '../../api/routers/StatusRouter'
 import { Config } from '../../config/Config'
+import { ChainConverter } from '../../core/ChainConverter'
 import { Clock } from '../../core/Clock'
 import { AggregatedReportStatusRepository } from '../../peripherals/database/AggregatedReportStatusRepository'
 import { BalanceStatusRepository } from '../../peripherals/database/BalanceStatusRepository'
@@ -49,6 +50,8 @@ export function createStatusModule(
     logger,
   )
 
+  const chainConverter = new ChainConverter(config.chains)
+
   const statusController = new StatusController(
     priceRepository,
     balanceStatusRepository,
@@ -62,6 +65,7 @@ export function createStatusModule(
     configReader,
     indexerStateRepository,
     livenessConfigurationRepository,
+    chainConverter,
   )
 
   const routers: Router[] = [createStatusRouter(statusController)]

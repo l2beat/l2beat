@@ -63,7 +63,7 @@ export const zora: Layer2 = opStack({
   l1StandardBridgeEscrow: EthereumAddress(
     '0x3e2Ea9B92B7E48A52296fD261dc26fd995284631',
   ),
-  apiUrl: 'https://rpc.zora.co',
+  rpcUrl: 'https://rpc.zora.co',
   sequencerAddress: EthereumAddress(
     discovery.getContractValue('SystemConfig', 'batcherHash'),
   ),

@@ -42,7 +42,7 @@ export function WarningBar({
           className={cn('p-4', className)}
           color={color}
           hoverable
-          icon={<Icon className={cn('h-5 w-5', iconFill)} />}
+          icon={<Icon className={cn('size-5', iconFill)} />}
           body={
             <div className="flex items-center gap-1">
               {textElement}
@@ -58,7 +58,7 @@ export function WarningBar({
     <Callout
       className={cn('p-4', className)}
       color={color}
-      icon={<Icon className={cn('h-5 w-5', iconFill)} />}
+      icon={<Icon className={cn('size-5', iconFill)} />}
       body={textElement}
     />
   )

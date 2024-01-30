@@ -80,8 +80,8 @@ export function RadioChartTypeControl({
                 'peer-checked:to-pink-100',
               )}
             >
-              <span className="hidden md:inline">{tab.fullName}</span>
-              <span className="md:hidden">{tab.shortName}</span>
+              <span className="hidden lg:inline">{tab.fullName}</span>
+              <span className="lg:hidden">{tab.shortName}</span>
             </div>
           </label>
         ))}

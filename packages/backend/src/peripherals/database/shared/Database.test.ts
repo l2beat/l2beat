@@ -8,8 +8,8 @@ import { Database } from './Database'
 
 describe(Database.name, () => {
   it('can run and rollback all migrations', async function () {
-    const { database, skip } = getTestDatabase()
-    if (skip) {
+    const database = getTestDatabase()
+    if (!database) {
       this.skip()
     }
 
@@ -39,21 +39,27 @@ describe(Database.name, () => {
   })
 
   describe(Database.prototype.assertRequiredServerVersion.name, () => {
-    let database: Database
+    let database: Database | undefined
 
     afterEach(async () => {
-      await database.closeConnection()
+      await database?.closeConnection()
     })
 
-    it('throws for mismatching version', async () => {
-      database = getTestDatabase({ requiredMajorVersion: 15 }).database
+    it('throws for mismatching version', async function () {
+      database = getTestDatabase({ requiredMajorVersion: 15 })
+      if (!database) {
+        this.skip()
+      }
       await expect(database.assertRequiredServerVersion()).toBeRejectedWith(
         'Assertion Error: Postgres server major version 14 different than required 15',
       )
     })
 
-    it('does not throw for matching version', async () => {
-      database = getTestDatabase().database
+    it('does not throw for matching version', async function () {
+      database = getTestDatabase()
+      if (!database) {
+        this.skip()
+      }
       await expect(database.assertRequiredServerVersion()).not.toBeRejected()
     })
   })

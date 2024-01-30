@@ -39,9 +39,9 @@ export function StageBadge({
         <span className="relative top-[0.5px]">{value ?? 'n/a'}</span>
       </span>
       {icon === 'warning' && (
-        <RoundedWarningIcon className="h-5 w-5 fill-yellow-700 dark:fill-yellow-300" />
+        <RoundedWarningIcon className="size-5 fill-yellow-700 dark:fill-yellow-300" />
       )}
-      {icon === 'underReview' && <UnderReviewIcon className="h-5 w-5" />}
+      {icon === 'underReview' && <UnderReviewIcon className="size-5" />}
     </div>
   )
 }
@@ -57,9 +57,9 @@ function getColorClassName(
     case 'Stage 0':
       return 'bg-orange-400 text-black'
     case 'UnderReview':
-      return 'bg-gray-750 text-yellow-200'
+      return 'bg-zinc-700 text-yellow-200'
     case 'NotApplicable':
-      return 'bg-gray-200 dark:bg-gray-750 text-gray-500 dark:text-gray-400 !font-normal'
+      return 'bg-gray-200 dark:bg-zinc-700 text-gray-500 dark:text-gray-400 !font-normal'
     default:
       return ''
   }
