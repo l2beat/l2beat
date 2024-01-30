@@ -31,21 +31,48 @@ export function ProjectDetails(props: ProjectDetailsProps) {
   return (
     <div className="px-4 md:px-0">
       {props.items.map((item, index) => {
+        const sectionOrder = index + 1
         switch (item.type) {
           case 'ChartSection':
-            return <ChartSection key={item.props.id} {...item.props} />
+            return (
+              <ChartSection
+                key={item.props.id}
+                sectionOrder={sectionOrder}
+                {...item.props}
+              />
+            )
           case 'MilestonesSection':
-            return <MilestonesSection key={item.props.id} {...item.props} />
+            return (
+              <MilestonesSection
+                key={item.props.id}
+                sectionOrder={sectionOrder}
+                {...item.props}
+              />
+            )
           case 'KnowledgeNuggetsSection':
             return (
-              <KnowledgeNuggetsSection key={item.props.id} {...item.props} />
+              <KnowledgeNuggetsSection
+                key={item.props.id}
+                sectionOrder={sectionOrder}
+                {...item.props}
+              />
             )
           case 'DetailedDescriptionSection':
             return (
-              <DetailedDescriptionSection key={item.props.id} {...item.props} />
+              <DetailedDescriptionSection
+                key={item.props.id}
+                sectionOrder={sectionOrder}
+                {...item.props}
+              />
             )
           case 'RiskAnalysisSection':
-            return <RiskAnalysis key={item.props.id} {...item.props} />
+            return (
+              <RiskAnalysis
+                key={item.props.id}
+                sectionOrder={sectionOrder}
+                {...item.props}
+              />
+            )
           case 'TechnologyIncompleteNote':
             return (
               <TechnologyIncomplete
@@ -54,19 +81,45 @@ export function ProjectDetails(props: ProjectDetailsProps) {
               />
             )
           case 'TechnologySection':
-            return <TechnologySection key={item.props.id} {...item.props} />
+            return (
+              <TechnologySection
+                key={item.props.id}
+                sectionOrder={sectionOrder}
+                {...item.props}
+              />
+            )
           case 'StateDerivationSection':
             return (
-              <StateDerivationSection key={item.props.id} {...item.props} />
+              <StateDerivationSection
+                key={item.props.id}
+                sectionOrder={sectionOrder}
+                {...item.props}
+              />
             )
           case 'StateValidationSection':
             return (
-              <StateValidationSection key={item.props.id} {...item.props} />
+              <StateValidationSection
+                key={item.props.id}
+                sectionOrder={sectionOrder}
+                {...item.props}
+              />
             )
           case 'PermissionsSection':
-            return <PermissionsSection key={item.props.id} {...item.props} />
+            return (
+              <PermissionsSection
+                key={item.props.id}
+                sectionOrder={sectionOrder}
+                {...item.props}
+              />
+            )
           case 'ContractsSection':
-            return <ContractsSection key={item.props.id} {...item.props} />
+            return (
+              <ContractsSection
+                key={item.props.id}
+                sectionOrder={sectionOrder}
+                {...item.props}
+              />
+            )
           case 'UpcomingDisclaimer':
             return (
               <UpcomingDisclaimer
