@@ -1,8 +1,8 @@
 {
   "name": "arbitrum",
   "chain": "ethereum",
-  "blockNumber": 19069754,
-  "configHash": "0xf0ebb18a156090f81984b9c14304510123dfbc44e00a90ac4ea35a66cd4d14f1",
+  "blockNumber": 19119504,
+  "configHash": "0xc26de3d89f84d5b879c1f92e6308927cb173525ce7e335cd29f3933b2eb9ba6b",
   "version": 3,
   "contracts": [
     {
@@ -120,7 +120,7 @@
       "implementations": ["0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9"],
       "sinceTimestamp": 1661457944,
       "values": {
-        "batchCount": 511207,
+        "batchCount": 521056,
         "batchPosters": [
           "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
           "0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc"
@@ -131,8 +131,9 @@
         "IS_HARDCODED_SEQUENCER_BATCH_POSTER": true,
         "maxTimeVariation": [5760, 12, 86400, 3600],
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
+        "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 1343469
+        "totalDelayedMessagesRead": 1358008
       },
       "derivedName": "SequencerInbox"
     },
@@ -329,12 +330,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 11217,
+        "firstUnresolvedNode": 11384,
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isERC20Enabled": false,
         "lastStakeBlock": 15447818,
-        "latestConfirmed": 11216,
-        "latestNodeCreated": 11370,
+        "latestConfirmed": 11383,
+        "latestNodeCreated": 11536,
         "loserStakeEscrow": "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -367,7 +368,7 @@
         "validatorUtils": "0x9E40625F52829Cf04bC4839F186D621ee33b0E67",
         "validatorWalletCreator": "0x960953f7c69cd2BC2322Db9223A815C680ccc7ea",
         "validatorWhitelistDisabled": false,
-        "wasmModuleRoot": "0x6b94a7fc388fd8ef3def759297828dc311761e88d8179c7ee8d3887dc554f3c3",
+        "wasmModuleRoot": "0xf4389b835497a910d7ba3ebfb77aa93da985634f3c052de1290360635be40c4a",
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
@@ -493,11 +494,11 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 1343496,
+        "delayedMessageCount": 1358039,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 511207,
-        "sequencerReportedSubMessageCount": 151163594
+        "sequencerMessageCount": 521056,
+        "sequencerReportedSubMessageCount": 153518222
       },
       "derivedName": "Bridge"
     },
