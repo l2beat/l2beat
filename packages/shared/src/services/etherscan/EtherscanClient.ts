@@ -1,28 +1,178 @@
 import { Logger } from '@l2beat/backend-tools'
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainId,
+  EthereumAddress,
+  getErrorMessage,
+  Hash256,
+  RateLimiter,
+  stringAsInt,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
-import { EtherscanLikeClient } from '../etherscanlike/EtherscanLikeClient'
 import { HttpClient } from '../HttpClient'
 import { BlockNumberProvider } from '../providers/BlockNumberProvider'
+import {
+  ContractCreatorAndCreationTxHashResult,
+  ContractSourceResult,
+  parseEtherscanResponse,
+} from './model'
 
 export class EtherscanError extends Error {}
 
-export class EtherscanClient
-  extends EtherscanLikeClient
-  implements BlockNumberProvider
-{
-  static API_URL = 'https://api.etherscan.io/api'
+export class EtherscanClient implements BlockNumberProvider {
+  private readonly rateLimiter = new RateLimiter({
+    callsPerMinute: 150,
+  })
+  private readonly timeoutMs = 20_000
 
   constructor(
-    httpClient: HttpClient,
-    apiKey: string,
-    minTimestamp: UnixTime,
-    logger = Logger.SILENT,
+    private readonly httpClient: HttpClient,
+    private readonly url: string,
+    private readonly apiKey: string,
+    private readonly minTimestamp: UnixTime,
+    private readonly chainId: ChainId,
+    private readonly logger = Logger.SILENT,
   ) {
-    super(httpClient, EtherscanClient.API_URL, apiKey, minTimestamp, logger)
+    this.call = this.rateLimiter.wrap(this.call.bind(this))
   }
 
   getChainId(): ChainId {
-    return ChainId.ETHEREUM
+    return this.chainId
+  }
+
+  /**
+   * Creates a client that can be used for discovery so does not need a minTimestamp.
+   */
+  static createForDiscovery(
+    httpClient: HttpClient,
+    url: string,
+    apiKey: string,
+    chainId: ChainId,
+  ) {
+    return new EtherscanClient(
+      httpClient,
+      url,
+      apiKey,
+      new UnixTime(0),
+      chainId,
+    )
+  }
+
+  // Etherscan API is not stable enough to trust it to return "closest" block.
+  // There is a case when there is not enough activity on a given chain
+  // so that blocks come in a greater than 10 minutes intervals,
+  // e.g block 0 @ 22:45 and block 1 @ 23:15
+  // if you query for 23:00 Etherscan API returns "No closes block found".
+  //
+  // To mitigate this, we need to go back in time by 10 minutes until we find a block
+  async getBlockNumberAtOrBefore(timestamp: UnixTime): Promise<number> {
+    let current = new UnixTime(timestamp.toNumber())
+
+    while (current.gte(this.minTimestamp)) {
+      try {
+        const result = await this.call('block', 'getblocknobytime', {
+          timestamp: current.toString(),
+          closest: 'before',
+        })
+
+        return stringAsInt().parse(result)
+      } catch (error) {
+        if (typeof error !== 'object') {
+          const errorString =
+            typeof error === 'string' ? error : 'Unknown error type caught'
+          throw new Error(errorString)
+        }
+
+        const errorObject = error as EtherscanError
+        if (!errorObject.message.includes('No closest block found')) {
+          throw new Error(errorObject.message)
+        }
+
+        current = current.add(-10, 'minutes')
+      }
+    }
+
+    throw new Error('Could not fetch block number')
+  }
+
+  async getContractSource(address: EthereumAddress) {
+    const response = await this.call('contract', 'getsourcecode', {
+      address: address.toString(),
+    })
+    return ContractSourceResult.parse(response)[0]
+  }
+
+  async getContractDeploymentTx(address: EthereumAddress): Promise<Hash256> {
+    const response = await this.call('contract', 'getcontractcreation', {
+      contractaddresses: address.toString(),
+    })
+
+    return ContractCreatorAndCreationTxHashResult.parse(response)[0].txHash
+  }
+
+  async call(module: string, action: string, params: Record<string, string>) {
+    const query = new URLSearchParams({
+      module,
+      action,
+      ...params,
+      apikey: this.apiKey,
+    })
+    const url = `${this.url}?${query.toString()}`
+
+    const start = Date.now()
+    const { httpResponse, error } = await this.httpClient
+      .fetch(url, { timeout: this.timeoutMs })
+      .then(
+        (httpResponse) => ({ httpResponse, error: undefined }),
+        (error: unknown) => ({ httpResponse: undefined, error }),
+      )
+    const timeMs = Date.now() - start
+
+    if (!httpResponse) {
+      const message = getErrorMessage(error)
+      this.recordError(module, action, timeMs, message)
+      throw error
+    }
+
+    const text = await httpResponse.text()
+    const etherscanResponse = tryParseEtherscanResponse(text)
+
+    if (!httpResponse.ok) {
+      this.recordError(module, action, timeMs, text)
+      throw new Error(
+        `Server responded with non-2XX result: ${httpResponse.status} ${httpResponse.statusText}`,
+      )
+    }
+
+    if (!etherscanResponse) {
+      const message = `Invalid Etherscan response [${text}] for request [${url}].`
+      this.recordError(module, action, timeMs, message)
+      throw new TypeError(message)
+    }
+
+    if (etherscanResponse.message !== 'OK') {
+      this.recordError(module, action, timeMs, etherscanResponse.result)
+      throw new EtherscanError(etherscanResponse.result)
+    }
+
+    this.logger.debug({ type: 'success', timeMs, module, action })
+    return etherscanResponse.result
+  }
+
+  private recordError(
+    module: string,
+    action: string,
+    timeMs: number,
+    message: string,
+  ) {
+    this.logger.debug({ type: 'error', message, timeMs, module, action })
+  }
+}
+
+function tryParseEtherscanResponse(text: string) {
+  try {
+    return parseEtherscanResponse(text)
+  } catch {
+    return undefined
   }
 }

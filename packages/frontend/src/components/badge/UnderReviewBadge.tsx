@@ -13,7 +13,7 @@ export function UnderReviewBadge({
     <span
       className={cn(
         'inline-block rounded px-1.5 font-medium uppercase !leading-none',
-        'bg-gray-750 text-yellow-200',
+        'bg-zinc-700 text-yellow-200',
         big ? 'py-0.5 text-base md:text-lg' : 'py-[3px] text-xs',
         className,
       )}

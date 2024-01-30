@@ -11,12 +11,12 @@ import { makeTechnologyChoice } from '../../../../utils/project/makeTechnologyCh
 
 interface TechnologyOverview {
   incomplete?: TechnologyIncompleteProps
-  sections: TechnologySectionProps[]
+  sections: Omit<TechnologySectionProps, 'sectionOrder'>[]
 }
 
 export function getTechnologyOverview(project: Bridge): TechnologyOverview {
   function makeSections() {
-    const technology: TechnologySectionProps = {
+    const technology: Omit<TechnologySectionProps, 'sectionOrder'> = {
       id: 'technology',
       title: 'Technology',
       isUnderReview: project.isUnderReview ?? project.technology.isUnderReview,

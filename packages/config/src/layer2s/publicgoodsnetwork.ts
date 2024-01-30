@@ -20,6 +20,7 @@ const upgradeability = {
 }
 
 export const publicgoodsnetwork: Layer2 = opStack({
+  daProvider: 'Celestia',
   discovery,
   display: {
     name: 'Public Goods Network',
@@ -63,7 +64,7 @@ export const publicgoodsnetwork: Layer2 = opStack({
   l1StandardBridgeEscrow: EthereumAddress(
     '0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b',
   ),
-  apiUrl: 'https://rpc.publicgoods.network',
+  rpcUrl: 'https://rpc.publicgoods.network',
   sequencerAddress: EthereumAddress(
     discovery.getContractValue('SystemConfig', 'batcherHash'),
   ),
@@ -83,6 +84,11 @@ export const publicgoodsnetwork: Layer2 = opStack({
       link: 'https://twitter.com/pgn_eth/status/1676972199423668228',
       date: '2023-07-06T00:00:00.00Z',
       description: 'The Public Goods Network is live on mainnet.',
+    },
+    {
+      name: 'PGN switches to Celestia',
+      link: 'https://x.com/conduitxyz/status/1750596065609572398',
+      date: '2024-01-26T00:00:00.00Z',
     },
   ],
   knowledgeNuggets: [],

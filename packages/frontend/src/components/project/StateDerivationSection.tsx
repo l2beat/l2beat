@@ -9,11 +9,16 @@ export interface StateDerivationSectionProps
   extends ScalingProjectStateDerivation {
   id: ProjectSectionId
   title: string
+  sectionOrder: number
 }
 
 export function StateDerivationSection(props: StateDerivationSectionProps) {
   return (
-    <ProjectDetailsSection title={props.title} id={props.id}>
+    <ProjectDetailsSection
+      title={props.title}
+      id={props.id}
+      sectionOrder={props.sectionOrder}
+    >
       <div className="flex flex-col gap-6">
         <Item title="Node software">{props.nodeSoftware}</Item>
         {props.compressionScheme && (
