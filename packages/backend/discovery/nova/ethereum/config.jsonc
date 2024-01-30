@@ -39,9 +39,9 @@
       "ignoreMethods": ["inboxAccs"],
       "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
       "fields": {
-          "sequencerVersion": {
-              "type": "arbitrumSequencerVersion"
-          }
+        "sequencerVersion": {
+          "type": "arbitrumSequencerVersion"
+        }
       }
     },
     "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58": {

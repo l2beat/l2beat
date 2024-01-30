@@ -111,7 +111,7 @@
           "args": ["0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc"]
         },
         "sequencerVersion": {
-            "type": "arbitrumSequencerVersion"
+          "type": "arbitrumSequencerVersion"
         },
         // when this changes, it means the sequencers have changed
         "setIsBatchPosterCount": {
