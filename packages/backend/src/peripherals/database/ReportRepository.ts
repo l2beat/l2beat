@@ -18,8 +18,6 @@ export interface ReportRecord {
   projectId: ProjectId
   asset: AssetId
   chainId: ChainId
-  // TODO: Index this column when we start querying by it.
-  // TODO: Rename
   reportType: ReportType
   amount: bigint
   usdValue: bigint
@@ -74,7 +72,6 @@ export class ReportRepository extends BaseRepository {
 
     await this.runInTransaction(async (trx) => {
       for (let i = 0; i < reports.length; i += BATCH_SIZE) {
-        // Can't be two or more updaters on the chain because it will break the logic
         await this._addOrUpdateMany(reports.slice(i, i + BATCH_SIZE), trx)
       }
     })
@@ -164,17 +161,6 @@ export class ReportRepository extends BaseRepository {
       .orderBy('unix_timestamp')
 
     return rows.map(toRecord)
-  }
-
-  private _getByProjectAndAssetQuery(
-    knex: Knex,
-    projectId: ProjectId,
-    assetId: AssetId,
-  ) {
-    return knex('reports')
-      .where('asset_id', assetId.toString())
-      .andWhere('project_id', projectId.toString())
-      .orderBy('unix_timestamp')
   }
 }
 
