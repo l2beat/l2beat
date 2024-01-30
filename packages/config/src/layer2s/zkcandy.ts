@@ -9,7 +9,7 @@ export const zkcandy: Layer2 = upcoming({
     description:
       "zkCandy is an L2 Gaming Hyperchain built on zkSync's ZK stack for the next generation of GameFi - Supercharged by iCandy, the largest game developer in ANZ and SEA.",
     purposes: ['Universal', 'Gaming'],
-    category: 'ZK Rollup',
+    category: 'Validium',
     provider: 'ZK Stack',
     links: {
       websites: ['https://zkcandy.io', 'https://icandy.io/'],
