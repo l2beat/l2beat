@@ -3,7 +3,7 @@ import { expect } from 'earl'
 import { existsSync, readFileSync } from 'fs'
 import path from 'path'
 
-describe.only('icons', () => {
+describe('icons', () => {
   const projects = [...layer2s, ...bridges, ...layer3s]
   for (const project of projects) {
     it(`${project.display.name} has an associated icon`, () => {
