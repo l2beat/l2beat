@@ -82,6 +82,9 @@
           "method": "function isBatchPoster(address) external view returns (bool)",
           "args": ["0x02c903F5c76F3f00c1F659702Bd76DF30470bBEE"]
         },
+        "sequencerVersion": {
+          "type": "arbitrumSequencerVersion"
+        },
         // when this changes, it means the sequencers have changed
         "setIsBatchPosterCount": {
           "type": "eventCount",

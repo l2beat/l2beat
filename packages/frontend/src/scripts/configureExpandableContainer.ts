@@ -1,26 +1,26 @@
 export function configureExpandableContainer() {
   const expandableContainers = document.querySelectorAll<HTMLElement>(
-    '.ExpandableContainer',
+    '[data-role=expandable-container]',
   )
 
   expandableContainers.forEach((container) => {
     const expandableContainerContent = container.querySelector<HTMLElement>(
-      '.ExpandableContainerContent',
+      '[data-role=expandable-container-content]',
     )
     const expandableContainerContentGradient =
       container.querySelector<HTMLElement>(
-        '.ExpandableContainerContentGradient',
+        '[data-role=expandable-container-content-gradient]',
       )
     const expandableContainerButton = container.querySelector<HTMLElement>(
-      '.ExpandableContainerButton',
+      '[data-role=expandable-container-button]',
     )
     const expandableContainerButtonText =
       expandableContainerButton?.querySelector<HTMLElement>(
-        '.ExpandableContainerButtonText',
+        '[data-role=expandable-container-button-text]',
       )
     const expandableContainerButtonArrow =
       expandableContainerButton?.querySelector<HTMLElement>(
-        '.ExpandableContainerButtonArrow',
+        '[data-role=expandable-container-button-arrow]',
       )
 
     if (

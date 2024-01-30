@@ -84,8 +84,8 @@ export const aztecV1: Layer2 = {
     ],
     transactionApi: {
       type: 'aztec',
-      url: 'https://api.aztec.network/falafel-mainnet',
-      callsPerMinute: 3_000,
+      defaultUrl: 'https://api.aztec.network/falafel-mainnet',
+      defaultCallsPerMinute: 3_000,
     },
   },
   riskView: makeBridgeCompatible({

@@ -63,6 +63,8 @@ export const metis: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
+      defaultUrl: 'https://andromeda.metis.io/',
+      defaultCallsPerMinute: 1500,
       startBlock: 1,
     },
   },

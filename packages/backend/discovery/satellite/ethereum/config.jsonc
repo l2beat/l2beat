@@ -11,6 +11,9 @@
     "Gateway": {
       "proxyType": "Axelar proxy"
     },
-    "AxelarAuthWeighted": { "ignoreMethods": ["hashForEpoch"] }
+    "AxelarAuthWeighted": {
+      "ignoreMethods": ["hashForEpoch"],
+      "ignoreInWatchMode": ["currentEpoch"]
+    }
   }
 }

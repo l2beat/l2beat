@@ -57,7 +57,7 @@ export function DesktopTabs({ pages }: DesktopTabsProps) {
             <a
               href={page.link}
               className={cn(
-                'relative z-20 flex h-full w-full items-center justify-center gap-4 rounded-md',
+                'relative z-20 flex size-full items-center justify-center gap-4 rounded-md',
                 page.selected && 'bg-purple-300 dark:bg-purple-800',
               )}
             >
@@ -105,7 +105,7 @@ export function DesktopTabs({ pages }: DesktopTabsProps) {
           <a
             href={page.link}
             className={cn(
-              'relative z-20 flex h-full w-full items-center justify-center gap-4 rounded-md',
+              'relative z-20 flex size-full items-center justify-center gap-4 rounded-md',
               page.selected && 'bg-purple-300 dark:bg-purple-800',
             )}
           >

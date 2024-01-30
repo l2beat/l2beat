@@ -10,7 +10,6 @@ import { DailyTransactionCountViewRefresher } from '../../core/activity/DailyTra
 import { TransactionCounter } from '../../core/activity/TransactionCounter'
 import { TransactionCountingMonitor } from '../../core/activity/TransactionCountingMonitor'
 import { Clock } from '../../core/Clock'
-import { Project } from '../../model'
 import { DailyTransactionCountViewRepository } from '../../peripherals/database/activity/DailyTransactionCountViewRepository'
 import { Database } from '../../peripherals/database/shared/Database'
 import { ApplicationModule } from '../ApplicationModule'
@@ -56,7 +55,6 @@ export function createActivityModule(
 
   const includedInApiProjectIds = getIncludedInApiProjectIds(
     counters,
-    config.projects,
     config.activity,
     logger,
   )
@@ -85,39 +83,21 @@ export function createActivityModule(
 
 function getIncludedInApiProjectIds(
   counters: TransactionCounter[],
-  projects: Project[],
   activity: ActivityConfig,
   logger: Logger,
 ): ProjectId[] {
   return counters
     .filter((counter) => {
-      return shouldCounterBeIncluded(counter, projects, activity, logger)
+      return shouldCounterBeIncluded(counter, activity, logger)
     })
     .map((c) => c.projectId)
 }
 
 export function shouldCounterBeIncluded(
   counter: TransactionCounter,
-  projects: Project[],
   activity: ActivityConfig,
   logger: Logger,
 ) {
-  if (activity.skipExplicitExclusion) {
-    return true
-  }
-
-  const explicitlyExcluded = projects.some(
-    (p) =>
-      p.projectId === counter.projectId &&
-      p.transactionApi?.excludeFromActivityApi === true,
-  )
-  if (explicitlyExcluded) {
-    logger.info(
-      `Project ${counter.projectId.toString()} explicitly excluded from activity v2 api via config - will not be present in the response, but will continue syncing`,
-    )
-    return false
-  }
-
   const isExcludedInEnv = activity.projectsExcludedFromAPI.some(
     (p) => p === counter.projectId.toString(),
   )

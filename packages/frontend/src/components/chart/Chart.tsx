@@ -7,6 +7,7 @@ import { ActivityHeader } from '../header/ActivityHeader'
 import { TvlHeader } from '../header/TvlHeader'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { Logo } from '../Logo'
+import { ProjectDetailsSectionHeader } from '../project/ProjectDetailsSection'
 import { ChartComingSoonState } from './ChartComingSoonState'
 import { ChartEmptyState } from './ChartEmptyState'
 import { ChartErrorState } from './ChartErrorState'
@@ -24,6 +25,7 @@ import { TokenControl, TokenControls } from './TokenControls'
 export interface ChartProps {
   title?: string
   id?: string
+  sectionOrder?: number
   settingsId: string
   tokens?: TokenControl[]
   initialType: ChartType
@@ -36,6 +38,7 @@ export interface ChartProps {
   sectionClassName?: string
   header?: 'tvl' | 'activity' | 'project'
   showComingSoon?: boolean
+  withoutSeparator?: boolean
 }
 
 export function Chart(props: ChartProps) {
@@ -63,12 +66,14 @@ export function Chart(props: ChartProps) {
           props.mobileFull
             ? 'px-4 py-6 dark:bg-gray-950 md:p-0 md:dark:bg-transparent'
             : 'mt-4',
+          props.metaChart && 'mt-0',
           props.sectionClassName,
         )}
       >
         <ChartHeader
           title={title}
           id={id}
+          sectionOrder={props.sectionOrder}
           hasActivity={props.hasActivity}
           hasTvl={props.hasTvl}
           metaChart={props.metaChart}
@@ -83,20 +88,31 @@ export function Chart(props: ChartProps) {
               props.metaChart && 'absolute bottom-0 left-0 w-full',
             )}
           >
-            <TimeRange />
-            <RangeControls isActivity={isActivity} />
+            <TimeRange isMetaChart={!!props.metaChart} />
+            <RangeControls
+              isActivity={isActivity}
+              isMetaChart={!!props.metaChart}
+            />
           </div>
           <div
             data-role="chart-view"
-            className="relative col-span-4 h-[160px] xs:h-[200px] sm:h-[260px]"
+            className={cn(
+              'relative col-span-4 h-[160px] xs:h-[200px] sm:h-[260px]',
+              props.metaChart && 'relative h-[262px]',
+            )}
             role="img"
             aria-label="chart"
           >
             <ChartLoader />
             <ChartHover />
-            <Logo className="absolute bottom-2 right-2 z-30 h-[25px] w-[60px] opacity-20" />
+            <Logo
+              className={cn(
+                'absolute bottom-2 right-2 z-30 h-[25px] w-[60px] opacity-20',
+                props.metaChart && 'hidden',
+              )}
+            />
             <div
-              className="absolute -bottom-4 -left-4 -right-4 top-0 z-40 group-data-[interactivity-disabled]/chart:hidden"
+              className="absolute -inset-x-4 -bottom-4 top-0 z-40 group-data-[interactivity-disabled]/chart:hidden"
               data-role="chart-canvas-interaction-zone"
             />
             <ChartEmptyState />
@@ -105,7 +121,10 @@ export function Chart(props: ChartProps) {
             <canvas
               data-role="chart-canvas"
               data-is-meta={props.metaChart}
-              className="absolute bottom-0 left-0 z-20 block h-full w-full"
+              className={cn(
+                'absolute bottom-0 left-0 z-20 block size-full',
+                props.metaChart && 'bottom-[unset] top-0 h-[242px]',
+              )}
             />
             <ChartLabels
               className={cn(
@@ -137,7 +156,9 @@ export function Chart(props: ChartProps) {
           </div>
         </div>
       </section>
-      <HorizontalSeparator className="mt-4 hidden md:mt-6 md:block" />
+      {!props.withoutSeparator && (
+        <HorizontalSeparator className="mt-4 hidden md:mt-6 md:block" />
+      )}
     </>
   )
 }
@@ -145,6 +166,7 @@ export function Chart(props: ChartProps) {
 function ChartHeader(props: {
   id: string
   title: string
+  sectionOrder: number | undefined
   hasActivity: boolean | undefined
   hasTvl: boolean | undefined
   metaChart: boolean | undefined
@@ -165,9 +187,11 @@ function ChartHeader(props: {
 
   return (
     <div className="mb-6 flex flex-col gap-1 md:flex-row md:items-center md:gap-5">
-      <h2 className="text-2xl font-bold md:text-4xl md:leading-normal">
-        <a href={`#${props.id}`}>{props.title}</a>
-      </h2>
+      <ProjectDetailsSectionHeader
+        title={props.title}
+        id={props.id}
+        sectionOrder={props.sectionOrder}
+      />
       {(props.hasActivity || props.hasTvl) && (
         <RadioChartTypeControl
           hasActivity={!!props.hasActivity}

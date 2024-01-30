@@ -69,6 +69,7 @@ export const optimism: Layer2 = opStack({
   ),
   transactionApi: {
     type: 'rpc',
+    defaultUrl: 'https://mainnet.optimism.io/',
     startBlock: 1,
     assessCount: subtractOneAfterBlockInclusive(105235064),
   },

@@ -25,7 +25,7 @@ export function getProjectWithIndexColumns(opts?: {
       minimalWidth: true,
       headClassName: 'pl-2 md:pl-4',
       className: cn(
-        'sticky -left-4 md:static z-10 dark:bg-neutral-900 bg-white md:!bg-transparent md:dark:!bg-transparent',
+        'sticky -left-4 z-10 bg-white dark:bg-neutral-900 md:static md:!bg-transparent md:dark:!bg-transparent',
         stickyColumnBackgroundClasses,
       ),
       getValue: (_, index) => (
@@ -42,7 +42,7 @@ export function getProjectWithIndexColumns(opts?: {
       align: 'right',
       noPaddingRight: true,
       className: cn(
-        'sticky left-[18px] md:static z-10 dark:bg-neutral-900 bg-white md:!bg-transparent md:dark:!bg-transparent',
+        'sticky left-[18px] z-10 bg-white dark:bg-neutral-900 md:static md:!bg-transparent md:dark:!bg-transparent',
         'before:absolute md:before:content-none',
         'before:z-10',
         'before:inset-y-0',

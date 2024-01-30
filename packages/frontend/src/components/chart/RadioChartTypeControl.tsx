@@ -38,10 +38,10 @@ export function RadioChartTypeControl({
         'relative',
         'before:absolute',
         'before:z-10',
-        'before:-top-[1px]',
-        'before:-left-[1px]',
-        'before:-right-[1px]',
-        'before:-bottom-[1px]',
+        'before:top-[-1px]',
+        'before:left-[-1px]',
+        'before:right-[-1px]',
+        'before:bottom-[-1px]',
         'before:bg-gradient-to-r',
         'before:from-purple-100',
         'before:to-pink-100',
@@ -80,8 +80,8 @@ export function RadioChartTypeControl({
                 'peer-checked:to-pink-100',
               )}
             >
-              <span className="hidden md:inline">{tab.fullName}</span>
-              <span className="md:hidden">{tab.shortName}</span>
+              <span className="hidden lg:inline">{tab.fullName}</span>
+              <span className="lg:hidden">{tab.shortName}</span>
             </div>
           </label>
         ))}
