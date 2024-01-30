@@ -72,6 +72,7 @@ import { stealthchain } from './stealthchain'
 import { taiko } from './taiko'
 import { tanx } from './tanx'
 import { ten } from './ten'
+import { tradable } from './tradable'
 import { Layer2 } from './types'
 import { x1 } from './x1'
 import { xchain } from './xchain'
@@ -160,6 +161,7 @@ export const layer2s: Layer2[] = [
   taiko,
   tanx,
   ten,
+  tradable,
   x1,
   xchain,
   zkcandy,
