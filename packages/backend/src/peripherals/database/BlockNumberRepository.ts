@@ -4,6 +4,10 @@ import { BlockNumberRow } from 'knex/types/tables'
 
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
+import {
+  _TVL_ONLY_deleteHourlyUntil,
+  _TVL_ONLY_deleteSixHourlyUntil,
+} from './shared/deleteArchivedRecords'
 
 export interface BlockNumberRecord {
   timestamp: UnixTime
@@ -49,6 +53,15 @@ export class BlockNumberRepository extends BaseRepository {
   async deleteAll() {
     const knex = await this.knex()
     return knex('block_numbers').delete()
+  }
+  async deleteHourlyUntil(timestamp: UnixTime) {
+    const knex = await this.knex()
+    return _TVL_ONLY_deleteHourlyUntil(knex, 'block_numbers', timestamp)
+  }
+
+  async deleteSixHourlyUntil(timestamp: UnixTime) {
+    const knex = await this.knex()
+    return _TVL_ONLY_deleteSixHourlyUntil(knex, 'block_numbers', timestamp)
   }
 }
 

@@ -3,7 +3,11 @@ import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { describeDatabase } from '../../test/database'
-import { BlockNumberRepository } from './BlockNumberRepository'
+import {
+  BlockNumberRecord,
+  BlockNumberRepository,
+} from './BlockNumberRepository'
+import { PriceRepository } from './PriceRepository'
 
 describeDatabase(BlockNumberRepository.name, (database) => {
   const repository = new BlockNumberRepository(database, Logger.SILENT)
@@ -107,4 +111,74 @@ describeDatabase(BlockNumberRepository.name, (database) => {
     const results = await repository.getAll(ChainId.ETHEREUM)
     expect(results).toEqual([])
   })
+
+  describe(PriceRepository.prototype.deleteHourlyUntil.name, () => {
+    it('deletes hourly reports', async () => {
+      const start = UnixTime.now().toStartOf('day')
+      const until = start.add(25, 'hours')
+
+      const entries = []
+      for (
+        let i = start.toNumber();
+        i <= until.toNumber();
+        i += UnixTime.HOUR
+      ) {
+        entries.push(fakeBlockRecord({ timestamp: new UnixTime(i) }))
+      }
+
+      await Promise.all(entries.map((e) => repository.add(e)))
+      await repository.deleteHourlyUntil(until)
+      const results = await repository.getAll(ChainId.ETHEREUM)
+
+      expect(results).toEqualUnsorted([
+        fakeBlockRecord({ timestamp: start }),
+        fakeBlockRecord({ timestamp: start.add(6, 'hours') }),
+        fakeBlockRecord({ timestamp: start.add(12, 'hours') }),
+        fakeBlockRecord({ timestamp: start.add(18, 'hours') }),
+        fakeBlockRecord({ timestamp: start.add(24, 'hours') }),
+        fakeBlockRecord({ timestamp: start.add(25, 'hours') }),
+      ])
+    })
+  })
+
+  describe(PriceRepository.prototype.deleteSixHourlyUntil.name, () => {
+    it('deletes six hourly reports', async () => {
+      const start = UnixTime.now().toStartOf('day')
+      const until = start.add(7, 'hours')
+
+      const entries = []
+      for (
+        let i = start.toNumber();
+        i <= until.toNumber();
+        i += UnixTime.HOUR
+      ) {
+        entries.push(fakeBlockRecord({ timestamp: new UnixTime(i) }))
+      }
+
+      await Promise.all(entries.map((e) => repository.add(e)))
+      await repository.deleteSixHourlyUntil(until)
+      const results = await repository.getAll(ChainId.ETHEREUM)
+
+      expect(results).toEqualUnsorted([
+        fakeBlockRecord({ timestamp: start }),
+        fakeBlockRecord({ timestamp: start.add(1, 'hours') }),
+        fakeBlockRecord({ timestamp: start.add(2, 'hours') }),
+        fakeBlockRecord({ timestamp: start.add(3, 'hours') }),
+        fakeBlockRecord({ timestamp: start.add(4, 'hours') }),
+        fakeBlockRecord({ timestamp: start.add(5, 'hours') }),
+        fakeBlockRecord({ timestamp: start.add(7, 'hours') }),
+      ])
+    })
+  })
 })
+
+function fakeBlockRecord(
+  report?: Partial<BlockNumberRecord>,
+): BlockNumberRecord {
+  return {
+    timestamp: UnixTime.now(),
+    blockNumber: 0,
+    chainId: ChainId.ETHEREUM,
+    ...report,
+  }
+}
