@@ -189,4 +189,26 @@ describe(Clock.name, () => {
       stop()
     })
   })
+
+  describe(Clock.prototype._TVL_ONLY_getHourlyDeletionBoundary.name, () => {
+    it('returns timestamp 10 days before now', () => {
+      setTime('00:00:00')
+      const now = UnixTime.now()
+      const clock = new Clock(new UnixTime(0), 0)
+      const boundary = clock._TVL_ONLY_getHourlyDeletionBoundary()
+
+      expect(boundary).toEqual(now.add(-10, 'days'))
+    })
+  })
+
+  describe(Clock.prototype._TVL_ONLY_getSixHourlyDeletionBoundary.name, () => {
+    it('returns timestamp 93 days before now', () => {
+      setTime('00:00:00')
+      const now = UnixTime.now()
+      const clock = new Clock(new UnixTime(0), 0)
+      const boundary = clock._TVL_ONLY_getSixHourlyDeletionBoundary()
+
+      expect(boundary).toEqual(now.add(-93, 'days'))
+    })
+  })
 })
