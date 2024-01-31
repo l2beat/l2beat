@@ -33,6 +33,7 @@ import { TotalSupplyStatusRepository } from '../../peripherals/database/TotalSup
 import { ApplicationModule } from '../ApplicationModule'
 import { chainTvlModule } from './ChainTvlModule'
 import { createEthereumTvlModule } from './EthereumTvlModule'
+import { TvlCleaner } from './TvlCleaner'
 import { TvlDatabase } from './types'
 
 export function createTvlModule(
@@ -73,6 +74,7 @@ export function createTvlModule(
       logger,
     ),
   }
+
   // #endregion
   // #region peripherals
 
@@ -89,6 +91,7 @@ export function createTvlModule(
     config.tokens,
     logger,
   )
+  const tvlCleaner = new TvlCleaner(clock, logger, [db.reportRepository])
 
   // #endregion
   // #region modules
@@ -157,6 +160,7 @@ export function createTvlModule(
     logger.info('Starting')
 
     priceUpdater.start()
+    tvlCleaner.start()
 
     logger.info('Starting modules...')
 
