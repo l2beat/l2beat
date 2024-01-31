@@ -39,7 +39,7 @@ export function Link({
         'data-[state=highlighted]:before:-bottom-0.5 data-[state=highlighted]:before:-right-1 data-[state=highlighted]:before:rounded',
         'data-[state=highlighted]:before:-z-10 data-[state=highlighted]:before:border',
         'data-[state=highlighted]:before:border-dashed data-[state=highlighted]:before:border-yellow-700 data-[state=highlighted]:before:bg-yellow-250/50 data-[state=highlighted]:before:content-[""]',
-        'data-[state=highlighted]:before:dark:border-yellow-250/10',
+        'data-[state=highlighted]:before:dark:border-yellow-250 data-[state=highlighted]:before:dark:bg-yellow-250/10',
         className,
       )}
       target={outLink ? '_blank' : undefined}

@@ -14,3 +14,4 @@ export type ScalingProjectPurpose =
   | 'Privacy'
   | 'Universal'
   | 'Social'
+  | 'RWA'

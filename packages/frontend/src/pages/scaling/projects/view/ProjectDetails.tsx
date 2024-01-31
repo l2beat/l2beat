@@ -17,6 +17,7 @@ import {
 } from '../../../../components/project/TechnologyIncomplete'
 import { TechnologySection } from '../../../../components/project/TechnologySection'
 import { UpcomingDisclaimer } from '../../../../components/project/UpcomingDisclaimer'
+import { UpgradesAndGovernanceSection } from '../../../../components/project/UpgradesAndGovernanceSection'
 import { WrongResearchCTA } from '../../../../components/project/WrongInformationCTA'
 import { ScalingDetailsItem } from '../props/getProjectDetails'
 
@@ -109,6 +110,14 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           case 'StateValidationSection':
             return (
               <StateValidationSection
+                key={item.props.id}
+                sectionOrder={sectionOrder}
+                {...item.props}
+              />
+            )
+          case 'UpgradesAndGovernanceSection':
+            return (
+              <UpgradesAndGovernanceSection
                 key={item.props.id}
                 sectionOrder={sectionOrder}
                 {...item.props}
