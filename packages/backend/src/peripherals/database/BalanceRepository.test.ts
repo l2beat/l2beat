@@ -250,4 +250,78 @@ describeDatabase(BalanceRepository.name, (database) => {
 
     expect(result).toEqual([])
   })
+
+  describe(BalanceRepository.prototype.deleteHourlyUntil.name, () => {
+    it('deletes hourly reports', async () => {
+      await repository.deleteAll()
+
+      const start = UnixTime.now().toStartOf('day')
+      const until = start.add(25, 'hours')
+
+      const entries = []
+      for (
+        let i = start.toNumber();
+        i <= until.toNumber();
+        i += UnixTime.HOUR
+      ) {
+        entries.push(fakeBalance({ timestamp: new UnixTime(i) }))
+      }
+
+      await repository.addOrUpdateMany(entries)
+      await repository.deleteHourlyUntil(until)
+      const results = await repository.getAll()
+
+      expect(results).toEqualUnsorted([
+        fakeBalance({ timestamp: start }),
+        fakeBalance({ timestamp: start.add(6, 'hours') }),
+        fakeBalance({ timestamp: start.add(12, 'hours') }),
+        fakeBalance({ timestamp: start.add(18, 'hours') }),
+        fakeBalance({ timestamp: start.add(24, 'hours') }),
+        fakeBalance({ timestamp: start.add(25, 'hours') }),
+      ])
+    })
+  })
+
+  describe(BalanceRepository.prototype.deleteSixHourlyUntil.name, () => {
+    it('deletes six hourly reports', async () => {
+      await repository.deleteAll()
+
+      const start = UnixTime.now().toStartOf('day')
+      const until = start.add(7, 'hours')
+
+      const entries = []
+      for (
+        let i = start.toNumber();
+        i <= until.toNumber();
+        i += UnixTime.HOUR
+      ) {
+        entries.push(fakeBalance({ timestamp: new UnixTime(i) }))
+      }
+
+      await repository.addOrUpdateMany(entries)
+      await repository.deleteSixHourlyUntil(until)
+      const results = await repository.getAll()
+
+      expect(results).toEqualUnsorted([
+        fakeBalance({ timestamp: start }),
+        fakeBalance({ timestamp: start.add(1, 'hours') }),
+        fakeBalance({ timestamp: start.add(2, 'hours') }),
+        fakeBalance({ timestamp: start.add(3, 'hours') }),
+        fakeBalance({ timestamp: start.add(4, 'hours') }),
+        fakeBalance({ timestamp: start.add(5, 'hours') }),
+        fakeBalance({ timestamp: start.add(7, 'hours') }),
+      ])
+    })
+  })
 })
+
+function fakeBalance(entry?: Partial<BalanceRecord>): BalanceRecord {
+  return {
+    timestamp: UnixTime.now(),
+    holderAddress: EthereumAddress.ZERO,
+    assetId: AssetId('fake'),
+    balance: 0n,
+    chainId: ChainId.ETHEREUM,
+    ...entry,
+  }
+}
