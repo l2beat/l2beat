@@ -109,8 +109,16 @@ export const paradex: Layer2 = {
         {
           formula: 'sharpSubmission',
           sinceTimestamp: new UnixTime(1704729971),
+          untilTimestamp: new UnixTime(1706626427),
           programHashes: [
             '54878256403880350656938046611252303365750679698042371543935159963667935317',
+          ],
+        },
+        {
+          formula: 'sharpSubmission',
+          sinceTimestamp: new UnixTime(1706626427),
+          programHashes: [
+            '2479841346739966073527450029179698923866252973805981504232089731754042431018',
           ],
         },
       ],
