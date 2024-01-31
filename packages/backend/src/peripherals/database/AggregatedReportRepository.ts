@@ -9,6 +9,10 @@ import { AggregatedReportRow } from 'knex/types/tables'
 
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
+import {
+  _TVL_ONLY_deleteHourlyUntil,
+  _TVL_ONLY_deleteSixHourlyUntil,
+} from './shared/deleteArchivedRecords'
 
 export interface AggregatedReportRecord {
   timestamp: UnixTime
@@ -181,10 +185,6 @@ export class AggregatedReportRepository extends BaseRepository {
   async addOrUpdateMany(reports: AggregatedReportRecord[]) {
     const rows = reports.map(toRow)
     const knex = await this.knex()
-    const timestampsMatch = reports.every((r) =>
-      r.timestamp.equals(reports[0].timestamp),
-    )
-    assert(timestampsMatch, 'Timestamps must match')
 
     await knex.transaction(async (trx) => {
       await trx('aggregated_reports')
@@ -201,6 +201,16 @@ export class AggregatedReportRepository extends BaseRepository {
   async deleteAll() {
     const knex = await this.knex()
     return knex('aggregated_reports').delete()
+  }
+
+  async deleteHourlyUntil(timestamp: UnixTime) {
+    const knex = await this.knex()
+    return _TVL_ONLY_deleteHourlyUntil(knex, 'aggregated_reports', timestamp)
+  }
+
+  async deleteSixHourlyUntil(timestamp: UnixTime) {
+    const knex = await this.knex()
+    return _TVL_ONLY_deleteSixHourlyUntil(knex, 'aggregated_reports', timestamp)
   }
 }
 

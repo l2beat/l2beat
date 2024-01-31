@@ -235,15 +235,6 @@ describeDatabase(AggregatedReportRepository.name, (database) => {
     it('handles empty array', async () => {
       await expect(repository.addOrUpdateMany([])).not.toBeRejected()
     })
-
-    it('throws if timestamps do not match', async () => {
-      await expect(
-        repository.addOrUpdateMany([
-          fakeAggregateReport({ timestamp: TIME_1 }),
-          fakeAggregateReport({ timestamp: TIME_2 }),
-        ]),
-      ).toBeRejectedWith('Assertion Error: Timestamps must match')
-    })
   })
 
   describe(AggregatedReportRepository.prototype.findLatest.name, () => {
@@ -287,6 +278,68 @@ describeDatabase(AggregatedReportRepository.name, (database) => {
       expect(results).toEqual([])
     })
   })
+
+  describe(AggregatedReportRepository.prototype.deleteHourlyUntil.name, () => {
+    it('deletes hourly reports', async () => {
+      const start = UnixTime.now().toStartOf('day')
+      const until = start.add(25, 'hours')
+
+      const reports = []
+      for (
+        let i = start.toNumber();
+        i <= until.toNumber();
+        i += UnixTime.HOUR
+      ) {
+        reports.push(fakeAggregateReport({ timestamp: new UnixTime(i) }))
+      }
+
+      await repository.addOrUpdateMany(reports)
+      await repository.deleteHourlyUntil(until)
+      const results = await repository.getAll()
+
+      expect(results).toEqualUnsorted([
+        fakeAggregateReport({ timestamp: start }),
+        fakeAggregateReport({ timestamp: start.add(6, 'hours') }),
+        fakeAggregateReport({ timestamp: start.add(12, 'hours') }),
+        fakeAggregateReport({ timestamp: start.add(18, 'hours') }),
+        fakeAggregateReport({ timestamp: start.add(24, 'hours') }),
+        fakeAggregateReport({ timestamp: start.add(25, 'hours') }),
+      ])
+    })
+  })
+
+  describe(
+    AggregatedReportRepository.prototype.deleteSixHourlyUntil.name,
+    () => {
+      it('deletes six hourly reports', async () => {
+        const start = UnixTime.now().toStartOf('day')
+        const until = start.add(7, 'hours')
+
+        const reports = []
+        for (
+          let i = start.toNumber();
+          i <= until.toNumber();
+          i += UnixTime.HOUR
+        ) {
+          reports.push(fakeAggregateReport({ timestamp: new UnixTime(i) }))
+        }
+
+        await repository.addOrUpdateMany(reports)
+        await repository.deleteSixHourlyUntil(until)
+        const results = await repository.getAll()
+
+        expect(results).toEqualUnsorted([
+          fakeAggregateReport({ timestamp: start }),
+          fakeAggregateReport({ timestamp: start.add(1, 'hours') }),
+          fakeAggregateReport({ timestamp: start.add(2, 'hours') }),
+          fakeAggregateReport({ timestamp: start.add(3, 'hours') }),
+          fakeAggregateReport({ timestamp: start.add(4, 'hours') }),
+          fakeAggregateReport({ timestamp: start.add(5, 'hours') }),
+          fakeAggregateReport({ timestamp: start.add(7, 'hours') }),
+        ])
+      })
+    },
+  )
 })
 
 function getResult(
