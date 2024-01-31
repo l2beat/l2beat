@@ -65,6 +65,7 @@ export interface OpStackConfig {
   associatedTokens?: string[]
   isNodeAvailable: boolean | 'UnderReview'
   chainConfig?: ChainConfig
+  upgradesAndGovernance?: string
 }
 
 export function opStack(templateVars: OpStackConfig): Layer2 {
@@ -237,6 +238,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
             },
           ),
     stateDerivation: templateVars.stateDerivation,
+    upgradesAndGovernance: templateVars.upgradesAndGovernance,
     technology: {
       stateCorrectness: {
         name: 'Fraud proofs are in development',
