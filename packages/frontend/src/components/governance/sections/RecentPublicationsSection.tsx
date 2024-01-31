@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { GovernancePublicationEntry } from '../../../pages/governance/getGovernancePublicationEntry'
-import { cn } from '../../../utils/cn'
+import { Button } from '../../Button'
 import { Link } from '../../Link'
 import { GovernanceCard, GovernanceCardHeader } from '../GovernanceCard'
 
@@ -33,15 +33,9 @@ export function RecentPublicationsSection({ publications, className }: Props) {
 
 function ExploreAllButton({ className }: { className?: string }) {
   return (
-    <a
-      className={cn(
-        'inline-flex items-center justify-center rounded-md border border-pink-900 px-6 py-2 text-xs',
-        className,
-      )}
-      href="/governance/publications"
-    >
+    <Button as="a" className={className} href="/governance/publications">
       Explore all publications
-    </a>
+    </Button>
   )
 }
 

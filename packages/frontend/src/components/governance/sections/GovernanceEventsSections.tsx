@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { GovernanceEventEntry } from '../../../pages/governance/getGovernanceEventEntry'
+import { Button } from '../../Button'
 import { GovernanceCard, GovernanceCardHeader } from '../GovernanceCard'
 
 interface Props {
@@ -23,16 +24,19 @@ export function GovernanceEventsSection({ events, className }: Props) {
 
 function Event({ event }: { event: GovernanceEventEntry }) {
   return (
-    <GovernanceCard type="secondary">
-      <p className="text-lg font-bold">{event.title}</p>
-      <div className="mt-6">
-        <p className="text-2xs font-medium text-opacity-50">DATE</p>
-        <p className="whitespace-pre text-sm font-bold">{event.date}</p>
+    <GovernanceCard type="secondary" className="flex flex-col justify-between">
+      <div>
+        <p className="text-lg font-bold">{event.title}</p>
+        <div className="mt-6">
+          <p className="text-2xs font-medium text-opacity-50">DATE</p>
+          <p className="whitespace-pre text-sm font-bold">{event.date}</p>
+        </div>
+        <div className="mt-3">
+          <p className="text-2xs font-medium text-opacity-50">PLACE</p>
+          <p className="text-sm font-bold">{event.location}</p>
+        </div>
       </div>
-      <div className="mt-3">
-        <p className="text-2xs font-medium text-opacity-50">PLACE</p>
-        <p className="text-sm font-bold">{event.location}</p>
-      </div>
+      <Button className="mt-6">Learn more</Button>
     </GovernanceCard>
   )
 }
