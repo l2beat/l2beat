@@ -53,23 +53,24 @@ export function createTvlModule(
     blockNumberRepository: new BlockNumberRepository(database, logger),
     priceRepository: new PriceRepository(database, logger),
     balanceRepository: new BalanceRepository(database, logger),
+    totalSupplyRepository: new TotalSupplyRepository(database, logger),
+    circulatingSupplyRepository: new CirculatingSupplyRepository(
+      database,
+      logger,
+    ),
     reportRepository: new ReportRepository(database, logger),
     aggregatedReportRepository: new AggregatedReportRepository(
       database,
       logger,
     ),
-    reportStatusRepository: new ReportStatusRepository(database, logger),
-    aggregatedReportStatusRepository: new AggregatedReportStatusRepository(
-      database,
-      logger,
-    ),
+    // status tables
     balanceStatusRepository: new BalanceStatusRepository(database, logger),
-    totalSupplyRepository: new TotalSupplyRepository(database, logger),
     totalSupplyStatusRepository: new TotalSupplyStatusRepository(
       database,
       logger,
     ),
-    circulatingSupplyRepository: new CirculatingSupplyRepository(
+    reportStatusRepository: new ReportStatusRepository(database, logger),
+    aggregatedReportStatusRepository: new AggregatedReportStatusRepository(
       database,
       logger,
     ),

@@ -14,12 +14,13 @@ export interface TvlDatabase {
   readonly blockNumberRepository: BlockNumberRepository
   readonly priceRepository: PriceRepository
   readonly balanceRepository: BalanceRepository
+  readonly totalSupplyRepository: TotalSupplyRepository
+  readonly circulatingSupplyRepository: CirculatingSupplyRepository
   readonly reportRepository: ReportRepository
   readonly aggregatedReportRepository: AggregatedReportRepository
-  readonly aggregatedReportStatusRepository: AggregatedReportStatusRepository
-  readonly reportStatusRepository: ReportStatusRepository
+  // status tables
   readonly balanceStatusRepository: BalanceStatusRepository
-  readonly totalSupplyRepository: TotalSupplyRepository
   readonly totalSupplyStatusRepository: TotalSupplyStatusRepository
-  readonly circulatingSupplyRepository: CirculatingSupplyRepository
+  readonly reportStatusRepository: ReportStatusRepository
+  readonly aggregatedReportStatusRepository: AggregatedReportStatusRepository
 }
