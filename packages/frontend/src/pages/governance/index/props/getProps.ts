@@ -1,6 +1,6 @@
 import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
-import { getContent } from '../../../../content/getContent'
+import { ContentEntry, getContent } from '../../../../content/getContent'
 import { Wrapped } from '../../../Page'
 import { getGovernanceEventEntries } from '../../getGovernanceEventEntry'
 import { getGovernancePublicationEntry } from '../../getGovernancePublicationEntry'
@@ -17,7 +17,7 @@ export function getProps(config: Config): Wrapped<GovernancePageProps> {
           return b.data.publishedOn.getTime() - a.data.publishedOn.getTime()
         })
         .map(getGovernancePublicationEntry),
-      events: getGovernanceEventEntries(events),
+      events: getEvents(events),
       navbar: getNavbarProps(config, 'governance'),
       footer: getFooterProps(config),
     },
@@ -26,4 +26,10 @@ export function getProps(config: Config): Wrapped<GovernancePageProps> {
       banner: false,
     },
   }
+}
+
+function getEvents(events: ContentEntry<'events'>[]) {
+  return getGovernanceEventEntries(events)
+    .filter((event) => event.status === 'upcoming')
+    .slice(0, 10)
 }
