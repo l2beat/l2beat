@@ -54,7 +54,14 @@ async function tinifyLogo(fileName: string) {
 
   const width = sourceBuffer.readUInt32BE(16)
   const height = sourceBuffer.readUInt32BE(20)
-  if (width < 128 && height < 128) {
+  if (width !== height) {
+    console.error(
+      `Skipping ${fileName} because it is not square, provide square logo`,
+    )
+    return 0
+  }
+
+  if (width < 128 || height < 128) {
     console.error(
       `Skipping ${fileName} because it is too small, provide minimum 128x128px logo`,
     )
