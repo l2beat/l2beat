@@ -48,6 +48,7 @@ module.exports = {
       '3xl': ['32px', '36px'],
       '4xl': ['40px', '60px'],
       '5xl': ['48px', '60px'],
+      '6xl': ['64px', '64px'],
     },
     colors: {
       current: 'currentColor',
