@@ -67,11 +67,7 @@ export class ReportRepository extends BaseRepository {
   }
 
   async addOrUpdateMany(reports: ReportRecord[]) {
-    const timestampsMatch = reports.every((r) =>
-      r.timestamp.equals(reports[0].timestamp),
-    )
     const chainIdsMatch = reports.every((r) => r.chainId === reports[0].chainId)
-    assert(timestampsMatch, 'Timestamps must match')
     assert(chainIdsMatch, 'Chain Ids must match')
 
     await this.runInTransaction(async (trx) => {

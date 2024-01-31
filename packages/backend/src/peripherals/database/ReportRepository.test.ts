@@ -13,7 +13,6 @@ describeDatabase(ReportRepository.name, (database) => {
 
   const PROJECT_A = ProjectId('project-a')
   const PROJECT_B = ProjectId('project-b')
-  const PROJECT_C = ProjectId('project-c')
 
   beforeEach(async () => {
     await repository.deleteAll()
@@ -46,16 +45,6 @@ describeDatabase(ReportRepository.name, (database) => {
 
     it('handles empty array', async () => {
       await expect(repository.addOrUpdateMany([])).not.toBeRejected()
-    })
-
-    it('throws if timestamps do not match', async () => {
-      await expect(
-        repository.addOrUpdateMany([
-          fakeReport({ projectId: PROJECT_A, timestamp: TIME_0 }),
-          fakeReport({ projectId: PROJECT_B, timestamp: TIME_0 }),
-          fakeReport({ projectId: PROJECT_C, timestamp: TIME_1 }),
-        ]),
-      ).toBeRejectedWith('Assertion Error: Timestamps must match')
     })
 
     it('batches insert', async () => {
@@ -113,7 +102,7 @@ describeDatabase(ReportRepository.name, (database) => {
         reports.push(fakeReport({ timestamp: start.add(i, 'hours') }))
       }
 
-      await Promise.all(reports.map((r) => repository.addOrUpdateMany([r])))
+      await repository.addOrUpdateMany(reports)
       await repository.deleteHourlyUntil(start.add(end, 'hours'))
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([
@@ -141,8 +130,8 @@ describeDatabase(ReportRepository.name, (database) => {
         fakeReport({ timestamp: start.add(24, 'hours') }),
         fakeReport({ timestamp: start.add(25, 'hours') }),
       ]
+      await repository.addOrUpdateMany(reports)
 
-      await Promise.all(reports.map((r) => repository.addOrUpdateMany([r])))
       await repository.deleteSixHourlyUntil(start.add(end, 'hours'))
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([
