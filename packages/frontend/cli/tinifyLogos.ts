@@ -76,7 +76,10 @@ function saveToJson(fileName: string) {
   const tinifiedLogos = getTinifiedLogos()
   tinifiedLogos.push(fileName)
 
-  writeFileSync(tinifiedLogosFile, JSON.stringify(tinifiedLogos, null, 2))
+  writeFileSync(
+    tinifiedLogosFile,
+    JSON.stringify(tinifiedLogos, null, 2) + '\n',
+  )
 }
 
 function checkIfWasTinified(fileName: string) {
