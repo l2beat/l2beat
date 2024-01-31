@@ -140,6 +140,7 @@ export function makeConfig(
     },
     chains: chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
     flags: flags.getResolved(),
+    tvlCleanerEnabled: flags.isEnabled('tvlCleaner'),
   }
 }
 

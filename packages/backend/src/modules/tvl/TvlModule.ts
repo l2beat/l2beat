@@ -160,7 +160,9 @@ export function createTvlModule(
     logger.info('Starting')
 
     priceUpdater.start()
-    tvlCleaner.start()
+    if (config.tvlCleanerEnabled) {
+      tvlCleaner.start()
+    }
 
     logger.info('Starting modules...')
 
