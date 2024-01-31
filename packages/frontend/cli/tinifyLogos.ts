@@ -12,7 +12,10 @@ const tinifiedLogosFile = path.join(__dirname, 'tinifiedLogos.json')
 main().catch((e) => console.error(e))
 
 async function main() {
-  // Default API key is associated with burner email. If you want to run this script and you have a lot of logos to tinify, please use your own API key.
+  /*
+    Default API key is associated with burner email.
+    If the limit is reached (500 contributions), create a new one for yourself at https://tinypng.com/developers.
+  */
   const apiKey =
     process.env.TINIFY_API_KEY ?? '7V2rB5RXN8DfJW04bGNvYs5MVVPk77KM'
 
