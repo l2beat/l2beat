@@ -4,11 +4,7 @@
   "name": "socket",
   "initialAddresses": [
     "0x943AC2775928318653e91d350574436A1b9b16f9",
-    "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d",
-    "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab",
-    "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e",
-    "0xD3F39174Ee7937381e19d682FfEa40968266FA3E",
-    "0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa"
+    "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d"
   ],
   "names": {
     "0x943AC2775928318653e91d350574436A1b9b16f9": "Socket",
@@ -17,11 +13,7 @@
     "0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe": "ArbitrumL1Switchboard",
     "0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA": "OptimismSwitchboard2",
     "0xD5a83a40F262E2247e6566171f9ADc76b745F5cD": "FastSwitchboard",
-    "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d": "USDC Vault",
-    "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab": "WBTC Vault",
-    "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e": "WETH Vault",
-    "0xD3F39174Ee7937381e19d682FfEa40968266FA3E": "USDT Vault",
-    "0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa": "USDT Vault"
+    "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d": "USDC Vault"
   },
   "overrides": {
     "Socket": {
@@ -87,15 +79,6 @@
       }
     },
     "USDC Vault": {
-      "ignoreMethods": ["token__"]
-    },
-    "WBTC Vault": {
-      "ignoreMethods": ["token__"]
-    },
-    "WETH Vault": {
-      "ignoreMethods": ["token__"]
-    },
-    "USDT Vault": {
       "ignoreMethods": ["token__"]
     }
   }
