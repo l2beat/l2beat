@@ -1,3 +1,4 @@
+import { notUndefined } from '@l2beat/shared-pure'
 import range from 'lodash/range'
 
 import { ContentEntry } from '../../content/getContent'
@@ -13,11 +14,15 @@ export interface GovernanceEventEntry {
 type OneTimeEvent = ContentEntry<'events'> & {
   data: Extract<ContentEntry<'events'>['data'], { type: 'one-time' }>
 }
+type RecurringEvent = ContentEntry<'events'> & {
+  data: Extract<ContentEntry<'events'>['data'], { type: 'recurring' }>
+}
 
 export function getGovernanceEventEntries(
   events: ContentEntry<'events'>[],
 ): GovernanceEventEntry[] {
   const oneTimeEvents = getOneTimeEvents(events)
+
   return oneTimeEvents
     .sort((a, b) => a.data.startDate.getTime() - b.data.startDate.getTime())
     .map(getGovernanceEventEntry)
@@ -28,15 +33,12 @@ function getGovernanceEventEntry(event: OneTimeEvent): GovernanceEventEntry {
     title: event.data.title,
     link: event.data.link,
     location: event.data.location,
-    date: getDate(event),
+    date: getNiceEventDate(event),
     status: event.data.startDate.getTime() > Date.now() ? 'upcoming' : 'past',
   }
 }
 
-function getOneTimeEvents(
-  events: ContentEntry<'events'>[],
-  depth = 5,
-): OneTimeEvent[] {
+function getOneTimeEvents(events: ContentEntry<'events'>[]): OneTimeEvent[] {
   return events.flatMap((event) => {
     if (event.data.type === 'one-time') {
       return {
@@ -46,57 +48,50 @@ function getOneTimeEvents(
     }
 
     const data = event.data
+    const weeksSinceStart = Math.ceil(
+      (Date.now() - data.startDate.getTime()) / (7 * 24 * 60 * 60 * 1000),
+    )
 
-    const futureEvents: OneTimeEvent[] = range(depth).map((i) => {
-      const nextDate = getNextDateForDayOfWeek(
-        data.dayOfWeek,
-        new Date(Date.now() + i * 7 * 24 * 60 * 60 * 1000),
+    return range(-weeksSinceStart + 1, event.data.futureEventsCount)
+      .map((weeksOffset) =>
+        getEventForWeek(event as RecurringEvent, weeksOffset),
       )
-
-      const startDate = new Date(nextDate)
-      startDate.setHours(data.startHour, data.startMinute)
-      const endDate = new Date(nextDate)
-      endDate.setHours(data.endHour, data.endMinute)
-
-      return {
-        ...event,
-        data: {
-          type: 'one-time',
-          title: data.title,
-          startDate,
-          endDate,
-          location: data.location,
-          link: data.link,
-        },
-      }
-    })
-
-    const pastEvents: OneTimeEvent[] = []
-    let nextDate = getNextDateForDayOfWeek(data.dayOfWeek, data.startDate)
-    while (nextDate.getTime() < Date.now()) {
-      const startDate = new Date(nextDate)
-      startDate.setHours(data.startHour, data.startMinute)
-      const endDate = new Date(nextDate)
-      endDate.setHours(data.endHour, data.endMinute)
-      pastEvents.push({
-        ...event,
-        data: {
-          type: 'one-time',
-          title: data.title,
-          startDate,
-          endDate,
-          location: data.location,
-          link: data.link,
-        },
-      })
-      nextDate = getNextDateForDayOfWeek(
-        data.dayOfWeek,
-        new Date(nextDate.getTime() + 7 * 24 * 60 * 60 * 1000),
-      )
-    }
-    return [...pastEvents, ...futureEvents]
+      .filter(notUndefined)
   })
 }
+
+function getEventForWeek(
+  event: RecurringEvent,
+  weeksOffset: number,
+): OneTimeEvent | undefined {
+  const nextDate = getNextDateForDayOfWeek(
+    event.data.dayOfWeek,
+    new Date(Date.now() + weeksOffset * 7 * 24 * 60 * 60 * 1000),
+  )
+
+  const isCancelled = event.data.cancelledAt?.some((date) => {
+    return date.getTime() === nextDate.getTime()
+  })
+  if (isCancelled) return
+
+  const startDate = new Date(nextDate)
+  startDate.setHours(event.data.startHour, event.data.startMinute)
+  const endDate = new Date(nextDate)
+  endDate.setHours(event.data.endHour, event.data.endMinute)
+
+  return {
+    ...event,
+    data: {
+      type: 'one-time' as const,
+      title: event.data.title,
+      startDate,
+      endDate,
+      location: event.data.location,
+      link: event.data.link,
+    },
+  }
+}
+
 function getNextDateForDayOfWeek(
   dayOfWeek: number,
   currentDate = new Date(),
@@ -112,11 +107,13 @@ function getNextDateForDayOfWeek(
     daysToAdd += 7
   }
 
-  currentDate.setDate(currentDate.getDate() + daysToAdd)
+  currentDate.setUTCDate(currentDate.getDate() + daysToAdd)
+  currentDate.setUTCHours(0, 0, 0, 0)
+
   return currentDate
 }
 
-function getDate(event: OneTimeEvent) {
+function getNiceEventDate(event: OneTimeEvent) {
   const startDay = event.data.startDate.getDate()
   const endDay = event.data.endDate.getDate()
 

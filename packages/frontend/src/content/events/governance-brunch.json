@@ -2,6 +2,7 @@
   "type": "recurring",
   "title": "Governance Brunch",
   "startDate": "2023-12-04",
+  "futureEventsCount": 1,
   "dayOfWeek": 6,
   "startHour": 11,
   "startMinute": 30,

@@ -1,8 +1,8 @@
 import React from 'react'
 
 import { GovernanceEventEntry } from '../../../pages/governance/getGovernanceEventEntry'
-import { Button } from '../../Button'
 import { Badge } from '../../badge/Badge'
+import { Button } from '../../Button'
 import { GovernanceCard, GovernanceCardHeader } from '../GovernanceCard'
 
 interface Props {
@@ -43,7 +43,9 @@ function Event({ event }: { event: GovernanceEventEntry }) {
           <p className="text-sm font-bold">{event.location}</p>
         </div>
       </div>
-      <Button className="mt-6">Learn more</Button>
+      <Button className="mt-6" as="a" href={event.link}>
+        Learn more
+      </Button>
     </GovernanceCard>
   )
 }
