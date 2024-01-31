@@ -93,18 +93,21 @@ describeDatabase(ReportRepository.name, (database) => {
   describe(ReportRepository.prototype.deleteHourlyUntil.name, () => {
     it('deletes hourly reports', async () => {
       const start = UnixTime.now().toStartOf('day')
+      const until = start.add(25, 'hours')
 
       const reports = []
-
-      const end = 25
-
-      for (let i = 0; i <= end; i++) {
-        reports.push(fakeReport({ timestamp: start.add(i, 'hours') }))
+      for (
+        let i = start.toNumber();
+        i <= until.toNumber();
+        i += UnixTime.HOUR
+      ) {
+        reports.push(fakeReport({ timestamp: new UnixTime(i) }))
       }
 
       await repository.addOrUpdateMany(reports)
-      await repository.deleteHourlyUntil(start.add(end, 'hours'))
+      await repository.deleteHourlyUntil(until)
       const results = await repository.getAll()
+
       expect(results).toEqualUnsorted([
         fakeReport({ timestamp: start }),
         fakeReport({ timestamp: start.add(6, 'hours') }),
@@ -119,27 +122,29 @@ describeDatabase(ReportRepository.name, (database) => {
   describe(ReportRepository.prototype.deleteSixHourlyUntil.name, () => {
     it('deletes six hourly reports', async () => {
       const start = UnixTime.now().toStartOf('day')
-      const end = 25
+      const until = start.add(7, 'hours')
 
-      const reports = [
-        fakeReport({ timestamp: start }),
-        fakeReport({ timestamp: start.add(1, 'hours') }),
-        fakeReport({ timestamp: start.add(6, 'hours') }),
-        fakeReport({ timestamp: start.add(12, 'hours') }),
-        fakeReport({ timestamp: start.add(18, 'hours') }),
-        fakeReport({ timestamp: start.add(24, 'hours') }),
-        fakeReport({ timestamp: start.add(25, 'hours') }),
-      ]
+      const reports = []
+      for (
+        let i = start.toNumber();
+        i <= until.toNumber();
+        i += UnixTime.HOUR
+      ) {
+        reports.push(fakeReport({ timestamp: new UnixTime(i) }))
+      }
+
       await repository.addOrUpdateMany(reports)
-
-      await repository.deleteSixHourlyUntil(start.add(end, 'hours'))
+      await repository.deleteSixHourlyUntil(until)
       const results = await repository.getAll()
+
       expect(results).toEqualUnsorted([
         fakeReport({ timestamp: start }),
-        // keeps hourly
         fakeReport({ timestamp: start.add(1, 'hours') }),
-        fakeReport({ timestamp: start.add(24, 'hours') }),
-        fakeReport({ timestamp: start.add(25, 'hours') }),
+        fakeReport({ timestamp: start.add(2, 'hours') }),
+        fakeReport({ timestamp: start.add(3, 'hours') }),
+        fakeReport({ timestamp: start.add(4, 'hours') }),
+        fakeReport({ timestamp: start.add(5, 'hours') }),
+        fakeReport({ timestamp: start.add(7, 'hours') }),
       ])
     })
   })
