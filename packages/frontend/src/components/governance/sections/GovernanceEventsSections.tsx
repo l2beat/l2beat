@@ -2,6 +2,7 @@ import React from 'react'
 
 import { GovernanceEventEntry } from '../../../pages/governance/getGovernanceEventEntry'
 import { Button } from '../../Button'
+import { Badge } from '../../badge/Badge'
 import { GovernanceCard, GovernanceCardHeader } from '../GovernanceCard'
 
 interface Props {
@@ -26,13 +27,19 @@ function Event({ event }: { event: GovernanceEventEntry }) {
   return (
     <GovernanceCard type="secondary" className="flex flex-col justify-between">
       <div>
-        <p className="text-lg font-bold">{event.title}</p>
+        <Badge
+          className="px-2 py-1 uppercase"
+          type={event.status === 'past' ? 'gray' : 'purple'}
+        >
+          {event.status}
+        </Badge>
+        <p className="mt-6 text-lg font-bold">{event.title}</p>
         <div className="mt-6">
-          <p className="text-2xs font-medium text-opacity-50">DATE</p>
+          <p className="text-2xs font-medium opacity-50">DATE</p>
           <p className="whitespace-pre text-sm font-bold">{event.date}</p>
         </div>
         <div className="mt-3">
-          <p className="text-2xs font-medium text-opacity-50">PLACE</p>
+          <p className="text-2xs font-medium opacity-50">PLACE</p>
           <p className="text-sm font-bold">{event.location}</p>
         </div>
       </div>

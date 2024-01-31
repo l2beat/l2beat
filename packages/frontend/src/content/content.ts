@@ -29,6 +29,7 @@ const events = {
     z.object({
       type: z.literal('recurring'),
       title: z.string(),
+      startDate: z.coerce.date(),
       dayOfWeek: z.number().min(0).max(6),
       startHour: z.number().min(0).max(23),
       startMinute: z.number().min(0).max(59),

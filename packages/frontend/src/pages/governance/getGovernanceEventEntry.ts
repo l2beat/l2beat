@@ -7,6 +7,7 @@ export interface GovernanceEventEntry {
   link: string
   location: string
   date: string
+  status: 'upcoming' | 'past'
 }
 
 type OneTimeEvent = ContentEntry<'events'> & {
@@ -17,9 +18,7 @@ export function getGovernanceEventEntries(
   events: ContentEntry<'events'>[],
 ): GovernanceEventEntry[] {
   const oneTimeEvents = getOneTimeEvents(events)
-
   return oneTimeEvents
-    .filter((event) => event.data.startDate.getTime() > Date.now())
     .sort((a, b) => a.data.startDate.getTime() - b.data.startDate.getTime())
     .map(getGovernanceEventEntry)
 }
@@ -30,6 +29,7 @@ function getGovernanceEventEntry(event: OneTimeEvent): GovernanceEventEntry {
     link: event.data.link,
     location: event.data.location,
     date: getDate(event),
+    status: event.data.startDate.getTime() > Date.now() ? 'upcoming' : 'past',
   }
 }
 
@@ -46,8 +46,9 @@ function getOneTimeEvents(
     }
 
     const data = event.data
-    return range(depth).map((i) => {
-      const nextDate = getNextDateForDay(
+
+    const futureEvents: OneTimeEvent[] = range(depth).map((i) => {
+      const nextDate = getNextDateForDayOfWeek(
         data.dayOfWeek,
         new Date(Date.now() + i * 7 * 24 * 60 * 60 * 1000),
       )
@@ -69,9 +70,37 @@ function getOneTimeEvents(
         },
       }
     })
+
+    const pastEvents: OneTimeEvent[] = []
+    let nextDate = getNextDateForDayOfWeek(data.dayOfWeek, data.startDate)
+    while (nextDate.getTime() < Date.now()) {
+      const startDate = new Date(nextDate)
+      startDate.setHours(data.startHour, data.startMinute)
+      const endDate = new Date(nextDate)
+      endDate.setHours(data.endHour, data.endMinute)
+      pastEvents.push({
+        ...event,
+        data: {
+          type: 'one-time',
+          title: data.title,
+          startDate,
+          endDate,
+          location: data.location,
+          link: data.link,
+        },
+      })
+      nextDate = getNextDateForDayOfWeek(
+        data.dayOfWeek,
+        new Date(nextDate.getTime() + 7 * 24 * 60 * 60 * 1000),
+      )
+    }
+    return [...pastEvents, ...futureEvents]
   })
 }
-function getNextDateForDay(dayOfWeek: number, currentDate = new Date()): Date {
+function getNextDateForDayOfWeek(
+  dayOfWeek: number,
+  currentDate = new Date(),
+): Date {
   if (dayOfWeek < 0 || dayOfWeek > 6) {
     throw new Error('Day must be between 0 (Sunday) and 6 (Saturday)')
   }
