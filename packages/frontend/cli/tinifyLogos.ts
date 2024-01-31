@@ -2,6 +2,9 @@ import dotenv from 'dotenv'
 import { readdirSync, readFileSync, writeFileSync } from 'fs'
 import path from 'path'
 import tinify from 'tinify'
+import { z } from 'zod'
+
+const TinifiedLogos = z.array(z.string())
 
 dotenv.config()
 const tinifiedLogosFile = path.join(__dirname, 'tinifiedLogos.json')
@@ -9,7 +12,9 @@ const tinifiedLogosFile = path.join(__dirname, 'tinifiedLogos.json')
 main().catch((e) => console.error(e))
 
 async function main() {
-  const apiKey = process.env.TINIFY_API_KEY
+  // Default API key is associated with burner email. If you want to run this script and you have a lot of logos to tinify, please use your own API key.
+  const apiKey =
+    process.env.TINIFY_API_KEY ?? '7V2rB5RXN8DfJW04bGNvYs5MVVPk77KM'
 
   if (!apiKey) {
     throw new Error('Missing TINIFY_API_KEY')
@@ -59,7 +64,7 @@ async function tinifyLogo(fileName: string) {
 
 function getTinifiedLogos() {
   const file = readFileSync(tinifiedLogosFile, 'utf8')
-  const tinifiedLogos = JSON.parse(file) as string[]
+  const tinifiedLogos = TinifiedLogos.parse(JSON.parse(file))
 
   return tinifiedLogos
 }

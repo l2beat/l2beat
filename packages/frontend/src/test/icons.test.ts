@@ -37,7 +37,7 @@ describe('icons', () => {
     }
   })
 
-  describe('every icon has been tinified', () => {
+  describe('every icon has been tinified by script', () => {
     const tinifiedLogos = getTinifiedLogos()
     for (const project of projects) {
       const id = project.id.toString()
