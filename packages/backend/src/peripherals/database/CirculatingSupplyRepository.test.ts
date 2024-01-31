@@ -250,16 +250,16 @@ describeDatabase(CirculatingSupplyRepository.name, (database) => {
       const start = UnixTime.now().toStartOf('day')
       const until = start.add(25, 'hours')
 
-      const reports = []
+      const entries = []
       for (
         let i = start.toNumber();
         i <= until.toNumber();
         i += UnixTime.HOUR
       ) {
-        reports.push(fakeCirculatingSupply({ timestamp: new UnixTime(i) }))
+        entries.push(fakeCirculatingSupply({ timestamp: new UnixTime(i) }))
       }
 
-      await repository.addMany(reports)
+      await repository.addMany(entries)
       await repository.deleteHourlyUntil(until)
       const results = await repository.getAll()
 
@@ -283,16 +283,16 @@ describeDatabase(CirculatingSupplyRepository.name, (database) => {
         const start = UnixTime.now().toStartOf('day')
         const until = start.add(7, 'hours')
 
-        const reports = []
+        const entries = []
         for (
           let i = start.toNumber();
           i <= until.toNumber();
           i += UnixTime.HOUR
         ) {
-          reports.push(fakeCirculatingSupply({ timestamp: new UnixTime(i) }))
+          entries.push(fakeCirculatingSupply({ timestamp: new UnixTime(i) }))
         }
 
-        await repository.addMany(reports)
+        await repository.addMany(entries)
         await repository.deleteSixHourlyUntil(until)
         const results = await repository.getAll()
 
@@ -311,13 +311,13 @@ describeDatabase(CirculatingSupplyRepository.name, (database) => {
 })
 
 function fakeCirculatingSupply(
-  report?: Partial<CirculatingSupplyRecord>,
+  entry?: Partial<CirculatingSupplyRecord>,
 ): CirculatingSupplyRecord {
   return {
     timestamp: UnixTime.ZERO,
     circulatingSupply: 0,
     assetId: AssetId('fake'),
     chainId: ChainId.ARBITRUM,
-    ...report,
+    ...entry,
   }
 }

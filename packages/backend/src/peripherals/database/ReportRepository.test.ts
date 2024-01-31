@@ -95,16 +95,16 @@ describeDatabase(ReportRepository.name, (database) => {
       const start = UnixTime.now().toStartOf('day')
       const until = start.add(25, 'hours')
 
-      const reports = []
+      const entries = []
       for (
         let i = start.toNumber();
         i <= until.toNumber();
         i += UnixTime.HOUR
       ) {
-        reports.push(fakeReport({ timestamp: new UnixTime(i) }))
+        entries.push(fakeReport({ timestamp: new UnixTime(i) }))
       }
 
-      await repository.addOrUpdateMany(reports)
+      await repository.addOrUpdateMany(entries)
       await repository.deleteHourlyUntil(until)
       const results = await repository.getAll()
 
@@ -124,16 +124,16 @@ describeDatabase(ReportRepository.name, (database) => {
       const start = UnixTime.now().toStartOf('day')
       const until = start.add(7, 'hours')
 
-      const reports = []
+      const entries = []
       for (
         let i = start.toNumber();
         i <= until.toNumber();
         i += UnixTime.HOUR
       ) {
-        reports.push(fakeReport({ timestamp: new UnixTime(i) }))
+        entries.push(fakeReport({ timestamp: new UnixTime(i) }))
       }
 
-      await repository.addOrUpdateMany(reports)
+      await repository.addOrUpdateMany(entries)
       await repository.deleteSixHourlyUntil(until)
       const results = await repository.getAll()
 
