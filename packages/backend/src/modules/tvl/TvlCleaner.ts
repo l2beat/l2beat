@@ -1,8 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 
+import { Config } from '../../config/Config'
 import { Clock } from '../../core/Clock'
 import { TaskQueue } from '../../core/queue/TaskQueue'
+import { TvlDatabase } from './types'
 
 interface Table {
   deleteHourlyUntil: (timestamp: UnixTime) => Promise<number>
@@ -46,4 +48,19 @@ export class TvlCleaner {
       await table.deleteSixHourlyUntil(sixHourlyDeletionBoundary)
     }
   }
+}
+
+export function initializeTvlCleaner(
+  config: Config,
+  logger: Logger,
+  clock: Clock,
+  database: TvlDatabase,
+): TvlCleaner | undefined {
+  if (!config.tvlCleanerEnabled) {
+    return undefined
+  }
+
+  const tables = [database.reportRepository]
+
+  return new TvlCleaner(clock, logger, tables)
 }
