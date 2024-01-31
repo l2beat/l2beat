@@ -13,7 +13,6 @@ describeDatabase(AggregatedReportRepository.name, (database) => {
 
   const TIME_0 = UnixTime.now().toStartOf('day')
   const TIME_1 = TIME_0.add(1, 'hours')
-  const TIME_2 = TIME_0.add(2, 'hours')
 
   const PROJECT_A = ProjectId('project-a')
   const PROJECT_B = ProjectId('project-b')

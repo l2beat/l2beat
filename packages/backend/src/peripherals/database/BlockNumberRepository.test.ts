@@ -16,6 +16,10 @@ describeDatabase(BlockNumberRepository.name, (database) => {
     await repository.deleteAll()
   })
 
+  afterEach(async () => {
+    await repository.deleteAll()
+  })
+
   it(BlockNumberRepository.prototype.add.name, async () => {
     const itemA = {
       blockNumber: 1234,
