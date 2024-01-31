@@ -15,15 +15,20 @@ export async function scrapEtherscanForTvl(
     result.tvl = button.text().slice(2).split('\n')[0]
   }
 
-  const ethValue = $('div:contains("Eth Value")')
-    .last()
-    .text()
-    .split('$')[1]
-    .trim()
-    .split(' ')[0]
+  // FIXME: throwing when trimming, value cannot be found
+  try {
+    const ethValue = $('div:contains("Eth Value")')
+      .last()
+      .text()
+      .split('$')[1]
+      .trim()
+      .split(' ')[0]
 
-  if (ethValue) {
-    result.ethValue = ethValue
+    if (ethValue) {
+      result.ethValue = ethValue
+    }
+  } catch (err) {
+    console.log('could not fetch ethValue while scraping etherscan', err)
   }
 
   return result

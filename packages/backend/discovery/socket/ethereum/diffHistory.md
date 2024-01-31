@@ -1,6 +1,48 @@
+Generated with discovered.json: 0x557a3f33a69a7f6cd9754ee887b8769d36fcd4ef
+
+# Diff at Wed, 31 Jan 2024 16:00:37 GMT
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@651e5154adab97c11eebd6d7e362af2c46ea0c6e block: 19126484
+- current block number: 19127499
+
+## Description
+
+New plugs added.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19126484 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract WBTC Vault (0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract USDT Vault (0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract USDT Vault (0xD3F39174Ee7937381e19d682FfEa40968266FA3E) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract WETH Vault (0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e) {
+    }
+```
+
 Generated with discovered.json: 0x27bd701904bb21c706ab1fea624a84968e3fa15f
 
-# Diff at Wed, 31 Jan 2024 12:32:59 GMT:
+# Diff at Wed, 31 Jan 2024 12:32:59 GMT
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
 - comparing to: main@e27d63e182fc6d33d67f67df00e2990c9700987e block: 19085063
@@ -24,7 +66,7 @@ Ignore `globalMessageCount` in watch mode.
 
 Generated with discovered.json: 0x7e76d559dbb49ba64aaea7b6263c85048220674d
 
-# Diff at Thu, 25 Jan 2024 17:16:49 GMT:
+# Diff at Thu, 25 Jan 2024 17:16:49 GMT
 
 - author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
 - current block number: 19085063

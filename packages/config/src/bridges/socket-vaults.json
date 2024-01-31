@@ -3,9 +3,33 @@
   "significantVaults": [
     {
       "address": "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d",
-      "tvl": "7,499,189.61",
-      "ethValue": "0.00",
+      "tvl": "0",
+      "ethValue": "0",
       "token": "USDC"
+    },
+    {
+      "address": "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab",
+      "tvl": "0",
+      "ethValue": "0",
+      "token": "WBTC"
+    },
+    {
+      "address": "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e",
+      "tvl": "0",
+      "ethValue": "0",
+      "token": "WETH"
+    },
+    {
+      "address": "0xD3F39174Ee7937381e19d682FfEa40968266FA3E",
+      "tvl": "0",
+      "ethValue": "0",
+      "token": "USDT"
+    },
+    {
+      "address": "0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa",
+      "tvl": "0",
+      "ethValue": "0",
+      "token": "USDT"
     }
   ],
   "vaults": [
@@ -18,32 +42,32 @@
   "vaultsData": [
     {
       "address": "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d",
-      "tvl": "7,499,189.61",
-      "ethValue": "0.00",
+      "tvl": "0",
+      "ethValue": "0",
       "token": "USDC"
     },
     {
       "address": "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab",
       "tvl": "0",
-      "ethValue": "0.00",
+      "ethValue": "0",
       "token": "WBTC"
     },
     {
       "address": "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e",
       "tvl": "0",
-      "ethValue": "0.00",
+      "ethValue": "0",
       "token": "WETH"
     },
     {
       "address": "0xD3F39174Ee7937381e19d682FfEa40968266FA3E",
       "tvl": "0",
-      "ethValue": "0.00",
+      "ethValue": "0",
       "token": "USDT"
     },
     {
       "address": "0x5e98A25d8d6FF69A8992d6Aa57948dFB77D4ECBa",
       "tvl": "0",
-      "ethValue": "0.00",
+      "ethValue": "0",
       "token": "USDT"
     }
   ],
@@ -58,6 +82,8 @@
     "0x1Eb392Aba52a2D933e58f7E86Ca96b9A3e2D8166",
     "0x5Afa7ddBcE8EE8862FDf5fD8c546BF32615d2D9B",
     "0x02D53793b18d032Cd94d745F7586C6F66F83f8e3",
-    "0x3553c0102684c20e2f8192d6F013c7242710b4b3"
+    "0x3553c0102684c20e2f8192d6F013c7242710b4b3",
+    "0x280D208f0eE2f053A0441099bcBFf298bc8b9444",
+    "0x37091ade7C4E1A914D3155449e25eE91DA08EbE4"
   ]
 }
