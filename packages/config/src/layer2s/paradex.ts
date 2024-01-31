@@ -115,6 +115,7 @@ export const paradex: Layer2 = {
           ],
         },
         {
+          // Updated to this program hash in tx 0x7eb527c897e8449234ad770573a2a5ba3737e6b9014600c261741bc258849639
           formula: 'sharpSubmission',
           sinceTimestamp: new UnixTime(1706626427),
           programHashes: [
