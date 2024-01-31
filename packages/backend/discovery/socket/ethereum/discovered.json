@@ -1,8 +1,8 @@
 {
   "name": "socket",
   "chain": "ethereum",
-  "blockNumber": 19085063,
-  "configHash": "0xea42f2cb89fab5b2fc18105031c55af0ad015940a3755ecb9fa7880f36b87666",
+  "blockNumber": 19126484,
+  "configHash": "0x58360ea527423c02f8566d9ed96fa865eff86e4212ac592e9fa6e4024236aa37",
   "version": 3,
   "contracts": [
     {
@@ -152,7 +152,7 @@
         "capacitorFactory__": "0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a",
         "chainSlug": 1,
         "executionManager__": "0xFB4dcD94A051a1D2cF3EaF713a2Ef686653884E0",
-        "globalMessageCount": 333,
+        "globalMessageCount": 352,
         "hasher__": "0x5C71beE4a6b0D617D8c3d107D331292741789E27",
         "inboundSwitchboards": [
           "0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287",
@@ -181,7 +181,9 @@
           "0x1Eb392Aba52a2D933e58f7E86Ca96b9A3e2D8166",
           "0x5Afa7ddBcE8EE8862FDf5fD8c546BF32615d2D9B",
           "0x02D53793b18d032Cd94d745F7586C6F66F83f8e3",
-          "0x3553c0102684c20e2f8192d6F013c7242710b4b3"
+          "0x3553c0102684c20e2f8192d6F013c7242710b4b3",
+          "0x280D208f0eE2f053A0441099bcBFf298bc8b9444",
+          "0x37091ade7C4E1A914D3155449e25eE91DA08EbE4"
         ],
         "transmitManager__": "0xeD037aFBffC65a94E9CC592947E851FB2f730341",
         "version": "0x484f1c5889188a0a81068ce8c49d8f7c3b3f1b0c1723b50ebd656a8d4f99e356"
