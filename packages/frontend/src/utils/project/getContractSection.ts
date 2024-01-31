@@ -69,7 +69,7 @@ export function getContractSection(
   }
 
   const architectureImage = hasArchitectureImage(project.display.slug)
-    ? `/images/${project.display.slug}-architecture.png`
+    ? `/images/architecture/${project.display.slug}.png`
     : undefined
 
   return {
