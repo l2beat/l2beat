@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.39.0
+
+### Minor Changes
+
+- Add ArbitrumDACKeyset handler
+
 ## 0.38.0
 
 ### Minor Changes

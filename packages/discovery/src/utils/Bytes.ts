@@ -38,6 +38,13 @@ export class Bytes {
     return new Bytes(value.map(numberToString).join(''))
   }
 
+  static randomOfLength(length: number): Bytes {
+    const numberArray = Array(length)
+      .fill(0)
+      .map(() => Math.floor(Math.random() * 256))
+    return Bytes.fromByteArray(numberArray)
+  }
+
   equals(other: Bytes): boolean {
     return this.value === other.value
   }

@@ -11,6 +11,10 @@ import {
   ArbitrumActorsHandlerDefinition,
 } from './ArbitrumActorsHandler'
 import {
+  ArbitrumDACKeysetHandler,
+  ArbitrumDACKeysetHandlerDefinition,
+} from './ArbitrumDACKeysetHandler'
+import {
   ArbitrumSequencerVersionDefinition,
   ArbitrumSequencerVersionHandler,
 } from './ArbitrumSequencerVersionHandler'
@@ -91,6 +95,7 @@ export const UserHandlerDefinition = z.union([
   ArbitrumActorsHandlerDefinition,
   OpStackDAHandlerDefinition,
   ArbitrumSequencerVersionDefinition,
+  ArbitrumDACKeysetHandlerDefinition,
 ])
 
 export function getUserHandler(
@@ -140,5 +145,7 @@ export function getUserHandler(
       return new OpStackDAHandler(field, definition, logger)
     case 'arbitrumSequencerVersion':
       return new ArbitrumSequencerVersionHandler(field, definition, logger)
+    case 'arbitrumDACKeyset':
+      return new ArbitrumDACKeysetHandler(field, definition, logger)
   }
 }
