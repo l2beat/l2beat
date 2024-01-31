@@ -3,6 +3,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 const SAFETY_OFFSET = 3
 const REMOVE_HOURLY_AFTER_DAYS = 7 + SAFETY_OFFSET
 const REMOVE_SIX_HOURLY_AFTER_DAYS = 90 + SAFETY_OFFSET
+
 export class Clock {
   constructor(
     private readonly minTimestamp: UnixTime,
