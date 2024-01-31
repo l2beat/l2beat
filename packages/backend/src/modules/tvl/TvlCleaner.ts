@@ -44,8 +44,15 @@ export class TvlCleaner {
       this.clock._TVL_ONLY_getSixHourlyDeletionBoundary()
 
     for (const table of this.tables) {
-      await table.deleteHourlyUntil(hourlyDeletionBoundary)
-      await table.deleteSixHourlyUntil(sixHourlyDeletionBoundary)
+      this.logger.info(`Cleaning ${table.constructor.name}`)
+      const hourly = await table.deleteHourlyUntil(hourlyDeletionBoundary)
+      const sixHourly = await table.deleteSixHourlyUntil(
+        sixHourlyDeletionBoundary,
+      )
+      this.logger.info(`Cleaned ${table.constructor.name}`, {
+        hourly,
+        sixHourly,
+      })
     }
   }
 }
