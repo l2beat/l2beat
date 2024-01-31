@@ -62,7 +62,7 @@ function buildContent() {
 }
 
 function watchContent() {
-  return gulp.watch(['src/**/*.{ts,tsx,md}'], buildContent)
+  return gulp.watch(['src/**/*.{ts,tsx,md,json}'], buildContent)
 }
 
 function generateMetaImages() {

@@ -12,10 +12,12 @@ import { OurApproachSection } from '../../../../components/governance/sections/O
 import { OurMissionSection } from '../../../../components/governance/sections/OurMissionSection'
 import { RecentPublicationsSection } from '../../../../components/governance/sections/RecentPublicationsSection'
 import { PageContent } from '../../../../components/PageContent'
+import { GovernanceEventEntry } from '../../getGovernanceEventEntry'
 import { GovernancePublicationEntry } from '../../getGovernancePublicationEntry'
 
 export interface GovernancePageProps {
   publications: GovernancePublicationEntry[]
+  events: GovernanceEventEntry[]
   navbar: NavbarProps
   footer: FooterProps
 }
@@ -31,7 +33,10 @@ export function GovernancePage(props: GovernancePageProps) {
             className="md:col-span-5"
           />
           <OfficeHoursSection className="md:col-span-3" />
-          <GovernanceEventsSection className="md:col-span-full" />
+          <GovernanceEventsSection
+            events={props.events}
+            className="md:col-span-full"
+          />
           <OurApproachSection className="md:col-span-4" />
           <OurMissionSection className="md:col-span-4" />
         </main>

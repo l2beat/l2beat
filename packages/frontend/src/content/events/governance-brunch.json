@@ -1,0 +1,11 @@
+{
+  "type": "recurring",
+  "title": "Governance Brunch",
+  "dayOfWeek": 6,
+  "startHour": 11,
+  "startMinute": 30,
+  "endHour": 13,
+  "endMinute": 0,
+  "location": "Online",
+  "link": "https://somelink.com"
+}

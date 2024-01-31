@@ -10,10 +10,12 @@ type GovernanceCardProps<T extends React.ElementType> = {
   as?: T
 } & ComponentPropsWithoutRef<T>
 
-type GovernanceCardType = 'primary' | 'purple'
+type GovernanceCardType = 'primary' | 'purple' | 'secondary'
 
 const typeToColor: Record<GovernanceCardType, string> = {
-  primary: 'bg-gray-100 dark:bg-zinc-800',
+  primary: 'bg-gray-100 dark:bg-zinc-900',
+  // TODO: (governance) fix arbitrary color
+  secondary: 'bg-[#DBDBDB] dark:bg-zinc-800',
   purple: 'bg-purple-300 dark:bg-purple-100',
 }
 
@@ -32,7 +34,7 @@ export function GovernanceCard<T extends React.ElementType>({
         'rounded-lg p-8',
         typeToColor[type],
         mobileFull &&
-          '-mx-4 rounded-none py-16 px-4 md:mx-0 md:rounded-lg md:p-8',
+          '-mx-4 rounded-none px-4 py-16 md:mx-0 md:rounded-lg md:p-8',
         className,
       )}
       {...rest}
