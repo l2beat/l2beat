@@ -48,11 +48,12 @@ export function getChainTvlConfig(
     throw new Error('Missing explorerApi for chain: ' + chain)
   }
 
-  if (
-    !chainConfig.multicallContracts ||
-    chainConfig.multicallContracts.length === 0
-  ) {
+  if (!chainConfig.multicallContracts) {
     throw new Error('Missing multicallContracts for chain: ' + chain)
+  }
+
+  if (chainConfig.multicallContracts.length === 0) {
+    console.warn('Missing multicallContracts for chain: ' + chain)
   }
 
   const enabled = flags.isEnabled('tvl', chain)
