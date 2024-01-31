@@ -54,13 +54,21 @@ export function initializeTvlCleaner(
   config: Config,
   logger: Logger,
   clock: Clock,
-  database: TvlDatabase,
+  db: TvlDatabase,
 ): TvlCleaner | undefined {
   if (!config.tvlCleanerEnabled) {
     return undefined
   }
 
-  const tables = [database.reportRepository]
+  const tables = [
+    db.blockNumberRepository,
+    db.priceRepository,
+    db.balanceRepository,
+    db.totalSupplyRepository,
+    db.circulatingSupplyRepository,
+    db.reportRepository,
+    db.aggregatedReportRepository,
+  ]
 
   return new TvlCleaner(clock, logger, tables)
 }
