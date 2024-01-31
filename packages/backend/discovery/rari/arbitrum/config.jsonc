@@ -85,6 +85,9 @@
         "sequencerVersion": {
           "type": "arbitrumSequencerVersion"
         },
+        "dacKeyset": {
+          "type": "arbitrumDACKeyset"
+        },
         // when this changes, it means the sequencers have changed
         "setIsBatchPosterCount": {
           "type": "eventCount",
