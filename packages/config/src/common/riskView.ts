@@ -71,6 +71,30 @@ export const STATE_EXITS_ONLY: ScalingProjectRiskViewEntry = {
   sentiment: 'bad',
 }
 
+export function STATE_ARBITRUM_FRAUD_PROOFS(
+  nOfChallengers: number,
+): ScalingProjectRiskViewEntry {
+  if (nOfChallengers === 1) {
+    return {
+      value: 'Fraud proofs (INT)',
+      description: `No actor outside of the single Proposer can submit fraud proofs. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks.`,
+      sentiment: 'bad',
+    }
+  }
+  if (nOfChallengers < 5) {
+    return {
+      value: 'Fraud proofs (INT)',
+      description: `Fraud proofs only allow ${nOfChallengers} WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks.`,
+      sentiment: 'bad',
+    }
+  }
+  return {
+    value: 'Fraud proofs (INT)',
+    description: `Fraud proofs allow ${nOfChallengers} WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve.`,
+    sentiment: 'warning',
+  }
+}
+
 // Data availability
 
 export const DATA_ON_CHAIN: ScalingProjectRiskViewEntry = {
@@ -448,6 +472,7 @@ export const RISK_VIEW = {
   STATE_ZKP_SN,
   STATE_ZKP_ST,
   STATE_EXITS_ONLY,
+  STATE_ARBITRUM_FRAUD_PROOFS,
   DATA_ON_CHAIN,
   DATA_ON_CHAIN_STATE_DIFFS,
   DATA_ON_CHAIN_L2,

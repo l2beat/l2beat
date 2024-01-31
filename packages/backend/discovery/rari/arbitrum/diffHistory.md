@@ -1,52 +1,9 @@
-Generated with discovered.json: 0xdda279d687b284bd6dce3d36586b071a872b6513
+Generated with discovered.json: 0x6f92b253b115597ca0826699638e3ce21ac70dc4
 
-# Diff at Tue, 30 Jan 2024 14:38:10 GMT:
-
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@367f818d32ce6c1ab18696a1cbeb7a6f368b6d78 block: 175360077
-- current block number: 175749297
-
-## Description
-
-Add RARI chain config.
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 175360077 (main branch discovery), not current.
-
-```diff
-    contract SequencerInbox (0xA436f1867adD490BF1530c636f2FB090758bB6B3) {
-      values.sequencerVersion:
-+        "0x88"
-    }
-```
-
-```diff
-+   Status: CREATED
-    contract L1GatewayRouter (0x2623C144B4d167f70893f6A8968B98c89a6C5F97) {
-    }
-```
-
-```diff
-+   Status: CREATED
-    contract L1ERC20Gateway (0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6) {
-    }
-```
-
-```diff
-+   Status: CREATED
-    contract L1CustomGateway (0x8bE956aB42274056ef4471BEb211b33e258b7324) {
-    }
-```
-
-Generated with discovered.json: 0x051400056af9aa68473df479ec67cf59fdd332a9
-
-# Diff at Mon, 29 Jan 2024 10:52:51 GMT:
+# Diff at Wed, 31 Jan 2024 12:16:32 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current block number: 175360077
+- current block number: 176049133
 
 ## Description
 
@@ -86,6 +43,12 @@ Add RARI chain config.
 
 ```diff
 +   Status: CREATED
+    contract L1GatewayRouter (0x2623C144B4d167f70893f6A8968B98c89a6C5F97) {
+    }
+```
+
+```diff
++   Status: CREATED
     contract RollupProxy (0x2e988Ea0873C9d712628F0bf38DAFdE754927C89) {
     }
 ```
@@ -104,7 +67,19 @@ Add RARI chain config.
 
 ```diff
 +   Status: CREATED
+    contract L1ERC20Gateway (0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6) {
+    }
+```
+
+```diff
++   Status: CREATED
     contract  (0x492c6278fea6b249F3A03672Ea1242fd6295fedA) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L1CustomGateway (0x8bE956aB42274056ef4471BEb211b33e258b7324) {
     }
 ```
 

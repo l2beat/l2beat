@@ -1,14 +1,35 @@
-Generated with discovered.json: 0x392d3c438876c610d41c75925b270c06e44cbd15
+Generated with discovered.json: 0x1996dc2a0216f47dd9b44fedcdc75942e9d7a294
 
-# Diff at Tue, 30 Jan 2024 13:04:21 GMT:
+# Diff at Wed, 31 Jan 2024 11:53:50 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@ceb6abb9c987b0d53dd547a79c3ebbf3480a024b block: 18564156
-- current block number: 19119504
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: master@74040c3a8f43c630b3d31cc8376e84f5f9acda5c block: 18564156
+- current block number: 19126289
 
 ## Description
 
-Add the SequencerInboxVersion handler.
+Add the SequencerInboxVersion handler. Updated OS version to ArbOS 11. Added other useful handlers.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (0xC234E41AE2cb00311956Aa7109fC801ae8c80941) {
+      values.getOwners.0:
+-        "0x702105E66C468b5191553702cD6BF3D6Bbfa4C6b"
++        "0x375906ADFD34D93236084F462BB2dB0D92129Fe1"
+      values.nonce:
+-        168
++        179
+    }
+```
+
+```diff
+    contract RollupProxy (0xFb209827c58283535b744575e11953DCC4bEAD88) {
+      values.wasmModuleRoot:
+-        "0x6b94a7fc388fd8ef3def759297828dc311761e88d8179c7ee8d3887dc554f3c3"
++        "0xf4389b835497a910d7ba3ebfb77aa93da985634f3c052de1290360635be40c4a"
+    }
+```
 
 ## Config/verification related changes
 
@@ -18,17 +39,113 @@ discovery. Values are for block 18564156 (main branch discovery), not current.
 
 ```diff
     contract SequencerInbox (0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b) {
+      values.batchPosters:
++        ["0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D","0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc"]
       values.sequencerVersion:
 +        "0x88"
+      derivedName:
++        "SequencerInbox"
     }
 ```
 
-Generated with discovered.json: 0xc37d63531c34445bc36060119ceefe5063f4d0b7
+```diff
+    contract ArbitrumProxy (0xFb209827c58283535b744575e11953DCC4bEAD88) {
+      name:
+-        "ArbitrumProxy"
++        "RollupProxy"
+      values.challenges:
++        []
+      values.setValidatorCount:
++        6
+      values.validators:
++        ["0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4","0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23","0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3","0x3B0369CAD35d257793F51c28213a4Cf4001397AC","0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c","0x57004b440Cc4eb2FEd8c4d1865FaC907F9150C76","0x610Aa279989F440820e14248BD3879B148717974","0x658e8123722462F888b6fa01a7dbcEFe1D6DD709","0xAB1A39332e934300eBCc57B5f95cA90631a347FF","0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d","0xDfB23DFE9De7dcC974467195C8B7D5cd21C9d7cB","0xE27d4Ed355e5273A3D4855c8e11BC4a8d3e39b87","0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E"]
+      derivedName:
++        "ArbitrumProxy"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorWallet (0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorWallet (0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Validator (0x3B0369CAD35d257793F51c28213a4Cf4001397AC) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorWallet (0x57004b440Cc4eb2FEd8c4d1865FaC907F9150C76) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorWallet (0x658e8123722462F888b6fa01a7dbcEFe1D6DD709) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x8f6b82D007C0Ff4fd85fE84a5BFa89C00A4e6d2B) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xAd3a14Fc16751d9E7FCa2A99aF85bf4d135e878d) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xb31407BCf91d54AbFC0B7ef61bFc71b8b71F0678) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xb85e18C8F552c823CdA4DCd9056213bDc970f9AE) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xC234E41AE2cb00311956Aa7109fC801ae8c80941) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorWallet (0xE27d4Ed355e5273A3D4855c8e11BC4a8d3e39b87) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xE4d0Ba69d082Fdf6f51b8fc8F92c19bF00B1a1B4) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xF32e5B5Ad94c0c0F83E0023b0AC48A93A8a2a428) {
+    }
+```
 
 # Diff at Mon, 13 Nov 2023 16:26:39 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@a45348c9ae2e765b872be3f217168f73b62d35a6
+- comparing to: master@a45348c9ae2e765b872be3f217168f73b62d35a6
 
 ## Description
 
@@ -81,7 +198,7 @@ Added EOAs:
 # Diff at Fri, 22 Sep 2023 07:25:53 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@3a33c063dab8666dc32b4ec15a81995020325b49
+- comparing to: master@3a33c063dab8666dc32b4ec15a81995020325b49
 
 ## Watched changes
 

@@ -13,7 +13,9 @@
     "0x71D78dC7cCC0e037e12de1E50f5470903ce37148": "ProxyAdmin 1",
     "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678": "ProxyAdmin 2",
     "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560": "ProxyAdmin 3",
-    "0x97f63339374fCe157Aa8Ee27830172d2AF76A786": "L1DaiGateway"
+    "0x97f63339374fCe157Aa8Ee27830172d2AF76A786": "L1DaiGateway",
+    "0xFb209827c58283535b744575e11953DCC4bEAD88": "RollupProxy",
+    "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b": "SequencerInbox"
   },
   "overrides": {
     "ValidatorUtils": {
@@ -26,21 +28,53 @@
       },
       "ignoreRelatives": ["NOVA_STAKERS"]
     },
-    "0xFb209827c58283535b744575e11953DCC4bEAD88": {
-      "ignoreMethods": ["proxiableUUID"],
+    "RollupProxy": {
+      "ignoreMethods": [
+        // Execution reverted
+        "proxiableUUID"
+      ],
       "ignoreInWatchMode": [
         "firstUnresolvedNode",
         "latestConfirmed",
-        "latestNodeCreated",
-        "wasmModuleRoot"
-      ]
+        "latestNodeCreated"
+      ],
+      "fields": {
+        // when this changes, it means the validators have changed
+        "setValidatorCount": {
+          "type": "eventCount",
+          "topics": [
+            // event OwnerFunctionCalled(uint256 indexed id);
+            "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
+            // id == 6 is emitted inside setValidator()
+            "0x0000000000000000000000000000000000000000000000000000000000000006"
+          ]
+        },
+        "challenges": {
+          "type": "stateFromEvent",
+          "event": "RollupChallengeStarted",
+          "returnParams": [
+            "challengeIndex",
+            "asserter",
+            "challenger",
+            "challengedNode"
+          ]
+        },
+        "validators": {
+          "type": "arbitrumActors",
+          "actorType": "validator"
+        }
+      }
     },
-    "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b": {
+    "SequencerInbox": {
       "ignoreMethods": ["inboxAccs"],
       "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
       "fields": {
         "sequencerVersion": {
           "type": "arbitrumSequencerVersion"
+        },
+        "batchPosters": {
+          "type": "arbitrumActors",
+          "actorType": "batchPoster"
         }
       }
     },
