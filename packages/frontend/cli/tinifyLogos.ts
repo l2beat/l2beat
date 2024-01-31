@@ -1,13 +1,15 @@
+import crypto from 'crypto'
 import dotenv from 'dotenv'
 import { readdirSync, readFileSync, writeFileSync } from 'fs'
 import path from 'path'
 import tinify from 'tinify'
 import { z } from 'zod'
 
-const TinifiedLogos = z.array(z.string())
+const TinifiedLogos = z.record(z.string(), z.string())
 
 dotenv.config()
 const tinifiedLogosFile = path.join(__dirname, 'tinifiedLogos.json')
+const tinifiedLogos = getTinifiedLogos()
 
 main().catch((e) => console.error(e))
 
@@ -17,7 +19,7 @@ async function main() {
     If the limit is reached (500 contributions), create a new one for yourself at https://tinypng.com/developers.
   */
   const apiKey =
-    process.env.TINIFY_API_KEY ?? '7V2rB5RXN8DfJW04bGNvYs5MVVPk77KM'
+    process.env.TINIFY_API_KEY ?? 'kD7WZWpK34khp7HlQm4DGJYXbQ5Ryb3z'
 
   if (!apiKey) {
     throw new Error('Missing TINIFY_API_KEY')
@@ -26,16 +28,11 @@ async function main() {
 
   const logos = readdirSync(
     path.join(__dirname, '..', 'src', 'static', 'icons'),
-  )
+  ).filter((fileName) => fileName.endsWith('.png'))
 
   let tinifiedLogosCount = 0
   for (const logo of logos) {
-    if (checkIfWasTinified(logo)) {
-      continue
-    }
-
-    await tinifyLogo(logo)
-    tinifiedLogosCount++
+    tinifiedLogosCount += await tinifyLogo(logo)
   }
 
   console.log(
@@ -43,26 +40,37 @@ async function main() {
       ? 'Nothing to tinify'
       : `Done, tinified ${tinifiedLogosCount} logos`,
   )
+  process.exit(0)
 }
 
 async function tinifyLogo(fileName: string) {
-  const pathToLogo = path.join(
-    __dirname,
-    '..',
-    'src',
-    'static',
-    'icons',
-    fileName,
-  )
+  console.time(`Tinifying ${fileName}`)
+  const logoPath = path.join(__dirname, `../src/static/icons/${fileName}`)
 
-  const source = tinify.fromFile(pathToLogo)
-  const resized = source.resize({
+  const source = tinify.fromFile(logoPath)
+
+  const sourceBuffer = readFileSync(logoPath)
+  if (checkIfWasTinified(fileName, sourceBuffer)) return 0
+
+  const width = sourceBuffer.readUInt32BE(16)
+  const height = sourceBuffer.readUInt32BE(20)
+  if (width < 128 && height < 128) {
+    console.error(`Skipping ${fileName} because it is too small`)
+    return 0
+  }
+
+  const tinified = source.resize({
     method: 'fit',
     width: 128,
     height: 128,
   })
-  await resized.toFile(pathToLogo)
-  saveToJson(fileName)
+
+  await tinified.toFile(path.join(__dirname, `../src/static/icons/${fileName}`))
+
+  const tinifiedBuffer = readFileSync(logoPath)
+  saveToJson(fileName, tinifiedBuffer)
+  console.timeEnd(`Tinifying ${fileName}`)
+  return 1
 }
 
 function getTinifiedLogos() {
@@ -72,9 +80,8 @@ function getTinifiedLogos() {
   return tinifiedLogos
 }
 
-function saveToJson(fileName: string) {
-  const tinifiedLogos = getTinifiedLogos()
-  tinifiedLogos.push(fileName)
+function saveToJson(fileName: string, file: Buffer) {
+  tinifiedLogos[fileName] = getHash(file)
 
   writeFileSync(
     tinifiedLogosFile,
@@ -82,8 +89,10 @@ function saveToJson(fileName: string) {
   )
 }
 
-function checkIfWasTinified(fileName: string) {
-  const tinifiedLogos = getTinifiedLogos()
+function getHash(file: Buffer) {
+  return crypto.createHash('md5').update(file).digest('hex')
+}
 
-  return tinifiedLogos.includes(fileName)
+function checkIfWasTinified(fileName: string, file: Buffer) {
+  return tinifiedLogos[fileName] === getHash(file)
 }
