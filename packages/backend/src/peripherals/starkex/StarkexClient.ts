@@ -1,5 +1,4 @@
 import { Logger } from '@l2beat/backend-tools'
-import { StarkexProduct } from '@l2beat/config'
 import { HttpClient } from '@l2beat/shared'
 import { getErrorMessage, json, RateLimiter } from '@l2beat/shared-pure'
 
@@ -33,7 +32,7 @@ export class StarkexClient {
     }
   }
 
-  async getDailyCount(day: number, product: StarkexProduct): Promise<number> {
+  async getDailyCount(day: number, product: string): Promise<number> {
     const body = getBody(day, product)
 
     const response =

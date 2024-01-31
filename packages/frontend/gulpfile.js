@@ -1,12 +1,8 @@
 const gulp = require('gulp')
-const sass = require('gulp-sass')(require('sass'))
 const del = require('del')
 const child_process = require('child_process')
 const path = require('path')
 const express = require('express')
-const postcss = require('gulp-postcss')
-const autoprefixer = require('autoprefixer')
-const cssnano = require('cssnano')
 const { createProxyMiddleware } = require('http-proxy-middleware')
 
 function clean() {
@@ -22,18 +18,6 @@ function buildScripts() {
 
 function watchScripts() {
   return gulp.watch(['src/**/*.ts'], buildScripts)
-}
-
-function buildSass() {
-  return gulp
-    .src('src/styles/**/*.scss')
-    .pipe(sass.sync().on('error', sass.logError))
-    .pipe(postcss([autoprefixer(), cssnano()]))
-    .pipe(gulp.dest('build/styles'))
-}
-
-function watchSass() {
-  return gulp.watch('src/styles/**/*.scss', buildSass)
 }
 
 function buildStyles() {
@@ -110,20 +94,13 @@ function serve() {
 
 const build = gulp.series(
   clean,
-  gulp.parallel(buildScripts, buildSass, buildStyles, buildContent, copyStatic),
+  gulp.parallel(buildScripts, buildStyles, buildContent, copyStatic),
   ...(process.env.GENERATE_METAIMAGES ? [generateMetaImages] : []),
 )
 
 const watch = gulp.series(
-  gulp.parallel(buildScripts, buildSass, buildStyles, buildContent, copyStatic),
-  gulp.parallel(
-    watchScripts,
-    watchSass,
-    watchStyles,
-    watchContent,
-    watchStatic,
-    serve,
-  ),
+  gulp.parallel(buildScripts, buildStyles, buildContent, copyStatic),
+  gulp.parallel(watchScripts, watchStyles, watchContent, watchStatic, serve),
 )
 
 module.exports = {

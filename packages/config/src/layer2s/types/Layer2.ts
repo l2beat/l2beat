@@ -46,6 +46,8 @@ export interface Layer2 {
   stateValidation?: string
   /** List of smart contracts used in the layer2 */
   contracts: ScalingProjectContracts
+  /** Upgrades and governance explained */
+  upgradesAndGovernance?: string
   /** List of permissioned addresses */
   permissions?: ScalingProjectPermission[] | 'UnderReview'
   /** Links to recent developments, milestones achieved by the project */

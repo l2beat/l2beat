@@ -85,7 +85,7 @@ export function TVLBreakdownTableView<
                     {column.tooltip && (
                       <Tooltip>
                         <TooltipTrigger className="-translate-y-px md:translate-y-0">
-                          <InfoIcon className="fill-current md:h-3.5 md:w-3.5" />
+                          <InfoIcon className="fill-current md:size-3.5" />
                         </TooltipTrigger>
                         <TooltipContent>{column.tooltip}</TooltipContent>
                       </Tooltip>
@@ -107,17 +107,19 @@ export function TVLBreakdownTableView<
                 {...rest}
                 className={cn(
                   'group',
-                  'border-b border-b-black/10 hover:bg-black/[0.1] hover:shadow-sm dark:border-b-gray-800 dark:hover:bg-white/[0.1] md:border-b-0',
+                  'border-b border-b-black/10 hover:bg-black/[0.1] hover:shadow-sm dark:border-b-zinc-700 dark:hover:bg-white/[0.1] md:border-b-0',
                   rowClassName,
-                  item.escrows?.length &&
-                    item.escrows.length > 1 &&
-                    'MultipleEscrowsRow',
                 )}
+                data-role={
+                  item.escrows?.length && item.escrows.length > 1
+                    ? 'multiple-escrows-row'
+                    : undefined
+                }
                 data-token={item.assetId}
               >
                 {columns.map((column, j) => {
                   const childClassName = cn(
-                    'h-full w-full items-start pt-2 pb-2',
+                    'size-full items-start py-2',
                     column.align === 'right' && 'justify-end',
                     column.align === 'center' && 'justify-center',
                   )

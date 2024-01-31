@@ -13,7 +13,7 @@ export function configureProjectFilters() {
     return
   }
 
-  const resetButtons = $$('.ProjectFilters-ResetButton')
+  const resetButtons = $$('[data-role=project-filters-reset]')
 
   const setFilteredSlugs = (slugs: string[] | null) => {
     if (!slugs) {
@@ -68,7 +68,9 @@ export function configureProjectFilters() {
   const checkboxes = projectFilters.querySelectorAll<HTMLInputElement>(
     'input[type="checkbox"]',
   )
-  const selects = projectFilters.querySelectorAll<HTMLElement>('.RichSelect')
+  const selects = projectFilters.querySelectorAll<HTMLElement>(
+    '[data-role=rich-select]',
+  )
 
   const rerenderState = () => {
     const stateValues = Array.from(states.values())

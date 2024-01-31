@@ -25,7 +25,7 @@ export function SidebarMenu(props: SidebarMenuProps) {
   return (
     <div
       id="sidebar-menu"
-      className="fixed bottom-0 left-0 top-0 z-999 flex w-full translate-x-full flex-col bg-white text-base transition-transform duration-300 dark:bg-black lg:hidden"
+      className="fixed inset-y-0 left-0 z-999 flex w-full translate-x-full flex-col bg-white text-base transition-transform duration-300 dark:bg-black lg:hidden"
     >
       <div className="mt-[11.5px] flex items-center justify-between px-4">
         <a href={props.selectedPage === 'bridges' ? '/bridges/summary' : '/'}>

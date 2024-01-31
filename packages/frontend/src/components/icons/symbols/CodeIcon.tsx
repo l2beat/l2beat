@@ -10,7 +10,7 @@ export function CodeIcon(props: SVGAttributes<SVGElement>) {
       height="16"
       viewBox="0 0 16 16"
       fill="none"
-      stroke="var(--text)"
+      className="stroke-black dark:stroke-white"
       {...props}
     >
       <g clipPath="url(#clip0_190_6173)">

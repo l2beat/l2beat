@@ -99,7 +99,7 @@ function RiskValueComponent({ title, risk }: RiskValueProps) {
           {risk.warning?.sentiment && (
             <RoundedWarningIcon
               className={cn(
-                'h-5 w-5',
+                'size-5',
                 sentimentToFillColor(risk.warning.sentiment),
               )}
             />

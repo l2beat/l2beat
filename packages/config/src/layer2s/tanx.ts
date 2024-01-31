@@ -145,8 +145,8 @@ export const tanx: Layer2 = {
     {
       name: 'Mainnet Launch',
       date: '2023-04-27T00:00:00.00Z',
-      link: 'https://www.brine.fi/beta-launch',
-      description: 'Brine DEX is live on mainnet.',
+      link: 'https://tanx.fi/',
+      description: 'tanX is live on mainnet.',
     },
   ],
   knowledgeNuggets: [...NUGGETS.STARKWARE],

@@ -1,7 +1,34 @@
+Generated with discovered.json: 0xceb17155dd0178eaeb49f0f0c13d6765f1491c4a
+
+# Diff at Tue, 30 Jan 2024 13:08:11 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@ceb6abb9c987b0d53dd547a79c3ebbf3480a024b block: 173375251
+- current block number: 175727823
+
+## Description
+
+Add the SequencerInboxVersion handler.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 173375251 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77) {
+      values.sequencerVersion:
++        "0x00"
+    }
+```
+
+Generated with discovered.json: 0xfea566360a1afd0474f5cc2e97609a3eb1dbaa61
+
 # Diff at Tue, 23 Jan 2024 13:55:47 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@74040c3a8f43c630b3d31cc8376e84f5f9acda5c block: 168378561
+- comparing to: main@74040c3a8f43c630b3d31cc8376e84f5f9acda5c block: 168378561
 - current block number: 173375251
 
 ## Description
@@ -49,7 +76,7 @@ discovery. Values are for block 168378561 (main branch discovery), not current.
 # Diff at Mon, 08 Jan 2024 15:22:41 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@3ee3c075ee99707d8392a73b092ed24eeb24866f block: 159392469
+- comparing to: main@3ee3c075ee99707d8392a73b092ed24eeb24866f block: 159392469
 - current block number: 168378561
 
 ## Description
@@ -91,7 +118,7 @@ for block 159392469 (main branch discovery), not current.
 # Diff at Tue, 12 Dec 2023 13:17:02 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@
+- comparing to: main@
 
 ## Description
 

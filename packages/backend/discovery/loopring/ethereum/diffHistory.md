@@ -1,7 +1,9 @@
+Generated with discovered.json: 0xbf94d7835ddc3daaf6aa320c3e75a3a2c11cc77d
+
 # Diff at Fri, 05 Jan 2024 12:19:14 GMT:
 
 - author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
-- comparing to: master@9cd2eb99d34f64eadf915ab21cf5e0819367bbc1 block: 18219921
+- comparing to: main@9cd2eb99d34f64eadf915ab21cf5e0819367bbc1 block: 18219921
 - current block number: 18941024
 
 ## Description
@@ -36,7 +38,7 @@ for block 18219921 (main branch discovery), not current.
 # Diff at Tue, 26 Sep 2023 12:23:04 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@cfd4e281f2af40c7c69302b16c1308c0c5651be0
+- comparing to: main@cfd4e281f2af40c7c69302b16c1308c0c5651be0
 
 ## Watched changes
 

@@ -11,6 +11,7 @@ type Story = StoryObj<typeof ContractsSection>
 const props: ContractsSectionProps = {
   id: 'contracts',
   title: 'Smart Contracts',
+  sectionOrder: 1,
   contracts: [
     {
       name: 'CanonicalTransactionChain',

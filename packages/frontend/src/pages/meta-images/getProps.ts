@@ -47,7 +47,8 @@ export function getProps(
       chartType,
     },
     wrapper: {
-      htmlClassName: 'light meta',
+      htmlClassName: 'light overflow-hidden h-[100vh] meta',
+      bodyClassName: 'overflow-hidden h-[100vh]',
       metadata: { title: 'Meta Image', description: '', image: '', url: '' },
       preloadApi: getChartUrl(chartType),
       banner: false,
@@ -71,7 +72,8 @@ export function getPropsActivity(
       tpsWeeklyChange: weeklyChange,
     },
     wrapper: {
-      htmlClassName: 'light meta',
+      htmlClassName: 'light overflow-hidden h-[100vh] meta',
+      bodyClassName: 'overflow-hidden h-[100vh]',
       metadata: { title: 'Meta Image', description: '', image: '', url: '' },
       preloadApi: getChartUrl({ type: 'layer2-activity' }),
       banner: false,
@@ -107,7 +109,8 @@ export function getPropsDetailed(
       chartType,
     },
     wrapper: {
-      htmlClassName: 'light meta',
+      htmlClassName: 'light overflow-hidden h-[100vh] meta',
+      bodyClassName: 'overflow-hidden h-[100vh]',
       metadata: { title: 'Meta Image', description: '', image: '', url: '' },
       preloadApi: getChartUrl(chartType),
       banner: false,

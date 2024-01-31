@@ -7,7 +7,7 @@ import {
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { setupDatabaseTestSuite } from '../../test/database'
+import { describeDatabase } from '../../test/database'
 import { BalanceRecord, BalanceRepository } from './BalanceRepository'
 
 const START = UnixTime.fromDate(new Date('2022-05-17'))
@@ -27,8 +27,7 @@ const mockBalance = (
   }
 }
 
-describe(BalanceRepository.name, () => {
-  const { database } = setupDatabaseTestSuite()
+describeDatabase(BalanceRepository.name, (database) => {
   const repository = new BalanceRepository(database, Logger.SILENT)
 
   const HOLDER_A = EthereumAddress.random()

@@ -2,13 +2,11 @@ import { Logger } from '@l2beat/backend-tools'
 import { expect } from 'earl'
 import { describe } from 'mocha'
 
-import { setupDatabaseTestSuite } from '../../../test/database'
+import { describeDatabase } from '../../../test/database'
 import { BaseRepository, CheckConvention } from './BaseRepository'
 import { Database } from './Database'
 
-describe(BaseRepository.name, () => {
-  const { database } = setupDatabaseTestSuite()
-
+describeDatabase(BaseRepository.name, (database) => {
   describe(BaseRepository.prototype.autoWrap.name, () => {
     it('should wrap all methods', () => {
       class DummyRepository extends BaseRepository {

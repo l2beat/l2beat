@@ -11,9 +11,30 @@ module.exports = {
         '0%': { opacity: '0' },
         '100%': { opacity: '1' },
       },
+      pulse: {
+        '0%': {
+          transform: 'scale(1,1)',
+        },
+        '80%': {
+          transform: 'scale(1, 1)',
+        },
+        '85%': {
+          transform: 'scale(1.05, 1.05)',
+        },
+        '90%': {
+          transform: 'scale(1, 1)',
+        },
+        '95%': {
+          transform: 'scale(1.05, 1.05)',
+        },
+        '100%': {
+          transform: 'scale(1, 1)',
+        },
+      },
     },
     animation: {
       'quick-fade-in': 'fade-in 0.1s ease-in-out',
+      pulse: 'pulse 5s ease-in-out infinite forwards',
     },
     fontSize: {
       '3xs': ['8px', '12px'],
@@ -27,16 +48,23 @@ module.exports = {
       '3xl': ['32px', '36px'],
       '4xl': ['40px', '60px'],
       '5xl': ['48px', '60px'],
+      '6xl': ['64px', '64px'],
     },
     colors: {
       current: 'currentColor',
       transparent: 'transparent',
+      brand: {
+        red: '#F9347B',
+        'red-dark': '#BD114F',
+        black: '#222222',
+      },
       white: '#FAFAFA',
       neutral: {
         700: '#323539',
         900: '#131215',
       },
       zinc: {
+        500: '#5F6470',
         700: '#393C43',
         800: '#272A2F',
         900: '#1D1E22',
@@ -158,6 +186,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['Roboto', 'Arial', 'sans-serif'],
+        lora: ['Lora', 'serif'],
       },
       spacing: {
         '2/3': '66.666666%',

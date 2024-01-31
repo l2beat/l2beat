@@ -1,7 +1,40 @@
+Generated with discovered.json: 0x8209f29438745b169ea4fcac0c17ac2784cf83c8
+
+# Diff at Tue, 30 Jan 2024 09:32:52 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8166c01da21cd9a7fadf2664669d7d2675512e02 block: 19076850
+- current block number: 19118450
+
+## Description
+
+In the pNetwork's DAO voting contract each new vote is counted.
+That is what happened here, somebody voted and their vote was counted.
+Nothing more, nothing less.
+Ignored this field in watch mode.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19076850 (main branch discovery), not current.
+
+```diff
+    contract DandelionVoting (0x2211bFD97b1c02aE8Ac305d206e9780ba7D8BfF4) {
+      name:
+-        "DandelionVoting"
++        "pNetworkDAOVoting"
+      derivedName:
++        "DandelionVoting"
+    }
+```
+
+Generated with discovered.json: 0x29eb7fc6046fc25e5f151bc71f6086820421492f
+
 # Diff at Fri, 19 Jan 2024 11:48:15 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: master@a25b693cc3754074753705b502d4656fdd29ecbb block: 17288492
+- comparing to: main@a25b693cc3754074753705b502d4656fdd29ecbb block: 17288492
 - current block number: 19040706
 
 ## Description

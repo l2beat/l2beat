@@ -112,6 +112,17 @@ export const kroma: Layer2 = {
       finalizationPeriod,
     },
   },
+  chainConfig: {
+    name: 'kroma',
+    chainId: 255,
+    explorerUrl: 'https://kromascan.com',
+    explorerApi: {
+      url: 'https://api.kromascan.com/api',
+      type: 'etherscan',
+    },
+    multicallContracts: [],
+    minTimestampForTvl: UnixTime.fromDate(new Date('2023-09-05T03:00:00Z')),
+  },
   config: {
     escrows: [
       discovery.getEscrowDetails({
@@ -130,9 +141,9 @@ export const kroma: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
+      defaultUrl: 'https://api.kroma.network',
+      defaultCallsPerMinute: 1500,
       startBlock: 1,
-      url: 'https://api.kroma.network',
-      callsPerMinute: 1500,
       assessCount: subtractOne,
     },
     liveness: {
@@ -353,7 +364,7 @@ export const kroma: Layer2 = {
   },
   stateDerivation: {
     nodeSoftware:
-      'Kroma nodes source code, including full node, proposer and validator, can be found [here](https://github.com/kroma-network/kroma). Also, the geth server, source maintained [here](https://github.com/kroma-network/go-ethereum), is a fork of go-ethereum. For more details on how they are different from the Optimism implementation, see [here](https://github.com/kroma-network/kroma/blob/main/specs/differences-from-optimism-bedrock.md).' +
+      'Kroma nodes source code, including full node, proposer and validator, can be found [here](https://github.com/kroma-network/kroma). Also, the geth server, source maintained [here](https://github.com/kroma-network/go-ethereum), is a fork of go-ethereum. For more details on how they are different from the Optimism implementation, see [here](https://github.com/kroma-network/kroma/blob/dev/specs/differences-from-optimism.md).' +
       '\n' +
       'The instructions to run the proposer (called validator) and the ZK prover, are documented [here](https://docs.kroma.network/developers/running-nodes-on-kroma).',
     compressionScheme:
