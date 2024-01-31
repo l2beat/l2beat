@@ -4,6 +4,10 @@ import { TotalSupplyRow } from 'knex/types/tables'
 
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
+import {
+  _TVL_ONLY_deleteHourlyUntil,
+  _TVL_ONLY_deleteSixHourlyUntil,
+} from './shared/deleteArchivedRecords'
 
 export interface TotalSupplyRecord {
   timestamp: UnixTime
@@ -55,6 +59,16 @@ export class TotalSupplyRepository extends BaseRepository {
   async deleteAll() {
     const knex = await this.knex()
     return knex('total_supplies').delete()
+  }
+
+  async deleteHourlyUntil(timestamp: UnixTime) {
+    const knex = await this.knex()
+    return _TVL_ONLY_deleteHourlyUntil(knex, 'total_supplies', timestamp)
+  }
+
+  async deleteSixHourlyUntil(timestamp: UnixTime) {
+    const knex = await this.knex()
+    return _TVL_ONLY_deleteSixHourlyUntil(knex, 'total_supplies', timestamp)
   }
 }
 
