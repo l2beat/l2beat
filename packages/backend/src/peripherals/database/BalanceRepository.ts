@@ -71,6 +71,13 @@ export class BalanceRepository extends BaseRepository {
     return rows.length
   }
 
+  async addMany(balances: BalanceRecord[]) {
+    const rows = balances.map(toRow)
+    const knex = await this.knex()
+    await knex.batchInsert('balances', rows, 10_000)
+    return rows.length
+  }
+
   async getAll(): Promise<BalanceRecord[]> {
     const knex = await this.knex()
     const rows = await knex('balances')
