@@ -6,7 +6,7 @@ import { Clock } from '../../core/Clock'
 import { TaskQueue } from '../../core/queue/TaskQueue'
 import { TvlDatabase } from './types'
 
-interface Table {
+interface Repository {
   deleteHourlyUntil: (timestamp: UnixTime) => Promise<number>
   deleteSixHourlyUntil: (timestamp: UnixTime) => Promise<number>
 }
@@ -17,7 +17,7 @@ export class TvlCleaner {
   constructor(
     private readonly clock: Clock,
     private readonly logger: Logger,
-    private readonly tables: Table[],
+    private readonly repositories: Repository[],
   ) {
     this.logger = this.logger.for(this)
     this.taskQueue = new TaskQueue(
@@ -43,7 +43,7 @@ export class TvlCleaner {
     const sixHourlyDeletionBoundary =
       this.clock._TVL_ONLY_getSixHourlyDeletionBoundary()
 
-    for (const table of this.tables) {
+    for (const table of this.repositories) {
       this.logger.info(`Cleaning ${table.constructor.name}`)
       const hourly = await table.deleteHourlyUntil(hourlyDeletionBoundary)
       const sixHourly = await table.deleteSixHourlyUntil(
