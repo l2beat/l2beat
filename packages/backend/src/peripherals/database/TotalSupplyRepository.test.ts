@@ -3,6 +3,7 @@ import { AssetId, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { describeDatabase } from '../../test/database'
+import { _TVL_ONLY_deletion_test } from './shared/deleteArchivedRecords'
 import {
   TotalSupplyRecord,
   TotalSupplyRepository,
@@ -219,74 +220,14 @@ describeDatabase(TotalSupplyRepository.name, (database) => {
     expect(result).toEqual([])
   })
 
-  describe(TotalSupplyRepository.prototype.deleteHourlyUntil.name, () => {
-    it('deletes hourly reports', async () => {
-      const start = UnixTime.now().toStartOf('day')
-      const until = start.add(25, 'hours')
-
-      const entries = []
-      for (
-        let i = start.toNumber();
-        i <= until.toNumber();
-        i += UnixTime.HOUR
-      ) {
-        entries.push(fakeTotalSupply({ timestamp: new UnixTime(i) }))
-      }
-
-      await repository.addOrUpdateMany(entries)
-      await repository.deleteHourlyUntil(until)
-      const results = await repository.getAll()
-
-      expect(results).toEqualUnsorted([
-        fakeTotalSupply({ timestamp: start }),
-        fakeTotalSupply({ timestamp: start.add(6, 'hours') }),
-        fakeTotalSupply({ timestamp: start.add(12, 'hours') }),
-        fakeTotalSupply({ timestamp: start.add(18, 'hours') }),
-        fakeTotalSupply({ timestamp: start.add(24, 'hours') }),
-        fakeTotalSupply({ timestamp: start.add(25, 'hours') }),
-      ])
-    })
-  })
-
-  describe(TotalSupplyRepository.prototype.deleteSixHourlyUntil.name, () => {
-    it('deletes six hourly reports', async () => {
-      const start = UnixTime.now().toStartOf('day')
-      const until = start.add(7, 'hours')
-
-      const entries = []
-      for (
-        let i = start.toNumber();
-        i <= until.toNumber();
-        i += UnixTime.HOUR
-      ) {
-        entries.push(fakeTotalSupply({ timestamp: new UnixTime(i) }))
-      }
-
-      await repository.addOrUpdateMany(entries)
-      await repository.deleteSixHourlyUntil(until)
-      const results = await repository.getAll()
-
-      expect(results).toEqualUnsorted([
-        fakeTotalSupply({ timestamp: start }),
-        fakeTotalSupply({ timestamp: start.add(1, 'hours') }),
-        fakeTotalSupply({ timestamp: start.add(2, 'hours') }),
-        fakeTotalSupply({ timestamp: start.add(3, 'hours') }),
-        fakeTotalSupply({ timestamp: start.add(4, 'hours') }),
-        fakeTotalSupply({ timestamp: start.add(5, 'hours') }),
-        fakeTotalSupply({ timestamp: start.add(7, 'hours') }),
-      ])
-    })
-  })
+  _TVL_ONLY_deletion_test(repository, fakeTotalSupply)
 })
 
-function fakeTotalSupply(
-  entry?: Partial<TotalSupplyRecord>,
-): TotalSupplyRecord {
+function fakeTotalSupply(timestamp: UnixTime): TotalSupplyRecord {
   return {
-    timestamp: UnixTime.ZERO,
+    timestamp,
     totalSupply: 0n,
     assetId: AssetId('fake'),
     chainId: ChainId.ARBITRUM,
-    ...entry,
   }
 }
