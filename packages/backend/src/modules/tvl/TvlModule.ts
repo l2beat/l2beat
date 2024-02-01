@@ -157,6 +157,7 @@ export function createTvlModule(
     logger.info('Starting')
 
     priceUpdater.start()
+    tvlController.start()
 
     logger.info('Starting modules...')
 
