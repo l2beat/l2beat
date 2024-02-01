@@ -31,6 +31,7 @@ const events = {
       title: z.string(),
       cancelledAt: z.array(z.coerce.date()).optional(),
       startDate: z.coerce.date(),
+      endDate: z.coerce.date().optional(),
       dayOfWeek: z.number().min(0).max(6),
       startHour: z.number().min(0).max(23),
       startMinute: z.number().min(0).max(59),

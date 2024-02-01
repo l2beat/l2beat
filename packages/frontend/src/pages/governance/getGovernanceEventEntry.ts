@@ -1,4 +1,5 @@
 import { notUndefined } from '@l2beat/shared-pure'
+import clamp from 'lodash/clamp'
 import range from 'lodash/range'
 
 import { ContentEntry } from '../../content/getContent'
@@ -48,11 +49,20 @@ function getOneTimeEvents(events: ContentEntry<'events'>[]): OneTimeEvent[] {
     }
 
     const data = event.data
-    const weeksSinceStart = Math.ceil(
+    const weeksSinceStart = Math.floor(
       (Date.now() - data.startDate.getTime()) / (7 * 24 * 60 * 60 * 1000),
     )
 
-    return range(-weeksSinceStart + 1, event.data.futureEventsCount)
+    const weeksTillEnd = data.endDate
+      ? clamp(
+          Math.ceil(
+            (data.endDate.getTime() - Date.now()) / (7 * 24 * 60 * 60 * 1000),
+          ),
+          event.data.futureEventsCount,
+        )
+      : event.data.futureEventsCount
+
+    return range(-weeksSinceStart, weeksTillEnd)
       .map((weeksOffset) =>
         getEventForWeek(event as RecurringEvent, weeksOffset),
       )
