@@ -36,12 +36,12 @@ describeDatabase(TotalSupplyRepository.name, (database) => {
 
   beforeEach(async () => {
     await repository.deleteAll()
-    // TODO: get rid of this, adding new tests is tricky because of it
-    await repository.addOrUpdateMany(DATA)
   })
 
   describe(TotalSupplyRepository.prototype.getByTimestamp.name, () => {
     it('returns matching data for given timestamp', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       const additionalData = [
         mockTotalSupply(TOTAL_SUPPLY, 0, AssetId('asset-a'), ChainId.ETHEREUM),
         mockTotalSupply(TOTAL_SUPPLY, 0, AssetId('asset-b'), ChainId.ETHEREUM),
@@ -55,6 +55,8 @@ describeDatabase(TotalSupplyRepository.name, (database) => {
     })
 
     it('returns empty list if no data exists for given timestamp', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       const result = await repository.getByTimestamp(
         ChainId.ETHEREUM,
         START.add(1, 'days'),
@@ -115,6 +117,8 @@ describeDatabase(TotalSupplyRepository.name, (database) => {
     })
 
     it('take chainId into consideration', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       const resultEth = await repository.getByTimestamp(ChainId.ETHEREUM, START)
       expect(resultEth).toEqual([DATA[0]])
 
@@ -125,6 +129,8 @@ describeDatabase(TotalSupplyRepository.name, (database) => {
 
   describe(TotalSupplyRepository.prototype.addOrUpdateMany.name, () => {
     it('new rows only', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       const newRows: TotalSupplyRecord[] = [
         {
           totalSupply: TOTAL_SUPPLY,
@@ -146,6 +152,8 @@ describeDatabase(TotalSupplyRepository.name, (database) => {
     })
 
     it('existing rows only', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       const existingRows: TotalSupplyRecord[] = [
         {
           timestamp: DATA[0].timestamp,
@@ -167,6 +175,8 @@ describeDatabase(TotalSupplyRepository.name, (database) => {
     })
 
     it('mixed: existing and new rows', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       const mixedRows: TotalSupplyRecord[] = [
         {
           timestamp: DATA[1].timestamp,
@@ -188,11 +198,15 @@ describeDatabase(TotalSupplyRepository.name, (database) => {
     })
 
     it('skips empty row modification', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       await expect(repository.addOrUpdateMany([])).not.toBeRejected()
     })
   })
 
   it(TotalSupplyRepository.prototype.getAll.name, async () => {
+    await repository.addOrUpdateMany(DATA)
+
     const result = await repository.getAll()
 
     expect(result).toEqual(DATA)
