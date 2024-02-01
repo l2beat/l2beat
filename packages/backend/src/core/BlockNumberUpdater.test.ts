@@ -24,7 +24,7 @@ describe(BlockNumberUpdater.name, () => {
           .resolvesToOnce(1100n),
       })
       const blockNumberRepository = mockObject<BlockNumberRepository>({
-        getAll: mockFn().returns([
+        getAllByChainId: mockFn().returns([
           { timestamp: TIME_0, blockNumber: 1000n },
           { timestamp: TIME_2, blockNumber: 1200n },
         ]),

@@ -75,7 +75,7 @@ export class BlockNumberUpdater {
   }
 
   async start() {
-    const known = await this.blockNumberRepository.getAll(this.chainId)
+    const known = await this.blockNumberRepository.getAllByChainId(this.chainId)
     for (const { timestamp, blockNumber } of known) {
       this.blocksByTimestamp.set(timestamp.toNumber(), blockNumber)
     }

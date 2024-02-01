@@ -7,7 +7,7 @@ import {
   BlockNumberRecord,
   BlockNumberRepository,
 } from './BlockNumberRepository'
-import { PriceRepository } from './PriceRepository'
+import { _TVL_ONLY_deletion_test } from './shared/deleteArchivedRecords'
 
 describeDatabase(BlockNumberRepository.name, (database) => {
   const repository = new BlockNumberRepository(database, Logger.SILENT)
@@ -31,10 +31,10 @@ describeDatabase(BlockNumberRepository.name, (database) => {
     await repository.add(itemA)
     await repository.add(itemB)
 
-    const resultsEth = await repository.getAll(ChainId.ETHEREUM)
+    const resultsEth = await repository.getAllByChainId(ChainId.ETHEREUM)
     expect(resultsEth).toEqualUnsorted([itemA])
 
-    const resultsArb = await repository.getAll(ChainId.ARBITRUM)
+    const resultsArb = await repository.getAllByChainId(ChainId.ARBITRUM)
     expect(resultsArb).toEqualUnsorted([itemB])
   })
 
@@ -72,7 +72,7 @@ describeDatabase(BlockNumberRepository.name, (database) => {
     expect(resultArb).toEqual(itemC)
   })
 
-  it(BlockNumberRepository.prototype.getAll.name, async () => {
+  it(BlockNumberRepository.prototype.getAllByChainId.name, async () => {
     const itemA = {
       blockNumber: 1234,
       timestamp: new UnixTime(5678),
@@ -93,10 +93,10 @@ describeDatabase(BlockNumberRepository.name, (database) => {
     await repository.add(itemB)
     await repository.add(itemC)
 
-    const resultsEth = await repository.getAll(ChainId.ETHEREUM)
+    const resultsEth = await repository.getAllByChainId(ChainId.ETHEREUM)
     expect(resultsEth).toEqualUnsorted([itemA, itemB])
 
-    const resultsArb = await repository.getAll(ChainId.ARBITRUM)
+    const resultsArb = await repository.getAllByChainId(ChainId.ARBITRUM)
     expect(resultsArb).toEqualUnsorted([itemC])
   })
 
@@ -108,77 +108,17 @@ describeDatabase(BlockNumberRepository.name, (database) => {
     })
     await repository.deleteAll()
 
-    const results = await repository.getAll(ChainId.ETHEREUM)
+    const results = await repository.getAllByChainId(ChainId.ETHEREUM)
     expect(results).toEqual([])
   })
 
-  describe(PriceRepository.prototype.deleteHourlyUntil.name, () => {
-    it('deletes hourly reports', async () => {
-      const start = UnixTime.now().toStartOf('day')
-      const until = start.add(25, 'hours')
-
-      const entries = []
-      for (
-        let i = start.toNumber();
-        i <= until.toNumber();
-        i += UnixTime.HOUR
-      ) {
-        entries.push(fakeBlockRecord({ timestamp: new UnixTime(i) }))
-      }
-
-      await Promise.all(entries.map((e) => repository.add(e)))
-      await repository.deleteHourlyUntil(until)
-      const results = await repository.getAll(ChainId.ETHEREUM)
-
-      expect(results).toEqualUnsorted([
-        fakeBlockRecord({ timestamp: start }),
-        fakeBlockRecord({ timestamp: start.add(6, 'hours') }),
-        fakeBlockRecord({ timestamp: start.add(12, 'hours') }),
-        fakeBlockRecord({ timestamp: start.add(18, 'hours') }),
-        fakeBlockRecord({ timestamp: start.add(24, 'hours') }),
-        fakeBlockRecord({ timestamp: start.add(25, 'hours') }),
-      ])
-    })
-  })
-
-  describe(PriceRepository.prototype.deleteSixHourlyUntil.name, () => {
-    it('deletes six hourly reports', async () => {
-      const start = UnixTime.now().toStartOf('day')
-      const until = start.add(7, 'hours')
-
-      const entries = []
-      for (
-        let i = start.toNumber();
-        i <= until.toNumber();
-        i += UnixTime.HOUR
-      ) {
-        entries.push(fakeBlockRecord({ timestamp: new UnixTime(i) }))
-      }
-
-      await Promise.all(entries.map((e) => repository.add(e)))
-      await repository.deleteSixHourlyUntil(until)
-      const results = await repository.getAll(ChainId.ETHEREUM)
-
-      expect(results).toEqualUnsorted([
-        fakeBlockRecord({ timestamp: start }),
-        fakeBlockRecord({ timestamp: start.add(1, 'hours') }),
-        fakeBlockRecord({ timestamp: start.add(2, 'hours') }),
-        fakeBlockRecord({ timestamp: start.add(3, 'hours') }),
-        fakeBlockRecord({ timestamp: start.add(4, 'hours') }),
-        fakeBlockRecord({ timestamp: start.add(5, 'hours') }),
-        fakeBlockRecord({ timestamp: start.add(7, 'hours') }),
-      ])
-    })
-  })
+  _TVL_ONLY_deletion_test(repository, fakeBlockRecord)
 })
 
-function fakeBlockRecord(
-  report?: Partial<BlockNumberRecord>,
-): BlockNumberRecord {
+function fakeBlockRecord(timestamp: UnixTime): BlockNumberRecord {
   return {
-    timestamp: UnixTime.now(),
+    timestamp,
     blockNumber: 0,
     chainId: ChainId.ETHEREUM,
-    ...report,
   }
 }

@@ -30,7 +30,20 @@ export class BlockNumberRepository extends BaseRepository {
     )}`
   }
 
-  async getAll(chainId: ChainId): Promise<BlockNumberRecord[]> {
+  async addMany(records: BlockNumberRecord[]) {
+    const rows = records.map(toRow)
+    const knex = await this.knex()
+    await knex.batchInsert('block_numbers', rows, 10_000)
+    return rows.length
+  }
+
+  async getAll(): Promise<BlockNumberRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('block_numbers')
+    return rows.map(toRecord)
+  }
+
+  async getAllByChainId(chainId: ChainId): Promise<BlockNumberRecord[]> {
     const knex = await this.knex()
     const rows = await knex('block_numbers')
       .where('chain_id', '=', Number(chainId))
