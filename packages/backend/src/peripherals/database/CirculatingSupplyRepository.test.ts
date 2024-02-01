@@ -7,6 +7,7 @@ import {
   CirculatingSupplyRecord,
   CirculatingSupplyRepository,
 } from './CirculatingSupplyRepository'
+import { _TVL_ONLY_deletion_test } from './shared/deleteArchivedRecords'
 
 const START = UnixTime.fromDate(new Date('2022-05-17'))
 
@@ -244,77 +245,14 @@ describeDatabase(CirculatingSupplyRepository.name, (database) => {
     expect(result).toEqual([])
   })
 
-  describe(CirculatingSupplyRepository.prototype.deleteHourlyUntil.name, () => {
-    it('deletes hourly reports', async () => {
-      const start = UnixTime.now().toStartOf('day')
-      const until = start.add(25, 'hours')
-
-      const entries = []
-      for (
-        let i = start.toNumber();
-        i <= until.toNumber();
-        i += UnixTime.HOUR
-      ) {
-        entries.push(fakeCirculatingSupply({ timestamp: new UnixTime(i) }))
-      }
-
-      await repository.addMany(entries)
-      await repository.deleteHourlyUntil(until)
-      const results = await repository.getAll()
-
-      expect(results).toEqualUnsorted([
-        fakeCirculatingSupply({ timestamp: start }),
-        fakeCirculatingSupply({ timestamp: start.add(6, 'hours') }),
-        fakeCirculatingSupply({ timestamp: start.add(12, 'hours') }),
-        fakeCirculatingSupply({ timestamp: start.add(18, 'hours') }),
-        fakeCirculatingSupply({ timestamp: start.add(24, 'hours') }),
-        fakeCirculatingSupply({ timestamp: start.add(25, 'hours') }),
-      ])
-    })
-  })
-
-  describe(
-    CirculatingSupplyRepository.prototype.deleteSixHourlyUntil.name,
-    () => {
-      it('deletes six hourly reports', async () => {
-        const start = UnixTime.now().toStartOf('day')
-        const until = start.add(7, 'hours')
-
-        const entries = []
-        for (
-          let i = start.toNumber();
-          i <= until.toNumber();
-          i += UnixTime.HOUR
-        ) {
-          entries.push(fakeCirculatingSupply({ timestamp: new UnixTime(i) }))
-        }
-
-        await repository.addMany(entries)
-        await repository.deleteSixHourlyUntil(until)
-        const results = await repository.getAll()
-
-        expect(results).toEqualUnsorted([
-          fakeCirculatingSupply({ timestamp: start }),
-          fakeCirculatingSupply({ timestamp: start.add(1, 'hours') }),
-          fakeCirculatingSupply({ timestamp: start.add(2, 'hours') }),
-          fakeCirculatingSupply({ timestamp: start.add(3, 'hours') }),
-          fakeCirculatingSupply({ timestamp: start.add(4, 'hours') }),
-          fakeCirculatingSupply({ timestamp: start.add(5, 'hours') }),
-          fakeCirculatingSupply({ timestamp: start.add(7, 'hours') }),
-        ])
-      })
-    },
-  )
+  _TVL_ONLY_deletion_test(repository, fakeCirculatingSupply)
 })
 
-function fakeCirculatingSupply(
-  entry?: Partial<CirculatingSupplyRecord>,
-): CirculatingSupplyRecord {
+function fakeCirculatingSupply(timestamp: UnixTime): CirculatingSupplyRecord {
   return {
-    timestamp: UnixTime.ZERO,
+    timestamp,
     circulatingSupply: 0,
     assetId: AssetId('fake'),
     chainId: ChainId.ARBITRUM,
-    ...entry,
   }
 }
