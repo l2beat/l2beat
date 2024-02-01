@@ -42,11 +42,12 @@ describeDatabase(BalanceRepository.name, (database) => {
 
   beforeEach(async () => {
     await repository.deleteAll()
-    await repository.addOrUpdateMany(DATA)
   })
 
   describe(BalanceRepository.prototype.getByTimestamp.name, () => {
     it('known timestamp', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       const additionalData = [
         mockBalance(HOLDER_A, 0, AssetId('asset-a'), BALANCE, ChainId.ETHEREUM),
         mockBalance(HOLDER_A, 0, AssetId('asset-b'), BALANCE, ChainId.ETHEREUM),
@@ -63,6 +64,8 @@ describeDatabase(BalanceRepository.name, (database) => {
     })
 
     it('unknown timestamp', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       const result = await repository.getByChainAndTimestamp(
         ChainId.ETHEREUM,
         START.add(1, 'days'),
@@ -71,7 +74,6 @@ describeDatabase(BalanceRepository.name, (database) => {
     })
 
     it('one project one asset', async () => {
-      await repository.deleteAll()
       const data = [
         mockBalance(HOLDER_A, 0, ASSET_1, 1n, ChainId.ETHEREUM),
         mockBalance(HOLDER_A, 1, ASSET_1, 1n, ChainId.ETHEREUM),
@@ -96,7 +98,6 @@ describeDatabase(BalanceRepository.name, (database) => {
     })
 
     it('many projects many assets', async () => {
-      await repository.deleteAll()
       const data = [
         mockBalance(HOLDER_A, 0, ASSET_1, 1n, ChainId.ETHEREUM),
         mockBalance(HOLDER_A, 1, ASSET_1, 1n, ChainId.ETHEREUM),
@@ -142,6 +143,8 @@ describeDatabase(BalanceRepository.name, (database) => {
     })
 
     it('take chainId into consideration', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       const resultEth = await repository.getByChainAndTimestamp(
         ChainId.ETHEREUM,
         START,
@@ -158,6 +161,8 @@ describeDatabase(BalanceRepository.name, (database) => {
 
   describe(BalanceRepository.prototype.addOrUpdateMany.name, () => {
     it('new rows only', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       const newRows = [
         {
           timestamp: START.add(2, 'hours'),
@@ -185,6 +190,8 @@ describeDatabase(BalanceRepository.name, (database) => {
     })
 
     it('existing rows only', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       const existingRows = [
         {
           timestamp: DATA[0].timestamp,
@@ -208,6 +215,8 @@ describeDatabase(BalanceRepository.name, (database) => {
     })
 
     it('mixed: existing and new rows', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       const mixedRows = [
         {
           timestamp: DATA[1].timestamp,
@@ -233,17 +242,22 @@ describeDatabase(BalanceRepository.name, (database) => {
     })
 
     it('empty array', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       await expect(repository.addOrUpdateMany([])).not.toBeRejected()
     })
   })
 
   it(BalanceRepository.prototype.getAll.name, async () => {
+    await repository.addOrUpdateMany(DATA)
+
     const result = await repository.getAll()
 
     expect(result).toEqual(DATA)
   })
 
   it(BalanceRepository.prototype.deleteAll.name, async () => {
+    await repository.addOrUpdateMany(DATA)
     await repository.deleteAll()
 
     const result = await repository.getAll()
@@ -253,8 +267,6 @@ describeDatabase(BalanceRepository.name, (database) => {
 
   describe(BalanceRepository.prototype.deleteHourlyUntil.name, () => {
     it('deletes hourly reports', async () => {
-      await repository.deleteAll()
-
       const start = UnixTime.now().toStartOf('day')
       const until = start.add(25, 'hours')
 
@@ -284,8 +296,6 @@ describeDatabase(BalanceRepository.name, (database) => {
 
   describe(BalanceRepository.prototype.deleteSixHourlyUntil.name, () => {
     it('deletes six hourly reports', async () => {
-      await repository.deleteAll()
-
       const start = UnixTime.now().toStartOf('day')
       const until = start.add(7, 'hours')
 
