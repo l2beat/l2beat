@@ -53,8 +53,8 @@ export const mode: Layer2 = opStack({
   milestones: [
     {
       name: 'Mode Network Mainnet Launch',
-      link: 'https://twitter.com/modenetwork/status/1751993397999477003',
-      date: '2024-01-30T00:00:00Z',
+      link: 'https://twitter.com/modenetwork/status/1752760726907760933',
+      date: '2024-01-31T00:00:00Z',
       description: 'Mode Network is live on mainnet.',
     },
   ],
