@@ -10,6 +10,7 @@ export function cacheAsyncFunction<T>(fn: () => Promise<T>): {
       cached = { value }
       promise = undefined
     })
+    await promise
   }
 
   const call = async () => {
@@ -20,6 +21,7 @@ export function cacheAsyncFunction<T>(fn: () => Promise<T>): {
       return cached.value
     }
     await refetch()
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return cached!.value
   }
 

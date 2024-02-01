@@ -2,6 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { bridges, layer2s } from '@l2beat/config'
 import {
   AssetId,
+  cacheAsyncFunction,
   ChainId,
   Hash256,
   ProjectAssetsBreakdownApiResponse,
@@ -14,7 +15,6 @@ import {
   TvlApiCharts,
   TvlApiResponse,
   UnixTime,
-  cacheAsyncFunction,
 } from '@l2beat/shared-pure'
 
 import { TaskQueue } from '../../../core/queue/TaskQueue'

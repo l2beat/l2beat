@@ -1,4 +1,5 @@
 import { expect, mockFn } from 'earl'
+
 import { cacheAsyncFunction } from './cacheAsyncFunction'
 
 describe(cacheAsyncFunction.name, () => {
