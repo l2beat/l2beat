@@ -89,7 +89,7 @@ export class TvlController {
 
     const fiveMinutes = 5 * 60 * 1000
     setInterval(() => {
-      this.taskQueue.addToFront()
+      this.taskQueue.addIfEmpty()
     }, fiveMinutes)
   }
 
