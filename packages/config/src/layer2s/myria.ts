@@ -60,7 +60,7 @@ export const myria: Layer2 = {
     links: {
       websites: ['https://myria.com/'],
       apps: ['https://market.x.immutable.com/'],
-      documentation: ['https://docs.starkware.co/starkex-docs-v2/'],
+      documentation: ['https://docs.starkware.co/starkex/index.html'],
       explorers: [],
       repositories: ['https://github.com/starkware-libs/starkex-contracts'],
       socialMedia: [
