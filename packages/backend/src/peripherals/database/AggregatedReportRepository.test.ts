@@ -17,7 +17,7 @@ describeDatabase(AggregatedReportRepository.name, (database) => {
   const PROJECT_A = ProjectId('project-a')
   const PROJECT_B = ProjectId('project-b')
 
-  beforeEach(async () => {
+  afterEach(async () => {
     await repository.deleteAll()
   })
 
