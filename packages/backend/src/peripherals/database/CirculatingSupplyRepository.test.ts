@@ -7,7 +7,7 @@ import {
   CirculatingSupplyRecord,
   CirculatingSupplyRepository,
 } from './CirculatingSupplyRepository'
-import { testDeletingArchivedRecords } from './shared/deleteArchivedRecords'
+import { testDeletingArchivedRecords } from './shared/deleteArchivedRecords.test'
 
 const START = UnixTime.fromDate(new Date('2022-05-17'))
 

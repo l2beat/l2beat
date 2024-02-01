@@ -7,7 +7,7 @@ import {
   BlockNumberRecord,
   BlockNumberRepository,
 } from './BlockNumberRepository'
-import { testDeletingArchivedRecords } from './shared/deleteArchivedRecords'
+import { testDeletingArchivedRecords } from './shared/deleteArchivedRecords.test'
 
 describeDatabase(BlockNumberRepository.name, (database) => {
   const repository = new BlockNumberRepository(database, Logger.SILENT)

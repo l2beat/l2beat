@@ -7,7 +7,7 @@ import {
   AggregatedReportRecord,
   AggregatedReportRepository,
 } from './AggregatedReportRepository'
-import { testDeletingArchivedRecords } from './shared/deleteArchivedRecords'
+import { testDeletingArchivedRecords } from './shared/deleteArchivedRecords.test'
 
 describeDatabase(AggregatedReportRepository.name, (database) => {
   const repository = new AggregatedReportRepository(database, Logger.SILENT)

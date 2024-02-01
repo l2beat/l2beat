@@ -4,7 +4,7 @@ import { expect } from 'earl'
 
 import { describeDatabase } from '../../test/database'
 import { ReportRecord, ReportRepository } from './ReportRepository'
-import { testDeletingArchivedRecords } from './shared/deleteArchivedRecords'
+import { testDeletingArchivedRecords } from './shared/deleteArchivedRecords.test'
 
 describeDatabase(ReportRepository.name, (database) => {
   const repository = new ReportRepository(database, Logger.SILENT)

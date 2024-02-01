@@ -4,7 +4,7 @@ import { expect } from 'earl'
 
 import { describeDatabase } from '../../test/database'
 import { PriceRecord, PriceRepository } from './PriceRepository'
-import { testDeletingArchivedRecords } from './shared/deleteArchivedRecords'
+import { testDeletingArchivedRecords } from './shared/deleteArchivedRecords.test'
 
 describeDatabase(PriceRepository.name, (database) => {
   const repository = new PriceRepository(database, Logger.SILENT)

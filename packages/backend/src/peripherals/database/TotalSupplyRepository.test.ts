@@ -3,7 +3,7 @@ import { AssetId, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { describeDatabase } from '../../test/database'
-import { testDeletingArchivedRecords } from './shared/deleteArchivedRecords'
+import { testDeletingArchivedRecords } from './shared/deleteArchivedRecords.test'
 import {
   TotalSupplyRecord,
   TotalSupplyRepository,

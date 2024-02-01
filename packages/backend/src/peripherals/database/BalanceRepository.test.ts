@@ -9,7 +9,7 @@ import { expect } from 'earl'
 
 import { describeDatabase } from '../../test/database'
 import { BalanceRecord, BalanceRepository } from './BalanceRepository'
-import { testDeletingArchivedRecords } from './shared/deleteArchivedRecords'
+import { testDeletingArchivedRecords } from './shared/deleteArchivedRecords.test'
 
 const START = UnixTime.fromDate(new Date('2022-05-17'))
 const mockBalance = (
