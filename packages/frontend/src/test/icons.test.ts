@@ -40,14 +40,6 @@ describe('icons', () => {
       })
     }
   })
-
-  describe('every icon has been tinified by script', () => {
-    for (const project of projects) {
-      const id = project.id.toString()
-
-      it(id, () => {})
-    }
-  })
 })
 
 function getTinifiedLogos() {
