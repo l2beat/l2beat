@@ -72,7 +72,7 @@ export const mode: Layer2 = opStack({
     ),
     ...discovery.getMultisigPermission(
       'ChallengerMultisig',
-      'This address is the permissioned challenger of the system. It can delete non finalized roots without going through the fault proof process.',
+      'This address is the permissioned challenger of the system. It can delete non finalized roots without going through the fault proof process. It is also designated as the Guardian.',
     ),
   ],
   nonTemplateContracts: [
