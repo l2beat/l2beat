@@ -1,4 +1,5 @@
 export * from './address'
+export * from './cacheAsyncFunction'
 export * from './divOrZero'
 export * from './formatLargeNumberShared'
 export * from './formatSeconds'

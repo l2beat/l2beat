@@ -171,6 +171,7 @@ export function createTvlModule(
     logger.info('Starting')
 
     priceUpdater.start()
+    tvlController.start()
 
     if (config.tvlCleanerEnabled) {
       tvlCleaner.start()
