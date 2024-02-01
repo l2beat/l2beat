@@ -34,7 +34,7 @@ describeDatabase(TotalSupplyRepository.name, (database) => {
     mockTotalSupply(TOTAL_SUPPLY, 1, ASSET_2, ChainId.ETHEREUM),
   ]
 
-  beforeEach(async () => {
+  afterEach(async () => {
     await repository.deleteAll()
   })
 
@@ -65,7 +65,6 @@ describeDatabase(TotalSupplyRepository.name, (database) => {
     })
 
     it('one project one asset', async () => {
-      await repository.deleteAll()
       const data = [
         mockTotalSupply(TOTAL_SUPPLY, 0, ASSET_1, ChainId.ETHEREUM),
         mockTotalSupply(TOTAL_SUPPLY, 1, ASSET_1, ChainId.ETHEREUM),
@@ -86,7 +85,6 @@ describeDatabase(TotalSupplyRepository.name, (database) => {
     })
 
     it('many projects many assets', async () => {
-      await repository.deleteAll()
       const data = [
         mockTotalSupply(TOTAL_SUPPLY, 0, ASSET_1, ChainId.ETHEREUM),
         mockTotalSupply(TOTAL_SUPPLY, 1, ASSET_1, ChainId.ETHEREUM),
@@ -213,6 +211,7 @@ describeDatabase(TotalSupplyRepository.name, (database) => {
   })
 
   it(TotalSupplyRepository.prototype.deleteAll.name, async () => {
+    await repository.addOrUpdateMany(DATA)
     await repository.deleteAll()
 
     const result = await repository.getAll()
@@ -222,8 +221,6 @@ describeDatabase(TotalSupplyRepository.name, (database) => {
 
   describe(TotalSupplyRepository.prototype.deleteHourlyUntil.name, () => {
     it('deletes hourly reports', async () => {
-      await repository.deleteAll()
-
       const start = UnixTime.now().toStartOf('day')
       const until = start.add(25, 'hours')
 
@@ -253,8 +250,6 @@ describeDatabase(TotalSupplyRepository.name, (database) => {
 
   describe(TotalSupplyRepository.prototype.deleteSixHourlyUntil.name, () => {
     it('deletes six hourly reports', async () => {
-      await repository.deleteAll()
-
       const start = UnixTime.now().toStartOf('day')
       const until = start.add(7, 'hours')
 
