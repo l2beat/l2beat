@@ -59,6 +59,7 @@ type AggregatedTvlResult = Result<
 >
 
 export class TvlController {
+  private cacheRequestPromise: Promise<unknown> | undefined = undefined
   private cachedTvlApi: TvlApiResponse | undefined = undefined
   private readonly taskQueue: TaskQueue<void>
 
@@ -76,7 +77,7 @@ export class TvlController {
   ) {
     this.logger = this.logger.for(this)
     this.taskQueue = new TaskQueue(
-      () => this.cacheTvlApiResponse(),
+      () => this.getTvlApiResponse().then(() => undefined),
       this.logger.for('taskQueue'),
       {
         metricsId: TvlController.name,
@@ -93,11 +94,11 @@ export class TvlController {
     }, fiveMinutes)
   }
 
-  async cacheTvlApiResponse() {
-    await this.getTvlApiResponse()
-  }
-
   async getCachedTvlApiResponse(): Promise<TvlResult> {
+    if (this.cacheRequestPromise) {
+      await this.cacheRequestPromise
+    }
+
     if (this.cachedTvlApi) {
       return {
         result: 'success',
@@ -105,7 +106,11 @@ export class TvlController {
       }
     }
 
-    return this.getTvlApiResponse()
+    const promise = this.getTvlApiResponse()
+    this.cacheRequestPromise = promise
+    const value = await promise
+    this.cacheRequestPromise = undefined
+    return value
   }
 
   /**
