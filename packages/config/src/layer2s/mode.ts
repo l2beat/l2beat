@@ -1,9 +1,9 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
+import { DERIVATION } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { opStack } from './templates/opStack'
 import { Layer2 } from './types'
-import { DERIVATION } from '../common'
 
 const discovery = new ProjectDiscovery('mode')
 
