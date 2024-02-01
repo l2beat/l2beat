@@ -92,7 +92,7 @@
   "portal": true,
   "publicgoodsnetwork": true,
   "pulseChain": true,
-  "rari": false,
+  "rari": true,
   "reddioex": true,
   "reddiozkvm": true,
   "ronin": true,
