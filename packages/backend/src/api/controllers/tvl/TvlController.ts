@@ -16,6 +16,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
+import { TaskQueue } from '../../../core/queue/TaskQueue'
 import { ReportProject } from '../../../core/reports/ReportProject'
 import { AggregatedReportRepository } from '../../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../../peripherals/database/AggregatedReportStatusRepository'
@@ -58,6 +59,9 @@ type AggregatedTvlResult = Result<
 >
 
 export class TvlController {
+  private cachedTvlApi: TvlApiResponse | undefined = undefined
+  private readonly taskQueue: TaskQueue<void>
+
   constructor(
     private readonly aggregatedReportRepository: AggregatedReportRepository,
     private readonly reportRepository: ReportRepository,
@@ -71,6 +75,37 @@ export class TvlController {
     private readonly options: TvlControllerOptions,
   ) {
     this.logger = this.logger.for(this)
+    this.taskQueue = new TaskQueue(
+      () => this.cacheTvlApiResponse(),
+      this.logger.for('taskQueue'),
+      {
+        metricsId: TvlController.name,
+      },
+    )
+  }
+
+  start() {
+    this.taskQueue.addToFront()
+
+    const fiveMinutes = 5 * 60 * 1000
+    setInterval(() => {
+      this.taskQueue.addToFront()
+    }, fiveMinutes)
+  }
+
+  async cacheTvlApiResponse() {
+    await this.getTvlApiResponse()
+  }
+
+  async getCachedTvlApiResponse(): Promise<TvlResult> {
+    if (this.cachedTvlApi) {
+      return {
+        result: 'success',
+        data: this.cachedTvlApi,
+      }
+    }
+
+    return this.getTvlApiResponse()
   }
 
   /**
@@ -135,6 +170,8 @@ export class TvlController {
       groupedLatestReports,
       this.projects.map((x) => x.projectId),
     )
+
+    this.cachedTvlApi = tvlApiResponse
 
     return {
       result: 'success',
