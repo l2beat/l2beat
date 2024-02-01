@@ -63,6 +63,12 @@ export function orbitStackCommon(
     'VALIDATOR_AFK_BLOCKS',
   )
 
+  const sequencerVersion = templateVars.discovery.getContractValue<string>(
+    'SequencerInbox',
+    'sequencerVersion',
+  )
+  const postsToExternalDA = sequencerVersion !== '0x00'
+
   return {
     id: ProjectId(templateVars.discovery.projectName),
     contracts: {
@@ -100,19 +106,24 @@ export function orbitStackCommon(
           },
         ],
       },
-      dataAvailability: {
-        ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
-        references: [
-          {
-            text: 'Sequencing followed by deterministic execution - Arbitrum documentation',
-            href: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/#sequencing-followed-by-deterministic-execution',
+      dataAvailability: postsToExternalDA
+        ? DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN
+        : {
+            ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
+            references: [
+              {
+                text: 'Sequencing followed by deterministic execution - Arbitrum documentation',
+                href: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/#sequencing-followed-by-deterministic-execution',
+              },
+              {
+                text: 'SequencerInbox.sol - Etherscan source code, addSequencerL2BatchFromOrigin function',
+                href: getCodeLink(
+                  templateVars.sequencerInbox,
+                  explorerLinkFormat,
+                ),
+              },
+            ],
           },
-          {
-            text: 'SequencerInbox.sol - Etherscan source code, addSequencerL2BatchFromOrigin function',
-            href: getCodeLink(templateVars.sequencerInbox, explorerLinkFormat),
-          },
-        ],
-      },
       operator: {
         ...OPERATOR.CENTRALIZED_SEQUENCER,
         references: [
@@ -216,6 +227,12 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
   )
   const selfSequencingDelay = maxTimeVariation[2]
 
+  const sequencerVersion = templateVars.discovery.getContractValue<string>(
+    'SequencerInbox',
+    'sequencerVersion',
+  )
+  const postsToExternalDA = sequencerVersion !== '0x00'
+
   return {
     type: 'layer3',
     ...orbitStackCommon(
@@ -225,8 +242,8 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     hostChain: templateVars.hostChain,
     display: {
       ...templateVars.display,
-      category: 'Optimistic Rollup',
       provider: 'Arbitrum Orbit',
+      category: postsToExternalDA ? 'Optimium' : 'Optimistic Rollup',
       dataAvailabilityMode: 'NotApplicable',
     },
     riskView: makeBridgeCompatible({
@@ -236,7 +253,9 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
           'Fraud proofs allow WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks.',
         sentiment: 'warning',
       },
-      dataAvailability: RISK_VIEW.DATA_ON_CHAIN_L2,
+      dataAvailability: postsToExternalDA
+        ? RISK_VIEW.DATA_EXTERNAL_DAC
+        : RISK_VIEW.DATA_ON_CHAIN_L2,
       exitWindow: RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelay),
       sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelay),
       proposerFailure:
@@ -275,36 +294,45 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
   )
   const selfSequencingDelay = maxTimeVariation[2]
 
+  const sequencerVersion = templateVars.discovery.getContractValue<string>(
+    'SequencerInbox',
+    'sequencerVersion',
+  )
+  const postsToExternalDA = sequencerVersion !== '0x00'
+
   return {
     type: 'layer2',
     ...orbitStackCommon(templateVars, ETHEREUM_EXPLORER_URL),
     display: {
       ...templateVars.display,
       provider: 'Arbitrum',
-      category: 'Optimistic Rollup',
-      dataAvailabilityMode: 'TxData',
-      warning: templateVars.display.warning,
+      category: postsToExternalDA ? 'Optimium' : 'Optimistic Rollup',
+      dataAvailabilityMode: postsToExternalDA ? 'NotApplicable' : 'TxData',
     },
-    stage: getStage({
-      stage0: {
-        callsItselfRollup: true,
-        stateRootsPostedToL1: true,
-        dataAvailabilityOnL1: true,
-        rollupNodeSourceAvailable: 'UnderReview',
-      },
-      stage1: {
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: false,
-        usersHave7DaysToExit: false,
-        usersCanExitWithoutCooperation: true,
-        securityCouncilProperlySetUp: false,
-      },
-      stage2: {
-        proofSystemOverriddenOnlyInCaseOfABug: false,
-        fraudProofSystemIsPermissionless: false,
-        delayWith30DExitWindow: false,
-      },
-    }),
+    stage: postsToExternalDA
+      ? {
+          stage: 'NotApplicable',
+        }
+      : getStage({
+          stage0: {
+            callsItselfRollup: true,
+            stateRootsPostedToL1: true,
+            dataAvailabilityOnL1: true,
+            rollupNodeSourceAvailable: 'UnderReview',
+          },
+          stage1: {
+            stateVerificationOnL1: true,
+            fraudProofSystemAtLeast5Outsiders: false,
+            usersHave7DaysToExit: false,
+            usersCanExitWithoutCooperation: true,
+            securityCouncilProperlySetUp: false,
+          },
+          stage2: {
+            proofSystemOverriddenOnlyInCaseOfABug: false,
+            fraudProofSystemIsPermissionless: false,
+            delayWith30DExitWindow: false,
+          },
+        }),
     riskView: makeBridgeCompatible({
       stateValidation: {
         value: 'Fraud proofs (INT)',
@@ -312,7 +340,9 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           'Fraud proofs allow WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks.',
         sentiment: 'warning',
       },
-      dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+      dataAvailability: postsToExternalDA
+        ? RISK_VIEW.DATA_EXTERNAL_DAC
+        : RISK_VIEW.DATA_ON_CHAIN,
       exitWindow: RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelay),
       sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelay),
       proposerFailure:

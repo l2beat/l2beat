@@ -23,7 +23,8 @@
     "test": "mocha --timeout 10000",
     "typecheck": "tsc --noEmit",
     "find-common-contracts": "ts-node --transpile-only src/tools/findCommonContracts.ts",
-    "update-diff-history": "ts-node --transpile-only src/tools/updateDiffHistory.ts"
+    "update-diff-history": "ts-node --transpile-only src/tools/updateDiffHistory.ts",
+    "powerdiff": "ts-node --transpile-only src/tools/powerdiff.ts"
   },
   "dependencies": {
     "@bugsnag/js": "^7.22.3",
@@ -32,11 +33,12 @@
     "@koa/router": "^12.0.0",
     "@l2beat/backend-tools": "^0.5.0",
     "@l2beat/config": "*",
-    "@l2beat/discovery": "0.37.0",
+    "@l2beat/discovery": "0.38.0",
     "@l2beat/discovery-types": "0.8.0",
     "@l2beat/shared": "*",
     "@l2beat/shared-pure": "*",
     "@l2beat/uif": "^0.2.3",
+    "ansi-to-html": "^0.7.2",
     "basic-auth": "^2.0.1",
     "chalk": "^4.1.2",
     "deep-diff": "^1.0.2",

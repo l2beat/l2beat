@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x9add5ea9290632cfcb71c7da24b5711ae9e16a1d
+
+# Diff at Wed, 31 Jan 2024 11:48:50 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2226ccb2f9affe507b9708f9072c87989d180e43 block: 18983662
+- current block number: 19126264
+
+## Description
+
+Updated the `programHash` and `configHash`.
+
+## Watched changes
+
+```diff
+    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+      values.configHash:
+-        "1946969884474626573154270293480115261427695072308490075958253509832033340430"
++        "2741190170141984203224468507008497105532196084369172236871397222510074358631"
+      values.programHash:
+-        "54878256403880350656938046611252303365750679698042371543935159963667935317"
++        "2479841346739966073527450029179698923866252973805981504232089731754042431018"
+    }
+```
+
 Generated with discovered.json: 0xb15a2532273ec56424a924c846c951de4ee51aaf
 
 # Diff at Thu, 11 Jan 2024 12:24:29 GMT:

@@ -38,7 +38,7 @@ export function Checkbox({
         defaultChecked={defaultChecked}
         {...rest}
       />
-      <CheckIcon className={cn('flex-shrink-0', checkIconClassName)} />
+      <CheckIcon className={cn('shrink-0', checkIconClassName)} />
       <span className="whitespace-pre">{label}</span>
     </label>
   )

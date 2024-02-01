@@ -151,10 +151,14 @@ describe('layer2s', () => {
       const layers2WithUrls = layer2s.flatMap((layer2) => {
         const { transactionApi } = layer2.config
 
-        if (transactionApi && 'url' in transactionApi && transactionApi.url) {
+        if (
+          transactionApi &&
+          'defaultUrl' in transactionApi &&
+          transactionApi.defaultUrl
+        ) {
           return {
             id: layer2.id,
-            url: transactionApi.url,
+            url: transactionApi.defaultUrl,
           }
         }
 

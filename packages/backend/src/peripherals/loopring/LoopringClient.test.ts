@@ -19,7 +19,11 @@ describe(LoopringClient.name, () => {
             }),
           ),
       })
-      const loopringClient = new LoopringClient(httpClient, Logger.SILENT)
+      const loopringClient = new LoopringClient(
+        httpClient,
+        Logger.SILENT,
+        'https://example.com',
+      )
 
       const result = await loopringClient.getBlock(42)
       expect(result).toEqual({
@@ -33,7 +37,11 @@ describe(LoopringClient.name, () => {
       const httpClient = mockObject<HttpClient>({
         fetch: async () => new Response(JSON.stringify({ foo: 'bar' })),
       })
-      const loopringClient = new LoopringClient(httpClient, Logger.SILENT)
+      const loopringClient = new LoopringClient(
+        httpClient,
+        Logger.SILENT,
+        'https://example.com',
+      )
 
       await expect(loopringClient.getBlock(1)).toBeRejectedWith(
         TypeError,
@@ -47,7 +55,11 @@ describe(LoopringClient.name, () => {
           return new Response('foo', { status: 400 })
         },
       })
-      const loopringClient = new LoopringClient(httpClient, Logger.SILENT)
+      const loopringClient = new LoopringClient(
+        httpClient,
+        Logger.SILENT,
+        'https://example.com',
+      )
       await expect(loopringClient.getBlock(1)).toBeRejectedWith(
         Error,
         'Http error 400: foo',
