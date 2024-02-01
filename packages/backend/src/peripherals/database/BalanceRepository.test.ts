@@ -40,7 +40,7 @@ describeDatabase(BalanceRepository.name, (database) => {
     mockBalance(HOLDER_A, 1, ASSET_1, BALANCE, ChainId.ETHEREUM),
   ]
 
-  beforeEach(async () => {
+  afterEach(async () => {
     await repository.deleteAll()
   })
 
