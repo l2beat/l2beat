@@ -49,7 +49,7 @@ export const mode: Layer2 = opStack({
   l2OutputOracle: discovery.getContract('L2OutputOracle'),
   portal: discovery.getContract('OptimismPortal'),
   //stateDerivation: DERIVATION.OPSTACK('MODE'),
-  isNodeAvailable: true,
+  isNodeAvailable: 'UnderReview',
   milestones: [
     {
       name: 'Mode Network Mainnet Launch',
