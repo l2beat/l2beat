@@ -44,11 +44,11 @@ export class TvlCleaner {
     for (const table of this.repositories) {
       this.logger.info(`Cleaning ${table.constructor.name}`)
       const hourly = await table.deleteHourlyUntil(hourlyDeletionBoundary)
+      this.logger.info(`Cleaned hourly ${table.constructor.name}`, { hourly })
       const sixHourly = await table.deleteSixHourlyUntil(
         sixHourlyDeletionBoundary,
       )
-      this.logger.info(`Cleaned ${table.constructor.name}`, {
-        hourly,
+      this.logger.info(`Cleaned sixHourly ${table.constructor.name}`, {
         sixHourly,
       })
     }
