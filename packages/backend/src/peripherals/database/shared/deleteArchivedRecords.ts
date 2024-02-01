@@ -40,15 +40,15 @@ export function _TVL_ONLY_deleteSixHourlyUntil(
   )
 }
 
-interface Repository {
+interface Repository<T> {
   deleteHourlyUntil: (timestamp: UnixTime) => Promise<number>
   deleteSixHourlyUntil: (timestamp: UnixTime) => Promise<number>
-  addMany: (records: unknown[]) => Promise<number>
-  getAll: () => Promise<unknown[]>
+  addMany: (records: T[]) => Promise<number>
+  getAll: () => Promise<T[]>
 }
 
 export function _TVL_ONLY_deletion_test<T>(
-  repository: Repository,
+  repository: Repository<T>,
   fakeRecord: (timestamp: UnixTime) => T,
 ) {
   it('deletes hourly records', async () => {
