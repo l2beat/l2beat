@@ -12,10 +12,6 @@ import { PriceRepository } from './PriceRepository'
 describeDatabase(BlockNumberRepository.name, (database) => {
   const repository = new BlockNumberRepository(database, Logger.SILENT)
 
-  beforeEach(async () => {
-    await repository.deleteAll()
-  })
-
   afterEach(async () => {
     await repository.deleteAll()
   })
