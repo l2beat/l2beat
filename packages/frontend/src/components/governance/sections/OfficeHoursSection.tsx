@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { GovernanceCard, GovernanceCardHeader } from '../GovernanceCard'
+import { OfficeHoursIllustration } from '../OfficeHoursIllustration'
 
 interface Props {
   className?: string
@@ -10,11 +11,11 @@ export function OfficeHoursSection({ className }: Props) {
   return (
     <GovernanceCard as="section" mobileFull type="purple" className={className}>
       <GovernanceCardHeader>Office Hours</GovernanceCardHeader>
-      <p className="text-balance mt-4 font-medium leading-normal">
+      <p className="mt-4 text-balance font-medium leading-normal">
         To promote transparency and communication as delegates, we’re hosting
         recurring Office Hours on Google Meets.
       </p>
-      <div className="mt-4 h-16 w-full bg-white bg-opacity-10" />
+      <OfficeHoursIllustration className="mt-4 w-full" />
       <p className="mt-4 leading-snug">
         During the Office Hours, anyone is able to reach L2BEAT’s governance
         team, which consists of <span className="underline">Kaereste</span>{' '}

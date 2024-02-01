@@ -6,6 +6,7 @@ import {
   Navbar,
   NavbarProps,
 } from '../../../../components'
+import { GovernanceHeaderIllustration } from '../../../../components/governance/GovernanceHeaderIllustration'
 import { GovernanceEventsSection } from '../../../../components/governance/sections/GovernanceEventsSections'
 import { OfficeHoursSection } from '../../../../components/governance/sections/OfficeHoursSection'
 import { OurApproachSection } from '../../../../components/governance/sections/OurApproachSection'
@@ -55,7 +56,7 @@ function Header(props: {
   delegatedProjects: GovernanceDelegatedProjectEntry[]
 }) {
   return (
-    <div className="bg-[#FFFFFF] px-4 py-[72px] dark:bg-zinc-900 lg:p-0">
+    <div className="bg-[#FFFFFF] px-4 py-[72px] dark:bg-zinc-900 lg:px-0 lg:py-10">
       <PageContent type="wider">
         <div className="flex items-center">
           <div className="leading-normal">
@@ -95,18 +96,7 @@ function Header(props: {
               please let us know and we’ll see what we can do.
             </p>
           </div>
-          <div className="hidden h-[548px] min-h-[548px] w-[585px] min-w-[585px] grow lg:block">
-            <img
-              className="hidden size-full dark:block"
-              src="/images/illustrations/governance-header-dark.png"
-              alt="L2BEAT Governance"
-            />
-            <img
-              className="size-full dark:hidden"
-              src="/images/illustrations/governance-header.png"
-              alt="L2BEAT Governance"
-            />
-          </div>
+          <GovernanceHeaderIllustration className="size-full min-w-[500px]" />
         </div>
       </PageContent>
     </div>
