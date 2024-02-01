@@ -193,6 +193,13 @@ export class AggregatedReportRepository extends BaseRepository {
     return rows.length
   }
 
+  async addMany(reports: AggregatedReportRecord[]) {
+    const rows = reports.map(toRow)
+    const knex = await this.knex()
+    await knex.batchInsert('aggregated_reports', rows, 10_000)
+    return rows.length
+  }
+
   async deleteAll() {
     const knex = await this.knex()
     return knex('aggregated_reports').delete()

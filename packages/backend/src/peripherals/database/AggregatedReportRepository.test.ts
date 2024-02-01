@@ -7,6 +7,7 @@ import {
   AggregatedReportRecord,
   AggregatedReportRepository,
 } from './AggregatedReportRepository'
+import { _TVL_ONLY_deletion_test } from './shared/deleteArchivedRecords'
 
 describeDatabase(AggregatedReportRepository.name, (database) => {
   const repository = new AggregatedReportRepository(database, Logger.SILENT)
@@ -278,67 +279,7 @@ describeDatabase(AggregatedReportRepository.name, (database) => {
     })
   })
 
-  describe(AggregatedReportRepository.prototype.deleteHourlyUntil.name, () => {
-    it('deletes hourly reports', async () => {
-      const start = UnixTime.now().toStartOf('day')
-      const until = start.add(25, 'hours')
-
-      const entries = []
-      for (
-        let i = start.toNumber();
-        i <= until.toNumber();
-        i += UnixTime.HOUR
-      ) {
-        entries.push(fakeAggregateReport({ timestamp: new UnixTime(i) }))
-      }
-
-      await repository.addOrUpdateMany(entries)
-      await repository.deleteHourlyUntil(until)
-      const results = await repository.getAll()
-
-      expect(results).toEqualUnsorted([
-        fakeAggregateReport({ timestamp: start }),
-        fakeAggregateReport({ timestamp: start.add(6, 'hours') }),
-        fakeAggregateReport({ timestamp: start.add(12, 'hours') }),
-        fakeAggregateReport({ timestamp: start.add(18, 'hours') }),
-        fakeAggregateReport({ timestamp: start.add(24, 'hours') }),
-        fakeAggregateReport({ timestamp: start.add(25, 'hours') }),
-      ])
-    })
-  })
-
-  describe(
-    AggregatedReportRepository.prototype.deleteSixHourlyUntil.name,
-    () => {
-      it('deletes six hourly reports', async () => {
-        const start = UnixTime.now().toStartOf('day')
-        const until = start.add(7, 'hours')
-
-        const entries = []
-        for (
-          let i = start.toNumber();
-          i <= until.toNumber();
-          i += UnixTime.HOUR
-        ) {
-          entries.push(fakeAggregateReport({ timestamp: new UnixTime(i) }))
-        }
-
-        await repository.addOrUpdateMany(entries)
-        await repository.deleteSixHourlyUntil(until)
-        const results = await repository.getAll()
-
-        expect(results).toEqualUnsorted([
-          fakeAggregateReport({ timestamp: start }),
-          fakeAggregateReport({ timestamp: start.add(1, 'hours') }),
-          fakeAggregateReport({ timestamp: start.add(2, 'hours') }),
-          fakeAggregateReport({ timestamp: start.add(3, 'hours') }),
-          fakeAggregateReport({ timestamp: start.add(4, 'hours') }),
-          fakeAggregateReport({ timestamp: start.add(5, 'hours') }),
-          fakeAggregateReport({ timestamp: start.add(7, 'hours') }),
-        ])
-      })
-    },
-  )
+  _TVL_ONLY_deletion_test(repository, fakeAggregateReportTimestamp)
 })
 
 function getResult(
@@ -398,4 +339,10 @@ function fakeAggregateReport(
     reportType: 'TVL',
     ...report,
   }
+}
+
+function fakeAggregateReportTimestamp(
+  timestamp: UnixTime,
+): AggregatedReportRecord {
+  return fakeAggregateReport({ timestamp })
 }

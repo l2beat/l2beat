@@ -109,14 +109,5 @@ function fakeReport(report?: Partial<ReportRecord>): ReportRecord {
 }
 
 function fakeReportTimestamp(timestamp: UnixTime): ReportRecord {
-  return {
-    timestamp,
-    projectId: ProjectId('fake-project'),
-    asset: AssetId('fake-asset'),
-    reportType: 'CBV',
-    chainId: ChainId.ETHEREUM,
-    amount: 1234n,
-    usdValue: 1234n,
-    ethValue: 1234n,
-  }
+  return fakeReport({ timestamp })
 }
