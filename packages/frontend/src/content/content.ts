@@ -19,7 +19,9 @@ const events = {
   schema: z.discriminatedUnion('type', [
     z.object({
       type: z.literal('one-time'),
+      highlighted: z.boolean().optional(),
       title: z.string(),
+      subtitle: z.string().optional(),
       startDate: z.coerce.date(),
       endDate: z.coerce.date(),
       location: z.string(),
@@ -27,7 +29,9 @@ const events = {
     }),
     z.object({
       type: z.literal('recurring'),
+      highlighted: z.boolean().optional(),
       title: z.string(),
+      subtitle: z.string().optional(),
       cancelledAt: z.array(z.coerce.date()).optional(),
       startDate: z.coerce.date(),
       endDate: z.coerce.date().optional(),

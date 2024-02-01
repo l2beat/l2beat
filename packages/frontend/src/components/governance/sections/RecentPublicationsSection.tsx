@@ -33,7 +33,13 @@ export function RecentPublicationsSection({ publications, className }: Props) {
 
 function ExploreAllButton({ className }: { className?: string }) {
   return (
-    <Button as="a" className={className} href="/governance/publications">
+    <Button
+      as="a"
+      className={className}
+      variant="purple"
+      size="sm"
+      href="/governance/publications"
+    >
       Explore all publications
     </Button>
   )

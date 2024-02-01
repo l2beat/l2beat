@@ -33,6 +33,7 @@ export function ExpandableContainer(props: ExpandableContainerProps) {
       <Button
         data-role="expandable-container-button"
         className="mx-auto mt-1 flex w-min gap-2.5"
+        variant="purple"
       >
         <span
           data-role="expandable-container-button-text"

@@ -11,11 +11,11 @@ export function OurMissionSection({ className }: Props) {
   return (
     <GovernanceCard as="section" mobileFull className={className}>
       <GovernanceCardHeader>Our Mission</GovernanceCardHeader>
-      <p className="mt-6 leading-snug">
+      <p className="mt-6 text-base md:text-sm">
         At L2BEAT we believe that crypto is the new infrastructure for the
         future financial system. As such, we believe that in order for it to be
         successful, it needs to be:
-        <ul className="ml-6 mt-2 list-disc leading-snug">
+        <ul className="ml-6 mt-2 list-disc text-base md:text-sm">
           <li>
             Permissionless, no one should need a third party's permission to
             join the network,
@@ -48,7 +48,7 @@ export function OurMissionSection({ className }: Props) {
       </p>
       <div className="mt-6 flex gap-3 rounded-lg bg-[#3A1929] p-4">
         <HeartIcon className="shrink-0" />
-        <span className="text-balance font-medium">
+        <span className="text-balance text-base font-medium md:text-sm">
           We believe that right now the best ecosystem where those values could
           be represented and cherished is Ethereum together with its L2s. While
           we respect and value other blockchains and people building on top of

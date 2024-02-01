@@ -36,6 +36,6 @@ export function getProps(config: Config): Wrapped<GovernancePageProps> {
 
 function getEvents(events: ContentEntry<'events'>[]) {
   return getGovernanceEventEntries(events)
-    .filter((event) => event.status === 'upcoming')
-    .slice(0, 10)
+    .filter((event) => event.startDate.getTime() > Date.now())
+    .slice(0, 8)
 }

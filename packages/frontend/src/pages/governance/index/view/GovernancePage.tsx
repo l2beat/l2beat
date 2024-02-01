@@ -6,8 +6,9 @@ import {
   Navbar,
   NavbarProps,
 } from '../../../../components'
+import { FullPageHeader } from '../../../../components/FullPageHeader'
 import { GovernanceHeaderIllustration } from '../../../../components/governance/GovernanceHeaderIllustration'
-import { GovernanceEventsSection } from '../../../../components/governance/sections/GovernanceEventsSections'
+import { GovernanceEventsSection } from '../../../../components/governance/sections/GovernanceEventsSection'
 import { OfficeHoursSection } from '../../../../components/governance/sections/OfficeHoursSection'
 import { OurApproachSection } from '../../../../components/governance/sections/OurApproachSection'
 import { OurMissionSection } from '../../../../components/governance/sections/OurMissionSection'
@@ -33,7 +34,7 @@ export function GovernancePage(props: GovernancePageProps) {
       <Navbar {...props.navbar} />
       <Header delegatedProjects={props.delegatedProjects} />
       <PageContent type="wider">
-        <main className="mt-20 grid md:grid-cols-8 md:gap-8">
+        <main className="grid md:mt-20 md:grid-cols-8 md:gap-8 [&>*:nth-child(odd)]:bg-transparent md:[&>*:nth-child(odd)]:bg-gray-100 md:[&>*:nth-child(odd)]:dark:dark:bg-zinc-900">
           <RecentPublicationsSection
             publications={props.publications}
             className="md:col-span-5"
@@ -47,7 +48,7 @@ export function GovernancePage(props: GovernancePageProps) {
           <OurMissionSection className="md:col-span-4" />
         </main>
       </PageContent>
-      <Footer {...props.footer} />
+      <Footer {...props.footer} className="mt-0 md:mt-20" />
     </>
   )
 }
@@ -56,49 +57,47 @@ function Header(props: {
   delegatedProjects: GovernanceDelegatedProjectEntry[]
 }) {
   return (
-    <div className="bg-[#FFFFFF] px-4 py-[72px] dark:bg-zinc-900 lg:px-0 lg:py-10">
-      <PageContent type="wider">
-        <div className="flex items-center">
-          <div className="leading-normal">
-            <h1 className="text-6xl font-bold">Governance</h1>
-            <p className="mt-6 text-balance">
-              By delegating your governance votes to L2BEAT, you're supporting
-              our mission to protect the interests of the Ethereum community and
-              uphold our shared values. Together, we can lead the L2 ecosystem
-              towards a safer, more secure decentralized future.
-            </p>
+    <FullPageHeader>
+      <div className="flex items-center gap-10">
+        <div className="max-w-[585px] leading-normal">
+          <h1 className="text-5xl font-bold md:text-6xl">Governance</h1>
+          <p className="mt-6 text-lg md:text-base">
+            By delegating your governance votes to L2BEAT, you're supporting our
+            mission to protect the interests of the Ethereum community and
+            uphold our shared values. Together, we can lead the L2 ecosystem
+            towards a safer, more secure decentralized future.
+          </p>
 
-            <div className="mt-6">
-              <span className="text-sm text-purple-100 dark:text-pink-200">
-                DELEGATE YOUR TOKENS
-              </span>
-              <div className="mt-2 flex flex-col gap-2 md:flex-row md:flex-wrap">
-                {props.delegatedProjects.map((delegatedProject) => (
-                  <Link
-                    key={delegatedProject.id}
-                    className="flex items-center justify-center gap-1.5 rounded-lg border border-gray-400 bg-gray-100 py-3 transition-colors duration-[250] hover:bg-gray-200 dark:border-zinc-500 dark:bg-zinc-800 dark:hover:bg-zinc-900 md:px-3 md:py-1"
-                    textClassName="text-sm font-medium"
-                    href={delegatedProject.link}
-                    underline={false}
-                  >
-                    <img
-                      className="size-5"
-                      src={`/icons/${delegatedProject.id}.png`}
-                    />
-                    {delegatedProject.name}
-                    <OutLinkIcon className="fill-current" />
-                  </Link>
-                ))}
-              </div>
+          <div className="mt-6">
+            <span className="text-sm text-purple-100 dark:text-pink-200">
+              DELEGATE YOUR TOKENS
+            </span>
+            <div className="mt-2 flex flex-col gap-2 md:flex-row md:flex-wrap">
+              {props.delegatedProjects.map((delegatedProject) => (
+                <Link
+                  key={delegatedProject.id}
+                  className="flex items-center justify-center gap-1.5 rounded-lg border border-gray-400 bg-gray-100 py-3 transition-colors duration-[250] hover:bg-gray-200 dark:border-zinc-500 dark:bg-zinc-800 dark:hover:bg-zinc-900 md:px-3 md:py-1"
+                  textClassName="text-sm font-medium"
+                  href={delegatedProject.link}
+                  underline={false}
+                >
+                  <img
+                    className="size-5"
+                    src={`/icons/${delegatedProject.id}.png`}
+                  />
+                  {delegatedProject.name}
+                  <OutLinkIcon className="fill-current" />
+                </Link>
+              ))}
             </div>
-            <p className="mt-6">
-              If you’d like to see us act as a delegate in another protocol,
-              please let us know and we’ll see what we can do.
-            </p>
           </div>
-          <GovernanceHeaderIllustration className="size-full min-w-[500px]" />
+          <p className="mt-6 text-xs md:text-sm">
+            If you’d like to see us act as a delegate in another protocol,
+            please let us know and we’ll see what we can do.
+          </p>
         </div>
-      </PageContent>
-    </div>
+        <GovernanceHeaderIllustration className="hidden size-full min-w-[500px] lg:block" />
+      </div>
+    </FullPageHeader>
   )
 }

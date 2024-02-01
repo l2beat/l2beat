@@ -6,10 +6,12 @@ import { ContentEntry } from '../../content/getContent'
 
 export interface GovernanceEventEntry {
   title: string
+  subtitle: string | undefined
   link: string
   location: string
-  date: string
-  status: 'upcoming' | 'past'
+  startDate: Date
+  displayDate: string
+  highlighted: boolean | undefined
 }
 
 type OneTimeEvent = ContentEntry<'events'> & {
@@ -32,10 +34,12 @@ export function getGovernanceEventEntries(
 function getGovernanceEventEntry(event: OneTimeEvent): GovernanceEventEntry {
   return {
     title: event.data.title,
+    subtitle: event.data.subtitle,
     link: event.data.link,
     location: event.data.location,
-    date: getNiceEventDate(event),
-    status: event.data.startDate.getTime() > Date.now() ? 'upcoming' : 'past',
+    highlighted: event.data.highlighted,
+    startDate: event.data.startDate,
+    displayDate: getNiceEventDate(event),
   }
 }
 
@@ -94,8 +98,10 @@ function getEventForWeek(
     data: {
       type: 'one-time' as const,
       title: event.data.title,
+      subtitle: event.data.subtitle,
       startDate,
       endDate,
+      highlighted: event.data.highlighted,
       location: event.data.location,
       link: event.data.link,
     },

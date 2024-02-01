@@ -3,6 +3,7 @@
   "title": "Governance Brunch",
   "startDate": "2023-12-04",
   "endDate": "2024-02-11",
+  "cancelledAt": ["2023-12-09"],
   "futureEventsCount": 4,
   "dayOfWeek": 6,
   "startHour": 11,
