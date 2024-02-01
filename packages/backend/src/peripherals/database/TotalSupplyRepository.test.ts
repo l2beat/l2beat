@@ -3,6 +3,7 @@ import { AssetId, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { describeDatabase } from '../../test/database'
+import { testDeletingArchivedRecords } from './shared/deleteArchivedRecords.test'
 import {
   TotalSupplyRecord,
   TotalSupplyRepository,
@@ -34,13 +35,14 @@ describeDatabase(TotalSupplyRepository.name, (database) => {
     mockTotalSupply(TOTAL_SUPPLY, 1, ASSET_2, ChainId.ETHEREUM),
   ]
 
-  beforeEach(async () => {
+  afterEach(async () => {
     await repository.deleteAll()
-    await repository.addOrUpdateMany(DATA)
   })
 
   describe(TotalSupplyRepository.prototype.getByTimestamp.name, () => {
     it('returns matching data for given timestamp', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       const additionalData = [
         mockTotalSupply(TOTAL_SUPPLY, 0, AssetId('asset-a'), ChainId.ETHEREUM),
         mockTotalSupply(TOTAL_SUPPLY, 0, AssetId('asset-b'), ChainId.ETHEREUM),
@@ -54,6 +56,8 @@ describeDatabase(TotalSupplyRepository.name, (database) => {
     })
 
     it('returns empty list if no data exists for given timestamp', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       const result = await repository.getByTimestamp(
         ChainId.ETHEREUM,
         START.add(1, 'days'),
@@ -62,7 +66,6 @@ describeDatabase(TotalSupplyRepository.name, (database) => {
     })
 
     it('one project one asset', async () => {
-      await repository.deleteAll()
       const data = [
         mockTotalSupply(TOTAL_SUPPLY, 0, ASSET_1, ChainId.ETHEREUM),
         mockTotalSupply(TOTAL_SUPPLY, 1, ASSET_1, ChainId.ETHEREUM),
@@ -83,7 +86,6 @@ describeDatabase(TotalSupplyRepository.name, (database) => {
     })
 
     it('many projects many assets', async () => {
-      await repository.deleteAll()
       const data = [
         mockTotalSupply(TOTAL_SUPPLY, 0, ASSET_1, ChainId.ETHEREUM),
         mockTotalSupply(TOTAL_SUPPLY, 1, ASSET_1, ChainId.ETHEREUM),
@@ -114,6 +116,8 @@ describeDatabase(TotalSupplyRepository.name, (database) => {
     })
 
     it('take chainId into consideration', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       const resultEth = await repository.getByTimestamp(ChainId.ETHEREUM, START)
       expect(resultEth).toEqual([DATA[0]])
 
@@ -124,6 +128,8 @@ describeDatabase(TotalSupplyRepository.name, (database) => {
 
   describe(TotalSupplyRepository.prototype.addOrUpdateMany.name, () => {
     it('new rows only', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       const newRows: TotalSupplyRecord[] = [
         {
           totalSupply: TOTAL_SUPPLY,
@@ -145,6 +151,8 @@ describeDatabase(TotalSupplyRepository.name, (database) => {
     })
 
     it('existing rows only', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       const existingRows: TotalSupplyRecord[] = [
         {
           timestamp: DATA[0].timestamp,
@@ -166,6 +174,8 @@ describeDatabase(TotalSupplyRepository.name, (database) => {
     })
 
     it('mixed: existing and new rows', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       const mixedRows: TotalSupplyRecord[] = [
         {
           timestamp: DATA[1].timestamp,
@@ -187,21 +197,37 @@ describeDatabase(TotalSupplyRepository.name, (database) => {
     })
 
     it('skips empty row modification', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       await expect(repository.addOrUpdateMany([])).not.toBeRejected()
     })
   })
 
   it(TotalSupplyRepository.prototype.getAll.name, async () => {
+    await repository.addOrUpdateMany(DATA)
+
     const result = await repository.getAll()
 
     expect(result).toEqual(DATA)
   })
 
   it(TotalSupplyRepository.prototype.deleteAll.name, async () => {
+    await repository.addOrUpdateMany(DATA)
     await repository.deleteAll()
 
     const result = await repository.getAll()
 
     expect(result).toEqual([])
   })
+
+  testDeletingArchivedRecords(repository, fakeTotalSupply)
 })
+
+function fakeTotalSupply(timestamp: UnixTime): TotalSupplyRecord {
+  return {
+    timestamp,
+    totalSupply: 0n,
+    assetId: AssetId('fake'),
+    chainId: ChainId.ARBITRUM,
+  }
+}

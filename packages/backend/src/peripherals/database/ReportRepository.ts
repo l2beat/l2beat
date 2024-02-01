@@ -12,14 +12,16 @@ import { ReportRow } from 'knex/types/tables'
 
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
+import {
+  deleteHourlyUntil,
+  deleteSixHourlyUntil,
+} from './shared/deleteArchivedRecords'
 
 export interface ReportRecord {
   timestamp: UnixTime
   projectId: ProjectId
   asset: AssetId
   chainId: ChainId
-  // TODO: Index this column when we start querying by it.
-  // TODO: Rename
   reportType: ReportType
   amount: bigint
   usdValue: bigint
@@ -65,21 +67,24 @@ export class ReportRepository extends BaseRepository {
   }
 
   async addOrUpdateMany(reports: ReportRecord[]) {
-    const timestampsMatch = reports.every((r) =>
-      r.timestamp.equals(reports[0].timestamp),
-    )
     const chainIdsMatch = reports.every((r) => r.chainId === reports[0].chainId)
-    assert(timestampsMatch, 'Timestamps must match')
     assert(chainIdsMatch, 'Chain Ids must match')
 
     await this.runInTransaction(async (trx) => {
       for (let i = 0; i < reports.length; i += BATCH_SIZE) {
-        // Can't be two or more updaters on the chain because it will break the logic
         await this._addOrUpdateMany(reports.slice(i, i + BATCH_SIZE), trx)
       }
     })
 
     return reports.length
+  }
+
+  async addMany(reports: ReportRecord[]) {
+    const rows = reports.map(toRow)
+    const knex = await this.knex()
+    await knex.batchInsert('reports', rows, 10_000)
+
+    return rows.length
   }
 
   private async _addOrUpdateMany(
@@ -166,15 +171,14 @@ export class ReportRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  private _getByProjectAndAssetQuery(
-    knex: Knex,
-    projectId: ProjectId,
-    assetId: AssetId,
-  ) {
-    return knex('reports')
-      .where('asset_id', assetId.toString())
-      .andWhere('project_id', projectId.toString())
-      .orderBy('unix_timestamp')
+  async deleteHourlyUntil(timestamp: UnixTime) {
+    const knex = await this.knex()
+    return deleteHourlyUntil(knex, 'reports', timestamp)
+  }
+
+  async deleteSixHourlyUntil(timestamp: UnixTime) {
+    const knex = await this.knex()
+    return deleteSixHourlyUntil(knex, 'reports', timestamp)
   }
 }
 

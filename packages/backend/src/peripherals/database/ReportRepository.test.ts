@@ -4,6 +4,7 @@ import { expect } from 'earl'
 
 import { describeDatabase } from '../../test/database'
 import { ReportRecord, ReportRepository } from './ReportRepository'
+import { testDeletingArchivedRecords } from './shared/deleteArchivedRecords.test'
 
 describeDatabase(ReportRepository.name, (database) => {
   const repository = new ReportRepository(database, Logger.SILENT)
@@ -13,9 +14,8 @@ describeDatabase(ReportRepository.name, (database) => {
 
   const PROJECT_A = ProjectId('project-a')
   const PROJECT_B = ProjectId('project-b')
-  const PROJECT_C = ProjectId('project-c')
 
-  beforeEach(async () => {
+  afterEach(async () => {
     await repository.deleteAll()
   })
 
@@ -46,16 +46,6 @@ describeDatabase(ReportRepository.name, (database) => {
 
     it('handles empty array', async () => {
       await expect(repository.addOrUpdateMany([])).not.toBeRejected()
-    })
-
-    it('throws if timestamps do not match', async () => {
-      await expect(
-        repository.addOrUpdateMany([
-          fakeReport({ projectId: PROJECT_A, timestamp: TIME_0 }),
-          fakeReport({ projectId: PROJECT_B, timestamp: TIME_0 }),
-          fakeReport({ projectId: PROJECT_C, timestamp: TIME_1 }),
-        ]),
-      ).toBeRejectedWith('Assertion Error: Timestamps must match')
     })
 
     it('batches insert', async () => {
@@ -100,6 +90,8 @@ describeDatabase(ReportRepository.name, (database) => {
       expect(results).toEqual([])
     })
   })
+
+  testDeletingArchivedRecords(repository, fakeReportTimestamp)
 })
 
 function fakeReport(report?: Partial<ReportRecord>): ReportRecord {
@@ -114,4 +106,8 @@ function fakeReport(report?: Partial<ReportRecord>): ReportRecord {
     ethValue: 1234n,
     ...report,
   }
+}
+
+function fakeReportTimestamp(timestamp: UnixTime): ReportRecord {
+  return fakeReport({ timestamp })
 }

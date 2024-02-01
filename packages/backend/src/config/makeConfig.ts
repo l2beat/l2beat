@@ -139,6 +139,7 @@ export function makeConfig(
       chains: [getChainDiscoveryConfig(env, 'ethereum')],
     },
     chains: chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
+    tvlCleanerEnabled: flags.isEnabled('tvlCleaner'),
     flags: flags.getResolved(),
   }
 }

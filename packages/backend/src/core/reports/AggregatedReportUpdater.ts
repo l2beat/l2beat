@@ -58,7 +58,7 @@ export class AggregatedReportUpdater {
     }
 
     this.logger.info('Started')
-    return this.clock.onEveryHour((timestamp) => {
+    return this.clock._TVL_ONLY_onEveryHour((timestamp) => {
       if (!this.knownSet.has(timestamp.toNumber())) {
         // we add to front to sync from newest to oldest
         this.taskQueue.addToFront(timestamp)

@@ -28,6 +28,7 @@ export interface Config {
   readonly statusEnabled: boolean
   readonly chains: { name: string; chainId: ChainId }[]
   readonly flags: ResolvedFeatureFlag[]
+  readonly tvlCleanerEnabled: boolean
 }
 
 export type LoggerConfig = Pick<LoggerOptions, 'logLevel' | 'format'> &

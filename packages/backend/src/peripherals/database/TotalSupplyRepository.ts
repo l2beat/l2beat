@@ -4,6 +4,10 @@ import { TotalSupplyRow } from 'knex/types/tables'
 
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
+import {
+  deleteHourlyUntil,
+  deleteSixHourlyUntil,
+} from './shared/deleteArchivedRecords'
 
 export interface TotalSupplyRecord {
   timestamp: UnixTime
@@ -32,17 +36,19 @@ export class TotalSupplyRepository extends BaseRepository {
   }
 
   async addOrUpdateMany(totalSupplies: TotalSupplyRecord[]) {
-    this.logger.info('addOrUpdateMany', {
-      chainId: totalSupplies[0].chainId.toString(),
-      rows: totalSupplies.length,
-    })
-
     const rows = totalSupplies.map(toRow)
     const knex = await this.knex()
     await knex('total_supplies')
       .insert(rows)
       .onConflict(['chain_id', 'unix_timestamp', 'asset_id'])
       .merge()
+    return rows.length
+  }
+
+  async addMany(totalSupplies: TotalSupplyRecord[]) {
+    const rows = totalSupplies.map(toRow)
+    const knex = await this.knex()
+    await knex.batchInsert('total_supplies', rows, 10_000)
     return rows.length
   }
 
@@ -55,6 +61,16 @@ export class TotalSupplyRepository extends BaseRepository {
   async deleteAll() {
     const knex = await this.knex()
     return knex('total_supplies').delete()
+  }
+
+  async deleteHourlyUntil(timestamp: UnixTime) {
+    const knex = await this.knex()
+    return deleteHourlyUntil(knex, 'total_supplies', timestamp)
+  }
+
+  async deleteSixHourlyUntil(timestamp: UnixTime) {
+    const knex = await this.knex()
+    return deleteSixHourlyUntil(knex, 'total_supplies', timestamp)
   }
 }
 

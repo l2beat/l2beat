@@ -19,6 +19,11 @@ export class UnixTime {
 
   static SIX_HOURS = 6 * this.HOUR
 
+  /**
+   * Static instance for test purposes, in most cases indicates that the timestamp is not important in this test case.
+   */
+  static ZERO = new UnixTime(0)
+
   static now() {
     return UnixTime.fromDate(new Date())
   }
