@@ -107,7 +107,7 @@ export function orbitStackCommon(
         ],
       },
       dataAvailability: postsToExternalDA
-        ? DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN
+        ? DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN // TODO: update so it depends on the DAC threshold and size
         : {
             ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
             references: [
@@ -138,7 +138,7 @@ export function orbitStackCommon(
         description:
           FORCE_TRANSACTIONS.CANONICAL_ORDERING.description +
           ' ' +
-          VALUES.ARBITRUM.getProposerFailureString(validatorAfkBlocks), // TODO
+          VALUES.ARBITRUM.getProposerFailureString(validatorAfkBlocks),
         references: [
           {
             text: 'SequencerInbox.sol - Etherscan source code, forceInclusion function',
