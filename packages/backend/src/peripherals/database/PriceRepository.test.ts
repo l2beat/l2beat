@@ -4,6 +4,7 @@ import { expect } from 'earl'
 
 import { describeDatabase } from '../../test/database'
 import { PriceRecord, PriceRepository } from './PriceRepository'
+import { _TVL_ONLY_deletion_test } from './shared/deleteArchivedRecords'
 
 describeDatabase(PriceRepository.name, (database) => {
   const repository = new PriceRepository(database, Logger.SILENT)
@@ -193,71 +194,13 @@ describeDatabase(PriceRepository.name, (database) => {
     })
   })
 
-  describe(PriceRepository.prototype.deleteHourlyUntil.name, () => {
-    it('deletes hourly reports', async () => {
-      const start = UnixTime.now().toStartOf('day')
-      const until = start.add(25, 'hours')
-
-      const entries = []
-      for (
-        let i = start.toNumber();
-        i <= until.toNumber();
-        i += UnixTime.HOUR
-      ) {
-        entries.push(fakePriceRecord({ timestamp: new UnixTime(i) }))
-      }
-
-      await repository.addMany(entries)
-      await repository.deleteHourlyUntil(until)
-      const results = await repository.getAll()
-
-      expect(results).toEqualUnsorted([
-        fakePriceRecord({ timestamp: start }),
-        fakePriceRecord({ timestamp: start.add(6, 'hours') }),
-        fakePriceRecord({ timestamp: start.add(12, 'hours') }),
-        fakePriceRecord({ timestamp: start.add(18, 'hours') }),
-        fakePriceRecord({ timestamp: start.add(24, 'hours') }),
-        fakePriceRecord({ timestamp: start.add(25, 'hours') }),
-      ])
-    })
-  })
-
-  describe(PriceRepository.prototype.deleteSixHourlyUntil.name, () => {
-    it('deletes six hourly reports', async () => {
-      const start = UnixTime.now().toStartOf('day')
-      const until = start.add(7, 'hours')
-
-      const entries = []
-      for (
-        let i = start.toNumber();
-        i <= until.toNumber();
-        i += UnixTime.HOUR
-      ) {
-        entries.push(fakePriceRecord({ timestamp: new UnixTime(i) }))
-      }
-
-      await repository.addMany(entries)
-      await repository.deleteSixHourlyUntil(until)
-      const results = await repository.getAll()
-
-      expect(results).toEqualUnsorted([
-        fakePriceRecord({ timestamp: start }),
-        fakePriceRecord({ timestamp: start.add(1, 'hours') }),
-        fakePriceRecord({ timestamp: start.add(2, 'hours') }),
-        fakePriceRecord({ timestamp: start.add(3, 'hours') }),
-        fakePriceRecord({ timestamp: start.add(4, 'hours') }),
-        fakePriceRecord({ timestamp: start.add(5, 'hours') }),
-        fakePriceRecord({ timestamp: start.add(7, 'hours') }),
-      ])
-    })
-  })
+  _TVL_ONLY_deletion_test(repository, fakePriceRecord)
 })
 
-function fakePriceRecord(report?: Partial<PriceRecord>): PriceRecord {
+function fakePriceRecord(timestamp: UnixTime): PriceRecord {
   return {
-    timestamp: UnixTime.ZERO,
+    timestamp,
     assetId: AssetId.ETH,
     priceUsd: 0,
-    ...report,
   }
 }
