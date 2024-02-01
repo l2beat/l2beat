@@ -1,8 +1,8 @@
 {
   "name": "nova",
   "chain": "ethereum",
-  "blockNumber": 19126289,
-  "configHash": "0x41c7ed71e75ef2c95cae9160270bc06eee0f17fee6f989a2cdcfb0cb89eb4c3a",
+  "blockNumber": 19132347,
+  "configHash": "0xa581a9684c36a7b5c5f59c51d4be28ece4e2b8c5aa461992cf14206e7593d03d",
   "version": 3,
   "contracts": [
     {
@@ -38,18 +38,23 @@
       "implementations": ["0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9"],
       "sinceTimestamp": 1656050353,
       "values": {
-        "batchCount": 28157,
+        "batchCount": 28207,
         "batchPosters": [
           "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
           "0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc"
         ],
         "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
+        "dacKeyset": {
+          "threshold": 2,
+          "keyCount": 6
+        },
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
+        "keySetUpdates": 11,
         "maxTimeVariation": [5760, 12, 86400, 3600],
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "sequencerVersion": "0x88",
-        "totalDelayedMessagesRead": 269001
+        "totalDelayedMessagesRead": 269066
       },
       "derivedName": "SequencerInbox"
     },
@@ -404,15 +409,15 @@
           "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
         ],
         "allowedOutboxList": ["0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
-        "delayedMessageCount": 269003,
+        "delayedMessageCount": 269068,
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "sequencerMessageCount": 28157,
-        "sequencerReportedSubMessageCount": 44300006
+        "sequencerMessageCount": 28207,
+        "sequencerReportedSubMessageCount": 44537755
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "ValidatorOwnerMultisig",
       "address": "0xC234E41AE2cb00311956Aa7109fC801ae8c80941",
       "upgradeability": {
         "type": "gnosis safe",
@@ -433,9 +438,10 @@
           "0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe"
         ],
         "getThreshold": 4,
-        "nonce": 179,
+        "nonce": 180,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "Inbox",
@@ -642,12 +648,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 13608,
+        "firstUnresolvedNode": 13628,
         "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "isERC20Enabled": false,
         "lastStakeBlock": 17257726,
-        "latestConfirmed": 13607,
-        "latestNodeCreated": 13760,
+        "latestConfirmed": 13627,
+        "latestNodeCreated": 13781,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",

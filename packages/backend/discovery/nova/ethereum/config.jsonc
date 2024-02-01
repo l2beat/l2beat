@@ -15,7 +15,8 @@
     "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560": "ProxyAdmin 3",
     "0x97f63339374fCe157Aa8Ee27830172d2AF76A786": "L1DaiGateway",
     "0xFb209827c58283535b744575e11953DCC4bEAD88": "RollupProxy",
-    "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b": "SequencerInbox"
+    "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b": "SequencerInbox",
+    "0xC234E41AE2cb00311956Aa7109fC801ae8c80941": "ValidatorOwnerMultisig"
   },
   "overrides": {
     "ValidatorUtils": {
@@ -71,6 +72,16 @@
       "fields": {
         "sequencerVersion": {
           "type": "arbitrumSequencerVersion"
+        },
+        "keySetUpdates": {
+          "type": "eventCount",
+          "topics": [
+            // SetValidKeyset(bytes32,bytes)
+            "0xabca9b7986bc22ad0160eb0cb88ae75411eacfba4052af0b457a9335ef655722"
+          ]
+        },
+        "dacKeyset": {
+          "type": "arbitrumDACKeyset"
         },
         "batchPosters": {
           "type": "arbitrumActors",
@@ -131,6 +142,9 @@
         "l2Counterpart",
         "l2Dai"
       ]
+    },
+    "ValidatorOwnerMultisig": {
+      "ignoreInWatchMode": ["nonce"]
     }
   }
 }

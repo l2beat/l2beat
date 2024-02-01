@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x1996dc2a0216f47dd9b44fedcdc75942e9d7a294
+Generated with discovered.json: 0x11137089528e466103478529e9825c95fb2f9c20
 
-# Diff at Wed, 31 Jan 2024 11:53:50 GMT:
+# Diff at Thu, 01 Feb 2024 08:18:12 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@74040c3a8f43c630b3d31cc8376e84f5f9acda5c block: 18564156
-- current block number: 19126289
+- comparing to: main@74040c3a8f43c630b3d31cc8376e84f5f9acda5c block: 18564156
+- current block number: 19132347
 
 ## Description
 
@@ -13,13 +13,21 @@ Add the SequencerInboxVersion handler. Updated OS version to ArbOS 11. Added oth
 ## Watched changes
 
 ```diff
-    contract GnosisSafe (0xC234E41AE2cb00311956Aa7109fC801ae8c80941) {
+    contract SequencerInbox (0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b) {
+      values.dacKeyset.keyCount:
+-        8
++        6
+      values.keySetUpdates:
+-        10
++        11
+    }
+```
+
+```diff
+    contract ValidatorOwnerMultisig (0xC234E41AE2cb00311956Aa7109fC801ae8c80941) {
       values.getOwners.0:
 -        "0x702105E66C468b5191553702cD6BF3D6Bbfa4C6b"
 +        "0x375906ADFD34D93236084F462BB2dB0D92129Fe1"
-      values.nonce:
--        168
-+        179
     }
 ```
 
@@ -41,6 +49,10 @@ discovery. Values are for block 18564156 (main branch discovery), not current.
     contract SequencerInbox (0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b) {
       values.batchPosters:
 +        ["0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D","0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc"]
+      values.dacKeyset:
++        {"threshold":2,"keyCount":8}
+      values.keySetUpdates:
++        10
       values.sequencerVersion:
 +        "0x88"
       derivedName:
@@ -120,7 +132,7 @@ discovery. Values are for block 18564156 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0xC234E41AE2cb00311956Aa7109fC801ae8c80941) {
+    contract ValidatorOwnerMultisig (0xC234E41AE2cb00311956Aa7109fC801ae8c80941) {
     }
 ```
 
