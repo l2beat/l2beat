@@ -14,6 +14,7 @@ import {
   TvlApiCharts,
   TvlApiResponse,
   UnixTime,
+  cacheAsyncFunction,
 } from '@l2beat/shared-pure'
 
 import { TaskQueue } from '../../../core/queue/TaskQueue'
@@ -59,9 +60,9 @@ type AggregatedTvlResult = Result<
 >
 
 export class TvlController {
-  private cacheRequestPromise: Promise<unknown> | undefined = undefined
-  private cachedTvlApi: TvlApiResponse | undefined = undefined
   private readonly taskQueue: TaskQueue<void>
+
+  getCachedTvlApiResponse: () => Promise<TvlResult>
 
   constructor(
     private readonly aggregatedReportRepository: AggregatedReportRepository,
@@ -76,12 +77,13 @@ export class TvlController {
     private readonly options: TvlControllerOptions,
   ) {
     this.logger = this.logger.for(this)
+
+    const cached = cacheAsyncFunction(() => this.getTvlApiResponse())
+    this.getCachedTvlApiResponse = cached.call
     this.taskQueue = new TaskQueue(
-      () => this.getTvlApiResponse().then(() => undefined),
+      cached.refetch,
       this.logger.for('taskQueue'),
-      {
-        metricsId: TvlController.name,
-      },
+      { metricsId: TvlController.name },
     )
   }
 
@@ -92,25 +94,6 @@ export class TvlController {
     setInterval(() => {
       this.taskQueue.addIfEmpty()
     }, fiveMinutes)
-  }
-
-  async getCachedTvlApiResponse(): Promise<TvlResult> {
-    if (this.cacheRequestPromise) {
-      await this.cacheRequestPromise
-    }
-
-    if (this.cachedTvlApi) {
-      return {
-        result: 'success',
-        data: this.cachedTvlApi,
-      }
-    }
-
-    const promise = this.getTvlApiResponse()
-    this.cacheRequestPromise = promise
-    const value = await promise
-    this.cacheRequestPromise = undefined
-    return value
   }
 
   /**
@@ -176,12 +159,7 @@ export class TvlController {
       this.projects.map((x) => x.projectId),
     )
 
-    this.cachedTvlApi = tvlApiResponse
-
-    return {
-      result: 'success',
-      data: tvlApiResponse,
-    }
+    return { result: 'success', data: tvlApiResponse }
   }
 
   async getAggregatedTvlApiResponse(
