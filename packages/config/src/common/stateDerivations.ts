@@ -1,6 +1,6 @@
 import { ScalingProjectStateDerivation } from './ScalingProjectStateDerivation'
 
-type SupportedOPStackChains = 'OP_MAINNET' | 'BASE' | 'ZORA' | 'PGN'
+type SupportedOPStackChains = 'OP_MAINNET' | 'BASE' | 'ZORA' | 'PGN' | 'MODE'
 type OPStackInfo = [string, string] // [config, genesis file]
 
 const OPStackInfos: Record<SupportedOPStackChains, OPStackInfo> = {
@@ -19,6 +19,10 @@ const OPStackInfos: Record<SupportedOPStackChains, OPStackInfo> = {
   BASE: [
     'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/base.yaml',
     'https://raw.githubusercontent.com/base-org/node/main/mainnet/genesis-l2.json ',
+  ],
+  MODE: [
+    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/mode.yaml',
+    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/extra/genesis/mainnet/mode.json.gz',
   ],
 }
 

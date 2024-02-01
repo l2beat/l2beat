@@ -3,6 +3,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { opStack } from './templates/opStack'
 import { Layer2 } from './types'
+import { DERIVATION } from '../common'
 
 const discovery = new ProjectDiscovery('mode')
 
@@ -48,8 +49,8 @@ export const mode: Layer2 = opStack({
 
   l2OutputOracle: discovery.getContract('L2OutputOracle'),
   portal: discovery.getContract('OptimismPortal'),
-  //stateDerivation: DERIVATION.OPSTACK('MODE'),
-  isNodeAvailable: 'UnderReview',
+  stateDerivation: DERIVATION.OPSTACK('MODE'),
+  isNodeAvailable: true,
   milestones: [
     {
       name: 'Mode Network Mainnet Launch',
