@@ -26,7 +26,7 @@ export function OurApproachSection({ className }: Props) {
       </p>
       <p className="mt-4 leading-snug">
         As a governance delegate, we hold the following core values:
-        <ul className="list-inside list-disc leading-snug">
+        <ul className="ml-6 mt-2 list-disc leading-snug">
           <li>
             <strong>Transparency & Open Communication:</strong> We believe in
             being open about our decision-making process and keeping the
