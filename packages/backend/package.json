@@ -40,6 +40,7 @@
     "basic-auth": "^2.0.1",
     "chalk": "^4.1.2",
     "deep-diff": "^1.0.2",
+    "earl": "^1.1.0",
     "ethers": "^5.7.2",
     "jsonc-parser": "^3.2.0",
     "knex": "^2.4.2",
