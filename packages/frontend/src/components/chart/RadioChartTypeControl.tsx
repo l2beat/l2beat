@@ -20,7 +20,7 @@ export function RadioChartTypeControl({
     hasTvl && {
       fullName: 'Value Locked',
       shortName: 'Value',
-      value: 'tvl',
+      value: 'detailedTvl',
       checked: true,
     },
     hasActivity && {
