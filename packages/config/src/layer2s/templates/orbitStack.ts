@@ -107,7 +107,13 @@ export function orbitStackCommon(
         ],
       },
       dataAvailability: postsToExternalDA
-        ? DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN // TODO: update so it depends on the DAC threshold and size
+        ? (() => {
+            const DAC = templateVars.discovery.getContractValue<
+              Record<string, number>
+            >('SequencerInbox', 'dacKeyset')
+
+            return DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN(DAC)
+          })()
         : {
             ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
             references: [

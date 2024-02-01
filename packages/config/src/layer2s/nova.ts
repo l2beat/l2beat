@@ -50,6 +50,11 @@ const nOfChallengers = discovery.getContractValue<string[]>(
   'validators',
 ).length
 
+const DAC = discovery.getContractValue<Record<number, number>>(
+  'SequencerInbox',
+  'dacKeyset',
+)
+
 export const nova: Layer2 = {
   type: 'layer2',
   id: ProjectId('nova'),
@@ -174,7 +179,7 @@ export const nova: Layer2 = {
         },
       ],
     },
-    dataAvailability: DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN,
+    dataAvailability: DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN(DAC),
     operator: {
       ...OPERATOR.CENTRALIZED_SEQUENCER,
       references: [
