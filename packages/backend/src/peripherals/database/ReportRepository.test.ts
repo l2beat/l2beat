@@ -4,6 +4,7 @@ import { expect } from 'earl'
 
 import { describeDatabase } from '../../test/database'
 import { ReportRecord, ReportRepository } from './ReportRepository'
+import { _TVL_ONLY_deletion_test } from './shared/deleteArchivedRecords'
 
 describeDatabase(ReportRepository.name, (database) => {
   const repository = new ReportRepository(database, Logger.SILENT)
@@ -90,64 +91,7 @@ describeDatabase(ReportRepository.name, (database) => {
     })
   })
 
-  describe(ReportRepository.prototype.deleteHourlyUntil.name, () => {
-    it('deletes hourly reports', async () => {
-      const start = UnixTime.now().toStartOf('day')
-      const until = start.add(25, 'hours')
-
-      const entries = []
-      for (
-        let i = start.toNumber();
-        i <= until.toNumber();
-        i += UnixTime.HOUR
-      ) {
-        entries.push(fakeReport({ timestamp: new UnixTime(i) }))
-      }
-
-      await repository.addOrUpdateMany(entries)
-      await repository.deleteHourlyUntil(until)
-      const results = await repository.getAll()
-
-      expect(results).toEqualUnsorted([
-        fakeReport({ timestamp: start }),
-        fakeReport({ timestamp: start.add(6, 'hours') }),
-        fakeReport({ timestamp: start.add(12, 'hours') }),
-        fakeReport({ timestamp: start.add(18, 'hours') }),
-        fakeReport({ timestamp: start.add(24, 'hours') }),
-        fakeReport({ timestamp: start.add(25, 'hours') }),
-      ])
-    })
-  })
-
-  describe(ReportRepository.prototype.deleteSixHourlyUntil.name, () => {
-    it('deletes six hourly reports', async () => {
-      const start = UnixTime.now().toStartOf('day')
-      const until = start.add(7, 'hours')
-
-      const entries = []
-      for (
-        let i = start.toNumber();
-        i <= until.toNumber();
-        i += UnixTime.HOUR
-      ) {
-        entries.push(fakeReport({ timestamp: new UnixTime(i) }))
-      }
-
-      await repository.addOrUpdateMany(entries)
-      await repository.deleteSixHourlyUntil(until)
-      const results = await repository.getAll()
-
-      expect(results).toEqualUnsorted([
-        fakeReport({ timestamp: start }),
-        fakeReport({ timestamp: start.add(1, 'hours') }),
-        fakeReport({ timestamp: start.add(2, 'hours') }),
-        fakeReport({ timestamp: start.add(3, 'hours') }),
-        fakeReport({ timestamp: start.add(4, 'hours') }),
-        fakeReport({ timestamp: start.add(5, 'hours') }),
-        fakeReport({ timestamp: start.add(7, 'hours') }),
-      ])
-    })
-  })
+  _TVL_ONLY_deletion_test(repository, fakeReportTimestamp)
 })
 
 function fakeReport(report?: Partial<ReportRecord>): ReportRecord {
@@ -161,5 +105,18 @@ function fakeReport(report?: Partial<ReportRecord>): ReportRecord {
     usdValue: 1234n,
     ethValue: 1234n,
     ...report,
+  }
+}
+
+function fakeReportTimestamp(timestamp: UnixTime): ReportRecord {
+  return {
+    timestamp,
+    projectId: ProjectId('fake-project'),
+    asset: AssetId('fake-asset'),
+    reportType: 'CBV',
+    chainId: ChainId.ETHEREUM,
+    amount: 1234n,
+    usdValue: 1234n,
+    ethValue: 1234n,
   }
 }

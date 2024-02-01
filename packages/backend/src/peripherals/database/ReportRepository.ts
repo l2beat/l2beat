@@ -79,6 +79,14 @@ export class ReportRepository extends BaseRepository {
     return reports.length
   }
 
+  async addMany(reports: ReportRecord[]) {
+    const rows = reports.map(toRow)
+    const knex = await this.knex()
+    await knex.batchInsert('reports', rows, 10_000)
+
+    return rows.length
+  }
+
   private async _addOrUpdateMany(
     reports: ReportRecord[],
     trx: Knex.Transaction,
