@@ -33,7 +33,7 @@ import { TotalSupplyStatusRepository } from '../../peripherals/database/TotalSup
 import { ApplicationModule } from '../ApplicationModule'
 import { chainTvlModule } from './ChainTvlModule'
 import { createEthereumTvlModule } from './EthereumTvlModule'
-import { initializeTvlCleaner } from './TvlCleaner'
+import { TvlCleaner } from './TvlCleaner'
 import { TvlDatabase } from './types'
 
 export function createTvlModule(
@@ -93,7 +93,16 @@ export function createTvlModule(
     logger,
   )
 
-  const tvlCleaner = initializeTvlCleaner(config, logger, clock, db)
+  const repositoriesToClean = [
+    db.blockNumberRepository,
+    db.priceRepository,
+    db.balanceRepository,
+    db.totalSupplyRepository,
+    db.circulatingSupplyRepository,
+    db.reportRepository,
+    db.aggregatedReportRepository,
+  ]
+  const tvlCleaner = new TvlCleaner(clock, logger, repositoriesToClean)
 
   // #endregion
   // #region modules
@@ -162,7 +171,10 @@ export function createTvlModule(
     logger.info('Starting')
 
     priceUpdater.start()
-    tvlCleaner?.start()
+
+    if (config.tvlCleanerEnabled) {
+      tvlCleaner.start()
+    }
 
     logger.info('Starting modules...')
 

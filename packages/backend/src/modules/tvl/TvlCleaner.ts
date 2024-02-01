@@ -1,10 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 
-import { Config } from '../../config/Config'
 import { Clock } from '../../core/Clock'
 import { TaskQueue } from '../../core/queue/TaskQueue'
-import { TvlDatabase } from './types'
 
 interface Repository {
   deleteHourlyUntil: (timestamp: UnixTime) => Promise<number>
@@ -55,27 +53,4 @@ export class TvlCleaner {
       })
     }
   }
-}
-
-export function initializeTvlCleaner(
-  config: Config,
-  logger: Logger,
-  clock: Clock,
-  db: TvlDatabase,
-): TvlCleaner | undefined {
-  if (!config.tvlCleanerEnabled) {
-    return undefined
-  }
-
-  const tables = [
-    db.blockNumberRepository,
-    db.priceRepository,
-    db.balanceRepository,
-    db.totalSupplyRepository,
-    db.circulatingSupplyRepository,
-    db.reportRepository,
-    db.aggregatedReportRepository,
-  ]
-
-  return new TvlCleaner(clock, logger, tables)
 }
