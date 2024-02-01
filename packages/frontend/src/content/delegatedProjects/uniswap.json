@@ -1,5 +1,4 @@
 {
-  "projectName": "Uniswap",
-  "communicationThreadUrl": "https://www.somelink.com",
+  "name": "Uniswap",
   "delegateTokensUrl": "https://vote.uniswapfoundation.org/delegate/delegate.l2beat.eth"
 }

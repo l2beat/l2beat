@@ -1,5 +1,4 @@
 {
-  "projectName": "Optimism",
-  "communicationThreadUrl": "https://www.somelink.com",
+  "name": "Optimism",
   "delegateTokensUrl": "https://vote.optimism.io/delegate/delegate.l2beat.eth"
 }

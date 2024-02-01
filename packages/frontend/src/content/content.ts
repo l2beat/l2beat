@@ -11,7 +11,6 @@ const publications = {
 const delegatedProjects = {
   schema: z.object({
     name: z.string(),
-    communicationThreadUrl: z.string().url(),
     delegateTokensUrl: z.string().url(),
   }),
 } as const

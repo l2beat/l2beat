@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { GovernanceEventEntry } from '../../../pages/governance/getGovernanceEventEntry'
+import { GovernanceEventEntry } from '../../../pages/governance/getGovernanceEventEntries'
 import { Badge } from '../../badge/Badge'
 import { Button } from '../../Button'
 import { GovernanceCard, GovernanceCardHeader } from '../GovernanceCard'

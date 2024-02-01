@@ -11,13 +11,17 @@ import { OfficeHoursSection } from '../../../../components/governance/sections/O
 import { OurApproachSection } from '../../../../components/governance/sections/OurApproachSection'
 import { OurMissionSection } from '../../../../components/governance/sections/OurMissionSection'
 import { RecentPublicationsSection } from '../../../../components/governance/sections/RecentPublicationsSection'
+import { OutLinkIcon } from '../../../../components/icons'
+import { Link } from '../../../../components/Link'
 import { PageContent } from '../../../../components/PageContent'
-import { GovernanceEventEntry } from '../../getGovernanceEventEntry'
+import { GovernanceDelegatedProjectEntry } from '../../getGovernanceDelegatedProjectEntry'
+import { GovernanceEventEntry } from '../../getGovernanceEventEntries'
 import { GovernancePublicationEntry } from '../../getGovernancePublicationEntry'
 
 export interface GovernancePageProps {
   publications: GovernancePublicationEntry[]
   events: GovernanceEventEntry[]
+  delegatedProjects: GovernanceDelegatedProjectEntry[]
   navbar: NavbarProps
   footer: FooterProps
 }
@@ -26,7 +30,8 @@ export function GovernancePage(props: GovernancePageProps) {
   return (
     <>
       <Navbar {...props.navbar} />
-      <PageContent className="max-w-[1296px]">
+      <Header delegatedProjects={props.delegatedProjects} />
+      <PageContent type="wider">
         <main className="mt-20 grid md:grid-cols-8 md:gap-8">
           <RecentPublicationsSection
             publications={props.publications}
@@ -43,5 +48,67 @@ export function GovernancePage(props: GovernancePageProps) {
       </PageContent>
       <Footer {...props.footer} />
     </>
+  )
+}
+
+function Header(props: {
+  delegatedProjects: GovernanceDelegatedProjectEntry[]
+}) {
+  return (
+    <div className="bg-[#FFFFFF] px-4 py-[72px] dark:bg-zinc-900 lg:p-0">
+      <PageContent type="wider">
+        <div className="flex items-center">
+          <div className="leading-normal">
+            <h1 className="text-6xl font-bold">Governance</h1>
+            <p className="mt-6 text-balance">
+              By delegating your governance votes to L2BEAT, you're supporting
+              our mission to protect the interests of the Ethereum community and
+              uphold our shared values. Together, we can lead the L2 ecosystem
+              towards a safer, more secure decentralized future.
+            </p>
+
+            <div className="mt-6">
+              <span className="text-sm text-purple-100 dark:text-pink-200">
+                DELEGATE YOUR TOKENS
+              </span>
+              <div className="mt-2 flex flex-col gap-2 md:flex-row md:flex-wrap">
+                {props.delegatedProjects.map((delegatedProject) => (
+                  <Link
+                    key={delegatedProject.id}
+                    className="flex items-center justify-center gap-1.5 rounded-lg border border-gray-400 bg-gray-100 py-3 transition-colors duration-[250] hover:bg-gray-200 dark:border-zinc-500 dark:bg-zinc-800 dark:hover:bg-zinc-900 md:px-3 md:py-1"
+                    textClassName="text-sm font-medium"
+                    href={delegatedProject.link}
+                    underline={false}
+                  >
+                    <img
+                      className="size-5"
+                      src={`/icons/${delegatedProject.id}.png`}
+                    />
+                    {delegatedProject.name}
+                    <OutLinkIcon className="fill-current" />
+                  </Link>
+                ))}
+              </div>
+            </div>
+            <p className="mt-6">
+              If you’d like to see us act as a delegate in another protocol,
+              please let us know and we’ll see what we can do.
+            </p>
+          </div>
+          <div className="hidden h-[548px] min-h-[548px] w-[585px] min-w-[585px] grow lg:block">
+            <img
+              className="hidden size-full dark:block"
+              src="/images/illustrations/governance-header-dark.png"
+              alt="L2BEAT Governance"
+            />
+            <img
+              className="size-full dark:hidden"
+              src="/images/illustrations/governance-header.png"
+              alt="L2BEAT Governance"
+            />
+          </div>
+        </div>
+      </PageContent>
+    </div>
   )
 }

@@ -2,7 +2,8 @@ import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
 import { ContentEntry, getContent } from '../../../../content/getContent'
 import { Wrapped } from '../../../Page'
-import { getGovernanceEventEntries } from '../../getGovernanceEventEntry'
+import { getGovernanceDelegatedProjectEntry } from '../../getGovernanceDelegatedProjectEntry'
+import { getGovernanceEventEntries } from '../../getGovernanceEventEntries'
 import { getGovernancePublicationEntry } from '../../getGovernancePublicationEntry'
 import { GovernancePageProps } from '../view/GovernancePage'
 import { getPageMetadata } from './getPageMetadata'
@@ -10,6 +11,8 @@ import { getPageMetadata } from './getPageMetadata'
 export function getProps(config: Config): Wrapped<GovernancePageProps> {
   const publications = getContent('publications')
   const events = getContent('events')
+  const delegatedProjects = getContent('delegatedProjects')
+
   return {
     props: {
       publications: publications
@@ -18,6 +21,9 @@ export function getProps(config: Config): Wrapped<GovernancePageProps> {
         })
         .map(getGovernancePublicationEntry),
       events: getEvents(events),
+      delegatedProjects: delegatedProjects.map(
+        getGovernanceDelegatedProjectEntry,
+      ),
       navbar: getNavbarProps(config, 'governance'),
       footer: getFooterProps(config),
     },
