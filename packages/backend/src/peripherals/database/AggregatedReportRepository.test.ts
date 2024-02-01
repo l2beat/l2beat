@@ -7,7 +7,7 @@ import {
   AggregatedReportRecord,
   AggregatedReportRepository,
 } from './AggregatedReportRepository'
-import { _TVL_ONLY_deletion_test } from './shared/deleteArchivedRecords'
+import { testDeletingArchivedRecords } from './shared/deleteArchivedRecords'
 
 describeDatabase(AggregatedReportRepository.name, (database) => {
   const repository = new AggregatedReportRepository(database, Logger.SILENT)
@@ -279,7 +279,7 @@ describeDatabase(AggregatedReportRepository.name, (database) => {
     })
   })
 
-  _TVL_ONLY_deletion_test(repository, fakeAggregateReportTimestamp)
+  testDeletingArchivedRecords(repository, fakeAggregateReportTimestamp)
 })
 
 function getResult(

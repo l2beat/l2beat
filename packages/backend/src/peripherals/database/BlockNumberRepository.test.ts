@@ -7,7 +7,7 @@ import {
   BlockNumberRecord,
   BlockNumberRepository,
 } from './BlockNumberRepository'
-import { _TVL_ONLY_deletion_test } from './shared/deleteArchivedRecords'
+import { testDeletingArchivedRecords } from './shared/deleteArchivedRecords'
 
 describeDatabase(BlockNumberRepository.name, (database) => {
   const repository = new BlockNumberRepository(database, Logger.SILENT)
@@ -112,7 +112,7 @@ describeDatabase(BlockNumberRepository.name, (database) => {
     expect(results).toEqual([])
   })
 
-  _TVL_ONLY_deletion_test(repository, fakeBlockRecord)
+  testDeletingArchivedRecords(repository, fakeBlockRecord)
 })
 
 function fakeBlockRecord(timestamp: UnixTime): BlockNumberRecord {

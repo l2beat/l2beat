@@ -10,8 +10,8 @@ import { BalanceRow } from 'knex/types/tables'
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 import {
-  _TVL_ONLY_deleteHourlyUntil,
-  _TVL_ONLY_deleteSixHourlyUntil,
+  deleteHourlyUntil,
+  deleteSixHourlyUntil,
 } from './shared/deleteArchivedRecords'
 
 export interface BalanceRecord {
@@ -91,12 +91,12 @@ export class BalanceRepository extends BaseRepository {
 
   async deleteHourlyUntil(timestamp: UnixTime) {
     const knex = await this.knex()
-    return _TVL_ONLY_deleteHourlyUntil(knex, 'balances', timestamp)
+    return deleteHourlyUntil(knex, 'balances', timestamp)
   }
 
   async deleteSixHourlyUntil(timestamp: UnixTime) {
     const knex = await this.knex()
-    return _TVL_ONLY_deleteSixHourlyUntil(knex, 'balances', timestamp)
+    return deleteSixHourlyUntil(knex, 'balances', timestamp)
   }
 }
 

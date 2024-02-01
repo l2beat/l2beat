@@ -7,7 +7,7 @@ import {
   CirculatingSupplyRecord,
   CirculatingSupplyRepository,
 } from './CirculatingSupplyRepository'
-import { _TVL_ONLY_deletion_test } from './shared/deleteArchivedRecords'
+import { testDeletingArchivedRecords } from './shared/deleteArchivedRecords'
 
 const START = UnixTime.fromDate(new Date('2022-05-17'))
 
@@ -245,7 +245,7 @@ describeDatabase(CirculatingSupplyRepository.name, (database) => {
     expect(result).toEqual([])
   })
 
-  _TVL_ONLY_deletion_test(repository, fakeCirculatingSupply)
+  testDeletingArchivedRecords(repository, fakeCirculatingSupply)
 })
 
 function fakeCirculatingSupply(timestamp: UnixTime): CirculatingSupplyRecord {

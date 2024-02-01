@@ -3,7 +3,7 @@ import { AssetId, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { describeDatabase } from '../../test/database'
-import { _TVL_ONLY_deletion_test } from './shared/deleteArchivedRecords'
+import { testDeletingArchivedRecords } from './shared/deleteArchivedRecords'
 import {
   TotalSupplyRecord,
   TotalSupplyRepository,
@@ -220,7 +220,7 @@ describeDatabase(TotalSupplyRepository.name, (database) => {
     expect(result).toEqual([])
   })
 
-  _TVL_ONLY_deletion_test(repository, fakeTotalSupply)
+  testDeletingArchivedRecords(repository, fakeTotalSupply)
 })
 
 function fakeTotalSupply(timestamp: UnixTime): TotalSupplyRecord {

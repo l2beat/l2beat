@@ -13,8 +13,8 @@ import { ReportRow } from 'knex/types/tables'
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
 import {
-  _TVL_ONLY_deleteHourlyUntil,
-  _TVL_ONLY_deleteSixHourlyUntil,
+  deleteHourlyUntil,
+  deleteSixHourlyUntil,
 } from './shared/deleteArchivedRecords'
 
 export interface ReportRecord {
@@ -173,12 +173,12 @@ export class ReportRepository extends BaseRepository {
 
   async deleteHourlyUntil(timestamp: UnixTime) {
     const knex = await this.knex()
-    return _TVL_ONLY_deleteHourlyUntil(knex, 'reports', timestamp)
+    return deleteHourlyUntil(knex, 'reports', timestamp)
   }
 
   async deleteSixHourlyUntil(timestamp: UnixTime) {
     const knex = await this.knex()
-    return _TVL_ONLY_deleteSixHourlyUntil(knex, 'reports', timestamp)
+    return deleteSixHourlyUntil(knex, 'reports', timestamp)
   }
 }
 

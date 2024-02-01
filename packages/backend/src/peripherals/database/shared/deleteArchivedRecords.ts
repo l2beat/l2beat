@@ -5,7 +5,7 @@ import { Knex } from 'knex'
 /**
  * WARNING: this method requires table to have unix_timestamp column
  */
-export function _TVL_ONLY_deleteHourlyUntil(
+export function deleteHourlyUntil(
   knex: Knex,
   tableName: string,
   timestamp: UnixTime,
@@ -24,7 +24,7 @@ export function _TVL_ONLY_deleteHourlyUntil(
 /**
  * WARNING: this method requires table to have unix_timestamp column
  */
-export function _TVL_ONLY_deleteSixHourlyUntil(
+export function deleteSixHourlyUntil(
   knex: Knex,
   tableName: string,
   timestamp: UnixTime,
@@ -47,7 +47,7 @@ interface Repository<T> {
   getAll: () => Promise<T[]>
 }
 
-export function _TVL_ONLY_deletion_test<T>(
+export function testDeletingArchivedRecords<T>(
   repository: Repository<T>,
   fakeRecord: (timestamp: UnixTime) => T,
 ) {

@@ -9,7 +9,7 @@ import { expect } from 'earl'
 
 import { describeDatabase } from '../../test/database'
 import { BalanceRecord, BalanceRepository } from './BalanceRepository'
-import { _TVL_ONLY_deletion_test } from './shared/deleteArchivedRecords'
+import { testDeletingArchivedRecords } from './shared/deleteArchivedRecords'
 
 const START = UnixTime.fromDate(new Date('2022-05-17'))
 const mockBalance = (
@@ -266,7 +266,7 @@ describeDatabase(BalanceRepository.name, (database) => {
     expect(result).toEqual([])
   })
 
-  _TVL_ONLY_deletion_test(repository, fakeBalance)
+  testDeletingArchivedRecords(repository, fakeBalance)
 })
 
 function fakeBalance(timestamp: UnixTime): BalanceRecord {

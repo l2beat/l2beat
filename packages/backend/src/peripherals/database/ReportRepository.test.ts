@@ -4,7 +4,7 @@ import { expect } from 'earl'
 
 import { describeDatabase } from '../../test/database'
 import { ReportRecord, ReportRepository } from './ReportRepository'
-import { _TVL_ONLY_deletion_test } from './shared/deleteArchivedRecords'
+import { testDeletingArchivedRecords } from './shared/deleteArchivedRecords'
 
 describeDatabase(ReportRepository.name, (database) => {
   const repository = new ReportRepository(database, Logger.SILENT)
@@ -91,7 +91,7 @@ describeDatabase(ReportRepository.name, (database) => {
     })
   })
 
-  _TVL_ONLY_deletion_test(repository, fakeReportTimestamp)
+  testDeletingArchivedRecords(repository, fakeReportTimestamp)
 })
 
 function fakeReport(report?: Partial<ReportRecord>): ReportRecord {
