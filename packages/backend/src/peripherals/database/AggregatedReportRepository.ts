@@ -61,6 +61,7 @@ export class AggregatedReportRepository extends BaseRepository {
     const knex = await this.knex()
     const rows = await knex('aggregated_reports')
       .whereRaw(`EXTRACT(hour FROM unix_timestamp) = 0`)
+      .andWhere('usd_value', '>', 0)
       .orderBy('unix_timestamp')
     return rows.map(toRecord)
   }
@@ -85,6 +86,7 @@ export class AggregatedReportRepository extends BaseRepository {
     const rows = await knex('aggregated_reports')
       .where('unix_timestamp', '>=', from.toDate())
       .andWhereRaw(`EXTRACT(hour FROM unix_timestamp) % 6 = 0`)
+      .andWhere('usd_value', '>', 0)
       .orderBy('unix_timestamp')
     return rows.map(toRecord)
   }
@@ -107,6 +109,7 @@ export class AggregatedReportRepository extends BaseRepository {
     const knex = await this.knex()
     const rows = await knex('aggregated_reports')
       .where('unix_timestamp', '>=', from.toDate())
+      .andWhere('usd_value', '>', 0)
       .orderBy('unix_timestamp')
     return rows.map(toRecord)
   }
