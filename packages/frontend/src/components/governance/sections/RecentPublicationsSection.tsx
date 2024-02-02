@@ -10,23 +10,19 @@ interface Props {
   className?: string
 }
 
-const RECENT_PUBLICATIONS_COUNT = 4
-
 export function RecentPublicationsSection({ publications, className }: Props) {
-  const showExploreAll = publications.length > RECENT_PUBLICATIONS_COUNT
-  const publicationsToShow = publications.slice(0, RECENT_PUBLICATIONS_COUNT)
   return (
     <GovernanceCard as="section" mobileFull className={className}>
       <div className="flex flex-wrap justify-between gap-2">
         <GovernanceCardHeader>Recent publications</GovernanceCardHeader>
-        {showExploreAll && <ExploreAllButton className="hidden md:block" />}
+        <ExploreAllButton className="hidden md:block" />
       </div>
       <div className="mt-8 flex flex-col gap-4">
-        {publicationsToShow.map((publication) => (
+        {publications.map((publication) => (
           <Publication publication={publication} key={publication.id} />
         ))}
       </div>
-      {showExploreAll && <ExploreAllButton className="mt-6 w-full md:hidden" />}
+      <ExploreAllButton className="mt-6 w-full md:hidden" />
     </GovernanceCard>
   )
 }
