@@ -19,7 +19,11 @@ const vaultAbi = ['function token__() view returns (address)']
 const vaultInt = new utils.Interface(vaultAbi)
 
 // this is not a plug, but appears in the discovery output
-const EXCLUDED_PLUGS = ['0x7a6Edde81cdD9d75BC10D87C490b132c08bD426D']
+const EXCLUDED_PLUGS = [
+  '0x7a6Edde81cdD9d75BC10D87C490b132c08bD426D',
+  '0x280D208f0eE2f053A0441099bcBFf298bc8b9444', //TODO: check what is this
+  '0x37091ade7C4E1A914D3155449e25eE91DA08EbE4', //TODO: check what is this
+]
 
 const SOCKET_DISCOVERY_CONFIG_PATH =
   '../backend/discovery/socket/ethereum/config.jsonc'

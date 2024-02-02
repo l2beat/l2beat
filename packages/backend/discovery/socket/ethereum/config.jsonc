@@ -17,6 +17,7 @@
   },
   "overrides": {
     "Socket": {
+      "ignoreInWatchMode": ["globalMessageCount"],
       "fields": {
         "plugs": {
           "type": "arrayFromOneEvent",

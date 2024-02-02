@@ -9,6 +9,7 @@ export interface UpgradesAndGovernanceSectionProps {
   title: string
   sectionOrder: number
   content: string
+  image: string | undefined
 }
 
 export function UpgradesAndGovernanceSection(
@@ -20,7 +21,21 @@ export function UpgradesAndGovernanceSection(
       title={props.title}
       sectionOrder={props.sectionOrder}
     >
-      <Markdown>{props.content}</Markdown>
+      {props.image && (
+        <figure className="mb-8 mt-4 text-center">
+          <img
+            className="inline max-w-full align-[unset] dark:invert"
+            src={props.image}
+            alt="A diagram of the upgrades and governance"
+          />
+          <figcaption className="text-xs text-gray-500 dark:text-gray-600">
+            A diagram of the upgrades and governance
+          </figcaption>
+        </figure>
+      )}
+      <Markdown className="text-lg leading-snug text-gray-850 dark:text-gray-400">
+        {props.content}
+      </Markdown>
     </ProjectDetailsSection>
   )
 }

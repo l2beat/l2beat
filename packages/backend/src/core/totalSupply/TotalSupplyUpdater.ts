@@ -113,7 +113,7 @@ export class TotalSupplyUpdater {
     }
 
     this.logger.info('Started')
-    return this.clock.onEveryHour((timestamp) => {
+    return this.clock._TVL_ONLY_onEveryHour((timestamp) => {
       if (!this.knownSet.has(timestamp.toNumber())) {
         if (timestamp.gte(this.minTimestamp)) {
           // we add to front to sync from newest to oldest

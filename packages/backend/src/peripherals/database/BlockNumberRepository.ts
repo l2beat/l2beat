@@ -4,6 +4,10 @@ import { BlockNumberRow } from 'knex/types/tables'
 
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
+import {
+  deleteHourlyUntil,
+  deleteSixHourlyUntil,
+} from './shared/deleteArchivedRecords'
 
 export interface BlockNumberRecord {
   timestamp: UnixTime
@@ -26,7 +30,20 @@ export class BlockNumberRepository extends BaseRepository {
     )}`
   }
 
-  async getAll(chainId: ChainId): Promise<BlockNumberRecord[]> {
+  async addMany(records: BlockNumberRecord[]) {
+    const rows = records.map(toRow)
+    const knex = await this.knex()
+    await knex.batchInsert('block_numbers', rows, 10_000)
+    return rows.length
+  }
+
+  async getAll(): Promise<BlockNumberRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('block_numbers')
+    return rows.map(toRecord)
+  }
+
+  async getAllByChainId(chainId: ChainId): Promise<BlockNumberRecord[]> {
     const knex = await this.knex()
     const rows = await knex('block_numbers')
       .where('chain_id', '=', Number(chainId))
@@ -49,6 +66,15 @@ export class BlockNumberRepository extends BaseRepository {
   async deleteAll() {
     const knex = await this.knex()
     return knex('block_numbers').delete()
+  }
+  async deleteHourlyUntil(timestamp: UnixTime) {
+    const knex = await this.knex()
+    return deleteHourlyUntil(knex, 'block_numbers', timestamp)
+  }
+
+  async deleteSixHourlyUntil(timestamp: UnixTime) {
+    const knex = await this.knex()
+    return deleteSixHourlyUntil(knex, 'block_numbers', timestamp)
   }
 }
 

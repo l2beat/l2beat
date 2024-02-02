@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x27bd701904bb21c706ab1fea624a84968e3fa15f
+
+# Diff at Wed, 31 Jan 2024 12:32:59 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e27d63e182fc6d33d67f67df00e2990c9700987e block: 19085063
+- current block number: 19126484
+
+## Description
+
+Two new plugs.
+Ignore `globalMessageCount` in watch mode.
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+      values.plugs[12]:
++        "0x37091ade7C4E1A914D3155449e25eE91DA08EbE4"
+      values.plugs[11]:
++        "0x280D208f0eE2f053A0441099bcBFf298bc8b9444"
+    }
+```
+
 Generated with discovered.json: 0x7e76d559dbb49ba64aaea7b6263c85048220674d
 
 # Diff at Thu, 25 Jan 2024 17:16:49 GMT:

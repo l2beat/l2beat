@@ -90,7 +90,7 @@ export class BalanceUpdater {
     }
 
     this.logger.info('Started', { chainId: this.chainId.toString() })
-    return this.clock.onEveryHour((timestamp) => {
+    return this.clock._TVL_ONLY_onEveryHour((timestamp) => {
       if (!this.knownSet.has(timestamp.toNumber())) {
         if (timestamp.gte(this.minTimestamp)) {
           // we add to front to sync from newest to oldest

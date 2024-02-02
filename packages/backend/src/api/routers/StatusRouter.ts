@@ -22,24 +22,6 @@ export function createStatusRouter(statusController: StatusController) {
   })
 
   router.get(
-    '/status/prices',
-    withTypedContext(queryParser, async (ctx) => {
-      const { from, to } = ctx.query
-
-      ctx.body = await statusController.getPricesStatus(from, to)
-    }),
-  )
-
-  router.get(
-    '/status/balances',
-    withTypedContext(queryParser, async (ctx) => {
-      const { chainId, from, to } = ctx.query
-
-      ctx.body = await statusController.getBalancesStatus(chainId, from, to)
-    }),
-  )
-
-  router.get(
     '/status/supplies',
     withTypedContext(queryParser, async (ctx) => {
       const { chainId, from, to } = ctx.query
@@ -49,29 +31,6 @@ export function createStatusRouter(statusController: StatusController) {
         from,
         to,
       )
-    }),
-  )
-
-  router.get(
-    '/status/reports',
-    withTypedContext(queryParser, async (ctx) => {
-      const { chainId, type, from, to } = ctx.query
-
-      ctx.body = await statusController.getReportsStatus(
-        chainId,
-        type,
-        from,
-        to,
-      )
-    }),
-  )
-
-  router.get(
-    '/status/aggregated',
-    withTypedContext(queryParser, async (ctx) => {
-      const { from, to } = ctx.query
-
-      ctx.body = await statusController.getAggregatedStatus(from, to)
     }),
   )
 

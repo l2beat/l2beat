@@ -139,7 +139,7 @@ describe(AggregatedReportUpdater.name, () => {
       const configHash = getAggregatedConfigHash([cbvUpdater])
 
       const clock = mockObject<Clock>({
-        onEveryHour: (callback) => {
+        _TVL_ONLY_onEveryHour: (callback) => {
           callback(MOCK.NOW.add(-1, 'hours'))
           callback(MOCK.NOW)
           callback(MOCK.NOW.add(1, 'hours'))
