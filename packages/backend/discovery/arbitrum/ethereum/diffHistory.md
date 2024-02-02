@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xb6cae49d8a397754403248e9c196f8521c975e94
+Generated with discovered.json: 0x908700877989248eaac07c353c8d500dc9f8284e
 
-# Diff at Thu, 01 Feb 2024 15:18:04 GMT:
+# Diff at Fri, 02 Feb 2024 09:15:05 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
 - comparing to: main@0724a665bb4a787cfdb0009eb3bb600c65f5a595 block: 19119504
-- current block number: 19134417
+- current block number: 19139752
 
 ## Description
 
-The change was in the nonce. Now it's ignored.
+The nonce is now ignored.
 
 ## Config/verification related changes
 
@@ -20,7 +20,7 @@ discovery. Values are for block 19119504 (main branch discovery), not current.
     contract GnosisSafe (0xC234E41AE2cb00311956Aa7109fC801ae8c80941) {
       name:
 -        "GnosisSafe"
-+        "OwnerMultisig"
++        "ValidatorOwnerMultisig"
       derivedName:
 +        "GnosisSafe"
     }
