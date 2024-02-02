@@ -650,10 +650,7 @@
         ],
         "getThreshold": 4,
         "nonce": 180,
-        "nonce": 180,
         "VERSION": "1.3.0"
-      },
-      "derivedName": "GnosisSafe"
       },
       "derivedName": "GnosisSafe"
     },
