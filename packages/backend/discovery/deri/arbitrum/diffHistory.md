@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xb51078bd97ed66168688ab278853cd4c9ef69f0d
+
+# Diff at Wed, 31 Jan 2024 08:03:25 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@367f818d32ce6c1ab18696a1cbeb7a6f368b6d78 block: 175727823
+- current block number: 175989340
+
+## Description
+
+Start tracking the keySetUpdates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 175727823 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77) {
+      values.keySetUpdates:
++        0
+    }
+```
+
 Generated with discovered.json: 0xceb17155dd0178eaeb49f0f0c13d6765f1491c4a
 
 # Diff at Tue, 30 Jan 2024 13:08:11 GMT:

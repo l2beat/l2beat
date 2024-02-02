@@ -1,3 +1,55 @@
+Generated with discovered.json: 0x598a2a43b1e79400ea587313e0534a96d5a69336
+
+# Diff at Wed, 31 Jan 2024 08:11:59 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@367f818d32ce6c1ab18696a1cbeb7a6f368b6d78 block: 175366965
+- current block number: 175991369
+
+## Description
+
+Start tracking the keySetUpdates.
+Ignore totalSupply and nonce in watch mode.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 175366965 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafeL2 (0x000d8C5A70B8805DF02f409F2715d05B9A63E871) {
+      name:
+-        "GnosisSafeL2"
++        "GnosisSafeAdminMember"
+      values.nonce:
+-        5
+      derivedName:
++        "GnosisSafeL2"
+    }
+```
+
+```diff
+    contract esXai (0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c) {
+      derivedName:
++        "esXai"
+    }
+```
+
+```diff
+    contract Xai (0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66) {
+      derivedName:
++        "Xai"
+    }
+```
+
+```diff
+    contract SequencerInbox (0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1) {
+      values.keySetUpdates:
++        2
+    }
+```
+
 Generated with discovered.json: 0xc92ae2df53624132eb65c022f197837314f8a495
 
 # Diff at Mon, 29 Jan 2024 11:22:06 GMT:
