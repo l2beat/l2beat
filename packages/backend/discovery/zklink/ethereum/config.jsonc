@@ -3,5 +3,30 @@
   "chain": "ethereum",
   "name": "zklink",
   "initialAddresses": ["0x683669E5B6cDc6636673a5f7ddB68E20812216F5"],
-  "names": {}
+  "names": {
+    "0x683669E5B6cDc6636673a5f7ddB68E20812216F5": "Arbitrator",
+    "0x98CEDA04E4a1FDc0fd025FB73e48e609AD00673B": "zkSyncL1Gateway",
+    "0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c": "LineaL1Gateway"
+  },
+  "overrides": {
+    "Arbitrator": {
+      "ignoreMethods": ["proxiableUUID"],
+      "fields": {
+        "gateways": {
+          "type": "stateFromEvent",
+          "event": "SetGateway",
+          "returnParams": ["chainId", "newGateway"],
+          "groupBy": "chainId"
+        }
+      }
+    },
+    "zkSyncL1Gateway": {
+      "ignoreMethods": ["proxiableUUID"],
+      "ignoreRelatives": ["messageService", "tokenBridge"]
+    },
+    "LineaL1Gateway": {
+      "ignoreMethods": ["proxiableUUID"],
+      "ignoreRelatives": ["messageService", "tokenBridge", "usdcBridge"]
+    }
+  }
 }

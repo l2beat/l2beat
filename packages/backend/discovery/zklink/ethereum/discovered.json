@@ -1,8 +1,8 @@
 {
   "name": "zklink",
   "chain": "ethereum",
-  "blockNumber": 19112645,
-  "configHash": "0x9de9312ca640780bbb425aa128c86f3a8827e75486484497a2ba0c03f9d7e3be",
+  "blockNumber": 19133455,
+  "configHash": "0x7fcf37840be364e77be828e6b115edd30f082ec93c869c78b3b675419a8d51e8",
   "version": 3,
   "contracts": [
     {
@@ -46,14 +46,71 @@
         "ALL_CHAINS": 80,
         "CHAIN_ID": 4,
         "DEFAULT_FEE_ADDRESS": "0x374632e7D48B7872d904524FdC5Dd4516F42cDFF",
+        "gateways": {
+          "5": {
+            "chainId": 5,
+            "newGateway": "0x98CEDA04E4a1FDc0fd025FB73e48e609AD00673B"
+          },
+          "7": {
+            "chainId": 7,
+            "newGateway": "0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c"
+          }
+        },
         "MASTER_CHAIN_ID": 7,
         "MAX_CHAIN_ID": 7,
         "MIN_CHAIN_ID": 1,
         "owner": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
       },
-      "errors": {
-        "proxiableUUID": "Multicall failed"
-      }
+      "derivedName": "Arbitrator"
+    },
+    {
+      "name": "zkSyncL1Gateway",
+      "address": "0x98CEDA04E4a1FDc0fd025FB73e48e609AD00673B",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x6d2F5f3ddbaB2C67e6310762a1fdDa3f1C7541Fb",
+        "admin": "0x0000000000000000000000000000000000000000"
+      },
+      "implementations": ["0x6d2F5f3ddbaB2C67e6310762a1fdDa3f1C7541Fb"],
+      "sinceTimestamp": 1704863603,
+      "values": {
+        "arbitrator": "0x683669E5B6cDc6636673a5f7ddB68E20812216F5",
+        "claimBlockConfirmationL2GasLimit": 2000000,
+        "claimERC20L2GasLimit": 3000000,
+        "claimETHL2GasLimit": 3000000,
+        "finalizeDepositL2GasLimit": 2000000,
+        "messageService": "0x32400084C286CF3E17e7B677ea9583e60a000324",
+        "owner": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
+        "paused": false,
+        "remoteGateway": "0xF180DD47ad7681335c82a592EA62Fdb92446F300",
+        "REQUIRED_L2_GAS_PRICE_PER_PUBDATA": 800,
+        "tokenBridge": "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063",
+        "txNonce": 0
+      },
+      "derivedName": "ZkSyncL1Gateway"
+    },
+    {
+      "name": "LineaL1Gateway",
+      "address": "0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x3C3f4b866f8c6F0D2c912feE36D5Ad337a9AA98e",
+        "admin": "0x0000000000000000000000000000000000000000"
+      },
+      "implementations": ["0x3C3f4b866f8c6F0D2c912feE36D5Ad337a9AA98e"],
+      "sinceTimestamp": 1704863507,
+      "values": {
+        "arbitrator": "0x683669E5B6cDc6636673a5f7ddB68E20812216F5",
+        "fee": 0,
+        "messageService": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+        "owner": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
+        "paused": false,
+        "remoteGateway": "0xb6B96964633F558980e454953474cc7435c3D78B",
+        "tokenBridge": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+        "txNonce": 0,
+        "usdcBridge": "0x504A330327A089d8364C4ab3811Ee26976d388ce"
+      },
+      "derivedName": "LineaL1Gateway"
     }
   ],
   "eoas": [
@@ -62,15 +119,135 @@
     "0x67ceD4Ae20D0702c6B773a70aE3826C1E0DE09e9",
     "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db",
     "0xAA2c80c9346BceF31570791BA0827B03d8a5E594",
+    "0xb6B96964633F558980e454953474cc7435c3D78B",
     "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
     "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
-    "0xd9cCb94805B882b78e4C8565e67469DdE90a110F"
+    "0xd9cCb94805B882b78e4C8565e67469DdE90a110F",
+    "0xF180DD47ad7681335c82a592EA62Fdb92446F300"
   ],
   "abis": {
     "0x374632e7D48B7872d904524FdC5Dd4516F42cDFF": [
       "constructor(address _singleton)"
     ],
+    "0x3C3f4b866f8c6F0D2c912feE36D5Ad337a9AA98e": [
+      "event Accept(address acceptor, address receiver, address token, uint128 amount, uint16 withdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce, uint128 amountReceive)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event ClaimedWithdrawERC20(address _receiver, address _token, uint256 _amount)",
+      "event ClaimedWithdrawETH(address _receiver, uint256 _amount)",
+      "event Deposit(uint32 indexed txNonce, address token, uint256 amount, bytes32 zklinkAddress, uint8 subAccountId, bool _mapping)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event SetArbitrator(address arbitrator)",
+      "event SetFee(uint64 fee)",
+      "event SetRemoteGateway(address remoteGateWay)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "event WithdrawFee(address receiver, uint256 amount)",
+      "function acceptERC20(address receiver, address token, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce)",
+      "function acceptETH(address receiver, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce) payable",
+      "function accepts(bytes32) view returns (address)",
+      "function arbitrator() view returns (address)",
+      "function claimERC20(address _remoteBridge, address _bridge, bytes _bridgeCallData, uint256 _bridgeNonce, bytes _cbCallData, uint256 _cbNonce)",
+      "function claimERC20Callback(bool _isUSDC, address _nativeToken, address _owner, uint128 _amount, uint32 _accountIdOfNonce, uint8 _subAccountIdOfNonce, uint32 _nonce, uint16 _fastWithdrawFeeRate)",
+      "function claimETH(uint256 _value, bytes _callData, uint256 _nonce)",
+      "function claimETHCallback(address _owner, uint128 _amount, uint32 _accountIdOfNonce, uint8 _subAccountIdOfNonce, uint32 _nonce, uint16 _fastWithdrawFeeRate) payable",
+      "function claimMasterSyncHashCallback(uint32 _blockNumber, bytes32 _syncHash)",
+      "function claimMessage(bytes _callData, uint256 _nonce)",
+      "function claimSlaverSyncHashCallback(bytes32 _syncHash)",
+      "function confirmBlock(uint32 blockNumber) payable",
+      "function depositERC20(address _token, uint256 _amount, bytes32 _zkLinkAddress, uint8 _subAccountId, bool _mapping) payable",
+      "function depositETH(bytes32 _zkLinkAddress, uint8 _subAccountId) payable",
+      "function estimateConfirmBlockFee(uint32) pure returns (uint256 nativeFee)",
+      "function fee() view returns (uint64)",
+      "function initialize(address _messageService, address _tokenBridge, address _usdcBridge)",
+      "function messageService() view returns (address)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function remoteGateway() view returns (address)",
+      "function renounceOwnership()",
+      "function setArbitrator(address _arbitrator)",
+      "function setFee(uint64 _fee)",
+      "function setRemoteGateway(address _remoteGateway)",
+      "function tokenBridge() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function txNonce() view returns (uint32)",
+      "function unpause()",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function usdcBridge() view returns (address)",
+      "function withdrawFee(address _receiver, uint256 _amount)"
+    ],
     "0x683669E5B6cDc6636673a5f7ddB68E20812216F5": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0x6d2F5f3ddbaB2C67e6310762a1fdDa3f1C7541Fb": [
+      "event Accept(address acceptor, address receiver, address token, uint128 amount, uint16 withdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce, uint128 amountReceive)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event ClaimedWithdrawERC20(address _receiver, address _token, uint256 _amount)",
+      "event ClaimedWithdrawETH(address _receiver, uint256 _amount)",
+      "event Deposit(uint32 indexed txNonce, address token, uint256 amount, bytes32 zklinkAddress, uint8 subAccountId, bool _mapping)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event SetArbitrator(address arbitrator)",
+      "event SetRemoteGateway(address remoteGateWay)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "function REQUIRED_L2_GAS_PRICE_PER_PUBDATA() view returns (uint256)",
+      "function acceptERC20(address receiver, address token, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce)",
+      "function acceptETH(address receiver, uint128 amount, uint16 fastWithdrawFeeRate, uint32 accountIdOfNonce, uint8 subAccountIdOfNonce, uint32 nonce) payable",
+      "function accepts(bytes32) view returns (address)",
+      "function arbitrator() view returns (address)",
+      "function claimBlockConfirmationL2GasLimit() view returns (uint256)",
+      "function claimERC20L2GasLimit() view returns (uint256)",
+      "function claimETHL2GasLimit() view returns (uint256)",
+      "function confirmBlock(uint32 blockNumber) payable",
+      "function depositERC20(address _token, uint256 _amount, bytes32 _zkLinkAddress, uint8 _subAccountId, bool _mapping) payable",
+      "function depositETH(bytes32 _zkLinkAddress, uint8 _subAccountId) payable",
+      "function estimateConfirmBlockFee(uint32) view returns (uint256 nativeFee)",
+      "function finalizeDepositL2GasLimit() view returns (uint256)",
+      "function finalizeMessage(uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes _message, bytes32[] _merkleProof)",
+      "function initialize(address _messageService, address _tokenBridge)",
+      "function isMessageFinalized(uint256, uint256) view returns (bool)",
+      "function messageService() view returns (address)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function remoteGateway() view returns (address)",
+      "function renounceOwnership()",
+      "function setArbitrator(address _arbitrator)",
+      "function setClaimBlockConfirmationL2GasLimit(uint256 _claimBlockConfirmationL2GasLimit)",
+      "function setClaimERC20L2GasLimit(uint256 _claimERC20L2GasLimit)",
+      "function setClaimETHL2GasLimit(uint256 _claimETHL2GasLimit)",
+      "function setFinalizeDepositL2GasLimit(uint256 _finalizeDepositL2GasLimit)",
+      "function setRemoteGateway(address _remoteGateway)",
+      "function tokenBridge() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function txNonce() view returns (uint32)",
+      "function unpause()",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x98CEDA04E4a1FDc0fd025FB73e48e609AD00673B": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
