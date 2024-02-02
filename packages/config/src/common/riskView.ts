@@ -140,9 +140,9 @@ export function DATA_EXTERNAL_DAC(
   console.log(DAC)
   const additionalString =
     DAC !== undefined
-      ? ` with a threshold of ${
-          DAC.keyCount - DAC.threshold + 1
-        }/{DAC.keyCount}`
+      ? ` with a threshold of ${DAC.keyCount - DAC.threshold + 1}/${
+          DAC.keyCount
+        }`
       : ``
   return {
     value: 'External (DAC)',
