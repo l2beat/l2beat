@@ -61,4 +61,59 @@ describe(generateTvlApiResponse.name, () => {
       7 * 24 + 1,
     )
   })
+
+  it('fills sixHourly from sinceTimestamp to untilTimestamp', () => {
+    const sinceTimestamp = UnixTime.fromDate(new Date('2024-01-01T00:00:00Z'))
+    const untilTimestamp = sinceTimestamp.add(1, 'days')
+
+    const result = generateTvlApiResponse(
+      [],
+      [],
+      [],
+      [],
+      [{ id: ProjectId('arbitrum'), isLayer2: true, sinceTimestamp }],
+      untilTimestamp,
+    )
+
+    // +1, because untilTimestamp is inclusive
+    expect(result.projects.arbitrum?.charts.sixHourly.data.length).toEqual(
+      4 + 1,
+    )
+  })
+
+  it('fills sixHourly at most 90 days back', () => {
+    const sinceTimestamp = UnixTime.fromDate(new Date('2024-01-01T00:00:00Z'))
+    const untilTimestamp = sinceTimestamp.add(123, 'days')
+
+    const result = generateTvlApiResponse(
+      [],
+      [],
+      [],
+      [],
+      [{ id: ProjectId('arbitrum'), isLayer2: true, sinceTimestamp }],
+      untilTimestamp,
+    )
+
+    // +1, because untilTimestamp is inclusive
+    expect(result.projects.arbitrum?.charts.sixHourly.data.length).toEqual(
+      90 * 4 + 1,
+    )
+  })
+
+  it('fills daily from sinceTimestamp to untilTimestamp', () => {
+    const sinceTimestamp = UnixTime.fromDate(new Date('2024-01-01T00:00:00Z'))
+    const untilTimestamp = sinceTimestamp.add(123, 'days')
+
+    const result = generateTvlApiResponse(
+      [],
+      [],
+      [],
+      [],
+      [{ id: ProjectId('arbitrum'), isLayer2: true, sinceTimestamp }],
+      untilTimestamp,
+    )
+
+    // +1, because untilTimestamp is inclusive
+    expect(result.projects.arbitrum?.charts.daily.data.length).toEqual(123 + 1)
+  })
 })
