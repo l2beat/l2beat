@@ -23,7 +23,7 @@ const events = {
       title: z.string(),
       subtitle: z.string().optional(),
       startDate: z.coerce.date(),
-      endDate: z.coerce.date(),
+      endDate: z.coerce.date().optional(),
       location: z.string(),
       link: z.string().url(),
     }),

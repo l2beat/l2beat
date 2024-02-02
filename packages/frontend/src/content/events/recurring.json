@@ -1,6 +1,6 @@
 {
   "type": "recurring",
-  "title": "Governance Brunch",
+  "title": "Recurring Event",
   "startDate": "2023-12-04",
   "endDate": "2024-02-11",
   "cancelledAt": ["2023-12-09"],

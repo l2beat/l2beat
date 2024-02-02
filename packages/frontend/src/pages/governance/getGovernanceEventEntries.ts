@@ -132,8 +132,13 @@ function getNextDateForDayOfWeek(
 
 function getNiceEventDate(event: OneTimeEvent) {
   const startDay = event.data.startDate.getDate()
-  const endDay = event.data.endDate.getDate()
   const startTimestamp = Math.ceil(event.data.startDate.getTime() / 1000)
+
+  if (!event.data.endDate) {
+    return formatTimestamp(startTimestamp, { mode: 'datetime' })
+  }
+
+  const endDay = event.data.endDate.getDate()
   const endTimestamp = Math.ceil(event.data.endDate.getTime() / 1000)
 
   if (startDay === endDay) {

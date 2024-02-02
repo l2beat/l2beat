@@ -54,7 +54,7 @@ function Event({ event }: { event: GovernanceEventEntry }) {
         </div>
         <div className="mt-3">
           <p className="text-2xs opacity-50">PLACE</p>
-          <p className="text-sm">{event.location}</p>
+          <p className="whitespace-pre text-sm">{event.location}</p>
         </div>
       </div>
       <Button
