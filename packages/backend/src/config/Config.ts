@@ -42,6 +42,9 @@ export interface LogThrottlerConfig {
 
 export interface ApiConfig {
   readonly port: number
+  readonly cache: {
+    readonly tvl: boolean
+  }
 }
 
 export interface DatabaseConfig {

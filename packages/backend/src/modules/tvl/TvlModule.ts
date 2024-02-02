@@ -155,7 +155,7 @@ export function createTvlModule(
   const dydxController = new DydxController(db.aggregatedReportRepository)
 
   const blocksRouter = createBlocksRouter(blocksController)
-  const tvlRouter = createTvlRouter(tvlController)
+  const tvlRouter = createTvlRouter(tvlController, config.api)
   const dydxRouter = createDydxRouter(dydxController)
   const tvlStatusRouter = createTvlStatusRouter(
     clock,
@@ -171,8 +171,10 @@ export function createTvlModule(
     logger.info('Starting')
 
     priceUpdater.start()
-    tvlController.start()
 
+    if (config.api.cache.tvl) {
+      tvlController.start()
+    }
     if (config.tvlCleanerEnabled) {
       tvlCleaner.start()
     }

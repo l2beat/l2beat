@@ -74,6 +74,9 @@ export function makeConfig(
         },
     api: {
       port: env.integer('PORT', isLocal ? 3000 : undefined),
+      cache: {
+        tvl: flags.isEnabled('cache', 'tvl'),
+      },
     },
     health: {
       releasedAt: env.optionalString('HEROKU_RELEASE_CREATED_AT'),
