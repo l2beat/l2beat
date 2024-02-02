@@ -4,6 +4,7 @@ import { expect } from 'earl'
 
 import { describeDatabase } from '../../test/database'
 import { PriceRecord, PriceRepository } from './PriceRepository'
+import { testDeletingArchivedRecords } from './shared/deleteArchivedRecords.test'
 
 describeDatabase(PriceRepository.name, (database) => {
   const repository = new PriceRepository(database, Logger.SILENT)
@@ -37,16 +38,14 @@ describeDatabase(PriceRepository.name, (database) => {
     },
   ]
 
-  beforeEach(async () => {
-    await repository.addMany(DATA)
-  })
-
   afterEach(async () => {
     await repository.deleteAll()
   })
 
   describe(PriceRepository.prototype.addMany.name, () => {
     it('only new rows', async () => {
+      await repository.addMany(DATA)
+
       const newRows = [
         {
           priceUsd: 3300,
@@ -84,12 +83,16 @@ describeDatabase(PriceRepository.name, (database) => {
   })
 
   it(PriceRepository.prototype.getAll.name, async () => {
+    await repository.addMany(DATA)
+
     const results = await repository.getAll()
 
     expect(results).toEqualUnsorted(DATA)
   })
 
   it(PriceRepository.prototype.getByTimestamp.name, async () => {
+    await repository.addMany(DATA)
+
     const timestamp = START.add(-1, 'hours')
 
     const results = await repository.getByTimestamp(timestamp)
@@ -98,6 +101,8 @@ describeDatabase(PriceRepository.name, (database) => {
   })
 
   it(PriceRepository.prototype.getByToken.name, async () => {
+    await repository.addMany(DATA)
+
     const token = AssetId('uni-uniswap')
     const results = await repository.getByToken(token)
 
@@ -105,6 +110,8 @@ describeDatabase(PriceRepository.name, (database) => {
   })
 
   it(PriceRepository.prototype.deleteAll.name, async () => {
+    await repository.addMany(DATA)
+
     await repository.deleteAll()
 
     const results = await repository.getAll()
@@ -114,6 +121,8 @@ describeDatabase(PriceRepository.name, (database) => {
 
   describe(PriceRepository.prototype.findDataBoundaries.name, () => {
     it('boundary of single and multi row data', async () => {
+      await repository.addMany(DATA)
+
       const result = await repository.findDataBoundaries()
 
       expect(result).toEqual(
@@ -154,7 +163,6 @@ describeDatabase(PriceRepository.name, (database) => {
 
   describe(PriceRepository.prototype.findLatestByTokenBetween.name, () => {
     it('gets most recent record of each token', async () => {
-      await repository.deleteAll()
       await repository.addMany([
         {
           priceUsd: 3000,
@@ -177,8 +185,6 @@ describeDatabase(PriceRepository.name, (database) => {
     })
 
     it('works with empty database', async () => {
-      await repository.deleteAll()
-
       const result = await repository.findLatestByTokenBetween(
         START.add(-1, 'days'),
         START.add(-1, 'hours'),
@@ -187,4 +193,14 @@ describeDatabase(PriceRepository.name, (database) => {
       expect(result).toEqual(new Map())
     })
   })
+
+  testDeletingArchivedRecords(repository, fakePriceRecord)
 })
+
+function fakePriceRecord(timestamp: UnixTime): PriceRecord {
+  return {
+    timestamp,
+    assetId: AssetId.ETH,
+    priceUsd: 0,
+  }
+}

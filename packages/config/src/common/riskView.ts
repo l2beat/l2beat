@@ -71,6 +71,30 @@ export const STATE_EXITS_ONLY: ScalingProjectRiskViewEntry = {
   sentiment: 'bad',
 }
 
+export function STATE_ARBITRUM_FRAUD_PROOFS(
+  nOfChallengers: number,
+): ScalingProjectRiskViewEntry {
+  if (nOfChallengers === 1) {
+    return {
+      value: 'Fraud proofs (INT)',
+      description: `No actor outside of the single Proposer can submit fraud proofs. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks.`,
+      sentiment: 'bad',
+    }
+  }
+  if (nOfChallengers < 5) {
+    return {
+      value: 'Fraud proofs (INT)',
+      description: `Fraud proofs only allow ${nOfChallengers} WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks.`,
+      sentiment: 'bad',
+    }
+  }
+  return {
+    value: 'Fraud proofs (INT)',
+    description: `Fraud proofs allow ${nOfChallengers} WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve.`,
+    sentiment: 'warning',
+  }
+}
+
 // Data availability
 
 export const DATA_ON_CHAIN: ScalingProjectRiskViewEntry = {
@@ -109,11 +133,26 @@ export const DATA_EXTERNAL_MEMO: ScalingProjectRiskViewEntry = {
   sentiment: 'bad',
 }
 
-export const DATA_EXTERNAL_DAC: ScalingProjectRiskViewEntry = {
-  value: 'External (DAC)',
-  description:
-    'Proof construction relies fully on data that is NOT published on chain. There exists a data availability committee (DAC) that is tasked with protecting and supplying the data.',
-  sentiment: 'warning',
+export function DATA_EXTERNAL_DAC(
+  DAC?: Record<string, number>,
+): ScalingProjectRiskViewEntry {
+  const additionalString =
+    DAC !== undefined
+      ? ` with a threshold of ${DAC.keyCount - DAC.threshold + 1}/${
+          DAC.keyCount
+        }`
+      : ``
+  return {
+    value: 'External (DAC)',
+    description: `Proof construction relies fully on data that is NOT published on chain. There exists a Data Availability Committee (DAC)${additionalString} that is tasked with protecting and supplying the data.`,
+    sentiment:
+      DAC !== undefined
+        ? DAC.keyCount < 6 ||
+          (DAC.keyCount - DAC.threshold + 1) / DAC.keyCount < 1 / 3
+          ? 'bad'
+          : 'warning'
+        : 'warning',
+  }
 }
 
 export const DATA_EXTERNAL: ScalingProjectRiskViewEntry = {
@@ -152,13 +191,13 @@ export function VALIDATED_BY_L2(
   chain: L2sWithL3Support,
 ): ScalingProjectRiskViewEntry {
   return {
-    value: capitilize(chain.toString()),
+    value: capitalize(chain.toString()),
     description: `Smart contracts on ${chain.toString()} validate all bridge transfers. Additionally, the security of the system depends on the security of the base layer.`,
     sentiment: 'warning',
   }
 }
 
-function capitilize(str: string): string {
+function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
@@ -448,6 +487,7 @@ export const RISK_VIEW = {
   STATE_ZKP_SN,
   STATE_ZKP_ST,
   STATE_EXITS_ONLY,
+  STATE_ARBITRUM_FRAUD_PROOFS,
   DATA_ON_CHAIN,
   DATA_ON_CHAIN_STATE_DIFFS,
   DATA_ON_CHAIN_L2,

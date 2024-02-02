@@ -14,11 +14,12 @@ import {
   ScalingProjectEscrow,
   ScalingProjectPermission,
 } from '../../common'
+import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { VALUES } from '../../discovery/values'
 import { Layer3, Layer3Display } from '../../layer3s/types'
 import { getStage } from '../common/stages/getStage'
-import { Layer2, Layer2Display } from '../types'
+import { Layer2, Layer2Display, Layer2TransactionApi } from '../types'
 
 const ETHEREUM_EXPLORER_URL = 'https://etherscan.io/address/{0}#code'
 
@@ -26,12 +27,13 @@ export interface OrbitStackConfigCommon {
   discovery: ProjectDiscovery
   associatedTokens?: string[]
 
-  escrows?: ScalingProjectEscrow[]
+  nonTemplateEscrows?: ScalingProjectEscrow[]
   bridge: ContractParameters
   rollupProxy: ContractParameters
   sequencerInbox: ContractParameters
   nonTemplatePermissions?: ScalingProjectPermission[]
-
+  rpcUrl?: string
+  transactionApi?: Layer2TransactionApi
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
 }
@@ -107,7 +109,13 @@ export function orbitStackCommon(
         ],
       },
       dataAvailability: postsToExternalDA
-        ? DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN
+        ? (() => {
+            const DAC = templateVars.discovery.getContractValue<
+              Record<string, number>
+            >('SequencerInbox', 'dacKeyset')
+
+            return DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN(DAC)
+          })()
         : {
             ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
             references: [
@@ -138,7 +146,7 @@ export function orbitStackCommon(
         description:
           FORCE_TRANSACTIONS.CANONICAL_ORDERING.description +
           ' ' +
-          VALUES.ARBITRUM.getProposerFailureString(validatorAfkBlocks), // TODO
+          VALUES.ARBITRUM.getProposerFailureString(validatorAfkBlocks),
         references: [
           {
             text: 'SequencerInbox.sol - Etherscan source code, forceInclusion function',
@@ -233,6 +241,11 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
   )
   const postsToExternalDA = sequencerVersion !== '0x00'
 
+  const nOfChallengers = templateVars.discovery.getContractValue<string[]>(
+    'RollupProxy',
+    'validators',
+  ).length
+
   return {
     type: 'layer3',
     ...orbitStackCommon(
@@ -247,14 +260,14 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
       dataAvailabilityMode: 'NotApplicable',
     },
     riskView: makeBridgeCompatible({
-      stateValidation: {
-        value: 'Fraud proofs (INT)',
-        description:
-          'Fraud proofs allow WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks.',
-        sentiment: 'warning',
-      },
+      stateValidation: RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(nOfChallengers),
       dataAvailability: postsToExternalDA
-        ? RISK_VIEW.DATA_EXTERNAL_DAC
+        ? (() => {
+            const DAC = templateVars.discovery.getContractValue<
+              Record<string, number>
+            >('SequencerInbox', 'dacKeyset')
+            return RISK_VIEW.DATA_EXTERNAL_DAC(DAC)
+          })()
         : RISK_VIEW.DATA_ON_CHAIN_L2,
       exitWindow: RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelay),
       sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelay),
@@ -272,7 +285,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
           description:
             'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
         }),
-        ...(templateVars.escrows ?? []),
+        ...(templateVars.nonTemplateEscrows ?? []),
       ],
     },
     milestones: [],
@@ -299,6 +312,11 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     'sequencerVersion',
   )
   const postsToExternalDA = sequencerVersion !== '0x00'
+
+  const nOfChallengers = templateVars.discovery.getContractValue<string[]>(
+    'RollupProxy',
+    'validators',
+  ).length
 
   return {
     type: 'layer2',
@@ -334,15 +352,15 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           },
         }),
     riskView: makeBridgeCompatible({
-      stateValidation: {
-        value: 'Fraud proofs (INT)',
-        description:
-          'Fraud proofs allow WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks.',
-        sentiment: 'warning',
-      },
+      stateValidation: RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(nOfChallengers),
       dataAvailability: postsToExternalDA
-        ? RISK_VIEW.DATA_EXTERNAL_DAC
-        : RISK_VIEW.DATA_ON_CHAIN,
+        ? (() => {
+            const DAC = templateVars.discovery.getContractValue<
+              Record<string, number>
+            >('SequencerInbox', 'dacKeyset')
+            return RISK_VIEW.DATA_EXTERNAL_DAC(DAC)
+          })()
+        : RISK_VIEW.DATA_ON_CHAIN_L2,
       exitWindow: RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelay),
       sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelay),
       proposerFailure:
@@ -359,8 +377,19 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           description:
             'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
         }),
-        ...(templateVars.escrows ?? []),
+        ...(templateVars.nonTemplateEscrows ?? []),
       ],
+      transactionApi:
+        templateVars.transactionApi ??
+        (templateVars.rpcUrl !== undefined
+          ? {
+              type: 'rpc',
+              startBlock: 1,
+              defaultUrl: templateVars.rpcUrl,
+              defaultCallsPerMinute: 1500,
+              assessCount: subtractOne,
+            }
+          : undefined),
     },
   }
 }

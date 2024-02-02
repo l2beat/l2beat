@@ -75,13 +75,13 @@ export class BlockNumberUpdater {
   }
 
   async start() {
-    const known = await this.blockNumberRepository.getAll(this.chainId)
+    const known = await this.blockNumberRepository.getAllByChainId(this.chainId)
     for (const { timestamp, blockNumber } of known) {
       this.blocksByTimestamp.set(timestamp.toNumber(), blockNumber)
     }
 
     this.logger.info('Started')
-    return this.clock.onEveryHour((timestamp) => {
+    return this.clock._TVL_ONLY_onEveryHour((timestamp) => {
       if (!this.blocksByTimestamp.has(timestamp.toNumber())) {
         if (timestamp.gte(this.minTimestamp)) {
           // we add to front to sync from newest to oldest

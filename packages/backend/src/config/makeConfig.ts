@@ -74,6 +74,9 @@ export function makeConfig(
         },
     api: {
       port: env.integer('PORT', isLocal ? 3000 : undefined),
+      cache: {
+        tvl: flags.isEnabled('cache', 'tvl'),
+      },
     },
     health: {
       releasedAt: env.optionalString('HEROKU_RELEASE_CREATED_AT'),
@@ -139,6 +142,7 @@ export function makeConfig(
       chains: [getChainDiscoveryConfig(env, 'ethereum')],
     },
     chains: chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
+    tvlCleanerEnabled: flags.isEnabled('tvlCleaner'),
     flags: flags.getResolved(),
   }
 }

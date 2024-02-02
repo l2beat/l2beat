@@ -8,14 +8,20 @@ import {
 } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
+import { ApiConfig } from '../../config/Config'
 import { TvlController } from '../controllers/tvl/TvlController'
 import { withTypedContext } from './types'
 
-export function createTvlRouter(tvlController: TvlController) {
+export function createTvlRouter(
+  tvlController: TvlController,
+  config: ApiConfig,
+) {
   const router = new Router()
 
   router.get('/api/tvl', async (ctx) => {
-    const tvlResult = await tvlController.getTvlApiResponse()
+    const tvlResult = config.cache.tvl
+      ? await tvlController.getCachedTvlApiResponse()
+      : await tvlController.getTvlApiResponse()
 
     if (tvlResult.result === 'error') {
       if (tvlResult.error === 'DATA_NOT_FULLY_SYNCED') {

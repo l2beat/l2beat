@@ -7,7 +7,7 @@ import { BlocksController } from './BlocksController'
 describe(BlocksController.name, () => {
   it('returns transformed blocks', async () => {
     const blockNumberRepository = mockObject<BlockNumberRepository>({
-      async getAll() {
+      async getAllByChainId() {
         return [
           {
             blockNumber: 123,

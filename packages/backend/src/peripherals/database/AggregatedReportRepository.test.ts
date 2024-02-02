@@ -7,18 +7,18 @@ import {
   AggregatedReportRecord,
   AggregatedReportRepository,
 } from './AggregatedReportRepository'
+import { testDeletingArchivedRecords } from './shared/deleteArchivedRecords.test'
 
 describeDatabase(AggregatedReportRepository.name, (database) => {
   const repository = new AggregatedReportRepository(database, Logger.SILENT)
 
   const TIME_0 = UnixTime.now().toStartOf('day')
   const TIME_1 = TIME_0.add(1, 'hours')
-  const TIME_2 = TIME_0.add(2, 'hours')
 
   const PROJECT_A = ProjectId('project-a')
   const PROJECT_B = ProjectId('project-b')
 
-  beforeEach(async () => {
+  afterEach(async () => {
     await repository.deleteAll()
   })
 
@@ -235,15 +235,6 @@ describeDatabase(AggregatedReportRepository.name, (database) => {
     it('handles empty array', async () => {
       await expect(repository.addOrUpdateMany([])).not.toBeRejected()
     })
-
-    it('throws if timestamps do not match', async () => {
-      await expect(
-        repository.addOrUpdateMany([
-          fakeAggregateReport({ timestamp: TIME_1 }),
-          fakeAggregateReport({ timestamp: TIME_2 }),
-        ]),
-      ).toBeRejectedWith('Assertion Error: Timestamps must match')
-    })
   })
 
   describe(AggregatedReportRepository.prototype.findLatest.name, () => {
@@ -287,6 +278,8 @@ describeDatabase(AggregatedReportRepository.name, (database) => {
       expect(results).toEqual([])
     })
   })
+
+  testDeletingArchivedRecords(repository, fakeAggregateReportTimestamp)
 })
 
 function getResult(
@@ -346,4 +339,10 @@ function fakeAggregateReport(
     reportType: 'TVL',
     ...report,
   }
+}
+
+function fakeAggregateReportTimestamp(
+  timestamp: UnixTime,
+): AggregatedReportRecord {
+  return fakeAggregateReport({ timestamp })
 }

@@ -33,6 +33,7 @@ import { TotalSupplyStatusRepository } from '../../peripherals/database/TotalSup
 import { ApplicationModule } from '../ApplicationModule'
 import { chainTvlModule } from './ChainTvlModule'
 import { createEthereumTvlModule } from './EthereumTvlModule'
+import { TvlCleaner } from './TvlCleaner'
 import { TvlDatabase } from './types'
 
 export function createTvlModule(
@@ -52,8 +53,19 @@ export function createTvlModule(
     blockNumberRepository: new BlockNumberRepository(database, logger),
     priceRepository: new PriceRepository(database, logger),
     balanceRepository: new BalanceRepository(database, logger),
+    totalSupplyRepository: new TotalSupplyRepository(database, logger),
+    circulatingSupplyRepository: new CirculatingSupplyRepository(
+      database,
+      logger,
+    ),
     reportRepository: new ReportRepository(database, logger),
     aggregatedReportRepository: new AggregatedReportRepository(
+      database,
+      logger,
+    ),
+    // status tables
+    balanceStatusRepository: new BalanceStatusRepository(database, logger),
+    totalSupplyStatusRepository: new TotalSupplyStatusRepository(
       database,
       logger,
     ),
@@ -62,17 +74,8 @@ export function createTvlModule(
       database,
       logger,
     ),
-    balanceStatusRepository: new BalanceStatusRepository(database, logger),
-    totalSupplyRepository: new TotalSupplyRepository(database, logger),
-    totalSupplyStatusRepository: new TotalSupplyStatusRepository(
-      database,
-      logger,
-    ),
-    circulatingSupplyRepository: new CirculatingSupplyRepository(
-      database,
-      logger,
-    ),
   }
+
   // #endregion
   // #region peripherals
 
@@ -89,6 +92,17 @@ export function createTvlModule(
     config.tokens,
     logger,
   )
+
+  const repositoriesToClean = [
+    db.blockNumberRepository,
+    db.priceRepository,
+    db.balanceRepository,
+    db.totalSupplyRepository,
+    db.circulatingSupplyRepository,
+    db.reportRepository,
+    db.aggregatedReportRepository,
+  ]
+  const tvlCleaner = new TvlCleaner(clock, logger, repositoriesToClean)
 
   // #endregion
   // #region modules
@@ -141,7 +155,7 @@ export function createTvlModule(
   const dydxController = new DydxController(db.aggregatedReportRepository)
 
   const blocksRouter = createBlocksRouter(blocksController)
-  const tvlRouter = createTvlRouter(tvlController)
+  const tvlRouter = createTvlRouter(tvlController, config.api)
   const dydxRouter = createDydxRouter(dydxController)
   const tvlStatusRouter = createTvlStatusRouter(
     clock,
@@ -157,6 +171,13 @@ export function createTvlModule(
     logger.info('Starting')
 
     priceUpdater.start()
+
+    if (config.api.cache.tvl) {
+      tvlController.start()
+    }
+    if (config.tvlCleanerEnabled) {
+      tvlCleaner.start()
+    }
 
     logger.info('Starting modules...')
 
