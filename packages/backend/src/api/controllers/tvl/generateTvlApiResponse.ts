@@ -81,7 +81,7 @@ export function generateTvlApiResponse(
     })
   }
 
-  fillCharts(hourlyReports, sixHourlyReports, dailyReports, charts)
+  fillCharts(charts, hourlyReports, sixHourlyReports, dailyReports)
 
   const groupedLatestReports = groupByProjectIdAndAssetType(latestReports)
   const projectsResult = projects.reduce<TvlApiResponse['projects']>(
@@ -108,10 +108,10 @@ export function generateTvlApiResponse(
 }
 
 function fillCharts(
+  charts: Map<ProjectId, TvlApiCharts>,
   hourlyReports: AggregatedReportRecord[],
   sixHourlyReports: AggregatedReportRecord[],
   dailyReports: AggregatedReportRecord[],
-  charts: Map<ProjectId, TvlApiCharts>,
 ) {
   const reports = {
     hourly: hourlyReports,
@@ -123,22 +123,26 @@ function fillCharts(
     for (const report of reports[period]) {
       const apiCharts = charts.get(report.projectId)
       if (!apiCharts) {
-        continue
+        throw new Error(
+          `Unexpected report for project: ${report.projectId.toString()}`,
+        )
       }
 
       const minTimestamp = apiCharts[period].data[0][0]
-      const offset =
+      const index =
         (report.timestamp.toNumber() - minTimestamp.toNumber()) / singleOffset
 
       if (
-        !Number.isInteger(offset) ||
-        offset < 0 ||
-        offset >= apiCharts[period].data.length
+        !Number.isInteger(index) ||
+        index < 0 ||
+        index >= apiCharts[period].data.length
       ) {
-        continue
+        throw new Error(
+          `Unexpected timestamp for project ${report.projectId.toString()} - ${report.timestamp.toNumber()}`,
+        )
       }
 
-      const point = apiCharts[period].data[offset]
+      const point = apiCharts[period].data[index]
       point[USD_INDEX[report.reportType]] = asNumber(report.usdValue, 2)
       point[ETH_INDEX[report.reportType]] = asNumber(report.ethValue, 6)
     }
@@ -161,12 +165,11 @@ function getExtendedProjects(
 
   const minTimestamp = UnixTime.min(minLayer2Timestamp, minBridgeTimestamp)
 
-  const extendedProjects = [
+  return [
     { id: ProjectId.LAYER2S, sinceTimestamp: minLayer2Timestamp },
     { id: ProjectId.BRIDGES, sinceTimestamp: minBridgeTimestamp },
     { id: ProjectId.ALL, sinceTimestamp: minTimestamp },
   ]
-  return extendedProjects
 }
 
 function generateZeroes(
