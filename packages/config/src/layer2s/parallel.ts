@@ -63,7 +63,7 @@ export const parallel: Layer2 = orbitStackL2({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-
+  rpcUrl: 'https://rpc.parallel.fi',
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'OwnerMultisig',

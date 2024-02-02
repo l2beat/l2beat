@@ -18,7 +18,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { VALUES } from '../../discovery/values'
 import { Layer3, Layer3Display } from '../../layer3s/types'
 import { getStage } from '../common/stages/getStage'
-import { Layer2, Layer2Display } from '../types'
+import { Layer2, Layer2Display, Layer2TransactionApi } from '../types'
 
 const ETHEREUM_EXPLORER_URL = 'https://etherscan.io/address/{0}#code'
 
@@ -31,7 +31,8 @@ export interface OrbitStackConfigCommon {
   rollupProxy: ContractParameters
   sequencerInbox: ContractParameters
   nonTemplatePermissions?: ScalingProjectPermission[]
-
+  rpcUrl?: string
+  transactionApi?: Layer2TransactionApi
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
 }
@@ -361,6 +362,16 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
         }),
         ...(templateVars.escrows ?? []),
       ],
+      transactionApi:
+        templateVars.transactionApi ??
+        (templateVars.rpcUrl !== undefined
+          ? {
+              type: 'rpc',
+              startBlock: 1,
+              defaultUrl: templateVars.rpcUrl,
+              defaultCallsPerMinute: 1500,
+            }
+          : undefined),
     },
   }
 }
