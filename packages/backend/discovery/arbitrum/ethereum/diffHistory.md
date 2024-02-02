@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xd968955c30d1d181283155fdec6efa9744f6c468
+Generated with discovered.json: 0x8719a11829c6e6325ba2ef228b77a827c2cacf3a
 
-# Diff at Wed, 31 Jan 2024 08:00:56 GMT:
+# Diff at Fri, 02 Feb 2024 11:08:25 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@367f818d32ce6c1ab18696a1cbeb7a6f368b6d78 block: 19119504
-- current block number: 19125141
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@d4d9bc19cc4a1e4baaadb947f4ad7e44e6c21ac9 block: 19119504
+- current block number: 19140307
 
 ## Description
 
@@ -20,6 +20,10 @@ discovery. Values are for block 19119504 (main branch discovery), not current.
     contract SequencerInbox (0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6) {
       values.keySetUpdates:
 +        0
+    }
+```
+
+```diff
     contract GnosisSafe (0xC234E41AE2cb00311956Aa7109fC801ae8c80941) {
       name:
 -        "GnosisSafe"
