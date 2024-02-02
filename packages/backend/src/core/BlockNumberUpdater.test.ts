@@ -24,14 +24,14 @@ describe(BlockNumberUpdater.name, () => {
           .resolvesToOnce(1100n),
       })
       const blockNumberRepository = mockObject<BlockNumberRepository>({
-        getAll: mockFn().returns([
+        getAllByChainId: mockFn().returns([
           { timestamp: TIME_0, blockNumber: 1000n },
           { timestamp: TIME_2, blockNumber: 1200n },
         ]),
         add: mockFn().returns([]),
       })
       const clock = mockObject<Clock>({
-        onEveryHour: (callback) => {
+        _TVL_ONLY_onEveryHour: (callback) => {
           callback(TIME_0)
           callback(TIME_1)
           callback(TIME_2)

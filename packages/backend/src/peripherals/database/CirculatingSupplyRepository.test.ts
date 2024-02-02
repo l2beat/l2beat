@@ -7,8 +7,10 @@ import {
   CirculatingSupplyRecord,
   CirculatingSupplyRepository,
 } from './CirculatingSupplyRepository'
+import { testDeletingArchivedRecords } from './shared/deleteArchivedRecords.test'
 
 const START = UnixTime.fromDate(new Date('2022-05-17'))
+
 const mockCirculatingSupply = (
   circulatingSupply: number,
   offset: number,
@@ -34,16 +36,14 @@ describeDatabase(CirculatingSupplyRepository.name, (database) => {
     mockCirculatingSupply(C_SUPPLY, 1, ASSET_2, ChainId.ETHEREUM),
   ]
 
-  beforeEach(async () => {
-    await repository.addMany(DATA)
-  })
-
   afterEach(async () => {
     await repository.deleteAll()
   })
 
   describe(CirculatingSupplyRepository.prototype.getByTimestamp.name, () => {
     it('returns matching data for given timestamp', async () => {
+      await repository.addMany(DATA)
+
       const additionalData = [
         mockCirculatingSupply(
           C_SUPPLY,
@@ -72,6 +72,8 @@ describeDatabase(CirculatingSupplyRepository.name, (database) => {
     })
 
     it('returns empty list if no data exists for given timestamp', async () => {
+      await repository.addMany(DATA)
+
       const result = await repository.getByTimestamp(
         ChainId.ETHEREUM,
         START.add(1, 'days'),
@@ -80,7 +82,6 @@ describeDatabase(CirculatingSupplyRepository.name, (database) => {
     })
 
     it('one project one asset', async () => {
-      await repository.deleteAll()
       const data = [
         mockCirculatingSupply(C_SUPPLY, 0, ASSET_1, ChainId.ETHEREUM),
         mockCirculatingSupply(C_SUPPLY, 1, ASSET_1, ChainId.ETHEREUM),
@@ -101,7 +102,6 @@ describeDatabase(CirculatingSupplyRepository.name, (database) => {
     })
 
     it('many projects many assets', async () => {
-      await repository.deleteAll()
       const data = [
         mockCirculatingSupply(C_SUPPLY, 0, ASSET_1, ChainId.ETHEREUM),
         mockCirculatingSupply(C_SUPPLY, 1, ASSET_1, ChainId.ETHEREUM),
@@ -132,6 +132,8 @@ describeDatabase(CirculatingSupplyRepository.name, (database) => {
     })
 
     it('take chainId into consideration', async () => {
+      await repository.addMany(DATA)
+
       const resultEth = await repository.getByTimestamp(ChainId.ETHEREUM, START)
       expect(resultEth).toEqual([DATA[0]])
 
@@ -144,8 +146,6 @@ describeDatabase(CirculatingSupplyRepository.name, (database) => {
     CirculatingSupplyRepository.prototype.findDataBoundaries.name,
     () => {
       it('boundary of single and multi row data', async () => {
-        await repository.deleteAll()
-
         const DATA: CirculatingSupplyRecord[] = [
           mockCirculatingSupply(C_SUPPLY, 0, ASSET_1, ChainId.ETHEREUM),
           mockCirculatingSupply(C_SUPPLY, 1, ASSET_1, ChainId.ETHEREUM),
@@ -188,6 +188,8 @@ describeDatabase(CirculatingSupplyRepository.name, (database) => {
 
   describe(CirculatingSupplyRepository.prototype.addMany.name, () => {
     it('new rows only', async () => {
+      await repository.addMany(DATA)
+
       const newRows: CirculatingSupplyRecord[] = [
         {
           circulatingSupply: C_SUPPLY,
@@ -228,16 +230,29 @@ describeDatabase(CirculatingSupplyRepository.name, (database) => {
   })
 
   it(CirculatingSupplyRepository.prototype.getAll.name, async () => {
+    await repository.addMany(DATA)
     const result = await repository.getAll()
 
     expect(result).toEqual(DATA)
   })
 
   it(CirculatingSupplyRepository.prototype.deleteAll.name, async () => {
+    await repository.addMany(DATA)
     await repository.deleteAll()
 
     const result = await repository.getAll()
 
     expect(result).toEqual([])
   })
+
+  testDeletingArchivedRecords(repository, fakeCirculatingSupply)
 })
+
+function fakeCirculatingSupply(timestamp: UnixTime): CirculatingSupplyRecord {
+  return {
+    timestamp,
+    circulatingSupply: 0,
+    assetId: AssetId('fake'),
+    chainId: ChainId.ARBITRUM,
+  }
+}

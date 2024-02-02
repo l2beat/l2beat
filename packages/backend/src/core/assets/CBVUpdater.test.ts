@@ -146,7 +146,7 @@ describe(CBVUpdater.name, () => {
       })
 
       const clock = mockObject<Clock>({
-        onEveryHour: (callback) => {
+        _TVL_ONLY_onEveryHour: (callback) => {
           callback(MOCK.NOW.add(-1, 'hours'))
           callback(MOCK.NOW)
           callback(MOCK.NOW.add(1, 'hours'))
@@ -222,7 +222,7 @@ describe(CBVUpdater.name, () => {
       })
 
       const clock = mockObject<Clock>({
-        onEveryHour: (callback) => {
+        _TVL_ONLY_onEveryHour: (callback) => {
           callback(MOCK.NOW.add(-1, 'hours'))
           callback(MOCK.NOW)
           callback(MOCK.NOW.add(1, 'hours'))
@@ -315,6 +315,6 @@ function mockReport(project: ReportProject, asset: AssetId): ReportRecord {
 
 function getEmptyClock() {
   return mockObject<Clock>({
-    onEveryHour: () => () => {},
+    _TVL_ONLY_onEveryHour: () => () => {},
   })
 }

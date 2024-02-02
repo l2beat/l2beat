@@ -2,6 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { bridges, layer2s } from '@l2beat/config'
 import {
   AssetId,
+  cacheAsyncFunction,
   ChainId,
   Hash256,
   ProjectAssetsBreakdownApiResponse,
@@ -16,6 +17,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
+import { TaskQueue } from '../../../core/queue/TaskQueue'
 import { ReportProject } from '../../../core/reports/ReportProject'
 import { AggregatedReportRepository } from '../../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../../peripherals/database/AggregatedReportStatusRepository'
@@ -58,6 +60,10 @@ type AggregatedTvlResult = Result<
 >
 
 export class TvlController {
+  private readonly taskQueue: TaskQueue<void>
+
+  getCachedTvlApiResponse: () => Promise<TvlResult>
+
   constructor(
     private readonly aggregatedReportRepository: AggregatedReportRepository,
     private readonly reportRepository: ReportRepository,
@@ -71,6 +77,23 @@ export class TvlController {
     private readonly options: TvlControllerOptions,
   ) {
     this.logger = this.logger.for(this)
+
+    const cached = cacheAsyncFunction(() => this.getTvlApiResponse())
+    this.getCachedTvlApiResponse = cached.call
+    this.taskQueue = new TaskQueue(
+      cached.refetch,
+      this.logger.for('taskQueue'),
+      { metricsId: TvlController.name },
+    )
+  }
+
+  start() {
+    this.taskQueue.addToFront()
+
+    const fiveMinutes = 5 * 60 * 1000
+    setInterval(() => {
+      this.taskQueue.addIfEmpty()
+    }, fiveMinutes)
   }
 
   /**
@@ -136,10 +159,7 @@ export class TvlController {
       this.projects.map((x) => x.projectId),
     )
 
-    return {
-      result: 'success',
-      data: tvlApiResponse,
-    }
+    return { result: 'success', data: tvlApiResponse }
   }
 
   async getAggregatedTvlApiResponse(
