@@ -40,8 +40,7 @@ export const parallel: Layer2 = orbitStackL2({
       ],
     },
   },
-
-  escrows: [
+  nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d'),
       tokens: '*',

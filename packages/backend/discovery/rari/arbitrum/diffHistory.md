@@ -1,3 +1,58 @@
+Generated with discovered.json: 0xa08f831bc81ba1e8dad6f27521784d8cb90e1c41
+
+# Diff at Fri, 02 Feb 2024 11:06:01 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@d4d9bc19cc4a1e4baaadb947f4ad7e44e6c21ac9 block: 175360077
+- current block number: 176692309
+
+## Description
+
+Discover the `dacKeyset`.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 175360077 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x2e988Ea0873C9d712628F0bf38DAFdE754927C89) {
+      unverified:
+-        true
+      derivedName:
+-        ""
++        "RollupProxy"
+    }
+```
+
+```diff
+    contract SequencerInbox (0xA436f1867adD490BF1530c636f2FB090758bB6B3) {
+      values.dacKeyset:
++        {"threshold":1,"keyCount":1}
+      values.sequencerVersion:
++        "0x88"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L1GatewayRouter (0x2623C144B4d167f70893f6A8968B98c89a6C5F97) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Gateway (0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L1CustomGateway (0x8bE956aB42274056ef4471BEb211b33e258b7324) {
+    }
+```
+
 Generated with discovered.json: 0x051400056af9aa68473df479ec67cf59fdd332a9
 
 # Diff at Mon, 29 Jan 2024 10:52:51 GMT:

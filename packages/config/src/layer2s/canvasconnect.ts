@@ -86,7 +86,7 @@ export const canvasconnect: Layer2 = {
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
-    dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
+    dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC(),
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelaySeconds, freezeGracePeriod),
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(freezeGracePeriod),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP_NFT,
