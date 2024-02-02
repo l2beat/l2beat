@@ -1,9 +1,9 @@
 import { formatSeconds, ProjectId } from '@l2beat/shared-pure'
+import console from 'console'
 import { utils } from 'ethers'
 
 import { ScalingProjectRiskViewEntry, Sentiment } from './ScalingProjectRisk'
 import { ScalingProjectRiskView } from './ScalingProjectRiskView'
-import console from 'console'
 
 export function makeBridgeCompatible(
   entry: Omit<ScalingProjectRiskView, 'sourceUpgradeability'>,
@@ -137,7 +137,6 @@ export const DATA_EXTERNAL_MEMO: ScalingProjectRiskViewEntry = {
 export function DATA_EXTERNAL_DAC(
   DAC?: Record<string, number>,
 ): ScalingProjectRiskViewEntry {
-  console.log(DAC)
   const additionalString =
     DAC !== undefined
       ? ` with a threshold of ${DAC.keyCount - DAC.threshold + 1}/${
