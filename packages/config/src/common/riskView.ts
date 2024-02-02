@@ -191,13 +191,13 @@ export function VALIDATED_BY_L2(
   chain: L2sWithL3Support,
 ): ScalingProjectRiskViewEntry {
   return {
-    value: capitilize(chain.toString()),
+    value: capitalize(chain.toString()),
     description: `Smart contracts on ${chain.toString()} validate all bridge transfers. Additionally, the security of the system depends on the security of the base layer.`,
     sentiment: 'warning',
   }
 }
 
-function capitilize(str: string): string {
+function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
