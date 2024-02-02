@@ -234,7 +234,7 @@ export class ProjectDiscovery {
           return {
             name: contract.name,
             accounts: [this.formatPermissionedAccount(contract.address)],
-            description: contract.generateDescription(),
+            description,
             chain: this.chain,
           }
         }

@@ -57,10 +57,18 @@ export class PermissionedContract {
   }
 
   generateDescription(): string {
-    return [
-      ...this.formatDescriptions(),
-      ...this.formatTags(),
-      ...this.formatTagReferences(),
-    ].join('')
+    let result = [this.formatDescriptions(), this.formatTags()]
+      .filter((s) => s.trim() !== '')
+      .join(' ')
+
+    const referenceDescription = this.formatTagReferences()
+    if (result.trim() !== '' && referenceDescription.trim() !== '') {
+      // Add reference description *only* if there already is other description.
+      // We don't want description to be reference only e.g.:
+      // "Owned by AdminManager" with nothing else.
+      result += ' ' + referenceDescription
+    }
+
+    return result
   }
 }
