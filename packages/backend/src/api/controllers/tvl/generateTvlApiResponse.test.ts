@@ -1,258 +1,64 @@
-import {
-  AssetId,
-  ChainId,
-  ProjectId,
-  TvlApiChart,
-  TvlApiChartPoint,
-  TvlApiCharts,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { AggregatedReportRecord } from '../../../peripherals/database/AggregatedReportRepository'
-import { ReportRecord } from '../../../peripherals/database/ReportRepository'
-import {
-  extractReportTypeSet,
-  generateTvlApiResponse,
-  getProjectChartData,
-} from './generateTvlApiResponse'
-import {
-  getProjectTokensCharts,
-  groupByProjectIdAndAssetType,
-  groupByProjectIdAndTimestamp,
-} from './tvl'
+import { generateTvlApiResponse } from './generateTvlApiResponse'
 
 describe(generateTvlApiResponse.name, () => {
   it('returns the correct groupings', () => {
-    const reports = fakeReports([
-      ProjectId('arbitrum'),
-      ProjectId('optimism'),
-      ProjectId('avalanche'),
-      ProjectId.ALL,
-      ProjectId.BRIDGES,
-      ProjectId.LAYER2S,
-    ])
+    const sinceTimestamp = UnixTime.fromDate(new Date('2024-01-01T00:00:00Z'))
+    const untilTimestamp = sinceTimestamp.add(1, 'days')
+
     const result = generateTvlApiResponse(
-      reports.hourly,
-      reports.sixHourly,
-      reports.daily,
-      reports.latest,
-      [ProjectId('arbitrum'), ProjectId('optimism'), ProjectId('avalanche')],
+      [],
+      [],
+      [],
+      [],
+      [
+        { id: ProjectId('arbitrum'), isLayer2: true, sinceTimestamp },
+        { id: ProjectId('optimism'), isLayer2: true, sinceTimestamp },
+        { id: ProjectId('avalanche'), isLayer2: true, sinceTimestamp },
+      ],
+      untilTimestamp,
     )
 
-    const expected = {
-      layers2s: charts(reports, ProjectId.LAYER2S),
-      bridges: charts(reports, ProjectId.BRIDGES),
-      combined: charts(reports, ProjectId.ALL),
-      projects: {
-        arbitrum: {
-          charts: charts(reports, ProjectId('arbitrum')),
-          tokens: tokens(reports, ProjectId('arbitrum')),
-        },
-        optimism: {
-          charts: charts(reports, ProjectId('optimism')),
-          tokens: tokens(reports, ProjectId('optimism')),
-        },
-        avalanche: {
-          charts: charts(reports, ProjectId('avalanche')),
-          tokens: tokens(reports, ProjectId('avalanche')),
-        },
-      },
-    }
-
-    expect(result).toEqual(expected)
+    expect(result.projects.arbitrum).not.toEqual(undefined)
+    expect(result.projects.optimism).not.toEqual(undefined)
+    expect(result.projects.avalanche).not.toEqual(undefined)
   })
 
-  function charts(
-    reports: ReturnType<typeof fakeReports>,
-    projectId: ProjectId,
-  ): TvlApiCharts {
-    const types: TvlApiChart['types'] = [
-      'timestamp',
-      'valueUsd',
-      'cbvUsd',
-      'ebvUsd',
-      'nmvUsd',
-      'valueEth',
-      'cbvEth',
-      'ebvEth',
-      'nmvEth',
-    ]
+  it('fills hourly from sinceTimestamp to untilTimestamp', () => {
+    const sinceTimestamp = UnixTime.fromDate(new Date('2024-01-01T00:00:00Z'))
+    const untilTimestamp = sinceTimestamp.add(1, 'days')
 
-    return {
-      hourly: {
-        types,
-        data: getProjectChartData(reports.hourly, projectId, 1),
-      },
-      sixHourly: {
-        types,
-        data: getProjectChartData(reports.sixHourly, projectId, 6),
-      },
-      daily: {
-        types,
-        data: getProjectChartData(reports.daily, projectId, 24),
-      },
-    }
-  }
+    const result = generateTvlApiResponse(
+      [],
+      [],
+      [],
+      [],
+      [{ id: ProjectId('arbitrum'), isLayer2: true, sinceTimestamp }],
+      untilTimestamp,
+    )
 
-  function tokens(
-    reports: ReturnType<typeof fakeReports>,
-    projectId: ProjectId,
-  ) {
-    return getProjectTokensCharts(reports.latest, projectId)
-  }
+    // +1, because untilTimestamp is inclusive
+    expect(result.projects.arbitrum?.charts.hourly.data.length).toEqual(24 + 1)
+  })
 
-  function fakeReports(projectIds: ProjectId[]) {
-    const now = UnixTime.now().toStartOf('day')
+  it('fills hourly at most 7 days back', () => {
+    const sinceTimestamp = UnixTime.fromDate(new Date('2024-01-01T00:00:00Z'))
+    const untilTimestamp = sinceTimestamp.add(123, 'days')
 
-    return {
-      hourly: groupByProjectIdAndTimestamp(
-        fakeTimePeriodReports(now, 1, 1, projectIds),
-      ),
-      sixHourly: groupByProjectIdAndTimestamp(
-        fakeTimePeriodReports(now, 6, 1, projectIds),
-      ),
-      daily: groupByProjectIdAndTimestamp(
-        fakeTimePeriodReports(now, 24, 1, projectIds),
-      ),
-      latest: groupByProjectIdAndAssetType(fakeLatestReports(now, projectIds)),
-    }
-  }
+    const result = generateTvlApiResponse(
+      [],
+      [],
+      [],
+      [],
+      [{ id: ProjectId('arbitrum'), isLayer2: true, sinceTimestamp }],
+      untilTimestamp,
+    )
 
-  function fakeTimePeriodReports(
-    now: UnixTime,
-    offsetHours: number,
-    count: number,
-    projectIds: ProjectId[],
-  ) {
-    const result: AggregatedReportRecord[] = []
-
-    for (let i = 0; i < count; i++) {
-      const timestamp = now.add(-i * offsetHours, 'hours')
-      for (const projectId of projectIds) {
-        const usdEbv = BigInt(Math.floor(Math.random() * 20_000 + 5_000))
-        const usdCbv = BigInt(Math.floor(Math.random() * 20_000 + 5_000))
-        const usdNmv = BigInt(Math.floor(Math.random() * 20_000 + 5_000))
-
-        const usdTvl = usdEbv + usdCbv + usdNmv
-
-        const ethEbv = usdEbv * 1000n
-        const ethCbv = usdCbv * 1000n
-        const ethNmv = usdNmv * 1000n
-
-        const ethTvl = ethEbv + ethCbv + ethNmv
-
-        result.push({
-          timestamp,
-          projectId,
-          usdValue: usdEbv,
-          ethValue: ethEbv,
-          reportType: 'EBV',
-        })
-
-        result.push({
-          timestamp,
-          projectId,
-          usdValue: usdCbv,
-          ethValue: ethCbv,
-          reportType: 'CBV',
-        })
-
-        result.push({
-          timestamp,
-          projectId,
-          usdValue: usdNmv,
-          ethValue: ethNmv,
-          reportType: 'NMV',
-        })
-
-        result.push({
-          timestamp,
-          projectId,
-          usdValue: usdTvl,
-          ethValue: ethTvl,
-          reportType: 'TVL',
-        })
-      }
-    }
-    return result
-  }
-
-  function fakeLatestReports(now: UnixTime, projectIds: ProjectId[]) {
-    const assets = [AssetId.ETH, AssetId.DAI]
-    const result: ReportRecord[] = []
-    for (const projectId of projectIds) {
-      for (const assetId of assets) {
-        const balanceUsd = BigInt(Math.floor(Math.random() * 20_000 + 5_000))
-        result.push({
-          asset: assetId,
-          chainId: ChainId.ARBITRUM, // ignored - not grouped
-          reportType: 'CBV',
-          amount: 0n, // ignored
-          ethValue: 0n, // ignored
-          usdValue: balanceUsd,
-          projectId,
-          timestamp: now,
-        })
-      }
-    }
-    return result
-  }
-})
-
-describe(extractReportTypeSet.name, () => {
-  it('fills in missing values', () => {
-    const timestamp = UnixTime.now()
-    const usdValue = 1_000n
-    const ethValue = 1_000_000n
-
-    const filledUsdValue = 0n
-    const filledEthValue = 0n
-
-    // NMV missing
-    const mockReports: AggregatedReportRecord[] = [
-      {
-        timestamp,
-        projectId: ProjectId.ARBITRUM,
-        usdValue,
-        ethValue,
-        reportType: 'TVL',
-      },
-      {
-        timestamp,
-        projectId: ProjectId.ARBITRUM,
-        usdValue,
-        ethValue,
-        reportType: 'CBV',
-      },
-      {
-        timestamp,
-        projectId: ProjectId.ARBITRUM,
-        usdValue,
-        ethValue,
-        reportType: 'EBV',
-      },
-    ]
-
-    const result = extractReportTypeSet(mockReports)
-
-    expect(result).toEqual({
-      ebvReport: {
-        usdValue,
-        ethValue,
-      },
-      cbvReport: {
-        usdValue,
-        ethValue,
-      },
-      tvlReport: {
-        usdValue,
-        ethValue,
-      },
-      nmvReport: {
-        usdValue: filledUsdValue,
-        ethValue: filledEthValue,
-      },
-    })
+    // +1, because untilTimestamp is inclusive
+    expect(result.projects.arbitrum?.charts.hourly.data.length).toEqual(
+      7 * 24 + 1,
+    )
   })
 })

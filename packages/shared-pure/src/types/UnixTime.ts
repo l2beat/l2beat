@@ -36,6 +36,14 @@ export class UnixTime {
     return new UnixTime(days * UnixTime.DAY)
   }
 
+  static min(a: UnixTime, b: UnixTime) {
+    return a.lt(b) ? a : b
+  }
+
+  static max(a: UnixTime, b: UnixTime) {
+    return a.gt(b) ? a : b
+  }
+
   toStartOf(period: 'day' | 'hour' | 'minute' | 'six hours') {
     const modulus =
       period === 'day'

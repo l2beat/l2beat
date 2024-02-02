@@ -1,5 +1,4 @@
 import {
-  AggregatedReportType,
   ProjectId,
   TvlApiChart,
   TvlApiChartPoint,
@@ -10,14 +9,8 @@ import {
 
 import { AggregatedReportRecord } from '../../../peripherals/database/AggregatedReportRepository'
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'
-import { covertBalancesToChartPoints } from './charts'
-import {
-  getProjectTokensCharts,
-  groupByProjectIdAndAssetType,
-  groupByProjectIdAndTimestamp,
-  ReportsPerProjectIdAndTimestamp,
-} from './tvl'
 import { asNumber } from './asNumber'
+import { getProjectTokensCharts, groupByProjectIdAndAssetType } from './tvl'
 
 export const TYPE_LABELS: TvlApiChart['types'] = [
   'timestamp',
@@ -31,6 +24,26 @@ export const TYPE_LABELS: TvlApiChart['types'] = [
   'nmvEth',
 ]
 
+const USD_INDEX = {
+  TVL: 1,
+  CBV: 2,
+  EBV: 3,
+  NMV: 4,
+}
+
+const ETH_INDEX = {
+  TVL: 5,
+  CBV: 6,
+  EBV: 7,
+  NMV: 8,
+}
+
+const PERIODS = [
+  ['hourly', 60 * 60],
+  ['sixHourly', 6 * 60 * 60],
+  ['daily', 24 * 60 * 60],
+] as const
+
 export function generateTvlApiResponse(
   hourlyReports: AggregatedReportRecord[],
   sixHourlyReports: AggregatedReportRecord[],
@@ -41,141 +54,41 @@ export function generateTvlApiResponse(
 ): TvlApiResponse {
   const charts = new Map<ProjectId, TvlApiCharts>()
 
-  function generateZeroes(
-    since: UnixTime,
-    until: UnixTime,
-    offsetHours: number,
-  ): TvlApiChartPoint[] {
-    const zeroes = []
-    for (
-      let timestamp = since;
-      timestamp.lte(until);
-      timestamp = timestamp.add(offsetHours, 'hours')
-    ) {
-      zeroes.push([timestamp, 0, 0, 0, 0, 0, 0, 0, 0] as TvlApiChartPoint)
-    }
-    return zeroes
-  }
-
-  const minLayer2Timestamp = projects
-    .filter((p) => p.isLayer2)
-    .map((x) => x.sinceTimestamp)
-    .reduce((min, current) => (min.lt(current) ? min : current), untilTimestamp)
-
-  const minBridgeTimestamp = projects
-    .filter((p) => !p.isLayer2)
-    .map((x) => x.sinceTimestamp)
-    .reduce((min, current) => (min.lt(current) ? min : current), untilTimestamp)
-
-  const minTimestamp = minLayer2Timestamp.lt(minBridgeTimestamp)
-    ? minLayer2Timestamp
-    : minBridgeTimestamp
-
-  const extendedProjects = [
-    { id: ProjectId.LAYER2S, sinceTimestamp: minLayer2Timestamp },
-    { id: ProjectId.BRIDGES, sinceTimestamp: minBridgeTimestamp },
-    { id: ProjectId.ALL, sinceTimestamp: minTimestamp },
-  ]
+  const extendedProjects = getExtendedProjects(projects, untilTimestamp)
 
   for (const { id, sinceTimestamp } of extendedProjects.concat(projects)) {
     charts.set(id, {
-      daily: {
-        types: TYPE_LABELS,
-        data: generateZeroes(
-          sinceTimestamp.toStartOf('day'),
-          untilTimestamp,
-          24,
-        ),
-      },
       hourly: {
         types: TYPE_LABELS,
         data: generateZeroes(
-          sinceTimestamp.toStartOf('hour'),
+          UnixTime.max(sinceTimestamp, untilTimestamp.add(-7, 'days')),
           untilTimestamp,
-          60,
+          1,
         ),
       },
       sixHourly: {
         types: TYPE_LABELS,
         data: generateZeroes(
-          sinceTimestamp.toStartOf('six hours'),
+          UnixTime.max(sinceTimestamp, untilTimestamp.add(-90, 'days')),
           untilTimestamp,
-          60,
+          6,
         ),
+      },
+      daily: {
+        types: TYPE_LABELS,
+        data: generateZeroes(sinceTimestamp, untilTimestamp, 24),
       },
     })
   }
 
-  const usdIndex = {
-    TVL: 1,
-    CBV: 2,
-    EBV: 3,
-    NMV: 4,
-  }
+  fillCharts(hourlyReports, sixHourlyReports, dailyReports, charts)
 
-  const ethIndex = {
-    TVL: 5,
-    CBV: 6,
-    EBV: 7,
-    NMV: 8,
-  }
-
-  for (const report of hourlyReports) {
-    const apiCharts = charts.get(report.projectId)
-    if (!apiCharts) {
-      continue
-    }
-    const minTimestamp = apiCharts.hourly.data[0][0]
-    const offset =
-      (report.timestamp.toNumber() - minTimestamp.toNumber()) / (60 * 60)
-    if (
-      !Number.isInteger(offset) ||
-      offset < 0 ||
-      offset >= apiCharts.hourly.data.length
-    ) {
-      continue
-    }
-
-    const point = apiCharts.hourly.data[offset]
-    point[usdIndex[report.reportType]] = asNumber(report.usdValue, 2)
-    point[ethIndex[report.reportType]] = asNumber(report.ethValue, 6)
-  }
-
-  /**
-   * ProjectID => Timestamp => [Report, Report, Report, Report]
-   * Ideally 4 reports per project per timestamp corresponding to 4 Value Types
-   */
-  const groupedHourlyReports = groupByProjectIdAndTimestamp(hourlyReports)
-
-  const groupedSixHourlyReportsTree =
-    groupByProjectIdAndTimestamp(sixHourlyReports)
-
-  const groupedDailyReports = groupByProjectIdAndTimestamp(dailyReports)
-
-  /**
-   * ProjectID => Asset => Report[]
-   * Ideally 1 report. Some chains like Arbitrum may have multiple reports per asset differentiated by Value Type
-   * That isl 1 report for USDC of value type CBV and 1 report for USDC of value type EBV
-   * Reduce (dedupe) occurs later in the call chain
-   * @see getProjectTokensCharts
-   */
   const groupedLatestReports = groupByProjectIdAndAssetType(latestReports)
-
-  const reports = {
-    hourly: groupedHourlyReports,
-    sixHourly: groupedSixHourlyReportsTree,
-    daily: groupedDailyReports,
-  }
-
-  const layers2s = getProjectCharts(reports, ProjectId.LAYER2S)
-  const bridges = getProjectCharts(reports, ProjectId.BRIDGES)
-  const combined = getProjectCharts(reports, ProjectId.ALL)
-
   const projectsResult = projects.reduce<TvlApiResponse['projects']>(
-    (acc, { id }) => {
-      acc[id.toString()] = {
-        charts: getProjectCharts(reports, id),
-        tokens: getProjectTokensCharts(groupedLatestReports, id),
+    (acc, project) => {
+      acc[project.id.toString()] = {
+        charts: charts.get(project.id)!,
+        tokens: getProjectTokensCharts(groupedLatestReports, project.id),
       }
       return acc
     },
@@ -183,101 +96,91 @@ export function generateTvlApiResponse(
   )
 
   return {
-    layers2s,
-    bridges,
-    combined,
+    layers2s: charts.get(ProjectId.LAYER2S)!,
+    bridges: charts.get(ProjectId.BRIDGES)!,
+    combined: charts.get(ProjectId.ALL)!,
     projects: projectsResult,
   }
 }
 
-export function getProjectCharts(
-  reports: {
-    hourly: ReportsPerProjectIdAndTimestamp
-    sixHourly: ReportsPerProjectIdAndTimestamp
-    daily: ReportsPerProjectIdAndTimestamp
-  },
-  projectId: ProjectId,
-): TvlApiCharts {
-  return {
-    hourly: {
-      types: TYPE_LABELS,
-      data: getProjectChartData(reports.hourly, projectId, 1),
-    },
-    sixHourly: {
-      types: TYPE_LABELS,
-      data: getProjectChartData(reports.sixHourly, projectId, 6),
-    },
-    daily: {
-      types: TYPE_LABELS,
-      data: getProjectChartData(reports.daily, projectId, 24),
-    },
-  }
-}
-
-export function getProjectChartData(
-  reportTree: ReportsPerProjectIdAndTimestamp,
-  projectId: ProjectId,
-  resolutionInHours: number,
-): TvlApiChartPoint[] {
-  const projectReportsByTimestamp = reportTree[projectId.toString()]
-
-  // Project may be missing reports
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (!projectReportsByTimestamp) {
-    return []
+function fillCharts(
+  hourlyReports: AggregatedReportRecord[],
+  sixHourlyReports: AggregatedReportRecord[],
+  dailyReports: AggregatedReportRecord[],
+  charts: Map<ProjectId, TvlApiCharts>,
+) {
+  const reports = {
+    hourly: hourlyReports,
+    sixHourly: sixHourlyReports,
+    daily: dailyReports,
   }
 
-  const balancesInTime = Object.entries(projectReportsByTimestamp).map(
-    ([timestamp, valueReports]) => {
-      const { tvlReport, cbvReport, ebvReport, nmvReport } =
-        extractReportTypeSet(valueReports)
-
-      return {
-        timestamp: new UnixTime(Number(timestamp)),
-        usdTvl: tvlReport.usdValue,
-        ethTvl: tvlReport.ethValue,
-        usdCbv: cbvReport.usdValue,
-        ethCbv: cbvReport.ethValue,
-        usdEbv: ebvReport.usdValue,
-        ethEbv: ebvReport.ethValue,
-        usdNmv: nmvReport.usdValue,
-        ethNmv: nmvReport.ethValue,
+  for (const [period, singleOffset] of PERIODS) {
+    for (const report of reports[period]) {
+      const apiCharts = charts.get(report.projectId)
+      if (!apiCharts) {
+        continue
       }
-    },
-  )
 
-  return covertBalancesToChartPoints(balancesInTime, resolutionInHours, 6, true)
-}
+      const minTimestamp = apiCharts[period].data[0][0]
+      const offset =
+        (report.timestamp.toNumber() - minTimestamp.toNumber()) / singleOffset
 
-export function extractReportTypeSet(reports: AggregatedReportRecord[]) {
-  const typesToSeek: AggregatedReportType[] = ['TVL', 'CBV', 'EBV', 'NMV']
+      if (
+        !Number.isInteger(offset) ||
+        offset < 0 ||
+        offset >= apiCharts[period].data.length
+      ) {
+        continue
+      }
 
-  const defaultValue = {
-    usdValue: 0n,
-    ethValue: 0n,
-  }
-
-  const fillMissingReportValues = getReportValuesOr(defaultValue)
-
-  const [tvlReport, cbvReport, ebvReport, nmvReport] = typesToSeek
-    .map((requestedReportType) =>
-      reports.find(({ reportType }) => reportType === requestedReportType),
-    )
-    .map(fillMissingReportValues)
-
-  return {
-    tvlReport,
-    cbvReport,
-    ebvReport,
-    nmvReport,
-  }
-}
-
-function getReportValuesOr(fallback: { usdValue: bigint; ethValue: bigint }) {
-  return function (report?: AggregatedReportRecord) {
-    return {
-      usdValue: report?.usdValue ?? fallback.usdValue,
-      ethValue: report?.ethValue ?? fallback.ethValue,
+      const point = apiCharts[period].data[offset]
+      point[USD_INDEX[report.reportType]] = asNumber(report.usdValue, 2)
+      point[ETH_INDEX[report.reportType]] = asNumber(report.ethValue, 6)
     }
   }
+}
+
+function getExtendedProjects(
+  projects: { id: ProjectId; isLayer2: boolean; sinceTimestamp: UnixTime }[],
+  untilTimestamp: UnixTime,
+) {
+  const minLayer2Timestamp = projects
+    .filter((p) => p.isLayer2)
+    .map((x) => x.sinceTimestamp)
+    .reduce((min, current) => UnixTime.min(min, current), untilTimestamp)
+
+  const minBridgeTimestamp = projects
+    .filter((p) => !p.isLayer2)
+    .map((x) => x.sinceTimestamp)
+    .reduce((min, current) => UnixTime.min(min, current), untilTimestamp)
+
+  const minTimestamp = UnixTime.min(minLayer2Timestamp, minBridgeTimestamp)
+
+  const extendedProjects = [
+    { id: ProjectId.LAYER2S, sinceTimestamp: minLayer2Timestamp },
+    { id: ProjectId.BRIDGES, sinceTimestamp: minBridgeTimestamp },
+    { id: ProjectId.ALL, sinceTimestamp: minTimestamp },
+  ]
+  return extendedProjects
+}
+
+function generateZeroes(
+  since: UnixTime,
+  until: UnixTime,
+  offsetHours: number,
+): TvlApiChartPoint[] {
+  const adjusted = new UnixTime(
+    since.toNumber() - (since.toNumber() % (offsetHours * 60 * 60)),
+  )
+
+  const zeroes: TvlApiChartPoint[] = []
+  for (
+    let timestamp = adjusted;
+    timestamp.lte(until);
+    timestamp = timestamp.add(offsetHours, 'hours')
+  ) {
+    zeroes.push([timestamp, 0, 0, 0, 0, 0, 0, 0, 0])
+  }
+  return zeroes
 }
