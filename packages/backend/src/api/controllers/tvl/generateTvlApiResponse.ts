@@ -61,7 +61,10 @@ export function generateTvlApiResponse(
       hourly: {
         types: TYPE_LABELS,
         data: generateZeroes(
-          UnixTime.max(sinceTimestamp, untilTimestamp.add(-7, 'days')),
+          UnixTime.max(
+            sinceTimestamp,
+            untilTimestamp.add(-7, 'days').add(1, 'hours'),
+          ),
           untilTimestamp,
           1,
         ),
@@ -69,7 +72,10 @@ export function generateTvlApiResponse(
       sixHourly: {
         types: TYPE_LABELS,
         data: generateZeroes(
-          UnixTime.max(sinceTimestamp, untilTimestamp.add(-90, 'days')),
+          UnixTime.max(
+            sinceTimestamp,
+            untilTimestamp.add(-90, 'days').add(6, 'hours'),
+          ),
           untilTimestamp,
           6,
         ),
@@ -123,9 +129,7 @@ function fillCharts(
     for (const report of reports[period]) {
       const apiCharts = charts.get(report.projectId)
       if (!apiCharts) {
-        throw new Error(
-          `Unexpected report for project ${report.projectId.toString()}`,
-        )
+        continue
       }
 
       const minTimestamp = apiCharts[period].data[0][0]
@@ -137,9 +141,7 @@ function fillCharts(
         index < 0 ||
         index >= apiCharts[period].data.length
       ) {
-        throw new Error(
-          `Unexpected timestamp for project ${report.projectId.toString()}: ${report.timestamp.toNumber()}`,
-        )
+        continue
       }
 
       const point = apiCharts[period].data[index]

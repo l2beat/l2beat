@@ -72,9 +72,8 @@ describe(generateTvlApiResponse.name, () => {
       const untilTimestamp = sinceTimestamp.add(123, 'days')
       const result = generateEmpty('arbitrum', sinceTimestamp, untilTimestamp)
 
-      // +1, because untilTimestamp is inclusive
       expect(result.projects.arbitrum?.charts.hourly.data.length).toEqual(
-        7 * 24 + 1,
+        7 * 24,
       )
     })
 
@@ -108,9 +107,8 @@ describe(generateTvlApiResponse.name, () => {
       const untilTimestamp = sinceTimestamp.add(123, 'days')
       const result = generateEmpty('arbitrum', sinceTimestamp, untilTimestamp)
 
-      // +1, because untilTimestamp is inclusive
       expect(result.projects.arbitrum?.charts.sixHourly.data.length).toEqual(
-        90 * 4 + 1,
+        90 * 4,
       )
     })
 
@@ -217,52 +215,54 @@ describe(generateTvlApiResponse.name, () => {
       ])
     })
 
-    it('throws an error for unknown projects', () => {
+    it('does not include unknown projects', () => {
       const sinceTimestamp = UnixTime.fromDate(new Date('2024-01-01T00:00:00Z'))
       const untilTimestamp = sinceTimestamp.add(1, 'hours')
 
-      expect(() =>
-        generateTvlApiResponse(
-          [
-            {
-              projectId: ProjectId('foo'),
-              timestamp: untilTimestamp,
-              usdValue: 1n,
-              ethValue: 1n,
-              reportType: 'TVL',
-            },
-          ],
-          [],
-          [],
-          [],
-          [{ id: ProjectId('arbitrum'), isLayer2: true, sinceTimestamp }],
-          untilTimestamp,
-        ),
-      ).toThrow('Unexpected report for project foo')
+      const result = generateTvlApiResponse(
+        [
+          {
+            projectId: ProjectId('foo'),
+            timestamp: untilTimestamp,
+            usdValue: 1n,
+            ethValue: 1n,
+            reportType: 'TVL',
+          },
+        ],
+        [],
+        [],
+        [],
+        [{ id: ProjectId('arbitrum'), isLayer2: true, sinceTimestamp }],
+        untilTimestamp,
+      )
+
+      expect(result.projects.foo).toEqual(undefined)
     })
 
-    it('throws an error for invalid timestamps', () => {
+    it('does not include invalid timestamps', () => {
       const sinceTimestamp = UnixTime.fromDate(new Date('2024-01-01T00:00:00Z'))
       const untilTimestamp = sinceTimestamp.add(1, 'hours')
 
-      expect(() =>
-        generateTvlApiResponse(
-          [
-            {
-              projectId: ProjectId('arbitrum'),
-              timestamp: sinceTimestamp.add(-1, 'hours'),
-              usdValue: 1n,
-              ethValue: 1n,
-              reportType: 'TVL',
-            },
-          ],
-          [],
-          [],
-          [],
-          [{ id: ProjectId('arbitrum'), isLayer2: true, sinceTimestamp }],
-          untilTimestamp,
-        ),
-      ).toThrow('Unexpected timestamp for project arbitrum: 1704063600')
+      const result = generateTvlApiResponse(
+        [
+          {
+            projectId: ProjectId('arbitrum'),
+            timestamp: sinceTimestamp.add(-1, 'hours'),
+            usdValue: 1n,
+            ethValue: 1n,
+            reportType: 'TVL',
+          },
+        ],
+        [],
+        [],
+        [],
+        [{ id: ProjectId('arbitrum'), isLayer2: true, sinceTimestamp }],
+        untilTimestamp,
+      )
+
+      expect(
+        result.projects.arbitrum?.charts.hourly.data.map((x) => x[0]),
+      ).toEqual([sinceTimestamp, untilTimestamp])
     })
   })
 })
