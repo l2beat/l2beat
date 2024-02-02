@@ -8,6 +8,9 @@ import { getGovernancePublicationEntry } from '../../getGovernancePublicationEnt
 import { GovernancePageProps } from '../view/GovernancePage'
 import { getPageMetadata } from './getPageMetadata'
 
+const INDEX_PAGE_PUBLICATIONS_COUNT = 8
+const INDEX_PAGE_MAX_HIGHLIGHTED_EVENTS = 4
+
 export function getProps(config: Config): Wrapped<GovernancePageProps> {
   const publications = getContent('publications')
   const events = getContent('events')
@@ -35,7 +38,22 @@ export function getProps(config: Config): Wrapped<GovernancePageProps> {
 }
 
 function getEvents(events: ContentEntry<'events'>[]) {
-  return getGovernanceEventEntries(events)
-    .filter((event) => event.startDate.getTime() > Date.now())
-    .slice(0, 8)
+  const futureEvents = getGovernanceEventEntries(events).filter(
+    (event) => event.startDate.getTime() > Date.now(),
+  )
+
+  const notHighlightedFutureEvents = futureEvents.filter(
+    (event) => !event.highlighted,
+  )
+  const highlightedFutureEvents = futureEvents
+    .filter((event) => event.highlighted)
+    .slice(0, INDEX_PAGE_MAX_HIGHLIGHTED_EVENTS)
+
+  return [
+    ...notHighlightedFutureEvents.slice(
+      0,
+      INDEX_PAGE_PUBLICATIONS_COUNT - highlightedFutureEvents.length,
+    ),
+    ...highlightedFutureEvents,
+  ]
 }
