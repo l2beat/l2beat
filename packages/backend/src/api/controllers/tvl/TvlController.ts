@@ -33,8 +33,6 @@ import {
   getCanonicalAssetsBreakdown,
   getNonCanonicalAssetsBreakdown,
   groupAndMergeBreakdowns,
-  groupByProjectIdAndAssetType,
-  groupByProjectIdAndTimestamp,
 } from './tvl'
 import { Result } from './types'
 
@@ -128,32 +126,32 @@ export class TvlController {
         this.reportRepository.getByTimestamp(dataTimings.latestTimestamp),
       ])
 
-    /**
-     * ProjectID => Timestamp => [Report, Report, Report, Report]
-     * Ideally 4 reports per project per timestamp corresponding to 4 Value Types
-     */
-    const groupedHourlyReports = groupByProjectIdAndTimestamp(hourlyReports)
+    const projects = []
+    for (const project of this.projects) {
+      if (project.escrows.length === 0) {
+        continue
+      }
 
-    const groupedSixHourlyReportsTree =
-      groupByProjectIdAndTimestamp(sixHourlyReports)
+      const sinceTimestamp = new UnixTime(
+        Math.min(
+          ...project.escrows.map((escrow) => escrow.sinceTimestamp.toNumber()),
+        ),
+      )
 
-    const groupedDailyReports = groupByProjectIdAndTimestamp(dailyReports)
-
-    /**
-     * ProjectID => Asset => Report[]
-     * Ideally 1 report. Some chains like Arbitrum may have multiple reports per asset differentiated by Value Type
-     * That isl 1 report for USDC of value type CBV and 1 report for USDC of value type EBV
-     * Reduce (dedupe) occurs later in the call chain
-     * @see getProjectTokensCharts
-     */
-    const groupedLatestReports = groupByProjectIdAndAssetType(latestReports)
+      projects.push({
+        id: project.projectId,
+        isLayer2: project.type === 'layer2',
+        sinceTimestamp,
+      })
+    }
 
     const tvlApiResponse = generateTvlApiResponse(
-      groupedHourlyReports,
-      groupedSixHourlyReportsTree,
-      groupedDailyReports,
-      groupedLatestReports,
-      this.projects.map((x) => x.projectId),
+      hourlyReports,
+      sixHourlyReports,
+      dailyReports,
+      latestReports,
+      projects,
+      dataTimings.latestTimestamp,
     )
 
     return { result: 'success', data: tvlApiResponse }
