@@ -19,6 +19,17 @@ export function createLivenessRouter(livenessController: LivenessController) {
     ctx.body = result.data
   })
 
+  router.get('/api/liveness-transactions', async (ctx) => {
+    const result = await livenessController.getLivenessTransactions()
+
+    if (result.type === 'error') {
+      ctx.status = 503
+      ctx.body = result.error
+      return
+    }
+    ctx.body = result.data
+  })
+
   router.get(
     '/api/liveness/:projectId/:livenessType',
     withTypedContext(
