@@ -107,7 +107,7 @@ export function TVLBreakdownTableView<
                 {...rest}
                 className={cn(
                   'group',
-                  'border-b border-b-black/10 hover:bg-black/[0.1] hover:shadow-sm dark:border-b-zinc-700 dark:hover:bg-white/[0.1] md:border-b-0',
+                  'border-b border-b-black/10 hover:bg-black/5 hover:shadow-sm dark:border-b-zinc-700 dark:hover:bg-white/5 md:border-b-0',
                   rowClassName,
                 )}
                 data-role={
