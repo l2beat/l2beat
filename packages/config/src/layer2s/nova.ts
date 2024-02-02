@@ -125,7 +125,7 @@ export const nova: Layer2 = {
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(nOfChallengers),
-    dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
+    dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC(DAC),
     exitWindow: {
       ...RISK_VIEW.EXIT_WINDOW(l2TimelockDelay, selfSequencingDelay, 0),
       sentiment: 'bad',

@@ -260,7 +260,12 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     riskView: makeBridgeCompatible({
       stateValidation: RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(nOfChallengers),
       dataAvailability: postsToExternalDA
-        ? RISK_VIEW.DATA_EXTERNAL_DAC
+        ? (() => {
+            const DAC = templateVars.discovery.getContractValue<
+              Record<string, number>
+            >('SequencerInbox', 'dacKeyset')
+            return RISK_VIEW.DATA_EXTERNAL_DAC(DAC)
+          })()
         : RISK_VIEW.DATA_ON_CHAIN_L2,
       exitWindow: RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelay),
       sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelay),
@@ -347,8 +352,13 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     riskView: makeBridgeCompatible({
       stateValidation: RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(nOfChallengers),
       dataAvailability: postsToExternalDA
-        ? RISK_VIEW.DATA_EXTERNAL_DAC
-        : RISK_VIEW.DATA_ON_CHAIN,
+        ? (() => {
+            const DAC = templateVars.discovery.getContractValue<
+              Record<string, number>
+            >('SequencerInbox', 'dacKeyset')
+            return RISK_VIEW.DATA_EXTERNAL_DAC(DAC)
+          })()
+        : RISK_VIEW.DATA_ON_CHAIN_L2,
       exitWindow: RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelay),
       sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelay),
       proposerFailure:

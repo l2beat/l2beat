@@ -133,11 +133,23 @@ export const DATA_EXTERNAL_MEMO: ScalingProjectRiskViewEntry = {
   sentiment: 'bad',
 }
 
-export const DATA_EXTERNAL_DAC: ScalingProjectRiskViewEntry = {
-  value: 'External (DAC)',
-  description:
-    'Proof construction relies fully on data that is NOT published on chain. There exists a data availability committee (DAC) that is tasked with protecting and supplying the data.',
-  sentiment: 'warning',
+export function DATA_EXTERNAL_DAC(
+  DAC?: Record<string, number>,
+): ScalingProjectRiskViewEntry {
+  const additionalString =
+    DAC !== undefined
+      ? ' with a threshold of ${DAC.size - DAC.threshold + 1}/{DAC.size}'
+      : ''
+  return {
+    value: 'External (DAC)',
+    description: `Proof construction relies fully on data that is NOT published on chain. There exists a Data Availability Committee (DAC)${additionalString} that is tasked with protecting and supplying the data.`,
+    sentiment:
+      DAC !== undefined
+        ? DAC.size < 6 || (DAC.size - DAC.threshold + 1) / DAC.size < 1 / 3
+          ? 'bad'
+          : 'warning'
+        : 'warning',
+  }
 }
 
 export const DATA_EXTERNAL: ScalingProjectRiskViewEntry = {
