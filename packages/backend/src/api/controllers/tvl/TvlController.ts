@@ -96,9 +96,6 @@ export class TvlController {
     }, fiveMinutes)
   }
 
-  /**
-   * TODO: Add project exclusion?
-   */
   async getTvlApiResponse(): Promise<TvlResult> {
     const dataTimings = await this.getDataTimings()
 
