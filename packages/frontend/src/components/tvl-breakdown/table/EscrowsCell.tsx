@@ -56,7 +56,9 @@ function EscrowLink(props: EscrowLinkProps) {
     )
   }
   return (
-    <div
+    <a
+      href={`${props.explorer}/address/${props.escrowAddress.toString()}`}
+      target="_blank"
       className={cn(
         'flex gap-1 text-xs font-medium text-blue-700 underline dark:text-blue-500',
         props.hidden && 'hidden',
@@ -66,7 +68,7 @@ function EscrowLink(props: EscrowLinkProps) {
     >
       {formatAddress(props.escrowAddress)}
       <OutLinkIcon className="fill-blue-700 dark:fill-blue-500" />
-    </div>
+    </a>
   )
 }
 
