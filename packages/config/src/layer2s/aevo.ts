@@ -34,7 +34,7 @@ export const aevo: Layer2 = opStack({
   },
   chainConfig: {
     name: 'aevo',
-    chainId: 0, // TODO: find correct one
+    chainId: 2999,
     explorerUrl: 'https://explorer.aevo.xyz',
     explorerApi: {
       url: 'https://explorer.aevo.xyz/api/v2/',
