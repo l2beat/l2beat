@@ -66,7 +66,7 @@ export const parallel: Layer2 = orbitStackL2({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   transactionApi: {
     type: 'rpc',
-    defaultUrl: 'https://api.parallel.fi',
+    defaultUrl: 'https://rpc.parallel.fi',
     defaultCallsPerMinute: 120,
     assessCount: subtractOne,
     startBlock: 1,
