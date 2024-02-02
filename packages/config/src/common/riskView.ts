@@ -138,7 +138,7 @@ export function DATA_EXTERNAL_DAC(
 ): ScalingProjectRiskViewEntry {
   const additionalString =
     DAC !== undefined
-      ? ' with a threshold of ${DAC.size - DAC.threshold + 1}/{DAC.size}'
+      ? ` with a threshold of ${DAC.size - DAC.threshold + 1}/{DAC.size}`
       : ''
   return {
     value: 'External (DAC)',
