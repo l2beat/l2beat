@@ -1,6 +1,7 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 
 import { ScalingProjectPermissionedAccount } from '../common'
+import { subtractOne } from '../common/assessCount'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { orbitStackL2 } from './templates/orbitStack'
 import { Layer2 } from './types'
@@ -62,7 +63,13 @@ export const parallel: Layer2 = orbitStackL2({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-
+  transactionApi: {
+    type: 'rpc',
+    defaultUrl: 'https://rpc.parallel.fi',
+    defaultCallsPerMinute: 120,
+    assessCount: subtractOne,
+    startBlock: 1,
+  },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'OwnerMultisig',
