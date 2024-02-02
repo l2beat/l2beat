@@ -1,8 +1,8 @@
 {
   "name": "arbitrum",
   "chain": "ethereum",
-  "blockNumber": 19119504,
-  "configHash": "0xc26de3d89f84d5b879c1f92e6308927cb173525ce7e335cd29f3933b2eb9ba6b",
+  "blockNumber": 19139752,
+  "configHash": "0xf6f126286661d6f8c4e341ac2f86137b4170bbaf7a38a0f63843376a5f28bc6a",
   "version": 3,
   "contracts": [
     {
@@ -120,7 +120,7 @@
       "implementations": ["0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9"],
       "sinceTimestamp": 1661457944,
       "values": {
-        "batchCount": 521056,
+        "batchCount": 524762,
         "batchPosters": [
           "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
           "0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc"
@@ -133,7 +133,7 @@
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 1358008
+        "totalDelayedMessagesRead": 1363435
       },
       "derivedName": "SequencerInbox"
     },
@@ -330,12 +330,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 11384,
+        "firstUnresolvedNode": 11451,
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isERC20Enabled": false,
         "lastStakeBlock": 15447818,
-        "latestConfirmed": 11383,
-        "latestNodeCreated": 11536,
+        "latestConfirmed": 11450,
+        "latestNodeCreated": 11604,
         "loserStakeEscrow": "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -494,11 +494,11 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 1358039,
+        "delayedMessageCount": 1363452,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 521056,
-        "sequencerReportedSubMessageCount": 153518222
+        "sequencerMessageCount": 524762,
+        "sequencerReportedSubMessageCount": 154458081
       },
       "derivedName": "Bridge"
     },
@@ -628,7 +628,7 @@
       "sinceTimestamp": 1661455968
     },
     {
-      "name": "GnosisSafe",
+      "name": "ValidatorOwnerMultisig",
       "address": "0xC234E41AE2cb00311956Aa7109fC801ae8c80941",
       "upgradeability": {
         "type": "gnosis safe",
@@ -649,9 +649,10 @@
           "0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe"
         ],
         "getThreshold": 4,
-        "nonce": 179,
+        "nonce": 180,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "OutboxEntry",
