@@ -124,7 +124,7 @@ function fillCharts(
       const apiCharts = charts.get(report.projectId)
       if (!apiCharts) {
         throw new Error(
-          `Unexpected report for project: ${report.projectId.toString()}`,
+          `Unexpected report for project ${report.projectId.toString()}`,
         )
       }
 
@@ -138,7 +138,7 @@ function fillCharts(
         index >= apiCharts[period].data.length
       ) {
         throw new Error(
-          `Unexpected timestamp for project ${report.projectId.toString()} - ${report.timestamp.toNumber()}`,
+          `Unexpected timestamp for project ${report.projectId.toString()}: ${report.timestamp.toNumber()}`,
         )
       }
 
