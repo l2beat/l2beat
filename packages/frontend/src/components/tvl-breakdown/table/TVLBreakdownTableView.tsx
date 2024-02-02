@@ -118,22 +118,17 @@ export function TVLBreakdownTableView<
                 data-token={item.assetId}
               >
                 {columns.map((column, j) => {
-                  const childClassName = cn(
-                    'size-full items-start py-2',
-                    column.align === 'right' && 'justify-end',
-                    column.align === 'center' && 'justify-center',
-                  )
                   return (
                     <td
                       key={j}
                       className={cn(
-                        'h-9 pr-2 first:rounded-l first:pl-2 last:rounded-r last:pr-2 md:h-10 md:pl-4 first:md:pl-6 last:md:pr-6',
+                        'h-9 py-2 pr-2 align-top first:rounded-l first:pl-2 last:rounded-r last:pr-2 md:h-10 md:pl-4 first:md:pl-6 last:md:pr-6',
                         column.highlight && highlightedColumnClassNames,
+                        column.align === 'right' && 'text-right',
+                        column.align === 'center' && 'text-center',
                       )}
                     >
-                      <div className={cn(childClassName, 'flex')}>
-                        {column.getValue(item, i)}
-                      </div>
+                      {column.getValue(item, i)}
                     </td>
                   )
                 })}

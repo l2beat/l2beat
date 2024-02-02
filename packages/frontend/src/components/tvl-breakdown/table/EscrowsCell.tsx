@@ -12,27 +12,27 @@ interface EscrowsCellProps {
   assetId: string
 }
 export function EscrowsCell(props: EscrowsCellProps) {
+  if (props.escrows.length === 1) {
+    return (
+      <EscrowLink
+        escrowAddress={props.escrows[0].escrowAddress}
+        explorer={props.explorer}
+      />
+    )
+  }
+
   return (
-    <div>
-      {props.escrows.length === 1 ? (
+    <div className="flex flex-col gap-2">
+      <MultipleEscrows token={props.assetId} />
+      {props.escrows.map((escrow) => (
         <EscrowLink
-          escrowAddress={props.escrows[0].escrowAddress}
+          key={escrow.escrowAddress.toString()}
+          escrowAddress={escrow.escrowAddress}
           explorer={props.explorer}
+          hidden
+          assetId={props.assetId}
         />
-      ) : (
-        <div className="flex flex-col gap-2">
-          <MultipleEscrows token={props.assetId} />
-          {props.escrows.map((escrow) => (
-            <EscrowLink
-              key={escrow.escrowAddress.toString()}
-              escrowAddress={escrow.escrowAddress}
-              explorer={props.explorer}
-              hidden
-              assetId={props.assetId}
-            />
-          ))}
-        </div>
-      )}
+      ))}
     </div>
   )
 }
@@ -56,9 +56,7 @@ function EscrowLink(props: EscrowLinkProps) {
     )
   }
   return (
-    <a
-      href={`${props.explorer}/address/${props.escrowAddress.toString()}`}
-      target="_blank"
+    <div
       className={cn(
         'flex gap-1 text-xs font-medium text-blue-700 underline dark:text-blue-500',
         props.hidden && 'hidden',
@@ -68,7 +66,7 @@ function EscrowLink(props: EscrowLinkProps) {
     >
       {formatAddress(props.escrowAddress)}
       <OutLinkIcon className="fill-blue-700 dark:fill-blue-500" />
-    </a>
+    </div>
   )
 }
 
