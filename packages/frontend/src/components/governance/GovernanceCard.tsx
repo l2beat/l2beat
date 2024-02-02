@@ -11,16 +11,21 @@ type GovernanceCardProps<T extends React.ElementType> = {
 } & ComponentPropsWithoutRef<T> &
   VariantProps<typeof governanceCardVariants>
 
-const governanceCardVariants = cva('rounded-lg p-8', {
+const governanceCardVariants = cva('rounded-lg', {
   variants: {
     type: {
       primary: 'bg-gray-100 dark:bg-zinc-900',
       secondary: 'bg-[#DBDBDB] dark:bg-zinc-800',
       purple: 'bg-purple-300 dark:bg-purple-100',
     },
+    size: {
+      default: 'p-8',
+      medium: 'p-6',
+    },
   },
   defaultVariants: {
     type: 'primary',
+    size: 'default',
   },
 })
 

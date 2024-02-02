@@ -38,7 +38,7 @@ function ExploreAllButton({ className }: { className?: string }) {
       className={className}
       variant="purple"
       size="sm"
-      href="/governance/publications"
+      href="https://medium.com/l2beat"
     >
       Explore all publications
     </Button>

@@ -31,7 +31,8 @@ function Event({ event }: { event: GovernanceEventEntry }) {
   return (
     <GovernanceCard
       type={event.highlighted ? 'purple' : 'secondary'}
-      className="flex flex-col justify-between"
+      size="medium"
+      className="flex h-[320px] flex-col justify-between"
     >
       <div>
         <div className="h-16">
@@ -57,7 +58,6 @@ function Event({ event }: { event: GovernanceEventEntry }) {
         </div>
       </div>
       <Button
-        className="mt-[50px]"
         as="a"
         variant={event.highlighted ? 'default' : 'purple'}
         href={event.link}

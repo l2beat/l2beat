@@ -28,7 +28,11 @@ export function OfficeHoursSection({ className }: Props) {
         will be specifically targeted at one of the protocols we’re delegates
         in.
       </p>
-      <Button as="a" href="somelink.com" className="mt-6 h-14 w-full">
+      <Button
+        as="a"
+        href="https://calendar.google.com/calendar/u/0?cid=Y18wNzQ1ODJiMWJkNWE2NTVjOGNkMmQ2YjNhYjliZDQ0NzcxY2U3MDgyYzI2Zjk0MmQ1MzM5ZWUxZDllN2M4YzA0QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20"
+        className="mt-6 h-14 w-full"
+      >
         Add the L2BEAT GOV Calendar
       </Button>
     </GovernanceCard>

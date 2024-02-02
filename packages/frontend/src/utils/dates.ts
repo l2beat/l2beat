@@ -21,7 +21,7 @@ const MONTHS: Record<
   '12': { shortName: 'Dec', longName: 'December' },
 }
 
-function parseTimestamp(timestamp: number) {
+export function parseTimestamp(timestamp: number) {
   const isoString = new Date(timestamp * 1000).toISOString()
   const [year, month, day] = isoString.slice(0, 10).split('-')
   const time = isoString.slice(11, 16)
@@ -33,8 +33,19 @@ function parseTimestamp(timestamp: number) {
   }
 }
 
-function formatTimeAndDate(date: string, time?: string) {
-  return time === undefined ? date : `${date}, ${time} (UTC)`
+function formatTimeAndDate(
+  date: string,
+  time: string,
+  mode: 'date' | 'datetime' | 'time' = 'date',
+) {
+  switch (mode) {
+    case 'date':
+      return date
+    case 'time':
+      return `${time} (UTC)`
+    case 'datetime':
+      return `${date}, ${time} (UTC)`
+  }
 }
 
 function toNiceDate(
@@ -75,13 +86,13 @@ export function formatRange(from: number, to: number) {
 export function formatTimestamp(
   timestamp: number,
   opts?: {
-    withTime?: boolean
+    mode?: 'date' | 'datetime' | 'time'
     longMonthName?: boolean
   },
 ) {
   const { year, month, day, time } = parseTimestamp(timestamp)
   const date = toNiceDate(day, month, year, opts?.longMonthName)
-  return formatTimeAndDate(date, opts?.withTime ? time : undefined)
+  return formatTimeAndDate(date, time, opts?.mode)
 }
 
 export function formatDate(date: string) {

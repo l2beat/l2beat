@@ -3,6 +3,7 @@ import clamp from 'lodash/clamp'
 import range from 'lodash/range'
 
 import { ContentEntry } from '../../content/getContent'
+import { formatTimestamp } from '../../utils'
 
 export interface GovernanceEventEntry {
   title: string
@@ -132,35 +133,17 @@ function getNextDateForDayOfWeek(
 function getNiceEventDate(event: OneTimeEvent) {
   const startDay = event.data.startDate.getDate()
   const endDay = event.data.endDate.getDate()
+  const startTimestamp = Math.ceil(event.data.startDate.getTime() / 1000)
+  const endTimestamp = Math.ceil(event.data.endDate.getTime() / 1000)
 
   if (startDay === endDay) {
-    return `${event.data.startDate.toLocaleDateString()}\n${event.data.startDate.toLocaleTimeString(
-      undefined,
-      { hour: 'numeric', minute: 'numeric' },
-    )} - ${event.data.endDate.toLocaleTimeString(undefined, {
-      hour: 'numeric',
-      minute: 'numeric',
-    })}`
+    return `${formatTimestamp(startTimestamp, {
+      mode: 'date',
+    })}\n${formatTimestamp(startTimestamp, { mode: 'time' }).slice(
+      0,
+      -6,
+    )} - ${formatTimestamp(endTimestamp, { mode: 'time' })}`
   }
 
-  if (
-    event.data.startDate.getUTCHours() === 0 &&
-    event.data.endDate.getUTCHours() === 0
-  ) {
-    return `${event.data.startDate.toLocaleDateString()} - ${event.data.startDate.toLocaleDateString()}`
-  }
-
-  return `${event.data.startDate.toLocaleDateString()} ${event.data.startDate.toLocaleTimeString(
-    undefined,
-    {
-      hour: 'numeric',
-      minute: 'numeric',
-    },
-  )} -\n${event.data.endDate.toLocaleDateString()} ${event.data.endDate.toLocaleTimeString(
-    undefined,
-    {
-      hour: 'numeric',
-      minute: 'numeric',
-    },
-  )}`
+  return `${formatTimestamp(startTimestamp)} - ${formatTimestamp(endTimestamp)}`
 }
