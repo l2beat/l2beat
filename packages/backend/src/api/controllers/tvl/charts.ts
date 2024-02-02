@@ -7,18 +7,6 @@ import {
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'
 import { asNumber } from './asNumber'
 
-interface BalanceInTime {
-  timestamp: UnixTime
-  usdTvl: bigint
-  ethTvl: bigint
-  usdEbv: bigint
-  ethEbv: bigint
-  usdCbv: bigint
-  ethCbv: bigint
-  usdNmv: bigint
-  ethNmv: bigint
-}
-
 export function addTokenMissingTimestamps(
   points: TokenTvlApiChartPoint[],
   hours: number,
@@ -106,57 +94,4 @@ export function getChartPoints(
     return usdFirst ? [b.timestamp, usd, asset] : [b.timestamp, asset, usd]
   })
   return addTokenMissingTimestamps(existing, hours)
-}
-
-export function covertBalancesToChartPoints(
-  balancesInTime: BalanceInTime[],
-  resolutionInHours: number,
-  decimals: number,
-  usdFirst = false,
-): TvlApiChartPoint[] {
-  const USD_DECIMALS = 2
-
-  const existingBalanceChartPoints: TvlApiChartPoint[] = balancesInTime.map(
-    (bit) => {
-      const [usdTvl, usdCbv, usdEbv, usdNmv] = [
-        bit.usdTvl,
-        bit.usdCbv,
-        bit.usdEbv,
-        bit.usdNmv,
-      ].map((usdBalance) => asNumber(usdBalance, USD_DECIMALS))
-
-      const [ethTvl, ethCbv, ethEbv, ethNmv] = [
-        bit.ethTvl,
-        bit.ethCbv,
-        bit.ethEbv,
-        bit.ethNmv,
-      ].map((ethBalance) => asNumber(ethBalance, decimals))
-
-      return usdFirst
-        ? [
-            bit.timestamp,
-            usdTvl,
-            usdCbv,
-            usdEbv,
-            usdNmv,
-            ethTvl,
-            ethCbv,
-            ethEbv,
-            ethNmv,
-          ]
-        : [
-            bit.timestamp,
-            ethTvl,
-            ethCbv,
-            ethEbv,
-            ethNmv,
-            usdTvl,
-            usdCbv,
-            usdEbv,
-            usdNmv,
-          ]
-    },
-  )
-
-  return addMissingTimestamps(existingBalanceChartPoints, resolutionInHours)
 }

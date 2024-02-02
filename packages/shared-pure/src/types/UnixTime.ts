@@ -36,22 +36,34 @@ export class UnixTime {
     return new UnixTime(days * UnixTime.DAY)
   }
 
-  toStartOf(period: 'day' | 'hour' | 'minute') {
+  static min(a: UnixTime, b: UnixTime) {
+    return a.lt(b) ? a : b
+  }
+
+  static max(a: UnixTime, b: UnixTime) {
+    return a.gt(b) ? a : b
+  }
+
+  toStartOf(period: 'day' | 'hour' | 'minute' | 'six hours') {
     const modulus =
       period === 'day'
         ? UnixTime.DAY
         : period === 'hour'
         ? UnixTime.HOUR
+        : period === 'six hours'
+        ? UnixTime.SIX_HOURS
         : UnixTime.MINUTE
     return new UnixTime(this.timestamp - (this.timestamp % modulus))
   }
 
-  toNext(period: 'day' | 'hour' | 'minute') {
+  toNext(period: 'day' | 'hour' | 'minute' | 'six hours') {
     const modulus =
       period === 'day'
         ? UnixTime.DAY
         : period === 'hour'
         ? UnixTime.HOUR
+        : period === 'six hours'
+        ? UnixTime.SIX_HOURS
         : UnixTime.MINUTE
     const remaining = modulus - (this.timestamp % modulus)
     return new UnixTime(this.timestamp + remaining)
