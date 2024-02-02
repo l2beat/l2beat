@@ -29,7 +29,8 @@
     "0xe5896783a2F463446E1f624e64Aa6836BE4C6f58": "ChallengeManager",
     "0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a": "wstETHEscrow",
     "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": "wstETHEscrowAdmin",
-    "0x73b047fe6337183A454c5217241D780a932777bD": "LidoEmergencyBrakeMultisig"
+    "0x73b047fe6337183A454c5217241D780a932777bD": "LidoEmergencyBrakeMultisig",
+    "0xC234E41AE2cb00311956Aa7109fC801ae8c80941": "ValidatorOwnerMultisig"
   },
   "overrides": {
     "ArbitrumOneBridge": {
@@ -201,6 +202,9 @@
     },
     "LidoEmergencyBrakeMultisig": {
       "ignoreDiscovery": true
+    },
+    "ValidatorOwnerMultisig": {
+      "ignoreInWatchMode": ["nonce"]
     }
   }
 }

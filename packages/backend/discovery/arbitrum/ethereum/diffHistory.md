@@ -8,7 +8,7 @@ Generated with discovered.json: 0xd968955c30d1d181283155fdec6efa9744f6c468
 
 ## Description
 
-Start tracking the keySetUpdates.
+The nonce is now ignored. Start tracking the keySetUpdates.
 
 ## Config/verification related changes
 
@@ -20,6 +20,12 @@ discovery. Values are for block 19119504 (main branch discovery), not current.
     contract SequencerInbox (0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6) {
       values.keySetUpdates:
 +        0
+    contract GnosisSafe (0xC234E41AE2cb00311956Aa7109fC801ae8c80941) {
+      name:
+-        "GnosisSafe"
++        "ValidatorOwnerMultisig"
+      derivedName:
++        "GnosisSafe"
     }
 ```
 
