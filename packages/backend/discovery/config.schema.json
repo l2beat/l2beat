@@ -27,7 +27,8 @@
         "linea",
         "base",
         "polygonzkevm",
-        "gnosis"
+        "gnosis",
+        "zksync2"
       ]
     },
     "initialAddresses": {

@@ -1,0 +1,9 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "zksync2",
+  "name": "zklink",
+  "initialAddresses": ["0x0669ef7718376591AE0756A56255c75D2e712d87"],
+  "names": {
+    "0x0669ef7718376591AE0756A56255c75D2e712d87": "zkLink"
+  }
+}
