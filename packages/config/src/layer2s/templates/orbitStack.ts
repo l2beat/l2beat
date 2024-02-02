@@ -14,6 +14,7 @@ import {
   ScalingProjectEscrow,
   ScalingProjectPermission,
 } from '../../common'
+import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { VALUES } from '../../discovery/values'
 import { Layer3, Layer3Display } from '../../layer3s/types'
@@ -370,6 +371,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
               startBlock: 1,
               defaultUrl: templateVars.rpcUrl,
               defaultCallsPerMinute: 1500,
+              assessCount: subtractOne,
             }
           : undefined),
     },
