@@ -3,6 +3,7 @@ import { utils } from 'ethers'
 
 import { ScalingProjectRiskViewEntry, Sentiment } from './ScalingProjectRisk'
 import { ScalingProjectRiskView } from './ScalingProjectRiskView'
+import console from 'console'
 
 export function makeBridgeCompatible(
   entry: Omit<ScalingProjectRiskView, 'sourceUpgradeability'>,
@@ -136,16 +137,20 @@ export const DATA_EXTERNAL_MEMO: ScalingProjectRiskViewEntry = {
 export function DATA_EXTERNAL_DAC(
   DAC?: Record<string, number>,
 ): ScalingProjectRiskViewEntry {
+  console.log(DAC)
   const additionalString =
     DAC !== undefined
-      ? ` with a threshold of ${DAC.size - DAC.threshold + 1}/{DAC.size}`
-      : ''
+      ? ` with a threshold of ${
+          DAC.keyCount - DAC.threshold + 1
+        }/{DAC.keyCount}`
+      : ``
   return {
     value: 'External (DAC)',
     description: `Proof construction relies fully on data that is NOT published on chain. There exists a Data Availability Committee (DAC)${additionalString} that is tasked with protecting and supplying the data.`,
     sentiment:
       DAC !== undefined
-        ? DAC.size < 6 || (DAC.size - DAC.threshold + 1) / DAC.size < 1 / 3
+        ? DAC.keyCount < 6 ||
+          (DAC.keyCount - DAC.threshold + 1) / DAC.keyCount < 1 / 3
           ? 'bad'
           : 'warning'
         : 'warning',
