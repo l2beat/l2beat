@@ -46,7 +46,7 @@ export function OurMissionSection({ className }: Props) {
           </li>
         </ul>
       </p>
-      <div className="mt-6 flex gap-3 rounded-lg bg-[#3A1929] p-4">
+      <div className="mt-6 flex gap-3 rounded-lg bg-[#F7DEEB] p-4 dark:bg-[#3A1929]">
         <HeartIcon className="shrink-0" />
         <span className="text-balance text-base font-medium md:text-sm">
           We believe that right now the best ecosystem where those values could

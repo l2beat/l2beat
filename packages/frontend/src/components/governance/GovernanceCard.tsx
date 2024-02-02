@@ -16,7 +16,7 @@ const governanceCardVariants = cva('rounded-lg', {
     type: {
       primary: 'bg-gray-100 dark:bg-zinc-900',
       secondary: 'bg-[#DBDBDB] dark:bg-zinc-800',
-      purple: 'bg-purple-300 dark:bg-purple-100',
+      purple: 'bg-purple-100 text-white',
     },
     size: {
       default: 'p-8',
