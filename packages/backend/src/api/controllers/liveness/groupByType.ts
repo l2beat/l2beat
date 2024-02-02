@@ -1,6 +1,6 @@
 import { LivenessRecordWithType } from '../../../peripherals/database/LivenessRepository'
 
-export interface GroupedByType<T> {
+export interface GroupedByType<T = LivenessRecordWithType> {
   batchSubmissions: {
     records: T[]
   }
