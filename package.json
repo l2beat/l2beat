@@ -23,7 +23,7 @@
     "lint": "turbo run lint",
     "lint:fix": "wsrun -ecam lint:fix",
     "start": "cd packages/backend && yarn start",
-    "test": "turbo run test",
+    "test": "turbo run test --",
     "test:exclude-backend": "turbo run test --filter=!backend",
     "typecheck": "turbo run typecheck",
     "ci:check": "turbo run ci:check",
