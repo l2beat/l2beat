@@ -20,6 +20,7 @@ import { Clock } from './Clock'
 import { PriceUpdater } from './PriceUpdater'
 
 describe(PriceUpdater.name, () => {
+  console.log('dupa')
   const HOUR_09 = UnixTime.fromDate(new Date('2021-09-07T09:00:00Z'))
   const HOUR_10 = UnixTime.fromDate(new Date('2021-09-07T10:00:00Z'))
   const HOUR_11 = UnixTime.fromDate(new Date('2021-09-07T11:00:00Z'))
