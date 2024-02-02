@@ -1,5 +1,4 @@
 import { formatSeconds, ProjectId } from '@l2beat/shared-pure'
-import console from 'console'
 import { utils } from 'ethers'
 
 import { ScalingProjectRiskViewEntry, Sentiment } from './ScalingProjectRisk'
