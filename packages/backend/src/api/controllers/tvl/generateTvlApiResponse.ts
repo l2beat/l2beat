@@ -1,6 +1,5 @@
 import {
   AggregatedReportType,
-  assert,
   ProjectId,
   TvlApiChart,
   TvlApiChartPoint,
@@ -8,7 +7,6 @@ import {
   TvlApiResponse,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { sum } from 'lodash'
 
 import { AggregatedReportRecord } from '../../../peripherals/database/AggregatedReportRepository'
 import { covertBalancesToChartPoints } from './charts'
@@ -64,97 +62,6 @@ export function generateTvlApiResponse(
     combined,
     projects,
   }
-}
-
-export function generateAggregatedTvlApiResponse(
-  hourly: ReportsPerProjectIdAndTimestamp,
-  sixHourly: ReportsPerProjectIdAndTimestamp,
-  daily: ReportsPerProjectIdAndTimestamp,
-  projectIds: ProjectId[],
-): TvlApiCharts {
-  const result: TvlApiCharts = createEmptyTvlApiCharts()
-
-  // get project charts of filtered projects (projectIds)
-
-  const projectCharts = projectIds.map((projectId) => {
-    return getProjectCharts(
-      {
-        hourly,
-        sixHourly,
-        daily,
-      },
-      projectId,
-    )
-  })
-
-  // aggregate charts
-
-  const hourlyDataLength = projectCharts[0].hourly.data.length
-  assert(
-    projectCharts.every(
-      (chart) => chart.hourly.data.length === hourlyDataLength,
-    ),
-    'hourly data length mismatch',
-  )
-  result.hourly.data = [...Array(hourlyDataLength).keys()].map((i) =>
-    mergeDetailValues(
-      projectCharts.map((projectChart) => projectChart.hourly.data[i]),
-    ),
-  )
-
-  const sixHourlyDataLength = projectCharts[0].sixHourly.data.length
-  assert(
-    projectCharts.every(
-      (chart) => chart.sixHourly.data.length === sixHourlyDataLength,
-    ),
-    'sixHourly data length mismatch',
-  )
-  result.sixHourly.data = [...Array(sixHourlyDataLength).keys()].map((i) =>
-    mergeDetailValues(
-      projectCharts.map((projectChart) => projectChart.sixHourly.data[i]),
-    ),
-  )
-
-  const dailyDataLength = projectCharts[0].daily.data.length
-  assert(
-    projectCharts.every((chart) => chart.daily.data.length === dailyDataLength),
-    'daily data length mismatch',
-  )
-  result.daily.data = [...Array(dailyDataLength).keys()].map((i) =>
-    mergeDetailValues(
-      projectCharts.map((projectChart) => projectChart.daily.data[i]),
-    ),
-  )
-
-  return result
-}
-
-function createEmptyTvlApiCharts(): TvlApiCharts {
-  return {
-    hourly: {
-      types: TYPE_LABELS,
-      data: [],
-    },
-    sixHourly: {
-      types: TYPE_LABELS,
-      data: [],
-    },
-    daily: { types: TYPE_LABELS, data: [] },
-  }
-}
-
-function mergeDetailValues(values: TvlApiChartPoint[]): TvlApiChartPoint {
-  return [
-    values[0][0],
-    sum(values.map((value) => value[1])),
-    sum(values.map((value) => value[2])),
-    sum(values.map((value) => value[3])),
-    sum(values.map((value) => value[4])),
-    sum(values.map((value) => value[5])),
-    sum(values.map((value) => value[6])),
-    sum(values.map((value) => value[7])),
-    sum(values.map((value) => value[8])),
-  ]
 }
 
 export function getProjectCharts(
