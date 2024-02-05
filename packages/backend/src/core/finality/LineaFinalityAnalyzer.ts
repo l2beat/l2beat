@@ -23,39 +23,6 @@ export class LineaFinalityAnalyzer {
     private readonly livenessRepository: LivenessRepository,
   ) {}
 
-  async getFinalityForTimestamp(from: UnixTime, to: UnixTime) {
-    const result = await this.livenessRepository.findTxByProjectIdAndTimestamp(
-      ProjectId('linea'),
-      from,
-      to,
-      // Linea posts everything in the same tx, but we store it only once in STATE type txs
-      LivenessType('STATE'),
-    )
-    if (!result) {
-      return
-    }
-    const { timestamp, txHash } = result
-    const tx = await this.provider.getTransaction(txHash)
-    const data = tx.data
-    const fnSignature =
-      'finalizeBlocks((bytes32,uint32,bytes[],bytes32[],bytes,uint16[])[], bytes, uint256, bytes32)'
-    const iface = new utils.Interface([`function ${fnSignature}`])
-    const decodedInput = iface.decodeFunctionData(
-      fnSignature,
-      data,
-    ) as LineaDecoded
-    const timestamps = decodedInput[0].map((x) => x[1])
-    const delays = timestamps.map((x) => timestamp.toNumber() - x)
-    const minimum = Math.min(...delays)
-    const maximum = Math.max(...delays)
-    const average = Math.round(mean(delays))
-    return {
-      minimum,
-      maximum,
-      average,
-    }
-  }
-
   async getFinalityWithGranularity(
     from: UnixTime,
     to: UnixTime,
@@ -87,6 +54,39 @@ export class LineaFinalityAnalyzer {
       minimum: Math.min(...minimums),
       maximum: Math.max(...maximums),
       average: Math.round(mean(averages)),
+    }
+  }
+
+  async getFinalityForTimestamp(from: UnixTime, to: UnixTime) {
+    const result = await this.livenessRepository.findTxForTimestamp(
+      ProjectId('linea'),
+      from,
+      to,
+      // Linea posts everything in the same tx, but we store it only once in STATE type txs
+      LivenessType('STATE'),
+    )
+    if (!result) {
+      return
+    }
+    const { timestamp, txHash } = result
+    const tx = await this.provider.getTransaction(txHash)
+    const data = tx.data
+    const fnSignature =
+      'finalizeBlocks((bytes32,uint32,bytes[],bytes32[],bytes,uint16[])[], bytes, uint256, bytes32)'
+    const iface = new utils.Interface([`function ${fnSignature}`])
+    const decodedInput = iface.decodeFunctionData(
+      fnSignature,
+      data,
+    ) as LineaDecoded
+    const timestamps = decodedInput[0].map((x) => x[1])
+    const delays = timestamps.map((x) => timestamp.toNumber() - x)
+    const minimum = Math.min(...delays)
+    const maximum = Math.max(...delays)
+    const average = Math.round(mean(delays))
+    return {
+      minimum,
+      maximum,
+      average,
     }
   }
 }

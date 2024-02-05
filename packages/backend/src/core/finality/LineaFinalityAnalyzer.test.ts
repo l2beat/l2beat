@@ -41,9 +41,7 @@ describe(LineaFinalityAnalyzer.name, () => {
           6,
         )
 
-        expect(
-          livenessRepository.findTxByProjectIdAndTimestamp,
-        ).toHaveBeenNthCalledWith(
+        expect(livenessRepository.findTxForTimestamp).toHaveBeenNthCalledWith(
           1,
           ProjectId('linea'),
           start,
@@ -51,9 +49,7 @@ describe(LineaFinalityAnalyzer.name, () => {
           LivenessType('STATE'),
         )
 
-        expect(
-          livenessRepository.findTxByProjectIdAndTimestamp,
-        ).toHaveBeenNthCalledWith(
+        expect(livenessRepository.findTxForTimestamp).toHaveBeenNthCalledWith(
           6,
           ProjectId('linea'),
           start.add(-600 * 5, 'seconds'),
@@ -61,16 +57,14 @@ describe(LineaFinalityAnalyzer.name, () => {
           LivenessType('STATE'),
         )
 
-        expect(
-          livenessRepository.findTxByProjectIdAndTimestamp,
-        ).toHaveBeenCalledTimes(6)
+        expect(livenessRepository.findTxForTimestamp).toHaveBeenCalledTimes(6)
         expect(provider.getTransaction).toHaveBeenCalledTimes(6)
       })
 
       it('correctly decode for multiple txs with one not found', async () => {
         const start = UnixTime.now().toStartOf('hour')
         const livenessRepository = mockObject<LivenessRepository>({
-          findTxByProjectIdAndTimestamp: mockFn()
+          findTxForTimestamp: mockFn()
             .resolvesToOnce({
               txHash: '0x121',
               timestamp: new UnixTime(1705407431),
@@ -104,9 +98,7 @@ describe(LineaFinalityAnalyzer.name, () => {
         expect(results?.minimum).toEqual(28810)
         expect(results?.maximum).toEqual(33693)
         expect(results?.average).toEqual(31261)
-        expect(
-          livenessRepository.findTxByProjectIdAndTimestamp,
-        ).toHaveBeenCalledTimes(3)
+        expect(livenessRepository.findTxForTimestamp).toHaveBeenCalledTimes(3)
         expect(provider.getTransaction).toHaveBeenCalledTimes(2)
       })
     },
@@ -115,7 +107,7 @@ describe(LineaFinalityAnalyzer.name, () => {
 
 function getMockLivenessRepository() {
   return mockObject<LivenessRepository>({
-    findTxByProjectIdAndTimestamp: mockFn().resolvesTo({
+    findTxForTimestamp: mockFn().resolvesTo({
       txHash: '0x121',
       timestamp: new UnixTime(1705407431),
     }),
