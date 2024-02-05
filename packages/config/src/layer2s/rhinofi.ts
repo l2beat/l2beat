@@ -60,7 +60,7 @@ export const rhinofi: Layer2 = {
       documentation: [
         'https://docs.rhino.fi/',
         'https://support.rhino.fi/en/',
-        'https://docs.starkware.co/starkex-docs-v2/',
+        'https://docs.starkware.co/starkex/index.html',
       ],
       explorers: [],
       repositories: [
