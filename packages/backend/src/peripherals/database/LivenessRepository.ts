@@ -31,11 +31,6 @@ export interface LivenessRowWithProjectIdAndType {
   type: string
 }
 
-export interface LivenessRowWithTxHash {
-  tx_hash: string
-  timestamp: Date
-}
-
 // TODO: add index when we will write controller
 export class LivenessRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
@@ -68,34 +63,18 @@ export class LivenessRepository extends BaseRepository {
     from: UnixTime,
     to: UnixTime,
     type: LivenessType,
-    offset = 0,
   ): Promise<{ txHash: string; timestamp: UnixTime } | undefined> {
     const knex = await this.knex()
-    let rows
-    if (offset < 0) {
-      rows = await knex('liveness as l')
-        .join('liveness_configuration as c', 'l.liveness_id', 'c.id')
-        .select('l.tx_hash', 'l.timestamp')
-        .where('c.project_id', projectId.toString())
-        .andWhere('c.type', type.toString())
-        .andWhere('l.timestamp', '>=', from.toDate())
-        .orderBy('l.timestamp', 'asc')
-        .distinct('l.tx_hash')
-        .limit(1)
-        .offset(-offset)
-    } else {
-      rows = await knex('liveness as l')
-        .join('liveness_configuration as c', 'l.liveness_id', 'c.id')
-        .select('l.tx_hash', 'l.timestamp')
-        .where('c.project_id', projectId.toString())
-        .andWhere('c.type', type.toString())
-        .andWhere('l.timestamp', '<=', from.toDate())
-        .andWhere('l.timestamp', '>', to.toDate())
-        .orderBy('l.timestamp', 'desc')
-        .distinct('l.tx_hash')
-        .limit(1)
-        .offset(offset)
-    }
+    const rows = await knex('liveness as l')
+      .join('liveness_configuration as c', 'l.liveness_id', 'c.id')
+      .select('l.tx_hash', 'l.timestamp')
+      .where('c.project_id', projectId.toString())
+      .andWhere('c.type', type.toString())
+      .andWhere('l.timestamp', '<=', from.toDate())
+      .andWhere('l.timestamp', '>', to.toDate())
+      .orderBy('l.timestamp', 'desc')
+      .distinct('l.tx_hash')
+      .limit(1)
     if (rows.length === 0) {
       return undefined
     }
@@ -164,9 +143,10 @@ function toRecordWithTimestampAndType(
   }
 }
 
-function toRecordWithTxHashAndTimestamp(
-  row: LivenessRowWithTxHash,
-): Pick<LivenessRecord, 'txHash' | 'timestamp'> {
+function toRecordWithTxHashAndTimestamp(row: {
+  tx_hash: string
+  timestamp: Date
+}): Pick<LivenessRecord, 'txHash' | 'timestamp'> {
   return {
     txHash: row.tx_hash,
     timestamp: UnixTime.fromDate(row.timestamp),

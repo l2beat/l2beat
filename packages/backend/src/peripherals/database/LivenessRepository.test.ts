@@ -171,34 +171,12 @@ describe(LivenessRepository.name, () => {
   describe(
     LivenessRepository.prototype.findTxByProjectIdAndTimestamp.name,
     () => {
-      it('should return tx hash for given project id and timestamp on place 0', async () => {
+      it('should return tx hash for given project id and timestamp', async () => {
         const result = await repository.findTxByProjectIdAndTimestamp(
           LIVENESS_CONFIGS[0].projectId,
           DATA[0].timestamp,
           DATA[1].timestamp,
           LIVENESS_CONFIGS[0].type,
-        )
-
-        expect(result).toEqual({
-          timestamp: DATA[0].timestamp,
-          txHash: DATA[0].txHash,
-        })
-      })
-      it('should return tx hash for given project id and timestamp on place -1', async () => {
-        await repository.addMany([
-          {
-            timestamp: START.add(-2, 'hours'),
-            blockNumber: 12346,
-            txHash: '0x1234567890abcdff',
-            livenessId: LIVENESS_CONFIGS[0].id,
-          },
-        ])
-        const result = await repository.findTxByProjectIdAndTimestamp(
-          LIVENESS_CONFIGS[0].projectId,
-          START.add(-2, 'hours'),
-          START.add(-3, 'hours'),
-          LIVENESS_CONFIGS[0].type,
-          -1,
         )
 
         expect(result).toEqual({
