@@ -169,33 +169,80 @@ describe(LivenessRepository.name, () => {
   })
 
   describe(LivenessRepository.prototype.findTxForTimestamp.name, () => {
-    it('should return tx hash for given project id and timestamp', async () => {
-      /* TODO
-      mockRecord(10:30)
-      10:45
-      11:01
+    it('should return tx hash for given project id and timestamp when no exact hour', async () => {
+      await repository.deleteAll()
 
-      findTxForTimestamp(11) => 10:45
-      */
-
-      /* TODO
-      10:00
-      11:00
-      12:00
-
-      findTxForTimestamp(11) => 11:00
-      */
+      const configuration = LIVENESS_CONFIGS[0]
+      const records = [
+        {
+          timestamp: UnixTime.fromDate(new Date('2021-01-01T10:30:00Z')),
+          blockNumber: 12345,
+          txHash: '0x1234567890abcdef',
+          livenessId: configuration.id,
+        },
+        {
+          timestamp: UnixTime.fromDate(new Date('2021-01-01T10:45:00Z')),
+          blockNumber: 12346,
+          txHash: '0xabcdef1234567890',
+          livenessId: configuration.id,
+        },
+        {
+          timestamp: UnixTime.fromDate(new Date('2021-01-01T11:01:00Z')),
+          blockNumber: 12347,
+          txHash: '0xabcdef1234567891',
+          livenessId: configuration.id,
+        },
+      ]
+      await repository.addMany(records)
 
       const result = await repository.findTxForTimestamp(
-        LIVENESS_CONFIGS[0].projectId,
-        DATA[0].timestamp,
-        DATA[1].timestamp,
-        LIVENESS_CONFIGS[0].type,
+        configuration.projectId,
+        UnixTime.fromDate(new Date('2021-01-01T11:00:00Z')),
+        UnixTime.fromDate(new Date('2021-01-01T10:00:00Z')),
+        configuration.type,
       )
 
       expect(result).toEqual({
-        timestamp: DATA[0].timestamp,
-        txHash: DATA[0].txHash,
+        timestamp: records[1].timestamp,
+        txHash: records[1].txHash,
+      })
+    })
+    it('should return tx hash for given project id and timestamp inclusive hour', async () => {
+      await repository.deleteAll()
+
+      const configuration = LIVENESS_CONFIGS[0]
+      const records = [
+        {
+          timestamp: UnixTime.fromDate(new Date('2021-01-01T10:00:00Z')),
+          blockNumber: 12345,
+          txHash: '0x1234567890abcdef',
+          livenessId: configuration.id,
+        },
+        {
+          timestamp: UnixTime.fromDate(new Date('2021-01-01T11:00:00Z')),
+          blockNumber: 12346,
+          txHash: '0xabcdef1234567890',
+          livenessId: configuration.id,
+        },
+        {
+          timestamp: UnixTime.fromDate(new Date('2021-01-01T12:00:00Z')),
+          blockNumber: 12347,
+          txHash: '0xabcdef1234567892',
+          livenessId: configuration.id,
+        },
+      ]
+      await repository.addMany(records)
+
+      const result = await repository.findTxForTimestamp(
+        configuration.projectId,
+        UnixTime.fromDate(new Date('2021-01-01T11:00:00Z')),
+        UnixTime.fromDate(new Date('2021-01-01T10:00:00Z')),
+        configuration.type,
+      )
+
+      expect(result).toEqual({
+        timestamp: records[1].timestamp,
+        txHash: records[1].txHash,
       })
     })
     it('should return undefined when no tx hash for given project id', async () => {
