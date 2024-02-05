@@ -33,20 +33,23 @@ export function GovernancePage(props: GovernancePageProps) {
   return (
     <>
       <Navbar {...props.navbar} />
-      <Header delegatedProjects={props.delegatedProjects} />
-      <PageContent type="wider">
-        <main className="grid md:mt-20 md:grid-cols-8 md:gap-8 [&>*:nth-child(odd)]:bg-transparent md:[&>*:nth-child(odd)]:bg-gray-100 md:[&>*:nth-child(odd)]:dark:dark:bg-zinc-900">
+      <Header
+        delegatedProjects={props.delegatedProjects}
+        pageContentClassName="md:px-2 lg:px-12 justify-start"
+      />
+      <PageContent type="wider" className="md:px-6 lg:px-12">
+        <main className="grid md:mt-20 md:gap-6 lg:grid-cols-8 lg:gap-8 [&>*:nth-child(odd)]:bg-transparent md:[&>*:nth-child(odd)]:bg-gray-100 md:[&>*:nth-child(odd)]:dark:dark:bg-zinc-900">
           <RecentPublicationsSection
             publications={props.publications}
-            className="md:col-span-5"
+            className="lg:col-span-5"
           />
-          <OfficeHoursSection className="md:col-span-3" />
+          <OfficeHoursSection className="lg:col-span-3" />
           <GovernanceEventsSection
             events={props.events}
-            className="md:col-span-full"
+            className="lg:col-span-full"
           />
-          <OurApproachSection className="md:col-span-4" />
-          <OurMissionSection className="md:col-span-4" />
+          <OurApproachSection className="lg:col-span-4" />
+          <OurMissionSection className="lg:col-span-4" />
         </main>
       </PageContent>
       <Footer {...props.footer} className="mt-0 md:mt-20" />
@@ -56,13 +59,14 @@ export function GovernancePage(props: GovernancePageProps) {
 
 function Header(props: {
   delegatedProjects: GovernanceDelegatedProjectEntry[]
+  pageContentClassName?: string
 }) {
   const chunkedProjects = chunk(props.delegatedProjects, 3)
 
   return (
-    <FullPageHeader>
+    <FullPageHeader pageContentClassName={props.pageContentClassName}>
       <div className="flex items-center gap-10">
-        <div className="max-w-[585px] leading-normal">
+        <div className="leading-normal lg:max-w-[585px]">
           <h1 className="text-5xl font-bold md:text-6xl">Governance</h1>
           <p className="mt-6 text-lg md:text-base">
             By delegating your governance votes to L2BEAT, you're supporting our

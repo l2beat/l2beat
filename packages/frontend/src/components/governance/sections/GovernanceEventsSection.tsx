@@ -16,7 +16,7 @@ export function GovernanceEventsSection({ events, className }: Props) {
       <div className="flex flex-wrap justify-between gap-2">
         <GovernanceCardHeader>Governance Events</GovernanceCardHeader>
       </div>
-      <div className="mt-6 grid gap-4 md:grid-cols-4">
+      <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {events.map((event, i) => (
           <Event event={event} key={i} />
         ))}
