@@ -61,7 +61,7 @@ export class LivenessRepository extends BaseRepository {
   async findTxForTimestamp(
     projectId: ProjectId,
     timestamp: UnixTime,
-    maxTimestamp: UnixTime,
+    minTimestamp: UnixTime,
     type: LivenessType,
   ): Promise<{ txHash: string; timestamp: UnixTime } | undefined> {
     const knex = await this.knex()
@@ -72,7 +72,7 @@ export class LivenessRepository extends BaseRepository {
       .where('c.project_id', projectId.toString())
       .andWhere('c.type', type.toString())
       .andWhere('l.timestamp', '<=', timestamp.toDate())
-      .andWhere('l.timestamp', '>', maxTimestamp.toDate())
+      .andWhere('l.timestamp', '>', minTimestamp.toDate())
       .orderBy('l.timestamp', 'desc')
       .distinct('l.tx_hash')
       .limit(1)

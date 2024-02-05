@@ -1,11 +1,12 @@
 import {
+  assert,
   LivenessType,
   notUndefined,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { mean } from 'lodash'
+import { mean, uniq } from 'lodash'
 
 import { LivenessRepository } from '../../peripherals/database/LivenessRepository'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
@@ -30,26 +31,37 @@ export class LineaFinalityAnalyzer {
   ) {
     const interval = (from.toNumber() - to.toNumber()) / granularity
 
-    const promises = Array.from({ length: granularity }).map(async (_, i) =>
-      this.getFinalityForTimestamp(
-        from.add(-interval * i, 'seconds'),
-        from.add(-interval * (i + 1), 'seconds'),
-      ),
-    )
-    const delays = (await Promise.all(promises))
-      .flatMap((x) => x)
-      .filter(notUndefined)
-    if (!delays.length) {
+    const txHashes = (
+      await Promise.all(
+        Array.from({ length: granularity }).map(async (_, i) =>
+          this.livenessRepository.findTxForTimestamp(
+            ProjectId('linea'),
+            from.add(-interval * i, 'seconds'),
+            from.add(-interval * (i + 1), 'seconds'),
+            LivenessType('STATE'),
+          ),
+        ),
+      )
+    ).filter(notUndefined)
+
+    if (!txHashes.length) {
       return undefined
     }
+
+    const finalities = await Promise.all(
+      txHashes.map((x) => this.getFinality(x.txHash)),
+    )
+
     const minimums: number[] = []
     const maximums: number[] = []
     const averages: number[] = []
-    delays.forEach((x) => {
+
+    finalities.forEach((x) => {
       minimums.push(x.minimum)
       maximums.push(x.maximum)
       averages.push(x.average)
     })
+
     return {
       minimum: Math.min(...minimums),
       maximum: Math.max(...maximums),
@@ -57,19 +69,11 @@ export class LineaFinalityAnalyzer {
     }
   }
 
-  async getFinalityForTimestamp(from: UnixTime, to: UnixTime) {
-    const result = await this.livenessRepository.findTxForTimestamp(
-      ProjectId('linea'),
-      from,
-      to,
-      // Linea posts everything in the same tx, but we store it only once in STATE type txs
-      LivenessType('STATE'),
-    )
-    if (!result) {
-      return
-    }
-    const { timestamp, txHash } = result
+  async getFinality(txHash: string) {
     const tx = await this.provider.getTransaction(txHash)
+    assert(tx.timestamp, 'There is no timestamp for transaction')
+    const l1Timestamp = new UnixTime(tx.timestamp)
+
     const data = tx.data
     const fnSignature =
       'finalizeBlocks((bytes32,uint32,bytes[],bytes32[],bytes,uint16[])[], bytes, uint256, bytes32)'
@@ -79,7 +83,9 @@ export class LineaFinalityAnalyzer {
       data,
     ) as LineaDecoded
     const timestamps = decodedInput[0].map((x) => x[1])
-    const delays = timestamps.map((x) => timestamp.toNumber() - x)
+    const delays = timestamps.map(
+      (l2Timestamp) => l1Timestamp.toNumber() - l2Timestamp,
+    )
     const minimum = Math.min(...delays)
     const maximum = Math.max(...delays)
     const average = Math.round(mean(delays))

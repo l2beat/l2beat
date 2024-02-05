@@ -7,13 +7,13 @@ import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { LineaFinalityAnalyzer } from './LineaFinalityAnalyzer'
 
 describe(LineaFinalityAnalyzer.name, () => {
-  describe(LineaFinalityAnalyzer.prototype.getFinalityForTimestamp.name, () => {
+  describe(LineaFinalityAnalyzer.prototype.getFinality.name, () => {
     it('correctly decode and returns correct data', async () => {
       const livenessRepository = getMockLivenessRepository()
       const provider = getMockRpcClient()
 
       const calculator = new LineaFinalityAnalyzer(provider, livenessRepository)
-      const results = await calculator.getFinalityForTimestamp(
+      const results = await calculator.getFinality(
         UnixTime.now().toStartOf('hour'),
         UnixTime.now().toStartOf('hour'),
       )
