@@ -1,8 +1,8 @@
 {
   "name": "xai",
   "chain": "arbitrum",
-  "blockNumber": 175991369,
-  "configHash": "0xa003c02fae9092147faa6690211cc88b7d7a6407c702f5b54f799ace74f70e59",
+  "blockNumber": 177621512,
+  "configHash": "0x634e80ccf24b34ca753aad2380c5d206500002a6d4aa0b25b34c20b677916c55",
   "version": 3,
   "contracts": [
     {
@@ -103,6 +103,26 @@
       "derivedName": "ERC20Outbox"
     },
     {
+      "name": "L1GatewayRouter",
+      "address": "0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xd106EC93D2c1adaA65C4B17ffc7bB166Ce30DDAe",
+        "admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485"
+      },
+      "implementations": ["0xd106EC93D2c1adaA65C4B17ffc7bB166Ce30DDAe"],
+      "sinceTimestamp": 1704476020,
+      "values": {
+        "counterpartGateway": "0xd096e8dE90D34de758B0E0bA4a796eA2e1e272cF",
+        "defaultGateway": "0xb591cE747CF19cF30e11d656EB94134F523A9e77",
+        "inbox": "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
+        "owner": "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F",
+        "router": "0x0000000000000000000000000000000000000000",
+        "whitelist": "0x0000000000000000000000000000000000000000"
+      },
+      "derivedName": "L1OrbitGatewayRouter"
+    },
+    {
       "name": "ValidatorWalletCreator",
       "address": "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
       "upgradeability": {
@@ -177,7 +197,7 @@
           "0xd4318D959B46d555143f56E03077028aB94D85d2"
         ],
         "getThreshold": 3,
-        "nonce": 1,
+        "nonce": 2,
         "VERSION": "1.3.0"
       }
     },
@@ -199,7 +219,7 @@
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
         "name": "esXai",
         "symbol": "esXAI",
-        "totalSupply": "70354315761638323294028400",
+        "totalSupply": "77545753255094117969415836",
         "xai": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66"
       },
       "derivedName": "esXai"
@@ -222,7 +242,7 @@
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
         "name": "Xai",
         "symbol": "XAI",
-        "totalSupply": "989987707617011118802924572"
+        "totalSupply": "991261252137559064008403967"
       },
       "derivedName": "Xai"
     },
@@ -251,12 +271,12 @@
           "0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8"
         ],
         "allowedOutboxList": ["0x1E400568AD4840dbE50FB32f306B842e9ddeF726"],
-        "delayedMessageCount": 3718,
+        "delayedMessageCount": 4469,
         "nativeToken": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66",
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerInbox": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
-        "sequencerMessageCount": 2103,
-        "sequencerReportedSubMessageCount": 245226
+        "sequencerMessageCount": 2579,
+        "sequencerReportedSubMessageCount": 356871
       },
       "derivedName": "ERC20Bridge"
     },
@@ -288,18 +308,23 @@
       "implementations": ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"],
       "sinceTimestamp": 1704309371,
       "values": {
-        "batchCount": 2103,
+        "batchCount": 2579,
         "batchPosters": ["0x7F68dba68E72a250004812fe04F1123Fca89aBa9"],
         "bridge": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
+        "dacKeyset": {
+          "threshold": 2,
+          "keyCount": 5
+        },
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
         "IS_HARDCODED_SEQUENCER_BATCH_POSTER": false,
-        "keySetUpdates": 2,
+        "keySetUpdates": 3,
         "maxDataSize": 104857,
         "maxTimeVariation": [5760, 96, 86400, 3600],
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
+        "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 3717
+        "totalDelayedMessagesRead": 4468
       },
       "derivedName": "SequencerInbox"
     },
@@ -338,6 +363,26 @@
       "derivedName": "ERC20Inbox"
     },
     {
+      "name": "L1ERC20Gateway",
+      "address": "0xb591cE747CF19cF30e11d656EB94134F523A9e77",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x8b73Ef238ADaB31EBC7c05423d243c345241a22f",
+        "admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485"
+      },
+      "implementations": ["0x8b73Ef238ADaB31EBC7c05423d243c345241a22f"],
+      "sinceTimestamp": 1704476020,
+      "values": {
+        "cloneableProxyHash": "0xce61ab08155a3a368bfd165ba9e1151d023608a155fce1ec0d87bba89a59cb4d",
+        "counterpartGateway": "0x0c71417917D24F4A6A6A55559B98c5cCEcb33F7a",
+        "inbox": "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
+        "l2BeaconProxyFactory": "0xC65de812db42Bfa8bd4E0fCf6ffcad8fe3072D44",
+        "router": "0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35",
+        "whitelist": "0x0000000000000000000000000000000000000000"
+      },
+      "derivedName": "L1OrbitERC20Gateway"
+    },
+    {
       "name": "RollupProxy",
       "address": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
       "upgradeability": {
@@ -360,12 +405,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 388,
+        "firstUnresolvedNode": 507,
         "inbox": "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
         "isERC20Enabled": false,
         "lastStakeBlock": 18944658,
-        "latestConfirmed": 387,
-        "latestNodeCreated": 539,
+        "latestConfirmed": 506,
+        "latestNodeCreated": 659,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x1E400568AD4840dbE50FB32f306B842e9ddeF726",
@@ -412,6 +457,7 @@
   ],
   "eoas": [
     "0x08a361fE449b1371cC21b286d88F69eF6d205809",
+    "0x0c71417917D24F4A6A6A55559B98c5cCEcb33F7a",
     "0x25EA41f0bDa921a0eBf48291961B1F10b59BC6b8",
     "0x2B95cdD1adD34461Fe737800c0D5A68d556B51b4",
     "0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341",
@@ -419,7 +465,9 @@
     "0x7F68dba68E72a250004812fe04F1123Fca89aBa9",
     "0x7f910C718bAF6698FBF9b56e047ECd52d157bAD6",
     "0xa2E7768789921a36eCFe8c239dBd8213120fFF83",
+    "0xC65de812db42Bfa8bd4E0fCf6ffcad8fe3072D44",
     "0xc7185e37A4aB4Af0E77bC08249CD2590AE3E1b51",
+    "0xd096e8dE90D34de758B0E0bA4a796eA2e1e272cF",
     "0xd4318D959B46d555143f56E03077028aB94D85d2",
     "0xD766Abf27CEc67393FF475f7fE969902f5D0A80A"
   ],
@@ -636,6 +684,12 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
     ],
     "0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC": [
       "error BadSequencerMessageNumber(uint256 stored, uint256 received)",
@@ -942,6 +996,30 @@
     "0x89AF7C4C2198c426cFe6E86de0680A0850503e06": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge) execCtx, tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) view returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, uint32 internalsOffset) mod)"
     ],
+    "0x8b73Ef238ADaB31EBC7c05423d243c345241a22f": [
+      "event DepositInitiated(address l1Token, address indexed _from, address indexed _to, uint256 indexed _sequenceNumber, uint256 _amount)",
+      "event TxToL2(address indexed _from, address indexed _to, uint256 indexed _seqNum, bytes _data)",
+      "event WithdrawRedirected(address indexed from, address indexed to, uint256 indexed exitNum, bytes newData, bytes data, bool madeExternalCall)",
+      "event WithdrawalFinalized(address l1Token, address indexed _from, address indexed _to, uint256 indexed _exitNum, uint256 _amount)",
+      "function calculateL2TokenAddress(address l1ERC20) view returns (address)",
+      "function cloneableProxyHash() view returns (bytes32)",
+      "function counterpartGateway() view returns (address)",
+      "function encodeWithdrawal(uint256 _exitNum, address _initialDestination) pure returns (bytes32)",
+      "function finalizeInboundTransfer(address _token, address _from, address _to, uint256 _amount, bytes _data) payable",
+      "function getExternalCall(uint256 _exitNum, address _initialDestination, bytes _initialData) view returns (address target, bytes data)",
+      "function getOutboundCalldata(address _token, address _from, address _to, uint256 _amount, bytes _data) view returns (bytes outboundCalldata)",
+      "function inbox() view returns (address)",
+      "function initialize(address _l2Counterpart, address _router, address _inbox, bytes32 _cloneableProxyHash, address _l2BeaconProxyFactory)",
+      "function l2BeaconProxyFactory() view returns (address)",
+      "function outboundTransfer(address _l1Token, address _to, uint256 _amount, uint256 _maxGas, uint256 _gasPriceBid, bytes _data) payable returns (bytes res)",
+      "function outboundTransferCustomRefund(address _l1Token, address _refundTo, address _to, uint256 _amount, uint256 _maxGas, uint256 _gasPriceBid, bytes _data) payable returns (bytes res)",
+      "function postUpgradeInit()",
+      "function redirectedExits(bytes32) view returns (bool isExit, address _newTo, bytes _newData)",
+      "function router() view returns (address)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function transferExitAndCall(uint256 _exitNum, address _initialDestination, address _newDestination, bytes _newData, bytes _data)",
+      "function whitelist() view returns (address)"
+    ],
     "0x8d6C063656b00E5c37CE007C0f99848D58F19d6B": [
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
       "event Initialized(uint8 version)",
@@ -1022,12 +1100,51 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "0xb591cE747CF19cF30e11d656EB94134F523A9e77": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
     "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)",
       "event UpgradedSecondary(address indexed implementation)",
       "function initializeProxy(tuple(uint64 confirmPeriodBlocks, uint64 extraChallengeTimeBlocks, address stakeToken, uint256 baseStake, bytes32 wasmModuleRoot, address owner, address loserStakeEscrow, uint256 chainId, string chainConfig, uint64 genesisBlockNum, tuple(uint256 delayBlocks, uint256 futureBlocks, uint256 delaySeconds, uint256 futureSeconds) sequencerInboxMaxTimeVariation) config, tuple(address bridge, address sequencerInbox, address inbox, address outbox, address rollupEventInbox, address challengeManager, address rollupAdminLogic, address rollupUserLogic, address validatorUtils, address validatorWalletCreator) connectedContracts)"
+    ],
+    "0xd106EC93D2c1adaA65C4B17ffc7bB166Ce30DDAe": [
+      "event DefaultGatewayUpdated(address newDefaultGateway)",
+      "event GatewaySet(address indexed l1Token, address indexed gateway)",
+      "event TransferRouted(address indexed token, address indexed _userFrom, address indexed _userTo, address gateway)",
+      "event TxToL2(address indexed _from, address indexed _to, uint256 indexed _seqNum, bytes _data)",
+      "event WhitelistSourceUpdated(address newSource)",
+      "function calculateL2TokenAddress(address l1ERC20) view returns (address)",
+      "function counterpartGateway() view returns (address)",
+      "function defaultGateway() view returns (address)",
+      "function finalizeInboundTransfer(address, address, address, uint256, bytes) payable",
+      "function getGateway(address _token) view returns (address gateway)",
+      "function getOutboundCalldata(address _token, address _from, address _to, uint256 _amount, bytes _data) view returns (bytes)",
+      "function inbox() view returns (address)",
+      "function initialize(address _owner, address _defaultGateway, address, address _counterpartGateway, address _inbox)",
+      "function l1TokenToGateway(address) view returns (address)",
+      "function outboundTransfer(address _token, address _to, uint256 _amount, uint256 _maxGas, uint256 _gasPriceBid, bytes _data) payable returns (bytes)",
+      "function outboundTransferCustomRefund(address _token, address _refundTo, address _to, uint256 _amount, uint256 _maxGas, uint256 _gasPriceBid, bytes _data) payable returns (bytes)",
+      "function owner() view returns (address)",
+      "function postUpgradeInit()",
+      "function router() view returns (address)",
+      "function setDefaultGateway(address, uint256, uint256, uint256) payable returns (uint256)",
+      "function setDefaultGateway(address newL1DefaultGateway, uint256 _maxGas, uint256 _gasPriceBid, uint256 _maxSubmissionCost, uint256 _feeAmount) returns (uint256)",
+      "function setGateway(address, uint256, uint256, uint256, address) payable returns (uint256)",
+      "function setGateway(address _gateway, uint256 _maxGas, uint256 _gasPriceBid, uint256 _maxSubmissionCost, address _creditBackAddress, uint256 _feeAmount) returns (uint256)",
+      "function setGateway(address _gateway, uint256 _maxGas, uint256 _gasPriceBid, uint256 _maxSubmissionCost, uint256 _feeAmount) returns (uint256)",
+      "function setGateway(address, uint256, uint256, uint256) payable returns (uint256)",
+      "function setGateways(address[] _token, address[] _gateway, uint256 _maxGas, uint256 _gasPriceBid, uint256 _maxSubmissionCost, uint256 _feeAmount) returns (uint256)",
+      "function setGateways(address[], address[], uint256, uint256, uint256) payable returns (uint256)",
+      "function setOwner(address newOwner)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function updateWhitelistSource(address newSource)",
+      "function whitelist() view returns (address)"
     ],
     "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
