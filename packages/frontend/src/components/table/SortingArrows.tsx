@@ -23,17 +23,17 @@ export function SortingArrows(props: Props) {
     .toLowerCase()
   return (
     <div
-      className="group/sorting-arrows flex cursor-pointer select-none items-center gap-1.5"
+      className="group/sorting-arrows flex cursor-pointer select-none items-end gap-1.5"
       data-role="sorting-arrows"
       data-name={name}
       data-rule={props.rule}
       data-state={props.defaultState}
       data-order-key={props.orderKey}
     >
-      <div className="flex flex-col gap-[1.5px]">
+      <div className="flex translate-y-[-4.5px] flex-col">
         <SortingArrowUpIcon
           className={cn(
-            'fill-gray-550 transition-all dark:fill-gray-650',
+            'mb-0.5 fill-gray-550 transition-all dark:fill-gray-650',
             'group-data-[state=asc]/sorting-arrows:fill-black dark:group-data-[state=asc]/sorting-arrows:fill-white',
             'group-data-[state=desc]/sorting-arrows:group-hover/sorting-arrows:fill-black group-data-[state=desc]/sorting-arrows:group-hover/sorting-arrows:opacity-70 dark:group-data-[state=desc]/sorting-arrows:group-hover/sorting-arrows:fill-white dark:group-data-[state=desc]/sorting-arrows:group-hover/sorting-arrows:opacity-60',
           )}
