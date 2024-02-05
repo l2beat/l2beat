@@ -5,7 +5,6 @@ import { readFile } from 'fs/promises'
 import { ProjectDiscovery } from '../../src/discovery/ProjectDiscovery'
 import { SocketVaults } from './schema'
 
-// FIXME: this test is not working
 describe('socket', () => {
   it('plugs should be up to date with the discovery output', async () => {
     const file = await readFile('src/bridges/socket-vaults.json', 'utf-8')
