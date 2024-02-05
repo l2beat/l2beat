@@ -2,7 +2,8 @@ import React from 'react'
 
 import { GovernanceEventEntry } from '../../../pages/governance/getGovernanceEventEntries'
 import { cn } from '../../../utils/cn'
-import { Button } from '../../Button'
+import { OutLinkIcon } from '../../icons'
+import { Link } from '../../Link'
 import { GovernanceCard, GovernanceCardHeader } from '../GovernanceCard'
 
 interface Props {
@@ -26,26 +27,32 @@ export function GovernanceEventsSection({ events, className }: Props) {
 }
 
 function Event({ event }: { event: GovernanceEventEntry }) {
+  const hostname = new URL(event.link).hostname
+  console.log(hostname)
   return (
     <GovernanceCard
       type={event.highlighted ? 'purple' : 'secondary'}
       size="medium"
-      className="flex h-[320px] flex-col justify-between"
+      className="flex h-[288px] flex-col justify-between"
     >
+      <div className="h-28">
+        {event.subtitle && (
+          <p
+            className={cn(
+              'text-xs font-semibold uppercase text-purple-100 dark:text-pink-200',
+              event.highlighted && 'text-pink-200',
+            )}
+          >
+            {event.subtitle}
+          </p>
+        )}
+        <p className="text-lg font-semibold leading-tight">{event.title}</p>
+        <Link href={event.link} className="mt-2 text-xs">
+          {hostname}
+          {<OutLinkIcon />}
+        </Link>
+      </div>
       <div>
-        <div className="h-16">
-          {event.subtitle && (
-            <p
-              className={cn(
-                'text-xs font-semibold uppercase text-purple-100 dark:text-pink-200',
-                event.highlighted && 'text-pink-200',
-              )}
-            >
-              {event.subtitle}
-            </p>
-          )}
-          <p className="text-lg font-semibold leading-tight">{event.title}</p>
-        </div>
         <div className="mt-4">
           <p className="text-2xs opacity-50">DATE</p>
           <p className="whitespace-pre text-sm">{event.displayDate}</p>
@@ -55,13 +62,6 @@ function Event({ event }: { event: GovernanceEventEntry }) {
           <p className="whitespace-pre text-sm">{event.location}</p>
         </div>
       </div>
-      <Button
-        as="a"
-        variant={event.highlighted ? 'default' : 'purple'}
-        href={event.link}
-      >
-        Learn more
-      </Button>
     </GovernanceCard>
   )
 }
