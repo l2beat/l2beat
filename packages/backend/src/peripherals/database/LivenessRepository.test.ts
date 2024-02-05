@@ -171,11 +171,19 @@ describe(LivenessRepository.name, () => {
   describe(LivenessRepository.prototype.findTxForTimestamp.name, () => {
     it('should return tx hash for given project id and timestamp', async () => {
       /* TODO
-      10:30
+      mockRecord(10:30)
       10:45
       11:01
 
       findTxForTimestamp(11) => 10:45
+      */
+
+      /* TODO
+      10:00
+      11:00
+      12:00
+
+      findTxForTimestamp(11) => 11:00
       */
 
       const result = await repository.findTxForTimestamp(
