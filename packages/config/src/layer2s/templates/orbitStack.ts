@@ -379,8 +379,9 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
         templateVars.discovery.getEscrowDetails({
           address: templateVars.bridge.address,
           tokens: ['ETH'],
-          description:
-            'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
+          description: `Contract managing Inboxes and Outboxes. It escrows ${
+            templateVars.nativeToken ?? 'ETH'
+          } sent to L2.`,
         }),
         ...(templateVars.nonTemplateEscrows ?? []),
       ],
