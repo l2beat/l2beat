@@ -32,7 +32,8 @@ const governanceCardVariants = cva('rounded-lg', {
 export function GovernanceCard<T extends React.ElementType>({
   children,
   className,
-  type = 'primary',
+  type,
+  size,
   as,
   mobileFull,
   ...rest
@@ -41,7 +42,7 @@ export function GovernanceCard<T extends React.ElementType>({
   return (
     <Comp
       className={cn(
-        governanceCardVariants({ type }),
+        governanceCardVariants({ type, size }),
         mobileFull &&
           '-mx-4 rounded-none px-4 py-16 md:mx-0 md:rounded-lg md:p-8',
         className,
