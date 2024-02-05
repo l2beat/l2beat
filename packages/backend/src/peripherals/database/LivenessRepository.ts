@@ -24,6 +24,7 @@ export interface LivenessRecordWithType {
   timestamp: UnixTime
   type: LivenessType
 }
+
 export interface LivenessTransactionsRecordWithType {
   timestamp: UnixTime
   txHash: string
@@ -35,6 +36,7 @@ export interface LivenessRowWithProjectIdAndType {
   project_id: string
   type: string
 }
+
 export interface LivenessTransactionRowWithAndType {
   timestamp: Date
   type: string
