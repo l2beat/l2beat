@@ -9,7 +9,7 @@ export function createFinalityRouter(finalityController: FinalityController) {
     const result = await finalityController.getFinality()
 
     if (result.type === 'error') {
-      ctx.status = 503
+      ctx.status = 404
       ctx.body = result.error
       return
     }

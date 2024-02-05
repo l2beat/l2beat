@@ -12,7 +12,7 @@ export function createLivenessRouter(livenessController: LivenessController) {
     const result = await livenessController.getLiveness()
 
     if (result.type === 'error') {
-      ctx.status = 503
+      ctx.status = 404
       ctx.body = result.error
       return
     }
@@ -23,7 +23,7 @@ export function createLivenessRouter(livenessController: LivenessController) {
     const result = await livenessController.getLivenessTransactions()
 
     if (result.type === 'error') {
-      ctx.status = 503
+      ctx.status = 404
       ctx.body = result.error
       return
     }
