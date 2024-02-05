@@ -29,7 +29,7 @@ export const xai: Layer3 = orbitStackL3({
       websites: ['https://xai.games/'],
       apps: [],
       documentation: ['https://xai-foundation.gitbook.io/xai-network/'],
-      explorers: [],
+      explorers: ['https://explorer.xai-chain.net/'],
       repositories: ['https://github.com/OffchainLabs/nitro'],
       socialMedia: [
         'https://twitter.com/xai_games',
@@ -43,6 +43,7 @@ export const xai: Layer3 = orbitStackL3({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   associatedTokens: ['XAI'],
   nativeToken: 'XAI',
+  rpcUrl: 'https://xai-chain.net/rpc',
   nonTemplatePermissions: [
     {
       name: 'RollupOwner',
