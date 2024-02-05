@@ -28,7 +28,7 @@ export function GovernanceEventsSection({ events, className }: Props) {
 
 function Event({ event }: { event: GovernanceEventEntry }) {
   const hostname = new URL(event.link).hostname
-  console.log(hostname)
+
   return (
     <GovernanceCard
       type={event.highlighted ? 'purple' : 'secondary'}
@@ -47,7 +47,12 @@ function Event({ event }: { event: GovernanceEventEntry }) {
           </p>
         )}
         <p className="text-lg font-semibold leading-tight">{event.title}</p>
-        <Link href={event.link} className="mt-2 text-xs">
+        <Link
+          href={event.link}
+          className="mt-2"
+          textClassName={cn('text-xs', event.highlighted && 'text-white')}
+          type={event.highlighted ? 'plain' : 'primary'}
+        >
           {hostname}
           {<OutLinkIcon />}
         </Link>
