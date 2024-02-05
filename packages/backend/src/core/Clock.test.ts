@@ -19,7 +19,9 @@ describe(Clock.name, () => {
     UnixTime.fromDate(new Date(`2022-06-29T${hhmmss}.000Z`))
 
   function setTime(hhmmss: string) {
-    time.setSystemTime(new Date(`2022-06-29T${hhmmss}.000Z`))
+    const newTime = new Date(`2022-06-29T${hhmmss}.000Z`)
+    time.setSystemTime(newTime)
+    return newTime
   }
 
   describe(Clock.prototype.getFirstHour.name, () => {
@@ -80,7 +82,7 @@ describe(Clock.name, () => {
     })
   })
 
-  describe(Clock.prototype.onEveryHour.name, () => {
+  describe(Clock.prototype._TVL_ONLY_onEveryHour.name, () => {
     it('calls the callback for every hour up to now', () => {
       setTime('13:05:48')
       const start = toTimestamp('10:00:00')
@@ -88,7 +90,9 @@ describe(Clock.name, () => {
       const clock = new Clock(start, 0)
 
       const calls: UnixTime[] = []
-      const stop = clock.onEveryHour((timestamp) => calls.push(timestamp))
+      const stop = clock._TVL_ONLY_onEveryHour((timestamp) =>
+        calls.push(timestamp),
+      )
       stop()
 
       expect(calls).toEqual([
@@ -106,7 +110,9 @@ describe(Clock.name, () => {
       const clock = new Clock(start, 0, 60 * 1000)
 
       const calls: UnixTime[] = []
-      const stop = clock.onEveryHour((timestamp) => calls.push(timestamp))
+      const stop = clock._TVL_ONLY_onEveryHour((timestamp) =>
+        calls.push(timestamp),
+      )
 
       expect(calls).toEqual([toTimestamp('12:00:00'), toTimestamp('13:00:00')])
 
@@ -120,6 +126,47 @@ describe(Clock.name, () => {
         toTimestamp('15:00:00'),
       ])
       stop()
+    })
+
+    it('ticks six hourly after 7D and daily after 90D', () => {
+      setTime('00:00:00')
+      const now = UnixTime.now()
+
+      const TOTAL_DAYS = 183
+      const DAILY_TICK_START_DAY = 93
+      const SIX_HOURLY_TICK_START_DAY = 10
+
+      const start = now.add(-TOTAL_DAYS, 'days')
+      const clock = new Clock(start, 0)
+
+      const calls: UnixTime[] = []
+      const stop = clock._TVL_ONLY_onEveryHour((timestamp) =>
+        calls.push(timestamp),
+      )
+      stop()
+
+      const DAILY_TICKS = TOTAL_DAYS - DAILY_TICK_START_DAY
+      const dailyCalls = calls.slice(0, DAILY_TICKS)
+      expect(dailyCalls.length).toEqual(DAILY_TICKS)
+      expect(dailyCalls.every((x) => x.isFull('day'))).toEqual(true)
+
+      const SIX_HOURLY_TICKS =
+        (DAILY_TICK_START_DAY - SIX_HOURLY_TICK_START_DAY) * 4
+      const sixHourlyCalls = calls.slice(
+        DAILY_TICKS,
+        DAILY_TICKS + SIX_HOURLY_TICKS,
+      )
+      expect(sixHourlyCalls.length).toEqual(SIX_HOURLY_TICKS)
+      expect(sixHourlyCalls.every((x) => x.isFull('six hours'))).toEqual(true)
+
+      const HOURLY_TICKS = 10 * 24 + 1
+      const hourlyCalls = calls.slice(DAILY_TICKS + SIX_HOURLY_TICKS)
+      expect(hourlyCalls.length).toEqual(HOURLY_TICKS)
+      for (let i = 0; i < hourlyCalls.length - 1; i++) {
+        const call = hourlyCalls[i]
+        const nextCall = hourlyCalls[i + 1]
+        expect(nextCall).toEqual(call.add(1, 'hours'))
+      }
     })
   })
 
@@ -140,6 +187,28 @@ describe(Clock.name, () => {
 
       expect(calls).toEqual([toTimestamp('14:00:00'), toTimestamp('15:00:00')])
       stop()
+    })
+  })
+
+  describe(Clock.prototype._TVL_ONLY_getHourlyDeletionBoundary.name, () => {
+    it('returns timestamp 10 days before now', () => {
+      setTime('00:00:00')
+      const now = UnixTime.now()
+      const clock = new Clock(new UnixTime(0), 0)
+      const boundary = clock._TVL_ONLY_getHourlyDeletionBoundary()
+
+      expect(boundary).toEqual(now.add(-10, 'days'))
+    })
+  })
+
+  describe(Clock.prototype._TVL_ONLY_getSixHourlyDeletionBoundary.name, () => {
+    it('returns timestamp 93 days before now', () => {
+      setTime('00:00:00')
+      const now = UnixTime.now()
+      const clock = new Clock(new UnixTime(0), 0)
+      const boundary = clock._TVL_ONLY_getSixHourlyDeletionBoundary()
+
+      expect(boundary).toEqual(now.add(-93, 'days'))
     })
   })
 })

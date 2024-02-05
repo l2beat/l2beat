@@ -80,7 +80,7 @@ function StatsItem(props: StatsItemProps) {
           <TooltipTrigger className="ml-0.5 -translate-y-px md:translate-y-0">
             <InfoIcon
               className={cn(
-                'md:h-3.5 md:w-3.5',
+                'md:size-3.5',
                 props.big
                   ? 'fill-black dark:fill-white md:fill-gray-500 md:dark:fill-gray-600'
                   : 'fill-gray-500 dark:fill-gray-600',

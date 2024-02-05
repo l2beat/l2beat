@@ -135,6 +135,8 @@ export const scroll: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
+      defaultUrl: 'https://rpc.scroll.io',
+      defaultCallsPerMinute: 120,
       startBlock: 1,
     },
     liveness: {

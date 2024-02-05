@@ -2,7 +2,8 @@ import { Logger } from '@l2beat/backend-tools'
 import { AssetId, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { setupDatabaseTestSuite } from '../../test/database'
+import { describeDatabase } from '../../test/database'
+import { testDeletingArchivedRecords } from './shared/deleteArchivedRecords.test'
 import {
   TotalSupplyRecord,
   TotalSupplyRepository,
@@ -23,8 +24,7 @@ const mockTotalSupply = (
   }
 }
 
-describe(TotalSupplyRepository.name, () => {
-  const { database } = setupDatabaseTestSuite()
+describeDatabase(TotalSupplyRepository.name, (database) => {
   const repository = new TotalSupplyRepository(database, Logger.SILENT)
 
   const ASSET_1 = AssetId('dai-dai-stablecoin')
@@ -35,13 +35,14 @@ describe(TotalSupplyRepository.name, () => {
     mockTotalSupply(TOTAL_SUPPLY, 1, ASSET_2, ChainId.ETHEREUM),
   ]
 
-  beforeEach(async () => {
+  afterEach(async () => {
     await repository.deleteAll()
-    await repository.addOrUpdateMany(DATA)
   })
 
   describe(TotalSupplyRepository.prototype.getByTimestamp.name, () => {
     it('returns matching data for given timestamp', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       const additionalData = [
         mockTotalSupply(TOTAL_SUPPLY, 0, AssetId('asset-a'), ChainId.ETHEREUM),
         mockTotalSupply(TOTAL_SUPPLY, 0, AssetId('asset-b'), ChainId.ETHEREUM),
@@ -55,6 +56,8 @@ describe(TotalSupplyRepository.name, () => {
     })
 
     it('returns empty list if no data exists for given timestamp', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       const result = await repository.getByTimestamp(
         ChainId.ETHEREUM,
         START.add(1, 'days'),
@@ -63,7 +66,6 @@ describe(TotalSupplyRepository.name, () => {
     })
 
     it('one project one asset', async () => {
-      await repository.deleteAll()
       const data = [
         mockTotalSupply(TOTAL_SUPPLY, 0, ASSET_1, ChainId.ETHEREUM),
         mockTotalSupply(TOTAL_SUPPLY, 1, ASSET_1, ChainId.ETHEREUM),
@@ -84,7 +86,6 @@ describe(TotalSupplyRepository.name, () => {
     })
 
     it('many projects many assets', async () => {
-      await repository.deleteAll()
       const data = [
         mockTotalSupply(TOTAL_SUPPLY, 0, ASSET_1, ChainId.ETHEREUM),
         mockTotalSupply(TOTAL_SUPPLY, 1, ASSET_1, ChainId.ETHEREUM),
@@ -115,6 +116,8 @@ describe(TotalSupplyRepository.name, () => {
     })
 
     it('take chainId into consideration', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       const resultEth = await repository.getByTimestamp(ChainId.ETHEREUM, START)
       expect(resultEth).toEqual([DATA[0]])
 
@@ -125,6 +128,8 @@ describe(TotalSupplyRepository.name, () => {
 
   describe(TotalSupplyRepository.prototype.addOrUpdateMany.name, () => {
     it('new rows only', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       const newRows: TotalSupplyRecord[] = [
         {
           totalSupply: TOTAL_SUPPLY,
@@ -146,6 +151,8 @@ describe(TotalSupplyRepository.name, () => {
     })
 
     it('existing rows only', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       const existingRows: TotalSupplyRecord[] = [
         {
           timestamp: DATA[0].timestamp,
@@ -167,6 +174,8 @@ describe(TotalSupplyRepository.name, () => {
     })
 
     it('mixed: existing and new rows', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       const mixedRows: TotalSupplyRecord[] = [
         {
           timestamp: DATA[1].timestamp,
@@ -188,21 +197,37 @@ describe(TotalSupplyRepository.name, () => {
     })
 
     it('skips empty row modification', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       await expect(repository.addOrUpdateMany([])).not.toBeRejected()
     })
   })
 
   it(TotalSupplyRepository.prototype.getAll.name, async () => {
+    await repository.addOrUpdateMany(DATA)
+
     const result = await repository.getAll()
 
     expect(result).toEqual(DATA)
   })
 
   it(TotalSupplyRepository.prototype.deleteAll.name, async () => {
+    await repository.addOrUpdateMany(DATA)
     await repository.deleteAll()
 
     const result = await repository.getAll()
 
     expect(result).toEqual([])
   })
+
+  testDeletingArchivedRecords(repository, fakeTotalSupply)
 })
+
+function fakeTotalSupply(timestamp: UnixTime): TotalSupplyRecord {
+  return {
+    timestamp,
+    totalSupply: 0n,
+    assetId: AssetId('fake'),
+    chainId: ChainId.ARBITRUM,
+  }
+}

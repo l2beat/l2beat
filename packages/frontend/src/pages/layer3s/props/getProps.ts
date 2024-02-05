@@ -3,7 +3,6 @@ import { Layer3 } from '@l2beat/config'
 import { Config } from '../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../components'
 import { getChart } from '../../../utils/project/getChart'
-import { getHeader } from '../../../utils/project/getHeader'
 import { PagesData, Wrapped } from '../../Page'
 import { ProjectPageProps } from '../view/ProjectPage'
 import { getPageMetadata } from './getPageMetadata'
@@ -26,7 +25,6 @@ export function getProps(
   return {
     props: {
       navbar: getNavbarProps(config, 'scaling'),
-      header: getHeader(project, tvlApiResponse, activityApiResponse),
       projectHeader: getProjectHeader(
         project,
         config,

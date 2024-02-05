@@ -25,7 +25,7 @@ export function AnomalyIndicator({ anomalyEntries, showComingSoon }: Props) {
         </div>
         <div className="flex gap-x-0.5">
           {range(30).map((_, i) => (
-            <div key={i} className="h-0.5 w-0.5 rounded-full bg-neutral-700" />
+            <div key={i} className="size-0.5 rounded-full bg-neutral-700" />
           ))}
         </div>
       </div>
@@ -38,7 +38,7 @@ export function AnomalyIndicator({ anomalyEntries, showComingSoon }: Props) {
         <div className="mx-auto text-gray-500 dark:text-gray-50">No data</div>
         <div className="flex gap-x-0.5">
           {range(30).map((_, i) => (
-            <div key={i} className="h-0.5 w-0.5 rounded-full bg-neutral-700" />
+            <div key={i} className="size-0.5 rounded-full bg-neutral-700" />
           ))}
         </div>
       </div>

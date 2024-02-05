@@ -8,6 +8,7 @@ const meta: Meta<typeof PermissionsSectionComponent> = {
   args: {
     id: 'permissions',
     title: 'Permissions',
+    sectionOrder: 1,
   },
 }
 export default meta

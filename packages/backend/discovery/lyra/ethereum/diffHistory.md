@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x4503a45a15552e2f0c5fac881fdbb0f026d5f650
+
+# Diff at Fri, 26 Jan 2024 10:56:14 GMT:
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: main@bb037f7100968a00265a4787338e51ca81aafe9b block: 19032828
+- current block number: 19090320
+
+## Description
+
+Added opStackDa handler
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19032828 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e) {
+      values.opStackDA:
++        {"isAllTxsLengthEqualToCelestiaDAExample":true,"isSomeTxsLengthEqualToCelestiaDAExample":true}
+    }
+```
+
 Generated with discovered.json: 0xf25c1536731bdb55d1cbfab87638b709e4c1b961
 
 # Diff at Thu, 18 Jan 2024 09:23:11 GMT:

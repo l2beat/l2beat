@@ -12,6 +12,7 @@ const sections: ScalingDetailsSection[] = range(10).map(() => ({
   props: {
     id: 'detailed-description',
     title: 'Example',
+    sectionOrder: 1,
     issueLink:
       'https://github.com/l2beat/l2beat/issues/new?title=Problem: zkSync Era project page&labels=website',
     editLink:

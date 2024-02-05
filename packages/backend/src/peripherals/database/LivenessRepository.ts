@@ -25,10 +25,22 @@ export interface LivenessRecordWithType {
   type: LivenessType
 }
 
+export interface LivenessTransactionsRecordWithType {
+  timestamp: UnixTime
+  txHash: string
+  type: LivenessType
+}
+
 export interface LivenessRowWithProjectIdAndType {
   timestamp: Date
   project_id: string
   type: string
+}
+
+export interface LivenessTransactionRowWithAndType {
+  timestamp: Date
+  type: string
+  tx_hash: string
 }
 
 // TODO: add index when we will write controller
@@ -82,6 +94,22 @@ export class LivenessRepository extends BaseRepository {
     }
 
     return rows.map(toRecordWithTxHashAndTimestamp)[0]
+  }
+
+  async getTransactionWithTypeDistinctTimestamp(
+    projectId: ProjectId,
+    since: UnixTime,
+  ): Promise<LivenessTransactionsRecordWithType[]> {
+    const knex = await this.knex()
+    const rows = await knex('liveness as l')
+      .join('liveness_configuration as c', 'l.liveness_id', 'c.id')
+      .select('l.timestamp', 'c.type', 'l.tx_hash', 'c.project_id')
+      .where('c.project_id', projectId.toString())
+      .andWhere('l.timestamp', '>=', since.toDate())
+      .distinct('l.timestamp')
+      .orderBy('l.timestamp', 'desc')
+
+    return rows.map(toTransactionRecordWithTimestamp)
   }
 
   async getByProjectIdAndType(
@@ -142,6 +170,15 @@ function toRecordWithTimestampAndType(
   return {
     timestamp: UnixTime.fromDate(row.timestamp),
     type: LivenessType(row.type),
+  }
+}
+function toTransactionRecordWithTimestamp(
+  row: LivenessTransactionRowWithAndType,
+): LivenessTransactionsRecordWithType {
+  return {
+    timestamp: UnixTime.fromDate(row.timestamp),
+    type: LivenessType(row.type),
+    txHash: row.tx_hash,
   }
 }
 

@@ -2,14 +2,17 @@ import { Logger } from '@l2beat/backend-tools'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { setupDatabaseTestSuite } from '../../test/database'
-import { BlockNumberRepository } from './BlockNumberRepository'
+import { describeDatabase } from '../../test/database'
+import {
+  BlockNumberRecord,
+  BlockNumberRepository,
+} from './BlockNumberRepository'
+import { testDeletingArchivedRecords } from './shared/deleteArchivedRecords.test'
 
-describe(BlockNumberRepository.name, () => {
-  const { database } = setupDatabaseTestSuite()
+describeDatabase(BlockNumberRepository.name, (database) => {
   const repository = new BlockNumberRepository(database, Logger.SILENT)
 
-  beforeEach(async () => {
+  afterEach(async () => {
     await repository.deleteAll()
   })
 
@@ -28,10 +31,10 @@ describe(BlockNumberRepository.name, () => {
     await repository.add(itemA)
     await repository.add(itemB)
 
-    const resultsEth = await repository.getAll(ChainId.ETHEREUM)
+    const resultsEth = await repository.getAllByChainId(ChainId.ETHEREUM)
     expect(resultsEth).toEqualUnsorted([itemA])
 
-    const resultsArb = await repository.getAll(ChainId.ARBITRUM)
+    const resultsArb = await repository.getAllByChainId(ChainId.ARBITRUM)
     expect(resultsArb).toEqualUnsorted([itemB])
   })
 
@@ -69,7 +72,7 @@ describe(BlockNumberRepository.name, () => {
     expect(resultArb).toEqual(itemC)
   })
 
-  it(BlockNumberRepository.prototype.getAll.name, async () => {
+  it(BlockNumberRepository.prototype.getAllByChainId.name, async () => {
     const itemA = {
       blockNumber: 1234,
       timestamp: new UnixTime(5678),
@@ -90,10 +93,10 @@ describe(BlockNumberRepository.name, () => {
     await repository.add(itemB)
     await repository.add(itemC)
 
-    const resultsEth = await repository.getAll(ChainId.ETHEREUM)
+    const resultsEth = await repository.getAllByChainId(ChainId.ETHEREUM)
     expect(resultsEth).toEqualUnsorted([itemA, itemB])
 
-    const resultsArb = await repository.getAll(ChainId.ARBITRUM)
+    const resultsArb = await repository.getAllByChainId(ChainId.ARBITRUM)
     expect(resultsArb).toEqualUnsorted([itemC])
   })
 
@@ -105,7 +108,17 @@ describe(BlockNumberRepository.name, () => {
     })
     await repository.deleteAll()
 
-    const results = await repository.getAll(ChainId.ETHEREUM)
+    const results = await repository.getAllByChainId(ChainId.ETHEREUM)
     expect(results).toEqual([])
   })
+
+  testDeletingArchivedRecords(repository, fakeBlockRecord)
 })
+
+function fakeBlockRecord(timestamp: UnixTime): BlockNumberRecord {
+  return {
+    timestamp,
+    blockNumber: 0,
+    chainId: ChainId.ETHEREUM,
+  }
+}

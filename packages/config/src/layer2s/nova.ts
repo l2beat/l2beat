@@ -24,12 +24,12 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('nova')
 const assumedBlockTime = 12 // seconds, different from RollupUserLogic.sol#L35 which assumes 13.2 seconds
 const validatorAfkBlocks = discovery.getContractValue<number>(
-  'ArbitrumProxy',
+  'RollupProxy',
   'VALIDATOR_AFK_BLOCKS',
 )
 const validatorAfkTime = validatorAfkBlocks * assumedBlockTime
 const challengeWindow = discovery.getContractValue<number>(
-  'ArbitrumProxy',
+  'RollupProxy',
   'confirmPeriodBlocks',
 )
 const challengeWindowSeconds = challengeWindow * assumedBlockTime
@@ -44,6 +44,16 @@ const maxTimeVariation = discovery.getContractValue<number[]>(
   'maxTimeVariation',
 )
 const selfSequencingDelay = maxTimeVariation[2]
+
+const nOfChallengers = discovery.getContractValue<string[]>(
+  'RollupProxy',
+  'validators',
+).length
+
+const DAC = discovery.getContractValue<Record<number, number>>(
+  'SequencerInbox',
+  'dacKeyset',
+)
 
 export const nova: Layer2 = {
   type: 'layer2',
@@ -108,18 +118,14 @@ export const nova: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
+      defaultUrl: 'https://nova.arbitrum.io/rpc',
       assessCount: subtractOne,
       startBlock: 1,
     },
   },
   riskView: makeBridgeCompatible({
-    stateValidation: {
-      value: 'Fraud proofs (INT)',
-      description:
-        'Fraud proofs allow WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve.',
-      sentiment: 'warning',
-    },
-    dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
+    stateValidation: RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(nOfChallengers),
+    dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC(DAC),
     exitWindow: {
       ...RISK_VIEW.EXIT_WINDOW(l2TimelockDelay, selfSequencingDelay, 0),
       sentiment: 'bad',
@@ -173,7 +179,7 @@ export const nova: Layer2 = {
         },
       ],
     },
-    dataAvailability: DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN,
+    dataAvailability: DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN(DAC),
     operator: {
       ...OPERATOR.CENTRALIZED_SEQUENCER,
       references: [
@@ -266,7 +272,7 @@ export const nova: Layer2 = {
         'Timelock contract for Arbitrum DAO Governance. It gives the DAO participants the ability to upgrade the system. Only the Nova counterpart of this contract can execute the upgrades.',
       ),
       discovery.getContractDetails(
-        'ArbitrumProxy',
+        'RollupProxy',
         'Main contract implementing Arbitrum Nova Rollup. Manages other Rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.',
       ),
       discovery.getContractDetails(

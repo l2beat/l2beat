@@ -85,7 +85,7 @@ export function TVLBreakdownTableView<
                     {column.tooltip && (
                       <Tooltip>
                         <TooltipTrigger className="-translate-y-px md:translate-y-0">
-                          <InfoIcon className="fill-current md:h-3.5 md:w-3.5" />
+                          <InfoIcon className="fill-current md:size-3.5" />
                         </TooltipTrigger>
                         <TooltipContent>{column.tooltip}</TooltipContent>
                       </Tooltip>
@@ -107,31 +107,28 @@ export function TVLBreakdownTableView<
                 {...rest}
                 className={cn(
                   'group',
-                  'border-b border-b-black/10 hover:bg-black/[0.1] hover:shadow-sm dark:border-b-gray-800 dark:hover:bg-white/[0.1] md:border-b-0',
+                  'border-b border-b-black/10 hover:bg-black/5 hover:shadow-sm dark:border-b-zinc-700 dark:hover:bg-white/5 md:border-b-0',
                   rowClassName,
-                  item.escrows?.length &&
-                    item.escrows.length > 1 &&
-                    'MultipleEscrowsRow',
                 )}
+                data-role={
+                  item.escrows?.length && item.escrows.length > 1
+                    ? 'multiple-escrows-row'
+                    : undefined
+                }
                 data-token={item.assetId}
               >
                 {columns.map((column, j) => {
-                  const childClassName = cn(
-                    'h-full w-full items-start pt-2 pb-2',
-                    column.align === 'right' && 'justify-end',
-                    column.align === 'center' && 'justify-center',
-                  )
                   return (
                     <td
                       key={j}
                       className={cn(
-                        'h-9 pr-2 first:rounded-l first:pl-2 last:rounded-r last:pr-2 md:h-10 md:pl-4 first:md:pl-6 last:md:pr-6',
+                        'h-9 py-2 pr-2 align-top first:rounded-l first:pl-2 last:rounded-r last:pr-2 md:h-10 md:pl-4 first:md:pl-6 last:md:pr-6',
                         column.highlight && highlightedColumnClassNames,
+                        column.align === 'right' && 'text-right',
+                        column.align === 'center' && 'text-center',
                       )}
                     >
-                      <div className={cn(childClassName, 'flex')}>
-                        {column.getValue(item, i)}
-                      </div>
+                      {column.getValue(item, i)}
                     </td>
                   )
                 })}

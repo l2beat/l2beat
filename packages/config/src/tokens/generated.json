@@ -1631,7 +1631,7 @@
       "address": "0xB0c7a3Ba49C7a6EaBa6cD4a96C55a1391070Ac9A",
       "symbol": "MAGIC",
       "decimals": 18,
-      "sinceTimestamp": 1630989984,
+      "sinceTimestamp": 1632700800,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/18623/large/magic.png?1696518095",
       "chainId": 1,
@@ -1757,7 +1757,7 @@
       "address": "0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C",
       "symbol": "USDM",
       "decimals": 18,
-      "sinceTimestamp": 1697061600,
+      "sinceTimestamp": 1696982400,
       "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/31719/large/usdm.png?1696530540",
       "chainId": 1,
@@ -2096,6 +2096,20 @@
       "sinceTimestamp": 1592411070,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/11659/large/pNetwork.png?1592411134",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "ethereum:pol-polygon-ecosystem-token",
+      "name": "Polygon Ecosystem Token",
+      "coingeckoId": "polygon-ecosystem-token",
+      "address": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
+      "symbol": "POL",
+      "decimals": 18,
+      "sinceTimestamp": 1698224783,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/32440/large/polygon.png?1698233684",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"
@@ -3059,7 +3073,7 @@
       "address": "0x57F5E098CaD7A3D1Eed53991D4d66C45C9AF7812",
       "symbol": "wUSDM",
       "decimals": 18,
-      "sinceTimestamp": 1696622279,
+      "sinceTimestamp": 1696982400,
       "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/33785/large/wUSDM_PNG_240px.png?1702981552",
       "chainId": 1,
@@ -3284,6 +3298,23 @@
       }
     },
     {
+      "id": "kroma:wemix.e-wemix.e",
+      "name": "WEMIX.e",
+      "coingeckoId": "wemix-token",
+      "address": "0x3720b1Dc2c8dde3BD6cfCf0b593D0A2bBCAc856e",
+      "symbol": "WEMIX.e",
+      "decimals": 18,
+      "sinceTimestamp": 1702444959,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12998/large/wemixcoin_color_200.png?1696512788",
+      "chainId": 255,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Wemix on Kroma"
+      }
+    },
+    {
       "id": "lyra:usdc-usd-coin",
       "name": "USD Coin",
       "coingeckoId": "usd-coin",
@@ -3297,7 +3328,8 @@
       "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Socket"
+        "bridge": "Socket",
+        "slug": "socket"
       }
     },
     {
@@ -3504,15 +3536,15 @@
     },
     {
       "id": "zkfair:zkf-zkf",
-      "chainId": 42766,
+      "name": "ZKF",
+      "coingeckoId": "zkfair",
       "address": "0x1cD3E2A23C45A690a18Ed93FD1412543f464158F",
       "symbol": "ZKF",
-      "name": "ZKF",
       "decimals": 18,
-      "coingeckoId": "zkfair",
       "sinceTimestamp": 1704412800,
-      "iconUrl": "https://assets.coingecko.com/coins/images/34288/large/r8A3J3kf_400x400.jpg?1704455147",
       "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/34288/large/r8A3J3kf_400x400.jpg?1704455147",
+      "chainId": 42766,
       "type": "NMV",
       "formula": "circulatingSupply"
     },

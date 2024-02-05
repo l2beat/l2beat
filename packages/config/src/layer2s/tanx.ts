@@ -90,7 +90,7 @@ export const tanx: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: {
-      ...RISK_VIEW.DATA_EXTERNAL_DAC,
+      ...RISK_VIEW.DATA_EXTERNAL_DAC(),
       sources: [
         {
           contract: 'Committee',

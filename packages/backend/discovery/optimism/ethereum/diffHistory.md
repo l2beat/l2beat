@@ -1,9 +1,32 @@
-Generated with discovered.json: 0x367c787f5ef9cf096744362153e423288f988639
+Generated with discovered.json: 0x7bc6699d72e87e966f09a1f8d9b0661ffdb9ab81
+
+# Diff at Wed, 31 Jan 2024 13:05:49 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@74040c3a8f43c630b3d31cc8376e84f5f9acda5c block: 18975204
+- current block number: 19126648
+
+## Description
+
+Added opStackDa handler
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18975204 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
+      values.opStackDA:
++        {"isAllTxsLengthEqualToCelestiaDAExample":false,"isSomeTxsLengthEqualToCelestiaDAExample":false}
+    }
+```
 
 # Diff at Wed, 10 Jan 2024 07:58:12 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@e2e6b511762816f77296c91449de9dfcd2aa348b block: 18961956
+- comparing to: master@e2e6b511762816f77296c91449de9dfcd2aa348b block: 18961956
 - current block number: 18975204
 
 ## Description
@@ -27,7 +50,7 @@ for block 18961956 (main branch discovery), not current.
 # Diff at Mon, 08 Jan 2024 11:19:28 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: main@255faead9c908eabe1ba60518df6fac59f9743e0 block: 18927148
+- comparing to: master@255faead9c908eabe1ba60518df6fac59f9743e0 block: 18927148
 - current block number: 18961956
 
 ## Description
@@ -70,7 +93,7 @@ One owner is removed from SynthetixMultisig (now 5/11).
 # Diff at Wed, 03 Jan 2024 13:33:11 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@2a4dee9ce3e9f4d9aa3c1d39fafd6ff2ba608ba2
+- comparing to: master@2a4dee9ce3e9f4d9aa3c1d39fafd6ff2ba608ba2
 
 ## Description
 
@@ -124,7 +147,7 @@ SynthetixMultisig has removed one owner. We are not showing it on the frontend. 
 # Diff at Tue, 26 Sep 2023 08:05:22 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@cfd4e281f2af40c7c69302b16c1308c0c5651be0
+- comparing to: master@cfd4e281f2af40c7c69302b16c1308c0c5651be0
 
 ## Watched changes
 

@@ -4,6 +4,10 @@ import { CirculatingSupplyRow } from 'knex/types/tables'
 
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
+import {
+  deleteHourlyUntil,
+  deleteSixHourlyUntil,
+} from './shared/deleteArchivedRecords'
 
 export interface CirculatingSupplyRecord {
   timestamp: UnixTime
@@ -72,6 +76,16 @@ export class CirculatingSupplyRepository extends BaseRepository {
   async deleteAll() {
     const knex = await this.knex()
     return knex('circulating_supplies').delete()
+  }
+
+  async deleteHourlyUntil(timestamp: UnixTime) {
+    const knex = await this.knex()
+    return deleteHourlyUntil(knex, 'circulating_supplies', timestamp)
+  }
+
+  async deleteSixHourlyUntil(timestamp: UnixTime) {
+    const knex = await this.knex()
+    return deleteSixHourlyUntil(knex, 'circulating_supplies', timestamp)
   }
 }
 

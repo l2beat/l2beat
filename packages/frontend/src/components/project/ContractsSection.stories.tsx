@@ -11,6 +11,7 @@ type Story = StoryObj<typeof ContractsSection>
 const props: ContractsSectionProps = {
   id: 'contracts',
   title: 'Smart Contracts',
+  sectionOrder: 1,
   contracts: [
     {
       name: 'CanonicalTransactionChain',
@@ -97,7 +98,7 @@ const props: ContractsSectionProps = {
       href: 'https://l2beat.com',
     },
   ],
-  architectureImage: '/images/optimism-architecture.png',
+  architectureImage: '/images/architecture/optimism.png',
   verificationStatus: {
     projects: {},
     contracts: {

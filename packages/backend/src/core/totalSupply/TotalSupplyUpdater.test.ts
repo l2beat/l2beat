@@ -26,7 +26,7 @@ describe(TotalSupplyUpdater.name, () => {
 
     it('skips known timestamps', async () => {
       const clock = mockObject<Clock>({
-        onEveryHour: (callback) => {
+        _TVL_ONLY_onEveryHour: (callback) => {
           callback(NOW.add(-1, 'hours'))
           callback(NOW)
           callback(NOW.add(1, 'hours'))

@@ -52,7 +52,7 @@ If you want to add a new Layer 2 project you can do that by opening a PR. To do 
    existing projects as reference.
 3. Add your project into `packages/config/src/layer2s/index.ts`. The order of the projects should be
    kept alphabetical.
-4. Add an 128x128 png project icon under 10KB into `packages/frontend/src/static/icons`.
+4. Add a square PNG project icon with a minimum size of 128x128 pixels into packages/frontend/src/static/icons. Run yarn tinify-logos afterwards to reduce its size.
 5. If your project is a fork of an already existing project (like Boba Network that is on top of
    Optimism) or it was built using a Rollups SDK/framework (like ImmutableX that is on top of
    StarkEx) you can show this information by:
@@ -85,7 +85,7 @@ If you want to add a new Layer 3 project you can do that by opening a PR. To do 
    Take `projectId` of host chian and add it to `hostChain` property.
 3. Add your project into `packages/config/src/layer3s/index.ts`. The order of the projects should be
    kept alphabetical.
-4. Add an 128x128 png project icon under 10KB into `packages/frontend/src/static/icons`.
+4. Add a square PNG project icon with a minimum size of 128x128 pixels into packages/frontend/src/static/icons. Run yarn tinify-logos afterwards to reduce its size.
 5. If your project is a fork of an already existing project (like Boba Network that is on top of
    Optimism) or it was built using a Rollups SDK/framework (like ImmutableX that is on top of
    StarkEx) you can show this information by:

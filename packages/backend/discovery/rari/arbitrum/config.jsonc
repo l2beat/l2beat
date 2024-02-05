@@ -1,0 +1,115 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "arbitrum",
+  "name": "rari",
+  "initialAddresses": [
+    "0x37e60F80d921dc5E7f501a7130F31f6548dBa564",
+    "0x8bE956aB42274056ef4471BEb211b33e258b7324",
+    "0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6"
+  ],
+  "names": {
+    "0x255f80Ef2F09FCE0944faBb292b8510F01316Cf0": "Bridge",
+    "0x37e60F80d921dc5E7f501a7130F31f6548dBa564": "Inbox",
+    "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89": "RollupProxy",
+    "0xa9064FebD91E9Ab4c49C8989926Cada18bc9C8FF": "ChallengeManager",
+    "0x91591BB66075BCfF94AA128B003134165C3Ab83a": "Outbox",
+    "0xA436f1867adD490BF1530c636f2FB090758bB6B3": "SequencerInbox",
+    "0x139C5A235632EDdad741ff380112B3161d31a21C": "UpgradeExecutor",
+    "0x8bE956aB42274056ef4471BEb211b33e258b7324": "L1CustomGateway",
+    "0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6": "L1ERC20Gateway"
+  },
+  "overrides": {
+    "ChallengeManager": {
+      "ignoreMethods": ["challenges"]
+    },
+    "RollupProxy": {
+      "ignoreMethods": [
+        // Execution reverted
+        "proxiableUUID"
+      ],
+      "ignoreInWatchMode": [
+        "firstUnresolvedNode",
+        "latestConfirmed",
+        "latestNodeCreated"
+      ],
+      "fields": {
+        // when this changes, it means the validators have changed
+        "setValidatorCount": {
+          "type": "eventCount",
+          "topics": [
+            // event OwnerFunctionCalled(uint256 indexed id);
+            "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
+            // id == 6 is emitted inside setValidator()
+            "0x0000000000000000000000000000000000000000000000000000000000000006"
+          ]
+        },
+        "challenges": {
+          "type": "stateFromEvent",
+          "event": "RollupChallengeStarted",
+          "returnParams": [
+            "challengeIndex",
+            "asserter",
+            "challenger",
+            "challengedNode"
+          ]
+        },
+        "validators": {
+          "type": "arbitrumActors",
+          "actorType": "validator"
+        }
+      }
+    },
+    "Outbox": {
+      "ignoreMethods": ["spent", "isSpent"]
+    },
+    "Bridge": {
+      "ignoreMethods": ["sequencerInboxAccs", "delayedInboxAccs"],
+      "ignoreInWatchMode": [
+        "delayedMessageCount",
+        "sequencerMessageCount",
+        "sequencerReportedSubMessageCount"
+      ]
+    },
+    "SequencerInbox": {
+      "ignoreMethods": ["inboxAccs"],
+      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
+      "fields": {
+        // getting sequencers from the contract is too complex at the moment
+        // so we hardcode it in config .ts
+        // this field will notify us in case of changes
+        "IS_HARDCODED_SEQUENCER_BATCH_POSTER": {
+          "type": "call",
+          "method": "function isBatchPoster(address) external view returns (bool)",
+          "args": ["0x02c903F5c76F3f00c1F659702Bd76DF30470bBEE"]
+        },
+        "sequencerVersion": {
+          "type": "arbitrumSequencerVersion"
+        },
+        "dacKeyset": {
+          "type": "arbitrumDACKeyset"
+        },
+        // when this changes, it means the sequencers have changed
+        "setIsBatchPosterCount": {
+          "type": "eventCount",
+          "topics": [
+            // event OwnerFunctionCalled(uint256 indexed id);
+            "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
+            // id == 6 is emitted inside setValidator()
+            "0x0000000000000000000000000000000000000000000000000000000000000001"
+          ]
+        },
+        "batchPosters": {
+          "type": "arbitrumActors",
+          "actorType": "batchPoster"
+        }
+      }
+    },
+    "UpgradeExecutor": {
+      "fields": {
+        "accessControl": {
+          "type": "accessControl"
+        }
+      }
+    }
+  }
+}

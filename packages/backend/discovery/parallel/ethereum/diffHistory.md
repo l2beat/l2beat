@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x01fbed9cb33e2f0bf40c3c67a6a73b1e5c4000da
+
+# Diff at Wed, 31 Jan 2024 08:01:53 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@367f818d32ce6c1ab18696a1cbeb7a6f368b6d78 block: 19119505
+- current block number: 19125146
+
+## Description
+
+Start tracking the keySetUpdates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19119505 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0xb4795A0edae98d7820C37F06f6b858e7acb51DF8) {
+      values.keySetUpdates:
++        0
+    }
+```
+
+Generated with discovered.json: 0x5cf12304ad462ca8b57812f5d60a6a7fbd19058d
+
+# Diff at Tue, 30 Jan 2024 13:05:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@ceb6abb9c987b0d53dd547a79c3ebbf3480a024b block: 19075194
+- current block number: 19119505
+
+## Description
+
+Add the SequencerInboxVersion handler.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19075194 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0xb4795A0edae98d7820C37F06f6b858e7acb51DF8) {
+      values.sequencerVersion:
++        "0x00"
+    }
+```
+
 Generated with discovered.json: 0x616619b46862d7649368c11858319d5e420f5791
 
 # Diff at Wed, 24 Jan 2024 08:06:10 GMT:

@@ -7,8 +7,9 @@ import {
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { setupDatabaseTestSuite } from '../../test/database'
+import { describeDatabase } from '../../test/database'
 import { BalanceRecord, BalanceRepository } from './BalanceRepository'
+import { testDeletingArchivedRecords } from './shared/deleteArchivedRecords.test'
 
 const START = UnixTime.fromDate(new Date('2022-05-17'))
 const mockBalance = (
@@ -27,8 +28,7 @@ const mockBalance = (
   }
 }
 
-describe(BalanceRepository.name, () => {
-  const { database } = setupDatabaseTestSuite()
+describeDatabase(BalanceRepository.name, (database) => {
   const repository = new BalanceRepository(database, Logger.SILENT)
 
   const HOLDER_A = EthereumAddress.random()
@@ -41,13 +41,14 @@ describe(BalanceRepository.name, () => {
     mockBalance(HOLDER_A, 1, ASSET_1, BALANCE, ChainId.ETHEREUM),
   ]
 
-  beforeEach(async () => {
+  afterEach(async () => {
     await repository.deleteAll()
-    await repository.addOrUpdateMany(DATA)
   })
 
   describe(BalanceRepository.prototype.getByTimestamp.name, () => {
     it('known timestamp', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       const additionalData = [
         mockBalance(HOLDER_A, 0, AssetId('asset-a'), BALANCE, ChainId.ETHEREUM),
         mockBalance(HOLDER_A, 0, AssetId('asset-b'), BALANCE, ChainId.ETHEREUM),
@@ -64,6 +65,8 @@ describe(BalanceRepository.name, () => {
     })
 
     it('unknown timestamp', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       const result = await repository.getByChainAndTimestamp(
         ChainId.ETHEREUM,
         START.add(1, 'days'),
@@ -72,7 +75,6 @@ describe(BalanceRepository.name, () => {
     })
 
     it('one project one asset', async () => {
-      await repository.deleteAll()
       const data = [
         mockBalance(HOLDER_A, 0, ASSET_1, 1n, ChainId.ETHEREUM),
         mockBalance(HOLDER_A, 1, ASSET_1, 1n, ChainId.ETHEREUM),
@@ -97,7 +99,6 @@ describe(BalanceRepository.name, () => {
     })
 
     it('many projects many assets', async () => {
-      await repository.deleteAll()
       const data = [
         mockBalance(HOLDER_A, 0, ASSET_1, 1n, ChainId.ETHEREUM),
         mockBalance(HOLDER_A, 1, ASSET_1, 1n, ChainId.ETHEREUM),
@@ -143,6 +144,8 @@ describe(BalanceRepository.name, () => {
     })
 
     it('take chainId into consideration', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       const resultEth = await repository.getByChainAndTimestamp(
         ChainId.ETHEREUM,
         START,
@@ -159,6 +162,8 @@ describe(BalanceRepository.name, () => {
 
   describe(BalanceRepository.prototype.addOrUpdateMany.name, () => {
     it('new rows only', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       const newRows = [
         {
           timestamp: START.add(2, 'hours'),
@@ -186,6 +191,8 @@ describe(BalanceRepository.name, () => {
     })
 
     it('existing rows only', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       const existingRows = [
         {
           timestamp: DATA[0].timestamp,
@@ -209,6 +216,8 @@ describe(BalanceRepository.name, () => {
     })
 
     it('mixed: existing and new rows', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       const mixedRows = [
         {
           timestamp: DATA[1].timestamp,
@@ -234,21 +243,38 @@ describe(BalanceRepository.name, () => {
     })
 
     it('empty array', async () => {
+      await repository.addOrUpdateMany(DATA)
+
       await expect(repository.addOrUpdateMany([])).not.toBeRejected()
     })
   })
 
   it(BalanceRepository.prototype.getAll.name, async () => {
+    await repository.addOrUpdateMany(DATA)
+
     const result = await repository.getAll()
 
     expect(result).toEqual(DATA)
   })
 
   it(BalanceRepository.prototype.deleteAll.name, async () => {
+    await repository.addOrUpdateMany(DATA)
     await repository.deleteAll()
 
     const result = await repository.getAll()
 
     expect(result).toEqual([])
   })
+
+  testDeletingArchivedRecords(repository, fakeBalance)
 })
+
+function fakeBalance(timestamp: UnixTime): BalanceRecord {
+  return {
+    timestamp,
+    holderAddress: EthereumAddress.ZERO,
+    assetId: AssetId('fake'),
+    balance: 0n,
+    chainId: ChainId.ETHEREUM,
+  }
+}

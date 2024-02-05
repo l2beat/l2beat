@@ -18,7 +18,7 @@ export function KnowledgeNuggetItem({ knowledgeNugget }: KnowledgeNuggetProps) {
       <div className="relative col-span-2 overflow-hidden rounded-md pb-2/3 drop-shadow-md">
         <img
           src={getThumbnail(knowledgeNugget)}
-          className="absolute h-full w-full object-cover transition-all group-hover:scale-105"
+          className="absolute size-full object-cover transition-all group-hover:scale-105"
         />
       </div>
       <div className="col-span-5 flex-col transition-all group-hover:translate-x-0.5">

@@ -78,6 +78,11 @@ const maxTimeVariation = discovery.getContractValue<number[]>(
 )
 const selfSequencingDelay = maxTimeVariation[2]
 
+const nOfChallengers = discovery.getContractValue<string[]>(
+  'RollupProxy',
+  'validators',
+).length
+
 export const arbitrum: Layer2 = {
   type: 'layer2',
   id: ProjectId('arbitrum'),
@@ -172,6 +177,7 @@ export const arbitrum: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
+      defaultUrl: 'https://arb1.arbitrum.io/rpc',
       // We need to subtract the Nitro system transactions
       // after the block of the update
       assessCount: subtractOneAfterBlockInclusive(22207818),
@@ -253,10 +259,7 @@ export const arbitrum: Layer2 = {
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
-      value: 'Fraud proofs (INT)',
-      description:
-        'Fraud proofs allow WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks.',
-      sentiment: 'warning',
+      ...RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(nOfChallengers),
       sources: [
         {
           contract: 'ChallengeManager',
@@ -493,16 +496,19 @@ export const arbitrum: Layer2 = {
       'This is yet another proxy admin for the three gateway contracts. It is owned by the Upgrade Executor.',
     ),
     {
-      name: 'Sequencer',
-      accounts: VALUES.ARBITRUM.SEQUENCER,
-      description:
-        'Central actor allowed to set the order in which L2 transactions are executed.',
-    },
-    {
       name: 'Validators/Proposers',
-      accounts: VALUES.ARBITRUM.VALIDATORS,
+      accounts: discovery.getPermissionedAccounts('RollupProxy', 'validators'),
       description:
         'They can submit new state roots and challenge state roots. Some of the operators perform their duties through special purpose smart contracts.',
+    },
+    {
+      name: 'Sequencers',
+      accounts: discovery.getPermissionedAccounts(
+        'SequencerInbox',
+        'batchPosters',
+      ),
+      description:
+        'Central actors allowed to submit transaction batches to L1.',
     },
   ],
   contracts: {

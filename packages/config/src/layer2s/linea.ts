@@ -131,6 +131,7 @@ export const linea: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
+      defaultUrl: 'https://linea-mainnet.infura.io/v3',
       startBlock: 1,
     },
     liveness: {
@@ -170,7 +171,7 @@ export const linea: Layer2 = {
     },
     // ~ Timestamp of block number 0 on Linea
     // https://lineascan.build/block/0
-    minTimestampForTvl: UnixTime.fromDate(new Date('2023-07-06T01:15:00Z')),
+    minTimestampForTvl: UnixTime.fromDate(new Date('2023-07-06T14:00:00Z')),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

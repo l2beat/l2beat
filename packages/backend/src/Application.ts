@@ -63,7 +63,7 @@ export class Application {
     )
 
     this.start = async () => {
-      logger.for(this).info('Starting')
+      logger.for(this).info('Starting', { features: config.flags })
 
       await apiServer.listen()
 

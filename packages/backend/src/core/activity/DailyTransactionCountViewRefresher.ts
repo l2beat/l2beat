@@ -35,7 +35,7 @@ export class DailyTransactionCountViewRefresher {
         this.refreshQueue.addIfEmpty()
       }),
     )
-    this.clock.onEveryHour(() => this.refreshQueue.addIfEmpty())
+    this.clock.onNewHour(() => this.refreshQueue.addIfEmpty())
     this.refreshQueue.addIfEmpty()
   }
 }

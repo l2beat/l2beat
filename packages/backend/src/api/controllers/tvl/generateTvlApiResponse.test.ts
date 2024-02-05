@@ -1,387 +1,268 @@
-import {
-  AssetId,
-  ChainId,
-  ProjectId,
-  TvlApiChart,
-  TvlApiChartPoint,
-  TvlApiCharts,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { AggregatedReportRecord } from '../../../peripherals/database/AggregatedReportRepository'
-import { ReportRecord } from '../../../peripherals/database/ReportRepository'
-import {
-  extractReportTypeSet,
-  generateAggregatedTvlApiResponse,
-  generateTvlApiResponse,
-  getProjectChartData,
-  TYPE_LABELS,
-} from './generateTvlApiResponse'
-import {
-  getProjectTokensCharts,
-  groupByProjectIdAndAssetType,
-  groupByProjectIdAndTimestamp,
-} from './tvl'
+import { generateTvlApiResponse } from './generateTvlApiResponse'
 
 describe(generateTvlApiResponse.name, () => {
   it('returns the correct groupings', () => {
-    const reports = fakeReports([
-      ProjectId('arbitrum'),
-      ProjectId('optimism'),
-      ProjectId('avalanche'),
-      ProjectId.ALL,
-      ProjectId.BRIDGES,
-      ProjectId.LAYER2S,
-    ])
+    const sinceTimestamp = UnixTime.fromDate(new Date('2024-01-01T00:00:00Z'))
+    const untilTimestamp = sinceTimestamp.add(1, 'days')
+
     const result = generateTvlApiResponse(
-      reports.hourly,
-      reports.sixHourly,
-      reports.daily,
-      reports.latest,
-      [ProjectId('arbitrum'), ProjectId('optimism'), ProjectId('avalanche')],
-    )
-
-    const expected = {
-      layers2s: charts(reports, ProjectId.LAYER2S),
-      bridges: charts(reports, ProjectId.BRIDGES),
-      combined: charts(reports, ProjectId.ALL),
-      projects: {
-        arbitrum: {
-          charts: charts(reports, ProjectId('arbitrum')),
-          tokens: tokens(reports, ProjectId('arbitrum')),
-        },
-        optimism: {
-          charts: charts(reports, ProjectId('optimism')),
-          tokens: tokens(reports, ProjectId('optimism')),
-        },
-        avalanche: {
-          charts: charts(reports, ProjectId('avalanche')),
-          tokens: tokens(reports, ProjectId('avalanche')),
-        },
-      },
-    }
-
-    expect(result).toEqual(expected)
-  })
-
-  function charts(
-    reports: ReturnType<typeof fakeReports>,
-    projectId: ProjectId,
-  ): TvlApiCharts {
-    const types: TvlApiChart['types'] = [
-      'timestamp',
-      'valueUsd',
-      'cbvUsd',
-      'ebvUsd',
-      'nmvUsd',
-      'valueEth',
-      'cbvEth',
-      'ebvEth',
-      'nmvEth',
-    ]
-
-    return {
-      hourly: {
-        types,
-        data: getProjectChartData(reports.hourly, projectId, 1),
-      },
-      sixHourly: {
-        types,
-        data: getProjectChartData(reports.sixHourly, projectId, 6),
-      },
-      daily: {
-        types,
-        data: getProjectChartData(reports.daily, projectId, 24),
-      },
-    }
-  }
-
-  function tokens(
-    reports: ReturnType<typeof fakeReports>,
-    projectId: ProjectId,
-  ) {
-    return getProjectTokensCharts(reports.latest, projectId)
-  }
-
-  function fakeReports(projectIds: ProjectId[]) {
-    const now = UnixTime.now().toStartOf('day')
-
-    return {
-      hourly: groupByProjectIdAndTimestamp(
-        fakeTimePeriodReports(now, 1, 1, projectIds),
-      ),
-      sixHourly: groupByProjectIdAndTimestamp(
-        fakeTimePeriodReports(now, 6, 1, projectIds),
-      ),
-      daily: groupByProjectIdAndTimestamp(
-        fakeTimePeriodReports(now, 24, 1, projectIds),
-      ),
-      latest: groupByProjectIdAndAssetType(fakeLatestReports(now, projectIds)),
-    }
-  }
-
-  function fakeTimePeriodReports(
-    now: UnixTime,
-    offsetHours: number,
-    count: number,
-    projectIds: ProjectId[],
-  ) {
-    const result: AggregatedReportRecord[] = []
-
-    for (let i = 0; i < count; i++) {
-      const timestamp = now.add(-i * offsetHours, 'hours')
-      for (const projectId of projectIds) {
-        const usdEbv = BigInt(Math.floor(Math.random() * 20_000 + 5_000))
-        const usdCbv = BigInt(Math.floor(Math.random() * 20_000 + 5_000))
-        const usdNmv = BigInt(Math.floor(Math.random() * 20_000 + 5_000))
-
-        const usdTvl = usdEbv + usdCbv + usdNmv
-
-        const ethEbv = usdEbv * 1000n
-        const ethCbv = usdCbv * 1000n
-        const ethNmv = usdNmv * 1000n
-
-        const ethTvl = ethEbv + ethCbv + ethNmv
-
-        result.push({
-          timestamp,
-          projectId,
-          usdValue: usdEbv,
-          ethValue: ethEbv,
-          reportType: 'EBV',
-        })
-
-        result.push({
-          timestamp,
-          projectId,
-          usdValue: usdCbv,
-          ethValue: ethCbv,
-          reportType: 'CBV',
-        })
-
-        result.push({
-          timestamp,
-          projectId,
-          usdValue: usdNmv,
-          ethValue: ethNmv,
-          reportType: 'NMV',
-        })
-
-        result.push({
-          timestamp,
-          projectId,
-          usdValue: usdTvl,
-          ethValue: ethTvl,
-          reportType: 'TVL',
-        })
-      }
-    }
-    return result
-  }
-
-  function fakeLatestReports(now: UnixTime, projectIds: ProjectId[]) {
-    const assets = [AssetId.ETH, AssetId.DAI]
-    const result: ReportRecord[] = []
-    for (const projectId of projectIds) {
-      for (const assetId of assets) {
-        const balanceUsd = BigInt(Math.floor(Math.random() * 20_000 + 5_000))
-        result.push({
-          asset: assetId,
-          chainId: ChainId.ARBITRUM, // ignored - not grouped
-          reportType: 'CBV',
-          amount: 0n, // ignored
-          ethValue: 0n, // ignored
-          usdValue: balanceUsd,
-          projectId,
-          timestamp: now,
-        })
-      }
-    }
-    return result
-  }
-})
-
-describe(extractReportTypeSet.name, () => {
-  it('fills in missing values', () => {
-    const timestamp = UnixTime.now()
-    const usdValue = 1_000n
-    const ethValue = 1_000_000n
-
-    const filledUsdValue = 0n
-    const filledEthValue = 0n
-
-    // NMV missing
-    const mockReports: AggregatedReportRecord[] = [
-      {
-        timestamp,
-        projectId: ProjectId.ARBITRUM,
-        usdValue,
-        ethValue,
-        reportType: 'TVL',
-      },
-      {
-        timestamp,
-        projectId: ProjectId.ARBITRUM,
-        usdValue,
-        ethValue,
-        reportType: 'CBV',
-      },
-      {
-        timestamp,
-        projectId: ProjectId.ARBITRUM,
-        usdValue,
-        ethValue,
-        reportType: 'EBV',
-      },
-    ]
-
-    const result = extractReportTypeSet(mockReports)
-
-    expect(result).toEqual({
-      ebvReport: {
-        usdValue,
-        ethValue,
-      },
-      cbvReport: {
-        usdValue,
-        ethValue,
-      },
-      tvlReport: {
-        usdValue,
-        ethValue,
-      },
-      nmvReport: {
-        usdValue: filledUsdValue,
-        ethValue: filledEthValue,
-      },
-    })
-  })
-})
-
-describe(generateAggregatedTvlApiResponse.name, () => {
-  const timestamps = [
-    0, // Zero Time
-    UnixTime.SIX_HOURS,
-    UnixTime.DAY,
-  ]
-
-  it('aggregates projects values together', () => {
-    const mock: AggregatedReportRecord[] = (
+      [],
+      [],
+      [],
+      [],
       [
-        [ProjectId('aaa'), [10, 100, 1000]],
-        [ProjectId('bbb'), [20, 200, 2000]],
-        [ProjectId('ccc'), [40, 400, 4000]],
-      ] as [ProjectId, number[]][]
-    )
-      .map(([projectId, tvls]) =>
-        tvls
-          .map((tvl, i) => {
-            return getMockPoints(projectId, new UnixTime(timestamps[i]), tvl)
-          })
-          .flat(),
-      )
-      .flat()
-
-    const result = generateAggregatedTvlApiResponse(
-      groupByProjectIdAndTimestamp(mock),
-      groupByProjectIdAndTimestamp(mock),
-      groupByProjectIdAndTimestamp(mock),
-      [ProjectId('aaa'), ProjectId('bbb')],
+        { id: ProjectId('arbitrum'), isLayer2: true, sinceTimestamp },
+        { id: ProjectId('optimism'), isLayer2: true, sinceTimestamp },
+        { id: ProjectId('avalanche'), isLayer2: true, sinceTimestamp },
+      ],
+      untilTimestamp,
     )
 
-    const [zeroTime, sixHour, oneDay] = getData([
-      10 + 20,
-      100 + 200,
-      1000 + 2000,
-    ])
-
-    const setPointTimeMapper = (interval: number) => {
-      return (point: TvlApiChartPoint, i: number) => {
-        return [
-          new UnixTime(i * interval),
-          ...point.slice(1),
-        ] as TvlApiChartPoint
-      }
-    }
-    const expectedResult: TvlApiCharts = {
-      hourly: {
-        types: TYPE_LABELS,
-        data: [
-          ...new Array(6).fill(zeroTime),
-          ...new Array(18).fill(sixHour),
-          oneDay,
-        ].map(setPointTimeMapper(UnixTime.HOUR)),
-      },
-      sixHourly: {
-        types: TYPE_LABELS,
-        data: [zeroTime, sixHour, sixHour, sixHour, oneDay].map(
-          setPointTimeMapper(UnixTime.SIX_HOURS),
-        ),
-      },
-      daily: {
-        types: TYPE_LABELS,
-        data: [zeroTime, oneDay].map(setPointTimeMapper(UnixTime.DAY)),
-      },
-    }
-
-    expect(result).toEqual(expectedResult)
+    expect(result.projects.arbitrum).not.toEqual(undefined)
+    expect(result.projects.optimism).not.toEqual(undefined)
+    expect(result.projects.avalanche).not.toEqual(undefined)
   })
 
-  function getData(tvls: number[]): TvlApiChartPoint[] {
-    return tvls.map((tvl, i) => {
-      return [
-        new UnixTime(timestamps[i]),
-        tvl,
-        tvl * 0.6,
-        tvl * 0.1,
-        tvl * 0.3,
-        tvl,
-        tvl * 0.6,
-        tvl * 0.1,
-        tvl * 0.3,
-      ]
-    })
-  }
+  describe('empty', () => {
+    function generateEmpty(
+      project: string,
+      sinceTimestamp: UnixTime,
+      untilTimestamp: UnixTime,
+    ) {
+      return generateTvlApiResponse(
+        [],
+        [],
+        [],
+        [],
+        [{ id: ProjectId(project), isLayer2: true, sinceTimestamp }],
+        untilTimestamp,
+      )
+    }
 
-  function getMockPoints(
-    projectId: ProjectId,
-    timestamp: UnixTime,
-    value: number,
-  ): AggregatedReportRecord[] {
-    const tvl = value
-    const cbv = value * 0.6
-    const ebv = value * 0.1
-    const nmv = value * 0.3
-    return [
-      {
-        timestamp,
-        projectId,
-        usdValue: BigInt(tvl * 100),
-        ethValue: BigInt(tvl * 1_000_000),
-        reportType: 'TVL',
-      },
-      {
-        timestamp,
-        projectId,
-        usdValue: BigInt(cbv * 100),
-        ethValue: BigInt(cbv * 1_000_000),
-        reportType: 'CBV',
-      },
-      {
-        timestamp,
-        projectId,
-        usdValue: BigInt(ebv * 100),
-        ethValue: BigInt(ebv * 1_000_000),
-        reportType: 'EBV',
-      },
-      {
-        timestamp,
-        projectId,
-        usdValue: BigInt(nmv * 100),
-        ethValue: BigInt(nmv * 1_000_000),
-        reportType: 'NMV',
-      },
-    ]
-  }
+    it('fills hourly from sinceTimestamp to untilTimestamp', () => {
+      const sinceTimestamp = UnixTime.fromDate(new Date('2024-01-01T00:00:00Z'))
+      const untilTimestamp = sinceTimestamp.add(1, 'days')
+      const result = generateEmpty('arbitrum', sinceTimestamp, untilTimestamp)
+
+      // +1, because untilTimestamp is inclusive
+      expect(result.projects.arbitrum?.charts.hourly.data.length).toEqual(
+        24 + 1,
+      )
+    })
+
+    it('adjusts hourly timestamps', () => {
+      const sinceTimestamp = UnixTime.fromDate(new Date('2024-01-01T00:12:34Z'))
+      const untilTimestamp = sinceTimestamp.add(2, 'hours')
+      const result = generateEmpty('arbitrum', sinceTimestamp, untilTimestamp)
+
+      expect(
+        result.projects.arbitrum?.charts.hourly.data.map((x) => x[0]),
+      ).toEqual([
+        UnixTime.fromDate(new Date('2024-01-01T00:00:00Z')),
+        UnixTime.fromDate(new Date('2024-01-01T01:00:00Z')),
+        UnixTime.fromDate(new Date('2024-01-01T02:00:00Z')),
+      ])
+    })
+
+    it('fills hourly at most 7 days back', () => {
+      const sinceTimestamp = UnixTime.fromDate(new Date('2024-01-01T00:00:00Z'))
+      const untilTimestamp = sinceTimestamp.add(123, 'days')
+      const result = generateEmpty('arbitrum', sinceTimestamp, untilTimestamp)
+
+      expect(result.projects.arbitrum?.charts.hourly.data.length).toEqual(
+        7 * 24,
+      )
+    })
+
+    it('fills sixHourly from sinceTimestamp to untilTimestamp', () => {
+      const sinceTimestamp = UnixTime.fromDate(new Date('2024-01-01T00:00:00Z'))
+      const untilTimestamp = sinceTimestamp.add(1, 'days')
+      const result = generateEmpty('arbitrum', sinceTimestamp, untilTimestamp)
+
+      // +1, because untilTimestamp is inclusive
+      expect(result.projects.arbitrum?.charts.sixHourly.data.length).toEqual(
+        4 + 1,
+      )
+    })
+
+    it('adjusts sixHourly timestamps', () => {
+      const sinceTimestamp = UnixTime.fromDate(new Date('2024-01-01T00:12:34Z'))
+      const untilTimestamp = sinceTimestamp.add(12, 'hours')
+      const result = generateEmpty('arbitrum', sinceTimestamp, untilTimestamp)
+
+      expect(
+        result.projects.arbitrum?.charts.sixHourly.data.map((x) => x[0]),
+      ).toEqual([
+        UnixTime.fromDate(new Date('2024-01-01T00:00:00Z')),
+        UnixTime.fromDate(new Date('2024-01-01T06:00:00Z')),
+        UnixTime.fromDate(new Date('2024-01-01T12:00:00Z')),
+      ])
+    })
+
+    it('fills sixHourly at most 90 days back', () => {
+      const sinceTimestamp = UnixTime.fromDate(new Date('2024-01-01T00:00:00Z'))
+      const untilTimestamp = sinceTimestamp.add(123, 'days')
+      const result = generateEmpty('arbitrum', sinceTimestamp, untilTimestamp)
+
+      expect(result.projects.arbitrum?.charts.sixHourly.data.length).toEqual(
+        90 * 4,
+      )
+    })
+
+    it('fills daily from sinceTimestamp to untilTimestamp', () => {
+      const sinceTimestamp = UnixTime.fromDate(new Date('2024-01-01T00:00:00Z'))
+      const untilTimestamp = sinceTimestamp.add(123, 'days')
+      const result = generateEmpty('arbitrum', sinceTimestamp, untilTimestamp)
+
+      // +1, because untilTimestamp is inclusive
+      expect(result.projects.arbitrum?.charts.daily.data.length).toEqual(
+        123 + 1,
+      )
+    })
+
+    it('adjusts daily timestamps', () => {
+      const sinceTimestamp = UnixTime.fromDate(new Date('2024-01-01T00:12:34Z'))
+      const untilTimestamp = sinceTimestamp.add(2, 'days')
+      const result = generateEmpty('arbitrum', sinceTimestamp, untilTimestamp)
+
+      expect(
+        result.projects.arbitrum?.charts.daily.data.map((x) => x[0]),
+      ).toEqual([
+        UnixTime.fromDate(new Date('2024-01-01T00:00:00Z')),
+        UnixTime.fromDate(new Date('2024-01-02T00:00:00Z')),
+        UnixTime.fromDate(new Date('2024-01-03T00:00:00Z')),
+      ])
+    })
+  })
+
+  describe('filling', () => {
+    it('fills hourly with the correct values', () => {
+      const t0 = UnixTime.fromDate(new Date('2024-01-01T00:00:00Z'))
+      const t1 = t0.add(1, 'hours')
+
+      const result = generateTvlApiResponse(
+        [
+          {
+            projectId: ProjectId('arbitrum'),
+            timestamp: t1,
+            usdValue: 32_000_00n,
+            ethValue: 16_000000n,
+            reportType: 'TVL',
+          },
+          {
+            projectId: ProjectId('arbitrum'),
+            timestamp: t1,
+            usdValue: 12_000_00n,
+            ethValue: 6_000000n,
+            reportType: 'CBV',
+          },
+          {
+            projectId: ProjectId('arbitrum'),
+            timestamp: t1,
+            usdValue: 16_000_00n,
+            ethValue: 8_000000n,
+            reportType: 'EBV',
+          },
+          {
+            projectId: ProjectId('arbitrum'),
+            timestamp: t1,
+            usdValue: 4_000_00n,
+            ethValue: 2_000000n,
+            reportType: 'NMV',
+          },
+          {
+            projectId: ProjectId('arbitrum'),
+            timestamp: t0,
+            usdValue: 16_000_00n,
+            ethValue: 8_000000n,
+            reportType: 'TVL',
+          },
+          {
+            projectId: ProjectId('arbitrum'),
+            timestamp: t0,
+            usdValue: 6_000_00n,
+            ethValue: 3_000000n,
+            reportType: 'CBV',
+          },
+          {
+            projectId: ProjectId('arbitrum'),
+            timestamp: t0,
+            usdValue: 8_000_00n,
+            ethValue: 4_000000n,
+            reportType: 'EBV',
+          },
+          {
+            projectId: ProjectId('arbitrum'),
+            timestamp: t0,
+            usdValue: 2_000_00n,
+            ethValue: 1_000000n,
+            reportType: 'NMV',
+          },
+        ],
+        [],
+        [],
+        [],
+        [{ id: ProjectId('arbitrum'), isLayer2: true, sinceTimestamp: t0 }],
+        t1,
+      )
+
+      expect(result.projects.arbitrum?.charts.hourly.data).toEqual([
+        [t0, 16_000, 6_000, 8_000, 2_000, 8, 3, 4, 1],
+        [t1, 32_000, 12_000, 16_000, 4_000, 16, 6, 8, 2],
+      ])
+    })
+
+    it('does not include unknown projects', () => {
+      const sinceTimestamp = UnixTime.fromDate(new Date('2024-01-01T00:00:00Z'))
+      const untilTimestamp = sinceTimestamp.add(1, 'hours')
+
+      const result = generateTvlApiResponse(
+        [
+          {
+            projectId: ProjectId('foo'),
+            timestamp: untilTimestamp,
+            usdValue: 1n,
+            ethValue: 1n,
+            reportType: 'TVL',
+          },
+        ],
+        [],
+        [],
+        [],
+        [{ id: ProjectId('arbitrum'), isLayer2: true, sinceTimestamp }],
+        untilTimestamp,
+      )
+
+      expect(result.projects.foo).toEqual(undefined)
+    })
+
+    it('does not include invalid timestamps', () => {
+      const sinceTimestamp = UnixTime.fromDate(new Date('2024-01-01T00:00:00Z'))
+      const untilTimestamp = sinceTimestamp.add(1, 'hours')
+
+      const result = generateTvlApiResponse(
+        [
+          {
+            projectId: ProjectId('arbitrum'),
+            timestamp: sinceTimestamp.add(-1, 'hours'),
+            usdValue: 1n,
+            ethValue: 1n,
+            reportType: 'TVL',
+          },
+        ],
+        [],
+        [],
+        [],
+        [{ id: ProjectId('arbitrum'), isLayer2: true, sinceTimestamp }],
+        untilTimestamp,
+      )
+
+      expect(
+        result.projects.arbitrum?.charts.hourly.data.map((x) => x[0]),
+      ).toEqual([sinceTimestamp, untilTimestamp])
+    })
+  })
 })

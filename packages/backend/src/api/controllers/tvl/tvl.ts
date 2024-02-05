@@ -13,30 +13,15 @@ import {
 import { Dictionary, mapValues } from 'lodash'
 
 import { ReportProject } from '../../../core/reports/ReportProject'
-import { AggregatedReportRecord } from '../../../peripherals/database/AggregatedReportRepository'
 import { BalanceRecord } from '../../../peripherals/database/BalanceRepository'
 import { PriceRecord } from '../../../peripherals/database/PriceRepository'
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'
 import { groupByAndOmit, nestedGroupBy } from '../utils/grouping'
 import { asNumber } from './asNumber'
 
-export type ReportsPerProjectIdAndTimestamp = ReturnType<
-  typeof groupByProjectIdAndTimestamp
->
-
 export type ReportsPerProjectIdAndAsset = ReturnType<
   typeof groupByProjectIdAndAssetType
 >
-
-export function groupByProjectIdAndTimestamp(
-  reports: AggregatedReportRecord[],
-) {
-  return nestedGroupBy(
-    reports,
-    (report) => report.projectId,
-    (report) => report.timestamp,
-  )
-}
 
 export function groupByProjectIdAndAssetType(reports: ReportRecord[]) {
   return nestedGroupBy(

@@ -2,13 +2,17 @@ import { makeQuery } from './query'
 
 export function configureMultipleEscrowsButton() {
   const { $, $$ } = makeQuery(document.body)
-  const multipleEscrowsButtons = $$('.MultipleEscrows')
+  const multipleEscrowsButtons = $$('[data-role=multiple-escrows]')
 
   multipleEscrowsButtons.forEach((button) => {
     const token = button.dataset.token ?? ''
-    const hiddenForToken = $$(`.MultipleEscrowsHidden[data-token="${token}"]`)
-    const btnArrow = $(`.MultipleEscrowsArrow[data-token="${token}"]`)
-    const row = $(`.MultipleEscrowsRow[data-token="${token}"]`)
+    const hiddenForToken = $$(
+      `[data-role=multiple-escrows-hidden][data-token="${token}"]`,
+    )
+    const btnArrow = $(
+      `[data-role=multiple-escrows-arrow][data-token="${token}"]`,
+    )
+    const row = $(`[data-role=multiple-escrows-row][data-token="${token}"]`)
 
     function toggle(classes: string[]) {
       classes.forEach((cls) => {
@@ -19,6 +23,7 @@ export function configureMultipleEscrowsButton() {
     button.addEventListener('click', () => {
       hiddenForToken.forEach((el) => {
         el.classList.toggle('hidden')
+        el.classList.toggle('flex')
       })
       btnArrow.classList.toggle('rotate-180')
       toggle([

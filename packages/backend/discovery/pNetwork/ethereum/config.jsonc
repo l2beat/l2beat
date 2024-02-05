@@ -13,7 +13,8 @@
     "0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8": "ERC20 Vault V2",
     "0x9f8622b11984AfC8f0a42A394928702017c5968D": "UOS Vault",
     "0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E": "MiniMeToken",
-    "0x47d12498Ed2E9EFA9ECA2EcD05ba857253824478": "EVMScriptRegistry"
+    "0x47d12498Ed2E9EFA9ECA2EcD05ba857253824478": "EVMScriptRegistry",
+    "0x2211bFD97b1c02aE8Ac305d206e9780ba7D8BfF4": "pNetworkDAOVoting"
   },
   "overrides": {
     "pNetwork Multisig": {
@@ -34,6 +35,9 @@
     },
     "EVMScriptRegistry": {
       "ignoreMethods": ["executors"]
+    },
+    "pNetworkDAOVoting": {
+      "ignoreInWatchMode": ["votesLength"]
     },
     "0xD216153c06E857cD7f72665E0aF1d7D82172F494": {
       "ignoreMethods": ["requiredGas"]
