@@ -15,14 +15,12 @@ export function GovernanceEventsSection({ events, className }: Props) {
     <GovernanceCard as="section" mobileFull className={className}>
       <div className="flex flex-wrap justify-between gap-2">
         <GovernanceCardHeader>Governance Events</GovernanceCardHeader>
-        <ExploreAllButton className="hidden md:block" />
       </div>
       <div className="mt-6 grid gap-4 md:grid-cols-4">
         {events.map((event, i) => (
           <Event event={event} key={i} />
         ))}
       </div>
-      <ExploreAllButton className="mt-6 w-full md:hidden" />
     </GovernanceCard>
   )
 }
@@ -65,19 +63,5 @@ function Event({ event }: { event: GovernanceEventEntry }) {
         Learn more
       </Button>
     </GovernanceCard>
-  )
-}
-
-function ExploreAllButton({ className }: { className?: string }) {
-  return (
-    <Button
-      as="a"
-      className={className}
-      variant="purple"
-      size="sm"
-      href="/governance/events"
-    >
-      Explore all events
-    </Button>
   )
 }

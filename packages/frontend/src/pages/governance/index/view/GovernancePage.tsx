@@ -1,3 +1,4 @@
+import chunk from 'lodash/chunk'
 import React from 'react'
 
 import {
@@ -56,6 +57,8 @@ export function GovernancePage(props: GovernancePageProps) {
 function Header(props: {
   delegatedProjects: GovernanceDelegatedProjectEntry[]
 }) {
+  const chunkedProjects = chunk(props.delegatedProjects, 3)
+
   return (
     <FullPageHeader>
       <div className="flex items-center gap-10">
@@ -72,24 +75,31 @@ function Header(props: {
             <span className="text-sm text-purple-100 dark:text-pink-200">
               DELEGATE YOUR TOKENS
             </span>
-            <div className="mt-2 flex flex-col gap-2 md:flex-row md:flex-wrap">
-              {props.delegatedProjects.map((delegatedProject) => (
-                <Link
-                  key={delegatedProject.id}
-                  className="flex items-center justify-center gap-1.5 rounded-lg border border-gray-400 bg-gray-100 py-3 transition-colors duration-[250] hover:bg-gray-200 dark:border-zinc-500 dark:bg-zinc-800 dark:hover:bg-zinc-900 md:px-3 md:py-1"
-                  textClassName="text-sm font-medium"
-                  href={delegatedProject.link}
-                  underline={false}
+            {chunkedProjects.map((projects, i) => {
+              return (
+                <div
+                  className="mt-2 flex flex-col gap-2 md:flex-row md:flex-wrap"
+                  key={i}
                 >
-                  <img
-                    className="size-5"
-                    src={`/icons/${delegatedProject.id}.png`}
-                  />
-                  {delegatedProject.name}
-                  <OutLinkIcon className="fill-current" />
-                </Link>
-              ))}
-            </div>
+                  {projects.map((delegatedProject) => (
+                    <Link
+                      key={delegatedProject.id}
+                      className="flex items-center justify-center gap-1.5 rounded-lg border border-gray-400 bg-gray-100 py-3 transition-colors duration-[250] hover:bg-gray-200 dark:border-zinc-500 dark:bg-zinc-800 dark:hover:bg-zinc-900 md:px-3 md:py-1"
+                      textClassName="text-sm font-medium"
+                      href={delegatedProject.link}
+                      underline={false}
+                    >
+                      <img
+                        className="size-5"
+                        src={`/icons/${delegatedProject.id}.png`}
+                      />
+                      {delegatedProject.name}
+                      <OutLinkIcon className="fill-current" />
+                    </Link>
+                  ))}
+                </div>
+              )
+            })}
           </div>
           <p className="mt-6 text-xs md:text-sm">
             If you’d like to see us act as a delegate in another protocol,
