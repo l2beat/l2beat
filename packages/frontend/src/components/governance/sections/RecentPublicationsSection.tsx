@@ -2,7 +2,7 @@ import React from 'react'
 
 import { GovernancePublicationEntry } from '../../../pages/governance/getGovernancePublicationEntry'
 import { Button } from '../../Button'
-import { Link } from '../../Link'
+import { LinkWithThumbnail } from '../../LinkWithThumbnail'
 import { GovernanceCard, GovernanceCardHeader } from '../GovernanceCard'
 
 interface Props {
@@ -47,20 +47,10 @@ interface PublicationProps {
 
 function Publication({ publication }: PublicationProps) {
   return (
-    <a
-      className="group/publication flex gap-6 rounded-md hover:bg-gray-400 dark:hover:bg-gray-900"
+    <LinkWithThumbnail
+      src={`/images/thumbnails/${publication.id}.png`}
       href={publication.link}
-    >
-      <img
-        className="aspect-video h-[98px] rounded-md"
-        src="/images/thumbnails/lifi-01.jpg"
-      />
-      <div className="flex flex-col justify-center">
-        <p>{publication.title}</p>
-        <Link as="div" className="text-sm" showArrow>
-          Learn more
-        </Link>
-      </div>
-    </a>
+      title={publication.title}
+    />
   )
 }

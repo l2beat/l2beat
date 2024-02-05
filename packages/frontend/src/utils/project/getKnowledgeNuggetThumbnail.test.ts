@@ -4,9 +4,9 @@ import { readdirSync } from 'fs-extra'
 
 import {
   DEFAULT_THUMBNAIL,
-  getThumbnail,
+  getKnowledgeNuggetThumbnail,
   THUMBNAILS_FOLDER,
-} from './getThumbnail'
+} from './getKnowledgeNuggetThumbnail'
 
 describe('getThumbnail', () => {
   it('returns the default thumbnail if no thumbnail is specified', () => {
@@ -14,7 +14,7 @@ describe('getThumbnail', () => {
       title: 'Understand StarkWare #1',
       url: 'https://twitter.com/bkiepuszewski/status/1480473352213041152',
     }
-    const result = getThumbnail(nugget)
+    const result = getKnowledgeNuggetThumbnail(nugget)
     expect(result).toEqual('/images/thumbnails/default.jpg')
   })
 
@@ -24,7 +24,7 @@ describe('getThumbnail', () => {
       url: 'https://twitter.com/bkiepuszewski/status/1480473352213041152',
       thumbnail: 'starkware-01.jpg',
     }
-    const result = getThumbnail(nugget)
+    const result = getKnowledgeNuggetThumbnail(nugget)
     expect(result).toEqual('/images/thumbnails/starkware-01.jpg')
   })
 
