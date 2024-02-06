@@ -1,0 +1,9 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "ethereum",
+  "name": "orderly",
+  "initialAddresses": ["0xe07eA0436100918F157DF35D01dCE5c11b16D1F1"],
+  "names": {
+    "0xe07eA0436100918F157DF35D01dCE5c11b16D1F1": "L1StandardBridge"
+  }
+}
