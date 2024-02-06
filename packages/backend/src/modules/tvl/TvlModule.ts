@@ -6,10 +6,8 @@ import {
 } from '@l2beat/shared'
 import { notUndefined } from '@l2beat/shared-pure'
 
-import { BlocksController } from '../../api/controllers/BlocksController'
 import { DydxController } from '../../api/controllers/DydxController'
 import { TvlController } from '../../api/controllers/tvl/TvlController'
-import { createBlocksRouter } from '../../api/routers/BlocksRouter'
 import { createDydxRouter } from '../../api/routers/DydxRouter'
 import { createTvlRouter } from '../../api/routers/TvlRouter'
 import { createTvlStatusRouter } from '../../api/routers/TvlStatusRouter'
@@ -137,8 +135,6 @@ export function createTvlModule(
   )
 
   // #region api
-  const blocksController = new BlocksController(db.blockNumberRepository)
-
   const tvlController = new TvlController(
     db.aggregatedReportRepository,
     db.reportRepository,
@@ -154,7 +150,6 @@ export function createTvlModule(
 
   const dydxController = new DydxController(db.aggregatedReportRepository)
 
-  const blocksRouter = createBlocksRouter(blocksController)
   const tvlRouter = createTvlRouter(tvlController, config.api)
   const dydxRouter = createDydxRouter(dydxController)
   const tvlStatusRouter = createTvlStatusRouter(
@@ -191,7 +186,7 @@ export function createTvlModule(
   }
 
   return {
-    routers: [blocksRouter, tvlRouter, dydxRouter, tvlStatusRouter],
+    routers: [tvlRouter, dydxRouter, tvlStatusRouter],
     start,
   }
 }

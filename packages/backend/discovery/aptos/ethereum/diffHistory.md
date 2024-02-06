@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x695e9666aa1d660f1069614b9e84af2847034ff8
+
+# Diff at Tue, 06 Feb 2024 09:35:41 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@4d639d97ae679e1e3695f59f0c84cca622283ff7 block: 18591456
+- current block number: 19168345
+
+## Description
+
+Updated the LayerZero version.
+Version 4: `0xd231084bfb234c107d3ee2b22f97f3346fdaf705` (`SendUln301`)
+Version 5: `0x245b6e8ffe9ea5fc301e32d16f66bd4c2123eefc` (`ReceiveUln301`)
+
+## Watched changes
+
+```diff
+    contract Endpoint (0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675) {
+      values.latestVersion:
+-        3
++        5
+    }
+```
+
 Generated with discovered.json: 0xfefefa739dc46550c8b3cf802febfcaf26f3698d
 
 # Diff at Fri, 17 Nov 2023 12:00:13 GMT:
