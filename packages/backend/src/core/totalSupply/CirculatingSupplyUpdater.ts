@@ -99,15 +99,9 @@ export class CirculatingSupplyUpdater {
     const boundaries =
       await this.circulatingSupplyRepository.findDataBoundaries()
 
-    const results = await Promise.allSettled(
-      this.tokens.map(({ id: assetId, address }) => {
-        const boundary = boundaries.get(assetId)
-        return this.updateToken(assetId, boundary, to, address)
-      }),
-    )
-    const error = results.find((x) => x.status === 'rejected')
-    if (error && error.status === 'rejected') {
-      throw error.reason
+    for (const { id: assetId, address } of this.tokens) {
+      const boundary = boundaries.get(assetId)
+      return this.updateToken(assetId, boundary, to, address)
     }
 
     for (let t = from; t.lte(to); t = t.add(1, 'hours')) {
