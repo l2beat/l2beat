@@ -198,15 +198,12 @@ describeDatabase(LivenessRepository.name, (database) => {
 
         const result = await repository.findTransactionWithinTimeRange(
           configuration.projectId,
+          configuration.type,
           UnixTime.fromDate(new Date('2021-01-01T11:00:00Z')),
           UnixTime.fromDate(new Date('2021-01-01T10:00:00Z')),
-          configuration.type,
         )
 
-        expect(result).toEqual({
-          timestamp: records[1].timestamp,
-          txHash: records[1].txHash,
-        })
+        expect(result).toEqual(records[1].txHash)
       })
       it('should return tx hash for given project id and timestamp inclusive hour', async () => {
         await repository.deleteAll()
@@ -236,15 +233,12 @@ describeDatabase(LivenessRepository.name, (database) => {
 
         const result = await repository.findTransactionWithinTimeRange(
           configuration.projectId,
+          configuration.type,
           UnixTime.fromDate(new Date('2021-01-01T11:00:00Z')),
           UnixTime.fromDate(new Date('2021-01-01T10:00:00Z')),
-          configuration.type,
         )
 
-        expect(result).toEqual({
-          timestamp: records[1].timestamp,
-          txHash: records[1].txHash,
-        })
+        expect(result).toEqual(records[1].txHash)
       })
       it('should return undefined when no tx hash for given project id', async () => {
         await repository.addMany([
@@ -257,9 +251,9 @@ describeDatabase(LivenessRepository.name, (database) => {
         ])
         const result = await repository.findTransactionWithinTimeRange(
           LIVENESS_CONFIGS[0].projectId,
+          LIVENESS_CONFIGS[0].type,
           START.add(-8, 'hours'),
           START.add(-9, 'hours'),
-          LIVENESS_CONFIGS[0].type,
         )
 
         expect(result).toEqual(undefined)
