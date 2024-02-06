@@ -1,7 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { formatTimestamp, formatTimestampToDateWithHour } from './dates'
+import {
+  formatTimestamp,
+  formatTimestampToDateWithHour,
+  getNextDateForDayOfWeek,
+} from './dates'
 
 describe('dates', () => {
   describe(formatTimestampToDateWithHour.name, () => {
@@ -163,6 +167,14 @@ describe('dates', () => {
           )
         })
       })
+    })
+  })
+
+  describe(getNextDateForDayOfWeek.name, () => {
+    it('returns next date for given day of the week', () => {
+      const date = new Date('2021-04-21T12:00:00Z')
+      const nextThursday = getNextDateForDayOfWeek(4, date)
+      expect(nextThursday.toISOString()).toEqual('2021-04-22T00:00:00.000Z')
     })
   })
 })

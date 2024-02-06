@@ -1,4 +1,4 @@
-import { ContentEntry } from '../../content/getContent'
+import { ContentEntry } from '../../../../content/getContent'
 
 export interface GovernanceDelegatedProjectEntry {
   id: string

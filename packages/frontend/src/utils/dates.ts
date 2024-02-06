@@ -127,3 +127,24 @@ export function formatTimestampToDateWithHour(timestamp: UnixTime) {
 
   return formattedDate
 }
+
+export function getNextDateForDayOfWeek(
+  dayOfWeek: number,
+  currentDate = new Date(),
+): Date {
+  if (dayOfWeek < 0 || dayOfWeek > 6) {
+    throw new Error('Day must be between 0 (Sunday) and 6 (Saturday)')
+  }
+
+  const currentDayOfWeek = currentDate.getDay()
+  let daysToAdd = dayOfWeek - currentDayOfWeek
+
+  if (daysToAdd <= 0) {
+    daysToAdd += 7
+  }
+
+  currentDate.setUTCDate(currentDate.getDate() + daysToAdd)
+  currentDate.setUTCHours(0, 0, 0, 0)
+
+  return currentDate
+}

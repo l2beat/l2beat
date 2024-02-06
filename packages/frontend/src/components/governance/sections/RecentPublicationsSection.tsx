@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { GovernancePublicationEntry } from '../../../pages/governance/getGovernancePublicationEntry'
+import { GovernancePublicationEntry } from '../../../pages/governance/index/props/getGovernancePublicationEntry'
 import { Button } from '../../Button'
 import { LinkWithThumbnail } from '../../LinkWithThumbnail'
 import { GovernanceCard, GovernanceCardHeader } from '../GovernanceCard'

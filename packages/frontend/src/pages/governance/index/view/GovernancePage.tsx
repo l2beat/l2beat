@@ -17,9 +17,9 @@ import { RecentPublicationsSection } from '../../../../components/governance/sec
 import { OutLinkIcon } from '../../../../components/icons'
 import { Link } from '../../../../components/Link'
 import { PageContent } from '../../../../components/PageContent'
-import { GovernanceDelegatedProjectEntry } from '../../getGovernanceDelegatedProjectEntry'
-import { GovernanceEventEntry } from '../../getGovernanceEventEntries'
-import { GovernancePublicationEntry } from '../../getGovernancePublicationEntry'
+import { GovernanceDelegatedProjectEntry } from '../props/getGovernanceDelegatedProjectEntry'
+import { GovernanceEventEntry } from '../props/getGovernanceEventEntries'
+import { GovernancePublicationEntry } from '../props/getGovernancePublicationEntry'
 
 export interface GovernancePageProps {
   publications: GovernancePublicationEntry[]

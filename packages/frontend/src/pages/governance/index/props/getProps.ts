@@ -2,10 +2,10 @@ import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
 import { ContentEntry, getContent } from '../../../../content/getContent'
 import { Wrapped } from '../../../Page'
-import { getGovernanceDelegatedProjectEntry } from '../../getGovernanceDelegatedProjectEntry'
-import { getGovernanceEventEntries } from '../../getGovernanceEventEntries'
-import { getGovernancePublicationEntry } from '../../getGovernancePublicationEntry'
 import { GovernancePageProps } from '../view/GovernancePage'
+import { getGovernanceDelegatedProjectEntry } from './getGovernanceDelegatedProjectEntry'
+import { getGovernanceEventEntries } from './getGovernanceEventEntries'
+import { getGovernancePublicationEntry } from './getGovernancePublicationEntry'
 import { getPageMetadata } from './getPageMetadata'
 
 const INDEX_PAGE_EVENTS_COUNT = 8

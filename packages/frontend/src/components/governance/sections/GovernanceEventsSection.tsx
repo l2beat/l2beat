@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { GovernanceEventEntry } from '../../../pages/governance/getGovernanceEventEntries'
+import { GovernanceEventEntry } from '../../../pages/governance/index/props/getGovernanceEventEntries'
 import { cn } from '../../../utils/cn'
 import { OutLinkIcon } from '../../icons'
 import { Link } from '../../Link'
