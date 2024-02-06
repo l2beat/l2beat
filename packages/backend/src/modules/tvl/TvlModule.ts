@@ -93,10 +93,8 @@ export function createTvlModule(
 
   const repositoriesToClean = [
     db.blockNumberRepository,
-    db.priceRepository,
     db.balanceRepository,
     db.totalSupplyRepository,
-    db.circulatingSupplyRepository,
     db.reportRepository,
     db.aggregatedReportRepository,
   ]
