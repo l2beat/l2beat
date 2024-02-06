@@ -22,7 +22,9 @@ export class JsonHttpClient {
     const response = await this.http.fetch(url)
     if (!response.ok) {
       throw new Error(
-        `Could not get data from api (requested: ${url}, received status ${response.status})`,
+        `Could not get data from api (url: ${url}, status: ${
+          response.status
+        }, message: ${await response.text()})`,
       )
     }
     const json: unknown = await response.json()
