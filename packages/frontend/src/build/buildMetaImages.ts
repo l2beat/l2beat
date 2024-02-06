@@ -45,7 +45,10 @@ async function main() {
   const browser = await puppeteer.launch({
     args: ['--no-sandbox'],
   })
-  await Promise.all(slugs.map(screenshot))
+
+  for (const slug of slugs) {
+    await screenshot(slug)
+  }
 
   async function screenshot(slug: string) {
     const page = await browser.newPage()
