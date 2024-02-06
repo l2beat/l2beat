@@ -3,8 +3,8 @@ import { ProjectId } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { ActivityConfig } from '../../config/Config'
+import { SequenceProcessor } from '../../core/activity/SequenceProcessor'
 import { TransactionCounter } from '../../core/activity/TransactionCounter'
-import { SequenceProcessor } from '../../core/SequenceProcessor'
 import { createActivityModule, shouldCounterBeIncluded } from './ActivityModule'
 
 const COUNTER = new TransactionCounter(

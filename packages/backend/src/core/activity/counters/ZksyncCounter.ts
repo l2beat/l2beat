@@ -7,8 +7,8 @@ import { ZksyncTransactionRepository } from '../../../peripherals/database/activ
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
 import { ZksyncClient } from '../../../peripherals/zksync'
 import { promiseAllPlus } from '../../queue/promiseAllPlus'
-import { SequenceProcessor } from '../../SequenceProcessor'
 import { SimpleActivityTransactionConfig } from '../ActivityTransactionConfig'
+import { SequenceProcessor } from '../SequenceProcessor'
 import { TransactionCounter } from '../TransactionCounter'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 

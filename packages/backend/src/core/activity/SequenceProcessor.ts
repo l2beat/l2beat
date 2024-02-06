@@ -5,8 +5,8 @@ import { Knex } from 'knex'
 import { Gauge } from 'prom-client'
 import { EventEmitter } from 'stream'
 
-import { SequenceProcessorRepository } from '../peripherals/database/SequenceProcessorRepository'
-import { TaskQueue } from './queue/TaskQueue'
+import { SequenceProcessorRepository } from '../../peripherals/database/SequenceProcessorRepository'
+import { TaskQueue } from '../queue/TaskQueue'
 
 const activityLast = new Gauge({
   name: 'activity_last_synced',

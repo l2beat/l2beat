@@ -1,7 +1,7 @@
 import { ProjectId } from '@l2beat/shared-pure'
 
 import { BlockTransactionCountRepository } from '../../../peripherals/database/activity/BlockTransactionCountRepository'
-import { SequenceProcessor } from '../../SequenceProcessor'
+import { SequenceProcessor } from '../SequenceProcessor'
 import { TransactionCounter } from '../TransactionCounter'
 
 export function createBlockTransactionCounter(

@@ -1,7 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import { SequenceProcessor } from '../SequenceProcessor'
+import { SequenceProcessor } from './SequenceProcessor'
 import { TransactionCounter } from './TransactionCounter'
 
 const projectId = ProjectId('a')

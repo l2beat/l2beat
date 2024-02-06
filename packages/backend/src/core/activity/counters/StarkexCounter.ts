@@ -7,8 +7,8 @@ import { SequenceProcessorRepository } from '../../../peripherals/database/Seque
 import { StarkexClient } from '../../../peripherals/starkex'
 import { Clock } from '../../Clock'
 import { promiseAllPlus } from '../../queue/promiseAllPlus'
-import { SequenceProcessor } from '../../SequenceProcessor'
 import { StarkexActivityTransactionConfig } from '../ActivityTransactionConfig'
+import { SequenceProcessor } from '../SequenceProcessor'
 import { TransactionCounter } from '../TransactionCounter'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 

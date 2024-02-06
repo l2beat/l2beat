@@ -4,7 +4,7 @@ import {
   ALL_PROCESSED_EVENT,
   SequenceProcessor,
   SequenceProcessorStatus,
-} from '../SequenceProcessor'
+} from './SequenceProcessor'
 
 type TransactionCounterStatus = Record<
   | 'lastProcessedTimestamp'

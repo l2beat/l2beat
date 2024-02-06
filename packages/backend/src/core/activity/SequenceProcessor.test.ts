@@ -3,8 +3,8 @@ import { install, InstalledClock } from '@sinonjs/fake-timers'
 import { expect, mockFn, MockFunction } from 'earl'
 import { once } from 'events'
 
-import { SequenceProcessorRepository } from '../peripherals/database/SequenceProcessorRepository'
-import { describeDatabase } from '../test/database'
+import { SequenceProcessorRepository } from '../../peripherals/database/SequenceProcessorRepository'
+import { describeDatabase } from '../../test/database'
 import {
   ALL_PROCESSED_EVENT,
   SequenceProcessor,
