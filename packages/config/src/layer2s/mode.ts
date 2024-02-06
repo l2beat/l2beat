@@ -40,6 +40,7 @@ export const mode: Layer2 = opStack({
         'https://t.me/ModeNetworkOfficial',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
     finality: {
       finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
     },
