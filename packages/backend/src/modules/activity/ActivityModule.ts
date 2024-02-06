@@ -8,7 +8,6 @@ import { Config } from '../../config'
 import { ActivityConfig } from '../../config/Config'
 import { DailyTransactionCountViewRefresher } from '../../core/activity/DailyTransactionCountViewRefresher'
 import { TransactionCounter } from '../../core/activity/TransactionCounter'
-import { TransactionCountingMonitor } from '../../core/activity/TransactionCountingMonitor'
 import { Clock } from '../../core/Clock'
 import { DailyTransactionCountViewRepository } from '../../peripherals/database/activity/DailyTransactionCountViewRepository'
 import { Database } from '../../peripherals/database/shared/Database'
@@ -47,12 +46,6 @@ export function createActivityModule(
     logger,
   )
 
-  const transactionCountingMonitor = new TransactionCountingMonitor(
-    counters,
-    clock,
-    logger,
-  )
-
   const includedInApiProjectIds = getIncludedInApiProjectIds(
     counters,
     config.activity,
@@ -71,7 +64,6 @@ export function createActivityModule(
     logger.info('Starting')
     await Promise.all(counters.map((c) => c.start()))
     viewRefresher.start()
-    transactionCountingMonitor.start()
     logger.info('Started')
   }
 
