@@ -9,7 +9,7 @@ import {
 
 describe(getOneTimeEvents.name, () => {
   beforeEach(() => {
-    set('2021-04-23T13:00:00Z')
+    set('2021-01-01T13:00:00Z')
   })
 
   afterEach(() => {
@@ -20,78 +20,241 @@ describe(getOneTimeEvents.name, () => {
     expect(getOneTimeEvents([])).toEqual([])
   })
 
+  it('should throw an error if since date is after till date', () => {
+    const event: RecurringEvent = recurringEvent({
+      data: {
+        sinceDate: new Date('2021-06-01'),
+        tillDate: new Date('2021-05-16'),
+      },
+    })
+
+    expect(() => getOneTimeEvents([event])).toThrow(
+      'Since date is after till date',
+    )
+  })
+
   it('returns one-time event for one-time event input', () => {
     const event = oneTimeEvent()
     expect(getOneTimeEvents([event])).toEqual([event])
   })
 
   describe('returns one-time events for recurring event input', () => {
-    it('with minimum arguments', () => {
-      const event: RecurringEvent = recurringEvent()
-
-      const events = getOneTimeEvents([event])
-
-      expect(events).toEqual([
-        oneTimeEvent({
-          id: event.id,
-          data: { startDate: new Date('2021-04-28T11:00:00.000Z') },
-        }),
-        oneTimeEvent({
-          id: event.id,
-          data: { startDate: new Date('2021-05-05T11:00:00.000Z') },
-        }),
-        oneTimeEvent({
-          id: event.id,
-          data: { startDate: new Date('2021-05-12T11:00:00.000Z') },
-        }),
-      ])
-    })
-
-    describe('futureEventsCount', () => {
-      it('generates future events for futureEventsCount', () => {
+    describe('since date in past', () => {
+      it('end date in past', () => {
         const event: RecurringEvent = recurringEvent({
           data: {
-            futureEventsCount: 4,
+            sinceDate: new Date('2020-12-07'),
+            tillDate: new Date('2020-12-28'),
+            futureEventsCount: 1,
           },
         })
-
         const events = getOneTimeEvents([event])
+
         expect(events).toEqual([
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2021-04-28T11:00:00.000Z') },
+            data: { startDate: new Date('2020-12-09T12:00:00.000Z') },
           }),
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2021-05-05T11:00:00.000Z') },
+            data: { startDate: new Date('2020-12-16T12:00:00.000Z') },
           }),
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2021-05-12T11:00:00.000Z') },
-          }),
-          oneTimeEvent({
-            id: event.id,
-            data: { startDate: new Date('2021-05-19T11:00:00.000Z') },
+            data: { startDate: new Date('2020-12-23T12:00:00.000Z') },
           }),
         ])
       })
-      it('gets limited by endDate', () => {
+
+      it('end date in future', () => {
         const event: RecurringEvent = recurringEvent({
           data: {
-            futureEventsCount: 4,
-            tillDate: new Date('2021-05-12'),
+            sinceDate: new Date('2020-12-09'),
+            tillDate: new Date('2021-01-27'),
+            futureEventsCount: 1000,
           },
         })
-
         const events = getOneTimeEvents([event])
+
         expect(events).toEqual([
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2021-04-28T11:00:00.000Z') },
+            data: { startDate: new Date('2020-12-09T12:00:00.000Z') },
           }),
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2021-05-05T11:00:00.000Z') },
+            data: { startDate: new Date('2020-12-16T12:00:00.000Z') },
+          }),
+          oneTimeEvent({
+            id: event.id,
+            data: { startDate: new Date('2020-12-23T12:00:00.000Z') },
+          }),
+          oneTimeEvent({
+            id: event.id,
+            data: { startDate: new Date('2020-12-30T12:00:00.000Z') },
+          }),
+          oneTimeEvent({
+            id: event.id,
+            data: { startDate: new Date('2021-01-06T12:00:00.000Z') },
+          }),
+          oneTimeEvent({
+            id: event.id,
+            data: { startDate: new Date('2021-01-13T12:00:00.000Z') },
+          }),
+          oneTimeEvent({
+            id: event.id,
+            data: { startDate: new Date('2021-01-20T12:00:00.000Z') },
+          }),
+          oneTimeEvent({
+            id: event.id,
+            data: { startDate: new Date('2021-01-27T12:00:00.000Z') },
+          }),
+        ])
+      })
+
+      it('end date in future and clamps endWeekOffset to futureEventsCount', () => {
+        const event: RecurringEvent = recurringEvent({
+          data: {
+            sinceDate: new Date('2020-12-07'),
+            tillDate: new Date('2021-01-31'),
+            futureEventsCount: 2,
+          },
+        })
+        const events = getOneTimeEvents([event])
+
+        expect(events).toEqual([
+          oneTimeEvent({
+            id: event.id,
+            data: { startDate: new Date('2020-12-09T12:00:00.000Z') },
+          }),
+          oneTimeEvent({
+            id: event.id,
+            data: { startDate: new Date('2020-12-16T12:00:00.000Z') },
+          }),
+          oneTimeEvent({
+            id: event.id,
+            data: { startDate: new Date('2020-12-23T12:00:00.000Z') },
+          }),
+          oneTimeEvent({
+            id: event.id,
+            data: { startDate: new Date('2020-12-30T12:00:00.000Z') },
+          }),
+          oneTimeEvent({
+            id: event.id,
+            data: { startDate: new Date('2021-01-06T12:00:00.000Z') },
+          }),
+          oneTimeEvent({
+            id: event.id,
+            data: { startDate: new Date('2021-01-13T12:00:00.000Z') },
+          }),
+        ])
+      })
+
+      it('no end date', () => {
+        const event: RecurringEvent = recurringEvent({
+          data: {
+            sinceDate: new Date('2020-12-07'),
+            futureEventsCount: 2,
+          },
+        })
+        const events = getOneTimeEvents([event])
+
+        expect(events).toEqual([
+          oneTimeEvent({
+            id: event.id,
+            data: { startDate: new Date('2020-12-09T12:00:00.000Z') },
+          }),
+          oneTimeEvent({
+            id: event.id,
+            data: { startDate: new Date('2020-12-16T12:00:00.000Z') },
+          }),
+          oneTimeEvent({
+            id: event.id,
+            data: { startDate: new Date('2020-12-23T12:00:00.000Z') },
+          }),
+          oneTimeEvent({
+            id: event.id,
+            data: { startDate: new Date('2020-12-30T12:00:00.000Z') },
+          }),
+          oneTimeEvent({
+            id: event.id,
+            data: { startDate: new Date('2021-01-06T12:00:00.000Z') },
+          }),
+          oneTimeEvent({
+            id: event.id,
+            data: { startDate: new Date('2021-01-13T12:00:00.000Z') },
+          }),
+        ])
+      })
+    })
+
+    describe('since date in future', () => {
+      it('end date in future', () => {
+        const event: RecurringEvent = recurringEvent({
+          data: {
+            sinceDate: new Date('2021-01-08'),
+            tillDate: new Date('2021-01-31'),
+            futureEventsCount: 1000,
+          },
+        })
+        const events = getOneTimeEvents([event])
+
+        expect(events).toEqual([
+          oneTimeEvent({
+            id: event.id,
+            data: { startDate: new Date('2021-01-13T12:00:00.000Z') },
+          }),
+          oneTimeEvent({
+            id: event.id,
+            data: { startDate: new Date('2021-01-20T12:00:00.000Z') },
+          }),
+          oneTimeEvent({
+            id: event.id,
+            data: { startDate: new Date('2021-01-27T12:00:00.000Z') },
+          }),
+        ])
+      })
+
+      it('end date in future and clamps endWeekOffset to futureEventsCount', () => {
+        const event: RecurringEvent = recurringEvent({
+          data: {
+            sinceDate: new Date('2021-01-08'),
+            tillDate: new Date('2021-01-31'),
+            futureEventsCount: 2,
+          },
+        })
+        const events = getOneTimeEvents([event])
+
+        expect(events).toEqual([
+          oneTimeEvent({
+            id: event.id,
+            data: { startDate: new Date('2021-01-13T12:00:00.000Z') },
+          }),
+          oneTimeEvent({
+            id: event.id,
+            data: { startDate: new Date('2021-01-20T12:00:00.000Z') },
+          }),
+        ])
+      })
+
+      it('no end date', () => {
+        const event: RecurringEvent = recurringEvent({
+          data: {
+            sinceDate: new Date('2021-01-08'),
+            tillDate: new Date('2021-01-31'),
+            futureEventsCount: 2,
+          },
+        })
+        const events = getOneTimeEvents([event])
+
+        expect(events).toEqual([
+          oneTimeEvent({
+            id: event.id,
+            data: { startDate: new Date('2021-01-13T12:00:00.000Z') },
+          }),
+          oneTimeEvent({
+            id: event.id,
+            data: { startDate: new Date('2021-01-20T12:00:00.000Z') },
           }),
         ])
       })
@@ -128,65 +291,6 @@ describe(getOneTimeEvents.name, () => {
           oneTimeEvent({
             id: event.id,
             data: { startDate: new Date('2021-05-05T11:00:00.000Z') },
-          }),
-        ])
-      })
-    })
-
-    describe('endDate', () => {
-      it('does not generate further events', () => {
-        const event: RecurringEvent = recurringEvent({
-          data: { tillDate: new Date('2021-05-13') },
-        })
-
-        const events = getOneTimeEvents([event])
-        expect(events).toEqual([
-          oneTimeEvent({
-            id: event.id,
-            data: { startDate: new Date('2021-04-28T11:00:00.000Z') },
-          }),
-          oneTimeEvent({
-            id: event.id,
-            data: { startDate: new Date('2021-05-05T11:00:00.000Z') },
-          }),
-          oneTimeEvent({
-            id: event.id,
-            data: { startDate: new Date('2021-05-12T11:00:00.000Z') },
-          }),
-        ])
-      })
-
-      it('is exclusive', () => {
-        const event: RecurringEvent = recurringEvent({
-          data: { tillDate: new Date('2021-05-05') },
-        })
-
-        const events = getOneTimeEvents([event])
-        expect(events).toEqual([
-          oneTimeEvent({
-            id: event.id,
-            data: { startDate: new Date('2021-04-28T11:00:00.000Z') },
-          }),
-        ])
-      })
-
-      it('stops generating events after endDate', () => {
-        const event: RecurringEvent = recurringEvent({
-          data: {
-            sinceDate: new Date('2021-04-01'),
-            tillDate: new Date('2021-04-21'),
-          },
-        })
-
-        const events = getOneTimeEvents([event])
-        expect(events).toEqual([
-          oneTimeEvent({
-            id: event.id,
-            data: { startDate: new Date('2021-04-07T11:00:00.000Z') },
-          }),
-          oneTimeEvent({
-            id: event.id,
-            data: { startDate: new Date('2021-04-14T11:00:00.000Z') },
           }),
         ])
       })

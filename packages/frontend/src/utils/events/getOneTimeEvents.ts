@@ -24,25 +24,29 @@ export function getOneTimeEvents(
         data: event.data,
       }
     }
-    const nextEventDate = getNextDateForDayOfWeek(
+    const thisWeekEventDate = getNextDateForDayOfWeek(
       event.data.dayOfWeek,
-      new Date(Date.now()),
+      new Date(),
     )
 
     const data = event.data
-    const weeksSinceStart = Math.floor(
-      (nextEventDate.getTime() - data.sinceDate.getTime()) / WEEK_IN_MS,
+
+    if (data.tillDate && data.sinceDate.getTime() > data.tillDate.getTime()) {
+      throw new Error('Since date is after till date')
+    }
+
+    const startWeekOffset = getStartWeekOffset(
+      data.sinceDate,
+      thisWeekEventDate,
+    )
+    const endWeekOffset = getEndWeekOffset(
+      startWeekOffset,
+      data.tillDate,
+      thisWeekEventDate,
+      data.futureEventsCount,
     )
 
-    const weeksTillEnd = data.tillDate
-      ? clamp(
-          getWeeksTillEnd(data.tillDate, nextEventDate),
-          event.data.futureEventsCount,
-        )
-      : event.data.futureEventsCount
-    console.log(weeksSinceStart, weeksTillEnd)
-    console.log(range(-weeksSinceStart, weeksTillEnd))
-    return range(-weeksSinceStart, weeksTillEnd)
+    return range(startWeekOffset, endWeekOffset + 1)
       .map((weeksOffset) =>
         getEventForWeek(event as RecurringEvent, weeksOffset),
       )
@@ -88,9 +92,34 @@ function getEventForWeek(
   }
 }
 
-function getWeeksTillEnd(tillDate: Date, nextEventDate: Date) {
-  const weeksOffset =
-    (tillDate.getTime() - nextEventDate.getTime()) / WEEK_IN_MS
-  const fn = weeksOffset > 0 ? Math.ceil : Math.floor
-  return fn(weeksOffset)
+function getStartWeekOffset(sinceDate: Date, thisWeekEventDate: Date) {
+  return Math.ceil(
+    (sinceDate.getTime() - thisWeekEventDate.getTime()) / WEEK_IN_MS,
+  )
+}
+
+function getEndWeekOffset(
+  startWeekOffset: number,
+  tillDate: Date | undefined,
+  thisWeekEventDate: Date,
+  futureEventsCount: number,
+) {
+  futureEventsCount = futureEventsCount - 1
+  const weeksOffset = tillDate
+    ? Math.floor(
+        (tillDate.getTime() - thisWeekEventDate.getTime()) / WEEK_IN_MS,
+      )
+    : undefined
+
+  if (startWeekOffset > 0) {
+    const clampedWeeksOffset = weeksOffset
+      ? clamp(weeksOffset - startWeekOffset, futureEventsCount)
+      : futureEventsCount
+    return startWeekOffset + clampedWeeksOffset
+  }
+
+  const clampedWeeksOffset = weeksOffset
+    ? clamp(weeksOffset, futureEventsCount)
+    : futureEventsCount
+  return clampedWeeksOffset
 }
