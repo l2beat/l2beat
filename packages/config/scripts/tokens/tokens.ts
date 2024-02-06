@@ -190,8 +190,10 @@ function getFormula(
 }
 
 function getAssetId(chain: ChainConfig, token: SourceEntry, name: string) {
+  const chainPrefix = chain.name === 'ethereum' ? '' : `${chain.name}:`
+
   return AssetId(
-    `${chain.name}:${token.symbol.replaceAll(' ', '-').toLowerCase()}-${name
+    `${chainPrefix}${token.symbol.replaceAll(' ', '-').toLowerCase()}-${name
       .replaceAll(' ', '-')
       .toLowerCase()}`,
   )
