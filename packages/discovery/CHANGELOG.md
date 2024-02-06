@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.39.1
+
+### Patch Changes
+
+- Don't check every tx in opDAHandler
+
 ## 0.39.0
 
 ### Minor Changes

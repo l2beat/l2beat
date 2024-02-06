@@ -60,10 +60,6 @@ export class OpStackDAHandler implements ClassicHandler {
     const sequencerAddress = valueToAddress(resolved)
     const last10Txs = await provider.getLast10Txs(sequencerAddress, blockNumber)
 
-    const isAllTxsLengthEqualToCelestiaDAExample = last10Txs.every(
-      (tx) => tx.input.length === OP_STACK_CELESTIA_DA_EXAMPLE_INPUT.length,
-    )
-
     const isSomeTxsLengthEqualToCelestiaDAExample = last10Txs.some(
       (tx) => tx.input.length === OP_STACK_CELESTIA_DA_EXAMPLE_INPUT.length,
     )
@@ -71,7 +67,6 @@ export class OpStackDAHandler implements ClassicHandler {
     return {
       field: this.field,
       value: {
-        isAllTxsLengthEqualToCelestiaDAExample,
         isSomeTxsLengthEqualToCelestiaDAExample,
       },
     }
