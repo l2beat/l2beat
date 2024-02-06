@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
-import { HttpClient } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { Knex } from 'knex'
 import { range } from 'lodash'
 
 import { BlockTransactionCountRepository } from '../../../peripherals/database/activity/BlockTransactionCountRepository'
@@ -8,50 +8,54 @@ import { SequenceProcessorRepository } from '../../../peripherals/database/Seque
 import { StarknetClient } from '../../../peripherals/starknet/StarknetClient'
 import { Clock } from '../../Clock'
 import { promiseAllPlus } from '../../queue/promiseAllPlus'
-import { SimpleActivityTransactionConfig } from '../ActivityTransactionConfig'
 import { SequenceProcessor } from '../SequenceProcessor'
-import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 
-export function createStarknetCounter(
-  projectId: ProjectId,
-  blockRepository: BlockTransactionCountRepository,
-  http: HttpClient,
-  sequenceProcessorRepository: SequenceProcessorRepository,
-  logger: Logger,
-  clock: Clock,
-  options: SimpleActivityTransactionConfig<'starknet'>,
-): SequenceProcessor {
-  const batchSize = getBatchSizeFromCallsPerMinute(options.callsPerMinute)
-  const client = new StarknetClient(options.url, http, {
-    callsPerMinute: options.callsPerMinute,
-  })
+export class StarknetCounter extends SequenceProcessor {
+  constructor(
+    projectId: ProjectId,
+    sequenceProcessorRepository: SequenceProcessorRepository,
+    private readonly blockRepository: BlockTransactionCountRepository,
+    private readonly starknetClient: StarknetClient,
+    private readonly clock: Clock,
+    logger: Logger,
+    batchSize: number,
+  ) {
+    super(
+      projectId,
+      sequenceProcessorRepository,
+      { batchSize, startFrom: 0 },
+      logger,
+    )
+    this.logger = this.logger.for(this)
+  }
 
-  return new SequenceProcessor(projectId, logger, sequenceProcessorRepository, {
-    batchSize,
-    startFrom: 0,
-    getLatest: async (previousLatest) => {
-      const blockNumber = await client.getBlockNumberAtOrBefore(
-        clock.getLastHour(),
-        previousLatest,
-      )
-      return blockNumber
-    },
-    processRange: async (from, to, trx, logger) => {
-      const queries = range(from, to + 1).map((blockNumber) => async () => {
-        const block = await client.getBlock(blockNumber)
+  protected override async getLatest(current: number): Promise<number> {
+    const blockNumber = await this.starknetClient.getBlockNumberAtOrBefore(
+      this.clock.getLastHour(),
+      current,
+    )
+    return blockNumber
+  }
 
-        return {
-          projectId,
-          blockNumber: block.number,
-          count: block.transactions.length,
-          timestamp: new UnixTime(block.timestamp),
-        }
-      })
+  protected override async processRange(
+    from: number,
+    to: number,
+    trx: Knex.Transaction,
+  ) {
+    const queries = range(from, to + 1).map((blockNumber) => async () => {
+      const block = await this.starknetClient.getBlock(blockNumber)
 
-      const blocks = await promiseAllPlus(queries, logger, {
-        metricsId: 'StarkNetBlockCounter',
-      })
-      await blockRepository.addOrUpdateMany(blocks, trx)
-    },
-  })
+      return {
+        projectId: this.projectId,
+        blockNumber: block.number,
+        count: block.transactions.length,
+        timestamp: new UnixTime(block.timestamp),
+      }
+    })
+
+    const blocks = await promiseAllPlus(queries, this.logger, {
+      metricsId: 'StarknetBlockCounter',
+    })
+    await this.blockRepository.addOrUpdateMany(blocks, trx)
+  }
 }

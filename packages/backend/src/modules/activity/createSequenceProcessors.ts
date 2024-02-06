@@ -1,23 +1,30 @@
 import { Logger } from '@l2beat/backend-tools'
 import { HttpClient } from '@l2beat/shared'
 import { assert, ProjectId } from '@l2beat/shared-pure'
+import { providers } from 'ethers'
 import { Gauge } from 'prom-client'
 
 import { Config } from '../../config'
-import { createAztecCounter } from '../../core/activity/counters/AztecCounter'
-import { createLoopringCounter } from '../../core/activity/counters/LoopringCounter'
-import { createRpcCounter } from '../../core/activity/counters/RpcCounter'
-import { createStarkexCounter } from '../../core/activity/counters/StarkexCounter'
-import { createStarknetCounter } from '../../core/activity/counters/StarknetCounter'
-import { createZksyncCounter } from '../../core/activity/counters/ZksyncCounter'
+import { AztecCounter } from '../../core/activity/counters/AztecCounter'
+import { LoopringCounter } from '../../core/activity/counters/LoopringCounter'
+import { RpcCounter } from '../../core/activity/counters/RpcCounter'
+import { StarkexCounter } from '../../core/activity/counters/StarkexCounter'
+import { StarknetCounter } from '../../core/activity/counters/StarknetCounter'
+import { ZksyncCounter } from '../../core/activity/counters/ZksyncCounter'
 import { SequenceProcessor } from '../../core/activity/SequenceProcessor'
 import { Clock } from '../../core/Clock'
+import { AztecClient } from '../../peripherals/aztec'
 import { BlockTransactionCountRepository } from '../../peripherals/database/activity/BlockTransactionCountRepository'
 import { StarkexTransactionCountRepository } from '../../peripherals/database/activity/StarkexCountRepository'
 import { ZksyncTransactionRepository } from '../../peripherals/database/activity/ZksyncTransactionRepository'
 import { SequenceProcessorRepository } from '../../peripherals/database/SequenceProcessorRepository'
 import { Database } from '../../peripherals/database/shared/Database'
+import { LoopringClient } from '../../peripherals/loopring'
+import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { StarkexClient } from '../../peripherals/starkex'
+import { StarknetClient } from '../../peripherals/starknet/StarknetClient'
+import { ZksyncClient } from '../../peripherals/zksync'
+import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 
 export function createSequenceProcessors(
   config: Config,
@@ -56,73 +63,119 @@ export function createSequenceProcessors(
   )
   const zksyncRepository = new ZksyncTransactionRepository(database, logger)
 
-  const processors = projects
+  return projects
     .filter(isProjectAllowed(allowedProjectIds, logger))
     .map(({ id, config }) => {
+      const taggedLogger = logger.tag(id.toString())
+
       switch (config.type) {
-        case 'starkex':
-          return createStarkexCounter(
+        case 'starkex': {
+          return new StarkexCounter(
             id,
+            config.product,
+            sequenceProcessorRepository,
             starkexRepository,
             starkexClient,
-            sequenceProcessorRepository,
-            logger,
             clock,
+            taggedLogger,
+            getBatchSizeFromCallsPerMinute(singleStarkexCPM),
+            config.sinceTimestamp,
+            config.resyncLastDays,
+          )
+        }
+
+        case 'aztec': {
+          const aztecClient = new AztecClient(
+            http,
+            config.url,
+            config.callsPerMinute,
+          )
+          return new AztecCounter(
+            id,
+            sequenceProcessorRepository,
+            blockRepository,
+            aztecClient,
+            taggedLogger,
+            getBatchSizeFromCallsPerMinute(config.callsPerMinute),
+          )
+        }
+
+        case 'starknet': {
+          const starknetClient = new StarknetClient(config.url, http, {
+            callsPerMinute: config.callsPerMinute,
+          })
+          return new StarknetCounter(
+            id,
+            sequenceProcessorRepository,
+            blockRepository,
+            starknetClient,
+            clock,
+            taggedLogger,
+            getBatchSizeFromCallsPerMinute(config.callsPerMinute),
+          )
+        }
+
+        case 'zksync': {
+          const zksyncClient = new ZksyncClient(
+            http,
+            taggedLogger,
+            config.url,
+            config.callsPerMinute,
+          )
+          return new ZksyncCounter(
+            id,
+            sequenceProcessorRepository,
+            zksyncRepository,
+            zksyncClient,
+            taggedLogger,
+            getBatchSizeFromCallsPerMinute(config.callsPerMinute),
+          )
+        }
+
+        case 'loopring': {
+          const loopringClient = new LoopringClient(
+            http,
+            taggedLogger,
+            config.url,
             {
-              ...config,
-              singleStarkexCPM,
+              callsPerMinute: config.callsPerMinute,
             },
           )
-        case 'aztec':
-          return createAztecCounter(
+          return new LoopringCounter(
             id,
-            blockRepository,
-            http,
             sequenceProcessorRepository,
-            logger,
-            config,
+            blockRepository,
+            loopringClient,
+            taggedLogger,
+            getBatchSizeFromCallsPerMinute(config.callsPerMinute),
           )
-        case 'starknet':
-          return createStarknetCounter(
+        }
+
+        case 'rpc': {
+          const provider = new providers.StaticJsonRpcProvider({
+            url: config.url,
+            timeout: 15_000,
+          })
+          const rpcClient = new RpcClient(
+            provider,
+            taggedLogger,
+            config.callsPerMinute,
+          )
+
+          return new RpcCounter(
             id,
-            blockRepository,
-            http,
             sequenceProcessorRepository,
-            logger,
+            blockRepository,
+            rpcClient,
             clock,
-            config,
+            taggedLogger,
+            config.assessCount,
+            getBatchSizeFromCallsPerMinute(config.callsPerMinute),
+            config.startBlock ?? 0,
           )
-        case 'zksync':
-          return createZksyncCounter(
-            id,
-            http,
-            zksyncRepository,
-            sequenceProcessorRepository,
-            logger,
-            config,
-          )
-        case 'loopring':
-          return createLoopringCounter(
-            id,
-            http,
-            blockRepository,
-            sequenceProcessorRepository,
-            logger,
-            config,
-          )
-        case 'rpc':
-          return createRpcCounter(
-            id,
-            blockRepository,
-            sequenceProcessorRepository,
-            logger,
-            clock,
-            config,
-          )
+        }
       }
     })
-
-  return processors
 }
 
 const activityIncludedInApi = new Gauge({
