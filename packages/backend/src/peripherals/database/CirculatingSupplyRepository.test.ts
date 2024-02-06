@@ -7,7 +7,6 @@ import {
   CirculatingSupplyRecord,
   CirculatingSupplyRepository,
 } from './CirculatingSupplyRepository'
-import { testDeletingArchivedRecords } from './shared/deleteArchivedRecords.test'
 
 const START = UnixTime.fromDate(new Date('2022-05-17'))
 
@@ -244,15 +243,4 @@ describeDatabase(CirculatingSupplyRepository.name, (database) => {
 
     expect(result).toEqual([])
   })
-
-  testDeletingArchivedRecords(repository, fakeCirculatingSupply)
 })
-
-function fakeCirculatingSupply(timestamp: UnixTime): CirculatingSupplyRecord {
-  return {
-    timestamp,
-    circulatingSupply: 0,
-    assetId: AssetId('fake'),
-    chainId: ChainId.ARBITRUM,
-  }
-}
