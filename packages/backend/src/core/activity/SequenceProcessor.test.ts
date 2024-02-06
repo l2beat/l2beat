@@ -49,7 +49,6 @@ describeDatabase(SequenceProcessor.name, (database) => {
         processRange,
         scheduleIntervalMs: refreshInterval,
         uncertaintyBuffer,
-        getLastProcessedTimestamp: mockFn(),
       },
     )
   }

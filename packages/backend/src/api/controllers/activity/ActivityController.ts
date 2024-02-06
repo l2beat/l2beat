@@ -81,21 +81,18 @@ export class ActivityController {
     return formatActivityChart(chartPoints)
   }
 
-  async getStatus(): Promise<json> {
-    const now = this.clock.getLastHour()
-    const projects = await Promise.all(
-      this.processors.map(async (processor) => {
-        return {
-          projectId: processor.projectId.toString(),
-          includedInApi: this.projectIds.includes(processor.projectId),
-          ...(await processor.getStatus(now)),
-        }
-      }),
-    )
-    return {
-      systemNow: now.toDate().toISOString(),
-      projects,
-    }
+  getStatus(): json {
+    const projects = this.processors.map((processor) => {
+      return {
+        projectId: processor.projectId.toString(),
+        includedInApi: this.projectIds.includes(processor.projectId),
+        ...processor.getStatus(),
+      }
+    })
+    return projects.reduce<Record<string, json>>((result, project) => {
+      result[project.projectId] = project
+      return result
+    }, {})
   }
 
   private async getPostprocessedDailyCounts(): Promise<DailyTransactionCountProjectsMap> {

@@ -53,7 +53,5 @@ export function createStarknetCounter(
       })
       await blockRepository.addOrUpdateMany(blocks, trx)
     },
-    getLastProcessedTimestamp: () =>
-      blockRepository.findLastTimestampByProjectId(projectId),
   })
 }

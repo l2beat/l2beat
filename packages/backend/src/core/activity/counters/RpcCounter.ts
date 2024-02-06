@@ -56,7 +56,5 @@ export function createRpcCounter(
       })
       await blockRepository.addOrUpdateMany(blocks, trx)
     },
-    getLastProcessedTimestamp: () =>
-      blockRepository.findLastTimestampByProjectId(projectId),
   })
 }

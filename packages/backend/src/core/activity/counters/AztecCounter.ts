@@ -46,7 +46,5 @@ export function createAztecCounter(
       })
       await blockRepository.addOrUpdateMany(blocks, trx)
     },
-    getLastProcessedTimestamp: () =>
-      blockRepository.findLastTimestampByProjectId(projectId),
   })
 }

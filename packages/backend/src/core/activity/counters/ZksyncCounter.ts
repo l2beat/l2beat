@@ -52,6 +52,5 @@ export function createZksyncCounter(
       })
       await zksyncRepository.addOrUpdateMany(blockTransactions.flat(), trx)
     },
-    getLastProcessedTimestamp: () => zksyncRepository.findLastTimestamp(),
   })
 }

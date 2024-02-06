@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { EventTracker } from '@l2beat/shared'
-import { assert, json, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, ProjectId } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { Gauge } from 'prom-client'
 import { EventEmitter } from 'stream'
@@ -44,24 +44,9 @@ export interface SequenceProcessorOpts {
   ) => Promise<void>
   uncertaintyBuffer?: number // resync from lastProcessed - uncertaintyBuffer
   scheduleIntervalMs?: number
-  getLastProcessedTimestamp: () => Promise<UnixTime | undefined>
 }
 
 export const ALL_PROCESSED_EVENT = 'All processed'
-
-export type SequenceProcessorStatus = Record<
-  | 'lastProcessedTimestamp'
-  | 'hasProcessedAll'
-  | 'isSyncedUpToYesterdayInclusive'
-  | 'latest'
-  | 'lastProcessed'
-  | 'scheduleIntervalMs'
-  | 'isProcessing'
-  | 'batchSize'
-  | 'events'
-  | 'processedLastFiveSeconds',
-  json
->
 
 const HOUR = 1000 * 60 * 60
 
@@ -135,42 +120,12 @@ export class SequenceProcessor extends EventEmitter {
     this.on(ALL_PROCESSED_EVENT, listener)
   }
 
-  async isSyncedUpToYesterdayInclusive(now: UnixTime): Promise<boolean> {
-    const lastTimestamp = await this.opts.getLastProcessedTimestamp()
-    if (!lastTimestamp) return false
-    return this.processedAllOrToday(now, lastTimestamp)
-  }
-
-  async getStatus(now: UnixTime): Promise<SequenceProcessorStatus> {
-    const lastProcessedTimestamp = await this.opts.getLastProcessedTimestamp()
-    const events = this.eventTracker.getStatus()
+  getStatus() {
     return {
-      lastProcessedTimestamp:
-        lastProcessedTimestamp?.toDate().toISOString() ?? null,
-      hasProcessedAll: this.hasProcessedAll(),
-      isSyncedUpToYesterdayInclusive: this.processedAllOrToday(
-        now,
-        lastProcessedTimestamp,
-      ),
       latest: this.state?.latest ?? null,
       lastProcessed: this.state?.lastProcessed ?? null,
-      scheduleIntervalMs: this.scheduleInterval,
       isProcessing: !this.processQueue.isEmpty(),
-      batchSize: this.opts.batchSize,
-      processedLastFiveSeconds:
-        events.lastFiveSeconds['range succeeded'] * this.opts.batchSize,
-      events,
     }
-  }
-
-  private processedAllOrToday(
-    now: UnixTime,
-    lastProcessedTimestamp: UnixTime | undefined,
-  ): boolean {
-    if (!lastProcessedTimestamp) return false
-    const lastDayWithData = lastProcessedTimestamp.toYYYYMMDD()
-    const today = now.toYYYYMMDD()
-    return lastDayWithData === today || this.hasProcessedAll()
   }
 
   private async process(): Promise<void> {

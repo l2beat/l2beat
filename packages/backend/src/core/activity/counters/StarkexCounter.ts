@@ -54,8 +54,6 @@ export function createStarkexCounter(
       })
       await starkexRepository.addOrUpdateMany(counts, trx)
     },
-    getLastProcessedTimestamp: () =>
-      starkexRepository.findLastTimestampByProjectId(projectId),
   })
 }
 

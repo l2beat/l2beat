@@ -45,7 +45,5 @@ export function createLoopringCounter(
       })
       await blockRepository.addOrUpdateMany(blocks, trx)
     },
-    getLastProcessedTimestamp: () =>
-      blockRepository.findLastTimestampByProjectId(projectId),
   })
 }
