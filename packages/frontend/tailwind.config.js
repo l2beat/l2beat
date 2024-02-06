@@ -58,6 +58,7 @@ module.exports = {
         'red-dark': '#BD114F',
         black: '#222222',
       },
+      'pure-white': '#FFFFFF',
       white: '#FAFAFA',
       neutral: {
         700: '#323539',
