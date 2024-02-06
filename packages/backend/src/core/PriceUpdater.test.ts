@@ -166,24 +166,24 @@ describe(PriceUpdater.name, () => {
       )
       expect(coingeckoQueryService.getUsdPriceHistory).toHaveBeenNthCalledWith(
         2,
+        tokens[0].coingeckoId,
+        HOUR_13,
+        HOUR_13,
+        tokens[0].address,
+      )
+      expect(coingeckoQueryService.getUsdPriceHistory).toHaveBeenNthCalledWith(
+        3,
         tokens[1].coingeckoId,
         HOUR_13,
         HOUR_13,
         tokens[1].address,
       )
       expect(coingeckoQueryService.getUsdPriceHistory).toHaveBeenNthCalledWith(
-        3,
+        4,
         tokens[2].coingeckoId,
         HOUR_09,
         HOUR_13,
         tokens[2].address,
-      )
-      expect(coingeckoQueryService.getUsdPriceHistory).toHaveBeenNthCalledWith(
-        4,
-        tokens[0].coingeckoId,
-        HOUR_13,
-        HOUR_13,
-        tokens[0].address,
       )
     })
 

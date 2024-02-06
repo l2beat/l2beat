@@ -78,7 +78,7 @@ export class PriceUpdater {
     for (const { id: assetId, address, sinceTimestamp } of this.tokens) {
       const boundary = boundaries.get(assetId)
       const adjustedFrom = getAdjustedFrom(sinceTimestamp, from)
-      return this.updateToken(assetId, boundary, adjustedFrom, to, address)
+      await this.updateToken(assetId, boundary, adjustedFrom, to, address)
     }
 
     for (let t = from; t.lte(to); t = t.add(1, 'hours')) {

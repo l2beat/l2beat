@@ -101,7 +101,7 @@ export class CirculatingSupplyUpdater {
 
     for (const { id: assetId, address } of this.tokens) {
       const boundary = boundaries.get(assetId)
-      return this.updateToken(assetId, boundary, to, address)
+      await this.updateToken(assetId, boundary, to, address)
     }
 
     for (let t = from; t.lte(to); t = t.add(1, 'hours')) {
