@@ -51,7 +51,7 @@ export const loopring: Layer2 = {
 
     links: {
       websites: ['https://loopring.org'],
-      apps: ['https://loopring.io/#/'],
+      apps: ['https://loopring.io/#/trade'],
       documentation: [
         'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md',
       ],
