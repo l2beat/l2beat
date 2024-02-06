@@ -167,102 +167,105 @@ describeDatabase(LivenessRepository.name, (database) => {
     })
   })
 
-  describe(LivenessRepository.prototype.findTxForTimestamp.name, () => {
-    it('should return tx hash for given project id and timestamp when no exact hour', async () => {
-      await repository.deleteAll()
+  describe(
+    LivenessRepository.prototype.findTransactionWithinTimeRange.name,
+    () => {
+      it('should return tx hash for given project id and timestamp when no exact hour', async () => {
+        await repository.deleteAll()
 
-      const configuration = LIVENESS_CONFIGS[0]
-      const records = [
-        {
-          timestamp: UnixTime.fromDate(new Date('2021-01-01T10:30:00Z')),
-          blockNumber: 12345,
-          txHash: '0x1234567890abcdef',
-          livenessId: configuration.id,
-        },
-        {
-          timestamp: UnixTime.fromDate(new Date('2021-01-01T10:45:00Z')),
-          blockNumber: 12346,
-          txHash: '0xabcdef1234567890',
-          livenessId: configuration.id,
-        },
-        {
-          timestamp: UnixTime.fromDate(new Date('2021-01-01T11:01:00Z')),
-          blockNumber: 12347,
-          txHash: '0xabcdef1234567891',
-          livenessId: configuration.id,
-        },
-      ]
-      await repository.addMany(records)
+        const configuration = LIVENESS_CONFIGS[0]
+        const records = [
+          {
+            timestamp: UnixTime.fromDate(new Date('2021-01-01T10:30:00Z')),
+            blockNumber: 12345,
+            txHash: '0x1234567890abcdef',
+            livenessId: configuration.id,
+          },
+          {
+            timestamp: UnixTime.fromDate(new Date('2021-01-01T10:45:00Z')),
+            blockNumber: 12346,
+            txHash: '0xabcdef1234567890',
+            livenessId: configuration.id,
+          },
+          {
+            timestamp: UnixTime.fromDate(new Date('2021-01-01T11:01:00Z')),
+            blockNumber: 12347,
+            txHash: '0xabcdef1234567891',
+            livenessId: configuration.id,
+          },
+        ]
+        await repository.addMany(records)
 
-      const result = await repository.findTxForTimestamp(
-        configuration.projectId,
-        UnixTime.fromDate(new Date('2021-01-01T11:00:00Z')),
-        UnixTime.fromDate(new Date('2021-01-01T10:00:00Z')),
-        configuration.type,
-      )
+        const result = await repository.findTransactionWithinTimeRange(
+          configuration.projectId,
+          UnixTime.fromDate(new Date('2021-01-01T11:00:00Z')),
+          UnixTime.fromDate(new Date('2021-01-01T10:00:00Z')),
+          configuration.type,
+        )
 
-      expect(result).toEqual({
-        timestamp: records[1].timestamp,
-        txHash: records[1].txHash,
+        expect(result).toEqual({
+          timestamp: records[1].timestamp,
+          txHash: records[1].txHash,
+        })
       })
-    })
-    it('should return tx hash for given project id and timestamp inclusive hour', async () => {
-      await repository.deleteAll()
+      it('should return tx hash for given project id and timestamp inclusive hour', async () => {
+        await repository.deleteAll()
 
-      const configuration = LIVENESS_CONFIGS[0]
-      const records = [
-        {
-          timestamp: UnixTime.fromDate(new Date('2021-01-01T10:00:00Z')),
-          blockNumber: 12345,
-          txHash: '0x1234567890abcdef',
-          livenessId: configuration.id,
-        },
-        {
-          timestamp: UnixTime.fromDate(new Date('2021-01-01T11:00:00Z')),
-          blockNumber: 12346,
-          txHash: '0xabcdef1234567890',
-          livenessId: configuration.id,
-        },
-        {
-          timestamp: UnixTime.fromDate(new Date('2021-01-01T12:00:00Z')),
-          blockNumber: 12347,
-          txHash: '0xabcdef1234567892',
-          livenessId: configuration.id,
-        },
-      ]
-      await repository.addMany(records)
+        const configuration = LIVENESS_CONFIGS[0]
+        const records = [
+          {
+            timestamp: UnixTime.fromDate(new Date('2021-01-01T10:00:00Z')),
+            blockNumber: 12345,
+            txHash: '0x1234567890abcdef',
+            livenessId: configuration.id,
+          },
+          {
+            timestamp: UnixTime.fromDate(new Date('2021-01-01T11:00:00Z')),
+            blockNumber: 12346,
+            txHash: '0xabcdef1234567890',
+            livenessId: configuration.id,
+          },
+          {
+            timestamp: UnixTime.fromDate(new Date('2021-01-01T12:00:00Z')),
+            blockNumber: 12347,
+            txHash: '0xabcdef1234567892',
+            livenessId: configuration.id,
+          },
+        ]
+        await repository.addMany(records)
 
-      const result = await repository.findTxForTimestamp(
-        configuration.projectId,
-        UnixTime.fromDate(new Date('2021-01-01T11:00:00Z')),
-        UnixTime.fromDate(new Date('2021-01-01T10:00:00Z')),
-        configuration.type,
-      )
+        const result = await repository.findTransactionWithinTimeRange(
+          configuration.projectId,
+          UnixTime.fromDate(new Date('2021-01-01T11:00:00Z')),
+          UnixTime.fromDate(new Date('2021-01-01T10:00:00Z')),
+          configuration.type,
+        )
 
-      expect(result).toEqual({
-        timestamp: records[1].timestamp,
-        txHash: records[1].txHash,
+        expect(result).toEqual({
+          timestamp: records[1].timestamp,
+          txHash: records[1].txHash,
+        })
       })
-    })
-    it('should return undefined when no tx hash for given project id', async () => {
-      await repository.addMany([
-        {
-          timestamp: START.add(-2, 'hours'),
-          blockNumber: 12346,
-          txHash: '0x1234567890abcdff',
-          livenessId: LIVENESS_CONFIGS[0].id,
-        },
-      ])
-      const result = await repository.findTxForTimestamp(
-        LIVENESS_CONFIGS[0].projectId,
-        START.add(-8, 'hours'),
-        START.add(-9, 'hours'),
-        LIVENESS_CONFIGS[0].type,
-      )
+      it('should return undefined when no tx hash for given project id', async () => {
+        await repository.addMany([
+          {
+            timestamp: START.add(-2, 'hours'),
+            blockNumber: 12346,
+            txHash: '0x1234567890abcdff',
+            livenessId: LIVENESS_CONFIGS[0].id,
+          },
+        ])
+        const result = await repository.findTransactionWithinTimeRange(
+          LIVENESS_CONFIGS[0].projectId,
+          START.add(-8, 'hours'),
+          START.add(-9, 'hours'),
+          LIVENESS_CONFIGS[0].type,
+        )
 
-      expect(result).toEqual(undefined)
-    })
-  })
+        expect(result).toEqual(undefined)
+      })
+    },
+  )
 
   describe(
     LivenessRepository.prototype.getWithTypeDistinctTimestamp.name,

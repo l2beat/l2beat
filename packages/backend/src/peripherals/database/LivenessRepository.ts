@@ -70,11 +70,21 @@ export class LivenessRepository extends BaseRepository {
     return rows.map(toRecordWithTimestampAndType)
   }
 
-  async findTxForTimestamp(
+  /**
+   * Searches for the transaction with the closest timestamp to "target", but no older than "floor".
+   * The search is inclusive of "target" and exclusive of "floor".
+   *
+   * @param projectId Filter only transactions for a specific project.
+   * @param livenessType Filter only transactions of a specific liveness type.
+   * @param targetTimestamp Query will try to find the closest or equal timestamp to target, but no older than floor.
+   * @param floorTimestamp The oldest timestamp search can go to.
+   * @returns An object containing the transaction hash and timestamp if found, otherwise undefined.
+   */
+  async findTransactionWithinTimeRange(
     projectId: ProjectId,
-    timestamp: UnixTime,
-    minTimestamp: UnixTime,
-    type: LivenessType,
+    livenessType: LivenessType,
+    targetTimestamp: UnixTime,
+    floorTimestamp: UnixTime,
   ): Promise<{ txHash: string; timestamp: UnixTime } | undefined> {
     const knex = await this.knex()
 
@@ -82,9 +92,9 @@ export class LivenessRepository extends BaseRepository {
       .join('liveness_configuration as c', 'l.liveness_id', 'c.id')
       .select('l.tx_hash', 'l.timestamp')
       .where('c.project_id', projectId.toString())
-      .andWhere('c.type', type.toString())
-      .andWhere('l.timestamp', '<=', timestamp.toDate())
-      .andWhere('l.timestamp', '>', minTimestamp.toDate())
+      .andWhere('c.type', livenessType.toString())
+      .andWhere('l.timestamp', '<=', targetTimestamp.toDate())
+      .andWhere('l.timestamp', '>', floorTimestamp.toDate())
       .orderBy('l.timestamp', 'desc')
       .distinct('l.tx_hash')
       .limit(1)

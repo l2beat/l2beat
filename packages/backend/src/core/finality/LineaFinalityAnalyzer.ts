@@ -6,7 +6,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { mean, uniq } from 'lodash'
+import { mean } from 'lodash'
 
 import { LivenessRepository } from '../../peripherals/database/LivenessRepository'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
@@ -33,34 +33,38 @@ export class LineaFinalityAnalyzer {
 
     const txHashes = (
       await Promise.all(
-        Array.from({ length: granularity }).map(async (_, i) =>
-          this.livenessRepository.findTxForTimestamp(
+        Array.from({ length: granularity }).map(async (_, i) => {
+          const targetTimestamp = from.add(-interval * i, 'seconds')
+          const lowerBound = targetTimestamp.add(-interval, 'seconds')
+
+          return this.livenessRepository.findTransactionWithinTimeRange(
             ProjectId('linea'),
-            from.add(-interval * i, 'seconds'),
-            from.add(-interval * (i + 1), 'seconds'),
             LivenessType('STATE'),
-          ),
-        ),
+            targetTimestamp,
+            lowerBound,
+          )
+        }),
       )
-    ).filter(notUndefined)
+    )
+      .filter(notUndefined)
+      .map((x) => x.txHash)
 
     if (!txHashes.length) {
       return undefined
     }
 
-    const finalities = await Promise.all(
-      txHashes.map((x) => this.getFinality(x.txHash)),
-    )
-
     const minimums: number[] = []
     const maximums: number[] = []
     const averages: number[] = []
 
-    finalities.forEach((x) => {
-      minimums.push(x.minimum)
-      maximums.push(x.maximum)
-      averages.push(x.average)
-    })
+    await Promise.all(
+      txHashes.map(async (hash) => {
+        const finality = await this.getFinality(hash)
+        minimums.push(finality.minimum)
+        maximums.push(finality.maximum)
+        averages.push(finality.average)
+      }),
+    )
 
     return {
       minimum: Math.min(...minimums),
