@@ -38,15 +38,6 @@ async function main() {
 
   slugs.push('overview-detailed-scaling')
 
-  slugs.push(
-    ...[...layer2s, ...bridges]
-      .map((x) => `${x.display.slug}-detailed`)
-      .filter((slug) =>
-        // only screenshot those that were actually generated
-        existsSync(path.join('build/meta-images', slug, 'index.html')),
-      ),
-  )
-
   if (config.features.activity) {
     slugs.push('overview-scaling-activity')
   }
@@ -55,9 +46,7 @@ async function main() {
     args: ['--no-sandbox'],
   })
 
-  for (const slug of slugs) {
-    await screenshot(slug)
-  }
+  await Promise.all(slugs.map(screenshot))
 
   async function screenshot(slug: string) {
     const page = await browser.newPage()
