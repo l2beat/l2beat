@@ -29,20 +29,25 @@ const events = {
     }),
     z.object({
       type: z.literal('recurring'),
-      highlighted: z.boolean().optional(),
       title: z.string(),
       subtitle: z.string().optional(),
-      cancelledAt: z.array(z.coerce.date()).optional(),
-      startDate: z.coerce.date(),
-      endDate: z.coerce.date().optional(),
-      dayOfWeek: z.number().min(0).max(6),
-      startHour: z.number().min(0).max(23),
-      startMinute: z.number().min(0).max(59),
-      endHour: z.number().min(0).max(23),
-      endMinute: z.number().min(0).max(59),
+      sinceDate: z.coerce.date(),
+      tillDate: z.coerce.date().optional(),
       futureEventsCount: z.number().min(1),
+      dayOfWeek: z.number().min(0).max(6),
+      startDate: z.object({
+        hour: z.number().min(0).max(23),
+        minute: z.number().min(0).max(59),
+      }),
+      endDate: z
+        .object({
+          hour: z.number().min(0).max(23),
+          minute: z.number().min(0).max(59),
+        })
+        .optional(),
       location: z.string(),
       link: z.string().url(),
+      cancelledAt: z.array(z.coerce.date()).optional(),
     }),
   ]),
 } as const

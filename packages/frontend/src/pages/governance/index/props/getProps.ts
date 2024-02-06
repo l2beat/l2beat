@@ -61,5 +61,5 @@ function getEvents(events: ContentEntry<'events'>[]) {
       INDEX_PAGE_EVENTS_COUNT - highlightedFutureEvents.length,
     ),
     ...highlightedFutureEvents,
-  ]
+  ].sort((a, b) => a.startDate.getTime() - b.startDate.getTime())
 }

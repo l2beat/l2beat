@@ -27,9 +27,7 @@ export function getGovernanceEventEntries(
 ): GovernanceEventEntry[] {
   const oneTimeEvents = getOneTimeEvents(events)
 
-  return oneTimeEvents
-    .sort((a, b) => a.data.startDate.getTime() - b.data.startDate.getTime())
-    .map(getGovernanceEventEntry)
+  return oneTimeEvents.map(getGovernanceEventEntry)
 }
 
 function getGovernanceEventEntry(event: OneTimeEvent): GovernanceEventEntry {
@@ -55,13 +53,13 @@ function getOneTimeEvents(events: ContentEntry<'events'>[]): OneTimeEvent[] {
 
     const data = event.data
     const weeksSinceStart = Math.floor(
-      (Date.now() - data.startDate.getTime()) / (7 * 24 * 60 * 60 * 1000),
+      (Date.now() - data.sinceDate.getTime()) / (7 * 24 * 60 * 60 * 1000),
     )
 
-    const weeksTillEnd = data.endDate
+    const weeksTillEnd = data.tillDate
       ? clamp(
           Math.ceil(
-            (data.endDate.getTime() - Date.now()) / (7 * 24 * 60 * 60 * 1000),
+            (data.tillDate.getTime() - Date.now()) / (7 * 24 * 60 * 60 * 1000),
           ),
           event.data.futureEventsCount,
         )
@@ -90,9 +88,13 @@ function getEventForWeek(
   if (isCancelled) return
 
   const startDate = new Date(nextDate)
-  startDate.setHours(event.data.startHour, event.data.startMinute)
-  const endDate = new Date(nextDate)
-  endDate.setHours(event.data.endHour, event.data.endMinute)
+  startDate.setHours(event.data.startDate.hour, event.data.startDate.minute)
+
+  let endDate: Date | undefined
+  if (event.data.endDate) {
+    endDate = new Date(startDate)
+    endDate.setHours(event.data.endDate.hour, event.data.endDate.minute)
+  }
 
   return {
     ...event,
@@ -102,7 +104,6 @@ function getEventForWeek(
       subtitle: event.data.subtitle,
       startDate,
       endDate,
-      highlighted: event.data.highlighted,
       location: event.data.location,
       link: event.data.link,
     },
