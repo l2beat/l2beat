@@ -8,7 +8,7 @@ import {
 
 import { SequenceProcessor } from '../../../core/activity/SequenceProcessor'
 import { Clock } from '../../../core/Clock'
-import { DailyTransactionCountViewRepository } from '../../../peripherals/database/activity/DailyTransactionCountViewRepository'
+import { ActivityViewRepository } from '../../../peripherals/database/activity/ActivityViewRepository'
 import { alignActivityData } from './alignActivityData'
 import { formatActivityChart } from './formatActivityChart'
 import { postprocessCounts } from './postprocessCounts'
@@ -22,7 +22,7 @@ export class ActivityController {
   constructor(
     private readonly projectIds: ProjectId[],
     private readonly processors: SequenceProcessor[],
-    private readonly viewRepository: DailyTransactionCountViewRepository,
+    private readonly viewRepository: ActivityViewRepository,
     private readonly clock: Clock,
   ) {}
 

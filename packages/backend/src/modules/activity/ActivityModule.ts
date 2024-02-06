@@ -6,10 +6,10 @@ import { ActivityController } from '../../api/controllers/activity/ActivityContr
 import { createActivityRouter } from '../../api/routers/ActivityRouter'
 import { Config } from '../../config'
 import { ActivityConfig } from '../../config/Config'
-import { DailyTransactionCountViewRefresher } from '../../core/activity/DailyTransactionCountViewRefresher'
+import { ActivityViewRefresher } from '../../core/activity/ActivityViewRefresher'
 import { SequenceProcessor } from '../../core/activity/SequenceProcessor'
 import { Clock } from '../../core/Clock'
-import { DailyTransactionCountViewRepository } from '../../peripherals/database/activity/DailyTransactionCountViewRepository'
+import { ActivityViewRepository } from '../../peripherals/database/activity/ActivityViewRepository'
 import { Database } from '../../peripherals/database/shared/Database'
 import { ApplicationModule } from '../ApplicationModule'
 import { createSequenceProcessors } from './createSequenceProcessors'
@@ -26,10 +26,7 @@ export function createActivityModule(
     return
   }
 
-  const dailyCountViewRepository = new DailyTransactionCountViewRepository(
-    database,
-    logger,
-  )
+  const activityViewRepository = new ActivityViewRepository(database, logger)
 
   const processors = createSequenceProcessors(
     config,
@@ -39,9 +36,9 @@ export function createActivityModule(
     clock,
   )
 
-  const viewRefresher = new DailyTransactionCountViewRefresher(
+  const viewRefresher = new ActivityViewRefresher(
     processors,
-    dailyCountViewRepository,
+    activityViewRepository,
     clock,
     logger,
   )
@@ -54,7 +51,7 @@ export function createActivityModule(
   const activityController = new ActivityController(
     includedInApiProjectIds,
     processors,
-    dailyCountViewRepository,
+    activityViewRepository,
     clock,
   )
   const activityV2Router = createActivityRouter(activityController, config)

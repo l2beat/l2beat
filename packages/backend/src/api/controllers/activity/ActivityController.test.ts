@@ -9,9 +9,9 @@ import { expect, mockObject } from 'earl'
 import { SequenceProcessor } from '../../../core/activity/SequenceProcessor'
 import { Clock } from '../../../core/Clock'
 import {
+  ActivityViewRepository,
   DailyTransactionCountRecord,
-  DailyTransactionCountViewRepository,
-} from '../../../peripherals/database/activity/DailyTransactionCountViewRepository'
+} from '../../../peripherals/database/activity/ActivityViewRepository'
 import { ActivityController } from './ActivityController'
 
 const PROJECT_A = ProjectId('project-a')
@@ -251,7 +251,7 @@ function mockCounter({
 }
 
 function mockRepository(counts: DailyTransactionCountRecord[]) {
-  return mockObject<DailyTransactionCountViewRepository>({
+  return mockObject<ActivityViewRepository>({
     getDailyCounts: async () => counts,
   })
 }
