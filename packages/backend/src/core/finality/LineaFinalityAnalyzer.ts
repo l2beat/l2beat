@@ -45,9 +45,7 @@ export class LineaFinalityAnalyzer {
           )
         }),
       )
-    )
-      .filter(notUndefined)
-      .map((x) => x.txHash)
+    ).filter(notUndefined)
 
     if (!txHashes.length) {
       return undefined
