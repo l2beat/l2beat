@@ -1,12 +1,12 @@
 {
   "name": "orderly",
   "chain": "ethereum",
-  "blockNumber": 19168015,
-  "configHash": "0xb227bdf4020d0e72cec546ae14795036de147fa1e6b7f0cdaec83a2e75d708f4",
+  "blockNumber": 19169232,
+  "configHash": "0x06237091b42533bb477095e6ffc95d5e847689b7b2256cc4ac3eaf441e30b884",
   "version": 3,
   "contracts": [
     {
-      "name": "GnosisSafe",
+      "name": "OrderlyMultisig",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "upgradeability": {
         "type": "gnosis safe",
@@ -28,7 +28,8 @@
         "getThreshold": 3,
         "nonce": 11,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "L2OutputOracle",
@@ -42,82 +43,20 @@
       "sinceTimestamp": 1696608323,
       "values": {
         "CHALLENGER": "0xcE10372313Ca39Fbf75A09e7f4c0E57F070259f4",
-        "computeL2Timestamp": [
-          1696608227, 1696608229, 1696608231, 1696608233, 1696608235
-        ],
+        "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
-        "getL2Output": [
-          [
-            "0x754f96161ffad14c3b110fcda7d3f78db1410aca89fe8c0b1eaba0d18bf98ee7",
-            1696613219,
-            1800
-          ],
-          [
-            "0xa108722f6661cb3d478906f6ac330fd14c36396cd6c613556f83320c20b73099",
-            1696617059,
-            3600
-          ],
-          [
-            "0xad553c766d637d6558aec92f176e6c7cef8e72d5d739f8520c0fa38b4ceade46",
-            1696620527,
-            5400
-          ],
-          [
-            "0x4af468b97c31e6d2dd8075a99d32c2a6ad6ff08dfc119eb4c50799ce2163c937",
-            1696623971,
-            7200
-          ],
-          [
-            "0x621da14b86390489ebe3ded6f47b474b442952733064d9fcda707f103b519af4",
-            1696628195,
-            9000
-          ]
-        ],
-        "getL2OutputAfter": [
-          [
-            "0x754f96161ffad14c3b110fcda7d3f78db1410aca89fe8c0b1eaba0d18bf98ee7",
-            1696613219,
-            1800
-          ],
-          [
-            "0x754f96161ffad14c3b110fcda7d3f78db1410aca89fe8c0b1eaba0d18bf98ee7",
-            1696613219,
-            1800
-          ],
-          [
-            "0x754f96161ffad14c3b110fcda7d3f78db1410aca89fe8c0b1eaba0d18bf98ee7",
-            1696613219,
-            1800
-          ],
-          [
-            "0x754f96161ffad14c3b110fcda7d3f78db1410aca89fe8c0b1eaba0d18bf98ee7",
-            1696613219,
-            1800
-          ],
-          [
-            "0x754f96161ffad14c3b110fcda7d3f78db1410aca89fe8c0b1eaba0d18bf98ee7",
-            1696613219,
-            1800
-          ]
-        ],
-        "getL2OutputIndexAfter": [0, 0, 0, 0, 0],
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 5297400,
-        "latestOutputIndex": 2942,
-        "nextBlockNumber": 5299200,
-        "nextOutputIndex": 2943,
+        "latestBlockNumber": 5306400,
+        "latestOutputIndex": 2947,
+        "nextBlockNumber": 5308200,
+        "nextOutputIndex": 2948,
         "PROPOSER": "0x74BaD482a7f73C8286F50D8Aa03e53b7d24A5f3B",
         "startingBlockNumber": 0,
         "startingTimestamp": 1696608227,
         "SUBMISSION_INTERVAL": 1800,
         "version": "1.3.1"
       },
-      "errors": {
-        "computeL2Timestamp": "Too many values. Update configuration to explore fully",
-        "getL2Output": "Too many values. Update configuration to explore fully",
-        "getL2OutputAfter": "Too many values. Update configuration to explore fully",
-        "getL2OutputIndexAfter": "Too many values. Update configuration to explore fully"
-      }
+      "derivedName": "L2OutputOracle"
     },
     {
       "name": "AddressManager",
@@ -128,7 +67,8 @@
       "sinceTimestamp": 1696608275,
       "values": {
         "owner": "0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9"
-      }
+      },
+      "derivedName": "AddressManager"
     },
     {
       "name": "SystemConfig",
@@ -141,9 +81,13 @@
       "implementations": ["0x240B3bd6b95cE40497Aafd71aD4705d0345A33CD"],
       "sinceTimestamp": 1696608335,
       "values": {
-        "batcherHash": "0x000000000000000000000000f8db8aba597ff36ccd16fecfbb1b816b3236e9b8",
+        "batcherHash": "0xf8dB8Aba597fF36cCD16fECfbb1B816B3236E9b8",
         "gasLimit": 30000000,
         "minimumGasLimit": 21000000,
+        "opStackDA": {
+          "isAllTxsLengthEqualToCelestiaDAExample": true,
+          "isSomeTxsLengthEqualToCelestiaDAExample": true
+        },
         "overhead": 188,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "resourceConfig": [
@@ -159,7 +103,8 @@
         "unsafeBlockSigner": "0xceED24B1Fd4A4393f6A9D2B137D9597dd5482569",
         "version": "1.3.1",
         "VERSION": 0
-      }
+      },
+      "derivedName": "SystemConfig"
     },
     {
       "name": "OptimismPortal",
@@ -173,7 +118,6 @@
       "sinceTimestamp": 1696608311,
       "values": {
         "GUARDIAN": "0xcE10372313Ca39Fbf75A09e7f4c0E57F070259f4",
-        "isOutputFinalized": [true, true, true, true, true],
         "L2_ORACLE": "0x5e76821C3c1AbB9fD6E310224804556C61D860e0",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": [1000000000, 490798, 19147689],
@@ -181,9 +125,7 @@
         "SYSTEM_CONFIG": "0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664",
         "version": "1.7.2"
       },
-      "errors": {
-        "isOutputFinalized": "Too many values. Update configuration to explore fully"
-      }
+      "derivedName": "OptimismPortal"
     },
     {
       "name": "ProxyAdmin",
@@ -223,12 +165,10 @@
         "RELAY_RESERVED_GAS": 40000,
         "version": "1.4.1"
       },
-      "errors": {
-        "xDomainMessageSender": "Multicall failed"
-      }
+      "derivedName": "L1CrossDomainMessenger"
     },
     {
-      "name": "GnosisSafe",
+      "name": "ChallengerMultisig",
       "address": "0xcE10372313Ca39Fbf75A09e7f4c0E57F070259f4",
       "upgradeability": {
         "type": "gnosis safe",
@@ -251,7 +191,8 @@
         "getThreshold": 4,
         "nonce": 0,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "L1StandardBridge",
@@ -286,7 +227,8 @@
     "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
     "0xC11D658978FF288da8bda4004CB93C6C99D791b1",
     "0xceED24B1Fd4A4393f6A9D2B137D9597dd5482569",
-    "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+    "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
+    "0xf8dB8Aba597fF36cCD16fECfbb1B816B3236E9b8"
   ],
   "abis": {
     "0x240B3bd6b95cE40497Aafd71aD4705d0345A33CD": [

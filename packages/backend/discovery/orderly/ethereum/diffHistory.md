@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x6306488fbfa10c706e3b2902bac80aa96038a570
+Generated with discovered.json: 0xed80449048b08dcfa1a59551d91aab9503e3e323
 
-# Diff at Tue, 06 Feb 2024 08:29:25 GMT:
+# Diff at Tue, 06 Feb 2024 12:35:14 GMT:
 
-- author: Luca Donno (<donnoh99@gmail.com>)
-- current block number: 19168015
+- author: Radina Talanova (<radinatalanova@Radinas-MacBook-Air.local>)
+- current block number: 19169232
 
 ## Description
 
@@ -13,7 +13,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    contract OrderlyMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
     }
 ```
 
@@ -55,7 +55,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0xcE10372313Ca39Fbf75A09e7f4c0E57F070259f4) {
+    contract ChallengerMultisig (0xcE10372313Ca39Fbf75A09e7f4c0E57F070259f4) {
     }
 ```
 
