@@ -205,6 +205,7 @@ describeDatabase(LivenessRepository.name, (database) => {
 
         expect(result).toEqual(records[1].txHash)
       })
+
       it('should return tx hash for given project id and timestamp inclusive hour', async () => {
         await repository.deleteAll()
 
@@ -240,6 +241,7 @@ describeDatabase(LivenessRepository.name, (database) => {
 
         expect(result).toEqual(records[1].txHash)
       })
+
       it('should return undefined when no tx hash for given project id', async () => {
         await repository.addMany([
           {

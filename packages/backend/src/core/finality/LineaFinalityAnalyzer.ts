@@ -76,18 +76,13 @@ export class LineaFinalityAnalyzer {
     assert(tx.timestamp, 'There is no timestamp for transaction')
     const l1Timestamp = new UnixTime(tx.timestamp)
 
-    const data = tx.data
-    const fnSignature =
-      'finalizeBlocks((bytes32,uint32,bytes[],bytes32[],bytes,uint16[])[], bytes, uint256, bytes32)'
-    const iface = new utils.Interface([`function ${fnSignature}`])
-    const decodedInput = iface.decodeFunctionData(
-      fnSignature,
-      data,
-    ) as LineaDecoded
+    const decodedInput = decodeInput(tx.data)
     const timestamps = decodedInput[0].map((x) => x[1])
+
     const delays = timestamps.map(
       (l2Timestamp) => l1Timestamp.toNumber() - l2Timestamp,
     )
+
     const minimum = Math.min(...delays)
     const maximum = Math.max(...delays)
     const average = Math.round(mean(delays))
@@ -97,4 +92,15 @@ export class LineaFinalityAnalyzer {
       average,
     }
   }
+}
+
+function decodeInput(data: string) {
+  const fnSignature =
+    'finalizeBlocks((bytes32,uint32,bytes[],bytes32[],bytes,uint16[])[], bytes, uint256, bytes32)'
+  const iface = new utils.Interface([`function ${fnSignature}`])
+  const decodedInput = iface.decodeFunctionData(
+    fnSignature,
+    data,
+  ) as LineaDecoded
+  return decodedInput
 }
