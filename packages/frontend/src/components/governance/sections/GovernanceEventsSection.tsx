@@ -33,9 +33,9 @@ function Event({ event }: { event: GovernanceEventEntry }) {
     <GovernanceCard
       type={event.highlighted ? 'purple' : 'secondary'}
       size="medium"
-      className="flex h-[288px] flex-col justify-between"
+      className="flex flex-col justify-between md:h-[288px]"
     >
-      <div className="h-28">
+      <div className="md:h-28">
         {event.subtitle && (
           <p
             className={cn(
