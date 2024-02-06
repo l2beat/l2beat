@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { EventTracker } from '@l2beat/shared'
-import { assert, json } from '@l2beat/shared-pure'
+import { assert, json, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { Gauge } from 'prom-client'
 import { EventEmitter } from 'stream'
@@ -44,11 +44,15 @@ export interface SequenceProcessorOpts {
   ) => Promise<void>
   uncertaintyBuffer?: number // resync from lastProcessed - uncertaintyBuffer
   scheduleIntervalMs?: number
+  getLastProcessedTimestamp: () => Promise<UnixTime | undefined>
 }
 
 export const ALL_PROCESSED_EVENT = 'All processed'
 
 export type SequenceProcessorStatus = Record<
+  | 'lastProcessedTimestamp'
+  | 'hasProcessedAll'
+  | 'isSyncedUpToYesterdayInclusive'
   | 'latest'
   | 'lastProcessed'
   | 'scheduleIntervalMs'
@@ -78,7 +82,7 @@ export class SequenceProcessor extends EventEmitter {
   >()
 
   constructor(
-    readonly id: string,
+    readonly projectId: ProjectId,
     logger: Logger,
     private readonly repository: SequenceProcessorRepository,
     private readonly opts: SequenceProcessorOpts,
@@ -86,19 +90,19 @@ export class SequenceProcessor extends EventEmitter {
     super()
 
     assert(opts.batchSize > 0)
-    this.logger = logger.for(this).tag(this.id)
+    this.logger = logger.for(this).tag(this.projectId.toString())
     this.processQueue = new TaskQueue<void>(
       () => this.process(),
       this.logger.for('updateQueue'),
       {
-        metricsId: `${SequenceProcessor.name}_${id}`,
+        metricsId: `${SequenceProcessor.name}_${projectId.toString()}`,
       },
     )
     this.scheduleInterval = opts.scheduleIntervalMs ?? HOUR
     this.uncertaintyBuffer = opts.uncertaintyBuffer ?? 0
     activityConfig
       .labels({
-        project: this.id,
+        project: this.projectId.toString(),
         scheduleIntervalMs: this.scheduleInterval,
         uncertaintyBuffer: this.uncertaintyBuffer,
         batchSize: this.opts.batchSize,
@@ -127,9 +131,27 @@ export class SequenceProcessor extends EventEmitter {
     )
   }
 
-  getStatus(): SequenceProcessorStatus {
+  onProcessedAll(listener: () => void): void {
+    this.on(ALL_PROCESSED_EVENT, listener)
+  }
+
+  async isSyncedUpToYesterdayInclusive(now: UnixTime): Promise<boolean> {
+    const lastTimestamp = await this.opts.getLastProcessedTimestamp()
+    if (!lastTimestamp) return false
+    return this.processedAllOrToday(now, lastTimestamp)
+  }
+
+  async getStatus(now: UnixTime): Promise<SequenceProcessorStatus> {
+    const lastProcessedTimestamp = await this.opts.getLastProcessedTimestamp()
     const events = this.eventTracker.getStatus()
     return {
+      lastProcessedTimestamp:
+        lastProcessedTimestamp?.toDate().toISOString() ?? null,
+      hasProcessedAll: this.hasProcessedAll(),
+      isSyncedUpToYesterdayInclusive: this.processedAllOrToday(
+        now,
+        lastProcessedTimestamp,
+      ),
       latest: this.state?.latest ?? null,
       lastProcessed: this.state?.lastProcessed ?? null,
       scheduleIntervalMs: this.scheduleInterval,
@@ -139,6 +161,16 @@ export class SequenceProcessor extends EventEmitter {
         events.lastFiveSeconds['range succeeded'] * this.opts.batchSize,
       events,
     }
+  }
+
+  private processedAllOrToday(
+    now: UnixTime,
+    lastProcessedTimestamp: UnixTime | undefined,
+  ): boolean {
+    if (!lastProcessedTimestamp) return false
+    const lastDayWithData = lastProcessedTimestamp.toYYYYMMDD()
+    const today = now.toYYYYMMDD()
+    return lastDayWithData === today || this.hasProcessedAll()
   }
 
   private async process(): Promise<void> {
@@ -201,20 +233,24 @@ export class SequenceProcessor extends EventEmitter {
   }
 
   private async loadState(): Promise<void> {
-    const state = await this.repository.findById(this.id)
+    const state = await this.repository.findById(this.projectId.toString())
     this.state = state
   }
 
   private async setState(state: State, trx?: Knex.Transaction): Promise<void> {
     await this.repository.addOrUpdate(
       {
-        id: this.id,
+        id: this.projectId.toString(),
         ...state,
       },
       trx,
     )
-    activityLast.labels({ project: this.id }).set(state.lastProcessed)
-    activityLatest.labels({ project: this.id }).set(state.latest)
+    activityLast
+      .labels({ project: this.projectId.toString() })
+      .set(state.lastProcessed)
+    activityLatest
+      .labels({ project: this.projectId.toString() })
+      .set(state.latest)
     this.state = state
   }
 

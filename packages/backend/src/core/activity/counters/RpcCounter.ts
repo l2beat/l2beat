@@ -10,8 +10,6 @@ import { Clock } from '../../Clock'
 import { promiseAllPlus } from '../../queue/promiseAllPlus'
 import { RpcActivityTransactionConfig } from '../ActivityTransactionConfig'
 import { SequenceProcessor } from '../SequenceProcessor'
-import { TransactionCounter } from '../TransactionCounter'
-import { createBlockTransactionCounter } from './BlockTransactionCounter'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
 
 export function createRpcCounter(
@@ -21,7 +19,7 @@ export function createRpcCounter(
   logger: Logger,
   clock: Clock,
   options: RpcActivityTransactionConfig,
-): TransactionCounter {
+): SequenceProcessor {
   const batchSize = getBatchSizeFromCallsPerMinute(options.callsPerMinute)
   const provider = new providers.StaticJsonRpcProvider({
     url: options.url,
@@ -33,37 +31,32 @@ export function createRpcCounter(
     options.callsPerMinute,
   )
 
-  const processor = new SequenceProcessor(
-    projectId.toString(),
-    logger,
-    sequenceProcessorRepository,
-    {
-      batchSize,
-      startFrom: options.startBlock ?? 0,
-      getLatest: (previousLatest) =>
-        client.getBlockNumberAtOrBefore(clock.getLastHour(), previousLatest),
-      processRange: async (from, to, trx, logger) => {
-        const queries = range(from, to + 1).map((blockNumber) => async () => {
-          const block = await client.getBlock(blockNumber)
-          const timestamp = new UnixTime(block.timestamp)
+  return new SequenceProcessor(projectId, logger, sequenceProcessorRepository, {
+    batchSize,
+    startFrom: options.startBlock ?? 0,
+    getLatest: (previousLatest) =>
+      client.getBlockNumberAtOrBefore(clock.getLastHour(), previousLatest),
+    processRange: async (from, to, trx, logger) => {
+      const queries = range(from, to + 1).map((blockNumber) => async () => {
+        const block = await client.getBlock(blockNumber)
+        const timestamp = new UnixTime(block.timestamp)
 
-          return {
-            projectId,
-            blockNumber,
-            timestamp,
-            count:
-              options.assessCount?.(block.transactions.length, blockNumber) ??
-              block.transactions.length,
-          }
-        })
+        return {
+          projectId,
+          blockNumber,
+          timestamp,
+          count:
+            options.assessCount?.(block.transactions.length, blockNumber) ??
+            block.transactions.length,
+        }
+      })
 
-        const blocks = await promiseAllPlus(queries, logger, {
-          metricsId: `RpcBlockCounter_${projectId.toString()}`,
-        })
-        await blockRepository.addOrUpdateMany(blocks, trx)
-      },
+      const blocks = await promiseAllPlus(queries, logger, {
+        metricsId: `RpcBlockCounter_${projectId.toString()}`,
+      })
+      await blockRepository.addOrUpdateMany(blocks, trx)
     },
-  )
-
-  return createBlockTransactionCounter(projectId, processor, blockRepository)
+    getLastProcessedTimestamp: () =>
+      blockRepository.findLastTimestampByProjectId(projectId),
+  })
 }

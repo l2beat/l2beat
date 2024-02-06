@@ -6,7 +6,7 @@ import {
   ProjectId,
 } from '@l2beat/shared-pure'
 
-import { TransactionCounter } from '../../../core/activity/TransactionCounter'
+import { SequenceProcessor } from '../../../core/activity/SequenceProcessor'
 import { Clock } from '../../../core/Clock'
 import { DailyTransactionCountViewRepository } from '../../../peripherals/database/activity/DailyTransactionCountViewRepository'
 import { alignActivityData } from './alignActivityData'
@@ -21,7 +21,7 @@ import {
 export class ActivityController {
   constructor(
     private readonly projectIds: ProjectId[],
-    private readonly counters: TransactionCounter[],
+    private readonly processors: SequenceProcessor[],
     private readonly viewRepository: DailyTransactionCountViewRepository,
     private readonly clock: Clock,
   ) {}
@@ -84,11 +84,11 @@ export class ActivityController {
   async getStatus(): Promise<json> {
     const now = this.clock.getLastHour()
     const projects = await Promise.all(
-      this.counters.map(async (counter) => {
+      this.processors.map(async (processor) => {
         return {
-          projectId: counter.projectId.toString(),
-          includedInApi: this.projectIds.includes(counter.projectId),
-          ...(await counter.getStatus(now)),
+          projectId: processor.projectId.toString(),
+          includedInApi: this.projectIds.includes(processor.projectId),
+          ...(await processor.getStatus(now)),
         }
       }),
     )
@@ -102,7 +102,7 @@ export class ActivityController {
     const counts = await this.viewRepository.getDailyCounts()
     const result: DailyTransactionCountProjectsMap = new Map()
     const now = this.clock.getLastHour()
-    for (const counter of this.counters) {
+    for (const counter of this.processors) {
       const projectId = counter.projectId
       if (!this.projectIds.includes(projectId)) continue
       const projectCounts = counts.filter((c) => c.projectId === projectId)

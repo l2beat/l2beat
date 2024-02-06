@@ -1,4 +1,5 @@
 import { Logger, LoggerOptions } from '@l2beat/backend-tools'
+import { ProjectId } from '@l2beat/shared-pure'
 import { install, InstalledClock } from '@sinonjs/fake-timers'
 import { expect, mockFn, MockFunction } from 'earl'
 import { once } from 'events'
@@ -34,7 +35,7 @@ describeDatabase(SequenceProcessor.name, (database) => {
     reportError?: LoggerOptions['reportError']
   }) {
     return new SequenceProcessor(
-      PROCESSOR_ID,
+      ProjectId(PROCESSOR_ID),
       new Logger({
         logLevel: 'ERROR', // tests rely on error being logged -- do not change
         format: 'pretty',
@@ -48,6 +49,7 @@ describeDatabase(SequenceProcessor.name, (database) => {
         processRange,
         scheduleIntervalMs: refreshInterval,
         uncertaintyBuffer,
+        getLastProcessedTimestamp: mockFn(),
       },
     )
   }

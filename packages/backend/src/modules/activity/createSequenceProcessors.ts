@@ -10,7 +10,7 @@ import { createRpcCounter } from '../../core/activity/counters/RpcCounter'
 import { createStarkexCounter } from '../../core/activity/counters/StarkexCounter'
 import { createStarknetCounter } from '../../core/activity/counters/StarknetCounter'
 import { createZksyncCounter } from '../../core/activity/counters/ZksyncCounter'
-import { TransactionCounter } from '../../core/activity/TransactionCounter'
+import { SequenceProcessor } from '../../core/activity/SequenceProcessor'
 import { Clock } from '../../core/Clock'
 import { BlockTransactionCountRepository } from '../../peripherals/database/activity/BlockTransactionCountRepository'
 import { StarkexTransactionCountRepository } from '../../peripherals/database/activity/StarkexCountRepository'
@@ -19,13 +19,13 @@ import { SequenceProcessorRepository } from '../../peripherals/database/Sequence
 import { Database } from '../../peripherals/database/shared/Database'
 import { StarkexClient } from '../../peripherals/starkex'
 
-export function createTransactionCounters(
+export function createSequenceProcessors(
   config: Config,
   logger: Logger,
   http: HttpClient,
   database: Database,
   clock: Clock,
-): TransactionCounter[] {
+): SequenceProcessor[] {
   assert(config.activity)
   const {
     activity: {

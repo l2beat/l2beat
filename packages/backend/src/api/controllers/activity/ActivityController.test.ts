@@ -6,7 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import { TransactionCounter } from '../../../core/activity/TransactionCounter'
+import { SequenceProcessor } from '../../../core/activity/SequenceProcessor'
 import { Clock } from '../../../core/Clock'
 import {
   DailyTransactionCountRecord,
@@ -23,7 +23,7 @@ describe(ActivityController.name, () => {
   describe(ActivityController.prototype.getActivity.name, () => {
     it('throws if ethereum not present in db', async () => {
       const includedIds: ProjectId[] = [PROJECT_A, ProjectId.ETHEREUM]
-      const counters: TransactionCounter[] = [
+      const counters: SequenceProcessor[] = [
         mockCounter({
           projectId: PROJECT_A,
           hasProcessedAll: true,
@@ -47,7 +47,7 @@ describe(ActivityController.name, () => {
 
     it('returns only included projects', async () => {
       const includedIds: ProjectId[] = [ProjectId.ETHEREUM, PROJECT_A]
-      const counters: TransactionCounter[] = [
+      const counters: SequenceProcessor[] = [
         mockCounter({
           projectId: PROJECT_A,
           hasProcessedAll: true,
@@ -133,7 +133,7 @@ describe(ActivityController.name, () => {
         PROJECT_B,
         ProjectId.ETHEREUM,
       ]
-      const counters: TransactionCounter[] = [
+      const counters: SequenceProcessor[] = [
         mockCounter({
           projectId: PROJECT_A,
           hasProcessedAll: true,
@@ -244,7 +244,7 @@ function mockCounter({
   hasProcessedAll: boolean
   projectId: ProjectId
 }) {
-  return mockObject<TransactionCounter>({
+  return mockObject<SequenceProcessor>({
     hasProcessedAll: () => hasProcessedAll,
     projectId,
   })
