@@ -70,5 +70,21 @@ export function getMetaImagePages(
         ),
       }
     }),
-  ])
+  ]).concat(
+    included.map((project) => {
+      const { props, wrapper } = getPropsDetailed(
+        tvlApiResponse,
+        project,
+        'layers2s',
+      )
+      return {
+        slug: `/meta-images/${project.display.slug}-detailed`,
+        page: (
+          <PageWrapper {...wrapper}>
+            <DetailedTvlMetaImage {...props} />
+          </PageWrapper>
+        ),
+      }
+    }),
+  )
 }
