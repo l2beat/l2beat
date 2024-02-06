@@ -131,8 +131,8 @@ export const amarok: Bridge = {
         'Contract for sending/receiving messages from mainnet to Polygon via Polygon FxChannel AMB.',
       ),
       discovery.getContractDetails(
-          'PolygonZkHubConnector',
-          'Contract for sending/receiving messages from mainnet to PolygonZKEVM via PolygonZKEVM AMB.',
+        'PolygonZkHubConnector',
+        'Contract for sending/receiving messages from mainnet to PolygonZKEVM via PolygonZKEVM AMB.',
       ),
       discovery.getContractDetails(
         'GnosisHubConnector',
@@ -144,16 +144,16 @@ export const amarok: Bridge = {
         as soon as Optimism state root is recorded on Ethereum w/out waiting for the 7-day fraud proof delay window.',
       ),
       discovery.getContractDetails(
-          'NewOptimismHubConnector',
-          'Contract for sending/receiving messages from mainnet to Optimism, duplicate of OptimismHubConnector.',
+        'NewOptimismHubConnector',
+        'Contract for sending/receiving messages from mainnet to Optimism, duplicate of OptimismHubConnector.',
       ),
       discovery.getContractDetails(
-          'MantleHubConnector',
-          'Contract for sending/receiving messages from mainnet to Mantle via Optimism AMB.',
+        'MantleHubConnector',
+        'Contract for sending/receiving messages from mainnet to Mantle via Optimism AMB.',
       ),
       discovery.getContractDetails(
-          'OptimismV0HubConnector',
-          'Contract for sending/receiving messages from mainnet to pre-bedrock Optimism based projects via Optimism AMB.',
+        'OptimismV0HubConnector',
+        'Contract for sending/receiving messages from mainnet to pre-bedrock Optimism based projects via Optimism AMB.',
       ),
       discovery.getContractDetails(
         'ArbitrumHubConnector',
@@ -172,8 +172,8 @@ export const amarok: Bridge = {
         'Contract for sending/receiving messages from mainnet to Linea via Linea AMB.',
       ),
       discovery.getContractDetails(
-          'ZkSyncHubConnector',
-          'Contract for sending/receiving messages from mainnet to ZkSync via ZkSync AMB.',
+        'ZkSyncHubConnector',
+        'Contract for sending/receiving messages from mainnet to ZkSync via ZkSync AMB.',
       ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
