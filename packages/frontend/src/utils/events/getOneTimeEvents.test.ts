@@ -53,15 +53,15 @@ describe(getOneTimeEvents.name, () => {
         expect(events).toEqual([
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2020-12-09T12:00:00.000Z') },
+            data: { startDate: new Date('2020-12-09T13:00:00.000Z') },
           }),
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2020-12-16T12:00:00.000Z') },
+            data: { startDate: new Date('2020-12-16T13:00:00.000Z') },
           }),
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2020-12-23T12:00:00.000Z') },
+            data: { startDate: new Date('2020-12-23T13:00:00.000Z') },
           }),
         ])
       })
@@ -79,35 +79,35 @@ describe(getOneTimeEvents.name, () => {
         expect(events).toEqual([
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2020-12-09T12:00:00.000Z') },
+            data: { startDate: new Date('2020-12-09T13:00:00.000Z') },
           }),
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2020-12-16T12:00:00.000Z') },
+            data: { startDate: new Date('2020-12-16T13:00:00.000Z') },
           }),
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2020-12-23T12:00:00.000Z') },
+            data: { startDate: new Date('2020-12-23T13:00:00.000Z') },
           }),
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2020-12-30T12:00:00.000Z') },
+            data: { startDate: new Date('2020-12-30T13:00:00.000Z') },
           }),
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2021-01-06T12:00:00.000Z') },
+            data: { startDate: new Date('2021-01-06T13:00:00.000Z') },
           }),
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2021-01-13T12:00:00.000Z') },
+            data: { startDate: new Date('2021-01-13T13:00:00.000Z') },
           }),
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2021-01-20T12:00:00.000Z') },
+            data: { startDate: new Date('2021-01-20T13:00:00.000Z') },
           }),
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2021-01-27T12:00:00.000Z') },
+            data: { startDate: new Date('2021-01-27T13:00:00.000Z') },
           }),
         ])
       })
@@ -125,27 +125,27 @@ describe(getOneTimeEvents.name, () => {
         expect(events).toEqual([
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2020-12-09T12:00:00.000Z') },
+            data: { startDate: new Date('2020-12-09T13:00:00.000Z') },
           }),
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2020-12-16T12:00:00.000Z') },
+            data: { startDate: new Date('2020-12-16T13:00:00.000Z') },
           }),
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2020-12-23T12:00:00.000Z') },
+            data: { startDate: new Date('2020-12-23T13:00:00.000Z') },
           }),
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2020-12-30T12:00:00.000Z') },
+            data: { startDate: new Date('2020-12-30T13:00:00.000Z') },
           }),
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2021-01-06T12:00:00.000Z') },
+            data: { startDate: new Date('2021-01-06T13:00:00.000Z') },
           }),
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2021-01-13T12:00:00.000Z') },
+            data: { startDate: new Date('2021-01-13T13:00:00.000Z') },
           }),
         ])
       })
@@ -162,27 +162,27 @@ describe(getOneTimeEvents.name, () => {
         expect(events).toEqual([
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2020-12-09T12:00:00.000Z') },
+            data: { startDate: new Date('2020-12-09T13:00:00.000Z') },
           }),
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2020-12-16T12:00:00.000Z') },
+            data: { startDate: new Date('2020-12-16T13:00:00.000Z') },
           }),
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2020-12-23T12:00:00.000Z') },
+            data: { startDate: new Date('2020-12-23T13:00:00.000Z') },
           }),
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2020-12-30T12:00:00.000Z') },
+            data: { startDate: new Date('2020-12-30T13:00:00.000Z') },
           }),
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2021-01-06T12:00:00.000Z') },
+            data: { startDate: new Date('2021-01-06T13:00:00.000Z') },
           }),
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2021-01-13T12:00:00.000Z') },
+            data: { startDate: new Date('2021-01-13T13:00:00.000Z') },
           }),
         ])
       })
@@ -202,15 +202,15 @@ describe(getOneTimeEvents.name, () => {
         expect(events).toEqual([
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2021-01-13T12:00:00.000Z') },
+            data: { startDate: new Date('2021-01-13T13:00:00.000Z') },
           }),
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2021-01-20T12:00:00.000Z') },
+            data: { startDate: new Date('2021-01-20T13:00:00.000Z') },
           }),
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2021-01-27T12:00:00.000Z') },
+            data: { startDate: new Date('2021-01-27T13:00:00.000Z') },
           }),
         ])
       })
@@ -228,11 +228,11 @@ describe(getOneTimeEvents.name, () => {
         expect(events).toEqual([
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2021-01-13T12:00:00.000Z') },
+            data: { startDate: new Date('2021-01-13T13:00:00.000Z') },
           }),
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2021-01-20T12:00:00.000Z') },
+            data: { startDate: new Date('2021-01-20T13:00:00.000Z') },
           }),
         ])
       })
@@ -250,11 +250,11 @@ describe(getOneTimeEvents.name, () => {
         expect(events).toEqual([
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2021-01-13T12:00:00.000Z') },
+            data: { startDate: new Date('2021-01-13T13:00:00.000Z') },
           }),
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2021-01-20T12:00:00.000Z') },
+            data: { startDate: new Date('2021-01-20T13:00:00.000Z') },
           }),
         ])
       })
@@ -270,11 +270,11 @@ describe(getOneTimeEvents.name, () => {
         expect(events).toEqual([
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2021-04-28T11:00:00.000Z') },
+            data: { startDate: new Date('2021-04-28T13:00:00.000Z') },
           }),
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2021-05-12T11:00:00.000Z') },
+            data: { startDate: new Date('2021-05-12T13:00:00.000Z') },
           }),
         ])
       })
@@ -290,7 +290,7 @@ describe(getOneTimeEvents.name, () => {
         expect(events).toEqual([
           oneTimeEvent({
             id: event.id,
-            data: { startDate: new Date('2021-05-05T11:00:00.000Z') },
+            data: { startDate: new Date('2021-05-05T13:00:00.000Z') },
           }),
         ])
       })

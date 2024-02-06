@@ -69,12 +69,12 @@ function getEventForWeek(
   if (isCancelled) return
 
   const startDate = new Date(nextDate)
-  startDate.setHours(event.data.startDate.hour, event.data.startDate.minute)
+  startDate.setUTCHours(event.data.startDate.hour, event.data.startDate.minute)
 
   let endDate: Date | undefined
   if (event.data.endDate) {
     endDate = new Date(startDate)
-    endDate.setHours(event.data.endDate.hour, event.data.endDate.minute)
+    endDate.setUTCHours(event.data.endDate.hour, event.data.endDate.minute)
   }
 
   return {
