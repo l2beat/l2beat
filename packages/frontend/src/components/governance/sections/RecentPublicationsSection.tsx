@@ -3,6 +3,7 @@ import React from 'react'
 import { GovernancePublicationEntry } from '../../../pages/governance/index/props/getGovernancePublicationEntry'
 import { Button } from '../../Button'
 import { LinkWithThumbnail } from '../../LinkWithThumbnail'
+import { OutLink } from '../../OutLink'
 import { GovernanceCard, GovernanceCardHeader } from '../GovernanceCard'
 
 interface Props {
@@ -29,15 +30,11 @@ export function RecentPublicationsSection({ publications, className }: Props) {
 
 function ExploreAllButton({ className }: { className?: string }) {
   return (
-    <Button
-      as="a"
-      className={className}
-      variant="purple"
-      size="sm"
-      href="https://medium.com/l2beat"
-    >
-      Explore all publications
-    </Button>
+    <OutLink href="https://medium.com/l2beat">
+      <Button className={className} variant="purple" size="sm">
+        Explore all publications
+      </Button>
+    </OutLink>
   )
 }
 

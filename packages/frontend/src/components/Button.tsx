@@ -1,5 +1,5 @@
 import { cva, VariantProps } from 'class-variance-authority'
-import React, { ComponentPropsWithoutRef } from 'react'
+import React from 'react'
 
 import { cn } from '../utils/cn'
 
@@ -23,29 +23,18 @@ const buttonVariants = cva(
   },
 )
 
-type Props<T extends React.ElementType> = {
+type Props = {
   children: React.ReactNode
-  as?: T
   className?: string
-} & ComponentPropsWithoutRef<T> &
-  VariantProps<typeof buttonVariants>
+} & VariantProps<typeof buttonVariants>
 
-export function Button<T extends React.ElementType>({
-  children,
-  as,
-  className,
-  variant,
-  size,
-  ...rest
-}: Props<T>) {
-  const Comp = as ?? 'div'
-
+export function Button({ children, className, variant, size, ...rest }: Props) {
   return (
-    <Comp
+    <button
       className={cn(buttonVariants({ variant, size }), className)}
       {...rest}
     >
       {children}
-    </Comp>
+    </button>
   )
 }
