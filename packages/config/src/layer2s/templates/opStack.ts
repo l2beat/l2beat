@@ -266,7 +266,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
           ...technologyDA(templateVars.daProvider).references,
           {
             text: 'Derivation: Batch submission - OP Mainnet specs',
-            href: 'https://github.com/ethereum-optimism/optimism/blob/develop/specs/derivation.md#batch-submission',
+            href: 'https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md',
           },
           {
             text: 'BatchInbox - Etherscan address',
