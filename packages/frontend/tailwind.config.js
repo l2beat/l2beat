@@ -58,12 +58,14 @@ module.exports = {
         'red-dark': '#BD114F',
         black: '#222222',
       },
+      'pure-white': '#FFFFFF',
       white: '#FAFAFA',
       neutral: {
         700: '#323539',
         900: '#131215',
       },
       zinc: {
+        300: '#DBDBDB',
         500: '#5F6470',
         700: '#393C43',
         800: '#272A2F',

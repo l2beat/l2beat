@@ -1,7 +1,8 @@
 import { KnowledgeNugget } from '@l2beat/config'
 import React from 'react'
 
-import { KnowledgeNuggetItem } from './KnowledgeNuggetItem'
+import { getKnowledgeNuggetThumbnail } from '../../utils/project/getKnowledgeNuggetThumbnail'
+import { LinkWithThumbnail } from '../LinkWithThumbnail'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
 import { ProjectSectionId } from './sectionId'
 
@@ -27,7 +28,12 @@ export function KnowledgeNuggetsSection({
     >
       <div className="flex flex-col gap-4">
         {knowledgeNuggets.map((nugget) => (
-          <KnowledgeNuggetItem knowledgeNugget={nugget} key={nugget.title} />
+          <LinkWithThumbnail
+            src={getKnowledgeNuggetThumbnail(nugget)}
+            href={nugget.url}
+            title={nugget.title}
+            key={nugget.title}
+          />
         ))}
       </div>
     </ProjectDetailsSection>
