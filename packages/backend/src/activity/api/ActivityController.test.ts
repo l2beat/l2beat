@@ -6,12 +6,12 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import { SequenceProcessor } from '../../../core/activity/SequenceProcessor'
-import { Clock } from '../../../core/Clock'
+import { Clock } from '../../core/Clock'
 import {
   ActivityViewRepository,
   DailyTransactionCountRecord,
-} from '../../../peripherals/database/activity/ActivityViewRepository'
+} from '../repositories/ActivityViewRepository'
+import { SequenceProcessor } from '../SequenceProcessor'
 import { ActivityController } from './ActivityController'
 
 const PROJECT_A = ProjectId('project-a')

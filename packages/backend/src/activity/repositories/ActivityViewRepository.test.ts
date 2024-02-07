@@ -3,7 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { groupBy, mapValues, omit } from 'lodash'
 
-import { describeDatabase } from '../../../test/database'
+import { describeDatabase } from '../../test/database'
 import {
   ActivityViewRepository,
   DailyTransactionCountRecord,

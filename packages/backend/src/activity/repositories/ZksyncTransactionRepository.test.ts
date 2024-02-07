@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { describeDatabase } from '../../../test/database'
+import { describeDatabase } from '../../test/database'
 import { ZksyncTransactionRepository } from './ZksyncTransactionRepository'
 
 describeDatabase(ZksyncTransactionRepository.name, (database) => {

@@ -5,10 +5,10 @@ import { expect, mockObject } from 'earl'
 import { Knex } from 'knex'
 import waitForExpect from 'wait-for-expect'
 
-import { StarkexTransactionCountRepository } from '../../../peripherals/database/activity/StarkexCountRepository'
-import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
-import { StarkexClient } from '../../../peripherals/starkex'
-import { Clock } from '../../Clock'
+import { Clock } from '../../core/Clock'
+import { StarkexClient } from '../../peripherals/starkex'
+import { SequenceProcessorRepository } from '../repositories/SequenceProcessorRepository'
+import { StarkexTransactionCountRepository } from '../repositories/StarkexCountRepository'
 import { StarkexCounter } from './StarkexCounter'
 
 describe(StarkexCounter.name, () => {

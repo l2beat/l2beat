@@ -1,10 +1,10 @@
 import Router from '@koa/router'
 import { z } from 'zod'
 
+import { withTypedContext } from '../../api/routers/types'
 import { Config } from '../../config'
 import { Project } from '../../model'
-import { ActivityController } from '../controllers/activity/ActivityController'
-import { withTypedContext } from './types'
+import { ActivityController } from './ActivityController'
 
 export function createActivityRouter(
   activityController: ActivityController,

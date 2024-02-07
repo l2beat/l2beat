@@ -5,8 +5,11 @@ import {
   ProjectsAggregatedDailyCountRow,
 } from 'knex/types/tables'
 
-import { BaseRepository, CheckConvention } from '../shared/BaseRepository'
-import { Database } from '../shared/Database'
+import {
+  BaseRepository,
+  CheckConvention,
+} from '../../peripherals/database/shared/BaseRepository'
+import { Database } from '../../peripherals/database/shared/Database'
 
 export interface DailyTransactionCountRecord {
   projectId: ProjectId

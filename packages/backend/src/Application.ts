@@ -1,10 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
 import { HttpClient } from '@l2beat/shared'
 
+import { createActivityModule } from './activity/ActivityModule'
 import { ApiServer } from './api/ApiServer'
 import { Config } from './config'
 import { Clock } from './core/Clock'
-import { createActivityModule } from './modules/activity/ActivityModule'
 import { ApplicationModule } from './modules/ApplicationModule'
 import { createDiffHistoryModule } from './modules/diff-history/createDiffHistoryModule'
 import { createFinalityModule } from './modules/finality/FinalityModule'

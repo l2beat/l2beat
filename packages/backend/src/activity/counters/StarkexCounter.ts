@@ -3,11 +3,11 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { range } from 'lodash'
 
-import { StarkexTransactionCountRepository } from '../../../peripherals/database/activity/StarkexCountRepository'
-import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
-import { StarkexClient } from '../../../peripherals/starkex'
-import { Clock } from '../../Clock'
-import { promiseAllPlus } from '../../queue/promiseAllPlus'
+import { Clock } from '../../core/Clock'
+import { promiseAllPlus } from '../../core/queue/promiseAllPlus'
+import { StarkexClient } from '../../peripherals/starkex'
+import { SequenceProcessorRepository } from '../repositories/SequenceProcessorRepository'
+import { StarkexTransactionCountRepository } from '../repositories/StarkexCountRepository'
 import { SequenceProcessor } from '../SequenceProcessor'
 
 export class StarkexCounter extends SequenceProcessor {

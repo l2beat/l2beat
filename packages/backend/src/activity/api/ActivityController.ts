@@ -6,9 +6,9 @@ import {
   ProjectId,
 } from '@l2beat/shared-pure'
 
-import { SequenceProcessor } from '../../../core/activity/SequenceProcessor'
-import { Clock } from '../../../core/Clock'
-import { ActivityViewRepository } from '../../../peripherals/database/activity/ActivityViewRepository'
+import { Clock } from '../../core/Clock'
+import { ActivityViewRepository } from '../repositories/ActivityViewRepository'
+import { SequenceProcessor } from '../SequenceProcessor'
 import { alignActivityData } from './alignActivityData'
 import { formatActivityChart } from './formatActivityChart'
 import { postprocessCounts } from './postprocessCounts'

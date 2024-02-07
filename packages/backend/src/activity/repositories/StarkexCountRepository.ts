@@ -3,9 +3,12 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { StarkexTransactionCountRow } from 'knex/types/tables'
 
-import { BaseRepository, CheckConvention } from '../shared/BaseRepository'
-import { Database } from '../shared/Database'
-import { NullableDict } from '../shared/types'
+import {
+  BaseRepository,
+  CheckConvention,
+} from '../../peripherals/database/shared/BaseRepository'
+import { Database } from '../../peripherals/database/shared/Database'
+import { NullableDict } from '../../peripherals/database/shared/types'
 
 export interface StarkexTransactionCountRecord {
   timestamp: UnixTime

@@ -3,10 +3,10 @@ import { ProjectId } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { range } from 'lodash'
 
-import { AztecClient } from '../../../peripherals/aztec'
-import { BlockTransactionCountRepository } from '../../../peripherals/database/activity/BlockTransactionCountRepository'
-import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
-import { promiseAllPlus } from '../../queue/promiseAllPlus'
+import { promiseAllPlus } from '../../core/queue/promiseAllPlus'
+import { AztecClient } from '../../peripherals/aztec'
+import { BlockTransactionCountRepository } from '../repositories/BlockTransactionCountRepository'
+import { SequenceProcessorRepository } from '../repositories/SequenceProcessorRepository'
 import { SequenceProcessor } from '../SequenceProcessor'
 
 export class AztecCounter extends SequenceProcessor {

@@ -3,10 +3,10 @@ import { ProjectId } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { range } from 'lodash'
 
-import { ZksyncTransactionRepository } from '../../../peripherals/database/activity/ZksyncTransactionRepository'
-import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
-import { ZksyncClient } from '../../../peripherals/zksync'
-import { promiseAllPlus } from '../../queue/promiseAllPlus'
+import { promiseAllPlus } from '../../core/queue/promiseAllPlus'
+import { ZksyncClient } from '../../peripherals/zksync'
+import { SequenceProcessorRepository } from '../repositories/SequenceProcessorRepository'
+import { ZksyncTransactionRepository } from '../repositories/ZksyncTransactionRepository'
 import { SequenceProcessor } from '../SequenceProcessor'
 
 export class ZksyncCounter extends SequenceProcessor {

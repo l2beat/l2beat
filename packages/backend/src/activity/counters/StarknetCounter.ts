@@ -3,41 +3,38 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { range } from 'lodash'
 
-import { BlockTransactionCountRepository } from '../../../peripherals/database/activity/BlockTransactionCountRepository'
-import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
-import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
-import { Clock } from '../../Clock'
-import { promiseAllPlus } from '../../queue/promiseAllPlus'
+import { Clock } from '../../core/Clock'
+import { promiseAllPlus } from '../../core/queue/promiseAllPlus'
+import { StarknetClient } from '../../peripherals/starknet/StarknetClient'
+import { BlockTransactionCountRepository } from '../repositories/BlockTransactionCountRepository'
+import { SequenceProcessorRepository } from '../repositories/SequenceProcessorRepository'
 import { SequenceProcessor } from '../SequenceProcessor'
 
-export class RpcCounter extends SequenceProcessor {
+export class StarknetCounter extends SequenceProcessor {
   constructor(
     projectId: ProjectId,
     sequenceProcessorRepository: SequenceProcessorRepository,
     private readonly blockRepository: BlockTransactionCountRepository,
-    private readonly rpcClient: RpcClient,
+    private readonly starknetClient: StarknetClient,
     private readonly clock: Clock,
     logger: Logger,
-    private readonly assessCount:
-      | ((count: number, blockNumber: number) => number)
-      | undefined,
     batchSize: number,
-    startFrom = 0,
   ) {
     super(
       projectId,
       sequenceProcessorRepository,
-      { batchSize, startFrom },
+      { batchSize, startFrom: 0 },
       logger,
     )
     this.logger = this.logger.for(this)
   }
 
   protected override async getLatest(current: number): Promise<number> {
-    return this.rpcClient.getBlockNumberAtOrBefore(
+    const blockNumber = await this.starknetClient.getBlockNumberAtOrBefore(
       this.clock.getLastHour(),
       current,
     )
+    return blockNumber
   }
 
   protected override async processRange(
@@ -46,21 +43,18 @@ export class RpcCounter extends SequenceProcessor {
     trx: Knex.Transaction,
   ) {
     const queries = range(from, to + 1).map((blockNumber) => async () => {
-      const block = await this.rpcClient.getBlock(blockNumber)
-      const timestamp = new UnixTime(block.timestamp)
+      const block = await this.starknetClient.getBlock(blockNumber)
 
       return {
         projectId: this.projectId,
-        blockNumber,
-        timestamp,
-        count:
-          this.assessCount?.(block.transactions.length, blockNumber) ??
-          block.transactions.length,
+        blockNumber: block.number,
+        count: block.transactions.length,
+        timestamp: new UnixTime(block.timestamp),
       }
     })
 
     const blocks = await promiseAllPlus(queries, this.logger, {
-      metricsId: `RpcBlockCounter_${this.projectId.toString()}`,
+      metricsId: 'StarknetBlockCounter',
     })
     await this.blockRepository.addOrUpdateMany(blocks, trx)
   }

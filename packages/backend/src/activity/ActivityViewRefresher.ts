@@ -1,8 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
 
-import { ActivityViewRepository } from '../../peripherals/database/activity/ActivityViewRepository'
-import { Clock } from '../Clock'
-import { TaskQueue } from '../queue/TaskQueue'
+import { Clock } from '../core/Clock'
+import { TaskQueue } from '../core/queue/TaskQueue'
+import { ActivityViewRepository } from './repositories/ActivityViewRepository'
 import { SequenceProcessor } from './SequenceProcessor'
 
 export class ActivityViewRefresher {

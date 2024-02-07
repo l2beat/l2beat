@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { ActivityConfig } from '../../config/Config'
+import { ActivityConfig } from '../config/Config'
 import { createActivityModule, shouldIncludeProject } from './ActivityModule'
 
 const ENV_CONFIG: ActivityConfig = {

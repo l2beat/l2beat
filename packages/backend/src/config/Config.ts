@@ -3,7 +3,7 @@ import { DiscoveryChainConfig } from '@l2beat/discovery'
 import { ChainId, ProjectId, Token, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
-import { ActivityTransactionConfig } from '../core/activity/ActivityTransactionConfig'
+import { ActivityTransactionConfig } from '../activity/ActivityTransactionConfig'
 import { Project } from '../model'
 import { MulticallConfigEntry } from '../peripherals/multicall/types'
 import { ResolvedFeatureFlag } from './FeatureFlags'
