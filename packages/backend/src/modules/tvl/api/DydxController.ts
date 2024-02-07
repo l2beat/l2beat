@@ -1,6 +1,6 @@
 import { ProjectId } from '@l2beat/shared-pure'
 
-import { AggregatedReportRepository } from '../../../peripherals/database/AggregatedReportRepository'
+import { AggregatedReportRepository } from '../repositories/AggregatedReportRepository'
 import { asNumber } from './asNumber'
 
 export class DydxController {

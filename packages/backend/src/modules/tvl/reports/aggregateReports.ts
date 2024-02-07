@@ -5,8 +5,8 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { AggregatedReportRecord } from '../../../peripherals/database/AggregatedReportRepository'
-import { ReportRecord } from '../../../peripherals/database/ReportRepository'
+import { AggregatedReportRecord } from '../repositories/AggregatedReportRepository'
+import { ReportRecord } from '../repositories/ReportRepository'
 import { ReportProject } from './ReportProject'
 import { ReportTree } from './reportTree'
 

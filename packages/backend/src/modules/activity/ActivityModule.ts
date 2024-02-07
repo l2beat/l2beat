@@ -4,7 +4,7 @@ import { ProjectId } from '@l2beat/shared-pure'
 
 import { Config } from '../../config'
 import { ActivityConfig } from '../../config/Config'
-import { Database } from '../../peripherals/database/shared/Database'
+import { Database } from '../../peripherals/database/Database'
 import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
 import { ActivityViewRefresher } from './ActivityViewRefresher'

@@ -17,13 +17,13 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { AggregatedReportRepository } from '../../../peripherals/database/AggregatedReportRepository'
-import { AggregatedReportStatusRepository } from '../../../peripherals/database/AggregatedReportStatusRepository'
-import { BalanceRepository } from '../../../peripherals/database/BalanceRepository'
-import { PriceRepository } from '../../../peripherals/database/PriceRepository'
-import { ReportRepository } from '../../../peripherals/database/ReportRepository'
 import { TaskQueue } from '../../../tools/queue/TaskQueue'
 import { ReportProject } from '../reports/ReportProject'
+import { AggregatedReportRepository } from '../repositories/AggregatedReportRepository'
+import { AggregatedReportStatusRepository } from '../repositories/AggregatedReportStatusRepository'
+import { BalanceRepository } from '../repositories/BalanceRepository'
+import { PriceRepository } from '../repositories/PriceRepository'
+import { ReportRepository } from '../repositories/ReportRepository'
 import { asNumber } from './asNumber'
 import { getProjectAssetChartData } from './charts'
 import { generateTvlApiResponse } from './generateTvlApiResponse'

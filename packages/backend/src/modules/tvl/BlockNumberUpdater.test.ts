@@ -5,9 +5,9 @@ import { expect, mockFn, mockObject } from 'earl'
 import { setTimeout } from 'timers/promises'
 import waitForExpect from 'wait-for-expect'
 
-import { BlockNumberRepository } from '../../peripherals/database/BlockNumberRepository'
 import { Clock } from '../../tools/Clock'
 import { BlockNumberUpdater } from './BlockNumberUpdater'
+import { BlockNumberRepository } from './repositories/BlockNumberRepository'
 
 describe(BlockNumberUpdater.name, () => {
   describe(BlockNumberUpdater.prototype.start.name, () => {

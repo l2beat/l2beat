@@ -2,7 +2,7 @@ import { ConfigReader, DiscoveryDiff } from '@l2beat/discovery'
 import { ChainId } from '@l2beat/shared-pure'
 
 import { Project } from '../../../../../model'
-import { UpdateMonitorRepository } from '../../../../../peripherals/database/discovery/UpdateMonitorRepository'
+import { UpdateMonitorRepository } from '../../../../update-monitor/repositories/UpdateMonitorRepository'
 import { getDashboardContracts } from './getDashboardContracts'
 import { getDiff } from './utils/getDiff'
 

@@ -2,11 +2,6 @@ import { Logger } from '@l2beat/backend-tools'
 import { assert, ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
-import {
-  ReportRecord,
-  ReportRepository,
-} from '../../../peripherals/database/ReportRepository'
-import { ReportStatusRepository } from '../../../peripherals/database/ReportStatusRepository'
 import { Clock } from '../../../tools/Clock'
 import { TaskQueue } from '../../../tools/queue/TaskQueue'
 import { UpdaterStatus } from '../../status/api/view/TvlStatusPage'
@@ -16,6 +11,11 @@ import { createReports } from '../reports/createReports'
 import { getReportConfigHash } from '../reports/getReportConfigHash'
 import { getStatus } from '../reports/getStatus'
 import { ReportProject } from '../reports/ReportProject'
+import {
+  ReportRecord,
+  ReportRepository,
+} from '../repositories/ReportRepository'
+import { ReportStatusRepository } from '../repositories/ReportStatusRepository'
 import { ReportUpdater } from './Updater'
 
 export class CBVUpdater implements ReportUpdater {

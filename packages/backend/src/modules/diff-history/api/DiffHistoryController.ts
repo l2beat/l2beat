@@ -1,8 +1,8 @@
 import { ConfigReader, diffDiscovery, DiscoveryDiff } from '@l2beat/discovery'
 import { DiffHistoryApiResponse, DiscoveryHistory } from '@l2beat/shared-pure'
 
-import { DiscoveryHistoryRepository } from '../../../peripherals/database/discovery/DiscoveryHistoryRepository'
 import { ChainConverter } from '../../../tools/ChainConverter'
+import { DiscoveryHistoryRepository } from '../../update-monitor/repositories/DiscoveryHistoryRepository'
 
 export class DiffHistoryController {
   constructor(

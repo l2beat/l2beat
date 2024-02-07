@@ -10,7 +10,6 @@ import {
 import { BigNumber, utils } from 'ethers'
 import { partition } from 'lodash'
 
-import { BalanceRecord } from '../../../peripherals/database/BalanceRepository'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import {
   ETHEREUM_MULTICALL_V1_ADDRESS,
@@ -21,6 +20,7 @@ import {
   MulticallResponse,
 } from '../../../peripherals/multicall/types'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
+import { BalanceRecord } from '../repositories/BalanceRepository'
 
 const erc20Interface = new utils.Interface([
   'function balanceOf(address account) view returns (uint256)',

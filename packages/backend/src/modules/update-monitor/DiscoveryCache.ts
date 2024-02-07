@@ -1,6 +1,6 @@
 import { DiscoveryCache as DiscoveryCacheInterface } from '@l2beat/discovery'
 
-import { DiscoveryCacheRepository } from '../../peripherals/database/DiscoveryCacheRepository'
+import { DiscoveryCacheRepository } from './repositories/DiscoveryCacheRepository'
 
 export class DiscoveryCache implements DiscoveryCacheInterface {
   constructor(private readonly repository: DiscoveryCacheRepository) {}

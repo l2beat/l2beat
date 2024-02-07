@@ -3,7 +3,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
 import { Knex } from 'knex'
 
-import { IndexerStateRepository } from '../../peripherals/database/IndexerStateRepository'
+import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
 import { HourlyIndexer } from './HourlyIndexer'
 import { LivenessClient } from './LivenessClient'
 import { LivenessConfigurationRepository } from './repositories/LivenessConfigurationRepository'

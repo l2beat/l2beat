@@ -6,9 +6,9 @@ import { StarkexTransactionCountRow } from 'knex/types/tables'
 import {
   BaseRepository,
   CheckConvention,
-} from '../../../peripherals/database/shared/BaseRepository'
-import { Database } from '../../../peripherals/database/shared/Database'
-import { NullableDict } from '../../../peripherals/database/shared/types'
+} from '../../../peripherals/database/BaseRepository'
+import { Database } from '../../../peripherals/database/Database'
+import { NullableDict } from '../../../peripherals/database/types'
 
 export interface StarkexTransactionCountRecord {
   timestamp: UnixTime

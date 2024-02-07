@@ -12,11 +12,11 @@ import { expect, mockFn, mockObject } from 'earl'
 import { setTimeout } from 'timers/promises'
 import waitForExpect from 'wait-for-expect'
 
+import { Clock } from '../../../tools/Clock'
 import {
   CirculatingSupplyRecord,
   CirculatingSupplyRepository,
-} from '../../../peripherals/database/CirculatingSupplyRepository'
-import { Clock } from '../../../tools/Clock'
+} from '../repositories/CirculatingSupplyRepository'
 import { CirculatingSupplyUpdater } from './CirculatingSupplyUpdater'
 
 const chainId = ChainId.ETHEREUM

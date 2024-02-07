@@ -1,7 +1,7 @@
 import { DiscoveryDiff } from '@l2beat/discovery'
 import { EthereumAddress } from '@l2beat/shared-pure'
 
-import { UpdateNotifierRecord } from '../../peripherals/database/discovery/UpdateNotifierRepository'
+import { UpdateNotifierRecord } from './repositories/UpdateNotifierRepository'
 
 const DEFAULT_OCCURRENCE_LIMIT = 3
 

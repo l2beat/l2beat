@@ -1,7 +1,7 @@
 import { AssetId, ChainId, ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { REPORTS_MOCK as MOCK } from '../../../test/mockReports'
+import { REPORTS_MOCK as MOCK } from '../test/mockReports'
 import { aggregateBalancesPerProject, createReports } from './createReports'
 
 describe(createReports.name, () => {

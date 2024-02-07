@@ -6,7 +6,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { ReportRecord } from '../../../peripherals/database/ReportRepository'
+import { ReportRecord } from '../repositories/ReportRepository'
 
 export interface BalancePerProject {
   assetId: AssetId

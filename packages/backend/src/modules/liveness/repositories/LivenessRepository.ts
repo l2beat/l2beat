@@ -6,8 +6,8 @@ import { LivenessRow } from 'knex/types/tables'
 import {
   BaseRepository,
   CheckConvention,
-} from '../../../peripherals/database/shared/BaseRepository'
-import { Database } from '../../../peripherals/database/shared/Database'
+} from '../../../peripherals/database/BaseRepository'
+import { Database } from '../../../peripherals/database/Database'
 import { LivenessId } from '../types/LivenessId'
 
 export interface LivenessRecord {

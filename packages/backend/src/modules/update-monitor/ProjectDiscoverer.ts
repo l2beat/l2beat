@@ -3,11 +3,11 @@ import { ConfigReader, DiscoveryConfig } from '@l2beat/discovery'
 import { UnixTime } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
-import { DiscoveryHistoryRepository } from '../../peripherals/database/discovery/DiscoveryHistoryRepository'
 import { ChainConverter } from '../../tools/ChainConverter'
 import { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 import { DiscoveryRunner } from './DiscoveryRunner'
+import { DiscoveryHistoryRepository } from './repositories/DiscoveryHistoryRepository'
 
 export class ProjectDiscoverer {
   private readonly taskQueue: TaskQueue<UnixTime>

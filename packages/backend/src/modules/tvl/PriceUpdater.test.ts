@@ -12,12 +12,9 @@ import { expect, mockFn, mockObject } from 'earl'
 import { setTimeout } from 'timers/promises'
 import waitForExpect from 'wait-for-expect'
 
-import {
-  PriceRecord,
-  PriceRepository,
-} from '../../peripherals/database/PriceRepository'
 import { Clock } from '../../tools/Clock'
 import { PriceUpdater } from './PriceUpdater'
+import { PriceRecord, PriceRepository } from './repositories/PriceRepository'
 
 describe(PriceUpdater.name, () => {
   const HOUR_09 = UnixTime.fromDate(new Date('2021-09-07T09:00:00Z'))

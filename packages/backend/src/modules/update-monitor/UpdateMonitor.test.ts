@@ -12,13 +12,13 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import {
-  UpdateMonitorRecord,
-  UpdateMonitorRepository,
-} from '../../peripherals/database/discovery/UpdateMonitorRepository'
 import { ChainConverter } from '../../tools/ChainConverter'
 import { Clock } from '../../tools/Clock'
 import { DiscoveryRunner, DiscoveryRunnerOptions } from './DiscoveryRunner'
+import {
+  UpdateMonitorRecord,
+  UpdateMonitorRepository,
+} from './repositories/UpdateMonitorRepository'
 import { UpdateMonitor } from './UpdateMonitor'
 import { UpdateMetadata, UpdateNotifier } from './UpdateNotifier'
 

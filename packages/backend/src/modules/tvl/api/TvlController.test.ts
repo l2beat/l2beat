@@ -13,24 +13,21 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
+import { ReportProject } from '../reports/ReportProject'
 import {
   AggregatedReportRecord,
   AggregatedReportRepository,
-} from '../../../peripherals/database/AggregatedReportRepository'
-import { AggregatedReportStatusRepository } from '../../../peripherals/database/AggregatedReportStatusRepository'
+} from '../repositories/AggregatedReportRepository'
+import { AggregatedReportStatusRepository } from '../repositories/AggregatedReportStatusRepository'
 import {
   BalanceRecord,
   BalanceRepository,
-} from '../../../peripherals/database/BalanceRepository'
-import {
-  PriceRecord,
-  PriceRepository,
-} from '../../../peripherals/database/PriceRepository'
+} from '../repositories/BalanceRepository'
+import { PriceRecord, PriceRepository } from '../repositories/PriceRepository'
 import {
   ReportRecord,
   ReportRepository,
-} from '../../../peripherals/database/ReportRepository'
-import { ReportProject } from '../reports/ReportProject'
+} from '../repositories/ReportRepository'
 import { getProjectAssetChartData } from './charts'
 import { TvlController } from './TvlController'
 

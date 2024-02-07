@@ -8,15 +8,15 @@ import {
 import { UnixTime } from '@l2beat/shared-pure'
 
 import { Config } from '../../config'
-import { DiscoveryHistoryRepository } from '../../peripherals/database/discovery/DiscoveryHistoryRepository'
-import { DiscoveryCacheRepository } from '../../peripherals/database/DiscoveryCacheRepository'
-import { Database } from '../../peripherals/database/shared/Database'
+import { Database } from '../../peripherals/database/Database'
 import { ChainConverter } from '../../tools/ChainConverter'
 import { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 import { ApplicationModule } from '../ApplicationModule'
 import { createDiscoveryRunner } from '../update-monitor/createDiscoveryRunner'
 import { ProjectDiscoverer } from '../update-monitor/ProjectDiscoverer'
+import { DiscoveryCacheRepository } from '../update-monitor/repositories/DiscoveryCacheRepository'
+import { DiscoveryHistoryRepository } from '../update-monitor/repositories/DiscoveryHistoryRepository'
 import { DiffHistoryController } from './api/DiffHistoryController'
 import { createDiffHistoryRouter } from './api/DiffHistoryRouter'
 

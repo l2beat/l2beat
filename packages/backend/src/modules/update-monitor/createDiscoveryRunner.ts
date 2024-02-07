@@ -14,9 +14,9 @@ import {
 import { providers } from 'ethers'
 
 import { UpdateMonitorChainConfig } from '../../config/Config'
-import { DiscoveryCacheRepository } from '../../peripherals/database/DiscoveryCacheRepository'
 import { DiscoveryCache } from './DiscoveryCache'
 import { DiscoveryRunner } from './DiscoveryRunner'
+import { DiscoveryCacheRepository } from './repositories/DiscoveryCacheRepository'
 
 export function createDiscoveryRunner(
   http: HttpClient,

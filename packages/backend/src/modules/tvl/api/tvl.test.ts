@@ -2,7 +2,7 @@ import { AssetId, ChainId, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describe } from 'mocha'
 
-import { ReportRecord } from '../../../peripherals/database/ReportRepository'
+import { ReportRecord } from '../repositories/ReportRepository'
 import { getProjectTokensCharts, groupByProjectIdAndAssetType } from './tvl'
 
 describe('tvl', () => {

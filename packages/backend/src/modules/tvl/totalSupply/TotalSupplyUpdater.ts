@@ -9,16 +9,16 @@ import {
 } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
-import {
-  TotalSupplyRecord,
-  TotalSupplyRepository,
-} from '../../../peripherals/database/TotalSupplyRepository'
-import { TotalSupplyStatusRepository } from '../../../peripherals/database/TotalSupplyStatusRepository'
 import { Clock } from '../../../tools/Clock'
 import { TaskQueue } from '../../../tools/queue/TaskQueue'
 import { UpdaterStatus } from '../../status/api/view/TvlStatusPage'
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { getStatus } from '../reports/getStatus'
+import {
+  TotalSupplyRecord,
+  TotalSupplyRepository,
+} from '../repositories/TotalSupplyRepository'
+import { TotalSupplyStatusRepository } from '../repositories/TotalSupplyStatusRepository'
 import { getTotalSupplyConfigHash } from './getTotalSupplyConfigHash'
 import { TotalSupplyProvider, TotalSupplyQuery } from './TotalSupplyProvider'
 

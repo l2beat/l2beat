@@ -10,15 +10,15 @@ import {
 } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
-import {
-  CirculatingSupplyRecord,
-  CirculatingSupplyRepository,
-  DataBoundary,
-} from '../../../peripherals/database/CirculatingSupplyRepository'
 import { Clock } from '../../../tools/Clock'
 import { TaskQueue } from '../../../tools/queue/TaskQueue'
 import { UpdaterStatus } from '../../status/api/view/TvlStatusPage'
 import { getStatus } from '../reports/getStatus'
+import {
+  CirculatingSupplyRecord,
+  CirculatingSupplyRepository,
+  DataBoundary,
+} from '../repositories/CirculatingSupplyRepository'
 
 export class CirculatingSupplyUpdater {
   private readonly knownSet = new Set<number>()

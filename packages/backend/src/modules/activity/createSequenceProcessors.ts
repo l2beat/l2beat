@@ -6,7 +6,7 @@ import { Gauge } from 'prom-client'
 
 import { Config } from '../../config'
 import { AztecClient } from '../../peripherals/aztec'
-import { Database } from '../../peripherals/database/shared/Database'
+import { Database } from '../../peripherals/database/Database'
 import { LoopringClient } from '../../peripherals/loopring'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { StarkexClient } from '../../peripherals/starkex'

@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import React from 'react'
 
-import { IndexerStateRecord } from '../../../../peripherals/database/IndexerStateRepository'
+import { IndexerStateRecord } from '../../../../peripherals/database/repositories/IndexerStateRepository'
 import { LivenessConfigurationRecord } from '../../../liveness/repositories/LivenessConfigurationRepository'
 import { LivenessId } from '../../../liveness/types/LivenessId'
 import { LivenessConfigurationCard } from './components/LivenessConfigurationCard'

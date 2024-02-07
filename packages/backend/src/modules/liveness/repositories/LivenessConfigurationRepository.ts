@@ -6,8 +6,8 @@ import { LivenessConfigurationRow } from 'knex/types/tables'
 import {
   BaseRepository,
   CheckConvention,
-} from '../../../peripherals/database/shared/BaseRepository'
-import { Database } from '../../../peripherals/database/shared/Database'
+} from '../../../peripherals/database/BaseRepository'
+import { Database } from '../../../peripherals/database/Database'
 import { LivenessConfigEntry } from '../types/LivenessConfig'
 import { LivenessId } from '../types/LivenessId'
 

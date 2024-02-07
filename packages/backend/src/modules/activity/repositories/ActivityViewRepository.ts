@@ -8,8 +8,8 @@ import {
 import {
   BaseRepository,
   CheckConvention,
-} from '../../../peripherals/database/shared/BaseRepository'
-import { Database } from '../../../peripherals/database/shared/Database'
+} from '../../../peripherals/database/BaseRepository'
+import { Database } from '../../../peripherals/database/Database'
 
 export interface DailyTransactionCountRecord {
   projectId: ProjectId

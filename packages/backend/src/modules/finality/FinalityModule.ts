@@ -1,8 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
 
 import { Config } from '../../config'
-import { IndexerStateRepository } from '../../peripherals/database/IndexerStateRepository'
-import { Database } from '../../peripherals/database/shared/Database'
+import { Database } from '../../peripherals/database/Database'
+import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
 import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
 import { LivenessRepository } from '../liveness/repositories/LivenessRepository'

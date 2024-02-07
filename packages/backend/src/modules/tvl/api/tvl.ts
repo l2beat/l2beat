@@ -12,10 +12,10 @@ import {
 } from '@l2beat/shared-pure'
 import { Dictionary, mapValues } from 'lodash'
 
-import { BalanceRecord } from '../../../peripherals/database/BalanceRepository'
-import { PriceRecord } from '../../../peripherals/database/PriceRepository'
-import { ReportRecord } from '../../../peripherals/database/ReportRepository'
 import { ReportProject } from '../reports/ReportProject'
+import { BalanceRecord } from '../repositories/BalanceRepository'
+import { PriceRecord } from '../repositories/PriceRepository'
+import { ReportRecord } from '../repositories/ReportRepository'
 import { asNumber } from './asNumber'
 import { groupByAndOmit, nestedGroupBy } from './grouping'
 

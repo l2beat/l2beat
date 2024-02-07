@@ -1,9 +1,9 @@
 import { assert, AssetId, ChainId, ProjectId, Token } from '@l2beat/shared-pure'
 
-import { CirculatingSupplyRecord } from '../../../peripherals/database/CirculatingSupplyRepository'
-import { PriceRecord } from '../../../peripherals/database/PriceRepository'
-import { ReportRecord } from '../../../peripherals/database/ReportRepository'
-import { TotalSupplyRecord } from '../../../peripherals/database/TotalSupplyRepository'
+import { CirculatingSupplyRecord } from '../repositories/CirculatingSupplyRepository'
+import { PriceRecord } from '../repositories/PriceRepository'
+import { ReportRecord } from '../repositories/ReportRepository'
+import { TotalSupplyRecord } from '../repositories/TotalSupplyRepository'
 import { BalancePerProject, createReport } from './createReport'
 
 export function createFormulaReports(

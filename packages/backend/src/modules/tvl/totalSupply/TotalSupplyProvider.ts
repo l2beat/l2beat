@@ -7,9 +7,9 @@ import {
 } from '@l2beat/shared-pure'
 import { BigNumber, utils } from 'ethers'
 
-import { TotalSupplyRecord } from '../../../peripherals/database/TotalSupplyRepository'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { MulticallRequest } from '../../../peripherals/multicall/types'
+import { TotalSupplyRecord } from '../repositories/TotalSupplyRepository'
 
 export interface TotalSupplyQuery {
   assetId: AssetId

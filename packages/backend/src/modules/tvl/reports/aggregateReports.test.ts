@@ -8,8 +8,8 @@ import {
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { AggregatedReportRecord } from '../../../peripherals/database/AggregatedReportRepository'
-import { ReportRecord } from '../../../peripherals/database/ReportRepository'
+import { AggregatedReportRecord } from '../repositories/AggregatedReportRepository'
+import { ReportRecord } from '../repositories/ReportRepository'
 import { aggregateReports } from './aggregateReports'
 import { ReportProject } from './ReportProject'
 

@@ -9,15 +9,15 @@ import {
 } from '@l2beat/shared-pure'
 
 import { Project } from '../../../model'
-import { BalanceStatusRecord } from '../../../peripherals/database/BalanceStatusRepository'
-import { UpdateMonitorRepository } from '../../../peripherals/database/discovery/UpdateMonitorRepository'
-import { IndexerStateRepository } from '../../../peripherals/database/IndexerStateRepository'
-import { ReportStatusRecord } from '../../../peripherals/database/ReportStatusRepository'
-import { TotalSupplyStatusRepository } from '../../../peripherals/database/TotalSupplyStatusRepository'
+import { IndexerStateRepository } from '../../../peripherals/database/repositories/IndexerStateRepository'
 import { ChainConverter } from '../../../tools/ChainConverter'
 import { Clock } from '../../../tools/Clock'
 import { LivenessConfigurationRepository } from '../../liveness/repositories/LivenessConfigurationRepository'
+import { BalanceStatusRecord } from '../../tvl/repositories/BalanceStatusRepository'
+import { ReportStatusRecord } from '../../tvl/repositories/ReportStatusRepository'
+import { TotalSupplyStatusRepository } from '../../tvl/repositories/TotalSupplyStatusRepository'
 import { getTotalSupplyConfigHash } from '../../tvl/totalSupply/getTotalSupplyConfigHash'
+import { UpdateMonitorRepository } from '../../update-monitor/repositories/UpdateMonitorRepository'
 import { getDashboardContracts } from './discovery/props/getDashboardContracts'
 import {
   DashboardProject,

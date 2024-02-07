@@ -8,7 +8,7 @@ import {
 import { expect, mockObject } from 'earl'
 
 import { Project } from '../../../model'
-import { IndexerStateRepository } from '../../../peripherals/database/IndexerStateRepository'
+import { IndexerStateRepository } from '../../../peripherals/database/repositories/IndexerStateRepository'
 import { Clock } from '../../../tools/Clock'
 import {
   LivenessRecordWithProjectIdAndType,

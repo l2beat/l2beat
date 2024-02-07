@@ -9,15 +9,15 @@ import {
 } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
-import {
-  DataBoundary,
-  PriceRecord,
-  PriceRepository,
-} from '../../peripherals/database/PriceRepository'
 import { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 import { UpdaterStatus } from '../status/api/view/TvlStatusPage'
 import { getStatus } from './reports/getStatus'
+import {
+  DataBoundary,
+  PriceRecord,
+  PriceRepository,
+} from './repositories/PriceRepository'
 
 export class PriceUpdater {
   private readonly knownSet = new Set<number>()

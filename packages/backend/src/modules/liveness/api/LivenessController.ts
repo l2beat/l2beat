@@ -6,7 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 
 import { Project } from '../../../model'
-import { IndexerStateRepository } from '../../../peripherals/database/IndexerStateRepository'
+import { IndexerStateRepository } from '../../../peripherals/database/repositories/IndexerStateRepository'
 import { Clock } from '../../../tools/Clock'
 import { LivenessRepository } from '../repositories/LivenessRepository'
 import { calculateAnomaliesPerProject } from './calculateAnomalies'

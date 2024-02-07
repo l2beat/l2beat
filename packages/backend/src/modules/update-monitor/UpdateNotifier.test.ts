@@ -3,12 +3,12 @@ import { DiscoveryDiff } from '@l2beat/discovery'
 import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import { UpdateNotifierRepository } from '../../peripherals/database/discovery/UpdateNotifierRepository'
 import {
   DiscordClient,
   MAX_MESSAGE_LENGTH,
 } from '../../peripherals/discord/DiscordClient'
 import { ChainConverter } from '../../tools/ChainConverter'
+import { UpdateNotifierRepository } from './repositories/UpdateNotifierRepository'
 import { UpdateNotifier } from './UpdateNotifier'
 
 const BLOCK = 123
