@@ -41,7 +41,7 @@ export class LivenessIndexer extends ChildIndexer {
     const [configurations, adjustedTo] = await this.getConfiguration(from, to)
 
     if (configurations.length === 0) {
-      this.logger.info('Update skipped', { from, to: adjustedTo })
+      this.logger.debug('Update skipped', { from, to: adjustedTo })
       return adjustedTo.toNumber()
     }
 
