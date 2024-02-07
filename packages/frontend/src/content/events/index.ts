@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { defineCollection } from '../defineCollection'
+
 export const OneTimeEvent = z.object({
   type: z.literal('one-time'),
   highlighted: z.boolean().optional(),
@@ -34,6 +36,7 @@ export const RecurringEvent = z.object({
   cancelledAt: z.array(z.coerce.date()).optional(),
 })
 
-export const eventsContent = {
+export const eventsCollection = defineCollection({
+  type: 'data',
   schema: z.discriminatedUnion('type', [OneTimeEvent, RecurringEvent]),
-} as const
+})

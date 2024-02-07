@@ -5,6 +5,7 @@ import { getBridgesSummaryPage } from './bridges/summary'
 import { getDonatePage } from './donate'
 import { getFaqPage } from './faq'
 import { getGovernancePage } from './governance/index'
+import { getGovernancePublicationPages } from './governance/publication'
 import { getL2DaysPage } from './l2days'
 import { getL3sProjectPages } from './layer3s'
 import { getMetaImagePages } from './meta-images'
@@ -93,6 +94,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
 
   if (config.features.governancePage) {
     pages.push(getGovernancePage(config))
+    pages.push(...getGovernancePublicationPages(config))
   }
 
   outputPages(pages)

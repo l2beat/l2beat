@@ -46,7 +46,7 @@ function Publication({ publication }: PublicationProps) {
   return (
     <LinkWithThumbnail
       src={`/images/thumbnails/${publication.id}.png`}
-      href={publication.link}
+      href={`/governance/publications/${publication.id}`}
       title={publication.title}
     />
   )

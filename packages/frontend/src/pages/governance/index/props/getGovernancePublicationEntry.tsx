@@ -1,4 +1,4 @@
-import { ContentEntry } from '../../../../content/getContent'
+import { CollectionEntry } from '../../../../content/getCollection'
 
 export interface GovernancePublicationEntry {
   id: string
@@ -7,7 +7,7 @@ export interface GovernancePublicationEntry {
 }
 
 export function getGovernancePublicationEntry(
-  post: ContentEntry<'publications'>,
+  post: CollectionEntry<'publications'>,
 ): GovernancePublicationEntry {
   return {
     id: post.id,

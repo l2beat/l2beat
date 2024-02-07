@@ -1,8 +1,11 @@
 import { z } from 'zod'
 
-export const delegatedProjectsContent = {
+import { defineCollection } from '../defineCollection'
+
+export const delegatedProjectsCollection = defineCollection({
+  type: 'data',
   schema: z.object({
     name: z.string(),
     delegateTokensUrl: z.string().url(),
   }),
-} as const
+})

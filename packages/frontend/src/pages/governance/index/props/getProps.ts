@@ -1,6 +1,9 @@
 import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
-import { ContentEntry, getContent } from '../../../../content/getContent'
+import {
+  CollectionEntry,
+  getCollection,
+} from '../../../../content/getCollection'
 import { Wrapped } from '../../../Page'
 import { GovernancePageProps } from '../view/GovernancePage'
 import { getGovernanceDelegatedProjectEntry } from './getGovernanceDelegatedProjectEntry'
@@ -13,9 +16,9 @@ const INDEX_PAGE_PUBLICATIONS_COUNT = 8
 const INDEX_PAGE_MAX_HIGHLIGHTED_EVENTS = 4
 
 export function getProps(config: Config): Wrapped<GovernancePageProps> {
-  const publications = getContent('publications')
-  const events = getContent('events')
-  const delegatedProjects = getContent('delegatedProjects')
+  const publications = getCollection('publications')
+  const events = getCollection('events')
+  const delegatedProjects = getCollection('delegatedProjects')
 
   return {
     props: {
@@ -34,7 +37,7 @@ export function getProps(config: Config): Wrapped<GovernancePageProps> {
   }
 }
 
-function getPublications(publications: ContentEntry<'publications'>[]) {
+function getPublications(publications: CollectionEntry<'publications'>[]) {
   return publications
     .sort((a, b) => {
       return b.data.publishedOn.getTime() - a.data.publishedOn.getTime()
@@ -43,7 +46,7 @@ function getPublications(publications: ContentEntry<'publications'>[]) {
     .map(getGovernancePublicationEntry)
 }
 
-function getEvents(events: ContentEntry<'events'>[]) {
+function getEvents(events: CollectionEntry<'events'>[]) {
   const futureEvents = getGovernanceEventEntries(events).filter(
     (event) => event.startDate.getTime() > Date.now(),
   )
