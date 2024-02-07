@@ -40,7 +40,14 @@ export const aevo: Layer2 = opStack({
       url: 'https://explorer.aevo.xyz/api',
       type: 'blockscout',
     },
-    multicallContracts: [],
+    multicallContracts: [
+      {
+        sinceBlock: 2790111,
+        batchSize: 150,
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        version: '3',
+      },
+    ],
     minTimestampForTvl: UnixTime.fromDate(new Date('2023-09-05T03:00:00Z')),
   },
   upgradeability,
