@@ -25,6 +25,7 @@ export class FinalityIndexer extends ChildIndexer {
 
   override async start(): Promise<void> {
     this.logger.info('Starting...')
+    await this.initialize()
     await super.start()
   }
 
@@ -98,6 +99,10 @@ export class FinalityIndexer extends ChildIndexer {
     })
     const data = await Promise.all(finalityPromises)
     return data.filter(notUndefined)
+  }
+
+  private async initialize() {
+    await this.initializeIndexerState(this.minTimestamp.toNumber())
   }
 
   async initializeIndexerState(safeHeight: number, trx?: Knex.Transaction) {
