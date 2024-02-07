@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xbcd016acfa6a5334e97a079167a85f47a1a34222
+Generated with discovered.json: 0x1bfd88e8a84f5b16a6ef0f7978717f4177dac648
 
-# Diff at Tue, 06 Feb 2024 07:27:11 GMT:
+# Diff at Wed, 07 Feb 2024 10:24:15 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current block number: 19167709
+- current block number: 19175701
 
 ## Description
 
@@ -43,30 +43,18 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract RootERC20BridgeFlowRate (0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6) {
+    contract Bridge (0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6) {
     }
 ```
 
 ```diff
 +   Status: CREATED
-    contract WETH9 (0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2) {
-    }
-```
-
-```diff
-+   Status: CREATED
-    contract GnosisSafe (0xD2C37fC6fD89563187f3679304975655e448D192) {
+    contract OwnerMultisig (0xD2C37fC6fD89563187f3679304975655e448D192) {
     }
 ```
 
 ```diff
 +   Status: CREATED
     contract ProxyAdmin (0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8) {
-    }
-```
-
-```diff
-+   Status: CREATED
-    contract IMXToken (0xF57e7e7C23978C3cAEC3C3548E3D615c346e79fF) {
     }
 ```
