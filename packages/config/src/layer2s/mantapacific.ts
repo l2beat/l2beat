@@ -97,7 +97,7 @@ export const mantapacific: Layer2 = opStack({
       accounts: [discovery.getPermissionedAccount('SystemConfig', 'owner')],
       description:
         'Owner of the SystemConfig and configured as the Challenger and Guardian of the system.',
-    }
+    },
   ],
   nonTemplateContracts: [],
   nonTemplateEscrows: [],
