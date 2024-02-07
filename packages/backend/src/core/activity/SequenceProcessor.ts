@@ -1,12 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
-import { EventTracker } from '@l2beat/shared'
-import { assert, json } from '@l2beat/shared-pure'
+import { assert, ProjectId } from '@l2beat/shared-pure'
+import { EventEmitter } from 'events'
 import { Knex } from 'knex'
 import { Gauge } from 'prom-client'
-import { EventEmitter } from 'stream'
 
-import { SequenceProcessorRepository } from '../peripherals/database/SequenceProcessorRepository'
-import { TaskQueue } from './queue/TaskQueue'
+import { SequenceProcessorRepository } from '../../peripherals/database/SequenceProcessorRepository'
+import { TaskQueue } from '../queue/TaskQueue'
 
 const activityLast = new Gauge({
   name: 'activity_last_synced',
@@ -34,30 +33,11 @@ const activityConfig = new Gauge({
 export interface SequenceProcessorOpts {
   startFrom: number
   batchSize: number
-  getLatest: (previousLatest: number) => Promise<number> | number
-  processRange: (
-    // [from, to] <- ranges are inclusive
-    from: number,
-    to: number,
-    trx: Knex.Transaction,
-    logger: Logger, // logger with properly set name
-  ) => Promise<void>
   uncertaintyBuffer?: number // resync from lastProcessed - uncertaintyBuffer
   scheduleIntervalMs?: number
 }
 
 export const ALL_PROCESSED_EVENT = 'All processed'
-
-export type SequenceProcessorStatus = Record<
-  | 'latest'
-  | 'lastProcessed'
-  | 'scheduleIntervalMs'
-  | 'isProcessing'
-  | 'batchSize'
-  | 'events'
-  | 'processedLastFiveSeconds',
-  json
->
 
 const HOUR = 1000 * 60 * 60
 
@@ -66,39 +46,43 @@ interface State {
   lastProcessed: number
 }
 
-export class SequenceProcessor extends EventEmitter {
+export abstract class SequenceProcessor extends EventEmitter {
   private readonly processQueue: TaskQueue<void>
   private readonly scheduleInterval: number
   private readonly uncertaintyBuffer: number
-  private readonly logger: Logger
   private state?: State
   private refreshId: NodeJS.Timer | undefined
-  private readonly eventTracker = new EventTracker<
-    'range started' | 'range succeeded' | 'range failed'
-  >()
+
+  protected abstract getLatest(current: number): Promise<number>
+  protected abstract processRange(
+    from: number, // inclusive
+    to: number, // inclusive
+    trx: Knex.Transaction,
+  ): Promise<void>
 
   constructor(
-    readonly id: string,
-    logger: Logger,
+    readonly projectId: ProjectId,
     private readonly repository: SequenceProcessorRepository,
     private readonly opts: SequenceProcessorOpts,
+    protected logger: Logger,
   ) {
     super()
 
     assert(opts.batchSize > 0)
-    this.logger = logger.for(this).tag(this.id)
+
     this.processQueue = new TaskQueue<void>(
       () => this.process(),
       this.logger.for('updateQueue'),
       {
-        metricsId: `${SequenceProcessor.name}_${id}`,
+        metricsId: `${SequenceProcessor.name}_${projectId.toString()}`,
       },
     )
     this.scheduleInterval = opts.scheduleIntervalMs ?? HOUR
     this.uncertaintyBuffer = opts.uncertaintyBuffer ?? 0
+
     activityConfig
       .labels({
-        project: this.id,
+        project: this.projectId.toString(),
         scheduleIntervalMs: this.scheduleInterval,
         uncertaintyBuffer: this.uncertaintyBuffer,
         batchSize: this.opts.batchSize,
@@ -127,17 +111,15 @@ export class SequenceProcessor extends EventEmitter {
     )
   }
 
-  getStatus(): SequenceProcessorStatus {
-    const events = this.eventTracker.getStatus()
+  onProcessedAll(listener: () => void): void {
+    this.on(ALL_PROCESSED_EVENT, listener)
+  }
+
+  getStatus() {
     return {
       latest: this.state?.latest ?? null,
       lastProcessed: this.state?.lastProcessed ?? null,
-      scheduleIntervalMs: this.scheduleInterval,
       isProcessing: !this.processQueue.isEmpty(),
-      batchSize: this.opts.batchSize,
-      processedLastFiveSeconds:
-        events.lastFiveSeconds['range succeeded'] * this.opts.batchSize,
-      events,
     }
   }
 
@@ -156,7 +138,7 @@ export class SequenceProcessor extends EventEmitter {
       let from = lastProcessed ? lastProcessed + 1 : startFrom
 
       const previousLatest = this.state?.latest ?? startFrom
-      const latest = await this.opts.getLatest(previousLatest)
+      const latest = await this.getLatest(previousLatest)
       this.logger.info('Fetched latest block', {
         latest,
         previousLatest,
@@ -175,7 +157,12 @@ export class SequenceProcessor extends EventEmitter {
 
       for (; from <= latest; from += this.opts.batchSize) {
         const to = Math.min(from + this.opts.batchSize - 1, latest)
-        await this.processRange(from, to, latest)
+        this.logger.info('Processing range started', { from, to })
+        await this.repository.runInTransaction(async (trx) => {
+          await this.processRange(from, to, trx)
+          await this.setState({ lastProcessed: to, latest }, trx)
+        })
+        this.logger.info('Processing range finished', { from, to })
       }
       firstRun = false
     }
@@ -184,37 +171,25 @@ export class SequenceProcessor extends EventEmitter {
     this.emit(ALL_PROCESSED_EVENT)
   }
 
-  private async processRange(from: number, to: number, latest: number) {
-    this.logger.info('Processing range started', { from, to })
-    try {
-      this.eventTracker.record('range started')
-      await this.repository.runInTransaction(async (trx) => {
-        await this.opts.processRange(from, to, trx, this.logger)
-        await this.setState({ lastProcessed: to, latest }, trx)
-      })
-      this.eventTracker.record('range succeeded')
-    } catch (error) {
-      this.eventTracker.record('range failed')
-      throw error
-    }
-    this.logger.info('Processing range finished', { from, to })
-  }
-
   private async loadState(): Promise<void> {
-    const state = await this.repository.findById(this.id)
+    const state = await this.repository.findById(this.projectId.toString())
     this.state = state
   }
 
   private async setState(state: State, trx?: Knex.Transaction): Promise<void> {
     await this.repository.addOrUpdate(
       {
-        id: this.id,
+        id: this.projectId.toString(),
         ...state,
       },
       trx,
     )
-    activityLast.labels({ project: this.id }).set(state.lastProcessed)
-    activityLatest.labels({ project: this.id }).set(state.latest)
+    activityLast
+      .labels({ project: this.projectId.toString() })
+      .set(state.lastProcessed)
+    activityLatest
+      .labels({ project: this.projectId.toString() })
+      .set(state.latest)
     this.state = state
   }
 

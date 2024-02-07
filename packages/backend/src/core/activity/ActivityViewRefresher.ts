@@ -1,15 +1,15 @@
 import { Logger } from '@l2beat/backend-tools'
 
-import { DailyTransactionCountViewRepository } from '../../peripherals/database/activity/DailyTransactionCountViewRepository'
+import { ActivityViewRepository } from '../../peripherals/database/activity/ActivityViewRepository'
 import { Clock } from '../Clock'
 import { TaskQueue } from '../queue/TaskQueue'
-import { TransactionCounter } from './TransactionCounter'
+import { SequenceProcessor } from './SequenceProcessor'
 
-export class DailyTransactionCountViewRefresher {
+export class ActivityViewRefresher {
   private readonly refreshQueue: TaskQueue<void>
   constructor(
-    private readonly counters: TransactionCounter[],
-    private readonly viewRepository: DailyTransactionCountViewRepository,
+    private readonly processors: SequenceProcessor[],
+    private readonly viewRepository: ActivityViewRepository,
     private readonly clock: Clock,
     private readonly logger: Logger,
   ) {
@@ -21,17 +21,18 @@ export class DailyTransactionCountViewRefresher {
         this.logger.info('Refresh finished')
       },
       this.logger.for('refreshQueue'),
-      { metricsId: DailyTransactionCountViewRefresher.name },
+      // TODO: rename to 'ActivityViewRefresher' and update grafana
+      { metricsId: 'DailyTransactionCountViewRefresher' },
     )
   }
 
   start() {
     this.logger.info('Started')
-    this.counters.forEach((counter) =>
-      counter.onProcessedAll(() => {
-        this.logger.info(
-          `Processed all for project ${counter.projectId.toString()} - scheduling refresh`,
-        )
+    this.processors.forEach((processor) =>
+      processor.onProcessedAll(() => {
+        this.logger.info('Scheduling refresh', {
+          processedProject: processor.projectId.toString(),
+        })
         this.refreshQueue.addIfEmpty()
       }),
     )

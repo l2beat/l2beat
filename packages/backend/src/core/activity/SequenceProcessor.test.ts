@@ -1,20 +1,19 @@
 import { Logger, LoggerOptions } from '@l2beat/backend-tools'
+import { ProjectId } from '@l2beat/shared-pure'
 import { install, InstalledClock } from '@sinonjs/fake-timers'
 import { expect, mockFn, MockFunction } from 'earl'
 import { once } from 'events'
 
-import { SequenceProcessorRepository } from '../peripherals/database/SequenceProcessorRepository'
-import { describeDatabase } from '../test/database'
-import {
-  ALL_PROCESSED_EVENT,
-  SequenceProcessor,
-  SequenceProcessorOpts,
-} from './SequenceProcessor'
+import { SequenceProcessorRepository } from '../../peripherals/database/SequenceProcessorRepository'
+import { describeDatabase } from '../../test/database'
+import { ALL_PROCESSED_EVENT, SequenceProcessor } from './SequenceProcessor'
 
 describeDatabase(SequenceProcessor.name, (database) => {
   const repository = new SequenceProcessorRepository(database, Logger.SILENT)
   const PROCESSOR_ID = 'test'
   let sequenceProcessor: SequenceProcessor
+
+  type ProcessRange = (from: number, to: number, trx: any) => Promise<void>
 
   function createSequenceProcessor({
     getLatest,
@@ -27,29 +26,52 @@ describeDatabase(SequenceProcessor.name, (database) => {
   }: {
     startFrom: number
     batchSize: number
-    getLatest: SequenceProcessorOpts['getLatest']
-    processRange: SequenceProcessorOpts['processRange']
+    getLatest: (current: number) => number
+    processRange: ProcessRange
     refreshInterval?: number
     uncertaintyBuffer?: number
     reportError?: LoggerOptions['reportError']
   }) {
-    return new SequenceProcessor(
-      PROCESSOR_ID,
-      new Logger({
-        logLevel: 'ERROR', // tests rely on error being logged -- do not change
-        format: 'pretty',
-        reportError,
-      }),
-      repository,
-      {
-        startFrom,
-        batchSize,
-        getLatest,
-        processRange,
-        scheduleIntervalMs: refreshInterval,
-        uncertaintyBuffer,
+    const logger = new Logger({
+      logLevel: 'ERROR', // tests rely on error being reported -- do not change
+      format: 'pretty',
+      reportError,
+      backend: {
+        // we do not want the logs to be printed during tests
+        log: () => void 0,
+        debug: () => void 0,
+        warn: () => void 0,
+        error: () => void 0,
       },
-    )
+    })
+
+    return new (class extends SequenceProcessor {
+      constructor() {
+        super(
+          ProjectId(PROCESSOR_ID),
+          repository,
+          {
+            batchSize,
+            startFrom,
+            uncertaintyBuffer,
+            scheduleIntervalMs: refreshInterval,
+          },
+          logger,
+        )
+      }
+
+      protected override async getLatest(current: number) {
+        return Promise.resolve(getLatest(current))
+      }
+
+      protected override async processRange(
+        from: number,
+        to: number,
+        trx: any,
+      ): Promise<void> {
+        return processRange(from, to, trx)
+      }
+    })()
   }
 
   beforeEach(async () => {
@@ -62,15 +84,14 @@ describeDatabase(SequenceProcessor.name, (database) => {
 
   describe('simple one off process', () => {
     it('processes in ranges', async () => {
-      const getLatestMock =
-        mockFn<SequenceProcessorOpts['getLatest']>().resolvesTo(5)
-      const processRangeMock =
-        mockFn<SequenceProcessorOpts['processRange']>().resolvesTo()
+      const getLatest = mockFn((_: number) => 5)
+      const processRange = mockFn<ProcessRange>().resolvesTo(undefined)
+
       sequenceProcessor = createSequenceProcessor({
         startFrom: 0,
         batchSize: 2,
-        getLatest: getLatestMock,
-        processRange: processRangeMock,
+        getLatest,
+        processRange,
       })
 
       await sequenceProcessor.start()
@@ -78,11 +99,11 @@ describeDatabase(SequenceProcessor.name, (database) => {
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
 
-      expect(getLatestMock).toHaveBeenCalledTimes(2)
-      expect(getLatestMock).toHaveBeenNthCalledWith(1, 0)
-      expect(getLatestMock).toHaveBeenNthCalledWith(2, 5)
+      expect(getLatest).toHaveBeenCalledTimes(2)
+      expect(getLatest).toHaveBeenNthCalledWith(1, 0)
+      expect(getLatest).toHaveBeenNthCalledWith(2, 5)
 
-      checkRanges(processRangeMock, [
+      checkRanges(processRange, [
         [0, 1],
         [2, 3],
         [4, 5],
@@ -96,22 +117,20 @@ describeDatabase(SequenceProcessor.name, (database) => {
     })
 
     it('respects `startFrom`', async () => {
-      const processRangeMock =
-        mockFn<SequenceProcessorOpts['processRange']>().resolvesTo()
+      const processRange = mockFn<ProcessRange>().resolvesTo(undefined)
+
       sequenceProcessor = createSequenceProcessor({
         startFrom: 4,
         batchSize: 2,
-        async getLatest() {
-          return 5
-        },
-        processRange: processRangeMock,
+        getLatest: () => 5,
+        processRange,
       })
 
       await sequenceProcessor.start()
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
-      checkRanges(processRangeMock, [[4, 5]])
+      checkRanges(processRange, [[4, 5]])
       expect(await repository.findById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 5,
@@ -120,22 +139,20 @@ describeDatabase(SequenceProcessor.name, (database) => {
     })
 
     it('works with a single-element sequence', async () => {
-      const processRangeMock =
-        mockFn<SequenceProcessorOpts['processRange']>().resolvesTo()
+      const processRange = mockFn<ProcessRange>().resolvesTo(undefined)
+
       sequenceProcessor = createSequenceProcessor({
         startFrom: 4,
         batchSize: 2,
-        async getLatest() {
-          return 4
-        },
-        processRange: processRangeMock,
+        getLatest: () => 4,
+        processRange,
       })
 
       await sequenceProcessor.start()
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
-      checkRanges(processRangeMock, [[4, 4]])
+      checkRanges(processRange, [[4, 4]])
       expect(await repository.findById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 4,
@@ -144,15 +161,14 @@ describeDatabase(SequenceProcessor.name, (database) => {
     })
 
     it('works with batch size of 1', async () => {
-      const getLatestMock =
-        mockFn<SequenceProcessorOpts['getLatest']>().resolvesTo(2)
-      const processRangeMock =
-        mockFn<SequenceProcessorOpts['processRange']>().resolvesTo()
+      const getLatest = mockFn((_: number) => 2)
+      const processRange = mockFn<ProcessRange>().resolvesTo(undefined)
+
       sequenceProcessor = createSequenceProcessor({
         startFrom: 0,
         batchSize: 1,
-        getLatest: getLatestMock,
-        processRange: processRangeMock,
+        getLatest,
+        processRange,
       })
 
       await sequenceProcessor.start()
@@ -160,11 +176,11 @@ describeDatabase(SequenceProcessor.name, (database) => {
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
 
-      expect(getLatestMock).toHaveBeenCalledTimes(2)
-      expect(getLatestMock).toHaveBeenNthCalledWith(1, 0)
-      expect(getLatestMock).toHaveBeenNthCalledWith(2, 2)
+      expect(getLatest).toHaveBeenCalledTimes(2)
+      expect(getLatest).toHaveBeenNthCalledWith(1, 0)
+      expect(getLatest).toHaveBeenNthCalledWith(2, 2)
 
-      checkRanges(processRangeMock, [
+      checkRanges(processRange, [
         [0, 0],
         [1, 1],
         [2, 2],
@@ -178,15 +194,14 @@ describeDatabase(SequenceProcessor.name, (database) => {
     })
 
     it('works with huge batch sizes', async () => {
-      const getLatestMock =
-        mockFn<SequenceProcessorOpts['getLatest']>().resolvesTo(2)
-      const processRangeMock =
-        mockFn<SequenceProcessorOpts['processRange']>().resolvesTo()
+      const getLatest = mockFn((_: number) => 2)
+      const processRange = mockFn<ProcessRange>().resolvesTo(undefined)
+
       sequenceProcessor = createSequenceProcessor({
         startFrom: 0,
         batchSize: 100,
-        getLatest: getLatestMock,
-        processRange: processRangeMock,
+        getLatest,
+        processRange,
       })
 
       await sequenceProcessor.start()
@@ -194,11 +209,11 @@ describeDatabase(SequenceProcessor.name, (database) => {
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
 
-      expect(getLatestMock).toHaveBeenCalledTimes(2)
-      expect(getLatestMock).toHaveBeenNthCalledWith(1, 0)
-      expect(getLatestMock).toHaveBeenNthCalledWith(2, 2)
+      expect(getLatest).toHaveBeenCalledTimes(2)
+      expect(getLatest).toHaveBeenNthCalledWith(1, 0)
+      expect(getLatest).toHaveBeenNthCalledWith(2, 2)
 
-      checkRanges(processRangeMock, [[0, 2]])
+      checkRanges(processRange, [[0, 2]])
 
       expect(await repository.findById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
@@ -210,70 +225,60 @@ describeDatabase(SequenceProcessor.name, (database) => {
     it('re-processes data when from > getLatest', async () => {
       const time = install()
 
-      const reportErrorMock = mockFn().returns(undefined)
-      const getLatestMock =
-        mockFn<SequenceProcessorOpts['getLatest']>().resolvesTo(0)
-      const processRangeMock =
-        mockFn<SequenceProcessorOpts['processRange']>().resolvesTo()
+      const reportError = mockFn().returns(undefined)
       sequenceProcessor = createSequenceProcessor({
         startFrom: 2,
         batchSize: 1,
-        getLatest: getLatestMock,
-        processRange: processRangeMock,
-        reportError: reportErrorMock,
+        getLatest: () => 0,
+        processRange: mockFn().resolvesTo(undefined),
+        reportError,
         // Because we use fake-timers, we need to disable the refresh interval
         refreshInterval: Infinity,
       })
 
       await sequenceProcessor.start()
-      await waitForErrorReport(time, reportErrorMock)
+      await waitForErrorReport(time, reportError)
 
       time.uninstall()
       sequenceProcessor._TEST_ONLY_stopQueue()
 
-      expect(reportErrorMock.calls[0].args[0].error).toEqual(
+      expect(reportError.calls[0].args[0].error).toEqual(
         new Error(
           'Assertion Error: getLatest returned sequence member that was already processed. from=2, latest=0',
         ),
       )
-      expect(reportErrorMock).toHaveBeenCalledTimes(1)
+      expect(reportError).toHaveBeenCalledTimes(1)
     })
 
     it('works when processRange throws', async () => {
       const time = install()
 
       const errorMessage = 'Force-failing during tests!'
-      const reportErrorMock = mockFn().returns(undefined)
-      const getLatestMock =
-        mockFn<SequenceProcessorOpts['getLatest']>().resolvesTo(5)
-      const processRangeMock = mockFn<
-        SequenceProcessorOpts['processRange']
-      >().rejectsWith(new Error(errorMessage))
+      const reportError = mockFn().returns(undefined)
       sequenceProcessor = createSequenceProcessor({
         startFrom: 0,
         batchSize: 2,
-        getLatest: getLatestMock,
-        processRange: processRangeMock,
-        reportError: reportErrorMock,
+        getLatest: () => 5,
+        processRange: mockFn().rejectsWith(new Error(errorMessage)),
+        reportError,
         // Because we use fake-timers, we need to disable the refresh interval
         refreshInterval: Infinity,
       })
 
       await sequenceProcessor.start()
-      await waitForErrorReport(time, reportErrorMock)
+      await waitForErrorReport(time, reportError)
 
       time.uninstall()
       sequenceProcessor._TEST_ONLY_stopQueue()
 
-      expect(reportErrorMock.calls[0].args[0].error).toEqual(
-        new Error('Force-failing during tests!'),
+      expect(reportError.calls[0].args[0].error).toEqual(
+        new Error(errorMessage),
       )
-      expect(reportErrorMock).toHaveBeenCalledTimes(1)
+      expect(reportError).toHaveBeenCalledTimes(1)
     })
 
     it('does not process anything when already done', async () => {
-      const processRangeMock =
-        mockFn<SequenceProcessorOpts['processRange']>().resolvesTo()
+      const processRange = mockFn<ProcessRange>().resolvesTo(undefined)
       const latest = 5
       const initialState = {
         id: PROCESSOR_ID,
@@ -284,36 +289,26 @@ describeDatabase(SequenceProcessor.name, (database) => {
       sequenceProcessor = createSequenceProcessor({
         startFrom: 1,
         batchSize: 2,
-        async getLatest() {
-          return latest
-        },
-        processRange: processRangeMock,
+        getLatest: () => latest,
+        processRange,
       })
 
       await sequenceProcessor.start()
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
-      expect(processRangeMock).not.toHaveBeenCalled()
+      expect(processRange).not.toHaveBeenCalled()
       expect(await repository.findById(PROCESSOR_ID)).toEqual(initialState)
     })
 
     it('continues syncing when more data available', async () => {
-      const getLatestMock = mockFn<
-        SequenceProcessorOpts['getLatest']
-      >().executes(async (latest: any) => {
-        if (latest === 0) {
-          return 5
-        }
-        return 7
-      })
-      const processRangeMock =
-        mockFn<SequenceProcessorOpts['processRange']>().resolvesTo()
+      const getLatest = mockFn((current) => (current === 0 ? 5 : 7))
+      const processRange = mockFn<ProcessRange>().resolvesTo(undefined)
       sequenceProcessor = createSequenceProcessor({
         startFrom: 0,
         batchSize: 2,
-        getLatest: getLatestMock,
-        processRange: processRangeMock,
+        getLatest,
+        processRange,
       })
 
       await sequenceProcessor.start()
@@ -322,13 +317,13 @@ describeDatabase(SequenceProcessor.name, (database) => {
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
 
       // deep inspect getLatestMock. It should be called with 0, 5, and rest is 7s
-      expect(getLatestMock).toHaveBeenNthCalledWith(1, 0)
-      expect(getLatestMock).toHaveBeenNthCalledWith(2, 5)
-      for (let i = 3; i <= getLatestMock.calls.length; i++) {
-        expect(getLatestMock).toHaveBeenNthCalledWith(i, 7)
+      expect(getLatest).toHaveBeenNthCalledWith(1, 0)
+      expect(getLatest).toHaveBeenNthCalledWith(2, 5)
+      for (let i = 3; i <= getLatest.calls.length; i++) {
+        expect(getLatest).toHaveBeenNthCalledWith(i, 7)
       }
 
-      checkRanges(processRangeMock, [
+      checkRanges(processRange, [
         [0, 1],
         [2, 3],
         [4, 5],
@@ -346,21 +341,13 @@ describeDatabase(SequenceProcessor.name, (database) => {
   describe('complex processing with refresh', () => {
     it('continues syncing during next schedule', async () => {
       let syncedOnce = false
-      const getLatestMock = mockFn<
-        SequenceProcessorOpts['getLatest']
-      >().executes(async () => {
-        if (!syncedOnce) {
-          return 1
-        }
-        return 2
-      })
-      const processRangeMock =
-        mockFn<SequenceProcessorOpts['processRange']>().resolvesTo()
+      const getLatest = mockFn((_: number) => (syncedOnce ? 2 : 1))
+      const processRange = mockFn<ProcessRange>().resolvesTo(undefined)
       sequenceProcessor = createSequenceProcessor({
         startFrom: 0,
         batchSize: 1,
-        getLatest: getLatestMock,
-        processRange: processRangeMock,
+        getLatest,
+        processRange,
         refreshInterval: 1, // kick refresh right after it's done
       })
 
@@ -373,11 +360,11 @@ describeDatabase(SequenceProcessor.name, (database) => {
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
 
-      expect(getLatestMock).toHaveBeenCalledWith(0)
-      expect(getLatestMock).toHaveBeenCalledWith(1)
-      expect(getLatestMock).toHaveBeenCalledWith(2)
+      expect(getLatest).toHaveBeenCalledWith(0)
+      expect(getLatest).toHaveBeenCalledWith(1)
+      expect(getLatest).toHaveBeenCalledWith(2)
 
-      checkRanges(processRangeMock, [
+      checkRanges(processRange, [
         [0, 0],
         [1, 1],
         [2, 2],
@@ -392,21 +379,13 @@ describeDatabase(SequenceProcessor.name, (database) => {
 
     it('continues syncing during next schedule and respects uncertainty buffer', async () => {
       let syncedOnce = false
-      const getLatestMock = mockFn<
-        SequenceProcessorOpts['getLatest']
-      >().executes(async () => {
-        if (!syncedOnce) {
-          return 4
-        }
-        return 5
-      })
-      const processRangeMock =
-        mockFn<SequenceProcessorOpts['processRange']>().resolvesTo()
+      const getLatest = mockFn((_: number) => (syncedOnce ? 5 : 4))
+      const processRange = mockFn<ProcessRange>().resolvesTo(undefined)
       sequenceProcessor = createSequenceProcessor({
         startFrom: 0,
         batchSize: 1,
-        getLatest: getLatestMock,
-        processRange: processRangeMock,
+        getLatest,
+        processRange,
         refreshInterval: 1, // kick refresh right after it's done
         uncertaintyBuffer: 2,
       })
@@ -414,20 +393,20 @@ describeDatabase(SequenceProcessor.name, (database) => {
       await sequenceProcessor.start()
 
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
-      expect(getLatestMock).toHaveBeenCalledTimes(2)
-      expect(getLatestMock).toHaveBeenNthCalledWith(1, 0)
-      expect(getLatestMock).toHaveBeenNthCalledWith(2, 4)
+      expect(getLatest).toHaveBeenCalledTimes(2)
+      expect(getLatest).toHaveBeenNthCalledWith(1, 0)
+      expect(getLatest).toHaveBeenNthCalledWith(2, 4)
       syncedOnce = true
 
       await once(sequenceProcessor, ALL_PROCESSED_EVENT)
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
 
-      expect(getLatestMock).toHaveBeenCalledWith(0)
-      expect(getLatestMock).toHaveBeenCalledWith(4)
-      expect(getLatestMock).toHaveBeenCalledWith(4)
-      expect(getLatestMock).toHaveBeenCalledWith(5)
+      expect(getLatest).toHaveBeenCalledWith(0)
+      expect(getLatest).toHaveBeenCalledWith(4)
+      expect(getLatest).toHaveBeenCalledWith(4)
+      expect(getLatest).toHaveBeenCalledWith(5)
 
-      checkRanges(processRangeMock, [
+      checkRanges(processRange, [
         [0, 0],
         [1, 1],
         [2, 2],
@@ -482,7 +461,7 @@ describeDatabase(SequenceProcessor.name, (database) => {
 })
 
 function checkRanges(
-  processRangeMock: MockFunction<[number, number, any, Logger], Promise<void>>,
+  processRangeMock: MockFunction<[number, number, any], Promise<void>>,
   ranges: [number, number][],
 ) {
   expect(processRangeMock).toHaveBeenCalledTimes(ranges.length)
@@ -492,7 +471,6 @@ function checkRanges(
       start,
       end,
       expect.anything(),
-      expect.a(Logger),
     )
   }
 }

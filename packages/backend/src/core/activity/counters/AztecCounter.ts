@@ -1,59 +1,56 @@
 import { Logger } from '@l2beat/backend-tools'
-import { HttpClient } from '@l2beat/shared'
 import { ProjectId } from '@l2beat/shared-pure'
+import { Knex } from 'knex'
 import { range } from 'lodash'
 
 import { AztecClient } from '../../../peripherals/aztec'
 import { BlockTransactionCountRepository } from '../../../peripherals/database/activity/BlockTransactionCountRepository'
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
 import { promiseAllPlus } from '../../queue/promiseAllPlus'
-import { SequenceProcessor } from '../../SequenceProcessor'
-import { SimpleActivityTransactionConfig } from '../ActivityTransactionConfig'
-import { TransactionCounter } from '../TransactionCounter'
-import { createBlockTransactionCounter } from './BlockTransactionCounter'
-import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
+import { SequenceProcessor } from '../SequenceProcessor'
 
-export function createAztecCounter(
-  projectId: ProjectId,
-  blockRepository: BlockTransactionCountRepository,
-  http: HttpClient,
-  sequenceProcessorRepository: SequenceProcessorRepository,
-  logger: Logger,
-  options: SimpleActivityTransactionConfig<'aztec'>,
-): TransactionCounter {
-  const batchSize = getBatchSizeFromCallsPerMinute(options.callsPerMinute)
-  const client = new AztecClient(http, options.url, options.callsPerMinute)
+export class AztecCounter extends SequenceProcessor {
+  constructor(
+    projectId: ProjectId,
+    sequenceProcessorRepository: SequenceProcessorRepository,
+    private readonly blockRepository: BlockTransactionCountRepository,
+    private readonly aztecClient: AztecClient,
+    logger: Logger,
+    batchSize: number,
+  ) {
+    super(
+      projectId,
+      sequenceProcessorRepository,
+      { batchSize, startFrom: 0 },
+      logger,
+    )
+    this.logger = this.logger.for(this)
+  }
 
-  const processor = new SequenceProcessor(
-    projectId.toString(),
-    logger,
-    sequenceProcessorRepository,
-    {
-      batchSize,
-      startFrom: 0,
-      getLatest: async () => {
-        const block = await client.getLatestBlock()
-        return block.number
-      },
-      processRange: async (from, to, trx, logger) => {
-        const queries = range(from, to + 1).map((blockNumber) => async () => {
-          const block = await client.getBlock(blockNumber)
+  protected override async getLatest(): Promise<number> {
+    const block = await this.aztecClient.getLatestBlock()
+    return block.number
+  }
 
-          return {
-            projectId,
-            blockNumber: block.number,
-            count: block.transactionCount,
-            timestamp: block.timestamp,
-          }
-        })
+  protected override async processRange(
+    from: number,
+    to: number,
+    trx: Knex.Transaction,
+  ) {
+    const queries = range(from, to + 1).map((blockNumber) => async () => {
+      const block = await this.aztecClient.getBlock(blockNumber)
 
-        const blocks = await promiseAllPlus(queries, logger, {
-          metricsId: 'AztecBlockCounter',
-        })
-        await blockRepository.addOrUpdateMany(blocks, trx)
-      },
-    },
-  )
+      return {
+        projectId: this.projectId,
+        blockNumber: block.number,
+        count: block.transactionCount,
+        timestamp: block.timestamp,
+      }
+    })
 
-  return createBlockTransactionCounter(projectId, processor, blockRepository)
+    const blocks = await promiseAllPlus(queries, this.logger, {
+      metricsId: 'AztecBlockCounter',
+    })
+    await this.blockRepository.addOrUpdateMany(blocks, trx)
+  }
 }

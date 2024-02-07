@@ -70,9 +70,8 @@ export function createActivityRouter(
     ),
   )
 
-  router.get('/api/activity/status', async (ctx) => {
-    const data = await activityController.getStatus()
-    ctx.body = data
+  router.get('/api/activity/status', (ctx) => {
+    ctx.body = activityController.getStatus()
   })
 
   return router

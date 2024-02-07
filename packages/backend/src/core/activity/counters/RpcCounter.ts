@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { providers } from 'ethers'
+import { Knex } from 'knex'
 import { range } from 'lodash'
 
 import { BlockTransactionCountRepository } from '../../../peripherals/database/activity/BlockTransactionCountRepository'
@@ -8,62 +8,60 @@ import { SequenceProcessorRepository } from '../../../peripherals/database/Seque
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { Clock } from '../../Clock'
 import { promiseAllPlus } from '../../queue/promiseAllPlus'
-import { SequenceProcessor } from '../../SequenceProcessor'
-import { RpcActivityTransactionConfig } from '../ActivityTransactionConfig'
-import { TransactionCounter } from '../TransactionCounter'
-import { createBlockTransactionCounter } from './BlockTransactionCounter'
-import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
+import { SequenceProcessor } from '../SequenceProcessor'
 
-export function createRpcCounter(
-  projectId: ProjectId,
-  blockRepository: BlockTransactionCountRepository,
-  sequenceProcessorRepository: SequenceProcessorRepository,
-  logger: Logger,
-  clock: Clock,
-  options: RpcActivityTransactionConfig,
-): TransactionCounter {
-  const batchSize = getBatchSizeFromCallsPerMinute(options.callsPerMinute)
-  const provider = new providers.StaticJsonRpcProvider({
-    url: options.url,
-    timeout: 15_000,
-  })
-  const client = new RpcClient(
-    provider,
-    logger.for(`RpcProcessor[${projectId.toString()}]`),
-    options.callsPerMinute,
-  )
+export class RpcCounter extends SequenceProcessor {
+  constructor(
+    projectId: ProjectId,
+    sequenceProcessorRepository: SequenceProcessorRepository,
+    private readonly blockRepository: BlockTransactionCountRepository,
+    private readonly rpcClient: RpcClient,
+    private readonly clock: Clock,
+    logger: Logger,
+    private readonly assessCount:
+      | ((count: number, blockNumber: number) => number)
+      | undefined,
+    batchSize: number,
+    startFrom = 0,
+  ) {
+    super(
+      projectId,
+      sequenceProcessorRepository,
+      { batchSize, startFrom },
+      logger,
+    )
+    this.logger = this.logger.for(this)
+  }
 
-  const processor = new SequenceProcessor(
-    projectId.toString(),
-    logger,
-    sequenceProcessorRepository,
-    {
-      batchSize,
-      startFrom: options.startBlock ?? 0,
-      getLatest: (previousLatest) =>
-        client.getBlockNumberAtOrBefore(clock.getLastHour(), previousLatest),
-      processRange: async (from, to, trx, logger) => {
-        const queries = range(from, to + 1).map((blockNumber) => async () => {
-          const block = await client.getBlock(blockNumber)
-          const timestamp = new UnixTime(block.timestamp)
+  protected override async getLatest(current: number): Promise<number> {
+    return this.rpcClient.getBlockNumberAtOrBefore(
+      this.clock.getLastHour(),
+      current,
+    )
+  }
 
-          return {
-            projectId,
-            blockNumber,
-            timestamp,
-            count:
-              options.assessCount?.(block.transactions.length, blockNumber) ??
-              block.transactions.length,
-          }
-        })
+  protected override async processRange(
+    from: number,
+    to: number,
+    trx: Knex.Transaction,
+  ) {
+    const queries = range(from, to + 1).map((blockNumber) => async () => {
+      const block = await this.rpcClient.getBlock(blockNumber)
+      const timestamp = new UnixTime(block.timestamp)
 
-        const blocks = await promiseAllPlus(queries, logger, {
-          metricsId: `RpcBlockCounter_${projectId.toString()}`,
-        })
-        await blockRepository.addOrUpdateMany(blocks, trx)
-      },
-    },
-  )
+      return {
+        projectId: this.projectId,
+        blockNumber,
+        timestamp,
+        count:
+          this.assessCount?.(block.transactions.length, blockNumber) ??
+          block.transactions.length,
+      }
+    })
 
-  return createBlockTransactionCounter(projectId, processor, blockRepository)
+    const blocks = await promiseAllPlus(queries, this.logger, {
+      metricsId: `RpcBlockCounter_${this.projectId.toString()}`,
+    })
+    await this.blockRepository.addOrUpdateMany(blocks, trx)
+  }
 }
