@@ -15,7 +15,7 @@ import { layer2s } from '@l2beat/config'
 import { LivenessType, notUndefined } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
-import { makeLivenessTransfer } from '../../../core/liveness/types/LivenessConfig'
+import { makeLivenessTransfer } from '../../../liveness/types/LivenessConfig'
 
 export async function up(knex: Knex) {
   const transfersToUpdate = layer2s.flatMap((l2) => {

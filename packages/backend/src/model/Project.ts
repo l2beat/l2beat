@@ -22,7 +22,7 @@ import {
   makeLivenessFunctionCall,
   makeLivenessSharpSubmissions,
   makeLivenessTransfer,
-} from '../core/liveness/types/LivenessConfig'
+} from '../liveness/types/LivenessConfig'
 
 interface LivenessConfig {
   entries: LivenessConfigEntry[]

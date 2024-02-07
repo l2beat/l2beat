@@ -1,6 +1,6 @@
 import { assert } from '@l2beat/shared-pure'
 
-import { LivenessRecord } from '../../../peripherals/database/LivenessRepository'
+import { LivenessRecord } from '../repositories/LivenessRepository'
 import { LivenessTransfer } from '../types/LivenessConfig'
 import { BigQueryTransfersResult } from '../types/model'
 

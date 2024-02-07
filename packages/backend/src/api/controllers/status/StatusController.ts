@@ -10,11 +10,11 @@ import {
 
 import { Clock } from '../../../core/Clock'
 import { getTotalSupplyConfigHash } from '../../../core/totalSupply/getTotalSupplyConfigHash'
+import { LivenessConfigurationRepository } from '../../../liveness/repositories/LivenessConfigurationRepository'
 import { Project } from '../../../model'
 import { BalanceStatusRecord } from '../../../peripherals/database/BalanceStatusRepository'
 import { UpdateMonitorRepository } from '../../../peripherals/database/discovery/UpdateMonitorRepository'
 import { IndexerStateRepository } from '../../../peripherals/database/IndexerStateRepository'
-import { LivenessConfigurationRepository } from '../../../peripherals/database/LivenessConfigurationRepository'
 import { ReportStatusRecord } from '../../../peripherals/database/ReportStatusRepository'
 import { TotalSupplyStatusRepository } from '../../../peripherals/database/TotalSupplyStatusRepository'
 import { ChainConverter } from '../../../tools/ChainConverter'

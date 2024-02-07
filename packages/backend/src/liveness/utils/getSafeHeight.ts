@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
-import { LivenessConfigurationRecord } from '../../../peripherals/database/LivenessConfigurationRepository'
+import { LivenessConfigurationRecord } from '../repositories/LivenessConfigurationRepository'
 import { LivenessConfigEntry } from '../types/LivenessConfig'
 
 export function getSafeHeight(

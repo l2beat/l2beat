@@ -7,13 +7,13 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import { Clock } from '../../../core/Clock'
-import { Project } from '../../../model'
-import { IndexerStateRepository } from '../../../peripherals/database/IndexerStateRepository'
+import { Clock } from '../../core/Clock'
+import { Project } from '../../model'
+import { IndexerStateRepository } from '../../peripherals/database/IndexerStateRepository'
 import {
   LivenessRecordWithProjectIdAndType,
   LivenessRepository,
-} from '../../../peripherals/database/LivenessRepository'
+} from '../repositories/LivenessRepository'
 import {
   calculateDetailsFor,
   calculateIntervals,

@@ -7,12 +7,12 @@ import {
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
+import { describeDatabase } from '../../test/database'
 import {
   LivenessConfigEntry,
   makeLivenessFunctionCall,
-} from '../../core/liveness/types/LivenessConfig'
-import { LivenessId } from '../../core/liveness/types/LivenessId'
-import { describeDatabase } from '../../test/database'
+} from '../types/LivenessConfig'
+import { LivenessId } from '../types/LivenessId'
 import {
   LivenessConfigurationRecord,
   LivenessConfigurationRepository,

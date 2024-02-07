@@ -1,7 +1,7 @@
 import { assert } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 
-import { LivenessConfigurationRecord } from '../../../peripherals/database/LivenessConfigurationRepository'
+import { LivenessConfigurationRecord } from '../repositories/LivenessConfigurationRepository'
 import { LivenessConfigEntry } from '../types/LivenessConfig'
 import { isTimestampInRange } from './isTimestampInRange'
 

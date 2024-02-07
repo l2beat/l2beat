@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { LivenessConfigurationRecord } from '../../../peripherals/database/LivenessConfigurationRepository'
+import { LivenessConfigurationRecord } from '../repositories/LivenessConfigurationRepository'
 import {
   LivenessConfigEntry,
   makeLivenessTransfer,

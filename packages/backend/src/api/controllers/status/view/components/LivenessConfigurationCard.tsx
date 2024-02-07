@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import React from 'react'
 
-import { LivenessConfigurationRecord } from '../../../../../peripherals/database/LivenessConfigurationRepository'
+import { LivenessConfigurationRecord } from '../../../../../liveness/repositories/LivenessConfigurationRepository'
 
 interface LivenessConfigurationCardProps {
   config: LivenessConfigurationRecord

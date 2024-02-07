@@ -4,8 +4,8 @@ import { FinalityController } from '../../api/controllers/finality/FinalityContr
 import { createFinalityRouter } from '../../api/routers/FinalityRouter'
 import { Config } from '../../config'
 import { Clock } from '../../core/Clock'
+import { LivenessRepository } from '../../liveness/repositories/LivenessRepository'
 import { IndexerStateRepository } from '../../peripherals/database/IndexerStateRepository'
-import { LivenessRepository } from '../../peripherals/database/LivenessRepository'
 import { Database } from '../../peripherals/database/shared/Database'
 import { ApplicationModule } from '../ApplicationModule'
 

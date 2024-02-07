@@ -5,10 +5,10 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { Clock } from '../../../core/Clock'
-import { Project } from '../../../model'
-import { IndexerStateRepository } from '../../../peripherals/database/IndexerStateRepository'
-import { LivenessRepository } from '../../../peripherals/database/LivenessRepository'
+import { Clock } from '../../core/Clock'
+import { Project } from '../../model'
+import { IndexerStateRepository } from '../../peripherals/database/IndexerStateRepository'
+import { LivenessRepository } from '../repositories/LivenessRepository'
 import { calculateAnomaliesPerProject } from './calculateAnomalies'
 import {
   calcIntervalWithAvgsPerProject,

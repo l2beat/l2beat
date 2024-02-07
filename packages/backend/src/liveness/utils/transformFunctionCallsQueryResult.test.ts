@@ -2,7 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { readFileSync } from 'fs'
 
-import { LivenessRecord } from '../../../peripherals/database/LivenessRepository'
+import { LivenessRecord } from '../repositories/LivenessRepository'
 import {
   LivenessFunctionCall,
   LivenessSharpSubmission,

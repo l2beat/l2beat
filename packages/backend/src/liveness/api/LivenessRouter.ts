@@ -2,8 +2,8 @@ import Router from '@koa/router'
 import { branded, LivenessType, ProjectId } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
-import { LivenessController } from '../controllers/liveness/LivenessController'
-import { withTypedContext } from './types'
+import { withTypedContext } from '../../api/routers/types'
+import { LivenessController } from './LivenessController'
 
 export function createLivenessRouter(livenessController: LivenessController) {
   const router = new Router()

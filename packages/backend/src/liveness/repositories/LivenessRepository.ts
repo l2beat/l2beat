@@ -3,9 +3,12 @@ import { LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { LivenessRow } from 'knex/types/tables'
 
-import { LivenessId } from '../../core/liveness/types/LivenessId'
-import { BaseRepository, CheckConvention } from './shared/BaseRepository'
-import { Database } from './shared/Database'
+import {
+  BaseRepository,
+  CheckConvention,
+} from '../../peripherals/database/shared/BaseRepository'
+import { Database } from '../../peripherals/database/shared/Database'
+import { LivenessId } from '../types/LivenessId'
 
 export interface LivenessRecord {
   timestamp: UnixTime

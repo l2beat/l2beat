@@ -2,7 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { readFileSync } from 'fs'
 
-import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
+import { BigQueryClient } from '../peripherals/bigquery/BigQueryClient'
 import { LivenessClient } from './LivenessClient'
 import {
   LivenessConfigEntry,

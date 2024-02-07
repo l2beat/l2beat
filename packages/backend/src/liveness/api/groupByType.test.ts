@@ -1,7 +1,7 @@
 import { LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { LivenessRecordWithProjectIdAndType } from '../../../peripherals/database/LivenessRepository'
+import { LivenessRecordWithProjectIdAndType } from '../repositories/LivenessRepository'
 import { groupByType } from './groupByType'
 
 describe(groupByType.name, () => {

@@ -9,16 +9,16 @@ import {
 import { expect, mockObject } from 'earl'
 
 import { Clock } from '../../../core/Clock'
-import { Project } from '../../../model'
-import { IndexerStateRepository } from '../../../peripherals/database/IndexerStateRepository'
-import {
-  LivenessRecordWithProjectIdAndType,
-  LivenessRepository,
-} from '../../../peripherals/database/LivenessRepository'
 import {
   calculateDetailsFor,
   calculateIntervals,
-} from '../liveness/calculateIntervalWithAverages'
+} from '../../../liveness/api/calculateIntervalWithAverages'
+import {
+  LivenessRecordWithProjectIdAndType,
+  LivenessRepository,
+} from '../../../liveness/repositories/LivenessRepository'
+import { Project } from '../../../model'
+import { IndexerStateRepository } from '../../../peripherals/database/IndexerStateRepository'
 import { FinalityController } from './FinalityController'
 
 describe(FinalityController.name, () => {
