@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xd087db262c876ac1e8569f8dfae22c3d82d65a41
+
+# Diff at Wed, 07 Feb 2024 08:42:51 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@64f1e0f27f831d3ef860a1c2faad8c77e04e6c29 block: 19090323
+- current block number: 19175197
+
+## Description
+
+Updated with the new OpDAHandler to remove the field.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19090323 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9) {
+      values.opStackDA.isAllTxsLengthEqualToCelestiaDAExample:
+-        true
+    }
+```
+
 Generated with discovered.json: 0x2ea26678bb8058c9f76cb5359240833a22025e41
 
 # Diff at Fri, 26 Jan 2024 10:56:51 GMT:

@@ -1,66 +1,61 @@
 import { Logger } from '@l2beat/backend-tools'
-import { HttpClient } from '@l2beat/shared'
 import { ProjectId } from '@l2beat/shared-pure'
+import { Knex } from 'knex'
 import { range } from 'lodash'
 
 import { ZksyncTransactionRepository } from '../../../peripherals/database/activity/ZksyncTransactionRepository'
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
 import { ZksyncClient } from '../../../peripherals/zksync'
 import { promiseAllPlus } from '../../queue/promiseAllPlus'
-import { SequenceProcessor } from '../../SequenceProcessor'
-import { SimpleActivityTransactionConfig } from '../ActivityTransactionConfig'
-import { TransactionCounter } from '../TransactionCounter'
-import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
+import { SequenceProcessor } from '../SequenceProcessor'
 
-export function createZksyncCounter(
-  projectId: ProjectId,
-  http: HttpClient,
-  zksyncRepository: ZksyncTransactionRepository,
-  sequenceProcessorRepository: SequenceProcessorRepository,
-  logger: Logger,
-  options: SimpleActivityTransactionConfig<'zksync'>,
-): TransactionCounter {
-  const batchSize = getBatchSizeFromCallsPerMinute(options.callsPerMinute)
-  const client = new ZksyncClient(
-    http,
-    logger,
-    options.url,
-    options.callsPerMinute,
-  )
+export class ZksyncCounter extends SequenceProcessor {
+  constructor(
+    projectId: ProjectId,
+    sequenceProcessorRepository: SequenceProcessorRepository,
+    private readonly zksyncRepository: ZksyncTransactionRepository,
+    private readonly zksyncClient: ZksyncClient,
+    logger: Logger,
+    batchSize: number,
+  ) {
+    super(
+      projectId,
+      sequenceProcessorRepository,
+      { batchSize, startFrom: 1 },
+      logger,
+    )
+    this.logger = this.logger.for(this)
+  }
 
-  const processor = new SequenceProcessor(
-    projectId.toString(),
-    logger,
-    sequenceProcessorRepository,
-    {
-      batchSize,
-      startFrom: 1,
-      getLatest: client.getLatestBlock.bind(client),
-      processRange: async (from, to, trx, logger) => {
-        const queries = range(from, to + 1).map((blockNumber) => async () => {
-          const transactions = await client.getTransactionsInBlock(blockNumber)
+  protected override async getLatest(): Promise<number> {
+    return this.zksyncClient.getLatestBlock()
+  }
 
-          return transactions.map((t, i) => {
-            // Block 427 has a duplicated blockIndex
-            const blockIndex =
-              blockNumber === 427 && i === 1 ? t.blockIndex + 1 : t.blockIndex
-            return {
-              blockNumber,
-              blockIndex,
-              timestamp: t.createdAt,
-            }
-          })
-        })
+  protected override async processRange(
+    from: number,
+    to: number,
+    trx: Knex.Transaction,
+  ) {
+    const queries = range(from, to + 1).map((blockNumber) => async () => {
+      const transactions = await this.zksyncClient.getTransactionsInBlock(
+        blockNumber,
+      )
 
-        const blockTransactions = await promiseAllPlus(queries, logger, {
-          metricsId: 'ZksyncBlockCounter',
-        })
-        await zksyncRepository.addOrUpdateMany(blockTransactions.flat(), trx)
-      },
-    },
-  )
+      return transactions.map((t, i) => {
+        // Block 427 has a duplicated blockIndex
+        const blockIndex =
+          blockNumber === 427 && i === 1 ? t.blockIndex + 1 : t.blockIndex
+        return {
+          blockNumber,
+          blockIndex,
+          timestamp: t.createdAt,
+        }
+      })
+    })
 
-  return new TransactionCounter(projectId, processor, () =>
-    zksyncRepository.findLastTimestamp(),
-  )
+    const blockTransactions = await promiseAllPlus(queries, this.logger, {
+      metricsId: 'ZksyncBlockCounter',
+    })
+    await this.zksyncRepository.addOrUpdateMany(blockTransactions.flat(), trx)
+  }
 }

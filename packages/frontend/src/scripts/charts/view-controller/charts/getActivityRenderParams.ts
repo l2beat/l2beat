@@ -24,7 +24,7 @@ export function getActivityRenderParams(
       return {
         series: state.showEthereumTransactions ? [ethTps, tps] : [tps],
         data: {
-          date: formatTimestamp(timestamp, { withTime: true }),
+          date: formatTimestamp(timestamp, { mode: 'datetime' }),
           tps,
           ethTps,
         },

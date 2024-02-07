@@ -23,6 +23,7 @@ export interface NavbarProps {
   showFinality: boolean
   showLiveness: boolean
   showHiringBadge: boolean
+  showNewGovernancePage: boolean
   forumLink: string
   socialLinks: SocialLinksProps
   selectedPage: NavbarPage
@@ -39,6 +40,7 @@ export function getNavbarProps(
     showActivity: config.features.activity,
     showFinality: config.features.finality,
     showLiveness: config.features.liveness,
+    showNewGovernancePage: config.features.governancePage,
     socialLinks: getSocialLinksProps(config),
     selectedPage,
   }
@@ -53,6 +55,7 @@ export function Navbar(props: NavbarProps) {
         showFinality={props.showFinality}
         showLiveness={props.showLiveness}
         showHiringBadge={props.showHiringBadge}
+        showNewGovernancePage={props.showNewGovernancePage}
         forumLink={props.forumLink}
         socialLinks={props.socialLinks}
       />
@@ -114,9 +117,18 @@ export function Navbar(props: NavbarProps) {
                 </PageLink>
               </li>
               <li className="h-full">
-                <PageLink href="https://l2beat.notion.site/Delegate-your-votes-to-L2BEAT-8ffc452bed9a431cb158d1e4e19839e3">
-                  Governance
-                </PageLink>
+                {props.showNewGovernancePage ? (
+                  <PageLink
+                    selected={props.selectedPage === 'governance'}
+                    href="/governance"
+                  >
+                    Governance
+                  </PageLink>
+                ) : (
+                  <PageLink href="https://l2beat.notion.site/Delegate-your-votes-to-L2BEAT-8ffc452bed9a431cb158d1e4e19839e3">
+                    Governance
+                  </PageLink>
+                )}
               </li>
               <li className="h-full">
                 <PageLink selected={props.selectedPage === 'faq'} href="/faq">

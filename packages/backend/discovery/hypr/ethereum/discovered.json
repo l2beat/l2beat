@@ -1,7 +1,7 @@
 {
   "name": "hypr",
   "chain": "ethereum",
-  "blockNumber": 19091597,
+  "blockNumber": 19175185,
   "configHash": "0x9c7cb21e4ec72fb810d3e73af847c31098d64e8809e14e80b6187eac961c90dc",
   "version": 3,
   "contracts": [
@@ -97,10 +97,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 383400,
-        "latestOutputIndex": 212,
-        "nextBlockNumber": 385200,
-        "nextOutputIndex": 213,
+        "latestBlockNumber": 889200,
+        "latestOutputIndex": 493,
+        "nextBlockNumber": 891000,
+        "nextOutputIndex": 494,
         "PROPOSER": "0xeF2169180a2eda91B695eA5e5C4f4547C013840c",
         "startingBlockNumber": 0,
         "startingTimestamp": 1705512383,
@@ -130,7 +130,7 @@
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
         ],
         "getThreshold": 3,
-        "nonce": 10,
+        "nonce": 11,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -163,7 +163,7 @@
       "sinceTimestamp": 1705512431,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619977",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620093",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -191,7 +191,7 @@
         "GUARDIAN": "0x28fB4D0e436874F4107948E358df3C242De06788",
         "L2_ORACLE": "0x3E4F4Eb77a9c1f88c0e1F5aDCc9d3521Ce157FdD",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 490798, 19089856],
+        "params": [1000000000, 490798, 19173744],
         "paused": false,
         "SYSTEM_CONFIG": "0xBB08cf90DEb93492b463f1Ee5DA9453e51643586",
         "version": "1.7.2"
@@ -213,7 +213,6 @@
         "gasLimit": 30000000,
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isAllTxsLengthEqualToCelestiaDAExample": true,
           "isSomeTxsLengthEqualToCelestiaDAExample": true
         },
         "overhead": 188,

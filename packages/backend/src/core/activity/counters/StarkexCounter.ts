@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { Knex } from 'knex'
 import { range } from 'lodash'
 
 import { StarkexTransactionCountRepository } from '../../../peripherals/database/activity/StarkexCountRepository'
@@ -7,68 +8,63 @@ import { SequenceProcessorRepository } from '../../../peripherals/database/Seque
 import { StarkexClient } from '../../../peripherals/starkex'
 import { Clock } from '../../Clock'
 import { promiseAllPlus } from '../../queue/promiseAllPlus'
-import { SequenceProcessor } from '../../SequenceProcessor'
-import { StarkexActivityTransactionConfig } from '../ActivityTransactionConfig'
-import { TransactionCounter } from '../TransactionCounter'
-import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
+import { SequenceProcessor } from '../SequenceProcessor'
 
-export interface StarkexProcessorOptions
-  extends StarkexActivityTransactionConfig {
-  singleStarkexCPM: number
-}
-
-export function createStarkexCounter(
-  projectId: ProjectId,
-  starkexRepository: StarkexTransactionCountRepository,
-  starkexClient: StarkexClient,
-  sequenceProcessorRepository: SequenceProcessorRepository,
-  logger: Logger,
-  clock: Clock,
-  options: StarkexProcessorOptions,
-): TransactionCounter {
-  const batchSize = getBatchSizeFromCallsPerMinute(options.singleStarkexCPM)
-  const startDay = options.sinceTimestamp.toStartOf('day').toDays()
-
-  const processor = new SequenceProcessor(
-    projectId.toString(),
-    logger,
-    sequenceProcessorRepository,
-    {
-      batchSize,
-      startFrom: startDay,
-      // starkex APIs are not stable and can change from the past. With this we make sure to scrape them again
-      uncertaintyBuffer: options.resyncLastDays,
-      getLatest: () => getStarkexLastDay(clock.getLastHour()),
-      processRange: async (from, to, trx, logger) => {
-        const queries = range(from, to + 1).map((day) => async () => {
-          const counts = await Promise.all(
-            options.product.map(
-              async (product) =>
-                await starkexClient.getDailyCount(day, product),
-            ),
-          )
-
-          return {
-            count: counts.reduce((a, b) => a + b, 0),
-            timestamp: UnixTime.fromDays(day),
-            projectId: projectId,
-          }
-        })
-
-        const counts = await promiseAllPlus(queries, logger, {
-          metricsId: `StarkexBlockCounter_${projectId.toString()}`,
-        })
-        await starkexRepository.addOrUpdateMany(counts, trx)
+export class StarkexCounter extends SequenceProcessor {
+  constructor(
+    projectId: ProjectId,
+    private readonly starkexInstances: string[],
+    sequenceProcessorRepository: SequenceProcessorRepository,
+    private readonly starkexRepository: StarkexTransactionCountRepository,
+    private readonly starkexClient: StarkexClient,
+    private readonly clock: Clock,
+    logger: Logger,
+    batchSize: number,
+    sinceTimestamp: UnixTime,
+    resyncLastDays: number,
+  ) {
+    super(
+      projectId,
+      sequenceProcessorRepository,
+      {
+        batchSize,
+        startFrom: sinceTimestamp.toStartOf('day').toDays(),
+        // starkex APIs are not stable and can change from the past. With this we make sure to scrape them again
+        uncertaintyBuffer: resyncLastDays,
       },
-    },
-  )
+      logger,
+    )
+    this.logger = this.logger.for(this)
+  }
 
-  return new TransactionCounter(projectId, processor, () =>
-    starkexRepository.findLastTimestampByProjectId(projectId),
-  )
-}
+  protected override async getLatest(): Promise<number> {
+    const day = this.clock.getLastHour().toStartOf('day').toDays()
+    return Promise.resolve(day)
+  }
 
-/** @internal */
-export function getStarkexLastDay(timestamp: UnixTime) {
-  return timestamp.toStartOf('day').toDays()
+  protected override async processRange(
+    from: number,
+    to: number,
+    trx: Knex.Transaction,
+  ) {
+    const queries = range(from, to + 1).map((day) => async () => {
+      const counts = await Promise.all(
+        this.starkexInstances.map(
+          async (instance) =>
+            await this.starkexClient.getDailyCount(day, instance),
+        ),
+      )
+
+      return {
+        count: counts.reduce((a, b) => a + b, 0),
+        timestamp: UnixTime.fromDays(day),
+        projectId: this.projectId,
+      }
+    })
+
+    const counts = await promiseAllPlus(queries, this.logger, {
+      metricsId: `StarkexBlockCounter_${this.projectId.toString()}`,
+    })
+    await this.starkexRepository.addOrUpdateMany(counts, trx)
+  }
 }
