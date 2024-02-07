@@ -1,7 +1,7 @@
 import { ConfigReader, DiscoveryDiff } from '@l2beat/discovery'
 import { ChainId } from '@l2beat/shared-pure'
 
-import { Project } from '../../../../../model'
+import { Project } from '../../../../../model/Project'
 import { UpdateMonitorRepository } from '../../../../update-monitor/repositories/UpdateMonitorRepository'
 import { getDashboardContracts } from './getDashboardContracts'
 import { getDiff } from './utils/getDiff'
