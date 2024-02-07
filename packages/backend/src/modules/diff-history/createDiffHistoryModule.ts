@@ -66,7 +66,7 @@ export function createDiffHistoryModule(
         { name: 'optimism', minTimestamp: new UnixTime(1636665360) },
         { name: 'base', minTimestamp: new UnixTime(1686789300) },
         { name: 'zksync2', minTimestamp: new UnixTime(1676388120) },
-        { name: 'dydx', minTimestamp: new UnixTime(1613991120) },
+        { name: 'dydx', minTimestamp: getDYDXMinTimestamp() },
         { name: 'linea', minTimestamp: new UnixTime(1688656500) },
         { name: 'starknet', minTimestamp: new UnixTime(1637076240) },
         { name: 'loopring', minTimestamp: new UnixTime(1606370340) },
@@ -121,4 +121,38 @@ export function createDiffHistoryModule(
     routers,
     start,
   }
+}
+
+function getDYDXMinTimestamp() {
+  // TODO(radomski): The real minTimestamp is equal to 1613991120. But we have
+  // to ignore some part of the dydx history because between the days of
+  //
+  // Jul-31-2021
+  // Aug-01-2021
+  // Aug-02-2021
+  //
+  // The following thing occurs:
+  //
+  // - On Jul-31-2021 the 0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC contract
+  // is deployed with default configuration that sets the
+  // `_EPOCH_PARAMETERS_` to
+  //
+  // {
+  //  interval: 2419200,
+  //  offset: 1628002800,
+  // }
+  //
+  // `offset` is the timestamp of the first epoch, the value written to it at
+  // construction decodes to _Aug 03 2021 15:00:00_.
+  //
+  // - On days Aug 01 and Aug 02 we try to call `getCurrentEpoch()` but it
+  // reverst with "Epoch zero has not started" error.
+  // - On Aug 03 the first epoch starts and every subsequent call does not revert.
+  //
+  // The big problem here is that we want to ignore the `getCurrentEpoch()`
+  // function in the range Jul-31-2021 to Aug-02-2021 but we don't have
+  // any tools to achieve this. It's either ignore that call completley or
+  // just move the minTimestamp to the day after the first epoch starts.
+
+  return new UnixTime(1628002800)
 }

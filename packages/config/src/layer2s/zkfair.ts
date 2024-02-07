@@ -152,7 +152,7 @@ export const zkfair: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...RISK_VIEW.DATA_EXTERNAL_DAC,
+      ...RISK_VIEW.DATA_EXTERNAL_DAC(),
       sources: [
         {
           contract: 'CDKValidium',

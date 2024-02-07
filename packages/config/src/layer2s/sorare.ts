@@ -58,7 +58,7 @@ export const sorare: Layer2 = {
     links: {
       websites: ['https://sorare.com/'],
       apps: [],
-      documentation: ['https://docs.starkware.co/starkex-docs-v2/'],
+      documentation: ['https://docs.starkware.co/starkex/index.html'],
       explorers: [],
       repositories: ['https://github.com/starkware-libs/starkex-contracts'],
       socialMedia: [
@@ -91,7 +91,7 @@ export const sorare: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: {
-      ...RISK_VIEW.DATA_EXTERNAL_DAC,
+      ...RISK_VIEW.DATA_EXTERNAL_DAC(),
       sources: [
         {
           contract: 'StarkExchange',

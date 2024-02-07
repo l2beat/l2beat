@@ -1,3 +1,38 @@
+Generated with discovered.json: 0x8719a11829c6e6325ba2ef228b77a827c2cacf3a
+
+# Diff at Fri, 02 Feb 2024 11:08:25 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@d4d9bc19cc4a1e4baaadb947f4ad7e44e6c21ac9 block: 19119504
+- current block number: 19140307
+
+## Description
+
+The nonce is now ignored. Start tracking the keySetUpdates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19119504 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6) {
+      values.keySetUpdates:
++        0
+    }
+```
+
+```diff
+    contract GnosisSafe (0xC234E41AE2cb00311956Aa7109fC801ae8c80941) {
+      name:
+-        "GnosisSafe"
++        "ValidatorOwnerMultisig"
+      derivedName:
++        "GnosisSafe"
+    }
+```
+
 Generated with discovered.json: 0x64a4811e26385036e4496726627304e6f3ddd353
 
 # Diff at Tue, 30 Jan 2024 13:04:34 GMT:

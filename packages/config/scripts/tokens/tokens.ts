@@ -124,17 +124,18 @@ async function main() {
 
       result.push({
         id: assetId,
-        chainId,
+        name: info.name,
+        coingeckoId: info.coingeckoId,
         address: token.address,
         symbol: token.symbol,
-        name: info.name,
         decimals: info.decimals,
-        coingeckoId: info.coingeckoId,
         sinceTimestamp: info.sinceTimestamp,
-        iconUrl: info.iconUrl,
         category,
+        iconUrl: info.iconUrl,
+        chainId,
         type,
         formula,
+        bridgedUsing: token.bridgedUsing,
       })
 
       tokenLogger.processed()

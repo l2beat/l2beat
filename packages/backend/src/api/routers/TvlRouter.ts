@@ -8,22 +8,30 @@ import {
 } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
+import { ApiConfig } from '../../config/Config'
 import { TvlController } from '../controllers/tvl/TvlController'
 import { withTypedContext } from './types'
 
-export function createTvlRouter(tvlController: TvlController) {
+export function createTvlRouter(
+  tvlController: TvlController,
+  config: ApiConfig,
+) {
   const router = new Router()
 
   router.get('/api/tvl', async (ctx) => {
-    const tvlResult = await tvlController.getCachedTvlApiResponse()
+    const tvlResult = config.cache.tvl
+      ? await tvlController.getCachedTvlApiResponse()
+      : await tvlController.getTvlApiResponse()
 
     if (tvlResult.result === 'error') {
       if (tvlResult.error === 'DATA_NOT_FULLY_SYNCED') {
-        ctx.status = 422
+        ctx.status = 404
+        ctx.body = tvlResult.error
       }
 
       if (tvlResult.error === 'NO_DATA') {
         ctx.status = 404
+        ctx.body = tvlResult.error
       }
 
       return
@@ -51,11 +59,13 @@ export function createTvlRouter(tvlController: TvlController) {
 
         if (tvlProjectsResponse.result === 'error') {
           if (tvlProjectsResponse.error === 'DATA_NOT_FULLY_SYNCED') {
-            ctx.status = 422
+            ctx.status = 404
+            ctx.body = tvlProjectsResponse.error
           }
 
           if (tvlProjectsResponse.error === 'NO_DATA') {
             ctx.status = 404
+            ctx.body = tvlProjectsResponse.error
           }
 
           return
@@ -93,10 +103,12 @@ export function createTvlRouter(tvlController: TvlController) {
         if (assetData.result === 'error') {
           if (assetData.error === 'NO_DATA') {
             ctx.status = 404
+            ctx.body = assetData.error
           }
 
           if (assetData.error === 'INVALID_PROJECT_OR_ASSET') {
             ctx.status = 400
+            ctx.body = assetData.error
           }
 
           return
@@ -114,10 +126,12 @@ export function createTvlRouter(tvlController: TvlController) {
     if (projectAssetsBreakdown.result === 'error') {
       if (projectAssetsBreakdown.error === 'NO_DATA') {
         ctx.status = 404
+        ctx.body = projectAssetsBreakdown.error
       }
 
       if (projectAssetsBreakdown.error === 'DATA_NOT_FULLY_SYNCED') {
-        ctx.status = 422
+        ctx.status = 404
+        ctx.body = projectAssetsBreakdown.error
       }
 
       return

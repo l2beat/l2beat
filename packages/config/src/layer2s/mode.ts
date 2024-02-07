@@ -12,6 +12,11 @@ const upgradeability = {
   upgradeDelay: 'No delay',
 }
 
+const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
+  'L2OutputOracle',
+  'FINALIZATION_PERIOD_SECONDS',
+)
+
 export const mode: Layer2 = opStack({
   discovery,
   display: {
@@ -34,6 +39,10 @@ export const mode: Layer2 = opStack({
         'https://mode.mirror.xyz/',
         'https://t.me/ModeNetworkOfficial',
       ],
+    },
+    activityDataSource: 'Blockchain RPC',
+    finality: {
+      finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
     },
   },
   upgradeability,
@@ -59,6 +68,10 @@ export const mode: Layer2 = opStack({
       description: 'Mode Network is live on mainnet.',
     },
   ],
+  finality: {
+    type: 'OPStack',
+    lag: 0,
+  },
   knowledgeNuggets: [],
   roleOverrides: {
     batcherHash: 'Sequencer',

@@ -9,6 +9,10 @@ interface Repository {
   deleteSixHourlyUntil: (timestamp: UnixTime) => Promise<number>
 }
 
+/**
+ * WARNING: Not all updaters support cleaning, so their repositories should not be injected there.
+ * Current list of unsupported updaters: PriceUpdater, CirculatingSupplyUpdater
+ */
 export class TvlCleaner {
   private readonly taskQueue: TaskQueue<void>
 

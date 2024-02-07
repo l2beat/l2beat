@@ -4,10 +4,6 @@ import { PriceRow } from 'knex/types/tables'
 
 import { BaseRepository, CheckConvention } from './shared/BaseRepository'
 import { Database } from './shared/Database'
-import {
-  deleteHourlyUntil,
-  deleteSixHourlyUntil,
-} from './shared/deleteArchivedRecords'
 
 export interface PriceRecord {
   assetId: AssetId
@@ -108,16 +104,6 @@ export class PriceRepository extends BaseRepository {
     return new Map(
       rows.map((row) => [AssetId(row.asset_id), UnixTime.fromDate(row.max)]),
     )
-  }
-
-  async deleteHourlyUntil(timestamp: UnixTime) {
-    const knex = await this.knex()
-    return deleteHourlyUntil(knex, 'coingecko_prices', timestamp)
-  }
-
-  async deleteSixHourlyUntil(timestamp: UnixTime) {
-    const knex = await this.knex()
-    return deleteSixHourlyUntil(knex, 'coingecko_prices', timestamp)
   }
 }
 

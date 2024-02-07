@@ -2,7 +2,11 @@
   "$schema": "../../config.schema.json",
   "chain": "arbitrum",
   "name": "rari",
-  "initialAddresses": ["0x37e60F80d921dc5E7f501a7130F31f6548dBa564"],
+  "initialAddresses": [
+    "0x37e60F80d921dc5E7f501a7130F31f6548dBa564",
+    "0x8bE956aB42274056ef4471BEb211b33e258b7324",
+    "0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6"
+  ],
   "names": {
     "0x255f80Ef2F09FCE0944faBb292b8510F01316Cf0": "Bridge",
     "0x37e60F80d921dc5E7f501a7130F31f6548dBa564": "Inbox",
@@ -10,8 +14,9 @@
     "0xa9064FebD91E9Ab4c49C8989926Cada18bc9C8FF": "ChallengeManager",
     "0x91591BB66075BCfF94AA128B003134165C3Ab83a": "Outbox",
     "0xA436f1867adD490BF1530c636f2FB090758bB6B3": "SequencerInbox",
-    "0x139C5A235632EDdad741ff380112B3161d31a21C": "UpgradeExecutor"
-    // TODO: add L1ERC20Gateway and L1CustomGateway
+    "0x139C5A235632EDdad741ff380112B3161d31a21C": "UpgradeExecutor",
+    "0x8bE956aB42274056ef4471BEb211b33e258b7324": "L1CustomGateway",
+    "0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6": "L1ERC20Gateway"
   },
   "overrides": {
     "ChallengeManager": {
@@ -76,6 +81,12 @@
           "type": "call",
           "method": "function isBatchPoster(address) external view returns (bool)",
           "args": ["0x02c903F5c76F3f00c1F659702Bd76DF30470bBEE"]
+        },
+        "sequencerVersion": {
+          "type": "arbitrumSequencerVersion"
+        },
+        "dacKeyset": {
+          "type": "arbitrumDACKeyset"
         },
         // when this changes, it means the sequencers have changed
         "setIsBatchPosterCount": {
