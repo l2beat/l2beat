@@ -32,6 +32,24 @@ export const aevo: Layer2 = opStack({
     },
     activityDataSource: 'Blockchain RPC',
   },
+  chainConfig: {
+    name: 'aevo',
+    chainId: 2999,
+    explorerUrl: 'https://explorer.aevo.xyz',
+    explorerApi: {
+      url: 'https://explorer.aevo.xyz/api',
+      type: 'blockscout',
+    },
+    multicallContracts: [
+      {
+        sinceBlock: 2790111,
+        batchSize: 150,
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        version: '3',
+      },
+    ],
+    minTimestampForTvl: UnixTime.fromDate(new Date('2023-09-05T03:00:00Z')),
+  },
   upgradeability,
   l1StandardBridgeEscrow: EthereumAddress(
     '0x4082C9647c098a6493fb499EaE63b5ce3259c574',

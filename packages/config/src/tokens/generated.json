@@ -3585,8 +3585,8 @@
       }
     },
     {
-      "id": "base:sdex-smardex-token",
-      "name": "SmarDex Token",
+      "id": "base:sdex-smardex",
+      "name": "SmarDex",
       "coingeckoId": "smardex",
       "address": "0xFd4330b0312fdEEC6d4225075b82E00493FF2e3f",
       "symbol": "SDEX",

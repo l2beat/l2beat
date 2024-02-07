@@ -6,14 +6,13 @@ import { ActivityController } from '../../api/controllers/activity/ActivityContr
 import { createActivityRouter } from '../../api/routers/ActivityRouter'
 import { Config } from '../../config'
 import { ActivityConfig } from '../../config/Config'
-import { DailyTransactionCountViewRefresher } from '../../core/activity/DailyTransactionCountViewRefresher'
-import { TransactionCounter } from '../../core/activity/TransactionCounter'
-import { TransactionCountingMonitor } from '../../core/activity/TransactionCountingMonitor'
+import { ActivityViewRefresher } from '../../core/activity/ActivityViewRefresher'
+import { SequenceProcessor } from '../../core/activity/SequenceProcessor'
 import { Clock } from '../../core/Clock'
-import { DailyTransactionCountViewRepository } from '../../peripherals/database/activity/DailyTransactionCountViewRepository'
+import { ActivityViewRepository } from '../../peripherals/database/activity/ActivityViewRepository'
 import { Database } from '../../peripherals/database/shared/Database'
 import { ApplicationModule } from '../ApplicationModule'
-import { createTransactionCounters } from './createTransactionCounters'
+import { createSequenceProcessors } from './createSequenceProcessors'
 
 export function createActivityModule(
   config: Config,
@@ -27,12 +26,9 @@ export function createActivityModule(
     return
   }
 
-  const dailyCountViewRepository = new DailyTransactionCountViewRepository(
-    database,
-    logger,
-  )
+  const activityViewRepository = new ActivityViewRepository(database, logger)
 
-  const counters = createTransactionCounters(
+  const processors = createSequenceProcessors(
     config,
     logger,
     http,
@@ -40,28 +36,22 @@ export function createActivityModule(
     clock,
   )
 
-  const viewRefresher = new DailyTransactionCountViewRefresher(
-    counters,
-    dailyCountViewRepository,
-    clock,
-    logger,
-  )
-
-  const transactionCountingMonitor = new TransactionCountingMonitor(
-    counters,
+  const viewRefresher = new ActivityViewRefresher(
+    processors,
+    activityViewRepository,
     clock,
     logger,
   )
 
   const includedInApiProjectIds = getIncludedInApiProjectIds(
-    counters,
+    processors,
     config.activity,
     logger,
   )
   const activityController = new ActivityController(
     includedInApiProjectIds,
-    counters,
-    dailyCountViewRepository,
+    processors,
+    activityViewRepository,
     clock,
   )
   const activityV2Router = createActivityRouter(activityController, config)
@@ -69,9 +59,8 @@ export function createActivityModule(
   const start = async () => {
     logger = logger.for('ActivityModule')
     logger.info('Starting')
-    await Promise.all(counters.map((c) => c.start()))
+    await Promise.all(processors.map((p) => p.start()))
     viewRefresher.start()
-    transactionCountingMonitor.start()
     logger.info('Started')
   }
 
@@ -82,28 +71,28 @@ export function createActivityModule(
 }
 
 function getIncludedInApiProjectIds(
-  counters: TransactionCounter[],
+  processors: SequenceProcessor[],
   activity: ActivityConfig,
   logger: Logger,
 ): ProjectId[] {
-  return counters
-    .filter((counter) => {
-      return shouldCounterBeIncluded(counter, activity, logger)
-    })
+  return processors
+    .filter((processor) =>
+      shouldIncludeProject(processor.projectId, activity, logger),
+    )
     .map((c) => c.projectId)
 }
 
-export function shouldCounterBeIncluded(
-  counter: TransactionCounter,
+export function shouldIncludeProject(
+  projectId: ProjectId,
   activity: ActivityConfig,
   logger: Logger,
 ) {
   const isExcludedInEnv = activity.projectsExcludedFromAPI.some(
-    (p) => p === counter.projectId.toString(),
+    (p) => p === projectId.toString(),
   )
   if (isExcludedInEnv) {
     logger.info(
-      `Project ${counter.projectId.toString()} excluded from activity v2 api via .env - will not be present in the response, but will continue syncing`,
+      `Project ${projectId.toString()} excluded from activity v2 api via .env - will not be present in the response, but will continue syncing`,
     )
     return false
   }

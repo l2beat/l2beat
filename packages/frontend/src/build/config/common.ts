@@ -26,6 +26,7 @@ export const common: Omit<Config, 'backend'> = {
     tvlBreakdown: true,
     diffHistory: false,
     buildAllProjectPages: false,
+    governancePage: false,
   },
   layer2s,
   layer3s,

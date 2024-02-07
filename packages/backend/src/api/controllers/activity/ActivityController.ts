@@ -6,9 +6,9 @@ import {
   ProjectId,
 } from '@l2beat/shared-pure'
 
-import { TransactionCounter } from '../../../core/activity/TransactionCounter'
+import { SequenceProcessor } from '../../../core/activity/SequenceProcessor'
 import { Clock } from '../../../core/Clock'
-import { DailyTransactionCountViewRepository } from '../../../peripherals/database/activity/DailyTransactionCountViewRepository'
+import { ActivityViewRepository } from '../../../peripherals/database/activity/ActivityViewRepository'
 import { alignActivityData } from './alignActivityData'
 import { formatActivityChart } from './formatActivityChart'
 import { postprocessCounts } from './postprocessCounts'
@@ -21,8 +21,8 @@ import {
 export class ActivityController {
   constructor(
     private readonly projectIds: ProjectId[],
-    private readonly counters: TransactionCounter[],
-    private readonly viewRepository: DailyTransactionCountViewRepository,
+    private readonly processors: SequenceProcessor[],
+    private readonly viewRepository: ActivityViewRepository,
     private readonly clock: Clock,
   ) {}
 
@@ -81,34 +81,31 @@ export class ActivityController {
     return formatActivityChart(chartPoints)
   }
 
-  async getStatus(): Promise<json> {
-    const now = this.clock.getLastHour()
-    const projects = await Promise.all(
-      this.counters.map(async (counter) => {
-        return {
-          projectId: counter.projectId.toString(),
-          includedInApi: this.projectIds.includes(counter.projectId),
-          ...(await counter.getStatus(now)),
-        }
-      }),
-    )
-    return {
-      systemNow: now.toDate().toISOString(),
-      projects,
-    }
+  getStatus(): json {
+    const projects = this.processors.map((processor) => {
+      return {
+        projectId: processor.projectId.toString(),
+        includedInApi: this.projectIds.includes(processor.projectId),
+        ...processor.getStatus(),
+      }
+    })
+    return projects.reduce<Record<string, json>>((result, project) => {
+      result[project.projectId] = project
+      return result
+    }, {})
   }
 
   private async getPostprocessedDailyCounts(): Promise<DailyTransactionCountProjectsMap> {
     const counts = await this.viewRepository.getDailyCounts()
     const result: DailyTransactionCountProjectsMap = new Map()
     const now = this.clock.getLastHour()
-    for (const counter of this.counters) {
-      const projectId = counter.projectId
+    for (const processor of this.processors) {
+      const projectId = processor.projectId
       if (!this.projectIds.includes(projectId)) continue
       const projectCounts = counts.filter((c) => c.projectId === projectId)
       const postprocessedCounts = postprocessCounts(
         projectCounts,
-        counter.hasProcessedAll(),
+        processor.hasProcessedAll(),
         now,
       )
       result.set(projectId, postprocessedCounts)
