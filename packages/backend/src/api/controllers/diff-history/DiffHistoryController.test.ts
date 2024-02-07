@@ -8,11 +8,11 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { ChainConverter } from '../../../core/ChainConverter'
 import {
   DiscoveryHistoryRecord,
   DiscoveryHistoryRepository,
 } from '../../../peripherals/database/discovery/DiscoveryHistoryRepository'
+import { ChainConverter } from '../../../tools/ChainConverter'
 import { DiffHistoryController } from './DiffHistoryController'
 
 describe(DiffHistoryController.name, () => {

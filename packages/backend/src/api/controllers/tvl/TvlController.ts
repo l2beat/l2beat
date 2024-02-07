@@ -17,13 +17,13 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { TaskQueue } from '../../../core/queue/TaskQueue'
 import { ReportProject } from '../../../core/reports/ReportProject'
 import { AggregatedReportRepository } from '../../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../../peripherals/database/AggregatedReportStatusRepository'
 import { BalanceRepository } from '../../../peripherals/database/BalanceRepository'
 import { PriceRepository } from '../../../peripherals/database/PriceRepository'
 import { ReportRepository } from '../../../peripherals/database/ReportRepository'
+import { TaskQueue } from '../../../tools/queue/TaskQueue'
 import { getHourlyMinTimestamp } from '../utils/getHourlyMinTimestamp'
 import { getSixHourlyMinTimestamp } from '../utils/getSixHourlyMinTimestamp'
 import { asNumber } from './asNumber'

@@ -8,9 +8,9 @@ import {
   BalanceRepository,
 } from '../../peripherals/database/BalanceRepository'
 import { BalanceStatusRepository } from '../../peripherals/database/BalanceStatusRepository'
+import { TaskQueue } from '../../tools/queue/TaskQueue'
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { Clock } from '../Clock'
-import { TaskQueue } from '../queue/TaskQueue'
 import { getStatus } from '../reports/getStatus'
 import { BalanceProject } from './BalanceProject'
 import { BalanceProvider, BalanceQuery } from './BalanceProvider'

@@ -15,9 +15,9 @@ import {
   ReportRepository,
 } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
+import { TaskQueue } from '../../tools/queue/TaskQueue'
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
-import { TaskQueue } from '../queue/TaskQueue'
 import { createFormulaReports } from '../reports/createFormulaReports'
 import { getStatus } from '../reports/getStatus'
 import { getTokensConfigHash } from '../reports/getTokensConfigHash'

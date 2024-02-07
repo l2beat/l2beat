@@ -15,9 +15,9 @@ import {
   TotalSupplyRepository,
 } from '../../peripherals/database/TotalSupplyRepository'
 import { TotalSupplyStatusRepository } from '../../peripherals/database/TotalSupplyStatusRepository'
+import { TaskQueue } from '../../tools/queue/TaskQueue'
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { Clock } from '../Clock'
-import { TaskQueue } from '../queue/TaskQueue'
 import { getStatus } from '../reports/getStatus'
 import { getTotalSupplyConfigHash } from './getTotalSupplyConfigHash'
 import { TotalSupplyProvider, TotalSupplyQuery } from './TotalSupplyProvider'

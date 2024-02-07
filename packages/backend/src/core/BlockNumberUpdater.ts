@@ -5,8 +5,8 @@ import { setTimeout } from 'timers/promises'
 
 import { UpdaterStatus } from '../api/controllers/status/view/TvlStatusPage'
 import { BlockNumberRepository } from '../peripherals/database/BlockNumberRepository'
+import { TaskQueue } from '../tools/queue/TaskQueue'
 import { Clock } from './Clock'
-import { TaskQueue } from './queue/TaskQueue'
 import { getStatus } from './reports/getStatus'
 
 export class BlockNumberUpdater {

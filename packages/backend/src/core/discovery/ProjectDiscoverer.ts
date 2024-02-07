@@ -4,9 +4,9 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
 import { DiscoveryHistoryRepository } from '../../peripherals/database/discovery/DiscoveryHistoryRepository'
-import { ChainConverter } from '../ChainConverter'
+import { ChainConverter } from '../../tools/ChainConverter'
+import { TaskQueue } from '../../tools/queue/TaskQueue'
 import { Clock } from '../Clock'
-import { TaskQueue } from '../queue/TaskQueue'
 import { DiscoveryRunner } from './DiscoveryRunner'
 
 export class ProjectDiscoverer {

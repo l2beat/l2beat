@@ -8,7 +8,7 @@ import {
   DiscordClient,
   MAX_MESSAGE_LENGTH,
 } from '../../peripherals/discord/DiscordClient'
-import { ChainConverter } from '../ChainConverter'
+import { ChainConverter } from '../../tools/ChainConverter'
 import { UpdateNotifier } from './UpdateNotifier'
 
 const BLOCK = 123

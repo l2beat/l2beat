@@ -8,10 +8,10 @@ import {
   ReportRepository,
 } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
+import { TaskQueue } from '../../tools/queue/TaskQueue'
 import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { Clock } from '../Clock'
 import { PriceUpdater } from '../PriceUpdater'
-import { TaskQueue } from '../queue/TaskQueue'
 import { createReports } from '../reports/createReports'
 import { getReportConfigHash } from '../reports/getReportConfigHash'
 import { getStatus } from '../reports/getStatus'

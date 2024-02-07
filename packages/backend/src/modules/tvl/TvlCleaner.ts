@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 
 import { Clock } from '../../core/Clock'
-import { TaskQueue } from '../../core/queue/TaskQueue'
+import { TaskQueue } from '../../tools/queue/TaskQueue'
 
 interface Repository {
   deleteHourlyUntil: (timestamp: UnixTime) => Promise<number>

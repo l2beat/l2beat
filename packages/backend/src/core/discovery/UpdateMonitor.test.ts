@@ -16,7 +16,7 @@ import {
   UpdateMonitorRecord,
   UpdateMonitorRepository,
 } from '../../peripherals/database/discovery/UpdateMonitorRepository'
-import { ChainConverter } from '../ChainConverter'
+import { ChainConverter } from '../../tools/ChainConverter'
 import { Clock } from '../Clock'
 import { DiscoveryRunner, DiscoveryRunnerOptions } from './DiscoveryRunner'
 import { UpdateMonitor } from './UpdateMonitor'

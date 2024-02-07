@@ -15,8 +15,8 @@ import {
   PriceRecord,
   PriceRepository,
 } from '../peripherals/database/PriceRepository'
+import { TaskQueue } from '../tools/queue/TaskQueue'
 import { Clock } from './Clock'
-import { TaskQueue } from './queue/TaskQueue'
 import { getStatus } from './reports/getStatus'
 
 export class PriceUpdater {

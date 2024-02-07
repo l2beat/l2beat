@@ -16,8 +16,8 @@ import {
   CirculatingSupplyRepository,
   DataBoundary,
 } from '../../peripherals/database/CirculatingSupplyRepository'
+import { TaskQueue } from '../../tools/queue/TaskQueue'
 import { Clock } from '../Clock'
-import { TaskQueue } from '../queue/TaskQueue'
 import { getStatus } from '../reports/getStatus'
 
 export class CirculatingSupplyUpdater {

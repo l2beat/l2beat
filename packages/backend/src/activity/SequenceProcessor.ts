@@ -4,7 +4,7 @@ import { EventEmitter } from 'events'
 import { Knex } from 'knex'
 import { Gauge } from 'prom-client'
 
-import { TaskQueue } from '../core/queue/TaskQueue'
+import { TaskQueue } from '../tools/queue/TaskQueue'
 import { SequenceProcessorRepository } from './repositories/SequenceProcessorRepository'
 
 const activityLast = new Gauge({
