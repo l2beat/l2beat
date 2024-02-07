@@ -3303,7 +3303,7 @@
     {
       "id": "wusdm-wrapped-mountain-protocol-usd",
       "name": "Wrapped Mountain Protocol USD",
-      "coingeckoId": "wrapped-usdm",
+      "coingeckoId": "mountain-protocol-usdm",
       "address": "0x57F5E098CaD7A3D1Eed53991D4d66C45C9AF7812",
       "symbol": "wUSDM",
       "decimals": 18,

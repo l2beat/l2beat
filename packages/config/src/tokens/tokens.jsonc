@@ -892,7 +892,8 @@
     {
       "symbol": "wUSDM",
       "address": "0x57F5E098CaD7A3D1Eed53991D4d66C45C9AF7812",
-      "category": "stablecoin"
+      "category": "stablecoin",
+      "coingeckoId": "mountain-protocol-usdm"
     },
     {
       "symbol": "WXT",
