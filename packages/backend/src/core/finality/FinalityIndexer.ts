@@ -1,13 +1,18 @@
 import { Logger } from '@l2beat/backend-tools'
-import { assert, notUndefined, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, notUndefined, UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
 import { Knex } from 'knex'
 
-import { FinalityRepository } from '../../peripherals/database/FinalityRepository'
+import {
+  FinalityRecord,
+  FinalityRepository,
+} from '../../peripherals/database/FinalityRepository'
 import { IndexerStateRepository } from '../../peripherals/database/IndexerStateRepository'
 import { LivenessIndexer } from '../liveness/LivenessIndexer'
 import { FinalityConfig } from './types/FinalityConfig'
 import { findConfigurationsToSync } from './utils/findConfigurationsToSync'
+
+const FINALITY_GRANULARITY = 24 * 6
 
 export class FinalityIndexer extends ChildIndexer {
   readonly indexerId = 'finality_indexer'
@@ -30,73 +35,68 @@ export class FinalityIndexer extends ChildIndexer {
   }
 
   override async update(from: number, to: number): Promise<number> {
-    const [configurationsToSync, adjustedTo] = await this.getConfiguration(to)
+    const targetTimestamp = new UnixTime(to).toStartOf('day')
+
+    const configurationsToSync = await this.getSyncStatus(targetTimestamp)
+
     if (configurationsToSync.length === 0) {
-      this.logger.info('Update skipped', { from, to: adjustedTo })
-      return adjustedTo
+      this.logger.debug('Update skipped', { from, to })
+      return to
     }
+
     const finalityData = await this.getFinalityData(
-      new UnixTime(adjustedTo).add(-1, 'days').toNumber(),
-      adjustedTo,
+      targetTimestamp,
       configurationsToSync,
     )
-    await this.finalityRepository.addMany(
-      finalityData.map((d) => ({ ...d, timestamp: new UnixTime(adjustedTo) })),
-    )
 
-    return adjustedTo
+    await this.finalityRepository.addMany(finalityData)
+
+    this.logger.info('Update finished', {
+      targetTimestamp,
+      projects: configurationsToSync.map((c) => c.projectId.toString()),
+    })
+    return to
   }
 
-  async getConfiguration(to: number): Promise<[FinalityConfig[], number]> {
+  private async getSyncStatus(targetTimestamp: UnixTime) {
     const syncedProjectsForLastDay =
       await this.finalityRepository.getProjectsSyncedOnTimestamp(
-        new UnixTime(to).toStartOf('day'),
+        targetTimestamp,
       )
+
     const configurationsToSyncForLastDay = findConfigurationsToSync(
       this.runtimeConfigurations,
       syncedProjectsForLastDay,
     )
-    if (configurationsToSyncForLastDay.length > 0) {
-      return [
-        configurationsToSyncForLastDay,
-        new UnixTime(to).toStartOf('day').toNumber(),
-      ]
-    } else if (UnixTime.now().toStartOf('day').toNumber() !== to) {
-      return [[], to]
-    } else {
-      return [this.runtimeConfigurations, to]
-    }
+
+    return configurationsToSyncForLastDay
   }
 
   async getFinalityData(
-    from: number,
-    to: number,
+    to: UnixTime,
     configurations: FinalityConfig[],
-  ): Promise<
-    {
-      projectId: ProjectId
-      minimum: number
-      maximum: number
-      average: number
-    }[]
-  > {
-    const fromUnixTime = new UnixTime(from)
-    const toUnixTime = new UnixTime(to)
+  ): Promise<FinalityRecord[]> {
+    const from = to.add(-1, 'days')
+
     const finalityPromises = configurations.map(async (config) => {
       const projectFinalityData =
         await config.analyzer.getFinalityWithGranularity(
-          fromUnixTime,
-          toUnixTime,
-          24 * 6,
+          from,
+          to,
+          FINALITY_GRANULARITY,
         )
+
       if (projectFinalityData === undefined) {
         return
       }
+
       return {
         projectId: config.projectId,
+        timestamp: to,
         ...projectFinalityData,
       }
     })
+
     const data = await Promise.all(finalityPromises)
     return data.filter(notUndefined)
   }
