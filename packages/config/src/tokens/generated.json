@@ -3333,6 +3333,34 @@
       }
     },
     {
+      "id": "aevo:usdc-usd-coin",
+      "chainId": 2999,
+      "address": "0xC06Ed0eB5c0e25fa71B37A3F33CFa62C7d9dD542",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "decimals": 6,
+      "coingeckoId": "usd-coin",
+      "sinceTimestamp": 1691459941,
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "category": "other",
+      "type": "EBV",
+      "formula": "totalSupply"
+    },
+    {
+      "id": "aevo:weth-wrapped-ether",
+      "chainId": 2999,
+      "address": "0xEB5eAb7315f6721d90ED8DD007F802ecbFb99cE8",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "decimals": 18,
+      "coingeckoId": "weth",
+      "sinceTimestamp": 1701477911,
+      "iconUrl": "https://assets.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "category": "other",
+      "type": "EBV",
+      "formula": "totalSupply"
+    },
+    {
       "id": "base:sdex-smardex",
       "name": "SmarDex",
       "coingeckoId": "smardex",

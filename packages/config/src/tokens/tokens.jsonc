@@ -1153,7 +1153,8 @@
       "bridgedUsing": {
         "bridge": "Socket",
         "slug": "socket"
-      }
+      },
+      "coingeckoId": "usd-coin"
     },
     {
       "symbol": "WETH",
@@ -1163,7 +1164,8 @@
       "bridgedUsing": {
         "bridge": "Socket",
         "slug": "socket"
-      }
+      },
+      "coingeckoId": "weth"
     }
   ]
 }
