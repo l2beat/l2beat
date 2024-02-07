@@ -3,7 +3,7 @@ import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { DiscoveryHistoryRow } from 'knex/types/tables'
 
-import { sanitizeDiscoveryOutput } from '../../../core/discovery/sanitizeDiscoveryOutput'
+import { sanitizeDiscoveryOutput } from '../../../modules/update-monitor/sanitizeDiscoveryOutput'
 import { BaseRepository, CheckConvention } from '../shared/BaseRepository'
 import { Database } from '../shared/Database'
 

@@ -8,8 +8,8 @@ import {
 import { utils } from 'ethers'
 import { mean } from 'lodash'
 
-import { LivenessRepository } from '../../modules/liveness/repositories/LivenessRepository'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
+import { LivenessRepository } from '../liveness/repositories/LivenessRepository'
 
 type LineaDecoded = [
   [string, number, string, unknown[], string, unknown[]][],

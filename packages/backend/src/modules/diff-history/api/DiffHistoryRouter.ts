@@ -1,8 +1,8 @@
 import Router from '@koa/router'
 import { z } from 'zod'
 
-import { DiffHistoryController } from '../controllers/diff-history/DiffHistoryController'
-import { withTypedContext } from './types'
+import { withTypedContext } from '../../../api/routers/types'
+import { DiffHistoryController } from './DiffHistoryController'
 
 export function createDiffHistoryRouter(controller: DiffHistoryController) {
   const router = new Router()

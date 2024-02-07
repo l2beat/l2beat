@@ -2,8 +2,8 @@ import { LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
 
-import { LivenessRepository } from '../../modules/liveness/repositories/LivenessRepository'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
+import { LivenessRepository } from '../liveness/repositories/LivenessRepository'
 import { LineaFinalityAnalyzer } from './LineaFinalityAnalyzer'
 
 describe(LineaFinalityAnalyzer.name, () => {
