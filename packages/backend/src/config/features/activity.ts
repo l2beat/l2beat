@@ -2,7 +2,7 @@ import { Env } from '@l2beat/backend-tools'
 import { layer2s, Layer2TransactionApi } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 
-import { ActivityTransactionConfig } from '../../activity/ActivityTransactionConfig'
+import { ActivityTransactionConfig } from '../../modules/activity/ActivityTransactionConfig'
 
 const DEFAULT_RPC_CALLS_PER_MINUTE = 60
 const DEFAULT_RESYNC_LAST_DAYS = 7

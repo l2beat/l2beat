@@ -1,21 +1,21 @@
 import { Logger } from '@l2beat/backend-tools'
 import { HttpClient } from '@l2beat/shared'
 
-import { createActivityModule } from './activity/ActivityModule'
 import { ApiServer } from './api/ApiServer'
 import { Config } from './config'
-import { createLivenessModule } from './liveness/LivenessModule'
+import { createActivityModule } from './modules/activity/ActivityModule'
 import { ApplicationModule } from './modules/ApplicationModule'
 import { createDiffHistoryModule } from './modules/diff-history/createDiffHistoryModule'
 import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createHealthModule } from './modules/health/HealthModule'
+import { createLivenessModule } from './modules/liveness/LivenessModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createStatusModule } from './modules/status/StatusModule'
+import { createTvlModule } from './modules/tvl/modules/TvlModule'
 import { createUpdateMonitorModule } from './modules/update-monitor/UpdateMonitorModule'
 import { Database } from './peripherals/database/shared/Database'
 import { Clock } from './tools/Clock'
 import { getErrorReportingMiddleware, reportError } from './tools/ErrorReporter'
-import { createTvlModule } from './tvl/modules/TvlModule'
 
 export class Application {
   start: () => Promise<void>

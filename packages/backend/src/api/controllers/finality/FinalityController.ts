@@ -4,8 +4,8 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { LivenessRepository } from '../../../liveness/repositories/LivenessRepository'
 import { Project } from '../../../model'
+import { LivenessRepository } from '../../../modules/liveness/repositories/LivenessRepository'
 import { IndexerStateRepository } from '../../../peripherals/database/IndexerStateRepository'
 import { Clock } from '../../../tools/Clock'
 import { calcAvgsPerProject } from './calcAvgsPerProject'

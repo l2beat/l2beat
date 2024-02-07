@@ -8,8 +8,9 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { LivenessConfigurationRepository } from '../../../liveness/repositories/LivenessConfigurationRepository'
 import { Project } from '../../../model'
+import { LivenessConfigurationRepository } from '../../../modules/liveness/repositories/LivenessConfigurationRepository'
+import { getTotalSupplyConfigHash } from '../../../modules/tvl/totalSupply/getTotalSupplyConfigHash'
 import { BalanceStatusRecord } from '../../../peripherals/database/BalanceStatusRepository'
 import { UpdateMonitorRepository } from '../../../peripherals/database/discovery/UpdateMonitorRepository'
 import { IndexerStateRepository } from '../../../peripherals/database/IndexerStateRepository'
@@ -17,7 +18,6 @@ import { ReportStatusRecord } from '../../../peripherals/database/ReportStatusRe
 import { TotalSupplyStatusRepository } from '../../../peripherals/database/TotalSupplyStatusRepository'
 import { ChainConverter } from '../../../tools/ChainConverter'
 import { Clock } from '../../../tools/Clock'
-import { getTotalSupplyConfigHash } from '../../../tvl/totalSupply/getTotalSupplyConfigHash'
 import { getDashboardContracts } from './discovery/props/getDashboardContracts'
 import {
   DashboardProject,

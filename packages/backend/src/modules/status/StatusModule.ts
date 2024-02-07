@@ -5,7 +5,6 @@ import { ConfigReader } from '@l2beat/discovery'
 import { StatusController } from '../../api/controllers/status/StatusController'
 import { createStatusRouter } from '../../api/routers/StatusRouter'
 import { Config } from '../../config/Config'
-import { LivenessConfigurationRepository } from '../../liveness/repositories/LivenessConfigurationRepository'
 import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'
 import { IndexerStateRepository } from '../../peripherals/database/IndexerStateRepository'
 import { Database } from '../../peripherals/database/shared/Database'
@@ -13,6 +12,7 @@ import { TotalSupplyStatusRepository } from '../../peripherals/database/TotalSup
 import { ChainConverter } from '../../tools/ChainConverter'
 import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
+import { LivenessConfigurationRepository } from '../liveness/repositories/LivenessConfigurationRepository'
 
 export function createStatusModule(
   config: Config,

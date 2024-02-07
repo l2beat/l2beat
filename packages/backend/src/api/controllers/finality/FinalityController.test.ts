@@ -8,15 +8,15 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
+import { Project } from '../../../model'
 import {
   calculateDetailsFor,
   calculateIntervals,
-} from '../../../liveness/api/calculateIntervalWithAverages'
+} from '../../../modules/liveness/api/calculateIntervalWithAverages'
 import {
   LivenessRecordWithProjectIdAndType,
   LivenessRepository,
-} from '../../../liveness/repositories/LivenessRepository'
-import { Project } from '../../../model'
+} from '../../../modules/liveness/repositories/LivenessRepository'
 import { IndexerStateRepository } from '../../../peripherals/database/IndexerStateRepository'
 import { Clock } from '../../../tools/Clock'
 import { FinalityController } from './FinalityController'

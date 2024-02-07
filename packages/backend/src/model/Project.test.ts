@@ -4,7 +4,7 @@ import { layer2s } from '@l2beat/config'
 import {
   LivenessFunctionCall,
   LivenessTransfer,
-} from '../liveness/types/LivenessConfig'
+} from '../modules/liveness/types/LivenessConfig'
 import { layer2ToProject } from './Project'
 
 describe('Backend project config', () => {

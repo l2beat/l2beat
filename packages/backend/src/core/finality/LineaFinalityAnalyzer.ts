@@ -8,7 +8,7 @@ import {
 import { utils } from 'ethers'
 import { mean } from 'lodash'
 
-import { LivenessRepository } from '../../liveness/repositories/LivenessRepository'
+import { LivenessRepository } from '../../modules/liveness/repositories/LivenessRepository'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 
 type LineaDecoded = [
