@@ -4,9 +4,9 @@ import { ChainId } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
 import { Config } from '../../config'
-import { Clock } from '../../core/Clock'
 import { MulticallClient } from '../../peripherals/multicall/MulticallClient'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
+import { Clock } from '../../tools/Clock'
 import { CBVUpdater } from '../assets'
 import {
   BalanceProvider,

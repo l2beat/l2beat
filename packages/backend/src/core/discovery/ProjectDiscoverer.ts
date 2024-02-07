@@ -5,8 +5,8 @@ import { setTimeout } from 'timers/promises'
 
 import { DiscoveryHistoryRepository } from '../../peripherals/database/discovery/DiscoveryHistoryRepository'
 import { ChainConverter } from '../../tools/ChainConverter'
+import { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
-import { Clock } from '../Clock'
 import { DiscoveryRunner } from './DiscoveryRunner'
 
 export class ProjectDiscoverer {

@@ -1,11 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
 
 import { Config } from '../config'
-import { Clock } from '../core/Clock'
 import { ApplicationModule } from '../modules/ApplicationModule'
 import { BigQueryClient } from '../peripherals/bigquery/BigQueryClient'
 import { IndexerStateRepository } from '../peripherals/database/IndexerStateRepository'
 import { Database } from '../peripherals/database/shared/Database'
+import { Clock } from '../tools/Clock'
 import { LivenessController } from './api/LivenessController'
 import { createLivenessRouter } from './api/LivenessRouter'
 import { HourlyIndexer } from './HourlyIndexer'

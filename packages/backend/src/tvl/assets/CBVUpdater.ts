@@ -3,12 +3,12 @@ import { assert, ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
 import { UpdaterStatus } from '../../api/controllers/status/view/TvlStatusPage'
-import { Clock } from '../../core/Clock'
 import {
   ReportRecord,
   ReportRepository,
 } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
+import { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { PriceUpdater } from '../PriceUpdater'

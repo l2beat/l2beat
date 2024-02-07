@@ -4,8 +4,8 @@ import { assert, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
 import { UpdaterStatus } from '../api/controllers/status/view/TvlStatusPage'
-import { Clock } from '../core/Clock'
 import { BlockNumberRepository } from '../peripherals/database/BlockNumberRepository'
+import { Clock } from '../tools/Clock'
 import { TaskQueue } from '../tools/queue/TaskQueue'
 import { getStatus } from './reports/getStatus'
 

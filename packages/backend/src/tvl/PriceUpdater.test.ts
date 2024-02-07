@@ -12,11 +12,11 @@ import { expect, mockFn, mockObject } from 'earl'
 import { setTimeout } from 'timers/promises'
 import waitForExpect from 'wait-for-expect'
 
-import { Clock } from '../core/Clock'
 import {
   PriceRecord,
   PriceRepository,
 } from '../peripherals/database/PriceRepository'
+import { Clock } from '../tools/Clock'
 import { PriceUpdater } from './PriceUpdater'
 
 describe(PriceUpdater.name, () => {

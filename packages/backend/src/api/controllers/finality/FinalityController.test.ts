@@ -8,7 +8,6 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import { Clock } from '../../../core/Clock'
 import {
   calculateDetailsFor,
   calculateIntervals,
@@ -19,6 +18,7 @@ import {
 } from '../../../liveness/repositories/LivenessRepository'
 import { Project } from '../../../model'
 import { IndexerStateRepository } from '../../../peripherals/database/IndexerStateRepository'
+import { Clock } from '../../../tools/Clock'
 import { FinalityController } from './FinalityController'
 
 describe(FinalityController.name, () => {

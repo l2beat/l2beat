@@ -3,10 +3,10 @@ import { Logger } from '@l2beat/backend-tools'
 import { FinalityController } from '../../api/controllers/finality/FinalityController'
 import { createFinalityRouter } from '../../api/routers/FinalityRouter'
 import { Config } from '../../config'
-import { Clock } from '../../core/Clock'
 import { LivenessRepository } from '../../liveness/repositories/LivenessRepository'
 import { IndexerStateRepository } from '../../peripherals/database/IndexerStateRepository'
 import { Database } from '../../peripherals/database/shared/Database'
+import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
 
 export function createFinalityModule(

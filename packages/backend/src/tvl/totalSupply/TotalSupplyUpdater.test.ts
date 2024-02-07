@@ -3,13 +3,13 @@ import { AssetId, ChainId, Token, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
 
-import { Clock } from '../../core/Clock'
 import {
   TotalSupplyRecord,
   TotalSupplyRepository,
 } from '../../peripherals/database/TotalSupplyRepository'
 import { TotalSupplyStatusRepository } from '../../peripherals/database/TotalSupplyStatusRepository'
 import { getMockToken } from '../../test/token'
+import { Clock } from '../../tools/Clock'
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { getTotalSupplyConfigHash } from './getTotalSupplyConfigHash'
 import { TotalSupplyProvider } from './TotalSupplyProvider'

@@ -8,7 +8,6 @@ import {
 import { HttpClient } from '@l2beat/shared'
 
 import { Config } from '../../config'
-import { Clock } from '../../core/Clock'
 import { createDiscoveryRunner } from '../../core/discovery/createDiscoveryRunner'
 import { UpdateMonitor } from '../../core/discovery/UpdateMonitor'
 import { UpdateNotifier } from '../../core/discovery/UpdateNotifier'
@@ -18,6 +17,7 @@ import { DiscoveryCacheRepository } from '../../peripherals/database/DiscoveryCa
 import { Database } from '../../peripherals/database/shared/Database'
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'
 import { ChainConverter } from '../../tools/ChainConverter'
+import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
 
 export function createUpdateMonitorModule(

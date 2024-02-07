@@ -10,12 +10,12 @@ import {
 import { setTimeout } from 'timers/promises'
 
 import { UpdaterStatus } from '../../api/controllers/status/view/TvlStatusPage'
-import { Clock } from '../../core/Clock'
 import {
   ReportRecord,
   ReportRepository,
 } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
+import { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 import { PriceUpdater } from '../PriceUpdater'
 import { createFormulaReports } from '../reports/createFormulaReports'

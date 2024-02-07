@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 
-import { Clock } from '../core/Clock'
+import { Clock } from '../tools/Clock'
 import { TaskQueue } from '../tools/queue/TaskQueue'
 import { ActivityViewRepository } from './repositories/ActivityViewRepository'
 import { SequenceProcessor } from './SequenceProcessor'

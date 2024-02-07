@@ -7,7 +7,7 @@ import {
 } from '../../api/controllers/status/view/TvlStatusPage'
 import { renderTvlStatusPageDetailed } from '../../api/controllers/status/view/TvlStatusPageDetailed'
 import { withTypedContext } from '../../api/routers/types'
-import { Clock } from '../../core/Clock'
+import { Clock } from '../../tools/Clock'
 import { TvlModule } from '../modules/types'
 import { PriceUpdater } from '../PriceUpdater'
 import { AggregatedReportUpdater } from '../reports/AggregatedReportUpdater'

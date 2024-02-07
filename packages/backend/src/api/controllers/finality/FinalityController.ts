@@ -4,10 +4,10 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { Clock } from '../../../core/Clock'
 import { LivenessRepository } from '../../../liveness/repositories/LivenessRepository'
 import { Project } from '../../../model'
 import { IndexerStateRepository } from '../../../peripherals/database/IndexerStateRepository'
+import { Clock } from '../../../tools/Clock'
 import { calcAvgsPerProject } from './calcAvgsPerProject'
 import { divideAndAddLag } from './divideAndAddLag'
 

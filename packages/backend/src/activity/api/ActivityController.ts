@@ -6,7 +6,7 @@ import {
   ProjectId,
 } from '@l2beat/shared-pure'
 
-import { Clock } from '../../core/Clock'
+import { Clock } from '../../tools/Clock'
 import { ActivityViewRepository } from '../repositories/ActivityViewRepository'
 import { SequenceProcessor } from '../SequenceProcessor'
 import { alignActivityData } from './alignActivityData'

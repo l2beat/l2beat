@@ -10,13 +10,13 @@ import {
 import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
 
-import { Clock } from '../../core/Clock'
 import {
   ReportRecord,
   ReportRepository,
 } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
 import { fakeToken, REPORTS_MOCK as MOCK } from '../../test/mockReports'
+import { Clock } from '../../tools/Clock'
 import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { PriceUpdater } from '../PriceUpdater'
 import { getReportConfigHash } from '../reports/getReportConfigHash'

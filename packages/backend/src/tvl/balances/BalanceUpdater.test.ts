@@ -11,12 +11,12 @@ import {
 import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
 
-import { Clock } from '../../core/Clock'
 import {
   BalanceRecord,
   BalanceRepository,
 } from '../../peripherals/database/BalanceRepository'
 import { BalanceStatusRepository } from '../../peripherals/database/BalanceStatusRepository'
+import { Clock } from '../../tools/Clock'
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { BalanceProject } from './BalanceProject'
 import { BalanceProvider } from './BalanceProvider'
