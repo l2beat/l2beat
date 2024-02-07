@@ -12,15 +12,12 @@ import {
 } from '@l2beat/shared-pure'
 import { Dictionary, mapValues } from 'lodash'
 
-import {
-  groupByAndOmit,
-  nestedGroupBy,
-} from '../../../api/controllers/utils/grouping'
 import { BalanceRecord } from '../../../peripherals/database/BalanceRepository'
 import { PriceRecord } from '../../../peripherals/database/PriceRepository'
 import { ReportRecord } from '../../../peripherals/database/ReportRepository'
 import { ReportProject } from '../reports/ReportProject'
 import { asNumber } from './asNumber'
+import { groupByAndOmit, nestedGroupBy } from './grouping'
 
 export type ReportsPerProjectIdAndAsset = ReturnType<
   typeof groupByProjectIdAndAssetType

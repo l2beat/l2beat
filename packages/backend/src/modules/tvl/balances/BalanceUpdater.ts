@@ -2,7 +2,6 @@ import { Logger } from '@l2beat/backend-tools'
 import { assert, ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
-import { UpdaterStatus } from '../../../api/controllers/status/view/TvlStatusPage'
 import {
   BalanceRecord,
   BalanceRepository,
@@ -10,6 +9,7 @@ import {
 import { BalanceStatusRepository } from '../../../peripherals/database/BalanceStatusRepository'
 import { Clock } from '../../../tools/Clock'
 import { TaskQueue } from '../../../tools/queue/TaskQueue'
+import { UpdaterStatus } from '../../status/api/view/TvlStatusPage'
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { getStatus } from '../reports/getStatus'
 import { BalanceProject } from './BalanceProject'

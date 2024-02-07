@@ -1,6 +1,6 @@
 import Router from '@koa/router'
 
-import { HealthController } from '../controllers/HealthController'
+import { HealthController } from './HealthController'
 
 export function createHealthRouter(healthController: HealthController) {
   const router = new Router()

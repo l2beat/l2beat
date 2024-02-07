@@ -2,8 +2,6 @@ import Router from '@koa/router'
 import { Logger } from '@l2beat/backend-tools'
 import { ConfigReader } from '@l2beat/discovery'
 
-import { StatusController } from '../../api/controllers/status/StatusController'
-import { createStatusRouter } from '../../api/routers/StatusRouter'
 import { Config } from '../../config/Config'
 import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'
 import { IndexerStateRepository } from '../../peripherals/database/IndexerStateRepository'
@@ -13,6 +11,8 @@ import { ChainConverter } from '../../tools/ChainConverter'
 import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
 import { LivenessConfigurationRepository } from '../liveness/repositories/LivenessConfigurationRepository'
+import { StatusController } from './api/StatusController'
+import { createStatusRouter } from './api/StatusRouter'
 
 export function createStatusModule(
   config: Config,

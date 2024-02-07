@@ -1,11 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Hash256, UnixTime } from '@l2beat/shared-pure'
 
-import { UpdaterStatus } from '../../../api/controllers/status/view/TvlStatusPage'
 import { AggregatedReportRepository } from '../../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../../peripherals/database/AggregatedReportStatusRepository'
 import { Clock } from '../../../tools/Clock'
 import { TaskQueue } from '../../../tools/queue/TaskQueue'
+import { UpdaterStatus } from '../../status/api/view/TvlStatusPage'
 import { ReportUpdater } from '../assets'
 import { aggregateReports } from './aggregateReports'
 import { getAggregatedConfigHash } from './getAggregatedConfigHash'

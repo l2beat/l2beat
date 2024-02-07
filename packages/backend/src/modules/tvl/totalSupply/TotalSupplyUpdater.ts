@@ -9,7 +9,6 @@ import {
 } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
-import { UpdaterStatus } from '../../../api/controllers/status/view/TvlStatusPage'
 import {
   TotalSupplyRecord,
   TotalSupplyRepository,
@@ -17,6 +16,7 @@ import {
 import { TotalSupplyStatusRepository } from '../../../peripherals/database/TotalSupplyStatusRepository'
 import { Clock } from '../../../tools/Clock'
 import { TaskQueue } from '../../../tools/queue/TaskQueue'
+import { UpdaterStatus } from '../../status/api/view/TvlStatusPage'
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { getStatus } from '../reports/getStatus'
 import { getTotalSupplyConfigHash } from './getTotalSupplyConfigHash'

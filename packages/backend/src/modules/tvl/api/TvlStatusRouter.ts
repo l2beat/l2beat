@@ -1,13 +1,13 @@
 import Router from '@koa/router'
 import { z } from 'zod'
 
+import { withTypedContext } from '../../../api/types'
+import { Clock } from '../../../tools/Clock'
 import {
   getSyncStatus,
   renderTvlStatusPage,
-} from '../../../api/controllers/status/view/TvlStatusPage'
-import { renderTvlStatusPageDetailed } from '../../../api/controllers/status/view/TvlStatusPageDetailed'
-import { withTypedContext } from '../../../api/routers/types'
-import { Clock } from '../../../tools/Clock'
+} from '../../status/api/view/TvlStatusPage'
+import { renderTvlStatusPageDetailed } from '../../status/api/view/TvlStatusPageDetailed'
 import { TvlModule } from '../modules/types'
 import { PriceUpdater } from '../PriceUpdater'
 import { AggregatedReportUpdater } from '../reports/AggregatedReportUpdater'

@@ -8,7 +8,7 @@ import {
 } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
-import { withTypedContext } from '../../../api/routers/types'
+import { withTypedContext } from '../../../api/types'
 import { ApiConfig } from '../../../config/Config'
 import { TvlController } from './TvlController'
 

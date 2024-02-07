@@ -3,10 +3,10 @@ import { BlockNumberProvider } from '@l2beat/shared'
 import { assert, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
-import { UpdaterStatus } from '../../api/controllers/status/view/TvlStatusPage'
 import { BlockNumberRepository } from '../../peripherals/database/BlockNumberRepository'
 import { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
+import { UpdaterStatus } from '../status/api/view/TvlStatusPage'
 import { getStatus } from './reports/getStatus'
 
 export class BlockNumberUpdater {

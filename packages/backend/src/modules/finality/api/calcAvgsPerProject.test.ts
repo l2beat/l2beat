@@ -1,7 +1,7 @@
 import { LivenessType, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { LivenessRecordWithInterval } from '../../../modules/liveness/api/calculateIntervalWithAverages'
+import { LivenessRecordWithInterval } from '../../liveness/api/calculateIntervalWithAverages'
 import { calcAvgsPerProject } from './calcAvgsPerProject'
 
 const NOW = UnixTime.now()

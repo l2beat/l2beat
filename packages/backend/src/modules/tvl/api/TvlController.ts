@@ -17,8 +17,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { getHourlyMinTimestamp } from '../../../api/controllers/utils/getHourlyMinTimestamp'
-import { getSixHourlyMinTimestamp } from '../../../api/controllers/utils/getSixHourlyMinTimestamp'
 import { AggregatedReportRepository } from '../../../peripherals/database/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../../../peripherals/database/AggregatedReportStatusRepository'
 import { BalanceRepository } from '../../../peripherals/database/BalanceRepository'
@@ -29,6 +27,8 @@ import { ReportProject } from '../reports/ReportProject'
 import { asNumber } from './asNumber'
 import { getProjectAssetChartData } from './charts'
 import { generateTvlApiResponse } from './generateTvlApiResponse'
+import { getHourlyMinTimestamp } from './getHourlyMinTimestamp'
+import { getSixHourlyMinTimestamp } from './getSixHourlyMinTimestamp'
 import {
   getCanonicalAssetsBreakdown,
   getNonCanonicalAssetsBreakdown,

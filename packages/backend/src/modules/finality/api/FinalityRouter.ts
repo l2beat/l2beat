@@ -1,6 +1,6 @@
 import Router from '@koa/router'
 
-import { FinalityController } from '../controllers/finality/FinalityController'
+import { FinalityController } from './FinalityController'
 
 export function createFinalityRouter(finalityController: FinalityController) {
   const router = new Router()

@@ -2,8 +2,8 @@ import Router from '@koa/router'
 import { AssetType, ChainId, stringAs, UnixTime } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
-import { StatusController } from '../controllers/status/StatusController'
-import { withTypedContext } from './types'
+import { withTypedContext } from '../../../api/types'
+import { StatusController } from './StatusController'
 
 const queryParser = z.object({
   query: z.object({

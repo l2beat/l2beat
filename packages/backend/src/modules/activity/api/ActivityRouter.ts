@@ -1,7 +1,7 @@
 import Router from '@koa/router'
 import { z } from 'zod'
 
-import { withTypedContext } from '../../../api/routers/types'
+import { withTypedContext } from '../../../api/types'
 import { Config } from '../../../config'
 import { Project } from '../../../model'
 import { ActivityController } from './ActivityController'

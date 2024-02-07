@@ -9,7 +9,6 @@ import {
 } from '@l2beat/shared-pure'
 import { setTimeout } from 'timers/promises'
 
-import { UpdaterStatus } from '../../../api/controllers/status/view/TvlStatusPage'
 import {
   ReportRecord,
   ReportRepository,
@@ -17,6 +16,7 @@ import {
 import { ReportStatusRepository } from '../../../peripherals/database/ReportStatusRepository'
 import { Clock } from '../../../tools/Clock'
 import { TaskQueue } from '../../../tools/queue/TaskQueue'
+import { UpdaterStatus } from '../../status/api/view/TvlStatusPage'
 import { PriceUpdater } from '../PriceUpdater'
 import { createFormulaReports } from '../reports/createFormulaReports'
 import { getStatus } from '../reports/getStatus'

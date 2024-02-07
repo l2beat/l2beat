@@ -2,8 +2,8 @@ import Router from '@koa/router'
 import auth from 'basic-auth'
 import { register } from 'prom-client'
 
-import { Config } from '../../config'
-import { MetricsAuthConfig } from '../../config/Config'
+import { Config } from '../../../config'
+import { MetricsAuthConfig } from '../../../config/Config'
 
 export function createMetricsRouter(config: Config) {
   const router = new Router()

@@ -5,9 +5,9 @@ import {
 } from '@l2beat/shared-pure'
 
 import { Project } from '../../../model'
-import { LivenessRepository } from '../../../modules/liveness/repositories/LivenessRepository'
 import { IndexerStateRepository } from '../../../peripherals/database/IndexerStateRepository'
 import { Clock } from '../../../tools/Clock'
+import { LivenessRepository } from '../../liveness/repositories/LivenessRepository'
 import { calcAvgsPerProject } from './calcAvgsPerProject'
 import { divideAndAddLag } from './divideAndAddLag'
 
