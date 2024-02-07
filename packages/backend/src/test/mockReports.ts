@@ -7,11 +7,11 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { aggregateReports } from '../core/reports/aggregateReports'
-import { createReports } from '../core/reports/createReports'
-import { ReportProject } from '../core/reports/ReportProject'
 import { BalanceRecord } from '../peripherals/database/BalanceRepository'
 import { PriceRecord } from '../peripherals/database/PriceRepository'
+import { aggregateReports } from '../tvl/reports/aggregateReports'
+import { createReports } from '../tvl/reports/createReports'
+import { ReportProject } from '../tvl/reports/ReportProject'
 import { getMockToken } from './token'
 
 const NOW = UnixTime.now().toStartOf('hour')

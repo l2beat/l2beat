@@ -12,10 +12,10 @@ import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createHealthModule } from './modules/health/HealthModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createStatusModule } from './modules/status/StatusModule'
-import { createTvlModule } from './modules/tvl/TvlModule'
 import { createUpdateMonitorModule } from './modules/update-monitor/UpdateMonitorModule'
 import { Database } from './peripherals/database/shared/Database'
 import { getErrorReportingMiddleware, reportError } from './tools/ErrorReporter'
+import { createTvlModule } from './tvl/modules/TvlModule'
 
 export class Application {
   start: () => Promise<void>
