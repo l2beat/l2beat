@@ -27,7 +27,6 @@
     "0xE8cF9EbB1cFB137c692a0a4E470E257B9417d116": "PolygonHubConnector",
 
     "0xf5a3372ed529FCD0690b6013EAaE04170ec0626b": "NewWormholeHubConnector",
-    "0x63C6c79F3E79406B62f8623881cBFD7B2Ec1E8cB": "ZkSyncHubConnector",
     "0x5B0E1a507E786f0a7c11C972ad5F4dd254661e24": "MantleHubConnector",
     "0x23b7abe4cc664F24Eb68E80cFAdc572857799a94": "NewOptimismHubConnector",
     "0x7ed49D0a13255802A281C08688563bd8D5f726b1": "PolygonZkHubConnector",
@@ -147,10 +146,6 @@
       "ignoreRelatives": ["AMB", "mirrorConnector"],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
     },
-    "ZkSyncHubConnector": {
-      "ignoreRelatives": ["AMB", "mirrorConnector"],
-      "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
-    },
     "MantleHubConnector": {
       "ignoreRelatives": ["AMB", "mirrorConnector", "stateCommitmentChain"],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
@@ -185,6 +180,10 @@
     "ProposerV2": {
       "ignoreMethods": ["bondedProposals"],
       "ignoreInWatchMode": ["bond", "getCurrentTime"]
+    },
+    // Old ZkSyncHubConnector
+    "0x63C6c79F3E79406B62f8623881cBFD7B2Ec1E8cB": {
+      "ignoreDiscovery": true
     },
     //GelatoRelayerHub
     "0x75C6A865c30da54e365Cb5Def728890B3DD8BDC4": {
