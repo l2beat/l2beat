@@ -1143,5 +1143,29 @@
       },
       "coingeckoId": "wemix-token"
     }
+  ],
+  "aevo": [
+    {
+      "symbol": "USDC",
+      "address": "0xC06Ed0eB5c0e25fa71B37A3F33CFa62C7d9dD542",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "usd-coin"
+    },
+    {
+      "symbol": "WETH",
+      "address": "0xEB5eAb7315f6721d90ED8DD007F802ecbFb99cE8",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "weth"
+    }
   ]
 }
