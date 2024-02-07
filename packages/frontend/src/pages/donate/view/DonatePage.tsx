@@ -2,9 +2,9 @@ import React from 'react'
 
 import { Footer, FooterProps, Navbar, NavbarProps } from '../../../components'
 import { FullPageHeader } from '../../../components/FullPageHeader'
+import { OutLinkIcon } from '../../../components/icons'
 import { Link } from '../../../components/Link'
 import { PageContent } from '../../../components/PageContent'
-import { OutLinkIcon } from '../../../components/icons'
 import {
   DonateFundingSources,
   DonateFundingSourcesProps,
