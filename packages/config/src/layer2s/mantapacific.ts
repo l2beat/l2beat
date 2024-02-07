@@ -92,10 +92,12 @@ export const mantapacific: Layer2 = opStack({
       'AdminMultisig',
       'Owner of the ProxyAdmin contract.',
     ),
-    ...discovery.getMultisigPermission(
-      'MantaOwner',
-      'Owner of the SystemConfig and configured as the Challenger and Guardian of the system.',
-    ),
+    {
+      name: 'MantaOwner',
+      accounts: [discovery.getPermissionedAccount('SystemConfig', 'owner')],
+      description:
+        'Owner of the SystemConfig and configured as the Challenger and Guardian of the system.',
+    }
   ],
   nonTemplateContracts: [],
   nonTemplateEscrows: [],
