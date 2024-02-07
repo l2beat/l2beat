@@ -37,6 +37,7 @@ export const orderly: Layer2 = opStack({
         'https://t.me/OrderlyNetworkAnnouncements',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
   },
   upgradeability,
   l1StandardBridgeEscrow: EthereumAddress(
@@ -73,6 +74,12 @@ export const orderly: Layer2 = opStack({
       'This address is the owner of the following contracts: ProxyAdmin, SystemConfig.',
     ),
   ],
-  nonTemplateContracts: [],
+  nonTemplateContracts: [
+    discovery.getContractDetails('L1ERC721Bridge', {
+      description:
+        'The L1ERC721Bridge contract is the main entry point to deposit ERC721 tokens from L1 to L2.',
+      ...upgradeability,
+    }),
+  ],
   nonTemplateEscrows: [],
 })

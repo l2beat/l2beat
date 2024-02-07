@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xed80449048b08dcfa1a59551d91aab9503e3e323
+Generated with discovered.json: 0xedd13e3dde8c295e1a9391d193e457e81c628000
 
-# Diff at Tue, 06 Feb 2024 12:35:14 GMT:
+# Diff at Wed, 07 Feb 2024 11:39:36 GMT:
 
 - author: Radina Talanova (<radinatalanova@Radinas-MacBook-Air.local>)
-- current block number: 19169232
+- current block number: 19176074
 
 ## Description
 
@@ -38,6 +38,12 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract OptimismPortal (0x91493a61ab83b62943E6dCAa5475Dd330704Cc84) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC721Bridge (0x934Ab59Ef14b638653b1C0FEf7aB9a72186393DC) {
     }
 ```
 

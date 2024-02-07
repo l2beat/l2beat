@@ -1,8 +1,8 @@
 {
   "name": "orderly",
   "chain": "ethereum",
-  "blockNumber": 19169232,
-  "configHash": "0x06237091b42533bb477095e6ffc95d5e847689b7b2256cc4ac3eaf441e30b884",
+  "blockNumber": 19176074,
+  "configHash": "0x573f6fffb13d05a25b5271f72012ebe727fe973397367787dcd3fff58ebc4ed1",
   "version": 3,
   "contracts": [
     {
@@ -46,10 +46,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 5306400,
-        "latestOutputIndex": 2947,
-        "nextBlockNumber": 5308200,
-        "nextOutputIndex": 2948,
+        "latestBlockNumber": 5347800,
+        "latestOutputIndex": 2970,
+        "nextBlockNumber": 5349600,
+        "nextOutputIndex": 2971,
         "PROPOSER": "0x74BaD482a7f73C8286F50D8Aa03e53b7d24A5f3B",
         "startingBlockNumber": 0,
         "startingTimestamp": 1696608227,
@@ -85,7 +85,6 @@
         "gasLimit": 30000000,
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isAllTxsLengthEqualToCelestiaDAExample": true,
           "isSomeTxsLengthEqualToCelestiaDAExample": true
         },
         "overhead": 188,
@@ -120,12 +119,30 @@
         "GUARDIAN": "0xcE10372313Ca39Fbf75A09e7f4c0E57F070259f4",
         "L2_ORACLE": "0x5e76821C3c1AbB9fD6E310224804556C61D860e0",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 490798, 19147689],
+        "params": [1000000000, 490798, 19174140],
         "paused": false,
         "SYSTEM_CONFIG": "0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664",
         "version": "1.7.2"
       },
       "derivedName": "OptimismPortal"
+    },
+    {
+      "name": "L1ERC721Bridge",
+      "address": "0x934Ab59Ef14b638653b1C0FEf7aB9a72186393DC",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x701E95156dfD378d1985C6CC405D0Ee3d2af8503",
+        "admin": "0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9"
+      },
+      "implementations": ["0x701E95156dfD378d1985C6CC405D0Ee3d2af8503"],
+      "sinceTimestamp": 1696608395,
+      "values": {
+        "messenger": "0xc76543A64666d9a073FaEF4e75F651c88e7DBC08",
+        "MESSENGER": "0xc76543A64666d9a073FaEF4e75F651c88e7DBC08",
+        "OTHER_BRIDGE": "0x4200000000000000000000000000000000000014",
+        "otherBridge": "0x4200000000000000000000000000000000000014",
+        "version": "1.1.2"
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -153,7 +170,7 @@
       "sinceTimestamp": 1696608359,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619813",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619814",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -219,6 +236,7 @@
     "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
     "0x4200000000000000000000000000000000000007",
     "0x4200000000000000000000000000000000000010",
+    "0x4200000000000000000000000000000000000014",
     "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
     "0x71884086Cfacc370cf5EC34363Bf3938C6c6d888",
     "0x74BaD482a7f73C8286F50D8Aa03e53b7d24A5f3B",
@@ -294,6 +312,20 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
+    "0x701E95156dfD378d1985C6CC405D0Ee3d2af8503": [
+      "constructor(address _messenger, address _otherBridge)",
+      "event ERC721BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 tokenId, bytes extraData)",
+      "event ERC721BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 tokenId, bytes extraData)",
+      "function MESSENGER() view returns (address)",
+      "function OTHER_BRIDGE() view returns (address)",
+      "function bridgeERC721(address _localToken, address _remoteToken, uint256 _tokenId, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeERC721To(address _localToken, address _remoteToken, address _to, uint256 _tokenId, uint32 _minGasLimit, bytes _extraData)",
+      "function deposits(address, address, uint256) view returns (bool)",
+      "function finalizeBridgeERC721(address _localToken, address _remoteToken, address _from, address _to, uint256 _tokenId, bytes _extraData)",
+      "function messenger() view returns (address)",
+      "function otherBridge() view returns (address)",
+      "function version() view returns (string)"
+    ],
     "0x7A163eb6Df3EEBbf817A7A9769F53FB2a441D47E": [
       "constructor(address _l2Oracle, address _guardian, bool _paused, address _config)",
       "event Initialized(uint8 version)",
@@ -341,6 +373,16 @@
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
     "0x91493a61ab83b62943E6dCAa5475Dd330704Cc84": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "0x934Ab59Ef14b638653b1C0FEf7aB9a72186393DC": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)",
