@@ -99,13 +99,13 @@ export class ActivityController {
     const counts = await this.viewRepository.getDailyCounts()
     const result: DailyTransactionCountProjectsMap = new Map()
     const now = this.clock.getLastHour()
-    for (const counter of this.processors) {
-      const projectId = counter.projectId
+    for (const processor of this.processors) {
+      const projectId = processor.projectId
       if (!this.projectIds.includes(projectId)) continue
       const projectCounts = counts.filter((c) => c.projectId === projectId)
       const postprocessedCounts = postprocessCounts(
         projectCounts,
-        counter.hasProcessedAll(),
+        processor.hasProcessedAll(),
         now,
       )
       result.set(projectId, postprocessedCounts)

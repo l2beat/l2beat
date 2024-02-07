@@ -23,19 +23,19 @@ describe(ActivityController.name, () => {
   describe(ActivityController.prototype.getActivity.name, () => {
     it('throws if ethereum not present in db', async () => {
       const includedIds: ProjectId[] = [PROJECT_A, ProjectId.ETHEREUM]
-      const counters: SequenceProcessor[] = [
-        mockCounter({
+      const processors: SequenceProcessor[] = [
+        mockProcessor({
           projectId: PROJECT_A,
           hasProcessedAll: true,
         }),
-        mockCounter({
+        mockProcessor({
           projectId: PROJECT_B,
           hasProcessedAll: true,
         }),
       ]
       const controller = new ActivityController(
         includedIds,
-        counters,
+        processors,
         mockRepository([]),
         mockObject<Clock>({ getLastHour: () => NOW }),
       )
@@ -47,16 +47,16 @@ describe(ActivityController.name, () => {
 
     it('returns only included projects', async () => {
       const includedIds: ProjectId[] = [ProjectId.ETHEREUM, PROJECT_A]
-      const counters: SequenceProcessor[] = [
-        mockCounter({
+      const processors: SequenceProcessor[] = [
+        mockProcessor({
           projectId: PROJECT_A,
           hasProcessedAll: true,
         }),
-        mockCounter({
+        mockProcessor({
           projectId: PROJECT_B,
           hasProcessedAll: true,
         }),
-        mockCounter({
+        mockProcessor({
           projectId: ProjectId.ETHEREUM,
           hasProcessedAll: false,
         }),
@@ -64,7 +64,7 @@ describe(ActivityController.name, () => {
 
       const controller = new ActivityController(
         includedIds,
-        counters,
+        processors,
         mockRepository([
           {
             projectId: ProjectId.ETHEREUM,
@@ -133,16 +133,16 @@ describe(ActivityController.name, () => {
         PROJECT_B,
         ProjectId.ETHEREUM,
       ]
-      const counters: SequenceProcessor[] = [
-        mockCounter({
+      const processors: SequenceProcessor[] = [
+        mockProcessor({
           projectId: PROJECT_A,
           hasProcessedAll: true,
         }),
-        mockCounter({
+        mockProcessor({
           projectId: PROJECT_B,
           hasProcessedAll: true,
         }),
-        mockCounter({
+        mockProcessor({
           projectId: ProjectId.ETHEREUM,
           hasProcessedAll: false,
         }),
@@ -150,7 +150,7 @@ describe(ActivityController.name, () => {
 
       const controller = new ActivityController(
         includedIds,
-        counters,
+        processors,
         mockRepository([
           {
             projectId: ProjectId.ETHEREUM,
@@ -237,7 +237,7 @@ function formatActivity({
   }
 }
 
-function mockCounter({
+function mockProcessor({
   hasProcessedAll,
   projectId,
 }: {

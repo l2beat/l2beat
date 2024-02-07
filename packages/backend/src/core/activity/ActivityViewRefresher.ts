@@ -21,7 +21,8 @@ export class ActivityViewRefresher {
         this.logger.info('Refresh finished')
       },
       this.logger.for('refreshQueue'),
-      { metricsId: ActivityViewRefresher.name },
+      // TODO: rename to 'ActivityViewRefresher' and update grafana
+      { metricsId: 'DailyTransactionCountViewRefresher' },
     )
   }
 
