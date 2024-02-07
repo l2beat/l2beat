@@ -5,7 +5,7 @@ import { Knex } from 'knex'
 
 import { FinalityRepository } from '../../peripherals/database/FinalityRepository'
 import { IndexerStateRepository } from '../../peripherals/database/IndexerStateRepository'
-import { HourlyIndexer } from '../liveness/HourlyIndexer'
+import { LivenessIndexer } from '../liveness/LivenessIndexer'
 import { FinalityConfig } from './types/FinalityConfig'
 import { findConfigurationsToSync } from './utils/findConfigurationsToSync'
 
@@ -15,7 +15,7 @@ export class FinalityIndexer extends ChildIndexer {
 
   constructor(
     logger: Logger,
-    parentIndexer: HourlyIndexer,
+    parentIndexer: LivenessIndexer,
     private readonly stateRepository: IndexerStateRepository,
     private readonly finalityRepository: FinalityRepository,
     private readonly runtimeConfigurations: FinalityConfig[],
