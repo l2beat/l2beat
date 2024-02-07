@@ -37,7 +37,7 @@ export const aevo: Layer2 = opStack({
     chainId: 2999,
     explorerUrl: 'https://explorer.aevo.xyz',
     explorerApi: {
-      url: 'https://explorer.aevo.xyz/api/v2/',
+      url: 'https://explorer.aevo.xyz/api',
       type: 'blockscout',
     },
     multicallContracts: [],
