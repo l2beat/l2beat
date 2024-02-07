@@ -1154,6 +1154,16 @@
         "bridge": "Socket",
         "slug": "socket"
       }
+    },
+    {
+      "symbol": "WETH",
+      "address": "0xEB5eAb7315f6721d90ED8DD007F802ecbFb99cE8",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      }
     }
   ]
 }
