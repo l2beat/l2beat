@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x368096bbdf292ae6710cc705bf1eb0584f168ba1
+
+# Diff at Wed, 07 Feb 2024 08:44:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@64f1e0f27f831d3ef860a1c2faad8c77e04e6c29 block: 19090313
+- current block number: 19175204
+
+## Description
+
+Increased the gas limit.
+Updated with the new OpDAHandler to remove the field.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca) {
+      values.gasLimit:
+-        30000000
++        150000000
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19090313 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca) {
+      values.opStackDA.isAllTxsLengthEqualToCelestiaDAExample:
+-        true
+    }
+```
+
 Generated with discovered.json: 0xdbe6ce9040494aceffa3835445396479993d2e68
 
 # Diff at Fri, 26 Jan 2024 10:54:51 GMT:
