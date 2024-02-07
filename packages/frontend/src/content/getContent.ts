@@ -31,10 +31,16 @@ export function getContentEntry<T extends ContentKey>(
   const file = readFileSync(path.join(__dirname, key, `${id}.json`))
 
   const json: unknown = JSON.parse(file.toString())
-  const data = contentEntry.schema.parse(json)
+  const parsedJson = contentEntry.schema.safeParse(json)
+
+  if (!parsedJson.success) {
+    throw new Error(
+      `Failed to parse ${key}/${id}.json: ${parsedJson.error.message}`,
+    )
+  }
 
   return {
     id,
-    data,
+    data: parsedJson.data,
   }
 }
