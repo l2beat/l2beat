@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
-import { Knex } from 'knex'
 
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
 import { LivenessIndexer } from '../liveness/LivenessIndexer'
@@ -110,20 +109,17 @@ export class FinalityIndexer extends ChildIndexer {
     await this.initializeIndexerState(this.minTimestamp.toNumber())
   }
 
-  async initializeIndexerState(safeHeight: number, trx?: Knex.Transaction) {
+  async initializeIndexerState(safeHeight: number) {
     const indexerState = await this.stateRepository.findIndexerState(
       this.indexerId,
     )
 
     if (indexerState === undefined) {
-      await this.stateRepository.add(
-        {
-          indexerId: this.indexerId,
-          safeHeight,
-          minTimestamp: this.minTimestamp,
-        },
-        trx,
-      )
+      await this.stateRepository.add({
+        indexerId: this.indexerId,
+        safeHeight,
+        minTimestamp: this.minTimestamp,
+      })
       return
     }
 
@@ -135,7 +131,7 @@ export class FinalityIndexer extends ChildIndexer {
       'Minimum timestamp of this indexer cannot be updated',
     )
 
-    await this.setSafeHeight(safeHeight, trx)
+    await this.setSafeHeight(safeHeight)
   }
 
   override async getSafeHeight(): Promise<number> {
@@ -145,16 +141,13 @@ export class FinalityIndexer extends ChildIndexer {
     return indexerState?.safeHeight ?? this.minTimestamp.toNumber()
   }
 
-  override async setSafeHeight(
-    safeHeight: number,
-    trx?: Knex.Transaction,
-  ): Promise<void> {
+  override async setSafeHeight(safeHeight: number): Promise<void> {
     assert(
       safeHeight >= this.minTimestamp.toNumber(),
       'Cannot set height to be lower than the minimum timestamp',
     )
 
-    await this.stateRepository.setSafeHeight(this.indexerId, safeHeight, trx)
+    await this.stateRepository.setSafeHeight(this.indexerId, safeHeight)
   }
 
   /**
