@@ -17,7 +17,7 @@ export function LinkWithThumbnail(props: LinkWithThumbnailProps) {
     >
       <img
         src={props.src}
-        className="aspect-video h-[98px] rounded-md object-cover transition-all group-hover:scale-105"
+        className="aspect-video h-[98px] rounded-md object-cover transition-all will-change-transform group-hover:scale-105"
       />
       <div className="col-span-5 flex-col transition-all group-hover:translate-x-0.5">
         <p className="text-lg font-bold leading-tight">{props.title}</p>
