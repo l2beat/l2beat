@@ -37,7 +37,20 @@ async function main() {
   let coinList: CoinListPlatformEntry[] | undefined = undefined
   const source = readTokensFile(logger)
   const output = readGeneratedFile(logger)
-  const result: GeneratedToken[] = []
+  const result: GeneratedToken[] = output.tokens
+
+  function saveToken(token: GeneratedToken) {
+    const index = result.findIndex((t) => t.id === token.id)
+
+    if (index === -1) {
+      result.push(token)
+    } else {
+      result[index] = token
+    }
+
+    const sorted = sortByChainAndName(result)
+    saveResults(sorted)
+  }
 
   for (const [chain, tokens] of Object.entries(source)) {
     const chainLogger = logger.prefix(chain)
@@ -86,7 +99,7 @@ async function main() {
           )
         }
 
-        result.push({ ...existingToken, ...overrides, bridgedUsing })
+        saveToken({ ...existingToken, ...overrides, bridgedUsing })
         continue
       }
 
@@ -123,7 +136,7 @@ async function main() {
 
       const assetId = getAssetId(chainConfig, token, info.name)
 
-      result.push({
+      saveToken({
         id: assetId,
         name: info.name,
         coingeckoId: info.coingeckoId,
@@ -143,9 +156,6 @@ async function main() {
       tokenLogger.processed()
     }
   }
-
-  const sorted = sortByChainAndName(result)
-  saveResults(sorted)
 }
 
 function getCoingeckoClient() {
