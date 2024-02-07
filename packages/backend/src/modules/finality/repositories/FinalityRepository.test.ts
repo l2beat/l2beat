@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { describeDatabase } from '../../test/database'
+import { describeDatabase } from '../../../test/database'
 import { FinalityRecord, FinalityRepository } from './FinalityRepository'
 
 describeDatabase(FinalityRepository.name, (database) => {

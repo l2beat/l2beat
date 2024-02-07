@@ -3,8 +3,11 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { FinalityRow } from 'knex/types/tables'
 
-import { BaseRepository, CheckConvention } from './shared/BaseRepository'
-import { Database } from './shared/Database'
+import {
+  BaseRepository,
+  CheckConvention,
+} from '../../../peripherals/database/BaseRepository'
+import { Database } from '../../../peripherals/database/Database'
 
 export interface FinalityRecord {
   projectId: ProjectId

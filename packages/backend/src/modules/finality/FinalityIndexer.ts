@@ -1,15 +1,15 @@
 import { Logger } from '@l2beat/backend-tools'
-import { UnixTime, assert } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
+import { Knex } from 'knex'
 
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
 import { LivenessIndexer } from '../liveness/LivenessIndexer'
 import {
   FinalityRecord,
   FinalityRepository,
-} from '../../peripherals/database/FinalityRepository'
+} from './repositories/FinalityRepository'
 import { FinalityConfig } from './types/FinalityConfig'
-import { Knex } from 'knex'
 import { findConfigurationsToSync } from './utils/findConfigurationsToSync'
 
 /*
