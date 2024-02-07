@@ -25,11 +25,13 @@ export function createTvlRouter(
 
     if (tvlResult.result === 'error') {
       if (tvlResult.error === 'DATA_NOT_FULLY_SYNCED') {
-        ctx.status = 422
+        ctx.status = 404
+        ctx.body = tvlResult.error
       }
 
       if (tvlResult.error === 'NO_DATA') {
         ctx.status = 404
+        ctx.body = tvlResult.error
       }
 
       return
@@ -57,11 +59,13 @@ export function createTvlRouter(
 
         if (tvlProjectsResponse.result === 'error') {
           if (tvlProjectsResponse.error === 'DATA_NOT_FULLY_SYNCED') {
-            ctx.status = 422
+            ctx.status = 404
+            ctx.body = tvlProjectsResponse.error
           }
 
           if (tvlProjectsResponse.error === 'NO_DATA') {
             ctx.status = 404
+            ctx.body = tvlProjectsResponse.error
           }
 
           return
@@ -99,10 +103,12 @@ export function createTvlRouter(
         if (assetData.result === 'error') {
           if (assetData.error === 'NO_DATA') {
             ctx.status = 404
+            ctx.body = assetData.error
           }
 
           if (assetData.error === 'INVALID_PROJECT_OR_ASSET') {
             ctx.status = 400
+            ctx.body = assetData.error
           }
 
           return
@@ -120,10 +126,12 @@ export function createTvlRouter(
     if (projectAssetsBreakdown.result === 'error') {
       if (projectAssetsBreakdown.error === 'NO_DATA') {
         ctx.status = 404
+        ctx.body = projectAssetsBreakdown.error
       }
 
       if (projectAssetsBreakdown.error === 'DATA_NOT_FULLY_SYNCED') {
-        ctx.status = 422
+        ctx.status = 404
+        ctx.body = projectAssetsBreakdown.error
       }
 
       return

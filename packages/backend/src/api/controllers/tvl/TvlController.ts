@@ -33,8 +33,6 @@ import {
   getCanonicalAssetsBreakdown,
   getNonCanonicalAssetsBreakdown,
   groupAndMergeBreakdowns,
-  groupByProjectIdAndAssetType,
-  groupByProjectIdAndTimestamp,
 } from './tvl'
 import { Result } from './types'
 
@@ -96,20 +94,17 @@ export class TvlController {
     }, fiveMinutes)
   }
 
-  /**
-   * TODO: Add project exclusion?
-   */
   async getTvlApiResponse(): Promise<TvlResult> {
-    const dataTimings = await this.getDataTimings()
+    const status = await this.getTvlModuleStatus()
 
-    if (!dataTimings.latestTimestamp) {
+    if (!status.latestTimestamp) {
       return {
         result: 'error',
         error: 'NO_DATA',
       }
     }
 
-    if (!dataTimings.isSynced && this.options.errorOnUnsyncedTvl) {
+    if (!status.isSynced && this.options.errorOnUnsyncedTvl) {
       return {
         result: 'error',
         error: 'DATA_NOT_FULLY_SYNCED',
@@ -119,44 +114,44 @@ export class TvlController {
     const [hourlyReports, sixHourlyReports, dailyReports, latestReports] =
       await Promise.all([
         this.aggregatedReportRepository.getHourlyWithAnyType(
-          getHourlyMinTimestamp(dataTimings.latestTimestamp),
+          getHourlyMinTimestamp(status.latestTimestamp),
         ),
 
         this.aggregatedReportRepository.getSixHourlyWithAnyType(
-          getSixHourlyMinTimestamp(dataTimings.latestTimestamp),
+          getSixHourlyMinTimestamp(status.latestTimestamp),
         ),
 
         this.aggregatedReportRepository.getDailyWithAnyType(),
 
-        this.reportRepository.getByTimestamp(dataTimings.latestTimestamp),
+        this.reportRepository.getByTimestamp(status.latestTimestamp),
       ])
 
-    /**
-     * ProjectID => Timestamp => [Report, Report, Report, Report]
-     * Ideally 4 reports per project per timestamp corresponding to 4 Value Types
-     */
-    const groupedHourlyReports = groupByProjectIdAndTimestamp(hourlyReports)
+    const projects = []
+    for (const project of this.projects) {
+      if (project.escrows.length === 0) {
+        continue
+      }
 
-    const groupedSixHourlyReportsTree =
-      groupByProjectIdAndTimestamp(sixHourlyReports)
+      const sinceTimestamp = new UnixTime(
+        Math.min(
+          ...project.escrows.map((escrow) => escrow.sinceTimestamp.toNumber()),
+        ),
+      )
 
-    const groupedDailyReports = groupByProjectIdAndTimestamp(dailyReports)
-
-    /**
-     * ProjectID => Asset => Report[]
-     * Ideally 1 report. Some chains like Arbitrum may have multiple reports per asset differentiated by Value Type
-     * That isl 1 report for USDC of value type CBV and 1 report for USDC of value type EBV
-     * Reduce (dedupe) occurs later in the call chain
-     * @see getProjectTokensCharts
-     */
-    const groupedLatestReports = groupByProjectIdAndAssetType(latestReports)
+      projects.push({
+        id: project.projectId,
+        isLayer2: project.type === 'layer2',
+        sinceTimestamp,
+      })
+    }
 
     const tvlApiResponse = generateTvlApiResponse(
-      groupedHourlyReports,
-      groupedSixHourlyReportsTree,
-      groupedDailyReports,
-      groupedLatestReports,
-      this.projects.map((x) => x.projectId),
+      hourlyReports,
+      sixHourlyReports,
+      dailyReports,
+      latestReports,
+      projects,
+      status.latestTimestamp,
     )
 
     return { result: 'success', data: tvlApiResponse }
@@ -179,16 +174,16 @@ export class TvlController {
       }
     }
 
-    const dataTimings = await this.getDataTimings()
+    const status = await this.getTvlModuleStatus()
 
-    if (!dataTimings.latestTimestamp) {
+    if (!status.latestTimestamp) {
       return {
         result: 'error',
         error: 'NO_DATA',
       }
     }
 
-    if (!dataTimings.isSynced && this.options.errorOnUnsyncedTvl) {
+    if (!status.isSynced && this.options.errorOnUnsyncedTvl) {
       return {
         result: 'error',
         error: 'DATA_NOT_FULLY_SYNCED',
@@ -200,11 +195,11 @@ export class TvlController {
     const [hourlyReports, sixHourlyReports, dailyReports] = await Promise.all([
       this.aggregatedReportRepository.getAggregateHourly(
         projectIdsFilter,
-        getHourlyMinTimestamp(dataTimings.latestTimestamp),
+        getHourlyMinTimestamp(status.latestTimestamp),
       ),
       this.aggregatedReportRepository.getAggregateSixHourly(
         projectIdsFilter,
-        getSixHourlyMinTimestamp(dataTimings.latestTimestamp),
+        getSixHourlyMinTimestamp(status.latestTimestamp),
       ),
       this.aggregatedReportRepository.getAggregateDaily(projectIdsFilter),
     ])
@@ -242,16 +237,16 @@ export class TvlController {
       }
     }
 
-    const dataTimings = await this.getDataTimings()
+    const status = await this.getTvlModuleStatus()
 
-    if (!dataTimings.latestTimestamp) {
+    if (!status.latestTimestamp) {
       return {
         result: 'error',
         error: 'NO_DATA',
       }
     }
 
-    if (!dataTimings.isSynced && this.options.errorOnUnsyncedTvl) {
+    if (!status.isSynced && this.options.errorOnUnsyncedTvl) {
       return {
         result: 'error',
         error: 'DATA_NOT_FULLY_SYNCED',
@@ -264,14 +259,14 @@ export class TvlController {
         chainId,
         assetId,
         assetType,
-        getHourlyMinTimestamp(dataTimings.latestTimestamp),
+        getHourlyMinTimestamp(status.latestTimestamp),
       ),
       this.reportRepository.getSixHourly(
         projectId,
         chainId,
         assetId,
         assetType,
-        getSixHourlyMinTimestamp(dataTimings.latestTimestamp),
+        getSixHourlyMinTimestamp(status.latestTimestamp),
       ),
       this.reportRepository.getDaily(projectId, chainId, assetId, assetType),
     ])
@@ -299,16 +294,16 @@ export class TvlController {
   }
 
   async getProjectTokenBreakdownApiResponse(): Promise<ProjectAssetBreakdownResult> {
-    const dataTimings = await this.getDataTimings()
+    const status = await this.getTvlModuleStatus()
 
-    if (!dataTimings.latestTimestamp) {
+    if (!status.latestTimestamp) {
       return {
         result: 'error',
         error: 'NO_DATA',
       }
     }
 
-    if (!dataTimings.isSynced && this.options.errorOnUnsyncedTvl) {
+    if (!status.isSynced && this.options.errorOnUnsyncedTvl) {
       return {
         result: 'error',
         error: 'DATA_NOT_FULLY_SYNCED',
@@ -316,9 +311,9 @@ export class TvlController {
     }
 
     const [latestReports, balances, prices] = await Promise.all([
-      this.reportRepository.getByTimestamp(dataTimings.latestTimestamp),
-      this.balanceRepository.getByTimestamp(dataTimings.latestTimestamp),
-      this.priceRepository.getByTimestamp(dataTimings.latestTimestamp),
+      this.reportRepository.getByTimestamp(status.latestTimestamp),
+      this.balanceRepository.getByTimestamp(status.latestTimestamp),
+      this.priceRepository.getByTimestamp(status.latestTimestamp),
     ])
 
     const externalAssetsBreakdown = getNonCanonicalAssetsBreakdown(this.logger)(
@@ -348,13 +343,13 @@ export class TvlController {
     return {
       result: 'success',
       data: {
-        dataTimestamp: dataTimings.latestTimestamp,
+        dataTimestamp: status.latestTimestamp,
         breakdowns,
       },
     }
   }
 
-  private async getDataTimings() {
+  private async getTvlModuleStatus() {
     const { matching: syncedReportsAmount, different: unsyncedReportsAmount } =
       await this.aggregatedReportStatusRepository.findCountsForHash(
         this.aggregatedConfigHash,

@@ -4,7 +4,6 @@ import { expect } from 'earl'
 
 import { describeDatabase } from '../../test/database'
 import { PriceRecord, PriceRepository } from './PriceRepository'
-import { testDeletingArchivedRecords } from './shared/deleteArchivedRecords.test'
 
 describeDatabase(PriceRepository.name, (database) => {
   const repository = new PriceRepository(database, Logger.SILENT)
@@ -193,14 +192,4 @@ describeDatabase(PriceRepository.name, (database) => {
       expect(result).toEqual(new Map())
     })
   })
-
-  testDeletingArchivedRecords(repository, fakePriceRecord)
 })
-
-function fakePriceRecord(timestamp: UnixTime): PriceRecord {
-  return {
-    timestamp,
-    assetId: AssetId.ETH,
-    priceUsd: 0,
-  }
-}

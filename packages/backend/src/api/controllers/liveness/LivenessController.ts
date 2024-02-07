@@ -26,6 +26,30 @@ type LivenessResult =
       error: 'DATA_NOT_SYNCED'
     }
 
+interface LivenessTransactionsDetail {
+  txHash: string
+  timestamp: UnixTime
+}
+
+type LivenessTransactionsResult =
+  | {
+      type: 'success'
+      data: {
+        projects: Record<
+          string,
+          {
+            batchSubmissions: LivenessTransactionsDetail[]
+            stateUpdates: LivenessTransactionsDetail[]
+            proofSubmissions: LivenessTransactionsDetail[]
+          }
+        >
+      }
+    }
+  | {
+      type: 'error'
+      error: 'DATA_NOT_SYNCED'
+    }
+
 export class LivenessController {
   constructor(
     private readonly livenessRepository: LivenessRepository,
@@ -102,5 +126,64 @@ export class LivenessController {
       type: livenessType,
       data: records.map((r) => r.timestamp),
     }
+  }
+
+  async getLivenessTransactions(): Promise<LivenessTransactionsResult> {
+    const requiredTimestamp = this.clock.getLastHour().add(-1, 'hours')
+    const indexerState = await this.indexerStateRepository.findIndexerState(
+      'liveness_indexer',
+    )
+    if (
+      indexerState === undefined ||
+      new UnixTime(indexerState.safeHeight).lt(requiredTimestamp)
+    ) {
+      return { type: 'error', error: 'DATA_NOT_SYNCED' }
+    }
+
+    const projects: Record<
+      string,
+      {
+        batchSubmissions: LivenessTransactionsDetail[]
+        stateUpdates: LivenessTransactionsDetail[]
+        proofSubmissions: LivenessTransactionsDetail[]
+      }
+    > = {}
+    const last30Days = UnixTime.now().add(-30, 'days')
+
+    await Promise.all(
+      this.projects
+        .filter((p) => !p.isArchived)
+        .map(async (project) => {
+          if (project.livenessConfig === undefined) {
+            return
+          }
+          const records =
+            await this.livenessRepository.getTransactionWithTypeDistinctTimestamp(
+              project.projectId,
+              last30Days,
+            )
+
+          const groupedByType = groupByType<{
+            txHash: string
+            timestamp: UnixTime
+            type: string
+          }>(records)
+
+          projects[project.projectId.toString()] = {
+            batchSubmissions: groupedByType.batchSubmissions.records.map(
+              (r) => ({ txHash: r.txHash, timestamp: r.timestamp }),
+            ),
+            stateUpdates: groupedByType.stateUpdates.records.map((r) => ({
+              txHash: r.txHash,
+              timestamp: r.timestamp,
+            })),
+            proofSubmissions: groupedByType.proofSubmissions.records.map(
+              (r) => ({ txHash: r.txHash, timestamp: r.timestamp }),
+            ),
+          }
+        }),
+    )
+
+    return { type: 'success', data: { projects } }
   }
 }
