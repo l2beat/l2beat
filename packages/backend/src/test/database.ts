@@ -1,6 +1,6 @@
 import { getEnv, Logger } from '@l2beat/backend-tools'
 
-import { Database, DatabaseOpts } from '../peripherals/database/shared/Database'
+import { Database, DatabaseOpts } from '../peripherals/database/Database'
 
 export function describeDatabase(
   name: string,
