@@ -9,13 +9,12 @@ import {
   ChainId,
   CoingeckoId,
   EthereumAddress,
-  Token,
 } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
 import { chains } from '../../src'
 import { ChainConfig } from '../../src/common'
-import { Output, SourceEntry } from '../../src/tokens/types'
+import { GeneratedToken, Output, SourceEntry } from '../../src/tokens/types'
 import {
   readGeneratedFile,
   readTokensFile,
@@ -29,6 +28,8 @@ main().catch((e: unknown) => {
   console.error(e)
 })
 
+// TODO:
+// - load all generated into result and save result every time
 async function main() {
   const logger = new ScriptLogger({})
   logger.notify('Running tokens script...\n')
@@ -36,7 +37,7 @@ async function main() {
   let coinList: CoinListPlatformEntry[] | undefined = undefined
   const source = readTokensFile(logger)
   const output = readGeneratedFile(logger)
-  const result: Token[] = []
+  const result: GeneratedToken[] = []
 
   for (const [chain, tokens] of Object.entries(source)) {
     const chainLogger = logger.prefix(chain)
@@ -129,7 +130,8 @@ async function main() {
         address: token.address,
         symbol: token.symbol,
         decimals: info.decimals,
-        sinceTimestamp: info.sinceTimestamp,
+        deploymentTimestamp: info.deploymentTimestamp,
+        coingeckoListingTimestamp: info.coingeckoListingTimestamp,
         category,
         iconUrl: info.iconUrl,
         chainId,
@@ -199,7 +201,7 @@ function getAssetId(chain: ChainConfig, token: SourceEntry, name: string) {
   )
 }
 
-function sortByChainAndName(result: Token[]) {
+function sortByChainAndName(result: GeneratedToken[]) {
   return result.sort((a, b) => {
     if (a.chainId !== b.chainId) {
       return Number(a.chainId) - Number(b.chainId)
@@ -212,7 +214,7 @@ function findTokenInOutput(
   output: Output,
   chainId: ChainId | undefined,
   entry: SourceEntry,
-): Token | undefined {
+): GeneratedToken | undefined {
   return output.tokens.find((e) => {
     if (chainId !== e.chainId) {
       return false
@@ -253,7 +255,8 @@ async function fetchTokenInfo(
     name: tokenInfo.name,
     coingeckoId: tokenInfo.coingeckoId,
     decimals: tokenInfo.decimals,
-    sinceTimestamp: tokenInfo.sinceTimestamp,
+    deploymentTimestamp: tokenInfo.deploymentTimestamp,
+    coingeckoListingTimestamp: tokenInfo.coingeckoListingTimestamp,
     iconUrl: tokenInfo.iconUrl,
   }
 }
