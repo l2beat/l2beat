@@ -89,7 +89,7 @@ function AnomalyTooltipContent(props: { anomalyEntries: AnomalyEntry[] }) {
           <li key={anomaly.timestamp}>
             <span>
               {formatTimestamp(anomaly.timestamp, {
-                withTime: true,
+                mode: 'datetime',
                 longMonthName: true,
               })}
             </span>

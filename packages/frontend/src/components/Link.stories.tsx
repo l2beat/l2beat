@@ -51,7 +51,6 @@ export const WithoutUnderline: Story = {
 export const Highlighted: Story = {
   args: {
     children: 'Example link',
-    //@ts-expect-error data-state is not handled by the Story type
     'data-state': 'highlighted',
   },
 }

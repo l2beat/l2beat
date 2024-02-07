@@ -9,21 +9,9 @@ import { StarkexTransactionCountRepository } from '../../../peripherals/database
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
 import { StarkexClient } from '../../../peripherals/starkex'
 import { Clock } from '../../Clock'
-import {
-  createStarkexCounter,
-  getStarkexLastDay,
-  StarkexProcessorOptions,
-} from './StarkexCounter'
+import { StarkexCounter } from './StarkexCounter'
 
-describe(getStarkexLastDay.name, () => {
-  it('returns current day', () => {
-    const now = UnixTime.fromDate(new Date('2021-09-07T03:00:00Z'))
-
-    expect(getStarkexLastDay(now)).toEqual(
-      UnixTime.fromDate(new Date('2021-09-07T00:00:00Z')).toDays(),
-    )
-  })
-
+describe(StarkexCounter.name, () => {
   it('iterates over products', async () => {
     const project = ProjectId('starkex_project')
     const starkexRepository = mockObject<StarkexTransactionCountRepository>({
@@ -51,22 +39,18 @@ describe(getStarkexLastDay.name, () => {
       getLastHour: () => DAY,
     })
     const product = ['apex_usdt', 'apex_usdc']
-    const options: StarkexProcessorOptions = {
-      type: 'starkex',
-      product,
-      sinceTimestamp: DAY,
-      resyncLastDays: 1, // irrelevant for this test
-      singleStarkexCPM: 60, // irrelevant for this test
-    }
 
-    const counter = createStarkexCounter(
+    const counter = new StarkexCounter(
       project,
+      product,
+      sequenceProcessorRepository,
       starkexRepository,
       starkexClient,
-      sequenceProcessorRepository,
-      Logger.SILENT,
       clock,
-      options,
+      Logger.SILENT,
+      1, // irrelevant for this test
+      DAY,
+      1, // irrelevant for this test
     )
 
     // start the counter and wait for it to finish

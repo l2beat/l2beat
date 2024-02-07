@@ -9,7 +9,7 @@ import {
 } from '@l2beat/shared-pure'
 
 import { HttpClient } from '../../../shared/build'
-import { renderPages } from '../pages'
+import { renderPages } from '../pages/renderPages'
 import { createApi } from './api/createApi'
 import { fetchActivityApi } from './api/fetchActivityApi'
 import { fetchDiffHistory } from './api/fetchDiffHistory'

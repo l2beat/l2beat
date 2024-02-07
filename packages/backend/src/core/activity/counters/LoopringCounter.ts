@@ -1,58 +1,54 @@
 import { Logger } from '@l2beat/backend-tools'
-import { HttpClient } from '@l2beat/shared'
 import { ProjectId } from '@l2beat/shared-pure'
+import { Knex } from 'knex'
 import { range } from 'lodash'
 
 import { BlockTransactionCountRepository } from '../../../peripherals/database/activity/BlockTransactionCountRepository'
 import { SequenceProcessorRepository } from '../../../peripherals/database/SequenceProcessorRepository'
 import { LoopringClient } from '../../../peripherals/loopring'
 import { promiseAllPlus } from '../../queue/promiseAllPlus'
-import { SequenceProcessor } from '../../SequenceProcessor'
-import { SimpleActivityTransactionConfig } from '../ActivityTransactionConfig'
-import { TransactionCounter } from '../TransactionCounter'
-import { createBlockTransactionCounter } from './BlockTransactionCounter'
-import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
+import { SequenceProcessor } from '../SequenceProcessor'
 
-export function createLoopringCounter(
-  projectId: ProjectId,
-  http: HttpClient,
-  blockRepository: BlockTransactionCountRepository,
-  sequenceProcessorRepository: SequenceProcessorRepository,
-  logger: Logger,
-  options: SimpleActivityTransactionConfig<'loopring'>,
-): TransactionCounter {
-  const batchSize = getBatchSizeFromCallsPerMinute(options.callsPerMinute)
-  const client = new LoopringClient(http, logger, options.url, {
-    callsPerMinute: options.callsPerMinute,
-  })
+export class LoopringCounter extends SequenceProcessor {
+  constructor(
+    projectId: ProjectId,
+    sequenceProcessorRepository: SequenceProcessorRepository,
+    private readonly blockRepository: BlockTransactionCountRepository,
+    private readonly loopringClient: LoopringClient,
+    logger: Logger,
+    batchSize: number,
+  ) {
+    super(
+      projectId,
+      sequenceProcessorRepository,
+      { batchSize, startFrom: 1 },
+      logger,
+    )
+    this.logger = this.logger.for(this)
+  }
 
-  const processor = new SequenceProcessor(
-    projectId.toString(),
-    logger,
-    sequenceProcessorRepository,
-    {
-      batchSize,
-      startFrom: 1,
-      getLatest: client.getFinalizedBlockNumber.bind(client),
-      processRange: async (from, to, trx, logger) => {
-        const queries = range(from, to + 1).map((blockNumber) => async () => {
-          const block = await client.getBlock(blockNumber)
+  protected override async getLatest(): Promise<number> {
+    return this.loopringClient.getFinalizedBlockNumber()
+  }
 
-          return {
-            projectId,
-            blockNumber,
-            count: block.transactions,
-            timestamp: block.createdAt,
-          }
-        })
+  protected override async processRange(
+    from: number,
+    to: number,
+    trx: Knex.Transaction,
+  ) {
+    const queries = range(from, to + 1).map((blockNumber) => async () => {
+      const block = await this.loopringClient.getBlock(blockNumber)
+      return {
+        projectId: this.projectId,
+        blockNumber,
+        count: block.transactions,
+        timestamp: block.createdAt,
+      }
+    })
 
-        const blocks = await promiseAllPlus(queries, logger, {
-          metricsId: 'LoopringBlockCounter',
-        })
-        await blockRepository.addOrUpdateMany(blocks, trx)
-      },
-    },
-  )
-
-  return createBlockTransactionCounter(projectId, processor, blockRepository)
+    const blocks = await promiseAllPlus(queries, this.logger, {
+      metricsId: 'LoopringBlockCounter',
+    })
+    await this.blockRepository.addOrUpdateMany(blocks, trx)
+  }
 }

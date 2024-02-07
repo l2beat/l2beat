@@ -53,6 +53,7 @@ import { ola } from './ola'
 import { omgnetwork } from './omgnetwork'
 import { optimism } from './optimism'
 import { orb3 } from './orb3'
+import { orderly } from './orderly'
 import { palm } from './palm'
 import { paradex } from './paradex'
 import { parallel } from './parallel'
@@ -143,6 +144,7 @@ export const layer2s: Layer2[] = [
   omgnetwork,
   optimism,
   orb3,
+  orderly,
   palm,
   paradex,
   parallel,
