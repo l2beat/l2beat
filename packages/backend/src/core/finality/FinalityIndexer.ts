@@ -52,6 +52,8 @@ export class FinalityIndexer extends ChildIndexer {
     await this.finalityRepository.addMany(finalityData)
 
     this.logger.info('Update finished', {
+      from,
+      to,
       targetTimestamp,
       projects: configurationsToSync.map((c) => c.projectId.toString()),
     })
