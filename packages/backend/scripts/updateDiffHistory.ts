@@ -18,7 +18,7 @@ import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
 import { toUpper } from 'lodash'
 import { rimraf } from 'rimraf'
 
-import { updateDiffHistoryHash } from '../modules/update-monitor/utils/hashing'
+import { updateDiffHistoryHash } from '../src/modules/update-monitor/utils/hashing'
 
 // This is a CLI tool. Run logic immediately.
 void updateDiffHistoryFile()
