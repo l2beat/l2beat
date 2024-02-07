@@ -9,10 +9,11 @@ export function getLocalConfig(): Config {
       ...common.features,
       // The local backend doesn't support activity
       activity: useMock,
-      liveness: useMock,
-      finality: useMock,
+      liveness: true,
+      finality: true,
       diffHistory: true,
       buildAllProjectPages: true,
+      governancePage: true,
     },
     backend: {
       apiUrl: 'http://localhost:3000',

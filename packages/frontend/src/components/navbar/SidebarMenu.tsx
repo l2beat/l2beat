@@ -17,6 +17,7 @@ export interface SidebarMenuProps {
   showFinality: boolean
   showLiveness: boolean
   showHiringBadge: boolean
+  showNewGovernancePage: boolean
   forumLink: string
   socialLinks: SocialLinksProps
 }
@@ -106,7 +107,13 @@ export function SidebarMenu(props: SidebarMenuProps) {
             <a href="/donate">Donate</a>
           </li>
           <li>
-            <a href="/governance">Governance</a>
+            {props.showNewGovernancePage ? (
+              <a href="/governance">Governance</a>
+            ) : (
+              <a href="https://l2beat.notion.site/Delegate-your-votes-to-L2BEAT-8ffc452bed9a431cb158d1e4e19839e3">
+                Governance
+              </a>
+            )}
           </li>
           <li>
             <a href="/faq">FAQ</a>

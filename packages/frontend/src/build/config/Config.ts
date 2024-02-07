@@ -21,6 +21,7 @@ export interface Config {
     gitcoinOption: boolean
     hiringBadge: boolean
     buildAllProjectPages: boolean
+    governancePage: boolean
   }
   backend: {
     apiUrl: string

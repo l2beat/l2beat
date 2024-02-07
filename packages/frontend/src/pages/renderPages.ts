@@ -91,7 +91,9 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     pages.push(...getDiffHistoryPages(config, diffHistory))
   }
 
-  pages.push(getGovernancePage(config))
+  if (config.features.governancePage) {
+    pages.push(getGovernancePage(config))
+  }
 
   outputPages(pages)
 }
