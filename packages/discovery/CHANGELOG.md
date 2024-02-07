@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.40.1
+
+### Patch Changes
+
+- Filter out incoming transactions from etherscan response
+
 ## 0.40.0
 
 ### Minor Changes

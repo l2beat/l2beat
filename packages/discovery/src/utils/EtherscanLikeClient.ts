@@ -137,7 +137,7 @@ export class EtherscanLikeClient {
     return new UnixTime(parseInt(resp.timeStamp, 10))
   }
 
-  async getLast10Txs(
+  async getLast10OutgoingTxs(
     address: EthereumAddress,
     blockNumber: number,
   ): Promise<{ input: string; to: EthereumAddress }[]> {
@@ -146,14 +146,26 @@ export class EtherscanLikeClient {
       startblock: '0',
       endblock: blockNumber.toString(),
       page: '1',
-      offset: '10',
+      offset: '20',
       sort: 'desc',
     })
 
-    const resp = TenTransactionListResult.parse(response)
+    const resp = TwentyTransactionListResult.parse(response)
     assert(resp)
+    const outgoingTxs = resp
+      .filter((tx) => EthereumAddress(tx.from) === address)
+      .slice(0, 10)
 
-    return resp.map((r) => ({ input: r.input, to: EthereumAddress(r.to) }))
+    assert(
+      outgoingTxs.length === 10,
+      'Not enough outgoing transactions, expected 10, received ' +
+        outgoingTxs.length.toString(),
+    )
+
+    return outgoingTxs.map((r) => ({
+      input: r.input,
+      to: EthereumAddress(r.to),
+    }))
   }
 
   async call(
@@ -285,4 +297,4 @@ export const TransactionListEntry = z.object({
 })
 
 const OneTransactionListResult = z.array(TransactionListEntry).length(1)
-const TenTransactionListResult = z.array(TransactionListEntry).length(10)
+const TwentyTransactionListResult = z.array(TransactionListEntry).length(20)

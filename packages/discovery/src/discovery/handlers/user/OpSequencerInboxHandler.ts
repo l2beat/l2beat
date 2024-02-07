@@ -45,7 +45,10 @@ export class OpStackSequencerInboxHandler implements ClassicHandler {
     )
     const sequencerAddress = valueToAddress(resolved)
 
-    const last10Txs = await provider.getLast10Txs(sequencerAddress, blockNumber)
+    const last10Txs = await provider.getLast10OutgoingTxs(
+      sequencerAddress,
+      blockNumber,
+    )
 
     // check if all last 10 txs have the same to address
     const toAddress = last10Txs[0]?.to
