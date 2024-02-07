@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { assert, notUndefined, UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
 import { Knex } from 'knex'
 
@@ -80,27 +80,26 @@ export class FinalityIndexer extends ChildIndexer {
   ): Promise<FinalityRecord[]> {
     const from = to.add(-1, 'days')
 
-    const finalityPromises = configurations.map(async (config) => {
+    const data: FinalityRecord[] = []
+
+    for (const configuration of configurations) {
       const projectFinalityData =
-        await config.analyzer.getFinalityWithGranularity(
+        await configuration.analyzer.getFinalityWithGranularity(
           from,
           to,
           FINALITY_GRANULARITY,
         )
 
-      if (projectFinalityData === undefined) {
-        return
+      if (projectFinalityData) {
+        data.push({
+          projectId: configuration.projectId,
+          timestamp: to,
+          ...projectFinalityData,
+        })
       }
+    }
 
-      return {
-        projectId: config.projectId,
-        timestamp: to,
-        ...projectFinalityData,
-      }
-    })
-
-    const data = await Promise.all(finalityPromises)
-    return data.filter(notUndefined)
+    return data
   }
 
   private async initialize() {
