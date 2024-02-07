@@ -12,6 +12,10 @@ import { LivenessIndexer } from '../liveness/LivenessIndexer'
 import { FinalityConfig } from './types/FinalityConfig'
 import { findConfigurationsToSync } from './utils/findConfigurationsToSync'
 
+/*
+  Once per day we want to fetch finality data for each project for last 24h, with granularity of 10 minutes,
+  so in every hour there will be 6 calls
+*/
 const FINALITY_GRANULARITY = 24 * 6
 
 export class FinalityIndexer extends ChildIndexer {
