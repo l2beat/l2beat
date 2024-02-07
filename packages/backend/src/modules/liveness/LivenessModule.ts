@@ -1,18 +1,18 @@
 import { Logger } from '@l2beat/backend-tools'
 
-import { LivenessController } from '../../api/controllers/liveness/LivenessController'
-import { createLivenessRouter } from '../../api/routers/LivenessRouter'
 import { Config } from '../../config'
-import { Clock } from '../../core/Clock'
-import { HourlyIndexer } from '../../core/liveness/HourlyIndexer'
-import { LivenessClient } from '../../core/liveness/LivenessClient'
-import { LivenessIndexer } from '../../core/liveness/LivenessIndexer'
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
-import { IndexerStateRepository } from '../../peripherals/database/IndexerStateRepository'
-import { LivenessConfigurationRepository } from '../../peripherals/database/LivenessConfigurationRepository'
-import { LivenessRepository } from '../../peripherals/database/LivenessRepository'
-import { Database } from '../../peripherals/database/shared/Database'
+import { Database } from '../../peripherals/database/Database'
+import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
+import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
+import { LivenessController } from './api/LivenessController'
+import { createLivenessRouter } from './api/LivenessRouter'
+import { HourlyIndexer } from './HourlyIndexer'
+import { LivenessClient } from './LivenessClient'
+import { LivenessIndexer } from './LivenessIndexer'
+import { LivenessConfigurationRepository } from './repositories/LivenessConfigurationRepository'
+import { LivenessRepository } from './repositories/LivenessRepository'
 
 export function createLivenessModule(
   config: Config,

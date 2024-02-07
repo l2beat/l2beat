@@ -1,3 +1,42 @@
+Generated with discovered.json: 0x658319b9c3fe837c9e09311f58fef75b5fc7adcd
+
+# Diff at Wed, 07 Feb 2024 13:46:24 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@70a2c5f9336d4d624160533a78c31ce52c7bbe58 block: 19126411
+- current block number: 19176699
+
+## Description
+
+Removed ZkSyncHubConnector.
+
+## Watched changes
+
+```diff
+    contract RootManager (0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A) {
+      values.connectors[12]:
+-        "0x9Ba7D2Ab079Bd1924859e2fECDAD1bEBe5B119Fa"
+      values.connectors.8:
+-        "0x63C6c79F3E79406B62f8623881cBFD7B2Ec1E8cB"
++        "0x9Ba7D2Ab079Bd1924859e2fECDAD1bEBe5B119Fa"
+      values.connectorsHash:
+-        "0x14c4bf163ae7a6600a7ae29528ef8d2fe05fb8d77cf4be6201ac10f3c92fcb2e"
++        "0x14b530936915b09786ec041c63aa2b1ec72eb6cdefd18fe41d79b92b93aa90bd"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19126411 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract ZkSyncHubConnector (0x63C6c79F3E79406B62f8623881cBFD7B2Ec1E8cB) {
+    }
+```
+
 Generated with discovered.json: 0x3173a709fca8a83c7486e3febdd1d1700357d694
 
 # Diff at Wed, 31 Jan 2024 12:18:08 GMT:
