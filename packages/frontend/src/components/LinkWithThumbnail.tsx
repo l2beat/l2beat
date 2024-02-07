@@ -13,7 +13,7 @@ export function LinkWithThumbnail(props: LinkWithThumbnailProps) {
   return (
     <OutLink
       href={props.href}
-      className="group flex items-center gap-6 rounded-md pr-4 transition-all hover:bg-gray-400 dark:hover:bg-gray-900 "
+      className="group flex items-center gap-6 rounded-md pr-4 transition-all hover:bg-zinc-300 dark:hover:bg-zinc-800"
     >
       <img
         src={props.src}
