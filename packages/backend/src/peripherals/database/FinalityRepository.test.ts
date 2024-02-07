@@ -90,6 +90,32 @@ describeDatabase(FinalityRepository.name, (database) => {
     })
   })
 
+  describe(
+    FinalityRepository.prototype.getProjectsSyncedOnTimestamp.name,
+    () => {
+      it('should return all projects ids which record on a given timestamp', async () => {
+        const target = UnixTime.fromDate(new Date('2021-01-01T01:00:00Z'))
+        const newRow = [
+          {
+            projectId: ProjectId('project-c'),
+            timestamp: target,
+            minimum: 2,
+            maximum: 4,
+            average: 3,
+          },
+        ]
+        await repository.addMany(newRow)
+
+        const results = await repository.getProjectsSyncedOnTimestamp(target)
+
+        expect(results).toEqualUnsorted([
+          ProjectId('project-a'),
+          ProjectId('project-c'),
+        ])
+      })
+    },
+  )
+
   describe(FinalityRepository.prototype.deleteAll.name, () => {
     it('should delete all rows', async () => {
       await repository.deleteAll()

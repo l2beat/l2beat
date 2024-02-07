@@ -8,8 +8,9 @@ import {
 import { utils } from 'ethers'
 import { mean } from 'lodash'
 
-import { LivenessRepository } from '../../peripherals/database/LivenessRepository'
-import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
+import { LivenessRepository } from '../../../peripherals/database/LivenessRepository'
+import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
+import { BaseAnalyzer } from './types/BaseAnalyzer'
 
 type LineaDecoded = [
   [string, number, string, unknown[], string, unknown[]][],
@@ -18,7 +19,7 @@ type LineaDecoded = [
   string,
 ]
 
-export class LineaFinalityAnalyzer {
+export class LineaFinalityAnalyzer implements BaseAnalyzer {
   constructor(
     private readonly provider: RpcClient,
     private readonly livenessRepository: LivenessRepository,

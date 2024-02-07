@@ -26,6 +26,14 @@ export class FinalityRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getProjectsSyncedOnTimestamp(
+    timestamp: UnixTime,
+  ): Promise<ProjectId[]> {
+    const knex = await this.knex()
+    const rows = await knex('finality').where('timestamp', timestamp.toDate())
+    return rows.map((row) => ProjectId(row.project_id))
+  }
+
   async addMany(transactions: FinalityRecord[], trx?: Knex.Transaction) {
     const knex = await this.knex(trx)
     const rows: FinalityRow[] = transactions.map(toRow)
