@@ -55,6 +55,10 @@ import {
 } from './LineaRolesModuleHandler'
 import { OpStackDAHandler, OpStackDAHandlerDefinition } from './OpDAHandler'
 import {
+  OpStackSequencerInboxHandler,
+  OpStackSequencerInboxHandlerDefinition,
+} from './OpSequencerInboxHandler'
+import {
   ScrollAccessControlHandler,
   ScrollAccessControlHandlerDefinition,
 } from './ScrollAccessControlHandler'
@@ -94,6 +98,7 @@ export const UserHandlerDefinition = z.union([
   LayerZeroMultisigHandlerDefinition,
   ArbitrumActorsHandlerDefinition,
   OpStackDAHandlerDefinition,
+  OpStackSequencerInboxHandlerDefinition,
   ArbitrumSequencerVersionDefinition,
   ArbitrumDACKeysetHandlerDefinition,
 ])
@@ -143,6 +148,8 @@ export function getUserHandler(
       return new ArbitrumActorsHandler(field, definition, logger)
     case 'opStackDA':
       return new OpStackDAHandler(field, definition, logger)
+    case 'opStackSequencerInbox':
+      return new OpStackSequencerInboxHandler(field, definition, logger)
     case 'arbitrumSequencerVersion':
       return new ArbitrumSequencerVersionHandler(field, definition, logger)
     case 'arbitrumDACKeyset':

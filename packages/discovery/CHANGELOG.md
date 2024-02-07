@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.40.0
+
+### Minor Changes
+
+- Add opStackSequencerInboxHandler
+
 ## 0.39.1
 
 ### Patch Changes
