@@ -131,7 +131,7 @@ export class BalanceUpdater {
         blockNumber,
       )
 
-      await this.balanceRepository.addOrUpdateMany(balances)
+      await this.balanceRepository.addMany(balances)
       this.logger.debug('Updated balances', {
         timestamp: timestamp.toNumber(),
         chainId: this.chainId.toString(),
