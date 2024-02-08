@@ -12,7 +12,7 @@ As you can see there are three types of value:
 
 Everything you see here is achieved via proper configuration files in our repository.
 
-### Token guide
+## Token guide
 
 1. Go to `config\src\tokens\tokens.jsonc`
 2. Add your token to the proper chain
