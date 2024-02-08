@@ -3,7 +3,7 @@ import { ProjectId } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { range } from 'lodash'
 
-import { AztecClient } from '../../../peripherals/aztec'
+import { AztecClient } from '../../../peripherals/aztec/AztecClient'
 import { promiseAllPlus } from '../../../tools/queue/promiseAllPlus'
 import { BlockTransactionCountRepository } from '../repositories/BlockTransactionCountRepository'
 import { SequenceProcessorRepository } from '../repositories/SequenceProcessorRepository'

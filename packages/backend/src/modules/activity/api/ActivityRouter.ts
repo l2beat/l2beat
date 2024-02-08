@@ -3,7 +3,7 @@ import { z } from 'zod'
 
 import { withTypedContext } from '../../../api/types'
 import { Config } from '../../../config'
-import { Project } from '../../../model'
+import { Project } from '../../../model/Project'
 import { ActivityController } from './ActivityController'
 
 export function createActivityRouter(

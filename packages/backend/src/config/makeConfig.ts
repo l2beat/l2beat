@@ -3,7 +3,7 @@ import { bridges, chains, layer2s, tokenList } from '@l2beat/config'
 import { ConfigReader } from '@l2beat/discovery'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
-import { bridgeToProject, layer2ToProject } from '../model'
+import { bridgeToProject, layer2ToProject } from '../model/Project'
 import { Config, DiscordConfig } from './Config'
 import { FeatureFlags } from './FeatureFlags'
 import {

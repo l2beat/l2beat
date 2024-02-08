@@ -8,7 +8,7 @@ import {
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { ProjectEscrow } from '../../../model'
+import { ProjectEscrow } from '../../../model/Project'
 import { getMockToken } from '../../../test/token'
 import { BalanceProject } from './BalanceProject'
 import { getBalanceConfigHash } from './getBalanceConfigHash'

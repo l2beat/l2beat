@@ -3,7 +3,7 @@ import { ProjectId } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { range } from 'lodash'
 
-import { ZksyncClient } from '../../../peripherals/zksync'
+import { ZksyncClient } from '../../../peripherals/zksync/ZksyncClient'
 import { promiseAllPlus } from '../../../tools/queue/promiseAllPlus'
 import { SequenceProcessorRepository } from '../repositories/SequenceProcessorRepository'
 import { ZksyncTransactionRepository } from '../repositories/ZksyncTransactionRepository'

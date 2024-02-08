@@ -5,7 +5,7 @@ import { expect, mockObject } from 'earl'
 import { Knex } from 'knex'
 import waitForExpect from 'wait-for-expect'
 
-import { StarkexClient } from '../../../peripherals/starkex'
+import { StarkexClient } from '../../../peripherals/starkex/StarkexClient'
 import { Clock } from '../../../tools/Clock'
 import { SequenceProcessorRepository } from '../repositories/SequenceProcessorRepository'
 import { StarkexTransactionCountRepository } from '../repositories/StarkexCountRepository'
