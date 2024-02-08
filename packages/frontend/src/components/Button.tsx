@@ -23,18 +23,29 @@ const buttonVariants = cva(
   },
 )
 
-type Props = {
+type Props<T extends React.ElementType> = {
   children: React.ReactNode
   className?: string
-} & VariantProps<typeof buttonVariants>
+  as?: T
+} & VariantProps<typeof buttonVariants> &
+  React.ComponentPropsWithoutRef<T>
 
-export function Button({ children, className, variant, size, ...rest }: Props) {
+export function Button<T extends React.ElementType>({
+  children,
+  className,
+  as,
+  variant,
+  size,
+  ...rest
+}: Props<T>) {
+  const Comp = as ?? 'button'
+
   return (
-    <button
+    <Comp
       className={cn(buttonVariants({ variant, size }), className)}
       {...rest}
     >
       {children}
-    </button>
+    </Comp>
   )
 }

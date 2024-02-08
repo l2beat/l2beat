@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { ArrowRightIcon } from './icons'
-import { OutLink } from './OutLink'
+import { PlainLink } from './PlainLink'
 
 export interface LinkWithThumbnailProps {
   title: string
@@ -11,7 +11,7 @@ export interface LinkWithThumbnailProps {
 
 export function LinkWithThumbnail(props: LinkWithThumbnailProps) {
   return (
-    <OutLink
+    <PlainLink
       href={props.href}
       className="group flex items-center gap-6 rounded-md pr-4 transition-all hover:bg-zinc-300 dark:hover:bg-zinc-800"
     >
@@ -26,6 +26,6 @@ export function LinkWithThumbnail(props: LinkWithThumbnailProps) {
           <ArrowRightIcon className="fill-current" />
         </p>
       </div>
-    </OutLink>
+    </PlainLink>
   )
 }
