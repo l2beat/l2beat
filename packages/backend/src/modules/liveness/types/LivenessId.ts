@@ -1,5 +1,6 @@
 import { hashJson } from '@l2beat/shared-pure'
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export interface LivenessId extends String {
   _LivenessIdBrand: string
 }

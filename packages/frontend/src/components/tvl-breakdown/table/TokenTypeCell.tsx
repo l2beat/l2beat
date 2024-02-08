@@ -12,8 +12,8 @@ export function TokenTypeCell(props: TokenTypeCellProps) {
     token?.formula === 'totalSupply'
       ? 'Multi-chain'
       : token?.formula === 'circulatingSupply'
-      ? 'Single-chain'
-      : ''
+        ? 'Single-chain'
+        : ''
 
   return (
     <div className="flex items-center justify-start gap-2 ">
