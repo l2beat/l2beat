@@ -53,8 +53,7 @@ export async function down(knex: Knex) {
     }),
   )
 
-  // @ts-expect-error coingecko_id removed from knex types module
-  await knex('coingecko_prices').where({ coingecko_id: null }).delete()
+  await knex('coingecko_prices').delete()
 
   await knex.schema.alterTable('coingecko_prices', (table) => {
     table.dropPrimary()
