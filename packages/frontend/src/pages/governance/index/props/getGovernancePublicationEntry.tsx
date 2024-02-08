@@ -3,7 +3,7 @@ import { CollectionEntry } from '../../../../content/getCollection'
 export interface GovernancePublicationEntry {
   id: string
   title: string
-  link: string
+  description: string
 }
 
 export function getGovernancePublicationEntry(
@@ -12,6 +12,6 @@ export function getGovernancePublicationEntry(
   return {
     id: post.id,
     title: post.data.title,
-    link: post.data.link,
+    description: post.data.description,
   }
 }

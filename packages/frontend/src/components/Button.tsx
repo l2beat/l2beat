@@ -4,7 +4,7 @@ import React from 'react'
 import { cn } from '../utils/cn'
 
 const buttonVariants = cva(
-  'cursor-pointer flex justify-center items-center transition-colors duration-100 px-6 py-2 text-center font-bold',
+  'cursor-pointer flex justify-center w-max items-center transition-colors duration-100 px-6 py-2 text-center font-bold',
   {
     variants: {
       variant: {

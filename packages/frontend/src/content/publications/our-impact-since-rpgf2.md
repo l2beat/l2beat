@@ -1,5 +1,6 @@
 ---
   title: "Dear Optimism Badgeholders"
+  description: "We're highlighting L2BEAT Team recent impact and contributions."
   publishedOn: "2023-11-24T00:00:00Z"
 ---
 
