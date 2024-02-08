@@ -9,9 +9,10 @@ export interface ConnectionProps {
     y: number
     direction: 'left' | 'right'
   }
+  isHighlighted?: boolean
 }
 
-export function Connection({ from, to }: ConnectionProps) {
+export function Connection({ from, to, isHighlighted }: ConnectionProps) {
   const minX = Math.min(from.x, to.x) - 200
   const maxX = Math.max(from.x, to.x) + 200
   const minY = Math.min(from.y, to.y) - 200
@@ -43,6 +44,10 @@ export function Connection({ from, to }: ConnectionProps) {
     to.y,
   ]
 
+  const stroke = isHighlighted
+    ? 'stroke-blue-500 stroke-[3]'
+    : 'stroke-slate-400 stroke-2'
+
   return (
     <svg
       viewBox={`${minX} ${minY} ${width} ${height}`}
@@ -50,11 +55,7 @@ export function Connection({ from, to }: ConnectionProps) {
       className="pointer-events-none absolute"
       style={{ left: minX, top: minY, width, height }}
     >
-      <path
-        d={path.join(' ')}
-        strokeLinecap="round"
-        className="stroke-slate-400 stroke-2"
-      />
+      <path d={path.join(' ')} strokeLinecap="round" className={stroke} />
     </svg>
   )
 }

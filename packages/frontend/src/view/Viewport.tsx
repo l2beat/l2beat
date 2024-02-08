@@ -40,6 +40,11 @@ export function Viewport(props: ViewportProps) {
                   key={`${node.simpleNode.id}-${i}-${field.connection.nodeId}`}
                   from={field.connection.from}
                   to={field.connection.to}
+                  // Highlight selected node both ways
+                  isHighlighted={
+                    selectedNodeIds.includes(node.simpleNode.id) ||
+                    selectedNodeIds.includes(field.connection.nodeId)
+                  }
                 />
               ),
           ),
