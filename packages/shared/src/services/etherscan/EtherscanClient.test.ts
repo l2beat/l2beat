@@ -208,9 +208,8 @@ describe(EtherscanClient.name, () => {
         new UnixTime(0),
         ChainId.ARBITRUM,
       )
-      const blockNumber = await arbiscanClient.getBlockNumberAtOrBefore(
-        timestamp,
-      )
+      const blockNumber =
+        await arbiscanClient.getBlockNumberAtOrBefore(timestamp)
 
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         1,
