@@ -1,3 +1,4 @@
+import { isResizeHandle } from '../../view/ResizeHandle'
 import { State } from '../State'
 import { LEFT_MOUSE_BUTTON, MIDDLE_MOUSE_BUTTON } from '../utils/constants'
 import { toViewCoordinates } from '../utils/coordinates'
@@ -8,6 +9,24 @@ export function onMouseDown(
   event: MouseEvent,
   container: HTMLElement,
 ): Partial<State> {
+  // Resize anchor
+  if (isResizeHandle(event.target)) {
+    const { nodeId } = event.target.dataset
+    const node = state.nodes.find((n) => n.simpleNode.id === nodeId)
+
+    if (node && nodeId) {
+      return {
+        resizingNode: {
+          id: nodeId,
+          initialWidth: node.box.width,
+          startX: event.clientX,
+        },
+        mouseMoveAction: 'resize-node',
+        pressed: { ...state.pressed, leftMouseButton: true },
+      }
+    }
+  }
+
   if (event.button === LEFT_MOUSE_BUTTON && !state.mouseMoveAction) {
     if (state.pressed.spaceKey) {
       const [x, y] = [event.clientX, event.clientY]

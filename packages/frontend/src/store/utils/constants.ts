@@ -13,6 +13,8 @@ export const FIELD_HEIGHT = 24
 export const NODE_WIDTH = 200
 export const NODE_SPACING = 25
 
+export const RESIZE_HANDLE_SPACING = 15
+
 export const ZOOM_SENSITIVITY = 0.02
 export const MAX_ZOOM = 3
 export const MIN_ZOOM = 0.3

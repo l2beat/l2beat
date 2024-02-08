@@ -28,7 +28,12 @@ export function updateNodes(state: State, nodes: SimpleNode[]): Partial<State> {
     .filter((node) => oldNodes.has(node.id))
     .map((node) => {
       const oldNode = oldNodes.get(node.id)
-      return simpleNodeToNode(node, oldNode?.box.x ?? 0, oldNode?.box.y ?? 0)
+      return simpleNodeToNode(
+        node,
+        oldNode?.box.x ?? 0,
+        oldNode?.box.y ?? 0,
+        oldNode?.box.width ?? NODE_WIDTH,
+      )
     })
 
   const addedNodes = nodes
@@ -37,7 +42,8 @@ export function updateNodes(state: State, nodes: SimpleNode[]): Partial<State> {
       const box = getNodeBoxFromStorage(state.projectId, node)
       const x = box?.x ?? startX + (NODE_WIDTH + NODE_SPACING) * i
       const y = box?.y ?? 0
-      return simpleNodeToNode(node, x, y)
+      const width = box?.width ?? NODE_WIDTH
+      return simpleNodeToNode(node, x, y, width)
     })
 
   return updateNodePositions({
@@ -76,11 +82,16 @@ function getNodeBoxFromStorage(projectId: string, node: SimpleNode) {
   return location
 }
 
-function simpleNodeToNode(node: SimpleNode, x: number, y: number): Node {
+function simpleNodeToNode(
+  node: SimpleNode,
+  x: number,
+  y: number,
+  width: number,
+): Node {
   return {
     simpleNode: node,
     // height will be updated by updateNodePositions
-    box: { x, y, width: NODE_WIDTH, height: 0 },
+    box: { x, y, width: width, height: 0 },
     fields: node.fields.map((field) => ({
       name: field.name,
       connection: toConnection(field.connection),

@@ -15,8 +15,18 @@ export interface State {
     readonly shiftKey: boolean
     readonly spaceKey: boolean
   }
+  readonly resizingNode?: {
+    readonly id: string
+    readonly initialWidth: number
+    readonly startX: number
+  }
   readonly mouseUpAction?: DeselectOne | DeselectAllBut
-  readonly mouseMoveAction?: 'drag' | 'pan' | 'select' | 'select-add'
+  readonly mouseMoveAction?:
+    | 'drag'
+    | 'pan'
+    | 'select'
+    | 'select-add'
+    | 'resize-node'
   readonly mouseMove: {
     readonly startX: number
     readonly startY: number

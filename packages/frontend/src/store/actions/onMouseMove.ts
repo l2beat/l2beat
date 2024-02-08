@@ -1,5 +1,5 @@
 import { Box, State } from '../State'
-import { LEFT_MOUSE_BUTTON } from '../utils/constants'
+import { LEFT_MOUSE_BUTTON, NODE_WIDTH } from '../utils/constants'
 import { toViewCoordinates } from '../utils/coordinates'
 import { toContainerCoordinates } from '../utils/toContainerCoordinates'
 import { updateNodePositions } from '../utils/updateNodePositions'
@@ -17,6 +17,34 @@ export function onMouseMove(
     switch (state.mouseMoveAction) {
       case undefined: {
         return { ...state, mouseUpAction: undefined }
+      }
+      case 'resize-node': {
+        if (!state.resizingNode) {
+          break
+        }
+
+        const { scale } = state.transform
+
+        const dx = event.clientX - state.resizingNode.startX
+
+        const newWidth = Math.max(
+          state.resizingNode.initialWidth + dx / scale,
+          NODE_WIDTH,
+        )
+
+        const nodes = state.nodes.map((node) =>
+          node.simpleNode.id === state.resizingNode?.id
+            ? {
+                ...node,
+                box: { ...node.box, width: newWidth },
+              }
+            : node,
+        )
+
+        return updateNodePositions({
+          ...state,
+          nodes,
+        })
       }
       case 'pan': {
         const [x, y] = [event.clientX, event.clientY]
