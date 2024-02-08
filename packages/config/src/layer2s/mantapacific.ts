@@ -72,10 +72,6 @@ export const mantapacific: Layer2 = opStack({
     ],
     coingeckoPlatform: 'manta-pacific',
   },
-  sequencerAddress: EthereumAddress(
-    discovery.getContractValue('SystemConfig', 'batcherHash'),
-  ),
-  inboxAddress: EthereumAddress('0xAEbA8e2307A22B6824a9a7a39f8b016C357Cd1Fe'),
   genesisTimestamp: new UnixTime(1679202395),
   l2OutputOracle: discovery.getContract('L2OutputOracle'),
   portal: discovery.getContract('OptimismPortal'),
