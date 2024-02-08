@@ -2,7 +2,8 @@
   "ethereum": [
     {
       "symbol": "10SET",
-      "address": "0x7FF4169a6B5122b664c51c95727d87750eC07c84"
+      "address": "0x7FF4169a6B5122b664c51c95727d87750eC07c84",
+      "coingeckoId": "tenset"
     },
     {
       "symbol": "1INCH",
@@ -158,7 +159,13 @@
     },
     {
       "symbol": "CHSB",
-      "address": "0xba9d4199faB4f26eFE3551D490E3821486f135Ba"
+      "address": "0xba9d4199faB4f26eFE3551D490E3821486f135Ba",
+      "coingeckoId": "swissborg"
+    },
+    {
+      "symbol": "BORG",
+      "address": "0x64d0f55cd8c7133a9d7102b13987235f486f2224",
+      "coingeckoId": "swissborg"
     },
     {
       "symbol": "CHZ",
@@ -317,7 +324,8 @@
     },
     {
       "symbol": "GALA",
-      "address": "0x15D4c048F83bd7e37d49eA4C83a07267Ec4203dA"
+      "address": "0x15D4c048F83bd7e37d49eA4C83a07267Ec4203dA",
+      "coingeckoId": "gala"
     },
     {
       "symbol": "GAME",
@@ -391,7 +399,8 @@
     },
     {
       "symbol": "KCS",
-      "address": "0xf34960d9d60be18cC1D5Afc1A6F012A723a28811"
+      "address": "0xf34960d9d60be18cC1D5Afc1A6F012A723a28811",
+      "coingeckoId": "kucoin-shares"
     },
     {
       "symbol": "KEEP",
@@ -505,7 +514,8 @@
     },
     {
       "symbol": "NFT",
-      "address": "0xEF40B859D21e4d566a3d713e756197c021BffaAa"
+      "address": "0xEF40B859D21e4d566a3d713e756197c021BffaAa",
+      "coingeckoId": "apenft"
     },
     {
       "symbol": "NFTD",
@@ -679,7 +689,8 @@
     },
     {
       "symbol": "RUNE",
-      "address": "0x3155BA85D5F96b2d030a4966AF206230e46849cb"
+      "address": "0x3155BA85D5F96b2d030a4966AF206230e46849cb",
+      "coingeckoId": "thorchain"
     },
     {
       "symbol": "SAND",
@@ -719,7 +730,8 @@
     },
     {
       "symbol": "SOUL",
-      "address": "0x79C75E2e8720B39e258F41c37cC4f309E0b0fF80"
+      "address": "0x79C75E2e8720B39e258F41c37cC4f309E0b0fF80",
+      "coingeckoId": "phantasma"
     },
     {
       "symbol": "SPELL",
@@ -880,7 +892,8 @@
     {
       "symbol": "wUSDM",
       "address": "0x57F5E098CaD7A3D1Eed53991D4d66C45C9AF7812",
-      "category": "stablecoin"
+      "category": "stablecoin",
+      "coingeckoId": "mountain-protocol-usdm"
     },
     {
       "symbol": "WXT",
@@ -900,7 +913,8 @@
     },
     {
       "symbol": "XDB",
-      "address": "0xB9EefC4b0d472A44be93970254Df4f4016569d27"
+      "address": "0xB9EefC4b0d472A44be93970254Df4f4016569d27",
+      "coingeckoId": "digitalbits"
     },
     {
       "symbol": "xSUSHI",
@@ -920,7 +934,8 @@
     },
     {
       "symbol": "ZKS",
-      "address": "0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6"
+      "address": "0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6",
+      "coingeckoId": "zkspace"
     },
     {
       "symbol": "ZMT",
