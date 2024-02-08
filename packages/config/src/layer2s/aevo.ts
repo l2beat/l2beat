@@ -54,10 +54,6 @@ export const aevo: Layer2 = opStack({
   l1StandardBridgeEscrow: EthereumAddress(
     '0x4082C9647c098a6493fb499EaE63b5ce3259c574',
   ),
-  sequencerAddress: EthereumAddress(
-    discovery.getContractValue('SystemConfig', 'batcherHash'),
-  ),
-  inboxAddress: EthereumAddress('0x253887577420Cb7e7418cD4d50147743c8041b28'),
   genesisTimestamp: new UnixTime(1679202395),
   l2OutputOracle: discovery.getContract('L2OutputOracle'),
   portal: discovery.getContract('OptimismPortal'),
