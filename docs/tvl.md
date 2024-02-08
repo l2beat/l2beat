@@ -16,7 +16,7 @@ Everything you see here is achieved via proper configuration files in our reposi
 1. Go to `config\src\tokens\tokens.jsonc`
 2. Add your token to the proper chain
 
-→ Canonically bridged tokens (CBV) should always be added to Ethereum, since they use Ethereum as a main ledger and are bridged to the L2 through the canonical bridge.
+→ Canonically bridged tokens (CBV) should always be added to Ethereum.
 - The required fields are `symbol` **&** `address`.
 - Optional fields are: `type`, `formula`, `category`, `bridgedUsing` & `coingeckoId`.
 - By default, the `type` is `CBV`, the `formula` is `locked`, and the `category` is `other`.
