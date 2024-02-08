@@ -79,6 +79,7 @@ export class StatusController {
     )
 
     return renderDashboardProjectPage({
+      chain,
       projectName: project,
       contracts,
       diff,

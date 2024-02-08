@@ -9,6 +9,7 @@ import { Diff } from './components/Diff'
 import { UnverifiedContract } from './components/UnverifiedContract'
 
 interface ConfigPageProps {
+  chain: string
   projectName: string
   contracts: DashboardContract[]
   diff?: DiscoveryDiff[]
@@ -16,7 +17,7 @@ interface ConfigPageProps {
 
 export function DashboardProjectPage(props: ConfigPageProps) {
   return (
-    <Page title={props.projectName}>
+    <Page title={props.projectName + '@' + props.chain}>
       <a href="/status/discovery">⬅ Back</a>
 
       {props.diff && (
