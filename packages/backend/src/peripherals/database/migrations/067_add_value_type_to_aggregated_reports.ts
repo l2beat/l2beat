@@ -27,6 +27,7 @@ export async function up(knex: Knex) {
 }
 
 export async function down(knex: Knex) {
+  await knex('aggregated_reports').delete()
   await knex.schema.alterTable('aggregated_reports', function (table) {
     table.dropPrimary()
     table.dropColumn('value_type')
