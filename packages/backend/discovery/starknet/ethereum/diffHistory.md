@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x2e28a72d29a4cc1e4344de73fd939abf00e284ab
+
+# Diff at Thu, 08 Feb 2024 13:13:55 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@9ecce2dd03460fdede9f1111a19bff138d54ce28 block: 19025063
+- current block number: 19183671
+
+## Description
+
+The upgrade delays for multiple bridge contracts (WBTC, ETH, USDT, USDC) are changed to 0.
+
+## Watched changes
+
+```diff
+    contract WBTC Bridge (0x283751A21eafBFcD52297820D27C1f1963D9b5b4) {
+      upgradeability.upgradeDelay:
+-        604800
++        0
+      values.getUpgradeActivationDelay:
+-        604800
++        0
+    }
+```
+
+```diff
+    contract ETH Bridge (0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419) {
+      upgradeability.upgradeDelay:
+-        604800
++        0
+      values.getUpgradeActivationDelay:
+-        604800
++        0
+    }
+```
+
+```diff
+    contract USDT Bridge (0xbb3400F107804DFB482565FF1Ec8D8aE66747605) {
+      upgradeability.upgradeDelay:
+-        604800
++        0
+      values.getUpgradeActivationDelay:
+-        604800
++        0
+    }
+```
+
+```diff
+    contract USDC Bridge (0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816) {
+      upgradeability.upgradeDelay:
+-        604800
++        0
+      values.getUpgradeActivationDelay:
+-        604800
++        0
+    }
+```
+
 Generated with discovered.json: 0x08a0364947864d1363efada15e024f5fb8769f76
 
 # Diff at Wed, 17 Jan 2024 07:18:24 GMT:
