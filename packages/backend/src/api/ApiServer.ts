@@ -5,8 +5,8 @@ import conditional from 'koa-conditional-get'
 import etag from 'koa-etag'
 
 import { BugsnagPluginKoaResult } from '../tools/ErrorReporter'
-import { createApiLogger } from './middleware/logger'
-import { createApiMetrics } from './middleware/metrics'
+import { createApiLogger } from './logger'
+import { createApiMetrics } from './metrics'
 
 export class ApiServer {
   private readonly app: Koa

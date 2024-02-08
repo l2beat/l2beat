@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x80d696e326cc38fa37de94d90eec00c9fd19f4c0
+
+# Diff at Wed, 07 Feb 2024 13:38:24 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@70a2c5f9336d4d624160533a78c31ce52c7bbe58 block: 19033859
+- current block number: 19176658
+
+## Description
+
+Ignore "getL1CallValue" in watch mode, since its value will fluctuate depending
+on the gas price.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19033859 (main branch discovery), not current.
+
+```diff
+    contract ZkSync_Adapter (0xE233009838CB898b50e0012a6E783FC9FeE447FB) {
+      derivedName:
++        "ZkSync_Adapter"
+    }
+```
+
 Generated with discovered.json: 0x23ba1cd898c48745cfbf6f95e764d3dd8904bfed
 
 # Diff at Thu, 18 Jan 2024 12:51:26 GMT:

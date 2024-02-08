@@ -7,18 +7,18 @@ import {
 } from '@l2beat/discovery'
 import { UnixTime } from '@l2beat/shared-pure'
 
-import { DiffHistoryController } from '../../api/controllers/diff-history/DiffHistoryController'
-import { createDiffHistoryRouter } from '../../api/routers/DiffHistoryRouter'
 import { Config } from '../../config'
-import { ChainConverter } from '../../core/ChainConverter'
-import { Clock } from '../../core/Clock'
-import { createDiscoveryRunner } from '../../core/discovery/createDiscoveryRunner'
-import { ProjectDiscoverer } from '../../core/discovery/ProjectDiscoverer'
-import { TaskQueue } from '../../core/queue/TaskQueue'
-import { DiscoveryHistoryRepository } from '../../peripherals/database/discovery/DiscoveryHistoryRepository'
-import { DiscoveryCacheRepository } from '../../peripherals/database/DiscoveryCacheRepository'
-import { Database } from '../../peripherals/database/shared/Database'
+import { Database } from '../../peripherals/database/Database'
+import { ChainConverter } from '../../tools/ChainConverter'
+import { Clock } from '../../tools/Clock'
+import { TaskQueue } from '../../tools/queue/TaskQueue'
 import { ApplicationModule } from '../ApplicationModule'
+import { createDiscoveryRunner } from '../update-monitor/createDiscoveryRunner'
+import { ProjectDiscoverer } from '../update-monitor/ProjectDiscoverer'
+import { DiscoveryCacheRepository } from '../update-monitor/repositories/DiscoveryCacheRepository'
+import { DiscoveryHistoryRepository } from '../update-monitor/repositories/DiscoveryHistoryRepository'
+import { DiffHistoryController } from './api/DiffHistoryController'
+import { createDiffHistoryRouter } from './api/DiffHistoryRouter'
 
 export function createDiffHistoryModule(
   config: Config,

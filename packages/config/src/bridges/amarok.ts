@@ -171,10 +171,6 @@ export const amarok: Bridge = {
         'LineaHubConnector',
         'Contract for sending/receiving messages from mainnet to Linea via Linea AMB.',
       ),
-      discovery.getContractDetails(
-        'ZkSyncHubConnector',
-        'Contract for sending/receiving messages from mainnet to ZkSync via ZkSync AMB.',
-      ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
