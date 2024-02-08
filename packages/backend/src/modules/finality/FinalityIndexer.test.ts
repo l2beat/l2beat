@@ -1,28 +1,86 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
 import { LivenessIndexer } from '../liveness/LivenessIndexer'
 import { BaseAnalyzer } from './analyzers/types/BaseAnalyzer'
 import { FinalityIndexer } from './FinalityIndexer'
-import { FinalityRepository } from './repositories/FinalityRepository'
+import {
+  FinalityRecord,
+  FinalityRepository,
+} from './repositories/FinalityRepository'
 import { FinalityConfig } from './types/FinalityConfig'
 
 const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2024-02-07T00:00:00Z'))
 
 describe(FinalityIndexer.name, () => {
+  describe(FinalityIndexer.prototype.getFinalityData.name, () => {
+    it('returns finality data', async () => {
+      const project1Results = { average: 2, minimum: 1, maximum: 3 }
+      const project2Results = { average: 4, minimum: 1, maximum: 7 }
+
+      const configurations = getMockFinalityRuntimeConfigurations([
+        project1Results,
+        project2Results,
+      ])
+      const finalityIndexer = getMockFinalityIndexer({})
+
+      const results = await finalityIndexer.getFinalityData(
+        MIN_TIMESTAMP,
+        configurations,
+      )
+      const EXPECTED: FinalityRecord[] = [
+        {
+          projectId: ProjectId('project-1'),
+          timestamp: MIN_TIMESTAMP,
+          ...project1Results,
+        },
+        {
+          projectId: ProjectId('project-2'),
+          timestamp: MIN_TIMESTAMP,
+          ...project2Results,
+        },
+      ]
+      expect(results).toEqualUnsorted(EXPECTED)
+    })
+
+    it('does not return project when undefined', async () => {
+      const project1Results = { average: 2, minimum: 1, maximum: 3 }
+      const project2Results = undefined
+
+      const configurations = getMockFinalityRuntimeConfigurations([
+        project1Results,
+        project2Results,
+      ])
+      const finalityIndexer = getMockFinalityIndexer({})
+
+      const results = await finalityIndexer.getFinalityData(
+        MIN_TIMESTAMP,
+        configurations,
+      )
+      const EXPECTED: FinalityRecord[] = [
+        {
+          projectId: ProjectId('project-1'),
+          timestamp: MIN_TIMESTAMP,
+          ...project1Results,
+        },
+      ]
+      expect(results).toEqualUnsorted(EXPECTED)
+    })
+  })
+
   describe(FinalityIndexer.prototype.start.name, () => {
     it('initializes indexer state', async () => {
       const stateRepository = getMockStateRepository()
-      const livenessIndexer = getMockFinalityIndexer({
+      const finalityIndexer = getMockFinalityIndexer({
         stateRepository,
       })
 
-      await livenessIndexer.start()
+      await finalityIndexer.start()
 
       expect(stateRepository.setSafeHeight).toHaveBeenOnlyCalledWith(
-        livenessIndexer.indexerId,
+        finalityIndexer.indexerId,
         MIN_TIMESTAMP.toNumber(),
       )
 
@@ -148,21 +206,6 @@ function getMockFinalityIndexer(params: {
     runtimeConfigurations ?? [],
   )
 }
-function getRandomInt() {
-  const min = Math.ceil(1)
-  const max = Math.floor(100)
-  return Math.floor(Math.random() * (max - min + 1)) + 1
-}
-
-function getMockAnalyzer() {
-  return mockObject<BaseAnalyzer>({
-    getFinalityWithGranularity: async () => ({
-      average: getRandomInt(),
-      maximum: getRandomInt(),
-      minimum: getRandomInt(),
-    }),
-  })
-}
 
 function getMockStateRepository(
   indexerState = {
@@ -179,15 +222,20 @@ function getMockStateRepository(
   return stateRepository
 }
 
-function getMockFinalityRuntimeConfigurations(): FinalityConfig[] {
-  return [
-    {
-      projectId: ProjectId('project-a'),
-      analyzer: getMockAnalyzer(),
-    },
-    {
-      projectId: ProjectId('project-b'),
-      analyzer: getMockAnalyzer(),
-    },
-  ]
+function getMockFinalityRuntimeConfigurations(
+  results: (
+    | {
+        average: number
+        minimum: number
+        maximum: number
+      }
+    | undefined
+  )[],
+): FinalityConfig[] {
+  return results.map((r, i) => ({
+    projectId: ProjectId(`project-${i + 1}`),
+    analyzer: mockObject<BaseAnalyzer>({
+      getFinalityWithGranularity: mockFn().resolvesTo(r),
+    }),
+  }))
 }
