@@ -650,7 +650,7 @@ export function getScalingFinalityColumnsConfig() {
       },
     },
     {
-      name: 'Time to finality\n30-day avg.',
+      name: 'Time to inclusion\n30-day avg.',
       getValue: (project) => (
         <FinalityDurationCell data={project.timeToFinalize} />
       ),
