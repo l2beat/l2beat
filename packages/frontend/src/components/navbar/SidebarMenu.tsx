@@ -17,6 +17,7 @@ export interface SidebarMenuProps {
   showFinality: boolean
   showLiveness: boolean
   showHiringBadge: boolean
+  showNewGovernancePage: boolean
   forumLink: string
   socialLinks: SocialLinksProps
 }
@@ -25,7 +26,7 @@ export function SidebarMenu(props: SidebarMenuProps) {
   return (
     <div
       id="sidebar-menu"
-      className="fixed bottom-0 left-0 top-0 z-999 flex w-full translate-x-full flex-col bg-white text-base transition-transform duration-300 dark:bg-black lg:hidden"
+      className="fixed inset-y-0 left-0 z-999 flex w-full translate-x-full flex-col bg-white text-base transition-transform duration-300 dark:bg-black lg:hidden"
     >
       <div className="mt-[11.5px] flex items-center justify-between px-4">
         <a href={props.selectedPage === 'bridges' ? '/bridges/summary' : '/'}>
@@ -106,9 +107,13 @@ export function SidebarMenu(props: SidebarMenuProps) {
             <a href="/donate">Donate</a>
           </li>
           <li>
-            <a href="https://l2beat.notion.site/Delegate-your-votes-to-L2BEAT-8ffc452bed9a431cb158d1e4e19839e3">
-              Governance
-            </a>
+            {props.showNewGovernancePage ? (
+              <a href="/governance">Governance</a>
+            ) : (
+              <a href="https://l2beat.notion.site/Delegate-your-votes-to-L2BEAT-8ffc452bed9a431cb158d1e4e19839e3">
+                Governance
+              </a>
+            )}
           </li>
           <li>
             <a href="/faq">FAQ</a>

@@ -30,7 +30,6 @@ import { hermez } from './hermez'
 import { honeypot } from './honeypot'
 import { hypr } from './hypr'
 import { immutablex } from './immutablex'
-import { immutablezkevm } from './immutablezkevm'
 import { kinto } from './kinto'
 import { kroma } from './kroma'
 import { layer2finance } from './layer2finance'
@@ -49,10 +48,12 @@ import { molten } from './molten'
 import { morph } from './morph'
 import { myria } from './myria'
 import { nova } from './nova'
+import { oev } from './oev'
 import { ola } from './ola'
 import { omgnetwork } from './omgnetwork'
 import { optimism } from './optimism'
 import { orb3 } from './orb3'
+import { orderly } from './orderly'
 import { palm } from './palm'
 import { paradex } from './paradex'
 import { parallel } from './parallel'
@@ -72,6 +73,7 @@ import { stealthchain } from './stealthchain'
 import { taiko } from './taiko'
 import { tanx } from './tanx'
 import { ten } from './ten'
+import { tradable } from './tradable'
 import { Layer2 } from './types'
 import { x1 } from './x1'
 import { xchain } from './xchain'
@@ -119,7 +121,6 @@ export const layer2s: Layer2[] = [
   hermez,
   hypr,
   immutablex,
-  immutablezkevm,
   kinto,
   kroma,
   layer2finance,
@@ -138,10 +139,12 @@ export const layer2s: Layer2[] = [
   morph,
   myria,
   nova,
+  oev,
   ola,
   omgnetwork,
   optimism,
   orb3,
+  orderly,
   palm,
   paradex,
   parallel,
@@ -161,6 +164,7 @@ export const layer2s: Layer2[] = [
   taiko,
   tanx,
   ten,
+  tradable,
   x1,
   xchain,
   zentachain,

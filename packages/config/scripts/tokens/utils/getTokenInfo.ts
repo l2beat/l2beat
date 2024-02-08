@@ -14,12 +14,20 @@ export async function getTokenInfo(
   symbolFromConfig: string,
   coingeckoId: CoingeckoId,
 ) {
-  const [name, symbol, decimals, iconUrl, sinceTimestamp] = await Promise.all([
+  const [
+    name,
+    symbol,
+    decimals,
+    iconUrl,
+    deploymentTimestamp,
+    coingeckoListingTimestamp,
+  ] = await Promise.all([
     getName(provider, logger, address),
     getSymbol(provider, logger, address),
     getDecimals(provider, logger, address),
     getImageUrl(coingeckoClient, logger, coingeckoId),
-    getSinceTimestamp(provider, logger, coingeckoClient, address, coingeckoId),
+    getDeploymentTimestamp(logger, provider, address),
+    getCoingeckoListingTimestamp(logger, coingeckoClient, coingeckoId),
   ])
 
   logger.assert(
@@ -32,7 +40,8 @@ export async function getTokenInfo(
     symbol,
     decimals,
     iconUrl,
-    sinceTimestamp,
+    deploymentTimestamp,
+    coingeckoListingTimestamp,
     coingeckoId,
   }
 }
@@ -106,12 +115,10 @@ function getImageUrl(
   return coingeckoClient.getImageUrl(coingeckoId)
 }
 
-async function getSinceTimestamp(
-  provider: providers.JsonRpcProvider,
+async function getDeploymentTimestamp(
   logger: ScriptLogger,
-  coingeckoClient: CoingeckoClient,
+  provider: providers.JsonRpcProvider,
   address: EthereumAddress,
-  coingeckoId: CoingeckoId,
 ) {
   logger.fetching('sinceTimestamp (this will take a while)')
 
@@ -119,6 +126,16 @@ async function getSinceTimestamp(
     provider,
     address,
   )
+
+  return contractCreationTimestamp
+}
+
+async function getCoingeckoListingTimestamp(
+  logger: ScriptLogger,
+  coingeckoClient: CoingeckoClient,
+  coingeckoId: CoingeckoId,
+) {
+  logger.fetching('coingeckoListingTimestamp')
 
   const coingeckoPriceHistoryData =
     await coingeckoClient.getCoinMarketChartRange(
@@ -134,12 +151,8 @@ async function getSinceTimestamp(
   )
 
   const firstCoingeckoPriceTimestamp = new UnixTime(
-    coingeckoPriceHistoryData.prices[0].date.getTime() / 1000,
+    Math.floor(coingeckoPriceHistoryData.prices[0].date.getTime() / 1000),
   )
 
-  const timestamp = Math.max(
-    contractCreationTimestamp.toNumber(),
-    firstCoingeckoPriceTimestamp.toNumber(),
-  )
-  return new UnixTime(timestamp)
+  return firstCoingeckoPriceTimestamp
 }

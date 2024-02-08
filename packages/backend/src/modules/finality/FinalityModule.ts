@@ -1,13 +1,13 @@
 import { Logger } from '@l2beat/backend-tools'
 
-import { FinalityController } from '../../api/controllers/finality/FinalityController'
-import { createFinalityRouter } from '../../api/routers/FinalityRouter'
 import { Config } from '../../config'
-import { Clock } from '../../core/Clock'
-import { IndexerStateRepository } from '../../peripherals/database/IndexerStateRepository'
-import { LivenessRepository } from '../../peripherals/database/LivenessRepository'
-import { Database } from '../../peripherals/database/shared/Database'
+import { Database } from '../../peripherals/database/Database'
+import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
+import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
+import { LivenessRepository } from '../liveness/repositories/LivenessRepository'
+import { FinalityController } from './api/FinalityController'
+import { createFinalityRouter } from './api/FinalityRouter'
 
 export function createFinalityModule(
   config: Config,

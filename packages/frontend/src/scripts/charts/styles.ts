@@ -1,11 +1,11 @@
 export interface SeriesStyle {
-  point?: keyof typeof POINT_CLASS_NAMES
+  point?: keyof PointClassNames
   fill?: keyof typeof FILL_STYLES
   line?: keyof typeof LINE_STYLES
 }
 
-export type PointStyle = keyof typeof POINT_CLASS_NAMES
-export type PointShapeDef =
+export type PointStyle = keyof PointClassNames
+export type PointShapeDefinition =
   | {
       type: 'div'
       className: string
@@ -19,7 +19,17 @@ export type PointShapeDef =
       svgShape: string
     }
 
-export const POINT_CLASS_NAMES: Record<string, PointShapeDef> = {
+interface PointClassNames {
+  circle: PointShapeDefinition
+  redCircle: PointShapeDefinition
+  blueSquare: PointShapeDefinition
+  purpleCircle: PointShapeDefinition
+  pinkSquare: PointShapeDefinition
+  yellowTriangle: PointShapeDefinition
+  milestone: PointShapeDefinition
+}
+
+export const POINT_CLASS_NAMES: PointClassNames = {
   circle: {
     type: 'div',
     className:

@@ -4,7 +4,7 @@ import { formatDate } from '../../../utils'
 import { formatCurrency, formatCurrencyExactValue } from '../../../utils/format'
 import { formatTps } from '../../../utils/formatTps'
 import { isMobile } from '../../utils/isMobile'
-import { POINT_CLASS_NAMES, PointShapeDef, PointStyle } from '../styles'
+import { POINT_CLASS_NAMES, PointShapeDefinition, PointStyle } from '../styles'
 import { TokenInfo } from '../types'
 
 export function renderMilestoneHover(milestone: Milestone) {
@@ -248,17 +248,16 @@ function renderIcon(icon?: PointStyle | 'gap') {
 
   if (!icon) return ''
 
-  const point: PointShapeDef = POINT_CLASS_NAMES[icon]
+  const point: PointShapeDefinition = POINT_CLASS_NAMES[icon]
 
   if (point.type === 'svg') {
     return `
     <div class="flex h-2.5 w-2.5 items-center justify-center">
-      <svg 
+      <svg
         viewBox="${point.svgViewBox}"
-        fill="var(--text)"
         role="img"
         aria-label="External asset icon"
-        class="inline-block ${point.className}"
+        class="inline-block stroke-black dark:stroke-white ${point.className}"
         height="${point.height}"
         width="${point.width}"
         >

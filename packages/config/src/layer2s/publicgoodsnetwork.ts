@@ -64,11 +64,7 @@ export const publicgoodsnetwork: Layer2 = opStack({
   l1StandardBridgeEscrow: EthereumAddress(
     '0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b',
   ),
-  apiUrl: 'https://rpc.publicgoods.network',
-  sequencerAddress: EthereumAddress(
-    discovery.getContractValue('SystemConfig', 'batcherHash'),
-  ),
-  inboxAddress: EthereumAddress('0xC1B90E1e459aBBDcEc4DCF90dA45ba077d83BFc5'),
+  rpcUrl: 'https://rpc.publicgoods.network',
   finality: {
     type: 'OPStack',
     lag: 0,

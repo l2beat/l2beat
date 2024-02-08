@@ -51,7 +51,7 @@ export const loopring: Layer2 = {
 
     links: {
       websites: ['https://loopring.org'],
-      apps: ['https://exchange.loopring.io/'],
+      apps: ['https://loopring.io/#/trade'],
       documentation: [
         'https://github.com/Loopring/protocols/blob/master/packages/loopring_v3/DESIGN.md',
       ],
@@ -61,7 +61,7 @@ export const loopring: Layer2 = {
         'https://loopring.org/#/blog',
         'https://medium.com/loopring-protocol',
         'https://twitter.com/loopringorg',
-        'https://discord.gg/KkYccYp',
+        'https://discord.gg/loopring',
         'https://youtube.com/c/loopring',
         'https://weibo.com/loopringfoundation',
         'https://reddit.com/r/loopringorg/',
@@ -99,7 +99,8 @@ export const loopring: Layer2 = {
     ],
     transactionApi: {
       type: 'loopring',
-      callsPerMinute: 240,
+      defaultUrl: 'https://api3.loopring.io/api/v3',
+      defaultCallsPerMinute: 240,
     },
     liveness: {
       duplicateData: [

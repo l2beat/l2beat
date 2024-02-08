@@ -14,7 +14,13 @@ const meta: Meta<typeof TvlMetaImage> = {
       useEffect(() => {
         configureCharts()
       })
-      return <Story />
+      return (
+        <div className="flex items-center justify-center">
+          <div className="relative h-[314px] w-[600px] overflow-hidden">
+            <Story />
+          </div>
+        </div>
+      )
     },
   ],
   parameters: {
@@ -27,16 +33,12 @@ export default meta
 
 export const Overview = () => {
   return (
-    <div className="meta flex items-center justify-center">
-      <div className="relative h-[314px] min-h-[314px] w-[600px] min-w-[600px] overflow-hidden rounded-lg shadow-2xl">
-        <TvlMetaImage
-          tvl="$1.34 B"
-          sevenDayChange="+3.45%"
-          chartType={{ type: 'layer2-tvl' }}
-          fake
-        />
-      </div>
-    </div>
+    <TvlMetaImage
+      tvl="$1.34 B"
+      sevenDayChange="+3.45%"
+      chartType={{ type: 'layer2-tvl' }}
+      fake
+    />
   )
 }
 
@@ -49,33 +51,25 @@ export const ProjectOverview = () => {
   }
 
   return (
-    <div className="meta flex items-center justify-center">
-      <div className="relative h-[314px] min-h-[314px] w-[600px] min-w-[600px] overflow-hidden rounded-lg shadow-2xl">
-        <TvlMetaImage
-          tvl="$1.34 B"
-          sevenDayChange="+3.45%"
-          name={project.display.name}
-          icon={project.display.slug && `/icons/${project.display.slug}.png`}
-          chartType={{ type: 'project-tvl', slug: project.display.slug }}
-          fake
-        />
-      </div>
-    </div>
+    <TvlMetaImage
+      tvl="$1.34 B"
+      sevenDayChange="+3.45%"
+      name={project.display.name}
+      icon={project.display.slug && `/icons/${project.display.slug}.png`}
+      chartType={{ type: 'project-tvl', slug: project.display.slug }}
+      fake
+    />
   )
 }
 
 export const DetailedTvlOverview = () => {
   return (
-    <div className="meta flex items-center justify-center">
-      <div className="relative h-[314px] min-h-[314px] w-[600px] min-w-[600px] overflow-hidden rounded-lg shadow-2xl">
-        <DetailedTvlMetaImage
-          tvl="$1.34 B"
-          sevenDayChange="+3.45%"
-          chartType={{ type: 'layer2-detailed-tvl' }}
-          fake
-        />
-      </div>
-    </div>
+    <DetailedTvlMetaImage
+      tvl="$1.34 B"
+      sevenDayChange="+3.45%"
+      chartType={{ type: 'layer2-detailed-tvl' }}
+      fake
+    />
   )
 }
 
@@ -88,30 +82,20 @@ export const DetailedProjectOverview = () => {
   }
 
   return (
-    <div className="meta flex items-center justify-center">
-      <div className="relative h-[314px] min-h-[314px] w-[600px] min-w-[600px] overflow-hidden rounded-lg shadow-2xl">
-        <DetailedTvlMetaImage
-          tvl="$1.34 B"
-          sevenDayChange="+3.45%"
-          name={project.display.name}
-          icon={project.display.slug && `/icons/${project.display.slug}.png`}
-          chartType={{
-            type: 'project-detailed-tvl',
-            slug: project.display.slug,
-          }}
-          fake
-        />
-      </div>
-    </div>
+    <DetailedTvlMetaImage
+      tvl="$1.34 B"
+      sevenDayChange="+3.45%"
+      name={project.display.name}
+      icon={project.display.slug && `/icons/${project.display.slug}.png`}
+      chartType={{
+        type: 'project-detailed-tvl',
+        slug: project.display.slug,
+      }}
+      fake
+    />
   )
 }
 
 export const ActivityOverview = () => {
-  return (
-    <div className="meta flex items-center justify-center">
-      <div className="relative h-[314px] min-h-[314px] w-[600px] min-w-[600px] overflow-hidden rounded-lg shadow-2xl">
-        <ActivityMetaImage tpsDaily="15.69" tpsWeeklyChange="+3.45%" fake />
-      </div>
-    </div>
-  )
+  return <ActivityMetaImage tpsDaily="15.69" tpsWeeklyChange="+3.45%" fake />
 }

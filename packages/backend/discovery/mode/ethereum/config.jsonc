@@ -1,0 +1,71 @@
+{
+  "$schema": "../../config.schema.json",
+  "chain": "ethereum",
+  "name": "mode",
+  "initialAddresses": [
+    "0x735aDBbE72226BD52e818E7181953f42E3b0FF21",
+    "0x2901dA832a4D0297FF0691100A8E496626cc626D"
+  ],
+  "names": {
+    "0x8B34b14c7c7123459Cf3076b8Cb929BE097d0C07": "OptimismPortal",
+    "0x735aDBbE72226BD52e818E7181953f42E3b0FF21": "L1StandardBridge",
+    "0x4317ba146D4933D889518a3e5E11Fe7a53199b04": "L2OutputOracle",
+    "0x50eF494573f28Cad6B64C31b7a00Cdaa48306e15": "AddressManager",
+    "0x309Fe2536d01867018D120b40e4676723C53A14C": "ChallengerMultisig",
+    "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "ModeMultisig",
+    "0x5e6432F18Bc5d497B1Ab2288a025Fbf9D69E2221": "SystemConfig",
+    "0x95bDCA6c8EdEB69C98Bd5bd17660BaCef1298A6f": "L1CrossDomainMessenger"
+  },
+  "overrides": {
+    "OptimismPortal": {
+      "ignoreMethods": ["isOutputFinalized"],
+      "ignoreInWatchMode": ["params"]
+    },
+    "L2OutputOracle": {
+      "ignoreMethods": [
+        "getL2OutputAfter",
+        "getL2OutputIndexAfter",
+        "getL2Output",
+        "computeL2Timestamp"
+      ],
+      "ignoreInWatchMode": [
+        "nextBlockNumber",
+        "nextOutputIndex",
+        "latestBlockNumber",
+        "latestOutputIndex"
+      ],
+      "fields": {
+        "deletedOutputs": {
+          "type": "stateFromEvent",
+          "event": "OutputsDeleted",
+          "returnParams": ["prevNextOutputIndex", "newNextOutputIndex"]
+        }
+      }
+    },
+    "ModeMultisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "L1CrossDomainMessenger": {
+      "ignoreMethods": ["xDomainMessageSender"],
+      "ignoreInWatchMode": ["messageNonce"]
+    },
+    "SystemConfig": {
+      "fields": {
+        // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
+        "batcherHash": {
+          "type": "call",
+          "method": "function batcherHash() view returns (address)",
+          "args": []
+        },
+        "opStackDA": {
+          "type": "opStackDA",
+          "sequencerAddress": "{{ batcherHash }}"
+        },
+        "sequencerInbox": {
+          "type": "opStackSequencerInbox",
+          "sequencerAddress": "{{ batcherHash }}"
+        }
+      }
+    }
+  }
+}

@@ -79,7 +79,7 @@ export const layer2financezk: Layer2 = {
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
-    dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC,
+    dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC(),
     exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, 0),
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,

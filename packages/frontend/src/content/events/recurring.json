@@ -1,0 +1,19 @@
+{
+  "type": "recurring",
+  "title": "Recurring Event",
+  "sinceDate": "2023-12-04",
+  "tillDate": "2024-02-11",
+  "cancelledAt": ["2023-12-09"],
+  "futureEventsCount": 4,
+  "dayOfWeek": 6,
+  "startDate": {
+    "hour": 11,
+    "minute": 30
+  },
+  "endDate": {
+    "hour": 13,
+    "minute": 30
+  },
+  "location": "Online",
+  "link": "https://somelink.com"
+}

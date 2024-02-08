@@ -1,8 +1,9 @@
 const overflowThreshold = 24
 
 export function configureHoverableDropdown() {
-  const hoverableDropdowns =
-    document.querySelectorAll<HTMLElement>('.HoverableDropdown')
+  const hoverableDropdowns = document.querySelectorAll<HTMLElement>(
+    '[data-role=hoverable-dropdown]',
+  )
 
   const show = (menu: HTMLElement) => {
     menu.classList.remove('opacity-0', 'pointer-events-none')
@@ -57,11 +58,11 @@ function moveOverflowingMenu(hoverableDropdowns: NodeListOf<HTMLElement>) {
 
 function getHoverableDropdownElements(hoverableDropdown: HTMLElement) {
   const toggle = hoverableDropdown.querySelector<HTMLElement>(
-    '.HoverableDropdownToggle',
+    '[data-role=hoverable-dropdown-toggle]',
   )
 
   const menu = hoverableDropdown.querySelector<HTMLElement>(
-    '.HoverableDropdownMenu',
+    '[data-role=hoverable-dropdown-menu]',
   )
 
   if (!toggle || !menu) return

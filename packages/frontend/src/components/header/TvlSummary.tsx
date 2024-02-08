@@ -53,21 +53,21 @@ export function TvlSummary(props: TvlSummaryProps) {
           shortLabel: 'Canonical',
           value: formatUSD(props.stats.canonical),
           usage: usage?.canonical ?? 1,
-          icon: <CanonicalIcon className="h-[9px] w-[9px]" />,
+          icon: <CanonicalIcon className="size-[9px]" />,
         },
         {
           label: 'Externally Bridged',
           shortLabel: 'External',
           value: formatUSD(props.stats.external),
           usage: usage?.external ?? 1,
-          icon: <ExternalIcon className="h-[10px] w-[10px]" />,
+          icon: <ExternalIcon className="size-[10px]" />,
         },
         {
           label: 'Natively Minted',
           shortLabel: 'Native',
           value: formatUSD(props.stats.native),
           usage: usage?.native ?? 1,
-          icon: <NativeIcon className="h-[8px] w-[8px]" />,
+          icon: <NativeIcon className="size-[8px]" />,
         },
       ]
     : []
@@ -132,7 +132,7 @@ export function TvlSummary(props: TvlSummaryProps) {
                 className="flex w-full flex-wrap items-end justify-between"
               >
                 <div className="flex items-center gap-1">
-                  <div className="flex h-2.5 w-2.5 items-center justify-center">
+                  <div className="flex size-2.5 items-center justify-center">
                     {s.icon}
                   </div>
                   <span className="text-xs leading-none text-gray-500 dark:text-gray-600">

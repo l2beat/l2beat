@@ -3,3 +3,4 @@ build
 !src/build
 cache
 storybook-static
+.env

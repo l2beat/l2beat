@@ -1,11 +1,12 @@
 import { LoggerOptions } from '@l2beat/backend-tools'
-import { Layer2TransactionApi } from '@l2beat/config'
 import { DiscoveryChainConfig } from '@l2beat/discovery'
 import { ChainId, ProjectId, Token, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
-import { Project } from '../model'
+import { Project } from '../model/Project'
+import { ActivityTransactionConfig } from '../modules/activity/ActivityTransactionConfig'
 import { MulticallConfigEntry } from '../peripherals/multicall/types'
+import { ResolvedFeatureFlag } from './FeatureFlags'
 
 export interface Config {
   readonly name: string
@@ -26,6 +27,8 @@ export interface Config {
   readonly diffHistory: DiffHistoryConfig | false
   readonly statusEnabled: boolean
   readonly chains: { name: string; chainId: ChainId }[]
+  readonly flags: ResolvedFeatureFlag[]
+  readonly tvlCleanerEnabled: boolean
 }
 
 export type LoggerConfig = Pick<LoggerOptions, 'logLevel' | 'format'> &
@@ -39,6 +42,9 @@ export interface LogThrottlerConfig {
 
 export interface ApiConfig {
   readonly port: number
+  readonly cache: {
+    readonly tvl: boolean
+  }
 }
 
 export interface DatabaseConfig {
@@ -108,10 +114,9 @@ export interface HealthConfig {
 export interface ActivityConfig {
   readonly starkexApiKey: string
   readonly starkexCallsPerMinute: number
-  readonly skipExplicitExclusion: boolean
   readonly projectsExcludedFromAPI: string[]
   readonly allowedProjectIds?: string[]
-  readonly projects: Record<string, Layer2TransactionApi | undefined>
+  readonly projects: { id: ProjectId; config: ActivityTransactionConfig }[]
 }
 
 export interface MetricsAuthConfig {

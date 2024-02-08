@@ -3,7 +3,10 @@
 @import 'tailwindcss/utilities';
 
 @import './markdown.css';
-@import '../pages/definitions/style.css';
+
+body {
+  @apply bg-white text-base text-black dark:bg-neutral-900 dark:text-white md:text-lg;
+}
 
 /* For Webkit-based browsers (Chrome, Safari and Opera) */
 .scrollbar-hide::-webkit-scrollbar {
@@ -23,7 +26,9 @@
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
-  src: local('Roboto'), local('Roboto-Regular'),
+  src:
+    local('Roboto'),
+    local('Roboto-Regular'),
     url('/fonts/Roboto/roboto-v30-latin-regular.woff2') format('woff2'),
     url('/fonts/Roboto/roboto-v30-latin-regular.woff') format('woff');
 }
@@ -33,7 +38,9 @@
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 500;
-  src: local('Roboto Medium'), local('Roboto-Medium'),
+  src:
+    local('Roboto Medium'),
+    local('Roboto-Medium'),
     url('/fonts/Roboto/roboto-v30-latin-500.woff2') format('woff2'),
     url('/fonts/Roboto/roboto-v30-latin-500.woff') format('woff');
 }
@@ -43,15 +50,9 @@
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 700;
-  src: local('Roboto Bold'), local('Roboto-Bold'),
+  src:
+    local('Roboto Bold'),
+    local('Roboto-Bold'),
     url('/fonts/Roboto/roboto-v30-latin-700.woff2') format('woff2'),
     url('/fonts/Roboto/roboto-v30-latin-700.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Lora';
-  font-style: italic;
-  font-weight: 400;
-  src: url('/fonts/Lora/lora-v17-latin-italic.woff2') format('woff2');
-  font-display: block;
 }

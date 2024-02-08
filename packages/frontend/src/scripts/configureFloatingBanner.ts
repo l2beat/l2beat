@@ -5,7 +5,7 @@ export function configureFloatingBanner() {
   const { $ } = makeQuery(document.body)
   const hasClosedBanner = LocalStorage.getItem('gg-19-floating-banner-closed')
 
-  const banner = $.maybe('.FloatingBanner')
+  const banner = $.maybe('[data-role=floating-banner]')
   if (!banner) {
     return
   }
@@ -23,7 +23,7 @@ export function configureFloatingBanner() {
   }
 
   setState('visible')
-  const closeButton = $('.FloatingBanner-Close')
+  const closeButton = $('[data-role=floating-banner-close]')
   closeButton.addEventListener('click', () => {
     setState(null)
     LocalStorage.setItem('gg-19-floating-banner-closed', true)

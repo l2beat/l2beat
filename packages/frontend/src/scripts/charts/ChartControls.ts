@@ -57,7 +57,7 @@ export class ChartControls {
 
   private setupControls(chart: HTMLElement, settings: ChartSettings) {
     const { $, $$ } = makeQuery(chart)
-    const tokenSelect = $.maybe('.RichSelect#token-select')
+    const tokenSelect = $.maybe('[data-role=rich-select]#token-select')
     const scaleControls = $$<HTMLInputElement>(
       '[data-role="chart-scale-controls"] input',
     )
@@ -138,10 +138,10 @@ export class ChartControls {
                   info: TokenInfo.parse(JSON.parse(selectValue)),
                 }
               : type === 'tvl'
-              ? { type: 'project-tvl', slug: this.projectSlug }
-              : type === 'detailedTvl'
-              ? { type: 'project-detailed-tvl', slug: this.projectSlug }
-              : { type: 'project-activity', slug: this.projectSlug }
+                ? { type: 'project-tvl', slug: this.projectSlug }
+                : type === 'detailedTvl'
+                  ? { type: 'project-detailed-tvl', slug: this.projectSlug }
+                  : { type: 'project-activity', slug: this.projectSlug }
 
           this.updateChartType(chartType)
         }

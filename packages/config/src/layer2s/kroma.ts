@@ -112,6 +112,17 @@ export const kroma: Layer2 = {
       finalizationPeriod,
     },
   },
+  chainConfig: {
+    name: 'kroma',
+    chainId: 255,
+    explorerUrl: 'https://kromascan.com',
+    explorerApi: {
+      url: 'https://api.kromascan.com/api',
+      type: 'etherscan',
+    },
+    multicallContracts: [],
+    minTimestampForTvl: UnixTime.fromDate(new Date('2023-09-05T03:00:00Z')),
+  },
   config: {
     escrows: [
       discovery.getEscrowDetails({
@@ -130,9 +141,9 @@ export const kroma: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
+      defaultUrl: 'https://api.kroma.network',
+      defaultCallsPerMinute: 1500,
       startBlock: 1,
-      url: 'https://api.kroma.network',
-      callsPerMinute: 1500,
       assessCount: subtractOne,
     },
     liveness: {
@@ -140,8 +151,12 @@ export const kroma: Layer2 = {
       batchSubmissions: [
         {
           formula: 'transfer',
-          from: EthereumAddress('0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12'),
-          to: EthereumAddress('0xfF00000000000000000000000000000000000255'),
+          from: EthereumAddress(
+            discovery.getContractValue('SystemConfig', 'batcherHash'),
+          ),
+          to: EthereumAddress(
+            discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+          ),
           sinceTimestamp: new UnixTime(1693883663),
         },
       ],

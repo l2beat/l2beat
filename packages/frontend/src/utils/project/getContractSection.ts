@@ -22,13 +22,13 @@ import {
 import { ContractsSectionProps } from '../../components/project/ContractsSection'
 import { getExplorerUrl } from '../getExplorerUrl'
 import { languageJoin } from '../utils'
-import { hasArchitectureImage } from './hasArchitectureImage'
+import { getArchitectureImage } from './getArchitectureImage'
 
 export function getContractSection(
   project: Layer2 | Layer3 | Bridge,
   verificationStatus: VerificationStatus,
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
-): ContractsSectionProps {
+): Omit<ContractsSectionProps, 'sectionOrder'> {
   const contracts = project.contracts?.addresses.map((contract) => {
     const isUnverified = isContractUnverified(contract, verificationStatus)
     return makeTechnologyContract(
@@ -68,17 +68,13 @@ export function getContractSection(
     })
   }
 
-  const architectureImage = hasArchitectureImage(project.display.slug)
-    ? `/images/${project.display.slug}-architecture.png`
-    : undefined
-
   return {
     id: 'contracts',
     title: 'Smart contracts',
     contracts: contracts ?? [],
     escrows: escrows,
     risks: risks,
-    architectureImage,
+    architectureImage: getArchitectureImage(project.display.slug),
     references: project.contracts?.references ?? [],
     isIncomplete: project.contracts?.isIncomplete,
     isUnderReview: project.isUnderReview ?? project.contracts?.isUnderReview,

@@ -650,12 +650,12 @@ export function getScalingFinalityColumnsConfig() {
       },
     },
     {
-      name: 'Time to finality\n30-day avg.',
+      name: 'Time to inclusion\n30-day avg.',
       getValue: (project) => (
         <FinalityDurationCell data={project.timeToFinalize} />
       ),
       tooltip:
-        'The average time it would take for an L2 transaction to be finalized on the L1. Please note, this is an approximate estimation. For simplicity values ignore the overhead time to reach L1 finality after L1 inclusion, which is shared among all projects.',
+        'The average time it would take for an L2 transaction to be included on the L1. Please note, this is an approximate estimation and is different than Time to finality since it ignores the overhead time to reach L1 finality after L1 inclusion.',
       sorting: {
         rule: 'numeric',
         getOrderValue: (project) => project.timeToFinalize.averageInSeconds,

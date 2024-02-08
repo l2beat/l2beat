@@ -13,6 +13,7 @@ export function getLocalConfig(): Config {
       finality: useMock,
       diffHistory: true,
       buildAllProjectPages: true,
+      governancePage: true,
     },
     backend: {
       apiUrl: 'http://localhost:3000',

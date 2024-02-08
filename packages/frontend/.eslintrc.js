@@ -1,5 +1,12 @@
 module.exports = {
-  extends: ['../../.eslintrc.json', 'plugin:storybook/recommended'],
+  extends: [
+    '../../.eslintrc.json',
+    'plugin:storybook/recommended',
+    'plugin:tailwindcss/recommended',
+  ],
+  rules: {
+    'classnames-order': 'off', // Prettier handles this
+  },
   overrides: [
     {
       files: ['*'],
@@ -28,4 +35,9 @@ module.exports = {
       },
     },
   ],
+  settings: {
+    tailwindcss: {
+      callees: ['cn'],
+    },
+  },
 }

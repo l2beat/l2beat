@@ -21,15 +21,15 @@ export function Callout({
 }: CalloutProps) {
   let background: string
   if (hoverable && color === 'red') {
-    background = 'bg-red-600 hover:bg-red-500'
+    background = 'bg-red-600/20 hover:bg-red-500/20'
   } else if (hoverable && color === 'yellow') {
-    background = 'bg-yellow-700 hover:bg-opacity-40'
+    background = 'bg-yellow-700/20 hover:bg-opacity-40/20'
   } else if (color === 'red') {
-    background = 'bg-red-600'
+    background = 'bg-red-600/20'
   } else if (color === 'yellow') {
-    background = 'bg-yellow-700'
+    background = 'bg-yellow-700/20'
   } else if (color === 'blue') {
-    background = 'bg-blue-700'
+    background = 'bg-blue-700/20'
   } else {
     background = ''
   }
@@ -38,7 +38,7 @@ export function Callout({
     <div
       className={cn(
         'flex first:mt-0',
-        'rounded-lg bg-opacity-20',
+        'rounded-lg',
         background,
         className,
         small ? 'gap-2 rounded-[4px] text-sm' : 'gap-3',

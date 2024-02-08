@@ -1,15 +1,16 @@
-import React from 'react'
+import React, { ComponentPropsWithoutRef } from 'react'
 
 import { cn } from '../utils/cn'
 import { ArrowRightIcon } from './icons'
 
-type LinkProps = React.HTMLProps<HTMLAnchorElement> & {
+type LinkProps<T extends React.ElementType> = {
   type?: LinkType
+  className?: string
   textClassName?: string
   showArrow?: boolean
   underline?: boolean
-}
-
+  as?: T
+} & ComponentPropsWithoutRef<T>
 type LinkType = 'primary' | 'danger' | 'plain'
 
 // Make sure this is compatible with markdown.css
@@ -19,31 +20,35 @@ const textClassesByType: Record<LinkType, string> = {
   plain: 'text-black dark:text-white',
 }
 
-export function Link({
+export function Link<T extends React.ElementType>({
   type = 'primary',
   className,
   textClassName,
-  href,
   children,
   showArrow,
   underline = true,
+  as,
   ...rest
-}: LinkProps) {
-  const outLink = isOutLink(href)
+}: LinkProps<T>) {
+  const Comp = as ?? 'a'
+
   return (
-    <a
-      href={href}
+    <Comp
       className={cn(
-        'group data-[state=highlighted]:relative',
+        'group cursor-pointer data-[state=highlighted]:relative data-[state=highlighted]:z-10',
         'data-[state=highlighted]:before:absolute data-[state=highlighted]:before:-left-1 data-[state=highlighted]:before:-top-0.5',
         'data-[state=highlighted]:before:-bottom-0.5 data-[state=highlighted]:before:-right-1 data-[state=highlighted]:before:rounded',
         'data-[state=highlighted]:before:-z-10 data-[state=highlighted]:before:border',
-        'data-[state=highlighted]:before:border-dashed data-[state=highlighted]:before:border-yellow-700 data-[state=highlighted]:before:bg-yellow-250 data-[state=highlighted]:before:bg-opacity-50 data-[state=highlighted]:before:content-[""]',
-        'data-[state=highlighted]:before:dark:border-yellow-250 data-[state=highlighted]:before:dark:bg-opacity-10',
+        'data-[state=highlighted]:before:border-dashed data-[state=highlighted]:before:border-yellow-700 data-[state=highlighted]:before:bg-yellow-250/50 data-[state=highlighted]:before:content-[""]',
+        'data-[state=highlighted]:before:dark:border-yellow-250 data-[state=highlighted]:before:dark:bg-yellow-250/10',
         className,
       )}
-      target={outLink ? '_blank' : undefined}
-      rel={outLink ? 'noreferrer noopener' : undefined}
+      target={'href' in rest && isOutLink(rest.href) ? '_blank' : undefined}
+      rel={
+        'href' in rest && isOutLink(rest.href)
+          ? 'noreferrer noopener'
+          : undefined
+      }
       {...rest}
     >
       <span
@@ -66,7 +71,7 @@ export function Link({
           <ArrowRightIcon className="ml-1 inline-block fill-current transition-transform group-hover:translate-x-px group-hover:fill-blue-550 dark:fill-blue-500" />
         )}
       </span>
-    </a>
+    </Comp>
   )
 }
 

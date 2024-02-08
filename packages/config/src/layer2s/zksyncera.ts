@@ -97,9 +97,9 @@ export const zksyncera: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
+      defaultUrl: 'https://mainnet.era.zksync.io',
+      defaultCallsPerMinute: 1500,
       startBlock: 1,
-      url: 'https://mainnet.era.zksync.io',
-      callsPerMinute: 1500,
     },
     liveness: {
       proofSubmissions: [
@@ -167,14 +167,14 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0xc40e5BE1a6D18DdB14268D32dc6075FCf72fF16d#code#F1#L365',
-            'https://etherscan.io/address/0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7#code#F5#L26',
+            'https://etherscan.io/address/0x3a4ef67C6cAb51444E5d3861843F7f4a37F64F0a#code#F1#L363',
+            'https://etherscan.io/address/0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B#code#F5#L26',
           ],
         },
         {
           contract: 'Verifier',
           references: [
-            'https://etherscan.io/address/0xB465882F67d236DcC0D090F78ebb0d838e9719D8#code#F1#L348',
+            'https://etherscan.io/address/0x3390051435eCB25a9610A1cF17d1BA0a228A0560#code#F1#L345',
           ],
         },
       ],
@@ -196,7 +196,7 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7#code#F1#L128',
+            'https://etherscan.io/address/0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B#code#F1#L125',
           ],
         },
       ],
@@ -210,8 +210,7 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0xAeA49FCEbe3A93ADaE67FF668C0ac87799537967#code#F1#L100',
-            'https://etherscan.io/address/0xAeA49FCEbe3A93ADaE67FF668C0ac87799537967#code#F5#L58',
+            'https://etherscan.io/address/0xE6426c725cB507168369c10284390E59d91eC821#code#F1#L107',
             'https://etherscan.io/address/0x0b622A2061EaccAE1c664eBC3E868b8438e03F61#code#F1#L37',
             'https://etherscan.io/address/0x0b622A2061EaccAE1c664eBC3E868b8438e03F61#code#F1#L169',
           ],
@@ -224,8 +223,8 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7#code#F10#L56',
-            'https://etherscan.io/address/0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7#code#F10#L73',
+            'https://etherscan.io/address/0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B#code#F10#L57',
+            'https://etherscan.io/address/0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B#code#F10#L74',
           ],
         },
       ],
@@ -240,7 +239,7 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0xc40e5BE1a6D18DdB14268D32dc6075FCf72fF16d#code#F1#L186',
+            'https://etherscan.io/address/0x3a4ef67C6cAb51444E5d3861843F7f4a37F64F0a#code#F1#L187',
           ],
         },
       ],

@@ -8,17 +8,17 @@ import {
 import { HttpClient } from '@l2beat/shared'
 
 import { Config } from '../../config'
-import { ChainConverter } from '../../core/ChainConverter'
-import { Clock } from '../../core/Clock'
-import { createDiscoveryRunner } from '../../core/discovery/createDiscoveryRunner'
-import { UpdateMonitor } from '../../core/discovery/UpdateMonitor'
-import { UpdateNotifier } from '../../core/discovery/UpdateNotifier'
-import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'
-import { UpdateNotifierRepository } from '../../peripherals/database/discovery/UpdateNotifierRepository'
-import { DiscoveryCacheRepository } from '../../peripherals/database/DiscoveryCacheRepository'
-import { Database } from '../../peripherals/database/shared/Database'
+import { Database } from '../../peripherals/database/Database'
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'
+import { ChainConverter } from '../../tools/ChainConverter'
+import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
+import { createDiscoveryRunner } from './createDiscoveryRunner'
+import { DiscoveryCacheRepository } from './repositories/DiscoveryCacheRepository'
+import { UpdateMonitorRepository } from './repositories/UpdateMonitorRepository'
+import { UpdateNotifierRepository } from './repositories/UpdateNotifierRepository'
+import { UpdateMonitor } from './UpdateMonitor'
+import { UpdateNotifier } from './UpdateNotifier'
 
 export function createUpdateMonitorModule(
   config: Config,

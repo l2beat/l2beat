@@ -9,9 +9,9 @@ interface Props {
 
 export function ProjectIconCell({ project }: Props) {
   return (
-    <div className="h-[18px] w-[18px]">
+    <div className="size-[18px]">
       <img
-        className="h-full w-full"
+        className="size-full"
         src={`/icons/${project.slug}.png`}
         alt={`${project.name} logo`}
       />

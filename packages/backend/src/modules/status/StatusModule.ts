@@ -2,21 +2,17 @@ import Router from '@koa/router'
 import { Logger } from '@l2beat/backend-tools'
 import { ConfigReader } from '@l2beat/discovery'
 
-import { StatusController } from '../../api/controllers/status/StatusController'
-import { createStatusRouter } from '../../api/routers/StatusRouter'
 import { Config } from '../../config/Config'
-import { ChainConverter } from '../../core/ChainConverter'
-import { Clock } from '../../core/Clock'
-import { AggregatedReportStatusRepository } from '../../peripherals/database/AggregatedReportStatusRepository'
-import { BalanceStatusRepository } from '../../peripherals/database/BalanceStatusRepository'
-import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'
-import { IndexerStateRepository } from '../../peripherals/database/IndexerStateRepository'
-import { LivenessConfigurationRepository } from '../../peripherals/database/LivenessConfigurationRepository'
-import { PriceRepository } from '../../peripherals/database/PriceRepository'
-import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
-import { Database } from '../../peripherals/database/shared/Database'
-import { TotalSupplyStatusRepository } from '../../peripherals/database/TotalSupplyStatusRepository'
+import { Database } from '../../peripherals/database/Database'
+import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
+import { ChainConverter } from '../../tools/ChainConverter'
+import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
+import { LivenessConfigurationRepository } from '../liveness/repositories/LivenessConfigurationRepository'
+import { TotalSupplyStatusRepository } from '../tvl/repositories/TotalSupplyStatusRepository'
+import { UpdateMonitorRepository } from '../update-monitor/repositories/UpdateMonitorRepository'
+import { StatusController } from './api/StatusController'
+import { createStatusRouter } from './api/StatusRouter'
 
 export function createStatusModule(
   config: Config,
@@ -30,14 +26,7 @@ export function createStatusModule(
   }
   const configReader = new ConfigReader()
 
-  const priceRepository = new PriceRepository(database, logger)
-  const reportStatusRepository = new ReportStatusRepository(database, logger)
-  const balanceStatusRepository = new BalanceStatusRepository(database, logger)
   const totalSupplyStatusRepository = new TotalSupplyStatusRepository(
-    database,
-    logger,
-  )
-  const aggregatedStatusRepository = new AggregatedReportStatusRepository(
     database,
     logger,
   )
@@ -53,14 +42,9 @@ export function createStatusModule(
   const chainConverter = new ChainConverter(config.chains)
 
   const statusController = new StatusController(
-    priceRepository,
-    balanceStatusRepository,
     totalSupplyStatusRepository,
-    reportStatusRepository,
-    aggregatedStatusRepository,
     updateMonitorRepository,
     clock,
-    config.tokens,
     config.projects,
     configReader,
     indexerStateRepository,

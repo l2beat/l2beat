@@ -82,6 +82,9 @@
           "method": "function isBatchPoster(address) external view returns (bool)",
           "args": ["0x02c903F5c76F3f00c1F659702Bd76DF30470bBEE"]
         },
+        "sequencerVersion": {
+          "type": "arbitrumSequencerVersion"
+        },
         // when this changes, it means the sequencers have changed
         "setIsBatchPosterCount": {
           "type": "eventCount",
@@ -95,6 +98,13 @@
         "batchPosters": {
           "type": "arbitrumActors",
           "actorType": "batchPoster"
+        },
+        "keySetUpdates": {
+          "type": "eventCount",
+          "topics": [
+            // SetValidKeyset(bytes32,bytes)
+            "0xabca9b7986bc22ad0160eb0cb88ae75411eacfba4052af0b457a9335ef655722"
+          ]
         }
       }
     },
