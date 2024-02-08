@@ -151,8 +151,12 @@ export const kroma: Layer2 = {
       batchSubmissions: [
         {
           formula: 'transfer',
-          from: EthereumAddress('0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12'),
-          to: EthereumAddress('0xfF00000000000000000000000000000000000255'),
+          from: EthereumAddress(
+            discovery.getContractValue('SystemConfig', 'batcherHash'),
+          ),
+          to: EthereumAddress(
+            discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+          ),
           sinceTimestamp: new UnixTime(1693883663),
         },
       ],
