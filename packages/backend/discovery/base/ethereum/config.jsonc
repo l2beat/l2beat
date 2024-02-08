@@ -68,6 +68,10 @@
         "opStackDA": {
           "type": "opStackDA",
           "sequencerAddress": "{{ batcherHash }}"
+        },
+        "sequencerInbox": {
+          "type": "opStackSequencerInbox",
+          "sequencerAddress": "{{ batcherHash }}"
         }
       }
     },
