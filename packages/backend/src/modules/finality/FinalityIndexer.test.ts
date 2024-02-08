@@ -15,6 +15,35 @@ import { FinalityConfig } from './types/FinalityConfig'
 const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2024-02-07T00:00:00Z'))
 
 describe(FinalityIndexer.name, () => {
+  describe(FinalityIndexer.prototype.getSyncStatus.name, () => {
+    it('correctly returns configurations to sync', async () => {
+      const finalityRepository = mockObject<FinalityRepository>({
+        getProjectsSyncedOnTimestamp: mockFn().resolvesToOnce([
+          ProjectId('project-1'),
+          ProjectId('project-2'),
+        ]),
+      })
+      const runtimeConfigurations = getMockFinalityRuntimeConfigurations([
+        undefined,
+        undefined,
+        undefined,
+      ])
+
+      const finalityIndexer = getMockFinalityIndexer({
+        finalityRepository,
+        runtimeConfigurations,
+      })
+
+      const results = await finalityIndexer.getSyncStatus(MIN_TIMESTAMP)
+      expect(results).toEqualUnsorted([
+        {
+          projectId: ProjectId('project-3'),
+          analyzer: runtimeConfigurations[2].analyzer,
+        },
+      ])
+    })
+  })
+
   describe(FinalityIndexer.prototype.getFinalityData.name, () => {
     it('returns finality data', async () => {
       const project1Results = { average: 2, minimum: 1, maximum: 3 }

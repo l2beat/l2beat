@@ -63,7 +63,7 @@ export class FinalityIndexer extends ChildIndexer {
     return to
   }
 
-  private async getSyncStatus(targetTimestamp: UnixTime) {
+  async getSyncStatus(targetTimestamp: UnixTime) {
     const syncedProjectsForLastDay =
       await this.finalityRepository.getProjectsSyncedOnTimestamp(
         targetTimestamp,
