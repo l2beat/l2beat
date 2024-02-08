@@ -15,6 +15,100 @@ import { FinalityConfig } from './types/FinalityConfig'
 const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2024-02-07T00:00:00Z'))
 
 describe(FinalityIndexer.name, () => {
+  describe(FinalityIndexer.prototype.update.name, () => {
+    it('have all projects synced', async () => {
+      const finalityRepository = mockObject<FinalityRepository>({
+        getProjectsSyncedOnTimestamp: mockFn().resolvesToOnce([
+          ProjectId('project-1'),
+        ]),
+        addMany: mockFn(),
+      })
+      const runtimeConfigurations = getMockFinalityRuntimeConfigurations([
+        undefined,
+      ])
+
+      const finalityIndexer = getMockFinalityIndexer({
+        runtimeConfigurations,
+        finalityRepository,
+      })
+
+      const from = MIN_TIMESTAMP.toNumber()
+      const to = MIN_TIMESTAMP.add(1, 'days').toNumber()
+
+      const result = await finalityIndexer.update(from, to)
+      expect(finalityRepository.addMany).not.toHaveBeenCalled()
+      expect(result).toEqual(to)
+    })
+
+    it('correctly syncs not synced projects', async () => {
+      const project2Results = { average: 4, minimum: 1, maximum: 7 }
+
+      const finalityRepository = mockObject<FinalityRepository>({
+        getProjectsSyncedOnTimestamp: mockFn().resolvesToOnce([
+          ProjectId('project-1'),
+        ]),
+        addMany: mockFn().resolvesToOnce(1),
+      })
+      const runtimeConfigurations = getMockFinalityRuntimeConfigurations([
+        undefined,
+        project2Results,
+      ])
+
+      const finalityIndexer = getMockFinalityIndexer({
+        runtimeConfigurations,
+        finalityRepository,
+      })
+
+      const from = MIN_TIMESTAMP.toNumber()
+      const to = MIN_TIMESTAMP.add(1, 'days').toNumber()
+
+      await finalityIndexer.update(from, to)
+      expect(finalityRepository.addMany).toHaveBeenNthCalledWith(1, [
+        {
+          projectId: ProjectId('project-2'),
+          timestamp: MIN_TIMESTAMP.add(1, 'days'),
+          ...project2Results,
+        },
+      ])
+    })
+
+    it('correctly syncs all projects on full day', async () => {
+      const project1Results = { average: 2, minimum: 1, maximum: 3 }
+      const project2Results = { average: 4, minimum: 1, maximum: 7 }
+
+      const finalityRepository = mockObject<FinalityRepository>({
+        getProjectsSyncedOnTimestamp: mockFn().resolvesToOnce([]),
+        addMany: mockFn().resolvesToOnce(1),
+      })
+      const runtimeConfigurations = getMockFinalityRuntimeConfigurations([
+        project1Results,
+        project2Results,
+      ])
+
+      const finalityIndexer = getMockFinalityIndexer({
+        runtimeConfigurations,
+        finalityRepository,
+      })
+
+      const from = MIN_TIMESTAMP.toNumber()
+      const to = MIN_TIMESTAMP.add(1, 'days').toNumber()
+
+      await finalityIndexer.update(from, to)
+      expect(finalityRepository.addMany).toHaveBeenNthCalledWith(1, [
+        {
+          projectId: ProjectId('project-1'),
+          timestamp: MIN_TIMESTAMP.add(1, 'days'),
+          ...project1Results,
+        },
+        {
+          projectId: ProjectId('project-2'),
+          timestamp: MIN_TIMESTAMP.add(1, 'days'),
+          ...project2Results,
+        },
+      ])
+    })
+  })
+
   describe(FinalityIndexer.prototype.getSyncStatus.name, () => {
     it('correctly returns configurations to sync', async () => {
       const finalityRepository = mockObject<FinalityRepository>({

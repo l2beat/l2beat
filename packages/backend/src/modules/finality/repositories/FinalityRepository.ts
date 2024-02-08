@@ -37,7 +37,10 @@ export class FinalityRepository extends BaseRepository {
     return rows.map((row) => ProjectId(row.project_id))
   }
 
-  async addMany(transactions: FinalityRecord[], trx?: Knex.Transaction) {
+  async addMany(
+    transactions: FinalityRecord[],
+    trx?: Knex.Transaction,
+  ): Promise<number> {
     const knex = await this.knex(trx)
     const rows: FinalityRow[] = transactions.map(toRow)
     await knex.batchInsert('finality', rows, 10_000)
