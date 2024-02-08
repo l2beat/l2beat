@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.41.0
+
+### Minor Changes
+
+- Added StateFromEventTuple handler
+
 ## 0.40.1
 
 ### Patch Changes

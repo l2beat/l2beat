@@ -3,7 +3,7 @@ import { utils } from 'ethers'
 export function toTopics(
   abi: utils.Interface,
   fragment: utils.EventFragment,
-  definitionTopics: (string | null)[] | undefined,
+  definitionTopics?: (string | null)[],
 ): (string | null)[] {
   const topic0 = abi.getEventTopic(fragment)
   const topics = definitionTopics

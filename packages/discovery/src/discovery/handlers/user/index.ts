@@ -74,6 +74,10 @@ import {
   StateFromEventDefinition,
   StateFromEventHandler,
 } from './StateFromEventHandler'
+import {
+  StateFromEventTupleDefinition,
+  StateFromEventTupleHandler,
+} from './StateFromEventTupleHandler'
 import { StorageHandler, StorageHandlerDefinition } from './StorageHandler'
 
 export type UserHandlerDefinition = z.infer<typeof UserHandlerDefinition>
@@ -93,6 +97,7 @@ export const UserHandlerDefinition = z.union([
   ConstructorArgsDefinition,
   EventCountHandlerDefinition,
   StateFromEventDefinition,
+  StateFromEventTupleDefinition,
   HardCodedDefinition,
   StarkWareGovernanceHandlerDefinition,
   LayerZeroMultisigHandlerDefinition,
@@ -142,6 +147,8 @@ export function getUserHandler(
       return new StarkWareGovernanceHandler(field, definition, abi, logger)
     case 'stateFromEvent':
       return new StateFromEventHandler(field, definition, abi, logger)
+    case 'stateFromEventTuple':
+      return new StateFromEventTupleHandler(field, definition, abi, logger)
     case 'layerZeroMultisig':
       return new LayerZeroMultisigHandler(field, abi, logger)
     case 'arbitrumActors':
