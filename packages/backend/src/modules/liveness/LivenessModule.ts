@@ -79,5 +79,6 @@ export function createLivenessModule(
   return {
     start,
     routers: [livenessRouter],
+    indexer: liveness,
   }
 }
