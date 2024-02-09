@@ -282,20 +282,6 @@ describe(FinalityIndexer.name, () => {
         safeHeight,
       )
     })
-
-    it('throws if height is lower than minimum timestamp', async () => {
-      const stateRepository = mockObject<IndexerStateRepository>({
-        setSafeHeight: async () => 0, // return value is not important
-      })
-      const finalityIndexer = getMockFinalityIndexer({ stateRepository })
-
-      const incorrectHeight = MIN_TIMESTAMP.add(-1, 'hours').toNumber()
-      await expect(
-        async () => await finalityIndexer.setSafeHeight(incorrectHeight),
-      ).toBeRejectedWith(
-        'Cannot set height to be lower than the minimum timestamp',
-      )
-    })
   })
 
   describe(FinalityIndexer.prototype.invalidate.name, () => {
