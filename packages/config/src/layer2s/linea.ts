@@ -160,6 +160,10 @@ export const linea: Layer2 = {
         },
       ],
     },
+    finality: {
+      type: 'Linea',
+      lag: 0,
+    },
   },
   chainConfig: {
     name: 'linea',
