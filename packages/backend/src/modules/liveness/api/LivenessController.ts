@@ -100,7 +100,8 @@ export class LivenessController {
 
     const projects: LivenessApiResponse['projects'] = {}
 
-    for (const project of this.projects.filter((p) => !p.isArchived)) {
+    const activeProjects = this.projects.filter((p) => !p.isArchived)
+    for (const project of activeProjects) {
       if (project.livenessConfig === undefined) {
         continue
       }
