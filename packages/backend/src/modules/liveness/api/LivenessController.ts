@@ -77,10 +77,12 @@ export class LivenessController {
 
   start() {
     this.taskQueue.addToFront()
+    this.logger.info('Caching: initial caching scheduled')
 
     const tenMinutes = 10 * 60 * 1000
     setInterval(() => {
       this.taskQueue.addIfEmpty()
+      this.logger.info('Caching: refetch scheduled')
     }, tenMinutes)
   }
 
