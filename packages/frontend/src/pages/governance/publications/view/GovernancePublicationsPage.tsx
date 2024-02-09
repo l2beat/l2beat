@@ -32,7 +32,7 @@ export function GovernancePublicationsPage(
         <h1 className="mt-20 text-3xl font-bold">
           All governance publications
         </h1>
-        <div className="mt-8 grid grid-cols-3 gap-8">
+        <div className="mt-8 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {props.publications.map((publication) => (
             <PublicationCard publication={publication} key={publication.id} />
           ))}
@@ -61,10 +61,16 @@ function PublicationCard({
 
 function Header(props: { publication: GovernancePublicationEntry }) {
   return (
-    <FullPageHeader>
-      <div className="grid grid-cols-2 gap-24">
+    <FullPageHeader pageContentClassName="justify-start">
+      <div className="grid gap-8 lg:grid-cols-2 lg:gap-24">
+        <img
+          src={`/images/thumbnails/${props.publication.id}.png`}
+          className="rounded-lg md:hidden"
+        />
         <div className="self-center">
-          <h1 className="text-4xl">{props.publication.title}</h1>
+          <h1 className="text-balance text-4xl leading-tight">
+            {props.publication.title}
+          </h1>
           <p className="mt-6 text-sm text-gray-50">
             {props.publication.description}
           </p>
@@ -80,7 +86,7 @@ function Header(props: { publication: GovernancePublicationEntry }) {
         </div>
         <img
           src={`/images/thumbnails/${props.publication.id}.png`}
-          className="rounded-lg"
+          className="hidden rounded-lg lg:block"
         />
       </div>
     </FullPageHeader>

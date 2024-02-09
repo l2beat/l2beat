@@ -20,38 +20,43 @@ export function LinkWithThumbnail({
     <PlainLink
       href={props.href}
       className={cn(
-        'group flex items-center gap-6 rounded-md bg-gray-100 transition-all hover:bg-zinc-300 dark:bg-zinc-900 dark:hover:bg-zinc-800',
-        orientation === 'vertical' && 'w-max flex-col',
+        'group grid gap-6 rounded-md bg-gray-100 transition-all hover:bg-zinc-300 dark:bg-zinc-900 dark:hover:bg-zinc-800',
+        orientation === 'horizontal' && 'grid-cols-7',
       )}
     >
       <img
         src={props.src}
         className={cn(
-          'aspect-video object-cover',
+          'aspect-video w-full object-cover',
           orientation === 'vertical' &&
-            'w-[384px] rounded-t-md transition-all will-change-transform group-hover:scale-[1.03] group-hover:rounded-md',
+            'rounded-t-md transition-all will-change-transform group-hover:scale-[1.03] group-hover:rounded-md',
           orientation === 'horizontal' &&
-            'w-[175px] rounded-md transition-all will-change-transform group-hover:scale-105',
+            'col-span-2 rounded-md transition-all will-change-transform group-hover:scale-105',
         )}
       />
       <div
         className={cn(
-          orientation === 'vertical' && 'mb-12 mt-6 max-w-[384px] px-8',
+          orientation === 'vertical' && 'mb-12 mt-6 px-8',
           orientation === 'horizontal' &&
-            'transition-all group-hover:translate-x-0.5',
+            'col-span-5 self-center transition-all group-hover:translate-x-0.5',
         )}
       >
         <p
           className={cn(
-            'font-bold leading-tight',
-            orientation === 'vertical' && 'text-2xl',
+            'text-balance font-bold ',
+            orientation === 'vertical' && 'text-2xl leading-[1.1]',
             orientation === 'horizontal' && 'text-lg',
           )}
         >
           {props.title}
         </p>
         {props.description && (
-          <p className="mt-1.5 hidden text-xs text-opacity-80 md:block">
+          <p
+            className={cn(
+              'mt-1.5 text-xs text-opacity-80',
+              orientation === 'horizontal' && 'hidden md:block',
+            )}
+          >
             {props.description}
           </p>
         )}
