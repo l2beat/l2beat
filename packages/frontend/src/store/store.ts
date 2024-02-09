@@ -15,6 +15,7 @@ export const useStore = create<State & Actions>()(
   persist(
     (set) => ({
       selectedNodeIds: [],
+      hiddenNodesIds: [],
       nodes: [],
       selection: undefined,
       transform: { offsetX: 0, offsetY: 0, scale: 1 },
@@ -43,12 +44,22 @@ export const useStore = create<State & Actions>()(
         set((state) => updateNodeLocations(state, ...args)),
       setProjectId: (projectId: string) =>
         set((state) => ({ ...state, projectId: projectId })),
+
+      setHiddenNodes: (updateFn) => {
+        set((state) => {
+          // stale-state
+          const hiddenNodesIds = updateFn([...state.hiddenNodesIds])
+
+          return { ...state, hiddenNodesIds }
+        })
+      },
     }),
     {
       name: 'store',
       partialize: (state) => {
         return {
           nodes: state.nodes,
+          hiddenNodesIds: state.hiddenNodesIds,
           projectId: state.projectId,
         }
       },

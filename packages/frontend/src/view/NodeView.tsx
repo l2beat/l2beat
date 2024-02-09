@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { useCallback, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 
 import { Node } from '../store/State'
 import { useStore } from '../store/store'
@@ -11,6 +11,7 @@ export interface NodeViewProps {
   selected: boolean
   discovered: boolean
   onDiscover: (nodeId: string) => void
+  onHideNode: (nodeId: string) => void
   loading: boolean
 }
 
@@ -18,6 +19,29 @@ export function NodeView(props: NodeViewProps) {
   const ref = useRef<HTMLDivElement>(null)
 
   const updateNodeLocations = useStore((state) => state.updateNodeLocations)
+  // Using ref instead of inline event listener
+  // to prevent side-menu from flashing on hidden node
+  const hideRef = useRef<HTMLButtonElement>(null)
+  const onHide = useCallback(
+    (e: MouseEvent) => {
+      e.preventDefault()
+      e.stopPropagation()
+      props.onHideNode(props.node.simpleNode.id)
+    },
+    [props.onHideNode, props.node.simpleNode.id],
+  )
+
+  useEffect(() => {
+    if (hideRef.current) {
+      // The `true` argument here signifies that this listener is for the capture phase
+      // actively prevent store-attached events from firing
+      hideRef.current.addEventListener('mousedown', onHide, true)
+    }
+
+    return () => {
+      hideRef.current?.removeEventListener('mousedown', onHide, true)
+    }
+  }, [])
 
   const onDiscover = useCallback(() => {
     props.onDiscover(props.node.simpleNode.id)
@@ -57,11 +81,16 @@ export function NodeView(props: NodeViewProps) {
         )}
       >
         <div className="truncate">{props.node.simpleNode.name}</div>
-        {!props.discovered && (
-          <button onClick={onDiscover} disabled={props.loading}>
-            {props.loading ? '🔄' : '🔍'}
+        <div className="flex items-center justify-center gap-2">
+          {!props.discovered && (
+            <button onClick={onDiscover} disabled={props.loading}>
+              {props.loading ? '🔄' : '🔍'}
+            </button>
+          )}
+          <button ref={hideRef} disabled={props.loading}>
+            👁️
           </button>
-        )}
+        </div>
       </div>
       {props.node.fields.map(({ name, connection }, i) => (
         <div className="relative" key={i}>

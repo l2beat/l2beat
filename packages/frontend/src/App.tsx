@@ -22,8 +22,10 @@ import { Viewport } from './view/Viewport'
 export function App() {
   // load the initial nodes from the store that gets rehydrated from local storage at startup
   const initialNodes = useStore((state) => state.nodes)
+  const hiddenNodesIds = useStore((state) => state.hiddenNodesIds)
   const projectId = useStore((state) => state.projectId)
   const updateNodeLocations = useStore((state) => state.updateNodeLocations)
+  const setHiddenNodes = useStore((state) => state.setHiddenNodes)
   const setProjectId = useStore((state) => state.setProjectId)
   const [nodes, setNodes] = useState<SimpleNode[]>(
     initialNodes.map(nodeToSimpleNode),
@@ -48,6 +50,7 @@ export function App() {
 
   function clear() {
     setNodes([])
+    setHiddenNodes(() => [])
   }
 
   function save() {
@@ -72,6 +75,10 @@ export function App() {
     const result = await discover(address)
     markLoading(address, false)
     setNodes((nodes) => merge(nodes, result))
+  }
+
+  function revealAllNodes() {
+    setHiddenNodes(() => [])
   }
 
   async function loadFromFile(file: File) {
@@ -164,8 +171,14 @@ export function App() {
                 </button>
               </div>
 
-              <div className="flex items-center">
+              <div className="flex items-center gap-1">
                 <AutoLayoutButton />
+                <button
+                  onClick={revealAllNodes}
+                  className="rounded bg-blue-400 px-4 py-2 font-bold text-white hover:bg-blue-700"
+                >
+                  Reveal all ({hiddenNodesIds.length})
+                </button>
                 <button
                   className="px-1 text-2xl hover:bg-gray-300"
                   type="button"

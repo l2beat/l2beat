@@ -21,10 +21,22 @@ export function Viewport(props: ViewportProps) {
     updateNodes(props.nodes)
   }, [updateNodes, props.nodes])
 
+  const setHiddenNodes = useStore((state) => state.setHiddenNodes)
+
   const nodes = useStore((state) => state.nodes)
   const selectedNodeIds = useStore((state) => state.selectedNodeIds)
+  const hiddenNodesIds = useStore((state) => state.hiddenNodesIds)
+
   const transform = useStore((state) => state.transform)
   const mouseSelection = useStore((state) => state.mouseSelection)
+
+  const visibleNodes = nodes.filter(
+    (node) => !hiddenNodesIds.includes(node.simpleNode.id),
+  )
+
+  function hideNode(nodeId: string) {
+    setHiddenNodes((nodes) => [...nodes, nodeId])
+  }
 
   return (
     <div
@@ -32,30 +44,37 @@ export function Viewport(props: ViewportProps) {
       className="relative h-full w-full overflow-hidden rounded-lg bg-white"
     >
       <ScalableView ref={viewRef} transform={transform}>
-        {nodes.map((node) =>
-          node.fields.map(
-            (field, i) =>
-              field.connection && (
-                <Connection
-                  key={`${node.simpleNode.id}-${i}-${field.connection.nodeId}`}
-                  from={field.connection.from}
-                  to={field.connection.to}
-                  // Highlight selected node both ways
-                  isHighlighted={
-                    selectedNodeIds.includes(node.simpleNode.id) ||
-                    selectedNodeIds.includes(field.connection.nodeId)
-                  }
-                />
-              ),
-          ),
+        {visibleNodes.map((node) =>
+          node.fields.map((field, i) => {
+            const shouldHide =
+              !field.connection ||
+              hiddenNodesIds.find((id) => id === field.connection?.nodeId)
+
+            if (shouldHide) {
+              return null
+            }
+
+            return (
+              <Connection
+                key={`${node.simpleNode.id}-${i}-${field.connection.nodeId}`}
+                from={field.connection.from}
+                to={field.connection.to}
+                isHighlighted={
+                  selectedNodeIds.includes(node.simpleNode.id) ||
+                  selectedNodeIds.includes(field.connection.nodeId)
+                }
+              />
+            )
+          }),
         )}
-        {nodes.map((node) => (
+        {visibleNodes.map((node) => (
           <NodeView
             key={node.simpleNode.id}
             node={node}
             selected={selectedNodeIds.includes(node.simpleNode.id)}
             discovered={node.simpleNode.discovered}
             onDiscover={props.onDiscover}
+            onHideNode={hideNode}
             loading={!!props.loading[node.simpleNode.id]}
           />
         ))}

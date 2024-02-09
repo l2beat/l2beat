@@ -12,4 +12,6 @@ export interface Actions {
   updateNodes: (nodes: SimpleNode[]) => void
   updateNodeLocations: (locations: NodeLocations) => void
   setProjectId: (projectId: string) => void
+
+  setHiddenNodes: (update: (currentlyHiddenIds: string[]) => string[]) => void
 }
