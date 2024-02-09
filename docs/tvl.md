@@ -4,13 +4,19 @@
 
 L2BEAT is tracking TVL of L2 projects, you can take a look at [Value Locked Page](https://l2beat.com/scaling/tvl). You can also see more detailed breakdown when you click on one of the projects, e.g. [Arbitrum](https://l2beat.com/scaling/projects/arbitrum/tvl-breakdown)
 
-As you can see there are three types of value:
+As you can see there are three types of value - the `type`:
 
-- native - minted natively on this chain
-- external - bridged from other chain via non-canonical bridge
-- canonical - locked in the L1 escrow contracts on Ethereum
+- `CBV` - Canonically Bridged Value - locked in the L1 escrow contracts on Ethereum
+- `EBV` - Externally Bridged Value - bridged from other chain via non-canonical bridge
+- `NMV` - Natively Minted Value - minted natively on this chain
 
-Everything you see here is achieved via proper configuration files in our repository.
+Each token can also have one of three methods of calculating its contribution to TVL - the `formula`:
+
+- `locked` - tracks the balance of the token in an escrow contract
+- `totalSupply` - tracks the total supply of the token
+- `circulatingSupply` - tracks the circulating supply of the token
+
+All this is achieved via proper configuration files in our repository.
 
 ## Token guide
 
@@ -22,26 +28,32 @@ Everything you see here is achieved via proper configuration files in our reposi
    - The required fields are `symbol` & `address`.
    - Optional fields are: `type`, `formula`, `category`, `bridgedUsing` & `coingeckoId`.
    - By default, the `type` is `CBV`, the `formula` is `locked`, and the `category` is `other`.
-   
-    Externally bridged tokens (EBV) and natively minted tokens (NMV) should be added to the token list of a specific L2.
 
-   - If the chain is missing in the file, you have to add it. Make sure to run `yarn coingecko:platforms` to check the name.
+   Externally bridged tokens (EBV) and natively minted tokens (NMV) should be added to the token list of a specific L2.
+
+   - If the chain is missing in the file, you have to add it, see the next section for details
    - The required fields are `symbol`, `address`, `type`, `formula`. The optional fields are `category`, `bridgedUsing` & `coingeckoId`.
    - If the token is externally bridged, you have to add a `bridgedUsing` object, containing at least the `bridge` = the bridge name. If we have it on our website, you can also add a `slug`.
    - If the chain is not available when you run `yarn coingecko:platforms`, you need to also specify the `coingeckoId`.
+
 3. Save the file
-4. If you’re adding externally bridged or natively minted tokens, go to the .ts file of the chain those are added to in `config\src\layer2s`
-    - Check if there is `chainConfig` defined within `export const projectName: Layer2 = {}`
-    - If not, it should be added with the following information:
-        - `name` of the chain - should be the same as defined in the `tokens.jsonc`. Check `yarn coingecko:platforms`.
-        - `chainId`
-        - `explorerUrl`
-        - `explorerApi{}`, containing `url` and `type`
-        - `multicallContracts[]` - could be empty if not deployed
-        - `minTimestampForTvl` - the timestamp of the first/second block on the chain
-5. Save the file
-6. Set environmental variables `<CHAIN>_RPC_URL` for the chains of the newly added tokens
-7. Run `yarn tokens` within `\config`
-    
-    **Never edit generated.json unless you know what you are doing.**
-8. Commit changes & open the PR
+4. Set environmental variables `<CHAIN>_RPC_URL` for the chains of the newly added tokens
+5. Run `yarn tokens` within `packages/config`
+
+   **Never edit generated.json unless you know what you are doing.**
+
+6. Commit changes & open the PR
+
+## Chain guide
+
+Go to the .ts file of the chain those are added to in `config\src\layer2s`,
+
+- Check if there is `chainConfig` defined within `export const projectName: Layer2 = {}`
+- If not, it should be added with the following information:
+  - `name` of the chain - should be the same as defined in the `tokens.jsonc`
+  - `chainId`
+  - `explorerUrl`
+  - `explorerApi{}`, containing `url` and `type`
+  - `multicallContracts[]` - could be empty if not deployed
+  - `minTimestampForTvl` - the timestamp of the first/second block on the chain
+  - `coingeckoPlatform` - the name of the platform on Coingecko. Check `yarn coingecko:platforms`.
