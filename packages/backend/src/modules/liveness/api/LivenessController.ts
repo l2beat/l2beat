@@ -72,35 +72,31 @@ export class LivenessController {
 
     const projects: LivenessApiResponse['projects'] = {}
 
-    await Promise.all(
-      this.projects
-        .filter((p) => !p.isArchived)
-        .map(async (project) => {
-          if (project.livenessConfig === undefined) {
-            return
+    for (const project of this.projects.filter((p) => !p.isArchived)) {
+      if (project.livenessConfig === undefined) {
+        continue
+      }
+      const records =
+        await this.livenessRepository.getWithTypeDistinctTimestamp(
+          project.projectId,
+        )
+
+      const groupedByType = groupByType(records)
+
+      const intervals = calcIntervalWithAvgsPerProject(groupedByType)
+
+      const withAnomalies = calculateAnomaliesPerProject(intervals)
+
+      if (withAnomalies && project.livenessConfig.duplicateData) {
+        for (const duplicateData of project.livenessConfig.duplicateData) {
+          withAnomalies[duplicateData.to] = {
+            ...withAnomalies[duplicateData.from],
           }
-          const records =
-            await this.livenessRepository.getWithTypeDistinctTimestamp(
-              project.projectId,
-            )
+        }
+      }
 
-          const groupedByType = groupByType(records)
-
-          const intervals = calcIntervalWithAvgsPerProject(groupedByType)
-
-          const withAnomalies = calculateAnomaliesPerProject(intervals)
-
-          if (withAnomalies && project.livenessConfig.duplicateData) {
-            for (const duplicateData of project.livenessConfig.duplicateData) {
-              withAnomalies[duplicateData.to] = {
-                ...withAnomalies[duplicateData.from],
-              }
-            }
-          }
-
-          projects[project.projectId.toString()] = withAnomalies
-        }),
-    )
+      projects[project.projectId.toString()] = withAnomalies
+    }
 
     return { type: 'success', data: { projects } }
   }
