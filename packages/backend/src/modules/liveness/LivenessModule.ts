@@ -65,12 +65,17 @@ export function createLivenessModule(
     indexerStateRepository,
     config.projects,
     clock,
+    logger,
   )
-  const livenessRouter = createLivenessRouter(livenessController)
+  const livenessRouter = createLivenessRouter(livenessController, config)
 
   const start = async () => {
     logger = logger.for('LivenessModule')
     logger.info('Starting...')
+
+    if (config.api.cache.liveness) {
+      livenessController.start()
+    }
 
     await hourlyIndexer.start()
     await liveness.start()
