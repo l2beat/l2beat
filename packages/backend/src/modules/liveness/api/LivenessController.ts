@@ -1,4 +1,6 @@
+import { Logger } from '@l2beat/backend-tools'
 import {
+  cacheAsyncFunction,
   LivenessApiResponse,
   LivenessType,
   ProjectId,
@@ -8,6 +10,7 @@ import {
 import { Project } from '../../../model/Project'
 import { IndexerStateRepository } from '../../../peripherals/database/repositories/IndexerStateRepository'
 import { Clock } from '../../../tools/Clock'
+import { TaskQueue } from '../../../tools/queue/TaskQueue'
 import { LivenessRepository } from '../repositories/LivenessRepository'
 import { calculateAnomaliesPerProject } from './calculateAnomalies'
 import {
@@ -51,12 +54,35 @@ type LivenessTransactionsResult =
     }
 
 export class LivenessController {
+  private readonly taskQueue: TaskQueue<void>
+  getCachedLivenessApiResponse: () => Promise<LivenessResult>
+
   constructor(
     private readonly livenessRepository: LivenessRepository,
     private readonly indexerStateRepository: IndexerStateRepository,
     private readonly projects: Project[],
     private readonly clock: Clock,
-  ) {}
+    private readonly logger = Logger.SILENT,
+  ) {
+    this.logger = this.logger.for(this)
+
+    const cached = cacheAsyncFunction(() => this.getLiveness())
+    this.getCachedLivenessApiResponse = cached.call
+    this.taskQueue = new TaskQueue(
+      cached.refetch,
+      this.logger.for('taskQueue'),
+      { metricsId: LivenessController.name },
+    )
+  }
+
+  start() {
+    this.taskQueue.addToFront()
+
+    const tenMinutes = 10 * 60 * 1000
+    setInterval(() => {
+      this.taskQueue.addIfEmpty()
+    }, tenMinutes)
+  }
 
   async getLiveness(): Promise<LivenessResult> {
     const requiredTimestamp = this.clock.getLastHour().add(-1, 'hours')

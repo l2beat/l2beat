@@ -76,6 +76,7 @@ export function makeConfig(
       port: env.integer('PORT', isLocal ? 3000 : undefined),
       cache: {
         tvl: flags.isEnabled('cache', 'tvl'),
+        liveness: flags.isEnabled('cache', 'liveness'),
       },
     },
     health: {
