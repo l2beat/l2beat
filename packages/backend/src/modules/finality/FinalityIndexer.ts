@@ -38,12 +38,22 @@ export class FinalityIndexer extends ChildIndexer {
   }
 
   override async update(from: number, to: number): Promise<number> {
+    if (to < this.minTimestamp.toNumber()) {
+      this.logger.debug(
+        'Update skipped: target earlier than minimumTimestamp',
+        { from, to },
+      )
+      return to
+    }
     const targetTimestamp = new UnixTime(to).toStartOf('day')
 
     const configurationsToSync = await this.getSyncStatus(targetTimestamp)
 
     if (configurationsToSync.length === 0) {
-      this.logger.debug('Update skipped', { from, to })
+      this.logger.debug('Update skipped: no configurations to sync', {
+        from,
+        to,
+      })
       return to
     }
 
@@ -142,11 +152,6 @@ export class FinalityIndexer extends ChildIndexer {
   }
 
   override async setSafeHeight(safeHeight: number): Promise<void> {
-    assert(
-      safeHeight >= this.minTimestamp.toNumber(),
-      'Cannot set height to be lower than the minimum timestamp',
-    )
-
     await this.stateRepository.setSafeHeight(this.indexerId, safeHeight)
   }
 
