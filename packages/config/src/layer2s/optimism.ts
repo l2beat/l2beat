@@ -88,7 +88,7 @@ export const optimism: Layer2 = opStack({
   upgradesAndGovernance:
     'All contracts are upgradable by the `ProxyAdmin` which is controlled by a 2/2 multisig composed by the Optimism Foundation and a Security Council. Currently, the Guardian, the Proposer and the Challenger roles are assigned to single actors and are immutable, meaning that an implementation upgrade is required to update them. \n\nThe `FoundationMultisig_2` controls both the Guardian and Challenger role. The single Sequencer actor can be modified by the `FoundationMultisig_2` via the `SystemConfig` contract. \n\nAt the moment, for regular upgrades, the DAO signals its intent by voting on upgrade proposals, but has no direct control over the upgrade process.',
   isNodeAvailable: true,
-  hasSecurityCouncil: false,
+  hasProperSecurityCouncil: false,
   milestones: [
     {
       name: 'Fault Proof System is live on OP Goerli',

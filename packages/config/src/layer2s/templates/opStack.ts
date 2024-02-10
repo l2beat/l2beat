@@ -64,7 +64,7 @@ export interface OpStackConfig {
   isNodeAvailable: boolean | 'UnderReview'
   chainConfig?: ChainConfig
   upgradesAndGovernance?: string
-  hasSecurityCouncil?: boolean
+  hasProperSecurityCouncil?: boolean
 }
 
 export function opStack(templateVars: OpStackConfig): Layer2 {
@@ -227,7 +227,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
                 fraudProofSystemAtLeast5Outsiders: null,
                 usersHave7DaysToExit: false,
                 usersCanExitWithoutCooperation: false,
-                securityCouncilProperlySetUp: templateVars.hasSecurityCouncil ?? null,
+                securityCouncilProperlySetUp: templateVars.hasProperSecurityCouncil ?? null,
               },
               stage2: {
                 proofSystemOverriddenOnlyInCaseOfABug: null,
