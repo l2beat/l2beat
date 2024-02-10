@@ -17,9 +17,9 @@ export async function up(knex: Knex) {
   await knex.schema.createTable('finality', function (table) {
     table.string('project_id').notNullable()
     table.dateTime('timestamp', { useTz: false }).notNullable()
-    table.integer('minimum').notNullable()
-    table.integer('maximum').notNullable()
-    table.integer('average').notNullable()
+    table.integer('minimum_time_to_inclusion').notNullable()
+    table.integer('maximum_time_to_inclusion').notNullable()
+    table.integer('average_time_to_inclusion').notNullable()
 
     table.primary(['project_id', 'timestamp'])
   })

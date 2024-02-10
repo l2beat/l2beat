@@ -13,23 +13,23 @@ describeDatabase(FinalityRepository.name, (database) => {
     {
       projectId: ProjectId('project-a'),
       timestamp: UnixTime.fromDate(new Date('2021-01-01T00:00:00Z')),
-      minimum: 1,
-      maximum: 3,
-      average: 2,
+      minimumTimeToInclusion: 1,
+      maximumTimeToInclusion: 3,
+      averageTimeToInclusion: 2,
     },
     {
       projectId: ProjectId('project-a'),
       timestamp: UnixTime.fromDate(new Date('2021-01-01T01:00:00Z')),
-      minimum: 2,
-      maximum: 4,
-      average: 3,
+      minimumTimeToInclusion: 2,
+      maximumTimeToInclusion: 4,
+      averageTimeToInclusion: 3,
     },
     {
       projectId: ProjectId('project-a'),
       timestamp: UnixTime.fromDate(new Date('2021-01-01T02:00:00Z')),
-      minimum: 4,
-      maximum: 8,
-      average: 6,
+      minimumTimeToInclusion: 4,
+      maximumTimeToInclusion: 8,
+      averageTimeToInclusion: 6,
     },
   ]
 
@@ -45,16 +45,16 @@ describeDatabase(FinalityRepository.name, (database) => {
         {
           projectId: ProjectId('project-c'),
           timestamp: UnixTime.fromDate(new Date('2021-01-01T03:00:00Z')),
-          minimum: 1,
-          maximum: 3,
-          average: 2,
+          minimumTimeToInclusion: 1,
+          maximumTimeToInclusion: 3,
+          averageTimeToInclusion: 2,
         },
         {
           projectId: ProjectId('project-c'),
           timestamp: UnixTime.fromDate(new Date('2021-01-01T04:00:00Z')),
-          minimum: 2,
-          maximum: 4,
-          average: 3,
+          minimumTimeToInclusion: 2,
+          maximumTimeToInclusion: 4,
+          averageTimeToInclusion: 3,
         },
       ]
       await repository.addMany(newRows)
@@ -73,9 +73,9 @@ describeDatabase(FinalityRepository.name, (database) => {
         records.push({
           timestamp: START.add(-i, 'hours'),
           projectId: ProjectId('project-a'),
-          average: i,
-          maximum: i + 1,
-          minimum: i - 1,
+          averageTimeToInclusion: i,
+          maximumTimeToInclusion: i + 1,
+          minimumTimeToInclusion: i - 1,
         })
       }
       await expect(repository.addMany(records)).not.toBeRejected()
@@ -99,9 +99,9 @@ describeDatabase(FinalityRepository.name, (database) => {
           {
             projectId: ProjectId('project-c'),
             timestamp: target,
-            minimum: 2,
-            maximum: 4,
-            average: 3,
+            minimumTimeToInclusion: 2,
+            maximumTimeToInclusion: 4,
+            averageTimeToInclusion: 3,
           },
         ]
         await repository.addMany(newRow)

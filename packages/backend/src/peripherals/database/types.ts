@@ -166,9 +166,9 @@ declare module 'knex/types/tables' {
   interface FinalityRow {
     project_id: string
     timestamp: Date
-    minimum: number
-    maximum: number
-    average: number
+    minimum_time_to_inclusion: number
+    maximum_time_to_inclusion: number
+    average_time_to_inclusion: number
   }
 
   interface DiscoveryCacheRow {

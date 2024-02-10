@@ -12,9 +12,9 @@ import { Database } from '../../../peripherals/database/Database'
 export interface FinalityRecord {
   projectId: ProjectId
   timestamp: UnixTime
-  minimum: number
-  maximum: number
-  average: number
+  minimumTimeToInclusion: number
+  maximumTimeToInclusion: number
+  averageTimeToInclusion: number
 }
 
 export class FinalityRepository extends BaseRepository {
@@ -57,9 +57,9 @@ function toRecord(row: FinalityRow): FinalityRecord {
   return {
     projectId: ProjectId(row.project_id),
     timestamp: UnixTime.fromDate(row.timestamp),
-    minimum: row.minimum,
-    maximum: row.maximum,
-    average: row.average,
+    minimumTimeToInclusion: row.minimum_time_to_inclusion,
+    maximumTimeToInclusion: row.maximum_time_to_inclusion,
+    averageTimeToInclusion: row.average_time_to_inclusion,
   }
 }
 
@@ -67,8 +67,8 @@ function toRow(record: FinalityRecord): FinalityRow {
   return {
     project_id: record.projectId.toString(),
     timestamp: record.timestamp.toDate(),
-    minimum: record.minimum,
-    maximum: record.maximum,
-    average: record.average,
+    minimum_time_to_inclusion: record.minimumTimeToInclusion,
+    maximum_time_to_inclusion: record.maximumTimeToInclusion,
+    average_time_to_inclusion: record.averageTimeToInclusion,
   }
 }
