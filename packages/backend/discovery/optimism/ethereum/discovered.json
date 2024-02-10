@@ -1,8 +1,8 @@
 {
   "name": "optimism",
   "chain": "ethereum",
-  "blockNumber": 19197911,
-  "configHash": "0x04446c2c4748105e80969efb4a80b6f766505c8d08046f7c6194d584ed0e2dd9",
+  "blockNumber": 19198057,
+  "configHash": "0x7ec7d19a809f24f00d8d3ba1b63c2fe2b70dd431e154024e2d5099be665cbf1d",
   "version": 3,
   "contracts": [
     {
@@ -71,7 +71,7 @@
       "sinceTimestamp": 1624400997,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292712325",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292712328",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -383,7 +383,7 @@
         "GUARDIAN": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
         "L2_ORACLE": "0xdfe97868233d1aa22e815a266982f2cf17685a27",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 438468, 19197898],
+        "params": [1000000000, 1301449, 19197980],
         "paused": false,
         "SYSTEM_CONFIG": "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
         "version": "1.6.0"

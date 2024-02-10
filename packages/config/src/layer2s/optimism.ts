@@ -86,8 +86,9 @@ export const optimism: Layer2 = opStack({
       'Since OP Mainnet has migrated from the OVM to Bedrock, a node must be synced using a data directory that can be found [here](https://community.optimism.io/docs/useful-tools/networks/#links). To reproduce the migration itself, see this [guide](https://blog.oplabs.co/reproduce-bedrock-migration/).',
   },
   upgradesAndGovernance:
-    'All contracts are upgradable by the `ProxyAdmin` which is controlled by the `OptimismMultisig`. Currently, the Guardian, the Proposer and the Challenger roles are assigned to single actors and are immutable, meaning that an implementation upgrade is required to update them. \n\nThe `OptimismMultisig` controls both the Guardian and Challenger role. The single Sequencer actor can be modified by the `OptimismMultisig` via the `SystemConfig` contract. \n\nAt the moment, for regular upgrades, the DAO signals its intent by voting on upgrade proposals, but has no direct control over the upgrade process.',
+    'All contracts are upgradable by the `ProxyAdmin` which is controlled by a 2/2 multisig composed by the Optimism Foundation and a Security Council. Currently, the Guardian, the Proposer and the Challenger roles are assigned to single actors and are immutable, meaning that an implementation upgrade is required to update them. \n\nThe `FoundationMultisig_2` controls both the Guardian and Challenger role. The single Sequencer actor can be modified by the `FoundationMultisig_2` via the `SystemConfig` contract. \n\nAt the moment, for regular upgrades, the DAO signals its intent by voting on upgrade proposals, but has no direct control over the upgrade process.',
   isNodeAvailable: true,
+  hasSecurityCouncil: false,
   milestones: [
     {
       name: 'Fault Proof System is live on OP Goerli',

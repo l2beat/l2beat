@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x8fb94bf8b2fa0d63e833a3660122eb318f59699b
+Generated with discovered.json: 0x602446a6f9c7e8bfb6e3c1818eef61a904920162
 
-# Diff at Sat, 10 Feb 2024 13:10:09 GMT:
+# Diff at Sat, 10 Feb 2024 13:39:45 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: master@08f8b19c0307b7e22a4676058d6705e1237b8966 block: 18975204
-- current block number: 19197911
+- current block number: 19198057
 
 ## Description
 
@@ -22,43 +22,61 @@ Added opStackSequencerInbox handler
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    contract ProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
     }
 ```
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    contract FoundationMultisig_1 (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
     }
 ```
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
     }
 ```
 
 ## Source code changes
 
 ```diff
-.../implementation/GnosisSafe.sol                  |   0
- .../implementation/base/Executor.sol               |   0
- .../implementation/base/FallbackManager.sol        |   0
- .../implementation/base/GuardManager.sol           |   0
- .../implementation/base/ModuleManager.sol          |   0
- .../implementation/base/OwnerManager.sol           |   0
- .../implementation/common/Enum.sol                 |   0
- .../implementation/common/EtherPaymentFallback.sol |   0
- .../implementation/common/SecuredTokenTransfer.sol |   0
- .../implementation/common/SelfAuthorized.sol       |   0
- .../implementation/common/SignatureDecoder.sol     |   0
- .../implementation/common/Singleton.sol            |   0
- .../implementation/common/StorageAccessible.sol    |   0
- .../implementation/external/GnosisSafeMath.sol     |   0
- .../interfaces/ISignatureValidator.sol             |   0
- .../implementation/meta.txt                        |   0
- .../proxy/GnosisSafeProxy.sol                      |   0
- .../proxy/meta.txt                                 |   0
+.../implementation/GnosisSafe.sol                  | 422 +++++++++++++++++++++
+ .../implementation/base/Executor.sol               |  27 ++
+ .../implementation/base/FallbackManager.sol        |  53 +++
+ .../implementation/base/GuardManager.sol           |  50 +++
+ .../implementation/base/ModuleManager.sol          | 133 +++++++
+ .../implementation/base/OwnerManager.sol           | 149 ++++++++
+ .../implementation/common/Enum.sol                 |   8 +
+ .../implementation/common/EtherPaymentFallback.sol |  13 +
+ .../implementation/common/SecuredTokenTransfer.sol |  35 ++
+ .../implementation/common/SelfAuthorized.sol       |  16 +
+ .../implementation/common/SignatureDecoder.sol     |  36 ++
+ .../implementation/common/Singleton.sol            |  11 +
+ .../implementation/common/StorageAccessible.sol    |  47 +++
+ .../implementation/external/GnosisSafeMath.sol     |  54 +++
+ .../interfaces/ISignatureValidator.sol             |  20 +
+ .../FoundationMultisig_1/implementation/meta.txt   |   2 +
+ .../FoundationMultisig_1/proxy/GnosisSafeProxy.sol | 155 ++++++++
+ .../.code/FoundationMultisig_1/proxy/meta.txt      |   2 +
+ .../ProxyAdminOwner/implementation/GnosisSafe.sol  | 422 +++++++++++++++++++++
+ .../implementation/base/Executor.sol               |  27 ++
+ .../implementation/base/FallbackManager.sol        |  53 +++
+ .../implementation/base/GuardManager.sol           |  50 +++
+ .../implementation/base/ModuleManager.sol          | 133 +++++++
+ .../implementation/base/OwnerManager.sol           | 149 ++++++++
+ .../ProxyAdminOwner/implementation/common/Enum.sol |   8 +
+ .../implementation/common/EtherPaymentFallback.sol |  13 +
+ .../implementation/common/SecuredTokenTransfer.sol |  35 ++
+ .../implementation/common/SelfAuthorized.sol       |  16 +
+ .../implementation/common/SignatureDecoder.sol     |  36 ++
+ .../implementation/common/Singleton.sol            |  11 +
+ .../implementation/common/StorageAccessible.sol    |  47 +++
+ .../implementation/external/GnosisSafeMath.sol     |  54 +++
+ .../interfaces/ISignatureValidator.sol             |  20 +
+ .../.code/ProxyAdminOwner/implementation/meta.txt  |   2 +
+ .../ProxyAdminOwner/proxy/GnosisSafeProxy.sol      | 155 ++++++++
+ .../ethereum/.code/ProxyAdminOwner/proxy/meta.txt  |   2 +
  .../implementation/GnosisSafe.sol                  | 422 +++++++++++++++++++++
  .../implementation/base/Executor.sol               |  27 ++
  .../implementation/base/FallbackManager.sol        |  53 +++
@@ -76,44 +94,8 @@ Added opStackSequencerInbox handler
  .../interfaces/ISignatureValidator.sol             |  20 +
  .../implementation/meta.txt                        |   2 +
  .../proxy/GnosisSafeProxy.sol                      | 155 ++++++++
- .../proxy/meta.txt                                 |   2 +
- .../implementation/GnosisSafe.sol                  | 422 +++++++++++++++++++++
- .../implementation/base/Executor.sol               |  27 ++
- .../implementation/base/FallbackManager.sol        |  53 +++
- .../implementation/base/GuardManager.sol           |  50 +++
- .../implementation/base/ModuleManager.sol          | 133 +++++++
- .../implementation/base/OwnerManager.sol           | 149 ++++++++
- .../implementation/common/Enum.sol                 |   8 +
- .../implementation/common/EtherPaymentFallback.sol |  13 +
- .../implementation/common/SecuredTokenTransfer.sol |  35 ++
- .../implementation/common/SelfAuthorized.sol       |  16 +
- .../implementation/common/SignatureDecoder.sol     |  36 ++
- .../implementation/common/Singleton.sol            |  11 +
- .../implementation/common/StorageAccessible.sol    |  47 +++
- .../implementation/external/GnosisSafeMath.sol     |  54 +++
- .../interfaces/ISignatureValidator.sol             |  20 +
- .../implementation/meta.txt                        |   2 +
- .../proxy/GnosisSafeProxy.sol                      | 155 ++++++++
- .../proxy/meta.txt                                 |   2 +
- .../implementation/GnosisSafe.sol                  | 422 +++++++++++++++++++++
- .../implementation/base/Executor.sol               |  27 ++
- .../implementation/base/FallbackManager.sol        |  53 +++
- .../implementation/base/GuardManager.sol           |  50 +++
- .../implementation/base/ModuleManager.sol          | 133 +++++++
- .../implementation/base/OwnerManager.sol           | 149 ++++++++
- .../implementation/common/Enum.sol                 |   8 +
- .../implementation/common/EtherPaymentFallback.sol |  13 +
- .../implementation/common/SecuredTokenTransfer.sol |  35 ++
- .../implementation/common/SelfAuthorized.sol       |  16 +
- .../implementation/common/SignatureDecoder.sol     |  36 ++
- .../implementation/common/Singleton.sol            |  11 +
- .../implementation/common/StorageAccessible.sol    |  47 +++
- .../implementation/external/GnosisSafeMath.sol     |  54 +++
- .../interfaces/ISignatureValidator.sol             |  20 +
- .../implementation/meta.txt                        |   2 +
- .../proxy/GnosisSafeProxy.sol                      | 155 ++++++++
- .../proxy/meta.txt                                 |   2 +
- 72 files changed, 3699 insertions(+)
+ .../.code/SecurityCouncilMultisig/proxy/meta.txt   |   2 +
+ 54 files changed, 3699 insertions(+)
 ```
 
 ## Config/verification related changes
@@ -128,6 +110,14 @@ discovery. Values are for block 18975204 (main branch discovery), not current.
 +        {"isSomeTxsLengthEqualToCelestiaDAExample":false}
       values.sequencerInbox:
 +        "0xFF00000000000000000000000000000000000010"
+    }
+```
+
+```diff
+    contract OptimismMultisig (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+      name:
+-        "OptimismMultisig"
++        "FoundationMultisig_2"
     }
 ```
 
