@@ -9,13 +9,12 @@ import {
   ChainId,
   CoingeckoId,
   EthereumAddress,
-  Token,
 } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
 import { chains } from '../../src'
 import { ChainConfig } from '../../src/common'
-import { Output, SourceEntry } from '../../src/tokens/types'
+import { GeneratedToken, Output, SourceEntry } from '../../src/tokens/types'
 import {
   readGeneratedFile,
   readTokensFile,
@@ -29,6 +28,8 @@ main().catch((e: unknown) => {
   console.error(e)
 })
 
+// TODO:
+// - load all generated into result and save result every time
 async function main() {
   const logger = new ScriptLogger({})
   logger.notify('Running tokens script...\n')
@@ -36,7 +37,20 @@ async function main() {
   let coinList: CoinListPlatformEntry[] | undefined = undefined
   const source = readTokensFile(logger)
   const output = readGeneratedFile(logger)
-  const result: Token[] = []
+  const result: GeneratedToken[] = output.tokens
+
+  function saveToken(token: GeneratedToken) {
+    const index = result.findIndex((t) => t.id === token.id)
+
+    if (index === -1) {
+      result.push(token)
+    } else {
+      result[index] = token
+    }
+
+    const sorted = sortByChainAndName(result)
+    saveResults(sorted)
+  }
 
   for (const [chain, tokens] of Object.entries(source)) {
     const chainLogger = logger.prefix(chain)
@@ -85,7 +99,7 @@ async function main() {
           )
         }
 
-        result.push({ ...existingToken, ...overrides, bridgedUsing })
+        saveToken({ ...existingToken, ...overrides, bridgedUsing })
         continue
       }
 
@@ -122,14 +136,15 @@ async function main() {
 
       const assetId = getAssetId(chainConfig, token, info.name)
 
-      result.push({
+      saveToken({
         id: assetId,
         name: info.name,
         coingeckoId: info.coingeckoId,
         address: token.address,
         symbol: token.symbol,
         decimals: info.decimals,
-        sinceTimestamp: info.sinceTimestamp,
+        deploymentTimestamp: info.deploymentTimestamp,
+        coingeckoListingTimestamp: info.coingeckoListingTimestamp,
         category,
         iconUrl: info.iconUrl,
         chainId,
@@ -141,9 +156,6 @@ async function main() {
       tokenLogger.processed()
     }
   }
-
-  const sorted = sortByChainAndName(result)
-  saveResults(sorted)
 }
 
 function getCoingeckoClient() {
@@ -190,14 +202,16 @@ function getFormula(
 }
 
 function getAssetId(chain: ChainConfig, token: SourceEntry, name: string) {
+  const chainPrefix = chain.name === 'ethereum' ? '' : `${chain.name}:`
+
   return AssetId(
-    `${chain.name}:${token.symbol.replaceAll(' ', '-').toLowerCase()}-${name
+    `${chainPrefix}${token.symbol.replaceAll(' ', '-').toLowerCase()}-${name
       .replaceAll(' ', '-')
       .toLowerCase()}`,
   )
 }
 
-function sortByChainAndName(result: Token[]) {
+function sortByChainAndName(result: GeneratedToken[]) {
   return result.sort((a, b) => {
     if (a.chainId !== b.chainId) {
       return Number(a.chainId) - Number(b.chainId)
@@ -210,7 +224,7 @@ function findTokenInOutput(
   output: Output,
   chainId: ChainId | undefined,
   entry: SourceEntry,
-): Token | undefined {
+): GeneratedToken | undefined {
   return output.tokens.find((e) => {
     if (chainId !== e.chainId) {
       return false
@@ -251,7 +265,8 @@ async function fetchTokenInfo(
     name: tokenInfo.name,
     coingeckoId: tokenInfo.coingeckoId,
     decimals: tokenInfo.decimals,
-    sinceTimestamp: tokenInfo.sinceTimestamp,
+    deploymentTimestamp: tokenInfo.deploymentTimestamp,
+    coingeckoListingTimestamp: tokenInfo.coingeckoListingTimestamp,
     iconUrl: tokenInfo.iconUrl,
   }
 }

@@ -23,8 +23,8 @@ export function StageBadge({
     stage === 'UnderReview'
       ? 'In review'
       : stage === 'NotApplicable'
-      ? undefined
-      : stage
+        ? undefined
+        : stage
   return (
     <div className={cn('inline-flex items-center gap-1.5', className)}>
       <span

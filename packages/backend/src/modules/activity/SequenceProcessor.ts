@@ -51,7 +51,7 @@ export abstract class SequenceProcessor extends EventEmitter {
   private readonly scheduleInterval: number
   private readonly uncertaintyBuffer: number
   private state?: State
-  private refreshId: NodeJS.Timer | undefined
+  private refreshId: ReturnType<typeof setTimeout> | undefined
 
   protected abstract getLatest(current: number): Promise<number>
   protected abstract processRange(

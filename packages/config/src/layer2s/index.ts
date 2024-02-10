@@ -30,7 +30,6 @@ import { hermez } from './hermez'
 import { honeypot } from './honeypot'
 import { hypr } from './hypr'
 import { immutablex } from './immutablex'
-import { immutablezkevm } from './immutablezkevm'
 import { kinto } from './kinto'
 import { kroma } from './kroma'
 import { layer2finance } from './layer2finance'
@@ -122,7 +121,6 @@ export const layer2s: Layer2[] = [
   hermez,
   hypr,
   immutablex,
-  immutablezkevm,
   kinto,
   kroma,
   layer2finance,

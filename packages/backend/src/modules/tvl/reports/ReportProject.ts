@@ -1,4 +1,4 @@
-import { Project } from '../../../model'
+import { Project } from '../../../model/Project'
 
 export type ReportProject = Pick<
   Project,

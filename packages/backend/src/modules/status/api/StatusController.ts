@@ -8,7 +8,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { Project } from '../../../model'
+import { Project } from '../../../model/Project'
 import { IndexerStateRepository } from '../../../peripherals/database/repositories/IndexerStateRepository'
 import { ChainConverter } from '../../../tools/ChainConverter'
 import { Clock } from '../../../tools/Clock'
@@ -79,6 +79,7 @@ export class StatusController {
     )
 
     return renderDashboardProjectPage({
+      chain,
       projectName: project,
       contracts,
       diff,

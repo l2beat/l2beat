@@ -107,7 +107,7 @@ describe(BalanceUpdater.name, () => {
         getByChainAndTimestamp: async (chainId, timestamp) => [
           mockBalance(AssetId('baz'), timestamp, holderAddress, chainId),
         ],
-        addOrUpdateMany: async () => 0,
+        addMany: async () => 0,
       })
       const balanceStatusRepository = mockObject<BalanceStatusRepository>({
         add: async (x) =>
@@ -151,9 +151,7 @@ describe(BalanceUpdater.name, () => {
         timestamp,
         blockNumber,
       )
-      expect(balanceRepository.addOrUpdateMany).toHaveBeenOnlyCalledWith(
-        balances,
-      )
+      expect(balanceRepository.addMany).toHaveBeenOnlyCalledWith(balances)
       expect(balanceStatusRepository.add).toHaveBeenOnlyCalledWith({
         configHash: getBalanceConfigHash(projects),
         timestamp,

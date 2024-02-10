@@ -88,7 +88,7 @@ describe(calculateMinMaxAverages.name, () => {
     const input = cloneDeep(RECORDS).filter(
       (r) => r.type === LivenessType('STATE'),
     )
-    calculateIntervals(input)!
+    calculateIntervals(input)
     const result = calculateMinMaxAverages(input)
     const expected = {
       last30Days: undefined,
@@ -107,7 +107,7 @@ describe(calculateMinMaxAverages.name, () => {
   })
   it('returns the averages for batchSubmissions', () => {
     const input = cloneDeep(RECORDS)
-    calculateIntervals(input)!
+    calculateIntervals(input)
     const result = calculateMinMaxAverages(
       input.filter((r) => r.type === LivenessType('DA')),
     )

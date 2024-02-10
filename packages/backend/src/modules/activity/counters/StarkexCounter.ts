@@ -3,7 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { range } from 'lodash'
 
-import { StarkexClient } from '../../../peripherals/starkex'
+import { StarkexClient } from '../../../peripherals/starkex/StarkexClient'
 import { Clock } from '../../../tools/Clock'
 import { promiseAllPlus } from '../../../tools/queue/promiseAllPlus'
 import { SequenceProcessorRepository } from '../repositories/SequenceProcessorRepository'

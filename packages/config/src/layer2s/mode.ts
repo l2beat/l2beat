@@ -50,10 +50,6 @@ export const mode: Layer2 = opStack({
     '0x735aDBbE72226BD52e818E7181953f42E3b0FF21',
   ),
   rpcUrl: 'https://mainnet.mode.network/',
-  sequencerAddress: EthereumAddress(
-    discovery.getContractValue('SystemConfig', 'batcherHash'),
-  ),
-  inboxAddress: EthereumAddress('0x24e59d9d3bd73ccc28dc54062af7ef7bff58bd67'),
   genesisTimestamp: new UnixTime(1700125343),
 
   l2OutputOracle: discovery.getContract('L2OutputOracle'),

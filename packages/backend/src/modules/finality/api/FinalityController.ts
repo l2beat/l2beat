@@ -4,7 +4,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { Project } from '../../../model'
+import { Project } from '../../../model/Project'
 import { IndexerStateRepository } from '../../../peripherals/database/repositories/IndexerStateRepository'
 import { Clock } from '../../../tools/Clock'
 import { LivenessRepository } from '../../liveness/repositories/LivenessRepository'

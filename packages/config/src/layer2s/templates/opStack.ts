@@ -49,8 +49,6 @@ export interface OpStackConfig {
   l1StandardBridgeEscrow: EthereumAddress
   rpcUrl?: string
   transactionApi?: Layer2TransactionApi
-  inboxAddress: EthereumAddress // You can find it by seeing to where sequencer posts
-  sequencerAddress: EthereumAddress
   genesisTimestamp: UnixTime
   finality?: Layer2FinalityConfig
   l2OutputOracle: ContractParameters
@@ -69,6 +67,12 @@ export interface OpStackConfig {
 }
 
 export function opStack(templateVars: OpStackConfig): Layer2 {
+  const sequencerAddress = EthereumAddress(
+    templateVars.discovery.getContractValue('SystemConfig', 'batcherHash'),
+  )
+  const sequencerInbox = EthereumAddress(
+    templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+  )
   return {
     type: 'layer2',
     id: ProjectId(templateVars.discovery.projectName),
@@ -128,8 +132,8 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
               batchSubmissions: [
                 {
                   formula: 'transfer',
-                  from: templateVars.sequencerAddress,
-                  to: templateVars.inboxAddress,
+                  from: sequencerAddress,
+                  to: sequencerInbox,
                   sinceTimestamp: templateVars.genesisTimestamp,
                 },
               ],
@@ -266,11 +270,11 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
           ...technologyDA(templateVars.daProvider).references,
           {
             text: 'Derivation: Batch submission - OP Mainnet specs',
-            href: 'https://github.com/ethereum-optimism/optimism/blob/develop/specs/derivation.md#batch-submission',
+            href: 'https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission',
           },
           {
             text: 'BatchInbox - Etherscan address',
-            href: `https://etherscan.io/address/${templateVars.inboxAddress.toString()}`,
+            href: `https://etherscan.io/address/${sequencerInbox.toString()}`,
           },
           {
             text: 'OptimismPortal.sol - Etherscan source code, depositTransaction function',

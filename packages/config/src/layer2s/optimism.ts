@@ -73,10 +73,6 @@ export const optimism: Layer2 = opStack({
     startBlock: 1,
     assessCount: subtractOneAfterBlockInclusive(105235064),
   },
-  sequencerAddress: EthereumAddress(
-    discovery.getContractValue('SystemConfig', 'batcherHash'),
-  ),
-  inboxAddress: EthereumAddress('0xFF00000000000000000000000000000000000010'),
   genesisTimestamp: new UnixTime(1686074603),
   finality: {
     type: 'OPStack',

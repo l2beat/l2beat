@@ -81,7 +81,8 @@
         "validators": {
           "type": "dynamicArray",
           "slot": 54,
-          "returnType": "address"
+          "returnType": "address",
+          "ignoreRelative": true
         }
       }
     },
@@ -125,6 +126,14 @@
           "type": "call",
           "method": "function batcherHash() view returns (address)",
           "args": []
+        },
+        "opStackDA": {
+          "type": "opStackDA",
+          "sequencerAddress": "{{ batcherHash }}"
+        },
+        "sequencerInbox": {
+          "type": "opStackSequencerInbox",
+          "sequencerAddress": "{{ batcherHash }}"
         }
       }
     }

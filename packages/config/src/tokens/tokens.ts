@@ -36,11 +36,14 @@ you are out of luck. We will fix this in the future.
 
 */
 
-import { AssetId, Token } from '@l2beat/shared-pure'
+import { AssetId, Token, UnixTime } from '@l2beat/shared-pure'
 
 import { tokens } from './generated.json'
+import { GeneratedToken } from './types'
 
-export const tokenList: Token[] = tokens.map((t) => Token.parse(t))
+export const tokenList: Token[] = tokens
+  .map((t) => GeneratedToken.parse(t))
+  .map(toToken)
 
 export const canonicalTokenList: Token[] = tokenList.filter(
   (t) => t.type === 'CBV',
@@ -70,4 +73,18 @@ export function getTokenByAssetId(assetId: AssetId) {
     throw new TypeError(`Unknown token ${assetId.toString()}`)
   }
   return token
+}
+
+function toToken(generated: GeneratedToken): Token {
+  const sinceTimestamp = new UnixTime(
+    Math.max(
+      generated.deploymentTimestamp.toNumber(),
+      generated.coingeckoListingTimestamp.toNumber(),
+    ),
+  )
+
+  return {
+    ...generated,
+    sinceTimestamp,
+  }
 }

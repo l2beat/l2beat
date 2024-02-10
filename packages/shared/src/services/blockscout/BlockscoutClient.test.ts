@@ -186,9 +186,8 @@ describe(BlockscoutClient.name, () => {
         new UnixTime(0),
         ChainId.ETHEREUM,
       )
-      const blockNumber = await blockscoutClient.getBlockNumberAtOrBefore(
-        timestamp,
-      )
+      const blockNumber =
+        await blockscoutClient.getBlockNumberAtOrBefore(timestamp)
 
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         1,

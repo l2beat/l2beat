@@ -1,13 +1,16 @@
+import { Logger } from '@l2beat/backend-tools'
 import {
+  cacheAsyncFunction,
   LivenessApiResponse,
   LivenessType,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { Project } from '../../../model'
+import { Project } from '../../../model/Project'
 import { IndexerStateRepository } from '../../../peripherals/database/repositories/IndexerStateRepository'
 import { Clock } from '../../../tools/Clock'
+import { TaskQueue } from '../../../tools/queue/TaskQueue'
 import { LivenessRepository } from '../repositories/LivenessRepository'
 import { calculateAnomaliesPerProject } from './calculateAnomalies'
 import {
@@ -51,12 +54,37 @@ type LivenessTransactionsResult =
     }
 
 export class LivenessController {
+  private readonly taskQueue: TaskQueue<void>
+  getCachedLivenessApiResponse: () => Promise<LivenessResult>
+
   constructor(
     private readonly livenessRepository: LivenessRepository,
     private readonly indexerStateRepository: IndexerStateRepository,
     private readonly projects: Project[],
     private readonly clock: Clock,
-  ) {}
+    private readonly logger = Logger.SILENT,
+  ) {
+    this.logger = this.logger.for(this)
+
+    const cached = cacheAsyncFunction(() => this.getLiveness())
+    this.getCachedLivenessApiResponse = cached.call
+    this.taskQueue = new TaskQueue(
+      cached.refetch,
+      this.logger.for('taskQueue'),
+      { metricsId: LivenessController.name },
+    )
+  }
+
+  start() {
+    this.taskQueue.addToFront()
+    this.logger.info('Caching: initial caching scheduled')
+
+    const tenMinutes = 10 * 60 * 1000
+    setInterval(() => {
+      this.taskQueue.addIfEmpty()
+      this.logger.info('Caching: refetch scheduled')
+    }, tenMinutes)
+  }
 
   async getLiveness(): Promise<LivenessResult> {
     const requiredTimestamp = this.clock.getLastHour().add(-1, 'hours')
@@ -72,35 +100,32 @@ export class LivenessController {
 
     const projects: LivenessApiResponse['projects'] = {}
 
-    await Promise.all(
-      this.projects
-        .filter((p) => !p.isArchived)
-        .map(async (project) => {
-          if (project.livenessConfig === undefined) {
-            return
+    const activeProjects = this.projects.filter((p) => !p.isArchived)
+    for (const project of activeProjects) {
+      if (project.livenessConfig === undefined) {
+        continue
+      }
+      const records =
+        await this.livenessRepository.getWithTypeDistinctTimestamp(
+          project.projectId,
+        )
+
+      const groupedByType = groupByType(records)
+
+      const intervals = calcIntervalWithAvgsPerProject(groupedByType)
+
+      const withAnomalies = calculateAnomaliesPerProject(intervals)
+
+      if (withAnomalies && project.livenessConfig.duplicateData) {
+        for (const duplicateData of project.livenessConfig.duplicateData) {
+          withAnomalies[duplicateData.to] = {
+            ...withAnomalies[duplicateData.from],
           }
-          const records =
-            await this.livenessRepository.getWithTypeDistinctTimestamp(
-              project.projectId,
-            )
+        }
+      }
 
-          const groupedByType = groupByType(records)
-
-          const intervals = calcIntervalWithAvgsPerProject(groupedByType)
-
-          const withAnomalies = calculateAnomaliesPerProject(intervals)
-
-          if (withAnomalies && project.livenessConfig.duplicateData) {
-            for (const duplicateData of project.livenessConfig.duplicateData) {
-              withAnomalies[duplicateData.to] = {
-                ...withAnomalies[duplicateData.from],
-              }
-            }
-          }
-
-          projects[project.projectId.toString()] = withAnomalies
-        }),
-    )
+      projects[project.projectId.toString()] = withAnomalies
+    }
 
     return { type: 'success', data: { projects } }
   }

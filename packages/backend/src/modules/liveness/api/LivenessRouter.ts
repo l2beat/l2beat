@@ -3,13 +3,19 @@ import { branded, LivenessType, ProjectId } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 import { withTypedContext } from '../../../api/types'
+import { Config } from '../../../config'
 import { LivenessController } from './LivenessController'
 
-export function createLivenessRouter(livenessController: LivenessController) {
+export function createLivenessRouter(
+  livenessController: LivenessController,
+  config: Config,
+) {
   const router = new Router()
 
   router.get('/api/liveness', async (ctx) => {
-    const result = await livenessController.getLiveness()
+    const result = config.api.cache.liveness
+      ? await livenessController.getCachedLivenessApiResponse()
+      : await livenessController.getLiveness()
 
     if (result.type === 'error') {
       ctx.status = 404
