@@ -7,9 +7,9 @@ export interface BaseAnalyzer {
     granularity: number,
   ): Promise<
     | {
-        minimum: number
-        maximum: number
-        average: number
+        minimumTimeToInclusion: number
+        maximumTimeToInclusion: number
+        averageTimeToInclusion: number
       }
     | undefined
   >

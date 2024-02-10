@@ -102,9 +102,9 @@ describe(LineaFinalityAnalyzer.name, () => {
           3,
         )
 
-        expect(results?.minimum).toEqual(28810)
-        expect(results?.maximum).toEqual(33693)
-        expect(results?.average).toEqual(31261)
+        expect(results?.minimumTimeToInclusion).toEqual(28810)
+        expect(results?.maximumTimeToInclusion).toEqual(33693)
+        expect(results?.averageTimeToInclusion).toEqual(31261)
         expect(
           livenessRepository.findTransactionWithinTimeRange,
         ).toHaveBeenCalledTimes(3)

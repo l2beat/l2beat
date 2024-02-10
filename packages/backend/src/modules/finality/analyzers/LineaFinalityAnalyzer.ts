@@ -65,9 +65,9 @@ export class LineaFinalityAnalyzer implements BaseAnalyzer {
     )
 
     return {
-      minimum: Math.min(...minimums),
-      maximum: Math.max(...maximums),
-      average: Math.round(mean(averages)),
+      minimumTimeToInclusion: Math.min(...minimums),
+      maximumTimeToInclusion: Math.max(...maximums),
+      averageTimeToInclusion: Math.round(mean(averages)),
     }
   }
 
