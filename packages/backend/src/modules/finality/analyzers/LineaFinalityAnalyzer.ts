@@ -30,7 +30,7 @@ export class LineaFinalityAnalyzer implements BaseAnalyzer {
     to: UnixTime,
     granularity: number,
   ) {
-    const interval = (from.toNumber() - to.toNumber()) / granularity
+    const interval = (to.toNumber() - from.toNumber()) / granularity
 
     const txHashes = (
       await Promise.all(
