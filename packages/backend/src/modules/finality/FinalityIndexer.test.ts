@@ -41,7 +41,11 @@ describe(FinalityIndexer.name, () => {
     })
 
     it('correctly syncs not synced projects', async () => {
-      const project2Results = { average: 4, minimum: 1, maximum: 7 }
+      const project2Results = {
+        averageTimeToInclusion: 4,
+        minimumTimeToInclusion: 1,
+        maximumTimeToInclusion: 7,
+      }
 
       const finalityRepository = mockObject<FinalityRepository>({
         getProjectsSyncedOnTimestamp: mockFn().resolvesToOnce([
@@ -73,8 +77,16 @@ describe(FinalityIndexer.name, () => {
     })
 
     it('correctly syncs all projects on full day', async () => {
-      const project1Results = { average: 2, minimum: 1, maximum: 3 }
-      const project2Results = { average: 4, minimum: 1, maximum: 7 }
+      const project1Results = {
+        averageTimeToInclusion: 2,
+        minimumTimeToInclusion: 1,
+        maximumTimeToInclusion: 3,
+      }
+      const project2Results = {
+        averageTimeToInclusion: 4,
+        minimumTimeToInclusion: 1,
+        maximumTimeToInclusion: 7,
+      }
 
       const finalityRepository = mockObject<FinalityRepository>({
         getProjectsSyncedOnTimestamp: mockFn().resolvesToOnce([]),
@@ -140,8 +152,16 @@ describe(FinalityIndexer.name, () => {
 
   describe(FinalityIndexer.prototype.getFinalityData.name, () => {
     it('returns finality data', async () => {
-      const project1Results = { average: 2, minimum: 1, maximum: 3 }
-      const project2Results = { average: 4, minimum: 1, maximum: 7 }
+      const project1Results = {
+        averageTimeToInclusion: 2,
+        minimumTimeToInclusion: 1,
+        maximumTimeToInclusion: 3,
+      }
+      const project2Results = {
+        averageTimeToInclusion: 4,
+        minimumTimeToInclusion: 1,
+        maximumTimeToInclusion: 7,
+      }
 
       const configurations = getMockFinalityRuntimeConfigurations([
         project1Results,
@@ -169,7 +189,11 @@ describe(FinalityIndexer.name, () => {
     })
 
     it('does not return project when undefined', async () => {
-      const project1Results = { average: 2, minimum: 1, maximum: 3 }
+      const project1Results = {
+        averageTimeToInclusion: 2,
+        minimumTimeToInclusion: 1,
+        maximumTimeToInclusion: 3,
+      }
       const project2Results = undefined
 
       const configurations = getMockFinalityRuntimeConfigurations([
@@ -334,9 +358,9 @@ function getMockStateRepository(
 function getMockFinalityRuntimeConfigurations(
   results: (
     | {
-        average: number
-        minimum: number
-        maximum: number
+        averageTimeToInclusion: number
+        minimumTimeToInclusion: number
+        maximumTimeToInclusion: number
       }
     | undefined
   )[],
