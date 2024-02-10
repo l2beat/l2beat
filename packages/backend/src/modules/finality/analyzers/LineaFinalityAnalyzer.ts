@@ -1,5 +1,4 @@
 import {
-  assert,
   LivenessType,
   notUndefined,
   ProjectId,
@@ -32,10 +31,10 @@ export class LineaFinalityAnalyzer implements BaseAnalyzer {
   ) {
     const interval = (to.toNumber() - from.toNumber()) / granularity
 
-    const txHashes = (
+    const transactions = (
       await Promise.all(
         Array.from({ length: granularity }).map(async (_, i) => {
-          const targetTimestamp = from.add(-interval * i, 'seconds')
+          const targetTimestamp = to.add(-interval * i, 'seconds')
           const lowerBound = targetTimestamp.add(-interval, 'seconds')
 
           return this.livenessRepository.findTransactionWithinTimeRange(
@@ -48,7 +47,7 @@ export class LineaFinalityAnalyzer implements BaseAnalyzer {
       )
     ).filter(notUndefined)
 
-    if (!txHashes.length) {
+    if (!transactions.length) {
       return undefined
     }
 
@@ -57,8 +56,8 @@ export class LineaFinalityAnalyzer implements BaseAnalyzer {
     const averages: number[] = []
 
     await Promise.all(
-      txHashes.map(async (hash) => {
-        const finality = await this.getFinality(hash)
+      transactions.map(async (transaction) => {
+        const finality = await this.getFinality(transaction)
         minimums.push(finality.minimum)
         maximums.push(finality.maximum)
         averages.push(finality.average)
@@ -72,10 +71,9 @@ export class LineaFinalityAnalyzer implements BaseAnalyzer {
     }
   }
 
-  async getFinality(txHash: string) {
-    const tx = await this.provider.getTransaction(txHash)
-    assert(tx.timestamp, 'There is no timestamp for transaction')
-    const l1Timestamp = new UnixTime(tx.timestamp)
+  async getFinality(transaction: { txHash: string; timestamp: UnixTime }) {
+    const tx = await this.provider.getTransaction(transaction.txHash)
+    const l1Timestamp = transaction.timestamp
 
     const decodedInput = decodeInput(tx.data)
     const timestamps = decodedInput[0].map((x) => x[1])

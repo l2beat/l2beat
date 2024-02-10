@@ -13,7 +13,10 @@ describe(LineaFinalityAnalyzer.name, () => {
       const provider = getMockRpcClient()
 
       const calculator = new LineaFinalityAnalyzer(provider, livenessRepository)
-      const results = await calculator.getFinality('0x121')
+      const results = await calculator.getFinality({
+        txHash: '0x121',
+        timestamp: new UnixTime(1705407431),
+      })
 
       expect(results.minimum).toEqual(33621)
       expect(results.maximum).toEqual(33693)
@@ -32,9 +35,10 @@ describe(LineaFinalityAnalyzer.name, () => {
           provider,
           livenessRepository,
         )
+
         await calculator.getFinalityWithGranularity(
-          start,
           start.add(-1, 'hours'),
+          start,
           6,
         )
 
@@ -68,19 +72,23 @@ describe(LineaFinalityAnalyzer.name, () => {
         const start = UnixTime.now().toStartOf('hour')
         const livenessRepository = mockObject<LivenessRepository>({
           findTransactionWithinTimeRange: mockFn()
-            .resolvesToOnce('0x121')
-            .resolvesToOnce('0x121')
+            .resolvesToOnce({
+              txHash: '0x121',
+              timestamp: new UnixTime(1705407431),
+            })
+            .resolvesToOnce({
+              txHash: '0x121',
+              timestamp: new UnixTime(1706171999),
+            })
             .resolvesToOnce(undefined),
         })
         const provider = mockObject<RpcClient>({
           getTransaction: mockFn()
             .resolvesToOnce({
               data: getMockCallData(DATA1_TIMESTAMPS),
-              timestamp: 1705407431,
             })
             .resolvesToOnce({
               data: getMockCallData(DATA2_TIMESTAMPS),
-              timestamp: 1706171999,
             }),
         })
 
@@ -108,16 +116,17 @@ describe(LineaFinalityAnalyzer.name, () => {
 
 function getMockLivenessRepository() {
   return mockObject<LivenessRepository>({
-    findTransactionWithinTimeRange: mockFn().resolvesTo('0x121'),
+    findTransactionWithinTimeRange: mockFn().resolvesTo({
+      txHash: '0x121',
+      timestamp: new UnixTime(1705407431),
+    }),
   })
 }
 
 function getMockRpcClient() {
   return mockObject<RpcClient>({
     getTransaction: mockFn().resolvesTo({
-      blockNumber: 1,
       data: getMockCallData(DATA1_TIMESTAMPS),
-      timestamp: 1705407431,
     }),
   })
 }
