@@ -19,7 +19,9 @@ const FINALITY_GRANULARITY = 24 * 6
 
 export class FinalityIndexer extends ChildIndexer {
   readonly indexerId = 'finality_indexer'
-  readonly minTimestamp = UnixTime.fromDate(new Date('2024-02-07T00:00:00Z'))
+  readonly minTimestamp = UnixTime.fromDate(
+    new Date('2024-02-07T00:00:00.000Z'),
+  )
 
   constructor(
     logger: Logger,
