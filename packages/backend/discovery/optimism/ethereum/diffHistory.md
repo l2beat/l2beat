@@ -1,64 +1,120 @@
-Generated with discovered.json: 0x75bf0a1e7f3ca34a61085103177321849b59f9c2
+Generated with discovered.json: 0x8fb94bf8b2fa0d63e833a3660122eb318f59699b
 
-# Diff at Wed, 07 Feb 2024 14:04:10 GMT:
+# Diff at Sat, 10 Feb 2024 13:10:09 GMT:
 
-- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
-- comparing to: main@2e35800e01005d93332a552032058dcd67f3631d block: 19175199
-- current block number: 19176787
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: master@08f8b19c0307b7e22a4676058d6705e1237b8966 block: 18975204
+- current block number: 19197911
 
 ## Description
 
 Added opStackSequencerInbox handler
 
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 19175199 (main branch discovery), not current.
+## Watched changes
 
 ```diff
-    contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
-      values.sequencerInbox:
-+        "0xFF00000000000000000000000000000000000010"
+    contract ProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+      values.owner:
+-        "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
     }
 ```
 
-Generated with discovered.json: 0x76f079bbf5d43c3c9139458655bfbd274ddbfa2a
-
-# Diff at Wed, 07 Feb 2024 08:43:05 GMT:
-
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@64f1e0f27f831d3ef860a1c2faad8c77e04e6c29 block: 19126648
-- current block number: 19175199
-
-## Description
-
-Updated with the new OpDAHandler to remove the field.
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 19126648 (main branch discovery), not current.
-
 ```diff
-    contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
-      values.opStackDA.isAllTxsLengthEqualToCelestiaDAExample:
--        false
++   Status: CREATED
+    contract GnosisSafe (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
     }
 ```
 
-Generated with discovered.json: 0x7bc6699d72e87e966f09a1f8d9b0661ffdb9ab81
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    }
+```
 
-# Diff at Wed, 31 Jan 2024 13:05:49 GMT:
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    }
+```
 
-- author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@74040c3a8f43c630b3d31cc8376e84f5f9acda5c block: 18975204
-- current block number: 19126648
+## Source code changes
 
-## Description
-
-Added opStackDa handler
+```diff
+.../implementation/GnosisSafe.sol                  |   0
+ .../implementation/base/Executor.sol               |   0
+ .../implementation/base/FallbackManager.sol        |   0
+ .../implementation/base/GuardManager.sol           |   0
+ .../implementation/base/ModuleManager.sol          |   0
+ .../implementation/base/OwnerManager.sol           |   0
+ .../implementation/common/Enum.sol                 |   0
+ .../implementation/common/EtherPaymentFallback.sol |   0
+ .../implementation/common/SecuredTokenTransfer.sol |   0
+ .../implementation/common/SelfAuthorized.sol       |   0
+ .../implementation/common/SignatureDecoder.sol     |   0
+ .../implementation/common/Singleton.sol            |   0
+ .../implementation/common/StorageAccessible.sol    |   0
+ .../implementation/external/GnosisSafeMath.sol     |   0
+ .../interfaces/ISignatureValidator.sol             |   0
+ .../implementation/meta.txt                        |   0
+ .../proxy/GnosisSafeProxy.sol                      |   0
+ .../proxy/meta.txt                                 |   0
+ .../implementation/GnosisSafe.sol                  | 422 +++++++++++++++++++++
+ .../implementation/base/Executor.sol               |  27 ++
+ .../implementation/base/FallbackManager.sol        |  53 +++
+ .../implementation/base/GuardManager.sol           |  50 +++
+ .../implementation/base/ModuleManager.sol          | 133 +++++++
+ .../implementation/base/OwnerManager.sol           | 149 ++++++++
+ .../implementation/common/Enum.sol                 |   8 +
+ .../implementation/common/EtherPaymentFallback.sol |  13 +
+ .../implementation/common/SecuredTokenTransfer.sol |  35 ++
+ .../implementation/common/SelfAuthorized.sol       |  16 +
+ .../implementation/common/SignatureDecoder.sol     |  36 ++
+ .../implementation/common/Singleton.sol            |  11 +
+ .../implementation/common/StorageAccessible.sol    |  47 +++
+ .../implementation/external/GnosisSafeMath.sol     |  54 +++
+ .../interfaces/ISignatureValidator.sol             |  20 +
+ .../implementation/meta.txt                        |   2 +
+ .../proxy/GnosisSafeProxy.sol                      | 155 ++++++++
+ .../proxy/meta.txt                                 |   2 +
+ .../implementation/GnosisSafe.sol                  | 422 +++++++++++++++++++++
+ .../implementation/base/Executor.sol               |  27 ++
+ .../implementation/base/FallbackManager.sol        |  53 +++
+ .../implementation/base/GuardManager.sol           |  50 +++
+ .../implementation/base/ModuleManager.sol          | 133 +++++++
+ .../implementation/base/OwnerManager.sol           | 149 ++++++++
+ .../implementation/common/Enum.sol                 |   8 +
+ .../implementation/common/EtherPaymentFallback.sol |  13 +
+ .../implementation/common/SecuredTokenTransfer.sol |  35 ++
+ .../implementation/common/SelfAuthorized.sol       |  16 +
+ .../implementation/common/SignatureDecoder.sol     |  36 ++
+ .../implementation/common/Singleton.sol            |  11 +
+ .../implementation/common/StorageAccessible.sol    |  47 +++
+ .../implementation/external/GnosisSafeMath.sol     |  54 +++
+ .../interfaces/ISignatureValidator.sol             |  20 +
+ .../implementation/meta.txt                        |   2 +
+ .../proxy/GnosisSafeProxy.sol                      | 155 ++++++++
+ .../proxy/meta.txt                                 |   2 +
+ .../implementation/GnosisSafe.sol                  | 422 +++++++++++++++++++++
+ .../implementation/base/Executor.sol               |  27 ++
+ .../implementation/base/FallbackManager.sol        |  53 +++
+ .../implementation/base/GuardManager.sol           |  50 +++
+ .../implementation/base/ModuleManager.sol          | 133 +++++++
+ .../implementation/base/OwnerManager.sol           | 149 ++++++++
+ .../implementation/common/Enum.sol                 |   8 +
+ .../implementation/common/EtherPaymentFallback.sol |  13 +
+ .../implementation/common/SecuredTokenTransfer.sol |  35 ++
+ .../implementation/common/SelfAuthorized.sol       |  16 +
+ .../implementation/common/SignatureDecoder.sol     |  36 ++
+ .../implementation/common/Singleton.sol            |  11 +
+ .../implementation/common/StorageAccessible.sol    |  47 +++
+ .../implementation/external/GnosisSafeMath.sol     |  54 +++
+ .../interfaces/ISignatureValidator.sol             |  20 +
+ .../implementation/meta.txt                        |   2 +
+ .../proxy/GnosisSafeProxy.sol                      | 155 ++++++++
+ .../proxy/meta.txt                                 |   2 +
+ 72 files changed, 3699 insertions(+)
+```
 
 ## Config/verification related changes
 
@@ -69,7 +125,9 @@ discovery. Values are for block 18975204 (main branch discovery), not current.
 ```diff
     contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
       values.opStackDA:
-+        {"isAllTxsLengthEqualToCelestiaDAExample":false,"isSomeTxsLengthEqualToCelestiaDAExample":false}
++        {"isSomeTxsLengthEqualToCelestiaDAExample":false}
+      values.sequencerInbox:
++        "0xFF00000000000000000000000000000000000010"
     }
 ```
 
