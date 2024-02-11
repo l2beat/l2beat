@@ -1,0 +1,29 @@
+{
+    "$schema": "../../config.schema.json",
+    "chain": "ethereum",
+    "name": "ronin",
+    "initialAddresses": [
+      "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08"
+    ],
+    "names": {
+      "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08": "MainchainGateway",
+      "0xa71456fA88a5f6a4696D0446E690Db4a5913fab0": "MainchainBridgeManager"
+    },
+    "overrides": {
+      "MainchainGateway": {
+        "ignoreMethods": [
+          "checkHighTierVoteWeightThreshold",
+          "checkThreshold",
+          "withdrawalHash",
+          "withdrawalLocked"
+        ]
+      },
+      "MainchainBridgeManager": {
+        "ignoreMethods": [
+          "checkThreshold",
+          "globalProposalRelayed",
+          "round"
+        ]
+      }
+    }
+}
