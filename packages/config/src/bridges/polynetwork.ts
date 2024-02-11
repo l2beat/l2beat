@@ -33,7 +33,7 @@ export const polynetwork: Bridge = {
       documentation: [
         'https://dev-docs.poly.network/',
         'https://github.com/PolygonNetwork/docs',
-        'https://github.com/PolygonNetwork/docs/tree/master/eth',
+        'https://github.com/PolygonNetwork/docs/tree/master/eth/README.md',
       ],
     },
     description:
