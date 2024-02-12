@@ -57,6 +57,7 @@ export const hypr: Layer2 = opStack({
     },
   ],
   rpcUrl: 'https://rpc.hypr.network',
+  associatedTokens: ['HYPR'],
   knowledgeNuggets: [],
   roleOverrides: {
     batcherHash: 'Sequencer',
