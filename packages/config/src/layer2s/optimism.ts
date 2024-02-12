@@ -206,9 +206,9 @@ export const optimism: Layer2 = opStack({
       [
         {
           text: 'Security Council members - Optimism Collective forum',
-          href: 'https://gov.optimism.io/t/security-council-vote-2-initial-member-ratification/7118'
-        }
-      ]
+          href: 'https://gov.optimism.io/t/security-council-vote-2-initial-member-ratification/7118',
+        },
+      ],
     ),
     ...discovery.getMultisigPermission(
       'FoundationMultisig_2',
