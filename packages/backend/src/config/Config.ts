@@ -44,6 +44,7 @@ export interface ApiConfig {
   readonly port: number
   readonly cache: {
     readonly tvl: boolean
+    readonly liveness: boolean
   }
 }
 
