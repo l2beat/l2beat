@@ -97,8 +97,8 @@ describe(LineaFinalityAnalyzer.name, () => {
           livenessRepository,
         )
         const results = await calculator.getFinalityWithGranularity(
-          start,
           start.add(-1, 'hours'),
+          start,
           3,
         )
 
