@@ -9,6 +9,7 @@ import { ReportRepository } from '../../peripherals/database/ReportRepository'
 import { ReportStatusRepository } from '../../peripherals/database/ReportStatusRepository'
 import { TotalSupplyRepository } from '../../peripherals/database/TotalSupplyRepository'
 import { TotalSupplyStatusRepository } from '../../peripherals/database/TotalSupplyStatusRepository'
+import { TvlCleanerRepository } from '../../peripherals/database/TvlCleanerRepository'
 
 export interface TvlDatabase {
   readonly blockNumberRepository: BlockNumberRepository
@@ -23,4 +24,6 @@ export interface TvlDatabase {
   readonly totalSupplyStatusRepository: TotalSupplyStatusRepository
   readonly reportStatusRepository: ReportStatusRepository
   readonly aggregatedReportStatusRepository: AggregatedReportStatusRepository
+  // cleaner
+  readonly tvlCleanerRepository: TvlCleanerRepository
 }

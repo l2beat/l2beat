@@ -28,6 +28,7 @@ import { ReportStatusRepository } from '../../peripherals/database/ReportStatusR
 import { Database } from '../../peripherals/database/shared/Database'
 import { TotalSupplyRepository } from '../../peripherals/database/TotalSupplyRepository'
 import { TotalSupplyStatusRepository } from '../../peripherals/database/TotalSupplyStatusRepository'
+import { TvlCleanerRepository } from '../../peripherals/database/TvlCleanerRepository'
 import { ApplicationModule } from '../ApplicationModule'
 import { chainTvlModule } from './ChainTvlModule'
 import { createEthereumTvlModule } from './EthereumTvlModule'
@@ -72,6 +73,7 @@ export function createTvlModule(
       database,
       logger,
     ),
+    tvlCleanerRepository: new TvlCleanerRepository(database, logger),
   }
 
   // #endregion
@@ -98,7 +100,13 @@ export function createTvlModule(
     db.reportRepository,
     db.aggregatedReportRepository,
   ]
-  const tvlCleaner = new TvlCleaner(clock, logger, repositoriesToClean)
+
+  const tvlCleaner = new TvlCleaner(
+    clock,
+    logger,
+    db.tvlCleanerRepository,
+    repositoriesToClean,
+  )
 
   // #endregion
   // #region modules

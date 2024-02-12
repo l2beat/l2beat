@@ -7,14 +7,24 @@ import { Knex } from 'knex'
 export function deleteHourlyUntil(
   knex: Knex,
   tableName: string,
-  timestamp: UnixTime,
+  to: UnixTime,
+  from: UnixTime | undefined,
 ) {
+  if (from) {
+    return (
+      knex(tableName)
+        .where('unix_timestamp', '<', to.toDate())
+        .andWhere('unix_timestamp', '>=', from.toDate())
+        // do not delete six hourly and daily
+        .andWhereRaw(`extract(hour from "unix_timestamp") % 6 != 0`)
+        .delete()
+    )
+  }
+
   return (
     knex(tableName)
-      .where('unix_timestamp', '<', timestamp.toDate())
-      // do not delete daily
-      .andWhereRaw(`extract(hour from "unix_timestamp") != 0`)
-      // do not delete six hourly
+      .where('unix_timestamp', '<', to.toDate())
+      // do not delete six hourly and daily
       .andWhereRaw(`extract(hour from "unix_timestamp") % 6 != 0`)
       .delete()
   )
@@ -26,11 +36,25 @@ export function deleteHourlyUntil(
 export function deleteSixHourlyUntil(
   knex: Knex,
   tableName: string,
-  timestamp: UnixTime,
+  to: UnixTime,
+  from: UnixTime | undefined,
 ) {
+  if (from) {
+    return (
+      knex(tableName)
+        .where('unix_timestamp', '<', to.toDate())
+        .andWhere('unix_timestamp', '>=', from.toDate())
+        // do not delete daily
+        .andWhereRaw(`extract(hour from "unix_timestamp") != 0`)
+        // delete only six hourly
+        .andWhereRaw(`extract(hour from "unix_timestamp") % 6 = 0`)
+        .delete()
+    )
+  }
+
   return (
     knex(tableName)
-      .where('unix_timestamp', '<', timestamp.toDate())
+      .where('unix_timestamp', '<', to.toDate())
       // do not delete daily
       .andWhereRaw(`extract(hour from "unix_timestamp") != 0`)
       // delete only six hourly
