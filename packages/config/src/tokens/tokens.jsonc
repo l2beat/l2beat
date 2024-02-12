@@ -386,6 +386,10 @@
       "category": "stablecoin"
     },
     {
+      "symbol": "HYPR",
+      "address": "0x31adda225642a8f4d7e90d4152be6661ab22a5a2"
+    },
+    {
       "symbol": "ILV",
       "address": "0x767FE9EDC9E0dF98E07454847909b5E959D7ca0E"
     },
