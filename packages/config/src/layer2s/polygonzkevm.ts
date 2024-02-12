@@ -616,6 +616,7 @@ export const polygonzkevm: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelayString)],
   },
+  upgradesAndGovernance: "All main contracts are upgradable by the `ProxyAdmin` which is controlled by the `PolygonZkEVMTimelock`. Escrow contracts are upgradable by the `EscrowAdmin` multisig.\n\n`PolygonZkEVMTimelock` is a modified version of TimelockController that disables delay in case of emergency state in the `PolygonZkEVM` (Consensus Contract). It is operated by `AdminMultisig` and has 10 days delay. Addresses of trusted sequencer and aggregator can be changed by the `AdminMultisig`. It can transfer its role to any account.\n\n`SecurityCouncil` multisig can upgrade `PolygonZkEVM` bypassing the timelock and arbitrarily enable emergency state.",
   milestones: [
     {
       name: 'Polygon zkEVM Etrog upgrade',
