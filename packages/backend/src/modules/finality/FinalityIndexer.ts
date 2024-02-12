@@ -40,23 +40,33 @@ export class FinalityIndexer extends ChildIndexer {
   }
 
   override async update(from: number, to: number): Promise<number> {
-    if (to < this.minTimestamp.toNumber()) {
+    const targetTo = new UnixTime(from)
+      .toStartOf('day')
+      .add(1, 'days')
+      .toNumber()
+
+    if (targetTo < this.minTimestamp.toNumber()) {
       this.logger.debug(
         'Update skipped: target earlier than minimumTimestamp',
-        { from, to },
+        { from, targetTo },
       )
+      return targetTo
+    }
+
+    if (targetTo > UnixTime.now().toNumber()) {
       return to
     }
-    const targetTimestamp = new UnixTime(to).toStartOf('day')
+
+    const targetTimestamp = new UnixTime(targetTo)
 
     const configurationsToSync = await this.getSyncStatus(targetTimestamp)
 
     if (configurationsToSync.length === 0) {
       this.logger.debug('Update skipped: no configurations to sync', {
         from,
-        to,
+        to: targetTo,
       })
-      return to
+      return targetTimestamp.toNumber()
     }
 
     const finalityData = await this.getFinalityData(
@@ -68,11 +78,11 @@ export class FinalityIndexer extends ChildIndexer {
 
     this.logger.info('Update finished', {
       from,
-      to,
+      to: targetTimestamp,
       targetTimestamp,
       projects: configurationsToSync.map((c) => c.projectId.toString()),
     })
-    return to
+    return targetTimestamp.toNumber()
   }
 
   async getSyncStatus(targetTimestamp: UnixTime) {
