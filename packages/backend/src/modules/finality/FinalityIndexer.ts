@@ -46,14 +46,12 @@ export class FinalityIndexer extends ChildIndexer {
       .toNumber()
 
     if (targetTo < this.minTimestamp.toNumber()) {
-      this.logger.debug(
-        'Update skipped: target earlier than minimumTimestamp',
-        { from, targetTo },
-      )
-      return targetTo
+      this.logger.debug('Update skipped: target earlier than minimumTimestamp')
+      return Math.min(this.minTimestamp.toNumber(), to)
     }
 
-    if (targetTo > UnixTime.now().toNumber()) {
+    if (targetTo > to) {
+      this.logger.debug('Update skipped: not full day')
       return to
     }
 
