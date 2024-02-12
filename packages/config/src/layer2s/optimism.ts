@@ -192,12 +192,18 @@ export const optimism: Layer2 = opStack({
     CHALLENGER: 'Challenger',
   },
   nonTemplatePermissions: [
-    ...discovery.getMultisigPermission('ProxyAdminOwner', 'Owner of the ProxyAdmin. It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component.'),
+    ...discovery.getMultisigPermission(
+      'ProxyAdminOwner',
+      'Owner of the ProxyAdmin. It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component.',
+    ),
     ...discovery.getMultisigPermission(
       'FoundationMultisig_1',
       'Member of the ProxyAdminOwner.',
     ),
-    ...discovery.getMultisigPermission('SecurityCouncilMultisig', 'Member of the ProxyAdminOwner.'),
+    ...discovery.getMultisigPermission(
+      'SecurityCouncilMultisig',
+      'Member of the ProxyAdminOwner.',
+    ),
     ...discovery.getMultisigPermission(
       'FoundationMultisig_2',
       'This address is the owner of the following contracts: SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals, and as a Challenger for state roots.',
