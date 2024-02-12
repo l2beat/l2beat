@@ -23,8 +23,13 @@ export function createFinalityModule(
   clock: Clock,
   livenessIndexer?: LivenessIndexer,
 ): ApplicationModule | undefined {
-  if (!config.finality || !livenessIndexer) {
+  if (!config.finality) {
     logger.info('Finality module disabled')
+    return
+  }
+
+  if (!livenessIndexer) {
+    logger.error('To run finality you have to run Liveness')
     return
   }
 
@@ -69,11 +74,15 @@ export function createFinalityModule(
     runtimeConfigurations,
   )
 
+  const isIndexerEnabled = config.finality.indexerEnabled
+
   const start = async () => {
     logger = logger.for('FinalityModule')
     logger.info('Starting...')
 
-    await finalityIndexer.start()
+    if (isIndexerEnabled) {
+      await finalityIndexer.start()
+    }
   }
 
   return {
