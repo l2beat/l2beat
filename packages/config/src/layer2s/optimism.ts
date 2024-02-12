@@ -203,6 +203,12 @@ export const optimism: Layer2 = opStack({
     ...discovery.getMultisigPermission(
       'SecurityCouncilMultisig',
       'Member of the ProxyAdminOwner.',
+      [
+        {
+          text: 'Security Council members - Optimism Collective forum',
+          href: 'https://gov.optimism.io/t/security-council-vote-2-initial-member-ratification/7118'
+        }
+      ]
     ),
     ...discovery.getMultisigPermission(
       'FoundationMultisig_2',
