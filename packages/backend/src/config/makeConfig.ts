@@ -117,7 +117,14 @@ export function makeConfig(
       // TODO: figure out how to set it for local development
       minTimestamp: UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
     },
-    finality: flags.isEnabled('finality'),
+    finality: flags.isEnabled('finality') && {
+      indexerEnabled: flags.isEnabled('finality', 'indexer'),
+      ethereumProviderUrl: env.string('FINALITY_ETHEREUM_PROVIDER_URL'),
+      ethereumProviderCallsPerMinute: env.integer(
+        'FINALITY_ETHEREUM_PROVIDER_CALLS_PER_MINUTE',
+        600,
+      ),
+    },
     activity: flags.isEnabled('activity') && {
       starkexApiKey: env.string('STARKEX_API_KEY'),
       starkexCallsPerMinute: env.integer('STARKEX_CALLS_PER_MINUTE', 600),

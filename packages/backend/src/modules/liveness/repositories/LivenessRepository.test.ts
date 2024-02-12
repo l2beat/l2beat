@@ -203,7 +203,10 @@ describeDatabase(LivenessRepository.name, (database) => {
           UnixTime.fromDate(new Date('2021-01-01T10:00:00Z')),
         )
 
-        expect(result).toEqual(records[1].txHash)
+        expect(result).toEqual({
+          txHash: records[1].txHash,
+          timestamp: records[1].timestamp,
+        })
       })
 
       it('should return tx hash for given project id and timestamp inclusive hour', async () => {
@@ -239,7 +242,10 @@ describeDatabase(LivenessRepository.name, (database) => {
           UnixTime.fromDate(new Date('2021-01-01T10:00:00Z')),
         )
 
-        expect(result).toEqual(records[1].txHash)
+        expect(result).toEqual({
+          txHash: records[1].txHash,
+          timestamp: records[1].timestamp,
+        })
       })
 
       it('should return undefined when no tx hash for given project id', async () => {
