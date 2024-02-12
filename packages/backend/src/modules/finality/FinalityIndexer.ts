@@ -19,6 +19,7 @@ const FINALITY_GRANULARITY = 24 * 6
 
 export class FinalityIndexer extends ChildIndexer {
   readonly indexerId = 'finality_indexer'
+  // Indexer need to have a minimum timestamp to start from, we set it to the date when the indexer was created
   readonly minTimestamp = UnixTime.fromDate(
     new Date('2024-02-07T00:00:00.000Z'),
   )
@@ -126,10 +127,11 @@ export class FinalityIndexer extends ChildIndexer {
   }
 
   private async initialize() {
-    await this.initializeIndexerState(this.minTimestamp.toNumber())
+    await this.initializeIndexerState()
   }
 
-  async initializeIndexerState(safeHeight: number) {
+  async initializeIndexerState() {
+    const safeHeight = this.minTimestamp.toNumber()
     const indexerState = await this.stateRepository.findIndexerState(
       this.indexerId,
     )
