@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x602446a6f9c7e8bfb6e3c1818eef61a904920162
+Generated with discovered.json: 0x7e4c9076131acf85de578916eb5cfca1e750a721
 
-# Diff at Sat, 10 Feb 2024 13:39:45 GMT:
+# Diff at Mon, 12 Feb 2024 08:28:31 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@08f8b19c0307b7e22a4676058d6705e1237b8966 block: 18975204
-- current block number: 19198057
+- comparing to: main@ddc21751860f919d2bc4b19eb9fd41d3f26acdf2 block: 19176787
+- current block number: 19210753
 
 ## Description
 
-Added opStackSequencerInbox handler
+The Security Council is introduced, but with a 4/13 threshold. Now the multisig owning the ProxyAdmin is a 2/2 with the Foundation multisig and the Security Council multisig.
 
 ## Watched changes
 
@@ -102,22 +102,88 @@ Added opStackSequencerInbox handler
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 18975204 (main branch discovery), not current.
-
-```diff
-    contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
-      values.opStackDA:
-+        {"isSomeTxsLengthEqualToCelestiaDAExample":false}
-      values.sequencerInbox:
-+        "0xFF00000000000000000000000000000000000010"
-    }
-```
+discovery. Values are for block 19176787 (main branch discovery), not current.
 
 ```diff
     contract OptimismMultisig (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
       name:
 -        "OptimismMultisig"
 +        "FoundationMultisig_2"
+    }
+```
+
+Generated with discovered.json: 0x75bf0a1e7f3ca34a61085103177321849b59f9c2
+
+# Diff at Wed, 07 Feb 2024 14:04:10 GMT:
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: main@2e35800e01005d93332a552032058dcd67f3631d block: 19175199
+- current block number: 19176787
+
+## Description
+
+Added opStackSequencerInbox handler
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19175199 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
+      values.sequencerInbox:
++        "0xFF00000000000000000000000000000000000010"
+    }
+```
+
+Generated with discovered.json: 0x76f079bbf5d43c3c9139458655bfbd274ddbfa2a
+
+# Diff at Wed, 07 Feb 2024 08:43:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@64f1e0f27f831d3ef860a1c2faad8c77e04e6c29 block: 19126648
+- current block number: 19175199
+
+## Description
+
+Updated with the new OpDAHandler to remove the field.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19126648 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
+      values.opStackDA.isAllTxsLengthEqualToCelestiaDAExample:
+-        false
+    }
+```
+
+Generated with discovered.json: 0x7bc6699d72e87e966f09a1f8d9b0661ffdb9ab81
+
+# Diff at Wed, 31 Jan 2024 13:05:49 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@74040c3a8f43c630b3d31cc8376e84f5f9acda5c block: 18975204
+- current block number: 19126648
+
+## Description
+
+Added opStackDa handler
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18975204 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
+      values.opStackDA:
++        {"isAllTxsLengthEqualToCelestiaDAExample":false,"isSomeTxsLengthEqualToCelestiaDAExample":false}
     }
 ```
 
