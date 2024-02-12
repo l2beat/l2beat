@@ -1,4 +1,5 @@
 import {
+  assert,
   LivenessType,
   notUndefined,
   ProjectId,
@@ -29,6 +30,7 @@ export class LineaFinalityAnalyzer implements BaseAnalyzer {
     to: UnixTime,
     granularity: number,
   ) {
+    assert(to.toNumber() > from.toNumber())
     const interval = (to.toNumber() - from.toNumber()) / granularity
 
     const transactions = (
