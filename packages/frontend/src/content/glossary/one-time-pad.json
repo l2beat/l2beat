@@ -1,0 +1,5 @@
+{
+  "term": "One-time pad",
+  "definition": "A type of encryption that uses a random key that is only used once to encrypt a message, providing perfect secrecy.",
+  "isSpicy": false
+}

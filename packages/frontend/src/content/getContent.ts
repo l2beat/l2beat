@@ -9,7 +9,7 @@ type ContentKey = keyof Content
 
 export interface ContentEntry<T extends ContentKey> {
   id: string
-  data: z.infer<Content[T]['schema']>
+  data: z.output<Content[T]['schema']>
 }
 
 export function getContent<T extends ContentKey>(key: T): ContentEntry<T>[] {

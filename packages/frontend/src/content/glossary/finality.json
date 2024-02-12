@@ -1,0 +1,5 @@
+{
+  "term": "Finality",
+  "definition": "\nNeeds help: some people distinguish order vs execution finality.\nFinality is a scale--when a valid L2 transaction is included in an L1 block, it has the same finality as that enclosing block. This is different from correctness, because incorrect state transitions can still have a concept of finality in an enclosing L1 block but be later proven as invalid.",
+  "isSpicy": true
+}

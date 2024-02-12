@@ -1,0 +1,5 @@
+{
+  "term": "Bytecode-equivalent ZK-EVM",
+  "definition": "A ZK-Rollup that can interpret and execute EVM bytecode. All EVM opcodes and pre-compiles are supported and provable through the ZK-EVM circuit, but gas costs for EVM opcodes might be changed. (Type 2.5 in Vitalik's classification (opens in a new tab)).",
+  "isSpicy": true
+}

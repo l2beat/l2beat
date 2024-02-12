@@ -1,0 +1,5 @@
+{
+  "term": "Proposer",
+  "definition": "An entity that creates a block of transactions, and propagates it to the network for inclusion in the blockchain.",
+  "isSpicy": false
+}

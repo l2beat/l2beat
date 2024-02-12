@@ -1,0 +1,5 @@
+{
+  "term": "Commitment Scheme",
+  "definition": "A cryptographic primitive that (i) allows one (usually a prover) to commit to a chosen statement and send this commitment to the verifier while keeping it hidden to others, and (ii) allows verifier to check the commitment and accept or reject it.\nThe commitment scheme should satisfy two properties: (i) it should be binding; that is, once the prover has committed she is bound to the message she has committed, (ii) it should be hiding; that is, the commitment reveals nothing new about the message to the verifier.",
+  "isSpicy": false
+}

@@ -1,0 +1,5 @@
+{
+  "term": "Gas price",
+  "definition": "Price in ether of one unit of gas specified in a transaction.",
+  "isSpicy": false
+}

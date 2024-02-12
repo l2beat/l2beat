@@ -1,0 +1,5 @@
+{
+  "term": "Bridge",
+  "definition": "A message-passing protocol between two blockchains (between L1 and L2, and between L2s). At its most basic, a bridge consists of a smart contract which can escrow funds on one side of the bridge, and instruct the release or minting of corresponding assets on the other side. How these instructions are validated is a critical factor in assessing the trust assumptions of a bridge.",
+  "isSpicy": false
+}

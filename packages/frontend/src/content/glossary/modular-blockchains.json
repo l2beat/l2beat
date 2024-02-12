@@ -1,0 +1,5 @@
+{
+  "term": "Modular blockchains",
+  "definition": "A blockchain that fully outsources at least one of the 4 components (Consensus, Data Availability, Execution, Settlement) to an external chain. For example, rollup is a modular blockchain as it handles transaction executions off-chain and ‘outsources’ data availability and consensus to Ethereum.",
+  "isSpicy": false
+}
