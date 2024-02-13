@@ -5,12 +5,5 @@ export interface BaseAnalyzer {
     from: UnixTime,
     to: UnixTime,
     granularity: number,
-  ): Promise<
-    | {
-        minimumTimeToInclusion: number
-        maximumTimeToInclusion: number
-        averageTimeToInclusion: number
-      }
-    | undefined
-  >
+  ): Promise<number[] | undefined>
 }
