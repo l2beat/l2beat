@@ -3,4 +3,4 @@ export interface Layer2FinalityConfig {
   lag: number
 }
 
-export type FinalityType = 'OPStack' | 'Linea'
+export type FinalityType = 'OPStack' | 'Linea' | 'zkSyncEra'

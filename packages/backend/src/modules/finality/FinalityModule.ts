@@ -11,6 +11,7 @@ import { ApplicationModule } from '../ApplicationModule'
 import { LivenessIndexer } from '../liveness/LivenessIndexer'
 import { LivenessRepository } from '../liveness/repositories/LivenessRepository'
 import { LineaFinalityAnalyzer } from './analyzers/LineaFinalityAnalyzer'
+import { zkSyncEraFinalityAnalyzer } from './analyzers/zkSyncEraFinalityAnalyzer'
 import { FinalityController } from './api/FinalityController'
 import { createFinalityRouter } from './api/FinalityRouter'
 import { FinalityIndexer } from './FinalityIndexer'
@@ -56,12 +57,22 @@ export function createFinalityModule(
     livenessRepository,
   )
 
+  const zkSyncEraAnalyzer = new zkSyncEraFinalityAnalyzer(
+    ethereumRPC,
+    livenessRepository,
+  )
+
   const runtimeConfigurations = config.projects
     .map((p) => {
       if (p.finalityConfig?.type === 'Linea') {
         return {
           projectId: p.projectId,
           analyzer: lineaAnalyzer,
+        }
+      } else if (p.finalityConfig?.type === 'zkSyncEra') {
+        return {
+          projectId: p.projectId,
+          analyzer: zkSyncEraAnalyzer,
         }
       }
     })

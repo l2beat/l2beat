@@ -150,6 +150,10 @@ export const zksyncera: Layer2 = {
         },
       ],
     },
+    finality: {
+      type: 'zkSyncEra',
+      lag: 0,
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
