@@ -1,3 +1,112 @@
+Generated with discovered.json: 0x1601625a361b96c885d21fa37a61d604208d8a0b
+
+# Diff at Tue, 13 Feb 2024 13:42:07 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@244395e6440f487ad831698f521fc2dfb210f92a block: 19012997
+- current block number: 19219446
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract zkEVM (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+      upgradeability.implementation:
+-        "0xb32c3D0dDb0063FfB15E8a50b40cC62230D820B3"
++        "0xAA4b3a9515c921996Abe7930bF75Eff7466a4457"
+      implementations.0:
+-        "0xb32c3D0dDb0063FfB15E8a50b40cC62230D820B3"
++        "0xAA4b3a9515c921996Abe7930bF75Eff7466a4457"
+      values.accessControl.OPERATOR_ROLE.members[1]:
++        "0xa9268341831eFa4937537bc3e9EB36DbecE83C7e"
+      values.accessControl.VERIFIER_SETTER_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xd6B95c960779c72B8C6752119849318E5d550574"]}
+      values.GENERAL_PAUSE_TYPE:
+-        "0x06193bb948d6b7a6fcbe51c193ccf2183bb5d979b6ae5d3a6971b8851461d3b0"
++        1
+      values.L1_L2_PAUSE_TYPE:
+-        "0x9a80e24e463f00a8763c4dcec6a92d07d33272fa5db895d8589be70dccb002df"
++        2
+      values.L2_L1_PAUSE_TYPE:
+-        "0x21ea2f4fee4bcb623de15ac222ea5c1464307d884f23394b78ddc07f9c9c7cd8"
++        3
+      values.PROVING_SYSTEM_PAUSE_TYPE:
+-        "0x3a56b1bd788a764cbd923badb6d0719f21f520455285bf6877e636d08708878d"
++        4
+      values.verifiers.0:
+-        "0x1111111111111111111111111111111111111111"
++        "0xfB0C26A89833762b65098dD66b6Ae04b34D153be"
+      values.currentL2StoredL1MessageNumber:
++        0
+      values.currentL2StoredL1RollingHash:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.isMessageClaimed:
++        [false,false,false,false,false]
+      values.rollingHashes:
++        ["0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000"]
+      values.systemMigrationBlock:
++        19219000
+      values.VERIFIER_SETTER_ROLE:
++        "0x32937fd5162e282df7e9a14a5073a2425321c7966eaf70ed6c838a1006d84c4c"
+      derivedName:
+-        "ZkEvmV2"
++        "LineaRollup"
+      errors:
++        {"isMessageClaimed":"Too many values. Update configuration to explore fully","rollingHashes":"Too many values. Update configuration to explore fully"}
+    }
+```
+
+```diff
+    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083) {
+      values.roles.roles.1.functions.0xd19d4B5d358258f05D7B411E21A1460D11B0876F.pauseByType(bytes32):
+-        {"options":"None","wildcarded":true,"parameters":[]}
+      values.roles.roles.1.functions.0xd19d4B5d358258f05D7B411E21A1460D11B0876F.pauseByType(uint8):
++        {"options":"None","wildcarded":true,"parameters":[]}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierForDataAggregation (0xfB0C26A89833762b65098dD66b6Ae04b34D153be) {
+    }
+```
+
+## Source code changes
+
+```diff
+.../PlonkVerifierForDataAggregation.sol            | 1365 ++++++++++++++++++++
+ .../.code/PlonkVerifierForDataAggregation/meta.txt |    2 +
+ .../contracts/utils/structs/BitMaps.sol            |   51 +
+ .../zkEVM/implementation/contracts/LineaRollup.sol |  438 +++++++
+ .../zkEVM/implementation/contracts/ZkEvmV2.sol     |  156 +--
+ .../contracts/interfaces/IGenericErrors.sol        |    7 +-
+ .../contracts/interfaces/IMessageService.sol       |   16 +-
+ .../contracts/interfaces/IPauseManager.sol         |   15 +-
+ .../contracts/interfaces/IRateLimiter.sol          |   14 +-
+ .../contracts/interfaces/l1/IL1MessageManager.sol  |   45 +
+ .../interfaces/l1/IL1MessageManagerV1.sol}         |   16 +-
+ .../contracts/interfaces/l1/IL1MessageService.sol  |   59 +
+ .../contracts/interfaces/l1/ILineaRollup.sol       |  229 ++++
+ .../contracts/interfaces/l1}/IPlonkVerifier.sol    |    5 +-
+ .../contracts/interfaces/l1}/IZkEvmV2.sol          |   56 +-
+ .../zkEVM/implementation/contracts/lib/Utils.sol   |   18 +
+ .../messageService/l1/L1MessageManager.sol         |  133 +-
+ .../messageService/l1/L1MessageService.sol         |  204 ++-
+ .../messageService/l1/v1/L1MessageManagerV1.sol    |   94 ++
+ .../messageService/l1/v1/L1MessageServiceV1.sol    |  138 ++
+ .../contracts/messageService/lib/Codec.sol         |    8 +-
+ .../contracts/messageService/lib/PauseManager.sol  |   91 +-
+ .../contracts/messageService/lib/RateLimiter.sol   |   17 +-
+ .../contracts/messageService/lib/Rlp.sol           |    5 +-
+ .../lib/SparseMerkleTreeVerifier.sol               |   47 +
+ .../messageService/lib/TransactionDecoder.sol      |   13 +-
+ .../zkEVM/implementation/meta.txt                  |    4 +-
+ 27 files changed, 2829 insertions(+), 417 deletions(-)
+```
+
 Generated with discovered.json: 0xf96825b03558d1edcc98e9c0f78df07f66bd73a2
 
 # Diff at Mon, 15 Jan 2024 14:53:19 GMT
