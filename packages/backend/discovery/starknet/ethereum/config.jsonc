@@ -78,9 +78,6 @@
     "ProxyMultisig": {
       "ignoreInWatchMode": ["nonce"]
     },
-    "Implementation Multisig": {
-      "ignoreInWatchMode": ["nonce"]
-    },
     "WBTCBridge": {
       "fields": {
         "manager": {
