@@ -12,11 +12,11 @@ const operatorsCount = discovery.getPermissionedAccounts(
   'getBridgeOperators',
 ).length
 
-const thresholdArray = discovery.getContractValue(
+const thresholdArray = discovery.getContractValue<number[]>(
   'MainchainGateway',
   'getThreshold',
 )
-const thresholdPerc = Number(thresholdArray.toString().split(',')[0])
+const thresholdPerc = thresholdArray[0]
 
 const upgrades = {
   upgradableBy: ['MainchainBridgeManager'],
