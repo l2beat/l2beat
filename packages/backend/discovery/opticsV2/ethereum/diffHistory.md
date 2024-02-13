@@ -1,35 +1,4 @@
-Generated with discovered.json: 0x22ba4f9f9e551ff654e7063304c9605763867b47
-
-# Diff at Mon, 12 Feb 2024 17:12:27 GMT:
-
-- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@0f1d2202ad78911f3e628bcd20067a2a23ee5a74 block: 18340280
-- current block number: 19213351
-
-## Description
-
-Provide description of changes. This section will be preserved.
-
-## Watched changes
-
-```diff
-    contract HomeBeaconProxy (0xa73a3a74C7044B5411bD61E1990618A1400DA379) {
-      values.committedRoot:
--        "0x82c0255a011e275f80ac5223cb0af0da00883cfb386a416b9bab09da70f6856b"
-+        "0x27a83293af18bc26caa698fd173dcf6be6858d3dd6082b159152f06bcd7b5511"
-      values.count:
--        1682
-+        1683
-      values.root:
--        "0x82c0255a011e275f80ac5223cb0af0da00883cfb386a416b9bab09da70f6856b"
-+        "0x27a83293af18bc26caa698fd173dcf6be6858d3dd6082b159152f06bcd7b5511"
-      values.tree:
--        1682
-+        1683
-    }
-```
-
-Generated with discovered.json: 0x934ae7e4ca1629bbf8024e8f3b36351bc2edc36a
+Generated with discovered.json: 0x49181e4503e9468845b1d08bde6efff7f7601e23
 
 # Diff at Fri, 13 Oct 2023 07:04:29 GMT:
 
