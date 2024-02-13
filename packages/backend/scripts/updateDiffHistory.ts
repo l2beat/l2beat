@@ -20,6 +20,8 @@ import { rimraf } from 'rimraf'
 
 import { updateDiffHistoryHash } from '../src/modules/update-monitor/utils/hashing'
 
+const FIRST_SECTION_PREFIX = '# Diff at'
+
 // This is a CLI tool. Run logic immediately.
 void updateDiffHistoryFile()
 
@@ -64,17 +66,19 @@ async function updateDiffHistoryFile() {
     config,
   )
 
-  const configRelatedDiff = diffDiscovery(
+  let configRelatedDiff = diffDiscovery(
     discoveryFromMainBranch?.contracts ?? [],
     prevDiscovery?.contracts ?? [],
     config,
   )
+  removeIgnoredFields(configRelatedDiff)
+  configRelatedDiff = filterOutEmptyDiffs(configRelatedDiff)
 
   const diffHistoryPath = `${discoveryFolder}/diffHistory.md`
-  if (diff.length > 0 || configRelatedDiff.length > 0) {
-    const { content: historyFileFromMainBranch } =
-      getFileVersionOnMainBranch(diffHistoryPath)
+  const { content: historyFileFromMainBranch } =
+    getFileVersionOnMainBranch(diffHistoryPath)
 
+  if (diff.length > 0 || configRelatedDiff.length > 0) {
     let description = undefined
     if (existsSync(diffHistoryPath) && statSync(diffHistoryPath).isFile()) {
       const diskDiffHistory = readFileSync(diffHistoryPath, 'utf-8')
@@ -98,10 +102,39 @@ async function updateDiffHistoryFile() {
 
     writeFileSync(diffHistoryPath, diffHistory)
   } else {
-    console.log('No changes found')
+    console.log('No changes found.')
+    await revertDiffHistory(diffHistoryPath, historyFileFromMainBranch)
   }
 
   await updateDiffHistoryHash(diffHistoryPath, projectName, chain)
+}
+
+function removeIgnoredFields(diffs: DiscoveryDiff[]) {
+  const ignoredFields = [
+    'derivedName', // we don't want changes to derivedName to trigger diff
+  ]
+  for (const diff of diffs) {
+    diff.diff = diff.diff?.filter(
+      (d) => d.key === undefined || !ignoredFields.includes(d.key),
+    )
+  }
+}
+
+function filterOutEmptyDiffs(diffs: DiscoveryDiff[]): DiscoveryDiff[] {
+  return diffs.filter(
+    (d) => d.type !== undefined || (d.diff !== undefined && d.diff.length > 0),
+  )
+}
+
+async function revertDiffHistory(
+  diffHistoryPath: string,
+  historyFileFromMainBranch: string,
+) {
+  if (historyFileFromMainBranch.trim() !== '') {
+    writeFileSync(diffHistoryPath, historyFileFromMainBranch)
+  } else {
+    await rimraf(diffHistoryPath)
+  }
 }
 
 async function performDiscoveryOnPreviousBlock(
@@ -264,7 +297,7 @@ function generateDiffHistoryMarkdown(
   const mainBranch = getMainBranchName()
 
   const now = new Date().toUTCString()
-  result.push(`# Diff at ${now}:`)
+  result.push(`${FIRST_SECTION_PREFIX} ${now}:`)
   result.push('')
   const { name, email } = getGitUser()
   result.push(`- author: ${name} (<${email}>)`)
@@ -327,9 +360,13 @@ function findDescription(
   diskDiffHistory: string,
   masterDiffHistory: string,
 ): string | undefined {
-  const lastCommitted = masterDiffHistory.split('\n').at(0)
+  const masterDiffLines = masterDiffHistory.split('\n')
+  const latestSectionIndex = masterDiffLines.findIndex((l) =>
+    l.startsWith(FIRST_SECTION_PREFIX),
+  )
   let lines: string[] = []
-  if (lastCommitted) {
+  if (latestSectionIndex >= 0) {
+    const lastCommitted = masterDiffLines[latestSectionIndex]
     const diskLines = diskDiffHistory.split('\n')
     const lastCommittedIndex = diskLines.findIndex((l) => l === lastCommitted)
     assert(

@@ -91,6 +91,35 @@ describeDatabase(FinalityRepository.name, (database) => {
   })
 
   describe(
+    FinalityRepository.prototype.findProjectFinalityOnTimestamp.name,
+    () => {
+      it('finds a record', async () => {
+        const target = UnixTime.fromDate(new Date('2021-01-01T01:00:00Z'))
+
+        const result = await repository.findProjectFinalityOnTimestamp(
+          ProjectId('project-a'),
+          target,
+        )
+        expect(result).toEqual({
+          minimumTimeToInclusion: 2,
+          maximumTimeToInclusion: 4,
+          averageTimeToInclusion: 3,
+        })
+      })
+
+      it('returns undefined if not found', async () => {
+        const target = UnixTime.fromDate(new Date('2025-01-01T01:00:00Z'))
+
+        const result = await repository.findProjectFinalityOnTimestamp(
+          ProjectId('project-a'),
+          target,
+        )
+        expect(result).toEqual(undefined)
+      })
+    },
+  )
+
+  describe(
     FinalityRepository.prototype.getProjectsSyncedOnTimestamp.name,
     () => {
       it('should return all projects ids which record on a given timestamp', async () => {

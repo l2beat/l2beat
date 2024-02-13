@@ -17,6 +17,12 @@ export interface FinalityRecord {
   averageTimeToInclusion: number
 }
 
+export interface ProjectFinalityRecord {
+  minimumTimeToInclusion: number
+  maximumTimeToInclusion: number
+  averageTimeToInclusion: number
+}
+
 export class FinalityRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
@@ -37,6 +43,18 @@ export class FinalityRepository extends BaseRepository {
     return rows.map((row) => ProjectId(row.project_id))
   }
 
+  async findProjectFinalityOnTimestamp(
+    projectId: ProjectId,
+    timestamp: UnixTime,
+  ): Promise<ProjectFinalityRecord | undefined> {
+    const knex = await this.knex()
+    const row = await knex('finality')
+      .where('timestamp', timestamp.toDate())
+      .where('project_id', projectId.toString())
+      .first()
+    return row ? toProjectFinalityRecord(row) : undefined
+  }
+
   async addMany(
     transactions: FinalityRecord[],
     trx?: Knex.Transaction,
@@ -50,6 +68,14 @@ export class FinalityRepository extends BaseRepository {
   async deleteAll() {
     const knex = await this.knex()
     return knex('finality').delete()
+  }
+}
+
+function toProjectFinalityRecord(row: FinalityRow): ProjectFinalityRecord {
+  return {
+    minimumTimeToInclusion: row.minimum_time_to_inclusion,
+    maximumTimeToInclusion: row.maximum_time_to_inclusion,
+    averageTimeToInclusion: row.average_time_to_inclusion,
   }
 }
 
