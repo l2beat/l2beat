@@ -121,7 +121,7 @@ export function SidebarMenu(props: SidebarMenuProps) {
           <li>
             <OutLink
               className="flex items-center"
-              href="https://www.notion.so/native/l2beat/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f"
+              href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f"
             >
               Jobs
               {props.showHiringBadge && <HiringBadge className="ml-2" />}
