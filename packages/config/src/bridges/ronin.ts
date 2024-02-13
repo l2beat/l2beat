@@ -13,7 +13,7 @@ const operatorsCount = discovery.getPermissionedAccounts(
 ).length
 
 const thresholdArray = discovery.getContractValue(
-  'MainchainGatewayV3',
+  'MainchainGateway',
   'getThreshold',
 )
 const thresholdPerc = Number(thresholdArray.toString().split(',')[0])
@@ -69,12 +69,12 @@ export const ronin: Bridge = {
   riskView: {
     validatedBy: {
       value: 'Third Party',
-      description: `${operatorsString} MultiSig`,
+      description: `${operatorsString} operators.`,
       sentiment: 'bad',
     },
     sourceUpgradeability: {
       value: 'Yes',
-      description: 'Gateway Proxy can be upgraded by a 7/22 MultiSig.',
+      description: `Gateway Proxy can be upgraded by ${operatorsString} operators.`,
       sentiment: 'bad',
     },
     destinationToken: {
@@ -144,9 +144,9 @@ export const ronin: Bridge = {
   contracts: {
     // TODO: we need all contracts (check roles on escrows) and a diagram
     addresses: [
-      discovery.getContractDetails('MainchainGatewayV3', {
+      discovery.getContractDetails('MainchainGateway', {
         description:
-          `Upgradeable Bridge V2 contract (MainchainGatewayV2). Upgradeable by ${operatorsString} multisig.`,
+          `Upgradeable Bridge V3 contract.`,
         ...upgrades,
       })
     ],
@@ -154,33 +154,33 @@ export const ronin: Bridge = {
   },
   permissions: [
     {
-      name: 'MainchainGatewayV3 admin',
+      name: 'MainchainBridgeManager',
       accounts: [
         {
           address: discovery.getContractUpgradeabilityParam(
-          'MainchainGatewayV3',
+          'MainchainGateway',
           'admin'
           ), 
           type: 'Contract'
         },
       ],
-      description: `An address that can upgrade the bridge. This is a ${operatorsString} multisig.`,
+      description: `Can propose upgrades to the bridge and invoke admin functions.`,
     },
     {
-      name: 'MainchainBridgeManager',
+      name: 'MainchainBridgeManager Operators',
       accounts: discovery.getPermissionedAccounts(
         'MainchainBridgeManager',
         'getBridgeOperators',
       ),
-      description: `List of operators that can validate incoming messages. Transfer needs to be signed by a set of ${operatorsString} Operators and then relayed to destination chain`,
+      description: `List of operators that can validate incoming messages. Transfer needs to be signed by a set of ${operatorsString} Operators.`,
     },
     {
-      name: 'EmergencyPauser',
+      name: 'MainchainGatewayV3 Emergency Pauser',
       accounts: [discovery.getPermissionedAccount(
-        'MainchainGatewayV3',
+        'MainchainGateway',
         'emergencyPauser',
       )],
-      description: 'An address that can pause the bridge in case of emergency',
+      description: 'An address that can pause the bridge in case of emergency.',
     },
   ],
 }

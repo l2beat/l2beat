@@ -7,7 +7,8 @@
     ],
     "names": {
       "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08": "MainchainGateway",
-      "0xa71456fA88a5f6a4696D0446E690Db4a5913fab0": "MainchainBridgeManager"
+      "0xa71456fA88a5f6a4696D0446E690Db4a5913fab0": "MainchainBridgeManager",
+      "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
     },
     "overrides": {
       "MainchainGateway": {
@@ -16,6 +17,9 @@
           "checkThreshold",
           "withdrawalHash",
           "withdrawalLocked"
+        ],
+        "ignoreInWatchMode": [
+          "depositCount"
         ]
       },
       "MainchainBridgeManager": {
@@ -23,6 +27,11 @@
           "checkThreshold",
           "globalProposalRelayed",
           "round"
+        ]
+      },
+      "WETH9": {
+        "ignoreInWatchMode": [
+          "totalSupply"
         ]
       }
     }

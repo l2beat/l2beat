@@ -1,12 +1,12 @@
 {
   "name": "ronin",
   "chain": "ethereum",
-  "blockNumber": 19189337,
-  "configHash": "0x1b91331ee85abb226dc6eac83625a100e56498c5856e9b70a9f665630f799ffe",
+  "blockNumber": 19217857,
+  "configHash": "0x847694095827d3e6e73571b1278c3d875f93ae0d894505253b9c27414868d7f3",
   "version": 3,
   "contracts": [
     {
-      "name": "MainchainGatewayV3",
+      "name": "MainchainGateway",
       "address": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08",
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -17,10 +17,8 @@
       "sinceTimestamp": 1655883630,
       "values": {
         "_MAX_PERCENTAGE": 1000000,
-        "checkHighTierVoteWeightThreshold": [false, false, false, false, false],
-        "checkThreshold": [false, false, false, false, false],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "depositCount": 58536,
+        "depositCount": 59103,
         "DOMAIN_SEPARATOR": "0x2b00d883a78a8b8d324cfe3cc451d9550b8509512a316b5dba270df178853071",
         "emergencyPauser": "0xe514d9DEB7966c8BE0ca922de8a064264eA6bcd4",
         "getHighTierVoteWeightThreshold": [90, 100],
@@ -30,22 +28,9 @@
         "paused": false,
         "roninChainId": 2020,
         "WITHDRAWAL_UNLOCKER_ROLE": "0x5e5712e902fff5e704bc4d506ad976718319e019e9d2a872528a01a85db433e4",
-        "withdrawalHash": [
-          "0x838e33095236287241018bff3cdeff666e7478e0684f6340eae092a0289b938d",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000"
-        ],
-        "withdrawalLocked": [false, false, false, false, false],
         "wrappedNativeToken": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
-      "errors": {
-        "checkHighTierVoteWeightThreshold": "Too many values. Update configuration to explore fully",
-        "checkThreshold": "Too many values. Update configuration to explore fully",
-        "withdrawalHash": "Too many values. Update configuration to explore fully",
-        "withdrawalLocked": "Too many values. Update configuration to explore fully"
-      }
+      "derivedName": "MainchainGatewayV3"
     },
     {
       "name": "MainchainBridgeManager",
@@ -55,7 +40,6 @@
       },
       "sinceTimestamp": 1697008163,
       "values": {
-        "checkThreshold": [false, false, false, false, false],
         "DOMAIN_SEPARATOR": "0x9408194fe4a32106a620466afdd1b7827ec744a26bd1d6e99423a57405e1ed63",
         "getBridgeOperators": [
           "0xc23F2907Bc11848B5d5cEdBB835e915D7b760d99",
@@ -163,16 +147,10 @@
         "getProposalExpiryDuration": "57896044618658097711785492504343953926634992332820282019728792003956564819968",
         "getThreshold": [70, 100],
         "getTotalWeight": 2200,
-        "globalProposalRelayed": [false, true, false, false, false],
         "minimumVoteWeight": 1540,
-        "round": [1, 2, 0, 0, 0],
         "totalBridgeOperator": 22
       },
-      "errors": {
-        "checkThreshold": "Too many values. Update configuration to explore fully",
-        "globalProposalRelayed": "Too many values. Update configuration to explore fully",
-        "round": "Too many values. Update configuration to explore fully"
-      }
+      "derivedName": "MainchainBridgeManager"
     },
     {
       "name": "WETH9",
@@ -185,8 +163,9 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "3257785886741119599990271"
-      }
+        "totalSupply": "3248828726634541023254349"
+      },
+      "derivedName": "WETH9"
     },
     {
       "name": "PauseEnforcer",

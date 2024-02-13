@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x46c8e63066564e97c860347555add2ecb05b385e
+Generated with discovered.json: 0x9c557def36c492d1f16601a50843c9918095eca0
 
-# Diff at Fri, 09 Feb 2024 08:19:20 GMT:
+# Diff at Tue, 13 Feb 2024 08:19:05 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- current block number: 19189337
+- current block number: 19217857
 
 ## Description
 
@@ -13,7 +13,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract MainchainGatewayV3 (0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08) {
+    contract MainchainGateway (0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08) {
     }
 ```
 
