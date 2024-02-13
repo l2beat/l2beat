@@ -635,7 +635,7 @@ export const starknet: Layer2 = {
     },
     ...discovery.getMultisigPermission(
       'BridgeMultisig',
-      'Can upgrade the following bridges: WBTC, ETH, USDT, USDC.',
+      'Can upgrade the following bridges: FRAX, FXS, sfrxETH, USDT, WBTC, ETH, USDT, and additional permissions on other bridges, like setting the max total balance or activate withdrawal limits.',
     ),
   ],
   milestones: [
