@@ -355,6 +355,8 @@ export const zksyncera: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
+  upgradesAndGovernance:
+    'All smart contracts and roles including the diamond and its facets, the `Governor`, `Admin`, `Validator` and `Verifier` are instantly upgradable by the Matter Labs multisig (4/8). A security council is not implemented but is planned to share (2/2) the Governor role of the AdminFacet with the Matter Labs multisig. The less powerful `Admin` role will stay with the multisig. Freezable diamond facets can be frozen by the `Governor` and unfrozen by the `Governor` or the `Admin`.\n\n A `Governance` smart contract with the role of the `Governor` is in place and is intended for scheduling transparent or intransparent upgrades with optional delay that will then execute via the `AdminFacet` of the diamond. This function is currently skipped as there is no party apart from the multisig that could intervene.',
   stateDerivation: {
     nodeSoftware: `The node software is open-source, and its source code can be found [here](https://github.com/matter-labs/zksync-era).
     The main node software does not rely on Layer 1 (L1) to reconstruct the state, but you can use [this tool](https://github.com/eqlabs/zksync-state-reconstruct) for that purpose. Currently, there is no straightforward method to inject the state into the main node, but zkSync is actively working on a solution for this.`,
