@@ -29,7 +29,9 @@ export function StatusPagesLinksPage() {
         <p>Links</p>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           {LINKS.map((link, i) => (
-            <a key={i} href={link.url}>{link.name}</a>
+            <a key={i} href={link.url}>
+              {link.name}
+            </a>
           ))}
         </div>
       </div>

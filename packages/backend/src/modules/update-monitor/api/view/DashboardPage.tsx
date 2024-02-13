@@ -77,7 +77,7 @@ export function DashboardPage(props: DashboardPageProps) {
           {Object.entries(props.projects).map(([chainName, projects]) => (
             <>
               <tr
-              key={chainName}
+                key={chainName}
                 style={{
                   padding: '0px',
                   textAlign: 'left',
