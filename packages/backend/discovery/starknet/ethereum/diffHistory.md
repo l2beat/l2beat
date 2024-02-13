@@ -8,7 +8,21 @@ Generated with discovered.json: 0x97edc1be390c5077c5863e2ba3fff282032ffa3f
 
 ## Description
 
-Bridges have been updated to support a new message format that includes the token address in the payload.
+Bridges have been updated to support a new message format that includes the token address in the payload and to support a new permissioning model.
+
+There are now 9 roles:
+
+1. Governance Admin: can update the App Role Admin and Upgrade Governor roles.
+2. App Governor: can set the L2 token bridge. Can set the max total balance.
+3. App Role Admin: can update the App Governor, Operator, Token Admin roles.
+4. Operator: not used?
+5. Token Admin: not used?
+6. Upgrade Governor: not used?
+7. Security Admin: can disable withdtawal limits. Can update the Security Agent role and itself.
+8. Security Agent: can enable withdrawal limits.
+9. Manager: can initiate the "enrollmenet" of a token or deactivate a token.
+
+Also the bridge implementation for ERC20 and Ether are different but overall very similar.
 
 ## Watched changes
 
