@@ -170,7 +170,7 @@ export const ronin: Bridge = {
         'MainchainBridgeManager',
         'getBridgeOperators',
       ),
-      description: `List of operators that can validate incoming messages. Transfer needs to be signed by a set of ${operatorsString} Operators.`,
+      description: `List of operators that can validate incoming messages. Transfer needs to be signed by ${operatorsString} Operators.`,
     },
     {
       name: 'MainchainGatewayV3 Emergency Pauser',
