@@ -206,6 +206,10 @@ export const polygonzkevm: Layer2 = {
         },
       ],
     },
+    finality: {
+      type: 'PolygonZkEVM',
+      lag: 0,
+    },
   },
   chainConfig: {
     name: 'polygonzkevm',
