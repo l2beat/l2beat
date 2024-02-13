@@ -1,4 +1,8 @@
-import { FinalityApiResponse, FinalityDataPoint } from '@l2beat/shared-pure'
+import {
+  FinalityApiResponse,
+  FinalityDataPoint,
+  FinalityProjectData,
+} from '@l2beat/shared-pure'
 
 import { JsonHttpClient } from '../caching/JsonHttpClient'
 import { Config } from '../config'
@@ -27,9 +31,8 @@ function getMockFinalityApiResponse(): FinalityApiResponse {
     'linea',
     'myria',
     'scroll',
-  ].reduce<Record<string, FinalityDataPoint>>((acc, cur) => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    acc[cur] = generateMockData()
+  ].reduce<Record<string, FinalityProjectData>>((acc, cur) => {
+    acc[cur] = { timeToInclusion: generateMockData() }
     return acc
   }, {})
 
@@ -40,6 +43,8 @@ function getMockFinalityApiResponse(): FinalityApiResponse {
 
 function generateMockData(): FinalityDataPoint {
   return {
+    minimumInSeconds:
+      generateRandomTime() < 3000 ? undefined : generateRandomTime(),
     averageInSeconds: generateRandomTime(),
     maximumInSeconds: generateRandomTime(),
   }

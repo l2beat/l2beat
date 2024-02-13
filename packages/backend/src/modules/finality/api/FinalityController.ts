@@ -73,7 +73,9 @@ export class FinalityController {
           project.finalityConfig.lag,
         )
         if (projectResult) {
-          result[project.projectId.toString()] = projectResult
+          result[project.projectId.toString()] = {
+            timeToInclusion: projectResult,
+          }
         }
       }),
     )
