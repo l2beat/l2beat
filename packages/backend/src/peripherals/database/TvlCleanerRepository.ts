@@ -3,8 +3,8 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { TvlCleanerRow } from 'knex/types/tables'
 
-import { BaseRepository, CheckConvention } from './shared/BaseRepository'
-import { Database } from './shared/Database'
+import { BaseRepository, CheckConvention } from './BaseRepository'
+import { Database } from './Database'
 
 export interface TvlCleanerRecord {
   repositoryName: string
