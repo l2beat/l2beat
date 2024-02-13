@@ -1,14 +1,6 @@
-import {
-  assert,
-  LivenessType,
-  notUndefined,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
-import { LivenessRepository } from '../../liveness/repositories/LivenessRepository'
 import { BaseAnalyzer } from './types/BaseAnalyzer'
 
 type LineaDecoded = [
@@ -18,49 +10,13 @@ type LineaDecoded = [
   string,
 ]
 
-export class LineaFinalityAnalyzer implements BaseAnalyzer {
-  constructor(
-    private readonly provider: RpcClient,
-    private readonly livenessRepository: LivenessRepository,
-  ) {}
+export class LineaFinalityAnalyzer extends BaseAnalyzer {
+  getProjectId(): ProjectId {
+    return ProjectId('linea')
+  }
 
-  async getFinalityWithGranularity(
-    from: UnixTime,
-    to: UnixTime,
-    granularity: number,
-  ) {
-    assert(to.toNumber() > from.toNumber())
-    const interval = (to.toNumber() - from.toNumber()) / granularity
-
-    const transactions = (
-      await Promise.all(
-        Array.from({ length: granularity }).map(async (_, i) => {
-          const targetTimestamp = to.add(-interval * i, 'seconds')
-          const lowerBound = targetTimestamp.add(-interval, 'seconds')
-
-          return this.livenessRepository.findTransactionWithinTimeRange(
-            ProjectId('linea'),
-            LivenessType('STATE'),
-            targetTimestamp,
-            lowerBound,
-          )
-        }),
-      )
-    ).filter(notUndefined)
-
-    if (!transactions.length) {
-      return undefined
-    }
-
-    const finalityDelays = (
-      await Promise.all(
-        transactions.map(async (transaction) => {
-          return this.getFinality(transaction)
-        }),
-      )
-    ).flat()
-
-    return finalityDelays
+  getLivenessType(): LivenessType {
+    return LivenessType('STATE')
   }
 
   async getFinality(transaction: {
