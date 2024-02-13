@@ -1,8 +1,8 @@
 {
   "name": "starknet",
   "chain": "ethereum",
-  "blockNumber": 19189404,
-  "configHash": "0x44deda8c04fc8ae179026f8da50c67f6d7f10032b97265f4fa38b1fed01ffa9a",
+  "blockNumber": 19212561,
+  "configHash": "0xaaa3bc8079b0b53a835d1868b2b07f08678744d4a79e77c849488d41c4ea4405",
   "version": 3,
   "contracts": [
     {
@@ -25,7 +25,7 @@
           "0x64F4396bb0669C72858Cc50C779b48EB25F45770"
         ],
         "getThreshold": 2,
-        "nonce": 7,
+        "nonce": 13,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -58,7 +58,7 @@
       "address": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
       "upgradeability": {
         "type": "StarkWare proxy",
-        "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
+        "implementation": "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0",
         "upgradeDelay": 0,
         "isFinal": false,
         "proxyGovernance": [
@@ -66,19 +66,55 @@
           "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
         ]
       },
-      "implementations": ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"],
+      "implementations": ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"],
       "sinceTimestamp": 1657137600,
       "values": {
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "GOVERNANCE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "APP_GOVERNOR": {
+            "adminRole": "APP_ROLE_ADMIN",
+            "members": []
+          },
+          "APP_ROLE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": []
+          },
+          "OPERATOR": {
+            "adminRole": "APP_ROLE_ADMIN",
+            "members": []
+          },
+          "TOKEN_ADMIN": {
+            "adminRole": "APP_ROLE_ADMIN",
+            "members": []
+          },
+          "UPGRADE_GOVERNOR": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": []
+          },
+          "SECURITY_ADMIN": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "SECURITY_AGENT": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": []
+          }
+        },
+        "estimateDepositFeeWei": 100000000000000,
+        "estimateEnrollmentFeeWei": 500000000000000,
         "getUpgradeActivationDelay": 0,
-        "governors": [
-          "0xfdF3E24BD26368512C5F65959BBB668d3338f994",
-          "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
-        ],
-        "identify": "StarkWare_StarknetERC20Bridge_2023_1",
-        "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
-        "isActive": true,
+        "identify": "StarkWare_StarknetERC20Bridge_2.0_4",
+        "implementation": "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0",
         "isFrozen": false,
         "isNotFinalized": true,
+        "manager": "0x0000000000000000000000000000000000000000",
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
@@ -92,19 +128,20 @@
       "address": "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
       "upgradeability": {
         "type": "StarkWare proxy",
-        "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
+        "implementation": "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0",
         "upgradeDelay": 0,
         "isFinal": false,
         "proxyGovernance": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
       },
-      "implementations": ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"],
+      "implementations": ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"],
       "sinceTimestamp": 1692689267,
       "values": {
         "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
+        "estimateDepositFeeWei": 100000000000000,
+        "estimateEnrollmentFeeWei": 500000000000000,
         "getUpgradeActivationDelay": 0,
-        "identify": "StarkWare_StarknetERC20Bridge_2023_1",
-        "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
-        "isActive": true,
+        "identify": "StarkWare_StarknetERC20Bridge_2.0_4",
+        "implementation": "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0",
         "isFrozen": false,
         "isNotFinalized": true,
         "MAX_UPGRADE_DELAY": 15552000,
@@ -209,7 +246,7 @@
       "address": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
       "upgradeability": {
         "type": "StarkWare proxy",
-        "implementation": "0x455603AD9ae671F6c1f0f746F24d7904cA603581",
+        "implementation": "0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95",
         "upgradeDelay": 0,
         "isFinal": false,
         "proxyGovernance": [
@@ -217,22 +254,58 @@
           "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
         ]
       },
-      "implementations": ["0x455603AD9ae671F6c1f0f746F24d7904cA603581"],
+      "implementations": ["0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95"],
       "sinceTimestamp": 1647857148,
       "values": {
-        "bridgedToken": "0x0000000000000000000000000000000000000000",
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "GOVERNANCE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "APP_GOVERNOR": {
+            "adminRole": "APP_ROLE_ADMIN",
+            "members": []
+          },
+          "APP_ROLE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": []
+          },
+          "OPERATOR": {
+            "adminRole": "APP_ROLE_ADMIN",
+            "members": []
+          },
+          "TOKEN_ADMIN": {
+            "adminRole": "APP_ROLE_ADMIN",
+            "members": []
+          },
+          "UPGRADE_GOVERNOR": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": []
+          },
+          "SECURITY_ADMIN": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "SECURITY_AGENT": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": []
+          }
+        },
+        "bridgedToken": "0x0000000000000000000000000000000000455448",
         "depositorAddress": "0x0000000000000000000000000000000000000000",
+        "estimateDepositFeeWei": 100000000000000,
+        "estimateEnrollmentFeeWei": 500000000000000,
         "getUpgradeActivationDelay": 0,
-        "governors": [
-          "0x6A03F3F0943eb686a4EF94e7B6f6CA3332580b5C",
-          "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
-        ],
-        "identify": "StarkWare_StarknetEthBridge_2023_1",
-        "implementation": "0x455603AD9ae671F6c1f0f746F24d7904cA603581",
-        "isActive": true,
+        "identify": "StarkWare_StarknetEthBridge_2.0_4",
+        "implementation": "0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95",
         "isFrozen": false,
         "isNotFinalized": true,
         "l2TokenContract": "0xd4C972C4e0A9946bEF9dabF4EF84EDa8EF542b82",
+        "manager": "0x0000000000000000000000000000000000000000",
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "messagingContract": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
@@ -247,7 +320,7 @@
       "address": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
       "upgradeability": {
         "type": "StarkWare proxy",
-        "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
+        "implementation": "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0",
         "upgradeDelay": 0,
         "isFinal": false,
         "proxyGovernance": [
@@ -255,19 +328,55 @@
           "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
         ]
       },
-      "implementations": ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"],
+      "implementations": ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"],
       "sinceTimestamp": 1657137615,
       "values": {
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "GOVERNANCE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "APP_GOVERNOR": {
+            "adminRole": "APP_ROLE_ADMIN",
+            "members": []
+          },
+          "APP_ROLE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": []
+          },
+          "OPERATOR": {
+            "adminRole": "APP_ROLE_ADMIN",
+            "members": []
+          },
+          "TOKEN_ADMIN": {
+            "adminRole": "APP_ROLE_ADMIN",
+            "members": []
+          },
+          "UPGRADE_GOVERNOR": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": []
+          },
+          "SECURITY_ADMIN": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "SECURITY_AGENT": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": []
+          }
+        },
+        "estimateDepositFeeWei": 100000000000000,
+        "estimateEnrollmentFeeWei": 500000000000000,
         "getUpgradeActivationDelay": 0,
-        "governors": [
-          "0x3ADfc0aBd0eBD4e61281d991F87134eE3231dB13",
-          "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
-        ],
-        "identify": "StarkWare_StarknetERC20Bridge_2023_1",
-        "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
-        "isActive": true,
+        "identify": "StarkWare_StarknetERC20Bridge_2.0_4",
+        "implementation": "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0",
         "isFrozen": false,
         "isNotFinalized": true,
+        "manager": "0x0000000000000000000000000000000000000000",
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
@@ -289,6 +398,44 @@
       "implementations": ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"],
       "sinceTimestamp": 1685452751,
       "values": {
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "GOVERNANCE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "APP_GOVERNOR": {
+            "adminRole": "APP_ROLE_ADMIN",
+            "members": []
+          },
+          "APP_ROLE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": []
+          },
+          "OPERATOR": {
+            "adminRole": "APP_ROLE_ADMIN",
+            "members": []
+          },
+          "TOKEN_ADMIN": {
+            "adminRole": "APP_ROLE_ADMIN",
+            "members": []
+          },
+          "UPGRADE_GOVERNOR": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": []
+          },
+          "SECURITY_ADMIN": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "SECURITY_AGENT": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": []
+          }
+        },
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
         "getUpgradeActivationDelay": 0,
@@ -296,14 +443,12 @@
         "implementation": "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0",
         "isFrozen": false,
         "isNotFinalized": true,
+        "manager": "0x0000000000000000000000000000000000000000",
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
-      },
-      "errors": {
-        "governors": "Cannot find a matching method for isGovernor"
       },
       "derivedName": "StarknetERC20Bridge"
     },
@@ -336,7 +481,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1629641,
+        "l1ToL2MessageNonce": 1631146,
         "messageCancellationDelay": 432100,
         "operators": [
           "0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591",
@@ -345,9 +490,9 @@
         "programHash": "2479841346739966073527450029179698923866252973805981504232089731754042431018",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
-        "stateBlockHash": "2363202998031527466441172596368837278637931958168331069005927737369097532176",
-        "stateBlockNumber": 536898,
-        "stateRoot": "3555421407496482760892525668710111079341982429189905589338041401321443533658",
+        "stateBlockHash": "2895952264661567450235937225599211430098732875198071481474835533204035201706",
+        "stateBlockNumber": 541205,
+        "stateRoot": "2495180490875366043815945536192585028279243746955750622777299704657634688657",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -366,6 +511,44 @@
       "implementations": ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"],
       "sinceTimestamp": 1685880791,
       "values": {
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "GOVERNANCE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "APP_GOVERNOR": {
+            "adminRole": "APP_ROLE_ADMIN",
+            "members": []
+          },
+          "APP_ROLE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": []
+          },
+          "OPERATOR": {
+            "adminRole": "APP_ROLE_ADMIN",
+            "members": []
+          },
+          "TOKEN_ADMIN": {
+            "adminRole": "APP_ROLE_ADMIN",
+            "members": []
+          },
+          "UPGRADE_GOVERNOR": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": []
+          },
+          "SECURITY_ADMIN": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "SECURITY_AGENT": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": []
+          }
+        },
         "estimateDepositFeeWei": 100000000000000,
         "estimateEnrollmentFeeWei": 500000000000000,
         "getUpgradeActivationDelay": 0,
@@ -373,15 +556,13 @@
         "implementation": "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0",
         "isFrozen": false,
         "isNotFinalized": true,
+        "manager": "0x0000000000000000000000000000000000000000",
         "MAX_UPGRADE_DELAY": 15552000,
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
-      },
-      "errors": {
-        "governors": "Cannot find a matching method for isGovernor"
       },
       "derivedName": "StarknetERC20Bridge"
     },
@@ -390,19 +571,20 @@
       "address": "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
       "upgradeability": {
         "type": "StarkWare proxy",
-        "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
+        "implementation": "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0",
         "upgradeDelay": 0,
         "isFinal": false,
         "proxyGovernance": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
       },
-      "implementations": ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"],
+      "implementations": ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"],
       "sinceTimestamp": 1692689279,
       "values": {
         "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
+        "estimateDepositFeeWei": 100000000000000,
+        "estimateEnrollmentFeeWei": 500000000000000,
         "getUpgradeActivationDelay": 0,
-        "identify": "StarkWare_StarknetERC20Bridge_2023_1",
-        "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
-        "isActive": true,
+        "identify": "StarkWare_StarknetERC20Bridge_2.0_4",
+        "implementation": "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0",
         "isFrozen": false,
         "isNotFinalized": true,
         "MAX_UPGRADE_DELAY": 15552000,
@@ -419,19 +601,20 @@
       "address": "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
       "upgradeability": {
         "type": "StarkWare proxy",
-        "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
+        "implementation": "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0",
         "upgradeDelay": 0,
         "isFinal": false,
         "proxyGovernance": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
       },
-      "implementations": ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"],
+      "implementations": ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"],
       "sinceTimestamp": 1692689255,
       "values": {
         "ENABLE_WINDOW_DURATION_SLOT": "0xb00a6109e73dbe7bbf8d3f18fb9221d2d024dc2671e3d5ff02532ccc40590738",
+        "estimateDepositFeeWei": 100000000000000,
+        "estimateEnrollmentFeeWei": 500000000000000,
         "getUpgradeActivationDelay": 0,
-        "identify": "StarkWare_StarknetERC20Bridge_2023_1",
-        "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
-        "isActive": true,
+        "identify": "StarkWare_StarknetERC20Bridge_2.0_4",
+        "implementation": "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0",
         "isFrozen": false,
         "isNotFinalized": true,
         "MAX_UPGRADE_DELAY": 15552000,
@@ -477,7 +660,7 @@
       "address": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
       "upgradeability": {
         "type": "StarkWare proxy",
-        "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
+        "implementation": "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0",
         "upgradeDelay": 0,
         "isFinal": false,
         "proxyGovernance": [
@@ -485,19 +668,55 @@
           "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
         ]
       },
-      "implementations": ["0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"],
+      "implementations": ["0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"],
       "sinceTimestamp": 1657137639,
       "values": {
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          },
+          "GOVERNANCE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "APP_GOVERNOR": {
+            "adminRole": "APP_ROLE_ADMIN",
+            "members": []
+          },
+          "APP_ROLE_ADMIN": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": []
+          },
+          "OPERATOR": {
+            "adminRole": "APP_ROLE_ADMIN",
+            "members": []
+          },
+          "TOKEN_ADMIN": {
+            "adminRole": "APP_ROLE_ADMIN",
+            "members": []
+          },
+          "UPGRADE_GOVERNOR": {
+            "adminRole": "GOVERNANCE_ADMIN",
+            "members": []
+          },
+          "SECURITY_ADMIN": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": ["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+          },
+          "SECURITY_AGENT": {
+            "adminRole": "SECURITY_ADMIN",
+            "members": []
+          }
+        },
+        "estimateDepositFeeWei": 100000000000000,
+        "estimateEnrollmentFeeWei": 500000000000000,
         "getUpgradeActivationDelay": 0,
-        "governors": [
-          "0xe8e9E69511BaaFC826953fC93cdf1ED6d3B63c53",
-          "0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"
-        ],
-        "identify": "StarkWare_StarknetERC20Bridge_2023_1",
-        "implementation": "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB",
-        "isActive": true,
+        "identify": "StarkWare_StarknetERC20Bridge_2.0_4",
+        "implementation": "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0",
         "isFrozen": false,
         "isNotFinalized": true,
+        "manager": "0x0000000000000000000000000000000000000000",
         "maxDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "maxTotalBalance": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
@@ -538,14 +757,13 @@
     }
   ],
   "eoas": [
+    "0x0000000000000000000000000000000000455448",
     "0x16C8B90390468c1AA81f68B2Fb9fcc3d46e0eA3E",
     "0x2871B956bC19D25961E9a7519f32D7fDaA21B403",
     "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7",
-    "0x3ADfc0aBd0eBD4e61281d991F87134eE3231dB13",
     "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
     "0x59232aC80E6d403b6381393e52f4665ECA328558",
     "0x64F4396bb0669C72858Cc50C779b48EB25F45770",
-    "0x6A03F3F0943eb686a4EF94e7B6f6CA3332580b5C",
     "0x804d60CB1ade94511f7915A2062948685Ca8C81f",
     "0x8dB2469f3355d6769932B853F29e32df06122981",
     "0xC91EC49Ad0843E5Cca55b4c4e5f68de54F6cB2Ae",
@@ -554,9 +772,7 @@
     "0xd4C972C4e0A9946bEF9dabF4EF84EDa8EF542b82",
     "0xD5fB66CaEE881367Df4409B17Fd53a2Ef0D9B263",
     "0xdc29f0F7742ec462Af475AceeCECC57601991D23",
-    "0xe8e9E69511BaaFC826953fC93cdf1ED6d3B63c53",
     "0xf5EF70bb0975cAF85461523e0cB3910c35cb30b4",
-    "0xfdF3E24BD26368512C5F65959BBB668d3338f994",
     "0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591"
   ],
   "abis": {
@@ -741,40 +957,6 @@
       "function removeImplementation(address removedImplementation, bytes data, bool finalize)",
       "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
     ],
-    "0x455603AD9ae671F6c1f0f746F24d7904cA603581": [
-      "event LogBridgeActivated()",
-      "event LogDeposit(address indexed sender, uint256 amount, uint256 indexed l2Recipient, uint256 nonce, uint256 fee)",
-      "event LogDepositCancelRequest(address indexed sender, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
-      "event LogDepositReclaimed(address indexed sender, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
-      "event LogNewGovernorAccepted(address acceptedGovernor)",
-      "event LogNominatedGovernor(address nominatedGovernor)",
-      "event LogNominationCancelled()",
-      "event LogRemovedGovernor(address removedGovernor)",
-      "event LogSetL2TokenBridge(uint256 value)",
-      "event LogSetMaxDeposit(uint256 value)",
-      "event LogSetMaxTotalBalance(uint256 value)",
-      "event LogWithdrawal(address indexed recipient, uint256 amount)",
-      "function acceptGovernance()",
-      "function cancelNomination()",
-      "function deposit(uint256 l2Recipient) payable",
-      "function deposit(uint256 amount, uint256 l2Recipient) payable",
-      "function depositCancelRequest(uint256 amount, uint256 l2Recipient, uint256 nonce)",
-      "function depositReclaim(uint256 amount, uint256 l2Recipient, uint256 nonce)",
-      "function identify() pure returns (string)",
-      "function initialize(bytes data)",
-      "function isActive() view returns (bool)",
-      "function isFrozen() view returns (bool)",
-      "function isGovernor(address user) view returns (bool)",
-      "function maxDeposit() view returns (uint256)",
-      "function maxTotalBalance() view returns (uint256)",
-      "function nominateNewGovernor(address newGovernor)",
-      "function removeGovernor(address governorForRemoval)",
-      "function setL2TokenBridge(uint256 l2TokenBridge_)",
-      "function setMaxDeposit(uint256 maxDeposit_)",
-      "function setMaxTotalBalance(uint256 maxTotalBalance_)",
-      "function withdraw(uint256 amount, address recipient)",
-      "function withdraw(uint256 amount)"
-    ],
     "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C": [
       "constructor(uint256 upgradeActivationDelay)",
       "event FinalizedImplementation(address indexed implementation)",
@@ -836,44 +1018,92 @@
       "function transferOwnership(address newOwner)",
       "function unpause()"
     ],
-    "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB": [
-      "event LogBridgeActivated()",
-      "event LogDeposit(address indexed sender, uint256 amount, uint256 indexed l2Recipient, uint256 nonce, uint256 fee)",
-      "event LogDepositCancelRequest(address indexed sender, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
-      "event LogDepositReclaimed(address indexed sender, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
-      "event LogNewGovernorAccepted(address acceptedGovernor)",
-      "event LogNominatedGovernor(address nominatedGovernor)",
-      "event LogNominationCancelled()",
-      "event LogRemovedGovernor(address removedGovernor)",
-      "event LogSetL2TokenBridge(uint256 value)",
-      "event LogSetMaxDeposit(uint256 value)",
-      "event LogSetMaxTotalBalance(uint256 value)",
-      "event LogWithdrawal(address indexed recipient, uint256 amount)",
-      "function acceptGovernance()",
-      "function cancelNomination()",
-      "function deposit(uint256 amount, uint256 l2Recipient) payable",
-      "function depositCancelRequest(uint256 amount, uint256 l2Recipient, uint256 nonce)",
-      "function depositReclaim(uint256 amount, uint256 l2Recipient, uint256 nonce)",
-      "function identify() pure returns (string)",
-      "function initialize(bytes data)",
-      "function isActive() view returns (bool)",
-      "function isFrozen() view returns (bool)",
-      "function isGovernor(address user) view returns (bool)",
-      "function maxDeposit() view returns (uint256)",
-      "function maxTotalBalance() view returns (uint256)",
-      "function nominateNewGovernor(address newGovernor)",
-      "function removeGovernor(address governorForRemoval)",
-      "function setL2TokenBridge(uint256 l2TokenBridge_)",
-      "function setMaxDeposit(uint256 maxDeposit_)",
-      "function setMaxTotalBalance(uint256 maxTotalBalance_)",
-      "function withdraw(uint256 amount, address recipient)",
-      "function withdraw(uint256 amount)"
-    ],
     "0x83C0A700114101D1283D1405E2c8f21D3F03e988": [
       "constructor(address _singleton)"
     ],
     "0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd": [
       "constructor(address _singleton)"
+    ],
+    "0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95": [
+      "event Deposit(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256 nonce, uint256 fee)",
+      "event DepositCancelRequest(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
+      "event DepositReclaimed(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
+      "event DepositWithMessage(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256[] message, uint256 nonce, uint256 fee)",
+      "event DepositWithMessageCancelRequest(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256[] message, uint256 nonce)",
+      "event DepositWithMessageReclaimed(address indexed sender, address indexed token, uint256 amount, uint256 indexed l2Recipient, uint256[] message, uint256 nonce)",
+      "event LogDeposit(address indexed sender, uint256 amount, uint256 indexed l2Recipient, uint256 nonce, uint256 fee)",
+      "event LogDepositCancelRequest(address indexed sender, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
+      "event LogDepositReclaimed(address indexed sender, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event SetL2TokenBridge(uint256 value)",
+      "event SetMaxTotalBalance(address indexed token, uint256 value)",
+      "event TokenDeactivated(address token)",
+      "event TokenEnrollmentInitiated(address token, bytes32 deploymentMsgHash)",
+      "event Withdrawal(address indexed recipient, address indexed token, uint256 amount)",
+      "event WithdrawalLimitDisabled(address indexed sender, address indexed token)",
+      "event WithdrawalLimitEnabled(address indexed sender, address indexed token)",
+      "function assignLegacyProxyGovernor(address account)",
+      "function checkDeploymentStatus(address token)",
+      "function deactivate(address token)",
+      "function deposit(address token, uint256 amount, uint256 l2Recipient) payable",
+      "function deposit(uint256 amount, uint256 l2Recipient) payable",
+      "function depositCancelRequest(address token, uint256 amount, uint256 l2Recipient, uint256 nonce)",
+      "function depositReclaim(address token, uint256 amount, uint256 l2Recipient, uint256 nonce)",
+      "function depositWithMessage(address token, uint256 amount, uint256 l2Recipient, uint256[] message) payable",
+      "function depositWithMessageCancelRequest(address token, uint256 amount, uint256 l2Recipient, uint256[] message, uint256 nonce)",
+      "function depositWithMessageReclaim(address token, uint256 amount, uint256 l2Recipient, uint256[] message, uint256 nonce)",
+      "function disableWithdrawalLimit(address token)",
+      "function enableWithdrawalLimit(address token)",
+      "function enrollToken(address) payable",
+      "function estimateDepositFeeWei() pure returns (uint256)",
+      "function estimateEnrollmentFeeWei() pure returns (uint256)",
+      "function getMaxTotalBalance(address token) view returns (uint256)",
+      "function getRemainingIntradayAllowance(address token) view returns (uint256)",
+      "function getStatus(address token) view returns (uint8)",
+      "function identify() pure returns (string)",
+      "function initialize(bytes data)",
+      "function isAppGovernor(address account) view returns (bool)",
+      "function isAppRoleAdmin(address account) view returns (bool)",
+      "function isFrozen() view returns (bool)",
+      "function isGovernanceAdmin(address account) view returns (bool)",
+      "function isOperator(address account) view returns (bool)",
+      "function isSecurityAdmin(address account) view returns (bool)",
+      "function isSecurityAgent(address account) view returns (bool)",
+      "function isServicingToken(address token) view returns (bool)",
+      "function isTokenAdmin(address account) view returns (bool)",
+      "function isUpgradeGovernor(address account) view returns (bool)",
+      "function legacyDepositCancelRequest(uint256 amount, uint256 l2Recipient, uint256 nonce)",
+      "function legacyDepositReclaim(uint256 amount, uint256 l2Recipient, uint256 nonce)",
+      "function maxDeposit() pure returns (uint256)",
+      "function maxTotalBalance() view returns (uint256)",
+      "function registerAppGovernor(address account)",
+      "function registerAppRoleAdmin(address account)",
+      "function registerGovernanceAdmin(address account)",
+      "function registerOperator(address account)",
+      "function registerSecurityAdmin(address account)",
+      "function registerSecurityAgent(address account)",
+      "function registerTokenAdmin(address account)",
+      "function registerUpgradeGovernor(address account)",
+      "function removeLegacyProxyGovernor(address account)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeAppGovernor(address account)",
+      "function revokeAppRoleAdmin(address account)",
+      "function revokeGovernanceAdmin(address account)",
+      "function revokeOperator(address account)",
+      "function revokeSecurityAdmin(address account)",
+      "function revokeSecurityAgent(address account)",
+      "function revokeTokenAdmin(address account)",
+      "function revokeUpgradeGovernor(address account)",
+      "function setL2TokenBridge(uint256 l2TokenBridge_)",
+      "function setMaxTotalBalance(address token, uint256 maxTotalBalance_)",
+      "function withdraw(uint256 amount, address recipient)",
+      "function withdraw(uint256 amount)",
+      "function withdraw(address token, uint256 amount, address recipient)",
+      "function withdraw(address token, uint256 amount)"
     ],
     "0x9F96fE0633eE838D0298E8b8980E6716bE81388d": [
       "constructor(address _starkNet, address _dai, uint256 _l2Dai, address _escrow, uint256 _l2DaiBridge)",

@@ -24,7 +24,6 @@
     "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816": "USDCBridge",
     "0xbb3400F107804DFB482565FF1Ec8D8aE66747605": "USDTBridge",
     "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419": "ETHBridge",
-    // TODO: Make it possible to use the contract name without overriding it
     "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4": "Starknet",
     "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": "SHARPVerifierProxy",
     "0x83C0A700114101D1283D1405E2c8f21D3F03e988": "ProxyMultisig",
@@ -84,49 +83,120 @@
     },
     "WBTCBridge": {
       "fields": {
-        "governors": {
-          "type": "starkWareGovernance",
-          "filterBy": "isGovernor"
+        "manager": {
+          "type": "starkWareNamedStorage",
+          "tag": "STARKNET_TOKEN_BRIDGE_MANAGER_SLOT_TAG",
+          "returnType": "address"
+        },
+        "accessControl": {
+          "type": "accessControl",
+          "roleNames": {
+            "0x00d2ead78c620e94b02d0a996e99298c59ddccfa1d8a0149080ac3a20de06068": "APP_GOVERNOR",
+            "0x03e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99": "APP_ROLE_ADMIN",
+            "0x03711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846": "GOVERNANCE_ADMIN",
+            "0x023edb77f7c8cc9e38e8afe78954f703aeeda7fffe014eeb6e56ea84e62f6da7": "OPERATOR",
+            "0x026bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3": "SECURITY_ADMIN",
+            "0x037693ba312785932d430dccf0f56ffedd0aa7c0f8b6da2cc4530c2717689b96": "SECURITY_AGENT",
+            "0x0128d63adbf6b09002c26caf55c47e2f26635807e3ef1b027218aa74c8d61a3e": "TOKEN_ADMIN",
+            "0x0251e864ca2a080f55bce5da2452e8cfcafdbc951a3e7fff5023d558452ec228": "UPGRADE_GOVERNOR"
+          }
         }
       }
     },
     "USDCBridge": {
       "fields": {
-        "governors": {
-          "type": "starkWareGovernance",
-          "filterBy": "isGovernor"
+        "manager": {
+          "type": "starkWareNamedStorage",
+          "tag": "STARKNET_TOKEN_BRIDGE_MANAGER_SLOT_TAG",
+          "returnType": "address"
+        },
+        "accessControl": {
+          "type": "accessControl",
+          "roleNames": {
+            "0x00d2ead78c620e94b02d0a996e99298c59ddccfa1d8a0149080ac3a20de06068": "APP_GOVERNOR",
+            "0x03e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99": "APP_ROLE_ADMIN",
+            "0x03711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846": "GOVERNANCE_ADMIN",
+            "0x023edb77f7c8cc9e38e8afe78954f703aeeda7fffe014eeb6e56ea84e62f6da7": "OPERATOR",
+            "0x026bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3": "SECURITY_ADMIN",
+            "0x037693ba312785932d430dccf0f56ffedd0aa7c0f8b6da2cc4530c2717689b96": "SECURITY_AGENT",
+            "0x0128d63adbf6b09002c26caf55c47e2f26635807e3ef1b027218aa74c8d61a3e": "TOKEN_ADMIN",
+            "0x0251e864ca2a080f55bce5da2452e8cfcafdbc951a3e7fff5023d558452ec228": "UPGRADE_GOVERNOR"
+          }
         }
       }
     },
     "USDTBridge": {
       "fields": {
-        "governors": {
-          "type": "starkWareGovernance",
-          "filterBy": "isGovernor"
+        "manager": {
+          "type": "starkWareNamedStorage",
+          "tag": "STARKNET_TOKEN_BRIDGE_MANAGER_SLOT_TAG",
+          "returnType": "address"
+        },
+        "accessControl": {
+          "type": "accessControl",
+          "roleNames": {
+            "0x00d2ead78c620e94b02d0a996e99298c59ddccfa1d8a0149080ac3a20de06068": "APP_GOVERNOR",
+            "0x03e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99": "APP_ROLE_ADMIN",
+            "0x03711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846": "GOVERNANCE_ADMIN",
+            "0x023edb77f7c8cc9e38e8afe78954f703aeeda7fffe014eeb6e56ea84e62f6da7": "OPERATOR",
+            "0x026bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3": "SECURITY_ADMIN",
+            "0x037693ba312785932d430dccf0f56ffedd0aa7c0f8b6da2cc4530c2717689b96": "SECURITY_AGENT",
+            "0x0128d63adbf6b09002c26caf55c47e2f26635807e3ef1b027218aa74c8d61a3e": "TOKEN_ADMIN",
+            "0x0251e864ca2a080f55bce5da2452e8cfcafdbc951a3e7fff5023d558452ec228": "UPGRADE_GOVERNOR"
+          }
         }
       }
     },
     "wstETHBridge": {
       "fields": {
-        "governors": {
-          "type": "starkWareGovernance",
-          "filterBy": "isGovernor"
+        "manager": {
+          "type": "starkWareNamedStorage",
+          "tag": "STARKNET_TOKEN_BRIDGE_MANAGER_SLOT_TAG",
+          "returnType": "address"
+        },
+        "accessControl": {
+          "type": "accessControl",
+          "roleNames": {
+            "0x00d2ead78c620e94b02d0a996e99298c59ddccfa1d8a0149080ac3a20de06068": "APP_GOVERNOR",
+            "0x03e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99": "APP_ROLE_ADMIN",
+            "0x03711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846": "GOVERNANCE_ADMIN",
+            "0x023edb77f7c8cc9e38e8afe78954f703aeeda7fffe014eeb6e56ea84e62f6da7": "OPERATOR",
+            "0x026bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3": "SECURITY_ADMIN",
+            "0x037693ba312785932d430dccf0f56ffedd0aa7c0f8b6da2cc4530c2717689b96": "SECURITY_AGENT",
+            "0x0128d63adbf6b09002c26caf55c47e2f26635807e3ef1b027218aa74c8d61a3e": "TOKEN_ADMIN",
+            "0x0251e864ca2a080f55bce5da2452e8cfcafdbc951a3e7fff5023d558452ec228": "UPGRADE_GOVERNOR"
+          }
         }
       }
     },
     "rETHBridge": {
       "fields": {
-        "governors": {
-          "type": "starkWareGovernance",
-          "filterBy": "isGovernor"
+        "manager": {
+          "type": "starkWareNamedStorage",
+          "tag": "STARKNET_TOKEN_BRIDGE_MANAGER_SLOT_TAG",
+          "returnType": "address"
+        },
+        "accessControl": {
+          "type": "accessControl",
+          "roleNames": {
+            "0x00d2ead78c620e94b02d0a996e99298c59ddccfa1d8a0149080ac3a20de06068": "APP_GOVERNOR",
+            "0x03e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99": "APP_ROLE_ADMIN",
+            "0x03711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846": "GOVERNANCE_ADMIN",
+            "0x023edb77f7c8cc9e38e8afe78954f703aeeda7fffe014eeb6e56ea84e62f6da7": "OPERATOR",
+            "0x026bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3": "SECURITY_ADMIN",
+            "0x037693ba312785932d430dccf0f56ffedd0aa7c0f8b6da2cc4530c2717689b96": "SECURITY_AGENT",
+            "0x0128d63adbf6b09002c26caf55c47e2f26635807e3ef1b027218aa74c8d61a3e": "TOKEN_ADMIN",
+            "0x0251e864ca2a080f55bce5da2452e8cfcafdbc951a3e7fff5023d558452ec228": "UPGRADE_GOVERNOR"
+          }
         }
       }
     },
     "ETHBridge": {
       "fields": {
-        "governors": {
-          "type": "starkWareGovernance",
-          "filterBy": "isGovernor"
+        "manager": {
+          "type": "starkWareNamedStorage",
+          "tag": "STARKNET_TOKEN_BRIDGE_MANAGER_SLOT_TAG",
+          "returnType": "address"
         },
         "bridgedToken": {
           "type": "starkWareNamedStorage",
@@ -147,6 +217,19 @@
           "type": "starkWareNamedStorage",
           "tag": "STARKNET_TOKEN_BRIDGE_DEPOSITOR_ADDRESSES",
           "returnType": "address"
+        },
+        "accessControl": {
+          "type": "accessControl",
+          "roleNames": {
+            "0x00d2ead78c620e94b02d0a996e99298c59ddccfa1d8a0149080ac3a20de06068": "APP_GOVERNOR",
+            "0x03e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99": "APP_ROLE_ADMIN",
+            "0x03711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846": "GOVERNANCE_ADMIN",
+            "0x023edb77f7c8cc9e38e8afe78954f703aeeda7fffe014eeb6e56ea84e62f6da7": "OPERATOR",
+            "0x026bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3": "SECURITY_ADMIN",
+            "0x037693ba312785932d430dccf0f56ffedd0aa7c0f8b6da2cc4530c2717689b96": "SECURITY_AGENT",
+            "0x0128d63adbf6b09002c26caf55c47e2f26635807e3ef1b027218aa74c8d61a3e": "TOKEN_ADMIN",
+            "0x0251e864ca2a080f55bce5da2452e8cfcafdbc951a3e7fff5023d558452ec228": "UPGRADE_GOVERNOR"
+          }
         }
       }
     },
