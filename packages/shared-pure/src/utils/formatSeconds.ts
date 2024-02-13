@@ -29,7 +29,7 @@ export function formatSeconds(
 
   const firstNonZeroIndex = values.findIndex((v) => v > 0)
   if (firstNonZeroIndex === -1) {
-    return '0s'
+    return opts?.fullUnit ? '0 seconds' : '0s'
   }
 
   return values

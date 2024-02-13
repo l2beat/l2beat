@@ -39,6 +39,7 @@ export function createFinalityModule(
 
   const finalityController = new FinalityController(
     livenessRepository,
+    finalityRepository,
     indexerStateRepository,
     config.projects,
     clock,

@@ -7,7 +7,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { DurationCell } from './DurationCell'
 
 interface Props {
-  data: ScalingFinalityViewEntry['timeToFinalize']
+  data: ScalingFinalityViewEntry['timeToInclusion']
 }
 
 export function FinalityDurationCell(props: Props) {
@@ -25,6 +25,16 @@ export function FinalityDurationCell(props: Props) {
         <div className="font-medium">
           <span>30-day avg. time to inclusion</span>
           <ul className="mt-1 list-inside list-disc">
+            {props.data.minimumInSeconds && (
+              <li className="flex justify-between gap-4">
+                Minimum:
+                <div>
+                  <DurationCell
+                    durationInSeconds={props.data.minimumInSeconds}
+                  />
+                </div>
+              </li>
+            )}
             <li className="flex justify-between gap-4">
               Average:
               <div>
