@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x97edc1be390c5077c5863e2ba3fff282032ffa3f
+Generated with discovered.json: 0xe580bb3a1add6ce5cdc1fde3e68404529c3dba7d
 
-# Diff at Mon, 12 Feb 2024 14:33:24 GMT:
+# Diff at Tue, 13 Feb 2024 12:15:50 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@129897f96b3abfd4a0b655fc3454caadeba39bdc block: 19183671
-- current block number: 19212561
+- current block number: 19219027
 
 ## Description
 
@@ -34,8 +34,22 @@ Also the bridge implementation for ERC20 and Ether are different but overall ver
       implementations.0:
 -        "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
 +        "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
-      values.governors:
--        ["0xfdF3E24BD26368512C5F65959BBB668d3338f994","0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.accessControl.GOVERNANCE_ADMIN:
++        {"adminRole":"GOVERNANCE_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]}
+      values.accessControl.APP_GOVERNOR:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.APP_ROLE_ADMIN:
++        {"adminRole":"GOVERNANCE_ADMIN","members":[]}
+      values.accessControl.OPERATOR:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.TOKEN_ADMIN:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.UPGRADE_GOVERNOR:
++        {"adminRole":"GOVERNANCE_ADMIN","members":[]}
+      values.accessControl.SECURITY_ADMIN:
++        {"adminRole":"SECURITY_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]}
+      values.accessControl.SECURITY_AGENT:
++        {"adminRole":"SECURITY_ADMIN","members":[]}
       values.identify:
 -        "StarkWare_StarknetERC20Bridge_2023_1"
 +        "StarkWare_StarknetERC20Bridge_2.0_4"
@@ -48,8 +62,6 @@ Also the bridge implementation for ERC20 and Ether are different but overall ver
 +        100000000000000
       values.estimateEnrollmentFeeWei:
 +        500000000000000
-      errors:
-+        {"governors":"Cannot find a matching method for isGovernor"}
     }
 ```
 
@@ -61,6 +73,22 @@ Also the bridge implementation for ERC20 and Ether are different but overall ver
       implementations.0:
 -        "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
 +        "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
+      values.accessControl.GOVERNANCE_ADMIN:
++        {"adminRole":"GOVERNANCE_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]}
+      values.accessControl.APP_GOVERNOR:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.APP_ROLE_ADMIN:
++        {"adminRole":"GOVERNANCE_ADMIN","members":[]}
+      values.accessControl.OPERATOR:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.TOKEN_ADMIN:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.UPGRADE_GOVERNOR:
++        {"adminRole":"GOVERNANCE_ADMIN","members":[]}
+      values.accessControl.SECURITY_ADMIN:
++        {"adminRole":"SECURITY_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]}
+      values.accessControl.SECURITY_AGENT:
++        {"adminRole":"SECURITY_ADMIN","members":[]}
       values.identify:
 -        "StarkWare_StarknetERC20Bridge_2023_1"
 +        "StarkWare_StarknetERC20Bridge_2.0_4"
@@ -84,11 +112,25 @@ Also the bridge implementation for ERC20 and Ether are different but overall ver
       implementations.0:
 -        "0x455603AD9ae671F6c1f0f746F24d7904cA603581"
 +        "0x95ff25A59Dc9c5A41cF0709dc916041E5dC7fd95"
+      values.accessControl.GOVERNANCE_ADMIN:
++        {"adminRole":"GOVERNANCE_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]}
+      values.accessControl.APP_GOVERNOR:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.APP_ROLE_ADMIN:
++        {"adminRole":"GOVERNANCE_ADMIN","members":[]}
+      values.accessControl.OPERATOR:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.TOKEN_ADMIN:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.UPGRADE_GOVERNOR:
++        {"adminRole":"GOVERNANCE_ADMIN","members":[]}
+      values.accessControl.SECURITY_ADMIN:
++        {"adminRole":"SECURITY_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]}
+      values.accessControl.SECURITY_AGENT:
++        {"adminRole":"SECURITY_ADMIN","members":[]}
       values.bridgedToken:
 -        "0x0000000000000000000000000000000000000000"
 +        "0x0000000000000000000000000000000000455448"
-      values.governors:
--        ["0x6A03F3F0943eb686a4EF94e7B6f6CA3332580b5C","0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
       values.identify:
 -        "StarkWare_StarknetEthBridge_2023_1"
 +        "StarkWare_StarknetEthBridge_2.0_4"
@@ -101,8 +143,6 @@ Also the bridge implementation for ERC20 and Ether are different but overall ver
 +        100000000000000
       values.estimateEnrollmentFeeWei:
 +        500000000000000
-      errors:
-+        {"governors":"Cannot find a matching method for isGovernor"}
     }
 ```
 
@@ -114,8 +154,22 @@ Also the bridge implementation for ERC20 and Ether are different but overall ver
       implementations.0:
 -        "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
 +        "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
-      values.governors:
--        ["0x3ADfc0aBd0eBD4e61281d991F87134eE3231dB13","0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.accessControl.GOVERNANCE_ADMIN:
++        {"adminRole":"GOVERNANCE_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]}
+      values.accessControl.APP_GOVERNOR:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.APP_ROLE_ADMIN:
++        {"adminRole":"GOVERNANCE_ADMIN","members":[]}
+      values.accessControl.OPERATOR:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.TOKEN_ADMIN:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.UPGRADE_GOVERNOR:
++        {"adminRole":"GOVERNANCE_ADMIN","members":[]}
+      values.accessControl.SECURITY_ADMIN:
++        {"adminRole":"SECURITY_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]}
+      values.accessControl.SECURITY_AGENT:
++        {"adminRole":"SECURITY_ADMIN","members":[]}
       values.identify:
 -        "StarkWare_StarknetERC20Bridge_2023_1"
 +        "StarkWare_StarknetERC20Bridge_2.0_4"
@@ -128,8 +182,6 @@ Also the bridge implementation for ERC20 and Ether are different but overall ver
 +        100000000000000
       values.estimateEnrollmentFeeWei:
 +        500000000000000
-      errors:
-+        {"governors":"Cannot find a matching method for isGovernor"}
     }
 ```
 
@@ -141,8 +193,22 @@ Also the bridge implementation for ERC20 and Ether are different but overall ver
       implementations.0:
 -        "0xEf3525a1081a4cf6f76E0B202a575195cEE083a2"
 +        "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
-      values.governors:
--        ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A"]
+      values.accessControl.GOVERNANCE_ADMIN:
++        {"adminRole":"GOVERNANCE_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]}
+      values.accessControl.APP_GOVERNOR:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.APP_ROLE_ADMIN:
++        {"adminRole":"GOVERNANCE_ADMIN","members":[]}
+      values.accessControl.OPERATOR:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.TOKEN_ADMIN:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.UPGRADE_GOVERNOR:
++        {"adminRole":"GOVERNANCE_ADMIN","members":[]}
+      values.accessControl.SECURITY_ADMIN:
++        {"adminRole":"SECURITY_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]}
+      values.accessControl.SECURITY_AGENT:
++        {"adminRole":"SECURITY_ADMIN","members":[]}
       values.identify:
 -        "StarkWare_StarknetERC20Bridge_2022_1"
 +        "StarkWare_StarknetERC20Bridge_2.0_4"
@@ -155,8 +221,6 @@ Also the bridge implementation for ERC20 and Ether are different but overall ver
 +        100000000000000
       values.estimateEnrollmentFeeWei:
 +        500000000000000
-      errors:
-+        {"governors":"Cannot find a matching method for isGovernor"}
     }
 ```
 
@@ -168,8 +232,22 @@ Also the bridge implementation for ERC20 and Ether are different but overall ver
       implementations.0:
 -        "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
 +        "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
-      values.governors:
--        ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A"]
+      values.accessControl.GOVERNANCE_ADMIN:
++        {"adminRole":"GOVERNANCE_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]}
+      values.accessControl.APP_GOVERNOR:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.APP_ROLE_ADMIN:
++        {"adminRole":"GOVERNANCE_ADMIN","members":[]}
+      values.accessControl.OPERATOR:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.TOKEN_ADMIN:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.UPGRADE_GOVERNOR:
++        {"adminRole":"GOVERNANCE_ADMIN","members":[]}
+      values.accessControl.SECURITY_ADMIN:
++        {"adminRole":"SECURITY_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]}
+      values.accessControl.SECURITY_AGENT:
++        {"adminRole":"SECURITY_ADMIN","members":[]}
       values.identify:
 -        "StarkWare_StarknetERC20Bridge_2023_1"
 +        "StarkWare_StarknetERC20Bridge_2.0_4"
@@ -182,8 +260,6 @@ Also the bridge implementation for ERC20 and Ether are different but overall ver
 +        100000000000000
       values.estimateEnrollmentFeeWei:
 +        500000000000000
-      errors:
-+        {"governors":"Cannot find a matching method for isGovernor"}
     }
 ```
 
@@ -195,6 +271,22 @@ Also the bridge implementation for ERC20 and Ether are different but overall ver
       implementations.0:
 -        "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
 +        "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
+      values.accessControl.GOVERNANCE_ADMIN:
++        {"adminRole":"GOVERNANCE_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]}
+      values.accessControl.APP_GOVERNOR:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.APP_ROLE_ADMIN:
++        {"adminRole":"GOVERNANCE_ADMIN","members":[]}
+      values.accessControl.OPERATOR:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.TOKEN_ADMIN:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.UPGRADE_GOVERNOR:
++        {"adminRole":"GOVERNANCE_ADMIN","members":[]}
+      values.accessControl.SECURITY_ADMIN:
++        {"adminRole":"SECURITY_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]}
+      values.accessControl.SECURITY_AGENT:
++        {"adminRole":"SECURITY_ADMIN","members":[]}
       values.identify:
 -        "StarkWare_StarknetERC20Bridge_2023_1"
 +        "StarkWare_StarknetERC20Bridge_2.0_4"
@@ -218,6 +310,22 @@ Also the bridge implementation for ERC20 and Ether are different but overall ver
       implementations.0:
 -        "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
 +        "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
+      values.accessControl.GOVERNANCE_ADMIN:
++        {"adminRole":"GOVERNANCE_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]}
+      values.accessControl.APP_GOVERNOR:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.APP_ROLE_ADMIN:
++        {"adminRole":"GOVERNANCE_ADMIN","members":[]}
+      values.accessControl.OPERATOR:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.TOKEN_ADMIN:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.UPGRADE_GOVERNOR:
++        {"adminRole":"GOVERNANCE_ADMIN","members":[]}
+      values.accessControl.SECURITY_ADMIN:
++        {"adminRole":"SECURITY_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]}
+      values.accessControl.SECURITY_AGENT:
++        {"adminRole":"SECURITY_ADMIN","members":[]}
       values.identify:
 -        "StarkWare_StarknetERC20Bridge_2023_1"
 +        "StarkWare_StarknetERC20Bridge_2.0_4"
@@ -241,6 +349,22 @@ Also the bridge implementation for ERC20 and Ether are different but overall ver
       implementations.0:
 -        "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
 +        "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
+      values.accessControl.GOVERNANCE_ADMIN:
++        {"adminRole":"GOVERNANCE_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]}
+      values.accessControl.APP_GOVERNOR:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.APP_ROLE_ADMIN:
++        {"adminRole":"GOVERNANCE_ADMIN","members":[]}
+      values.accessControl.OPERATOR:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.TOKEN_ADMIN:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.UPGRADE_GOVERNOR:
++        {"adminRole":"GOVERNANCE_ADMIN","members":[]}
+      values.accessControl.SECURITY_ADMIN:
++        {"adminRole":"SECURITY_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]}
+      values.accessControl.SECURITY_AGENT:
++        {"adminRole":"SECURITY_ADMIN","members":[]}
       values.identify:
 -        "StarkWare_StarknetERC20Bridge_2023_1"
 +        "StarkWare_StarknetERC20Bridge_2.0_4"
@@ -264,8 +388,22 @@ Also the bridge implementation for ERC20 and Ether are different but overall ver
       implementations.0:
 -        "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
 +        "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
-      values.governors:
--        ["0xe8e9E69511BaaFC826953fC93cdf1ED6d3B63c53","0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.accessControl.GOVERNANCE_ADMIN:
++        {"adminRole":"GOVERNANCE_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]}
+      values.accessControl.APP_GOVERNOR:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.APP_ROLE_ADMIN:
++        {"adminRole":"GOVERNANCE_ADMIN","members":[]}
+      values.accessControl.OPERATOR:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.TOKEN_ADMIN:
++        {"adminRole":"APP_ROLE_ADMIN","members":[]}
+      values.accessControl.UPGRADE_GOVERNOR:
++        {"adminRole":"GOVERNANCE_ADMIN","members":[]}
+      values.accessControl.SECURITY_ADMIN:
++        {"adminRole":"SECURITY_ADMIN","members":["0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]}
+      values.accessControl.SECURITY_AGENT:
++        {"adminRole":"SECURITY_ADMIN","members":[]}
       values.identify:
 -        "StarkWare_StarknetERC20Bridge_2023_1"
 +        "StarkWare_StarknetERC20Bridge_2.0_4"
@@ -278,8 +416,6 @@ Also the bridge implementation for ERC20 and Ether are different but overall ver
 +        100000000000000
       values.estimateEnrollmentFeeWei:
 +        500000000000000
-      errors:
-+        {"governors":"Cannot find a matching method for isGovernor"}
     }
 ```
 
@@ -291,6 +427,10 @@ Also the bridge implementation for ERC20 and Ether are different but overall ver
       implementations.0:
 -        "0x6Fa346c1e77C17d7976Bf1EFE2b121E845f15FEB"
 +        "0x179FA59e4D19ac7C7b4e3daa0Cd6557a553656A0"
+      values.accessControl.SECURITY_ADMIN:
++        {"adminRole":"SECURITY_ADMIN","members":["0xF689688640E88160c07C6FC5cc63039F29EDe86b"]}
+      values.accessControl.SECURITY_AGENT:
++        {"adminRole":"SECURITY_ADMIN","members":[]}
       values.identify:
 -        "StarkWare_StarknetERC20Bridge_2023_1"
 +        "StarkWare_StarknetERC20Bridge_2.0_4"
@@ -827,6 +967,12 @@ discovery. Values are for block 19183671 (main branch discovery), not current.
       name:
 -        "WBTC Bridge"
 +        "WBTCBridge"
+      values.governors:
+-        ["0xfdF3E24BD26368512C5F65959BBB668d3338f994","0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
+      values.manager:
++        "0x0000000000000000000000000000000000000000"
     }
 ```
 
@@ -835,6 +981,10 @@ discovery. Values are for block 19183671 (main branch discovery), not current.
       name:
 -        "FXS Bridge"
 +        "FXSBridge"
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
+      values.manager:
++        "0x0000000000000000000000000000000000000000"
     }
 ```
 
@@ -859,6 +1009,12 @@ discovery. Values are for block 19183671 (main branch discovery), not current.
       name:
 -        "ETH Bridge"
 +        "ETHBridge"
+      values.governors:
+-        ["0x6A03F3F0943eb686a4EF94e7B6f6CA3332580b5C","0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
+      values.manager:
++        "0x0000000000000000000000000000000000000000"
     }
 ```
 
@@ -867,6 +1023,12 @@ discovery. Values are for block 19183671 (main branch discovery), not current.
       name:
 -        "USDT Bridge"
 +        "USDTBridge"
+      values.governors:
+-        ["0x3ADfc0aBd0eBD4e61281d991F87134eE3231dB13","0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
+      values.manager:
++        "0x0000000000000000000000000000000000000000"
     }
 ```
 
@@ -875,6 +1037,12 @@ discovery. Values are for block 19183671 (main branch discovery), not current.
       name:
 -        "wstETH Bridge"
 +        "wstETHBridge"
+      values.governors:
+-        ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A"]
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
+      values.manager:
++        "0x0000000000000000000000000000000000000000"
     }
 ```
 
@@ -883,6 +1051,12 @@ discovery. Values are for block 19183671 (main branch discovery), not current.
       name:
 -        "rETH Bridge"
 +        "rETHBridge"
+      values.governors:
+-        ["0x5751a83170BeA11fE7CdA5D599B04153C021f21A"]
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
+      values.manager:
++        "0x0000000000000000000000000000000000000000"
     }
 ```
 
@@ -891,6 +1065,10 @@ discovery. Values are for block 19183671 (main branch discovery), not current.
       name:
 -        "sfrxETH Bridge"
 +        "sfrxETHBridge"
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
+      values.manager:
++        "0x0000000000000000000000000000000000000000"
     }
 ```
 
@@ -899,6 +1077,10 @@ discovery. Values are for block 19183671 (main branch discovery), not current.
       name:
 -        "FRAX Bridge"
 +        "FRAXBridge"
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
+      values.manager:
++        "0x0000000000000000000000000000000000000000"
     }
 ```
 
@@ -907,6 +1089,10 @@ discovery. Values are for block 19183671 (main branch discovery), not current.
       name:
 -        "LUSD Bridge"
 +        "LUSDBridge"
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
+      values.manager:
++        "0x0000000000000000000000000000000000000000"
     }
 ```
 
@@ -915,6 +1101,12 @@ discovery. Values are for block 19183671 (main branch discovery), not current.
       name:
 -        "USDC Bridge"
 +        "USDCBridge"
+      values.governors:
+-        ["0xe8e9E69511BaaFC826953fC93cdf1ED6d3B63c53","0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec"]
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
+      values.manager:
++        "0x0000000000000000000000000000000000000000"
     }
 ```
 
@@ -923,6 +1115,10 @@ discovery. Values are for block 19183671 (main branch discovery), not current.
       name:
 -        "UNI Bridge"
 +        "UNIBridge"
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"GOVERNANCE_ADMIN":{"adminRole":"GOVERNANCE_ADMIN","members":["0xF689688640E88160c07C6FC5cc63039F29EDe86b"]},"APP_GOVERNOR":{"adminRole":"APP_ROLE_ADMIN","members":[]},"APP_ROLE_ADMIN":{"adminRole":"GOVERNANCE_ADMIN","members":[]},"OPERATOR":{"adminRole":"APP_ROLE_ADMIN","members":[]},"TOKEN_ADMIN":{"adminRole":"APP_ROLE_ADMIN","members":[]},"UPGRADE_GOVERNOR":{"adminRole":"GOVERNANCE_ADMIN","members":["0xF689688640E88160c07C6FC5cc63039F29EDe86b"]}}
+      values.manager:
++        "0x0000000000000000000000000000000000000000"
     }
 ```
 
