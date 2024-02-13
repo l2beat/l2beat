@@ -54,11 +54,12 @@ export function getScalingFinalityViewEntry(
       ...timeToInclusion,
       warning: project.display.finality?.warning,
     },
-    finalizationPeriod: project.display.finality?.finalizationPeriod
-      ? formatSeconds(project.display.finality.finalizationPeriod, {
-          fullUnit: true,
-        })
-      : undefined,
+    finalizationPeriod:
+      project.display.finality?.finalizationPeriod !== undefined
+        ? formatSeconds(project.display.finality.finalizationPeriod, {
+            fullUnit: true,
+          })
+        : undefined,
   }
 }
 
