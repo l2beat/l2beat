@@ -25,7 +25,6 @@ const upgrades = {
 
 const operatorsString = `${thresholdPerc}% out of ${operatorsCount}`
 
-
 export const ronin: Bridge = {
   type: 'bridge',
   id: ProjectId('ronin'),
@@ -145,10 +144,9 @@ export const ronin: Bridge = {
     // TODO: we need all contracts (check roles on escrows) and a diagram
     addresses: [
       discovery.getContractDetails('MainchainGateway', {
-        description:
-          `Upgradeable Bridge V3 contract.`,
+        description: `Upgradeable Bridge V3 contract.`,
         ...upgrades,
-      })
+      }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
@@ -158,10 +156,10 @@ export const ronin: Bridge = {
       accounts: [
         {
           address: discovery.getContractUpgradeabilityParam(
-          'MainchainGateway',
-          'admin'
-          ), 
-          type: 'Contract'
+            'MainchainGateway',
+            'admin',
+          ),
+          type: 'Contract',
         },
       ],
       description: `Can propose upgrades to the bridge and invoke admin functions.`,
@@ -176,10 +174,9 @@ export const ronin: Bridge = {
     },
     {
       name: 'MainchainGatewayV3 Emergency Pauser',
-      accounts: [discovery.getPermissionedAccount(
-        'MainchainGateway',
-        'emergencyPauser',
-      )],
+      accounts: [
+        discovery.getPermissionedAccount('MainchainGateway', 'emergencyPauser'),
+      ],
       description: 'An address that can pause the bridge in case of emergency.',
     },
   ],
