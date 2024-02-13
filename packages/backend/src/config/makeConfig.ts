@@ -3,7 +3,7 @@ import { bridges, chains, layer2s, tokenList } from '@l2beat/config'
 import { ConfigReader } from '@l2beat/discovery'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
-import { bridgeToProject, layer2ToProject } from '../model'
+import { bridgeToProject, layer2ToProject } from '../model/Project'
 import { Config, DiscordConfig } from './Config'
 import { FeatureFlags } from './FeatureFlags'
 import {
@@ -76,6 +76,7 @@ export function makeConfig(
       port: env.integer('PORT', isLocal ? 3000 : undefined),
       cache: {
         tvl: flags.isEnabled('cache', 'tvl'),
+        liveness: flags.isEnabled('cache', 'liveness'),
       },
     },
     health: {
@@ -116,7 +117,14 @@ export function makeConfig(
       // TODO: figure out how to set it for local development
       minTimestamp: UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
     },
-    finality: flags.isEnabled('finality'),
+    finality: flags.isEnabled('finality') && {
+      indexerEnabled: flags.isEnabled('finality', 'indexer'),
+      ethereumProviderUrl: env.string('FINALITY_ETHEREUM_PROVIDER_URL'),
+      ethereumProviderCallsPerMinute: env.integer(
+        'FINALITY_ETHEREUM_PROVIDER_CALLS_PER_MINUTE',
+        600,
+      ),
+    },
     activity: flags.isEnabled('activity') && {
       starkexApiKey: env.string('STARKEX_API_KEY'),
       starkexCallsPerMinute: env.integer('STARKEX_CALLS_PER_MINUTE', 600),

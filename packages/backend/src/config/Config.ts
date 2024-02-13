@@ -3,8 +3,8 @@ import { DiscoveryChainConfig } from '@l2beat/discovery'
 import { ChainId, ProjectId, Token, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
-import { ActivityTransactionConfig } from '../core/activity/ActivityTransactionConfig'
-import { Project } from '../model'
+import { Project } from '../model/Project'
+import { ActivityTransactionConfig } from '../modules/activity/ActivityTransactionConfig'
 import { MulticallConfigEntry } from '../peripherals/multicall/types'
 import { ResolvedFeatureFlag } from './FeatureFlags'
 
@@ -21,7 +21,7 @@ export interface Config {
   readonly health: HealthConfig
   readonly tvl: TvlConfig
   readonly liveness: LivenessConfig | false
-  readonly finality: boolean
+  readonly finality: FinalityConfig | false
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
   readonly diffHistory: DiffHistoryConfig | false
@@ -44,6 +44,7 @@ export interface ApiConfig {
   readonly port: number
   readonly cache: {
     readonly tvl: boolean
+    readonly liveness: boolean
   }
 }
 
@@ -78,6 +79,12 @@ export interface LivenessConfig {
     readonly queryWarningLimitGb: number
   }
   readonly minTimestamp: UnixTime
+}
+
+export interface FinalityConfig {
+  readonly indexerEnabled: boolean
+  readonly ethereumProviderUrl: string
+  readonly ethereumProviderCallsPerMinute: number
 }
 
 export interface BlockscoutChainConfig {

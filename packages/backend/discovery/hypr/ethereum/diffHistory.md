@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xeb0c7bf141bfc7f188e3e3529f272eab8d5cb08f
+
+# Diff at Wed, 07 Feb 2024 14:02:35 GMT:
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: main@2e35800e01005d93332a552032058dcd67f3631d block: 19175185
+- current block number: 19176779
+
+## Description
+
+Added opStackSequencerInbox handler
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19175185 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0xBB08cf90DEb93492b463f1Ee5DA9453e51643586) {
+      values.sequencerInbox:
++        "0x0C57B7f3bAc278bE091431B52470fBAdBc4240E6"
+    }
+```
+
 Generated with discovered.json: 0x46f4c52a626acd3dcf884cb34161e0d5fb8e3c00
 
 # Diff at Wed, 07 Feb 2024 08:40:44 GMT:

@@ -14,8 +14,6 @@ should create a new migration file that fixes the issue.
 import { UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
-import { SIX_HOURS } from '../ReportRepository'
-
 const sixHourlyIndex = 'reports_unix_timestamp_six_hourly_index'
 const dailyIndex = 'reports_unix_timestamp_daily_index'
 const create = (name: string, time: number) =>
@@ -23,7 +21,7 @@ const create = (name: string, time: number) =>
 const drop = (name: string) => `drop index ${name}`
 
 export async function up(knex: Knex) {
-  await knex.schema.raw(create(sixHourlyIndex, SIX_HOURS))
+  await knex.schema.raw(create(sixHourlyIndex, UnixTime.SIX_HOURS))
   await knex.schema.raw(create(dailyIndex, UnixTime.DAY))
 }
 

@@ -1,15 +1,8 @@
 import Router from '@koa/router'
-
-import { DataUpdater, ReportUpdater } from '../core/assets'
+import { ChildIndexer } from '@l2beat/uif'
 
 export interface ApplicationModule {
   routers?: Router[]
   start?: () => Promise<void> | void
-}
-
-export interface TvlModule {
-  chain: string
-  reportUpdaters?: ReportUpdater[]
-  dataUpdaters?: DataUpdater[]
-  start?: () => Promise<void> | void
+  indexer?: ChildIndexer
 }

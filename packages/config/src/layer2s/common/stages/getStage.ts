@@ -106,4 +106,4 @@ const getBlueprint = (opts?: GetStageOptions) =>
         },
       },
     },
-  } as const)
+  }) as const

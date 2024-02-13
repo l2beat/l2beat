@@ -44,10 +44,6 @@ export const orderly: Layer2 = opStack({
     '0xe07eA0436100918F157DF35D01dCE5c11b16D1F1',
   ),
   rpcUrl: 'https://rpc.orderly.network',
-  sequencerAddress: EthereumAddress(
-    discovery.getContractValue('SystemConfig', 'batcherHash'),
-  ),
-  inboxAddress: EthereumAddress('0x08aa34cc843ceebcc88a627f18430294aa9780be'),
   genesisTimestamp: new UnixTime(1696566432),
 
   l2OutputOracle: discovery.getContract('L2OutputOracle'),

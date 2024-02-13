@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xf2efb953c5d3442db9a5c3a901d3af836fbd3787
+
+# Diff at Thu, 08 Feb 2024 09:45:31 GMT:
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: main@0a61ea8397e7cdcf34b79a079bc53c0c2e703fe2 block: 18940443
+- current block number: 19182633
+
+## Description
+
+Add opStackDA and opStackSequencerInbox handlers
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18940443 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35) {
+      values.opStackDA:
++        {"isSomeTxsLengthEqualToCelestiaDAExample":false}
+      values.sequencerInbox:
++        "0xfF00000000000000000000000000000000000255"
+    }
+```
+
 Generated with discovered.json: 0x5c2d3985c37d7e2b7bfa690fefaec55556e068d8
 
 # Diff at Fri, 05 Jan 2024 10:21:46 GMT:

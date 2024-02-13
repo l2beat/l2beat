@@ -110,12 +110,12 @@ export function formatTimestampToDateWithHour(timestamp: UnixTime) {
     numericDay >= 11 && numericDay <= 13
       ? 'th'
       : numericDay % 10 === 1
-      ? 'st'
-      : numericDay % 10 === 2
-      ? 'nd'
-      : numericDay % 10 === 3
-      ? 'rd'
-      : 'th'
+        ? 'st'
+        : numericDay % 10 === 2
+          ? 'nd'
+          : numericDay % 10 === 3
+            ? 'rd'
+            : 'th'
 
   const numericHour = +time.slice(0, 2)
 

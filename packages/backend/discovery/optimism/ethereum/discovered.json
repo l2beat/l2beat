@@ -1,8 +1,8 @@
 {
   "name": "optimism",
   "chain": "ethereum",
-  "blockNumber": 19175199,
-  "configHash": "0x6a646a511010eb16f28509fef4778f3da40e136c9e2bd628bd0807be59c002a5",
+  "blockNumber": 19210753,
+  "configHash": "0x7ec7d19a809f24f00d8d3ba1b63c2fe2b70dd431e154024e2d5099be665cbf1d",
   "version": 3,
   "contracts": [
     {
@@ -50,6 +50,7 @@
           "340282366920938463463374607431768211455"
         ],
         "scalar": 684000,
+        "sequencerInbox": "0xFF00000000000000000000000000000000000010",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
         "unsafeBlockSigner": "0xAAAA45d9549EDA09E70937013520214382Ffc4A2",
         "version": "1.3.0",
@@ -70,7 +71,7 @@
       "sinceTimestamp": 1624400997,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292711877",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292712616",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -102,7 +103,7 @@
           "0x4665374939642965EfD8357D4568D2A77f677429"
         ],
         "getThreshold": 2,
-        "nonce": 25,
+        "nonce": 26,
         "VERSION": "1.3.0"
       }
     },
@@ -124,8 +125,31 @@
       "values": {
         "addressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
         "isUpgrading": false,
-        "owner": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
+        "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
       }
+    },
+    {
+      "name": "ProxyAdminOwner",
+      "address": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": []
+      },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
+      "sinceTimestamp": 1707420875,
+      "values": {
+        "domainSeparator": "0xdaf670b31fdf41fdaae2643ed0ebe709283539c0e61540c160b5a6403d79073f",
+        "getChainId": 1,
+        "getOwners": [
+          "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
+          "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"
+        ],
+        "getThreshold": 2,
+        "nonce": 0,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "CanonicalTransactionChain",
@@ -238,6 +262,34 @@
       "derivedName": "OVM_ChainStorageContainer"
     },
     {
+      "name": "FoundationMultisig_1",
+      "address": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": []
+      },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
+      "sinceTimestamp": 1707420755,
+      "values": {
+        "domainSeparator": "0xa4a9c312badf3fcaa05eafe5dc9bee8bd9316c78ee8b0bebe3115bb21b732672",
+        "getChainId": 1,
+        "getOwners": [
+          "0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64",
+          "0x3041BA32f451F5850c147805F5521AC206421623",
+          "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
+          "0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8",
+          "0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
+          "0x7cB07FE039a92B3D784f284D919503A381BEC54f",
+          "0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa"
+        ],
+        "getThreshold": 5,
+        "nonce": 0,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
       "name": "L1StandardBridge",
       "address": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
       "upgradeability": {
@@ -256,7 +308,7 @@
       }
     },
     {
-      "name": "OptimismMultisig",
+      "name": "FoundationMultisig_2",
       "address": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
       "upgradeability": {
         "type": "gnosis safe",
@@ -279,7 +331,7 @@
         ],
         "getThreshold": 5,
         "NAME": "Gnosis Safe",
-        "nonce": 86,
+        "nonce": 87,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
@@ -331,12 +383,46 @@
         "GUARDIAN": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
         "L2_ORACLE": "0xdfe97868233d1aa22e815a266982f2cf17685a27",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 440516, 19175155],
+        "params": [1000000000, 2826282, 19210748],
         "paused": false,
         "SYSTEM_CONFIG": "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
         "version": "1.6.0"
       },
       "derivedName": "OptimismPortal"
+    },
+    {
+      "name": "SecurityCouncilMultisig",
+      "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": []
+      },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
+      "sinceTimestamp": 1707420419,
+      "values": {
+        "domainSeparator": "0xdf53d510b56e539b90b369ef08fce3631020fbf921e3136ea5f8747c20bce967",
+        "getChainId": 1,
+        "getOwners": [
+          "0x07dC0893cAfbF810e3E72505041f2865726Fd073",
+          "0x0a122d8aA40758FBAFf0360BFB391EdFfD9758b8",
+          "0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e",
+          "0x4A7322258c9E690e4CB8Cea6e5251443E956e61E",
+          "0x51aCb8e1205De850D1b512584FeE9C29C3813dDa",
+          "0x5C0F529d5B025540c54f71d2BcbB4c78F368C47e",
+          "0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865",
+          "0x74FAE9a9fbe31d1F69b95f59CaF12736a8b6B310",
+          "0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39",
+          "0x8Afe777B5A4D1e156435ab44Ad4b73A318cE0EA4",
+          "0x9Eb11A55132c851b9991F148b3Af791ca498fD7A",
+          "0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9",
+          "0xE895076cD050F1f042d1040E47b5929bE989E514"
+        ],
+        "getThreshold": 4,
+        "nonce": 0,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "CTCStorageContainerBatches",
@@ -400,10 +486,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 115846063,
-        "latestOutputIndex": 5894,
-        "nextBlockNumber": 115847863,
-        "nextOutputIndex": 5895,
+        "latestBlockNumber": 116062063,
+        "latestOutputIndex": 6014,
+        "nextBlockNumber": 116063863,
+        "nextOutputIndex": 6015,
         "PROPOSER": "0x473300df21D047806A082244b417f96b32f13A33",
         "startingBlockNumber": 105235063,
         "startingTimestamp": 1686068903,
@@ -447,7 +533,10 @@
   ],
   "eoas": [
     "0x000000000000000000000000000000000000dEaD",
+    "0x07dC0893cAfbF810e3E72505041f2865726Fd073",
+    "0x0a122d8aA40758FBAFf0360BFB391EdFfD9758b8",
     "0x0B67bab43157e53D21965Af0d83f83BeD9553E0a",
+    "0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e",
     "0x1dd532CF7603a60C3ec91360f273DA3Db38545aB",
     "0x26E10fF641839cA457695CE955Cb90657D6E3F53",
     "0x2d8cF727d37e7277D5eeDbAb853a3e8320f767Cd",
@@ -457,21 +546,32 @@
     "0x4200000000000000000000000000000000000010",
     "0x4665374939642965EfD8357D4568D2A77f677429",
     "0x473300df21D047806A082244b417f96b32f13A33",
+    "0x4A7322258c9E690e4CB8Cea6e5251443E956e61E",
     "0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15",
+    "0x51aCb8e1205De850D1b512584FeE9C29C3813dDa",
     "0x562948111d50BF039A39Eea48D127f2Ae51ddF02",
     "0x599e835cbFC903eF09f3Dd5E08D1cF63c32AF8d8",
+    "0x5C0F529d5B025540c54f71d2BcbB4c78F368C47e",
+    "0x6323ef2b80030f3fBc508bFc321Fc71fDB95c865",
     "0x6887246668a3b87F54DeB3b94Ba47a6f63F32985",
+    "0x74FAE9a9fbe31d1F69b95f59CaF12736a8b6B310",
     "0x7cB07FE039a92B3D784f284D919503A381BEC54f",
+    "0x7ed8d9Af9eaA194D1A75C67c1475579E42289E39",
     "0x8909F73188C4fE68B283fCB1E724b2466e0BdfD0",
+    "0x8Afe777B5A4D1e156435ab44Ad4b73A318cE0EA4",
     "0x8E01013243a96601a86eb3153F0d9Fa4fbFb6957",
     "0x9bbFB9919062C29a5eE15aCD93c9D7c3b14d31aa",
+    "0x9Eb11A55132c851b9991F148b3Af791ca498fD7A",
     "0xa2fa6Ef1Fcf740b632a04B3FC56B5d3118Bbd211",
     "0xAAAA45d9549EDA09E70937013520214382Ffc4A2",
     "0xb23794fd6BA1CEAd01Cf54D772b8341F2F0197A5",
     "0xBF93D4d727F7Ba1F753E1124C3e532dCb04Ea2c8",
+    "0xbfA046B0bc5cEa1596be62B8b3f79f9f41f1E0d9",
     "0xe1Efa5C91cA533E4a51884d805879249E3FCB2BC",
     "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
-    "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E"
+    "0xE895076cD050F1f042d1040E47b5929bE989E514",
+    "0xEde8a407913A874Dd7e3d5B731AFcA135D30375E",
+    "0xFF00000000000000000000000000000000000010"
   ],
   "abis": {
     "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F": [
@@ -691,6 +791,9 @@
       "function upgrade(address _proxy, address _implementation)",
       "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
     ],
+    "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A": [
+      "constructor(address _singleton)"
+    ],
     "0x5E4e65926BA27467555EB562121fac00D24E9dD2": [
       "constructor(address _libAddressManager, uint256 _maxTransactionGasLimit, uint256 _l2GasDiscountDivisor, uint256 _enqueueGasCost)",
       "event L2GasParamsUpdated(uint256 l2GasDiscountDivisor, uint256 enqueueGasCost, uint256 enqueueL2GasPrepaid)",
@@ -785,6 +888,9 @@
       "function resolve(string _name) view returns (address)",
       "function setGlobalMetadata(bytes27 _globalMetadata)"
     ],
+    "0x847B5c174615B1B7fDF770882256e2D3E95b9D92": [
+      "constructor(address _singleton)"
+    ],
     "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1": [
       "constructor(address _owner)",
       "function getImplementation() returns (address)",
@@ -865,6 +971,9 @@
       "function l2TokenBridge() view returns (address)",
       "function messenger() view returns (address)",
       "function version() view returns (string)"
+    ],
+    "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": [
+      "constructor(address _singleton)"
     ],
     "0xD16463EF9b0338CE3D73309028ef1714D220c024": [
       "constructor(address _libAddressManager, string _owner)",

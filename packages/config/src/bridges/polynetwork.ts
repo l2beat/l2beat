@@ -32,8 +32,8 @@ export const polynetwork: Bridge = {
       repositories: ['https://github.com/polynetwork'],
       documentation: [
         'https://dev-docs.poly.network/',
-        'https://github.com/polynetwork/docs',
-        'https://github.com/polynetwork/docs/blob/master/eth/README.md',
+        'https://github.com/PolygonNetwork/docs',
+        'https://github.com/PolygonNetwork/docs/blob/master/eth/README.md',
       ],
     },
     description:
