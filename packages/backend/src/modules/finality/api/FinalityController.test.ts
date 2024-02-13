@@ -6,7 +6,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 
 import { Project } from '../../../model/Project'
 import { IndexerStateRepository } from '../../../peripherals/database/repositories/IndexerStateRepository'
@@ -19,6 +19,10 @@ import {
   LivenessRecordWithProjectIdAndType,
   LivenessRepository,
 } from '../../liveness/repositories/LivenessRepository'
+import {
+  FinalityRepository,
+  ProjectFinalityRecord,
+} from '../repositories/FinalityRepository'
 import { FinalityController } from './FinalityController'
 
 describe(FinalityController.name, () => {
@@ -27,6 +31,7 @@ describe(FinalityController.name, () => {
     it('returns empty object if no data', async () => {
       const finalityController = new FinalityController(
         getMockLivenessRepository([]),
+        getMockFinalityRepository(),
         getMockIndexerStateRepository(CLOCK.getLastHour()),
         [],
         CLOCK,
@@ -59,10 +64,27 @@ describe(FinalityController.name, () => {
           }
         }),
       )
+      const project2Result = {
+        minimumTimeToInclusion: 1,
+        averageTimeToInclusion: 2,
+        maximumTimeToInclusion: 3,
+      }
       const finalityController = new FinalityController(
         getMockLivenessRepository(RECORDS),
+        getMockFinalityRepository([project2Result]),
         getMockIndexerStateRepository(CLOCK.getLastHour()),
-        mockProjectConfig(RECORDS),
+        mockProjectConfig([
+          {
+            projectId: ProjectId('project1'),
+            lag: 0,
+            type: 'OPStack',
+          },
+          {
+            projectId: ProjectId('project2'),
+            lag: 0,
+            type: 'Linea',
+          },
+        ]),
         getMockClock(),
       )
 
@@ -78,7 +100,16 @@ describe(FinalityController.name, () => {
 
       const result = await finalityController.getFinality()
       if (result.type === 'success') {
-        expect(result.data.projects.project1).toEqual(expected)
+        expect(result.data.projects.project1).toEqual({
+          timeToInclusion: expected,
+        })
+        expect(result.data.projects.project2).toEqual({
+          timeToInclusion: {
+            averageInSeconds: project2Result.averageTimeToInclusion,
+            maximumInSeconds: project2Result.maximumTimeToInclusion,
+            minimumInSeconds: project2Result.minimumTimeToInclusion,
+          },
+        })
       }
     })
 
@@ -88,6 +119,7 @@ describe(FinalityController.name, () => {
       const outOfSyncTimestamp = CLOCK.getLastHour().add(-2, 'hours')
       const finalityController = new FinalityController(
         getMockLivenessRepository([]),
+        getMockFinalityRepository(),
         getMockIndexerStateRepository(outOfSyncTimestamp),
         mockProjectConfig([]),
         clock,
@@ -123,9 +155,12 @@ describe(FinalityController.name, () => {
           }
         }),
       )
-      const projects = mockProjectConfig(RECORDS)
+      const projects = mockProjectConfig([
+        { projectId: ProjectId('project1'), lag: 0, type: 'OPStack' },
+      ])
       const finalityController = new FinalityController(
         getMockLivenessRepository(RECORDS),
+        getMockFinalityRepository(),
         getMockIndexerStateRepository(CLOCK.getLastHour()),
         projects,
         getMockClock(),
@@ -142,7 +177,54 @@ describe(FinalityController.name, () => {
       }
 
       const result = await finalityController.getOPStackFinality(projects)
-      expect(result.project1).toEqual(expected)
+      expect(result.project1).toEqual({ timeToInclusion: expected })
+    })
+  })
+
+  describe(FinalityController.prototype.getProjectsFinality.name, () => {
+    it('gets finality records for all projects with one undefined', async () => {
+      const projects = mockProjectConfig([
+        { projectId: ProjectId('project1'), lag: 0, type: 'Linea' },
+        { projectId: ProjectId('project2'), lag: 0, type: 'Linea' },
+        { projectId: ProjectId('project3'), lag: 0, type: 'Linea' },
+      ])
+      const finalityController = new FinalityController(
+        getMockLivenessRepository([]),
+        getMockFinalityRepository([
+          {
+            minimumTimeToInclusion: 1,
+            averageTimeToInclusion: 2,
+            maximumTimeToInclusion: 3,
+          },
+          {
+            minimumTimeToInclusion: 4,
+            averageTimeToInclusion: 5,
+            maximumTimeToInclusion: 6,
+          },
+          undefined,
+        ]),
+        getMockIndexerStateRepository(CLOCK.getLastHour()),
+        projects,
+        getMockClock(),
+      )
+
+      const result = await finalityController.getProjectsFinality(projects)
+      expect(result).toEqual({
+        project1: {
+          timeToInclusion: {
+            minimumInSeconds: 1,
+            averageInSeconds: 2,
+            maximumInSeconds: 3,
+          },
+        },
+        project2: {
+          timeToInclusion: {
+            minimumInSeconds: 4,
+            averageInSeconds: 5,
+            maximumInSeconds: 6,
+          },
+        },
+      })
     })
   })
 })
@@ -168,6 +250,25 @@ function getMockIndexerStateRepository(data: UnixTime) {
   })
 }
 
+function getMockFinalityRepository(
+  records?: (ProjectFinalityRecord | undefined)[],
+) {
+  const mock = mockFn()
+  records?.forEach((r) => {
+    mock.resolvesToOnce(r)
+  })
+
+  return mockObject<FinalityRepository>({
+    findProjectFinalityOnTimestamp: mock,
+    addMany() {
+      return Promise.resolve(1)
+    },
+    deleteAll() {
+      return Promise.resolve(1)
+    },
+  })
+}
+
 function getMockLivenessRepository(
   records: LivenessRecordWithProjectIdAndType[],
 ) {
@@ -189,20 +290,21 @@ function getMockLivenessRepository(
 }
 
 function mockProjectConfig(
-  records: LivenessRecordWithProjectIdAndType[],
-  type: FinalityType = 'OPStack',
-  lag = 0,
+  records: {
+    projectId: ProjectId
+    type: FinalityType
+    lag: number
+  }[],
 ): Project[] {
   return records
-    .map((x) => x.projectId)
     .filter((x, i, a) => a.indexOf(x) === i)
-    .map((projectId) =>
+    .map((project) =>
       mockObject<Project>({
-        projectId,
+        projectId: project.projectId,
         isArchived: false,
         finalityConfig: mockObject<Project['finalityConfig']>({
-          type,
-          lag,
+          type: project.type,
+          lag: project.lag,
         }),
       }),
     )

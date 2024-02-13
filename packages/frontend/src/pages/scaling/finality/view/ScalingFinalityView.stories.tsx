@@ -94,7 +94,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
             text: 'There is no available node software that can reconstruct the state from L1 data, hence there is no way to verify that this system is a rollup.',
           },
         },
-        timeToFinalize: {
+        timeToInclusion: {
           averageInSeconds: 344900,
           maximumInSeconds: 2240,
         },
@@ -111,7 +111,8 @@ const meta: Meta<typeof ScalingFinalityView> = {
         redWarning: undefined,
         purposes: ['Exchange'],
         stage: { stage: 'NotApplicable' },
-        timeToFinalize: {
+        timeToInclusion: {
+          minimumInSeconds: 78,
           averageInSeconds: 15078,
           maximumInSeconds: 1259,
         },
@@ -214,7 +215,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
           ],
           message: undefined,
         },
-        timeToFinalize: {
+        timeToInclusion: {
           averageInSeconds: 2329,
           maximumInSeconds: 4584,
         },
@@ -297,7 +298,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
           ],
           message: undefined,
         },
-        timeToFinalize: {
+        timeToInclusion: {
           averageInSeconds: 410,
           maximumInSeconds: 1626,
         },
@@ -379,7 +380,8 @@ const meta: Meta<typeof ScalingFinalityView> = {
           ],
           message: undefined,
         },
-        timeToFinalize: {
+        timeToInclusion: {
+          minimumInSeconds: 555,
           averageInSeconds: 18555,
           maximumInSeconds: 67229,
         },
@@ -475,7 +477,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
             text: 'There is no available node software that can reconstruct the state from L1 data, hence there is no way to verify that this system is a rollup.',
           },
         },
-        timeToFinalize: {
+        timeToInclusion: {
           averageInSeconds: 96,
           maximumInSeconds: 78212,
         },
@@ -492,7 +494,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
         redWarning: undefined,
         purposes: ['NFT', 'Exchange'],
         stage: { stage: 'NotApplicable' },
-        timeToFinalize: {
+        timeToInclusion: {
           averageInSeconds: 819,
           maximumInSeconds: 2646,
         },
@@ -575,7 +577,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
           ],
           message: undefined,
         },
-        timeToFinalize: {
+        timeToInclusion: {
           averageInSeconds: 185585,
           maximumInSeconds: 1211,
         },
@@ -670,7 +672,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
             text: 'There is no available node software that can reconstruct the state from L1 data, hence there is no way to verify that this system is a rollup.',
           },
         },
-        timeToFinalize: {
+        timeToInclusion: {
           averageInSeconds: 4899,
           maximumInSeconds: 294,
         },
@@ -687,7 +689,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
         redWarning: undefined,
         purposes: ['Exchange'],
         stage: { stage: 'NotApplicable' },
-        timeToFinalize: {
+        timeToInclusion: {
           averageInSeconds: 175511,
           maximumInSeconds: 2129,
         },
