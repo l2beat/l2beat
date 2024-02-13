@@ -29,7 +29,7 @@ export const ORBIT_STACK_CONTRACT_DESCRIPTION: OrbitStackContractTemplate[] = [
   {
     name: 'Bridge',
     coreDescription:
-      'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
+      'Contract managing Inboxes and Outboxes. It escrows the native token used for gas on the chain.',
   },
   {
     name: 'SequencerInbox',

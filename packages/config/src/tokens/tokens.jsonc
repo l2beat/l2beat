@@ -386,6 +386,10 @@
       "category": "stablecoin"
     },
     {
+      "symbol": "HYPR",
+      "address": "0x31adda225642a8f4d7e90d4152be6661ab22a5a2"
+    },
+    {
       "symbol": "ILV",
       "address": "0x767FE9EDC9E0dF98E07454847909b5E959D7ca0E"
     },
@@ -1083,6 +1087,30 @@
       "category": "stablecoin",
       "type": "NMV",
       "formula": "totalSupply"
+    },
+    {
+      "symbol": "AERO",
+      "address": "0x940181a94a35a4569e4529a3cdfb74e38fd98631",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "SEAM",
+      "address": "0x1c7a460413dd4e964f96d8dfc56e7223ce88cd85",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "DEGEN",
+      "address": "0x4ed4e862860bed51a9570b96d89af5e1b0efefed",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "TYBG",
+      "address": "0x0d97f261b1e88845184f678e2d1e7a98d9fd38de",
+      "type": "NMV",
+      "formula": "circulatingSupply"
     }
   ],
   "lyra": [

@@ -88,7 +88,7 @@ export class LivenessRepository extends BaseRepository {
     livenessType: LivenessType,
     targetTimestamp: UnixTime,
     floorTimestamp: UnixTime,
-  ): Promise<string | undefined> {
+  ): Promise<{ txHash: string; timestamp: UnixTime } | undefined> {
     const knex = await this.knex()
 
     const rows = await knex('liveness as l')
@@ -197,8 +197,9 @@ function toTransactionRecordWithTimestamp(
 
 function toRecordWithTxHashAndTimestamp(row: {
   tx_hash: string
-}): LivenessRecord['txHash'] {
-  return row.tx_hash
+  timestamp: Date
+}): { txHash: string; timestamp: UnixTime } {
+  return { txHash: row.tx_hash, timestamp: UnixTime.fromDate(row.timestamp) }
 }
 
 function toRow(record: LivenessRecord): LivenessRow {

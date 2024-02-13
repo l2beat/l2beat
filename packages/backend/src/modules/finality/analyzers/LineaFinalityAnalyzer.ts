@@ -8,8 +8,9 @@ import {
 import { utils } from 'ethers'
 import { mean } from 'lodash'
 
-import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
-import { LivenessRepository } from '../liveness/repositories/LivenessRepository'
+import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
+import { LivenessRepository } from '../../liveness/repositories/LivenessRepository'
+import { BaseAnalyzer } from './types/BaseAnalyzer'
 
 type LineaDecoded = [
   [string, number, string, unknown[], string, unknown[]][],
@@ -18,7 +19,7 @@ type LineaDecoded = [
   string,
 ]
 
-export class LineaFinalityAnalyzer {
+export class LineaFinalityAnalyzer implements BaseAnalyzer {
   constructor(
     private readonly provider: RpcClient,
     private readonly livenessRepository: LivenessRepository,
@@ -29,12 +30,13 @@ export class LineaFinalityAnalyzer {
     to: UnixTime,
     granularity: number,
   ) {
-    const interval = (from.toNumber() - to.toNumber()) / granularity
+    assert(to.toNumber() > from.toNumber())
+    const interval = (to.toNumber() - from.toNumber()) / granularity
 
-    const txHashes = (
+    const transactions = (
       await Promise.all(
         Array.from({ length: granularity }).map(async (_, i) => {
-          const targetTimestamp = from.add(-interval * i, 'seconds')
+          const targetTimestamp = to.add(-interval * i, 'seconds')
           const lowerBound = targetTimestamp.add(-interval, 'seconds')
 
           return this.livenessRepository.findTransactionWithinTimeRange(
@@ -47,7 +49,7 @@ export class LineaFinalityAnalyzer {
       )
     ).filter(notUndefined)
 
-    if (!txHashes.length) {
+    if (!transactions.length) {
       return undefined
     }
 
@@ -56,8 +58,8 @@ export class LineaFinalityAnalyzer {
     const averages: number[] = []
 
     await Promise.all(
-      txHashes.map(async (hash) => {
-        const finality = await this.getFinality(hash)
+      transactions.map(async (transaction) => {
+        const finality = await this.getFinality(transaction)
         minimums.push(finality.minimum)
         maximums.push(finality.maximum)
         averages.push(finality.average)
@@ -65,16 +67,15 @@ export class LineaFinalityAnalyzer {
     )
 
     return {
-      minimum: Math.min(...minimums),
-      maximum: Math.max(...maximums),
-      average: Math.round(mean(averages)),
+      minimumTimeToInclusion: Math.min(...minimums),
+      maximumTimeToInclusion: Math.max(...maximums),
+      averageTimeToInclusion: Math.round(mean(averages)),
     }
   }
 
-  async getFinality(txHash: string) {
-    const tx = await this.provider.getTransaction(txHash)
-    assert(tx.timestamp, 'There is no timestamp for transaction')
-    const l1Timestamp = new UnixTime(tx.timestamp)
+  async getFinality(transaction: { txHash: string; timestamp: UnixTime }) {
+    const tx = await this.provider.getTransaction(transaction.txHash)
+    const l1Timestamp = transaction.timestamp
 
     const decodedInput = decodeInput(tx.data)
     const timestamps = decodedInput[0].map((x) => x[1])
