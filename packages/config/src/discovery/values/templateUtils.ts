@@ -1,4 +1,4 @@
-import { AddressDetails, Role } from '@l2beat/discovery'
+import { InvertedAddressDetails, Role } from '@l2beat/discovery'
 
 import { StackPermissionTemplate } from '../StackTemplateTypes'
 
@@ -10,7 +10,7 @@ export function stringFormat(str: string, ...val: string[]) {
 }
 
 export function findRoleMatchingTemplate(
-  contract: AddressDetails,
+  contract: InvertedAddressDetails,
   template: StackPermissionTemplate,
   contractOverrides?: Record<string, string>,
 ): Role | undefined {
