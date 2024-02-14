@@ -53,7 +53,7 @@ export class Application {
       createActivityModule(config, logger, http, database, clock),
       createUpdateMonitorModule(config, logger, http, database, clock),
       createDiffHistoryModule(config, logger, database),
-      createStatusModule(config, logger, database, clock),
+      createStatusModule(config, logger),
       livenessModule,
       createFinalityModule(
         config,
