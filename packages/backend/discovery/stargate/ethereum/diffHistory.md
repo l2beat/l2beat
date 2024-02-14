@@ -9,6 +9,7 @@ Generated with discovered.json: 0x6aa238b93e1fb75daa84f0b1ea40a61326c2f152
 ## Description
 
 A new pool for mETH is added. The Default basis point multiplier of the Google Oracle is updated (related to fees). The latest version of the LayerZero Endpoint contract is updated:
+
 - Version 4: 0xd231084bfb234c107d3ee2b22f97f3346fdaf705 (SendUln301)
 - Version 5: 0x245b6e8ffe9ea5fc301e32d16f66bd4c2123eefc (ReceiveUln301)
 
