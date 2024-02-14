@@ -1,13 +1,12 @@
 import { IndexerStateRepository } from '../../../peripherals/database/repositories/IndexerStateRepository'
 import { Clock } from '../../../tools/Clock'
-import { LivenessConfigurationRepository } from '../../liveness/repositories/LivenessConfigurationRepository'
 import {
   LivenessStatusPageProps,
   renderLivenessStatusPage,
-} from './view/LivenessStatusPage'
-import { renderStatusPagesLinksPage } from './view/StatusPagesLinksPage'
+} from '../../status/api/view/LivenessStatusPage'
+import { LivenessConfigurationRepository } from '../repositories/LivenessConfigurationRepository'
 
-export class StatusController {
+export class LivenessStatusController {
   constructor(
     private readonly clock: Clock,
     private readonly indexerStateRepository: IndexerStateRepository,
@@ -31,9 +30,5 @@ export class StatusController {
       unusedConfigurationsIds,
     }
     return renderLivenessStatusPage(params)
-  }
-
-  getStatusPagesLinks() {
-    return renderStatusPagesLinksPage()
   }
 }
