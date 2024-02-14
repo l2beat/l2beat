@@ -105,7 +105,6 @@ const aggregators: ScalingProjectPermissionedAccount[] =
 export const polygonzkevm: Layer2 = {
   type: 'layer2',
   id: ProjectId('polygonzkevm'),
-  isUnderReview: true,
   display: {
     name: 'Polygon zkEVM',
     slug: 'polygonzkevm',
