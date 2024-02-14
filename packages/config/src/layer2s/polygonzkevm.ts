@@ -94,6 +94,7 @@ const ESCROW_DAI_ADDRESS = '0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98'
 export const polygonzkevm: Layer2 = {
   type: 'layer2',
   id: ProjectId('polygonzkevm'),
+  isUnderReview: true,
   display: {
     name: 'Polygon zkEVM',
     slug: 'polygonzkevm',
@@ -183,16 +184,6 @@ export const polygonzkevm: Layer2 = {
           sinceTimestamp: new UnixTime(1679653163),
           untilTimestamp: new UnixTime(1707822059),
         },
-        {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0x519e42c24163192dca44cd3fbdcebf6be9130987',
-          ),
-          selector: '0xecef3f99',
-          functionSignature:
-            'function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)',
-          sinceTimestamp: new UnixTime(1707822059),
-        },
       ],
       stateUpdates: [
         {
@@ -204,6 +195,7 @@ export const polygonzkevm: Layer2 = {
           functionSignature:
             'function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)',
           sinceTimestamp: new UnixTime(1679653163),
+          untilTimestamp: new UnixTime(1707822059),
         },
         {
           formula: 'functionCall',
@@ -214,6 +206,7 @@ export const polygonzkevm: Layer2 = {
           functionSignature:
             'function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) ',
           sinceTimestamp: new UnixTime(1679653163),
+          untilTimestamp: new UnixTime(1707822059),
         },
       ],
     },
