@@ -396,7 +396,7 @@ export const polygonzkevm: Layer2 = {
   permissions: [
     ...discovery.getMultisigPermission(
       'AdminMultisig',
-      `Admin of the PolygonZkEvm rollup, can set core system parameters like timeouts, sequencer and aggregator as well as deactivate emergency state. They can also upgrade the PolygonZkEvm contracts, but are restricted by a ${upgradeDelay} delay unless rollup is put in the Emergency State.`,
+      `Admin of the PolygonZkEvm rollup, can set core system parameters like timeouts, sequencer and aggregator as well as deactivate emergency state. They can also upgrade the PolygonZkEvm contracts, but are restricted by a ${formatSeconds(upgradeDelay)} delay unless rollup is put in the Emergency State.`,
     ),
     {
       name: 'Sequencer',
