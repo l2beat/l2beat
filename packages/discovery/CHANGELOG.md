@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.42.0
+
+### Minor Changes
+
+- Log all the discovery errors at the end of the execution
+
 ## 0.41.0
 
 ### Minor Changes
