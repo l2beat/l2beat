@@ -1,10 +1,10 @@
 import { IndexerStateRepository } from '../../../peripherals/database/repositories/IndexerStateRepository'
 import { Clock } from '../../../tools/Clock'
+import { LivenessConfigurationRepository } from '../repositories/LivenessConfigurationRepository'
 import {
   LivenessStatusPageProps,
   renderLivenessStatusPage,
-} from '../../status/api/view/LivenessStatusPage'
-import { LivenessConfigurationRepository } from '../repositories/LivenessConfigurationRepository'
+} from './status/LivenessStatusPage'
 
 export class LivenessStatusController {
   constructor(

@@ -3,15 +3,15 @@ import { DiscoveryDiff } from '@l2beat/shared-pure'
 
 import { Project } from '../../../model/Project'
 import { ChainConverter } from '../../../tools/ChainConverter'
-import { getDashboardContracts } from '../../status/api/discovery/props/getDashboardContracts'
+import { UpdateMonitorRepository } from '../repositories/UpdateMonitorRepository'
+import { getDashboardContracts } from './props/getDashboardContracts'
 import {
   DashboardProject,
   getDashboardProjects,
-} from '../../status/api/discovery/props/getDashboardProjects'
-import { getDiff } from '../../status/api/discovery/props/utils/getDiff'
-import { renderDashboardPage } from '../../status/api/discovery/view/DashboardPage'
-import { renderDashboardProjectPage } from '../../status/api/discovery/view/DashboardProjectPage'
-import { UpdateMonitorRepository } from '../repositories/UpdateMonitorRepository'
+} from './props/getDashboardProjects'
+import { getDiff } from './props/utils/getDiff'
+import { renderDashboardPage } from './view/DashboardPage'
+import { renderDashboardProjectPage } from './view/DashboardProjectPage'
 
 export class UpdateMonitorController {
   constructor(

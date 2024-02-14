@@ -1,6 +1,6 @@
 import Router from '@koa/router'
 
-import { renderStatusPagesLinksPage } from './view/StatusPagesLinksPage'
+import { renderStatusPagesLinksPage } from './StatusPagesLinksPage'
 
 export function createStatusRouter() {
   const router = new Router()

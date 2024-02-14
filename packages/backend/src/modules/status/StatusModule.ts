@@ -3,7 +3,7 @@ import { Logger } from '@l2beat/backend-tools'
 
 import { Config } from '../../config/Config'
 import { ApplicationModule } from '../ApplicationModule'
-import { createStatusRouter } from './api/StatusRouter'
+import { createStatusRouter } from './StatusRouter'
 
 export function createStatusModule(
   config: Config,
