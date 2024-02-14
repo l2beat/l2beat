@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x41a408a94905042c8dc5aef6ff75202882d8b4d4
+Generated with discovered.json: 0xe1b854d9d1e0fdb4f36dc514fe720231b67a1c02
 
-# Diff at Wed, 14 Feb 2024 13:09:14 GMT:
+# Diff at Wed, 14 Feb 2024 13:10:31 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@c9d75a79ee568ba0a609342a536c18c36c61cf35 block: 19012997
-- current block number: 19226410
+- current block number: 19226416
 
 ## Description
 
@@ -12,7 +12,7 @@ Major upgrade. Mainly related to reducing fees with compression and aggregated p
 
 ### ZkEvmV2
 
-It's now inherited by the LineaRollup contract.  The `setVerifierAddress` function has been moved to LineaRollup. The pause system has been tweaked but it's equivalent.
+It's now inherited by the LineaRollup contract. The `setVerifierAddress` function has been moved to LineaRollup. The pause system has been tweaked but it's equivalent.
 It's still possible to finalize blocks without proofs.
 
 ### LineaRollup
