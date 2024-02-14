@@ -9,7 +9,7 @@ export function getStatus(
   knownSet: Set<number>,
   minTimestamp?: UnixTime,
 ) {
-  from = minTimestamp ? UnixTime.max(from, minTimestamp) : from
+  from = minTimestamp ? UnixTime.min(from, minTimestamp) : from
   const timestamps = getRelevantTimestamps(from, to).sort(
     (a, b) => b.toNumber() - a.toNumber(),
   )
@@ -17,7 +17,11 @@ export function getStatus(
   const statuses = timestamps.map(
     (timestamp): StatusPoint => ({
       timestamp,
-      status: knownSet.has(timestamp.toNumber()) ? 'synced' : 'notSynced',
+      status: knownSet.has(timestamp.toNumber())
+        ? 'synced'
+        : minTimestamp && timestamp.lt(minTimestamp)
+        ? 'notApplicable'
+        : 'notSynced',
     }),
   )
 
@@ -27,6 +31,9 @@ export function getStatus(
 const ONE_HOUR = 3600
 
 function getRelevantTimestamps(from: UnixTime, to: UnixTime) {
+  from = from.toEndOf('day')
+  to = to.toStartOf('day')
+
   const timestamps = []
   const hourlyCutoff = to.add(-7, 'days')
   const sixHourlyCutoff = to.add(-90, 'days')
