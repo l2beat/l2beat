@@ -50,7 +50,7 @@ function Publication({ publication }: PublicationProps) {
     <LinkWithThumbnail
       src={`/images/thumbnails/${publication.id}.png`}
       href={`/governance/publications/${publication.id}`}
-      title={publication.title}
+      title={publication.shortTitle ?? publication.title}
       description={publication.description}
     />
   )

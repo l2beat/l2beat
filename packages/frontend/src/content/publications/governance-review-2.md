@@ -2,6 +2,7 @@
   title: "Governance Review #02"
   description: "L2BEAT provides weekly updates on governance in concise articles."
   publishedOn: "2024-01-26T00:00:00Z"
+  readTimeInMinutes: 5
 ---
 
 **Advertisement :)**

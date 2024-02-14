@@ -9,7 +9,8 @@ export interface LinkWithThumbnailProps {
   description?: string
   src: string
   href: string
-  orientation: 'vertical' | 'horizontal'
+  topAccessory?: React.ReactNode
+  orientation?: 'vertical' | 'horizontal'
 }
 
 export function LinkWithThumbnail({
@@ -41,6 +42,7 @@ export function LinkWithThumbnail({
             'col-span-5 self-center transition-all group-hover:translate-x-0.5',
         )}
       >
+        {props.topAccessory && <div className="mb-2">{props.topAccessory}</div>}
         <p
           className={cn(
             'text-balance font-bold ',
