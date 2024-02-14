@@ -137,6 +137,7 @@ export function getProjectDetails(
         props: {
           id: 'state-derivation',
           title: 'State derivation',
+          isUnderReview: project.isUnderReview,
           ...project.stateDerivation,
         },
       })
@@ -149,6 +150,7 @@ export function getProjectDetails(
           id: 'state-validation',
           title: 'State validation',
           stateValidation: project.stateValidation,
+          isUnderReview: project.isUnderReview,
         },
       })
     }
@@ -173,6 +175,7 @@ export function getProjectDetails(
           title: 'Upgrades & Governance',
           content: project.upgradesAndGovernance,
           image: getUpgradesAndGovernanceImage(project.display.slug),
+          isUnderReview: project.isUnderReview,
         },
       })
     }
