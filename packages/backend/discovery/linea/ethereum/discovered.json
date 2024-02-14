@@ -1,8 +1,8 @@
 {
   "name": "linea",
   "chain": "ethereum",
-  "blockNumber": 19219446,
-  "configHash": "0xebe4a4cdcd3ec57473886dbad6c55aba15237a22733c9504f62b9b4203704cdc",
+  "blockNumber": 19226410,
+  "configHash": "0xc560531ac063564e0c9f5ffcaad3c4ba3808248895912e372511fa3d182da247",
   "version": 3,
   "contracts": [
     {
@@ -84,7 +84,7 @@
       "implementations": ["0x0eC393209674090368C592A591B25811e490BF36"],
       "sinceTimestamp": 1691086271,
       "values": {
-        "balance": 16386654244696,
+        "balance": 16438792531214,
         "messageService": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
         "owner": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
         "paused": false,
@@ -137,7 +137,7 @@
           "0xB4dAebe4D01f467701F95f0196fc29033c54dBcb"
         ],
         "getThreshold": 4,
-        "nonce": 37,
+        "nonce": 38,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -199,15 +199,14 @@
             "members": ["0xd6B95c960779c72B8C6752119849318E5d550574"]
           }
         },
-        "currentL2StoredL1MessageNumber": 0,
-        "currentL2StoredL1RollingHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "currentPeriodAmountInWei": "49129679061234000000",
+        "currentL2StoredL1MessageNumber": 509612,
+        "currentL2StoredL1RollingHash": "0x54ca3032411cc8c78cd7055356b039b81d8f64e17ff3fa5b0f44eb6d0d4d6c0b",
+        "currentPeriodAmountInWei": "36380227600000000000",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "GENERAL_PAUSE_TYPE": 1,
         "generalPause": false,
         "INBOX_STATUS_RECEIVED": 1,
         "INBOX_STATUS_UNKNOWN": 0,
-        "isMessageClaimed": [false, false, false, false, false],
         "L1_L2_PAUSE_TYPE": 2,
         "l1l2Pause": false,
         "L2_L1_PAUSE_TYPE": 3,
@@ -219,15 +218,10 @@
         "OUTBOX_STATUS_UNKNOWN": 0,
         "PAUSE_MANAGER_ROLE": "0x356a809dfdea9198dd76fb76bf6d403ecf13ea675eb89e1eda2db2c4a4676a26",
         "periodInSeconds": 86400,
+        "provenCompressedBlocksWithoutProof": [2242752],
+        "provenNonCompressedBlocksWithoutProof": [],
         "PROVING_SYSTEM_PAUSE_TYPE": 4,
         "RATE_LIMIT_SETTER_ROLE": "0x1185e52d62bfbbea270e57d3d09733d221b53ab7a18bae82bb3c6c74bab16d82",
-        "rollingHashes": [
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000"
-        ],
         "sender": "0x00000000000000000000000000000000075BCd15",
         "systemMigrationBlock": 19219000,
         "VERIFIER_SETTER_ROLE": "0x32937fd5162e282df7e9a14a5073a2425321c7966eaf70ed6c838a1006d84c4c",
@@ -243,10 +237,6 @@
           "0x0000000000000000000000000000000000000000",
           "0x0000000000000000000000000000000000000000"
         ]
-      },
-      "errors": {
-        "isMessageClaimed": "Too many values. Update configuration to explore fully",
-        "rollingHashes": "Too many values. Update configuration to explore fully"
       },
       "derivedName": "LineaRollup"
     },
