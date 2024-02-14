@@ -56,7 +56,9 @@ describe(TvlCleaner.name, () => {
           Promise.resolve(2),
       })
 
-      const firstTableCleanedUntil = UnixTime.fromDate(new Date('2022-02-13'))
+      const firstTableCleanedUntil = UnixTime.fromDate(
+        new Date('2024-02-03T06:00:00Z'),
+      )
       const repository = mockObject<TvlCleanerRepository>({
         find: mockFn()
           .given(firstTable.constructor.name)

@@ -71,19 +71,19 @@ export class TvlCleaner {
         hourlyDeletionBoundary,
         tvlCleanerRecord?.cleanedUntil,
       )
-      this.logger.info(`Cleaned hourly ${repositoryName}`, { hourly })
-
       const sixHourly = await repository.deleteSixHourlyUntil(
         sixHourlyDeletionBoundary,
         tvlCleanerRecord?.cleanedUntil,
       )
-      this.logger.info(`Cleaned sixHourly ${repositoryName}`, {
-        sixHourly,
-      })
 
       await this.tvlCleanerRepository.addOrUpdate({
         repositoryName: repositoryName,
         cleanedUntil: hourlyDeletionBoundary,
+      })
+
+      this.logger.info(`Finished cleaning ${repositoryName}`, {
+        hourly,
+        sixHourly,
       })
     }
   }
