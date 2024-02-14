@@ -8,7 +8,7 @@ Generated with discovered.json: 0xce8b41575c0b51dafec8f3ef40c3daba3c4fba4d
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+It is now possible to attach many rollups to the same system. Polygon zkEVM is the first one of those. The rollup manager manages roots proposal and the single rollups manage tx data sequencing and forced transactions. Most of the params and roles are now shared. The rest is mostly similar.
 
 ## Watched changes
 
