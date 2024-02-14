@@ -8,6 +8,7 @@ import {
   assert,
   EthereumAddress,
   gatherAddressesFromUpgradeability,
+  notUndefined,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
@@ -239,7 +240,7 @@ export class ProjectDiscovery {
           }
         }
       })
-      .filter((x) => !!x) as ScalingProjectPermission[]
+      .filter(notUndefined)
   }
 
   getMultisigPermission(
