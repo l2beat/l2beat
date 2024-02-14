@@ -181,7 +181,7 @@ export const polygonzkevm: Layer2 = {
           functionSignature:
             'function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)',
           sinceTimestamp: new UnixTime(1679653163),
-          untilTimestamp: new UnixTime(1707819683),
+          untilTimestamp: new UnixTime(1707822059),
         },
         {
           formula: 'functionCall',
@@ -191,7 +191,7 @@ export const polygonzkevm: Layer2 = {
           selector: '0xecef3f99',
           functionSignature:
             'function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)',
-          sinceTimestamp: new UnixTime(1707819683),
+          sinceTimestamp: new UnixTime(1707822059),
         },
       ],
       stateUpdates: [
