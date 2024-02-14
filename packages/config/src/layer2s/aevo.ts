@@ -32,14 +32,28 @@ export const aevo: Layer2 = opStack({
     },
     activityDataSource: 'Blockchain RPC',
   },
+  chainConfig: {
+    name: 'aevo',
+    chainId: 2999,
+    explorerUrl: 'https://explorer.aevo.xyz',
+    explorerApi: {
+      url: 'https://explorer.aevo.xyz/api',
+      type: 'blockscout',
+    },
+    multicallContracts: [
+      {
+        sinceBlock: 2790111,
+        batchSize: 150,
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        version: '3',
+      },
+    ],
+    minTimestampForTvl: UnixTime.fromDate(new Date('2023-09-05T03:00:00Z')),
+  },
   upgradeability,
   l1StandardBridgeEscrow: EthereumAddress(
     '0x4082C9647c098a6493fb499EaE63b5ce3259c574',
   ),
-  sequencerAddress: EthereumAddress(
-    discovery.getContractValue('SystemConfig', 'batcherHash'),
-  ),
-  inboxAddress: EthereumAddress('0x253887577420Cb7e7418cD4d50147743c8041b28'),
   genesisTimestamp: new UnixTime(1679202395),
   l2OutputOracle: discovery.getContract('L2OutputOracle'),
   portal: discovery.getContract('OptimismPortal'),

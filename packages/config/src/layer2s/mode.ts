@@ -12,6 +12,11 @@ const upgradeability = {
   upgradeDelay: 'No delay',
 }
 
+const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
+  'L2OutputOracle',
+  'FINALIZATION_PERIOD_SECONDS',
+)
+
 export const mode: Layer2 = opStack({
   discovery,
   display: {
@@ -35,16 +40,16 @@ export const mode: Layer2 = opStack({
         'https://t.me/ModeNetworkOfficial',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
+    finality: {
+      finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
+    },
   },
   upgradeability,
   l1StandardBridgeEscrow: EthereumAddress(
     '0x735aDBbE72226BD52e818E7181953f42E3b0FF21',
   ),
   rpcUrl: 'https://mainnet.mode.network/',
-  sequencerAddress: EthereumAddress(
-    discovery.getContractValue('SystemConfig', 'batcherHash'),
-  ),
-  inboxAddress: EthereumAddress('0x24e59d9d3bd73ccc28dc54062af7ef7bff58bd67'),
   genesisTimestamp: new UnixTime(1700125343),
 
   l2OutputOracle: discovery.getContract('L2OutputOracle'),
@@ -59,6 +64,10 @@ export const mode: Layer2 = opStack({
       description: 'Mode Network is live on mainnet.',
     },
   ],
+  finality: {
+    type: 'OPStack',
+    lag: 0,
+  },
   knowledgeNuggets: [],
   roleOverrides: {
     batcherHash: 'Sequencer',

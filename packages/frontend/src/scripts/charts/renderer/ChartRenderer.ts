@@ -279,8 +279,8 @@ export class ChartRenderer {
           milestone
             ? POINT_CLASS_NAMES.milestone.className
             : pointStyle
-            ? POINT_CLASS_NAMES[pointStyle].className
-            : ''
+              ? POINT_CLASS_NAMES[pointStyle].className
+              : ''
         }`
         const y = this.getY(value)
         const bottom = Math.max(0, y * (canvasHeight - FIRST_LABEL_HEIGHT_PX))

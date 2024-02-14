@@ -1,8 +1,8 @@
 {
   "name": "mantapacific",
   "chain": "ethereum",
-  "blockNumber": 19090321,
-  "configHash": "0x4a40630049075c3708d1efc2d6ed98a1907453b18a795ec6021a010b938ddee0",
+  "blockNumber": 19176785,
+  "configHash": "0xccb4cf130b037a910fb0d63482450d5d3813e797d193c99561110f2ddc88bde6",
   "version": 3,
   "contracts": [
     {
@@ -20,10 +20,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 259200,
         "L2_BLOCK_TIME": 10,
-        "latestBlockNumber": 1204080,
-        "latestOutputIndex": 10033,
-        "nextBlockNumber": 1204200,
-        "nextOutputIndex": 10034,
+        "latestBlockNumber": 1308840,
+        "latestOutputIndex": 10906,
+        "nextBlockNumber": 1308960,
+        "nextOutputIndex": 10907,
         "PROPOSER": "0x853bDfF715eFeDc280C16241dD30A6d651f90aCa",
         "startingBlockNumber": 0,
         "startingTimestamp": 1694223959,
@@ -103,7 +103,7 @@
       "sinceTimestamp": 1694224919,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292669067",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292670424",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -132,7 +132,6 @@
         "gasLimit": 50000000,
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isAllTxsLengthEqualToCelestiaDAExample": true,
           "isSomeTxsLengthEqualToCelestiaDAExample": true
         },
         "overhead": 1000,
@@ -146,6 +145,7 @@
           "340282366920938463463374607431768211455"
         ],
         "scalar": 333333,
+        "sequencerInbox": "0xAEbA8e2307A22B6824a9a7a39f8b016C357Cd1Fe",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
         "unsafeBlockSigner": "0xfeC5478feD709F728566FA6bF4546C83106be95B",
         "version": "1.3.1",
@@ -167,7 +167,7 @@
         "GUARDIAN": "0x4b1A788B20bb85eb19f8e9B69B8a584e7fA29fe5",
         "L2_ORACLE": "0x30c789674ad3B458886BBC9abf42EEe19EA05C1D",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 1135001, 19090224],
+        "params": [1000000000, 490798, 19176503],
         "paused": false,
         "SYSTEM_CONFIG": "0x895E00269A05848F3c9889EfA677D02fF7351a5D",
         "version": "1.7.2"
@@ -199,6 +199,7 @@
     "0x853bDfF715eFeDc280C16241dD30A6d651f90aCa",
     "0x92124ee0e7238992E5E7F34f9FBBCD71931ABC6D",
     "0xA76E31D8471D569EfDd3D95d1b11Ce6710f4533F",
+    "0xAEbA8e2307A22B6824a9a7a39f8b016C357Cd1Fe",
     "0xB44948Ff3E8a4d3Ac32A376B4b3209AdC7620770",
     "0xDC80503b718Ff3B2e43db42460A718c119e75cdd",
     "0xfeC5478feD709F728566FA6bF4546C83106be95B"

@@ -111,6 +111,9 @@ The liveness feature is configured via the following environment variables:
 
 ### `finality` feature
 
+- `FINALITY_ETHEREUM_PROVIDER_URL` - Ethereum RPC url
+- `FINALITY_ETHEREUM_PROVIDER_CALLS_PER_MINUTE` - Optional. Rate limits the number of calls to the RPC. Defaults to 600
+
 In development.
 
 ### `activity` feature

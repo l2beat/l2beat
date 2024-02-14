@@ -37,9 +37,9 @@ export function LivenessDurationCell(props: {
       props.project?.dataAvailabilityMode === 'StateDiffs'
         ? 'State diff rollups do not post batches of transactions to the L1.'
         : props.dataType === 'proofSubmissions' &&
-          props.project?.category === 'Optimistic Rollup'
-        ? 'Optimistic rollups do not post validity proofs to the L1.'
-        : undefined
+            props.project?.category === 'Optimistic Rollup'
+          ? 'Optimistic rollups do not post validity proofs to the L1.'
+          : undefined
     return (
       <Tooltip>
         <TooltipTrigger className="rounded bg-gray-200 px-1.5 py-px text-center font-medium uppercase text-gray-500 dark:bg-neutral-700 dark:text-gray-50">

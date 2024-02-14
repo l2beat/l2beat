@@ -21,7 +21,7 @@ const MONTHS: Record<
   '12': { shortName: 'Dec', longName: 'December' },
 }
 
-function parseTimestamp(timestamp: number) {
+export function parseTimestamp(timestamp: number) {
   const isoString = new Date(timestamp * 1000).toISOString()
   const [year, month, day] = isoString.slice(0, 10).split('-')
   const time = isoString.slice(11, 16)
@@ -33,8 +33,19 @@ function parseTimestamp(timestamp: number) {
   }
 }
 
-function formatTimeAndDate(date: string, time?: string) {
-  return time === undefined ? date : `${date}, ${time} (UTC)`
+function formatTimeAndDate(
+  date: string,
+  time: string,
+  mode: 'date' | 'datetime' | 'time' = 'date',
+) {
+  switch (mode) {
+    case 'date':
+      return date
+    case 'time':
+      return `${time} (UTC)`
+    case 'datetime':
+      return `${date}, ${time} (UTC)`
+  }
 }
 
 function toNiceDate(
@@ -75,13 +86,13 @@ export function formatRange(from: number, to: number) {
 export function formatTimestamp(
   timestamp: number,
   opts?: {
-    withTime?: boolean
+    mode?: 'date' | 'datetime' | 'time'
     longMonthName?: boolean
   },
 ) {
   const { year, month, day, time } = parseTimestamp(timestamp)
   const date = toNiceDate(day, month, year, opts?.longMonthName)
-  return formatTimeAndDate(date, opts?.withTime ? time : undefined)
+  return formatTimeAndDate(date, time, opts?.mode)
 }
 
 export function formatDate(date: string) {
@@ -99,12 +110,12 @@ export function formatTimestampToDateWithHour(timestamp: UnixTime) {
     numericDay >= 11 && numericDay <= 13
       ? 'th'
       : numericDay % 10 === 1
-      ? 'st'
-      : numericDay % 10 === 2
-      ? 'nd'
-      : numericDay % 10 === 3
-      ? 'rd'
-      : 'th'
+        ? 'st'
+        : numericDay % 10 === 2
+          ? 'nd'
+          : numericDay % 10 === 3
+            ? 'rd'
+            : 'th'
 
   const numericHour = +time.slice(0, 2)
 
@@ -115,4 +126,25 @@ export function formatTimestampToDateWithHour(timestamp: UnixTime) {
   const formattedDate = `${hour}:${minute} ${ampm} UTC, ${monthAbbr} ${day}${daySuffix} ${year}`
 
   return formattedDate
+}
+
+export function getNextDateForDayOfWeek(
+  dayOfWeek: number,
+  currentDate = new Date(),
+): Date {
+  if (dayOfWeek < 0 || dayOfWeek > 6) {
+    throw new Error('Day must be between 0 (Sunday) and 6 (Saturday)')
+  }
+
+  const currentDayOfWeek = currentDate.getDay()
+  let daysToAdd = dayOfWeek - currentDayOfWeek
+
+  if (daysToAdd <= 0) {
+    daysToAdd += 7
+  }
+
+  currentDate.setUTCDate(currentDate.getDate() + daysToAdd)
+  currentDate.setUTCHours(0, 0, 0, 0)
+
+  return currentDate
 }

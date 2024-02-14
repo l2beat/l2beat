@@ -14,11 +14,12 @@ import {
   ScalingProjectEscrow,
   ScalingProjectPermission,
 } from '../../common'
+import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { VALUES } from '../../discovery/values'
 import { Layer3, Layer3Display } from '../../layer3s/types'
 import { getStage } from '../common/stages/getStage'
-import { Layer2, Layer2Display } from '../types'
+import { Layer2, Layer2Display, Layer2TransactionApi } from '../types'
 
 const ETHEREUM_EXPLORER_URL = 'https://etherscan.io/address/{0}#code'
 
@@ -31,7 +32,8 @@ export interface OrbitStackConfigCommon {
   rollupProxy: ContractParameters
   sequencerInbox: ContractParameters
   nonTemplatePermissions?: ScalingProjectPermission[]
-
+  rpcUrl?: string
+  transactionApi?: Layer2TransactionApi
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
 }
@@ -39,10 +41,12 @@ export interface OrbitStackConfigCommon {
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
   display: Omit<Layer3Display, 'provider' | 'category' | 'dataAvailabilityMode'>
   hostChain: ProjectId
+  nativeToken?: string
 }
 
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
   display: Omit<Layer2Display, 'provider' | 'category' | 'dataAvailabilityMode'>
+  nativeToken?: string
 }
 
 export function orbitStackCommon(
@@ -279,9 +283,12 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
       escrows: [
         templateVars.discovery.getEscrowDetails({
           address: templateVars.bridge.address,
-          tokens: ['ETH'],
-          description:
-            'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
+          tokens: templateVars.nativeToken
+            ? [templateVars.nativeToken]
+            : ['ETH'],
+          description: templateVars.nativeToken
+            ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.nativeToken} sent to L2.`
+            : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
         }),
         ...(templateVars.nonTemplateEscrows ?? []),
       ],
@@ -371,12 +378,26 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       escrows: [
         templateVars.discovery.getEscrowDetails({
           address: templateVars.bridge.address,
-          tokens: ['ETH'],
-          description:
-            'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
+          tokens: templateVars.nativeToken
+            ? [templateVars.nativeToken]
+            : ['ETH'],
+          description: templateVars.nativeToken
+            ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.nativeToken} sent to L2.`
+            : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
         }),
         ...(templateVars.nonTemplateEscrows ?? []),
       ],
+      transactionApi:
+        templateVars.transactionApi ??
+        (templateVars.rpcUrl !== undefined
+          ? {
+              type: 'rpc',
+              startBlock: 1,
+              defaultUrl: templateVars.rpcUrl,
+              defaultCallsPerMinute: 1500,
+              assessCount: subtractOne,
+            }
+          : undefined),
     },
   }
 }

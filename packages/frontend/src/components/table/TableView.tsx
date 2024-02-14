@@ -175,7 +175,7 @@ function ColumnHeader<T>(props: {
       >
         <div
           className={cn(
-            'flex flex-row items-center gap-1.5',
+            'flex flex-row items-end gap-1.5',
             props.column.align === 'right' && 'justify-end',
             props.column.align === 'center' && 'justify-center',
           )}
@@ -194,8 +194,8 @@ function ColumnHeader<T>(props: {
           )}
 
           {props.column.tooltip && (
-            <Tooltip>
-              <TooltipTrigger className="-translate-y-px md:translate-y-0">
+            <Tooltip className="translate-y-[-4.5px]">
+              <TooltipTrigger>
                 <InfoIcon className="fill-current md:size-3.5" />
               </TooltipTrigger>
               <TooltipContent>{props.column.tooltip}</TooltipContent>

@@ -7,7 +7,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { DurationCell } from './DurationCell'
 
 interface Props {
-  data: ScalingFinalityViewEntry['timeToFinalize']
+  data: ScalingFinalityViewEntry['timeToInclusion']
 }
 
 export function FinalityDurationCell(props: Props) {
@@ -15,8 +15,7 @@ export function FinalityDurationCell(props: Props) {
     <Tooltip data-testid="finality-duration-cell">
       <TooltipTrigger className="flex items-center gap-1">
         <div>
-          <DurationCell durationInSeconds={props.data.averageInSeconds} /> + L1
-          Finality
+          <DurationCell durationInSeconds={props.data.averageInSeconds} />
         </div>
         {props.data.warning && (
           <RoundedWarningIcon className="size-5 fill-yellow-700 dark:fill-yellow-300" />
@@ -24,20 +23,28 @@ export function FinalityDurationCell(props: Props) {
       </TooltipTrigger>
       <TooltipContent>
         <div className="font-medium">
-          <span>30-day avg. time to finality</span>
+          <span>30-day avg. time to inclusion</span>
           <ul className="mt-1 list-inside list-disc">
+            {props.data.minimumInSeconds && (
+              <li className="flex justify-between gap-4">
+                Minimum:
+                <div>
+                  <DurationCell
+                    durationInSeconds={props.data.minimumInSeconds}
+                  />
+                </div>
+              </li>
+            )}
             <li className="flex justify-between gap-4">
               Average:
               <div>
-                <DurationCell durationInSeconds={props.data.averageInSeconds} />{' '}
-                + L1 Finality
+                <DurationCell durationInSeconds={props.data.averageInSeconds} />
               </div>
             </li>
             <li className="flex justify-between gap-4">
               Maximum:
               <div>
-                <DurationCell durationInSeconds={props.data.maximumInSeconds} />{' '}
-                + L1 Finality
+                <DurationCell durationInSeconds={props.data.maximumInSeconds} />
               </div>
             </li>
           </ul>

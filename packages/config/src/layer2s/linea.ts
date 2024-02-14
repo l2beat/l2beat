@@ -110,6 +110,9 @@ export const linea: Layer2 = {
       explanation:
         'Linea is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1. Tx data, proofs and state roots are currently posted in the same transaction. Blocks can also be finalized by the operator without the need to provide a proof.',
     },
+    finality: {
+      finalizationPeriod: 0,
+    },
   },
   config: {
     escrows: [
@@ -159,6 +162,10 @@ export const linea: Layer2 = {
           sinceTimestamp: new UnixTime(1689159923),
         },
       ],
+    },
+    finality: {
+      type: 'Linea',
+      lag: 0,
     },
   },
   chainConfig: {

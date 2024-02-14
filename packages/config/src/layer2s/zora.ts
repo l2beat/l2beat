@@ -64,10 +64,6 @@ export const zora: Layer2 = opStack({
     '0x3e2Ea9B92B7E48A52296fD261dc26fd995284631',
   ),
   rpcUrl: 'https://rpc.zora.co',
-  sequencerAddress: EthereumAddress(
-    discovery.getContractValue('SystemConfig', 'batcherHash'),
-  ),
-  inboxAddress: EthereumAddress('0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf'),
   finality: {
     type: 'OPStack',
     lag: 0,

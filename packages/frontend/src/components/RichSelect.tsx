@@ -29,8 +29,8 @@ export function RichSelect(props: Props) {
       >
         <div className="inline-flex items-center gap-1.5 whitespace-pre px-2 group-data-[state=selected]:hidden">
           {props.label}
-          <ChevronDownIcon className="hidden transition-transform group-data-[state=opened]:-rotate-180 md:block" />
-          <ExpandIcon className="md:hidden" />
+          <ChevronDownIcon className="hidden transition-transform group-data-[state=opened]:-rotate-180 lg:block" />
+          <ExpandIcon className="lg:hidden" />
         </div>
         <div className="group hidden w-max items-center gap-1.5 rounded-md bg-white px-2 group-data-[state=selected]:inline-flex dark:bg-black dark:group-data-[state=selected]:group-hover:bg-gray-950">
           <span data-role="rich-select-selected-text" />
@@ -41,7 +41,7 @@ export function RichSelect(props: Props) {
       </div>
       <div
         data-role="rich-select-dropdown"
-        className="pointer-events-none absolute z-60 mr-8 hidden opacity-0 transition-opacity group-data-[state=opened]:pointer-events-auto group-data-[state=opened]:opacity-100 md:block"
+        className="pointer-events-none absolute z-60 mr-8 hidden opacity-0 transition-opacity group-data-[state=opened]:pointer-events-auto group-data-[state=opened]:opacity-100 lg:block"
       >
         <hr className="h-1.5 border-t-0" />
         <div
@@ -56,11 +56,11 @@ export function RichSelect(props: Props) {
       <div data-role="rich-select-slide-card">
         <div
           data-role="rich-select-slide-card-background"
-          className="pointer-events-none fixed inset-x-0 bottom-0 z-999 size-full bg-black/50 opacity-0 transition-opacity group-data-[state=opened]:pointer-events-auto group-data-[state=opened]:opacity-100 md:hidden"
+          className="pointer-events-none fixed inset-x-0 bottom-0 z-999 size-full bg-black/50 opacity-0 transition-opacity group-data-[state=opened]:pointer-events-auto group-data-[state=opened]:opacity-100 lg:hidden"
         />
         <div
           data-role="rich-select-slide-card-content"
-          className="fixed inset-x-0 bottom-0 z-999 translate-y-full whitespace-normal rounded-t-2xl bg-gray-100 p-4 transition-transform duration-300 ease-out group-data-[state=opened]:translate-y-0 dark:bg-zinc-700 md:hidden"
+          className="fixed inset-x-0 bottom-0 z-999 translate-y-full whitespace-normal rounded-t-2xl bg-gray-100 p-4 transition-transform duration-300 ease-out group-data-[state=opened]:translate-y-0 dark:bg-zinc-700 lg:hidden"
         >
           <div className="relative flex justify-between">
             <div

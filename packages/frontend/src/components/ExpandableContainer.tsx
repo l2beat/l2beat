@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react'
 
 import { cn } from '../utils/cn'
+import { Button } from './Button'
 import { ChevronDownIcon } from './icons'
 
 interface ExpandableContainerProps {
@@ -29,23 +30,22 @@ export function ExpandableContainer(props: ExpandableContainerProps) {
           )}
         />
       </div>
-      <div
+      <Button
         data-role="expandable-container-button"
-        className="mx-auto mt-1 flex w-min cursor-pointer items-center justify-center rounded-md border border-pink-900 px-8 py-2 transition hover:bg-pink-900/25"
+        className="mx-auto mt-1 flex w-min gap-2.5"
+        variant="purple"
       >
-        <div className="flex gap-2.5">
-          <span
-            data-role="expandable-container-button-text"
-            className="whitespace-pre text-sm font-bold"
-          >
-            Show more
-          </span>
-          <ChevronDownIcon
-            data-role="expandable-container-button-arrow"
-            className="transition-transform duration-300"
-          />
-        </div>
-      </div>
+        <span
+          data-role="expandable-container-button-text"
+          className="whitespace-pre text-sm font-bold"
+        >
+          Show more
+        </span>
+        <ChevronDownIcon
+          data-role="expandable-container-button-arrow"
+          className="transition-transform duration-300"
+        />
+      </Button>
     </div>
   )
 }

@@ -112,7 +112,7 @@ export class CoingeckoQueryService {
       const noData = data.prices.length === 0 && data.marketCaps.length === 0
       if (noData) {
         assert(
-          !adjustedFrom,
+          !from || currentTo.lt(from),
           `No data received for coin: ${coingeckoId.toString()} from ${currentFrom
             .toDate()
             .toISOString()} to ${currentTo.toDate().toISOString()}`,
@@ -180,11 +180,9 @@ function adjust(
   from: UnixTime | undefined,
   to: UnixTime,
 ): [UnixTime | undefined, UnixTime] {
-  const start = from && (from.isFull('hour') ? from : from.toNext('hour'))
-  const end = to.isFull('hour') ? to : to.toStartOf('hour')
   return [
-    start?.add(-COINGECKO_INTERPOLATION_WINDOW_DAYS, 'days'),
-    end.add(COINGECKO_INTERPOLATION_WINDOW_DAYS, 'days'),
+    from?.toEndOf('hour')?.add(-COINGECKO_INTERPOLATION_WINDOW_DAYS, 'days'),
+    to.toStartOf('hour').add(COINGECKO_INTERPOLATION_WINDOW_DAYS, 'days'),
   ]
 }
 

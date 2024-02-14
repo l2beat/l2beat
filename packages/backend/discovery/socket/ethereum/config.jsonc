@@ -13,7 +13,8 @@
     "0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe": "ArbitrumL1Switchboard",
     "0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA": "OptimismSwitchboard2",
     "0xD5a83a40F262E2247e6566171f9ADc76b745F5cD": "FastSwitchboard",
-    "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d": "USDC Vault"
+    "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d": "USDC Vault",
+    "0x246d38588b16Dd877c558b245e6D5a711C649fCF": "USDCVaultOwner"
   },
   "overrides": {
     "Socket": {
@@ -80,6 +81,9 @@
     },
     "USDC Vault": {
       "ignoreMethods": ["token__"]
+    },
+    "USDCVaultOwner": {
+      "ignoreInWatchMode": ["nonce"]
     }
   }
 }

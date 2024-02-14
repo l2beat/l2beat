@@ -1,3 +1,31 @@
+Generated with discovered.json: 0xbe11b5db1a4e90286ad51c890467859b0f633f8f
+
+# Diff at Mon, 12 Feb 2024 15:19:43 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@49775e355a1eff76df613908442249b787dac181 block: 19126484
+- current block number: 19212794
+
+## Description
+
+Ignored nonce for usdc vault owner.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19126484 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (0x246d38588b16Dd877c558b245e6D5a711C649fCF) {
+      name:
+-        "GnosisSafe"
++        "USDCVaultOwner"
+      derivedName:
++        "GnosisSafe"
+    }
+```
+
 Generated with discovered.json: 0x27bd701904bb21c706ab1fea624a84968e3fa15f
 
 # Diff at Wed, 31 Jan 2024 12:32:59 GMT:

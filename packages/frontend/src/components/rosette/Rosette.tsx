@@ -189,7 +189,7 @@ export function BigRosette({
         Data availability
       </span>
       <span
-        className="absolute left-[207px] top-[72px] rotate-[64deg] text-center text-xs font-medium uppercase leading-tight"
+        className="absolute left-[205px] top-[86px] w-[10ch] rotate-[69deg] text-center text-xs font-medium uppercase leading-tight"
         data-role="rosette-text"
         data-rosette="exit-window"
       >
