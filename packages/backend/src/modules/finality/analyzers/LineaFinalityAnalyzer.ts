@@ -1,4 +1,4 @@
-import { LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import { BaseAnalyzer } from './types/BaseAnalyzer'
@@ -11,14 +11,6 @@ type LineaDecoded = [
 ]
 
 export class LineaFinalityAnalyzer extends BaseAnalyzer {
-  getProjectId(): ProjectId {
-    return ProjectId('linea')
-  }
-
-  getLivenessType(): LivenessType {
-    return LivenessType('STATE')
-  }
-
   async getFinality(transaction: {
     txHash: string
     timestamp: UnixTime
@@ -26,20 +18,20 @@ export class LineaFinalityAnalyzer extends BaseAnalyzer {
     const tx = await this.provider.getTransaction(transaction.txHash)
     const l1Timestamp = transaction.timestamp
 
-    const decodedInput = decodeInput(tx.data)
+    const decodedInput = this.decodeInput(tx.data)
     const timestamps = decodedInput[0].map((x) => x[1])
 
     return timestamps.map((l2Timestamp) => l1Timestamp.toNumber() - l2Timestamp)
   }
-}
 
-function decodeInput(data: string) {
-  const fnSignature =
-    'finalizeBlocks((bytes32,uint32,bytes[],bytes32[],bytes,uint16[])[], bytes, uint256, bytes32)'
-  const iface = new utils.Interface([`function ${fnSignature}`])
-  const decodedInput = iface.decodeFunctionData(
-    fnSignature,
-    data,
-  ) as LineaDecoded
-  return decodedInput
+  private decodeInput(data: string) {
+    const fnSignature =
+      'finalizeBlocks((bytes32,uint32,bytes[],bytes32[],bytes,uint16[])[], bytes, uint256, bytes32)'
+    const iface = new utils.Interface([`function ${fnSignature}`])
+    const decodedInput = iface.decodeFunctionData(
+      fnSignature,
+      data,
+    ) as LineaDecoded
+    return decodedInput
+  }
 }
