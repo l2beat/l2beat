@@ -13,7 +13,7 @@ export interface PermissionsSectionProps {
   id: ProjectSectionId
   title: string
   sectionOrder: number
-  isUnderReview?: boolean
+  isUnderReview: boolean | undefined
   permissions: TechnologyContract[]
   verificationStatus: VerificationStatus
   manuallyVerifiedContracts: ManuallyVerifiedContracts
@@ -35,6 +35,7 @@ export function PermissionsSection({
       id={id}
       isUnderReview={isUnderReview}
       sectionOrder={sectionOrder}
+      includeChildrenIfUnderReview
     >
       <h3 className="mt-4 font-bold">
         The system uses the following set of permissioned addresses:
