@@ -14,7 +14,12 @@ describe(LineaFinalityAnalyzer.name, () => {
 
       const l1Timestamp = 1705407431
 
-      const calculator = new LineaFinalityAnalyzer(provider, livenessRepository)
+      const calculator = new LineaFinalityAnalyzer(
+        provider,
+        livenessRepository,
+        ProjectId('linea'),
+        LivenessType('STATE'),
+      )
       const results = await calculator.getFinality({
         txHash: '0x121',
         timestamp: new UnixTime(l1Timestamp),
@@ -36,6 +41,8 @@ describe(LineaFinalityAnalyzer.name, () => {
         const calculator = new LineaFinalityAnalyzer(
           provider,
           livenessRepository,
+          ProjectId('linea'),
+          LivenessType('STATE'),
         )
 
         await calculator.getFinalityWithGranularity(
@@ -101,6 +108,8 @@ describe(LineaFinalityAnalyzer.name, () => {
         const calculator = new LineaFinalityAnalyzer(
           provider,
           livenessRepository,
+          ProjectId('linea'),
+          LivenessType('STATE'),
         )
         const results = await calculator.getFinalityWithGranularity(
           start.add(-1, 'hours'),
