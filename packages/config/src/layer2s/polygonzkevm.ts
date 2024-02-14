@@ -423,6 +423,17 @@ export const polygonzkevm: Layer2 = {
       'EscrowsAdmin',
       'Escrows Admin can instantly upgrade wstETH, DAI and USDC bridges.',
     ),
+    {
+      name: 'Forced Batcher',
+      accounts: [
+        discovery.getPermissionedAccount(
+          'PolygonZkEVMExistentEtrog',
+          'forceBatchAddress',
+        ),
+      ],
+      description:
+        'Sole account allowed to submit forced transactions. If this address is the zero address, anyone can submit forced transactions.',
+    },
   ],
   contracts: {
     addresses: [
