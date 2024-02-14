@@ -51,17 +51,17 @@ export function createFinalityModule(
   )
   const ethereumRPC = new RpcClient(ethereumProvider, logger)
 
-  const lineaAnalyzer = new LineaFinalityAnalyzer(
-    ethereumRPC,
-    livenessRepository,
-  )
-
   const runtimeConfigurations = config.projects
     .map((p) => {
       if (p.finalityConfig?.type === 'Linea') {
         return {
           projectId: p.projectId,
-          analyzer: lineaAnalyzer,
+          analyzer: new LineaFinalityAnalyzer(
+            ethereumRPC,
+            livenessRepository,
+            p.projectId,
+            'STATE',
+          ),
         }
       }
     })
