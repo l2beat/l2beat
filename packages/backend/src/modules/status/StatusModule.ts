@@ -9,7 +9,6 @@ import { ChainConverter } from '../../tools/ChainConverter'
 import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
 import { LivenessConfigurationRepository } from '../liveness/repositories/LivenessConfigurationRepository'
-import { TotalSupplyStatusRepository } from '../tvl/repositories/TotalSupplyStatusRepository'
 import { UpdateMonitorRepository } from '../update-monitor/repositories/UpdateMonitorRepository'
 import { StatusController } from './api/StatusController'
 import { createStatusRouter } from './api/StatusRouter'
@@ -26,11 +25,6 @@ export function createStatusModule(
   }
   const configReader = new ConfigReader()
 
-  const totalSupplyStatusRepository = new TotalSupplyStatusRepository(
-    database,
-    logger,
-  )
-
   const updateMonitorRepository = new UpdateMonitorRepository(database, logger)
 
   const indexerStateRepository = new IndexerStateRepository(database, logger)
@@ -42,7 +36,6 @@ export function createStatusModule(
   const chainConverter = new ChainConverter(config.chains)
 
   const statusController = new StatusController(
-    totalSupplyStatusRepository,
     updateMonitorRepository,
     clock,
     config.projects,
