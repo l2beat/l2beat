@@ -6,7 +6,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { mean } from 'lodash'
 
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { LivenessRepository } from '../../liveness/repositories/LivenessRepository'
@@ -53,45 +52,28 @@ export class LineaFinalityAnalyzer implements BaseAnalyzer {
       return undefined
     }
 
-    const minimums: number[] = []
-    const maximums: number[] = []
-    const averages: number[] = []
+    const finalityDelays = (
+      await Promise.all(
+        transactions.map(async (transaction) => {
+          return this.getFinality(transaction)
+        }),
+      )
+    ).flat()
 
-    await Promise.all(
-      transactions.map(async (transaction) => {
-        const finality = await this.getFinality(transaction)
-        minimums.push(finality.minimum)
-        maximums.push(finality.maximum)
-        averages.push(finality.average)
-      }),
-    )
-
-    return {
-      minimumTimeToInclusion: Math.min(...minimums),
-      maximumTimeToInclusion: Math.max(...maximums),
-      averageTimeToInclusion: Math.round(mean(averages)),
-    }
+    return finalityDelays
   }
 
-  async getFinality(transaction: { txHash: string; timestamp: UnixTime }) {
+  async getFinality(transaction: {
+    txHash: string
+    timestamp: UnixTime
+  }): Promise<number[]> {
     const tx = await this.provider.getTransaction(transaction.txHash)
     const l1Timestamp = transaction.timestamp
 
     const decodedInput = decodeInput(tx.data)
     const timestamps = decodedInput[0].map((x) => x[1])
 
-    const delays = timestamps.map(
-      (l2Timestamp) => l1Timestamp.toNumber() - l2Timestamp,
-    )
-
-    const minimum = Math.min(...delays)
-    const maximum = Math.max(...delays)
-    const average = Math.round(mean(delays))
-    return {
-      minimum,
-      maximum,
-      average,
-    }
+    return timestamps.map((l2Timestamp) => l1Timestamp.toNumber() - l2Timestamp)
   }
 }
 

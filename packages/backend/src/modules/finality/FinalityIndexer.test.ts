@@ -41,12 +41,6 @@ describe(FinalityIndexer.name, () => {
     })
 
     it('correctly syncs not synced projects', async () => {
-      const project2Results = {
-        averageTimeToInclusion: 4,
-        minimumTimeToInclusion: 1,
-        maximumTimeToInclusion: 7,
-      }
-
       const finalityRepository = mockObject<FinalityRepository>({
         getProjectsSyncedOnTimestamp: mockFn().resolvesToOnce([
           ProjectId('project-1'),
@@ -55,7 +49,7 @@ describe(FinalityIndexer.name, () => {
       })
       const runtimeConfigurations = getMockFinalityRuntimeConfigurations([
         undefined,
-        project2Results,
+        [2, 4],
       ])
 
       const finalityIndexer = getMockFinalityIndexer({
@@ -71,7 +65,9 @@ describe(FinalityIndexer.name, () => {
         {
           projectId: ProjectId('project-2'),
           timestamp: MIN_TIMESTAMP.add(1, 'days'),
-          ...project2Results,
+          averageTimeToInclusion: 3,
+          minimumTimeToInclusion: 2,
+          maximumTimeToInclusion: 4,
         },
       ])
     })
@@ -93,8 +89,8 @@ describe(FinalityIndexer.name, () => {
         addMany: mockFn().resolvesToOnce(1),
       })
       const runtimeConfigurations = getMockFinalityRuntimeConfigurations([
-        project1Results,
-        project2Results,
+        [1, 2, 3],
+        [1, 7],
       ])
 
       const finalityIndexer = getMockFinalityIndexer({
@@ -164,8 +160,8 @@ describe(FinalityIndexer.name, () => {
       }
 
       const configurations = getMockFinalityRuntimeConfigurations([
-        project1Results,
-        project2Results,
+        [1, 2, 3],
+        [1, 7],
       ])
       const finalityIndexer = getMockFinalityIndexer({})
 
@@ -197,7 +193,7 @@ describe(FinalityIndexer.name, () => {
       const project2Results = undefined
 
       const configurations = getMockFinalityRuntimeConfigurations([
-        project1Results,
+        [1, 3],
         project2Results,
       ])
       const finalityIndexer = getMockFinalityIndexer({})
@@ -356,14 +352,7 @@ function getMockStateRepository(
 }
 
 function getMockFinalityRuntimeConfigurations(
-  results: (
-    | {
-        averageTimeToInclusion: number
-        minimumTimeToInclusion: number
-        maximumTimeToInclusion: number
-      }
-    | undefined
-  )[],
+  results: (number[] | undefined)[],
 ): FinalityConfig[] {
   return results.map((r, i) => ({
     projectId: ProjectId(`project-${i + 1}`),

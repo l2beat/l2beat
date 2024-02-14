@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
+import { mean } from 'lodash'
 
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
 import { LivenessIndexer } from '../liveness/LivenessIndexer'
@@ -107,18 +108,20 @@ export class FinalityIndexer extends ChildIndexer {
     const data: FinalityRecord[] = []
 
     for (const configuration of configurations) {
-      const projectFinalityData =
+      const projectFinalityTimestamps =
         await configuration.analyzer.getFinalityWithGranularity(
           from,
           to,
           FINALITY_GRANULARITY,
         )
 
-      if (projectFinalityData) {
+      if (projectFinalityTimestamps) {
         data.push({
           projectId: configuration.projectId,
           timestamp: to,
-          ...projectFinalityData,
+          minimumTimeToInclusion: Math.min(...projectFinalityTimestamps),
+          maximumTimeToInclusion: Math.max(...projectFinalityTimestamps),
+          averageTimeToInclusion: Math.round(mean(projectFinalityTimestamps)),
         })
       }
     }
