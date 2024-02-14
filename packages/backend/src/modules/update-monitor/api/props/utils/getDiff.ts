@@ -6,7 +6,7 @@ import {
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { ChainId } from '@l2beat/shared-pure'
 
-import { UpdateMonitorRepository } from '../../../../../update-monitor/repositories/UpdateMonitorRepository'
+import { UpdateMonitorRepository } from '../../../repositories/UpdateMonitorRepository'
 
 export async function getDiff(
   updateMonitorRepository: UpdateMonitorRepository,

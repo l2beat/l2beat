@@ -13,6 +13,8 @@ import { DiscordClient } from '../../peripherals/discord/DiscordClient'
 import { ChainConverter } from '../../tools/ChainConverter'
 import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
+import { UpdateMonitorController } from './api/UpdateMonitorController'
+import { createUpdateMonitorRouter } from './api/UpdateMonitorRouter'
 import { createDiscoveryRunner } from './createDiscoveryRunner'
 import { DiscoveryCacheRepository } from './repositories/DiscoveryCacheRepository'
 import { UpdateMonitorRepository } from './repositories/UpdateMonitorRepository'
@@ -87,6 +89,14 @@ export function createUpdateMonitorModule(
     DISCOVERY_LOGIC_VERSION,
   )
 
+  const updateMonitorController = new UpdateMonitorController(
+    updateMonitorRepository,
+    config.projects,
+    configReader,
+    chainConverter,
+  )
+  const updateMonitorRouter = createUpdateMonitorRouter(updateMonitorController)
+
   const start = async () => {
     logger = logger.for('UpdateMonitorModule')
     logger.info('Starting')
@@ -95,7 +105,7 @@ export function createUpdateMonitorModule(
   }
 
   return {
-    routers: [],
+    routers: [updateMonitorRouter],
     start,
   }
 }

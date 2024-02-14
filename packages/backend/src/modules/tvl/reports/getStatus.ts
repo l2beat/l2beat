@@ -1,6 +1,6 @@
 import { getHourlyTimestamps, UnixTime } from '@l2beat/shared-pure'
 
-import { StatusPoint } from '../../status/api/view/TvlStatusPage'
+import { StatusPoint } from '../api/status/TvlStatusPage'
 
 export function getStatus(
   updaterName: string,
