@@ -1,7 +1,9 @@
 import { PageMetadata } from '../../../Page'
 import { GovernancePublicationEntry } from '../../index/props/getGovernancePublicationEntry'
 
-export function getPageMetadata(publication: GovernancePublicationEntry): PageMetadata {
+export function getPageMetadata(
+  publication: GovernancePublicationEntry,
+): PageMetadata {
   return {
     title: `${publication.shortTitle ?? publication.title} - L2BEAT`,
     description: publication.description,
