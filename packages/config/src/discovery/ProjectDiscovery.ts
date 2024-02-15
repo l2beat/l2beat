@@ -8,6 +8,7 @@ import {
   assert,
   EthereumAddress,
   gatherAddressesFromUpgradeability,
+  notUndefined,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
@@ -36,11 +37,9 @@ import {
   ORBIT_STACK_PERMISSION_TEMPLATES,
   OrbitStackContractName,
 } from './OrbitStackTypes'
-import {
-  StackPermissionsTag,
-  StackPermissionsTagDescription,
-  StackPermissionTemplate,
-} from './StackTemplateTypes'
+import { PermissionedContract } from './PermissionedContract'
+import { StackPermissionTemplate } from './StackTemplateTypes'
+import { findRoleMatchingTemplate } from './values/templateUtils'
 
 type AllKeys<T> = T extends T ? keyof T : never
 
@@ -190,90 +189,58 @@ export class ProjectDiscovery {
   ): ScalingProjectPermission[] {
     const inversion = this.getInversion()
 
-    const result: Record<
-      string,
-      {
-        name: string
-        addresses: EthereumAddress[]
-        contractDescription: Record<string, string[]>
-        taggedNames: Record<string, string[]>
-      }
-    > = {}
-
-    const roleNameMatches = (
-      templateName: string,
-      roleName: string,
-    ): boolean => {
-      function isNumeric(str: string): boolean {
-        if (str === '') return false
-        return !isNaN(+str)
-      }
-
-      // I really don't want to use regexes
-      const matchesExact = templateName === roleName
-      if (!matchesExact && roleName.startsWith(templateName)) {
-        const suffix = roleName.slice(templateName.length)
-        return suffix.startsWith('.') && isNumeric(suffix.slice(1))
-      }
-
-      return matchesExact
+    const contracts: Record<string, PermissionedContract> = {}
+    const getContract = (name: string, address: EthereumAddress) => {
+      contracts[name] ??= new PermissionedContract(name, address)
+      return contracts[name]
     }
 
     for (const template of templates) {
-      for (const contract of inversion.values()) {
-        const role = contract.roles.find(
-          (r) =>
-            roleNameMatches(template.role.value, r.name) &&
-            r.atName ===
-              (contractOverrides?.[template.role.contract] ??
-                template.role.contract),
+      for (const invertedContract of inversion.values()) {
+        const role = findRoleMatchingTemplate(
+          invertedContract,
+          template,
+          contractOverrides,
         )
         if (!role) {
           continue
         }
 
-        const contractKey = overrides?.[role.name] ?? contract.name ?? role.name
+        const contractKey =
+          overrides?.[role.name] ?? invertedContract.name ?? role.name
 
-        result[contractKey] ??= {
-          name: contractKey,
-          addresses: [EthereumAddress(contract.address)],
-          contractDescription: {},
-          taggedNames: {},
-        }
-        const entry = result[contractKey]
+        const contractAddress = EthereumAddress(invertedContract.address)
+        const contract = getContract(contractKey, contractAddress)
+        const referenced = getContract(role.atName, role.atAddress)
 
         if (template.description !== undefined) {
-          entry.contractDescription[role.name] ??= []
-          entry.contractDescription[role.name].push(
+          contract.addDescription(
             stringFormat(template.description, role.atName),
           )
         }
 
         if (template.tags !== undefined) {
           for (const tag of template.tags) {
-            entry.taggedNames[tag] ??= []
-            entry.taggedNames[tag].push(role.atName)
+            contract.addTag(tag, role.atName)
+            referenced.addTagReference(tag, contractKey)
           }
         }
       }
     }
 
-    return Object.values(result).map((entry) => ({
-      name: entry.name,
-      accounts: entry.addresses.map((a) => this.formatPermissionedAccount(a)),
-      description: Object.values(entry.contractDescription)
-        .flat()
-        .concat(
-          Object.entries(entry.taggedNames).map(([tag, contracts]) =>
-            stringFormat(
-              StackPermissionsTagDescription[tag as StackPermissionsTag],
-              contracts.join(', '),
-            ),
-          ),
-        )
-        .join(' '),
-      chain: this.chain,
-    }))
+    return Object.values(contracts)
+      .map((contract) => {
+        const description = contract.generateDescription()
+        if (description !== '') {
+          return {
+            name: contract.name,
+            accounts: [this.formatPermissionedAccount(contract.address)],
+            description,
+            chain: this.chain,
+          }
+        }
+      })
+      .filter(notUndefined)
   }
 
   getMultisigPermission(
