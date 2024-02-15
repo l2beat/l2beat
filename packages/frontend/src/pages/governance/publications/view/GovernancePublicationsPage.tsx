@@ -76,9 +76,11 @@ function Header(props: { publication: GovernancePublicationEntry }) {
           <h1 className="line-clamp-2 text-balance text-4xl leading-tight">
             {props.publication.title}
           </h1>
-          {<p className="mt-6 line-clamp-5 text-sm text-gray-50">
-            {props.publication.description ?? props.publication.excerpt}
-          </p>}
+          {
+            <p className="mt-6 line-clamp-5 text-sm text-gray-50">
+              {props.publication.description ?? props.publication.excerpt}
+            </p>
+          }
           <Button
             as="a"
             href={`/governance/publications/${props.publication.id}`}
