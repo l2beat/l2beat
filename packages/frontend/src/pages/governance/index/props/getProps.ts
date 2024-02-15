@@ -11,8 +11,8 @@ import { getGovernanceEventEntries } from './getGovernanceEventEntries'
 import { getGovernancePublicationEntry } from './getGovernancePublicationEntry'
 import { getPageMetadata } from './getPageMetadata'
 
+const INDEX_PAGE_PUBLICATIONS_COUNT = 4
 const INDEX_PAGE_EVENTS_COUNT = 8
-const INDEX_PAGE_PUBLICATIONS_COUNT = 8
 const INDEX_PAGE_MAX_HIGHLIGHTED_EVENTS = 4
 
 export function getProps(config: Config): Wrapped<GovernancePageProps> {
