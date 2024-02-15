@@ -5,6 +5,7 @@ import MarkdownIt from 'markdown-it'
 import path from 'path'
 import { z } from 'zod'
 
+import { startsWithLetterOrNumber } from '../utils/startsWithLetterOrNumber'
 import { collections } from './collections'
 
 type Collection = typeof collections
@@ -25,6 +26,7 @@ interface ContentCollectionEntry<T extends CollectionKey> {
   id: string
   data: z.infer<Collection[T]['schema']>
   content: string
+  excerpt: string
 }
 export type CollectionEntry<T extends CollectionKey> =
   T extends DataCollectionKey
@@ -124,12 +126,24 @@ function getContentCollectionEntry<T extends ContentCollectionKey>(
     path.join(__dirname, key, `${id}.${contentEntry.extension}`),
   )
   const parsedFile = matter(file.toString())
-  const markdown = MarkdownIt().render(parsedFile.content.toString())
+
   const data = contentEntry.schema.parse(parsedFile.data)
+  const content = MarkdownIt().render(parsedFile.content)
+  const excerpt = getExcerpt(parsedFile.content)
 
   return {
     id,
     data,
-    content: markdown,
+    content,
+    excerpt,
   }
+}
+
+function getExcerpt(content: string) {
+  const lines = content.split('\n')
+  const line = lines.find((line) => startsWithLetterOrNumber(line))
+  if (!line) {
+    throw new Error('No paragraph found')
+  }
+  return line
 }

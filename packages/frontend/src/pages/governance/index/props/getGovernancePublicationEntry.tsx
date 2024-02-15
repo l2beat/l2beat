@@ -27,7 +27,7 @@ export function getGovernancePublicationEntry(
     content: post.content,
     title: post.data.title,
     shortTitle: post.data.shortTitle,
-    description: post.data.description,
+    description: post.data.description ?? post.excerpt,
     readTimeInMinutes: post.data.readTimeInMinutes,
     author: getGovernanceAuthorEntry(author),
   }

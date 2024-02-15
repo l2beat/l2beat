@@ -53,14 +53,17 @@ export function LinkWithThumbnail({
           {props.title}
         </p>
         {props.description && (
-          <p
-            className={cn(
-              'mt-1.5 text-xs text-opacity-80',
-              orientation === 'horizontal' && 'hidden md:block',
-            )}
-          >
-            {props.description}
-          </p>
+          <div className="hidden md:block">
+            <p
+              className={cn(
+                'mt-1.5 text-xs text-opacity-80',
+                orientation === 'horizontal' && 'line-clamp-1 pr-2',
+                orientation === 'vertical' && 'line-clamp-3',
+              )}
+            >
+              {props.description}
+            </p>
+          </div>
         )}
         <p className="mt-3 flex flex-wrap items-center gap-1 text-sm font-semibold text-blue-700 underline transition-colors group-hover:text-blue-550 dark:text-blue-500">
           Learn more

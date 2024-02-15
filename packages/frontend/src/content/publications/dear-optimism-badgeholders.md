@@ -1,7 +1,6 @@
 ---
   title: "Dear Optimism Badgeholders, here’s what we’ve been up to at L2BEAT over the past 6 month"
   shortTitle: "Dear Optimism Badgeholders"
-  description: "We're highlighting L2BEAT Team recent impact and contributions."
   publishedOn: "2023-11-24T00:00:00Z"
   readTimeInMinutes: 30
   authorId: krzysztof-urbanski

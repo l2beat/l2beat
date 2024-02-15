@@ -6,16 +6,7 @@
   authorId: anastassis-oikonomopoulos
 ---
 
-**Advertisement :)**
-
-- **[pica](https://nodeca.github.io/pica/demo/)** - high quality and fast image
-  resize in browser.
-- **[babelfish](https://github.com/nodeca/babelfish/)** - developer friendly
-  i18n with plurals support and easy syntax.
-
-You will like those projects!
-
----
+We have talked about excerpts, markdown and potential pitfalls to dealing with markdown for content and front matter. It’s now time to actually build this method. Here is the code that we would use for creating excerpts:
 
 # h1 Heading 8-)
 

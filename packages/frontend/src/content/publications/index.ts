@@ -7,7 +7,7 @@ export const publicationsCollection = defineCollection({
   schema: z.object({
     title: z.string(),
     shortTitle: z.string().optional(),
-    description: z.string(),
+    description: z.string().optional(),
     publishedOn: z.coerce.date(),
     authorId: z.string(),
     readTimeInMinutes: z.number(),
