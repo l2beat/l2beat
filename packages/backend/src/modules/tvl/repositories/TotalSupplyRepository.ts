@@ -66,14 +66,20 @@ export class TotalSupplyRepository extends BaseRepository {
     return knex('total_supplies').delete()
   }
 
-  async deleteHourlyUntil(to: UnixTime, from: UnixTime | undefined) {
+  async deleteHourlyUntil(dateRange: {
+    from: UnixTime | undefined
+    to: UnixTime
+  }) {
     const knex = await this.knex()
-    return deleteHourlyUntil(knex, 'total_supplies', to, from)
+    return deleteHourlyUntil(knex, 'total_supplies', dateRange)
   }
 
-  async deleteSixHourlyUntil(to: UnixTime, from: UnixTime | undefined) {
+  async deleteSixHourlyUntil(dateRange: {
+    from: UnixTime | undefined
+    to: UnixTime
+  }) {
     const knex = await this.knex()
-    return deleteSixHourlyUntil(knex, 'total_supplies', to, from)
+    return deleteSixHourlyUntil(knex, 'total_supplies', dateRange)
   }
 }
 

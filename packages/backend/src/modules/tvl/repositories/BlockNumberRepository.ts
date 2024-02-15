@@ -70,14 +70,20 @@ export class BlockNumberRepository extends BaseRepository {
     const knex = await this.knex()
     return knex('block_numbers').delete()
   }
-  async deleteHourlyUntil(to: UnixTime, from: UnixTime | undefined) {
+  async deleteHourlyUntil(dateRange: {
+    from: UnixTime | undefined
+    to: UnixTime
+  }) {
     const knex = await this.knex()
-    return deleteHourlyUntil(knex, 'block_numbers', to, from)
+    return deleteHourlyUntil(knex, 'block_numbers', dateRange)
   }
 
-  async deleteSixHourlyUntil(to: UnixTime, from: UnixTime | undefined) {
+  async deleteSixHourlyUntil(dateRange: {
+    from: UnixTime | undefined
+    to: UnixTime
+  }) {
     const knex = await this.knex()
-    return deleteSixHourlyUntil(knex, 'block_numbers', to, from)
+    return deleteSixHourlyUntil(knex, 'block_numbers', dateRange)
   }
 }
 

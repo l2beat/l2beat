@@ -33,8 +33,12 @@ describe(TvlCleaner.name, () => {
 
   describe(TvlCleaner.prototype.clean.name, () => {
     it('gets boundaries, iterates over tables and deletes', async () => {
-      const hourlyDeletionBoundary = new UnixTime(1000)
-      const sixHourlyDeletionBoundary = new UnixTime(2000)
+      const hourlyDeletionBoundary = UnixTime.fromDate(
+        new Date('2024-02-05T06:00:00Z'),
+      )
+      const sixHourlyDeletionBoundary = UnixTime.fromDate(
+        new Date('2024-01-05T06:00:00Z'),
+      )
       const clock = mockObject<Clock>({
         onNewHour: () => () => {},
         _TVL_ONLY_getHourlyDeletionBoundary: () => hourlyDeletionBoundary,
@@ -43,28 +47,36 @@ describe(TvlCleaner.name, () => {
 
       const firstTable = mockObject({
         constructor: { name: 'firstTableRepository' },
-        deleteHourlyUntil: (_: UnixTime, __: UnixTime | undefined) =>
+        deleteHourlyUntil: (_: { from: UnixTime | undefined; to: UnixTime }) =>
           Promise.resolve(1),
-        deleteSixHourlyUntil: (_: UnixTime, __: UnixTime | undefined) =>
-          Promise.resolve(2),
+        deleteSixHourlyUntil: (_: {
+          from: UnixTime | undefined
+          to: UnixTime
+        }) => Promise.resolve(2),
       })
       const secondTable = mockObject({
         constructor: { name: 'secondTableRepository' },
-        deleteHourlyUntil: (_: UnixTime, __: UnixTime | undefined) =>
+        deleteHourlyUntil: (_: { from: UnixTime | undefined; to: UnixTime }) =>
           Promise.resolve(1),
-        deleteSixHourlyUntil: (_: UnixTime, __: UnixTime | undefined) =>
-          Promise.resolve(2),
+        deleteSixHourlyUntil: (_: {
+          from: UnixTime | undefined
+          to: UnixTime
+        }) => Promise.resolve(2),
       })
 
-      const firstTableCleanedUntil = UnixTime.fromDate(
+      const firstTableHourlyCleanedUntil = UnixTime.fromDate(
         new Date('2024-02-03T06:00:00Z'),
+      )
+      const firstTableSixHourlyCleanedUntil = UnixTime.fromDate(
+        new Date('2024-01-03T06:00:00Z'),
       )
       const repository = mockObject<TvlCleanerRepository>({
         find: mockFn()
           .given(firstTable.constructor.name)
           .resolvesToOnce({
             repositoryName: firstTable.constructor.name,
-            cleanedUntil: firstTableCleanedUntil,
+            hourlyCleanedUntil: firstTableHourlyCleanedUntil,
+            sixHourlyCleanedUntil: firstTableSixHourlyCleanedUntil,
           })
           .given(secondTable.constructor.name)
           .resolvesToOnce(undefined),
@@ -82,37 +94,39 @@ describe(TvlCleaner.name, () => {
         1,
         firstTable.constructor.name,
       )
-      expect(firstTable.deleteHourlyUntil).toHaveBeenCalledWith(
-        hourlyDeletionBoundary,
-        firstTableCleanedUntil,
-      )
-      expect(firstTable.deleteSixHourlyUntil).toHaveBeenCalledWith(
-        sixHourlyDeletionBoundary,
-        firstTableCleanedUntil,
-      )
+      expect(firstTable.deleteHourlyUntil).toHaveBeenCalledWith({
+        from: firstTableHourlyCleanedUntil,
+        to: hourlyDeletionBoundary,
+      })
+      expect(firstTable.deleteSixHourlyUntil).toHaveBeenCalledWith({
+        from: firstTableSixHourlyCleanedUntil,
+        to: sixHourlyDeletionBoundary,
+      })
       expect(repository.addOrUpdate).toHaveBeenNthCalledWith(1, {
         repositoryName: firstTable.constructor.name,
-        cleanedUntil: hourlyDeletionBoundary,
+        hourlyCleanedUntil: hourlyDeletionBoundary,
+        sixHourlyCleanedUntil: sixHourlyDeletionBoundary,
       })
       expect(repository.find).toHaveBeenNthCalledWith(
         2,
         secondTable.constructor.name,
       )
-      expect(secondTable.deleteHourlyUntil).toHaveBeenCalledWith(
-        hourlyDeletionBoundary,
-        undefined,
-      )
-      expect(secondTable.deleteSixHourlyUntil).toHaveBeenCalledWith(
-        sixHourlyDeletionBoundary,
-        undefined,
-      )
+      expect(secondTable.deleteHourlyUntil).toHaveBeenCalledWith({
+        from: undefined,
+        to: hourlyDeletionBoundary,
+      })
+      expect(secondTable.deleteSixHourlyUntil).toHaveBeenCalledWith({
+        from: undefined,
+        to: sixHourlyDeletionBoundary,
+      })
       expect(repository.addOrUpdate).toHaveBeenNthCalledWith(2, {
         repositoryName: secondTable.constructor.name,
-        cleanedUntil: hourlyDeletionBoundary,
+        hourlyCleanedUntil: hourlyDeletionBoundary,
+        sixHourlyCleanedUntil: sixHourlyDeletionBoundary,
       })
     })
 
-    it('skips if was already cleared in the last hour', async () => {
+    it('skips if hourly and six hourly was already cleared', async () => {
       const hourlyDeletionBoundary = new UnixTime(1000)
       const sixHourlyDeletionBoundary = new UnixTime(2000)
       const clock = mockObject<Clock>({
@@ -130,7 +144,8 @@ describe(TvlCleaner.name, () => {
       const repository = mockObject<TvlCleanerRepository>({
         find: mockFn().resolvesTo({
           repositoryName: firstTable.constructor.name,
-          cleanedUntil: hourlyDeletionBoundary,
+          hourlyCleanedUntil: hourlyDeletionBoundary,
+          sixHourlyCleanedUntil: sixHourlyDeletionBoundary,
         }),
         addOrUpdate: mockFn().resolvesTo(1),
       })

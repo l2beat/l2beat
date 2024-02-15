@@ -5,14 +5,14 @@ import { TvlCleanerRepository } from '../../../peripherals/database/TvlCleanerRe
 import { Clock } from '../../../tools/Clock'
 import { TaskQueue } from '../../../tools/queue/TaskQueue'
 export interface TvlRepositoryToClean {
-  deleteHourlyUntil: (
-    to: UnixTime,
-    from: UnixTime | undefined,
-  ) => Promise<number>
-  deleteSixHourlyUntil: (
-    to: UnixTime,
-    from: UnixTime | undefined,
-  ) => Promise<number>
+  deleteHourlyUntil: (dateRange: {
+    from: UnixTime | undefined
+    to: UnixTime
+  }) => Promise<number>
+  deleteSixHourlyUntil: (dateRange: {
+    from: UnixTime | undefined
+    to: UnixTime
+  }) => Promise<number>
 }
 
 /**
@@ -58,7 +58,10 @@ export class TvlCleaner {
         repositoryName,
       )
 
-      if (tvlCleanerRecord?.cleanedUntil.equals(hourlyDeletionBoundary)) {
+      if (
+        tvlCleanerRecord?.hourlyCleanedUntil.gte(hourlyDeletionBoundary) &&
+        tvlCleanerRecord.sixHourlyCleanedUntil.gte(sixHourlyDeletionBoundary)
+      ) {
         this.logger.info(
           `Nothing to clean for ${repositoryName}, waiting for next hour`,
         )
@@ -67,18 +70,19 @@ export class TvlCleaner {
 
       this.logger.info(`Cleaning ${repositoryName}`)
 
-      const hourly = await repository.deleteHourlyUntil(
-        hourlyDeletionBoundary,
-        tvlCleanerRecord?.cleanedUntil,
-      )
-      const sixHourly = await repository.deleteSixHourlyUntil(
-        sixHourlyDeletionBoundary,
-        tvlCleanerRecord?.cleanedUntil,
-      )
+      const hourly = await repository.deleteHourlyUntil({
+        from: tvlCleanerRecord?.hourlyCleanedUntil,
+        to: hourlyDeletionBoundary,
+      })
+      const sixHourly = await repository.deleteSixHourlyUntil({
+        from: tvlCleanerRecord?.sixHourlyCleanedUntil,
+        to: sixHourlyDeletionBoundary,
+      })
 
       await this.tvlCleanerRepository.addOrUpdate({
         repositoryName: repositoryName,
-        cleanedUntil: hourlyDeletionBoundary,
+        hourlyCleanedUntil: hourlyDeletionBoundary,
+        sixHourlyCleanedUntil: sixHourlyDeletionBoundary,
       })
 
       this.logger.info(`Finished cleaning ${repositoryName}`, {

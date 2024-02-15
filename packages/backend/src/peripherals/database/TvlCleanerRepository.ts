@@ -8,7 +8,8 @@ import { Database } from './Database'
 
 export interface TvlCleanerRecord {
   repositoryName: string
-  cleanedUntil: UnixTime
+  hourlyCleanedUntil: UnixTime
+  sixHourlyCleanedUntil: UnixTime
 }
 
 export class TvlCleanerRepository extends BaseRepository {
@@ -44,13 +45,15 @@ export class TvlCleanerRepository extends BaseRepository {
 function toRow(record: TvlCleanerRecord): TvlCleanerRow {
   return {
     repository_name: record.repositoryName,
-    cleaned_until: record.cleanedUntil.toDate(),
+    hourly_cleaned_until: record.hourlyCleanedUntil.toDate(),
+    six_hourly_cleaned_until: record.sixHourlyCleanedUntil.toDate(),
   }
 }
 
 function toRecord(row: TvlCleanerRow): TvlCleanerRecord {
   return {
     repositoryName: row.repository_name,
-    cleanedUntil: UnixTime.fromDate(row.cleaned_until),
+    hourlyCleanedUntil: UnixTime.fromDate(row.hourly_cleaned_until),
+    sixHourlyCleanedUntil: UnixTime.fromDate(row.six_hourly_cleaned_until),
   }
 }

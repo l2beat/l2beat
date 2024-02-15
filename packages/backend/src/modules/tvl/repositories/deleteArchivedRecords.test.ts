@@ -2,14 +2,14 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 interface TestedRepository<T> {
-  deleteHourlyUntil: (
-    to: UnixTime,
-    from: UnixTime | undefined,
-  ) => Promise<number>
-  deleteSixHourlyUntil: (
-    to: UnixTime,
-    from: UnixTime | undefined,
-  ) => Promise<number>
+  deleteHourlyUntil: (dateRange: {
+    from: UnixTime | undefined
+    to: UnixTime
+  }) => Promise<number>
+  deleteSixHourlyUntil: (dateRange: {
+    from: UnixTime | undefined
+    to: UnixTime
+  }) => Promise<number>
   addMany: (records: T[]) => Promise<number>
   getAll: () => Promise<T[]>
 }
@@ -20,15 +20,15 @@ export function testDeletingArchivedRecords<T>(
 ) {
   it('deletes hourly records to given date', async () => {
     const start = UnixTime.now().toStartOf('day')
-    const until = start.add(25, 'hours')
+    const to = start.add(25, 'hours')
 
     const entries = []
-    for (let i = start.toNumber(); i <= until.toNumber(); i += UnixTime.HOUR) {
+    for (let i = start.toNumber(); i <= to.toNumber(); i += UnixTime.HOUR) {
       entries.push(fakeRecord(new UnixTime(i)))
     }
 
     await repository.addMany(entries)
-    await repository.deleteHourlyUntil(until, undefined)
+    await repository.deleteHourlyUntil({ from: undefined, to })
     const results = await repository.getAll()
 
     expect(results).toEqualUnsorted([
@@ -52,7 +52,7 @@ export function testDeletingArchivedRecords<T>(
     }
 
     await repository.addMany(entries)
-    await repository.deleteHourlyUntil(to, from)
+    await repository.deleteHourlyUntil({ from, to })
     const results = await repository.getAll()
 
     expect(results).toEqualUnsorted([
@@ -72,15 +72,15 @@ export function testDeletingArchivedRecords<T>(
 
   it('deletes six hourly records to given date', async () => {
     const start = UnixTime.now().toStartOf('day')
-    const until = start.add(7, 'hours')
+    const to = start.add(7, 'hours')
 
     const entries = []
-    for (let i = start.toNumber(); i <= until.toNumber(); i += UnixTime.HOUR) {
+    for (let i = start.toNumber(); i <= to.toNumber(); i += UnixTime.HOUR) {
       entries.push(fakeRecord(new UnixTime(i)))
     }
 
     await repository.addMany(entries)
-    await repository.deleteSixHourlyUntil(until, undefined)
+    await repository.deleteSixHourlyUntil({ from: undefined, to })
     const results = await repository.getAll()
 
     expect(results).toEqualUnsorted([
@@ -105,7 +105,7 @@ export function testDeletingArchivedRecords<T>(
     }
 
     await repository.addMany(entries)
-    await repository.deleteSixHourlyUntil(to, from)
+    await repository.deleteSixHourlyUntil({ from, to })
     const results = await repository.getAll()
 
     expect(results).toEqualUnsorted([

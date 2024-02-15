@@ -16,7 +16,8 @@ import { Knex } from 'knex'
 export async function up(knex: Knex) {
   await knex.schema.createTable('tvl_cleaner', function (table) {
     table.string('repository_name').primary()
-    table.dateTime('cleaned_until', { useTz: false })
+    table.dateTime('hourly_cleaned_until', { useTz: false })
+    table.dateTime('six_hourly_cleaned_until', { useTz: false })
   })
 }
 

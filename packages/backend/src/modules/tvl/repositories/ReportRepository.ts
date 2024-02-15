@@ -174,14 +174,20 @@ export class ReportRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async deleteHourlyUntil(to: UnixTime, from: UnixTime | undefined) {
+  async deleteHourlyUntil(dateRange: {
+    from: UnixTime | undefined
+    to: UnixTime
+  }) {
     const knex = await this.knex()
-    return deleteHourlyUntil(knex, 'reports', to, from)
+    return deleteHourlyUntil(knex, 'reports', dateRange)
   }
 
-  async deleteSixHourlyUntil(to: UnixTime, from: UnixTime | undefined) {
+  async deleteSixHourlyUntil(dateRange: {
+    from: UnixTime | undefined
+    to: UnixTime
+  }) {
     const knex = await this.knex()
-    return deleteSixHourlyUntil(knex, 'reports', to, from)
+    return deleteSixHourlyUntil(knex, 'reports', dateRange)
   }
 }
 

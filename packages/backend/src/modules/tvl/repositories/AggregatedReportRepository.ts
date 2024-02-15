@@ -211,14 +211,20 @@ export class AggregatedReportRepository extends BaseRepository {
     return knex('aggregated_reports').delete()
   }
 
-  async deleteHourlyUntil(to: UnixTime, from: UnixTime | undefined) {
+  async deleteHourlyUntil(dateRange: {
+    from: UnixTime | undefined
+    to: UnixTime
+  }) {
     const knex = await this.knex()
-    return deleteHourlyUntil(knex, 'aggregated_reports', to, from)
+    return deleteHourlyUntil(knex, 'aggregated_reports', dateRange)
   }
 
-  async deleteSixHourlyUntil(to: UnixTime, from: UnixTime | undefined) {
+  async deleteSixHourlyUntil(dateRange: {
+    from: UnixTime | undefined
+    to: UnixTime
+  }) {
     const knex = await this.knex()
-    return deleteSixHourlyUntil(knex, 'aggregated_reports', to, from)
+    return deleteSixHourlyUntil(knex, 'aggregated_reports', dateRange)
   }
 }
 

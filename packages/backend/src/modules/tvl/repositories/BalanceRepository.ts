@@ -92,14 +92,20 @@ export class BalanceRepository extends BaseRepository {
     return knex('balances').delete()
   }
 
-  async deleteHourlyUntil(to: UnixTime, from: UnixTime | undefined) {
+  async deleteHourlyUntil(dateRange: {
+    from: UnixTime | undefined
+    to: UnixTime
+  }) {
     const knex = await this.knex()
-    return deleteHourlyUntil(knex, 'balances', to, from)
+    return deleteHourlyUntil(knex, 'balances', dateRange)
   }
 
-  async deleteSixHourlyUntil(to: UnixTime, from: UnixTime | undefined) {
+  async deleteSixHourlyUntil(dateRange: {
+    from: UnixTime | undefined
+    to: UnixTime
+  }) {
     const knex = await this.knex()
-    return deleteSixHourlyUntil(knex, 'balances', to, from)
+    return deleteSixHourlyUntil(knex, 'balances', dateRange)
   }
 }
 

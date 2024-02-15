@@ -186,7 +186,8 @@ declare module 'knex/types/tables' {
 
   interface TvlCleanerRow {
     repository_name: string
-    cleaned_until: Date
+    hourly_cleaned_until: Date
+    six_hourly_cleaned_until: Date
   }
 
   interface Tables {
