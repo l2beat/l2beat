@@ -190,7 +190,8 @@ function isArrayFragment(fragment: utils.FunctionFragment): boolean {
     (fragment.stateMutability === 'view' ||
       fragment.stateMutability === 'pure') &&
     fragment.inputs.length === 1 &&
-    (fragment.inputs[0]?.type === 'uint256' ||
-      fragment.inputs[0]?.type === 'uint16')
+    ['uint16', 'uint32', 'uint64', 'uint256'].includes(
+      fragment.inputs[0]?.type ?? '',
+    )
   )
 }

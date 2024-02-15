@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.42.2
+
+### Patch Changes
+
+- Support all uint types in ArrayHandler
+
 ## 0.42.1
 
 ### Patch Changes
