@@ -4,8 +4,34 @@ import { CONTRACTS } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
+import { utils } from 'ethers'
 
 const discovery = new ProjectDiscovery('near')
+
+const threshold = discovery.getContractValue<number>(
+  'BridgeAdminMultisig',
+  'getThreshold',
+)
+
+const owners: any[] = discovery.getContractValue<any[]>(
+  'BridgeAdminMultisig',
+  'getOwners',
+)
+
+const size = owners.length;
+const adminThresholdString = `${threshold} / ${size}`
+
+const lockDurationSeconds = discovery.getContractValue<number>(
+  'NearBridge',
+  'lockDuration',
+)
+
+const lockDurationHours = lockDurationSeconds / 3600;
+
+const lockRequirementInWei = discovery.getContractValue<number>(
+  'NearBridge',
+  'lockEthAmount',
+)
 
 export const near: Bridge = {
   type: 'bridge',
@@ -49,7 +75,7 @@ export const near: Bridge = {
     sourceUpgradeability: {
       value: 'Yes',
       description:
-        'Bridge cannot be upgraded but 3/5 Admin Multisig can move all funds out of the bridge via admin functions with no warning.',
+        `Bridge cannot be upgraded but ${adminThresholdString} Admin Multisig can move all funds out of the bridge via admin functions with no warning.`,
       sentiment: 'bad',
     },
     destinationToken: {
@@ -73,11 +99,12 @@ export const near: Bridge = {
     validation: {
       name: 'Both inbound and outbound transfers are verified by the light client',
       description:
-        'Near Rainbow bridge implements a light client for both inbound and outbound transfers. For inbound transfers, checkpoints of NEAR state are submitted every 4 hours. \
+        `Near Rainbow bridge implements a light client for both inbound and outbound transfers. For inbound transfers, checkpoints of NEAR state are submitted every ${lockDurationHours} hours. \
           These are optimistically assumed to be signed by 2/3 of Near Validators. The signatures are not immediately verified by Ethereum due to a different signature scheme \
-          used on NEAR and - as a result - very high gas cost on Ethereum. If signatures are found to be invalid, checkpoints can be permissionlessly challenged. \
+          used on NEAR and - as a result - very high gas cost on Ethereum. Checkpoints relayers are required to lock ${utils.formatEther(lockRequirementInWei)} ETH in order to submit block headers. If signatures are found to be invalid, checkpoints can be permissionlessly challenged and the relayers' bond is slashed. \
+          Challengers can specify an address to receive half of the slashed bond. \
           Users can withdraw funds by submitting a Merkle proof of a burn event against the checkpoint. \
-          For outbound transfers, Ethereum light client is implemented on NEAR and a Merkle proof of a lock event must be presented.',
+          For outbound transfers, Ethereum light client is implemented on NEAR and a Merkle proof of a lock event must be presented.`,
       references: [],
       risks: [
         {
@@ -109,23 +136,22 @@ export const near: Bridge = {
   },
   contracts: {
     addresses: [
-      discovery.getContractDetails('ERC20Locker', {
-        description: 'Escrow contract for ERC20 tokens.',
-      }),
-      discovery.getContractDetails('EthCustodian', {
-        description: 'Escrow contract for ETH tokens.',
+      discovery.getContractDetails('NearBridge', {
+        description: 'Contract storing Near state checkpoints.',
       }),
       discovery.getContractDetails('NearProver', {
         description: 'Contract verifying merkle proofs, used for withdrawals.',
       }),
-      discovery.getContractDetails('NearBridge', {
-        description: 'Contract storing Near state checkpoints.',
-      }),
+      {	
+        address: EthereumAddress('0x23Ddd3e3692d1861Ed57EDE224608875809e127f'),	
+        name: 'ERC20Locker',	
+        description: 'Escrow contract for ERC20 tokens.',	
+      }, // Note: Escrow contract has to be hardcoded
       {
-        address: EthereumAddress('0x3be7Df8dB39996a837041bb8Ee0dAdf60F767038'), // old near bridge
-        name: 'NearBridge (old)',
-        description: 'Contract storing Near state checkpoints.',
-      },
+        address: EthereumAddress('0x6BFaD42cFC4EfC96f529D786D643Ff4A8B89FA52'),
+        name: 'EthCustodian',
+        description: 'Escrow contract for ETH tokens.'
+      } // Note: Escrow contract has to be hardcoded
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
