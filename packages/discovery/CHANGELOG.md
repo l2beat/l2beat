@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.42.1
+
+### Patch Changes
+
+- Export InvertedAddressDetails and Role types
+
 ## 0.42.0
 
 ### Minor Changes

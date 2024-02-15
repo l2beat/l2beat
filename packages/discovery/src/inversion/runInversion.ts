@@ -9,19 +9,19 @@ import { ConfigReader } from '../discovery/config/ConfigReader'
 import { DiscoveryConfig } from '../discovery/config/DiscoveryConfig'
 import { EthereumAddress } from '../utils/EthereumAddress'
 
-interface AddressDetails {
+export interface InvertedAddressDetails {
   name?: string
   address: string
   roles: Role[]
 }
 
-interface Role {
+export interface Role {
   name: string
   atName: string
   atAddress: EthereumAddress
 }
 
-export type InvertedAddresses = Map<string, AddressDetails>
+export type InvertedAddresses = Map<string, InvertedAddressDetails>
 
 export async function runInversion(
   project: string,
@@ -65,7 +65,7 @@ export function calculateInversion(
   discovery: DiscoveryOutput,
   config?: DiscoveryConfig,
 ): InvertedAddresses {
-  const addresses = new Map<string, AddressDetails>()
+  const addresses = new Map<string, InvertedAddressDetails>()
 
   function add(address: ContractValue, role?: Role): void {
     if (
@@ -156,7 +156,7 @@ export function calculateInversion(
   return addresses
 }
 
-function print(addresses: Map<string, AddressDetails>): void {
+function print(addresses: Map<string, InvertedAddressDetails>): void {
   for (const details of addresses.values()) {
     const name = details.name
       ? chalk.blue(details.name)
@@ -175,7 +175,7 @@ function print(addresses: Map<string, AddressDetails>): void {
   }
 }
 
-function createMermaid(addresses: Map<string, AddressDetails>): string {
+function createMermaid(addresses: Map<string, InvertedAddressDetails>): string {
   const rows: string[] = ['flowchart LR']
   for (const details of addresses.values()) {
     if (details.roles.length === 0) {

@@ -34,7 +34,9 @@ export { deduplicateAbi } from './discovery/source/deduplicateAbi'
 export { SourceCodeService } from './discovery/source/SourceCodeService'
 export {
   calculateInversion,
+  type InvertedAddressDetails,
   type InvertedAddresses,
+  type Role,
 } from './inversion/runInversion'
 export {
   EtherscanLikeClient,
