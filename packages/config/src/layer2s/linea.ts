@@ -270,6 +270,15 @@ export const linea: Layer2 = {
   technology: {
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
+      description:
+        STATE_CORRECTNESS.VALIDITY_PROOFS.description +
+        ' Operator can finalize L2 state root without proof.',
+      risks: [
+        {
+          category: 'Funds can be stolen if',
+          text: 'the operator forces and finalizes L2 state root without proof.',
+        },
+      ],
       references: [
         {
           text: 'ZkEvmV2.sol - Etherscan source code, _verifyProof() function',
