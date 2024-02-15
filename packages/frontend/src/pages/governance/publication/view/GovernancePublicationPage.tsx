@@ -25,6 +25,8 @@ export function GovernancePublicationPage(
       <Navbar {...props.navbar} />
       <Header publication={props.publication} />
       <PageContent type="article" className="mt-20">
+        <p className='mb-12 font-roboto-serif text-xl font-normal opacity-80'>{props.publication.description}</p>
+        <img src={`/meta-images/governance/publications/${props.publication.id}.png`} alt={`${props.publication.title} publication thumbnail`} className='mb-12 w-full'/>
         <Article>{props.publication.content}</Article>
       </PageContent>
       <Footer {...props.footer} className="mt-0 md:mt-20" />

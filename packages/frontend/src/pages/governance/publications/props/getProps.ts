@@ -7,6 +7,7 @@ import {
 import { Wrapped } from '../../../Page'
 import { getGovernancePublicationEntry } from '../../index/props/getGovernancePublicationEntry'
 import { GovernancePublicationsPageProps } from '../view/GovernancePublicationsPage'
+import { getPageMetadata } from './getPageMetadata'
 
 export function getProps(
   config: Config,
@@ -21,12 +22,7 @@ export function getProps(
     },
     wrapper: {
       banner: config.features.banner,
-      metadata: {
-        description: 'Governance publications',
-        title: 'Governance publications',
-        image: '/meta-images/governance.jpg',
-        url: '/governance/publications',
-      },
+      metadata: getPageMetadata(),
     },
   }
 }

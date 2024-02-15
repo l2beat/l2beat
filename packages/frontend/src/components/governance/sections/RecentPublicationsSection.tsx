@@ -48,7 +48,7 @@ interface PublicationProps {
 function Publication({ publication }: PublicationProps) {
   return (
     <LinkWithThumbnail
-      src={`/images/thumbnails/${publication.id}.png`}
+      src={`/meta-images/governance/publications/${publication.id}.png`}
       href={`/governance/publications/${publication.id}`}
       title={publication.shortTitle ?? publication.title}
       description={publication.description}

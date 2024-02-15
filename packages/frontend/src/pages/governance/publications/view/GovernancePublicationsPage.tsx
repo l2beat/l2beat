@@ -50,7 +50,7 @@ function PublicationCard({
 }) {
   return (
     <LinkWithThumbnail
-      href={`/governance/publications/${publication.id}`}
+      href={`/meta-images/governance/publications/${publication.id}.png`}
       src={`/images/thumbnails/${publication.id}.png`}
       title={publication.shortTitle ?? publication.title}
       topAccessory={
