@@ -41,10 +41,12 @@ export interface OrbitStackConfigCommon {
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
   display: Omit<Layer3Display, 'provider' | 'category' | 'dataAvailabilityMode'>
   hostChain: ProjectId
+  nativeToken?: string
 }
 
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
   display: Omit<Layer2Display, 'provider' | 'category' | 'dataAvailabilityMode'>
+  nativeToken?: string
 }
 
 export function orbitStackCommon(
@@ -281,9 +283,12 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
       escrows: [
         templateVars.discovery.getEscrowDetails({
           address: templateVars.bridge.address,
-          tokens: ['ETH'],
-          description:
-            'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
+          tokens: templateVars.nativeToken
+            ? [templateVars.nativeToken]
+            : ['ETH'],
+          description: templateVars.nativeToken
+            ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.nativeToken} sent to L2.`
+            : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
         }),
         ...(templateVars.nonTemplateEscrows ?? []),
       ],
@@ -373,9 +378,12 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       escrows: [
         templateVars.discovery.getEscrowDetails({
           address: templateVars.bridge.address,
-          tokens: ['ETH'],
-          description:
-            'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
+          tokens: templateVars.nativeToken
+            ? [templateVars.nativeToken]
+            : ['ETH'],
+          description: templateVars.nativeToken
+            ? `Contract managing Inboxes and Outboxes. It escrows ${templateVars.nativeToken} sent to L2.`
+            : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
         }),
         ...(templateVars.nonTemplateEscrows ?? []),
       ],

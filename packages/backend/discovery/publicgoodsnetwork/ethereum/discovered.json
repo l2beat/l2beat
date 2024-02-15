@@ -1,8 +1,8 @@
 {
   "name": "publicgoodsnetwork",
   "chain": "ethereum",
-  "blockNumber": 19175197,
-  "configHash": "0x56773753bd98805bcb3314822c146b164e855790863bed1a82789c7c92aa0bba",
+  "blockNumber": 19176788,
+  "configHash": "0xaae231d73be04d9be6bba9574df81c607bddee1ae38150032dde357a964954a3",
   "version": 3,
   "contracts": [
     {
@@ -98,6 +98,7 @@
           "340282366920938463463374607431768211455"
         ],
         "scalar": 684000,
+        "sequencerInbox": "0xC1B90E1e459aBBDcEc4DCF90dA45ba077d83BFc5",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
         "unsafeBlockSigner": "0x7916D35b57c2E4AffCaB46C3E5C8d76D3b44d1F7",
         "version": "1.3.0",
@@ -147,10 +148,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 9091800,
-        "latestOutputIndex": 5050,
-        "nextBlockNumber": 9093600,
-        "nextOutputIndex": 5051,
+        "latestBlockNumber": 9102600,
+        "latestOutputIndex": 5056,
+        "nextBlockNumber": 9104400,
+        "nextOutputIndex": 5057,
         "PROPOSER": "0x69968Ce0E92d9c101BAd81de55EFbcb69603cFe3",
         "startingBlockNumber": 0,
         "startingTimestamp": 1689106727,
@@ -225,6 +226,7 @@
     "0x99526b0e49A95833E734EB556A6aBaFFAb0Ee167",
     "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
     "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
+    "0xC1B90E1e459aBBDcEc4DCF90dA45ba077d83BFc5",
     "0xc2E2B715d9e302947Ec7e312fd2384b5a1296099",
     "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
   ],

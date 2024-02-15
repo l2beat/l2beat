@@ -1,8 +1,8 @@
 {
   "name": "zora",
   "chain": "ethereum",
-  "blockNumber": 19175194,
-  "configHash": "0xd5f583d684e842d99a65e370631b81bb66f8c7c23bce38d3ebf462fc1d01a7d1",
+  "blockNumber": 19176790,
+  "configHash": "0x919110555a37d4dedd9db279c7a635b1d09fc4fc95b923d466a467698a4f1589",
   "version": 3,
   "contracts": [
     {
@@ -19,7 +19,7 @@
         "GUARDIAN": "0xC72aE5c7cc9a332699305E29F68Be66c73b60542",
         "L2_ORACLE": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 21000, 19175193],
+        "params": [1000000000, 100000, 19176780],
         "paused": false,
         "SYSTEM_CONFIG": "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86",
         "version": "1.6.0"
@@ -78,10 +78,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 10299780,
-        "latestOutputIndex": 5946,
-        "nextBlockNumber": 10301580,
-        "nextOutputIndex": 5947,
+        "latestBlockNumber": 10308780,
+        "latestOutputIndex": 5951,
+        "nextBlockNumber": 10310580,
+        "nextOutputIndex": 5952,
         "PROPOSER": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
         "startingBlockNumber": 0,
         "startingTimestamp": 1686693839,
@@ -118,6 +118,7 @@
           "340282366920938463463374607431768211455"
         ],
         "scalar": 684000,
+        "sequencerInbox": "0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
         "unsafeBlockSigner": "0x3Dc8Dfd0709C835cAd15a6A27e089FF4cF4C9228",
         "version": "1.3.0",
@@ -220,7 +221,7 @@
       "sinceTimestamp": 1686694019,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621102",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621104",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -257,6 +258,7 @@
     "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
     "0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c",
     "0x625726c858dBF78c0125436C943Bf4b4bE9d9033",
+    "0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf",
     "0xc08C1b8fD69A22a448fC014bEe4A700d70726dA7",
     "0xD05e9Ab3B6A7F10ec1374bc352854ABA51643E81",
     "0xe7d71aea6FB8248d4fD4D5d5098D201674B531dB",

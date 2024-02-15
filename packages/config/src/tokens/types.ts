@@ -1,10 +1,37 @@
 import {
+  AssetId,
+  ChainId,
   CoingeckoId,
   EthereumAddress,
+  numberAs,
   stringAs,
-  Token,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import { z } from 'zod'
+
+export type GeneratedToken = z.infer<typeof GeneratedToken>
+export const GeneratedToken = z.object({
+  id: stringAs((s) => AssetId(s)),
+  name: z.string(),
+  coingeckoId: stringAs((s) => CoingeckoId(s)),
+  address: stringAs((s) => EthereumAddress(s)).optional(),
+  symbol: z.string(),
+  decimals: z.number(),
+  deploymentTimestamp: numberAs((n) => new UnixTime(n)),
+  coingeckoListingTimestamp: numberAs((n) => new UnixTime(n)),
+  /** @deprecated */
+  category: z.enum(['ether', 'stablecoin', 'other']),
+  iconUrl: z.optional(z.string()),
+  chainId: numberAs(ChainId),
+  type: z.enum(['CBV', 'EBV', 'NMV']),
+  formula: z.enum(['totalSupply', 'locked', 'circulatingSupply']),
+  bridgedUsing: z.optional(
+    z.object({
+      bridge: z.string(),
+      slug: z.string().optional(),
+    }),
+  ),
+})
 
 export type SourceEntry = z.infer<typeof SourceEntry>
 export const SourceEntry = z.object({
@@ -28,5 +55,5 @@ export const Source = z.record(z.array(SourceEntry))
 export type Output = z.infer<typeof Output>
 export const Output = z.object({
   comment: z.string().optional(),
-  tokens: z.array(Token),
+  tokens: z.array(GeneratedToken),
 })

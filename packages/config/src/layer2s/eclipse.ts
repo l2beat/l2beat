@@ -19,7 +19,7 @@ export const eclipse: Layer2 = upcoming({
       socialMedia: [
         'https://twitter.com/eclipsefnd',
         'https://discord.gg/eclipse-labs',
-        'https://eclipsemainnet.mirror.xyz/',
+        'https://mirror.xyz/eclipsemainnet.eth',
       ],
     },
   },

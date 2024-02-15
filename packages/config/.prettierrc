@@ -3,5 +3,13 @@
   "singleQuote": true,
   "printWidth": 80,
   "bracketSpacing": true,
-  "trailingComma": "all"
+  "trailingComma": "all",
+  "overrides": [
+    {
+      "files": ["**/*.jsonc"],
+      "options": {
+        "trailingComma": "none"
+      }
+    }
+  ]
 }

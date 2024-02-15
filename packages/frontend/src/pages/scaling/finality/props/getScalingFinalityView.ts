@@ -21,12 +21,15 @@ export function getScalingFinalityView(
   return {
     items: orderedProjects
       .map((project) => {
-        const finalityDataPoint =
+        const finalityProjectData =
           finalityApiResponse.projects[project.id.toString()]
-        if (!finalityDataPoint) {
+        if (!finalityProjectData?.timeToInclusion) {
           return
         }
-        return getScalingFinalityViewEntry(project, finalityDataPoint)
+        return getScalingFinalityViewEntry(
+          project,
+          finalityProjectData.timeToInclusion,
+        )
       })
       .filter(notUndefined),
   }
@@ -34,7 +37,7 @@ export function getScalingFinalityView(
 
 export function getScalingFinalityViewEntry(
   project: Layer2,
-  finalityDataPoint: FinalityDataPoint,
+  timeToInclusion: FinalityDataPoint,
 ): ScalingFinalityViewEntry {
   return {
     name: project.display.name,
@@ -47,15 +50,16 @@ export function getScalingFinalityViewEntry(
     redWarning: project.display.redWarning,
     purposes: project.display.purposes,
     stage: project.stage,
-    timeToFinalize: {
-      ...finalityDataPoint,
+    timeToInclusion: {
+      ...timeToInclusion,
       warning: project.display.finality?.warning,
     },
-    finalizationPeriod: project.display.finality?.finalizationPeriod
-      ? formatSeconds(project.display.finality.finalizationPeriod, {
-          fullUnit: true,
-        })
-      : undefined,
+    finalizationPeriod:
+      project.display.finality?.finalizationPeriod !== undefined
+        ? formatSeconds(project.display.finality.finalizationPeriod, {
+            fullUnit: true,
+          })
+        : undefined,
   }
 }
 

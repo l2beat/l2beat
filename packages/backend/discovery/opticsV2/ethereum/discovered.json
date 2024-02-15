@@ -1,8 +1,8 @@
 {
   "name": "opticsV2",
   "chain": "ethereum",
-  "blockNumber": 18340280,
-  "configHash": "0x9b5a2cfbafc1c9b32e96869cdaa812c885c64a0a21765f656f3a70700e1d08cb",
+  "blockNumber": 19218300,
+  "configHash": "0xe157522d43f4ca1c5f335691ec7b3ff49ccec0283bbd10d9288721c6e93301bc",
   "version": 3,
   "contracts": [
     {
@@ -26,7 +26,7 @@
       "implementations": ["0x8F6b6aDB49cDCa3b9F6947F61a1201242C3d827F"],
       "sinceTimestamp": 1637962173,
       "values": {
-        "committedRoot": "0xfae953dd987fd08fed61f27962bb7d5bfc8110c797eaa2f6d4fb5c5e081e2566",
+        "committedRoot": "0x437c0f0ea1cf83c04f4c2f1d0db9d204172a5036eb91abdb861135b35136b9e1",
         "homeDomainHash": "0x6b881beed7c8ffb30baea620e40be2b61ea2706b341014fb812bc7ff2f75fca1",
         "localDomain": 6648936,
         "optimisticSeconds": 1800,
@@ -157,21 +157,21 @@
       "implementations": ["0xfc6E146384b5c65f372d5b20537F3e8727aD3723"],
       "sinceTimestamp": 1637961283,
       "values": {
-        "committedRoot": "0x82c0255a011e275f80ac5223cb0af0da00883cfb386a416b9bab09da70f6856b",
-        "count": 1682,
+        "committedRoot": "0x27a83293af18bc26caa698fd173dcf6be6858d3dd6082b159152f06bcd7b5511",
+        "count": 1683,
         "homeDomainHash": "0xae0c02ff12852e3fb80794f3504aa3d7393b3ef3149213ffe623be2cbe67e77c",
         "localDomain": 6648936,
         "MAX_MESSAGE_BODY_BYTES": 2048,
         "owner": "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94",
         "queueEnd": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "queueLength": 0,
-        "root": "0x82c0255a011e275f80ac5223cb0af0da00883cfb386a416b9bab09da70f6856b",
+        "root": "0x27a83293af18bc26caa698fd173dcf6be6858d3dd6082b159152f06bcd7b5511",
         "state": 1,
         "suggestUpdate": [
           "0x0000000000000000000000000000000000000000000000000000000000000000",
           "0x0000000000000000000000000000000000000000000000000000000000000000"
         ],
-        "tree": 1682,
+        "tree": 1683,
         "updater": "0x5Ef6e0F6A7E1f866612D806041799a9D762b62c0",
         "updaterManager": "0x81B97dfBB743c343983e9bE7B863dB636DbD7373",
         "VERSION": 0

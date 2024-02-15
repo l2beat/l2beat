@@ -49,11 +49,15 @@ export class UnixTime {
       period === 'day'
         ? UnixTime.DAY
         : period === 'hour'
-        ? UnixTime.HOUR
-        : period === 'six hours'
-        ? UnixTime.SIX_HOURS
-        : UnixTime.MINUTE
+          ? UnixTime.HOUR
+          : period === 'six hours'
+            ? UnixTime.SIX_HOURS
+            : UnixTime.MINUTE
     return new UnixTime(this.timestamp - (this.timestamp % modulus))
+  }
+
+  toEndOf(period: 'day' | 'hour' | 'minute' | 'six hours') {
+    return this.isFull(period) ? this : this.toNext(period)
   }
 
   toNext(period: 'day' | 'hour' | 'minute' | 'six hours') {
@@ -61,10 +65,10 @@ export class UnixTime {
       period === 'day'
         ? UnixTime.DAY
         : period === 'hour'
-        ? UnixTime.HOUR
-        : period === 'six hours'
-        ? UnixTime.SIX_HOURS
-        : UnixTime.MINUTE
+          ? UnixTime.HOUR
+          : period === 'six hours'
+            ? UnixTime.SIX_HOURS
+            : UnixTime.MINUTE
     const remaining = modulus - (this.timestamp % modulus)
     return new UnixTime(this.timestamp + remaining)
   }
@@ -74,10 +78,10 @@ export class UnixTime {
       period === 'day'
         ? UnixTime.DAY
         : period === 'hour'
-        ? UnixTime.HOUR
-        : period === 'minute'
-        ? UnixTime.MINUTE
-        : UnixTime.SIX_HOURS
+          ? UnixTime.HOUR
+          : period === 'minute'
+            ? UnixTime.MINUTE
+            : UnixTime.SIX_HOURS
     const isFull = this.timestamp % modulus ? false : true
     return isFull
   }
@@ -90,10 +94,10 @@ export class UnixTime {
       period === 'days'
         ? UnixTime.DAY
         : period === 'hours'
-        ? UnixTime.HOUR
-        : period === 'minutes'
-        ? UnixTime.MINUTE
-        : 1
+          ? UnixTime.HOUR
+          : period === 'minutes'
+            ? UnixTime.MINUTE
+            : 1
     return new UnixTime(this.timestamp + value * unit)
   }
 
