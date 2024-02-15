@@ -23,6 +23,7 @@ export function LinkWithThumbnail({
       className={cn(
         'group grid gap-6 rounded-md bg-gray-100 transition-all hover:bg-zinc-300 dark:bg-zinc-900 dark:hover:bg-zinc-800',
         orientation === 'horizontal' && 'grid-cols-7',
+        orientation === 'vertical' && 'max-w-96',
       )}
     >
       <img
