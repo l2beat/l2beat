@@ -517,11 +517,11 @@ export function getScalingLivenessColumnsConfig() {
           name: 'Tx data\nsubmissions',
           tooltip: 'How often transaction batches are submitted to the L1',
           colSpan: (project) =>
-            project.data === 'coming soon' ? 3 : undefined,
+            !project.isSynced ? 3 : undefined,
           getValue: (project) =>
-            project.data !== 'coming soon' ? (
+          project.isSynced ? (
               <LivenessDurationTimeRangeCell
-                data={project.data.batchSubmissions}
+                data={project.batchSubmissions}
                 project={project}
                 dataType="batchSubmissions"
               />
@@ -532,7 +532,7 @@ export function getScalingLivenessColumnsConfig() {
             ),
           sorting: {
             getOrderValue: (project) => {
-              if (project.data === 'coming soon')
+              if (!project.isSynced)
                 return {
                   '30D': undefined,
                   '90D': undefined,
@@ -540,10 +540,10 @@ export function getScalingLivenessColumnsConfig() {
                 }
               return {
                 '30D':
-                  project.data.batchSubmissions?.last30Days?.averageInSeconds,
+                  project.batchSubmissions?.last30Days?.averageInSeconds,
                 '90D':
-                  project.data.batchSubmissions?.last90Days?.averageInSeconds,
-                MAX: project.data.batchSubmissions?.allTime?.averageInSeconds,
+                  project.batchSubmissions?.last90Days?.averageInSeconds,
+                MAX: project.batchSubmissions?.allTime?.averageInSeconds,
               }
             },
             defaultOrderKey: '30D',
@@ -554,9 +554,9 @@ export function getScalingLivenessColumnsConfig() {
           name: 'Proof\nsubmissions',
           tooltip: 'How often validity proofs are submitted to the L1',
           getValue: (project) =>
-            project.data !== 'coming soon' ? (
+          project.isSynced ? (
               <LivenessDurationTimeRangeCell
-                data={project.data.proofSubmissions}
+                data={project.proofSubmissions}
                 project={project}
                 dataType="proofSubmissions"
               />
@@ -564,7 +564,7 @@ export function getScalingLivenessColumnsConfig() {
           removeCellOnFalsyValue: true,
           sorting: {
             getOrderValue: (project) => {
-              if (project.data === 'coming soon')
+              if (!project.isSynced)
                 return {
                   '30D': undefined,
                   '90D': undefined,
@@ -572,10 +572,10 @@ export function getScalingLivenessColumnsConfig() {
                 }
               return {
                 '30D':
-                  project.data.proofSubmissions?.last30Days?.averageInSeconds,
+                  project.proofSubmissions?.last30Days?.averageInSeconds,
                 '90D':
-                  project.data.proofSubmissions?.last90Days?.averageInSeconds,
-                MAX: project.data.proofSubmissions?.allTime?.averageInSeconds,
+                  project.proofSubmissions?.last90Days?.averageInSeconds,
+                MAX: project.proofSubmissions?.allTime?.averageInSeconds,
               }
             },
             defaultOrderKey: '30D',
@@ -586,9 +586,9 @@ export function getScalingLivenessColumnsConfig() {
           name: 'State\nupdates',
           tooltip: 'How often state roots are submitted to the L1',
           getValue: (project) =>
-            project.data !== 'coming soon' ? (
+          project.isSynced ? (
               <LivenessDurationTimeRangeCell
-                data={project.data.stateUpdates}
+                data={project.stateUpdates}
                 project={project}
                 dataType="stateUpdates"
               />
@@ -596,16 +596,16 @@ export function getScalingLivenessColumnsConfig() {
           removeCellOnFalsyValue: true,
           sorting: {
             getOrderValue: (project) => {
-              if (project.data === 'coming soon')
+              if (!project.isSynced)
                 return {
                   '30D': undefined,
                   '90D': undefined,
                   MAX: undefined,
                 }
               return {
-                '30D': project.data.stateUpdates?.last30Days?.averageInSeconds,
-                '90D': project.data.stateUpdates?.last90Days?.averageInSeconds,
-                MAX: project.data.stateUpdates?.allTime?.averageInSeconds,
+                '30D': project.stateUpdates?.last30Days?.averageInSeconds,
+                '90D': project.stateUpdates?.last90Days?.averageInSeconds,
+                MAX: project.stateUpdates?.allTime?.averageInSeconds,
               }
             },
             defaultOrderKey: '30D',
@@ -636,10 +636,10 @@ export function getScalingLivenessColumnsConfig() {
       getValue: (project) => (
         <AnomalyIndicator
           anomalyEntries={
-            project.data !== 'coming soon' ? project.data.anomalyEntries : []
+            project.isSynced ? project.anomalyEntries : []
           }
           showComingSoon={
-            project.data === 'coming soon' || project.slug === 'linea'
+            !project.isSynced || project.slug === 'linea'
           }
         />
       ),
