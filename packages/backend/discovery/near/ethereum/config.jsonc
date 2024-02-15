@@ -17,7 +17,8 @@
   },
   "overrides": {
     "NearBridge": {
-      "ignoreMethods": ["checkBlockProducerSignatureInHead"] // too many values
+      "ignoreMethods": ["checkBlockProducerSignatureInHead"], // too many values
+      "ignoreInWatchMode": ["bridgeState", "lastValidAt"]
     }
   }
 }
