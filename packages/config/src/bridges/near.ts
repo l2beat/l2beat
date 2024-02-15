@@ -13,7 +13,7 @@ const threshold = discovery.getContractValue<number>(
   'getThreshold',
 )
 
-const owners: any[] = discovery.getContractValue<any[]>(
+const owners: string[] = discovery.getContractValue<string[]>(
   'BridgeAdminMultisig',
   'getOwners',
 )
