@@ -95,7 +95,7 @@ export class LivenessController {
       indexerState === undefined ||
       new UnixTime(indexerState.safeHeight).lt(requiredTimestamp)
     ) {
-      // return { type: 'error', error: 'DATA_NOT_SYNCED' }
+      return { type: 'error', error: 'DATA_NOT_SYNCED' }
     }
 
     const projects: LivenessApiResponse['projects'] = {}
