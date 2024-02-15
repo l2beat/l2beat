@@ -69,7 +69,7 @@ function Header(props: { publication: GovernancePublicationEntry }) {
     <FullPageHeader pageContentClassName="justify-start">
       <div className="grid gap-8 lg:grid-cols-2 lg:gap-24">
         <img
-          src={`/images/thumbnails/${props.publication.id}.png`}
+          src={`/meta-images/governance/publications/${props.publication.id}.png`}
           className="rounded-lg md:hidden"
         />
         <div className="self-center">
