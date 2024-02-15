@@ -95,7 +95,7 @@ export class LivenessController {
       indexerState === undefined ||
       new UnixTime(indexerState.safeHeight).lt(requiredTimestamp)
     ) {
-      return { type: 'error', error: 'DATA_NOT_SYNCED' }
+      // return { type: 'error', error: 'DATA_NOT_SYNCED' }
     }
 
     const projects: LivenessApiResponse['projects'] = {}
@@ -106,13 +106,9 @@ export class LivenessController {
         continue
       }
 
-      const isComingSoon = project.livenessConfig.entries.every((e) =>
-        e.untilTimestamp?.lt(UnixTime.now()),
+      const isSynced = project.livenessConfig.entries.some(
+        (e) => !e.untilTimestamp || e.untilTimestamp.gt(UnixTime.now()),
       )
-      if (isComingSoon) {
-        projects[project.projectId.toString()] = 'coming soon'
-        continue
-      }
 
       const records =
         await this.livenessRepository.getWithTypeDistinctTimestamp(
@@ -125,7 +121,7 @@ export class LivenessController {
 
       const withAnomalies = calculateAnomaliesPerProject(intervals)
 
-      if (withAnomalies && project.livenessConfig.duplicateData) {
+      if (project.livenessConfig.duplicateData) {
         for (const duplicateData of project.livenessConfig.duplicateData) {
           withAnomalies[duplicateData.to] = {
             ...withAnomalies[duplicateData.from],
@@ -133,7 +129,10 @@ export class LivenessController {
         }
       }
 
-      projects[project.projectId.toString()] = withAnomalies
+      projects[project.projectId.toString()] = {
+        ...withAnomalies,
+        isSynced,
+      }
     }
 
     return { type: 'success', data: { projects } }

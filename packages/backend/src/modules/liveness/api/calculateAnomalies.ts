@@ -20,7 +20,7 @@ export function calculateAnomaliesPerProject({
   batchSubmissions: LivenessRecordsWithIntervalAndDetails | undefined
   stateUpdates: LivenessRecordsWithIntervalAndDetails | undefined
   proofSubmissions: LivenessRecordsWithIntervalAndDetails | undefined
-}): LivenessApiProject {
+}): Omit<LivenessApiProject, 'isSynced'> {
   const lastHour = UnixTime.now().toStartOf('hour')
 
   let batchSubmissionAnomalies: LivenessAnomaly[] | undefined = undefined
