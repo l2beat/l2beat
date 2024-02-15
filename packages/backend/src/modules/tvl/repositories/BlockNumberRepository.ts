@@ -8,6 +8,7 @@ import {
 } from '../../../peripherals/database/BaseRepository'
 import { Database } from '../../../peripherals/database/Database'
 import {
+  CleanDateRange,
   deleteHourlyUntil,
   deleteSixHourlyUntil,
 } from './deleteArchivedRecords'
@@ -70,18 +71,12 @@ export class BlockNumberRepository extends BaseRepository {
     const knex = await this.knex()
     return knex('block_numbers').delete()
   }
-  async deleteHourlyUntil(dateRange: {
-    from: UnixTime | undefined
-    to: UnixTime
-  }) {
+  async deleteHourlyUntil(dateRange: CleanDateRange) {
     const knex = await this.knex()
     return deleteHourlyUntil(knex, 'block_numbers', dateRange)
   }
 
-  async deleteSixHourlyUntil(dateRange: {
-    from: UnixTime | undefined
-    to: UnixTime
-  }) {
+  async deleteSixHourlyUntil(dateRange: CleanDateRange) {
     const knex = await this.knex()
     return deleteSixHourlyUntil(knex, 'block_numbers', dateRange)
   }

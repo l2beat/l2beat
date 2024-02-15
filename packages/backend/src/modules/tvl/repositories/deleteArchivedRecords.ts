@@ -1,16 +1,18 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
+export interface CleanDateRange {
+  from: UnixTime | undefined
+  to: UnixTime
+}
+
 /**
  * WARNING: this method requires table to have unix_timestamp column
  */
 export function deleteHourlyUntil(
   knex: Knex,
   tableName: string,
-  dateRange: {
-    from: UnixTime | undefined
-    to: UnixTime
-  },
+  dateRange: CleanDateRange,
 ) {
   let query = knex(tableName)
     .where('unix_timestamp', '<', dateRange.to.toDate())
@@ -30,10 +32,7 @@ export function deleteHourlyUntil(
 export function deleteSixHourlyUntil(
   knex: Knex,
   tableName: string,
-  dateRange: {
-    from: UnixTime | undefined
-    to: UnixTime
-  },
+  dateRange: CleanDateRange,
 ) {
   let query = knex(tableName)
     .where('unix_timestamp', '<', dateRange.to.toDate())

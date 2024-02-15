@@ -8,6 +8,7 @@ import {
 } from '../../../peripherals/database/BaseRepository'
 import { Database } from '../../../peripherals/database/Database'
 import {
+  CleanDateRange,
   deleteHourlyUntil,
   deleteSixHourlyUntil,
 } from './deleteArchivedRecords'
@@ -211,18 +212,12 @@ export class AggregatedReportRepository extends BaseRepository {
     return knex('aggregated_reports').delete()
   }
 
-  async deleteHourlyUntil(dateRange: {
-    from: UnixTime | undefined
-    to: UnixTime
-  }) {
+  async deleteHourlyUntil(dateRange: CleanDateRange) {
     const knex = await this.knex()
     return deleteHourlyUntil(knex, 'aggregated_reports', dateRange)
   }
 
-  async deleteSixHourlyUntil(dateRange: {
-    from: UnixTime | undefined
-    to: UnixTime
-  }) {
+  async deleteSixHourlyUntil(dateRange: CleanDateRange) {
     const knex = await this.knex()
     return deleteSixHourlyUntil(knex, 'aggregated_reports', dateRange)
   }
