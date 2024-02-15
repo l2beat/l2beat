@@ -51,6 +51,33 @@ const forceBatchTimeout = discovery.getContractValue<number>(
   'forceBatchTimeout',
 )
 
+const adminMultisigThresholdString =
+  discovery
+    .getContractValue<number>('AdminMultisig', 'getThreshold')
+    .toString() +
+  '/' +
+  discovery
+    .getContractValue<string[]>('AdminMultisig', 'getOwners')
+    .length.toString()
+
+const securityCouncilThresholdString =
+  discovery
+    .getContractValue<number>('SecurityCouncil', 'getThreshold')
+    .toString() +
+  '/' +
+  discovery
+    .getContractValue<string[]>('SecurityCouncil', 'getOwners')
+    .length.toString()
+
+const escrowsAdminThresholdString =
+  discovery
+    .getContractValue<number>('EscrowsAdmin', 'getThreshold')
+    .toString() +
+  '/' +
+  discovery
+    .getContractValue<string[]>('EscrowsAdmin', 'getOwners')
+    .length.toString()
+
 /*
 const bridgeEmergencyState = discovery.getContractValue<boolean>(
   'Bridge',
@@ -499,7 +526,15 @@ export const polygonzkevm: Layer2 = {
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelayString)],
   },
   upgradesAndGovernance:
-    'All main contracts are upgradable by the `ProxyAdmin` which is controlled by the `PolygonZkEVMTimelock`. Escrow contracts are upgradable by the `EscrowAdmin` multisig.\n\n`PolygonZkEVMTimelock` is a modified version of TimelockController that disables delay in case of emergency state in the `PolygonZkEVM` (Consensus Contract). It is operated by `AdminMultisig` and has 10 days delay. Addresses of trusted sequencer and aggregator can be changed by the `AdminMultisig`. It can transfer its role to any account.\n\n`SecurityCouncil` multisig can upgrade `PolygonZkEVM` bypassing the timelock and arbitrarily enable emergency state.',
+    'All main contracts are upgradable by the `ProxyAdmin` which is controlled by the `PolygonZkEVMTimelock`. Escrow contracts are upgradable by the `EscrowsAdmin` ' +
+    escrowsAdminThresholdString +
+    ' multisig.\n\n`PolygonZkEVMTimelock` is a modified version of TimelockController that disables delay in case of emergency state in the `PolygonRollupManager`. It is operated by ' +
+    adminMultisigThresholdString +
+    ' `AdminMultisig` and has ' +
+    upgradeDelayString +
+    ' delay. Addresses of trusted sequencer and aggregator can be changed by the `AdminMultisig`.\n\n`SecurityCouncil` ' +
+    securityCouncilThresholdString +
+    ' multisig can arbitrarily enable emergency state in the system.',
   milestones: [
     {
       name: 'Polygon zkEVM Etrog upgrade',
