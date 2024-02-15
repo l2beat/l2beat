@@ -105,6 +105,15 @@ export class LivenessController {
       if (project.livenessConfig === undefined) {
         continue
       }
+
+      const isComingSoon = project.livenessConfig.entries.every((e) =>
+        e.untilTimestamp?.lt(UnixTime.now()),
+      )
+      if (isComingSoon) {
+        projects[project.projectId.toString()] = 'coming soon'
+        continue
+      }
+
       const records =
         await this.livenessRepository.getWithTypeDistinctTimestamp(
           project.projectId,

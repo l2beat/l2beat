@@ -35,10 +35,14 @@ export const LivenessApiProject = z.object({
   proofSubmissions: LivenessDetails,
   anomalies: z.array(LivenessAnomaly).or(z.undefined()),
 })
+
 export type LivenessApiProject = z.infer<typeof LivenessApiProject>
 
 export const LivenessApiResponse = z.object({
-  projects: z.record(z.string(), z.optional(LivenessApiProject)),
+  projects: z.record(
+    z.string(),
+    z.optional(LivenessApiProject.or(z.literal('coming soon'))),
+  ),
 })
 export type LivenessApiResponse = z.infer<typeof LivenessApiResponse>
 
@@ -101,6 +105,7 @@ const example: LivenessApiResponse = {
         },
       ],
     },
+    optimism: "coming soon",
   },
 }
 */
