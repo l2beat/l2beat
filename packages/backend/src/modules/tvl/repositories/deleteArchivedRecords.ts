@@ -14,13 +14,12 @@ export function deleteHourlyUntil(
     .where('unix_timestamp', '<', to.toDate())
     // do not delete six hourly and daily
     .andWhereRaw(`extract(hour from "unix_timestamp") % 6 != 0`)
-    .delete()
 
   if (from) {
     query = query.andWhere('unix_timestamp', '>=', from.toDate())
   }
 
-  return query
+  return query.delete()
 }
 
 /**
@@ -38,11 +37,10 @@ export function deleteSixHourlyUntil(
     .andWhereRaw(`extract(hour from "unix_timestamp") != 0`)
     // delete only six hourly
     .andWhereRaw(`extract(hour from "unix_timestamp") % 6 = 0`)
-    .delete()
 
   if (from) {
     query = query.andWhere('unix_timestamp', '>=', from.toDate())
   }
 
-  return query
+  return query.delete()
 }
