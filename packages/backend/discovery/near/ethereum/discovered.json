@@ -1,7 +1,7 @@
 {
   "name": "near",
   "chain": "ethereum",
-  "blockNumber": 19219973,
+  "blockNumber": 19232117,
   "configHash": "0xef3f5fca4d554a4c91cd5f71beb8d9893dfeb4d6c286c99ba03aa7fd0436f3ec",
   "version": 3,
   "contracts": [
@@ -70,9 +70,9 @@
       "sinceTimestamp": 1664198555,
       "values": {
         "admin": "0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1",
-        "bridgeState": [112738515, "1707832379761689650", 1707846827, 100],
+        "bridgeState": [112852421, "1707977208738177970", 1707991787, 100],
         "initialized": true,
-        "lastValidAt": 1707846827,
+        "lastValidAt": 1707991787,
         "lockDuration": 14400,
         "lockEthAmount": "5000000000000000000",
         "paused": 0,
