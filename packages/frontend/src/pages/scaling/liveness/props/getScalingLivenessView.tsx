@@ -34,6 +34,7 @@ function getScalingLivenessViewEntry(
   livenessResponse: LivenessApiResponse,
 ): ScalingLivenessViewEntry {
   const liveness = livenessResponse.projects[project.id.toString()]
+
   return {
     name: project.display.name,
     shortName: project.display.shortName,
@@ -46,19 +47,24 @@ function getScalingLivenessViewEntry(
     provider: project.display.provider,
     stage: project.stage,
     explanation: project.display.liveness?.explanation,
-    stateUpdates: {
-      ...liveness?.stateUpdates,
-      warning: project.display.liveness?.warnings?.stateUpdates,
-    },
-    batchSubmissions: {
-      ...liveness?.batchSubmissions,
-      warning: project.display.liveness?.warnings?.batchSubmissions,
-    },
-    proofSubmissions: {
-      ...liveness?.proofSubmissions,
-      warning: project.display.liveness?.warnings?.proofSubmissions,
-    },
-    anomalyEntries: getAnomalyEntries(liveness?.anomalies),
+    data:
+      liveness === 'coming soon'
+        ? 'coming soon'
+        : {
+            stateUpdates: {
+              ...liveness?.stateUpdates,
+              warning: project.display.liveness?.warnings?.stateUpdates,
+            },
+            batchSubmissions: {
+              ...liveness?.batchSubmissions,
+              warning: project.display.liveness?.warnings?.batchSubmissions,
+            },
+            proofSubmissions: {
+              ...liveness?.proofSubmissions,
+              warning: project.display.liveness?.warnings?.proofSubmissions,
+            },
+            anomalyEntries: getAnomalyEntries(liveness?.anomalies),
+          },
   }
 }
 

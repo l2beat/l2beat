@@ -27,10 +27,14 @@ export interface ScalingLivenessViewEntry {
   purposes: ScalingProjectPurpose[]
   stage: StageConfig
   explanation: string | undefined
-  batchSubmissions: LivenessDetailsWithWarning | undefined
-  stateUpdates: LivenessDetailsWithWarning | undefined
-  proofSubmissions: LivenessDetailsWithWarning | undefined
-  anomalyEntries: AnomalyIndicatorEntry[]
+  data:
+    | {
+        batchSubmissions: LivenessDetailsWithWarning | undefined
+        stateUpdates: LivenessDetailsWithWarning | undefined
+        proofSubmissions: LivenessDetailsWithWarning | undefined
+        anomalyEntries: AnomalyIndicatorEntry[]
+      }
+    | 'coming soon'
 }
 
 export type LivenessDetailsWithWarning = LivenessDetails & {

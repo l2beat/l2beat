@@ -39,7 +39,10 @@ function getMockLivenessApiResponse(): LivenessApiResponse {
   }, {})
 
   return {
-    projects,
+    projects: {
+      ...projects,
+      polygonzkevm: 'coming soon',
+    },
   }
 }
 
