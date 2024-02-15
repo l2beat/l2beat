@@ -408,7 +408,7 @@ export const polygonzkevm: Layer2 = {
         references: [
           {
             text: 'PolygonZkEvmBridge.sol - Etherscan source code, claimAsset function',
-            href: 'https://etherscan.io/address/0xb1585916487AcEdD99952086f2950763D253b923',
+            href: 'https://etherscan.io/address/0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe',
           },
         ],
       },
