@@ -138,6 +138,12 @@ export const stargate: Bridge = {
         tokens: ['WOO'],
         description: 'WOO Pool',
       }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xA572d137666DCbAdFA47C3fC41F15e90134C618c'),
+        sinceTimestamp: new UnixTime(1677032255),
+        tokens: ['mETH'],
+        description: 'mETH Pool',
+      }),
       {
         address: EthereumAddress('0x72E2F4830b9E45d52F80aC08CB2bEC0FeF72eD9c'),
         sinceTimestamp: new UnixTime(1656108257),
