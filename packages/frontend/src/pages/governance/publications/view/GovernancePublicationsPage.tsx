@@ -73,7 +73,7 @@ function Header(props: { publication: GovernancePublicationEntry }) {
           className="rounded-lg md:hidden"
         />
         <div className="self-center">
-          <h1 className="text-balance text-4xl leading-tight">
+          <h1 className="line-clamp-2 text-balance text-4xl leading-tight">
             {props.publication.title}
           </h1>
           {<p className="mt-6 line-clamp-5 text-sm text-gray-50">
