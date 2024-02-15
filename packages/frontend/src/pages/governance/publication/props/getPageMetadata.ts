@@ -6,7 +6,7 @@ export function getPageMetadata(
 ): PageMetadata {
   return {
     title: `${publication.shortTitle ?? publication.title} - L2BEAT`,
-    description: publication.description,
+    description: publication.description ?? publication.excerpt,
     image: `https://l2beat.com/meta-images/governance/publications/${publication.id}.png`,
     url: `https://l2beat.com/governance/publications/${publication.id}`,
   }

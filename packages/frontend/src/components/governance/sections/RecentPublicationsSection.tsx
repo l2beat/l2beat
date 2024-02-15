@@ -51,7 +51,7 @@ function Publication({ publication }: PublicationProps) {
       src={`/meta-images/governance/publications/${publication.id}.png`}
       href={`/governance/publications/${publication.id}`}
       title={publication.shortTitle ?? publication.title}
-      description={publication.description}
+      description={publication.description ?? publication.excerpt}
     />
   )
 }

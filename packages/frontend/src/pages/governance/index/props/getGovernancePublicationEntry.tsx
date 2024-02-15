@@ -11,7 +11,8 @@ export interface GovernancePublicationEntry {
   id: string
   title: string
   shortTitle: string | undefined
-  description: string
+  description: string | undefined
+  excerpt: string
   readTimeInMinutes: number
   author: GovernanceAuthorEntry
   content: string
@@ -27,7 +28,8 @@ export function getGovernancePublicationEntry(
     content: post.content,
     title: post.data.title,
     shortTitle: post.data.shortTitle,
-    description: post.data.description ?? post.excerpt,
+    description: post.data.description,
+    excerpt: post.excerpt,
     readTimeInMinutes: post.readTimeInMinutes,
     author: getGovernanceAuthorEntry(author),
   }

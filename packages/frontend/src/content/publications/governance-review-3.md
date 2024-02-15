@@ -1,6 +1,5 @@
 ---
   title: "Governance Review #03"
-  description: "L2BEAT provides weekly updates on governance in concise articles."
   publishedOn: "2024-02-02"
   authorId: anastassis-oikonomopoulos
 ---
@@ -16,6 +15,8 @@
 ##### h5 Heading
 
 ###### h6 Heading
+
+Cillum eu eiusmod tempor laborum ullamco voluptate. Commodo magna consequat nulla consequat minim nisi cupidatat non. Id elit exercitation aliqua labore in elit aliqua culpa do in. Velit proident eiusmod et nostrud ex nulla nostrud tempor do eu amet consectetur excepteur. Reprehenderit in sint cupidatat non.Cillum eu eiusmod tempor laborum ullamco voluptate. Commodo magna consequat nulla consequat minim nisi cupidatat non. Id elit exercitation aliqua labore in elit aliqua culpa do in. Velit proident eiusmod et nostrud ex nulla nostrud tempor do eu amet consectetur excepteur. Reprehenderit in sint cupidatat non.Cillum eu eiusmod tempor laborum ullamco voluptate. Commodo magna consequat nulla consequat minim nisi cupidatat non. Id elit exercitation aliqua labore in elit aliqua culpa do in. Velit proident eiusmod et nostrud ex nulla nostrud tempor do eu amet consectetur excepteur. Reprehenderit in sint cupidatat non.
 
 ## Horizontal Rules
 
