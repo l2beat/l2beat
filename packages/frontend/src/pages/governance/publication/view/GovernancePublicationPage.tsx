@@ -26,7 +26,7 @@ export function GovernancePublicationPage(
       <Header publication={props.publication} />
       <PageContent type="article" className="mt-20">
         <p className='mb-12 font-roboto-serif text-xl font-normal opacity-80'>{props.publication.description}</p>
-        <img src={`/meta-images/governance/publications/${props.publication.id}.png`} alt={`${props.publication.title} publication thumbnail`} className='mb-12 w-full'/>
+        <img src={`/meta-images/governance/publications/${props.publication.id}.png`} alt={`${props.publication.title} publication thumbnail`} className='mb-12 w-full rounded-lg'/>
         <Article>{props.publication.content}</Article>
       </PageContent>
       <Footer {...props.footer} className="mt-0 md:mt-20" />
@@ -53,7 +53,7 @@ function Header({ publication }: { publication: GovernancePublicationEntry }) {
             <p className="text-lg font-bold leading-none">
               {publication.author.firstName} {publication.author.lastName}
             </p>
-            <p className="text-2xs font-medium text-gray-50">
+            <p className="text-2xs font-medium text-zinc-500 dark:text-gray-50">
               {publication.author.role}
             </p>
           </div>
