@@ -516,10 +516,9 @@ export function getScalingLivenessColumnsConfig() {
         {
           name: 'Tx data\nsubmissions',
           tooltip: 'How often transaction batches are submitted to the L1',
-          colSpan: (project) =>
-            !project.isSynced ? 3 : undefined,
+          colSpan: (project) => (!project.isSynced ? 3 : undefined),
           getValue: (project) =>
-          project.isSynced ? (
+            project.isSynced ? (
               <LivenessDurationTimeRangeCell
                 data={project.batchSubmissions}
                 project={project}
@@ -539,10 +538,8 @@ export function getScalingLivenessColumnsConfig() {
                   MAX: undefined,
                 }
               return {
-                '30D':
-                  project.batchSubmissions?.last30Days?.averageInSeconds,
-                '90D':
-                  project.batchSubmissions?.last90Days?.averageInSeconds,
+                '30D': project.batchSubmissions?.last30Days?.averageInSeconds,
+                '90D': project.batchSubmissions?.last90Days?.averageInSeconds,
                 MAX: project.batchSubmissions?.allTime?.averageInSeconds,
               }
             },
@@ -554,7 +551,7 @@ export function getScalingLivenessColumnsConfig() {
           name: 'Proof\nsubmissions',
           tooltip: 'How often validity proofs are submitted to the L1',
           getValue: (project) =>
-          project.isSynced ? (
+            project.isSynced ? (
               <LivenessDurationTimeRangeCell
                 data={project.proofSubmissions}
                 project={project}
@@ -571,10 +568,8 @@ export function getScalingLivenessColumnsConfig() {
                   MAX: undefined,
                 }
               return {
-                '30D':
-                  project.proofSubmissions?.last30Days?.averageInSeconds,
-                '90D':
-                  project.proofSubmissions?.last90Days?.averageInSeconds,
+                '30D': project.proofSubmissions?.last30Days?.averageInSeconds,
+                '90D': project.proofSubmissions?.last90Days?.averageInSeconds,
                 MAX: project.proofSubmissions?.allTime?.averageInSeconds,
               }
             },
@@ -586,7 +581,7 @@ export function getScalingLivenessColumnsConfig() {
           name: 'State\nupdates',
           tooltip: 'How often state roots are submitted to the L1',
           getValue: (project) =>
-          project.isSynced ? (
+            project.isSynced ? (
               <LivenessDurationTimeRangeCell
                 data={project.stateUpdates}
                 project={project}
@@ -635,12 +630,8 @@ export function getScalingLivenessColumnsConfig() {
       align: 'center',
       getValue: (project) => (
         <AnomalyIndicator
-          anomalyEntries={
-            project.isSynced ? project.anomalyEntries : []
-          }
-          showComingSoon={
-            !project.isSynced || project.slug === 'linea'
-          }
+          anomalyEntries={project.isSynced ? project.anomalyEntries : []}
+          showComingSoon={!project.isSynced || project.slug === 'linea'}
         />
       ),
     },

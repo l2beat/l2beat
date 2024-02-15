@@ -33,7 +33,7 @@ function getMockLivenessApiResponse(): LivenessApiResponse {
     'linea',
     'myria',
     'scroll',
-    'polygonzkevm'
+    'polygonzkevm',
   ].reduce<Record<string, LivenessApiProject>>((acc, cur) => {
     acc[cur] = generateMockData()
     return acc
@@ -45,7 +45,7 @@ function getMockLivenessApiResponse(): LivenessApiResponse {
       polygonzkevm: {
         ...projects.polygonzkevm,
         isSynced: false,
-      }
+      },
     },
   }
 }

@@ -34,8 +34,10 @@ function getScalingLivenessViewEntry(
   livenessResponse: LivenessApiResponse,
 ): ScalingLivenessViewEntry {
   const liveness = livenessResponse.projects[project.id.toString()]
-  if(!liveness) {
-    throw new Error(`Liveness data not found for project ${project.display.name}`)
+  if (!liveness) {
+    throw new Error(
+      `Liveness data not found for project ${project.display.name}`,
+    )
   }
 
   return {
@@ -63,7 +65,7 @@ function getScalingLivenessViewEntry(
       warning: project.display.liveness?.warnings?.proofSubmissions,
     },
     anomalyEntries: getAnomalyEntries(liveness.anomalies),
-    isSynced: liveness.isSynced
+    isSynced: liveness.isSynced,
   }
 }
 
