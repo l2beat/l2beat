@@ -9,6 +9,7 @@ export const publicationsCollection = defineCollection({
     shortTitle: z.string().optional(),
     description: z.string(),
     publishedOn: z.coerce.date(),
-    readTimeInMinutes: z.number()
+    authorId: z.string(),
+    readTimeInMinutes: z.number(),
   }),
 })

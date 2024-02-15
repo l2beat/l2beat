@@ -188,6 +188,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['Roboto', 'Arial', 'sans-serif'],
+        'roboto-serif': ['Roboto Serif', 'Roboto', 'Arial'],
         lora: ['Lora', 'serif'],
       },
       spacing: {

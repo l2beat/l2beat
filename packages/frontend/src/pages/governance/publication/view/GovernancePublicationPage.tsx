@@ -6,12 +6,13 @@ import {
   Navbar,
   NavbarProps,
 } from '../../../../components'
-import { Markdown } from '../../../../components/Markdown'
+import { Article } from '../../../../components/Article'
+import { FullPageHeader } from '../../../../components/FullPageHeader'
 import { PageContent } from '../../../../components/PageContent'
-import { CollectionEntry } from '../../../../content/getCollection'
+import { GovernancePublicationEntry } from '../../index/props/getGovernancePublicationEntry'
 
 export interface GovernancePublicationPageProps {
-  publication: CollectionEntry<'publications'>
+  publication: GovernancePublicationEntry
   navbar: NavbarProps
   footer: FooterProps
 }
@@ -22,10 +23,40 @@ export function GovernancePublicationPage(
   return (
     <>
       <Navbar {...props.navbar} />
-      <PageContent type="wider" className="mt-20">
-        <Markdown>{props.publication.content}</Markdown>
+      <Header publication={props.publication} />
+      <PageContent type="article" className="mt-20">
+        <Article>{props.publication.content}</Article>
       </PageContent>
       <Footer {...props.footer} className="mt-0 md:mt-20" />
     </>
+  )
+}
+
+function Header({ publication }: { publication: GovernancePublicationEntry }) {
+  return (
+    <FullPageHeader pageContentClassName="flex-col items-start gap-6">
+      <p className="text-2xs font-semibold uppercase text-purple-100 dark:text-pink-200">
+        {publication.readTimeInMinutes} min read
+      </p>
+      <h1 className="text-[44px] font-bold leading-snug">
+        {publication.title}
+      </h1>
+      <div>
+        <div className="flex items-center justify-center">
+          <img
+            src={`/avatars/${publication.author.id}.png`}
+            className="mr-2 size-10 rounded-full"
+          />
+          <div>
+            <p className="text-lg font-bold leading-none">
+              {publication.author.firstName} {publication.author.lastName}
+            </p>
+            <p className="text-2xs font-medium text-gray-50">
+              {publication.author.role}
+            </p>
+          </div>
+        </div>
+      </div>
+    </FullPageHeader>
   )
 }
