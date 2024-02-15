@@ -424,7 +424,7 @@ export function getScalingActivityColumnsConfig() {
           <NumberCell>{formatTps(project.data.tpsDaily)}</NumberCell>
         ) : (
           <Badge type="gray" className="mr-0 w-full text-center lg:mr-4">
-            MISSING ACTIVITY DATA
+            MISSING DATA
           </Badge>
         ),
       removeCellOnFalsyValue: true,
@@ -527,7 +527,7 @@ export function getScalingLivenessColumnsConfig() {
               />
             ) : (
               <Badge type="gray" className="mr-0 w-full text-center lg:mr-4">
-                COMING SOON
+                MISSING DATA
               </Badge>
             ),
           sorting: {

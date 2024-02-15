@@ -105,8 +105,8 @@ const example: LivenessApiResponse = {
           durationInSeconds: 60 * 60 * 2,
         },
       ],
+      isSynced: true
     },
-    optimism: "coming soon",
   },
 }
 */
