@@ -184,6 +184,12 @@ declare module 'knex/types/tables' {
     min_timestamp: Date | undefined
   }
 
+  interface TvlCleanerRow {
+    repository_name: string
+    hourly_cleaned_until: Date
+    six_hourly_cleaned_until: Date
+  }
+
   interface Tables {
     coingecko_prices: PriceRow
     block_numbers: BlockNumberRow
@@ -209,6 +215,7 @@ declare module 'knex/types/tables' {
     daily_discovery: DiscoveryHistoryRow
     liveness_configuration: LivenessConfigurationRow
     indexer_state: IndexerStateRow
+    tvl_cleaner: TvlCleanerRow
     finality: FinalityRow
   }
 }

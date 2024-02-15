@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import React from 'react'
 
-import { Page } from './Page'
-import { reactToHtml } from './reactToHtml'
+import { Page } from '../../../status/Page'
+import { reactToHtml } from '../../../status/reactToHtml'
 
 export interface StatusPoint {
   timestamp: UnixTime

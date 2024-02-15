@@ -2,11 +2,11 @@ import { UnixTime } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { IndexerStateRecord } from '../../../../peripherals/database/repositories/IndexerStateRepository'
-import { LivenessConfigurationRecord } from '../../../liveness/repositories/LivenessConfigurationRepository'
-import { LivenessId } from '../../../liveness/types/LivenessId'
-import { LivenessConfigurationCard } from './components/LivenessConfigurationCard'
-import { Page } from './Page'
-import { reactToHtml } from './reactToHtml'
+import { Page } from '../../../status/Page'
+import { reactToHtml } from '../../../status/reactToHtml'
+import { LivenessConfigurationRecord } from '../../repositories/LivenessConfigurationRepository'
+import { LivenessId } from '../../types/LivenessId'
+import { LivenessConfigurationCard } from './LivenessConfigurationCard'
 
 export interface LivenessStatusPageProps {
   indexerState: IndexerStateRecord | undefined

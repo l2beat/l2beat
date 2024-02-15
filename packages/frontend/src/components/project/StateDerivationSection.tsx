@@ -10,6 +10,7 @@ export interface StateDerivationSectionProps
   id: ProjectSectionId
   title: string
   sectionOrder: number
+  isUnderReview: boolean | undefined
 }
 
 export function StateDerivationSection(props: StateDerivationSectionProps) {
@@ -18,6 +19,7 @@ export function StateDerivationSection(props: StateDerivationSectionProps) {
       title={props.title}
       id={props.id}
       sectionOrder={props.sectionOrder}
+      isUnderReview={props.isUnderReview}
     >
       <div className="flex flex-col gap-6">
         <Item title="Node software">{props.nodeSoftware}</Item>

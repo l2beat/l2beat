@@ -11,7 +11,7 @@ import { setTimeout } from 'timers/promises'
 
 import { Clock } from '../../../tools/Clock'
 import { TaskQueue } from '../../../tools/queue/TaskQueue'
-import { UpdaterStatus } from '../../status/api/view/TvlStatusPage'
+import { UpdaterStatus } from '../api/status/TvlStatusPage'
 import { PriceUpdater } from '../PriceUpdater'
 import { createFormulaReports } from '../reports/createFormulaReports'
 import { getStatus } from '../reports/getStatus'

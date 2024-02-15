@@ -1,4 +1,4 @@
-import { HealthConfig } from '../../../config/Config'
+import { HealthConfig } from '../../config/Config'
 
 export class HealthController {
   constructor(private readonly health?: HealthConfig) {}

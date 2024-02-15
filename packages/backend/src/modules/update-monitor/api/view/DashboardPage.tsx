@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react'
 
-import { Page } from '../../view/Page'
-import { reactToHtml } from '../../view/reactToHtml'
+import { Page } from '../../../status/Page'
+import { reactToHtml } from '../../../status/reactToHtml'
 import { DashboardProject } from '../props/getDashboardProjects'
 import { getHardcoded } from '../props/utils/getHardcoded'
 import { DASHBOARD_COLORS } from './constants'
