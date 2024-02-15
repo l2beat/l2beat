@@ -50,8 +50,8 @@ function PublicationCard({
 }) {
   return (
     <LinkWithThumbnail
-      href={`/meta-images/governance/publications/${publication.id}.png`}
-      src={`/images/thumbnails/${publication.id}.png`}
+      href={`/governance/publications/${publication.id}`}
+      src={`/meta-images/governance/publications/${publication.id}.png`}
       title={publication.shortTitle ?? publication.title}
       topAccessory={
         <p className="text-2xs font-semibold uppercase text-purple-100 dark:text-pink-200">
