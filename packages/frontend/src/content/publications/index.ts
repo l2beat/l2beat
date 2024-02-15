@@ -10,6 +10,5 @@ export const publicationsCollection = defineCollection({
     description: z.string().optional(),
     publishedOn: z.coerce.date(),
     authorId: z.string(),
-    readTimeInMinutes: z.number(),
   }),
 })

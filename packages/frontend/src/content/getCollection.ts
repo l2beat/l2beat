@@ -27,6 +27,7 @@ interface ContentCollectionEntry<T extends CollectionKey> {
   data: z.infer<Collection[T]['schema']>
   content: string
   excerpt: string
+  readTimeInMinutes: number
 }
 export type CollectionEntry<T extends CollectionKey> =
   T extends DataCollectionKey
@@ -130,12 +131,14 @@ function getContentCollectionEntry<T extends ContentCollectionKey>(
   const data = contentEntry.schema.parse(parsedFile.data)
   const content = MarkdownIt().render(parsedFile.content)
   const excerpt = getExcerpt(parsedFile.content)
+  const readTimeInMinutes = getReadTime(parsedFile.content)
 
   return {
     id,
     data,
     content,
     excerpt,
+    readTimeInMinutes,
   }
 }
 
@@ -146,4 +149,15 @@ function getExcerpt(content: string) {
     throw new Error('No paragraph found')
   }
   return line
+}
+
+const AVERAGE_WORDS_PER_MINUTE = 183
+
+function getReadTime(content: string) {
+  const words = content
+    .split('\n')
+    .join(' ')
+    .split(' ')
+    .filter((word) => word !== '')
+  return Math.max(5, Math.round(words.length / AVERAGE_WORDS_PER_MINUTE))
 }
