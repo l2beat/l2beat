@@ -22,12 +22,12 @@ describe(startsWithLetterOrNumber.name, () => {
   })
 
   it('should return false for a string that starts with a non-letter', () => {
-    expect(startsWithLetterOrNumber('1')).toEqual(false)
+    expect(startsWithLetterOrNumber('#')).toEqual(false)
     expect(startsWithLetterOrNumber('!')).toEqual(false)
     expect(startsWithLetterOrNumber(' ')).toEqual(false)
     expect(startsWithLetterOrNumber(' 1')).toEqual(false)
+    expect(startsWithLetterOrNumber(' a')).toEqual(false)
     expect(startsWithLetterOrNumber('!1')).toEqual(false)
-    expect(startsWithLetterOrNumber(' 1')).toEqual(false)
-    expect(startsWithLetterOrNumber(' 1')).toEqual(false)
+    expect(startsWithLetterOrNumber('!a')).toEqual(false)
   })
 })
