@@ -1,8 +1,8 @@
 {
   "type": "one-time",
   "title": "Arbitrum DAO call",
-  "startDate": "2024-02-09T14:30:00Z",
-  "endDate": "2024-02-09T15:30:00Z",
+  "startDate": "2024-02-25T14:30:00Z",
   "location": "Warsaw, Poland",
-  "link": "https://somelink.com"
+  "link": "https://somelink.com",
+  "toBeAnnounced": true
 }

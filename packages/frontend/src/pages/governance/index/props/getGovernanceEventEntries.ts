@@ -36,6 +36,10 @@ function getGovernanceEventEntry(event: OneTimeEvent): GovernanceEventEntry {
 }
 
 function getNiceEventDate(event: OneTimeEvent) {
+  if (event.data.toBeAnnounced) {
+    return 'To be announced'
+  }
+
   const startDay = event.data.startDate.getDate()
   const startTimestamp = Math.ceil(event.data.startDate.getTime() / 1000)
 

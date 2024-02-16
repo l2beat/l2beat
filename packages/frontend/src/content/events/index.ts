@@ -11,6 +11,7 @@ export const OneTimeEvent = z.object({
   endDate: z.coerce.date().optional(),
   location: z.string(),
   link: z.string().url(),
+  toBeAnnounced: z.boolean().optional(),
 })
 
 export const RecurringEvent = z.object({
@@ -34,7 +35,6 @@ export const RecurringEvent = z.object({
   location: z.string(),
   link: z.string().url(),
   cancelledAt: z.array(z.coerce.date()).optional(),
-  toBeAnnounced: z.boolean().optional(),
 })
 
 export const eventsCollection = defineCollection({
