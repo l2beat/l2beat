@@ -34,6 +34,7 @@ export const RecurringEvent = z.object({
   location: z.string(),
   link: z.string().url(),
   cancelledAt: z.array(z.coerce.date()).optional(),
+  toBeAnnounced: z.boolean().optional(),
 })
 
 export const eventsCollection = defineCollection({

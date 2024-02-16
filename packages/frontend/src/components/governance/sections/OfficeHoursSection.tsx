@@ -11,7 +11,7 @@ interface Props {
 export function OfficeHoursSection({ className }: Props) {
   return (
     <GovernanceCard as="section" mobileFull type="purple" className={className}>
-      <GovernanceCardHeader>Office Hours</GovernanceCardHeader>
+      <GovernanceCardHeader>Office hours</GovernanceCardHeader>
       <p className="mt-4 text-balance text-base font-medium ">
         To promote transparency and communication as delegates, we’re hosting
         recurring Office Hours on Google Meets.
@@ -29,7 +29,7 @@ export function OfficeHoursSection({ className }: Props) {
         in.
       </p>
       <Button
-        className="mx-auto mt-6 h-14 w-full md:w-1/2 lg:w-full"
+        className="mx-auto mt-auto h-14 w-full md:w-1/2 lg:w-full"
         as="a"
         href="https://calendar.google.com/calendar/u/0?cid=Y18wNzQ1ODJiMWJkNWE2NTVjOGNkMmQ2YjNhYjliZDQ0NzcxY2U3MDgyYzI2Zjk0MmQ1MzM5ZWUxZDllN2M4YzA0QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20"
       >
