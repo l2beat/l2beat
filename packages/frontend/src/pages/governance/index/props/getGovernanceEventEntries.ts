@@ -1,4 +1,4 @@
-import { ContentEntry } from '../../../../content/getContent'
+import { CollectionEntry } from '../../../../content/getCollection'
 import { formatTimestamp } from '../../../../utils'
 import {
   getOneTimeEvents,
@@ -16,7 +16,7 @@ export interface GovernanceEventEntry {
 }
 
 export function getGovernanceEventEntries(
-  events: ContentEntry<'events'>[],
+  events: CollectionEntry<'events'>[],
 ): GovernanceEventEntry[] {
   const oneTimeEvents = getOneTimeEvents(events)
 

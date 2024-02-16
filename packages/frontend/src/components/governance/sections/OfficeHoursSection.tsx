@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { Button } from '../../Button'
-import { OutLink } from '../../OutLink'
 import { GovernanceCard, GovernanceCardHeader } from '../GovernanceCard'
 import { OfficeHoursIllustration } from '../OfficeHoursIllustration'
 
@@ -29,11 +28,13 @@ export function OfficeHoursSection({ className }: Props) {
         will be specifically targeted at one of the protocols we’re delegates
         in.
       </p>
-      <OutLink href="https://calendar.google.com/calendar/u/0?cid=Y18wNzQ1ODJiMWJkNWE2NTVjOGNkMmQ2YjNhYjliZDQ0NzcxY2U3MDgyYzI2Zjk0MmQ1MzM5ZWUxZDllN2M4YzA0QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20">
-        <Button className="mt-6 h-14 w-full">
-          Add the L2BEAT GOV Calendar
-        </Button>
-      </OutLink>
+      <Button
+        className="mx-auto mt-6 h-14 w-full md:w-1/2 lg:w-full"
+        as="a"
+        href="https://calendar.google.com/calendar/u/0?cid=Y18wNzQ1ODJiMWJkNWE2NTVjOGNkMmQ2YjNhYjliZDQ0NzcxY2U3MDgyYzI2Zjk0MmQ1MzM5ZWUxZDllN2M4YzA0QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20"
+      >
+        Add the L2BEAT GOV Calendar
+      </Button>
     </GovernanceCard>
   )
 }
