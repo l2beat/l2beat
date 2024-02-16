@@ -407,7 +407,7 @@ export const polygonzkevm: Layer2 = {
         ...EXITS.REGULAR('zk', 'merkle proof'),
         references: [
           {
-            text: 'PolygonZkEvmBridge.sol - Etherscan source code, claimAsset function',
+            text: 'PolygonZkEvmBridgeV2.sol - Etherscan source code, claimAsset function',
             href: 'https://etherscan.io/address/0x0feb850b183c57534b56b7d56520133c8f9bdb65',
           },
         ],
