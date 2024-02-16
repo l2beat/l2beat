@@ -34,16 +34,13 @@ export const LivenessApiProject = z.object({
   stateUpdates: LivenessDetails,
   proofSubmissions: LivenessDetails,
   anomalies: z.array(LivenessAnomaly).or(z.undefined()),
-  isSynced: z.boolean()
+  isSynced: z.boolean(),
 })
 
 export type LivenessApiProject = z.infer<typeof LivenessApiProject>
 
 export const LivenessApiResponse = z.object({
-  projects: z.record(
-    z.string(),
-    z.optional(LivenessApiProject),
-  ),
+  projects: z.record(z.string(), z.optional(LivenessApiProject)),
 })
 export type LivenessApiResponse = z.infer<typeof LivenessApiResponse>
 
