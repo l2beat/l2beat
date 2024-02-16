@@ -12,7 +12,7 @@ import { IndexerStateRepository } from '../../../peripherals/database/repositori
 import { Clock } from '../../../tools/Clock'
 import { TaskQueue } from '../../../tools/queue/TaskQueue'
 import { LivenessRepository } from '../repositories/LivenessRepository'
-import { calculateAnomaliesPerProject } from './calculateAnomalies'
+import { calculateAnomalies } from './calculateAnomalies'
 import {
   calcIntervalWithAvgsPerProject,
   LivenessRecordWithInterval,
@@ -119,7 +119,7 @@ export class LivenessController {
 
       const intervals = calcIntervalWithAvgsPerProject(groupedByType)
 
-      const withAnomalies = calculateAnomaliesPerProject(intervals)
+      const withAnomalies = calculateAnomalies(intervals)
 
       if (project.livenessConfig.duplicateData) {
         for (const duplicateData of project.livenessConfig.duplicateData) {

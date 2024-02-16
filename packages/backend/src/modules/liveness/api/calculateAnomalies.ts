@@ -5,7 +5,6 @@ import {
   notUndefined,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { Dictionary } from 'lodash'
 
 import {
   LivenessRecordsWithIntervalAndDetails,
@@ -13,21 +12,7 @@ import {
 } from './calculateIntervalWithAverages'
 import { RunningStatistics } from './RollingVariance'
 
-export function calculateAnomalies(
-  projects: Dictionary<{
-    batchSubmissions: LivenessRecordsWithIntervalAndDetails | undefined
-    stateUpdates: LivenessRecordsWithIntervalAndDetails | undefined
-    proofSubmissions: LivenessRecordsWithIntervalAndDetails | undefined
-  }>,
-): { projects: Record<string, Omit<LivenessApiProject, 'isSynced'>> } {
-  const result: Record<string, Omit<LivenessApiProject, 'isSynced'>> = {}
-  for (const p in projects) {
-    result[p] = calculateAnomaliesPerProject(projects[p])
-  }
-  return { projects: result }
-}
-
-export function calculateAnomaliesPerProject({
+export function calculateAnomalies({
   batchSubmissions,
   stateUpdates,
   proofSubmissions,
