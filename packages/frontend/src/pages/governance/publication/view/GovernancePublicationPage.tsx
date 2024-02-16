@@ -24,7 +24,7 @@ export function GovernancePublicationPage(
     <>
       <Navbar {...props.navbar} />
       <Header publication={props.publication} />
-      <PageContent type="article" className="mt-20">
+      <PageContent type="article" className="mt-12 md:mt-16 lg:mt-20">
         {props.publication.description && (
           <p className="mb-12 font-roboto-serif text-xl font-normal opacity-80">
             {props.publication.description}
@@ -48,7 +48,7 @@ function Header({ publication }: { publication: GovernancePublicationEntry }) {
       <p className="text-2xs font-semibold uppercase text-purple-100 dark:text-pink-200">
         {publication.readTimeInMinutes} min read
       </p>
-      <h1 className="text-[44px] font-bold leading-snug">
+      <h1 className="text-2xl font-bold leading-snug md:text-3xl lg:text-[44px]">
         {publication.title}
       </h1>
       <div>

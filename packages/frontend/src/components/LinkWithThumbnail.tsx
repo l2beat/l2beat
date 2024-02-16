@@ -11,6 +11,7 @@ export interface LinkWithThumbnailProps {
   href: string
   topAccessory?: React.ReactNode
   orientation?: 'vertical' | 'horizontal'
+  className?: string
 }
 
 export function LinkWithThumbnail({
@@ -21,26 +22,27 @@ export function LinkWithThumbnail({
     <PlainLink
       href={props.href}
       className={cn(
-        'group grid gap-6 rounded-md bg-gray-100 transition-all hover:bg-zinc-300 dark:bg-zinc-900 dark:hover:bg-zinc-800',
-        orientation === 'horizontal' && 'grid-cols-7',
-        orientation === 'vertical' && 'max-w-96',
+        'group flex gap-6 rounded-md bg-gray-100 transition-all hover:bg-zinc-300 dark:bg-zinc-900 dark:hover:bg-zinc-800',
+        orientation === 'horizontal' && '',
+        orientation === 'vertical' && 'max-w-96 flex-col',
+        props.className,
       )}
     >
       <img
         src={props.src}
         className={cn(
-          'aspect-video w-full object-cover',
+          'aspect-video w-full object-cover will-change-transform',
           orientation === 'vertical' &&
-            'rounded-t-md transition-all will-change-transform group-hover:scale-[1.03] group-hover:rounded-md',
+            'rounded-t-md transition-all group-hover:scale-[1.03] group-hover:rounded-md',
           orientation === 'horizontal' &&
-            'col-span-2 rounded-md transition-all will-change-transform group-hover:scale-105',
+            'max-w-36 rounded-md transition-all group-hover:scale-105 md:max-w-48',
         )}
       />
       <div
         className={cn(
           orientation === 'vertical' && 'mb-12 mt-6 px-8',
           orientation === 'horizontal' &&
-            'col-span-5 self-center transition-all group-hover:translate-x-0.5',
+            'self-center transition-all group-hover:translate-x-0.5',
         )}
       >
         {props.topAccessory && <div className="mb-2">{props.topAccessory}</div>}
