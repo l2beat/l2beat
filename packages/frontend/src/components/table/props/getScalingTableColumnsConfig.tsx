@@ -526,7 +526,7 @@ export function getScalingLivenessColumnsConfig() {
               />
             ) : (
               <Badge type="gray" className="mr-0 w-full text-center lg:mr-4">
-                MISSING DATA
+                COMING SOON
               </Badge>
             ),
           sorting: {
