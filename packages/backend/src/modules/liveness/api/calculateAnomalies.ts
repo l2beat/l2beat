@@ -2,7 +2,6 @@ import { assert } from '@l2beat/backend-tools'
 import {
   LivenessAnomaly,
   LivenessApiProject,
-  LivenessApiResponse,
   notUndefined,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -20,8 +19,8 @@ export function calculateAnomalies(
     stateUpdates: LivenessRecordsWithIntervalAndDetails | undefined
     proofSubmissions: LivenessRecordsWithIntervalAndDetails | undefined
   }>,
-): LivenessApiResponse {
-  const result: LivenessApiResponse['projects'] = {}
+): { projects: Record<string, Omit<LivenessApiProject, 'isSynced'>> } {
+  const result: Record<string, Omit<LivenessApiProject, 'isSynced'>> = {}
   for (const p in projects) {
     result[p] = calculateAnomaliesPerProject(projects[p])
   }
