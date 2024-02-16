@@ -2,15 +2,31 @@ import { assert } from '@l2beat/backend-tools'
 import {
   LivenessAnomaly,
   LivenessApiProject,
+  LivenessApiResponse,
   notUndefined,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { Dictionary } from 'lodash'
 
 import {
   LivenessRecordsWithIntervalAndDetails,
   LivenessRecordWithInterval,
 } from './calculateIntervalWithAverages'
 import { RunningStatistics } from './RollingVariance'
+
+export function calculateAnomalies(
+  projects: Dictionary<{
+    batchSubmissions: LivenessRecordsWithIntervalAndDetails | undefined
+    stateUpdates: LivenessRecordsWithIntervalAndDetails | undefined
+    proofSubmissions: LivenessRecordsWithIntervalAndDetails | undefined
+  }>,
+): LivenessApiResponse {
+  const result: LivenessApiResponse['projects'] = {}
+  for (const p in projects) {
+    result[p] = calculateAnomaliesPerProject(projects[p])
+  }
+  return { projects: result }
+}
 
 export function calculateAnomaliesPerProject({
   batchSubmissions,
