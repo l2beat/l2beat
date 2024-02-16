@@ -9,7 +9,7 @@ export interface GovernanceEventEntry {
   title: string
   subtitle: string | undefined
   link: string
-  location: string
+  location: string | undefined
   startDate: Date
   displayDate: string
   highlighted: boolean | undefined

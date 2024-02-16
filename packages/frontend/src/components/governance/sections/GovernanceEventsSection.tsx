@@ -62,10 +62,12 @@ function Event({ event }: { event: GovernanceEventEntry }) {
           <p className="text-2xs opacity-50">DATE</p>
           <p className="whitespace-pre-line text-sm">{event.displayDate}</p>
         </div>
-        <div className="mt-3">
-          <p className="text-2xs opacity-50">PLACE</p>
-          <p className="whitespace-pre-line text-sm">{event.location}</p>
-        </div>
+        {event.location && (
+          <div className="mt-3">
+            <p className="text-2xs opacity-50">PLACE</p>
+            <p className="whitespace-pre-line text-sm">{event.location}</p>
+          </div>
+        )}
       </div>
     </GovernanceCard>
   )
