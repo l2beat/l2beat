@@ -1,8 +1,8 @@
 {
   "name": "xai",
   "chain": "arbitrum",
-  "blockNumber": 177621512,
-  "configHash": "0x634e80ccf24b34ca753aad2380c5d206500002a6d4aa0b25b34c20b677916c55",
+  "blockNumber": 181262302,
+  "configHash": "0xc8e513d7ba943cd8ebe35c68c296a5efeef3dbba9b4e258704232ac9eaf8871a",
   "version": 3,
   "contracts": [
     {
@@ -177,7 +177,7 @@
       "sinceTimestamp": 1700037242
     },
     {
-      "name": "GnosisSafeL2",
+      "name": "ExecutorMultisig",
       "address": "0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E",
       "upgradeability": {
         "type": "gnosis safe",
@@ -197,9 +197,9 @@
           "0xd4318D959B46d555143f56E03077028aB94D85d2"
         ],
         "getThreshold": 3,
-        "nonce": 2,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafeL2"
     },
     {
       "name": "esXai",
@@ -219,7 +219,7 @@
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
         "name": "esXai",
         "symbol": "esXAI",
-        "totalSupply": "77545753255094117969415836",
+        "totalSupply": "94239356069519325789535596",
         "xai": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66"
       },
       "derivedName": "esXai"
@@ -242,7 +242,7 @@
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
         "name": "Xai",
         "symbol": "XAI",
-        "totalSupply": "991261252137559064008403967"
+        "totalSupply": "994054488438928927022102472"
       },
       "derivedName": "Xai"
     },
@@ -271,12 +271,12 @@
           "0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8"
         ],
         "allowedOutboxList": ["0x1E400568AD4840dbE50FB32f306B842e9ddeF726"],
-        "delayedMessageCount": 4469,
+        "delayedMessageCount": 9188,
         "nativeToken": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66",
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerInbox": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
-        "sequencerMessageCount": 2579,
-        "sequencerReportedSubMessageCount": 356871
+        "sequencerMessageCount": 3648,
+        "sequencerReportedSubMessageCount": 990548
       },
       "derivedName": "ERC20Bridge"
     },
@@ -308,7 +308,7 @@
       "implementations": ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"],
       "sinceTimestamp": 1704309371,
       "values": {
-        "batchCount": 2579,
+        "batchCount": 3648,
         "batchPosters": ["0x7F68dba68E72a250004812fe04F1123Fca89aBa9"],
         "bridge": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
         "dacKeyset": {
@@ -324,7 +324,7 @@
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 4468
+        "totalDelayedMessagesRead": 9186
       },
       "derivedName": "SequencerInbox"
     },
@@ -405,12 +405,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 507,
+        "firstUnresolvedNode": 768,
         "inbox": "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
         "isERC20Enabled": false,
         "lastStakeBlock": 18944658,
-        "latestConfirmed": 506,
-        "latestNodeCreated": 659,
+        "latestConfirmed": 767,
+        "latestNodeCreated": 920,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x1E400568AD4840dbE50FB32f306B842e9ddeF726",
