@@ -1,7 +1,119 @@
+Generated with discovered.json: 0x7c248e7cf936813d85d694d339b4b74a03d9aa12
+
+# Diff at Wed, 07 Feb 2024 13:34:15 GMT:
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: main@2e35800e01005d93332a552032058dcd67f3631d block: 19175204
+- current block number: 19176638
+
+## Description
+
+Added opStackSequencerInbox handler
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19175204 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca) {
+      values.sequencerInbox:
++        "0x253887577420Cb7e7418cD4d50147743c8041b28"
+    }
+```
+
+Generated with discovered.json: 0x368096bbdf292ae6710cc705bf1eb0584f168ba1
+
+# Diff at Wed, 07 Feb 2024 08:44:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@64f1e0f27f831d3ef860a1c2faad8c77e04e6c29 block: 19090313
+- current block number: 19175204
+
+## Description
+
+Increased the gas limit.
+Updated with the new OpDAHandler to remove the field.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca) {
+      values.gasLimit:
+-        30000000
++        150000000
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19090313 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca) {
+      values.opStackDA.isAllTxsLengthEqualToCelestiaDAExample:
+-        true
+    }
+```
+
+Generated with discovered.json: 0xdbe6ce9040494aceffa3835445396479993d2e68
+
+# Diff at Fri, 26 Jan 2024 10:54:51 GMT:
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: main@bb037f7100968a00265a4787338e51ca81aafe9b block: 19032812
+- current block number: 19090313
+
+## Description
+
+Added opStackDa handler
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19032812 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca) {
+      values.opStackDA:
++        {"isAllTxsLengthEqualToCelestiaDAExample":true,"isSomeTxsLengthEqualToCelestiaDAExample":true}
+    }
+```
+
+Generated with discovered.json: 0x7c9f89d35918320ff94fc04fa034065255687352
+
+# Diff at Thu, 18 Jan 2024 09:19:36 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@0cb1eb82b45ad89a272a3c1b8f8f24ae020627cc block: 18933723
+- current block number: 19032812
+
+## Description
+
+Changed dynamic and static L2 fee overhead.
+Ignoring multisig nonce.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca) {
+      values.overhead:
+-        2100
++        188
+      values.scalar:
+-        1000000
++        68400
+    }
+```
+
 # Diff at Thu, 04 Jan 2024 11:38:42 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@45fa22227d0d99394ce6d0a25e40e8ceeca18cb3
+- comparing to: main@45fa22227d0d99394ce6d0a25e40e8ceeca18cb3
 
 ## Description
 
@@ -35,7 +147,7 @@ One owner is removed and another is added to AevoMultiSig.
 # Diff at Tue, 26 Sep 2023 09:30:32 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@cfd4e281f2af40c7c69302b16c1308c0c5651be0
+- comparing to: main@cfd4e281f2af40c7c69302b16c1308c0c5651be0
 
 ## Watched changes
 

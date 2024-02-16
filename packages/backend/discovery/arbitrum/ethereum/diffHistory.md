@@ -1,7 +1,214 @@
+Generated with discovered.json: 0x8719a11829c6e6325ba2ef228b77a827c2cacf3a
+
+# Diff at Fri, 02 Feb 2024 11:08:25 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@d4d9bc19cc4a1e4baaadb947f4ad7e44e6c21ac9 block: 19119504
+- current block number: 19140307
+
+## Description
+
+The nonce is now ignored. Start tracking the keySetUpdates.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19119504 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6) {
+      values.keySetUpdates:
++        0
+    }
+```
+
+```diff
+    contract GnosisSafe (0xC234E41AE2cb00311956Aa7109fC801ae8c80941) {
+      name:
+-        "GnosisSafe"
++        "ValidatorOwnerMultisig"
+      derivedName:
++        "GnosisSafe"
+    }
+```
+
+Generated with discovered.json: 0x64a4811e26385036e4496726627304e6f3ddd353
+
+# Diff at Tue, 30 Jan 2024 13:04:34 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@ceb6abb9c987b0d53dd547a79c3ebbf3480a024b block: 19069754
+- current block number: 19119504
+
+## Description
+
+Add the SequencerInboxVersion handler.
+ArbOS11 Upgrade.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x5eF0D09d1E6204141B4d37530808eD19f60FBa35) {
+      values.wasmModuleRoot:
+-        "0x6b94a7fc388fd8ef3def759297828dc311761e88d8179c7ee8d3887dc554f3c3"
++        "0xf4389b835497a910d7ba3ebfb77aa93da985634f3c052de1290360635be40c4a"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19069754 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6) {
+      values.sequencerVersion:
++        "0x00"
+    }
+```
+
+Generated with discovered.json: 0xe996eeb6cd08d695db9b13369e8aded556ec9bb2
+
+# Diff at Tue, 23 Jan 2024 13:46:20 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@74040c3a8f43c630b3d31cc8376e84f5f9acda5c block: 18691623
+- current block number: 19069754
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (0xC234E41AE2cb00311956Aa7109fC801ae8c80941) {
+      values.getOwners.0:
+-        "0x702105E66C468b5191553702cD6BF3D6Bbfa4C6b"
++        "0x375906ADFD34D93236084F462BB2dB0D92129Fe1"
+      values.nonce:
+-        170
++        179
+    }
+```
+
+```diff
+    contract L1ArbitrumTimelock (0xE6841D92B0C345144506576eC13ECf5103aC7f49) {
+      values.scheduledTransactions[16]:
++        {"id":"0xbcda99fe98a7c479aafb3eb3eab0f154f9fdd169f28c11adf6eefda3bef7c04e","target":"0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x000000000000000000000000c4448b71118c9071bcb9734a0eac55d18a15394900000000000000000000000086a02dd71363c440b21f4c0e5b2ad01ffe1a748200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd0000000000000000000000005357f4d3e8f8250a77bcddd5e58886ad1358220c00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}
+      values.scheduledTransactions[15]:
++        {"id":"0xbcda99fe98a7c479aafb3eb3eab0f154f9fdd169f28c11adf6eefda3bef7c04e","target":"0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd000000000000000000000000f6c7dc6eae78abf2f32df899654ca425dfa9948100000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}
+      values.scheduledTransactions[14]:
++        {"id":"0xbcda99fe98a7c479aafb3eb3eab0f154f9fdd169f28c11adf6eefda3bef7c04e","target":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","value":0,"data":"0x1cff79cd00000000000000000000000054c2c372943572ac2a8e84d502ebc13f14b6224600000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c00000000000000000000000000000000000000000000000000000000","delay":259200}
+      values.scheduledTransactions[13]:
++        {"id":"0xbcda99fe98a7c479aafb3eb3eab0f154f9fdd169f28c11adf6eefda3bef7c04e","target":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","value":0,"data":"0x1cff79cd0000000000000000000000003b70f2da6f3b01f9a53dcbcb3e59ad3ad8bed92400000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c00000000000000000000000000000000000000000000000000000000","delay":259200}
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18691623 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6) {
+      values.batchPosters:
++        ["0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D","0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc"]
+    }
+```
+
+```diff
+    contract RollupProxy (0x5eF0D09d1E6204141B4d37530808eD19f60FBa35) {
+      values.validators:
++        ["0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4","0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c","0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78","0x610Aa279989F440820e14248BD3879B148717974","0x6Fb914de4653eC5592B7c15F4d9466Cbd03F2104","0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398","0x7CF3d537733F6Ba4183A833c9B021265716cE9d0","0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5","0xAB1A39332e934300eBCc57B5f95cA90631a347FF","0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0","0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d","0xF8D3E1cF58386c92B27710C6a0D8A54c76BC6ab5","0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E","0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x0ea6999172c1B4563695F76A52de73c848587b17) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x3f92814930f43c6a1C6B133E5945E7B3338F33a6) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x4561A4cDA2CB8a61ED023785bc1817fdf685dcb3) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x509E3CDc218d163DB9A03678107b72e00163b061) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorWallet (0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Validator (0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorWallet (0x7CF3d537733F6Ba4183A833c9B021265716cE9d0) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorWallet (0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xAb33350E0319466A81D2AE6DC5CdF2518123f766) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorWallet (0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xC234E41AE2cb00311956Aa7109fC801ae8c80941) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xCcadc6B174BEcf31a35b818373e90391971a1C0c) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorWallet (0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b) {
+    }
+```
+
 # Diff at Fri, 24 Nov 2023 10:04:53 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@34d3533152f3f3d3d80344ca84d4d9a3744c3f17
+- comparing to: main@34d3533152f3f3d3d80344ca84d4d9a3744c3f17
 
 ## Description
 
@@ -19,7 +226,7 @@ New scheduled transaction - there is a DAC update about to be executed by the Up
 # Diff at Mon, 13 Nov 2023 15:23:11 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: master@a45348c9ae2e765b872be3f217168f73b62d35a6
+- comparing to: main@a45348c9ae2e765b872be3f217168f73b62d35a6
 
 ## Description
 
@@ -85,7 +292,7 @@ Added EOAs:
 # Diff at Tue, 26 Sep 2023 07:54:37 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@cfd4e281f2af40c7c69302b16c1308c0c5651be0
+- comparing to: main@cfd4e281f2af40c7c69302b16c1308c0c5651be0
 
 ## Watched changes
 
@@ -106,7 +313,7 @@ Added EOAs:
 # Diff at Fri, 22 Sep 2023 09:02:08 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@3a33c063dab8666dc32b4ec15a81995020325b49
+- comparing to: main@3a33c063dab8666dc32b4ec15a81995020325b49
 
 ## Watched changes
 
@@ -120,7 +327,7 @@ Added EOAs:
 # Diff at Thu, 21 Sep 2023 14:53:24 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@7579713bbe334d225f845fec749fd69636fe060a
+- comparing to: main@7579713bbe334d225f845fec749fd69636fe060a
 
 ## Watched changes
 

@@ -1,7 +1,7 @@
 import { Layer2Provider, Layer3Provider } from '@l2beat/config'
-import cx from 'classnames'
 import React from 'react'
 
+import { cn } from '../../utils/cn'
 import {
   ArbitrumIcon,
   LoopringIcon,
@@ -26,7 +26,7 @@ export function TypeCell({ provider, children, disableColors }: TypeCellProps) {
 
   return (
     <span
-      className={cx(
+      className={cn(
         isRollup && !disableColors && 'text-green-300 dark:text-green-450',
       )}
     >
@@ -97,8 +97,8 @@ interface TypeTooltipProps {
 function TypeTooltip({ Icon, text }: TypeTooltipProps) {
   return (
     <Tooltip className="inline">
-      <TooltipTrigger className="relative ml-1 inline-block h-4 w-4">
-        <Icon className="absolute -top-0.5 left-0 h-4 w-4" />
+      <TooltipTrigger className="relative ml-1 inline-block size-4">
+        <Icon className="absolute -top-0.5 left-0 size-4" />
       </TooltipTrigger>
       <TooltipContent>{text}</TooltipContent>
     </Tooltip>

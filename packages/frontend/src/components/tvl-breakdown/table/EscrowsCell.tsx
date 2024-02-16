@@ -1,58 +1,69 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
-import cx from 'classnames'
 import React from 'react'
 
 import { TVLProjectBreakdown } from '../../../pages/scaling/projects-tvl-breakdown/props/getTvlBreakdownView'
+import { cn } from '../../../utils/cn'
 import { formatAddress } from '../../../utils/utils'
 import { ChevronDownIcon, OutLinkIcon } from '../../icons'
 
 interface EscrowsCellProps {
   escrows: TVLProjectBreakdown['canonical'][number]['escrows']
-  explorer: string
+  explorer?: string
   assetId: string
 }
 export function EscrowsCell(props: EscrowsCellProps) {
+  if (props.escrows.length === 1) {
+    return (
+      <EscrowLink
+        escrowAddress={props.escrows[0].escrowAddress}
+        explorer={props.explorer}
+      />
+    )
+  }
+
   return (
-    <div>
-      {props.escrows.length === 1 ? (
+    <div className="flex flex-col gap-2">
+      <MultipleEscrows token={props.assetId} />
+      {props.escrows.map((escrow) => (
         <EscrowLink
-          escrowAddress={props.escrows[0].escrowAddress}
+          key={escrow.escrowAddress.toString()}
+          escrowAddress={escrow.escrowAddress}
           explorer={props.explorer}
+          hidden
+          assetId={props.assetId}
         />
-      ) : (
-        <div className="flex flex-col gap-2">
-          <MultipleEscrows token={props.assetId} />
-          {props.escrows.map((escrow) => (
-            <EscrowLink
-              key={escrow.escrowAddress.toString()}
-              escrowAddress={escrow.escrowAddress}
-              explorer={props.explorer}
-              hidden
-              assetId={props.assetId}
-            />
-          ))}
-        </div>
-      )}
+      ))}
     </div>
   )
 }
 
 interface EscrowLinkProps {
   escrowAddress: EthereumAddress
-  explorer: string
+  explorer?: string
   hidden?: boolean
   assetId?: string
 }
 
 function EscrowLink(props: EscrowLinkProps) {
+  if (!props.explorer) {
+    return (
+      <span
+        className={cn('text-xs font-medium', props.hidden && 'hidden')}
+        data-role={props.hidden ? 'multiple-escrows-hidden' : undefined}
+      >
+        {formatAddress(props.escrowAddress)}
+      </span>
+    )
+  }
   return (
     <a
       href={`${props.explorer}/address/${props.escrowAddress.toString()}`}
       target="_blank"
-      className={cx(
+      className={cn(
         'flex gap-1 text-xs font-medium text-blue-700 underline dark:text-blue-500',
-        props.hidden && 'MultipleEscrowsHidden hidden',
+        props.hidden && 'hidden',
       )}
+      data-role={props.hidden ? 'multiple-escrows-hidden' : undefined}
       data-token={props.assetId}
     >
       {formatAddress(props.escrowAddress)}
@@ -68,7 +79,8 @@ interface MultipleEscrowsProps {
 function MultipleEscrows(props: MultipleEscrowsProps) {
   return (
     <div
-      className="MultipleEscrows flex cursor-pointer select-none items-center gap-1 pr-4"
+      className="flex cursor-pointer select-none items-center gap-1 pr-4"
+      data-role="multiple-escrows"
       data-token={props.token}
     >
       <svg
@@ -85,7 +97,8 @@ function MultipleEscrows(props: MultipleEscrowsProps) {
       </svg>
       <span className="text-xs font-medium">Multiple escrows</span>
       <ChevronDownIcon
-        className="MultipleEscrowsArrow w-[10px] transition-transform duration-300 "
+        className="w-[10px] transition-transform duration-300"
+        data-role="multiple-escrows-arrow"
         data-token={props.token}
       />
     </div>

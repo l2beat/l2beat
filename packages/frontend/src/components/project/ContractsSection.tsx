@@ -10,11 +10,11 @@ import { ReferenceList, TechnologyReference } from './ReferenceList'
 import { RiskList, TechnologyRisk } from './RiskList'
 import { ProjectSectionId } from './sectionId'
 import { TechnologyIncompleteShort } from './TechnologyIncomplete'
-import { UnderReviewCallout } from './UnderReviewCallout'
 
 export interface ContractsSectionProps {
   id: ProjectSectionId
   title: string
+  sectionOrder: number
   contracts: TechnologyContract[]
   escrows: TechnologyContract[]
   risks: TechnologyRisk[]
@@ -37,11 +37,16 @@ export function ContractsSection(props: ContractsSectionProps) {
   }
 
   return (
-    <ProjectDetailsSection title={props.title} id={props.id}>
-      {props.isUnderReview ? <UnderReviewCallout className="mb-4" /> : null}
+    <ProjectDetailsSection
+      title={props.title}
+      id={props.id}
+      sectionOrder={props.sectionOrder}
+      isUnderReview={props.isUnderReview}
+      includeChildrenIfUnderReview
+    >
       {props.isIncomplete && <TechnologyIncompleteShort />}
       {props.architectureImage && (
-        <figure className="mt-4 mb-8 text-center">
+        <figure className="mb-8 mt-4 text-center">
           <img
             className="inline max-w-full align-[unset] dark:invert"
             src={props.architectureImage}
@@ -54,17 +59,17 @@ export function ContractsSection(props: ContractsSectionProps) {
       )}
       {props.contracts.length > 0 && (
         <>
-          <h3 className="md:text-md font-bold">
+          <h3 className="font-bold">
             The system consists of the following smart contracts:
           </h3>
-          <div className="mt-4 mb-4">
+          <div className="my-4">
             {props.contracts.map((contract, i) => (
               <React.Fragment key={i}>
                 <ContractEntry
                   contract={contract}
                   verificationStatus={props.verificationStatus}
                   manuallyVerifiedContracts={props.manuallyVerifiedContracts}
-                  className="mt-4 mb-4"
+                  className="my-4"
                 />
               </React.Fragment>
             ))}
@@ -74,18 +79,18 @@ export function ContractsSection(props: ContractsSectionProps) {
       {/* @todo: this "if" can be dropped when all escrows will migrate to new form */}
       {props.escrows.length > 0 && (
         <>
-          <h3 className="md:text-md font-bold">
+          <h3 className="font-bold">
             Value Locked is calculated based on these smart contracts and
             tokens:
           </h3>
-          <div className="mt-4 mb-4">
+          <div className="my-4">
             {props.escrows.map((contract, i) => (
               <React.Fragment key={i}>
                 <ContractEntry
                   contract={contract}
                   verificationStatus={props.verificationStatus}
                   manuallyVerifiedContracts={props.manuallyVerifiedContracts}
-                  className="mt-4 mb-4"
+                  className="my-4"
                 />
               </React.Fragment>
             ))}

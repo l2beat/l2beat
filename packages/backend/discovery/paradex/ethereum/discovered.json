@@ -1,8 +1,8 @@
 {
   "name": "paradex",
   "chain": "ethereum",
-  "blockNumber": 18983662,
-  "configHash": "0x3b671dd18aadcc305df1f9a3bb21243ca1e9a163e818d896fd0efd1a81333fa0",
+  "blockNumber": 19126264,
+  "configHash": "0x45fe09b6af4ffb8a3b90809a336dd483fcd07cdf025d2d8e927393cb46ffe5b3",
   "version": 3,
   "contracts": [
     {
@@ -26,7 +26,7 @@
           "0x59232aC80E6d403b6381393e52f4665ECA328558"
         ],
         "getThreshold": 2,
-        "nonce": 7,
+        "nonce": 8,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -72,7 +72,7 @@
       "implementations": ["0xA964D693cd45FCBe4303524E0EFe0988cfF5ed08"],
       "sinceTimestamp": 1689850631,
       "values": {
-        "configHash": "1946969884474626573154270293480115261427695072308490075958253509832033340430",
+        "configHash": "2741190170141984203224468507008497105532196084369172236871397222510074358631",
         "getMaxL1MsgFee": "1000000000000000000",
         "getUpgradeActivationDelay": 0,
         "governedFinalized": 0,
@@ -85,16 +85,16 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 215,
+        "l1ToL2MessageNonce": 251,
         "MAX_UPGRADE_DELAY": 15552000,
         "messageCancellationDelay": 432000,
         "operators": ["0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"],
-        "programHash": "54878256403880350656938046611252303365750679698042371543935159963667935317",
+        "programHash": "2479841346739966073527450029179698923866252973805981504232089731754042431018",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
-        "stateBlockHash": "3575542878414655311436204448657846138517185932019322321451565175108529234611",
-        "stateBlockNumber": 31062,
-        "stateRoot": "508289377072447310218926698304815335326925144371126103954316895108096646567",
+        "stateBlockHash": "1191830681496300085423902669138267077836471516511433452512344942913403964451",
+        "stateBlockNumber": 34463,
+        "stateRoot": "433560794845145273259288243401347073006293408721682770521010101294466448968",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },

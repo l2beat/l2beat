@@ -11,7 +11,8 @@ export function configureTables() {
 
 function onLoad(table: HTMLElement) {
   const parentElement = table.parentElement
-  const isInsideTabs = parentElement?.classList.contains('TabsContent')
+  const isInsideTabs =
+    parentElement?.getAttribute('data-role') === 'tabs-content'
 
   const visibleRowsLength = reorderIndexes(table)
   if (parentElement && isInsideTabs) {
@@ -21,7 +22,8 @@ function onLoad(table: HTMLElement) {
 
 export function rerenderTable(table: HTMLElement, slugsToShow?: string[]) {
   const parentElement = table.parentElement
-  const isInsideTabs = parentElement?.classList.contains('TabsContent')
+  const isInsideTabs =
+    parentElement?.getAttribute('data-role') === 'tabs-content'
   const visibleRowsLength = rerenderRows(table, slugsToShow)
 
   if (parentElement && isInsideTabs) {
@@ -34,12 +36,12 @@ export function rerenderTable(table: HTMLElement, slugsToShow?: string[]) {
 function rerenderRows(table: HTMLElement, slugs?: string[]) {
   const { $$ } = makeQuery(table)
   const rows = $$('tbody tr[data-slug]')
-  rows.forEach((row) => manageRowVisiblity(row, slugs))
+  rows.forEach((row) => manageRowVisibility(row, slugs))
 
   return reorderIndexes(table)
 }
 
-function manageRowVisiblity(row: HTMLElement, slugs?: string[]) {
+function manageRowVisibility(row: HTMLElement, slugs?: string[]) {
   const slug = row.dataset.slug
   if (!slug) {
     throw new Error('No slug found')
@@ -53,7 +55,7 @@ function manageRowVisiblity(row: HTMLElement, slugs?: string[]) {
 
 function rerenderTabCountBadge(tabId: string, visibleRowsLength: number) {
   const tabBadgeCount = document.querySelector(
-    `.TabsItem#${tabId} .TabsItem-CountBadge`,
+    `#${tabId}[data-role=tabs-item] [data-role=tabs-item-count-badge]`,
   )
   if (!tabBadgeCount) {
     throw new Error('No tabBadgeCount found')

@@ -1,10 +1,12 @@
-import classNames from 'classnames'
 import React from 'react'
 
+import { cn } from '../../../utils/cn'
 import { Icon } from '../Icon'
 
-export function CheckIcon(props: React.SVGProps<SVGSVGElement>) {
-  const { className, ...rest } = props
+export function CheckIcon({
+  className,
+  ...rest
+}: React.SVGProps<SVGSVGElement>) {
   return (
     <Icon
       width="16"
@@ -13,7 +15,7 @@ export function CheckIcon(props: React.SVGProps<SVGSVGElement>) {
       role="img"
       fill="none"
       stroke="none"
-      className={classNames(
+      className={cn(
         'peer-checked:stroke-black dark:peer-checked:stroke-white',
         className,
       )}

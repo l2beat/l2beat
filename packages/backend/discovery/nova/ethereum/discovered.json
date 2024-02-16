@@ -1,10 +1,24 @@
 {
   "name": "nova",
   "chain": "ethereum",
-  "blockNumber": 18564156,
-  "configHash": "0xd4b348366a8456f491830ae0fdf771dd5ea73bc386089f18146979b5640add06",
+  "blockNumber": 19132347,
+  "configHash": "0xa581a9684c36a7b5c5f59c51d4be28ece4e2b8c5aa461992cf14206e7593d03d",
   "version": 3,
   "contracts": [
+    {
+      "name": "ValidatorWallet",
+      "address": "0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x6Ab7A2f1a4febCD40A58b0205bFDA9CAf614b779",
+        "admin": "0xAd3a14Fc16751d9E7FCa2A99aF85bf4d135e878d"
+      },
+      "implementations": ["0x6Ab7A2f1a4febCD40A58b0205bFDA9CAf614b779"],
+      "sinceTimestamp": 1659949972,
+      "values": {
+        "owner": "0xd3132d052C9045D7cB0236586C9E2276e654343D"
+      }
+    },
     {
       "name": "OneStepProverMath",
       "address": "0x1efb116EBC38CE895Eb2E5e009234E0E0836f2F5",
@@ -24,14 +38,25 @@
       "implementations": ["0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9"],
       "sinceTimestamp": 1656050353,
       "values": {
-        "batchCount": 23543,
+        "batchCount": 28207,
+        "batchPosters": [
+          "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
+          "0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc"
+        ],
         "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
+        "dacKeyset": {
+          "threshold": 2,
+          "keyCount": 6
+        },
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
+        "keySetUpdates": 11,
         "maxTimeVariation": [5760, 12, 86400, 3600],
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
-        "totalDelayedMessagesRead": 260397
-      }
+        "sequencerVersion": "0x88",
+        "totalDelayedMessagesRead": 269066
+      },
+      "derivedName": "SequencerInbox"
     },
     {
       "name": "L1CustomGateway",
@@ -49,6 +74,20 @@
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
         "router": "0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48",
         "whitelist": "0x0000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "name": "ValidatorWallet",
+      "address": "0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x6Ab7A2f1a4febCD40A58b0205bFDA9CAf614b779",
+        "admin": "0xb31407BCf91d54AbFC0B7ef61bFc71b8b71F0678"
+      },
+      "implementations": ["0x6Ab7A2f1a4febCD40A58b0205bFDA9CAf614b779"],
+      "sinceTimestamp": 1659997241,
+      "values": {
+        "owner": "0x9de97C570c1214f6c0ba08c2321d6a5F20D85a47"
       }
     },
     {
@@ -82,6 +121,21 @@
       "values": {
         "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88"
+      }
+    },
+    {
+      "name": "Validator",
+      "address": "0x3B0369CAD35d257793F51c28213a4Cf4001397AC",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x11e5Ea5Ba5c4394a11e88e2cf474E09bfD583bbF",
+        "admin": "0xb85e18C8F552c823CdA4DCd9056213bDc970f9AE"
+      },
+      "implementations": ["0x11e5Ea5Ba5c4394a11e88e2cf474E09bfD583bbF"],
+      "sinceTimestamp": 1653129278,
+      "values": {
+        "isMaster": false,
+        "owner": "0x5B3E4404d05339D41A7E672BC912CBf511Cca294"
       }
     },
     {
@@ -128,6 +182,34 @@
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
       },
       "derivedName": "ProxyAdmin"
+    },
+    {
+      "name": "ValidatorWallet",
+      "address": "0x57004b440Cc4eb2FEd8c4d1865FaC907F9150C76",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x6Ab7A2f1a4febCD40A58b0205bFDA9CAf614b779",
+        "admin": "0xF32e5B5Ad94c0c0F83E0023b0AC48A93A8a2a428"
+      },
+      "implementations": ["0x6Ab7A2f1a4febCD40A58b0205bFDA9CAf614b779"],
+      "sinceTimestamp": 1657735979,
+      "values": {
+        "owner": "0xC234E41AE2cb00311956Aa7109fC801ae8c80941"
+      }
+    },
+    {
+      "name": "ValidatorWallet",
+      "address": "0x658e8123722462F888b6fa01a7dbcEFe1D6DD709",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x6Ab7A2f1a4febCD40A58b0205bFDA9CAf614b779",
+        "admin": "0x8f6b82D007C0Ff4fd85fE84a5BFa89C00A4e6d2B"
+      },
+      "implementations": ["0x6Ab7A2f1a4febCD40A58b0205bFDA9CAf614b779"],
+      "sinceTimestamp": 1660078092,
+      "values": {
+        "owner": "0xDfB23DFE9De7dcC974467195C8B7D5cd21C9d7cB"
+      }
     },
     {
       "name": "ValidatorWallet",
@@ -181,6 +263,17 @@
         "type": "immutable"
       },
       "sinceTimestamp": 1656050037
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "0x8f6b82D007C0Ff4fd85fE84a5BFa89C00A4e6d2B",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1660078092,
+      "values": {
+        "owner": "0xDfB23DFE9De7dcC974467195C8B7D5cd21C9d7cB"
+      }
     },
     {
       "name": "L1DaiGateway",
@@ -248,6 +341,17 @@
       "derivedName": "ProxyAdmin"
     },
     {
+      "name": "ProxyAdmin",
+      "address": "0xAd3a14Fc16751d9E7FCa2A99aF85bf4d135e878d",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1659949972,
+      "values": {
+        "owner": "0xd3132d052C9045D7cB0236586C9E2276e654343D"
+      }
+    },
+    {
       "name": "L1ERC20Gateway",
       "address": "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
       "upgradeability": {
@@ -267,6 +371,28 @@
       }
     },
     {
+      "name": "ProxyAdmin",
+      "address": "0xb31407BCf91d54AbFC0B7ef61bFc71b8b71F0678",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1659997241,
+      "values": {
+        "owner": "0x9de97C570c1214f6c0ba08c2321d6a5F20D85a47"
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "0xb85e18C8F552c823CdA4DCd9056213bDc970f9AE",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1653129278,
+      "values": {
+        "owner": "0x5B3E4404d05339D41A7E672BC912CBf511Cca294"
+      }
+    },
+    {
       "name": "Bridge",
       "address": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
       "upgradeability": {
@@ -283,12 +409,39 @@
           "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
         ],
         "allowedOutboxList": ["0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
-        "delayedMessageCount": 260398,
+        "delayedMessageCount": 269068,
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "sequencerMessageCount": 23543,
-        "sequencerReportedSubMessageCount": 29275737
+        "sequencerMessageCount": 28207,
+        "sequencerReportedSubMessageCount": 44537755
       }
+    },
+    {
+      "name": "ValidatorOwnerMultisig",
+      "address": "0xC234E41AE2cb00311956Aa7109fC801ae8c80941",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": []
+      },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
+      "sinceTimestamp": 1630382926,
+      "values": {
+        "domainSeparator": "0x2e30e82c06149e106d9459cde774416c518aece8b088f2bd8986744dbe6aa51d",
+        "getChainId": 1,
+        "getOwners": [
+          "0x375906ADFD34D93236084F462BB2dB0D92129Fe1",
+          "0xfE2bf40f2A9183774BF8E871d634A4E50255158B",
+          "0x64379Dee676ab442B48925Ed603771f386510Ee7",
+          "0x290Aa3E7533c873B3326DabFe7579e86ed951428",
+          "0x4d9A23BD4DBBdC04A88B99d8d2ac450EB6b8f49C",
+          "0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe"
+        ],
+        "getThreshold": 4,
+        "nonce": 180,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "Inbox",
@@ -358,6 +511,31 @@
       "values": {
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
         "template": "0x6Ab7A2f1a4febCD40A58b0205bFDA9CAf614b779"
+      }
+    },
+    {
+      "name": "ValidatorWallet",
+      "address": "0xE27d4Ed355e5273A3D4855c8e11BC4a8d3e39b87",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x6Ab7A2f1a4febCD40A58b0205bFDA9CAf614b779",
+        "admin": "0xE4d0Ba69d082Fdf6f51b8fc8F92c19bF00B1a1B4"
+      },
+      "implementations": ["0x6Ab7A2f1a4febCD40A58b0205bFDA9CAf614b779"],
+      "sinceTimestamp": 1656217585,
+      "values": {
+        "owner": "0xC234E41AE2cb00311956Aa7109fC801ae8c80941"
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "0xE4d0Ba69d082Fdf6f51b8fc8F92c19bF00B1a1B4",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1656217585,
+      "values": {
+        "owner": "0xC234E41AE2cb00311956Aa7109fC801ae8c80941"
       }
     },
     {
@@ -437,7 +615,18 @@
       }
     },
     {
-      "name": "ArbitrumProxy",
+      "name": "ProxyAdmin",
+      "address": "0xF32e5B5Ad94c0c0F83E0023b0AC48A93A8a2a428",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1657735979,
+      "values": {
+        "owner": "0xC234E41AE2cb00311956Aa7109fC801ae8c80941"
+      }
+    },
+    {
+      "name": "RollupProxy",
       "address": "0xFb209827c58283535b744575e11953DCC4bEAD88",
       "upgradeability": {
         "type": "Arbitrum proxy",
@@ -455,15 +644,16 @@
         "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
         "chainId": 42170,
         "challengeManager": "0xA59075221b50C598aED0Eae0bB9869639513af0D",
+        "challenges": [],
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 11732,
+        "firstUnresolvedNode": 13628,
         "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "isERC20Enabled": false,
         "lastStakeBlock": 17257726,
-        "latestConfirmed": 11731,
-        "latestNodeCreated": 11882,
+        "latestConfirmed": 13627,
+        "latestNodeCreated": 13781,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
@@ -472,35 +662,70 @@
         "rollupDeploymentBlock": 15016829,
         "rollupEventInbox": "0x304807A7ed6c1296df2128E6ff3836e477329CD2",
         "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
+        "setValidatorCount": 6,
         "stakerCount": 2,
         "stakeToken": "0x0000000000000000000000000000000000000000",
         "totalWithdrawableFunds": 0,
         "VALIDATOR_AFK_BLOCKS": 45818,
+        "validators": [
+          "0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4",
+          "0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23",
+          "0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3",
+          "0x3B0369CAD35d257793F51c28213a4Cf4001397AC",
+          "0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c",
+          "0x57004b440Cc4eb2FEd8c4d1865FaC907F9150C76",
+          "0x610Aa279989F440820e14248BD3879B148717974",
+          "0x658e8123722462F888b6fa01a7dbcEFe1D6DD709",
+          "0xAB1A39332e934300eBCc57B5f95cA90631a347FF",
+          "0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d",
+          "0xDfB23DFE9De7dcC974467195C8B7D5cd21C9d7cB",
+          "0xE27d4Ed355e5273A3D4855c8e11BC4a8d3e39b87",
+          "0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E"
+        ],
         "validatorUtils": "0x2B081fbaB646D9013f2699BebEf62B7e7d7F0976",
         "validatorWalletCreator": "0xe05465Aab36ba1277dAE36aa27a7B74830e74DE4",
         "validatorWhitelistDisabled": false,
-        "wasmModuleRoot": "0x6b94a7fc388fd8ef3def759297828dc311761e88d8179c7ee8d3887dc554f3c3",
+        "wasmModuleRoot": "0xf4389b835497a910d7ba3ebfb77aa93da985634f3c052de1290360635be40c4a",
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
-      }
+      },
+      "derivedName": "ArbitrumProxy"
     }
   ],
   "eoas": [
     "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
+    "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
+    "0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4",
+    "0x290Aa3E7533c873B3326DabFe7579e86ed951428",
+    "0x375906ADFD34D93236084F462BB2dB0D92129Fe1",
     "0x3Bd8e2AC65ad6f0F094BA6766cBd9484AB49eF23",
     "0x3E286452b1C66abB08Eb5494c3894F40aB5a59AF",
     "0x475816ca2a31D601B4e336f5c2418A67978aBf09",
+    "0x4d9A23BD4DBBdC04A88B99d8d2ac450EB6b8f49C",
     "0x5280406912EB8Ec677Df66C326BE48f938DC2e44",
+    "0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c",
     "0x566a07C3c932aE6AF74d77c29e5c30D8B1853710",
     "0x5A1FD562271aAC2Dadb51BAAb7760b949D9D81dF",
+    "0x5B3E4404d05339D41A7E672BC912CBf511Cca294",
+    "0x610Aa279989F440820e14248BD3879B148717974",
+    "0x64379Dee676ab442B48925Ed603771f386510Ee7",
+    "0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe",
     "0x8F10e3413586c4a8DCfcE19D009872b19e9cd8E3",
+    "0x9de97C570c1214f6c0ba08c2321d6a5F20D85a47",
     "0xa723C008e76E379c55599D2E4d93879BeaFDa79C",
+    "0xAB1A39332e934300eBCc57B5f95cA90631a347FF",
     "0xb07dc9103328A51128bC6Cc1049d1137035f5E28",
+    "0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d",
     "0xb71ca4FFbB7b58d75Ba29891ab45e9Dc12B444Ed",
+    "0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc",
+    "0xd3132d052C9045D7cB0236586C9E2276e654343D",
     "0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3",
+    "0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E",
+    "0xDfB23DFE9De7dcC974467195C8B7D5cd21C9d7cB",
     "0xf6B6F07862A02C85628B3A9688beae07fEA9C863",
-    "0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd"
+    "0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd",
+    "0xfE2bf40f2A9183774BF8E871d634A4E50255158B"
   ],
   "abis": {
     "0x1066CEcC8880948FE55e427E94F1FF221d626591": [
@@ -538,6 +763,29 @@
       "function setSequencerInbox(address _sequencerInbox)",
       "function setSequencerReportedSubMessageCount(uint256 newMsgCount)",
       "function submitBatchSpendingReport(address sender, bytes32 messageDataHash) returns (uint256)"
+    ],
+    "0x11e5Ea5Ba5c4394a11e88e2cf474E09bfD583bbF": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function executeTransaction(bytes data, address destination, uint256 amount) payable",
+      "function executeTransactions(bytes[] data, address[] destination, uint256[] amount) payable",
+      "function initialize()",
+      "function isMaster() view returns (bool)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function returnOldDeposits(address rollup, address[] stakers)",
+      "function timeoutChallenges(address[] challenges)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0x1b2676D32E2f7430a564DD4560641F990dFE3D6a": [
       "error DataTooLarge(uint256 dataLength, uint256 maxDataLength)",
@@ -608,6 +856,17 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "0x2B081fbaB646D9013f2699BebEf62B7e7d7F0976": [
       "function areUnresolvedNodesLinear(address rollup) view returns (bool)",
       "function checkDecidableNextNode(address rollup) view returns (uint8)",
@@ -639,6 +898,16 @@
       "function initialize(address _bridge)",
       "function rollup() view returns (address)",
       "function rollupInitialized(uint256 chainId)"
+    ],
+    "0x3B0369CAD35d257793F51c28213a4Cf4001397AC": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -691,6 +960,17 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
+    "0x57004b440Cc4eb2FEd8c4d1865FaC907F9150C76": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "0x61dC65001A8De4138DAD5167e43FF0FB0AB8D3B3": [
       "constructor()",
       "event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)",
@@ -735,6 +1015,17 @@
       "function scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateDelay(uint256 newDelay)"
+    ],
+    "0x658e8123722462F888b6fa01a7dbcEFe1D6DD709": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0x6Ab7A2f1a4febCD40A58b0205bFDA9CAf614b779": [
       "error BadArrayLength(uint256 expected, uint256 actual)",
@@ -946,6 +1237,17 @@
       "function revokeRole(bytes32 role, address account)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
     ],
+    "0x8f6b82D007C0Ff4fd85fE84a5BFa89C00A4e6d2B": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
     "0x97f63339374fCe157Aa8Ee27830172d2AF76A786": [
       "constructor(address _l2Counterpart, address _l1Router, address _inbox, address _l1Dai, address _l2Dai, address _l1Escrow)",
       "event Closed()",
@@ -1089,6 +1391,17 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
+    "0xAd3a14Fc16751d9E7FCa2A99aF85bf4d135e878d": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
     "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1099,6 +1412,17 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xb31407BCf91d54AbFC0B7ef61bFc71b8b71F0678": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
     "0xb4299A1F5f26fF6a98B7BA35572290C359fde900": [
       "event DepositInitiated(address l1Token, address indexed _from, address indexed _to, uint256 indexed _sequenceNumber, uint256 _amount)",
@@ -1124,6 +1448,17 @@
       "function transferExitAndCall(uint256 _exitNum, address _initialDestination, address _newDestination, bytes _newData, bytes _data)",
       "function whitelist() view returns (address)"
     ],
+    "0xb85e18C8F552c823CdA4DCd9056213bDc970f9AE": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
     "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1134,6 +1469,9 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xC234E41AE2cb00311956Aa7109fC801ae8c80941": [
+      "constructor(address _singleton)"
     ],
     "0xc4448b71118c9071Bcb9734A0EAc55D18A153949": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1305,6 +1643,28 @@
       "function template() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
+    "0xE27d4Ed355e5273A3D4855c8e11BC4a8d3e39b87": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xE4d0Ba69d082Fdf6f51b8fc8F92c19bF00B1a1B4": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
     "0xE6841D92B0C345144506576eC13ECf5103aC7f49": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1318,6 +1678,17 @@
     ],
     "0xF06E95eF589D9c38af242a8AAee8375f14023F85": [
       "constructor(address _singleton)"
+    ],
+    "0xF32e5B5Ad94c0c0F83E0023b0AC48A93A8a2a428": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
     "0xFb209827c58283535b744575e11953DCC4bEAD88": [
       "constructor(tuple(uint64 confirmPeriodBlocks, uint64 extraChallengeTimeBlocks, address stakeToken, uint256 baseStake, bytes32 wasmModuleRoot, address owner, address loserStakeEscrow, uint256 chainId, tuple(uint256 delayBlocks, uint256 futureBlocks, uint256 delaySeconds, uint256 futureSeconds) sequencerInboxMaxTimeVariation) config, tuple(address bridge, address sequencerInbox, address inbox, address outbox, address rollupEventInbox, address challengeManager, address rollupAdminLogic, address rollupUserLogic, address validatorUtils, address validatorWalletCreator) connectedContracts)",

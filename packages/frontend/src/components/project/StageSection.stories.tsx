@@ -7,6 +7,7 @@ const meta: Meta<typeof StageSectionComponent> = {
   args: {
     title: 'Rollup stage',
     id: 'stage',
+    sectionOrder: 1,
     icon: '/icons/arbitrum.png',
     name: 'Arbitrum One',
     type: 'Optimistic Rollup',

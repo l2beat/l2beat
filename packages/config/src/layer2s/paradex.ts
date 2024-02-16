@@ -1,6 +1,7 @@
 import {
   EthereumAddress,
   formatLargeNumberShared,
+  formatSeconds,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -24,7 +25,6 @@ import {
   getSHARPVerifierGovernors,
 } from '../discovery/starkware'
 import { delayDescriptionFromSeconds } from '../utils/delayDescription'
-import { formatSeconds } from '../utils/formatSeconds'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -109,8 +109,17 @@ export const paradex: Layer2 = {
         {
           formula: 'sharpSubmission',
           sinceTimestamp: new UnixTime(1704729971),
+          untilTimestamp: new UnixTime(1706626427),
           programHashes: [
             '54878256403880350656938046611252303365750679698042371543935159963667935317',
+          ],
+        },
+        {
+          // Updated to this program hash in tx 0x7eb527c897e8449234ad770573a2a5ba3737e6b9014600c261741bc258849639
+          formula: 'sharpSubmission',
+          sinceTimestamp: new UnixTime(1706626427),
+          programHashes: [
+            '2479841346739966073527450029179698923866252973805981504232089731754042431018',
           ],
         },
       ],

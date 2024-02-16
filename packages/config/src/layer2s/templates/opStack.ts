@@ -1,8 +1,8 @@
 import { ContractParameters } from '@l2beat/discovery-types'
 import {
+  assertUnreachable,
   EthereumAddress,
   ProjectId,
-  Token,
   UnixTime,
 } from '@l2beat/shared-pure'
 
@@ -20,15 +20,26 @@ import {
   ScalingProjectContract,
   ScalingProjectEscrow,
   ScalingProjectPermission,
+  ScalingProjectRiskViewEntry,
   ScalingProjectStateDerivation,
+  ScalingProjectTechnologyChoice,
 } from '../../common'
 import { subtractOne } from '../../common/assessCount'
+import { ChainConfig } from '../../common/ChainConfig'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import { getStage } from '../common/stages/getStage'
-import { Layer2, Layer2Display, Layer2TransactionApi } from '../types'
+import {
+  Layer2,
+  Layer2Display,
+  Layer2FinalityConfig,
+  Layer2TransactionApi,
+} from '../types'
+
+type DAProvider = 'Celestia'
 
 export interface OpStackConfig {
+  daProvider?: DAProvider
   discovery: ProjectDiscovery
   display: Omit<Layer2Display, 'provider' | 'category' | 'dataAvailabilityMode'>
   upgradeability: {
@@ -36,12 +47,10 @@ export interface OpStackConfig {
     upgradeDelay: string | undefined
   }
   l1StandardBridgeEscrow: EthereumAddress
-  apiUrl?: string
+  rpcUrl?: string
   transactionApi?: Layer2TransactionApi
-  inboxAddress: EthereumAddress // You can find it by seeing to where sequencer posts
-  sequencerAddress: EthereumAddress
   genesisTimestamp: UnixTime
-  tokenList?: Token[]
+  finality?: Layer2FinalityConfig
   l2OutputOracle: ContractParameters
   portal: ContractParameters
   stateDerivation?: ScalingProjectStateDerivation
@@ -53,24 +62,41 @@ export interface OpStackConfig {
   nonTemplateEscrows: ScalingProjectEscrow[]
   associatedTokens?: string[]
   isNodeAvailable: boolean | 'UnderReview'
+  chainConfig?: ChainConfig
+  upgradesAndGovernance?: string
+  hasProperSecurityCouncil?: boolean
 }
 
 export function opStack(templateVars: OpStackConfig): Layer2 {
+  const sequencerAddress = EthereumAddress(
+    templateVars.discovery.getContractValue('SystemConfig', 'batcherHash'),
+  )
+  const sequencerInbox = EthereumAddress(
+    templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+  )
   return {
     type: 'layer2',
     id: ProjectId(templateVars.discovery.projectName),
     display: {
       ...templateVars.display,
       provider: 'OP Stack',
-      category: 'Optimistic Rollup',
-      dataAvailabilityMode: 'TxData',
+      category:
+        templateVars.daProvider !== undefined
+          ? 'Optimium'
+          : 'Optimistic Rollup',
+      dataAvailabilityMode:
+        templateVars.daProvider !== undefined ? 'NotApplicable' : 'TxData',
       warning:
         templateVars.display.warning === undefined
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
           : templateVars.display.warning,
+      finality: {
+        warning:
+          "It's assumed that transaction data batches are submitted sequentially.",
+        finalizationPeriod: templateVars.display.finality?.finalizationPeriod,
+      },
     },
     config: {
-      tokenList: templateVars.tokenList,
       associatedTokens: templateVars.associatedTokens,
       escrows: [
         templateVars.discovery.getEscrowDetails({
@@ -90,44 +116,52 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
       ],
       transactionApi:
         templateVars.transactionApi ??
-        (templateVars.apiUrl !== undefined
+        (templateVars.rpcUrl !== undefined
           ? {
               type: 'rpc',
               startBlock: 1,
-              url: templateVars.apiUrl,
-              callsPerMinute: 1500,
+              defaultUrl: templateVars.rpcUrl,
+              defaultCallsPerMinute: 1500,
               assessCount: subtractOne,
             }
           : undefined),
-      liveness: {
-        proofSubmissions: [],
-        batchSubmissions: [
-          {
-            formula: 'transfer',
-            from: templateVars.sequencerAddress,
-            to: templateVars.inboxAddress,
-            sinceTimestamp: templateVars.genesisTimestamp,
-          },
-        ],
-        stateUpdates: [
-          {
-            formula: 'functionCall',
-            address: templateVars.l2OutputOracle.address,
-            selector: '0x9aaab648',
-            functionSignature:
-              'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
-            sinceTimestamp: new UnixTime(
-              templateVars.l2OutputOracle.sinceTimestamp ??
-                templateVars.genesisTimestamp.toNumber(),
-            ),
-          },
-        ],
-      },
+      liveness:
+        templateVars.daProvider !== undefined
+          ? undefined
+          : {
+              proofSubmissions: [],
+              batchSubmissions: [
+                {
+                  formula: 'transfer',
+                  from: sequencerAddress,
+                  to: sequencerInbox,
+                  sinceTimestamp: templateVars.genesisTimestamp,
+                },
+              ],
+              stateUpdates: [
+                {
+                  formula: 'functionCall',
+                  address: templateVars.l2OutputOracle.address,
+                  selector: '0x9aaab648',
+                  functionSignature:
+                    'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
+                  sinceTimestamp: new UnixTime(
+                    templateVars.l2OutputOracle.sinceTimestamp ??
+                      templateVars.genesisTimestamp.toNumber(),
+                  ),
+                },
+              ],
+            },
+      finality:
+        templateVars.daProvider !== undefined
+          ? undefined
+          : templateVars.finality,
     },
+    chainConfig: templateVars.chainConfig,
     riskView: makeBridgeCompatible({
       stateValidation: RISK_VIEW.STATE_NONE,
       dataAvailability: {
-        ...RISK_VIEW.DATA_ON_CHAIN,
+        ...riskViewDA(templateVars.daProvider),
         sources: [
           {
             contract: templateVars.portal.name,
@@ -175,35 +209,42 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
       destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
       validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     }),
-    stage: getStage(
-      {
-        stage0: {
-          callsItselfRollup: true,
-          stateRootsPostedToL1: true,
-          dataAvailabilityOnL1: true,
-          rollupNodeSourceAvailable: templateVars.isNodeAvailable,
-        },
-        stage1: {
-          stateVerificationOnL1: false,
-          fraudProofSystemAtLeast5Outsiders: null,
-          usersHave7DaysToExit: false,
-          usersCanExitWithoutCooperation: false,
-          securityCouncilProperlySetUp: null,
-        },
-        stage2: {
-          proofSystemOverriddenOnlyInCaseOfABug: null,
-          fraudProofSystemIsPermissionless: null,
-          delayWith30DExitWindow: false,
-        },
-      },
-      {
-        rollupNodeLink:
-          templateVars.isNodeAvailable === true
-            ? 'https://github.com/ethereum-optimism/optimism/tree/develop/op-node'
-            : '',
-      },
-    ),
+    stage:
+      templateVars.daProvider !== undefined
+        ? {
+            stage: 'NotApplicable',
+          }
+        : getStage(
+            {
+              stage0: {
+                callsItselfRollup: true,
+                stateRootsPostedToL1: true,
+                dataAvailabilityOnL1: true,
+                rollupNodeSourceAvailable: templateVars.isNodeAvailable,
+              },
+              stage1: {
+                stateVerificationOnL1: false,
+                fraudProofSystemAtLeast5Outsiders: null,
+                usersHave7DaysToExit: false,
+                usersCanExitWithoutCooperation: false,
+                securityCouncilProperlySetUp:
+                  templateVars.hasProperSecurityCouncil ?? null,
+              },
+              stage2: {
+                proofSystemOverriddenOnlyInCaseOfABug: null,
+                fraudProofSystemIsPermissionless: null,
+                delayWith30DExitWindow: false,
+              },
+            },
+            {
+              rollupNodeLink:
+                templateVars.isNodeAvailable === true
+                  ? 'https://github.com/ethereum-optimism/optimism/tree/develop/op-node'
+                  : '',
+            },
+          ),
     stateDerivation: templateVars.stateDerivation,
+    upgradesAndGovernance: templateVars.upgradesAndGovernance,
     technology: {
       stateCorrectness: {
         name: 'Fraud proofs are in development',
@@ -226,15 +267,16 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
         ],
       },
       dataAvailability: {
-        ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
+        ...technologyDA(templateVars.daProvider),
         references: [
+          ...technologyDA(templateVars.daProvider).references,
           {
             text: 'Derivation: Batch submission - OP Mainnet specs',
-            href: 'https://github.com/ethereum-optimism/optimism/blob/develop/specs/derivation.md#batch-submission',
+            href: 'https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission',
           },
           {
             text: 'BatchInbox - Etherscan address',
-            href: `https://etherscan.io/address/${templateVars.inboxAddress.toString()}`,
+            href: `https://etherscan.io/address/${sequencerInbox.toString()}`,
           },
           {
             text: 'OptimismPortal.sol - Etherscan source code, depositTransaction function',
@@ -282,7 +324,14 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
       },
       exitMechanisms: [
         {
-          ...EXITS.REGULAR('optimistic', 'merkle proof'),
+          ...EXITS.REGULAR(
+            'optimistic',
+            'merkle proof',
+            templateVars.discovery.getContractValue<number>(
+              'L2OutputOracle',
+              'FINALIZATION_PERIOD_SECONDS',
+            ),
+          ),
           references: [
             {
               text: 'OptimismPortal.sol - Etherscan source code, proveWithdrawalTransaction function',
@@ -371,4 +420,28 @@ function safeGetImplementation(contract: ContractParameters): string {
     throw new Error(`No implementation found for ${contract.name}`)
   }
   return implementation.toString()
+}
+
+function riskViewDA(DA: DAProvider | undefined): ScalingProjectRiskViewEntry {
+  switch (DA) {
+    case 'Celestia':
+      return RISK_VIEW.DATA_CELESTIA(false)
+    case undefined:
+      return RISK_VIEW.DATA_ON_CHAIN
+    default:
+      assertUnreachable(DA)
+  }
+}
+
+function technologyDA(
+  DA: DAProvider | undefined,
+): ScalingProjectTechnologyChoice {
+  switch (DA) {
+    case 'Celestia':
+      return DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(false)
+    case undefined:
+      return DATA_AVAILABILITY.ON_CHAIN
+    default:
+      assertUnreachable(DA)
+  }
 }

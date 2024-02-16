@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -20,7 +25,6 @@ import {
   getSHARPVerifierGovernors,
 } from '../discovery/starkware'
 import { delayDescriptionFromString } from '../utils/delayDescription'
-import { formatSeconds } from '../utils/formatSeconds'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('myria')
@@ -56,7 +60,7 @@ export const myria: Layer2 = {
     links: {
       websites: ['https://myria.com/'],
       apps: ['https://market.x.immutable.com/'],
-      documentation: ['https://docs.starkware.co/starkex-docs-v2/'],
+      documentation: ['https://docs.starkware.co/starkex/index.html'],
       explorers: [],
       repositories: ['https://github.com/starkware-libs/starkex-contracts'],
       socialMedia: [
@@ -89,7 +93,7 @@ export const myria: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: {
-      ...RISK_VIEW.DATA_EXTERNAL_DAC,
+      ...RISK_VIEW.DATA_EXTERNAL_DAC(),
       sources: [
         {
           contract: 'StarkExchange',

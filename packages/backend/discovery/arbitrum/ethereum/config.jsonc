@@ -29,7 +29,8 @@
     "0xe5896783a2F463446E1f624e64Aa6836BE4C6f58": "ChallengeManager",
     "0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a": "wstETHEscrow",
     "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": "wstETHEscrowAdmin",
-    "0x73b047fe6337183A454c5217241D780a932777bD": "LidoEmergencyBrakeMultisig"
+    "0x73b047fe6337183A454c5217241D780a932777bD": "LidoEmergencyBrakeMultisig",
+    "0xC234E41AE2cb00311956Aa7109fC801ae8c80941": "ValidatorOwnerMultisig"
   },
   "overrides": {
     "ArbitrumOneBridge": {
@@ -91,6 +92,10 @@
             "challenger",
             "challengedNode"
           ]
+        },
+        "validators": {
+          "type": "arbitrumActors",
+          "actorType": "validator"
         }
       }
     },
@@ -106,6 +111,9 @@
           "method": "function isBatchPoster(address) external view returns (bool)",
           "args": ["0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc"]
         },
+        "sequencerVersion": {
+          "type": "arbitrumSequencerVersion"
+        },
         // when this changes, it means the sequencers have changed
         "setIsBatchPosterCount": {
           "type": "eventCount",
@@ -114,6 +122,17 @@
             "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
             // id == 6 is emitted inside setValidator()
             "0x0000000000000000000000000000000000000000000000000000000000000001"
+          ]
+        },
+        "batchPosters": {
+          "type": "arbitrumActors",
+          "actorType": "batchPoster"
+        },
+        "keySetUpdates": {
+          "type": "eventCount",
+          "topics": [
+            // SetValidKeyset(bytes32,bytes)
+            "0xabca9b7986bc22ad0160eb0cb88ae75411eacfba4052af0b457a9335ef655722"
           ]
         }
       }
@@ -183,6 +202,9 @@
     },
     "LidoEmergencyBrakeMultisig": {
       "ignoreDiscovery": true
+    },
+    "ValidatorOwnerMultisig": {
+      "ignoreInWatchMode": ["nonce"]
     }
   }
 }

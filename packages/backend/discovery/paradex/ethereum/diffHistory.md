@@ -1,7 +1,34 @@
+Generated with discovered.json: 0x9add5ea9290632cfcb71c7da24b5711ae9e16a1d
+
+# Diff at Wed, 31 Jan 2024 11:48:50 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2226ccb2f9affe507b9708f9072c87989d180e43 block: 18983662
+- current block number: 19126264
+
+## Description
+
+Updated the `programHash` and `configHash`.
+
+## Watched changes
+
+```diff
+    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+      values.configHash:
+-        "1946969884474626573154270293480115261427695072308490075958253509832033340430"
++        "2741190170141984203224468507008497105532196084369172236871397222510074358631"
+      values.programHash:
+-        "54878256403880350656938046611252303365750679698042371543935159963667935317"
++        "2479841346739966073527450029179698923866252973805981504232089731754042431018"
+    }
+```
+
+Generated with discovered.json: 0xb15a2532273ec56424a924c846c951de4ee51aaf
+
 # Diff at Thu, 11 Jan 2024 12:24:29 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@f4fd8a33866a1a7eab89875fb7e0473f7609e88b block: 18941335
+- comparing to: main@f4fd8a33866a1a7eab89875fb7e0473f7609e88b block: 18941335
 - current block number: 18983662
 
 ## Description
@@ -37,7 +64,7 @@ for block 18941335 (main branch discovery), not current.
 # Diff at Fri, 05 Jan 2024 13:21:53 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@93d6aaf3e23d92ddfefa09b5758d1e10c888e66a block: 18812636
+- comparing to: main@93d6aaf3e23d92ddfefa09b5758d1e10c888e66a block: 18812636
 - current block number: 18941335
 
 ## Description
@@ -86,7 +113,7 @@ A new Starknet governor (2/5 MultiSig) is added to the Paradex contract.
 # Diff at Mon, 18 Dec 2023 11:40:25 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@636723aa928b9ac461db31dd0b5005a916961be5
+- comparing to: main@636723aa928b9ac461db31dd0b5005a916961be5
 
 ## Description
 
@@ -111,7 +138,7 @@ Change in the deposit limits of the USDC Bridge contract:
 # Diff at Tue, 31 Oct 2023 10:57:48 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@
+- comparing to: main@
 
 ## Description
 

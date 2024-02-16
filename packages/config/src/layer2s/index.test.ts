@@ -84,6 +84,17 @@ describe('layer2s', () => {
     })
   })
 
+  describe('chain name equals project id', () => {
+    for (const layer2 of layer2s) {
+      const name = layer2.chainConfig?.name
+      if (name !== undefined) {
+        it(layer2.id.toString(), () => {
+          expect(name).toEqual(layer2.id.toString())
+        })
+      }
+    }
+  })
+
   describe('liveness', () => {
     it('every project has valid signatures', () => {
       for (const project of layer2s) {
@@ -124,15 +135,30 @@ describe('layer2s', () => {
     })
   })
 
+  describe('finality', () => {
+    describe('every project with finality enabled has finalizationPeriod property', () => {
+      const projectsWithFinality = layer2s.filter((p) => p.config.finality)
+      for (const project of projectsWithFinality) {
+        it(project.id.toString(), () => {
+          expect(project.display.finality?.finalizationPeriod).not.toBeNullish()
+        })
+      }
+    })
+  })
+
   describe('activity', () => {
     describe('custom URL starts with https', () => {
       const layers2WithUrls = layer2s.flatMap((layer2) => {
         const { transactionApi } = layer2.config
 
-        if (transactionApi && 'url' in transactionApi && transactionApi.url) {
+        if (
+          transactionApi &&
+          'defaultUrl' in transactionApi &&
+          transactionApi.defaultUrl
+        ) {
           return {
             id: layer2.id,
-            url: transactionApi.url,
+            url: transactionApi.defaultUrl,
           }
         }
 

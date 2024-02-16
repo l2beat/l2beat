@@ -1,7 +1,225 @@
+Generated with discovered.json: 0x658319b9c3fe837c9e09311f58fef75b5fc7adcd
+
+# Diff at Wed, 07 Feb 2024 13:46:24 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@70a2c5f9336d4d624160533a78c31ce52c7bbe58 block: 19126411
+- current block number: 19176699
+
+## Description
+
+Removed ZkSyncHubConnector.
+
+## Watched changes
+
+```diff
+    contract RootManager (0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A) {
+      values.connectors[12]:
+-        "0x9Ba7D2Ab079Bd1924859e2fECDAD1bEBe5B119Fa"
+      values.connectors.8:
+-        "0x63C6c79F3E79406B62f8623881cBFD7B2Ec1E8cB"
++        "0x9Ba7D2Ab079Bd1924859e2fECDAD1bEBe5B119Fa"
+      values.connectorsHash:
+-        "0x14c4bf163ae7a6600a7ae29528ef8d2fe05fb8d77cf4be6201ac10f3c92fcb2e"
++        "0x14b530936915b09786ec041c63aa2b1ec72eb6cdefd18fe41d79b92b93aa90bd"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19126411 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract ZkSyncHubConnector (0x63C6c79F3E79406B62f8623881cBFD7B2Ec1E8cB) {
+    }
+```
+
+Generated with discovered.json: 0x3173a709fca8a83c7486e3febdd1d1700357d694
+
+# Diff at Wed, 31 Jan 2024 12:18:08 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@8530982d7716e84f0c3870f09585b94f46c2e4bc block: 18990101
+- current block number: 19126411
+
+## Description
+
+Added six new connectors, but in reality only four of them are unique. New and
+unique connectors are:
+
+- MantleHubConnector
+- ZkSyncHubConnector
+- PolygonZkHubConnector
+- OptimismV0HubConnector
+
+OptimismV0 uses a pre-bedrock version of the optimism contracts. There are two
+_new_ connectors that in reality are just the same code - no diff between the
+new and old - from WormholeHubConnector and OptimismHubConnector.
+
+## Watched changes
+
+```diff
+    contract RootManager (0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A) {
+      values.connectors[12]:
++        "0x9Ba7D2Ab079Bd1924859e2fECDAD1bEBe5B119Fa"
+      values.connectors[11]:
++        "0x7ed49D0a13255802A281C08688563bd8D5f726b1"
+      values.connectors[10]:
++        "0x23b7abe4cc664F24Eb68E80cFAdc572857799a94"
+      values.connectors[9]:
++        "0x5B0E1a507E786f0a7c11C972ad5F4dd254661e24"
+      values.connectors[8]:
++        "0x63C6c79F3E79406B62f8623881cBFD7B2Ec1E8cB"
+      values.connectors[7]:
++        "0xf5a3372ed529FCD0690b6013EAaE04170ec0626b"
+      values.connectorsHash:
+-        "0xec2e6a01e97f05ecaf76a70e989737bba3d7b1e9b1409ace525f00a0ee16c137"
++        "0x14c4bf163ae7a6600a7ae29528ef8d2fe05fb8d77cf4be6201ac10f3c92fcb2e"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract NewOptimismHubConnector (0x23b7abe4cc664F24Eb68E80cFAdc572857799a94) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract MantleHubConnector (0x5B0E1a507E786f0a7c11C972ad5F4dd254661e24) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ZkSyncHubConnector (0x63C6c79F3E79406B62f8623881cBFD7B2Ec1E8cB) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PolygonZkHubConnector (0x7ed49D0a13255802A281C08688563bd8D5f726b1) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OptimismV0HubConnector (0x9Ba7D2Ab079Bd1924859e2fECDAD1bEBe5B119Fa) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract NewWormholeHubConnector (0xf5a3372ed529FCD0690b6013EAaE04170ec0626b) {
+    }
+```
+
+## Source code changes
+
+```diff
+.../@openzeppelin/contracts/utils/Address.sol      | 244 ++++++++
+ .../contracts/messaging/connectors/Connector.sol   | 216 +++++++
+ .../contracts/messaging/connectors/GasCap.sol      |  61 ++
+ .../messaging/connectors/HubConnector.sol          |  44 ++
+ .../connectors/mantle/MantleHubConnector.sol       | 187 ++++++
+ .../connectors/optimism-v0/BaseOptimismV0.sol      |  28 +
+ .../connectors/optimism-v0/lib/BytesUtils.sol      | 135 ++++
+ .../connectors/optimism-v0/lib/MerkleTrie.sol      | 291 +++++++++
+ .../connectors/optimism-v0/lib/OVMCodec.sol        |  40 ++
+ .../optimism-v0/lib/PredeployAddresses.sol         |  21 +
+ .../connectors/optimism-v0/lib/RLPReader.sol       | 381 ++++++++++++
+ .../optimism-v0/lib/SecureMerkleTrie.sol           |  68 ++
+ .../contracts/messaging/interfaces/IConnector.sol  |  64 ++
+ .../messaging/interfaces/IRootManager.sol          |  22 +
+ .../ambs/mantle/IStateCommitmentChain.sol          | 102 +++
+ .../interfaces/ambs/optimism/OptimismAmb.sol       |  28 +
+ .../contracts/shared/ProposedOwnable.sol           | 172 +++++
+ .../shared/interfaces/IProposedOwnable.sol         |  42 ++
+ .../contracts/shared/libraries/TypedMemView.sol    | 687 ++++++++++++++++++++
+ .../ethereum/.code/MantleHubConnector/meta.txt     |   2 +
+ .../@openzeppelin/contracts/utils/Address.sol      | 244 ++++++++
+ .../contracts/messaging/connectors/Connector.sol   | 216 +++++++
+ .../contracts/messaging/connectors/GasCap.sol      |  61 ++
+ .../messaging/connectors/HubConnector.sol          |  44 ++
+ .../messaging/connectors/optimism/BaseOptimism.sol |  28 +
+ .../connectors/optimism/OptimismHubConnector.sol   | 148 +++++
+ .../messaging/connectors/optimism/lib/Types.sol    |  84 +++
+ .../contracts/messaging/interfaces/IConnector.sol  |  64 ++
+ .../messaging/interfaces/IRootManager.sol          |  22 +
+ .../interfaces/ambs/optimism/IOptimismPortal.sol   |  25 +
+ .../interfaces/ambs/optimism/OptimismAmb.sol       |  28 +
+ .../contracts/shared/ProposedOwnable.sol           | 172 +++++
+ .../shared/interfaces/IProposedOwnable.sol         |  42 ++
+ .../.code/NewOptimismHubConnector/meta.txt         |   2 +
+ .../@openzeppelin/contracts/utils/Address.sol      | 244 ++++++++
+ .../contracts/messaging/connectors/Connector.sol   | 216 +++++++
+ .../contracts/messaging/connectors/GasCap.sol      |  61 ++
+ .../messaging/connectors/HubConnector.sol          |  44 ++
+ .../messaging/connectors/wormhole/BaseWormhole.sol | 137 ++++
+ .../connectors/wormhole/WormholeHubConnector.sol   |  69 ++
+ .../contracts/messaging/interfaces/IConnector.sol  |  64 ++
+ .../messaging/interfaces/IRootManager.sol          |  22 +
+ .../interfaces/ambs/wormhole/IWormholeReceiver.sol |  49 ++
+ .../interfaces/ambs/wormhole/IWormholeRelayer.sol  | 691 +++++++++++++++++++++
+ .../contracts/shared/ProposedOwnable.sol           | 172 +++++
+ .../shared/interfaces/IProposedOwnable.sol         |  42 ++
+ .../.code/NewWormholeHubConnector/meta.txt         |   2 +
+ .../@openzeppelin/contracts/utils/Address.sol      | 244 ++++++++
+ .../contracts/messaging/connectors/Connector.sol   | 216 +++++++
+ .../contracts/messaging/connectors/GasCap.sol      |  61 ++
+ .../messaging/connectors/HubConnector.sol          |  44 ++
+ .../connectors/optimism-v0/BaseOptimismV0.sol      |  28 +
+ .../optimism-v0/OptimismV0HubConnector.sol         | 186 ++++++
+ .../connectors/optimism-v0/lib/BytesUtils.sol      | 135 ++++
+ .../connectors/optimism-v0/lib/MerkleTrie.sol      | 291 +++++++++
+ .../connectors/optimism-v0/lib/OVMCodec.sol        |  40 ++
+ .../optimism-v0/lib/PredeployAddresses.sol         |  21 +
+ .../connectors/optimism-v0/lib/RLPReader.sol       | 381 ++++++++++++
+ .../optimism-v0/lib/SecureMerkleTrie.sol           |  68 ++
+ .../contracts/messaging/interfaces/IConnector.sol  |  64 ++
+ .../messaging/interfaces/IRootManager.sol          |  22 +
+ .../interfaces/ambs/optimism/OptimismAmb.sol       |  28 +
+ .../ambs/optimism-v0/IStateCommitmentChain.sol     | 101 +++
+ .../contracts/shared/ProposedOwnable.sol           | 172 +++++
+ .../shared/interfaces/IProposedOwnable.sol         |  42 ++
+ .../contracts/shared/libraries/TypedMemView.sol    | 687 ++++++++++++++++++++
+ .../ethereum/.code/OptimismV0HubConnector/meta.txt |   2 +
+ .../@openzeppelin/contracts/utils/Address.sol      | 244 ++++++++
+ .../contracts/messaging/connectors/Connector.sol   | 216 +++++++
+ .../contracts/messaging/connectors/GasCap.sol      |  61 ++
+ .../messaging/connectors/HubConnector.sol          |  44 ++
+ .../connectors/polygonzk/BasePolygonZk.sol         |  67 ++
+ .../connectors/polygonzk/PolygonZkHubConnector.sol |  42 ++
+ .../contracts/messaging/interfaces/IConnector.sol  |  64 ++
+ .../messaging/interfaces/IRootManager.sol          |  22 +
+ .../ambs/polygonzk/IBridgeMessageReceiver.sol      |   9 +
+ .../ambs/polygonzk/IPolygonZkEVMBridge.sol         | 117 ++++
+ .../contracts/shared/ProposedOwnable.sol           | 172 +++++
+ .../shared/interfaces/IProposedOwnable.sol         |  42 ++
+ .../ethereum/.code/PolygonZkHubConnector/meta.txt  |   2 +
+ .../@openzeppelin/contracts/utils/Address.sol      | 244 ++++++++
+ .../contracts/messaging/connectors/Connector.sol   | 216 +++++++
+ .../contracts/messaging/connectors/GasCap.sol      |  61 ++
+ .../messaging/connectors/HubConnector.sol          |  44 ++
+ .../connectors/zksync/ZkSyncHubConnector.sol       | 138 ++++
+ .../contracts/messaging/interfaces/IConnector.sol  |  64 ++
+ .../messaging/interfaces/IRootManager.sol          |  22 +
+ .../messaging/interfaces/ambs/zksync/IZkSync.sol   | 191 ++++++
+ .../contracts/shared/ProposedOwnable.sol           | 172 +++++
+ .../shared/interfaces/IProposedOwnable.sol         |  42 ++
+ .../ethereum/.code/ZkSyncHubConnector/meta.txt     |   2 +
+ 91 files changed, 10959 insertions(+)
+```
+
+Generated with discovered.json: 0x2205517d3479bdc0b356b55a229b76d5deb3faea
+
 # Diff at Fri, 12 Jan 2024 10:04:41 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: master@29bf7dab0273e12e067979db6a3b622e6e34f64f block: 18941290
+- comparing to: main@29bf7dab0273e12e067979db6a3b622e6e34f64f block: 18941290
 - current block number: 18990101
 
 ## Description
@@ -20,7 +238,7 @@ New router, empty at the time of discovering this
 # Diff at Fri, 05 Jan 2024 13:12:40 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: master@9b1911b38ffdc811ae8c1518aae762bfe4831370 block: 18620064
+- comparing to: main@9b1911b38ffdc811ae8c1518aae762bfe4831370 block: 18620064
 - current block number: 18941290
 
 ## Description
@@ -428,7 +646,7 @@ for block 18620064 (main branch discovery), not current.
 # Diff at Tue, 21 Nov 2023 12:24:08 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@9f0318505c4ed8d37a7f843ad157191e2e5c6ee2
+- comparing to: main@9f0318505c4ed8d37a7f843ad157191e2e5c6ee2
 
 ## Description
 
@@ -471,7 +689,7 @@ Added connector for Linea.
 # Diff at Tue, 07 Nov 2023 11:21:30 GMT:
 
 - author: Amin Latifi (<a.latifi.al@gmail.com>)
-- comparing to: master@bcbd5d376f2f1df169f0ac5ce430862eef6be17f
+- comparing to: main@bcbd5d376f2f1df169f0ac5ce430862eef6be17f
 
 ## Description
 
@@ -533,7 +751,7 @@ warning: in the working copy of 'packages/backend/discovery/amarok/ethereum/.cod
 # Diff at Mon, 02 Oct 2023 13:31:00 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@10dbc30af490bd7af5cfca51b827ce3f10182f4d
+- comparing to: main@10dbc30af490bd7af5cfca51b827ce3f10182f4d
 
 ## Watched changes
 

@@ -1,4 +1,3 @@
-import classNames from 'classnames'
 import range from 'lodash/range'
 import React from 'react'
 
@@ -8,6 +7,7 @@ import {
   AnomalyIndicatorEntry,
 } from '../pages/scaling/liveness/types'
 import { formatTimestamp } from '../utils'
+import { cn } from '../utils/cn'
 import { LivenessDurationCell } from './table/LivenessDurationCell'
 import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip/Tooltip'
 
@@ -25,7 +25,7 @@ export function AnomalyIndicator({ anomalyEntries, showComingSoon }: Props) {
         </div>
         <div className="flex gap-x-0.5">
           {range(30).map((_, i) => (
-            <div key={i} className="h-0.5 w-0.5 rounded-full bg-neutral-700" />
+            <div key={i} className="size-0.5 rounded-full bg-neutral-700" />
           ))}
         </div>
       </div>
@@ -38,7 +38,7 @@ export function AnomalyIndicator({ anomalyEntries, showComingSoon }: Props) {
         <div className="mx-auto text-gray-500 dark:text-gray-50">No data</div>
         <div className="flex gap-x-0.5">
           {range(30).map((_, i) => (
-            <div key={i} className="h-0.5 w-0.5 rounded-full bg-neutral-700" />
+            <div key={i} className="size-0.5 rounded-full bg-neutral-700" />
           ))}
         </div>
       </div>
@@ -58,7 +58,7 @@ export function AnomalyIndicator({ anomalyEntries, showComingSoon }: Props) {
         {anomalyEntries.map((anomaly, i) => (
           <div
             key={i}
-            className={classNames(
+            className={cn(
               'w-0.5 rounded-full',
               anomaly.isAnomaly ? 'bg-orange-400' : 'bg-blue-500',
             )}
@@ -84,12 +84,12 @@ function AnomalyTooltipContent(props: { anomalyEntries: AnomalyEntry[] }) {
   return (
     <>
       <span>Anomalies from last 30 days:</span>
-      <ul className="mt-2.5 ml-4 list-disc space-y-4 text-gray-500 dark:text-gray-50">
+      <ul className="ml-4 mt-2.5 list-disc space-y-4 text-gray-500 dark:text-gray-50">
         {anomalies.slice(0, 4).map((anomaly) => (
           <li key={anomaly.timestamp}>
             <span>
               {formatTimestamp(anomaly.timestamp, {
-                withTime: true,
+                mode: 'datetime',
                 longMonthName: true,
               })}
             </span>

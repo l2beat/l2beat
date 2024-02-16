@@ -7,6 +7,7 @@ const meta: Meta<typeof StateDerivationSection> = {
   args: {
     title: 'State Derivation',
     id: 'state-derivation',
+    sectionOrder: 1,
   },
 }
 export default meta

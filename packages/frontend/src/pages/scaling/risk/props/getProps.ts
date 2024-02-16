@@ -17,6 +17,7 @@ export function getProps(
       footer: getFooterProps(config),
       showActivity: config.features.activity,
       showLiveness: config.features.liveness,
+      showFinality: config.features.finality,
     },
     wrapper: {
       metadata: getPageMetadata(),

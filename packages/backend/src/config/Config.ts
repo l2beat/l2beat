@@ -1,10 +1,12 @@
 import { LoggerOptions } from '@l2beat/backend-tools'
-import { Layer2TransactionApi } from '@l2beat/config'
 import { DiscoveryChainConfig } from '@l2beat/discovery'
-import { Token, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, ProjectId, Token, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
-import { Project } from '../model'
+import { Project } from '../model/Project'
+import { ActivityTransactionConfig } from '../modules/activity/ActivityTransactionConfig'
+import { MulticallConfigEntry } from '../peripherals/multicall/types'
+import { ResolvedFeatureFlag } from './FeatureFlags'
 
 export interface Config {
   readonly name: string
@@ -19,10 +21,14 @@ export interface Config {
   readonly health: HealthConfig
   readonly tvl: TvlConfig
   readonly liveness: LivenessConfig | false
+  readonly finality: FinalityConfig | false
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
   readonly diffHistory: DiffHistoryConfig | false
   readonly statusEnabled: boolean
+  readonly chains: { name: string; chainId: ChainId }[]
+  readonly flags: ResolvedFeatureFlag[]
+  readonly tvlCleanerEnabled: boolean
 }
 
 export type LoggerConfig = Pick<LoggerOptions, 'logLevel' | 'format'> &
@@ -36,6 +42,10 @@ export interface LogThrottlerConfig {
 
 export interface ApiConfig {
   readonly port: number
+  readonly cache: {
+    readonly tvl: boolean
+    readonly liveness: boolean
+  }
 }
 
 export interface DatabaseConfig {
@@ -56,13 +66,8 @@ export interface TvlConfig {
   readonly enabled: boolean
   readonly errorOnUnsyncedTvl: boolean
   readonly coingeckoApiKey: string | undefined
-  readonly ethereum: ChainTvlConfig | false
-  readonly arbitrum: ChainTvlConfig | false
-  readonly optimism: ChainTvlConfig | false
-  readonly base: ChainTvlConfig | false
-  readonly mantapacific: ChainTvlConfig | false
-  readonly lyra: ChainTvlConfig | false
-  readonly linea: ChainTvlConfig | false
+  readonly ethereum: ChainTvlConfig
+  readonly modules: ChainTvlConfig[]
 }
 
 export interface LivenessConfig {
@@ -76,24 +81,36 @@ export interface LivenessConfig {
   readonly minTimestamp: UnixTime
 }
 
-export interface RoutescanChainConfig {
-  readonly type: 'RoutescanLike'
-  readonly routescanApiUrl: string
+export interface FinalityConfig {
+  readonly indexerEnabled: boolean
+  readonly ethereumProviderUrl: string
+  readonly ethereumProviderCallsPerMinute: number
+}
+
+export interface BlockscoutChainConfig {
+  readonly type: 'blockscout'
+  readonly blockscoutApiUrl: string
 }
 
 export interface EtherscanChainConfig {
-  readonly type: 'EtherscanLike'
+  readonly type: 'etherscan'
   readonly etherscanApiKey: string
   readonly etherscanApiUrl: string
 }
 
 export interface ChainTvlConfig {
-  readonly providerUrl: string
-  readonly providerCallsPerMinute: number
-  readonly minBlockTimestamp: UnixTime
-  readonly blockNumberProviderConfig:
-    | EtherscanChainConfig
-    | RoutescanChainConfig
+  readonly chain: string
+  readonly config?: {
+    readonly projectId: ProjectId
+    readonly chainId: ChainId
+    readonly providerUrl: string
+    readonly providerCallsPerMinute: number
+    readonly minBlockTimestamp: UnixTime
+    readonly blockNumberProviderConfig:
+      | EtherscanChainConfig
+      | BlockscoutChainConfig
+    readonly multicallConfig: MulticallConfigEntry[]
+  }
 }
 
 export interface HealthConfig {
@@ -104,10 +121,9 @@ export interface HealthConfig {
 export interface ActivityConfig {
   readonly starkexApiKey: string
   readonly starkexCallsPerMinute: number
-  readonly skipExplicitExclusion: boolean
   readonly projectsExcludedFromAPI: string[]
   readonly allowedProjectIds?: string[]
-  readonly projects: Record<string, Layer2TransactionApi | undefined>
+  readonly projects: { id: ProjectId; config: ActivityTransactionConfig }[]
 }
 
 export interface MetricsAuthConfig {

@@ -11,6 +11,7 @@ import { CoingeckoClient } from './CoingeckoClient'
 import { CoinMarketChartRangeData } from './model'
 
 export const MAX_DAYS_FOR_HOURLY_PRECISION = 80
+export const COINGECKO_INTERPOLATION_WINDOW_DAYS = 3
 
 export interface QueryResultPoint {
   value: number
@@ -111,7 +112,7 @@ export class CoingeckoQueryService {
       const noData = data.prices.length === 0 && data.marketCaps.length === 0
       if (noData) {
         assert(
-          !adjustedFrom,
+          !from || currentTo.lt(from),
           `No data received for coin: ${coingeckoId.toString()} from ${currentFrom
             .toDate()
             .toISOString()} to ${currentTo.toDate().toISOString()}`,
@@ -179,9 +180,10 @@ function adjust(
   from: UnixTime | undefined,
   to: UnixTime,
 ): [UnixTime | undefined, UnixTime] {
-  const start = from && (from.isFull('hour') ? from : from.toNext('hour'))
-  const end = to.isFull('hour') ? to : to.toStartOf('hour')
-  return [start?.add(-12, 'hours'), end.add(12, 'hours')]
+  return [
+    from?.toEndOf('hour')?.add(-COINGECKO_INTERPOLATION_WINDOW_DAYS, 'days'),
+    to.toStartOf('hour').add(COINGECKO_INTERPOLATION_WINDOW_DAYS, 'days'),
+  ]
 }
 
 export function generateRangesToCallHourly(from: UnixTime, to: UnixTime) {

@@ -6,9 +6,9 @@ import type {
 } from '@l2beat/discovery-types'
 import {
   assert,
-  ChainId,
   EthereumAddress,
   gatherAddressesFromUpgradeability,
+  notUndefined,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
@@ -31,9 +31,15 @@ import {
   OP_STACK_CONTRACT_DESCRIPTION,
   OP_STACK_PERMISSION_TEMPLATES,
   OpStackContractName,
-  OpStackTag,
-  OpStackTagDescription,
 } from './OpStackTypes'
+import {
+  ORBIT_STACK_CONTRACT_DESCRIPTION,
+  ORBIT_STACK_PERMISSION_TEMPLATES,
+  OrbitStackContractName,
+} from './OrbitStackTypes'
+import { PermissionedContract } from './PermissionedContract'
+import { StackPermissionTemplate } from './StackTemplateTypes'
+import { findRoleMatchingTemplate } from './values/templateUtils'
 
 type AllKeys<T> = T extends T ? keyof T : never
 
@@ -54,26 +60,18 @@ const filesystem = {
 
 export class ProjectDiscovery {
   private readonly discovery: DiscoveryOutput
-  private readonly explorer: string
   constructor(
     public readonly projectName: string,
-    public readonly chainId: ChainId = ChainId.ETHEREUM,
+    public readonly chain: string = 'ethereum',
     private readonly fs: Filesystem = filesystem,
   ) {
     this.discovery = this.getDiscoveryJson(projectName)
-    this.explorer = ChainId.getExplorer(chainId)
-    assert(
-      this.explorer,
-      `No explorer found for chainId: ${chainId.toString()}`,
-    )
   }
 
   private getDiscoveryJson(project: string): DiscoveryOutput {
     const discoveryFile = this.fs.readFileSync(
       path.resolve(
-        `../backend/discovery/${project}/${ChainId.getName(
-          this.chainId,
-        )}/discovered.json`,
+        `../backend/discovery/${project}/${this.chain}/discovered.json`,
       ),
     )
 
@@ -105,7 +103,7 @@ export class ProjectDiscovery {
       name: contract.name,
       address: contract.address,
       upgradeability: contract.upgradeability,
-      etherscanUrl: this.explorer,
+      chain: this.chain,
       ...descriptionOrOptions,
     }
   }
@@ -131,26 +129,28 @@ export class ProjectDiscovery {
     isUpcoming?: boolean
     isLayer3?: boolean
   }): ScalingProjectEscrow {
-    const contract = this.getContractByAddress(address.toString())
-    const timestamp = sinceTimestamp?.toNumber() ?? contract.sinceTimestamp
+    const contractRaw = this.getContractByAddress(address.toString())
+    const timestamp = sinceTimestamp?.toNumber() ?? contractRaw.sinceTimestamp
     assert(
       timestamp,
       'No timestamp was found for an escrow. Possible solutions:\n1. Run discovery for that address to capture the sinceTimestamp.\n2. Provide your own sinceTimestamp that will override the value from discovery.',
     )
+
+    const options: Partial<ScalingProjectContractSingleAddress> = {
+      name,
+      description,
+      upgradableBy,
+      upgradeDelay,
+    }
+
+    const contract = this.getContractDetails(address.toString(), options)
 
     return {
       address,
       newVersion: true,
       sinceTimestamp: new UnixTime(timestamp),
       tokens,
-      contract: {
-        name: name ?? contract.name,
-        description,
-        upgradeability: contract.upgradeability,
-        etherscanUrl: this.explorer,
-        upgradableBy,
-        upgradeDelay,
-      },
+      contract,
       isUpcoming,
       isLayer3,
     }
@@ -164,73 +164,83 @@ export class ProjectDiscovery {
     overrides?: Record<string, string>,
     contractOverrides?: Record<string, string>,
   ): ScalingProjectPermission[] {
+    return this.getStackTemplatePermissions(
+      OP_STACK_PERMISSION_TEMPLATES,
+      overrides,
+      contractOverrides,
+    )
+  }
+
+  getOrbitStackPermissions(
+    overrides?: Record<string, string>,
+    contractOverrides?: Record<string, string>,
+  ): ScalingProjectPermission[] {
+    return this.getStackTemplatePermissions(
+      ORBIT_STACK_PERMISSION_TEMPLATES,
+      overrides,
+      contractOverrides,
+    )
+  }
+
+  getStackTemplatePermissions(
+    templates: StackPermissionTemplate[],
+    overrides?: Record<string, string>,
+    contractOverrides?: Record<string, string>,
+  ): ScalingProjectPermission[] {
     const inversion = this.getInversion()
 
-    const result: Record<
-      string,
-      {
-        name: string
-        address: EthereumAddress
-        contractDescription: Record<string, string[]>
-        taggedNames: Record<string, string[]>
-      }
-    > = {}
+    const contracts: Record<string, PermissionedContract> = {}
+    const getContract = (name: string, address: EthereumAddress) => {
+      contracts[name] ??= new PermissionedContract(name, address)
+      return contracts[name]
+    }
 
-    for (const template of OP_STACK_PERMISSION_TEMPLATES) {
-      for (const contract of inversion.values()) {
-        const role = contract.roles.find(
-          (r) =>
-            r.name === template.role.value &&
-            r.atName ===
-              (contractOverrides?.[template.role.contract] ??
-                template.role.contract),
+    for (const template of templates) {
+      for (const invertedContract of inversion.values()) {
+        const role = findRoleMatchingTemplate(
+          invertedContract,
+          template,
+          contractOverrides,
         )
         if (!role) {
           continue
         }
 
-        const contractKey = overrides?.[role.name] ?? contract.name ?? role.name
+        const contractKey =
+          overrides?.[role.name] ?? invertedContract.name ?? role.name
 
-        result[contractKey] ??= {
-          name: contractKey,
-          address: EthereumAddress(contract.address),
-          contractDescription: {},
-          taggedNames: {},
-        }
-        const entry = result[contractKey]
+        const contractAddress = EthereumAddress(invertedContract.address)
+        const contract = getContract(contractKey, contractAddress)
+        const referenced = getContract(role.atName, role.atAddress)
 
         if (template.description !== undefined) {
-          entry.contractDescription[role.name] ??= []
-          entry.contractDescription[role.name].push(
+          contract.addDescription(
             stringFormat(template.description, role.atName),
           )
         }
 
         if (template.tags !== undefined) {
           for (const tag of template.tags) {
-            entry.taggedNames[tag] ??= []
-            entry.taggedNames[tag].push(role.atName)
+            contract.addTag(tag, role.atName)
+            referenced.addTagReference(tag, contractKey)
           }
         }
       }
     }
 
-    return Object.values(result).map((entry) => ({
-      name: entry.name,
-      accounts: [this.formatPermissionedAccount(entry.address)],
-      description: Object.values(entry.contractDescription)
-        .flat()
-        .concat(
-          Object.entries(entry.taggedNames).map(([tag, contracts]) =>
-            stringFormat(
-              OpStackTagDescription[tag as OpStackTag],
-              contracts.join(', '),
-            ),
-          ),
-        )
-        .join(' '),
-      etherscanUrl: this.explorer,
-    }))
+    return Object.values(contracts)
+      .map((contract) => {
+        const description = contract.generateDescription()
+        if (description !== '') {
+          return {
+            name: contract.name,
+            accounts: [this.formatPermissionedAccount(contract.address)],
+            description,
+            chain: this.chain,
+          }
+        }
+      })
+      .filter(notUndefined)
   }
 
   getMultisigPermission(
@@ -256,13 +266,14 @@ export class ProjectDiscovery {
             type: 'MultiSig',
           },
         ],
-        etherscanUrl: this.explorer,
+        chain: this.chain,
       },
       {
         name: `${identifier} participants`,
         description: `Those are the participants of the ${identifier}.`,
         accounts: this.getPermissionedAccounts(identifier, 'getOwners'),
         references,
+        chain: this.chain,
       },
     ]
   }
@@ -367,7 +378,7 @@ export class ProjectDiscovery {
       address: contract.address,
       name: contract.name,
       upgradeability: contract.upgradeability,
-      etherscanUrl: this.explorer,
+      chain: this.chain,
       ...descriptionOrOptions,
     }
   }
@@ -409,7 +420,7 @@ export class ProjectDiscovery {
           type: 'Contract',
         },
       ],
-      etherscanUrl: this.explorer,
+      chain: this.chain,
       description,
     }
   }
@@ -451,10 +462,13 @@ export class ProjectDiscovery {
   }
 
   getAllContractAddresses(): EthereumAddress[] {
-    return this.discovery.contracts.flatMap((contract) => [
-      contract.address,
-      ...gatherAddressesFromUpgradeability(contract.upgradeability),
-    ])
+    const addressesWithinUpgradeability = this.discovery.contracts.flatMap(
+      (contract) => gatherAddressesFromUpgradeability(contract.upgradeability),
+    )
+
+    return addressesWithinUpgradeability.filter(
+      (addr) => !this.discovery.eoas.includes(addr),
+    )
   }
 
   getContractByAddress(address: string): ContractParameters {
@@ -481,6 +495,19 @@ export class ProjectDiscovery {
           overrides?.[d.name] ?? d.name,
         ),
         ...upgradesProxy,
+      }),
+    )
+  }
+
+  getOrbitStackContractDetails(
+    overrides?: Partial<Record<OrbitStackContractName, string>>,
+  ): ScalingProjectContractSingleAddress[] {
+    return ORBIT_STACK_CONTRACT_DESCRIPTION.map((d) =>
+      this.getContractDetails(overrides?.[d.name] ?? d.name, {
+        description: stringFormat(
+          d.coreDescription,
+          overrides?.[d.name] ?? d.name,
+        ),
       }),
     )
   }

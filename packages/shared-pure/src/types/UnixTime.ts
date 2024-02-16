@@ -19,6 +19,11 @@ export class UnixTime {
 
   static SIX_HOURS = 6 * this.HOUR
 
+  /**
+   * Static instance for test purposes, in most cases indicates that the timestamp is not important in this test case.
+   */
+  static ZERO = new UnixTime(0)
+
   static now() {
     return UnixTime.fromDate(new Date())
   }
@@ -31,23 +36,39 @@ export class UnixTime {
     return new UnixTime(days * UnixTime.DAY)
   }
 
-  toStartOf(period: 'day' | 'hour' | 'minute') {
+  static min(a: UnixTime, b: UnixTime) {
+    return a.lt(b) ? a : b
+  }
+
+  static max(a: UnixTime, b: UnixTime) {
+    return a.gt(b) ? a : b
+  }
+
+  toStartOf(period: 'day' | 'hour' | 'minute' | 'six hours') {
     const modulus =
       period === 'day'
         ? UnixTime.DAY
         : period === 'hour'
-        ? UnixTime.HOUR
-        : UnixTime.MINUTE
+          ? UnixTime.HOUR
+          : period === 'six hours'
+            ? UnixTime.SIX_HOURS
+            : UnixTime.MINUTE
     return new UnixTime(this.timestamp - (this.timestamp % modulus))
   }
 
-  toNext(period: 'day' | 'hour' | 'minute') {
+  toEndOf(period: 'day' | 'hour' | 'minute' | 'six hours') {
+    return this.isFull(period) ? this : this.toNext(period)
+  }
+
+  toNext(period: 'day' | 'hour' | 'minute' | 'six hours') {
     const modulus =
       period === 'day'
         ? UnixTime.DAY
         : period === 'hour'
-        ? UnixTime.HOUR
-        : UnixTime.MINUTE
+          ? UnixTime.HOUR
+          : period === 'six hours'
+            ? UnixTime.SIX_HOURS
+            : UnixTime.MINUTE
     const remaining = modulus - (this.timestamp % modulus)
     return new UnixTime(this.timestamp + remaining)
   }
@@ -57,10 +78,10 @@ export class UnixTime {
       period === 'day'
         ? UnixTime.DAY
         : period === 'hour'
-        ? UnixTime.HOUR
-        : period === 'minute'
-        ? UnixTime.MINUTE
-        : UnixTime.SIX_HOURS
+          ? UnixTime.HOUR
+          : period === 'minute'
+            ? UnixTime.MINUTE
+            : UnixTime.SIX_HOURS
     const isFull = this.timestamp % modulus ? false : true
     return isFull
   }
@@ -73,10 +94,10 @@ export class UnixTime {
       period === 'days'
         ? UnixTime.DAY
         : period === 'hours'
-        ? UnixTime.HOUR
-        : period === 'minutes'
-        ? UnixTime.MINUTE
-        : 1
+          ? UnixTime.HOUR
+          : period === 'minutes'
+            ? UnixTime.MINUTE
+            : 1
     return new UnixTime(this.timestamp + value * unit)
   }
 

@@ -1,14 +1,14 @@
-import cx from 'classnames'
 import React from 'react'
 
+import { cn } from '../../utils/cn'
 import { ArchivedIcon } from '../icons/symbols/ArchivedIcon'
 
 export function ArchivedBar({ className }: { className?: string }) {
   return (
     <div
-      className={cx(
+      className={cn(
         'flex justify-center py-2.5',
-        'rounded-lg bg-gray-200 dark:bg-gray-800',
+        'rounded-lg bg-gray-200 dark:bg-zinc-700',
         className,
       )}
     >

@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -13,7 +18,6 @@ import {
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
-import { formatSeconds } from '../utils/formatSeconds'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -62,7 +66,7 @@ export const zksynclite: Layer2 = {
     links: {
       websites: ['https://zksync.io/'],
       apps: ['https://lite.zksync.io/'],
-      documentation: ['https://docs.zksync.io/dev/'],
+      documentation: ['https://docs.lite.zksync.io/dev/'],
       explorers: ['https://zkscan.io/'],
       repositories: ['https://github.com/matter-labs/zksync'],
       socialMedia: [
@@ -89,7 +93,8 @@ export const zksynclite: Layer2 = {
     ],
     transactionApi: {
       type: 'zksync',
-      callsPerMinute: 3_000,
+      defaultUrl: 'https://api.zksync.io/api/v0.2',
+      defaultCallsPerMinute: 3_000,
     },
     liveness: {
       proofSubmissions: [
@@ -155,7 +160,10 @@ export const zksynclite: Layer2 = {
       )} to exit to exit funds in case of an unwanted upgrade. There is a ${upgradeDelayString} delay before an upgrade is applied, and withdrawals can take up to ${formatSeconds(
         forcedWithdrawalDelay,
       )} to be processed.`,
-      warning: 'The Security Council can upgrade with no delay.',
+      warning: {
+        text: 'The Security Council can upgrade with no delay.',
+        sentiment: 'bad',
+      },
       sources: [
         {
           contract: 'Governance',
@@ -297,7 +305,7 @@ export const zksynclite: Layer2 = {
         references: [
           {
             text: 'Withdrawing funds - zkSync documentation',
-            href: 'https://docs.zksync.io/dev/payments/basic/#withdrawing-funds',
+            href: 'https://docs.lite.zksync.io/dev/payments/basic/#withdrawing-funds',
           },
         ],
       },
@@ -306,7 +314,7 @@ export const zksynclite: Layer2 = {
         references: [
           {
             text: 'Withdrawing funds - zkSync documentation',
-            href: 'https://docs.zksync.io/dev/payments/basic/#withdrawing-funds',
+            href: 'https://docs.lite.zksync.io/dev/payments/basic/#withdrawing-funds',
           },
           {
             text: 'ZkSync.sol#L325 - Etherscan source code, requestFullExit function',
@@ -323,7 +331,7 @@ export const zksynclite: Layer2 = {
         references: [
           {
             text: 'Withdrawing funds - zkSync documentation',
-            href: 'https://docs.zksync.io/dev/payments/basic/#withdrawing-funds',
+            href: 'https://docs.lite.zksync.io/dev/payments/basic/#withdrawing-funds',
           },
           {
             text: 'README.md - zkSync Exit Tool',

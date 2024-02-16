@@ -50,8 +50,19 @@
           "type": "call",
           "method": "function batcherHash() view returns (address)",
           "args": []
+        },
+        "opStackDA": {
+          "type": "opStackDA",
+          "sequencerAddress": "{{ batcherHash }}"
+        },
+        "sequencerInbox": {
+          "type": "opStackSequencerInbox",
+          "sequencerAddress": "{{ batcherHash }}"
         }
       }
+    },
+    "AevoMultiSig": {
+      "ignoreInWatchMode": ["nonce"]
     }
   }
 }

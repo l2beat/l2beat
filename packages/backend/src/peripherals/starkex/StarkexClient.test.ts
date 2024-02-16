@@ -1,5 +1,4 @@
 import { Logger } from '@l2beat/backend-tools'
-import { StarkexProduct } from '@l2beat/config'
 import { HttpClient } from '@l2beat/shared'
 import { expect, mockObject } from 'earl'
 import { Response } from 'node-fetch'
@@ -100,12 +99,11 @@ describe(StarkexClient.name, () => {
   describe(StarkexClient.prototype.getDailyCount.name, () => {
     it('uses API V2 for dydx', async () => {
       const day = Math.floor(Math.random() * 10000)
-      const product: StarkexProduct = 'dydx'
 
       const body = {
         day_start: day,
         day_end: day + 1,
-        product,
+        product: 'dydx',
         tx_type: '_all',
         token_id: '_all',
       }
@@ -127,17 +125,16 @@ describe(StarkexClient.name, () => {
         Logger.SILENT,
       )
 
-      await starkexClient.getDailyCount(day, product)
+      await starkexClient.getDailyCount(day, 'dydx')
     })
 
     it('uses API V3 for others', async () => {
       const day = Math.floor(Math.random() * 10000)
-      const product: StarkexProduct = 'immutable'
 
       const body = {
         day_start: day,
         day_end: day + 1,
-        product,
+        product: 'immutable',
       }
 
       const httpClient = mockObject<HttpClient>({
@@ -157,7 +154,7 @@ describe(StarkexClient.name, () => {
         Logger.SILENT,
       )
 
-      await starkexClient.getDailyCount(day, product)
+      await starkexClient.getDailyCount(day, 'immutable')
     })
 
     it('returns the count', async () => {

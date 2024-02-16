@@ -1,7 +1,546 @@
+Generated with discovered.json: 0x6ea4015640d399764ce2291a73b01d1fa8270153
+
+# Diff at Thu, 08 Feb 2024 08:13:36 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9217c6a2eaa101c8d887a96cdb949f396eb72c8a block: 18968886
+- current block number: 19182180
+
+## Description
+
+Overall big picture change is that factors used to calculate `gasPrice` can now
+be changed by the governor and are not hardcoded.
+
+### ZkSync
+
+#### Base
+
+Revert in `onlyGovernorOrAdmin` with error code instead of a message.
+Added some comments.
+
+### Admin
+
+New function (`changeFeeParams`) callable only by the governor.
+It overwrites data used to calculate the gasPrice for the L1 -> L2 tx.
+
+### Diamond
+
+The variable `DIAMOND_INIT_SUCCESS_RETURN_VALUE` changed from `constant` to `internal`.
+And `DIAMOND_STORAGE_POSITION` changed from `constant` to `private`.
+
+### PriorityQueue
+
+Superfluous, basically comments.
+
+### Config
+
+Removed a bunch of configuration values:
+
+```solidity
+uint256 constant INITIAL_STORAGE_CHANGE_SERIALIZE_SIZE = 64;
+uint256 constant MAX_INITIAL_STORAGE_CHANGES_COMMITMENT_BYTES = 4 + INITIAL_STORAGE_CHANGE_SERIALIZE_SIZE * 4765;
+uint256 constant REPEATED_STORAGE_CHANGE_SERIALIZE_SIZE = 40;
+uint256 constant MAX_REPEATED_STORAGE_CHANGES_COMMITMENT_BYTES = 4 + REPEATED_STORAGE_CHANGE_SERIALIZE_SIZE * 7564;
+uint256 constant UPGRADE_NOTICE_PERIOD = 0;
+uint256 constant MAX_PUBDATA_PER_BATCH = 110000;
+uint256 constant PRIORITY_TX_MAX_PUBDATA = 99000;
+uint256 constant FAIR_L2_GAS_PRICE = 500000000;
+uint256 constant BATCH_OVERHEAD_L2_GAS = 1200000;
+uint256 constant BATCH_OVERHEAD_L1_GAS = 1000000;
+uint256 constant BATCH_OVERHEAD_PUBDATA = BATCH_OVERHEAD_L1_GAS / L1_GAS_PER_PUBDATA_BYTE;
+uint256 constant MAX_TRANSACTIONS_IN_BATCH = 1024;
+uint256 constant BOOTLOADER_TX_ENCODING_SPACE = 8740224;
+```
+
+The value `L2_TX_MAX_GAS_LIMIT` is not renamed to `MAX_GAS_PER_TRANSACTION`.
+
+Added two new configuration values:
+
+```solidity
+uint256 constant TX_SLOT_OVERHEAD_L2_GAS = 10000; // overhead for a transaction slot in L2 gas
+uint256 constant MEMORY_OVERHEAD_GAS = 10; // overhead for each byte of the bootloader memory
+```
+
+### Storage
+
+Introduced `PubdataPricingMode` enum and `FeeParams` structure that uses that
+enum. It seems like `FeeParams` is there to allow the governor to overwrite the
+gas pricing/gas amounts on things that were before constant and are not removed
+from the Config. The enum `PubdataPricingMode` is just a switch between
+`Rollup` and `Validium`.
+
+Deprecated the `totalDepositedAmountPerUser` field.
+
+### Getters
+
+Only changes are comments, or the structure of imports is different.
+
+### Math
+
+Syntax/formatting changes - (like `x * 8` changed to `x << 3`) - or comments.
+
+### L2ContractHelper
+
+The constant `CREATE2_PREFIX` is now `private`.
+
+### L2ContractAddresses
+
+Removed `L2_BYTECODE_COMPRESSOR_SYSTEM_CONTRACT_ADDR`.
+
+### Mailbox
+
+Additional comments, syntax/formatting changes. The `_deriveL2GasPrice()`
+function now uses `FeeParams` to derive the gas price.
+
+### Executor
+
+Additional comments, syntax/formatting changes. Removed a helper function
+`_maxU256()`. In `_createBatchCommitment()` the result now includes four zero
+bytes32, described as to be replaced with EIP4844 commitments.
+
+### Verifier
+
+Two out of eight gate setup commitments changed and added some comments.
+
+## Watched changes
+
+```diff
+    contract zkSync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+      upgradeability.facets.3:
+-        "0xc40e5BE1a6D18DdB14268D32dc6075FCf72fF16d"
++        "0x3a4ef67C6cAb51444E5d3861843F7f4a37F64F0a"
+      upgradeability.facets.2:
+-        "0x2FbF76bAE617cE41AdB9021907F02e2bF187BB58"
++        "0x0f58Fd6c9Ed966e09C1dFFBc8E6FF600ec65f6eB"
+      upgradeability.facets.1:
+-        "0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7"
++        "0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B"
+      upgradeability.facets.0:
+-        "0xAeA49FCEbe3A93ADaE67FF668C0ac87799537967"
++        "0xE6426c725cB507168369c10284390E59d91eC821"
+      implementations.3:
+-        "0xc40e5BE1a6D18DdB14268D32dc6075FCf72fF16d"
++        "0x3a4ef67C6cAb51444E5d3861843F7f4a37F64F0a"
+      implementations.2:
+-        "0x2FbF76bAE617cE41AdB9021907F02e2bF187BB58"
++        "0x0f58Fd6c9Ed966e09C1dFFBc8E6FF600ec65f6eB"
+      implementations.1:
+-        "0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7"
++        "0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B"
+      implementations.0:
+-        "0xAeA49FCEbe3A93ADaE67FF668C0ac87799537967"
++        "0xE6426c725cB507168369c10284390E59d91eC821"
+      values.facetAddresses.3:
+-        "0xc40e5BE1a6D18DdB14268D32dc6075FCf72fF16d"
++        "0x3a4ef67C6cAb51444E5d3861843F7f4a37F64F0a"
+      values.facetAddresses.2:
+-        "0x2FbF76bAE617cE41AdB9021907F02e2bF187BB58"
++        "0x0f58Fd6c9Ed966e09C1dFFBc8E6FF600ec65f6eB"
+      values.facetAddresses.1:
+-        "0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7"
++        "0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B"
+      values.facetAddresses.0:
+-        "0xAeA49FCEbe3A93ADaE67FF668C0ac87799537967"
++        "0xE6426c725cB507168369c10284390E59d91eC821"
+      values.facets.3.0:
+-        "0xc40e5BE1a6D18DdB14268D32dc6075FCf72fF16d"
++        "0x3a4ef67C6cAb51444E5d3861843F7f4a37F64F0a"
+      values.facets.2.0:
+-        "0x2FbF76bAE617cE41AdB9021907F02e2bF187BB58"
++        "0x0f58Fd6c9Ed966e09C1dFFBc8E6FF600ec65f6eB"
+      values.facets.1.0:
+-        "0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7"
++        "0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B"
+      values.facets.0.1[10]:
++        "0x17338945"
+      values.facets.0.1.9:
+-        "0x17338945"
++        "0x4623c91d"
+      values.facets.0.1.8:
+-        "0x4623c91d"
++        "0xbe6f11cf"
+      values.facets.0.1.7:
+-        "0xbe6f11cf"
++        "0x1cc5d103"
+      values.facets.0.1.6:
+-        "0x1cc5d103"
++        "0xf235757f"
+      values.facets.0.1.5:
+-        "0xf235757f"
++        "0x4dd18bf5"
+      values.facets.0.1.4:
+-        "0x4dd18bf5"
++        "0x27ae4c16"
+      values.facets.0.1.3:
+-        "0x27ae4c16"
++        "0xa9f6d941"
+      values.facets.0.1.2:
+-        "0xa9f6d941"
++        "0x64bf8d66"
+      values.facets.0.0:
+-        "0xAeA49FCEbe3A93ADaE67FF668C0ac87799537967"
++        "0xE6426c725cB507168369c10284390E59d91eC821"
+      values.getL2BootloaderBytecodeHash:
+-        "0x01000831ba7021800f5d9103772fcc7463ed7e764a2a3624cacca6b3826172d0"
++        "0x010007ed0e328b940e241f7666a6303b7ffd4e3fd7e8c154d6e7556befe6cd6d"
+      values.getL2DefaultAccountBytecodeHash:
+-        "0x0100055bf7f1bc4237c2be24252fb6737cc235194139e544933c1dbf25c24ee8"
++        "0x0100055b7a8be90522251be8be1a186464d056462973502ac8a0437c85e4d2a9"
+      values.getProtocolVersion:
+-        19
++        20
+      values.getVerifier:
+-        "0xB465882F67d236DcC0D090F78ebb0d838e9719D8"
++        "0x3390051435eCB25a9610A1cF17d1BA0a228A0560"
+      values.getVerifierParams.1:
+-        "0x14628525c227822148e718ca1138acfc6d25e759e19452455d89f7f610c3dcb8"
++        "0x062362cb3eaf1f631406cbe19bf2a2c5d0d9ea69d069309a6003addae9f387be"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Verifier (0xB465882F67d236DcC0D090F78ebb0d838e9719D8) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (0x3390051435eCB25a9610A1cF17d1BA0a228A0560) {
+    }
+```
+
+## Source code changes
+
+```diff
+.../Verifier/Verifier.sol                          |  15 ++-
+ .../Verifier/interfaces/IVerifier.sol              |   8 ++
+ .../{.code@18968886 => .code}/Verifier/meta.txt    |   2 +-
+ .../solpp-generated-contracts/zksync/Config.sol    |  61 +++---------
+ .../solpp-generated-contracts/zksync/Storage.sol   |  42 ++++++--
+ .../zksync/facets/Admin.sol                        |  59 +++++------
+ .../zksync/facets/Base.sol                         |   6 +-
+ .../zksync/interfaces/IAdmin.sol                   |  36 ++++++-
+ .../zksync/interfaces/IBase.sol                    |   4 +
+ .../zksync/interfaces/IVerifier.sol                |   8 ++
+ .../zksync/libraries/Diamond.sol                   |  13 +--
+ .../zksync/libraries/PriorityQueue.sol             |   2 +-
+ .../zkSync/implementation-1/meta.txt               |   2 +-
+ .../solpp-generated-contracts/zksync/Storage.sol   |  42 ++++++--
+ .../zksync/facets/Base.sol                         |   6 +-
+ .../zksync/facets/Getters.sol                      | 108 +++++++++------------
+ .../zksync/interfaces/IBase.sol                    |   4 +
+ .../zksync/interfaces/IGetters.sol                 |  47 ++++++++-
+ .../zksync/interfaces/ILegacyGetters.sol           |  21 +++-
+ .../zksync/interfaces/IVerifier.sol                |   8 ++
+ .../zksync/libraries/Diamond.sol                   |  13 +--
+ .../zksync/libraries/PriorityQueue.sol             |   2 +-
+ .../zkSync/implementation-2/meta.txt               |   2 +-
+ .../@openzeppelin/contracts/utils/math/Math.sol    |  52 +++++-----
+ .../common/L2ContractAddresses.sol                 |   3 -
+ .../common/libraries/L2ContractHelper.sol          |   2 +-
+ .../solpp-generated-contracts/zksync/Config.sol    |  61 +++---------
+ .../solpp-generated-contracts/zksync/Storage.sol   |  42 ++++++--
+ .../zksync/facets/Base.sol                         |   6 +-
+ .../zksync/facets/Mailbox.sol                      |  97 +++++++-----------
+ .../zksync/interfaces/IBase.sol                    |   4 +
+ .../zksync/interfaces/IMailbox.sol                 |  55 ++++++++++-
+ .../zksync/interfaces/IVerifier.sol                |   8 ++
+ .../zksync/libraries/Merkle.sol                    |   2 +-
+ .../zksync/libraries/PriorityQueue.sol             |   2 +-
+ .../zksync/libraries/TransactionValidator.sol      |  61 +++---------
+ .../zkSync/implementation-3/meta.txt               |   2 +-
+ .../common/L2ContractAddresses.sol                 |   3 -
+ .../zkSync/implementation-4/meta.txt               |   2 +-
+ .../zkSync/implementation-4/zksync/Config.sol      |  61 +++---------
+ .../zkSync/implementation-4/zksync/Storage.sol     |  42 ++++++--
+ .../zkSync/implementation-4/zksync/facets/Base.sol |   6 +-
+ .../implementation-4/zksync/facets/Executor.sol    |  41 ++++----
+ .../implementation-4/zksync/interfaces/IBase.sol   |   4 +
+ .../zksync/interfaces/IExecutor.sol                |  22 +++++
+ .../zksync/interfaces/IVerifier.sol                |   8 ++
+ .../zksync/libraries/PriorityQueue.sol             |   2 +-
+ 47 files changed, 627 insertions(+), 472 deletions(-)
+```
+
+Generated with discovered.json: 0xb99d6a83690f166d2551d4c4cf9d8dd3b3ba1a3b
+
+# Diff at Tue, 09 Jan 2024 10:44:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b01559086d88aef87bd572fd8173d5933affc8d9 block: 18740832
+- current block number: 18968886
+
+## Description
+
+Overall seems like a step towards introducing a security council.
+The Governance contract is improved and written in a way that allows to simply set the security councils address and increase the minimum delay.
+Any reference to AllowList has been deleted in favour of Gorvernance.
+Removed the deposit limit.
+
+### L1ERC20Bridge
+
+When calling `deposit()`, `claimFailedDeposit()` and `finalizeWithdrawal()` the `senderCanCallFunction()` modifier has been removed.
+In the first two functions the call to `_verifyDepositLimit()` is no longer being made because the function has been removed.
+
+### zkSync
+
+- Admin facet: setting a new pending admin is done by governor only instead of governor or admin.
+- Getters facet: everything related to AllowList is removed.
+- Mailbox facet: when calling `finalizeEthWithdrawal()`, `requestL2Transaction()` the `senderCanCallFunction()` modifier has been removed. In the latter function the call to `_verifyDepositLimit()` is removed.
+
+### Governance
+
+A new contract admin of L1ERC20Bridge and ValidatorTimelock.
+Owned by zkSync Era Multisig, securityCouncil set to zero.
+Owner can schedule a transparent (you see the upgrade data on-chain) or a shadow (you don't see the upgrade data on-chain) upgrade.
+While scheduling an upgrade the owner chooses a delay, that delay has to be bigger than `minDelay` - currently that is set to zero.
+Canceling the upgrade can be done only by the owner.
+The owner or security council can call `execute()` that performs the upgrade if the delay is up.
+Only the security council can call `executeInstant()` that performs the upgrade even if the delay is not up.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract AllowList (0x0C0dC1171258694635AA50cec5845aC1031cA6d7) {
+    }
+```
+
+```diff
+    contract zkSync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+      upgradeability.facets.3:
+-        "0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269"
++        "0xc40e5BE1a6D18DdB14268D32dc6075FCf72fF16d"
+      upgradeability.facets.2:
+-        "0x63b5EC36B09384fFA7106A80Ec7cfdFCa521fD08"
++        "0x2FbF76bAE617cE41AdB9021907F02e2bF187BB58"
+      upgradeability.facets.1:
+-        "0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4"
++        "0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7"
+      upgradeability.facets.0:
+-        "0x409560DE546e057ce5bD5dB487EdF2bB5E785baB"
++        "0xAeA49FCEbe3A93ADaE67FF668C0ac87799537967"
+      implementations.3:
+-        "0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269"
++        "0xc40e5BE1a6D18DdB14268D32dc6075FCf72fF16d"
+      implementations.2:
+-        "0x63b5EC36B09384fFA7106A80Ec7cfdFCa521fD08"
++        "0x2FbF76bAE617cE41AdB9021907F02e2bF187BB58"
+      implementations.1:
+-        "0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4"
++        "0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7"
+      implementations.0:
+-        "0x409560DE546e057ce5bD5dB487EdF2bB5E785baB"
++        "0xAeA49FCEbe3A93ADaE67FF668C0ac87799537967"
+      values.facetAddresses.3:
+-        "0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269"
++        "0xc40e5BE1a6D18DdB14268D32dc6075FCf72fF16d"
+      values.facetAddresses.2:
+-        "0x63b5EC36B09384fFA7106A80Ec7cfdFCa521fD08"
++        "0x2FbF76bAE617cE41AdB9021907F02e2bF187BB58"
+      values.facetAddresses.1:
+-        "0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4"
++        "0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7"
+      values.facetAddresses.0:
+-        "0x409560DE546e057ce5bD5dB487EdF2bB5E785baB"
++        "0xAeA49FCEbe3A93ADaE67FF668C0ac87799537967"
+      values.facets.3.0:
+-        "0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269"
++        "0xc40e5BE1a6D18DdB14268D32dc6075FCf72fF16d"
+      values.facets.2.0:
+-        "0x63b5EC36B09384fFA7106A80Ec7cfdFCa521fD08"
++        "0x2FbF76bAE617cE41AdB9021907F02e2bF187BB58"
+      values.facets.1.1[33]:
+-        "0x74f4d30d"
+      values.facets.1.1.32:
+-        "0xb22dd78e"
++        "0x74f4d30d"
+      values.facets.1.1.31:
+-        "0x56142d7a"
++        "0xb22dd78e"
+      values.facets.1.1.30:
+-        "0x9cd939e4"
++        "0x56142d7a"
+      values.facets.1.1.29:
+-        "0xfacd743b"
++        "0x9cd939e4"
+      values.facets.1.1.28:
+-        "0xe81e0ba1"
++        "0xfacd743b"
+      values.facets.1.1.27:
+-        "0xc3bbd2d7"
++        "0xe81e0ba1"
+      values.facets.1.1.26:
+-        "0xbd7c5412"
++        "0xc3bbd2d7"
+      values.facets.1.1.25:
+-        "0x29b98c67"
++        "0xbd7c5412"
+      values.facets.1.1.24:
+-        "0x18e3a941"
++        "0x29b98c67"
+      values.facets.1.1.23:
+-        "0x46657fe9"
++        "0x18e3a941"
+      values.facets.1.1.22:
+-        "0xa1954fc5"
++        "0x46657fe9"
+      values.facets.1.1.21:
+-        "0xaf6a2dcd"
++        "0xa1954fc5"
+      values.facets.1.1.20:
+-        "0x39607382"
++        "0xaf6a2dcd"
+      values.facets.1.1.19:
+-        "0xfe26699e"
++        "0x39607382"
+      values.facets.1.1.18:
+-        "0xef3f0bae"
++        "0xfe26699e"
+      values.facets.1.1.17:
+-        "0xb8c2f66f"
++        "0xef3f0bae"
+      values.facets.1.1.16:
+-        "0xdb1f0bf9"
++        "0xb8c2f66f"
+      values.facets.1.1.15:
+-        "0x33ce93fe"
++        "0xdb1f0bf9"
+      values.facets.1.1.14:
+-        "0x0ec6b0b7"
++        "0x33ce93fe"
+      values.facets.1.1.13:
+-        "0x631f4bac"
++        "0x0ec6b0b7"
+      values.facets.1.1.12:
+-        "0x8665b150"
++        "0x631f4bac"
+      values.facets.1.1.11:
+-        "0x7b30c8da"
++        "0x8665b150"
+      values.facets.1.1.10:
+-        "0x9d1b5a81"
++        "0x7b30c8da"
+      values.facets.1.1.9:
+-        "0xe5355c75"
++        "0x9d1b5a81"
+      values.facets.1.1.8:
+-        "0xfd791f3c"
++        "0xe5355c75"
+      values.facets.1.1.7:
+-        "0xd86970d8"
++        "0xfd791f3c"
+      values.facets.1.1.6:
+-        "0x4fc07d75"
++        "0xd86970d8"
+      values.facets.1.1.5:
+-        "0x79823c9a"
++        "0x4fc07d75"
+      values.facets.1.1.4:
+-        "0xa7cd63b7"
++        "0x79823c9a"
+      values.facets.1.0:
+-        "0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4"
++        "0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7"
+      values.facets.0.0:
+-        "0x409560DE546e057ce5bD5dB487EdF2bB5E785baB"
++        "0xAeA49FCEbe3A93ADaE67FF668C0ac87799537967"
+      values.getAllowList:
+-        "0x0C0dC1171258694635AA50cec5845aC1031cA6d7"
+      values.getGovernor:
+-        "0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
++        "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61"
+      values.getL2BootloaderBytecodeHash:
+-        "0x01000983d4ac4f797cf5c077e022f72284969b13248c2a8e9846f574bdeb5b88"
++        "0x01000831ba7021800f5d9103772fcc7463ed7e764a2a3624cacca6b3826172d0"
+      values.getL2DefaultAccountBytecodeHash:
+-        "0x01000651c5ae96f2aab07d720439e42491bb44c6384015e3a08e32620a4d582d"
++        "0x0100055bf7f1bc4237c2be24252fb6737cc235194139e544933c1dbf25c24ee8"
+      values.getProtocolVersion:
+-        18
++        19
+    }
+```
+
+```diff
+    contract L1ERC20Bridge (0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063) {
+      upgradeability.implementation:
+-        "0x03F3F3c12e11C2FAA60080bd3F7f80AADF369a33"
++        "0x79Cc1DF74Ac2d1B0876498C9FcE32c7e34F57B43"
+      upgradeability.admin:
+-        "0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
++        "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61"
+      implementations.0:
+-        "0x03F3F3c12e11C2FAA60080bd3F7f80AADF369a33"
++        "0x79Cc1DF74Ac2d1B0876498C9FcE32c7e34F57B43"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0xa0425d71cB1D6fb80E65a5361a04096E0672De03) {
+      values.owner:
+-        "0x4e4943346848c4867F81dFb37c4cA9C5715A7828"
++        "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Governance (0x0b622A2061EaccAE1c664eBC3E868b8438e03F61) {
+    }
+```
+
+## Source code changes
+
+```diff
+.../common/AllowList.sol => /dev/null              | 142 -----------
+ .../common/interfaces/IAllowList.sol => /dev/null  |  73 ------
+ .../libraries/UncheckedMath.sol => /dev/null       |  24 --
+ .../.code@18740832/AllowList/meta.txt => /dev/null |   2 -
+ .../@openzeppelin/contracts/access/Ownable.sol     |   0
+ .../contracts/access/Ownable2Step.sol              |   0
+ .../@openzeppelin/contracts/utils/Context.sol      |   0
+ .../governance/Governance.sol                      | 265 +++++++++++++++++++++
+ .../governance/IGovernance.sol                     |  83 +++++++
+ .../zksync2/ethereum/.code/Governance/meta.txt     |   2 +
+ .../bridge/L1ERC20Bridge.sol                       |  37 +--
+ .../common/AllowListed.sol => /dev/null            |  19 --
+ .../common/interfaces/IAllowList.sol => /dev/null  |  73 ------
+ .../solpp-generated-contracts/zksync/Storage.sol   |   3 +-
+ .../zksync/interfaces/IGetters.sol                 |   2 -
+ .../L1ERC20Bridge/implementation/meta.txt          |   2 +-
+ .../common/AllowListed.sol => /dev/null            |  19 --
+ .../common/interfaces/IAllowList.sol => /dev/null  |  73 ------
+ .../solpp-generated-contracts/zksync/Storage.sol   |   3 +-
+ .../zksync/facets/Admin.sol                        |   2 +-
+ .../zksync/facets/Base.sol                         |   3 +-
+ .../zkSync/implementation-1/meta.txt               |   2 +-
+ .../common/AllowListed.sol => /dev/null            |  19 --
+ .../common/interfaces/IAllowList.sol => /dev/null  |  73 ------
+ .../solpp-generated-contracts/zksync/Storage.sol   |   3 +-
+ .../zksync/facets/Base.sol                         |   3 +-
+ .../zksync/facets/Getters.sol                      |   5 -
+ .../zksync/interfaces/IGetters.sol                 |   2 -
+ .../zkSync/implementation-2/meta.txt               |   2 +-
+ .../common/AllowListed.sol => /dev/null            |  19 --
+ .../common/interfaces/IAllowList.sol => /dev/null  |  73 ------
+ .../solpp-generated-contracts/zksync/Storage.sol   |   3 +-
+ .../zksync/facets/Base.sol                         |   3 +-
+ .../zksync/facets/Mailbox.sol                      |  16 +-
+ .../zkSync/implementation-3/meta.txt               |   2 +-
+ .../common/AllowListed.sol => /dev/null            |  19 --
+ .../common/interfaces/IAllowList.sol => /dev/null  |  73 ------
+ .../zkSync/implementation-4/meta.txt               |   2 +-
+ .../zkSync/implementation-4/zksync/Storage.sol     |   3 +-
+ .../zkSync/implementation-4/zksync/facets/Base.sol |   3 +-
+ 40 files changed, 373 insertions(+), 779 deletions(-)
+```
+
 # Diff at Fri, 08 Dec 2023 10:06:01 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: master@30e367cba0866d89eb0bd930461090359c5d3f4a
+- comparing to: main@30e367cba0866d89eb0bd930461090359c5d3f4a
 
 ## Description
 
@@ -522,7 +1061,7 @@ Refactored the way logs from L2 indicate what they are, instead of different sen
 # Diff at Mon, 04 Dec 2023 12:52:34 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@11f81c3217315242a2af781f1c2528aa4938b44c
+- comparing to: main@11f81c3217315242a2af781f1c2528aa4938b44c
 
 ## Description
 
@@ -556,7 +1095,7 @@ ExecutorFacet: 0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269
 # Diff at Tue, 21 Nov 2023 15:32:06 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@c91f8874e3c01dd4c477491e11cff7b3c664ef34
+- comparing to: main@c91f8874e3c01dd4c477491e11cff7b3c664ef34
 
 ## Description
 
@@ -575,7 +1114,7 @@ Change in the zkSync Era Multisig owners - one address is removed and another is
 # Diff at Thu, 02 Nov 2023 07:24:20 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@9b49ec4aa1d93626f3f30c0e914cb12bb6670dbd
+- comparing to: main@9b49ec4aa1d93626f3f30c0e914cb12bb6670dbd
 
 ## Description
 
@@ -606,7 +1145,7 @@ Proposal updates (the upgrade is executed): a verification key has been updated,
 # Diff at Wed, 01 Nov 2023 11:26:01 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@d5598e9a46a99374387c1df455805e40f3d361a7
+- comparing to: main@d5598e9a46a99374387c1df455805e40f3d361a7
 
 ## Description
 
@@ -634,7 +1173,7 @@ A new proposal is detected.
 # Diff at Fri, 27 Oct 2023 10:26:34 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: master@f531a9c18fd564738c9f66b8b1e5c04730dce464
+- comparing to: main@f531a9c18fd564738c9f66b8b1e5c04730dce464
 
 ## Description
 
@@ -656,7 +1195,7 @@ A new proposal has been detected.
 # Diff at Tue, 26 Sep 2023 10:27:16 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@cfd4e281f2af40c7c69302b16c1308c0c5651be0
+- comparing to: main@cfd4e281f2af40c7c69302b16c1308c0c5651be0
 
 ## Watched changes
 
@@ -690,7 +1229,7 @@ A new proposal has been detected.
 # Diff at Thu, 21 Sep 2023 12:39:16 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@36d4050a6ee5a543b2163fe6e44153b540b87c16
+- comparing to: main@36d4050a6ee5a543b2163fe6e44153b540b87c16
 
 ## Watched changes
 

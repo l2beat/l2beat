@@ -1,6 +1,6 @@
-import classNames from 'classnames'
 import React from 'react'
 
+import { cn } from '../utils/cn'
 import { ChevronLeftIcon, ChevronRightIcon } from './icons'
 
 interface OverflowWrapperProps {
@@ -11,19 +11,27 @@ interface OverflowWrapperProps {
   className?: string
 }
 
-export function OverflowWrapper(props: OverflowWrapperProps) {
+export function OverflowWrapper({
+  children,
+  disableScrollOnLoad,
+  within,
+  childrenClassName,
+  className,
+  ...rest
+}: OverflowWrapperProps) {
   return (
     <div
       data-role="overflow-wrapper"
-      data-scroll-on-load={!props.disableScrollOnLoad}
-      className={classNames('group/overflow-wrapper relative', props.className)}
+      data-scroll-on-load={!disableScrollOnLoad}
+      className={cn('group/overflow-wrapper relative', className)}
+      {...rest}
     >
       <div
-        className={classNames(
+        className={cn(
           'pointer-events-none absolute inset-y-0 left-0 z-10 w-6 bg-gradient-to-r opacity-0 transition-opacity group-data-[arrow-left-visible=true]/overflow-wrapper:pointer-events-auto group-data-[arrow-left-visible=true]/overflow-wrapper:opacity-100',
-          !props.within &&
+          !within &&
             'from-white via-white dark:from-neutral-900 dark:via-neutral-900',
-          props.within === 'nav-tabs' &&
+          within === 'nav-tabs' &&
             'from-gray-100 via-gray-100 dark:from-gray-950 dark:via-gray-950',
         )}
         data-role="overflow-wrapper-arrow-left"
@@ -33,20 +41,17 @@ export function OverflowWrapper(props: OverflowWrapperProps) {
         </div>
       </div>
       <div
-        className={classNames(
-          'scrollbar-hide overflow-x-auto',
-          props.childrenClassName,
-        )}
+        className={cn('scrollbar-hide overflow-x-auto', childrenClassName)}
         data-role="overflow-wrapper-content"
       >
-        {props.children}
+        {children}
       </div>
       <div
-        className={classNames(
+        className={cn(
           'pointer-events-none absolute inset-y-0 right-0 z-10 w-6 bg-gradient-to-l opacity-0 transition-opacity group-data-[arrow-right-visible=true]/overflow-wrapper:pointer-events-auto group-data-[arrow-right-visible=true]/overflow-wrapper:opacity-100',
-          !props.within &&
+          !within &&
             'from-white via-white dark:from-neutral-900 dark:via-neutral-900',
-          props.within === 'nav-tabs' &&
+          within === 'nav-tabs' &&
             'from-gray-100 via-gray-100 dark:from-gray-950 dark:via-gray-950',
         )}
         data-role="overflow-wrapper-arrow-right"

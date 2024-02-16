@@ -1,0 +1,1218 @@
+{
+  "ethereum": [
+    {
+      "symbol": "10SET",
+      "address": "0x7FF4169a6B5122b664c51c95727d87750eC07c84",
+      "coingeckoId": "tenset"
+    },
+    {
+      "symbol": "1INCH",
+      "address": "0x111111111117dC0aa78b770fA6A738034120C302"
+    },
+    {
+      "symbol": "AAVE",
+      "address": "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9"
+    },
+    {
+      "symbol": "ACH",
+      "address": "0xEd04915c23f00A313a544955524EB7DBD823143d"
+    },
+    {
+      "symbol": "agEUR",
+      "address": "0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8",
+      "category": "stablecoin"
+    },
+    {
+      "symbol": "AGIX",
+      "address": "0x5B7533812759B45C2B44C19e320ba2cD2681b542"
+    },
+    {
+      "symbol": "ALEPH",
+      "address": "0x27702a26126e0B3702af63Ee09aC4d1A084EF628"
+    },
+    {
+      "symbol": "alUSD",
+      "address": "0xBC6DA0FE9aD5f3b0d58160288917AA56653660E9",
+      "category": "stablecoin"
+    },
+    {
+      "symbol": "AMP",
+      "address": "0xfF20817765cB7f73d4bde2e66e067E58D11095C2"
+    },
+    {
+      "symbol": "ANC",
+      "address": "0x0F3ADC247E91c3c50bC08721355A41037E89Bc20"
+    },
+    {
+      "symbol": "ANKR",
+      "address": "0x8290333ceF9e6D528dD5618Fb97a76f268f3EDD4"
+    },
+    {
+      "symbol": "ANT",
+      "address": "0xa117000000f279D81A1D3cc75430fAA017FA5A2e"
+    },
+    {
+      "symbol": "ANY",
+      "address": "0xf99d58e463A2E07e5692127302C20A191861b4D6"
+    },
+    {
+      "symbol": "APE",
+      "address": "0x4d224452801ACEd8B2F0aebE155379bb5D594381"
+    },
+    {
+      "symbol": "API3",
+      "address": "0x0b38210ea11411557c13457D4dA7dC6ea731B88a"
+    },
+    {
+      "symbol": "AUDIO",
+      "address": "0x18aAA7115705e8be94bfFEBDE57Af9BFc265B998"
+    },
+    {
+      "symbol": "AURORA",
+      "address": "0xAaAAAA20D9E0e2461697782ef11675f668207961"
+    },
+    {
+      "symbol": "AXS",
+      "address": "0xBB0E17EF65F82Ab018d8EDd776e8DD940327B28b"
+    },
+    {
+      "symbol": "BabyDoge",
+      "address": "0xAC57De9C1A09FeC648E93EB98875B212DB0d460B"
+    },
+    {
+      "symbol": "BAL",
+      "address": "0xba100000625a3754423978a60c9317c58a424e3D"
+    },
+    {
+      "symbol": "BAND",
+      "address": "0xBA11D00c5f74255f56a5E366F4F77f5A186d7f55"
+    },
+    {
+      "symbol": "BAT",
+      "address": "0x0D8775F648430679A709E98d2b0Cb6250d2887EF"
+    },
+    {
+      "symbol": "BFC",
+      "address": "0x0c7D5ae016f806603CB1782bEa29AC69471CAb9c"
+    },
+    {
+      "symbol": "BICO",
+      "address": "0xF17e65822b568B3903685a7c9F496CF7656Cc6C2"
+    },
+    {
+      "symbol": "BIT",
+      "address": "0x1A4b46696b2bB4794Eb3D4c26f1c55F9170fa4C5"
+    },
+    {
+      "symbol": "BLUR",
+      "address": "0x5283D291DBCF85356A21bA090E6db59121208b44"
+    },
+    {
+      "symbol": "BNT",
+      "address": "0x1F573D6Fb3F13d689FF844B4cE37794d79a7FF1C"
+    },
+    {
+      "symbol": "BOBA",
+      "address": "0x42bBFa2e77757C645eeaAd1655E0911a7553Efbc"
+    },
+    {
+      "symbol": "BRKL",
+      "address": "0x4674a4F24C5f63D53F22490Fb3A08eAAAD739ff8"
+    },
+    {
+      "symbol": "BTT",
+      "address": "0xC669928185DbCE49d2230CC9B0979BE6DC797957"
+    },
+    {
+      "symbol": "BUSD",
+      "address": "0x4Fabb145d64652a948d72533023f6E7A623C7C53",
+      "category": "stablecoin"
+    },
+    {
+      "symbol": "C98",
+      "address": "0xAE12C5930881c53715B369ceC7606B70d8EB229f"
+    },
+    {
+      "symbol": "cDAI",
+      "address": "0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",
+      "category": "stablecoin"
+    },
+    {
+      "symbol": "CEL",
+      "address": "0xaaAEBE6Fe48E54f431b0C390CfaF0b017d09D42d"
+    },
+    {
+      "symbol": "CELR",
+      "address": "0x4F9254C83EB525f9FCf346490bbb3ed28a81C667"
+    },
+    {
+      "symbol": "CET",
+      "address": "0x081F67aFA0cCF8c7B17540767BBe95DF2bA8D97F"
+    },
+    {
+      "symbol": "cETH",
+      "address": "0x4Ddc2D193948926D02f9B1fE9e1daa0718270ED5"
+    },
+    {
+      "symbol": "CHR",
+      "address": "0x8A2279d4A90B6fe1C4B30fa660cC9f926797bAA2"
+    },
+    {
+      "symbol": "CHSB",
+      "address": "0xba9d4199faB4f26eFE3551D490E3821486f135Ba",
+      "coingeckoId": "swissborg"
+    },
+    {
+      "symbol": "BORG",
+      "address": "0x64d0f55cd8c7133a9d7102b13987235f486f2224",
+      "coingeckoId": "swissborg"
+    },
+    {
+      "symbol": "CHZ",
+      "address": "0x3506424F91fD33084466F402d5D97f05F8e3b4AF"
+    },
+    {
+      "symbol": "COMP",
+      "address": "0xc00e94Cb662C3520282E6f5717214004A7f26888"
+    },
+    {
+      "symbol": "COPI",
+      "address": "0x42Baf1f659D765C65ADE5BB7E08eb2C680360d9d"
+    },
+    {
+      "symbol": "COTI",
+      "address": "0xDDB3422497E61e13543BeA06989C0789117555c5"
+    },
+    {
+      "symbol": "CREDI",
+      "address": "0xaE6e307c3Fe9E922E5674DBD7F830Ed49c014c6B"
+    },
+    {
+      "symbol": "CRO",
+      "address": "0xA0b73E1Ff0B80914AB6fe0444E65848C4C34450b"
+    },
+    {
+      "symbol": "CRTS",
+      "address": "0x678e840C640F619E17848045D23072844224dD37"
+    },
+    {
+      "symbol": "CRV",
+      "address": "0xD533a949740bb3306d119CC777fa900bA034cd52"
+    },
+    {
+      "symbol": "CTSI",
+      "address": "0x491604c0FDF08347Dd1fa4Ee062a822A5DD06B5D"
+    },
+    {
+      "symbol": "cUSDC",
+      "address": "0x39AA39c021dfbaE8faC545936693aC917d5E7563",
+      "category": "stablecoin"
+    },
+    {
+      "symbol": "CVC",
+      "address": "0x41e5560054824eA6B0732E656E3Ad64E20e94E45"
+    },
+    {
+      "symbol": "CVX",
+      "address": "0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B"
+    },
+    {
+      "symbol": "cvxCRV",
+      "address": "0x62B9c7356A2Dc64a1969e19C23e4f579F9810Aa7"
+    },
+    {
+      "symbol": "cWBTC",
+      "address": "0xccF4429DB6322D5C611ee964527D42E5d685DD6a"
+    },
+    {
+      "symbol": "DAI",
+      "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+      "category": "stablecoin"
+    },
+    {
+      "symbol": "DAO",
+      "address": "0x0f51bb10119727a7e5eA3538074fb341F56B09Ad"
+    },
+    {
+      "symbol": "DENT",
+      "address": "0x3597bfD533a99c9aa083587B074434E61Eb0A258"
+    },
+    {
+      "symbol": "DG",
+      "address": "0x53C8395465A84955c95159814461466053DedEDE"
+    },
+    {
+      "symbol": "DPX",
+      "address": "0xEec2bE5c91ae7f8a338e1e5f3b5DE49d07AfdC81"
+    },
+    {
+      "symbol": "DVF",
+      "address": "0xDDdddd4301A082e62E84e43F474f044423921918"
+    },
+    {
+      "symbol": "DYDX",
+      "address": "0x92D6C1e31e14520e676a687F0a93788B716BEff5"
+    },
+    {
+      "symbol": "ELG",
+      "address": "0xA2085073878152aC3090eA13D1e41bD69e60Dc99"
+    },
+    {
+      "symbol": "ELON",
+      "address": "0x761D38e5ddf6ccf6Cf7c55759d5210750B5D60F3"
+    },
+    {
+      "symbol": "ENJ",
+      "address": "0xF629cBd94d3791C9250152BD8dfBDF380E2a3B9c"
+    },
+    {
+      "symbol": "ENS",
+      "address": "0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72"
+    },
+    {
+      "symbol": "EPIK",
+      "address": "0x4da0C48376C277cdBd7Fc6FdC6936DEE3e4AdF75"
+    },
+    {
+      "symbol": "ETH",
+      "category": "ether"
+    },
+    {
+      "symbol": "EURT",
+      "address": "0xC581b735A1688071A1746c968e0798D642EDE491"
+    },
+    {
+      "symbol": "eXRD",
+      "address": "0x6468e79A80C0eaB0F9A2B574c8d5bC374Af59414"
+    },
+    {
+      "symbol": "FEG",
+      "address": "0x389999216860AB8E0175387A0c90E5c52522C945"
+    },
+    {
+      "symbol": "FEI",
+      "address": "0x956F47F50A910163D8BF957Cf5846D573E7f87CA",
+      "category": "stablecoin"
+    },
+    {
+      "symbol": "FET",
+      "address": "0xaea46A60368A7bD060eec7DF8CBa43b7EF41Ad85"
+    },
+    {
+      "symbol": "FRAX",
+      "address": "0x853d955aCEf822Db058eb8505911ED77F175b99e"
+    },
+    {
+      "symbol": "FTM",
+      "address": "0x4E15361FD6b4BB609Fa63C81A2be19d873717870"
+    },
+    {
+      "symbol": "FTX Token",
+      "address": "0x50D1c9771902476076eCFc8B2A83Ad6b9355a4c9"
+    },
+    {
+      "symbol": "FX",
+      "address": "0x8c15Ef5b4B21951d50E53E4fbdA8298FFAD25057"
+    },
+    {
+      "symbol": "FXS",
+      "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0"
+    },
+    {
+      "symbol": "GAINS",
+      "address": "0x056C1D42Fb1326f57da7f19eBB7dDA4673f1FF55"
+    },
+    {
+      "symbol": "GALA",
+      "address": "0x15D4c048F83bd7e37d49eA4C83a07267Ec4203dA",
+      "coingeckoId": "gala"
+    },
+    {
+      "symbol": "GAME",
+      "address": "0xD567B5F02b9073aD3a982a099a23Bf019FF11d1c"
+    },
+    {
+      "symbol": "GLM",
+      "address": "0x7DD9c5Cba05E151C895FDe1CF355C9A1D5DA6429"
+    },
+    {
+      "symbol": "GNO",
+      "address": "0x6810e776880C02933D47DB1b9fc05908e5386b96"
+    },
+    {
+      "symbol": "gOHM",
+      "address": "0x0ab87046fBb341D058F17CBC4c1133F25a20a52f"
+    },
+    {
+      "symbol": "GRT",
+      "address": "0xc944E90C64B2c07662A292be6244BDf05Cda44a7"
+    },
+    {
+      "symbol": "GT",
+      "address": "0xE66747a101bFF2dBA3697199DCcE5b743b454759"
+    },
+    {
+      "symbol": "GUSD",
+      "address": "0x056Fd409E1d7A124BD7017459dFEa2F387b6d5Cd",
+      "category": "stablecoin"
+    },
+    {
+      "symbol": "HBTC",
+      "address": "0x0316EB71485b0Ab14103307bf65a021042c6d380"
+    },
+    {
+      "symbol": "HEART",
+      "address": "0x8FAc8031e079F409135766C7d5De29cf22EF897C"
+    },
+    {
+      "symbol": "HEZ",
+      "address": "0xEEF9f339514298C6A857EfCfC1A762aF84438dEE"
+    },
+    {
+      "symbol": "HOP",
+      "address": "0xc5102fE9359FD9a28f877a67E36B0F050d81a3CC"
+    },
+    {
+      "symbol": "HOT",
+      "address": "0x6c6EE5e31d828De241282B9606C8e98Ea48526E2"
+    },
+    {
+      "symbol": "HT",
+      "address": "0x6f259637dcD74C767781E37Bc6133cd6A68aa161"
+    },
+    {
+      "symbol": "HUSD",
+      "address": "0xdF574c24545E5FfEcb9a659c229253D4111d87e1",
+      "category": "stablecoin"
+    },
+    {
+      "symbol": "HYPR",
+      "address": "0x31adda225642a8f4d7e90d4152be6661ab22a5a2"
+    },
+    {
+      "symbol": "ILV",
+      "address": "0x767FE9EDC9E0dF98E07454847909b5E959D7ca0E"
+    },
+    {
+      "symbol": "IMX",
+      "address": "0xF57e7e7C23978C3cAEC3C3548E3D615c346e79fF"
+    },
+    {
+      "symbol": "INJ",
+      "address": "0xe28b3B32B6c345A34Ff64674606124Dd5Aceca30"
+    },
+    {
+      "symbol": "KCS",
+      "address": "0xf34960d9d60be18cC1D5Afc1A6F012A723a28811",
+      "coingeckoId": "kucoin-shares"
+    },
+    {
+      "symbol": "KEEP",
+      "address": "0x85Eee30c52B0b379b046Fb0F85F4f3Dc3009aFEC"
+    },
+    {
+      "symbol": "KNC",
+      "address": "0xdeFA4e8a7bcBA345F687a2f1456F5Edd9CE97202"
+    },
+    {
+      "symbol": "KP3R",
+      "address": "0x1cEB5cB57C4D4E2b2433641b95Dd330A33185A44"
+    },
+    {
+      "symbol": "LDO",
+      "address": "0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32"
+    },
+    {
+      "symbol": "LEO",
+      "address": "0x2AF5D2aD76741191D15Dfe7bF6aC92d4Bd912Ca3"
+    },
+    {
+      "symbol": "LINK",
+      "address": "0x514910771AF9Ca656af840dff83E8264EcF986CA"
+    },
+    {
+      "symbol": "LOOKS",
+      "address": "0xf4d2888d29D722226FafA5d9B24F9164c092421E"
+    },
+    {
+      "symbol": "LORDS",
+      "address": "0x686f2404e77Ab0d9070a46cdfb0B7feCDD2318b0"
+    },
+    {
+      "symbol": "LPT",
+      "address": "0x58b6A8A3302369DAEc383334672404Ee733aB239"
+    },
+    {
+      "symbol": "LRC",
+      "address": "0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD"
+    },
+    {
+      "symbol": "LUSD",
+      "address": "0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+      "category": "stablecoin"
+    },
+    {
+      "symbol": "LYRA",
+      "address": "0x01BA67AAC7f75f647D94220Cc98FB30FCc5105Bf",
+      "category": "stablecoin"
+    },
+    {
+      "symbol": "LYXe",
+      "address": "0xA8b919680258d369114910511cc87595aec0be6D"
+    },
+    {
+      "symbol": "MAGIC",
+      "address": "0xB0c7a3Ba49C7a6EaBa6cD4a96C55a1391070Ac9A"
+    },
+    {
+      "symbol": "MANA",
+      "address": "0x0F5D2fB29fb7d3CFeE444a200298f468908cC942"
+    },
+    {
+      "symbol": "MASK",
+      "address": "0x69af81e73A73B40adF4f3d4223Cd9b1ECE623074"
+    },
+    {
+      "symbol": "MATIC",
+      "address": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0"
+    },
+    {
+      "symbol": "MC",
+      "address": "0x949D48EcA67b17269629c7194F4b727d4Ef9E5d6"
+    },
+    {
+      "symbol": "mETH",
+      "address": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa"
+    },
+    {
+      "symbol": "MELD",
+      "address": "0x333000333b26eE30214B4af6419D9ab07a450400"
+    },
+    {
+      "symbol": "Metis",
+      "address": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e"
+    },
+    {
+      "symbol": "MIM",
+      "address": "0x99D8a9C45b2ecA8864373A26D1459e3Dff1e17F3"
+    },
+    {
+      "symbol": "MIR",
+      "address": "0x09a3EcAFa817268f77BE1283176B946C4ff2E608"
+    },
+    {
+      "symbol": "MKR",
+      "address": "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2"
+    },
+    {
+      "symbol": "MNT",
+      "address": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354"
+    },
+    {
+      "symbol": "MUTE",
+      "address": "0xA49d7499271aE71cd8aB9Ac515e6694C755d400c"
+    },
+    {
+      "symbol": "MXC",
+      "address": "0x5Ca381bBfb58f0092df149bD3D243b08B9a8386e"
+    },
+    {
+      "symbol": "NEXO",
+      "address": "0xB62132e35a6c13ee1EE0f84dC5d40bad8d815206"
+    },
+    {
+      "symbol": "NFT",
+      "address": "0xEF40B859D21e4d566a3d713e756197c021BffaAa",
+      "coingeckoId": "apenft"
+    },
+    {
+      "symbol": "NFTD",
+      "address": "0x8E0fE2947752BE0d5ACF73aaE77362Daf79cB379"
+    },
+    {
+      "symbol": "NU",
+      "address": "0x4fE83213D56308330EC302a8BD641f1d0113A4Cc"
+    },
+    {
+      "symbol": "NUM",
+      "address": "0x3496B523e5C00a4b4150D6721320CdDb234c3079"
+    },
+    {
+      "symbol": "NXM",
+      "address": "0xd7c49CEE7E9188cCa6AD8FF264C1DA2e69D4Cf3B"
+    },
+    {
+      "symbol": "OBI",
+      "address": "0xBb3A8FD6Ec4bF0FDc6Cd2739b1e41192D12B1873"
+    },
+    {
+      "symbol": "OCEAN",
+      "address": "0x967da4048cD07aB37855c090aAF366e4ce1b9F48"
+    },
+    {
+      "symbol": "OHM",
+      "address": "0x64aa3364F17a4D01c6f1751Fd97C2BD3D7e7f1D5"
+    },
+    {
+      "symbol": "OKB",
+      "address": "0x75231F58b43240C9718Dd58B4967c5114342a86c"
+    },
+    {
+      "symbol": "OMG",
+      "address": "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07"
+    },
+    {
+      "symbol": "OMI",
+      "address": "0xeD35af169aF46a02eE13b9d79Eb57d6D68C1749e"
+    },
+    {
+      "symbol": "ORBS",
+      "address": "0xff56Cc6b1E6dEd347aA0B7676C85AB0B3D08B0FA"
+    },
+    {
+      "symbol": "ORION",
+      "address": "0x727f064A78DC734D33eEc18d5370aef32Ffd46e4"
+    },
+    {
+      "symbol": "OUSD",
+      "address": "0x2A8e1E676Ec238d8A992307B495b45B3fEAa5e86",
+      "category": "stablecoin"
+    },
+    {
+      "symbol": "PAXG",
+      "address": "0x45804880De22913dAFE09f4980848ECE6EcbAf78"
+    },
+    {
+      "symbol": "PBX",
+      "address": "0xD528cf2E081f72908e086F8800977df826B5a483"
+    },
+    {
+      "symbol": "PEOPLE",
+      "address": "0x7A58c0Be72BE218B41C608b7Fe7C5bB630736C71"
+    },
+    {
+      "symbol": "PERP",
+      "address": "0xbC396689893D065F41bc2C6EcbeE5e0085233447"
+    },
+    {
+      "symbol": "PLA",
+      "address": "0x3a4f40631a4f906c2BaD353Ed06De7A5D3fCb430"
+    },
+    {
+      "symbol": "PNT",
+      "address": "0x89Ab32156e46F46D02ade3FEcbe5Fc4243B9AAeD"
+    },
+    {
+      "symbol": "POL",
+      "address": "0x455e53cbb86018ac2b8092fdcd39d8444affc3f6"
+    },
+    {
+      "symbol": "POLY",
+      "address": "0x9992eC3cF6A55b00978cdDF2b27BC6882d88D1eC"
+    },
+    {
+      "symbol": "PORTX",
+      "address": "0x104F3152D8ebFC3f679392977356962Ff36566aC"
+    },
+    {
+      "symbol": "POWR",
+      "address": "0x595832F8FC6BF59c85C527fEC3740A1b7a361269"
+    },
+    {
+      "symbol": "PSTAKE",
+      "address": "0xfB5c6815cA3AC72Ce9F5006869AE67f18bF77006"
+    },
+    {
+      "symbol": "PUNDIX",
+      "address": "0x0FD10b9899882a6f2fcb5c371E17e70FdEe00C38"
+    },
+    {
+      "symbol": "PYR",
+      "address": "0x430EF9263E76DAE63c84292C3409D61c598E9682"
+    },
+    {
+      "symbol": "QNT",
+      "address": "0x4a220E6096B25EADb88358cb44068A3248254675"
+    },
+    {
+      "symbol": "RACA",
+      "address": "0x12BB890508c125661E03b09EC06E404bc9289040"
+    },
+    {
+      "symbol": "RAD",
+      "address": "0x31c8EAcBFFdD875c74b94b077895Bd78CF1E64A3"
+    },
+    {
+      "symbol": "RAI",
+      "address": "0x03ab458634910AaD20eF5f1C8ee96F1D6ac54919",
+      "category": "stablecoin"
+    },
+    {
+      "symbol": "RAZOR",
+      "address": "0x50DE6856358Cc35f3A9a57eAAA34BD4cB707d2cd"
+    },
+    {
+      "symbol": "rDPX",
+      "address": "0x0ff5A8451A839f5F0BB3562689D9A44089738D11"
+    },
+    {
+      "symbol": "REEF",
+      "address": "0xFE3E6a25e6b192A42a44ecDDCd13796471735ACf"
+    },
+    {
+      "symbol": "REN",
+      "address": "0x408e41876cCCDC0F92210600ef50372656052a38"
+    },
+    {
+      "symbol": "renBTC",
+      "address": "0xEB4C2781e4ebA804CE9a9803C67d0893436bB27D"
+    },
+    {
+      "symbol": "REQ",
+      "address": "0x8f8221aFbB33998d8584A2B05749bA73c37a938a"
+    },
+    {
+      "symbol": "rETH",
+      "address": "0xae78736Cd615f374D3085123A210448E74Fc6393"
+    },
+    {
+      "symbol": "RGT",
+      "address": "0xD291E7a03283640FDc51b121aC401383A46cC623"
+    },
+    {
+      "symbol": "RLY",
+      "address": "0xf1f955016EcbCd7321c7266BccFB96c68ea5E49b"
+    },
+    {
+      "symbol": "RNDR",
+      "address": "0x6De037ef9aD2725EB40118Bb1702EBb27e4Aeb24"
+    },
+    {
+      "symbol": "RPL",
+      "address": "0xD33526068D116cE69F19A9ee46F0bd304F21A51f"
+    },
+    {
+      "symbol": "RSR",
+      "address": "0x320623b8E4fF03373931769A31Fc52A4E78B5d70"
+    },
+    {
+      "symbol": "RUNE",
+      "address": "0x3155BA85D5F96b2d030a4966AF206230e46849cb",
+      "coingeckoId": "thorchain"
+    },
+    {
+      "symbol": "SAND",
+      "address": "0x3845badAde8e6dFF049820680d1F14bD3903a5d0"
+    },
+    {
+      "symbol": "sDAI",
+      "address": "0x83F20F44975D03b1b09e64809B757c47f942BEeA"
+    },
+    {
+      "symbol": "sfrxETH",
+      "address": "0xac3E018457B222d93114458476f3E3416Abbe38F"
+    },
+    {
+      "symbol": "SHIB",
+      "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE"
+    },
+    {
+      "symbol": "SIS",
+      "address": "0xd38BB40815d2B0c2d2c866e0c72c5728ffC76dd9"
+    },
+    {
+      "symbol": "SKL",
+      "address": "0x00c83aeCC790e8a4453e5dD3B0B4b3680501a7A7"
+    },
+    {
+      "symbol": "SLP",
+      "address": "0xCC8Fa225D80b9c7D42F96e9570156c65D6cAAa25"
+    },
+    {
+      "symbol": "SNT",
+      "address": "0x744d70FDBE2Ba4CF95131626614a1763DF805B9E"
+    },
+    {
+      "symbol": "SNX",
+      "address": "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F"
+    },
+    {
+      "symbol": "SOUL",
+      "address": "0x79C75E2e8720B39e258F41c37cC4f309E0b0fF80",
+      "coingeckoId": "phantasma"
+    },
+    {
+      "symbol": "SPELL",
+      "address": "0x090185f2135308BaD17527004364eBcC2D37e5F6"
+    },
+    {
+      "symbol": "SRM",
+      "address": "0x476c5E26a75bd202a9683ffD34359C0CC15be0fF"
+    },
+    {
+      "symbol": "STARL",
+      "address": "0x8E6cd950Ad6ba651F6DD608Dc70e5886B1AA6B24"
+    },
+    {
+      "symbol": "stETH",
+      "address": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
+    },
+    {
+      "symbol": "STG",
+      "address": "0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6"
+    },
+    {
+      "symbol": "STONE",
+      "address": "0x7122985656e38BDC0302Db86685bb972b145bD3C"
+    },
+    {
+      "symbol": "SUPER",
+      "address": "0xe53EC727dbDEB9E2d5456c3be40cFF031AB40A55"
+    },
+    {
+      "symbol": "SUSHI",
+      "address": "0x6B3595068778DD592e39A122f4f5a5cF09C90fE2"
+    },
+    {
+      "symbol": "SXP",
+      "address": "0x8CE9137d39326AD0cD6491fb5CC0CbA0e089b6A9"
+    },
+    {
+      "symbol": "SYN",
+      "address": "0x0f2D719407FdBeFF09D87557AbB7232601FD9F29"
+    },
+    {
+      "symbol": "TEL",
+      "address": "0x467Bccd9d29f223BcE8043b84E8C8B282827790F"
+    },
+    {
+      "symbol": "TLOS",
+      "address": "0x7825e833D495F3d1c28872415a4aee339D26AC88"
+    },
+    {
+      "symbol": "TOKE",
+      "address": "0x2e9d63788249371f1DFC918a52f8d799F4a38C94"
+    },
+    {
+      "symbol": "TONCOIN",
+      "address": "0x582d872A1B094FC48F5DE31D3B73F2D9bE47def1"
+    },
+    {
+      "symbol": "TRAC",
+      "address": "0xaA7a9CA87d3694B5755f213B5D04094b8d0F0A6F"
+    },
+    {
+      "symbol": "TRIBE",
+      "address": "0xc7283b66Eb1EB5FB86327f08e1B5816b0720212B"
+    },
+    {
+      "symbol": "TUSD",
+      "address": "0x0000000000085d4780B73119b644AE5ecd22b376",
+      "category": "stablecoin"
+    },
+    {
+      "symbol": "UFO",
+      "address": "0x249e38Ea4102D0cf8264d3701f1a0E39C4f2DC3B"
+    },
+    {
+      "symbol": "UMA",
+      "address": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
+    },
+    {
+      "symbol": "UNI",
+      "address": "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"
+    },
+    {
+      "symbol": "UOS",
+      "address": "0xD13c7342e1ef687C5ad21b27c2b65D772cAb5C8c"
+    },
+    {
+      "symbol": "USDC",
+      "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "category": "stablecoin"
+    },
+    {
+      "symbol": "USDD",
+      "address": "0x0C10bF8FcB7Bf5412187A595ab97a3609160b5c6",
+      "category": "stablecoin"
+    },
+    {
+      "symbol": "USDM",
+      "address": "0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C",
+      "category": "stablecoin"
+    },
+    {
+      "symbol": "USDN",
+      "address": "0x674C6Ad92Fd080e4004b2312b45f796a192D27a0",
+      "category": "stablecoin"
+    },
+    {
+      "symbol": "USDP",
+      "address": "0x8E870D67F660D95d5be530380D0eC0bd388289E1",
+      "category": "stablecoin"
+    },
+    {
+      "symbol": "USDT",
+      "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+      "category": "stablecoin"
+    },
+    {
+      "symbol": "VENT",
+      "address": "0x5F0bc16D50F72d10b719dBF6845DE2E599eb5624"
+    },
+    {
+      "symbol": "VLX",
+      "address": "0x8C543AED163909142695f2d2aCd0D55791a9Edb9"
+    },
+    {
+      "symbol": "VR",
+      "address": "0x7d5121505149065b562C789A0145eD750e6E8cdD"
+    },
+    {
+      "symbol": "WAGMI",
+      "address": "0x92CC36D66e9d739D50673d1f27929a371FB83a67"
+    },
+    {
+      "symbol": "WAVES",
+      "address": "0x1cF4592ebfFd730c7dc92c1bdFFDfc3B9EfCf29a"
+    },
+    {
+      "symbol": "WBTC",
+      "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
+    },
+    {
+      "symbol": "WETH",
+      "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "category": "ether"
+    },
+    {
+      "symbol": "WLD",
+      "address": "0x163f8C2467924be0ae7B5347228CABF260318753"
+    },
+    {
+      "symbol": "WOO",
+      "address": "0x4691937a7508860F876c9c0a2a617E7d9E945D4B"
+    },
+    {
+      "symbol": "wstETH",
+      "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
+    },
+    {
+      "symbol": "wUSDM",
+      "address": "0x57F5E098CaD7A3D1Eed53991D4d66C45C9AF7812",
+      "category": "stablecoin",
+      "coingeckoId": "mountain-protocol-usdm"
+    },
+    {
+      "symbol": "WXT",
+      "address": "0xa02120696c7B8fE16C09C749E4598819b2B0E915"
+    },
+    {
+      "symbol": "XAUt",
+      "address": "0x68749665FF8D2d112Fa859AA293F07A622782F38"
+    },
+    {
+      "symbol": "XCAD",
+      "address": "0x7659CE147D0e714454073a5dd7003544234b6Aa0"
+    },
+    {
+      "symbol": "XCN",
+      "address": "0xA2cd3D43c775978A96BdBf12d733D5A1ED94fb18"
+    },
+    {
+      "symbol": "XDB",
+      "address": "0xB9EefC4b0d472A44be93970254Df4f4016569d27",
+      "coingeckoId": "digitalbits"
+    },
+    {
+      "symbol": "xSUSHI",
+      "address": "0x8798249c2E607446EfB7Ad49eC89dD1865Ff4272"
+    },
+    {
+      "symbol": "XYO",
+      "address": "0x55296f69f40Ea6d20E478533C15A6B08B654E758"
+    },
+    {
+      "symbol": "YFI",
+      "address": "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e"
+    },
+    {
+      "symbol": "YGG",
+      "address": "0x25f8087EAD173b73D6e8B84329989A8eEA16CF73"
+    },
+    {
+      "symbol": "ZKS",
+      "address": "0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6",
+      "coingeckoId": "zkspace"
+    },
+    {
+      "symbol": "ZMT",
+      "address": "0xaa602dE53347579f86b996D2Add74bb6F79462b2"
+    },
+    {
+      "symbol": "ZRX",
+      "address": "0xE41d2489571d322189246DaFA5ebDe1F4699F498"
+    }
+  ],
+  "arbitrum": [
+    {
+      "symbol": "ARB",
+      "address": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "BIFI",
+      "address": "0x99C409E5f62E4bd2AC142f17caFb6810B8F0BAAE",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Multichain",
+        "slug": "multichain"
+      },
+      "coingeckoId": "beefy-finance"
+    },
+    {
+      "symbol": "BTC.b",
+      "address": "0x2297aEbD383787A160DD0d9F71508148769342E3",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
+      "symbol": "DMT",
+      "address": "0x8B0E6f19Ee57089F7649A455D89D7bC6314D04e8",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "GMX",
+      "address": "0xfc5A1A6EB076a2C7aD06eD22C90d7E710E35ad0a",
+      "category": "stablecoin",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "GNS",
+      "address": "0x18c11FD286C5EC11c3b683Caa813B77f5163A122",
+      "type": "NMV",
+      "formula": "totalSupply"
+    },
+    {
+      "symbol": "HDN",
+      "address": "0x3404149e9EE6f17Fb41DB1Ce593ee48FBDcD9506",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "JOE",
+      "address": "0x371c7ec6d8039ff7933a2aa28eb827ffe1f52f07",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
+      "symbol": "SDEX",
+      "address": "0xabD587f2607542723b17f14d00d99b987C29b074",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Wormhole",
+        "slug": "portal"
+      }
+    },
+    {
+      "symbol": "USDC",
+      "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+      "category": "stablecoin",
+      "type": "NMV",
+      "formula": "totalSupply"
+    },
+    {
+      "symbol": "XAI",
+      "address": "0x4cb9a7ae498cedcbb5eae9f25736ae7d428c9d66",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    }
+  ],
+  "optimism": [
+    {
+      "symbol": "KWENTA",
+      "address": "0x920Cf626a271321C151D027030D5d08aF699456b",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "OP",
+      "address": "0x4200000000000000000000000000000000000042",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "USDC",
+      "address": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+      "category": "stablecoin",
+      "type": "NMV",
+      "formula": "totalSupply"
+    },
+    {
+      "symbol": "VELO",
+      "address": "0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "EXA",
+      "address": "0x1e925de1c68ef83bd98ee3e130ef14a50309c01b",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    }
+  ],
+  "base": [
+    {
+      "symbol": "SDEX",
+      "address": "0xFd4330b0312fdEEC6d4225075b82E00493FF2e3f",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Wormhole",
+        "slug": "portal"
+      }
+    },
+    {
+      "symbol": "USDC",
+      "address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "category": "stablecoin",
+      "type": "NMV",
+      "formula": "totalSupply"
+    },
+    {
+      "symbol": "AERO",
+      "address": "0x940181a94a35a4569e4529a3cdfb74e38fd98631",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "SEAM",
+      "address": "0x1c7a460413dd4e964f96d8dfc56e7223ce88cd85",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "DEGEN",
+      "address": "0x4ed4e862860bed51a9570b96d89af5e1b0efefed",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "TYBG",
+      "address": "0x0d97f261b1e88845184f678e2d1e7a98d9fd38de",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    }
+  ],
+  "lyra": [
+    {
+      "symbol": "USDC",
+      "address": "0x6879287835A86F50f784313dBEd5E5cCC5bb8481",
+      "category": "stablecoin",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "usd-coin"
+    }
+  ],
+  "mantapacific": [
+    {
+      "symbol": "STONE",
+      "address": "0xEc901DA9c68E90798BbBb74c11406A32A70652C3",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
+      "symbol": "TIA",
+      "address": "0x6Fae4D9935E2fcb11fC79a64e917fb2BF14DaFaa",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Hyperlane Nexus"
+      },
+      "coingeckoId": "celestia"
+    },
+    {
+      "symbol": "MANTA",
+      "address": "0x95CeF13441Be50d20cA4558CC0a27B601aC544E5",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    }
+  ],
+  "linea": [
+    {
+      "symbol": "STONE",
+      "address": "0x93F4d0ab6a8B4271f4a28Db399b5E30612D21116",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    }
+  ],
+  "zkfair": [
+    {
+      "symbol": "ZKF",
+      "address": "0x1cd3e2a23c45a690a18ed93fd1412543f464158f",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    }
+  ],
+  "kroma": [
+    {
+      "symbol": "WEMIX.e",
+      "address": "0x3720b1Dc2c8dde3BD6cfCf0b593D0A2bBCAc856e",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Wemix on Kroma"
+      },
+      "coingeckoId": "wemix-token"
+    }
+  ],
+  "aevo": [
+    {
+      "symbol": "USDC",
+      "address": "0xC06Ed0eB5c0e25fa71B37A3F33CFa62C7d9dD542",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "usd-coin"
+    },
+    {
+      "symbol": "WETH",
+      "address": "0xEB5eAb7315f6721d90ED8DD007F802ecbFb99cE8",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "weth"
+    }
+  ]
+}

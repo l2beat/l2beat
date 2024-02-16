@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -13,7 +18,6 @@ import {
   STATE_CORRECTNESS,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { formatSeconds } from '../utils/formatSeconds'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -93,9 +97,9 @@ export const zksyncera: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
+      defaultUrl: 'https://mainnet.era.zksync.io',
+      defaultCallsPerMinute: 1500,
       startBlock: 1,
-      url: 'https://mainnet.era.zksync.io',
-      callsPerMinute: 1500,
     },
     liveness: {
       proofSubmissions: [
@@ -163,14 +167,14 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269#code#F1#L365',
-            'https://etherscan.io/address/0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4#code#F7#L26',
+            'https://etherscan.io/address/0x3a4ef67C6cAb51444E5d3861843F7f4a37F64F0a#code#F1#L363',
+            'https://etherscan.io/address/0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B#code#F5#L26',
           ],
         },
         {
           contract: 'Verifier',
           references: [
-            'https://etherscan.io/address/0xB465882F67d236DcC0D090F78ebb0d838e9719D8#code#F1#L348',
+            'https://etherscan.io/address/0x3390051435eCB25a9610A1cF17d1BA0a228A0560#code#F1#L345',
           ],
         },
       ],
@@ -192,7 +196,7 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4#code#F1#L128',
+            'https://etherscan.io/address/0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B#code#F1#L125',
           ],
         },
       ],
@@ -206,8 +210,9 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0x409560DE546e057ce5bD5dB487EdF2bB5E785baB#code#F1#L100',
-            'https://etherscan.io/address/0x409560DE546e057ce5bD5dB487EdF2bB5E785baB#code#F7#L58',
+            'https://etherscan.io/address/0xE6426c725cB507168369c10284390E59d91eC821#code#F1#L107',
+            'https://etherscan.io/address/0x0b622A2061EaccAE1c664eBC3E868b8438e03F61#code#F1#L37',
+            'https://etherscan.io/address/0x0b622A2061EaccAE1c664eBC3E868b8438e03F61#code#F1#L169',
           ],
         },
       ],
@@ -218,8 +223,8 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4#code#F12#L56',
-            'https://etherscan.io/address/0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4#code#F12#L73',
+            'https://etherscan.io/address/0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B#code#F10#L57',
+            'https://etherscan.io/address/0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B#code#F10#L74',
           ],
         },
       ],
@@ -234,7 +239,7 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269#code#F1#L186',
+            'https://etherscan.io/address/0x3a4ef67C6cAb51444E5d3861843F7f4a37F64F0a#code#F1#L187',
           ],
         },
       ],
@@ -340,6 +345,13 @@ export const zksyncera: Layer2 = {
         'ValidatorTimelock',
         'Contract delaying block execution (ie withdrawals and other L2 --> L1 messages).',
       ),
+      discovery.getContractDetails('Governance', {
+        description: `Owner can schedule a transparent (you see the upgrade data on-chain) or a shadow (you don't see the upgrade data on-chain) upgrade. While scheduling an upgrade the owner chooses a delay, that delay has to be bigger than ${discovery.getContractValue<number>(
+          'Governance',
+          'minDelay',
+        )} seconds. Canceling the upgrade can be done only by the owner. The owner or the security council can perform the upgrade if the chosen delay is up. Only the security council can force the upgrade to execute even if the delay is not up.`,
+        ...upgrades,
+      }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },

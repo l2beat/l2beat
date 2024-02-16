@@ -1,4 +1,4 @@
-import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import {
@@ -13,11 +13,7 @@ describe(ProjectDiscovery.name, () => {
     readFileSync: () => JSON.stringify(discoveredJsonStub),
   })
   const projectName = 'ExampleProject'
-  const discovery = new ProjectDiscovery(
-    'ExampleProject',
-    ChainId.ETHEREUM,
-    fsMock,
-  )
+  const discovery = new ProjectDiscovery('ExampleProject', 'ethereum', fsMock)
 
   describe(ProjectDiscovery.prototype.getContract.name, () => {
     it('should return contract for given address', () => {
@@ -117,11 +113,7 @@ describe(ProjectDiscovery.name, () => {
     const fsMock = mockObject<Filesystem>({
       readFileSync: () => JSON.stringify(discoveredOpStackJsonStub),
     })
-    const discovery = new ProjectDiscovery(
-      'ExampleProject',
-      ChainId.ETHEREUM,
-      fsMock,
-    )
+    const discovery = new ProjectDiscovery('ExampleProject', 'ethereum', fsMock)
 
     const upgradesProxy = {
       upgradableBy: ['MockAdmin'],
@@ -142,7 +134,7 @@ describe(ProjectDiscovery.name, () => {
           description:
             'The L2OutputOracle contract contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.',
           name: 'L2OutputOracle',
-          etherscanUrl: 'https://etherscan.io',
+          chain: 'ethereum',
           upgradableBy: ['MockAdmin'],
           upgradeDelay: 'No delay',
           upgradeability: {
@@ -162,7 +154,7 @@ describe(ProjectDiscovery.name, () => {
           description:
             'The MockPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals.',
           name: 'MockPortal',
-          etherscanUrl: 'https://etherscan.io',
+          chain: 'ethereum',
           upgradableBy: ['MockAdmin'],
           upgradeDelay: 'No delay',
           upgradeability: {
@@ -182,7 +174,7 @@ describe(ProjectDiscovery.name, () => {
           description:
             'It contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address.',
           name: 'SystemConfig',
-          etherscanUrl: 'https://etherscan.io',
+          chain: 'ethereum',
           upgradableBy: ['MockAdmin'],
           upgradeDelay: 'No delay',
           upgradeability: {
@@ -202,7 +194,7 @@ describe(ProjectDiscovery.name, () => {
           description:
             "The L1CrossDomainMessenger (L1xDM) contract sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.",
           name: 'L1CrossDomainMessenger',
-          etherscanUrl: 'https://etherscan.io',
+          chain: 'ethereum',
           upgradableBy: ['MockAdmin'],
           upgradeDelay: 'No delay',
           upgradeability: {
@@ -216,6 +208,26 @@ describe(ProjectDiscovery.name, () => {
             type: 'resolved delegate proxy',
           },
         },
+        {
+          address: EthereumAddress(
+            '0xeBec795c9c8bBD61FFc14A6662944748F299cAcf',
+          ),
+          description:
+            'The L1StandardBridge contract is the main entry point to deposit ERC20 tokens from L1 to L2.',
+          name: 'L1StandardBridge',
+          chain: 'ethereum',
+          upgradableBy: ['MockAdmin'],
+          upgradeDelay: 'No delay',
+          upgradeability: {
+            type: 'EIP1967 proxy',
+            implementation: EthereumAddress(
+              '0xC70dcb11c0673b0BBE2F415105fA2B15Ac58339f',
+            ),
+            admin: EthereumAddress(
+              '0x543bA4AADBAb8f9025686Bd03993043599c6fB04',
+            ),
+          },
+        },
       ])
     })
   })
@@ -224,11 +236,7 @@ describe(ProjectDiscovery.name, () => {
     const fsMock = mockObject<Filesystem>({
       readFileSync: () => JSON.stringify(discoveredOpStackJsonStub),
     })
-    const discovery = new ProjectDiscovery(
-      'ExampleProject',
-      ChainId.ETHEREUM,
-      fsMock,
-    )
+    const discovery = new ProjectDiscovery('ExampleProject', 'ethereum', fsMock)
 
     it('should return all op stack permissions with correct overrides', () => {
       const permissions = discovery.getOpStackPermissions()
@@ -243,9 +251,10 @@ describe(ProjectDiscovery.name, () => {
               type: 'Contract',
             },
           ],
-          description: 'Admin of SystemConfig, L2OutputOracle.',
+          description:
+            'Admin of SystemConfig, L2OutputOracle, L1StandardBridge.',
           name: 'ProxyAdmin',
-          etherscanUrl: 'https://etherscan.io',
+          chain: 'ethereum',
         },
       ])
     })
@@ -255,11 +264,7 @@ describe(ProjectDiscovery.name, () => {
     const fsMock = mockObject<Filesystem>({
       readFileSync: () => JSON.stringify(discoveredJsonStub),
     })
-    const discovery = new ProjectDiscovery(
-      'ExampleProject',
-      ChainId.ARBITRUM,
-      fsMock,
-    )
+    const discovery = new ProjectDiscovery('ExampleProject', 'arbitrum', fsMock)
     const contract = discovery.getContract(contractStub.address)
 
     expect(JSON.stringify(contract)).toEqual(JSON.stringify(contractStub))

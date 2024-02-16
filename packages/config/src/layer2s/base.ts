@@ -1,16 +1,8 @@
-import {
-  AssetId,
-  ChainId,
-  CoingeckoId,
-  EthereumAddress,
-  Token,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
-import { formatSeconds } from '../utils/formatSeconds'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { opStack } from './templates/opStack'
 import { Layer2 } from './types'
@@ -22,49 +14,13 @@ const upgradeability = {
   upgradeDelay: 'No delay',
 }
 
-const challengePeriod: number = discovery.getContractValue<number>(
+const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
   'L2OutputOracle',
   'FINALIZATION_PERIOD_SECONDS',
 )
 
-const TOKENS: Omit<Token, 'chainId'>[] = [
-  {
-    id: AssetId.USDC_ON_BASE,
-    name: 'USD Coin',
-    symbol: 'USDC',
-    decimals: 6,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042389',
-    address: EthereumAddress('0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913'),
-    coingeckoId: CoingeckoId('usd-coin'),
-    sinceTimestamp: new UnixTime(1692383789),
-    category: 'stablecoin',
-    type: 'NMV',
-    formula: 'totalSupply',
-  },
-  {
-    id: AssetId('base:sdex-smardex'),
-    name: 'SmarDex',
-    symbol: 'SDEX',
-    decimals: 18,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/29470/large/SDEX_logo_transparent.png?1690430205',
-    address: EthereumAddress('0xFd4330b0312fdEEC6d4225075b82E00493FF2e3f'),
-    coingeckoId: CoingeckoId('smardex'),
-    sinceTimestamp: new UnixTime(1691501141),
-    category: 'other',
-    type: 'EBV',
-    formula: 'totalSupply',
-    bridgedUsing: {
-      bridge: 'Wormhole',
-      slug: 'portal',
-    },
-  },
-]
-
 export const base: Layer2 = opStack({
   discovery,
-  tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.BASE })),
   display: {
     name: 'Base',
     slug: 'base',
@@ -99,19 +55,22 @@ export const base: Layer2 = opStack({
       explanation: `Base is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
         HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
       )} or until it gets published. The state root gets finalized ${formatSeconds(
-        challengePeriod,
+        FINALIZATION_PERIOD_SECONDS,
       )} after it has been posted.`,
+    },
+    finality: {
+      finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
     },
   },
   upgradeability,
   l1StandardBridgeEscrow: EthereumAddress(
     '0x3154Cf16ccdb4C6d922629664174b904d80F2C35',
   ),
-  apiUrl: 'https://developer-access-mainnet.base.org',
-  sequencerAddress: EthereumAddress(
-    discovery.getContractValue('SystemConfig', 'batcherHash'),
-  ),
-  inboxAddress: EthereumAddress('0xFf00000000000000000000000000000000008453'),
+  rpcUrl: 'https://developer-access-mainnet.base.org',
+  finality: {
+    type: 'OPStack',
+    lag: 0,
+  },
   genesisTimestamp: new UnixTime(1686796655),
   l2OutputOracle: discovery.getContract('L2OutputOracle'),
   portal: discovery.getContract('OptimismPortal'),
@@ -169,4 +128,25 @@ export const base: Layer2 = opStack({
         "This contract is the permissioned challenger of the system. It can delete non finalized roots without going through the fault proof process. It is functionally equivalent to a 1/2 multisig where neither party can remove the other's permission to execute a Challenger call. It is controlled by the GuardianMultisig and the OptimismMultisig.",
     }),
   ],
+  chainConfig: {
+    name: 'base',
+    chainId: 8453,
+    explorerUrl: 'https://basescan.org',
+    explorerApi: {
+      url: 'https://api.basescan.org/api',
+      type: 'etherscan',
+    },
+    // ~ Timestamp of block number 0 on Base
+    // https://basescan.org/block/0
+    minTimestampForTvl: UnixTime.fromDate(new Date('2023-06-15T12:35:47Z')),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 5022,
+        version: '3',
+      },
+    ],
+    coingeckoPlatform: 'base',
+  },
 })

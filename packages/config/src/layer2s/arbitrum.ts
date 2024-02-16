@@ -1,10 +1,7 @@
 import {
-  AssetId,
-  ChainId,
-  CoingeckoId,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
-  Token,
   UnixTime,
 } from '@l2beat/shared-pure'
 
@@ -23,7 +20,6 @@ import { subtractOneAfterBlockInclusive } from '../common/assessCount'
 import { UPGRADE_MECHANISM } from '../common/upgradeMechanism'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { VALUES } from '../discovery/values'
-import { formatSeconds } from '../utils/formatSeconds'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
@@ -82,164 +78,10 @@ const maxTimeVariation = discovery.getContractValue<number[]>(
 )
 const selfSequencingDelay = maxTimeVariation[2]
 
-const TOKENS: Omit<Token, 'chainId'>[] = [
-  {
-    id: AssetId('arb-arbitrum'),
-    name: 'Arbitrum',
-    symbol: 'ARB',
-    decimals: 18,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/16547/large/photo_2023-03-29_21.47.00.jpeg?1680097630',
-    address: EthereumAddress('0xb50721bcf8d664c30412cfbc6cf7a15145234ad1'),
-    coingeckoId: CoingeckoId('arbitrum'),
-    sinceTimestamp: new UnixTime(1630233600),
-    category: 'other',
-    type: 'NMV',
-    formula: 'circulatingSupply',
-  },
-  {
-    id: AssetId('arbitrum:usdc-usd-coin'),
-    name: 'USD Coin',
-    symbol: 'USDC',
-    decimals: 6,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042389',
-    address: EthereumAddress('0xaf88d065e77c8cC2239327C5EDb3A432268e5831'),
-    coingeckoId: CoingeckoId('usd-coin'),
-    sinceTimestamp: new UnixTime(1667250000),
-    category: 'stablecoin',
-    type: 'NMV',
-    formula: 'totalSupply',
-  },
-  {
-    id: AssetId('gns-gains-network'),
-    name: 'Gains Network',
-    symbol: 'GNS',
-    decimals: 18,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/19737/large/logo.png?1635909203',
-    address: EthereumAddress('0x18c11FD286C5EC11c3b683Caa813B77f5163A122'),
-    coingeckoId: CoingeckoId('gains-network'),
-    sinceTimestamp: new UnixTime(1672175006),
-    category: 'other',
-    type: 'NMV',
-    formula: 'totalSupply',
-  },
-  {
-    id: AssetId('btc.b-bitcoin'),
-    name: 'Bitcoin',
-    symbol: 'BTC.b',
-    decimals: 8,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/26115/large/btcb.png?1655921693',
-    address: EthereumAddress('0x2297aEbD383787A160DD0d9F71508148769342E3'),
-    coingeckoId: CoingeckoId('bitcoin-avalanche-bridged-btc-b'),
-    sinceTimestamp: new UnixTime(1668644839),
-    category: 'other',
-    type: 'EBV',
-    formula: 'totalSupply',
-    bridgedUsing: {
-      bridge: 'Layer Zero',
-      slug: 'omnichain',
-    },
-  },
-  {
-    id: AssetId('joe-joe-token'),
-    name: 'JoeToken',
-    symbol: 'JOE',
-    decimals: 18,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/17569/large/traderjoe.png?1685690062',
-    address: EthereumAddress('0x371c7ec6D8039ff7933a2AA28EB827Ffe1F52f07'),
-    coingeckoId: CoingeckoId('joe'),
-    sinceTimestamp: new UnixTime(1674495392),
-    category: 'other',
-    type: 'EBV',
-    formula: 'totalSupply',
-    bridgedUsing: {
-      bridge: 'Layer Zero',
-      slug: 'omnichain',
-    },
-  },
-  {
-    id: AssetId('bifi-beefy-finance'),
-    name: 'beefy.finance',
-    symbol: 'BIFI',
-    decimals: 18,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/12704/large/token.png?1601876182',
-    address: EthereumAddress('0x99C409E5f62E4bd2AC142f17caFb6810B8F0BAAE'),
-    coingeckoId: CoingeckoId('beefy-finance'),
-    sinceTimestamp: new UnixTime(1632385561),
-    category: 'other',
-    type: 'EBV',
-    formula: 'totalSupply',
-    bridgedUsing: {
-      bridge: 'Multichain',
-      slug: 'multichain',
-    },
-  },
-  {
-    id: AssetId('arbitrum:sdex-smardex'),
-    name: 'SmarDex',
-    symbol: 'SDEX',
-    decimals: 18,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/29470/large/SDEX_logo_transparent.png?1690430205',
-    address: EthereumAddress('0xabD587f2607542723b17f14d00d99b987C29b074'),
-    coingeckoId: CoingeckoId('smardex'),
-    sinceTimestamp: new UnixTime(1688976153),
-    category: 'other',
-    type: 'EBV',
-    formula: 'totalSupply',
-    bridgedUsing: {
-      bridge: 'Wormhole',
-      slug: 'portal',
-    },
-  },
-  {
-    id: AssetId('arbitrum:gmx-gmx'),
-    name: 'GMX',
-    symbol: 'GMX',
-    decimals: 18,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/18323/large/arbit.png?1631532468',
-    address: EthereumAddress('0xfc5a1a6eb076a2c7ad06ed22c90d7e710e35ad0a'),
-    coingeckoId: CoingeckoId('gmx'),
-    sinceTimestamp: new UnixTime(1626958493),
-    category: 'stablecoin',
-    type: 'NMV',
-    formula: 'circulatingSupply',
-  },
-  {
-    id: AssetId('arbitrum:dmt-dream-machine-token'),
-    name: 'Dream Machine Token',
-    symbol: 'DMT',
-    decimals: 18,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/30505/large/dmt.png?1684821418',
-    address: EthereumAddress('0x8b0e6f19ee57089f7649a455d89d7bc6314d04e8'),
-    coingeckoId: CoingeckoId('dream-machine-token'),
-    sinceTimestamp: new UnixTime(1684901612),
-    category: 'other',
-    type: 'NMV',
-    formula: 'circulatingSupply',
-  },
-  {
-    id: AssetId('arbitrum:hdn-hydranet'),
-    name: 'Hydranet',
-    symbol: 'HDN',
-    decimals: 18,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/25177/large/HDXdarkblueInv.png?1652694650',
-    address: EthereumAddress('0x3404149e9ee6f17fb41db1ce593ee48fbdcd9506'),
-    coingeckoId: CoingeckoId('hydranet'),
-    sinceTimestamp: new UnixTime(1687566748),
-    category: 'other',
-    type: 'NMV',
-    formula: 'circulatingSupply',
-  },
-]
+const nOfChallengers = discovery.getContractValue<string[]>(
+  'RollupProxy',
+  'validators',
+).length
 
 export const arbitrum: Layer2 = {
   type: 'layer2',
@@ -286,10 +128,10 @@ export const arbitrum: Layer2 = {
     },
   },
   config: {
-    tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.ARBITRUM })),
     associatedTokens: ['ARB'],
     escrows: [
       discovery.getEscrowDetails({
+        // Arbitrum One Bridge
         address: EthereumAddress('0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a'),
         tokens: ['ETH'],
         description:
@@ -297,6 +139,7 @@ export const arbitrum: Layer2 = {
         ...upgradesProxyAdmin,
       }),
       discovery.getEscrowDetails({
+        // Custom ERC20 Gateway
         address: EthereumAddress('0xcEe284F754E854890e311e3280b767F80797180d'),
         tokens: '*',
         description:
@@ -304,6 +147,7 @@ export const arbitrum: Layer2 = {
         ...upgradesGatewaysAdmin,
       }),
       discovery.getEscrowDetails({
+        // ERC20 Gateway
         address: EthereumAddress('0xa3A7B6F88361F48403514059F1F16C8E78d60EeC'),
         tokens: '*',
         description:
@@ -333,6 +177,7 @@ export const arbitrum: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
+      defaultUrl: 'https://arb1.arbitrum.io/rpc',
       // We need to subtract the Nitro system transactions
       // after the block of the update
       assessCount: subtractOneAfterBlockInclusive(22207818),
@@ -386,12 +231,35 @@ export const arbitrum: Layer2 = {
       ],
     },
   },
+  chainConfig: {
+    name: 'arbitrum',
+    chainId: 42161,
+    explorerUrl: 'https://arbiscan.io',
+    explorerApi: {
+      url: 'https://api.arbiscan.io/api',
+      type: 'etherscan',
+    },
+    // ~ Timestamp of block number 0 on Arbitrum
+    minTimestampForTvl: UnixTime.fromDate(new Date('2021-05-28T22:15:00Z')),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 7654707,
+        version: '3',
+      },
+      {
+        sinceBlock: 821923,
+        batchSize: 150,
+        address: EthereumAddress('0x842eC2c7D803033Edf55E478F461FC547Bc54EB2'),
+        version: '2',
+      },
+    ],
+    coingeckoPlatform: 'arbitrum-one',
+  },
   riskView: makeBridgeCompatible({
     stateValidation: {
-      value: 'Fraud proofs (INT)',
-      description:
-        'Fraud proofs allow WHITELISTED actors watching the chain to prove that the state is incorrect. Interactive proofs (INT) require multiple transactions over time to resolve. The challenge protocol can be subject to delay attacks.',
-      sentiment: 'warning',
+      ...RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(nOfChallengers),
       sources: [
         {
           contract: 'ChallengeManager',
@@ -421,7 +289,7 @@ export const arbitrum: Layer2 = {
         selfSequencingDelay,
       )} to force a tx, users have only ${formatSeconds(
         l2TimelockDelay - selfSequencingDelay,
-      )} to exit. If users post a tx after that time, they would need to self propose a root with a ${formatSeconds(
+      )} to exit.\nIf users post a tx after that time, they would need to self propose a root with a ${formatSeconds(
         validatorAfkTime,
       )} delay and then wait for the ${formatSeconds(
         challengeWindowSeconds,
@@ -430,7 +298,10 @@ export const arbitrum: Layer2 = {
       )} challenge window and the ${formatSeconds(
         l1TimelockDelay,
       )} L1 timelock.`,
-      warning: 'The Security Council can upgrade with no delay.',
+      warning: {
+        text: 'The Security Council can upgrade with no delay.',
+        sentiment: 'bad',
+      },
       sources: [
         {
           contract: 'OutboxV2',
@@ -625,16 +496,19 @@ export const arbitrum: Layer2 = {
       'This is yet another proxy admin for the three gateway contracts. It is owned by the Upgrade Executor.',
     ),
     {
-      name: 'Sequencer',
-      accounts: VALUES.ARBITRUM.SEQUENCER,
-      description:
-        'Central actor allowed to set the order in which L2 transactions are executed.',
-    },
-    {
       name: 'Validators/Proposers',
-      accounts: VALUES.ARBITRUM.VALIDATORS,
+      accounts: discovery.getPermissionedAccounts('RollupProxy', 'validators'),
       description:
         'They can submit new state roots and challenge state roots. Some of the operators perform their duties through special purpose smart contracts.',
+    },
+    {
+      name: 'Sequencers',
+      accounts: discovery.getPermissionedAccounts(
+        'SequencerInbox',
+        'batchPosters',
+      ),
+      description:
+        'Central actors allowed to submit transaction batches to L1.',
     },
   ],
   contracts: {

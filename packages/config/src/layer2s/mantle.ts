@@ -82,6 +82,8 @@ export const mantle: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
+      defaultUrl: 'https://rpc.mantle.xyz',
+      defaultCallsPerMinute: 1500,
     },
   },
   riskView: makeBridgeCompatible({

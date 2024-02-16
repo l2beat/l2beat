@@ -1,7 +1,9 @@
+Generated with discovered.json: 0x0fa337b45cd76773ae656410f777bdb702845b4e
+
 # Diff at Thu, 30 Nov 2023 16:11:29 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: master@86509954e727fb4deae9efbdf805e6bb714a43c5
+- comparing to: main@86509954e727fb4deae9efbdf805e6bb714a43c5
 
 ## Description
 
@@ -23,7 +25,7 @@ Upgrade delay for USDT StarkEx has been changed from 0 to 14 days.
 # Diff at Thu, 23 Nov 2023 15:27:54 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: master@2ff45714640abe4c50d283967078888d4af81d78
+- comparing to: main@2ff45714640abe4c50d283967078888d4af81d78
 
 ## Description
 

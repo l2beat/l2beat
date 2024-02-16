@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -9,11 +14,11 @@ import {
   makeBridgeCompatible,
   NUGGETS,
   RISK_VIEW,
+  ScalingProjectPermissionedAccount,
   SEQUENCER_NO_MECHANISM,
   STATE_CORRECTNESS,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { formatSeconds } from '../utils/formatSeconds'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -24,25 +29,25 @@ const upgradeDelay = discovery.getContractValue<number>(
 )
 const upgradeDelayString = formatSeconds(upgradeDelay)
 const trustedAggregatorTimeout = discovery.getContractValue<number>(
-  'PolygonZkEvm',
+  'PolygonRollupManager',
   'trustedAggregatorTimeout',
 )
 const trustedAggregatorTimeoutString = formatSeconds(trustedAggregatorTimeout)
 
 const pendingStateTimeout = discovery.getContractValue<number>(
-  'PolygonZkEvm',
+  'PolygonRollupManager',
   'pendingStateTimeout',
 )
 const pendingStateTimeoutString = formatSeconds(pendingStateTimeout)
 const _HALT_AGGREGATION_TIMEOUT = formatSeconds(
   discovery.getContractValue<number>(
-    'PolygonZkEvm',
+    'PolygonRollupManager',
     '_HALT_AGGREGATION_TIMEOUT',
   ),
 )
 
 const forceBatchTimeout = discovery.getContractValue<number>(
-  'PolygonZkEvm',
+  'PolygonZkEVMExistentEtrog',
   'forceBatchTimeout',
 )
 
@@ -66,8 +71,11 @@ const exitWindowRisk = {
   description: `Even though there is a ${upgradeDelayString} Timelock for upgrades, forced transactions are disabled. Even if they were to be enabled, user withdrawals can be censored up to ${formatSeconds(
     trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
   )}.`,
-  warning: 'The Security Council can upgrade with no delay.',
-}
+  warning: {
+    text: 'The Security Council can remove the delay on upgrades.',
+    sentiment: 'bad',
+  },
+} as const
 
 const timelockUpgrades = {
   upgradableBy: ['AdminMultisig'],
@@ -75,14 +83,24 @@ const timelockUpgrades = {
   upgradeConsiderations: exitWindowRisk.description,
 }
 
-const isForcedBatchDisallowed = discovery.getContractValue<boolean>(
-  'PolygonZkEvm',
-  'isForcedBatchDisallowed',
-)
+const isForcedBatchDisallowed =
+  discovery.getContractValue<string>(
+    'PolygonZkEVMExistentEtrog',
+    'forceBatchAddress',
+  ) !== '0x0000000000000000000000000000000000000000'
 
 const ESCROW_wstETH_ADDRESS = '0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01'
 const ESCROW_USDC_ADDRESS = '0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB'
 const ESCROW_DAI_ADDRESS = '0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98'
+
+const roles = discovery.getContractValue<{
+  TRUSTED_AGGREGATOR: { members: string[] }
+}>('PolygonRollupManager', 'accessControl')
+
+const aggregators: ScalingProjectPermissionedAccount[] =
+  roles.TRUSTED_AGGREGATOR.members.map((address) =>
+    discovery.formatPermissionedAccount(address),
+  )
 
 export const polygonzkevm: Layer2 = {
   type: 'layer2',
@@ -152,6 +170,8 @@ export const polygonzkevm: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
+      defaultUrl: 'https://polygon-rpc.com/zkevm',
+      defaultCallsPerMinute: 500,
       startBlock: 1,
     },
     liveness: {
@@ -172,6 +192,17 @@ export const polygonzkevm: Layer2 = {
           functionSignature:
             'function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)',
           sinceTimestamp: new UnixTime(1679653163),
+          untilTimestamp: new UnixTime(1707822059),
+        },
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
+          ),
+          selector: '0x5e9145c9',
+          functionSignature:
+            'function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)',
+          sinceTimestamp: new UnixTime(1707822059),
         },
       ],
       stateUpdates: [
@@ -184,6 +215,7 @@ export const polygonzkevm: Layer2 = {
           functionSignature:
             'function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)',
           sinceTimestamp: new UnixTime(1679653163),
+          untilTimestamp: new UnixTime(1707822059),
         },
         {
           formula: 'functionCall',
@@ -194,18 +226,56 @@ export const polygonzkevm: Layer2 = {
           functionSignature:
             'function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) ',
           sinceTimestamp: new UnixTime(1679653163),
+          untilTimestamp: new UnixTime(1707822059),
+        },
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
+          ),
+          selector: '0xa2ee10d3',
+          functionSignature:
+            'verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[])',
+          sinceTimestamp: new UnixTime(1707822059),
+        },
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
+          ),
+          selector: '0x08068a47',
+          functionSignature:
+            'verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[])',
+          sinceTimestamp: new UnixTime(1707822059),
         },
       ],
     },
+  },
+  chainConfig: {
+    name: 'polygonzkevm',
+    chainId: 1101,
+    explorerUrl: 'https://zkevm.polygonscan.com',
+    explorerApi: {
+      url: 'https://api-zkevm.polygonscan.com/api',
+      type: 'etherscan',
+    },
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 57746,
+        version: '3',
+      },
+    ],
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
       sources: [
         {
-          contract: 'PolygonZkEvm',
+          contract: 'PolygonRollupManager',
           references: [
-            'https://etherscan.io/address/0xb1585916487AcEdD99952086f2950763D253b923#code#F15#L817',
+            'https://etherscan.io/address/0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
           ],
         },
       ],
@@ -217,9 +287,9 @@ export const polygonzkevm: Layer2 = {
         ' Unlike most ZK rollups transactions are posted instead of state diffs.',
       sources: [
         {
-          contract: 'PolygonZkEvm',
+          contract: 'PolygonZkEVMExistentEtrog',
           references: [
-            'https://etherscan.io/address/0xb1585916487AcEdD99952086f2950763D253b923#code#F15#L186',
+            'https://etherscan.io/address/0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
           ],
         },
       ],
@@ -230,9 +300,9 @@ export const polygonzkevm: Layer2 = {
       ...SEQUENCER_NO_MECHANISM(isForcedBatchDisallowed),
       sources: [
         {
-          contract: 'PolygonZkEvm',
+          contract: 'PolygonZkEVMExistentEtrog',
           references: [
-            'https://etherscan.io/address/0xb1585916487AcEdD99952086f2950763D253b923#code#F15#L243',
+            'https://etherscan.io/address/0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
           ],
         },
       ],
@@ -244,10 +314,10 @@ export const polygonzkevm: Layer2 = {
         ` There is a ${trustedAggregatorTimeoutString} delay for proving and a ${pendingStateTimeoutString} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
       sources: [
         {
-          contract: 'PolygonZkEvm',
+          contract: 'PolygonRollupManager',
           references: [
-            'https://etherscan.io/address/0xb1585916487AcEdD99952086f2950763D253b923#code#F15#L636',
-            'https://etherscan.io/address/0xb1585916487AcEdD99952086f2950763D253b923#code#F15#L859',
+            'https://etherscan.io/address/0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
+            'https://etherscan.io/address/0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
           ],
         },
       ],
@@ -288,8 +358,8 @@ export const polygonzkevm: Layer2 = {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
         {
-          text: 'PolygonZkEvm.sol#L817 - Etherscan source code, _verifyAndRewardBatches function',
-          href: 'https://etherscan.io/address/0xb1585916487AcEdD99952086f2950763D253b923#code#F1#L115',
+          text: 'PolygonRollupManager.sol - Etherscan source code, _verifyAndRewardBatches function',
+          href: 'https://etherscan.io/address/0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
         },
       ],
     },
@@ -297,8 +367,8 @@ export const polygonzkevm: Layer2 = {
       ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
       references: [
         {
-          text: 'PolygonZkEvm.sol#L186 - Etherscan source code, sequencedBatches mapping',
-          href: 'https://etherscan.io/address/0xb1585916487AcEdD99952086f2950763D253b923#code#F15#L186',
+          text: 'PolygonZkEVMExistentEtrog.sol - Etherscan source code, sequenceBatches function',
+          href: 'https://etherscan.io/address/0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
         },
       ],
     },
@@ -316,8 +386,8 @@ export const polygonzkevm: Layer2 = {
       ],
       references: [
         {
-          text: 'PolygonZkEvm.sol#L454 - Etherscan source code, onlyTrustedSequencer modifier',
-          href: 'https://etherscan.io/address/0xb1585916487AcEdD99952086f2950763D253b923#code#F15#L454',
+          text: 'PolygonZkEVMExistentEtrog.sol - Etherscan source code, onlyTrustedSequencer modifier',
+          href: 'https://etherscan.io/address/0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
         },
       ],
     },
@@ -327,8 +397,8 @@ export const polygonzkevm: Layer2 = {
         'The mechanism for allowing users to submit their own transactions is currently disabled.',
       references: [
         {
-          text: 'PolygonZkEvm.sol#L468 - Etherscan source code, isForceBatchAllowed modifier',
-          href: 'https://etherscan.io/address/0xb1585916487AcEdD99952086f2950763D253b923#code#F15#L468',
+          text: 'PolygonZkEVMExistentEtrog.sol - Etherscan source code, forceBatchAddress address',
+          href: 'https://etherscan.io/address/0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
         },
       ],
     },
@@ -337,8 +407,8 @@ export const polygonzkevm: Layer2 = {
         ...EXITS.REGULAR('zk', 'merkle proof'),
         references: [
           {
-            text: 'PolygonZkEvmBridge.sol#L311 - Etherscan source code, claimAsset function',
-            href: 'https://etherscan.io/address/0xb1585916487AcEdD99952086f2950763D253b923#code#F15#L311',
+            text: 'PolygonZkEvmBridge.sol - Etherscan source code, claimAsset function',
+            href: 'https://etherscan.io/address/0xb1585916487AcEdD99952086f2950763D253b923',
           },
         ],
       },
@@ -356,22 +426,23 @@ export const polygonzkevm: Layer2 = {
   permissions: [
     ...discovery.getMultisigPermission(
       'AdminMultisig',
-      'Admin of the PolygonZkEvm rollup, can set core system parameters like timeouts, sequencer and aggregator as well as deactivate emergency state. They can also upgrade the PolygonZkEvm contracts, but are restricted by a 10d delay unless rollup is put in the Emergency State.',
+      `Admin of the PolygonZkEvm rollup, can set core system parameters like timeouts, sequencer and aggregator as well as deactivate emergency state. They can also upgrade the PolygonZkEvm contracts, but are restricted by a ${formatSeconds(upgradeDelay)} delay unless rollup is put in the Emergency State.`,
     ),
     {
       name: 'Sequencer',
       accounts: [
-        discovery.getPermissionedAccount('PolygonZkEvm', 'trustedSequencer'),
+        discovery.getPermissionedAccount(
+          'PolygonZkEVMExistentEtrog',
+          'trustedSequencer',
+        ),
       ],
       description:
         'Its sole purpose and ability is to submit transaction batches. In case they are unavailable users cannot rely on the force batch mechanism because it is currently disabled.',
     },
     {
-      name: 'Proposer',
-      accounts: [
-        discovery.getPermissionedAccount('PolygonZkEvm', 'trustedAggregator'),
-      ],
-      description: `The trusted proposer (called Aggregator) provides the PolygonZkEvm contract with ZK proofs of the new system state. In case they are unavailable a mechanism for users to submit proofs on their own exists, but is behind a ${trustedAggregatorTimeoutString} delay for proving and a ${pendingStateTimeoutString} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
+      name: 'Proposer (Trusted Aggregator)',
+      accounts: aggregators,
+      description: `The trusted proposer (called Aggregator) provides ZK proofs for all the supported systems. In case they are unavailable a mechanism for users to submit proofs on their own exists, but is behind a ${trustedAggregatorTimeoutString} delay for proving and a ${pendingStateTimeoutString} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
     },
     ...discovery.getMultisigPermission(
       'SecurityCouncil',
@@ -381,11 +452,27 @@ export const polygonzkevm: Layer2 = {
       'EscrowsAdmin',
       'Escrows Admin can instantly upgrade wstETH, DAI and USDC bridges.',
     ),
+    {
+      name: 'Forced Batcher',
+      accounts: [
+        discovery.getPermissionedAccount(
+          'PolygonZkEVMExistentEtrog',
+          'forceBatchAddress',
+        ),
+      ],
+      description:
+        'Sole account allowed to submit forced transactions. If this address is the zero address, anyone can submit forced transactions.',
+    },
   ],
   contracts: {
     addresses: [
-      discovery.getContractDetails('PolygonZkEvm', {
-        description: `The main contract of the Polygon zkEVM rollup. It defines the rules of the system including core system parameters, permissioned actors as well as emergency procedures. The emergency state can be activated either by the Security Council, by proving a soundness error or by presenting a sequenced batch that has not been aggregated before a ${_HALT_AGGREGATION_TIMEOUT} timeout. This contract receives transaction batches, L2 state roots as well as ZK proofs.`,
+      discovery.getContractDetails('PolygonZkEVMExistentEtrog', {
+        description:
+          'The main contract of the Polygon zkEVM rollup. Contains sequencing and forced transaction logic.',
+        ...timelockUpgrades,
+      }),
+      discovery.getContractDetails('PolygonRollupManager', {
+        description: `It defines the rules of the system including core system parameters, permissioned actors as well as emergency procedures. The emergency state can be activated either by the Security Council, by proving a soundness error or by presenting a sequenced batch that has not been aggregated before a ${_HALT_AGGREGATION_TIMEOUT} timeout. This contract receives L2 state roots as well as ZK proofs.`,
         ...timelockUpgrades,
       }),
       discovery.getContractDetails('Bridge', {
@@ -393,25 +480,31 @@ export const polygonzkevm: Layer2 = {
           'The escrow contract for user funds. It is mirrored on the L2 side and can be used to transfer both ERC20 assets and arbitrary messages. To transfer funds a user initiated transaction on both sides is required.',
         ...timelockUpgrades,
       }),
-      discovery.getContractDetails('GlobalExitRoot', {
+      discovery.getContractDetails('GlobalExitRootV2', {
         description:
-          'Synchronizes deposit and withdraw merkle trees across L1 and L2. The global root from this contract is injected into the L2 contract.',
+          'Synchronizes deposit and withdraw merkle trees across L1 and the L2s. The global root from this contract is injected into the L2 contracts.',
         ...timelockUpgrades,
       }),
       discovery.getContractDetails(
         'FflonkVerifier',
-        'An autogenerated contract that verifies ZK proofs in the PolygonZkEvm system.',
+        'An autogenerated contract that verifies ZK proofs in the PolygonRollupManager system.',
       ),
     ],
     references: [
       {
         text: 'State injections - stateRoot and exitRoot are part of the validity proof input.',
-        href: 'https://etherscan.io/address/0xb1585916487AcEdD99952086f2950763D253b923#code#F15#L806',
+        href: 'https://etherscan.io/address/0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
       },
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelayString)],
   },
   milestones: [
+    {
+      name: 'Polygon zkEVM Etrog upgrade',
+      link: 'https://docs.polygon.technology/zkEVM/architecture/protocol/etrog-upgrade/#etrog-upgrade',
+      date: '2024-02-13',
+      description: 'Polygon zkEVM is upgraded to the Polygon Etrog version.',
+    },
     {
       name: 'Polygon zkEVM Mainnet Beta is Live',
       link: 'https://polygon.technology/blog/polygon-zkevm-mainnet-beta-is-live?utm_source=twitter&utm_medium=social&utm_campaign=zkevm-launch&utm_term=mainnet-beta-live&utm_content=blog',

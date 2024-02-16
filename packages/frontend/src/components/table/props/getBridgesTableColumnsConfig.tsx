@@ -2,7 +2,7 @@ import React from 'react'
 
 import { BridgesRiskViewEntry } from '../../../pages/bridges/risk/types'
 import { BridgesSummaryViewEntry } from '../../../pages/bridges/summary/types'
-import { TVLBreakdown } from '../../TVLBreakdown'
+import { TokenBreakdown } from '../../TokenBreakdown'
 import { NumberCell } from '../NumberCell'
 import { RiskCell } from '../RiskCell'
 import { TypeCell } from '../TypeCell'
@@ -74,11 +74,11 @@ export function getActiveBridgesSummaryColumnsConfig() {
       },
     },
     {
-      name: 'Breakdown',
+      name: 'Tokens',
       tooltip:
         'Composition of the total value locked broken down by token type.',
       getValue: (entry) =>
-        entry.tvlBreakdown && <TVLBreakdown {...entry.tvlBreakdown} />,
+        entry.tvlBreakdown && <TokenBreakdown {...entry.tvlBreakdown} />,
     },
     {
       name: 'Mkt share',

@@ -1,4 +1,3 @@
-import { ChainId } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { TVLProjectBreakdown } from '../../../../pages/scaling/projects-tvl-breakdown/props/getTvlBreakdownView'
@@ -28,7 +27,7 @@ export function getNativelyMintedColumns() {
         token.tokenAddress && (
           <TokenAddressCell
             address={token.tokenAddress}
-            explorer={ChainId.getExplorer(token.chainId)}
+            explorer={token.explorerUrl}
           />
         ),
     },
@@ -72,7 +71,7 @@ export function getExternallyBridgedColumns() {
         token.tokenAddress && (
           <TokenAddressCell
             address={token.tokenAddress}
-            explorer={ChainId.getExplorer(token.chainId)}
+            explorer={token.explorerUrl}
           />
         ),
     },
@@ -124,7 +123,7 @@ export function getCanonicallyBridgedColumns() {
         <EscrowsCell
           assetId={token.assetId.toString()}
           escrows={token.escrows}
-          explorer={ChainId.getExplorer(token.chainId)}
+          explorer={token.explorerUrl}
         />
       ),
     },

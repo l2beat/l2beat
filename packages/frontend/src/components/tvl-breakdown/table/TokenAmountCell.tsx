@@ -20,8 +20,8 @@ export function TokenAmountCell(props: TokenAmountCellProps) {
     token?.formula === 'totalSupply'
       ? 'Total supply'
       : token?.formula === 'circulatingSupply'
-      ? 'Circulating supply'
-      : ''
+        ? 'Circulating supply (Market Cap/Price)'
+        : ''
 
   return props.forCanonical && props.escrows ? (
     <Tooltip>
@@ -31,7 +31,8 @@ export function TokenAmountCell(props: TokenAmountCellProps) {
           props.escrows.map((escrow) => (
             <div
               key={escrow.escrowAddress.toString()}
-              className="MultipleEscrowsHidden hidden font-normal text-black/80 dark:text-white/80"
+              className="hidden font-normal text-black/80 dark:text-white/80"
+              data-role="multiple-escrows-hidden"
               data-token={props.assetId}
             >
               {formatLargeNumberWithCommas(Number(escrow.amount))}

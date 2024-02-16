@@ -8,7 +8,7 @@ export const aztecV2: Layer2 = upcoming({
     slug: 'aztec',
     description:
       'Aztec is an open source layer 2 network that brings programmable privacy and scalability to Ethereum.',
-    purposes: ['Privacy'],
+    purposes: ['Universal', 'Privacy'],
     category: 'ZK Rollup',
     links: {
       websites: ['https://aztec.network/'],

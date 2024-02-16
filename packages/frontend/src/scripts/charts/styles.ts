@@ -1,11 +1,11 @@
 export interface SeriesStyle {
-  point?: keyof typeof POINT_CLASS_NAMES
+  point?: keyof PointClassNames
   fill?: keyof typeof FILL_STYLES
   line?: keyof typeof LINE_STYLES
 }
 
-export type PointStyle = keyof typeof POINT_CLASS_NAMES
-export type PointShapeDef =
+export type PointStyle = keyof PointClassNames
+export type PointShapeDefinition =
   | {
       type: 'div'
       className: string
@@ -19,19 +19,29 @@ export type PointShapeDef =
       svgShape: string
     }
 
-export const POINT_CLASS_NAMES: Record<string, PointShapeDef> = {
+interface PointClassNames {
+  circle: PointShapeDefinition
+  redCircle: PointShapeDefinition
+  blueSquare: PointShapeDefinition
+  purpleCircle: PointShapeDefinition
+  pinkSquare: PointShapeDefinition
+  yellowTriangle: PointShapeDefinition
+  milestone: PointShapeDefinition
+}
+
+export const POINT_CLASS_NAMES: PointClassNames = {
   circle: {
     type: 'div',
     className:
-      'h-2 w-2 rounded-full border-2 border-current bg-white dark:bg-black',
+      'size-2 rounded-full border-2 border-current bg-white dark:bg-black',
   },
   redCircle: {
     type: 'div',
-    className: 'h-2 w-2 rounded-full border-2 border-current bg-red-300',
+    className: 'size-2 rounded-full border-2 border-current bg-red-300',
   },
   blueSquare: {
     type: 'div',
-    className: 'h-2 w-2 border-2 border-current bg-blue-600',
+    className: 'size-2 border-2 border-current bg-blue-600',
   },
   purpleCircle: {
     type: 'svg',
@@ -43,7 +53,7 @@ export const POINT_CLASS_NAMES: Record<string, PointShapeDef> = {
   },
   pinkSquare: {
     type: 'svg',
-    className: 'h-2 w-2 stroke-black dark:stroke-white',
+    className: 'size-2 stroke-black dark:stroke-white',
     height: 9,
     width: 9,
     svgViewBox: '0 0 9 9',
@@ -60,7 +70,7 @@ export const POINT_CLASS_NAMES: Record<string, PointShapeDef> = {
   milestone: {
     type: 'div',
     className:
-      'h-2 w-2 rotate-45 border-2 border-green-200 bg-green-600 dark:border-current dark:bg-green-500',
+      'size-2 rotate-45 border-2 border-green-200 bg-green-600 dark:border-current dark:bg-green-500',
   },
 }
 

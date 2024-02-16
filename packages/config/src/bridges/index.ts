@@ -12,6 +12,7 @@ import { gravity } from './gravity'
 import { harmony } from './harmony'
 import { hop } from './hop'
 import { hyphen } from './hyphen'
+import { immutablezkevm } from './immutablezkevm'
 import { lzOmnichain } from './lzOmnichain'
 import { multichain } from './multichain'
 import { near } from './near'
@@ -30,6 +31,7 @@ import { pulseChain } from './pulseChain'
 import { ronin } from './ronin'
 import { satellite } from './satellite'
 import { skaleIMA } from './skaleIMA'
+import { socket } from './socket'
 import { sollet } from './sollet'
 import { stargate } from './stargate'
 import { symbiosis } from './symbiosis'
@@ -55,6 +57,7 @@ export const bridges: Bridge[] = [
   chainport,
   hop,
   hyphen,
+  immutablezkevm,
   lzOmnichain,
   multichain,
   near,
@@ -72,6 +75,7 @@ export const bridges: Bridge[] = [
   ronin,
   satellite,
   skaleIMA,
+  socket,
   sollet,
   stargate,
   synapse,

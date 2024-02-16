@@ -1,10 +1,11 @@
 import React from 'react'
 
 import { ActivityIcon, RiskIcon, SummaryIcon, TvlIcon } from '../icons'
+import { FinalityIcon } from '../icons/pages/FinalityIcon'
 import { LivenessIcon } from '../icons/pages/LivenessIcon'
 import { MenuCloseIcon } from '../icons/symbols/MenuCloseIcon'
 import { Logo } from '../Logo'
-import { OutLink } from '../OutLink'
+import { PlainLink } from '../PlainLink'
 import { DarkThemeToggle } from './DarkThemeToggle'
 import { HiringBadge } from './HiringBadge'
 import { SocialLinks, SocialLinksProps } from './SocialLinks'
@@ -13,8 +14,10 @@ import { NavbarPage } from './types'
 export interface SidebarMenuProps {
   selectedPage: NavbarPage
   showActivity: boolean
+  showFinality: boolean
   showLiveness: boolean
   showHiringBadge: boolean
+  showNewGovernancePage: boolean
   forumLink: string
   socialLinks: SocialLinksProps
 }
@@ -23,7 +26,7 @@ export function SidebarMenu(props: SidebarMenuProps) {
   return (
     <div
       id="sidebar-menu"
-      className="fixed left-0 bottom-0 top-0 z-999 flex w-full translate-x-full flex-col bg-white text-base transition-transform duration-300 dark:bg-black lg:hidden"
+      className="fixed inset-y-0 left-0 z-999 flex w-full translate-x-full flex-col bg-white text-base transition-transform duration-300 dark:bg-black lg:hidden"
     >
       <div className="mt-[11.5px] flex items-center justify-between px-4">
         <a href={props.selectedPage === 'bridges' ? '/bridges/summary' : '/'}>
@@ -61,6 +64,12 @@ export function SidebarMenu(props: SidebarMenuProps) {
                   <a href="/scaling/liveness">Liveness</a>
                 </li>
               )}
+              {props.showFinality && (
+                <li className="flex gap-2 font-medium">
+                  <FinalityIcon className="h-auto w-4" />
+                  <a href="/scaling/finality">Finality</a>
+                </li>
+              )}
               {props.showActivity && (
                 <li className="flex items-center gap-2 font-medium">
                   <ActivityIcon className="h-auto w-4" />
@@ -89,30 +98,34 @@ export function SidebarMenu(props: SidebarMenuProps) {
             </ul>
           </li>
         </ul>
-        <hr className="mt-8 mb-6 w-full border-gray-200 dark:border-gray-850" />
+        <hr className="mb-6 mt-8 w-full border-gray-200 dark:border-gray-850" />
         <ul className="flex flex-col gap-4 px-6 text-sm font-medium">
           <li>
-            <OutLink href={props.forumLink}>Forum</OutLink>
+            <PlainLink href={props.forumLink}>Forum</PlainLink>
           </li>
           <li>
             <a href="/donate">Donate</a>
           </li>
           <li>
-            <a href="https://l2beat.notion.site/Delegate-your-votes-to-L2BEAT-8ffc452bed9a431cb158d1e4e19839e3">
-              Governance
-            </a>
+            {props.showNewGovernancePage ? (
+              <a href="/governance">Governance</a>
+            ) : (
+              <a href="https://l2beat.notion.site/Delegate-your-votes-to-L2BEAT-8ffc452bed9a431cb158d1e4e19839e3">
+                Governance
+              </a>
+            )}
           </li>
           <li>
             <a href="/faq">FAQ</a>
           </li>
           <li>
-            <OutLink
+            <PlainLink
               className="flex items-center"
-              href="https://www.notion.so/native/l2beat/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f"
+              href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f"
             >
               Jobs
               {props.showHiringBadge && <HiringBadge className="ml-2" />}
-            </OutLink>
+            </PlainLink>
           </li>
         </ul>
         <hr className="my-6 w-full border-gray-200 dark:border-gray-850" />

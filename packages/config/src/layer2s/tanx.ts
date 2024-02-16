@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -19,7 +24,6 @@ import {
   getSHARPVerifierGovernors,
 } from '../discovery/starkware'
 import { delayDescriptionFromString } from '../utils/delayDescription'
-import { formatSeconds } from '../utils/formatSeconds'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('brine')
@@ -86,7 +90,7 @@ export const tanx: Layer2 = {
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: {
-      ...RISK_VIEW.DATA_EXTERNAL_DAC,
+      ...RISK_VIEW.DATA_EXTERNAL_DAC(),
       sources: [
         {
           contract: 'Committee',
@@ -141,8 +145,8 @@ export const tanx: Layer2 = {
     {
       name: 'Mainnet Launch',
       date: '2023-04-27T00:00:00.00Z',
-      link: 'https://www.brine.fi/beta-launch',
-      description: 'Brine DEX is live on mainnet.',
+      link: 'https://tanx.fi/',
+      description: 'tanX is live on mainnet.',
     },
   ],
   knowledgeNuggets: [...NUGGETS.STARKWARE],

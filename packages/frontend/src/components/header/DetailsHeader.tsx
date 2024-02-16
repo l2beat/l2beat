@@ -1,6 +1,6 @@
-import { default as classNames, default as cx } from 'classnames'
 import React from 'react'
 
+import { cn } from '../../utils/cn'
 import { RiskValues } from '../../utils/risks/types'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { ProjectLink } from '../icons'
@@ -49,11 +49,11 @@ export function DetailsHeader(props: HeaderProps) {
   const isL2orL3 = props.type === 'layer2' || props.type === 'layer3'
   return (
     <>
-      <header className="md:pt-15 flex flex-row justify-end gap-3 bg-gray-100 pt-6 dark:bg-zinc-900 md:gap-0 md:bg-transparent md:dark:bg-transparent">
+      <header className="flex flex-row justify-end gap-3 bg-gray-100 pt-6 dark:bg-zinc-900 md:gap-0 md:bg-transparent md:dark:bg-transparent">
         <div className="flex w-full flex-wrap divide-y divide-gray-200 dark:divide-gray-850 md:gap-4 md:divide-y-0">
           <div className="mb-4 flex w-full flex-col gap-2 px-4 md:mb-0 md:px-0">
             <h1
-              className={cx(
+              className={cn(
                 'relative mb-0 flex items-center justify-start gap-3',
                 'whitespace-pre text-3xl font-bold md:text-4xl',
                 props.titleClassName,
@@ -61,7 +61,7 @@ export function DetailsHeader(props: HeaderProps) {
             >
               {props.icon && (
                 <img
-                  className="h-8 w-8 md:h-10 md:w-10"
+                  className="size-8 md:size-10"
                   src={props.icon}
                   alt={`${props.title} logo`}
                 />
@@ -69,7 +69,7 @@ export function DetailsHeader(props: HeaderProps) {
               {props.title}
             </h1>
             {props.description && (
-              <div className="mt-4 text-sm opacity-80">{props.description}</div>
+              <div className="mt-4 text-base">{props.description}</div>
             )}
             {props.isArchived && <ArchivedBar className="w-full" />}
             {props.isUpcoming && <UpcomingBar className="w-full" />}
@@ -90,7 +90,7 @@ export function DetailsHeader(props: HeaderProps) {
                 }
                 color="yellow"
                 isCritical={false}
-                className="w-full items-center justify-center py-2.5 px-2.5 text-xs md:text-base"
+                className="w-full items-center justify-center p-2.5 text-xs md:text-base"
               />
             )}
           </div>
@@ -99,7 +99,7 @@ export function DetailsHeader(props: HeaderProps) {
             <DesktopProjectLinks projectLinks={props.links} />
           </div>
           <div
-            className={classNames(
+            className={cn(
               'grid w-full divide-y divide-gray-200 dark:divide-gray-850 md:gap-4 md:divide-y-0 ',
               isL2orL3 && 'md:grid-cols-3',
             )}
@@ -109,6 +109,8 @@ export function DetailsHeader(props: HeaderProps) {
                 stats={props.stats.l2Tvl}
                 tvlBreakdownHref={props.tvlBreakdownHref}
                 showTvlBreakdown={props.showTvlBreakdown}
+                isArchived={props.isArchived}
+                type={props.type}
               />
             )}
             <ProjectSummary

@@ -5,6 +5,8 @@ import { ArrowDownIcon, ArrowRightIcon, ArrowUpIcon } from './Arrows'
 import { EthereumLineIcon } from './chart/EthereumLineIcon'
 import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from './Chevron'
 import { ActivityIcon } from './pages/ActivityIcon'
+import { FinalityIcon } from './pages/FinalityIcon'
+import { LivenessIcon } from './pages/LivenessIcon'
 import { RiskIcon } from './pages/RiskIcon'
 import { TvlIcon } from './pages/TvlIcon'
 import { DiscordIcon } from './products/DiscordIcon'
@@ -75,6 +77,8 @@ export function PageIcons() {
       <TvlIcon />
       <RiskIcon />
       <ActivityIcon />
+      <LivenessIcon />
+      <FinalityIcon />
     </Template>
   )
 }
@@ -113,7 +117,10 @@ export function SymbolIcons() {
       <AppsIcon />
       <ArchivedIcon />
       <BulletIcon />
+      {/* Unchecked */}
       <CheckIcon />
+      {/* Checked */}
+      <CheckIcon className="stroke-black dark:stroke-white" />
       <CodeIcon />
       <DocumentIcon />
       <FinanceIcon />
