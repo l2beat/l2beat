@@ -16,12 +16,13 @@ const markdown = MarkdownIt({
 }).use(outLinksPlugin)
 
 export function Markdown(props: MarkdownProps) {
+  const Comp = props.inline ? 'span' : 'div'
   const rendered = props.inline
     ? markdown.renderInline(props.children)
     : markdown.render(props.children)
 
   return (
-    <div
+    <Comp
       className={cn('mdc', props.className)}
       dangerouslySetInnerHTML={{ __html: rendered }}
     />

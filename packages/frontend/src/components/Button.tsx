@@ -2,6 +2,7 @@ import { cva, VariantProps } from 'class-variance-authority'
 import React from 'react'
 
 import { cn } from '../utils/cn'
+import { PlainLink } from './PlainLink'
 
 const buttonVariants = cva(
   'cursor-pointer flex justify-center w-max items-center transition-colors duration-100 px-6 py-2 text-center font-bold',
@@ -38,7 +39,7 @@ export function Button<T extends React.ElementType>({
   size,
   ...rest
 }: Props<T>) {
-  const Comp = as ?? 'button'
+  const Comp = as === 'a' ? PlainLink : 'button'
 
   return (
     <Comp

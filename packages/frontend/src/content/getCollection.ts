@@ -131,7 +131,7 @@ function getContentCollectionEntry<T extends ContentCollectionKey>(
   const data = contentEntry.schema.parse(parsedFile.data)
   const content = MarkdownIt().render(parsedFile.content)
   const excerpt = getExcerpt(parsedFile.content)
-  const readTimeInMinutes = getReadTime(parsedFile.content)
+  const readTimeInMinutes = getReadTimeInMinutes(parsedFile.content)
 
   return {
     id,
@@ -153,7 +153,7 @@ function getExcerpt(content: string) {
 
 const AVERAGE_WORDS_PER_MINUTE = 183
 
-function getReadTime(content: string) {
+function getReadTimeInMinutes(content: string) {
   const words = content
     .split('\n')
     .join(' ')
