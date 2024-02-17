@@ -56,6 +56,10 @@ export class UnixTime {
     return new UnixTime(this.timestamp - (this.timestamp % modulus))
   }
 
+  toEndOf(period: 'day' | 'hour' | 'minute' | 'six hours') {
+    return this.isFull(period) ? this : this.toNext(period)
+  }
+
   toNext(period: 'day' | 'hour' | 'minute' | 'six hours') {
     const modulus =
       period === 'day'

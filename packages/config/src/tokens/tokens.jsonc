@@ -386,6 +386,10 @@
       "category": "stablecoin"
     },
     {
+      "symbol": "HYPR",
+      "address": "0x31adda225642a8f4d7e90d4152be6661ab22a5a2"
+    },
+    {
       "symbol": "ILV",
       "address": "0x767FE9EDC9E0dF98E07454847909b5E959D7ca0E"
     },
@@ -475,6 +479,10 @@
     {
       "symbol": "MC",
       "address": "0x949D48EcA67b17269629c7194F4b727d4Ef9E5d6"
+    },
+    {
+      "symbol": "mETH",
+      "address": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa"
     },
     {
       "symbol": "MELD",

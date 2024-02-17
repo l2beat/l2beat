@@ -1,3 +1,117 @@
+Generated with discovered.json: 0x7e4c9076131acf85de578916eb5cfca1e750a721
+
+# Diff at Mon, 12 Feb 2024 08:28:31 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@ddc21751860f919d2bc4b19eb9fd41d3f26acdf2 block: 19176787
+- current block number: 19210753
+
+## Description
+
+The Security Council is introduced, but with a 4/13 threshold. Now the multisig owning the ProxyAdmin is a 2/2 with the Foundation multisig and the Security Council multisig.
+
+## Watched changes
+
+```diff
+    contract ProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+      values.owner:
+-        "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract FoundationMultisig_1 (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    }
+```
+
+## Source code changes
+
+```diff
+.../implementation/GnosisSafe.sol                  | 422 +++++++++++++++++++++
+ .../implementation/base/Executor.sol               |  27 ++
+ .../implementation/base/FallbackManager.sol        |  53 +++
+ .../implementation/base/GuardManager.sol           |  50 +++
+ .../implementation/base/ModuleManager.sol          | 133 +++++++
+ .../implementation/base/OwnerManager.sol           | 149 ++++++++
+ .../implementation/common/Enum.sol                 |   8 +
+ .../implementation/common/EtherPaymentFallback.sol |  13 +
+ .../implementation/common/SecuredTokenTransfer.sol |  35 ++
+ .../implementation/common/SelfAuthorized.sol       |  16 +
+ .../implementation/common/SignatureDecoder.sol     |  36 ++
+ .../implementation/common/Singleton.sol            |  11 +
+ .../implementation/common/StorageAccessible.sol    |  47 +++
+ .../implementation/external/GnosisSafeMath.sol     |  54 +++
+ .../interfaces/ISignatureValidator.sol             |  20 +
+ .../FoundationMultisig_1/implementation/meta.txt   |   2 +
+ .../FoundationMultisig_1/proxy/GnosisSafeProxy.sol | 155 ++++++++
+ .../.code/FoundationMultisig_1/proxy/meta.txt      |   2 +
+ .../ProxyAdminOwner/implementation/GnosisSafe.sol  | 422 +++++++++++++++++++++
+ .../implementation/base/Executor.sol               |  27 ++
+ .../implementation/base/FallbackManager.sol        |  53 +++
+ .../implementation/base/GuardManager.sol           |  50 +++
+ .../implementation/base/ModuleManager.sol          | 133 +++++++
+ .../implementation/base/OwnerManager.sol           | 149 ++++++++
+ .../ProxyAdminOwner/implementation/common/Enum.sol |   8 +
+ .../implementation/common/EtherPaymentFallback.sol |  13 +
+ .../implementation/common/SecuredTokenTransfer.sol |  35 ++
+ .../implementation/common/SelfAuthorized.sol       |  16 +
+ .../implementation/common/SignatureDecoder.sol     |  36 ++
+ .../implementation/common/Singleton.sol            |  11 +
+ .../implementation/common/StorageAccessible.sol    |  47 +++
+ .../implementation/external/GnosisSafeMath.sol     |  54 +++
+ .../interfaces/ISignatureValidator.sol             |  20 +
+ .../.code/ProxyAdminOwner/implementation/meta.txt  |   2 +
+ .../ProxyAdminOwner/proxy/GnosisSafeProxy.sol      | 155 ++++++++
+ .../ethereum/.code/ProxyAdminOwner/proxy/meta.txt  |   2 +
+ .../implementation/GnosisSafe.sol                  | 422 +++++++++++++++++++++
+ .../implementation/base/Executor.sol               |  27 ++
+ .../implementation/base/FallbackManager.sol        |  53 +++
+ .../implementation/base/GuardManager.sol           |  50 +++
+ .../implementation/base/ModuleManager.sol          | 133 +++++++
+ .../implementation/base/OwnerManager.sol           | 149 ++++++++
+ .../implementation/common/Enum.sol                 |   8 +
+ .../implementation/common/EtherPaymentFallback.sol |  13 +
+ .../implementation/common/SecuredTokenTransfer.sol |  35 ++
+ .../implementation/common/SelfAuthorized.sol       |  16 +
+ .../implementation/common/SignatureDecoder.sol     |  36 ++
+ .../implementation/common/Singleton.sol            |  11 +
+ .../implementation/common/StorageAccessible.sol    |  47 +++
+ .../implementation/external/GnosisSafeMath.sol     |  54 +++
+ .../interfaces/ISignatureValidator.sol             |  20 +
+ .../implementation/meta.txt                        |   2 +
+ .../proxy/GnosisSafeProxy.sol                      | 155 ++++++++
+ .../.code/SecurityCouncilMultisig/proxy/meta.txt   |   2 +
+ 54 files changed, 3699 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19176787 (main branch discovery), not current.
+
+```diff
+    contract OptimismMultisig (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+      name:
+-        "OptimismMultisig"
++        "FoundationMultisig_2"
+    }
+```
+
 Generated with discovered.json: 0x75bf0a1e7f3ca34a61085103177321849b59f9c2
 
 # Diff at Wed, 07 Feb 2024 14:04:10 GMT:

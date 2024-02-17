@@ -3,14 +3,11 @@ import { z } from 'zod'
 
 import { withTypedContext } from '../../../api/types'
 import { Clock } from '../../../tools/Clock'
-import {
-  getSyncStatus,
-  renderTvlStatusPage,
-} from '../../status/api/view/TvlStatusPage'
-import { renderTvlStatusPageDetailed } from '../../status/api/view/TvlStatusPageDetailed'
 import { TvlModule } from '../modules/types'
 import { PriceUpdater } from '../PriceUpdater'
 import { AggregatedReportUpdater } from '../reports/AggregatedReportUpdater'
+import { getSyncStatus, renderTvlStatusPage } from './status/TvlStatusPage'
+import { renderTvlStatusPageDetailed } from './status/TvlStatusPageDetailed'
 
 export function createTvlStatusRouter(
   clock: Clock,

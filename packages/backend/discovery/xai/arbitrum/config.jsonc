@@ -2,7 +2,10 @@
   "$schema": "../../config.schema.json",
   "chain": "arbitrum",
   "name": "xai",
-  "initialAddresses": ["0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9"],
+  "initialAddresses": [
+    "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
+    "0xb591cE747CF19cF30e11d656EB94134F523A9e77"
+  ],
   "names": {
     "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9": "Inbox",
     "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336": "RollupProxy",
@@ -13,7 +16,10 @@
     "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F": "UpgradeExecutor",
     "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66": "Xai",
     "0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c": "esXai",
-    "0x000d8C5A70B8805DF02f409F2715d05B9A63E871": "GnosisSafeAdminMember"
+    "0x000d8C5A70B8805DF02f409F2715d05B9A63E871": "GnosisSafeAdminMember",
+    "0xb591cE747CF19cF30e11d656EB94134F523A9e77": "L1ERC20Gateway",
+    "0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35": "L1GatewayRouter",
+    "0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E": "ExecutorMultisig"
   },
   "overrides": {
     "ChallengeManager": {
@@ -79,6 +85,12 @@
           "method": "function isBatchPoster(address) external view returns (bool)",
           "args": ["0x02c903F5c76F3f00c1F659702Bd76DF30470bBEE"]
         },
+        "sequencerVersion": {
+          "type": "arbitrumSequencerVersion"
+        },
+        "dacKeyset": {
+          "type": "arbitrumDACKeyset"
+        },
         // when this changes, it means the sequencers have changed
         "setIsBatchPosterCount": {
           "type": "eventCount",
@@ -116,6 +128,9 @@
       "ignoreInWatchMode": ["totalSupply"]
     },
     "GnosisSafeAdminMember": {
+      "ignoreMethods": ["nonce"]
+    },
+    "ExecutorMultisig": {
       "ignoreMethods": ["nonce"]
     }
   }

@@ -55,9 +55,9 @@ export type CheckConvention<T extends BaseRepository> = {
   [K in SetKeys<T>]: Match<T[K], SetMethod>
 }
 
-/* 
+/*
   This class requires its child classes to persist given naming convention of methods and wraps them with logger and metrics.
-  
+
   The CheckConvention will make sure if you are using naming convention correctly. So in the child class' constructor you should always use this.autoWrap<CheckConvention<RepositoryName>>().
 
   Methods that should be auto wrapped needs to start with add, addMany, find, get or delete prefix.
@@ -65,21 +65,21 @@ export type CheckConvention<T extends BaseRepository> = {
   If you do not want to use autoWrap on some method then you have to wrap it manually before calling autoWrap.
 
   Naming convention:
-    * add... -> 
-      * Arguments: record that you want to add 
+    * add... ->
+      * Arguments: record that you want to add
       * Return type: IdType
-    * add...Many || addMany... -> 
-      * Arguments: array of records that you want to add 
+    * add...Many || addMany... ->
+      * Arguments: array of records that you want to add
       * Return type: array of IdType or count of added records
     * find... ->
-      * Arguments: any   
+      * Arguments: any
       * Return type: record or undefined
-    * get... -> 
+    * get... ->
       * Arguments: any
       * Return type: array of records
     * delete... ->
       * Arguments: any
-      * Return type: count of deleted records  
+      * Return type: count of deleted records
 */
 
 type RepositoryHistogram = Histogram<'repository' | 'method'>

@@ -8,6 +8,7 @@ import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
 import { LivenessController } from './api/LivenessController'
 import { createLivenessRouter } from './api/LivenessRouter'
+import { LivenessStatusController } from './api/LivenessStatusController'
 import { HourlyIndexer } from './HourlyIndexer'
 import { LivenessClient } from './LivenessClient'
 import { LivenessIndexer } from './LivenessIndexer'
@@ -67,7 +68,18 @@ export function createLivenessModule(
     clock,
     logger,
   )
-  const livenessRouter = createLivenessRouter(livenessController, config)
+
+  const livenessStatusController = new LivenessStatusController(
+    clock,
+    indexerStateRepository,
+    livenessConfigurationRepository,
+  )
+
+  const livenessRouter = createLivenessRouter(
+    livenessController,
+    livenessStatusController,
+    config,
+  )
 
   const start = async () => {
     logger = logger.for('LivenessModule')
@@ -84,5 +96,6 @@ export function createLivenessModule(
   return {
     start,
     routers: [livenessRouter],
+    indexer: liveness,
   }
 }

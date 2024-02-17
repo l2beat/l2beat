@@ -163,6 +163,14 @@ declare module 'knex/types/tables' {
     debug_info: string
   }
 
+  interface FinalityRow {
+    project_id: string
+    timestamp: Date
+    minimum_time_to_inclusion: number
+    maximum_time_to_inclusion: number
+    average_time_to_inclusion: number
+  }
+
   interface DiscoveryCacheRow {
     key: string
     value: string
@@ -174,6 +182,12 @@ declare module 'knex/types/tables' {
     indexer_id: string
     safe_height: number
     min_timestamp: Date | undefined
+  }
+
+  interface TvlCleanerRow {
+    repository_name: string
+    hourly_cleaned_until: Date
+    six_hourly_cleaned_until: Date
   }
 
   interface Tables {
@@ -201,6 +215,8 @@ declare module 'knex/types/tables' {
     daily_discovery: DiscoveryHistoryRow
     liveness_configuration: LivenessConfigurationRow
     indexer_state: IndexerStateRow
+    tvl_cleaner: TvlCleanerRow
+    finality: FinalityRow
   }
 }
 

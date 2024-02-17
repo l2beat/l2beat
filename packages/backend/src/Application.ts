@@ -8,6 +8,7 @@ import { ApplicationModule } from './modules/ApplicationModule'
 import { createDiffHistoryModule } from './modules/diff-history/createDiffHistoryModule'
 import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createHealthModule } from './modules/health/HealthModule'
+import { LivenessIndexer } from './modules/liveness/LivenessIndexer'
 import { createLivenessModule } from './modules/liveness/LivenessModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createStatusModule } from './modules/status/StatusModule'
@@ -43,6 +44,8 @@ export class Application {
       config.clock.safeTimeOffsetSeconds,
     )
 
+    const livenessModule = createLivenessModule(config, logger, database, clock)
+
     const modules: (ApplicationModule | undefined)[] = [
       createHealthModule(config),
       createMetricsModule(config),
@@ -50,9 +53,15 @@ export class Application {
       createActivityModule(config, logger, http, database, clock),
       createUpdateMonitorModule(config, logger, http, database, clock),
       createDiffHistoryModule(config, logger, database),
-      createStatusModule(config, logger, database, clock),
-      createLivenessModule(config, logger, database, clock),
-      createFinalityModule(config, logger, database, clock),
+      createStatusModule(config, logger),
+      livenessModule,
+      createFinalityModule(
+        config,
+        logger,
+        database,
+        clock,
+        livenessModule?.indexer as LivenessIndexer,
+      ),
     ]
 
     const apiServer = new ApiServer(

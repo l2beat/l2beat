@@ -221,16 +221,23 @@ function DataCell<T>(props: {
     isLast: boolean
   }
 }) {
-  const value = props.columnConfig.getValue(props.item, props.rowIndex)
-  if (!value && props.columnConfig.removeCellOnFalsyValue) {
-    return null
-  }
-
-  const hasPaddingRight = !props.columnConfig.noPaddingRight
   const idHref =
     props.columnConfig.idHref && props.href
       ? `${props.href}#${props.columnConfig.idHref}`
       : props.href
+
+  const isLastColumn = props.groupOptions?.isLast && !props.isLastColumn
+  const value = props.columnConfig.getValue(props.item, props.rowIndex)
+
+  if (!value && props.columnConfig.removeCellOnFalsyValue) {
+    if (isLastColumn) {
+      return <RowFiller idHref={idHref} />
+    }
+    return null
+  }
+
+  const hasPaddingRight = !props.columnConfig.noPaddingRight
+
   const orderValue = props.columnConfig.sorting?.getOrderValue(
     props.item,
     props.rowIndex,
@@ -265,12 +272,16 @@ function DataCell<T>(props: {
           {value}
         </a>
       </td>
-      {props.groupOptions?.isLast && !props.isLastColumn && (
-        <td className="h-9 md:h-14">
-          <a href={idHref} className="flex h-full w-4 items-center" />
-        </td>
-      )}
+      {isLastColumn && <RowFiller idHref={idHref} />}
     </>
+  )
+}
+
+function RowFiller({ idHref }: { idHref: string | undefined }) {
+  return (
+    <td className="h-9 md:h-14">
+      <a href={idHref} className="flex h-full w-4 items-center" />
+    </td>
   )
 }
 

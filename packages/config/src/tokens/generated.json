@@ -1501,6 +1501,21 @@
       "formula": "locked"
     },
     {
+      "id": "hypr-hypr",
+      "name": "HYPR",
+      "coingeckoId": "hypr-network",
+      "address": "0x31aDdA225642a8f4D7e90d4152BE6661ab22a5a2",
+      "symbol": "HYPR",
+      "decimals": 18,
+      "deploymentTimestamp": 1700052659,
+      "coingeckoListingTimestamp": 1700524800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33071/large/655412078d33fa9fee8e3a1b_hypr_logo_200.png?1700598490",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "ilv-illuvium",
       "name": "Illuvium",
       "coingeckoId": "illuvium",
@@ -1856,6 +1871,21 @@
       "coingeckoListingTimestamp": 1635897600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/19304/large/Db4XqML.png?1696518747",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "meth-meth",
+      "name": "mETH",
+      "coingeckoId": "mantle-staked-ether",
+      "address": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
+      "symbol": "mETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1696584719,
+      "coingeckoListingTimestamp": 1701993600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33345/large/symbol_transparent_bg.png?1701697066",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"

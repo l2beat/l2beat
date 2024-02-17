@@ -1,3 +1,91 @@
+Generated with discovered.json: 0x275442cd2cf2edcdd371a58695931131fb9430fd
+
+# Diff at Fri, 16 Feb 2024 07:26:55 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@a6356b2783ea71be1ce7003098f574ebc90b553b block: 177621512
+- current block number: 181262302
+
+## Description
+
+Update in nonce, now ignored.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 177621512 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafeL2 (0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E) {
+      name:
+-        "GnosisSafeL2"
++        "ExecutorMultisig"
+      values.nonce:
+-        2
+    }
+```
+
+Generated with discovered.json: 0x1331038a7bf98dc70733792489ed180c671bcb35
+
+# Diff at Mon, 05 Feb 2024 08:16:18 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@7095f5c6435baaba0d0084960e2593a905aaf947 block: 175991369
+- current block number: 177621512
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract GnosisSafeL2 (0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E) {
+      values.nonce:
+-        1
++        2
+    }
+```
+
+```diff
+    contract SequencerInbox (0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1) {
+      values.dacKeyset.keyCount:
+-        3
++        5
+      values.keySetUpdates:
+-        2
++        3
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 175991369 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1) {
+      values.dacKeyset:
++        {"threshold":2,"keyCount":3}
+      values.sequencerVersion:
++        "0x88"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L1GatewayRouter (0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Gateway (0xb591cE747CF19cF30e11d656EB94134F523A9e77) {
+    }
+```
+
 Generated with discovered.json: 0x598a2a43b1e79400ea587313e0534a96d5a69336
 
 # Diff at Wed, 31 Jan 2024 08:11:59 GMT:

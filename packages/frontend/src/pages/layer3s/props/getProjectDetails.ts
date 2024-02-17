@@ -84,7 +84,6 @@ export function getProjectDetails(
       props: {
         id: 'risk-analysis',
         title: 'Risk analysis',
-
         riskValues: getRiskValues(project.riskView),
         isUnderReview: project.isUnderReview,
         warning: project.display.warning,
@@ -111,7 +110,6 @@ export function getProjectDetails(
         items: technologySection.items,
         id: technologySection.id,
         title: technologySection.title,
-
         isUnderReview: technologySection.isUnderReview,
       },
     })
@@ -122,8 +120,8 @@ export function getProjectDetails(
         props: {
           id: 'state-derivation',
           title: 'State derivation',
-
           ...project.stateDerivation,
+          isUnderReview: project.isUnderReview,
         },
       })
     }
@@ -134,8 +132,8 @@ export function getProjectDetails(
         props: {
           id: 'state-validation',
           title: 'State validation',
-
           stateValidation: project.stateValidation,
+          isUnderReview: project.isUnderReview,
         },
       })
     }

@@ -31,6 +31,7 @@ export interface ScalingLivenessViewEntry {
   stateUpdates: LivenessDetailsWithWarning | undefined
   proofSubmissions: LivenessDetailsWithWarning | undefined
   anomalyEntries: AnomalyIndicatorEntry[]
+  isSynced: boolean
 }
 
 export type LivenessDetailsWithWarning = LivenessDetails & {
