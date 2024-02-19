@@ -43,7 +43,7 @@ date: "`r format(Sys.time(), '%B %d, %Y')`"
 geometry: margin=1in
 fontfamily: mathpazo
 fontsize: 11pt
-## spacing: double
+# spacing: double
 bibliography: ~/Dropbox/master.bib
 biblio-style: apsr
 ---
