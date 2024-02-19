@@ -19,7 +19,7 @@ export function getProps(config: Config): Wrapped<GovernancePageProps> {
   const publications = getCollection('publications')
   const events = getCollection('events')
   const delegatedProjects = getCollection('delegatedProjects')
-
+  console.log(getEvents(events))
   return {
     props: {
       publications: getPublications(publications),
@@ -47,22 +47,19 @@ function getPublications(publications: CollectionEntry<'publications'>[]) {
 }
 
 function getEvents(events: CollectionEntry<'events'>[]) {
-  const futureEvents = getGovernanceEventEntries(events).filter(
-    (event) => event.startDate.getTime() > Date.now(),
-  )
+  const futureEvents = getGovernanceEventEntries(events)
+    .filter((event) => event.startDate.getTime() > Date.now())
+    .sort((a, b) => a.startDate.getTime() - b.startDate.getTime())
 
-  const notHighlightedFutureEvents = futureEvents.filter(
-    (event) => !event.highlighted,
-  )
   const highlightedFutureEvents = futureEvents
     .filter((event) => event.highlighted)
     .slice(0, INDEX_PAGE_MAX_HIGHLIGHTED_EVENTS)
 
-  return [
-    ...notHighlightedFutureEvents.slice(
-      0,
-      INDEX_PAGE_EVENTS_COUNT - highlightedFutureEvents.length,
-    ),
-    ...highlightedFutureEvents,
-  ].sort((a, b) => a.startDate.getTime() - b.startDate.getTime())
+  const notHighlightedFutureEvents = futureEvents
+    .filter((event) => !event.highlighted)
+    .slice(0, INDEX_PAGE_EVENTS_COUNT - highlightedFutureEvents.length)
+
+  return [...notHighlightedFutureEvents, ...highlightedFutureEvents].sort(
+    (a, b) => a.startDate.getTime() - b.startDate.getTime(),
+  )
 }
