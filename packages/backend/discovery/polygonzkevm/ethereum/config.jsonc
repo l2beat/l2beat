@@ -42,7 +42,9 @@
         "lastPendingStateConsolidated",
         "lastTimestamp",
         "lastVerifiedBatch",
-        "multiplierBatchFee",
+        "multiplierBatchFee"
+      ],
+      "ignoreInWatchMode": [
         "getRollupExitRoot",
         "lastAggregationTimestamp",
         "totalSequencedBatches",
@@ -105,10 +107,9 @@
       "ignoreMethods": [
         "getLastGlobalExitRoot",
         "lastMainnetExitRoot",
-        "lastRollupExitRoot",
-        "getRoot",
-        "depositCount"
-      ]
+        "lastRollupExitRoot"
+      ],
+      "ignoreInWatchMode": ["getRoot", "depositCount"]
     },
     "Bridge": {
       "ignoreMethods": [
@@ -116,9 +117,9 @@
         "isClaimed",
         "depositCount",
         "lastUpdatedDepositCount",
-        "getDepositRoot",
-        "getRoot"
+        "getDepositRoot"
       ],
+      "ignoreInWatchMode": ["getRoot"],
       "fields": {}
     },
     "wstETHBridge": {
@@ -146,7 +147,7 @@
     },
     "MaticToken": { "ignoreDiscovery": true },
     "PolygonZkEVMExistentEtrog": {
-      "ignoreMethods": ["lastAccInputHash"]
+      "ignoreInWatchMode": ["lastAccInputHash"]
     }
   }
 }

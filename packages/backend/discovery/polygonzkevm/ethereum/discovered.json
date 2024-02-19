@@ -1,8 +1,8 @@
 {
   "name": "polygonzkevm",
   "chain": "ethereum",
-  "blockNumber": 19262900,
-  "configHash": "0x679e3ac9c88b41c49b3dd2e20ac14b94f931ffdbdc04d87da3207e45e91eaa00",
+  "blockNumber": 19263381,
+  "configHash": "0x0695bb6604e8a359e1cf8fd669f562b9db23d37bbbfe11d9a936d051e8cc8bd9",
   "version": 3,
   "contracts": [
     {
@@ -74,6 +74,7 @@
         "gasTokenAddress": "0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
+        "getRoot": "0x5571db798a38177a21c622cd481c50168ad7f382520536fe94d7731c3eb50acf",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
@@ -245,14 +246,18 @@
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getBatchFee": "100000000000000000",
+        "getRollupExitRoot": "0xf373ef78c2c13b1e536d7386d23f01e6f3cd609c363f9adfefcf333458f39beb",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
+        "lastAggregationTimestamp": 1708363691,
         "lastDeactivatedEmergencyStateTimestamp": 0,
         "nondeterminsiticPendingState": [],
         "pendingStateTimeout": 432000,
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "rollupCount": 1,
         "rollupTypeCount": 0,
+        "totalSequencedBatches": 5881,
+        "totalVerifiedBatches": 5866,
         "trustedAggregatorTimeout": 432000,
         "verifyBatchTimeTarget": 1800
       },
@@ -286,6 +291,7 @@
         "INITIALIZE_TX_CONSTANT_BYTES_EMPTY_METADATA": 31,
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
+        "lastAccInputHash": "0x0170e7103c8bd34b2da3a3dd54b0241bbceed52b67b8fc4d1d500628e988dc40",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "polygon zkEVM",
@@ -313,6 +319,8 @@
       "sinceTimestamp": 1679653151,
       "values": {
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+        "depositCount": 1064,
+        "getRoot": "0xf12159c7bc70a01032871ce5bf4d9eb15c3738e3a02234117817199f67bdec2e",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "derivedName": "PolygonZkEVMGlobalExitRootV2"
