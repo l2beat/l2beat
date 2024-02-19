@@ -149,6 +149,7 @@ export function getProjectDetails(
         props: {
           id: 'state-validation',
           title: 'State validation',
+          image: getDiagramImage('state-validation', project.display.slug),
           stateValidation: project.stateValidation,
           isUnderReview: project.isUnderReview,
         },
