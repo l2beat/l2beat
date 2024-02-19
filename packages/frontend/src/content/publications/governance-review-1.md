@@ -5,204 +5,201 @@
   authorId: anastassis-oikonomopoulos
 ---
 
-## Introduction
+## **Optimism**
 
-Academic workflow, certainly in political science, is at a crossroads. The _American Journal of Political Science_ (_AJPS_) announced a (my words) ["show your work" initiative](http://ajps.org/2015/03/26/the-ajps-replication-policy-innovations-and-revisions/) in which authors who are tentatively accepted for publication at the journal must hand over the raw code and data that produced the results shown in the manuscript. The editorial team at _AJPS_ then reproduces the code from the manuscript. Pending successful replication, the manuscript moves toward publication. The _AJPS_ might be at the fore of this movement, and it could be the most aggressive among political science journals, but other journals in our field have signed the joint [Data Access & Research Transparency](http://www.dartstatement.org/) (DART) initiative. This, at a bare minimum, requires uploading code from quantitatively-oriented published articles to in-house directories hosted by the journal or to services like [Dataverse](http://dataverse.org/).
+### **Grant Misuse Reporting Process**
 
-There are workflow implications to the Lacour controversy as well. Political science, for the foreseeable future, will struggle with the extent of [the data fraud perpetrated by Michael Lacour](http://stanford.edu/~dbroock/broockman_kalla_aronow_lg_irregularities.pdf) in an article co-authored with Donald P. Green in _Science_, the general scientific journal of record in the United States. A failure to reproduce LaCour's results with different samples uncovered a comprehensive effort by LaCour to "fake" data that provided results to what we felt or believed to be true [(i.e. "truthiness")](http://chronicle.com/article/LAffaire-LaCour/230905/). However, [fake data can have real consequences](http://kieranhealy.org/blog/archives/2015/05/20/fake-science-real-consequences/) for both the researcher and those who want to learn from it and use it for various purposes. Even research done honestly may suffer the same fate if researchers are not diligent in their workflow.
+Vonnie, the community manager of Optimism Foundation, [shared a post](https://gov.optimism.io/t/grant-misuse-reporting-process/7346) that goes over the process of reporting grant misuse. This Reporting Process only covers grants made, and corresponding tokens allocated, by the Optimism Token House. For example, RetroPGF recipients are currently outside the scope of this process.
 
-These recent events underscore the DART push and cast a shadow over our workflow. However, good workflow has always been an issue in our discipline. Cloud storage services like [Dropbox](http://www.dropbox.com) are still relatively new among political scientists. Without cloud storage, previous workflow left open the possibility that work between a home computer and an office computer was lost as a function of a corrupted thumb drive, an overheated power supply, or, among other things, the wave of viruses that [would particularly affect Microsoft users every summer](http://money.cnn.com/2003/11/05/technology/microsoftbounty/). Social sciences, [unlike engineering](http://kieranhealy.org/blog/archives/2014/01/23/plain-text/), have traditionally relied on software like Microsoft Word for manuscript preparation though any word processor reduces workflow to a series of clicks and strokes on a keyboard. This is [a terrible way to track changes](http://www.nytimes.com/2013/04/19/opinion/krugman-the-excel-depression.html) or maintain version control. The addition of collaborators only compounds all the aforementioned issues. The proverbial left hand may not know what the right hand is doing.
+The reports are supposed to be anonymous but must also be published in the forum. It’s up to the reporter to use an account not associated with their real identity in order to protect their anonymity.
 
-I think there is reason for optimism. We only struggle with it now because we have tools like [R Markdown](http://rmarkdown.rstudio.com/) and [Pandoc](http://pandoc.org/), more generally, that make significant strides in workflow. LaTeX resolved earlier issues of corrupted binary files by reducing documents to raw markup that was little more than raw text and revisions that could be easily kept as ["commented" text](http://tex.stackexchange.com/questions/11177/how-to-write-hidden-notes-in-a-latex-file). However, for all its benefits (including pretty PDFs), [LaTeX is _ugly_ code](http://www-rohan.sdsu.edu/~aty/bibliog/latex/gripe.html) and does not provide means of seamlessly working with the actual data analysis itself. R Markdown both eliminates markup and allows the author and her collaborators to write and reproduce the manuscript in one fell swoop.
+### **How Base will Participate in Optimism Governance**
 
-## Getting Started with YAML
+Base came back to the forum and [published a manifesto](https://gov.optimism.io/t/manifesto-how-base-will-participate-in-optimism-governance/7361) on how they’ll participate in Optimism’s governance.They will selectively and deliberately vote for proposals that materially impact the Optimism Collective and Base. Each proposal will be considered case-by-case by a panel of Base contributors - by default, Product, Engineering, Ecosystem, and Legal teams will be looped in.
 
-The lion's share of a R Markdown document will be raw text, though the front matter may be the most important part of the document. R Markdown uses [YAML](http://www.yaml.org/) for its metadata and the fields differ from [what an author would use for a Beamer presentation](http://svmiller.com/blog/2015/02/moving-from-beamer-to-r-markdown/). I provide a sample YAML metadata largely taken from this exact document and explain it below.
+They have committed to exercise at most 9% of the total votable supply. This 9% includes any delegations to third parties. This commitment is just on the social layer and not enforced by code.
 
-```{r eval=FALSE}
----
-output:
-  pdf_document:
-    citation_package: natbib
-    keep_tex: true
-    fig_caption: true
-    latex_engine: pdflatex
-    template: ~/Dropbox/miscelanea/svm-r-markdown-templates/svm-latex-ms.tex
-title: "A Pandoc Markdown Article Starter and Template"
-thanks: "Replication files are available on the author's Github account..."
-author:
-- name: Steven V. Miller
-  affiliation: Clemson University
-- name: Mary Margaret Albright
-  affiliation: Pendelton State University
-- name: Rembrandt Q. Einstein
-  affiliation: Springfield University
-abstract: "This document provides an introduction to R Markdown, argues for its..."
-keywords: "pandoc, r markdown, knitr"
-date: "`r format(Sys.time(), '%B %d, %Y')`"
-geometry: margin=1in
-fontfamily: mathpazo
-fontsize: 11pt
-# spacing: double
-bibliography: ~/Dropbox/master.bib
-biblio-style: apsr
----
-```
+Lastly, they’re planning on a pilot delegation program in which they’ll delegate 500,000 $OP to 2 delegates for 6 months. They’ll release more info on the program when they’re ready.
 
-`output:` will tell R Markdown we want a PDF document rendered with LaTeX. Since we are adding a fair bit of custom options to this call, we specify `pdf_document:` on the next line (with, importantly, a two-space indent). We specify additional output-level options underneath it, each are indented with four spaces. `citation_package: natbib` tells R Markdown to use `natbib` to handle bibliographic citations.[^natbib] Thereafter, the next line (`keep_tex: true`) tells R Markdown to render a raw `.tex` file along with the PDF document. This is useful for both debugging and the publication stage, when the editorial team will ask for the raw `.tex` so that they could render it and later provide page proofs. The next line `fig_caption: true` tells R Markdown to make sure that whatever images are included in the document are treated as figures in which our caption in brackets in a Markdown call is treated as the caption in the figure. The next line (`latex_engine: pdflatex`) tells R Markdown to use pdflatex and not some other option like `lualatex`. For my template, I'm pretty sure this is mandatory.[^pdflatex]
+### **Mission Request Approvals**
 
-[^natbib]: R Markdown can use Pandoc's native bibliography management system or even `biblatex`, but I've found that it chokes with some of the more advanced stuff I've done with my .bib file over the years. For example, I've been diligent about special characters (e.g. umlauts and acute accents) in author names in my .bib file, but Pandoc's native citation system will choke on these characters in a .bib file. I effectively need `natbib` for my own projects.
-[^pdflatex]: The main reason I still use `pdflatex` (and most readers probably do as well) is because of LaTeX fonts. [Unlike others](http://www-rohan.sdsu.edu/~aty/bibliog/latex/gripe.html), I find standard LaTeX fonts to be appealing.
+[Mission requests](https://gov.optimism.io/c/mission-requests/69) are in full-swing. The mission request submission has finished and now delegates will be approving missions.
 
-The next line (`template: ...`) tells R Markdown to use my custom LaTeX template.[^path] While I will own any errors in the code, I confess to "Frankensteining" this template from [the default LaTeX template](https://github.com/jgm/pandoc-templates) from Pandoc, [Kieran Healy's LaTeX template](https://github.com/kjhealy/pandoc-templates/tree/master/templates), and liberally using raw TeX from the [Association for Computing Machinery's (ACM) LaTeX template](https://www.acm.org/publications/article-templates/acm-latex-style-guide). I rather like that template since it resembles standard manuscripts when they are published in some of our more prominent journals. I will continue with a description of the YAML metadata in the next paragraph, though invite the curious reader to scroll to the end of the accompanying post to see the PDF this template produces.
+### **The Role of VC Funding in RetroPGF**
 
-[^path]: Notice that the path is relative. The user can, if she wishes, install this in the default Pandoc directory. I don't think this is necessary. Just be mindful of wherever the template is placed. Importantly, `~` is used in R to find the home directory (not necessarily the working directory). It is equivalent to saying `/home/steve` in Linux, or `/Users/steve` on a Mac, in my case.
+Optimism Foundation [published a post](https://gov.optimism.io/t/the-role-of-vc-funding-in-retropgf/7342) discussing the role of VC funding in RPGF. Within the post, one can read the opinions of different members of the collective on key questions such as:
 
-The next fields get to the heart of the document itself. `title:` is, intuitively, the title of the manuscript. Do note that fields like `title:` do not have to be in quotation marks, but must be in quotation marks if the title of the document includes a colon. That said, the only reason to use a colon in an article title is if it is followed by a subtitle, hence the optional field (`subtitle:`). Notice I "comment out" the subtitle in the above example with a pound sign since this particular document does not have a subtitle. If `thanks:` is included and has an accompanying entry, the ensuing title of the document gets an asterisk and a footnote. This field is typically used to advise readers that the document is a working paper or is forthcoming in a journal.
+1. Is the amount of venture funding received by a project relevant to evaluating impact = profit?
+2. Should RetroPGF rewards only go to projects which are in need of funding?
+3. Should RetroPGF consider the resources that were used to create impact?
 
-The next field (`author:`) is a divergence from standard YAML, but I think it is useful. I will also confess to pilfering this idea from Kieran Healy's template. Typically, multiple authors for a given document are separated by an `\and` in this field. However, standard LaTeX then creates a tabular field separating multiple authors that is somewhat restrictive and not easy to override. As a result, I use this setup (again, taken from Kieran Healy) to sidestep the restrictive rendering of authors in the standard `\maketitle` tag. After `author:`, enter `- name:` (no space before the dash) and fill in the field with the first author. On the next line, enter two spaces, followed by `affiliation:` and the institute or university affiliation of the first author.
+It also includes the Foundation’s perspective which is based on the Optimistic Vision and [Ether’s Phoenix](https://medium.com/ethereum-optimism/ethers-phoenix-18fb7d7304bb). The TL;DR of the Foundation’s perspective is that they do not think whether a project has received funding or not plays any role in assessing impact=profit and therefore it shouldn’t ‘disqualify’ them from or in any way affect their RPGF allocation.
 
-Do notice this can be repeated for however many co-authors there are to a manuscript. The rendered PDF will enter each co-author in a new line in a manner similar to journals like _American Journal of Political Science_, _American Political Science Review_, or _Journal of Politics_.
+**Discuss with L2BEAT**
 
-The next two fields pertain to the frontmatter of a manuscript. They should also be intuitive for the reader. `abstract` should contain the abstract and `keywords` should contain some keywords that describe the research project. Both fields are optional, though are practically mandatory. Every manuscript requires an abstract and some journals---especially those published by Sage---request them with submitted manuscripts. My template also includes these keywords in the PDF's metadata.
+If you’re looking for delegates to approve your mission requests, we’d be happy to hear your pitch. As Season 5 starts getting momentum, we expect a lot of the attention to be driven towards Mission Requests and the applications to fulfill those so we want to stay in touch with what’s happening.
 
-`date` comes standard with R Markdown and you can use it to enter the date of the most recent compile. I typically include the date of the last compile for a working paper in the `thanks:` field, so this field currently does not do anything in my Markdown-LaTeX manuscript template. I include it in my YAML as a legacy, basically.
+Furthermore, we’re looking for the community’s opinion on the manifesto Base published regarding their participation in governance. Given it’s the first member-chain of the Superchain, it’ll set a precedent for how other chains will tackle participating in governance. Lastly, with RPGF3 results behind us, and with an ongoing discussion around them, as well as with the discussion around the role of VC funding in RPGF, we’re curious to hear your thoughts on the matter.
 
-The next items are optional and cosmetic. `geometry:` is a standard option in LaTeX. I set the margins at one inch, and you probably should too. `fontfamily:` is optional, but I use it to specify the Palatino font. The default option is Computer Modern Roman. `fontsize:` sets, intuitively, the font size. The default is 10-point, but I prefer 11-point. `spacing:` is an optional field. If it is set as "double", the ensuing document is double-spaced. "single" is the only other valid entry for this field, though not including the entry in the YAML metadata amounts to singlespacing the document by default. Notice I have this "commented out" in the example code.
+We’re especially keen to discuss with RPGF recipients who both have and do not have VC funding and understand their perspectives.
 
-The final two options pertain to the bibliography. `bibliography:` specifies the location of the .bib file, so the author could make citations in the manuscript. `biblio-style` specifies the type of bibliography to use. You'll typically set this as APSR. You could also specify the relative path of [my _Journal of Peace Research_ .bst file](http://svmiller.com/miscellany/journal-of-peace-research-bst-file/) if you are submitting to that journal.
+**When/where to catch us:**
 
-## Getting Started with Markdown Syntax
+We’re happy to discuss all of the above and more during our Optimism Office Hours every Tuesday at 4 pm UTC.
 
-There are a lot of cheatsheets and reference guides for Markdown (e.g. [Adam Prichard](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet), [Assemble](http://assemble.io/docs/Cheatsheet-Markdown.html), [Rstudio](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf), [Rstudio again](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf), [Scott Boms](http://scottboms.com/downloads/documentation/markdown_cheatsheet.pdf), [Daring Fireball](https://daringfireball.net/projects/markdown/syntax), among, I'm sure, several others). I encourage the reader to look at those, though I will retread these references here with a minimal working example below.
+## **Arbitrum**
 
-```markdown
-## Introduction
+### **[On-chain Vote] Experimental Delegate Incentive System**
 
-**Lorem ipsum** dolor _sit amet_.
+The experimental delegate incentive system has [gone to an on-chain vote](https://www.tally.xyz/gov/arbitrum/proposal/98889951328992702889653461987621825257851718470562453684547824130828387112157?chart=0), following a successful [temp-check](https://snapshot.org/#/arbitrumfoundation.eth/proposal/0xef3ed3b3735cad375953947437980db576baebbba5a0c209b2cccabcb1c30740).
 
-- Single asterisks italicize text _like this_.
-- Double asterisks embolden text **like this**.
+Context for the proposal can be [found here](https://forum.arbitrum.foundation/t/proposal-experimental-incentive-system-for-active-arbitrumdao-delegates/19467).
 
-Start a new paragraph with a blank line separating paragraphs.
+### **[On-chain Vote] Establish the Arbitrum Research and Development Collective**
 
-- This will start an unordered list environment, and this will be the first item.
-- This will be a second item.
-- A third item.
-  - Four spaces and a dash create a sublist and this item in it.
-- The fourth item.
+The ARDC has[ gone to an on-chain vote](https://www.tally.xyz/gov/arbitrum/proposal/56002054155248055908873103086558103132748843103210580613728556162036150296506?chart=0) following a successful [temp-check](https://snapshot.org/#/arbitrumfoundation.eth/proposal/0xf49d88ec2f4fa7373efc66a7cf9441d916519f48a2d90e7db3ea688357150a44).
 
-1. This starts a numerical list.
-2. This is no. 2 in the numerical list.
+Context for the proposal can be [found here](https://forum.arbitrum.foundation/t/proposal-non-constitutional-establish-the-arbitrum-research-development-collective/19899). We’d like to remind everyone that the proposal was spawned out of the [‘Arbitrum Coalition' proposal](https://forum.arbitrum.foundation/t/proposal-the-arbitrum-coalition/19145) which failed to pass a [temp-check](https://snapshot.org/#/arbitrumfoundation.eth/proposal/0x42f68a26ff5a5be692a80468a1d1885cf07d590836536f5169cc4b69f64f3f37).
 
-## This Starts A New Section
+### **[Temp-Check] Constitutional AIP - Security Council Improvement Proposal**
 
-> This will create a block quote, if you want one.
+We (L2BEAT) [submitted a proposal](https://forum.arbitrum.foundation/t/constitutional-aip-security-council-improvement-proposal/20541) that seeks to propose changes to the structure of the security council so Arbitrum can maintain the “Stage 1” designation as per our website (l2beat.com) and not fall back to “Stage 0” designation.
 
-Want a table? This will create one.
+The proposal is in temp-check which will end on January 25th.
 
-| Table Header | Second Header |
-| ------------ | ------------- |
-| Table Cell   | Cell 2        |
-| Cell 3       | Cell 4        |
+### **Questbook Grant Program ARB Conversion Request**
 
-Note that the separators _do not_ have to be aligned.
+Jojo [published a request](https://forum.arbitrum.foundation/t/arbitrum-dao-grants-domain-allocator-nominations/15759/93?u=jojo) on behalf of the Questbook domain allocators to convert around 30% of ARB in the grant program’s multisig into stables to ensure long-term stability. They’re looking to get a feeling of the community’s thoughts on it before moving forward with a more official proposal, or with the conversion itself and how it would happen.
 
-Want an image? This will do it.
+### **[RFC] Thank ARB by Plurality Labs - Milestone 2: Scaling Value Creation in the DAO**
 
-![caption for my image](path/to/image.jpg)
+6 months ago, the DAO voted to fund the[ first of three Milestones](https://forum.arbitrum.foundation/t/aip-3-non-constitutional-fund-the-arbitrum-grants-framework-proposal-milestone-1/14976) to build a grants framework. Plurality Labs [published a proposal](https://forum.arbitrum.foundation/t/non-constitutional-thank-arb-by-plurality-labs-milestone-2-scaling-value-creation-in-the-dao/20534/2) regarding the second Milestone. They’ve included several different funding requests, ranging from 10M ARB to 30M ARB.
 
-`fig_caption: yes` will provide a caption. Put that in the YAML metadata.
+### **Arbitrum Treasury And Sustainability Research**
 
-Almost forgot about creating a footnote.[^1] This will do it again.[^2]
+Karpatkey [published their research](https://forum.arbitrum.foundation/t/arbitrum-treasury-and-sustainability-research/20630) on treasury sustainability which focused on 3 main areas:
 
-[^1]: The first footnote
-[^2]: The second footnote
+1. **Assessment of ARB Price Impact:** Understanding how ARB sales might influence current market dynamics and recommendations to reduce the price impact on ARB.
+2. **Sequencer Revenue Utilization:** Exploring the use of sequencer revenues, evaluating their prospective allocation and efficiency in advancing the organization’s objectives.
+3. **Developing Guidelines for Effective Treasury Management:** Set of principles and strategies for efficient and sustainable treasury management, ensuring the organization’s long-term financial health.
 
-Want to cite something?
+You can find the [full report here](https://docs.google.com/document/d/1UV8ZjlWmRXGJr4XMrU3E3sUoa0MrdvKl67w7inHcf7M/edit).
 
-- Find your biblatexkey in your bib file.
-- Put an @ before it, like @smith1984, or whatever it is.
-- @smith1984 creates an in-text citation (e.g. Smith (1984) says...)
-- [@smith1984] creates a parenthetical citation (Smith, 1984)
+**Discuss with L2BEAT:**
 
-That'll also automatically create a reference list at the end of the document.
+We’ve been following the discussions and the developments around all currently-being-voted-on proposals and we’re generally supportive of them. We’re always happy to hear the community’s opinion on them as well as consider information that we might have missed during our assessment. If you have anything to discuss regarding the LTIPP, the Delegate Incentives, ARDC, or the Security Council Improvement proposals, please reach out to us.
 
-[In-text link to Google](http://google.com) as well.
-```
+\
+Regarding Questbook’s request, guarding against price fluctuations is a prudent thing to do. The amount makes sense, and it seems a logical time to do so given the recent price increase. We’re curious if anyone more financially savvy has any recommendations on the amount to be converted (should it be more or less?) or the process in which it should happen.
 
-That's honestly it. Markdown takes the chore of markup from your manuscript (hence: "Markdown").
+Lastly, Plurality Labs has been doing a lot of things since AIP-3 passed. Prior to putting out their proposal for Milestone #2, [they published a report](https://forum.arbitrum.foundation/t/plurality-labs-milestone-1-review/20198) on what they’ve been working on for the past 6 months. Going through the report and individual initiatives of Plurality Labs and assessing their performance and impact on the DAO is a very important step before trying to decide whether or not to vote for their second milestone.
 
-On that note, you could easily pass most LaTeX code through Markdown if you're writing a LaTeX document. However, you don't need to do this (unless you're using the math environment) and probably shouldn't anyway if you intend to share your document in HTML as well.
+We’re dedicating the appropriate amount of time to do that, and we suggest all delegates do that too. In that regard, we invite other delegates to discuss and exchange our views on our understanding of what Milestone 1 has achieved.
 
-## Using R Markdown with Knitr
+**When/where to catch us:**
 
-Perhaps the greatest intrigue of R Markdown comes with the [`knitr` package](http://yihui.name/knitr/) provided by @xie2013ddrk. In other words, the author can, if she chooses, do the analysis in the Markdown document itself and compile/execute it in R.
+We’re happy to discuss all of the above and more during our Arbitrum Office Hours every Thursday at 4 pm UTC.
 
-Take, for example, this simple exercise using the `voteincome` data from the `Zelig` package. Suppose I want to explain the decision to vote using data from this package. I load in the data, clean the data, run the analyses, and present the results as a coefficient plot.
+## **Uniswap**
 
-Here's what this code looks like. All I did was create a code display, which starts with three _backticks_ (i.e. those ticks next to the number 1 key on your keyboard) and ends with three backticks on another line. On the first line of backticks (i.e. to start the code display) enter `{r, eval=FALSE, tidy=TRUE}`. The `eval=FALSE` option just displays the R code (and does not run it), `tidy=TRUE` wraps long code so it does not run off the page.
+### **[Discussion] 100K+ USD Grantees to Introduce Themselves on the Forum**
 
-Within that code display, I enter my R code like this.
+Doo from StableLabs [started a discussion](https://gov.uniswap.org/t/discussion-100k-usd-grantees-to-introduce-themselves-on-the-forum/22579) that suggests that grantees that receive 100,000 USD or more worth of grant from Uniswap Foundation or relevant Committees should be required to make a forum post to introduce their works and ideally milestones as well.
 
-```{r, eval=FALSE, tidy = TRUE}
-suppressMessages(library(Zelig))
-suppressMessages(library(arm))
-suppressMessages(library(coefplot))
+### **Gauntlet’s Uniswap Protocol Fee Report - TLDR Version**
 
-data(voteincome)
+Gauntlet [published a report](https://gov.uniswap.org/t/gauntlet-s-uniswap-protocol-fee-report-tldr-version/22607), which was requested by the Uniswap Foundation, on the effects of a protocol-level fee on revenue, liquidity, and trading volume for certain deployments of the Uniswap protocol.
 
-voteincome$z.age <- arm::rescale(voteincome$age)
-voteincome$z.education <- arm::rescale(voteincome$education)
-voteincome$z.income <- arm::rescale(voteincome$income)
+An abstract of the report that summarizes the learnings:
 
-M1 <- glm(vote ~ z.age + female + z.education + z.income,
-            data=voteincome, family=binomial)
+“The community choice of whether or not to institute a protocol fee comes down to whether or not the long-term revenue gained outweighs the losses in volume and liquidity. Our analysis shows that the losses to TVL and toxic MEV volume may be significant with even a conservative fee switch. Still, we expect the impact on core, non-MEV volume to be very minor under all but the most extreme fees.”
 
-coefplot(M1)
-```
+**Discuss with L2BEAT**
 
-The implications for workflow are faily substantial. Authors can rather quickly display the code they used to run the analyses in the document itself (likely in the appendix). As such, there's little guesswork for reviewers and editors in understanding what the author did in the analyses reported in the manuscript.
+Requiring grantees to have some sort of presence in the forum would help increase the transparency and accountability of projects receiving grants. It’s typical of grants frameworks across many DAOs to require grantees to maintain a communication thread regarding the use of the grant and it makes sense to incorporate something like this for Uniswap DAO as well. Although this isn’t a proposal to be voted on, we’d be keen to discuss it further with the community.
 
-It doesn't end there. In fact, here's what happens when `eval=FALSE` is omitted or changed to `eval=TRUE`. Now, the code runs within R. Observe.
+**When/where to catch us:**
 
-```{r, eval=TRUE, tidy = TRUE, cache=FALSE, fig.cap="A Coefficient Plot"}
-suppressMessages(library(Zelig))
-suppressMessages(library(arm))
+We’re happy to discuss all of the above and more during our Uniswap Office Hours every Friday at 4 pm UTC.
 
+## **Hop**
 
-data(voteincome)
+### **[RFC] Hop Community Moderator Compensation**
 
-voteincome$z.age <- arm::rescale(voteincome$age)
-voteincome$z.education <- arm::rescale(voteincome$education)
-voteincome$z.income <- arm::rescale(voteincome$income)
+Chris Whinfrey of Hop Foundation [submitted an RFC](https://forum.hop.exchange/t/rfc-hop-community-moderator-compensation/1087) that seeks to retroactively compensate Rxpwnz and the rest of the Discourse/Discord moderator team, as well as establish a Lead Community Moderator Role.
 
-M1 <- glm(vote ~ z.age + female + z.education + z.income,
-            data=voteincome, family=binomial)
+The proposed compensation for Rxpwnz is $3,000/month, both for his active contributions and in retrospective recognition starting June 9th, 2022, payable 50% in USDC and 50% in $HOP with the latter being linearly vested over 1 year. That brings the total proposed compensation to
 
-arm::coefplot(M1)
-```
+$3,000 x 18 months = $54,000
 
-To get `knitr` to present the results of a table, add `results="asis"` to the brackets to start the R code chunk. The ensuing output will look like this (though the table may come on the next page).
+There are also one-time bonuses proposed for other moderators as follows:
 
-```{r, eval=TRUE, tidy = TRUE, size="small", cache=FALSE, results="asis"}
-suppressMessages(library(Zelig))
-suppressMessages(library(stargazer))
-suppressMessages(library(arm))
+Nauzystan: $4,000
 
-data(voteincome)
+Cai: $2,000
 
-voteincome$z.age <- arm::rescale(voteincome$age)
-voteincome$z.education <- arm::rescale(voteincome$education)
-voteincome$z.income <- arm::rescale(voteincome$income)
+Hossein: $1,000
 
+Abruzy: $1,000
 
-M1 <- glm(vote ~ z.age + female + z.education + z.income,
-            data=voteincome, family=binomial)
+The Lead Community Moderator role will be assumed by Rxpwnz, but there could also be elections if there are multiple interested individuals.
 
-stargazer(M1, title="A Handsome Table", header=FALSE)
-```
+### **Meeting Minutes [10/1/2024]**
 
-Adding `echo="FALSE"` inside the brackets to start the R chunk will omit the presentation of the R commands. It will just present the table. This provides substantial opportunity for authors in doing their analyses. Now, the analysis and presentation in the form of a polished manuscript can be effectively simultaneous.[^4]
+Thegreg.eth [shared the notes](https://forum.hop.exchange/t/community-call-meeting-minutes/889/10) from the community call that took place on January 10, 2024.
 
-[^4]: I'm not sure if I'm ready to commit to this myself since my workflow is still largely derived from [Rob J. Hyndman's example](http://robjhyndman.com/hyndsight/workflow-in-r/). However, _knitr_ has endless potential, especially when analyses can stored in cache, saved as chunks, or loaded in the preamble of a document to reference later in the manuscript.
+### **[RFC] Head of DAO Governance and Operations Role**
+
+Francom put together [an RFC](https://forum.hop.exchange/t/rfc-head-of-dao-governance-and-operations-role/1089) that seeks to establish a Head of DAO Governance and Operations role. The role would come with responsibilities such as:
+
+- Run the HOP community call
+- Maintain the forums
+- Assisting the grants committee, ambassador program and multi sig signers
+- Evaluating and defining compensations for existing and new committees
+- Verifying data provided by delegates for their delegate compensation
+- Handle general administrative, operational, and administrative work for the DAO
+
+The proposed compensation for the role is at $3k/month (payable in HOP) with a 1-year vesting period and the proposed term is 6 months to act as a pilot.
+
+**Discuss with L2BEAT**
+
+We’re very much in favor of retroactively rewarding contributors and we’re happy to see such a proposal hit the forums. Given the wide range of activities Rxpwnz took up over the course of 1,5 years without any compensation or promise (at least to our knowledge), the proposed retroactive compensation seems reasonable. The same goes for the one-time bonuses proposed for other moderators. However, given that we’re not as familiar with their contributions, we invite them (or any member of the HOP DAO who’s familiar with the moderator program) to provide us with more information.
+
+With the proposal to establish the role of Head of DAO Governance and Operations being discussed at the same time (for which we’re not sure what to think yet, happy to discuss it with the community), which proposes the same compensation ($3k/mo) for a much wider and more difficult mandate, there will be a discrepancy between the compensation of the two roles if both proposals pass as they are. We’re not sure whether the compensation for the Lead Moderator is too high, or the compensation for the Head of DAO Governance is too low. However, we do know it should be something to keep in mind when assessing either proposal.
+
+**When/where to catch us:**
+
+We’re happy to discuss all of the above and more during our Hop Office Hours every Friday at 4 pm UTC.
+
+## **Connext**
+
+### **[RFC] Extend and Optimize NEXT Liquidity Program on Velodrome**
+
+Connext DAO’s pilot program on Velodrome is ending on January 25th and Methodic [submitted an RFC](https://forum.connext.network/t/rfc-extend-and-optimize-next-liquidity-program-on-velodrome/1016) which seeks to extend NEXT’s liquidity program on Velodrome.
+
+**Specifications:**
+
+Through its current incentive program, Connext has directed ~$2 in $VELO for every $1 they deployed. By approving this proposal, Connext will extend its initial program by 26 weeks while switching the source of incentives from $5K of worth $NEXT to $6K worth of $OP. These will be deposited weekly to attract votes for NEXT/USDC.
+
+The proposal also suggests the deployment of $750k of protocol-owned liquidity in the NEXT/USDC pair – which would mean the DAO would have to convert $NEXT and/or $ETH from the treasury into $USDC since [there currently is none.](https://app.safe.global/balances?safe=eth:0x4d50a469fc788a3c0CdC8Fd67868877dCb246625)
+
+**Overall cost:**
+
+$6K worth of OP tokens x 26 weeks, representing about 13% of Connext’s 300K OP tokens at today’s prices.
+
+### **[RFC] Metis Network Expansion**
+
+Nadjana from the Connext Foundation [submitted an RFC](https://forum.connext.network/t/rfc-metis-network-expansion/1026) that seeks to add Connext support for Metis chain. This follows a discussion that took place during one of the community calls about creating a framework for adding support for different chains quicker and without procedural overhead for the DAO. However, since the framework isn’t in place yet, the decision has to be made through a DAO vote.
+
+**Discuss with L2BEAT:**
+
+As already pointed out in the forum by MinistroDolar,
+
+1. The $OP tokens that Connext DAO has is meant to bootstrap AMM pools and subsidize the gas fees for bridging to Optimism, not to be used as liquidity incentives.
+2. There’s still 1,24M $NEXT (minus the amount to be distributed until the program ends) [available](https://optimistic.etherscan.io/address/0x1a3c9dc0c3fb2d9bc435e28479b3d9b3e3343347#tokentxns). So far, 251,450 $NEXT has been spent and we saw an increase of $183,000 in TVL. This implies a cost of 24.5% for every dollar raised.
+
+We’d like to hear Velodrome’s response as well as get the community’s thoughts on the proposal.
+
+**Where to catch us:**
+
+We’re happy to discuss all of the above and more during our Connext Office Hours every Friday at 4 pm UTC.
