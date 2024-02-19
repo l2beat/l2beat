@@ -1,3 +1,71 @@
+Generated with discovered.json: 0x1e147871334adbdf3c6185806d439b2fe62f8e41
+
+# Diff at Mon, 19 Feb 2024 07:26:08 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@1d42798d2c1c84e72c06e36258e023fc6dbbfb1d block: 19254184
+- current block number: 19260286
+
+## Description
+
+The implementation is upgraded. See Diff below for the changes.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract LaunchBridge (0x0bD88b59D580549285f0A207Db5F06bf24a8e561) {
+    }
+```
+
+```diff
+    contract Bridge (0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d) {
+      upgradeability.implementation:
+-        "0x829e8Bf84569A0B2da7B27f975F026fDb6e0a774"
++        "0x0bD88b59D580549285f0A207Db5F06bf24a8e561"
+      implementations.0:
+-        "0x829e8Bf84569A0B2da7B27f975F026fDb6e0a774"
++        "0x0bD88b59D580549285f0A207Db5F06bf24a8e561"
+      values.proposedBridgeReadyAt:
+-        0
+      values.proposedMainnetBridge:
+-        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000"]
+      values.proposedUpgrade:
+-        ["0x0bD88b59D580549285f0A207Db5F06bf24a8e561","0x195ff6fae1f3fcceb00116c9f65f6cdd9a1ef6665f8d468acc446b32f20114c4"]
+      values.proposedUpgradeReadyAt:
+-        1708303151
+    }
+```
+
+## Source code changes
+
+```diff
+.../contracts/token/ERC20/IERC20.sol               |   8 +-
+ .../ERC20/extensions/IERC20Permit.sol => /dev/null |  60 --
+ .../token/ERC20/extensions/draft-IERC20Permit.sol  |  58 +-
+ .../Bridge/implementation/meta.txt                 |   2 +-
+ .../Bridge/implementation}/src/LaunchBridge_v3.sol |   0
+ .../launch-bridge/LaunchBridge.sol => /dev/null    | 858 ---------------------
+ .../implementation}/src/libraries/Predeploys.sol   |   0
+ .../contracts/interfaces/IERC20.sol => /dev/null   |   6 -
+ .../contracts/token/ERC20/IERC20.sol => /dev/null  |  82 --
+ .../extensions/draft-IERC20Permit.sol => /dev/null |  60 --
+ .../Ownable2StepUpgradeable.sol => /dev/null       |  71 --
+ .../access/OwnableUpgradeable.sol => /dev/null     |  95 ---
+ .../IERC1967Upgradeable.sol => /dev/null           |  26 -
+ .../draft-IERC1822Upgradeable.sol => /dev/null     |  20 -
+ .../ERC1967UpgradeUpgradeable.sol => /dev/null     | 170 ----
+ .../beacon/IBeaconUpgradeable.sol => /dev/null     |  16 -
+ .../proxy/utils/Initializable.sol => /dev/null     | 166 ----
+ .../proxy/utils/UUPSUpgradeable.sol => /dev/null   | 112 ---
+ .../security/PausableUpgradeable.sol => /dev/null  | 117 ---
+ .../utils/AddressUpgradeable.sol => /dev/null      | 244 ------
+ .../utils/ContextUpgradeable.sol => /dev/null      |  37 -
+ .../utils/StorageSlotUpgradeable.sol => /dev/null  | 138 ----
+ .../LaunchBridge/meta.txt => /dev/null             |   2 -
+ 23 files changed, 62 insertions(+), 2286 deletions(-)
+```
+
 Generated with discovered.json: 0xd3ba79cfc2cc395aa3d3a8c51165c0d647ae5c94
 
 # Diff at Sun, 18 Feb 2024 10:46:13 GMT:
@@ -8,7 +76,7 @@ Generated with discovered.json: 0xd3ba79cfc2cc395aa3d3a8c51165c0d647ae5c94
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Added a new proposal to upgrade the Bridge. The new implementation adds functions to migrate funds to a new system and removes upgrade delay functionalities.
 
 ## Watched changes
 
