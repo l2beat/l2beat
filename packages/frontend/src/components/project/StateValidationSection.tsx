@@ -1,6 +1,7 @@
 import { ScalingProjectStateValidation } from '@l2beat/config'
 import React from 'react'
 
+import { HorizontalSeparator } from '../HorizontalSeparator'
 import { Markdown } from '../Markdown'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
 import { ProjectSectionId } from './sectionId'
@@ -38,6 +39,7 @@ export function StateValidationSection(props: StateValidationSectionProps) {
         <Markdown className="leading-snug text-gray-850 dark:text-gray-400 md:text-lg">
           {props.stateValidation.description}
         </Markdown>
+        <HorizontalSeparator />
         {props.stateValidation.categories.map((stateValidationCategory) => (
           <Item
             stateValidationCategory={stateValidationCategory}
