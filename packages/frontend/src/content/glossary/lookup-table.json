@@ -1,0 +1,5 @@
+{
+  "term": "Lookup table",
+  "definition": "Lookup tables express a relation between variables in the format of a table. A prover can rely on such a table of precomputed values in generating a proof without having to do bit by bit arithmetic. These tables can help handle hash functions within circuits in a more friendly manner (that is speeding up decryption and reducing memory requirements).",
+  "isSpicy": false
+}

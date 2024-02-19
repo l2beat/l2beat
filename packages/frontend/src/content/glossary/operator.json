@@ -1,0 +1,5 @@
+{
+  "term": "Operator",
+  "definition": "An operator is the entity charged with managing a rollup and progressing its state. While similar to the concept of a proposer, operator is often meant to convey a centralized rollup implementation, with a single operator acting as node, proposer (and prover if ZK).",
+  "isSpicy": false
+}

@@ -1,0 +1,5 @@
+{
+  "term": "Halo",
+  "definition": "The first recursive proof composition without a trusted setup. A proof verifies the correctness of another instance of itself, meaning that the latest mathematical output (one single proof) contains within it a proof that all prior claims to the relevant secret knowledge have themselves been sufficiently proven through a similar process. It allows any amount of computational effort and data to produce a short proof that can be checked quickly.",
+  "isSpicy": false
+}

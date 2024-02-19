@@ -1,0 +1,5 @@
+{
+  "term": "Upgradeability",
+  "definition": "The ability for rollup smart contracts and parameters used in a rollup to be updated by holders of an admin key. Upgradeability represents a vector of risk for users, and should be decentralized and combined with time delays for greater security guarantees.",
+  "isSpicy": true
+}

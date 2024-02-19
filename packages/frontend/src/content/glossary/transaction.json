@@ -1,0 +1,5 @@
+{
+  "term": "Transaction",
+  "definition": "Data committed to the Ethereum Blockchain signed by an originating account, targeting a specific address. The transaction contains metadata such as the gas limit for that transaction.",
+  "isSpicy": false
+}

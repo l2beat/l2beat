@@ -1,0 +1,5 @@
+{
+  "term": "FRI",
+  "definition": "A proximity test method that is used to determine whether a set of points is mostly on a polynomial with a degree less than a specified value. It resembles the FFT but the arithmetic complexity of its prover is strictly linear and that of the verifier is strictly logarithmic.",
+  "isSpicy": false
+}

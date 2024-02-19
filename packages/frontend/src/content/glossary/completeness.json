@@ -1,0 +1,5 @@
+{
+  "term": "Completeness",
+  "definition": "One of three properties of zero-knowledge proofs, completeness states that if a statement is true, an honest verifier will be convinced of this by an honest prover.",
+  "isSpicy": false
+}

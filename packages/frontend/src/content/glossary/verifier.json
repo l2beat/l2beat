@@ -1,0 +1,5 @@
+{
+  "term": "Verifier",
+  "definition": "An entity in a ZK-Rollup, often a smart contract, that verifies zero-knowledge proofs submitted by a prover.",
+  "isSpicy": false
+}

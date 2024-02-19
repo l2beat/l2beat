@@ -1,0 +1,5 @@
+{
+  "term": "Polynomial commitment",
+  "definition": "A commitment scheme that commits to a univariate polynomial. It is used for Sonic, Marlin, and PLONK proof schemes.",
+  "isSpicy": false
+}

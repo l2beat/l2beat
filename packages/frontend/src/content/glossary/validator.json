@@ -1,0 +1,5 @@
+{
+  "term": "Validator",
+  "definition": "A node in a blockchain system responsible for processing transactions, and adding or verifying new blocks to the blockchain.",
+  "isSpicy": false
+}
