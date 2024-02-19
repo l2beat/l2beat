@@ -58,6 +58,7 @@ export const zksyncera: Layer2 = {
       documentation: ['https://era.zksync.io/docs/'],
       explorers: [
         'https://explorer.zksync.io/',
+        'https://era.zksync.network/',
         'https://zksync-era.l2scan.co/',
       ],
       repositories: ['https://github.com/matter-labs/zksync-era'],
