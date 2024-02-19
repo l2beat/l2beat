@@ -9,5 +9,5 @@ export const collections = {
   delegatedProjects: delegatedProjectsCollection,
   events: eventsCollection,
   authors: authorsCollection,
-  glossary: glossaryCollection
+  glossary: glossaryCollection,
 }

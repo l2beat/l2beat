@@ -1,4 +1,4 @@
-import { CollectionEntry } from "../../../content/getCollection"
+import { CollectionEntry } from '../../../content/getCollection'
 
 export interface GlossaryEntry {
   id: string
