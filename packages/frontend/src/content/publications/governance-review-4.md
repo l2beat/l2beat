@@ -16,6 +16,7 @@ Delegates will be able to vote on the different Mission Requests submitted in ea
 You can vote for the missions in each intent in the following links: \
  \
 [Intent #1 - Technical Decentralization](https://vote.optimism.io/proposals/98465291872542951214209322719211107762519739238690458061430483715486199997958) - 6 Mission Requests
+
 [Intent #2 - Growing the Superchain](https://vote.optimism.io/proposals/73015178396219273083926854824941753345309809188523598109189308270327699475780) - 14 Mission Requests
 
 [Intent #3 - Improving Consumer Experience](https://vote.optimism.io/proposals/28717615714293937494900642239604511349625947114847340322672351149517127794996) - 13 Mission Requests
@@ -65,9 +66,9 @@ You can find us at our Optimism Office Hours every Tuesday at 4 pm UTC.
 
 ### **On Chain Vote - Long Term Incentives Pilot Program**
 
-This AIP seeks to establish a Long-term Term Incentives Pilot Program for the DAO to test new incentive designs and answer the necessary questions to ensure we are ready to commit to the long-term program. This Pilot Program will distribute a maximum of 45M ARB to protocols building on Arbitrum that were **not** **funded **during STIP or the Backfund \
- \
-The overall cost of the proposal is 45,735,00 ARB, 45,000,000 of which will be distributed to applying protocols. The rest 735,000 will be broken down into the following categories: \
+This AIP seeks to establish a Long-term Term Incentives Pilot Program for the DAO to test new incentive designs and answer the necessary questions to ensure we are ready to commit to the long-term program. This Pilot Program will distribute a maximum of 45M ARB to protocols building on Arbitrum that were **not** funded during STIP or the Backfund.
+ 
+The overall cost of the proposal is 45,735,00 ARB, 45,000,000 of which will be distributed to applying protocols. The rest 735,000 will be broken down into the following categories:
 
 - **Council Members**: 125,000 ARB - 25,000 ARB each
 - **Advisors**: 105,000 ARB - 35,000 ARB each
@@ -169,21 +170,17 @@ We’d love to hear the community’s thoughts on the proposal by the Arbiters, 
 
 You can catch us to discuss all the above and more during our Arbitrum Office Hours every Thursday at 4 pm UTC.
 
-## **Uniswap **
+## **Uniswap**
 
 ### **Uniswap-Arbitrum Grant Program (UAGP) - Update Cohort 1**
 
 Bernard [published an update](https://gov.uniswap.org/t/uniswap-arbitrum-grant-program-uagp-update-cohort-1/22789) on behalf of the UAGP committee to announce the selected grant recipients of the first cohort. The recipients, and the amount received are:
 
-[Revert Finance](https://revert.finance/) - 70,000 ARB
-
-[Oku](https://oku.trade/index.html) - 35,000 ARB
-
-[Slash Payments](https://slash.fi/) - 10,000 ARB
-
-[RabbitHole](https://rabbithole.gg/) - 30,000 ARB
-
-[Ephema](https://www.ephema.io/) - 60,000 ARB
+- [Revert Finance](https://revert.finance/) - 70,000 ARB
+- [Oku](https://oku.trade/index.html) - 35,000 ARB
+- [Slash Payments](https://slash.fi/) - 10,000 ARB
+- [RabbitHole](https://rabbithole.gg/) - 30,000 ARB
+- [Ephema](https://www.ephema.io/) - 60,000 ARB
 
 **Discuss with L2BEAT**
 
@@ -225,14 +222,6 @@ This proposal seeks to diversify the treasury and create protocol owned liquidit
 
 The [Tally vote](https://www.tally.xyz/gov/hop/proposal/58755660485926286000919392683741755457975975545732074086390752903100177701755?chart=list) ends on February 12th, 2024 at 08:03 am UTC.
 
-**Discuss with L2BEAT**
-
-We’d like to discuss the efficiency of protocol-owned liquidity and understand the optimal way to approach it.
-
-**When/where to catch us:**
-
-You can find us during our Hop Office Hours every Friday at 4 pm UTC.
-
 ### **[RFC] Renewal of the Hop Delegate Incentivization Trial (3rd Period)**
 
 Francom [submitted an RFC](https://forum.hop.exchange/t/rfc-renewal-of-the-hop-delegate-incentivization-trial-3rd-period/1097) which seeks to extend the Hop Delegate Incentivization Program for a period of twelve months.
@@ -264,6 +253,10 @@ Ilia from StarkWare [published](https://community.starknet.io/t/starknet-2024-ro
 
 We’d be happy to discuss the 2024 roadmap and learn more about the developments happening in Starknet.
 
+**When/where to catch us:**
+
+You can find us to discuss Starknet during our Starknet Office Hours every Friday at 3 pm UTC.
+
 ## **Connext**
 
 ### **Community Call Summary**
@@ -282,6 +275,4 @@ If you’re an active participant in Connext’s ecosystem and/or DAO, we’d lo
 
 **When/where to catch us:**
 
-You can find us during our Connext Office Hours every Friday at 4 pm UTCThe [Tally vote](https://www.tally.xyz/gov/hop/proposal/58755660485926286000919392683741755457975975545732074086390752903100177701755?chart=list) ends on February 12th, 2024 at 07:53 am UTC.
-
-You can read the full proposal in the [forum post here](https://forum.hop.exchange/t/rfc-treasury-diversification-protocol-owned-liquidity-multichain-hop-eth-lps/1046/19).
+You can find us during our Connext Office Hours every Friday at 4 pm UTC.

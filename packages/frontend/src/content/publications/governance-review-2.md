@@ -49,15 +49,11 @@ The elections for the Arbitrum DAO Procurement Committee ([original proposal](ht
 
 **The applicants are:**
 
-[Pavel Fedotov (pfedprog)](https://forum.arbitrum.foundation/t/procurement-committee-application-elections-on-snapshot/20536/3)
-
-[Joseph (ImmutableLawyer)](https://forum.arbitrum.foundation/t/procurement-committee-application-elections-on-snapshot/20536/4)
-
-[Paul Imseih (Pablo)](https://forum.arbitrum.foundation/t/procurement-committee-application-elections-on-snapshot/20536/5)
-
-[Jeff G (jeff_g)](https://forum.arbitrum.foundation/t/procurement-committee-application-elections-on-snapshot/20536/6)
-
-[Bernard Schmid (bernard)](https://forum.arbitrum.foundation/t/procurement-committee-application-elections-on-snapshot/20536/7)
+- [Pavel Fedotov (pfedprog)](https://forum.arbitrum.foundation/t/procurement-committee-application-elections-on-snapshot/20536/3)
+- [Joseph (ImmutableLawyer)](https://forum.arbitrum.foundation/t/procurement-committee-application-elections-on-snapshot/20536/4)
+- [Paul Imseih (Pablo)](https://forum.arbitrum.foundation/t/procurement-committee-application-elections-on-snapshot/20536/5)
+- [Jeff G (jeff_g)](https://forum.arbitrum.foundation/t/procurement-committee-application-elections-on-snapshot/20536/6)
+- [Bernard Schmid (bernard)](https://forum.arbitrum.foundation/t/procurement-committee-application-elections-on-snapshot/20536/7)
 
 There will be a pitching session on Monday 29th of January at 4pm UTC ([event link](https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=NWplZms5NDI5YnRyM3I0YjAwNWFpbzc5YzIgY180MTU3OTg1ZDI0NTJkZmQ4YTkxYjZhMzZiY2NhYjM3ZGViOWJmZmU5MDUzYTRiOWJjYzRlOWZmZjllZjAyOTI0QGc&tmsrc=c_4157985d2452dfd8a91b6a36bccab37deb9bffe9053a4b9bcc4e9fff9ef02924%40group.calendar.google.com)). Make sure to cast your vote before January 30th, 4:32 pm UTC.
 
@@ -105,23 +101,17 @@ The elections for the Council and Application Advisors of the Long Term Incentiv
 
 **[Council](https://snapshot.org/#/arbitrumfoundation.eth/proposal/0xc2d7ebf5ef78084b26544905fd6febf0b8256293ce7f67a71fdcdefc5e6284a4)**
 
-GFX Labs
-
-404 DAO
-
-Wintermute
-
-GMX
-
-Karel Vuong
+- GFX Labs
+- 404 DAO
+- Wintermute
+- GMX
+- Karel Vuong
 
 **[Application Advisors](https://snapshot.org/#/arbitrumfoundation.eth/proposal/0x1e5052579c5ed931f90e03e59f34274ba0a006093a6eeeab65e5e4df552668cc)**
 
-JoJo
-
-SEEDLatam Gov
-
-Castle Capital
+- JoJo
+- SEEDLatam Gov
+- Castle Capital
 
 ### **[RFC] Changes to the Constitution and the Security Council Election Process**
 
@@ -174,8 +164,7 @@ You can catch us to discuss all the above and more during our Arbitrum Office Ho
 
 Getty [started a discussion](https://gov.uniswap.org/t/uniswap-revitalization-and-growth/22616) on how Uniswap can increase its market share, especially on newer chains. He suggests creating a Uniswap V3 Onboarding Package with some $UNI (initial proposed amount is $250k, but still being discussed) to be used to kick off liquidity incentivization for new chains, and even chains in which v3 is already deployed.
 
-** \
-Discuss with L2BEAT**
+**Discuss with L2BEAT**
 
 Actively working to increase Uniswap’s market share and not solely relying on brand recognition is definitely needed, especially for newer chains where other, native dexes are solidifying their market share every day. It would also make the governance process for the deployment of Uniswap v3 on new chains more meaningful, as right now it’s more of a rubber-stamping process.
 
@@ -201,7 +190,7 @@ We’re interested to discuss the upcoming Hop V2 launch and get some extra cont
 
 You can discuss all things related to HOP with us during our Hop Office Hours every Friday at 5pm UTC
 
-# **Polygon**
+## **Polygon**
 
 ### **Public Goods Funding RFC**
 

@@ -21,7 +21,7 @@ They have committed to exercise at most 9% of the total votable supply. This 9% 
 
 Lastly, they’re planning on a pilot delegation program in which they’ll delegate 500,000 $OP to 2 delegates for 6 months. They’ll release more info on the program when they’re ready.
 
-### **Mission Request Approvals **
+### **Mission Request Approvals**
 
 [Mission requests](https://gov.optimism.io/c/mission-requests/69) are in full-swing. The mission request submission has finished and now delegates will be approving missions.
 
@@ -79,8 +79,8 @@ Jojo [published a request](https://forum.arbitrum.foundation/t/arbitrum-dao-gran
 
 Karpatkey [published their research](https://forum.arbitrum.foundation/t/arbitrum-treasury-and-sustainability-research/20630) on treasury sustainability which focused on 3 main areas:
 
-1. **Assessment of ARB Price Impact: **Understanding how ARB sales might influence current market dynamics and recommendations to reduce the price impact on ARB.
-2. **Sequencer Revenue Utilization: **Exploring the use of sequencer revenues, evaluating their prospective allocation and efficiency in advancing the organization’s objectives.
+1. **Assessment of ARB Price Impact:** Understanding how ARB sales might influence current market dynamics and recommendations to reduce the price impact on ARB.
+2. **Sequencer Revenue Utilization:** Exploring the use of sequencer revenues, evaluating their prospective allocation and efficiency in advancing the organization’s objectives.
 3. **Developing Guidelines for Effective Treasury Management:** Set of principles and strategies for efficient and sustainable treasury management, ensuring the organization’s long-term financial health.
 
 You can find the [full report here](https://docs.google.com/document/d/1UV8ZjlWmRXGJr4XMrU3E3sUoa0MrdvKl67w7inHcf7M/edit).

@@ -50,7 +50,7 @@ For more context, you can read the [forum post here](https://forum.arbitrum.foun
 
 We’ll be having our 11th Open Governance Call on Wednesday 7th of February 2024. [The agenda for the call can be found here](https://forum.arbitrum.foundation/t/11-arbitrum-open-governance-call-7-2-2023/20991), and as always is open to anyone who wants to bring up a specific topic to be discussed.
 
-### **Plurality Labs Milestone 1 Review by L2BEAT **
+### **Plurality Labs Milestone 1 Review by L2BEAT**
 
 On the occasion of [Plurality Labs’ Milestone 2 proposal](https://forum.arbitrum.foundation/t/non-constitutional-thank-arb-by-plurality-labs-milestone-2-scaling-value-creation-in-the-dao/20534) going to Snapshot for a temp-check vote (which has since been withdrawn), we (L2BEAT) [published our review](https://forum.arbitrum.foundation/t/plurality-labs-milestone-1-review/20198/3) of Milestone 1.
 
@@ -175,11 +175,13 @@ Marc Boiron, Polygon Labs’ CEO, [published a copy](https://forum.polygon.techn
 
 In [this transparency report](https://forum.polygon.technology/t/council-transparency-report-pip-29/13501), the Protocol Council (‘PC’) aims to outline the execution details of the removal of 0x0000000000000000000000000000000000000001 assigned to the TIMELOCK_ADMIN_ROLE on the OpenZeppelin contracts. After evaluating the efficacy, impact, execution specifications, and security considerations, the PC has reached a majority consensus of 7/13, thereby queuing the change in execution.
 
-**Discuss with L2BEAT \
-**We’re very interested in discussing with community members about Polygon so please reach out if you have anything you believe we can somehow contribute to.
+**Discuss with L2BEAT**
 
-**When/where to catch us: \
-**You can find us during our Polygon Office Hours which happen every Friday at 3 pm UTC.
+We’re very interested in discussing with community members about Polygon so please reach out if you have anything you believe we can somehow contribute to.
+
+**When/where to catch us:**
+
+You can find us during our Polygon Office Hours which happen every Friday at 3 pm UTC.
 
 ## **Starknet**
 

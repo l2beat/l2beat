@@ -20,7 +20,7 @@ The number of Mission Requests approved under each intent are:
 
 Interested parties can now [apply to fulfill Mission Requests on Charmverse](https://app.charmverse.io/op-grants/application-guide-4494195094676161) up until 21st of February 2024.
 
-### **Upgrade Proposal #5: Ecotone Network Upgrade **
+### **Upgrade Proposal #5: Ecotone Network Upgrade**
 
 Bayardo, an engineer on the core Base team and a core developer of the OP stack [submitted a proposal](https://gov.optimism.io/t/upgrade-proposal-5-ecotone-network-upgrade/7669) for Protocol Upgrade #5: Ecotone Network Upgrade.
 
@@ -87,9 +87,9 @@ Pedrob [created a post](https://forum.arbitrum.foundation/t/rfc-daos-committees-
 
 Jojo [published a post](https://forum.arbitrum.foundation/t/supporting-some-of-the-needs-of-builders-through-grants-a-simple-analysis-of-what-the-dao-could-do-next/21184) that tries to highlight what protocols need and what the DAO could do for them, with a focus on grants. Jojo has broken down the types of grants into 3 main categories:
 
-1. **Development grants **- described as the biggest gap in the DAO
+1. **Development grants** - described as the biggest gap in the DAO
 2. **Incentives grants** - described as the type of grants that the DAO has the most experience
-3. **Bootstrap grants **- kind of a mix of the two
+3. **Bootstrap grants** - kind of a mix of the two
 
 The end goal of the post is to start having a public discussion on the next steps regarding what our DAO can do to favor builders.
 
@@ -107,7 +107,7 @@ You can catch us to discuss all the above and more during our Arbitrum Office Ho
 
 ## **Uniswap**
 
-### **On Chain Vote - Deploy v2 on all chains with v3 **
+### **On Chain Vote - Deploy v2 on all chains with v3**
 
 TL;DR of deploying v2 on all chains where v3 is deployed:
 
@@ -182,15 +182,11 @@ Validator.Info [published their staking report](https://forum.polygon.technology
 
 The top 5 Polygon validators ranked by total stake as of February 1, 2024, are:
 
-Luganodes - 382.88m MATIC
-
-Binance Node - 360.25m MATIC
-
-Twinstake - 344.24m MATIC
-
-Web3Nodes - 207.44m MATIC
-
-Coinbase Cloud - 205.83m MATIC
+- Luganodes - 382.88m MATIC
+- Binance Node - 360.25m MATIC
+- Twinstake - 344.24m MATIC
+- Web3Nodes - 207.44m MATIC
+- Coinbase Cloud - 205.83m MATIC
 
 **Discuss with L2BEAT**
 
