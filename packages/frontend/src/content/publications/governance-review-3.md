@@ -6,11 +6,9 @@
 
 ## **Optimism**
 
-
 ### **Mission Request Approvals**
 
 Mission requests are in the stage in which delegates need to review them and provide, or not, their approval. As a reminder, mission requests need at least 4 approvals by top 100 delegates in order to move to a vote. The deadline for approvals is February 7th at 19:00 UTC.
-
 
 ### **A16z’s Continued Participation in Optimism Governance**
 
@@ -30,9 +28,7 @@ We’ll be spending the next week reviewing proposals and providing our approval
 
 You can discuss mission requests as well as anything else related to Optimism during our Optimism Office Hours every Tuesday at 4 pm UTC.
 
-
 ## **Arbitrum**
-
 
 ### **Temp Check - [Constitutional] Changes to the Constitution and the Security Council Election Process**
 
@@ -42,7 +38,6 @@ The [Snapshot vote](https://snapshot.org/#/arbitrumfoundation.eth/proposal/0x4e0
 
 For more context, you can read the [forum post here](https://forum.arbitrum.foundation/t/aip-changes-to-the-constitution-and-the-security-council-election-process/20856).
 
-
 ### **Temp Check - [Non-Constitutional]: Arbitrum Stable Treasury Endowment Program**
 
 This framework supports the budding RWA ecosystem on Arbitrum by diversifying 35 million ARB from our treasury (~1%) into stable & liquid bills or money market instruments earning a rate of return roughly equivalent to US Treasuries
@@ -51,11 +46,9 @@ The [Snapshot vote](https://snapshot.org/#/arbitrumfoundation.eth/proposal/0x505
 
 For more context, you can read the [forum post here](https://forum.arbitrum.foundation/t/final-arbitrum-stable-treasury-endowment-program/20139/33).
 
-
 ### **Arbitrum Open Governance Call #11**
 
 We’ll be having our 11th Open Governance Call on Wednesday 7th of February 2024. [The agenda for the call can be found here](https://forum.arbitrum.foundation/t/11-arbitrum-open-governance-call-7-2-2023/20991), and as always is open to anyone who wants to bring up a specific topic to be discussed.
-
 
 ### **Plurality Labs Milestone 1 Review by L2BEAT **
 
@@ -63,16 +56,13 @@ On the occasion of [Plurality Labs’ Milestone 2 proposal](https://forum.arbitr
 
 In the coming weeks, we’ll also be reviewing Questbook’s grant program and sharing our findings in the forums.
 
-
 ### **Self-Voting Policy Discussion**
 
 ImmutableLawyer [started a discussion](https://forum.arbitrum.foundation/t/self-voting-policy-discussion-arbitrumdao-constitution/20886) around the issue of self-voting and whether or not the DAO should have a more streamlined approach to the phenomenon. The discussion aims to highlight the conflict of interests concerns surrounding self-voting within the DAO while also addressing the challenges in determining what constitutes a ‘direct’ and ‘indirect’ conflict of interest.
 
-
 ### **Arbitrum Research and Development Collective (ARDC): Applications and Elections**
 
 The [applications for the ARDC](https://forum.arbitrum.foundation/t/arbitrum-research-development-collective-elections-applications/20805/1) are open until 5th of February 2024. After applications close, there will be a 7-day window for KYC/KYB + proposal review period, 3 days after which (so on the 20th of February 2024), the elections will take place on Snapshot.
-
 
 ### **Learnings from STIP**
 
@@ -80,13 +70,10 @@ Tnorm, who spearheaded the working group behind the Short Term Incentives Propos
 
 The post contains a lot of useful insights into what went well and what worked poorly. Some of the most important takeaways are (in a condensed form):
 
-
-
 1. Contributors shouldn’t hesitate to speak their mind if you are to participate in a constructive way.
 2. To effectively evaluate strategic alignment with the DAO, future programs must define clear objectives
 3. The DAO should first focus on creating more intentional programs with clear objectives before working on making them as inclusive as possible.
 4. DAO participants should be wary of limiting their views and degree of innovation by the precedent that past or currently running programs have set.
-
 
 ### **[RFC] Create a Standardized Guideline for Non-Security Council Elections**
 
@@ -94,21 +81,16 @@ Bob-Rossi [submitted an RFC](https://forum.arbitrum.foundation/t/rfc-create-a-st
 
 The 3 main discussion items are:
 
-
-
-1. Voting type 
-    1. Ranked Choice
-    2. Single Choice
-    3. Weighted
+1. Voting type
+   1. Ranked Choice
+   2. Single Choice
+   3. Weighted
 2. Voting Privacy
 3. Application Window & Election Period
-
 
 ### **Delegate Incentive Program Applications**
 
 SEEDGov [created a post](https://forum.arbitrum.foundation/t/incentive-program-delegate-application/20945) in which delegates can express their interest to participate in the delegate incentive program which recently passed through an on-chain vote. The eligibility criteria are:
-
-
 
 1. **Voting Power:** >50K ARB, corresponding to 175 delegates. (Source: Arbitrum Delegates and Voting Power - Dune Analytics 3).
 2. **Historical Participation Rate (Tally):** Over 25%. We would like to express that for the calculation of the participation rate in tally, proposals with the prefix “[OLD]” or those that have been considered “tests” will not be taken into account.
@@ -119,25 +101,21 @@ SEEDGov also [conducted a test](https://forum.arbitrum.foundation/t/experimental
 
 If you have any questions in regards to the Delegate Incentive Program, you can [ask SEEDGov in this thread](https://forum.arbitrum.foundation/t/delegate-incentive-program-questions-and-feedback/20946).
 
-
 ### **Pre-Proposal for a Strategy Framework**
 
 Danielo from RnDAO [published a post](https://forum.arbitrum.foundation/t/pre-proposal-for-a-strategy-framework-for-arbitrum-dao/20947) in order to start a discussion around and propose a “strategy ontology” - a framework serving as an agreed format to define the strategy for the Arbitrum DAO. This framework, called SKIs Framework, showcases a comprehensive mapping of essential functions of a system (as applied to ArbitrumDAO) for viability. All functions identified in the framework are essential; however, they’re not equally urgent.
 
 Right now, they’re looking for feedback on whether the framework presented is clear and understandable, and whether it’s something that DAO participants would use.
 
-
 ### **[AIP] ArbOS Version 20**
 
-[This AIP](https://forum.arbitrum.foundation/t/aip-arbos-version-20/20957) proposes a number of improvements to Arbitrum chains, including the capability to leverage EIP 4844 to post batches of L2 transactions as Blobs on L1 Ethereum at a cheaper price, and enabling partial support for most of the changes included in Ethereum’s Dencun upgrade. 
+[This AIP](https://forum.arbitrum.foundation/t/aip-arbos-version-20/20957) proposes a number of improvements to Arbitrum chains, including the capability to leverage EIP 4844 to post batches of L2 transactions as Blobs on L1 Ethereum at a cheaper price, and enabling partial support for most of the changes included in Ethereum’s Dencun upgrade.
 
 The proposal is currently undergoing security audits, but it’s ready to be reviewed, discussed, and considered for adoption by the DAO.
 
-
 ### **[RFC] Experiential Incentive Program for Arbitrum Game Builders**
 
-Blanklee [submitted an RFC](https://forum.arbitrum.foundation/t/proposal-experiental-incentive-program-for-arbitrum-game-builders-for-discussion/20979) which seeks to introduce the idea of establishing a dedicated Experimental Incentive Program for Games(EIPG). This plan involves quick funding for each game builder, providing 30K USDT-valued $ARB  from the treasury, with an easy and expedited process.
-
+Blanklee [submitted an RFC](https://forum.arbitrum.foundation/t/proposal-experiental-incentive-program-for-arbitrum-game-builders-for-discussion/20979) which seeks to introduce the idea of establishing a dedicated Experimental Incentive Program for Games(EIPG). This plan involves quick funding for each game builder, providing 30K USDT-valued $ARB from the treasury, with an easy and expedited process.
 
 ### **[RFC] Funding for Into the Dungeons: Machinata - a PvP Digital Miniature Game V2**
 
@@ -157,9 +135,7 @@ Lastly, we’re keen to talk with individuals or groups applying for a position 
 
 You can find us to discuss all of the above and more during the Open Governance Call next week, and also during our Arbitrum Office Hours which take place every Thursday at 4pm UTC.
 
-
 ## **Uniswap**
-
 
 ### **Onboarding Package for Different Chains**
 
@@ -173,9 +149,7 @@ Our understanding is that we should allocate smaller amounts of UNI to newer and
 
 You can find us to discuss the UNI onboarding packages as well as any other matter relevant to Uniswap DAO during our Uniswap Office Hours that take place every Friday at 4 pm UTC.
 
-
 ## **Hop**
-
 
 ### **[HIP 43] Proposal to create Head of DAO Operations Role**
 
@@ -191,14 +165,11 @@ There’s currently some debate happening under the forum post regarding the Hea
 
 You can find us to discuss all things Hop during our Hop Office Hours every Friday at 4 pm UTC.
 
-
 ## **Polygon**
-
 
 ### **An Update on Polygon Labs, Polygon Ventures and Polygon ID**
 
-Marc Boiron, Polygon Labs’ CEO, [published a copy](https://forum.polygon.technology/t/an-update-on-polygon-labs-polygon-ventures-and-polygon-id/13507) of an update he shared the Polygon Labs team in regard to optimizing the organization. 
-
+Marc Boiron, Polygon Labs’ CEO, [published a copy](https://forum.polygon.technology/t/an-update-on-polygon-labs-polygon-ventures-and-polygon-id/13507) of an update he shared the Polygon Labs team in regard to optimizing the organization.
 
 ### **Council Transparency Report: PIP 29**
 
@@ -209,7 +180,6 @@ In [this transparency report](https://forum.polygon.technology/t/council-transpa
 
 **When/where to catch us: \
 **You can find us during our Polygon Office Hours which happen every Friday at 3 pm UTC.
-
 
 ## **Starknet**
 
@@ -223,9 +193,7 @@ If there’s anything related to Starknet that you want to discuss, we’re happ
 
 You can catch us to discuss Starknet during our Starknet Office Hours every Friday at 3 pm UTC.
 
-
 ## **Connext**
-
 
 ### **Formal Vote - Community Leadership Incentivization**
 
@@ -235,7 +203,6 @@ The proposal requests a quarterly budget of 295,000 NEXT tokens and a one time r
 
 The [Snapshot vote](https://snapshot.org/#/dao.connext.eth/proposal/0x2d65ad2e5d45f5839e90c0769964e2034972245701aecd96a7b015aa05c46590) ends on Thursday, February 8th 2024, at 3:56 pm UTC.
 
-
 ### **Formal Vote - Extend Existing Incentives Program on Velodrome**
 
 [This proposal](https://forum.connext.network/t/social-cgp7-extend-existing-incentives-program-on-velodrome/1042) aims to extend Connext’s liquidity program on Velodrome to give delegates and the broader community time to decide on how they’d like to optimize Connext’s liquidity strategy long term as per discussion [here](https://forum.connext.network/t/rfc-extend-and-optimize-next-liquidity-program-on-velodrome/1016).
@@ -243,7 +210,6 @@ The [Snapshot vote](https://snapshot.org/#/dao.connext.eth/proposal/0x2d65ad2e5d
 The overall cost of extending the incentives program would be $5K worth of NEXT tokens for 8 weeks for a total of $40k.
 
 The [Snapshot vote](https://snapshot.org/#/dao.connext.eth/proposal/0xf327124efb80091b2509d86bfe2f119551c52803043d78b5679c0fa4e2862d07) ends on Friday, February 9th 2024, at 4:29 pm UTC.
-
 
 ### **[RFC] The Rollup Ecosystem Education Partnership**
 
