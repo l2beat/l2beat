@@ -1,0 +1,5 @@
+{
+  "term": "Validity proof",
+  "definition": "The output of a cryptographic proving system attesting to correct computation. ZK-Rollups use succinct validity proofs (also called zero-knowledge proofs) to prove a batch of rollup transactions and blocks were properly executed. Validity proofs are submitted to a verifier, such as an Ethereum smart contract, which accepts them if properly constructed.",
+  "isSpicy": false
+}

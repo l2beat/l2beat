@@ -1,0 +1,5 @@
+{
+  "term": "Rollup-as-a-service",
+  "definition": "An SDK or service that allows anyone to launch rollups quickly. Emphasis may be placed on the ability to customize the modular components of a rollup: VM, DA layer, proof system.",
+  "isSpicy": false
+}

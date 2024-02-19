@@ -1,0 +1,5 @@
+{
+  "term": "Homomorphic encryption",
+  "definition": "A type of encryption that allows computations to be performed on encrypted data without decrypting it, making it useful for privacy-preserving computation.",
+  "isSpicy": false
+}

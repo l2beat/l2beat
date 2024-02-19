@@ -1,0 +1,5 @@
+{
+  "term": "Rollup",
+  "definition": "A rollup is a chain, specifically a chain which is derived from a base chain's state (the base chain in this context can be referred to as a data availability layer). A rollup does not need a proving system, because it is defined by the state of the base chain and how it is derived. A proving system does not define a rollup, but it's a mechanism for one chain to develop some confidence to trust the data from some other chain. A rollup is another chain, and multiple rollups means higher bandwidth, similar to lanes of traffic on the highway, which offers cheaper fees. Also, it might omit taking part in consensus, which reduces costs as well (and relying on the consensus of the base chain).",
+  "isSpicy": true
+}

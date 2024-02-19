@@ -1,0 +1,5 @@
+{
+  "term": "Multi-proof system",
+  "definition": "A rollup settlement concept that relies on a combination of multiple different proving systems. For example, a combination of fraud proof and validity proof. The goal is to reduce reliance on a single system-type or implementation. A more complex example of a multi-proof system: if anyone submits two conflicting state roots to a prover and both roots pass, that prover is turned off.",
+  "isSpicy": false
+}

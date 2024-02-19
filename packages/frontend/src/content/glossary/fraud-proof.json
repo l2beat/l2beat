@@ -1,0 +1,5 @@
+{
+  "term": "Fraud proof",
+  "definition": "Also referred to as a fault proof, it is the construction of an assertion that fraud was perpetrated on an optimistic rollup. More concretely, that an invalid state transition took place according to the protocol rules. The submitter of a fraud proof would expect a reward from the optimistic rollup protocol for helping maintain the integrity of the system.",
+  "isSpicy": false
+}

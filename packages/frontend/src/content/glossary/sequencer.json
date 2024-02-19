@@ -1,0 +1,5 @@
+{
+  "term": "Sequencer",
+  "definition": "A party responsible for ordering and executing transactions on the rollup. The sequencer verifies transactions, compresses the data into a block, and submits the batch to Ethereum L1 as a single transaction. Often synonymous with proposer.",
+  "isSpicy": false
+}

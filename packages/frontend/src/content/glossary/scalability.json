@@ -1,0 +1,5 @@
+{
+  "term": "Scalability",
+  "definition": "The ability of a blockchain to handle a high level of throughput as measured in transactions per second (TPS), holding decentralization and hardware requirements constant.",
+  "isSpicy": true
+}

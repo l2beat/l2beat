@@ -1,0 +1,5 @@
+{
+  "term": "SNARK",
+  "definition": "Short for \"succinct non-interactive argument of knowledge\", a SNARK is a widely used type of zero-knowledge proof that is short and fast to verify. Different kinds of SNARKs are usually systematized by proof size, verification time, and type of setup. The most famous SNARKs are Groth16, PLONK/Marlin, Bulletproofs, and STARKs.",
+  "isSpicy": false
+}

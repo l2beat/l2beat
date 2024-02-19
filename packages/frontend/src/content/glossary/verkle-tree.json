@@ -1,0 +1,5 @@
+{
+  "term": "Verkle tree",
+  "definition": "A data storage format of which you can make a proof that it contains some pieces of data to anyone who has the root of the tree. While similar to Merkle Patricia Trees, key differences include a much wider tree format which leads to smaller proof sizes.",
+  "isSpicy": false
+}

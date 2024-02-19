@@ -1,0 +1,5 @@
+{
+  "term": "Decentralized rollup",
+  "definition": "There are several factors within a rollup construction which separately can be more or less decentralized, leading to the degree to which the rollup as a whole is uncapturable by a central entity. The most significant factors include who can run a node, who can propose blocks, who can prove blocks (in ZK-Rollups), and who can upgrade the rollup smart contracts. For the factors of \"who can run a node/proposer/prover\", the question asks both: is it permissionless for anyone to run these (no allow-list); and how reasonable is it in terms of hardware required.",
+  "isSpicy": true
+}

@@ -1,0 +1,5 @@
+{
+  "term": "Escape hatch",
+  "definition": "The facility for any user of a rollup to exit the system with their assets under any circumstance. Most relevant in rollups with a centralized proposer, wherein users do not have the ability to propose blocks, but can nonetheless exit the rollup by interacting with a smart contract on L1.",
+  "isSpicy": false
+}

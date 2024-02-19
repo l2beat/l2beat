@@ -1,0 +1,5 @@
+{
+  "term": "Settlement",
+  "definition": "The mechanism with which the execution of rollup blocks and the resultant state is verified and possible disputes are resolved. In the context of rollups or other modular blockchains, it often refers to the proof system used--validity (ZK) or fraud proofs, or a combination thereof. Sometimes it will refer to this mechanism along with where the mechanism's outputs are ultimately published and verified, as in Ethereum being a settlement layer by verifying the proof(s).",
+  "isSpicy": false
+}
