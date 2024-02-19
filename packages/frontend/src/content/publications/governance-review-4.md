@@ -67,7 +67,7 @@ You can find us at our Optimism Office Hours every Tuesday at 4 pm UTC.
 ### **On Chain Vote - Long Term Incentives Pilot Program**
 
 This AIP seeks to establish a Long-term Term Incentives Pilot Program for the DAO to test new incentive designs and answer the necessary questions to ensure we are ready to commit to the long-term program. This Pilot Program will distribute a maximum of 45M ARB to protocols building on Arbitrum that were **not** funded during STIP or the Backfund.
- 
+
 The overall cost of the proposal is 45,735,00 ARB, 45,000,000 of which will be distributed to applying protocols. The rest 735,000 will be broken down into the following categories:
 
 - **Council Members**: 125,000 ARB - 25,000 ARB each
