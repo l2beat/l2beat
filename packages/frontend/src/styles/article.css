@@ -1,9 +1,9 @@
 .article > * {
-  @apply mb-8;
+  @apply mb-4;
 }
 
 .article > *:last-child {
-  @apply mb-0;
+  @apply mb-8;
 }
 
 .article p,
@@ -11,25 +11,21 @@
   @apply font-roboto-serif;
 }
 
-.article h1 {
-  @apply text-2xl font-bold md:text-4xl;
-}
-
 .article h2 {
-  @apply text-2xl font-bold md:text-3xl;
+  @apply text-2xl font-bold md:text-3xl mt-12 mb-8;
 }
 
 .article h3 {
-  @apply text-xl font-bold md:text-2xl;
+  @apply text-xl font-bold md:text-2xl mb-4 mt-8;
 }
 
 .article p,
 .article li {
-  @apply text-base text-black text-opacity-80 dark:text-white dark:text-opacity-80 md:text-[17px];
+  @apply text-base text-black text-opacity-80 dark:text-white dark:text-opacity-80 md:text-[17px] leading-[1.6] font-light;
 }
 
 .article blockquote {
-  @apply border-l-2 border-pink-200 bg-pink-200 bg-opacity-10 px-7 py-6 text-sm md:text-[17px];
+  @apply border-l-2 border-pink-200 bg-pink-200 bg-opacity-10 px-7 py-6 text-sm md:text-[17px] leading-[1.6] font-light;
 }
 
 .article blockquote p {

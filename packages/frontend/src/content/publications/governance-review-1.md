@@ -5,7 +5,7 @@
   authorId: anastassis-oikonomopoulos
 ---
 
-# Introduction
+## Introduction
 
 Academic workflow, certainly in political science, is at a crossroads. The _American Journal of Political Science_ (_AJPS_) announced a (my words) ["show your work" initiative](http://ajps.org/2015/03/26/the-ajps-replication-policy-innovations-and-revisions/) in which authors who are tentatively accepted for publication at the journal must hand over the raw code and data that produced the results shown in the manuscript. The editorial team at _AJPS_ then reproduces the code from the manuscript. Pending successful replication, the manuscript moves toward publication. The _AJPS_ might be at the fore of this movement, and it could be the most aggressive among political science journals, but other journals in our field have signed the joint [Data Access & Research Transparency](http://www.dartstatement.org/) (DART) initiative. This, at a bare minimum, requires uploading code from quantitatively-oriented published articles to in-house directories hosted by the journal or to services like [Dataverse](http://dataverse.org/).
 
@@ -15,7 +15,7 @@ These recent events underscore the DART push and cast a shadow over our workflow
 
 I think there is reason for optimism. We only struggle with it now because we have tools like [R Markdown](http://rmarkdown.rstudio.com/) and [Pandoc](http://pandoc.org/), more generally, that make significant strides in workflow. LaTeX resolved earlier issues of corrupted binary files by reducing documents to raw markup that was little more than raw text and revisions that could be easily kept as ["commented" text](http://tex.stackexchange.com/questions/11177/how-to-write-hidden-notes-in-a-latex-file). However, for all its benefits (including pretty PDFs), [LaTeX is _ugly_ code](http://www-rohan.sdsu.edu/~aty/bibliog/latex/gripe.html) and does not provide means of seamlessly working with the actual data analysis itself. R Markdown both eliminates markup and allows the author and her collaborators to write and reproduce the manuscript in one fell swoop.
 
-# Getting Started with YAML
+## Getting Started with YAML
 
 The lion's share of a R Markdown document will be raw text, though the front matter may be the most important part of the document. R Markdown uses [YAML](http://www.yaml.org/) for its metadata and the fields differ from [what an author would use for a Beamer presentation](http://svmiller.com/blog/2015/02/moving-from-beamer-to-r-markdown/). I provide a sample YAML metadata largely taken from this exact document and explain it below.
 
@@ -72,12 +72,12 @@ The next items are optional and cosmetic. `geometry:` is a standard option in La
 
 The final two options pertain to the bibliography. `bibliography:` specifies the location of the .bib file, so the author could make citations in the manuscript. `biblio-style` specifies the type of bibliography to use. You'll typically set this as APSR. You could also specify the relative path of [my _Journal of Peace Research_ .bst file](http://svmiller.com/miscellany/journal-of-peace-research-bst-file/) if you are submitting to that journal.
 
-# Getting Started with Markdown Syntax
+## Getting Started with Markdown Syntax
 
 There are a lot of cheatsheets and reference guides for Markdown (e.g. [Adam Prichard](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet), [Assemble](http://assemble.io/docs/Cheatsheet-Markdown.html), [Rstudio](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf), [Rstudio again](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf), [Scott Boms](http://scottboms.com/downloads/documentation/markdown_cheatsheet.pdf), [Daring Fireball](https://daringfireball.net/projects/markdown/syntax), among, I'm sure, several others). I encourage the reader to look at those, though I will retread these references here with a minimal working example below.
 
 ```markdown
-# Introduction
+## Introduction
 
 **Lorem ipsum** dolor _sit amet_.
 
@@ -95,13 +95,7 @@ Start a new paragraph with a blank line separating paragraphs.
 1. This starts a numerical list.
 2. This is no. 2 in the numerical list.
 
-# This Starts A New Section
-
-## This is a Subsection
-
-### This is a Subsubsection
-
-#### This starts a Paragraph Block.
+## This Starts A New Section
 
 > This will create a block quote, if you want one.
 
@@ -141,7 +135,7 @@ That's honestly it. Markdown takes the chore of markup from your manuscript (hen
 
 On that note, you could easily pass most LaTeX code through Markdown if you're writing a LaTeX document. However, you don't need to do this (unless you're using the math environment) and probably shouldn't anyway if you intend to share your document in HTML as well.
 
-# Using R Markdown with Knitr
+## Using R Markdown with Knitr
 
 Perhaps the greatest intrigue of R Markdown comes with the [`knitr` package](http://yihui.name/knitr/) provided by @xie2013ddrk. In other words, the author can, if she chooses, do the analysis in the Markdown document itself and compile/execute it in R.
 
