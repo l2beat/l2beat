@@ -1,8 +1,8 @@
 {
   "name": "blast",
   "chain": "ethereum",
-  "blockNumber": 19260286,
-  "configHash": "0x5562b16b7419fc49bcd1b3a88c9356477e94bbaa49fca779fbdac9c9494b32d8",
+  "blockNumber": 19260868,
+  "configHash": "0x24892ab65b460d4b6d2fea88a3bc196c6826ccc92f7b4b45a36a9aedf58954ef",
   "version": 3,
   "contracts": [
     {
@@ -19,6 +19,7 @@
         "CURVE_3POOL": "0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7",
         "DAI": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "DSR_MANAGER": "0x373238337Bfe1146fb49989fc222523f83081dDb",
+        "getMainnetBridge": "EXPECT_REVERT",
         "isTransitionEnabled": false,
         "LIDO": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
         "owner": "0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C",
@@ -26,10 +27,10 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "PSM": "0x89B78CfA322F6C5dE0aBcEecab66Aee45393cC5A",
         "staker": "0x9eDFc192fC4d29b8f2b18f484211161b6Fc8063E",
-        "totalETHBalance": "588211321889618617242775",
-        "totalETHShares": "583005232243943947280551",
-        "totalUSDBalanceNoUpdate": "160933558450652198949515633",
-        "totalUSDShares": "159012766014888409904464238",
+        "totalETHBalance": "588328022058127353162445",
+        "totalETHShares": "583120899532743788664542",
+        "totalUSDBalanceNoUpdate": "161240019791146667262191360",
+        "totalUSDShares": "159313844392883549238821701",
         "USDC": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "USDT": "0xdAC17F958D2ee523a2206206994597C13D831ec7"
       },

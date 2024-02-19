@@ -1,22 +1,16 @@
-Generated with discovered.json: 0x1e147871334adbdf3c6185806d439b2fe62f8e41
+Generated with discovered.json: 0x73efb82f36e49271fe84dbc69b985b3c4af9f14f
 
-# Diff at Mon, 19 Feb 2024 07:26:08 GMT:
+# Diff at Mon, 19 Feb 2024 09:23:53 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@1d42798d2c1c84e72c06e36258e023fc6dbbfb1d block: 19254184
-- current block number: 19260286
+- comparing to: main@0a522442e2dd6f9a3312ee296e595da0691fa23a block: 18771421
+- current block number: 19260868
 
 ## Description
 
 The implementation is upgraded. See Diff below for the changes.
 
 ## Watched changes
-
-```diff
--   Status: DELETED
-    contract LaunchBridge (0x0bD88b59D580549285f0A207Db5F06bf24a8e561) {
-    }
-```
 
 ```diff
     contract Bridge (0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d) {
@@ -31,9 +25,9 @@ The implementation is upgraded. See Diff below for the changes.
       values.proposedMainnetBridge:
 -        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000"]
       values.proposedUpgrade:
--        ["0x0bD88b59D580549285f0A207Db5F06bf24a8e561","0x195ff6fae1f3fcceb00116c9f65f6cdd9a1ef6665f8d468acc446b32f20114c4"]
+-        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000"]
       values.proposedUpgradeReadyAt:
--        1708303151
+-        0
     }
 ```
 
@@ -41,87 +35,25 @@ The implementation is upgraded. See Diff below for the changes.
 
 ```diff
 .../contracts/token/ERC20/IERC20.sol               |   8 +-
- .../ERC20/extensions/IERC20Permit.sol => /dev/null |  60 --
- .../token/ERC20/extensions/draft-IERC20Permit.sol  |  58 +-
+ .../ERC20/extensions/IERC20Permit.sol => /dev/null |  60 -------
+ .../token/ERC20/extensions/draft-IERC20Permit.sol  |  58 ++++++-
  .../Bridge/implementation/meta.txt                 |   2 +-
- .../Bridge/implementation}/src/LaunchBridge_v3.sol |   0
- .../launch-bridge/LaunchBridge.sol => /dev/null    | 858 ---------------------
- .../implementation}/src/libraries/Predeploys.sol   |   0
- .../contracts/interfaces/IERC20.sol => /dev/null   |   6 -
- .../contracts/token/ERC20/IERC20.sol => /dev/null  |  82 --
- .../extensions/draft-IERC20Permit.sol => /dev/null |  60 --
- .../Ownable2StepUpgradeable.sol => /dev/null       |  71 --
- .../access/OwnableUpgradeable.sol => /dev/null     |  95 ---
- .../IERC1967Upgradeable.sol => /dev/null           |  26 -
- .../draft-IERC1822Upgradeable.sol => /dev/null     |  20 -
- .../ERC1967UpgradeUpgradeable.sol => /dev/null     | 170 ----
- .../beacon/IBeaconUpgradeable.sol => /dev/null     |  16 -
- .../proxy/utils/Initializable.sol => /dev/null     | 166 ----
- .../proxy/utils/UUPSUpgradeable.sol => /dev/null   | 112 ---
- .../security/PausableUpgradeable.sol => /dev/null  | 117 ---
- .../utils/AddressUpgradeable.sol => /dev/null      | 244 ------
- .../utils/ContextUpgradeable.sol => /dev/null      |  37 -
- .../utils/StorageSlotUpgradeable.sol => /dev/null  | 138 ----
- .../LaunchBridge/meta.txt => /dev/null             |   2 -
- 23 files changed, 62 insertions(+), 2286 deletions(-)
+ .../Bridge/implementation/src/LaunchBridge_v3.sol} | 179 +++++++--------------
+ .../implementation/src/libraries/Predeploys.sol    |  95 +++++++++++
+ 6 files changed, 215 insertions(+), 187 deletions(-)
 ```
 
-Generated with discovered.json: 0xd3ba79cfc2cc395aa3d3a8c51165c0d647ae5c94
+## Config/verification related changes
 
-# Diff at Sun, 18 Feb 2024 10:46:13 GMT:
-
-- author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@195e600e3ab1fecf5a0abc790deb9649361140a3 block: 18771421
-- current block number: 19254184
-
-## Description
-
-Added a new proposal to upgrade the Bridge. The new implementation adds functions to migrate funds to a new system and removes upgrade delay functionalities.
-
-## Watched changes
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18771421 (main branch discovery), not current.
 
 ```diff
     contract Bridge (0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d) {
-      values.proposedUpgrade.1:
--        "0x0000000000000000000000000000000000000000000000000000000000000000"
-+        "0x195ff6fae1f3fcceb00116c9f65f6cdd9a1ef6665f8d468acc446b32f20114c4"
-      values.proposedUpgrade.0:
--        "0x0000000000000000000000000000000000000000"
-+        "0x0bD88b59D580549285f0A207Db5F06bf24a8e561"
-      values.proposedUpgradeReadyAt:
--        0
-+        1708303151
+      values.getMainnetBridge:
++        "EXPECT_REVERT"
     }
-```
-
-```diff
-+   Status: CREATED
-    contract LaunchBridge (0x0bD88b59D580549285f0A207Db5F06bf24a8e561) {
-    }
-```
-
-## Source code changes
-
-```diff
-.../contracts/interfaces/IERC20.sol                |   6 +
- .../contracts/token/ERC20/IERC20.sol               |  82 +++
- .../token/ERC20/extensions/draft-IERC20Permit.sol  |  60 ++
- .../contracts/access/Ownable2StepUpgradeable.sol   |  71 ++
- .../contracts/access/OwnableUpgradeable.sol        |  95 +++
- .../contracts/interfaces/IERC1967Upgradeable.sol   |  26 +
- .../interfaces/draft-IERC1822Upgradeable.sol       |  20 +
- .../proxy/ERC1967/ERC1967UpgradeUpgradeable.sol    | 170 +++++
- .../contracts/proxy/beacon/IBeaconUpgradeable.sol  |  16 +
- .../contracts/proxy/utils/Initializable.sol        | 166 +++++
- .../contracts/proxy/utils/UUPSUpgradeable.sol      | 112 +++
- .../contracts/security/PausableUpgradeable.sol     | 117 +++
- .../contracts/utils/AddressUpgradeable.sol         | 244 +++++++
- .../contracts/utils/ContextUpgradeable.sol         |  37 +
- .../contracts/utils/StorageSlotUpgradeable.sol     | 138 ++++
- .../blast/ethereum/.code/LaunchBridge/meta.txt     |   2 +
- .../.code/LaunchBridge/src/LaunchBridge_v3.sol     | 795 +++++++++++++++++++++
- .../LaunchBridge/src/libraries/Predeploys.sol      |  95 +++
- 18 files changed, 2252 insertions(+)
 ```
 
 Generated with discovered.json: 0xe9cebe22717eca176ca67be9ef1b813fd5ffaa20
