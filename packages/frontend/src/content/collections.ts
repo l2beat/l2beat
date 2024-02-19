@@ -1,7 +1,7 @@
 import { authorsCollection } from './authors'
 import { delegatedProjectsCollection } from './delegatedProjects'
 import { eventsCollection } from './events'
-import { glossaryContent } from './glossary'
+import { glossaryCollection } from './glossary'
 import { publicationsCollection } from './publications'
 
 export const collections = {
@@ -9,5 +9,5 @@ export const collections = {
   delegatedProjects: delegatedProjectsCollection,
   events: eventsCollection,
   authors: authorsCollection,
-  glossary: glossaryContent
+  glossary: glossaryCollection
 }
