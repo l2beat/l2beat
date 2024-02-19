@@ -56,7 +56,7 @@ function Item(props: {
 }) {
   return (
     <div>
-      <span className="text-xl font-bold uppercase">
+      <span className="text-lg font-bold uppercase md:text-xl">
         {props.stateValidationCategory.title}
       </span>
       <Markdown className="mt-2 leading-snug text-gray-850 dark:text-gray-400 md:text-lg">
