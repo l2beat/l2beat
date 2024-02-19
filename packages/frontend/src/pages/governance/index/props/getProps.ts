@@ -19,7 +19,7 @@ export function getProps(config: Config): Wrapped<GovernancePageProps> {
   const publications = getCollection('publications')
   const events = getCollection('events')
   const delegatedProjects = getCollection('delegatedProjects')
-  console.log(getEvents(events))
+
   return {
     props: {
       publications: getPublications(publications),
