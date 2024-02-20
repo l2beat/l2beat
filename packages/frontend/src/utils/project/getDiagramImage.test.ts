@@ -1,36 +1,31 @@
 import { expect } from 'earl'
-import { unlink, writeFile } from 'fs-extra'
-import path from 'path'
+import { it } from 'mocha'
 
-import { getDiagramImage } from './getDiagramImage'
+import { DiagramType, getDiagramImage } from './getDiagramImage'
 
 const fileName = 'random-file-name-that-does-not-exist'
+const diagramTypes: DiagramType[] = [
+  'architecture',
+  'upgrades-and-governance',
+  'state-validation',
+]
 
 describe(getDiagramImage.name, () => {
-  it('returns the correct path if the file exists', async () => {
-    const file = mockFile(
-      path.join(
-        __dirname,
-        `../../static/images/upgrades-and-governance/${fileName}.png`,
-      ),
-    )
-    await file.create()
+  for (const type of diagramTypes) {
+    describe(type, () => {
+      it('returns the correct path if the file exists', async () => {
+        const result = getDiagramImage(type, fileName, {
+          existsSync: () => true,
+        })
+        expect(result).toEqual(`/images/${type}/${fileName}.png`)
+      })
 
-    const result = getDiagramImage('upgrades-and-governance', fileName)
-    expect(result).toEqual(`/images/upgrades-and-governance/${fileName}.png`)
-
-    file.delete()
-  })
-
-  it('returns undefined if the file does not exist', () => {
-    const result = getDiagramImage('upgrades-and-governance', fileName)
-    expect(result).toBeNullish()
-  })
-})
-
-const mockFile = (filePath: string) => {
-  return {
-    create: () => writeFile(filePath, 'random-file-content'),
-    delete: () => unlink(filePath, () => {}),
+      it('returns undefined if the file does not exist', () => {
+        const result = getDiagramImage(type, fileName, {
+          existsSync: () => false,
+        })
+        expect(result).toBeNullish()
+      })
+    })
   }
-}
+})
