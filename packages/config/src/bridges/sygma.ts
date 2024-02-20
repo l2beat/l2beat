@@ -166,7 +166,7 @@ export const sygma: Bridge = {
       ],
       name: 'Community MultiSig', // 4/6 GnosisSafeProxy
       description:
-        'This 4/6 multisig is used to manage the fee handler liquidity.',
+        'This 4/6 multisig is used to manage the fee handler liquidity. This action would be required in the case of a security breach, or where a migration of fee handler is required.',
     },
     {
       accounts: [
@@ -222,7 +222,7 @@ export const sygma: Bridge = {
       ],
       name: 'Admin MultiSig',
       description:
-        'The 3/5 admin multisig covers a set of super administrative privileges, such as pausing the bridge, that may be required in order to be able to reduce the impact of security incidents.',
+        'The 3/5 admin multisig covers a set of super administrative privileges, such as pausing the bridge, that may be required in order to be able to reduce the impact of security incidents. As these actions may have significant financial impact, the admin governance process follows a strict off-chain preparation/review and onchain review/signing.',
     },
     {
       accounts: [
@@ -274,8 +274,8 @@ export const sygma: Bridge = {
       thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
     },
     {
-        title: 'Frequently asked questions',
-        url: 'https://docs.buildwithsygma.com/faq',
+        title: 'Sygma governance',
+        url: 'https://docs.buildwithsygma.com/readme/governance/govintroduction',
         thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
       },
   ],
