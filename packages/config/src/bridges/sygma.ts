@@ -146,16 +146,6 @@ export const sygma: Bridge = {
             description: 'The PermissionlessGenericHandler contract facilitates the processing of generic deposits and their execution without permissions, integrating with the bridge contract for cross-chain interactions, and is designed to handle complex data encoding for executing transactions across chains.',
         },
         {
-            address: EthereumAddress('0xc4d8b2F5501C765dE0C5E12550118F397B197D05'),
-            name: 'Community Multisig', // 4/6 GnosisSafeProxy
-            description: 'This 4/6 multisig is used to manage the fee handler liquidity',
-        },
-        {
-            address: EthereumAddress('0xde79695d5cefF7c324552B3ecbe6165f77FCdF53'),
-            name: 'Admin Multisig', // 3/5 GnosisSafeProxy
-            description: 'The 3/5 admin multisig covers a set of super administrative privileges, such as pausing the bridge, that may be required in order to be able to reduce the impact of security incidents.',
-        },
-        {
             address: EthereumAddress('0x6c5bA91642F10282b576d91922Ae6448C9d52f4E'),
             name: 'PHA',
             description: 'Token contract address for PHA token, which is one of Sygmas supported routes between EVM and Phala/Khala.',
@@ -165,14 +155,112 @@ export const sygma: Bridge = {
     isIncomplete: true,
   },
   permissions: [
-    discovery.contractAsPermissioned(
-      discovery.getContract('Community Multisig'),
-      'This 4/6 multisig is used to manage the fee handlers liquidity',
-    ),
-    discovery.contractAsPermissioned(
-        discovery.getContract('Admin Multisig'),
+    {
+      accounts: [
+        {
+          address: EthereumAddress(
+            '0xc4d8b2F5501C765dE0C5E12550118F397B197D05',
+          ),
+          type: 'MultiSig', 
+        },
+      ],
+      name: 'Community MultiSig', // 4/6 GnosisSafeProxy
+      description:
+        'This 4/6 multisig is used to manage the fee handler liquidity.',
+    },
+    {
+      accounts: [
+        {
+          address: EthereumAddress(
+            '0x86a73a594f74C76a6eB8F9E728d992D03252f60f',
+          ),
+          type: 'EOA', 
+        },
+        {
+          address: EthereumAddress(
+            '0xC6458dedf35231F524ED9d7E0DF77A60b9E08676',
+          ),
+          type: 'EOA', 
+        },
+        {
+          address: EthereumAddress(
+            '0xe845B1d31CaA16Bf6c6Bf5E97a28D086bd46FD49',
+          ),
+          type: 'EOA', 
+        },
+        {
+          address: EthereumAddress(
+            '0xa399460Ce767b06297457178D2F9F8f144017E77',
+          ),
+          type: 'EOA', 
+        },
+        {
+          address: EthereumAddress(
+            '0x0c1db86328E6CFCD4f530401131Dc9a26DefA12a',
+          ),
+          type: 'EOA', 
+        },
+        {
+          address: EthereumAddress(
+            '0xd85b34B2Fe1eC7815B6dF659372382A8FA229677',
+          ),
+          type: 'EOA', 
+        },
+      ],
+      name: 'Community MultiSig Participants',
+      description:
+        'Participants of the 4/6 Sygma community multisig.',
+    },
+    {
+      accounts: [
+        {
+          address: EthereumAddress(
+            '0xde79695d5cefF7c324552B3ecbe6165f77FCdF53', 
+          ),
+          type: 'MultiSig', // 3/5 GnosisSafeProxy
+        },
+      ],
+      name: 'Admin MultiSig',
+      description:
         'The 3/5 admin multisig covers a set of super administrative privileges, such as pausing the bridge, that may be required in order to be able to reduce the impact of security incidents.',
-      ),
+    },
+    {
+      accounts: [
+        {
+          address: EthereumAddress(
+            '0x86a73a594f74C76a6eB8F9E728d992D03252f60f', 
+          ),
+          type: 'EOA', 
+        },
+        {
+          address: EthereumAddress(
+            '0x5a288b42dC222190D8cF5014A330c978ee42A5df', 
+          ),
+          type: 'EOA', 
+        },
+        {
+          address: EthereumAddress(
+            '0xe845B1d31CaA16Bf6c6Bf5E97a28D086bd46FD49', 
+          ),
+          type: 'EOA', 
+        },
+        {
+          address: EthereumAddress(
+            '0xacc0268a75280192897a78C706C9FBA2d2b851C4', 
+          ),
+          type: 'EOA', 
+        },
+        {
+          address: EthereumAddress(
+            '0x197C57440A30cB28103ab27CB1b0dC86E5907ADA', 
+          ),
+          type: 'EOA', 
+        },
+      ],
+      name: 'Admin MultiSig Participants',
+      description:
+        'Participants of the 3/5 Sygma admin multisig.',
+    },
   ],
   knowledgeNuggets: [
     {
