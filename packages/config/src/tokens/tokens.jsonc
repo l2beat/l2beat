@@ -754,6 +754,10 @@
       "address": "0x8E6cd950Ad6ba651F6DD608Dc70e5886B1AA6B24"
     },
     {
+      "symbol": "STRK",
+      "address": "0xca14007eff0db1f8135f4c25b34de49ab0d42766"
+    },
+    {
       "symbol": "stETH",
       "address": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
     },

@@ -16,7 +16,8 @@
     "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
     "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
     "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
-    "0x023A2aAc5d0fa69E3243994672822BA43E34E5C9"
+    "0x023A2aAc5d0fa69E3243994672822BA43E34E5C9",
+    "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
   ],
   "names": {
     "0x0437465dfb5B79726e35F08559B0cBea55bb585C": "DAIBridge",
@@ -37,7 +38,8 @@
     "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C": "FXSBridge",
     "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8": "sfrxETHBridge",
     "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5": "LUSDBridge",
-    "0x023A2aAc5d0fa69E3243994672822BA43E34E5C9": "LORDSBridge"
+    "0x023A2aAc5d0fa69E3243994672822BA43E34E5C9": "LORDSBridge",
+    "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4": "STRKBridge"
   },
   "sharedModules": {
     "SHARPVerifierProxy": "l2beat-starkware"
@@ -345,6 +347,15 @@
     },
     "BridgeMultisig": {
       "ignoreInWatchMode": ["nonce"]
+    },
+    "STRKBridge": {
+      "fields": {
+        "manager": {
+          "type": "starkWareNamedStorage",
+          "tag": "STARKNET_TOKEN_BRIDGE_MANAGER_SLOT_TAG",
+          "returnType": "address"
+        }
+      }
     }
   }
 }

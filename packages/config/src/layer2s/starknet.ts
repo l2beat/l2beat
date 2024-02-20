@@ -48,6 +48,8 @@ const ESCROW_FXS_ADDRESS = '0x66ba83ba3D3AD296424a2258145d9910E9E40B7C'
 const ESCROW_SFRXETH_ADDRESS = '0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8'
 const ESCROW_LUSD_ADDRESS = '0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5'
 const ESCROW_LORDS_ADDRESS = '0x023A2aAc5d0fa69E3243994672822BA43E34E5C9'
+const ESCROW_STRK_ADDRESS = '0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4'
+
 
 const escrowETHDelaySeconds = discovery.getContractUpgradeabilityParam(
   ESCROW_ETH_ADDRESS,
@@ -93,6 +95,10 @@ const escrowLUSDDelaySeconds = discovery.getContractUpgradeabilityParam(
   ESCROW_LUSD_ADDRESS,
   'upgradeDelay',
 )
+const escrowSTRKDelaySeconds = discovery.getContractUpgradeabilityParam(
+  ESCROW_STRK_ADDRESS,
+  'upgradeDelay',
+)
 
 const minDelay = Math.min(
   escrowETHDelaySeconds,
@@ -102,6 +108,7 @@ const minDelay = Math.min(
   starknetDelaySeconds,
   escrowWSTETHDelaySeconds,
   escrowRETHDelaySeconds,
+  escrowSTRKDelaySeconds,
 )
 
 function formatMaxTotalBalanceString(
@@ -190,6 +197,11 @@ const escrowLUSDMaxTotalBalanceString = formatMaxTotalBalanceString(
 const escrowDAIMaxTotalBalanceString = formatMaxTotalBalanceString(
   'DAI',
   discovery.getContractValue<number>('L1DaiGateway', 'ceiling'),
+  18,
+)
+const escrowSTRKMaxTotalBalanceString = formatMaxTotalBalanceString(
+  'DAI',
+  discovery.getContractValue<number>('STRKBridge', 'maxTotalBalance'),
   18,
 )
 
@@ -343,6 +355,14 @@ export const starknet: Layer2 = {
         address: EthereumAddress(ESCROW_LORDS_ADDRESS),
         tokens: ['LORDS'],
         description: 'StarkGate bridge for LORDS.',
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress(ESCROW_STRK_ADDRESS),
+        tokens: ['STRK'],
+        description:
+          'StarkGate bridge for LUSD.' + ' ' + escrowSTRKMaxTotalBalanceString,
+        upgradableBy: ['StarkGate STRK owner'],
+        upgradeDelay: formatSeconds(escrowSTRKDelaySeconds),
       }),
     ],
     transactionApi: {

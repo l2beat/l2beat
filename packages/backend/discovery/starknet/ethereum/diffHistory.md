@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xf285c15f919278b3e125add968cce33b3b1be56f
+
+# Diff at Tue, 20 Feb 2024 14:11:20 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@f1a4f59735908524d8f638dee96ca19d8ea22693 block: 19219087
+- current block number: 19269419
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19219087 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract STRKBridge (0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) {
+    }
+```
+
 Generated with discovered.json: 0x080da638902a1d509df830a7384f2c65b76c2793
 
 # Diff at Tue, 13 Feb 2024 12:27:47 GMT:
