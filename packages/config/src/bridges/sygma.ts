@@ -17,7 +17,7 @@ export const sygma: Bridge = {
     description:
       'Sygma is a modular, open-source, cross-chain connectivity protocol. With Sygma, developers can easily extend their applications across EVM, Substrate, and beyond.',
     detailedDescription: 
-      `Sygma currently leverages an MPC relayer network along with threshold signature schemes (TSS) to facilitate cross-chain transfers. There is ongoing efforts underway to implement optimistic, trust-minimized cross-chain block header oracles (Zipline), as well as a ZK-based block header oracle (Spectre) to provide tailored security for different bridging use-cases.`,
+      `Sygma is a hybrid bridging protocol that currently leverages an MPC-based relayer network along with threshold signature schemes (TSS) to facilitate cross-chain transfers. There is ongoing efforts underway to implement optimistic, trust-minimized cross-chain block header oracles (Zipline), as well as a ZK-based block header oracle (Spectre) to provide tailored security for different bridging use-cases.`,
     links: {
       websites: [
         'https://buildwithsygma.com/',
@@ -71,42 +71,41 @@ export const sygma: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        `Sygma currently leverages an MPC relayer network along with threshold signature schemes (TSS) to facilitate cross-chain transfers. There is ongoing efforts underway to implement optimistic, trust-minimized cross-chain block header oracles (Zipline), as well as a ZK-based block header oracle (Spectre) to provide tailored security for different bridging use-cases.`,
+        `Sygma is a hybrid bridging protocol that currently leverages an MPC-based relayer network along with threshold signature schemes (TSS) to facilitate cross-chain transfers. There is ongoing efforts underway to implement optimistic, trust-minimized cross-chain block header oracles (Zipline), as well as a ZK-based block header oracle (Spectre) to provide tailored security for different bridging use-cases.`,
       references: [],
       risks: [],
     },
     validation: {
       name: 'Transfers are externally verified',
       description:
-        'A Sygma relayer network, operated by a trusted federation of entities (incl. Bware Labs, Phala Network, and ChainSafe), listens, parses, and passes along events related to cross-chain transfers or generic message passing. This network utilizes a variety of verification systems (currently MPC) to sign off on generic messages and/or token release/minting.',
+        'A Sygma relayer network, operated by a trusted federation of entities (incl. Sygma Labs, Bware Labs, Phala Network, and ChainSafe), listens, parses, and passes along events related to cross-chain transfers or generic message passing. The relayer nodes in this network utilizes a variety of verification systems (currently MPC) to sign off on generic messages and/or token release/minting.',
       references: [],
       risks: [
-        // {
-        //   category: 'Users can be censored if',
-        //   text: 'MPC nodes decide to censor certain transactions.',
-        //   isCritical: true,
-        //   _ignoreTextFormatting: true,
-        // },
-        // {
-        //   category: 'Funds can be stolen if',
-        //   text: 'MPC nodes decide to maliciously takeover them or there is an external exploit which will result in signing malicious transaction.',
-        //   isCritical: true,
-        //   _ignoreTextFormatting: true,
-        // },
-        // {
-        //   category: 'Funds can be lost if',
-        //   text: 'MPC nodes lose their private keys.',
-        //   isCritical: true,
-        //   _ignoreTextFormatting: true,
-        // },
+        {
+          category: 'Users can be censored if',
+          text: 'Greater than threshold number of MPC relayer nodes decide to censor certain transactions.',
+          isCritical: true,
+          _ignoreTextFormatting: true,
+        },
+        {
+          category: 'Funds can be stolen if',
+          text: 'Greater than threshold number of MPC relayer nodes are maliciously taken over resulting in signing of malicious transactions.',
+          isCritical: true,
+          _ignoreTextFormatting: true,
+        },
+        {
+          category: 'Funds can be lost if',
+          text: 'Greater than threshold number of MPC relayer nodes lose access to their MPC private keys.',
+          isCritical: true,
+          _ignoreTextFormatting: true,
+        },
       ],
     },
     destinationToken: {
       name: 'Destination tokens',
       description:
         'Tokens received on the destination chain can be either wrapped tokens or native tokens depending on the specific implementation. For example, on Phalas integrated use-case with Sygma, native tokens are burned in Substrate/Polkadot and unlocked on EVM, and vice versa where tokens get locked on EVM and minted in Substrate/Polkadot.',
-      risks: [
-      ],
+      risks: [],
       references: [],
     },
   },
@@ -149,7 +148,7 @@ export const sygma: Bridge = {
         {
             address: EthereumAddress('0xc4d8b2F5501C765dE0C5E12550118F397B197D05'),
             name: 'Community Multisig', // 4/6 GnosisSafeProxy
-            description: 'This 4/6 multisig is used to manage the fee handlers liquidity',
+            description: 'This 4/6 multisig is used to manage the fee handler liquidity',
         },
         {
             address: EthereumAddress('0xde79695d5cefF7c324552B3ecbe6165f77FCdF53'),
