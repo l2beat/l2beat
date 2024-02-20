@@ -31,9 +31,6 @@ export function getStatus(
 const ONE_HOUR = 3600
 
 function getRelevantTimestamps(from: UnixTime, to: UnixTime) {
-  from = from.toEndOf('day')
-  to = to.toStartOf('day')
-
   const timestamps = []
   const hourlyCutoff = to.add(-7, 'days')
   const sixHourlyCutoff = to.add(-90, 'days')

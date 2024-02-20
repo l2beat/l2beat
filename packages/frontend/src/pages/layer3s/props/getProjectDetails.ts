@@ -7,6 +7,7 @@ import isEmpty from 'lodash/isEmpty'
 
 import { ChartProps } from '../../../components'
 import { getContractSection } from '../../../utils/project/getContractSection'
+import { getDiagramImage } from '../../../utils/project/getDiagramImage'
 import { getPermissionsSection } from '../../../utils/project/getPermissionsSection'
 import {
   getProjectEditLink,
@@ -132,6 +133,7 @@ export function getProjectDetails(
         props: {
           id: 'state-validation',
           title: 'State validation',
+          image: getDiagramImage('state-validation', project.display.slug),
           stateValidation: project.stateValidation,
           isUnderReview: project.isUnderReview,
         },

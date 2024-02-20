@@ -2205,13 +2205,14 @@
   dependencies:
     zod "^3.22.2"
 
-"@l2beat/discovery@0.42.1":
-  version "0.42.1"
-  resolved "https://registry.yarnpkg.com/@l2beat/discovery/-/discovery-0.42.1.tgz#ce21cd2aaac911012791c0cd760bfd39bcedccc8"
-  integrity sha512-UwdIU/+nz01adjFnc+QOqfyZfoO9oZZ0tzNaMd1tM9cr6jw+uFkHdzKYxqSQNupE32ULuAjWigsVBjqdB3O6TQ==
+"@l2beat/discovery@0.43.0":
+  version "0.43.0"
+  resolved "https://registry.yarnpkg.com/@l2beat/discovery/-/discovery-0.43.0.tgz#113b1deb61f5ee797cc2d27303b51f85e4b1650e"
+  integrity sha512-95np/PLT1tcCINWN1VST/btSx8ZHCth6gxBopf3gM81OvC8nuq/OBu5v5ZQI99oDM9Cdo123wuAY+7wGrk8FCw==
   dependencies:
     "@l2beat/backend-tools" "^0.5.1"
     "@l2beat/discovery-types" "^0.8.0"
+    "@solidity-parser/parser" "^0.18.0"
     chalk "^4.1.2"
     deep-diff "^1.0.2"
     dotenv "^16.0.3"
@@ -2332,6 +2333,11 @@
   integrity sha512-SwUDyjWnah1AaNl7kxsa7cfLhlTYoiyhDAIgyh+El30YvXs/o7OLXpYH88Zdhyx9JExKrmHDJ+10bwIcY80Jmw==
   dependencies:
     "@sinonjs/commons" "^2.0.0"
+
+"@solidity-parser/parser@^0.18.0":
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/@solidity-parser/parser/-/parser-0.18.0.tgz#8e77a02a09ecce957255a2f48c9a7178ec191908"
+  integrity sha512-yfORGUIPgLck41qyN7nbwJRAx17/jAIXCTanHOJZhB6PJ1iAk/84b/xlsVKFSyNyLXIj0dhppoE0+CRws7wlzA==
 
 "@storybook/addon-actions@7.0.9":
   version "7.0.9"

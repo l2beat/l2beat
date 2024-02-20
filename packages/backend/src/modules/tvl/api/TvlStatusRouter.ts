@@ -20,7 +20,7 @@ export function createTvlStatusRouter(
   const statuses = [
     {
       groupName: 'shared',
-      updaters: [aggregatedReportUpdater, priceUpdater],
+      updaters: [priceUpdater, aggregatedReportUpdater],
     },
     ...modules.map((x) => {
       const reports = x.reportUpdaters ?? []
@@ -28,7 +28,7 @@ export function createTvlStatusRouter(
 
       return {
         groupName: x.chain,
-        updaters: [...reports, ...data],
+        updaters: [...data, ...reports],
       }
     }),
   ]

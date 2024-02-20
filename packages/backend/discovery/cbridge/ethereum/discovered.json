@@ -1,7 +1,7 @@
 {
   "name": "cbridge",
   "chain": "ethereum",
-  "blockNumber": 18163828,
+  "blockNumber": 19262793,
   "configHash": "0xaefd4ad630423ac7314704b457cb0518fe5a5ccfa2e6d8dc6956c0c61e5a129a",
   "version": 3,
   "contracts": [
@@ -77,13 +77,12 @@
       },
       "sinceTimestamp": 1638346811,
       "values": {
-        "addseq": 5080,
+        "addseq": 5147,
         "delayPeriod": 1800,
         "epochLength": 1800,
         "governors": [
           "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
           "0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C",
-          "0xED9fdF5B16F9F254bec5Ad389B80B48225186655",
           "0x40C11BddeB38Dec685Eed3586BAeBf086fac9dA0",
           "0xF140024969F6c76494a78518D9a99c8776B55f70"
         ],
@@ -97,12 +96,11 @@
           "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
           "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2",
           "0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C",
-          "0xED9fdF5B16F9F254bec5Ad389B80B48225186655",
           "0xF140024969F6c76494a78518D9a99c8776B55f70"
         ],
         "resetTime": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "ssHash": "0x4830ba2c3e2994baf31ad7fe644c13157ea804d951b2e68edc2ae9dff50d0013",
-        "triggerTime": 1694779181
+        "ssHash": "0x25a99513cbc4b51e1bb700a00454a84559d5a722d68ee75f16954f09b1376350",
+        "triggerTime": 1708122503
       },
       "derivedName": "Bridge"
     },
@@ -182,7 +180,6 @@
         "governors": [
           "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
           "0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C",
-          "0xED9fdF5B16F9F254bec5Ad389B80B48225186655",
           "0x40C11BddeB38Dec685Eed3586BAeBf086fac9dA0",
           "0xF140024969F6c76494a78518D9a99c8776B55f70"
         ],
@@ -193,7 +190,6 @@
           "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
           "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2",
           "0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C",
-          "0xED9fdF5B16F9F254bec5Ad389B80B48225186655",
           "0xF140024969F6c76494a78518D9a99c8776B55f70"
         ],
         "sigsVerifier": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820"
