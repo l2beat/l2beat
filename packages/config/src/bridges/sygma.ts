@@ -1,7 +1,7 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import { NUGGETS } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { CONTRACTS } from '../layer2s'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
@@ -14,160 +14,182 @@ export const sygma: Bridge = {
     name: 'Sygma',
     slug: 'sygma',
     category: 'Hybrid',
+    description:
+      'Sygma is a modular, open-source, cross-chain connectivity protocol. With Sygma, developers can easily extend their applications across EVM, Substrate, and beyond.',
+    detailedDescription: 
+      `Sygma currently leverages an MPC relayer network along with threshold signature schemes (TSS) to facilitate cross-chain transfers. There is ongoing efforts underway to implement optimistic, trust-minimized cross-chain block header oracles (Zipline), as well as a ZK-based block header oracle (Spectre) to provide tailored security for different bridging use-cases.`,
     links: {
-      websites: ['https://buildwithsygma.com/'],
-      documentation: ['https://docs.buildwithsygma.com/'],
+      websites: [
+        'https://buildwithsygma.com/',
+        'https://blog.buildwithsygma.com',
+      ],
+      documentation: [
+        `https://docs.buildwithsygma.com`,
+      ],
+      explorers: [
+        `https://scan.buildwithsygma.com`,
+        `https://scan.test.buildwithsygma.com`
+      ],
       repositories: ['https://github.com/sygmaprotocol'],
-      explorers: ['https://scan.buildwithsygma.com/'],
       socialMedia: [
-        'https://twitter.com/buildwithsygma',
         'https://discord.gg/Qdf6GyNB5J',
-        'https://blog.buildwithsygma.com/',
-        'https://www.linkedin.com/company/buildwithsygma',
+        'https://twitter.com/buildwithsygma',
+        `https://t.me/buildwithsygma`
       ],
       apps: [
-        'https://transfer-ui.test.buildwithsygma.com/transfer'
-        'https://scan.test.buildwithsygma.com/'
-        'https://faucet-ui-stage.buildwithsygma.com/'
-        'https://scan.buildwithsygma.com/'
-        'https://validator.faucet.chainsafe.dev/upload'
-        'https://subbridge.io/'
-      ],
+        `https://subbridge.io`,
+        'https://transfer-ui.test.buildwithsygma.com/transfer',
+        'https://faucet-ui-stage.buildwithsygma.com/',
+        'https://validator.faucet.chainsafe.dev/upload',
+      ]
     },
-    description:
-      'Sygma is a modular, open-source, cross-chain connectivity protocol built on the fundamentals of the ChainBridge open source project. With Sygma, developers can easily extend their applications across EVM, Substrate, and beyond.',
   },
-  config: {
-    escrows: [
-      {
-        address: EthereumAddress('0xC832588193cd5ED2185daDA4A531e0B26eC5B830'),
-        sinceTimestamp: new UnixTime(1707415076),
-        tokens: [
-          'PHA',
-          'ETH',
-          'CRO',
-          'MATIC',
-          'XDAI',
-        ],
-      },
-    ],
+  riskView: {
+    validatedBy: {
+      value: 'Third party',
+      description:
+        '4/6 of the MPC group (the Sygma relayer network) is required to create a cross-chain message with the MPC signature.', // sygma eng team currently developing a zk methodology for block header oracle verification which we will implement on mainnet relayers soon. additionally, optimistic approach coming as well. we call this "tailored security"
+      sentiment: 'neutral',
+    },
+    sourceUpgradeability: {
+      value: 'Yes',
+      description: 'Contracts are upgradable using the 3/5 Admin Multisig.',
+      sentiment: 'bad',
+    },
+    destinationToken: RISK_VIEW.CANONICAL_OR_WRAPPED,
   },
   technology: {
-    destination: ['Ethereum Mainnet', 'Khala', 'Phala', 'Cronos', 'Base', 'Gnosis','Polygon',],
+    destination: [ // these are the currently supported networks on mainnet, but the main integration available is our backend integration for PHA tokens between the EVM<->Phala/Khala routes on Phala's SubBridge 
+      'Ethereum',
+      'Phala',
+      'Khala',
+      'Polygon',
+      'Cronos',
+      'Base',
+      'Gnosis',
+    ],
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'Sygma leverages a multi-layered framework that uses secure multi-party computation (MPC) and threshold signature schemes (TSS) to strengthen security and communication within the relayer network. There is ongoing efforts underway to implement optimistic, trust-minimized cross-chain block header oracles (Zipline), as well as a ZK-based block header oracle (Spectre) to provide tailored security for different bridging use-cases.',
-        
-      references: [
-        text: 'Future-Proofing Interoperability',
-        href: 'https://blog.buildwithsygma.com/vision-cross-chain-future/',
-        text: 'Introducing Zipline Casper',
-        href: 'https://blog.buildwithsygma.com/zipline/',
-        text: 'Spectre: A ZK Coprocessor to Extend Sygma Security',
-        href: 'https://blog.buildwithsygma.com/spectre-a-zk-coprocessor-to-extend-sygmas-security/',
-      ],
+        `Sygma currently leverages an MPC relayer network along with threshold signature schemes (TSS) to facilitate cross-chain transfers. There is ongoing efforts underway to implement optimistic, trust-minimized cross-chain block header oracles (Zipline), as well as a ZK-based block header oracle (Spectre) to provide tailored security for different bridging use-cases.`,
+      references: [],
       risks: [],
     },
     validation: {
-      name: 'Third Party',
+      name: 'Transfers are externally verified',
       description:
-        'The multi-party computation (MPC) model that Sygma employs includes a number of trusted relayer nodes operating under a trusted federation. These trusted relayer nodes are run by ChainSafe Systems, Bware Labs, Phala Network and new relayer partners are activly being added.',
-      references: [
-        text: 'Sygma Architecture',
-        href: 'https://docs.buildwithsygma.com/architecture',
-      ],
+        'A Sygma relayer network, operated by a trusted federation of entities (incl. Bware Labs, Phala Network, and ChainSafe), listens, parses, and passes along events related to cross-chain transfers or generic message passing. This network utilizes a variety of verification systems (currently MPC) to sign off on generic messages and/or token release/minting.',
+      references: [],
       risks: [
-        {
-          category: 'Users can be censored if',
-          text: '',
-         
-        },
+        // {
+        //   category: 'Users can be censored if',
+        //   text: 'MPC nodes decide to censor certain transactions.',
+        //   isCritical: true,
+        //   _ignoreTextFormatting: true,
+        // },
+        // {
+        //   category: 'Funds can be stolen if',
+        //   text: 'MPC nodes decide to maliciously takeover them or there is an external exploit which will result in signing malicious transaction.',
+        //   isCritical: true,
+        //   _ignoreTextFormatting: true,
+        // },
+        // {
+        //   category: 'Funds can be lost if',
+        //   text: 'MPC nodes lose their private keys.',
+        //   isCritical: true,
+        //   _ignoreTextFormatting: true,
+        // },
       ],
     },
     destinationToken: {
       name: 'Destination tokens',
       description:
-        'Depending on the integration of the specific token route, bridged tokens will follow either a lock/release (1:1 backed, wrapped asset) mechanism or a burn/mint (synthetic asset) mechanism.',
-      references: [],
+        'Tokens received on the destination chain can be either wrapped tokens or native tokens depending on the specific implementation. For example, on Phalas integrated use-case with Sygma, native tokens are burned in Substrate/Polkadot and unlocked on EVM, and vice versa where tokens get locked on EVM and minted in Substrate/Polkadot.',
       risks: [
-        {
-          category: 'Funds can be stolen if',
-          text: '',
-        },
       ],
+      references: [],
     },
   },
-  riskView: {
-    validatedBy: {
-      value: 'Third Party',
-      description: 'Signed off-chain by 3 or more independent relayers.',
-      sentiment: '',
-    },
-    sourceUpgradeability: {
-      value: 'Yes',
-      description: 'The EVM admin multisig is a 3-of-5 and includes actions such as:registering resources and routes, withdrawing fees from the handler, changing the fee logic for a bridge, changing fee percentage on a static fee handler, set the address of the fee oracle which provides gas price and effective rates, pause and unpause the bridge. The community multisig is a 4-of-6 and includes one action, withdraw liquidity from the handle. The Substrate admin multisig is a 2-of-3 and includes actions such as: register a new domain as the supported destination domain, along with its ChainID, set fee amount for a supported domain and an asset, set Fee handler type for a domain and an asset and pause/unpause the bridge of given destination domain.  ',
-      sentiment: '',
-    },
-    destinationToken: RISK_VIEW.CANONICAL_OR_WRAPPED,
+  config: {
+    escrows: [
+      {
+        address: discovery.getContract('Sygma').address, 
+        sinceTimestamp: new UnixTime(1685659954),
+        tokens: ['PHA'],
+      },
+    ],
   },
   contracts: {
     addresses: [
-      discovery.getContractDetails(
-        'Bridge',
-        'Clear description of the contract here',
-      ),
-      discovery.getContractDetails(
-        'ERC1155Safe',
-        'Contract responsible for checking off-chain signatures performed by the oracles, currently there are needed at least 8 confirmations.',
-      ),
-      discovery.getContractDetails(
-        'ERC20Safe',
-        'Clear description of the contract here',
-      ),
-      discovery.getContractDetails(
-        'ERC721MinterBurnerPauser',
-        'Clear description of the contract here',
-      ),
-      discovery.getContractDetails(
-        'ERC721Safe',
-        'Clear description of the contract here',
-      ),
-      discovery.getContractDetails(
-        'Forwarder',
-        'Clear description of the contract here',
-      ),
-      discovery.getContractDetails(
-        'Migrations',
-        'Clear description of the contract here',
-      ),
-      discovery.getContractDetails(
-        'TestContracts',
-        'Clear description of the contract here',
-      ),
-      discovery.getContractDetails(
-        'XC20Safe',
-        'Clear description of the contract here',
-      ),
-      discovery.getContractDetails(
-        'Forwarder',
-        'Clear description of the contract here',
-      ),
+        {
+            address: EthereumAddress('0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089'),
+            name: 'Bridge',
+            description: 'The Bridge.sol contract facilitates and manages the cross-chain transfer of assets by recording and verifying deposit and withdrawal events across different blockchain networks.',
+        },
+        {
+            address: EthereumAddress('0xC832588193cd5ED2185daDA4A531e0B26eC5B830'),
+            name: 'ERC20Handler',
+            description: 'A contract that handles ERC20 tokens, enabling their deposit, withdrawal, and management within the protocol. This contract currently stores PHA tokens.',
+        },
+        {
+            address: EthereumAddress('0x1d34808907607FA82Fa1b51F5fBA5Ff5a3Fa90cF'),
+            name: 'FeeHandlerRouter',
+            description: 'The FeeHandlerRouter contract routes fee handling for cross-chain transactions to appropriate fee handlers based on the destination domain and resource ID, while managing exemptions through a whitelist system.',
+        },
+        {
+            address: EthereumAddress('0x9f9778DA7c1D0AbE148314d6C1EA6E0A93C151C7'),
+            name: 'BasicFeeHandler', // fixed fee
+            description: 'The BasicFeeHandler contract collects and manages deposit fees for cross-chain transactions, allowing for fee adjustments and the distribution of collected fees, intended for use with the bridge and fee router contract.',
+        },
+        {
+            address: EthereumAddress('0x31282123E7bcd947e2c1Bc364d564839574fAdCD'),
+            name: 'PermissionlessGenericHandler',
+            description: 'The PermissionlessGenericHandler contract facilitates the processing of generic deposits and their execution without permissions, integrating with the bridge contract for cross-chain interactions, and is designed to handle complex data encoding for executing transactions across chains.',
+        },
+        {
+            address: EthereumAddress('0xc4d8b2F5501C765dE0C5E12550118F397B197D05'),
+            name: 'Community Multisig', // 4/6 GnosisSafeProxy
+            description: 'This 4/6 multisig is used to manage the fee handlers liquidity',
+        },
+        {
+            address: EthereumAddress('0xde79695d5cefF7c324552B3ecbe6165f77FCdF53'),
+            name: 'Admin Multisig', // 3/5 GnosisSafeProxy
+            description: 'The 3/5 admin multisig covers a set of super administrative privileges, such as pausing the bridge, that may be required in order to be able to reduce the impact of security incidents.',
+        },
+        {
+            address: EthereumAddress('0x6c5bA91642F10282b576d91922Ae6448C9d52f4E'),
+            name: 'PHA',
+            description: 'Token contract address for PHA token, which is one of Sygmas supported routes between EVM and Phala/Khala.',
+        },
     ],
     risks: [],
+    isIncomplete: true,
   },
   permissions: [
-    ...discovery.getMultisigPermission(
-      'Admin Multisig',
-      'The admin multisig covers a set of super administrative privileges, such as pausing the bridge, that may be required in order to be able to reduce the impact of security incidents. As these actions may have significant financial impact, the admin governance process follows a strict off-chain preparation/review and onchain review/signing.'),
-    {
-      name: 'Relayers',
-      description:
-        'Relayers are entities that ensure bridge decentralization and execute asset bridging. Relayers are distributed among several legal entities and operate under a trusted federation model.',
-      accounts: discovery.getPermissionedAccounts(
-        'SignatureVerifier',
-        'relayers',
+    discovery.contractAsPermissioned(
+      discovery.getContract('Community Multisig'),
+      'This 4/6 multisig is used to manage the fee handlers liquidity',
+    ),
+    discovery.contractAsPermissioned(
+        discovery.getContract('Admin Multisig'),
+        'The 3/5 admin multisig covers a set of super administrative privileges, such as pausing the bridge, that may be required in order to be able to reduce the impact of security incidents.',
       ),
+  ],
+  knowledgeNuggets: [
+    {
+      title: 'Architecture overview',
+      url: 'https://docs.buildwithsygma.com/architecture',
+      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_01,
     },
+    {
+      title: 'Audits',
+      url: 'https://docs.buildwithsygma.com/audits',
+      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
+    },
+    {
+        title: 'Frequently asked questions',
+        url: 'https://docs.buildwithsygma.com/faq',
+        thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
+      },
   ],
 }
