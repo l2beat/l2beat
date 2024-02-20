@@ -52,9 +52,9 @@ export const sygma: Bridge = {
       sentiment: 'neutral',
     },
     sourceUpgradeability: {
-      value: 'Yes',
-      description: 'Contracts are upgradable using the 3/5 Admin Multisig.',
-      sentiment: 'bad',
+      value: 'No',
+      description: 'Contracts are not upgradable.',
+      sentiment: 'good',
     },
     destinationToken: RISK_VIEW.CANONICAL_OR_WRAPPED,
   },
