@@ -7,7 +7,7 @@ Generated with discovered.json: 0xabe7c526f112e7c35d9d3809029eda70c54e600f
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Added Discovery integration to the Near Rainbow Bridge.
 
 ## Initial discovery
 
