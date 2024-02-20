@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.43.0
+
+### Minor Changes
+
+- Flattener
+
 ## 0.42.2
 
 ### Patch Changes

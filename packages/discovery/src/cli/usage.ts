@@ -7,6 +7,7 @@ const usage = `Usage:
     yarn discover [chain] [project] --dev ........... run on the same block number as in .json
     yarn invert [chain] [project] ................... print addresses and their functions
     yarn invert [chain] [project] --mermaid ......... print mermaid graph markup
+    yarn flatten [path] [root contract] ............. flatten a contract discarding any contracts not included in the bytecode
     yarn discover:single [chain] [address] .......... run a discovery on the address (no config needed, useful for experimenting)
     yarn <start|discover> --help .................... display this message
 

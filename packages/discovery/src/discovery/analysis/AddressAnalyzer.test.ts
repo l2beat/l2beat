@@ -55,9 +55,19 @@ describe(AddressAnalyzer.name, () => {
           [address.toString()]: ['function foo()'],
           [implementation.toString()]: ['function bar()'],
         },
-        files: [
-          { 'Foo.sol': 'contract Test { function foo() {} }' },
-          { 'Bar.sol': 'contract Test { function bar() {} }' },
+        sources: [
+          {
+            name: 'Proxy1',
+            address: address,
+            files: { 'Foo.sol': 'contract Test { function foo() {} }' },
+            remappings: [],
+          },
+          {
+            name: 'Impl1',
+            address: implementation,
+            files: { 'Bar.sol': 'contract Test { function bar() {} }' },
+            remappings: [],
+          },
         ],
       }
 
@@ -114,7 +124,7 @@ describe(AddressAnalyzer.name, () => {
           values: { owner: owner.toString() },
           errors: {},
           abis: sources.abis,
-          sources: sources.files,
+          source: sources.sources,
         },
         relatives: [owner, admin],
       })
@@ -133,7 +143,20 @@ describe(AddressAnalyzer.name, () => {
         abis: {
           [address.toString()]: ['function foo()'],
         },
-        files: [{ 'Foo.sol': 'contract Test { function foo() {} }' }, {}],
+        sources: [
+          {
+            name: 'Test',
+            address,
+            files: { 'Foo.sol': 'contract Test { function foo() {} }' },
+            remappings: [],
+          },
+          {
+            name: 'Test2',
+            address: implementation,
+            files: {},
+            remappings: [],
+          },
+        ],
       }
 
       const addressAnalyzer = new AddressAnalyzer(
@@ -189,7 +212,7 @@ describe(AddressAnalyzer.name, () => {
           values: { owner: owner.toString() },
           errors: {},
           abis: sources.abis,
-          sources: sources.files,
+          source: sources.sources,
         },
         relatives: [owner, admin],
       })
@@ -209,9 +232,19 @@ describe(AddressAnalyzer.name, () => {
           [address.toString()]: ['function foo()'],
           [implementation.toString()]: ['function bar()'],
         },
-        files: [
-          { 'Foo.sol': 'contract Test { function foo() {} }' },
-          { 'Bar.sol': 'contract Test { function bar() {} }' },
+        sources: [
+          {
+            name: 'Test',
+            address,
+            files: { 'Foo.sol': 'contract Test { function foo() {} }' },
+            remappings: [],
+          },
+          {
+            name: 'Test',
+            address,
+            files: { 'Bar.sol': 'contract Test { function bar() {} }' },
+            remappings: [],
+          },
         ],
       }
 
@@ -265,7 +298,7 @@ describe(AddressAnalyzer.name, () => {
           values: { owner: owner.toString() },
           errors: {},
           abis: sources.abis,
-          sources: sources.files,
+          source: sources.sources,
         },
         relatives: [owner, admin],
       })
@@ -537,6 +570,6 @@ function mockSources({ isVerified }: { isVerified: boolean }): ContractSources {
     isVerified,
     abi: [],
     abis: {},
-    files: [],
+    sources: [],
   }
 }

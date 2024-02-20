@@ -20,7 +20,7 @@ describe(getSourceOutputPath.name, () => {
     upgradeability: { type: 'immutable' },
     implementations: [],
     abis: {},
-    sources: [],
+    source: [],
   })
 
   const contractA = genAnalyzedContract('A')

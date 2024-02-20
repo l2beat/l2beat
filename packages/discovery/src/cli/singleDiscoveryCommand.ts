@@ -13,7 +13,7 @@ import { EtherscanLikeClient } from '../utils/EtherscanLikeClient'
 import { HttpClient } from '../utils/HttpClient'
 
 export async function singleDiscoveryCommand(
-  { singleDiscovery, chain }: DiscoveryCliConfig,
+  { singleDiscovery }: DiscoveryCliConfig,
   logger: Logger,
 ): Promise<void> {
   if (!singleDiscovery) {
@@ -22,17 +22,19 @@ export async function singleDiscoveryCommand(
 
   const projectConfig = new DiscoveryConfig({
     name: singleDiscovery.address.toString(),
-    chain: chain.chain,
+    chain: singleDiscovery.chain.name,
     initialAddresses: [singleDiscovery.address],
   })
 
   const http = new HttpClient()
-  const provider = new providers.StaticJsonRpcProvider(chain.rpcUrl)
+  const provider = new providers.StaticJsonRpcProvider(
+    singleDiscovery.chain.rpcUrl,
+  )
   const etherscanClient = EtherscanLikeClient.createForDiscovery(
     http,
-    chain.etherscanUrl,
-    chain.etherscanApiKey,
-    chain.etherscanUnsupported,
+    singleDiscovery.chain.etherscanUrl,
+    singleDiscovery.chain.etherscanApiKey,
+    singleDiscovery.chain.etherscanUnsupported,
   )
   const blockNumber = await provider.getBlockNumber()
 
@@ -42,19 +44,25 @@ export async function singleDiscoveryCommand(
   const results = await discovery(
     provider,
     etherscanClient,
-    chain.multicall,
+    singleDiscovery.chain.multicall,
     projectConfig,
     DiscoveryLogger.CLI,
     blockNumber,
-    chain.rpcGetLogsMaxRange,
+    singleDiscovery.chain.rpcGetLogsMaxRange,
   )
 
   const rootFolder = `./cache/single-discovery`
   await rimraf(rootFolder)
 
-  await saveDiscoveryResult(results, projectConfig, blockNumber, {
-    rootFolder,
-  })
+  await saveDiscoveryResult(
+    results,
+    projectConfig,
+    blockNumber,
+    DiscoveryLogger.CLI,
+    {
+      rootFolder,
+    },
+  )
 
   logger.info(
     'Opening discovered.json in the browser, please use firefox or other browser with JSON viewer extension',

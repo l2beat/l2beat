@@ -7,6 +7,7 @@ export type CliParameters =
   | ServerCliParameters
   | DiscoverCliParameters
   | InvertCliParameters
+  | FlattenCliParameters
   | HelpCliParameters
   | SingleDiscoveryCliParameters
 
@@ -31,6 +32,13 @@ export interface InvertCliParameters {
   chain: string
   useMermaidMarkup: boolean
 }
+
+export interface FlattenCliParameters {
+  mode: 'flatten'
+  path: string
+  rootContractName: string
+}
+
 export interface SingleDiscoveryCliParameters {
   mode: 'single-discovery'
   address: EthereumAddress
@@ -167,6 +175,31 @@ export function getCliParameters(args = process.argv.slice(2)): CliParameters {
       chain,
       project,
       useMermaidMarkup,
+    }
+    return result
+  }
+
+  if (args[0] === 'flatten') {
+    const remaining = args.slice(1)
+
+    if (remaining.length === 0) {
+      return { mode: 'help', error: 'Not enough arguments' }
+    }
+    if (remaining.length > 2) {
+      return { mode: 'help', error: 'Too many arguments' }
+    }
+
+    const [path, rootContractName] = remaining
+    if (!path || !rootContractName) {
+      return getHelpCliParameter(
+        'You need to provide arguments for both the path and the root contract name',
+      )
+    }
+
+    const result: FlattenCliParameters = {
+      mode: 'flatten',
+      path,
+      rootContractName,
     }
     return result
   }

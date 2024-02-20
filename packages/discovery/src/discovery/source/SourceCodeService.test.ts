@@ -47,7 +47,14 @@ describe(SourceCodeService.name, () => {
       abis: {},
       isVerified: false,
       name: 'Foo',
-      files: [processSources(FOO_ADDRESS, FOO_METADATA)],
+      sources: [
+        {
+          name: 'Foo',
+          address: FOO_ADDRESS,
+          files: processSources(FOO_ADDRESS, FOO_METADATA),
+          remappings: [],
+        },
+      ],
     })
   })
 
@@ -67,7 +74,14 @@ describe(SourceCodeService.name, () => {
       },
       isVerified: true,
       name: 'Bar',
-      files: [processSources(BAR_ADDRESS, BAR_METADATA)],
+      sources: [
+        {
+          name: 'Bar',
+          address: BAR_ADDRESS,
+          files: processSources(BAR_ADDRESS, BAR_METADATA),
+          remappings: [],
+        },
+      ],
     })
   })
 
@@ -90,9 +104,19 @@ describe(SourceCodeService.name, () => {
       },
       isVerified: true,
       name: 'Baz',
-      files: [
-        processSources(BAR_ADDRESS, BAR_METADATA),
-        processSources(BAZ_ADDRESS, BAZ_METADATA),
+      sources: [
+        {
+          name: 'Bar',
+          address: BAR_ADDRESS,
+          files: processSources(BAR_ADDRESS, BAR_METADATA),
+          remappings: [],
+        },
+        {
+          name: 'Baz',
+          address: BAZ_ADDRESS,
+          files: processSources(BAZ_ADDRESS, BAZ_METADATA),
+          remappings: [],
+        },
       ],
     })
   })
@@ -115,9 +139,19 @@ describe(SourceCodeService.name, () => {
       },
       isVerified: false,
       name: 'Foo',
-      files: [
-        processSources(BAR_ADDRESS, BAR_METADATA),
-        processSources(FOO_ADDRESS, FOO_METADATA),
+      sources: [
+        {
+          name: 'Bar',
+          address: BAR_ADDRESS,
+          files: processSources(BAR_ADDRESS, BAR_METADATA),
+          remappings: [],
+        },
+        {
+          name: 'Foo',
+          address: FOO_ADDRESS,
+          files: processSources(FOO_ADDRESS, FOO_METADATA),
+          remappings: [],
+        },
       ],
     })
   })

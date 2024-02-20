@@ -19,5 +19,5 @@ export async function invertCommand(
   logger = logger.for('Inversion')
   logger.info('Starting')
 
-  await runInversion(project, configReader, useMermaidMarkup, chain)
+  await runInversion(project, configReader, useMermaidMarkup, chain.name)
 }

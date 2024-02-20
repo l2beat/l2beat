@@ -4,15 +4,22 @@ import { EthereumAddress } from '../../utils/EthereumAddress'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { deduplicateAbi } from './deduplicateAbi'
 import { getLegacyDerivedName } from './getDerivedName'
-import { processSources } from './processSources'
+import { getRemappings, processSources } from './processSources'
 import { skipIgnoredFunctions } from './skipIgnoredFunctions'
+
+export interface PerContractSource {
+  name: string
+  address: EthereumAddress
+  files: Record<string, string>
+  remappings: string[]
+}
 
 export interface ContractSources {
   name: string
   isVerified: boolean
   abi: string[]
   abis: Record<string, string[]>
-  files: Record<string, string>[]
+  sources: PerContractSource[]
 }
 
 export class SourceCodeService {
@@ -31,7 +38,7 @@ export class SourceCodeService {
     const abi = deduplicateAbi(metadata.flatMap((x) => x.abi))
 
     const abis: Record<string, string[]> = {}
-    const files: Record<string, string>[] = []
+    const sources: PerContractSource[] = []
     for (const [address, item] of zip(addresses, metadata)) {
       if (!address || !item) {
         continue
@@ -39,12 +46,18 @@ export class SourceCodeService {
       if (item.abi.length !== 0) {
         abis[address.toString()] = item.abi
       }
-      files.push(processSources(address, item))
+
+      sources.push({
+        name: item.name,
+        address: address,
+        files: processSources(address, item),
+        remappings: getRemappings(item),
+      })
     }
 
     const isVerified = metadata.every((x) => x.isVerified)
 
-    return { name, isVerified, abi, abis, files }
+    return { name, isVerified, abi, abis, sources }
   }
 
   getRelevantAbi(

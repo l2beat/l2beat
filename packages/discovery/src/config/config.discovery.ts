@@ -11,6 +11,7 @@ export function getDiscoveryCliConfig(cli: CliParameters): DiscoveryCliConfig {
   if (
     cli.mode !== 'invert' &&
     cli.mode !== 'discover' &&
+    cli.mode !== 'flatten' &&
     cli.mode !== 'single-discovery'
   ) {
     throw new Error(`No local config for mode: ${cli.mode}`)
@@ -19,29 +20,31 @@ export function getDiscoveryCliConfig(cli: CliParameters): DiscoveryCliConfig {
   const discoveryEnabled = cli.mode === 'discover'
   const singleDiscoveryEnabled = cli.mode === 'single-discovery'
   const invertEnabled = cli.mode === 'invert'
-  const chain = getChainConfig(cli.chain)
+  const flattenEnabled = cli.mode === 'flatten'
 
   return {
     invert: invertEnabled && {
       project: cli.project,
-      chain: cli.chain,
+      chain: getChainConfig(cli.chain),
       useMermaidMarkup: cli.useMermaidMarkup,
     },
     discovery: discoveryEnabled && {
       project: cli.project,
-      chain: cli.chain,
+      chain: getChainConfig(cli.chain),
       dryRun: cli.dryRun,
       dev: cli.dev,
       blockNumber: cli.blockNumber,
-      getLogsMaxRange: chain.rpcGetLogsMaxRange,
       sourcesFolder: cli.sourcesFolder,
       discoveryFilename: cli.discoveryFilename,
     },
     singleDiscovery: singleDiscoveryEnabled && {
       address: cli.address,
-      chain: cli.chain,
+      chain: getChainConfig(cli.chain),
     },
-    chain,
+    flatten: flattenEnabled && {
+      path: cli.path,
+      rootContractName: cli.rootContractName,
+    },
   }
 }
 
@@ -55,7 +58,7 @@ export function getChainConfig(chain: string): DiscoveryChainConfig {
 
   const ENV_NAME = chainConfig.name.toUpperCase()
   return {
-    chain: chainConfig.name,
+    name: chainConfig.name,
     rpcUrl: env.string(`DISCOVERY_${ENV_NAME}_RPC_URL`),
     rpcGetLogsMaxRange: env.optionalInteger(
       `DISCOVERY_${ENV_NAME}_RPC_GETLOGS_MAX_RANGE`,

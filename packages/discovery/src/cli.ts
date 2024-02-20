@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 
 import { discoverCommand } from './cli/discoverCommand'
+import { flattenCommand } from './cli/flattenCommand'
 import { handleCli } from './cli/handleCli'
 import { invertCommand } from './cli/invertCommand'
 import { singleDiscoveryCommand } from './cli/singleDiscoveryCommand'
@@ -19,4 +20,5 @@ async function main(): Promise<void> {
   await discoverCommand(config, logger)
   await invertCommand(config, logger)
   await singleDiscoveryCommand(config, logger)
+  await flattenCommand(config, logger)
 }

@@ -28,13 +28,13 @@ export async function runDiscovery(
 ): Promise<void> {
   const projectConfig = await configReader.readConfig(
     config.project,
-    config.chain,
+    config.chain.name,
   )
 
   const blockNumber =
     config.blockNumber ??
     (config.dev
-      ? (await configReader.readDiscovery(config.project, config.chain))
+      ? (await configReader.readDiscovery(config.project, config.chain.name))
           .blockNumber
       : await provider.getBlockNumber())
 
@@ -46,9 +46,9 @@ export async function runDiscovery(
     projectConfig,
     logger,
     blockNumber,
-    config.getLogsMaxRange,
+    config.chain.rpcGetLogsMaxRange,
   )
-  await saveDiscoveryResult(result, projectConfig, blockNumber, {
+  await saveDiscoveryResult(result, projectConfig, blockNumber, logger, {
     sourcesFolder: config.sourcesFolder,
     discoveryFilename: config.discoveryFilename,
   })
@@ -67,7 +67,7 @@ export async function dryRunDiscovery(
 
   const projectConfig = await configReader.readConfig(
     config.project,
-    config.chain,
+    config.chain.name,
   )
 
   const [discovered, discoveredYesterday] = await Promise.all([
@@ -77,7 +77,7 @@ export async function dryRunDiscovery(
       multicallConfig,
       projectConfig,
       blockNumber,
-      config.getLogsMaxRange,
+      config.chain.rpcGetLogsMaxRange,
     ),
     justDiscover(
       provider,
@@ -85,7 +85,7 @@ export async function dryRunDiscovery(
       multicallConfig,
       projectConfig,
       blockNumberYesterday,
-      config.getLogsMaxRange,
+      config.chain.rpcGetLogsMaxRange,
     ),
   ])
 

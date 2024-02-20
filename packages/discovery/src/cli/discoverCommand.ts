@@ -1,4 +1,4 @@
-import { assert, Logger } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import { providers } from 'ethers'
 
 import { getDiscoveryCliConfig } from '../config/config.discovery'
@@ -16,12 +16,7 @@ export async function discoverCommand(
     return
   }
   const discoverConfig = config.discovery
-  const chainConfig = config.chain
-
-  assert(
-    chainConfig.chain === discoverConfig.chain,
-    'Chain config does not match discovery config! Update "discovery.config" file or config.json of your project',
-  )
+  const chainConfig = discoverConfig.chain
 
   const http = new HttpClient()
   const provider = new providers.StaticJsonRpcProvider(chainConfig.rpcUrl)
@@ -40,7 +35,7 @@ export async function discoverCommand(
     await dryRunDiscovery(
       provider,
       etherscanClient,
-      config.chain.multicall,
+      chainConfig.multicall,
       configReader,
       discoverConfig,
     )
@@ -50,11 +45,11 @@ export async function discoverCommand(
   logger = logger.for('Discovery')
   logger.info('Starting discovery...')
   logger.info(`Project: ${discoverConfig.project}`)
-  logger.info(`Chain: ${discoverConfig.chain}\n`)
+  logger.info(`Chain: ${discoverConfig.chain.name}\n`)
   await runDiscovery(
     provider,
     etherscanClient,
-    config.chain.multicall,
+    chainConfig.multicall,
     configReader,
     discoverConfig,
   )
@@ -70,7 +65,7 @@ export function discover(
   const cliConfig = getDiscoveryCliConfig({
     mode: 'discover',
     project: config.project,
-    chain: config.chain,
+    chain: config.chain.name,
     dryRun: config.dryRun === true,
     dev: config.dev === true,
     sourcesFolder: config.sourcesFolder,

@@ -18,7 +18,7 @@ describe(processAnalysis.name, () => {
     upgradeability: { type: 'immutable' } as UpgradeabilityParameters,
     implementations: [],
     abis: {},
-    sources: [],
+    source: [],
   }
 
   const ADDRESS_A = EthereumAddress(
