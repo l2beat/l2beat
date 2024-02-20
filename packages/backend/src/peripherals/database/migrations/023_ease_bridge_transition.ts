@@ -14,14 +14,17 @@ should create a new migration file that fixes the issue.
 import { ProjectId } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
+const ALL_ID = ProjectId('l2beat-all')
+const LAYER2S_ID = ProjectId('l2beat-all')
+
 export async function up(knex: Knex) {
   const hasLayer2Already = !!(await knex('aggregate_reports')
-    .where('project_id', ProjectId.LAYER2S.toString())
+    .where('project_id', LAYER2S_ID)
     .first())
   if (!hasLayer2Already) {
     await knex('aggregate_reports')
-      .where('project_id', ProjectId.ALL.toString())
-      .update('project_id', ProjectId.LAYER2S.toString())
+      .where('project_id', ALL_ID)
+      .update('project_id', LAYER2S_ID)
   }
 }
 
