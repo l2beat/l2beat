@@ -8,7 +8,7 @@ type ScalingProjectStateValidationCategory = {
   description: string
 }
 
-export type ScalingProjectStateValidation = {
+export interface ScalingProjectStateValidation {
   description: string
   categories: ScalingProjectStateValidationCategory[]
 }

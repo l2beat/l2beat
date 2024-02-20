@@ -73,7 +73,6 @@
     "eslint-plugin-tailwindcss": "^3.14.1",
     "gulp": "^4.0.2",
     "http-proxy-middleware": "^2.0.6",
-    "mock-fs": "^5.2.0",
     "mockdate": "^3.0.5",
     "postcss": "^8.4.21",
     "postcss-import": "^15.1.0",
