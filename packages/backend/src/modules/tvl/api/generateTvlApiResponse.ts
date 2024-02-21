@@ -10,7 +10,7 @@ import {
 import { AggregatedReportRecord } from '../repositories/AggregatedReportRepository'
 import { ReportRecord } from '../repositories/ReportRepository'
 import { asNumber } from './asNumber'
-import { getProjectTokensCharts, groupByProjectIdAndAssetType } from './tvl'
+import { getProjectTokensCharts, groupByProjectAndReportType } from './tvl'
 
 export const TYPE_LABELS: TvlApiChart['types'] = [
   'timestamp',
@@ -52,8 +52,82 @@ export function generateTvlApiResponse(
   projects: { id: ProjectId; isLayer2: boolean; sinceTimestamp: UnixTime }[],
   untilTimestamp: UnixTime,
 ): TvlApiResponse {
-  const charts = new Map<ProjectId, TvlApiCharts>()
+  const charts = getEmptyCharts(projects, untilTimestamp)
+  fillCharts(charts, hourlyReports, sixHourlyReports, dailyReports)
 
+  const aggregates = getEmptyAggregates(projects, untilTimestamp)
+
+  const groupedLatestReports = groupByProjectAndReportType(latestReports)
+
+  const projectsResult = projects.reduce<TvlApiResponse['projects']>(
+    (acc, project) => {
+      acc[project.id.toString()] = {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        charts: charts.get(project.id)!,
+        tokens: getProjectTokensCharts(groupedLatestReports, project.id),
+      }
+
+      updateAggregates(project, aggregates, charts)
+
+      return acc
+    },
+    {},
+  )
+
+  return {
+    layers2s: aggregates.layers2s,
+    bridges: aggregates.bridges,
+    combined: aggregates.combined,
+    projects: projectsResult,
+  }
+}
+
+function updateAggregates(
+  project: { id: ProjectId; isLayer2: boolean; sinceTimestamp: UnixTime },
+  aggregates: {
+    layers2s: TvlApiCharts
+    bridges: TvlApiCharts
+    combined: TvlApiCharts
+  },
+  charts: Map<ProjectId, TvlApiCharts>,
+) {
+  if (project.isLayer2) {
+    aggregates.layers2s = mergeAggregates(
+      aggregates.layers2s,
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      charts.get(project.id)!,
+    )
+  } else {
+    aggregates.bridges = mergeAggregates(
+      aggregates.bridges,
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      charts.get(project.id)!,
+    )
+  }
+
+  aggregates.combined = mergeAggregates(
+    aggregates.combined,
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    charts.get(project.id)!,
+  )
+}
+
+function getEmptyCharts(
+  projects: { id: ProjectId; isLayer2: boolean; sinceTimestamp: UnixTime }[],
+  untilTimestamp: UnixTime,
+) {
+  return new Map<ProjectId, TvlApiCharts>(
+    projects.map((p) => [
+      p.id,
+      getEmptyChart(p.sinceTimestamp, untilTimestamp),
+    ]),
+  )
+}
+
+function getEmptyAggregates(
+  projects: { id: ProjectId; isLayer2: boolean; sinceTimestamp: UnixTime }[],
+  untilTimestamp: UnixTime,
+) {
   const minLayer2Timestamp = projects
     .filter((p) => p.isLayer2)
     .map((x) => x.sinceTimestamp)
@@ -71,53 +145,7 @@ export function generateTvlApiResponse(
     bridges: getEmptyChart(minBridgeTimestamp, untilTimestamp),
     combined: getEmptyChart(minTimestamp, untilTimestamp),
   }
-
-  for (const p of projects) {
-    charts.set(p.id, getEmptyChart(p.sinceTimestamp, untilTimestamp))
-  }
-
-  fillCharts(charts, hourlyReports, sixHourlyReports, dailyReports)
-
-  const groupedLatestReports = groupByProjectIdAndAssetType(latestReports)
-  const projectsResult = projects.reduce<TvlApiResponse['projects']>(
-    (acc, project) => {
-      acc[project.id.toString()] = {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        charts: charts.get(project.id)!,
-        tokens: getProjectTokensCharts(groupedLatestReports, project.id),
-      }
-
-      if (project.isLayer2) {
-        aggregates.layers2s = mergeAggregates(
-          aggregates.layers2s,
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          charts.get(project.id)!,
-        )
-      } else {
-        aggregates.bridges = mergeAggregates(
-          aggregates.bridges,
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          charts.get(project.id)!,
-        )
-      }
-
-      aggregates.combined = mergeAggregates(
-        aggregates.combined,
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        charts.get(project.id)!,
-      )
-
-      return acc
-    },
-    {},
-  )
-
-  return {
-    layers2s: aggregates.layers2s,
-    bridges: aggregates.bridges,
-    combined: aggregates.combined,
-    projects: projectsResult,
-  }
+  return aggregates
 }
 
 // Function to sum two chart points with the same timestamp
@@ -170,7 +198,10 @@ function mergeAggregates(
   }
 }
 
-function getEmptyChart(sinceTimestamp: UnixTime, untilTimestamp: UnixTime) {
+function getEmptyChart(
+  sinceTimestamp: UnixTime,
+  untilTimestamp: UnixTime,
+): TvlApiCharts {
   return {
     hourly: {
       types: TYPE_LABELS,

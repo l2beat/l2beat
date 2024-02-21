@@ -20,10 +20,10 @@ import { asNumber } from './asNumber'
 import { groupByAndOmit, nestedGroupBy } from './grouping'
 
 export type ReportsPerProjectIdAndAsset = ReturnType<
-  typeof groupByProjectIdAndAssetType
+  typeof groupByProjectAndReportType
 >
 
-export function groupByProjectIdAndAssetType(reports: ReportRecord[]) {
+export function groupByProjectAndReportType(reports: ReportRecord[]) {
   return nestedGroupBy(
     reports,
     (report) => report.projectId,

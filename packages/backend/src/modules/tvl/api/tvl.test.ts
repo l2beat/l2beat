@@ -3,10 +3,10 @@ import { expect } from 'earl'
 import { describe } from 'mocha'
 
 import { ReportRecord } from '../repositories/ReportRepository'
-import { getProjectTokensCharts, groupByProjectIdAndAssetType } from './tvl'
+import { getProjectTokensCharts, groupByProjectAndReportType } from './tvl'
 
 describe('tvl', () => {
-  describe(groupByProjectIdAndAssetType.name, () => {
+  describe(groupByProjectAndReportType.name, () => {
     it('groups reports by project id and asset type', () => {
       const timestamp = UnixTime.now()
       const mockReports: ReportRecord[] = [
@@ -72,7 +72,7 @@ describe('tvl', () => {
         },
       ]
 
-      const result = groupByProjectIdAndAssetType(mockReports)
+      const result = groupByProjectAndReportType(mockReports)
 
       expect(result).toEqual({
         [ProjectId.ARBITRUM.toString()]: {
@@ -221,7 +221,7 @@ describe('tvl', () => {
       },
     ]
     it('returns project tokens grouped by asset type and sorted in descending order', () => {
-      const groupedReports = groupByProjectIdAndAssetType(mockReports)
+      const groupedReports = groupByProjectAndReportType(mockReports)
 
       const arbitrumResult = getProjectTokensCharts(
         groupedReports,
@@ -288,7 +288,7 @@ describe('tvl', () => {
     })
 
     it('returns empty array if no project`s assets were found', () => {
-      const groupedReports = groupByProjectIdAndAssetType(mockReports)
+      const groupedReports = groupByProjectAndReportType(mockReports)
 
       const optimismResult = getProjectTokensCharts(
         groupedReports,
