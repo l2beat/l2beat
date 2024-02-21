@@ -7,6 +7,7 @@ import isEmpty from 'lodash/isEmpty'
 
 import { ChartProps } from '../../../components'
 import { getContractSection } from '../../../utils/project/getContractSection'
+import { getDiagramImage } from '../../../utils/project/getDiagramImage'
 import { getPermissionsSection } from '../../../utils/project/getPermissionsSection'
 import {
   getProjectEditLink,
@@ -84,7 +85,6 @@ export function getProjectDetails(
       props: {
         id: 'risk-analysis',
         title: 'Risk analysis',
-
         riskValues: getRiskValues(project.riskView),
         isUnderReview: project.isUnderReview,
         warning: project.display.warning,
@@ -111,7 +111,6 @@ export function getProjectDetails(
         items: technologySection.items,
         id: technologySection.id,
         title: technologySection.title,
-
         isUnderReview: technologySection.isUnderReview,
       },
     })
@@ -122,8 +121,8 @@ export function getProjectDetails(
         props: {
           id: 'state-derivation',
           title: 'State derivation',
-
           ...project.stateDerivation,
+          isUnderReview: project.isUnderReview,
         },
       })
     }
@@ -134,8 +133,9 @@ export function getProjectDetails(
         props: {
           id: 'state-validation',
           title: 'State validation',
-
+          image: getDiagramImage('state-validation', project.display.slug),
           stateValidation: project.stateValidation,
+          isUnderReview: project.isUnderReview,
         },
       })
     }

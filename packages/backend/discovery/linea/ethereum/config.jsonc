@@ -21,13 +21,19 @@
   },
   "overrides": {
     "zkEVM": {
-      "ignoreInWatchMode": ["currentPeriodAmountInWei"],
+      "ignoreInWatchMode": [
+        "currentPeriodAmountInWei",
+        "currentL2StoredL1MessageNumber",
+        "currentL2StoredL1RollingHash"
+      ],
       "ignoreMethods": [
         "stateRootHashes",
         "currentTimestamp",
         "currentPeriodEnd",
         "currentL2BlockNumber",
-        "nextMessageNumber"
+        "nextMessageNumber",
+        "isMessageClaimed",
+        "rollingHashes"
       ],
       "fields": {
         "verifiers": {
@@ -62,6 +68,20 @@
           "args": [
             "0x21ea2f4fee4bcb623de15ac222ea5c1464307d884f23394b78ddc07f9c9c7cd8"
           ] // L2_L1_PAUSE_TYPE
+        },
+        "provenNonCompressedBlocksWithoutProof": {
+          "type": "arrayFromOneEvent",
+          "event": "BlockFinalized",
+          "valueKey": "blockNumber",
+          "flagKey": "finalizedWithProof",
+          "invert": true
+        },
+        "provenCompressedBlocksWithoutProof": {
+          "type": "arrayFromOneEvent",
+          "event": "DataFinalized",
+          "valueKey": "lastBlockFinalized",
+          "flagKey": "withProof",
+          "invert": true
         }
       }
     },

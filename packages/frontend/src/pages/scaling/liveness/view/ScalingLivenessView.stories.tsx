@@ -111,6 +111,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
             },
           ],
         },
+        isSynced: false,
         stateUpdates: {
           last30Days: {
             averageInSeconds: 3650,
@@ -339,6 +340,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
             },
           ],
         },
+        isSynced: true,
         stateUpdates: {
           last30Days: {
             averageInSeconds: 3601,
@@ -545,6 +547,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
             },
           ],
         },
+        isSynced: true,
         stateUpdates: {
           last30Days: {
             averageInSeconds: 3601,
@@ -765,6 +768,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
             },
           ],
         },
+        isSynced: true,
         stateUpdates: {
           last30Days: {
             averageInSeconds: 3461,
@@ -984,6 +988,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
             },
           ],
         },
+        isSynced: true,
         stateUpdates: {
           last30Days: {
             averageInSeconds: 2464,
@@ -1203,6 +1208,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
             text: 'There is no available node software that can reconstruct the state from L1 data, hence there is no way to verify that this system is a rollup.',
           },
         },
+        isSynced: true,
         stateUpdates: {
           last30Days: {
             averageInSeconds: 121,

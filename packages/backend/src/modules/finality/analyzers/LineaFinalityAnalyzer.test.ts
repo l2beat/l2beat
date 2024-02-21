@@ -12,15 +12,22 @@ describe(LineaFinalityAnalyzer.name, () => {
       const livenessRepository = getMockLivenessRepository()
       const provider = getMockRpcClient()
 
-      const calculator = new LineaFinalityAnalyzer(provider, livenessRepository)
+      const l1Timestamp = 1705407431
+
+      const calculator = new LineaFinalityAnalyzer(
+        provider,
+        livenessRepository,
+        ProjectId('linea'),
+        LivenessType('STATE'),
+      )
       const results = await calculator.getFinality({
         txHash: '0x121',
-        timestamp: new UnixTime(1705407431),
+        timestamp: new UnixTime(l1Timestamp),
       })
 
-      expect(results.minimum).toEqual(33621)
-      expect(results.maximum).toEqual(33693)
-      expect(results.average).toEqual(33657)
+      expect(results).toEqualUnsorted(
+        DATA1_TIMESTAMPS.map((t) => l1Timestamp - t),
+      )
     })
   })
 
@@ -34,6 +41,8 @@ describe(LineaFinalityAnalyzer.name, () => {
         const calculator = new LineaFinalityAnalyzer(
           provider,
           livenessRepository,
+          ProjectId('linea'),
+          LivenessType('STATE'),
         )
 
         await calculator.getFinalityWithGranularity(
@@ -70,18 +79,22 @@ describe(LineaFinalityAnalyzer.name, () => {
 
       it('correctly decode for multiple txs with one not found', async () => {
         const start = UnixTime.now().toStartOf('hour')
+        const firstL1Timestamp = 1705407431
+        const secondL1Timestamp = 1706171999
+
         const livenessRepository = mockObject<LivenessRepository>({
           findTransactionWithinTimeRange: mockFn()
             .resolvesToOnce({
               txHash: '0x121',
-              timestamp: new UnixTime(1705407431),
+              timestamp: new UnixTime(firstL1Timestamp),
             })
             .resolvesToOnce({
               txHash: '0x121',
-              timestamp: new UnixTime(1706171999),
+              timestamp: new UnixTime(secondL1Timestamp),
             })
             .resolvesToOnce(undefined),
         })
+
         const provider = mockObject<RpcClient>({
           getTransaction: mockFn()
             .resolvesToOnce({
@@ -95,16 +108,21 @@ describe(LineaFinalityAnalyzer.name, () => {
         const calculator = new LineaFinalityAnalyzer(
           provider,
           livenessRepository,
+          ProjectId('linea'),
+          LivenessType('STATE'),
         )
         const results = await calculator.getFinalityWithGranularity(
           start.add(-1, 'hours'),
           start,
           3,
         )
+        if (results) {
+          expect(results).toEqualUnsorted([
+            ...DATA1_TIMESTAMPS.map((t) => firstL1Timestamp - t),
+            ...DATA2_TIMESTAMPS.map((t) => secondL1Timestamp - t),
+          ])
+        }
 
-        expect(results?.minimumTimeToInclusion).toEqual(28810)
-        expect(results?.maximumTimeToInclusion).toEqual(33693)
-        expect(results?.averageTimeToInclusion).toEqual(31261)
         expect(
           livenessRepository.findTransactionWithinTimeRange,
         ).toHaveBeenCalledTimes(3)

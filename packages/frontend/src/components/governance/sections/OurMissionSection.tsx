@@ -10,7 +10,7 @@ interface Props {
 export function OurMissionSection({ className }: Props) {
   return (
     <GovernanceCard as="section" mobileFull className={className}>
-      <GovernanceCardHeader>Our Mission</GovernanceCardHeader>
+      <GovernanceCardHeader>Our mission</GovernanceCardHeader>
       <p className="mt-6 text-base md:text-sm">
         At L2BEAT we believe that crypto is the new infrastructure for the
         future financial system. As such, we believe that in order for it to be

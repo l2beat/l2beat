@@ -11,7 +11,7 @@ import { setTimeout } from 'timers/promises'
 
 import { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
-import { UpdaterStatus } from '../status/api/view/TvlStatusPage'
+import { UpdaterStatus } from './api/status/TvlStatusPage'
 import { getStatus } from './reports/getStatus'
 import {
   DataBoundary,
@@ -152,9 +152,5 @@ export class PriceUpdater {
 }
 
 function getAdjustedFrom(sinceTimestamp: UnixTime, from: UnixTime) {
-  const sinceTimestampFullHour = sinceTimestamp.isFull('hour')
-    ? sinceTimestamp
-    : sinceTimestamp.toNext('hour')
-
-  return sinceTimestampFullHour.gt(from) ? sinceTimestampFullHour : from
+  return UnixTime.max(sinceTimestamp.toEndOf('hour'), from)
 }

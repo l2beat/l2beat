@@ -43,7 +43,15 @@
         "totalETHShares",
         "totalUSDBalanceNoUpdate",
         "totalUSDShares"
-      ]
+      ],
+      "fields": {
+        "getMainnetBridge": {
+          "type": "call",
+          "method": "function getMainnetBridge() view returns (address mainnetBridge)",
+          "args": [],
+          "expectRevert": true
+        }
+      }
     },
     "BridgeOwner": {
       "ignoreInWatchMode": ["nonce"]

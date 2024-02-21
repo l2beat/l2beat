@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x73efb82f36e49271fe84dbc69b985b3c4af9f14f
+
+# Diff at Mon, 19 Feb 2024 09:23:53 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@0a522442e2dd6f9a3312ee296e595da0691fa23a block: 18771421
+- current block number: 19260868
+
+## Description
+
+The implementation is upgraded. See Diff below for the changes.
+
+## Watched changes
+
+```diff
+    contract Bridge (0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d) {
+      upgradeability.implementation:
+-        "0x829e8Bf84569A0B2da7B27f975F026fDb6e0a774"
++        "0x0bD88b59D580549285f0A207Db5F06bf24a8e561"
+      implementations.0:
+-        "0x829e8Bf84569A0B2da7B27f975F026fDb6e0a774"
++        "0x0bD88b59D580549285f0A207Db5F06bf24a8e561"
+      values.proposedBridgeReadyAt:
+-        0
+      values.proposedMainnetBridge:
+-        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000"]
+      values.proposedUpgrade:
+-        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000"]
+      values.proposedUpgradeReadyAt:
+-        0
+    }
+```
+
+## Source code changes
+
+```diff
+.../contracts/token/ERC20/IERC20.sol               |   8 +-
+ .../ERC20/extensions/IERC20Permit.sol => /dev/null |  60 -------
+ .../token/ERC20/extensions/draft-IERC20Permit.sol  |  58 ++++++-
+ .../Bridge/implementation/meta.txt                 |   2 +-
+ .../Bridge/implementation/src/LaunchBridge_v3.sol} | 179 +++++++--------------
+ .../implementation/src/libraries/Predeploys.sol    |  95 +++++++++++
+ 6 files changed, 215 insertions(+), 187 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18771421 (main branch discovery), not current.
+
+```diff
+    contract Bridge (0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d) {
+      values.getMainnetBridge:
++        "EXPECT_REVERT"
+    }
+```
+
 Generated with discovered.json: 0xe9cebe22717eca176ca67be9ef1b813fd5ffaa20
 
 # Diff at Tue, 12 Dec 2023 16:53:48 GMT:

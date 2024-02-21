@@ -1,3 +1,4 @@
+import { TvlCleanerRepository } from '../../../peripherals/database/TvlCleanerRepository'
 import { DataUpdater, ReportUpdater } from '../assets'
 import { AggregatedReportRepository } from '../repositories/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../repositories/AggregatedReportStatusRepository'
@@ -24,6 +25,8 @@ export interface TvlDatabase {
   readonly totalSupplyStatusRepository: TotalSupplyStatusRepository
   readonly reportStatusRepository: ReportStatusRepository
   readonly aggregatedReportStatusRepository: AggregatedReportStatusRepository
+  // cleaner
+  readonly tvlCleanerRepository: TvlCleanerRepository
 }
 export interface TvlModule {
   chain: string

@@ -9,7 +9,7 @@ import {
   TwitterIcon,
   YouTubeIcon,
 } from '../icons'
-import { OutLink } from '../OutLink'
+import { PlainLink } from '../PlainLink'
 
 export interface SocialLinksProps {
   twitterLink: string
@@ -35,34 +35,34 @@ export function SocialLinks(props: SocialLinksProps) {
   return (
     <>
       <li>
-        <OutLink href={props.twitterLink} title="Twitter">
+        <PlainLink href={props.twitterLink} title="Twitter">
           <TwitterIcon />
-        </OutLink>
+        </PlainLink>
       </li>
       <li>
-        <OutLink href={props.discordLink} title="Discord">
+        <PlainLink href={props.discordLink} title="Discord">
           <DiscordIcon />
-        </OutLink>
+        </PlainLink>
       </li>
       <li>
-        <OutLink href={props.githubLink} title="Github">
+        <PlainLink href={props.githubLink} title="Github">
           <GithubIcon />
-        </OutLink>
+        </PlainLink>
       </li>
       <li>
-        <OutLink href={props.linkedinLink} title="LinkedIn">
+        <PlainLink href={props.linkedinLink} title="LinkedIn">
           <LinkedInIcon />
-        </OutLink>
+        </PlainLink>
       </li>
       <li>
-        <OutLink href={props.youTubeLink} title="YouTube">
+        <PlainLink href={props.youTubeLink} title="YouTube">
           <YouTubeIcon />
-        </OutLink>
+        </PlainLink>
       </li>
       <li>
-        <OutLink href={props.mediumLink} title="Medium">
+        <PlainLink href={props.mediumLink} title="Medium">
           <MediumIcon />
-        </OutLink>
+        </PlainLink>
       </li>
     </>
   )
