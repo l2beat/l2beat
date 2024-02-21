@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
-import { assert, UnixTime } from '@l2beat/shared-pure'
-import { ChildIndexer } from '@l2beat/uif'
+import { UnixTime } from '@l2beat/shared-pure'
+import { ChildIndexer, Retries } from '@l2beat/uif'
 import { mean } from 'lodash'
 
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
@@ -17,6 +17,11 @@ import { FinalityConfig } from './types/FinalityConfig'
 */
 const FINALITY_GRANULARITY = 24 * 6
 
+const UPDATE_RETRY_STRATEGY = Retries.exponentialBackOff({
+  maxAttempts: 10,
+  initialTimeoutMs: 1000,
+})
+
 export class FinalityIndexer extends ChildIndexer {
   readonly indexerId
 
@@ -27,25 +32,29 @@ export class FinalityIndexer extends ChildIndexer {
     private readonly finalityRepository: FinalityRepository,
     private readonly configuration: FinalityConfig,
   ) {
-    super(logger.tag(configuration.projectId.toString()), [parentIndexer])
-    //ensure  uniqness
+    super(logger.tag(configuration.projectId.toString()), [parentIndexer], {
+      updateRetryStrategy: UPDATE_RETRY_STRATEGY,
+    })
     this.indexerId = `finality_indexer_${configuration.projectId.toString()}`
   }
 
   override async start(): Promise<void> {
     this.logger.info('Starting...')
     await this.initialize()
+    // safe height = minTimestamp
     await super.start()
   }
+
+  // from - can be lower than minTimestamp
+  // to = Liveindexer safe height
 
   override async update(from: number, to: number): Promise<number> {
     const targetTimestamp = new UnixTime(to).toStartOf('day')
 
-    // Can it happen that we will get the "to" smaller than minTimestamp which is set to
-    // if (targetTimestamp.lt(this.configuration.minTimestamp)) {
-    //   this.logger.debug('Update skipped: target earlier than minimumTimestamp')
-    //   return this.configuration.minTimestamp.toNumber()
-    // }
+    if (to < this.configuration.minTimestamp.toNumber()) {
+      this.logger.debug('Update skipped: target earlier than minimumTimestamp')
+      return to
+    }
 
     const isSynced = await this.isConfigurationSynced(targetTimestamp)
     if (isSynced) {
@@ -77,13 +86,11 @@ export class FinalityIndexer extends ChildIndexer {
   }
 
   async isConfigurationSynced(targetTimestamp: UnixTime) {
-    // No need to get all projects, just for the configuration's project
-    const syncedProjectsForLastDay =
-      await this.finalityRepository.getProjectsSyncedOnTimestamp(
-        targetTimestamp,
-      )
+    const latestSynced = await this.finalityRepository.findLatestByProjectId(
+      this.configuration.projectId,
+    )
 
-    return syncedProjectsForLastDay.includes(this.configuration.projectId)
+    return !!latestSynced?.timestamp.gte(targetTimestamp)
   }
 
   async getFinalityData(
@@ -128,14 +135,6 @@ export class FinalityIndexer extends ChildIndexer {
       })
       return
     }
-
-    // We prevent updating the minimum timestamp of the indexer.
-    // This functionality can be added in the future if needed.
-    assert(
-      indexerState.minTimestamp &&
-        this.configuration.minTimestamp.equals(indexerState.minTimestamp),
-      'Minimum timestamp of this indexer cannot be updated',
-    )
 
     await this.setSafeHeight(safeHeight)
   }

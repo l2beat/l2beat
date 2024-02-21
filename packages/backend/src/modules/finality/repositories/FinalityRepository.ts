@@ -35,12 +35,15 @@ export class FinalityRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getProjectsSyncedOnTimestamp(
-    timestamp: UnixTime,
-  ): Promise<ProjectId[]> {
+  async findLatestByProjectId(
+    projectId: ProjectId,
+  ): Promise<FinalityRecord | undefined> {
     const knex = await this.knex()
-    const rows = await knex('finality').where('timestamp', timestamp.toDate())
-    return rows.map((row) => ProjectId(row.project_id))
+    const row = await knex('finality')
+      .where('project_id', projectId.toString())
+      .orderBy('timestamp', 'desc')
+      .first()
+    return row ? toRecord(row) : undefined
   }
 
   async findProjectFinalityOnTimestamp(

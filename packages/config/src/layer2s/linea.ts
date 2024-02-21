@@ -188,6 +188,7 @@ export const linea: Layer2 = {
     },
     finality: {
       type: 'Linea',
+      minTimestamp: UnixTime.fromDate(new Date('2024-02-07')),
       lag: 0,
     },
   },

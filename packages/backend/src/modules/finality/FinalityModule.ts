@@ -15,6 +15,7 @@ import { FinalityController } from './api/FinalityController'
 import { createFinalityRouter } from './api/FinalityRouter'
 import { FinalityIndexer } from './FinalityIndexer'
 import { FinalityRepository } from './repositories/FinalityRepository'
+import { FinalityConfig } from './types/FinalityConfig'
 
 export function createFinalityModule(
   config: Config,
@@ -51,7 +52,7 @@ export function createFinalityModule(
   )
   const ethereumRPC = new RpcClient(ethereumProvider, logger)
 
-  const runtimeConfigurations = config.projects
+  const runtimeConfigurations: FinalityConfig[] = config.projects
     .map((p) => {
       if (p.finalityConfig?.type === 'Linea') {
         return {
@@ -62,6 +63,7 @@ export function createFinalityModule(
             p.projectId,
             'STATE',
           ),
+          minTimestamp: p.finalityConfig.minTimestamp,
         }
       }
     })
