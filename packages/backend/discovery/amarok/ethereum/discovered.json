@@ -1,7 +1,7 @@
 {
   "name": "amarok",
   "chain": "ethereum",
-  "blockNumber": 19176699,
+  "blockNumber": 19267405,
   "configHash": "0xfddc4643b58d7f8fb0a5d7795068af17714c80e3d1ab926c24058cbb1a246a50",
   "version": 3,
   "contracts": [
@@ -19,7 +19,7 @@
         "disputeBlocks": 120,
         "DOMAIN": 6648936,
         "FINALIZED_HASH": "0x0000000000000000000000000000000000000000000000000000000000000001",
-        "getLastCompletedSnapshotId": 948507,
+        "getLastCompletedSnapshotId": 949118,
         "getSnapshotDuration": 1800,
         "home": "0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc",
         "lastSentBlock": 19098811,
@@ -29,7 +29,7 @@
         "MIRROR_DOMAIN": 6648936,
         "mirrorConnector": "0x0000000000000000000000000000000000000000",
         "optimisticMode": true,
-        "outboundRoot": "0x705ee74d91ff048262fe1bf7fd67332391f83d5ebef28bc205f5d60d1dd870e6",
+        "outboundRoot": "0x6c15d9a7e0a3e0fc5b2486e43b72053e607e343545d71713ec5ff129c7116a59",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "PROCESS_GAS": 850000,
@@ -56,7 +56,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "118010204777929617041421191",
+        "totalSupply": "118105399540833862198709721",
         "totalSupplyAt": []
       }
     },
@@ -177,7 +177,7 @@
       "values": {
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1707313559,
+        "getCurrentTime": 1708413755,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -220,7 +220,7 @@
         "getPendingInboundRootsCount": 0,
         "getSnapshotDuration": 1800,
         "hubDomain": 6648936,
-        "lastSavedAggregateRootTimestamp": 1707311747,
+        "lastSavedAggregateRootTimestamp": 1708411547,
         "MAX_DOMAINS": 500,
         "MERKLE": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
         "minDisputeBlocks": 60,
@@ -229,7 +229,7 @@
         "paused": false,
         "pendingInboundRoots": [170, 169],
         "proposed": "0x0000000000000000000000000000000000000000",
-        "proposedAggregateRootHash": "0x964bcac7a56e06f22b91ed61f3a04f5795151ecfd6e1b41d131379d820f8c5c5",
+        "proposedAggregateRootHash": "0x6cde70f3a8c993d99d3292df19b6cd2212bcbadfb54972956ba6c933d00bb716",
         "proposedTimestamp": 0,
         "renounced": false,
         "watcherManager": "0x79e6E0242405A66B2dd8B96DEd3b2F0216Fd417d"
@@ -337,7 +337,7 @@
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
           "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
         ],
-        "numProposals": 198
+        "numProposals": 199
       },
       "derivedName": "GovernorV2"
     },
@@ -390,7 +390,7 @@
           "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
         ],
         "getThreshold": 2,
-        "nonce": 538,
+        "nonce": 552,
         "VERSION": "1.3.0"
       }
     },
@@ -662,7 +662,7 @@
         "LIQUIDITY_FEE_NUMERATOR": 9995,
         "lpTokenTargetAddress": "0xf7DE5aCeEeE6091d1103209C337fA00D0B4b9092",
         "maxRoutersPerTransfer": 5,
-        "nonce": 21799,
+        "nonce": 22808,
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "proposed": "0x0000000000000000000000000000000000000000",
@@ -681,7 +681,8 @@
           "0x62B1a88CCc6BC5e6FF91FB2FCD29Ab4F819b35C6",
           "0xcDbF9D438670D19d1Fb3954Abc8a13666b302b28",
           "0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99",
-          "0xB4F8D176466f5F544bAd53737bffAaeA17185c05"
+          "0xB4F8D176466f5F544bAd53737bffAaeA17185c05",
+          "0xF9D64d54D32EE2BDceAAbFA60C4C438E224427d0"
         ],
         "routerAllowlistRemoved": false,
         "routerAllowlistTimestamp": 0,
@@ -852,7 +853,7 @@
           "0xf8d8aF083aC452b05b0D2eb4499AD900324b5754"
         ],
         "getThreshold": 3,
-        "nonce": 27,
+        "nonce": 29,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

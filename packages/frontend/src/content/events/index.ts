@@ -9,8 +9,9 @@ export const OneTimeEvent = z.object({
   subtitle: z.string().optional(),
   startDate: z.coerce.date(),
   endDate: z.coerce.date().optional(),
-  location: z.string(),
+  location: z.string().optional(),
   link: z.string().url(),
+  toBeAnnounced: z.boolean().optional(),
 })
 
 export const RecurringEvent = z.object({
@@ -31,7 +32,7 @@ export const RecurringEvent = z.object({
       minute: z.number().min(0).max(59),
     })
     .optional(),
-  location: z.string(),
+  location: z.string().optional(),
   link: z.string().url(),
   cancelledAt: z.array(z.coerce.date()).optional(),
 })

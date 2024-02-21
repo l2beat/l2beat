@@ -241,6 +241,7 @@ The call handler allows you to call view methods with arguments of your choosing
 - `method` - (optional) the name or abi of the method to be called. If omitted the name of the field is used. The abi should be provided in the human readable abi format.
 - `args` - an array of values that will be passed as arguments to the method call, e.g. `[1, "0x1234", false]`. It supports field references, e.g. `"{{ value }}"`.
 - `ignoreRelative` - (optional) if set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.
+- `expectRevert` - a bool that specifies if the method is expected to revert. This is useful when the method currently reverts but is expected to be changed in the future.
 
 **Examples:**
 
