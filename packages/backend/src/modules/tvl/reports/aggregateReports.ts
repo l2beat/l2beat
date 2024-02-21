@@ -15,12 +15,6 @@ interface AggregatedValues {
   ethValue: bigint
 }
 
-type AggregatedReportTree = ReportTree<
-  ReportProject,
-  AggregatedReportType,
-  AggregatedValues
->
-
 type NotAggregatedReportTree = ReportTree<
   ReportProject,
   ReportType,
@@ -114,57 +108,9 @@ function aggregateReportTree(
     }))
   }
 
-  const categoriesTree = deriveCategoryTree(reportTree)
-
-  const finalTree = reportTree
-    .replaceRoots(projectIds)
-    .mergeWith(categoriesTree)
+  const finalTree = reportTree.replaceRoots(projectIds)
 
   return finalTree
-}
-
-export function deriveCategoryTree(
-  tree: AggregatedReportTree,
-): SerializableReportTree {
-  const categoriesTree = ReportTree.from(
-    [ProjectId.ALL, ProjectId.BRIDGES, ProjectId.LAYER2S],
-    ['CBV', 'EBV', 'NMV', 'TVL'] as AggregatedReportType[],
-    () => ({
-      usdValue: 0n,
-      ethValue: 0n,
-    }),
-  )
-
-  for (const [project, valueMap] of tree) {
-    if (project.isUpcoming || project.isLayer3) {
-      continue
-    }
-
-    const targetType =
-      project.type === 'bridge' ? ProjectId.BRIDGES : ProjectId.LAYER2S
-
-    for (const [reportType, values] of valueMap) {
-      categoriesTree.set(targetType, reportType, ({ usdValue, ethValue }) => {
-        return {
-          usdValue: usdValue + values.usdValue,
-          ethValue: ethValue + values.ethValue,
-        }
-      })
-
-      categoriesTree.set(
-        ProjectId.ALL,
-        reportType,
-        ({ usdValue, ethValue }) => {
-          return {
-            usdValue: usdValue + values.usdValue,
-            ethValue: ethValue + values.ethValue,
-          }
-        },
-      )
-    }
-  }
-
-  return categoriesTree
 }
 
 function serializeReportTree(

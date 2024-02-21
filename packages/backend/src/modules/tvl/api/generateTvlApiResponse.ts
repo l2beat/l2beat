@@ -54,37 +54,24 @@ export function generateTvlApiResponse(
 ): TvlApiResponse {
   const charts = new Map<ProjectId, TvlApiCharts>()
 
-  const extendedProjects = getExtendedProjects(projects, untilTimestamp)
+  const minLayer2Timestamp = projects
+    .filter((p) => p.isLayer2)
+    .map((x) => x.sinceTimestamp)
+    .reduce((min, current) => UnixTime.min(min, current), untilTimestamp)
 
-  for (const { id, sinceTimestamp } of extendedProjects.concat(projects)) {
-    charts.set(id, {
-      hourly: {
-        types: TYPE_LABELS,
-        data: generateZeroes(
-          UnixTime.max(
-            sinceTimestamp,
-            untilTimestamp.add(-7, 'days').add(1, 'hours'),
-          ),
-          untilTimestamp,
-          1,
-        ),
-      },
-      sixHourly: {
-        types: TYPE_LABELS,
-        data: generateZeroes(
-          UnixTime.max(
-            sinceTimestamp,
-            untilTimestamp.add(-90, 'days').add(6, 'hours'),
-          ),
-          untilTimestamp,
-          6,
-        ),
-      },
-      daily: {
-        types: TYPE_LABELS,
-        data: generateZeroes(sinceTimestamp, untilTimestamp, 24),
-      },
-    })
+  const minBridgeTimestamp = projects
+    .filter((p) => !p.isLayer2)
+    .map((x) => x.sinceTimestamp)
+    .reduce((min, current) => UnixTime.min(min, current), untilTimestamp)
+
+  const minTimestamp = UnixTime.min(minLayer2Timestamp, minBridgeTimestamp)
+
+  const layers2s = getEmptyChart(minLayer2Timestamp, untilTimestamp)
+  const bridges = getEmptyChart(minBridgeTimestamp, untilTimestamp)
+  const combined = getEmptyChart(minTimestamp, untilTimestamp)
+
+  for (const p of projects) {
+    charts.set(p.id, getEmptyChart(p.sinceTimestamp, untilTimestamp))
   }
 
   fillCharts(charts, hourlyReports, sixHourlyReports, dailyReports)
@@ -102,14 +89,44 @@ export function generateTvlApiResponse(
     {},
   )
 
+  //TODO: aggregate reports for layer2s and bridges and combined
+
   return {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    layers2s: charts.get(ProjectId.LAYER2S)!,
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    bridges: charts.get(ProjectId.BRIDGES)!,
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    combined: charts.get(ProjectId.ALL)!,
+    layers2s,
+    bridges,
+    combined,
     projects: projectsResult,
+  }
+}
+
+function getEmptyChart(sinceTimestamp: UnixTime, untilTimestamp: UnixTime) {
+  return {
+    hourly: {
+      types: TYPE_LABELS,
+      data: generateZeroes(
+        UnixTime.max(
+          sinceTimestamp,
+          untilTimestamp.add(-7, 'days').add(1, 'hours'),
+        ),
+        untilTimestamp,
+        1,
+      ),
+    },
+    sixHourly: {
+      types: TYPE_LABELS,
+      data: generateZeroes(
+        UnixTime.max(
+          sinceTimestamp,
+          untilTimestamp.add(-90, 'days').add(6, 'hours'),
+        ),
+        untilTimestamp,
+        6,
+      ),
+    },
+    daily: {
+      types: TYPE_LABELS,
+      data: generateZeroes(sinceTimestamp, untilTimestamp, 24),
+    },
   }
 }
 
@@ -149,29 +166,6 @@ function fillCharts(
       point[ETH_INDEX[report.reportType]] = asNumber(report.ethValue, 6)
     }
   }
-}
-
-function getExtendedProjects(
-  projects: { id: ProjectId; isLayer2: boolean; sinceTimestamp: UnixTime }[],
-  untilTimestamp: UnixTime,
-) {
-  const minLayer2Timestamp = projects
-    .filter((p) => p.isLayer2)
-    .map((x) => x.sinceTimestamp)
-    .reduce((min, current) => UnixTime.min(min, current), untilTimestamp)
-
-  const minBridgeTimestamp = projects
-    .filter((p) => !p.isLayer2)
-    .map((x) => x.sinceTimestamp)
-    .reduce((min, current) => UnixTime.min(min, current), untilTimestamp)
-
-  const minTimestamp = UnixTime.min(minLayer2Timestamp, minBridgeTimestamp)
-
-  return [
-    { id: ProjectId.LAYER2S, sinceTimestamp: minLayer2Timestamp },
-    { id: ProjectId.BRIDGES, sinceTimestamp: minBridgeTimestamp },
-    { id: ProjectId.ALL, sinceTimestamp: minTimestamp },
-  ]
 }
 
 function generateZeroes(

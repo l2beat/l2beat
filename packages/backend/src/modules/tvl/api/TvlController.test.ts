@@ -72,27 +72,6 @@ describe(TvlController.name, () => {
           reportType: 'CBV',
           projectId: ARBITRUM.projectId,
         },
-        {
-          timestamp: MINIMUM_TIMESTAMP,
-          usdValue: 1234_56n,
-          ethValue: 1_111111n,
-          reportType: 'CBV',
-          projectId: ProjectId.ALL,
-        },
-        {
-          timestamp: MINIMUM_TIMESTAMP,
-          usdValue: 1234_56n,
-          ethValue: 1_111111n,
-          reportType: 'CBV',
-          projectId: ProjectId.BRIDGES,
-        },
-        {
-          timestamp: MINIMUM_TIMESTAMP,
-          usdValue: 1234_56n,
-          ethValue: 1_111111n,
-          reportType: 'CBV',
-          projectId: ProjectId.LAYER2S,
-        },
       ]
 
       const aggregatedReportStatusRepository =
