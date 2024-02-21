@@ -16,6 +16,7 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
+  ScalingProjectPermissionedAccount,
   STATE_CORRECTNESS,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -204,6 +205,15 @@ const escrowSTRKMaxTotalBalanceString = formatMaxTotalBalanceString(
   18,
 )
 
+const strkBridgeRoles = discovery.getContractValue<{
+  GOVERNANCE_ADMIN: { members: string[] }
+}>('STRKBridge', 'accessControl')
+
+const strkGovernor: ScalingProjectPermissionedAccount[] =
+  strkBridgeRoles.GOVERNANCE_ADMIN.members.map((address) =>
+    discovery.formatPermissionedAccount(address),
+  )
+
 export const starknet: Layer2 = {
   type: 'layer2',
   id: ProjectId('starknet'),
@@ -243,6 +253,7 @@ export const starknet: Layer2 = {
     },
   },
   config: {
+    associatedTokens: ['STRK'],
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_ETH_ADDRESS),
@@ -655,6 +666,13 @@ export const starknet: Layer2 = {
       'BridgeMultisig',
       'Can upgrade the following bridges: FRAX, FXS, sfrxETH, USDT, WBTC, ETH, USDT, and additional permissions on other bridges, like setting the max total balance or activate withdrawal limits.',
     ),
+    {
+      name: 'StarkGate STRK owner',
+      accounts: strkGovernor,
+      description:
+        'Can upgrade implementation of the STRK escrow, potentially gaining access to all funds stored in the bridge. ' +
+        delayDescriptionFromSeconds(escrowSTRKDelaySeconds),
+    },
   ],
   milestones: [
     {

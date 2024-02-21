@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xf285c15f919278b3e125add968cce33b3b1be56f
+Generated with discovered.json: 0x1386d87ab58bc19b1c69fbb556c97c261450bf99
 
-# Diff at Tue, 20 Feb 2024 14:11:20 GMT:
+# Diff at Wed, 21 Feb 2024 10:10:10 GMT:
 
-- author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: main@f1a4f59735908524d8f638dee96ca19d8ea22693 block: 19219087
-- current block number: 19269419
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@5eac5af1d838f52a31d2a40aa5a4dbe720a0c417 block: 19219087
+- current block number: 19275345
 
 ## Description
 
