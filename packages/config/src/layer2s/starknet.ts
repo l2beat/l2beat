@@ -359,7 +359,7 @@ export const starknet: Layer2 = {
         address: EthereumAddress(ESCROW_STRK_ADDRESS),
         tokens: ['STRK'],
         description:
-          'StarkGate bridge for LUSD.' + ' ' + escrowSTRKMaxTotalBalanceString,
+          'StarkGate bridge for STRK.' + ' ' + escrowSTRKMaxTotalBalanceString,
         upgradableBy: ['StarkGate STRK owner'],
         upgradeDelay: formatSeconds(escrowSTRKDelaySeconds),
       }),
