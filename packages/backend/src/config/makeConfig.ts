@@ -10,7 +10,7 @@ import {
   getChainActivityConfig,
   getProjectsWithActivity,
 } from './features/activity'
-import { getChainTvlConfig, getChainsWithTokens } from './features/tvl'
+import { getChainsWithTokens, getChainTvlConfig } from './features/tvl'
 import { getChainDiscoveryConfig } from './features/updateMonitor'
 import { getGitCommitHash } from './getGitCommitHash'
 
