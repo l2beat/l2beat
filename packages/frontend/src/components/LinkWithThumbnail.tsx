@@ -23,7 +23,6 @@ export function LinkWithThumbnail({
       href={props.href}
       className={cn(
         'group flex gap-6 rounded-md bg-gray-100 transition-all hover:bg-zinc-300 dark:bg-zinc-900 dark:hover:bg-zinc-800',
-        orientation === 'horizontal' && '',
         orientation === 'vertical' && 'max-w-96 flex-col',
         props.className,
       )}
@@ -48,9 +47,9 @@ export function LinkWithThumbnail({
         {props.topAccessory && <div className="mb-2">{props.topAccessory}</div>}
         <p
           className={cn(
-            'text-balance font-bold ',
-            orientation === 'vertical' && 'text-2xl leading-[1.1]',
+            orientation === 'vertical' && 'text-2xl',
             orientation === 'horizontal' && 'text-lg',
+            'text-balance font-bold leading-[1.1]',
           )}
         >
           {props.title}

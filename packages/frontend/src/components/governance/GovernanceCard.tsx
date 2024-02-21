@@ -59,5 +59,5 @@ interface GovernanceCardHeaderProps {
 }
 
 export function GovernanceCardHeader({ children }: GovernanceCardHeaderProps) {
-  return <h1 className="text-2xl font-bold md:text-3xl">{children}</h1>
+  return <h2 className="text-2xl font-bold md:text-3xl">{children}</h2>
 }

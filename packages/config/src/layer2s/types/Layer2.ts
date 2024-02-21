@@ -12,6 +12,7 @@ import {
 import { ChainConfig } from '../../common/ChainConfig'
 import { ScalingProjectRiskView } from '../../common/ScalingProjectRiskView'
 import { ScalingProjectStateDerivation } from '../../common/ScalingProjectStateDerivation'
+import { ScalingProjectStateValidation } from '../../common/ScalingProjectStateValidation'
 import { ScalingProjectTechnology } from '../../common/ScalingProjectTechnology'
 import { StageConfig } from '../common/stages/types'
 import { Layer2FinalityConfig } from './Layer2FinalityConfig'
@@ -42,8 +43,8 @@ export interface Layer2 {
   technology: ScalingProjectTechnology
   /** Open-source node details */
   stateDerivation?: ScalingProjectStateDerivation
-  /** How project validates state? */
-  stateValidation?: string
+  /** Explains how project validates state */
+  stateValidation?: ScalingProjectStateValidation
   /** List of smart contracts used in the layer2 */
   contracts: ScalingProjectContracts
   /** Upgrades and governance explained */

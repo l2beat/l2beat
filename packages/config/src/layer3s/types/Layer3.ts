@@ -11,6 +11,7 @@ import {
 } from '../../common'
 import { ScalingProjectRiskView } from '../../common/ScalingProjectRiskView'
 import { ScalingProjectStateDerivation } from '../../common/ScalingProjectStateDerivation'
+import { ScalingProjectStateValidation } from '../../common/ScalingProjectStateValidation'
 import { ScalingProjectTechnology } from '../../common/ScalingProjectTechnology'
 
 export interface Layer3 {
@@ -34,7 +35,7 @@ export interface Layer3 {
   /** Open-source node details */
   stateDerivation?: ScalingProjectStateDerivation
   /** How project validates state? */
-  stateValidation?: string
+  stateValidation?: ScalingProjectStateValidation
   /** List of smart contracts used in the layer2 */
   contracts: ScalingProjectContracts
   /** List of permissioned addresses */
