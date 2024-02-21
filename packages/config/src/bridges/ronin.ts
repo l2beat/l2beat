@@ -29,7 +29,7 @@ export const ronin: Bridge = {
   type: 'bridge',
   id: ProjectId('ronin'),
   display: {
-    name: 'Ronin V2',
+    name: 'Ronin V3',
     slug: 'ronin',
     links: {
       websites: ['https://bridge.roninchain.com/'],
@@ -47,7 +47,7 @@ export const ronin: Bridge = {
       // repositories: ['https://github.com/axieinfinity/ronin-smart-contracts-v2']
     },
     description:
-      'Ronin Bridge V2 is the official bridge for the Axie Infinity chain (Ronin chain). It uses external validators to confirm deposits for a typical Token Bridge swap.',
+      'Ronin Bridge V3 is the official bridge for the Axie Infinity chain (Ronin chain). It uses external validators to confirm deposits for a typical Token Bridge swap.',
     category: 'Token Bridge',
   },
   config: {
@@ -171,6 +171,14 @@ export const ronin: Bridge = {
         'getBridgeOperators',
       ),
       description: `List of operators that can validate incoming messages. Transfer needs to be signed by ${operatorsString} Operators.`,
+    },
+    {
+      name: 'MainchainBridgeManager Governors',
+      accounts: discovery.getPermissionedAccounts(
+        'MainchainBridgeManager',
+        'getBridgeGovernors',
+      ),
+      description: `List of governors that can update their corresponding operators and change bridge parameters.`,
     },
     {
       name: 'MainchainGatewayV3 Emergency Pauser',
