@@ -7,7 +7,7 @@ export const nil: Layer2 = upcoming({
         name: '=nil;',
         slug: 'nil',
         description:
-            "=nil; is a zkRollup that securely scales Ethereum to 60,000+ TPS through zkSharding, empowering web3 developers to build scalable, secure, and composable applications.",
+            "=nil; is a zkRollup that securely scales Ethereum through zkSharding, empowering web3 developers to build scalable and composable applications.",
         purposes: ['Universal'],
         category: 'ZK Rollup',
         links: {
