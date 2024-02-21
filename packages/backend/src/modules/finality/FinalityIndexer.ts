@@ -41,12 +41,8 @@ export class FinalityIndexer extends ChildIndexer {
   override async start(): Promise<void> {
     this.logger.info('Starting...')
     await this.initialize()
-    // safe height = minTimestamp
     await super.start()
   }
-
-  // from - can be lower than minTimestamp
-  // to = Liveindexer safe height
 
   override async update(from: number, to: number): Promise<number> {
     const targetTimestamp = new UnixTime(to).toStartOf('day')
