@@ -9,6 +9,7 @@ import {
   diffDiscovery,
   discover,
   DiscoveryDiff,
+  getChainConfig,
 } from '@l2beat/discovery'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { DiscoveryOutput } from '@l2beat/discovery-types'
@@ -156,7 +157,7 @@ async function performDiscoveryOnPreviousBlock(
 
   await discover({
     project: projectName,
-    chain,
+    chain: getChainConfig(chain),
     blockNumber: blockNumberFromMainBranch,
     sourcesFolder: `.code@${blockNumberFromMainBranch}`,
     discoveryFilename: `discovered@${blockNumberFromMainBranch}.json`,
