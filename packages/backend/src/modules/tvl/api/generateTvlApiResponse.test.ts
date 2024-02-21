@@ -265,4 +265,84 @@ describe(generateTvlApiResponse.name, () => {
       ).toEqual([sinceTimestamp, untilTimestamp])
     })
   })
+
+  describe('aggregating', () => {
+    it('layer2s', () => {
+      const t0 = UnixTime.fromDate(new Date('2024-01-01T00:00:00Z'))
+      const t1 = t0.add(1, 'hours')
+
+      const result = generateTvlApiResponse(
+        [
+          {
+            projectId: ProjectId('arbitrum'),
+            timestamp: t1,
+            usdValue: 32_000_00n,
+            ethValue: 16_000000n,
+            reportType: 'TVL',
+          },
+          {
+            projectId: ProjectId('arbitrum'),
+            timestamp: t1,
+            usdValue: 12_000_00n,
+            ethValue: 6_000000n,
+            reportType: 'CBV',
+          },
+          {
+            projectId: ProjectId('arbitrum'),
+            timestamp: t1,
+            usdValue: 16_000_00n,
+            ethValue: 8_000000n,
+            reportType: 'EBV',
+          },
+          {
+            projectId: ProjectId('arbitrum'),
+            timestamp: t1,
+            usdValue: 4_000_00n,
+            ethValue: 2_000000n,
+            reportType: 'NMV',
+          },
+          {
+            projectId: ProjectId('optimism'),
+            timestamp: t1,
+            usdValue: 16_000_00n,
+            ethValue: 8_000000n,
+            reportType: 'TVL',
+          },
+          {
+            projectId: ProjectId('optimism'),
+            timestamp: t1,
+            usdValue: 6_000_00n,
+            ethValue: 3_000000n,
+            reportType: 'CBV',
+          },
+          {
+            projectId: ProjectId('optimism'),
+            timestamp: t1,
+            usdValue: 8_000_00n,
+            ethValue: 4_000000n,
+            reportType: 'EBV',
+          },
+          {
+            projectId: ProjectId('optimism'),
+            timestamp: t1,
+            usdValue: 2_000_00n,
+            ethValue: 1_000000n,
+            reportType: 'NMV',
+          },
+        ],
+        [],
+        [],
+        [],
+        [
+          { id: ProjectId('arbitrum'), isLayer2: true, sinceTimestamp: t1 },
+          { id: ProjectId('optimism'), isLayer2: true, sinceTimestamp: t1 },
+        ],
+        t1,
+      )
+
+      expect(result.layers2s.hourly.data).toEqual([
+        [t1, 32_000, 12_000, 16_000, 4_000, 16, 6, 8, 2],
+      ])
+    })
+  })
 })

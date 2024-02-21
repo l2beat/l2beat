@@ -3,6 +3,7 @@ import {
   TvlApiChart,
   TvlApiChartPoint,
   TvlApiCharts,
+  TvlApiProject,
   TvlApiResponse,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -66,9 +67,11 @@ export function generateTvlApiResponse(
 
   const minTimestamp = UnixTime.min(minLayer2Timestamp, minBridgeTimestamp)
 
-  const layers2s = getEmptyChart(minLayer2Timestamp, untilTimestamp)
-  const bridges = getEmptyChart(minBridgeTimestamp, untilTimestamp)
-  const combined = getEmptyChart(minTimestamp, untilTimestamp)
+  const aggregates = {
+    layers2s: getEmptyChart(minLayer2Timestamp, untilTimestamp),
+    bridges: getEmptyChart(minBridgeTimestamp, untilTimestamp),
+    combined: getEmptyChart(minTimestamp, untilTimestamp),
+  }
 
   for (const p of projects) {
     charts.set(p.id, getEmptyChart(p.sinceTimestamp, untilTimestamp))
@@ -84,6 +87,15 @@ export function generateTvlApiResponse(
         charts: charts.get(project.id)!,
         tokens: getProjectTokensCharts(groupedLatestReports, project.id),
       }
+
+      if (project.isLayer2) {
+        aggregates.layers2s = mergeAggregates(
+          aggregates.layers2s,
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          charts.get(project.id)!,
+        )
+      }
+
       return acc
     },
     {},
@@ -92,10 +104,63 @@ export function generateTvlApiResponse(
   //TODO: aggregate reports for layer2s and bridges and combined
 
   return {
-    layers2s,
-    bridges,
-    combined,
+    layers2s: aggregates.layers2s,
+    bridges: aggregates.bridges,
+    combined: aggregates.combined,
     projects: projectsResult,
+  }
+}
+
+// Function to sum two chart points with the same timestamp
+function sumChartPoints(
+  a: TvlApiChartPoint,
+  b: TvlApiChartPoint,
+): TvlApiChartPoint {
+  return a.map((value, index) =>
+    index === 0 ? value : value + b[index],
+  ) as TvlApiChartPoint
+}
+
+// Merge and sum chart points, handling identical timestamps
+function mergeAndSumChartPoints(
+  a: TvlApiChartPoint[],
+  b: TvlApiChartPoint[],
+): TvlApiChartPoint[] {
+  const merged = [...a, ...b]
+  const result: TvlApiChartPoint[] = []
+
+  const map = new Map<number, TvlApiChartPoint>()
+  merged.forEach((point) => {
+    const timestamp = point[0]
+    if (map.has(timestamp.toNumber())) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const existingPoint = map.get(timestamp.toNumber())!
+      const summedPoint = sumChartPoints(existingPoint, point)
+      map.set(timestamp.toNumber(), summedPoint)
+    } else {
+      map.set(timestamp.toNumber(), point)
+    }
+  })
+
+  map.forEach((value) => result.push(value))
+  return result.sort((a, b) => a[0].toNumber() - b[0].toNumber()) // Sort by timestamp
+}
+
+function mergeCharts(a: TvlApiChart, b: TvlApiChart): TvlApiChart {
+  return {
+    types: a.types, // Assuming types are constant and identical
+    data: mergeAndSumChartPoints(a.data, b.data),
+  }
+}
+
+function mergeAggregates(
+  aggregates: TvlApiCharts,
+  projectCharts: TvlApiCharts,
+): TvlApiCharts {
+  return {
+    hourly: mergeCharts(aggregates.hourly, projectCharts.hourly),
+    sixHourly: mergeCharts(aggregates.sixHourly, projectCharts.sixHourly),
+    daily: mergeCharts(aggregates.daily, projectCharts.daily),
   }
 }
 
