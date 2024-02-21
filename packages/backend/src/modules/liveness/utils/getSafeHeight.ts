@@ -20,6 +20,7 @@ export function getSafeHeight(
       ) {
         return true
       }
+      // Filter out archived configurations which have already been synced
       return entry.untilTimestamp?.gte(entry.lastSyncedTimestamp)
     })
     .map((c) => c.lastSyncedTimestamp ?? c.sinceTimestamp)
