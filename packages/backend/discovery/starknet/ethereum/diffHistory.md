@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x1386d87ab58bc19b1c69fbb556c97c261450bf99
+
+# Diff at Wed, 21 Feb 2024 10:10:10 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@5eac5af1d838f52a31d2a40aa5a4dbe720a0c417 block: 19219087
+- current block number: 19275345
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19219087 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract STRKBridge (0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) {
+    }
+```
+
 Generated with discovered.json: 0x080da638902a1d509df830a7384f2c65b76c2793
 
 # Diff at Tue, 13 Feb 2024 12:27:47 GMT:
