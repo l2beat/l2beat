@@ -82,7 +82,6 @@ export interface LivenessConfig {
 }
 
 export interface FinalityConfig {
-  readonly indexerEnabled: boolean
   readonly ethereumProviderUrl: string
   readonly ethereumProviderCallsPerMinute: number
 }

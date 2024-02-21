@@ -117,7 +117,7 @@ describe(FinalityIndexer.name, () => {
     })
   })
 
-  describe(FinalityIndexer.prototype.getSyncStatus.name, () => {
+  describe(FinalityIndexer.prototype.isConfigurationSynced.name, () => {
     it('correctly returns configurations to sync', async () => {
       const finalityRepository = mockObject<FinalityRepository>({
         getProjectsSyncedOnTimestamp: mockFn().resolvesToOnce([
@@ -136,7 +136,7 @@ describe(FinalityIndexer.name, () => {
         runtimeConfigurations,
       })
 
-      const results = await finalityIndexer.getSyncStatus(MIN_TIMESTAMP)
+      const results = await finalityIndexer.isConfigurationSynced(MIN_TIMESTAMP)
       expect(results).toEqualUnsorted([
         {
           projectId: ProjectId('project-3'),

@@ -67,21 +67,22 @@ export function createFinalityModule(
     })
     .filter(notUndefined)
 
-  const finalityIndexer = new FinalityIndexer(
-    logger,
-    livenessIndexer,
-    indexerStateRepository,
-    finalityRepository,
-    runtimeConfigurations,
+  const finalityIndexers = runtimeConfigurations.map(
+    (runtimeConfiguration) =>
+      new FinalityIndexer(
+        logger,
+        livenessIndexer,
+        indexerStateRepository,
+        finalityRepository,
+        runtimeConfiguration,
+      ),
   )
-
-  const isIndexerEnabled = config.finality.indexerEnabled
 
   const start = async () => {
     logger = logger.for('FinalityModule')
     logger.info('Starting...')
 
-    if (isIndexerEnabled) {
+    for (const finalityIndexer of finalityIndexers) {
       await finalityIndexer.start()
     }
   }

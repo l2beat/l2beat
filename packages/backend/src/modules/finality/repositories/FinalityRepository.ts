@@ -56,13 +56,24 @@ export class FinalityRepository extends BaseRepository {
   }
 
   async addMany(
-    transactions: FinalityRecord[],
+    records: FinalityRecord[],
     trx?: Knex.Transaction,
   ): Promise<number> {
     const knex = await this.knex(trx)
-    const rows: FinalityRow[] = transactions.map(toRow)
+    const rows: FinalityRow[] = records.map(toRow)
     await knex.batchInsert('finality', rows, 10_000)
     return rows.length
+  }
+
+  async add(record: FinalityRecord, trx?: Knex.Transaction): Promise<string> {
+    const knex = await this.knex(trx)
+
+    const row: FinalityRow = toRow(record)
+    const [inserted] = await knex('finality')
+      .insert(row)
+      .returning('project_id')
+
+    return inserted.project_id
   }
 
   async deleteAll() {
