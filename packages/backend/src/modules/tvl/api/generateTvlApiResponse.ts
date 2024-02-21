@@ -3,7 +3,6 @@ import {
   TvlApiChart,
   TvlApiChartPoint,
   TvlApiCharts,
-  TvlApiProject,
   TvlApiResponse,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -127,33 +126,30 @@ function sumChartPoints(
   b: TvlApiChartPoint,
 ): TvlApiChartPoint {
   return a.map((value, index) =>
+    // @ts-expect-error first element should not be summed
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/restrict-plus-operands
     index === 0 ? value : value + b[index],
   ) as TvlApiChartPoint
 }
 
-// Merge and sum chart points, handling identical timestamps
+// This relies on an assumption that aggregate that first aggregate element is older or equal to first project element
+// and on the fact that the interval between consecutive elements is the same
 function mergeAndSumChartPoints(
-  a: TvlApiChartPoint[],
-  b: TvlApiChartPoint[],
+  aggregate: TvlApiChartPoint[],
+  project: TvlApiChartPoint[],
 ): TvlApiChartPoint[] {
-  const merged = [...a, ...b]
-  const result: TvlApiChartPoint[] = []
+  const id = aggregate.findIndex(
+    (a) => a[0].toNumber() === project[0][0].toNumber(),
+  )
 
-  const map = new Map<number, TvlApiChartPoint>()
-  merged.forEach((point) => {
-    const timestamp = point[0]
-    if (map.has(timestamp.toNumber())) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const existingPoint = map.get(timestamp.toNumber())!
-      const summedPoint = sumChartPoints(existingPoint, point)
-      map.set(timestamp.toNumber(), summedPoint)
-    } else {
-      map.set(timestamp.toNumber(), point)
-    }
-  })
+  let ii = 0
 
-  map.forEach((value) => result.push(value))
-  return result.sort((a, b) => a[0].toNumber() - b[0].toNumber()) // Sort by timestamp
+  for (let i = id; i < aggregate.length; i++) {
+    aggregate[i] = sumChartPoints(aggregate[i], project[ii])
+    ii++
+  }
+
+  return aggregate
 }
 
 function mergeCharts(a: TvlApiChart, b: TvlApiChart): TvlApiChart {

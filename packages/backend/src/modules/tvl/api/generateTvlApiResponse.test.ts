@@ -269,7 +269,7 @@ describe(generateTvlApiResponse.name, () => {
 
   describe('aggregating', () => {
     it('generates aggregates for layer2s, bridges and combined', () => {
-      const timestamp = UnixTime.fromDate(new Date('2024-01-01T00:00:00Z'))
+      const t0 = UnixTime.fromDate(new Date('2024-01-01T00:00:00Z'))
 
       const projects = [
         {
@@ -284,33 +284,42 @@ describe(generateTvlApiResponse.name, () => {
           id: ProjectId('stargate'),
           isLayer2: false,
         },
-      ].map((p) => ({ ...p, sinceTimestamp: timestamp }))
+      ].map((p) => ({ ...p, sinceTimestamp: t0 }))
 
-      const mock = (projectId: ProjectId) =>
+      const mock = (projectId: ProjectId, timestamp: UnixTime) =>
         getMockAggregatedRecord(projectId, timestamp, 32n, 12n, 16n, 4n)
 
-      const expected = (props: { multiplier: number }) =>
-        getMockChartPoint(timestamp, props.multiplier, 32, 12, 16, 4)
+      const expected = (props: { multiplier: number; t: UnixTime }) =>
+        getMockChartPoint(props.t, props.multiplier, 32, 12, 16, 4)
 
       const result = generateTvlApiResponse(
         [
-          ...mock(projects[0].id),
-          ...mock(projects[1].id),
-          ...mock(projects[2].id),
+          ...mock(projects[0].id, t0),
+          ...mock(projects[1].id, t0),
+          ...mock(projects[2].id, t0),
+          ...mock(projects[0].id, t0.add(1, 'hours')),
+          ...mock(projects[1].id, t0.add(1, 'hours')),
+          ...mock(projects[2].id, t0.add(1, 'hours')),
         ],
         [
-          ...mock(projects[0].id),
-          ...mock(projects[1].id),
-          ...mock(projects[2].id),
+          ...mock(projects[0].id, t0),
+          ...mock(projects[1].id, t0),
+          ...mock(projects[2].id, t0),
+          ...mock(projects[0].id, t0.add(6, 'hours')),
+          ...mock(projects[1].id, t0.add(6, 'hours')),
+          ...mock(projects[2].id, t0.add(6, 'hours')),
         ],
         [
-          ...mock(projects[0].id),
-          ...mock(projects[1].id),
-          ...mock(projects[2].id),
+          ...mock(projects[0].id, t0),
+          ...mock(projects[1].id, t0),
+          ...mock(projects[2].id, t0),
+          ...mock(projects[0].id, t0.add(1, 'days')),
+          ...mock(projects[1].id, t0.add(1, 'days')),
+          ...mock(projects[2].id, t0.add(1, 'days')),
         ],
         [],
         projects,
-        timestamp,
+        t0.add(1, 'days'),
       )
 
       const aggregates: {
@@ -332,16 +341,19 @@ describe(generateTvlApiResponse.name, () => {
       ]
 
       for (const aggregate of aggregates) {
-        expect(result[aggregate.key].hourly.data).toEqual([
-          expected({ multiplier: aggregate.multiplier }),
+        expect(result[aggregate.key].hourly.data.slice(0, 2)).toEqual([
+          expected({ t: t0, multiplier: aggregate.multiplier }),
+          expected({ t: t0.add(1, 'hours'), multiplier: aggregate.multiplier }),
         ])
 
-        expect(result[aggregate.key].sixHourly.data).toEqual([
-          expected({ multiplier: aggregate.multiplier }),
+        expect(result[aggregate.key].sixHourly.data.slice(0, 2)).toEqual([
+          expected({ t: t0, multiplier: aggregate.multiplier }),
+          expected({ t: t0.add(6, 'hours'), multiplier: aggregate.multiplier }),
         ])
 
-        expect(result[aggregate.key].daily.data).toEqual([
-          expected({ multiplier: aggregate.multiplier }),
+        expect(result[aggregate.key].daily.data.slice(0, 2)).toEqual([
+          expected({ t: t0, multiplier: aggregate.multiplier }),
+          expected({ t: t0.add(1, 'days'), multiplier: aggregate.multiplier }),
         ])
       }
     })
