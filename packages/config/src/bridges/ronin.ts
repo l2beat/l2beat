@@ -176,7 +176,7 @@ export const ronin: Bridge = {
       name: 'MainchainBridgeManager Governors',
       accounts: discovery.getPermissionedAccounts(
         'MainchainBridgeManager',
-        'getBridgeGovernors',
+        'getGovernors',
       ),
       description: `List of governors that can update their corresponding operators and change bridge parameters.`,
     },
