@@ -9,6 +9,7 @@ import { notUndefined } from '@l2beat/shared-pure'
 import { Config } from '../../../config'
 import { ChainTvlConfig } from '../../../config/Config'
 import { Database } from '../../../peripherals/database/Database'
+import { TvlCleanerRepository } from '../../../peripherals/database/TvlCleanerRepository'
 import { Clock } from '../../../tools/Clock'
 import { ApplicationModule } from '../../ApplicationModule'
 import { DydxController } from '../api/DydxController'
@@ -72,6 +73,7 @@ export function createTvlModule(
       database,
       logger,
     ),
+    tvlCleanerRepository: new TvlCleanerRepository(database, logger),
   }
 
   // #endregion
@@ -98,7 +100,12 @@ export function createTvlModule(
     db.reportRepository,
     db.aggregatedReportRepository,
   ]
-  const tvlCleaner = new TvlCleaner(clock, logger, repositoriesToClean)
+  const tvlCleaner = new TvlCleaner(
+    clock,
+    logger,
+    db.tvlCleanerRepository,
+    repositoriesToClean,
+  )
 
   // #endregion
   // #region modules

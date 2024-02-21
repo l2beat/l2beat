@@ -176,6 +176,20 @@ describe(UnixTime.name, () => {
     })
   })
 
+  describe(UnixTime.prototype.toEndOf.name, () => {
+    it('adjusts to the end of day', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-07T12:34:56Z'))
+      const end = time.toEndOf('day')
+      expect(end.toDate()).toEqual(new Date('2021-09-08T00:00:00Z'))
+    })
+
+    it('does not adjust if already at the end of day', () => {
+      const time = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
+      const end = time.toEndOf('day')
+      expect(end.toDate()).toEqual(new Date('2021-09-07T00:00:00Z'))
+    })
+  })
+
   describe(UnixTime.isSafeToCast.name, () => {
     it('correct timestamp', () => {
       const timestamp = 1661873521

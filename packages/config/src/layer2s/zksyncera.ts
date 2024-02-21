@@ -58,6 +58,7 @@ export const zksyncera: Layer2 = {
       documentation: ['https://era.zksync.io/docs/'],
       explorers: [
         'https://explorer.zksync.io/',
+        'https://era.zksync.network/',
         'https://zksync-era.l2scan.co/',
       ],
       repositories: ['https://github.com/matter-labs/zksync-era'],
@@ -363,6 +364,27 @@ export const zksyncera: Layer2 = {
     genesisState: 'There have been neither genesis states nor regenesis.',
     dataFormat:
       'Details on data format can be found [here](https://github.com/matter-labs/zksync-era/blob/main/docs/guides/advanced/pubdata.md).',
+  },
+  stateValidation: {
+    description:
+      'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.',
+    categories: [
+      {
+        title: 'Prover Architecture',
+        description:
+          'zkSync Era proof system Boojum can be found [here](https://github.com/matter-labs/era-boojum/tree/main) and contains essential tools like the Prover, the Verifier, and other backend components. The specs of the system can be found [here](https://github.com/matter-labs/zksync-era/tree/main/docs/specs/prover).',
+      },
+      {
+        title: 'ZK Circuits',
+        description:
+          'zkSync Era circuits are built from Boojum and are designed to replicate the behavior of the EVM. The source code can be found [here](https://github.com/matter-labs/era-zkevm_circuits/tree/main). The circuits are checked against tests that can be found [here](https://github.com/matter-labs/era-zkevm_test_harness/tree/main).',
+      },
+      {
+        title: 'Verification Keys Generation',
+        description:
+          'SNARK verification keys can be generated and checked against the Ethereum verifier contract using [this tool](https://github.com/matter-labs/zksync-era/tree/main/prover/vk_setup_data_generator_server_fri). The system requires a trusted setup.',
+      },
+    ],
   },
   permissions: [
     ...discovery.getMultisigPermission(

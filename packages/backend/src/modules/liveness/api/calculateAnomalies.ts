@@ -1,11 +1,10 @@
 import { assert } from '@l2beat/backend-tools'
 import {
   LivenessAnomaly,
-  LivenessApiResponse,
+  LivenessApiProject,
   notUndefined,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { Dictionary } from 'lodash'
 
 import {
   LivenessRecordsWithIntervalAndDetails,
@@ -13,21 +12,7 @@ import {
 } from './calculateIntervalWithAverages'
 import { RunningStatistics } from './RollingVariance'
 
-export function calculateAnomalies(
-  projects: Dictionary<{
-    batchSubmissions: LivenessRecordsWithIntervalAndDetails | undefined
-    stateUpdates: LivenessRecordsWithIntervalAndDetails | undefined
-    proofSubmissions: LivenessRecordsWithIntervalAndDetails | undefined
-  }>,
-): LivenessApiResponse {
-  const result: LivenessApiResponse['projects'] = {}
-  for (const p in projects) {
-    result[p] = calculateAnomaliesPerProject(projects[p])
-  }
-  return { projects: result }
-}
-
-export function calculateAnomaliesPerProject({
+export function calculateAnomalies({
   batchSubmissions,
   stateUpdates,
   proofSubmissions,
@@ -35,7 +20,7 @@ export function calculateAnomaliesPerProject({
   batchSubmissions: LivenessRecordsWithIntervalAndDetails | undefined
   stateUpdates: LivenessRecordsWithIntervalAndDetails | undefined
   proofSubmissions: LivenessRecordsWithIntervalAndDetails | undefined
-}): LivenessApiResponse['projects'][number] {
+}): Omit<LivenessApiProject, 'isSynced'> {
   const lastHour = UnixTime.now().toStartOf('hour')
 
   let batchSubmissionAnomalies: LivenessAnomaly[] | undefined = undefined
