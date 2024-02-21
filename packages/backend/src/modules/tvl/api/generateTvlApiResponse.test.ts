@@ -1,6 +1,7 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, TvlApiChartPoint, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
+import { AggregatedReportRecord } from '../repositories/AggregatedReportRepository'
 import { generateTvlApiResponse } from './generateTvlApiResponse'
 
 describe(generateTvlApiResponse.name, () => {
@@ -267,82 +268,143 @@ describe(generateTvlApiResponse.name, () => {
   })
 
   describe('aggregating', () => {
-    it('layer2s', () => {
-      const t0 = UnixTime.fromDate(new Date('2024-01-01T00:00:00Z'))
-      const t1 = t0.add(1, 'hours')
+    it('generates aggregates for layer2s, bridges and combined', () => {
+      const timestamp = UnixTime.fromDate(new Date('2024-01-01T00:00:00Z'))
+
+      const projects = [
+        {
+          id: ProjectId('arbitrum'),
+          isLayer2: true,
+        },
+        {
+          id: ProjectId('optimism'),
+          isLayer2: true,
+        },
+        {
+          id: ProjectId('stargate'),
+          isLayer2: false,
+        },
+      ].map((p) => ({ ...p, sinceTimestamp: timestamp }))
+
+      const mock = (projectId: ProjectId) =>
+        getMockAggregatedRecord(projectId, timestamp, 32n, 12n, 16n, 4n)
+
+      const expected = (props: { multiplier: number }) =>
+        getMockChartPoint(timestamp, props.multiplier, 32, 12, 16, 4)
 
       const result = generateTvlApiResponse(
         [
-          {
-            projectId: ProjectId('arbitrum'),
-            timestamp: t1,
-            usdValue: 32_000_00n,
-            ethValue: 16_000000n,
-            reportType: 'TVL',
-          },
-          {
-            projectId: ProjectId('arbitrum'),
-            timestamp: t1,
-            usdValue: 12_000_00n,
-            ethValue: 6_000000n,
-            reportType: 'CBV',
-          },
-          {
-            projectId: ProjectId('arbitrum'),
-            timestamp: t1,
-            usdValue: 16_000_00n,
-            ethValue: 8_000000n,
-            reportType: 'EBV',
-          },
-          {
-            projectId: ProjectId('arbitrum'),
-            timestamp: t1,
-            usdValue: 4_000_00n,
-            ethValue: 2_000000n,
-            reportType: 'NMV',
-          },
-          {
-            projectId: ProjectId('optimism'),
-            timestamp: t1,
-            usdValue: 16_000_00n,
-            ethValue: 8_000000n,
-            reportType: 'TVL',
-          },
-          {
-            projectId: ProjectId('optimism'),
-            timestamp: t1,
-            usdValue: 6_000_00n,
-            ethValue: 3_000000n,
-            reportType: 'CBV',
-          },
-          {
-            projectId: ProjectId('optimism'),
-            timestamp: t1,
-            usdValue: 8_000_00n,
-            ethValue: 4_000000n,
-            reportType: 'EBV',
-          },
-          {
-            projectId: ProjectId('optimism'),
-            timestamp: t1,
-            usdValue: 2_000_00n,
-            ethValue: 1_000000n,
-            reportType: 'NMV',
-          },
+          ...mock(projects[0].id),
+          ...mock(projects[1].id),
+          ...mock(projects[2].id),
         ],
-        [],
-        [],
-        [],
         [
-          { id: ProjectId('arbitrum'), isLayer2: true, sinceTimestamp: t1 },
-          { id: ProjectId('optimism'), isLayer2: true, sinceTimestamp: t1 },
+          ...mock(projects[0].id),
+          ...mock(projects[1].id),
+          ...mock(projects[2].id),
         ],
-        t1,
+        [
+          ...mock(projects[0].id),
+          ...mock(projects[1].id),
+          ...mock(projects[2].id),
+        ],
+        [],
+        projects,
+        timestamp,
       )
 
-      expect(result.layers2s.hourly.data).toEqual([
-        [t1, 32_000, 12_000, 16_000, 4_000, 16, 6, 8, 2],
-      ])
+      const aggregates: {
+        key: 'layers2s' | 'bridges' | 'combined'
+        multiplier: number
+      }[] = [
+        {
+          key: 'layers2s',
+          multiplier: 2,
+        },
+        {
+          key: 'bridges',
+          multiplier: 1,
+        },
+        {
+          key: 'combined',
+          multiplier: 3,
+        },
+      ]
+
+      for (const aggregate of aggregates) {
+        expect(result[aggregate.key].hourly.data).toEqual([
+          expected({ multiplier: aggregate.multiplier }),
+        ])
+
+        expect(result[aggregate.key].sixHourly.data).toEqual([
+          expected({ multiplier: aggregate.multiplier }),
+        ])
+
+        expect(result[aggregate.key].daily.data).toEqual([
+          expected({ multiplier: aggregate.multiplier }),
+        ])
+      }
     })
   })
 })
+
+function getMockAggregatedRecord(
+  projectId: ProjectId,
+  timestamp: UnixTime,
+  tvl: bigint,
+  cbv: bigint,
+  ebv: bigint,
+  nmv: bigint,
+): AggregatedReportRecord[] {
+  return [
+    {
+      projectId,
+      timestamp,
+      usdValue: tvl * 100_000n,
+      ethValue: tvl * 1000000n,
+      reportType: 'TVL',
+    },
+    {
+      projectId,
+      timestamp,
+      usdValue: cbv * 100_000n,
+      ethValue: cbv * 1000000n,
+      reportType: 'CBV',
+    },
+    {
+      projectId,
+      timestamp,
+      usdValue: ebv * 100_000n,
+      ethValue: ebv * 1000000n,
+      reportType: 'EBV',
+    },
+    {
+      projectId,
+      timestamp,
+      usdValue: nmv * 100_000n,
+      ethValue: nmv * 1000000n,
+      reportType: 'NMV',
+    },
+  ]
+}
+
+function getMockChartPoint(
+  timestamp: UnixTime,
+  multiplier: number,
+  tvl: number,
+  cbv: number,
+  ebv: number,
+  nmv: number,
+): TvlApiChartPoint {
+  return [
+    timestamp,
+    multiplier * tvl * 1000,
+    multiplier * cbv * 1000,
+    multiplier * ebv * 1000,
+    multiplier * nmv * 1000,
+    multiplier * tvl,
+    multiplier * cbv,
+    multiplier * ebv,
+    multiplier * nmv,
+  ]
+}

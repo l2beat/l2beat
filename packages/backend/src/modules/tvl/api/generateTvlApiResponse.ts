@@ -94,14 +94,24 @@ export function generateTvlApiResponse(
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           charts.get(project.id)!,
         )
+      } else {
+        aggregates.bridges = mergeAggregates(
+          aggregates.bridges,
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          charts.get(project.id)!,
+        )
       }
+
+      aggregates.combined = mergeAggregates(
+        aggregates.combined,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        charts.get(project.id)!,
+      )
 
       return acc
     },
     {},
   )
-
-  //TODO: aggregate reports for layer2s and bridges and combined
 
   return {
     layers2s: aggregates.layers2s,
