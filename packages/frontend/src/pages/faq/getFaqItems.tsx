@@ -61,36 +61,28 @@ export function getFaqItems(): FaqItem[] {
       ),
     },
     {
-      question: 'What exactly are L2s and why Polygon is not included?',
+      question: 'What exactly is an L2?',
       answer: (
         <div>
           <p className="mt-4">
-            Trust-minimized L2s are chains that can be exited by interacting
-            directly with L1 alone, eliminating the need to rely on L2 operators
-            for the security of the funds.
-          </p>
-          <p className="mt-4">
-            In the case of Polygon, an additional layer of trust is introduced:
-            users must trust the majority of Polygon's validators to enable
-            secure withdrawals and prevent fund theft. Note that
-            application-specific logic, like in the case of dYdX forced trade
-            requests, may also require inter-user dependencies to successfully
-            exit the system.
+            An L2 is a protocol that moves transaction execution offchain and can be 
+            exited by interacting directly with L1 alone, eliminating the need to 
+            rely on L2 operators for the security of the funds.
           </p>
         </div>
       ),
     },
     {
       question:
-        'Why does the main table contain projects that are not trust-minimized L2s yet?',
+        'Why does the main table contain projects that are not L2s yet?',
       answer: (
         <div>
           <p className="mt-4">
             We want to track the progress of the projects that are credibly
-            committed towards becoming trust-minimized L2s. Our goal is to
+            committed towards becoming L2s. Our goal is to
             provide the community with the most up-to-date information about the
             state of these projects and to provide insights and guidance for
-            them to become fully trust minimized.
+            them to become L2s.
           </p>
         </div>
       ),
@@ -101,9 +93,9 @@ export function getFaqItems(): FaqItem[] {
         <div>
           <p className="mt-4">
             Validiums and Optimiums are not L2s: by not publishing data on L1
-            they introduce additional trust assumptions on top of it. If the
-            data to reconstruct the state is not made available by the operators
-            of the offchain DA solution, funds are at risk.
+            they introduce the possibility that users cannot exit by interacting
+            with L1 alone. If the data to reconstruct the state is not made available
+            by the operators of the offchain DA solution, funds are at risk of being frozen.
           </p>
         </div>
       ),
@@ -126,7 +118,7 @@ export function getFaqItems(): FaqItem[] {
       ),
     },
     {
-      question: 'How do L2s derive their security from L1?',
+      question: 'How do L2 chains derive their security from L1?',
       answer: (
         <div>
           <p className="mt-4">
@@ -192,9 +184,16 @@ export function getFaqItems(): FaqItem[] {
     },
     {
       question:
-        "Are there any other ways L2 validators can steal user's coins?",
-      answer:
-        'Most L2 constructions are upgradable and until upgradability mechanism is either fully disabled or controlled by a sufficiently decentralised DAO, the funds can be, in theory, stolen through the upgrade mechanism. L2BEAT will closely monitor how the particular construction is upgradable and who currently controls the upgradability keys.',
+        "Are there any other ways L2 validators can steal users' coins?",
+      answer: (
+        <>
+          Most L2 constructions are upgradable and until upgradability mechanism is 
+          either fully disabled or controlled by a sufficiently decentralised DAO, 
+          the funds can be, in theory, stolen through the upgrade mechanism. L2BEAT 
+          will closely monitor how the particular construction is upgradable and who 
+          currently controls the upgradability keys.
+        </>
+      ),
     },
     {
       question: 'What about data availability? Why is it important?',
