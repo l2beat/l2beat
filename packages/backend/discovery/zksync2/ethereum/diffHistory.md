@@ -1,3 +1,54 @@
+Generated with discovered.json: 0x2a6d354fd89f8981107b3b6fa8743d24329997c7
+
+# Diff at Wed, 21 Feb 2024 10:47:09 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@9b9ae3ded14098eb8cc02dd80f4be605745e1b19 block: 19182180
+- current block number: 19275529
+
+## Description
+
+Updated the SafeERC20 library. Deprecated some methods.
+
+## Watched changes
+
+```diff
+    contract L1ERC20Bridge (0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063) {
+      upgradeability.implementation:
+-        "0x79Cc1DF74Ac2d1B0876498C9FcE32c7e34F57B43"
++        "0x810c6598CAaA08B61f6430Df5a8e120B3390d78A"
+      implementations.0:
+-        "0x79Cc1DF74Ac2d1B0876498C9FcE32c7e34F57B43"
++        "0x810c6598CAaA08B61f6430Df5a8e120B3390d78A"
+    }
+```
+
+## Source code changes
+
+```diff
+.../@openzeppelin/contracts/token/ERC20/IERC20.sol |  8 +-
+ .../token/ERC20/extensions/IERC20Permit.sol}       | 32 ++++++-
+ .../contracts/token/ERC20/utils/SafeERC20.sol      | 99 ++++++++++++++--------
+ .../@openzeppelin/contracts/utils/Address.sol      | 16 ++--
+ .../bridge/L1ERC20Bridge.sol                       | 49 ++++++-----
+ .../bridge/interfaces/IL1Bridge.sol                |  2 +
+ .../bridge/interfaces/IL1BridgeLegacy.sol          |  2 +
+ .../common/L2ContractAddresses.sol                 |  3 -
+ .../common/libraries/L2ContractHelper.sol          |  2 +-
+ .../solpp-generated-contracts/zksync/Storage.sol   | 42 +++++++--
+ .../zksync/interfaces/IAdmin.sol                   | 36 +++++++-
+ .../zksync/interfaces/IBase.sol                    |  4 +
+ .../zksync/interfaces/IExecutor.sol                | 22 +++++
+ .../zksync/interfaces/IGetters.sol                 | 47 +++++++++-
+ .../zksync/interfaces/IMailbox.sol                 | 55 +++++++++++-
+ .../zksync/interfaces/IVerifier.sol                |  8 ++
+ .../zksync/interfaces/IZkSync.sol                  | 12 ++-
+ .../zksync/libraries/Diamond.sol                   | 13 +--
+ .../zksync/libraries/PriorityQueue.sol             |  2 +-
+ .../L1ERC20Bridge/implementation/meta.txt          |  2 +-
+ 20 files changed, 357 insertions(+), 99 deletions(-)
+```
+
 Generated with discovered.json: 0x6ea4015640d399764ce2291a73b01d1fa8270153
 
 # Diff at Thu, 08 Feb 2024 08:13:36 GMT:
