@@ -72,7 +72,7 @@ const exitWindowRisk = {
     trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
   )}.`,
   warning: {
-    text: 'The Security Council can upgrade with no delay.',
+    text: 'The Security Council can remove the delay on upgrades.',
     sentiment: 'bad',
   },
 } as const
@@ -194,6 +194,16 @@ export const polygonzkevm: Layer2 = {
           sinceTimestamp: new UnixTime(1679653163),
           untilTimestamp: new UnixTime(1707822059),
         },
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
+          ),
+          selector: '0x5e9145c9',
+          functionSignature:
+            'function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)',
+          sinceTimestamp: new UnixTime(1707822059),
+        },
       ],
       stateUpdates: [
         {
@@ -217,6 +227,26 @@ export const polygonzkevm: Layer2 = {
             'function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) ',
           sinceTimestamp: new UnixTime(1679653163),
           untilTimestamp: new UnixTime(1707822059),
+        },
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
+          ),
+          selector: '0xa2ee10d3',
+          functionSignature:
+            'verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[])',
+          sinceTimestamp: new UnixTime(1707822059),
+        },
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
+          ),
+          selector: '0x08068a47',
+          functionSignature:
+            'verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[])',
+          sinceTimestamp: new UnixTime(1707822059),
         },
       ],
     },
@@ -377,8 +407,8 @@ export const polygonzkevm: Layer2 = {
         ...EXITS.REGULAR('zk', 'merkle proof'),
         references: [
           {
-            text: 'PolygonZkEvmBridge.sol - Etherscan source code, claimAsset function',
-            href: 'https://etherscan.io/address/0xb1585916487AcEdD99952086f2950763D253b923',
+            text: 'PolygonZkEvmBridgeV2.sol - Etherscan source code, claimAsset function',
+            href: 'https://etherscan.io/address/0x0feb850b183c57534b56b7d56520133c8f9bdb65',
           },
         ],
       },
@@ -391,7 +421,7 @@ export const polygonzkevm: Layer2 = {
     genesisState:
       'The genesis state, whose corresponding root is accessible as Batch 0 root in the `batchNumToStateRoot` method of PolygonZkEvm, is available [here](https://github.com/0xPolygonHermez/zkevm-contracts/blob/main/deployment/genesis.json).',
     dataFormat:
-      'The trusted sequencer batches transactions according to the specifications documented [here](https://wiki.polygon.technology/docs/zkevm/protocol/transaction-batching/#transactions).',
+      'The trusted sequencer batches transactions according to the specifications documented [here](https://docs.polygon.technology/zkEVM/architecture/protocol/transaction-life-cycle/transaction-batching/).',
   },
   permissions: [
     ...discovery.getMultisigPermission(

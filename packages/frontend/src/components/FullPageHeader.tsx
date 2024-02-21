@@ -10,9 +10,9 @@ interface Props {
 
 export function FullPageHeader(props: Props) {
   return (
-    <div className="bg-pure-white px-4 py-[72px] dark:bg-zinc-900 lg:h-[700px] lg:p-0">
+    <header className="bg-pure-white py-24 dark:bg-zinc-900">
       <PageContent
-        type="wider"
+        type="subpage"
         className={cn(
           'flex items-center justify-center',
           props.pageContentClassName,
@@ -20,6 +20,6 @@ export function FullPageHeader(props: Props) {
       >
         {props.children}
       </PageContent>
-    </div>
+    </header>
   )
 }

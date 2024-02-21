@@ -1,9 +1,14 @@
 import { z } from 'zod'
 
-export const publicationsContent = {
+import { defineCollection } from '../defineCollection'
+
+export const publicationsCollection = defineCollection({
+  type: 'content',
   schema: z.object({
     title: z.string(),
-    link: z.string(),
+    shortTitle: z.string().optional(),
+    description: z.string().optional(),
     publishedOn: z.coerce.date(),
+    authorId: z.string(),
   }),
-} as const
+})

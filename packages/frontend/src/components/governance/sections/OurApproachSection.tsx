@@ -10,7 +10,7 @@ interface Props {
 export function OurApproachSection({ className }: Props) {
   return (
     <GovernanceCard as="section" mobileFull className={cn(className, 'h-min')}>
-      <GovernanceCardHeader>Our Approach</GovernanceCardHeader>
+      <GovernanceCardHeader>Our approach</GovernanceCardHeader>
       <p className="mt-6 text-base md:text-sm">
         We recognize that achieving successful decentralized governance stands
         as a vital challenge within the blockchain realm. Our goal is to

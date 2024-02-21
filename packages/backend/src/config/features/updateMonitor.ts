@@ -31,7 +31,7 @@ export function getChainDiscoveryConfig(
   const ENV_NAME = chain.toUpperCase()
 
   return {
-    chain: chainConfig.name,
+    name: chainConfig.name,
     rpcUrl: env.string(`DISCOVERY_${ENV_NAME}_RPC_URL`),
     rpcGetLogsMaxRange: env.optionalInteger(
       `DISCOVERY_${ENV_NAME}_RPC_GETLOGS_MAX_RANGE`,

@@ -2,20 +2,20 @@ import { notUndefined } from '@l2beat/shared-pure'
 import clamp from 'lodash/clamp'
 import range from 'lodash/range'
 
-import { ContentEntry } from '../../content/getContent'
+import { CollectionEntry } from '../../content/getCollection'
 import { getNextDateForDayOfWeek } from '../dates'
 
-export type OneTimeEvent = ContentEntry<'events'> & {
-  data: Extract<ContentEntry<'events'>['data'], { type: 'one-time' }>
+export type OneTimeEvent = CollectionEntry<'events'> & {
+  data: Extract<CollectionEntry<'events'>['data'], { type: 'one-time' }>
 }
-export type RecurringEvent = ContentEntry<'events'> & {
-  data: Extract<ContentEntry<'events'>['data'], { type: 'recurring' }>
+export type RecurringEvent = CollectionEntry<'events'> & {
+  data: Extract<CollectionEntry<'events'>['data'], { type: 'recurring' }>
 }
 
 const WEEK_IN_MS = 7 * 24 * 60 * 60 * 1000
 
 export function getOneTimeEvents(
-  events: ContentEntry<'events'>[],
+  events: CollectionEntry<'events'>[],
 ): OneTimeEvent[] {
   return events.flatMap((event) => {
     if (event.data.type === 'one-time') {

@@ -50,7 +50,7 @@ export function createDiffHistoryModule(
 
   const discoverers = config.diffHistory.chains
     // TODO(radomski): In the initial version we only care about ethereum
-    .filter((chainConfig) => chainConfig.chain === 'ethereum')
+    .filter((chainConfig) => chainConfig.name === 'ethereum')
     .flatMap((chainConfig) => {
       const runner = createDiscoveryRunner(
         discoveryHttpClient,
