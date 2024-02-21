@@ -360,7 +360,6 @@ export const starknet: Layer2 = {
         tokens: ['STRK'],
         description:
           'StarkGate bridge for STRK.' + ' ' + escrowSTRKMaxTotalBalanceString,
-        upgradableBy: ['StarkGate STRK owner'],
         upgradeDelay: formatSeconds(escrowSTRKDelaySeconds),
       }),
     ],
