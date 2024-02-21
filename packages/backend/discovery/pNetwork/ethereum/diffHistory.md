@@ -1,3 +1,40 @@
+Generated with discovered.json: 0xad325636328085a0f48d1cedf9b583f2df039877
+
+# Diff at Wed, 21 Feb 2024 08:21:41 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@f247182ed17ab198e708715bad7d245c5212992d block: 19118450
+- current block number: 19274813
+
+## Description
+
+Changes related to the inflation mechanism for the ethPNT token (introduced with previous changes below). The values below get updated for each new month/year.
+
+## Watched changes
+
+```diff
+    contract EthPntv2 (0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2) {
+      values.currentMonthNumber:
+-        0
++        1
+      values.currentMonthWithdrawnAmount:
+-        "1100000000000000000000000"
++        "360000000000000000000000"
+      values.currentYearWithdrawnAmount:
+-        "1100000000000000000000000"
++        "1460000000000000000000000"
+      values.maxWithdrawableAmounts.1:
+-        "18255045741928169125886545"
++        "17895045741928169125886545"
+      values.maxWithdrawableAmounts.0:
+-        "835504574192816912588654"
++        "1575504574192816912588654"
+      values.totalSupply:
+-        "9900000000000000000000000"
++        "10260000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x8209f29438745b169ea4fcac0c17ac2784cf83c8
 
 # Diff at Tue, 30 Jan 2024 09:32:52 GMT:
