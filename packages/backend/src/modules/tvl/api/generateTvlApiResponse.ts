@@ -12,38 +12,6 @@ import { ReportRecord } from '../repositories/ReportRepository'
 import { asNumber } from './asNumber'
 import { getProjectTokensCharts, groupByProjectAndReportType } from './tvl'
 
-export const TYPE_LABELS: TvlApiChart['types'] = [
-  'timestamp',
-  'valueUsd',
-  'cbvUsd',
-  'ebvUsd',
-  'nmvUsd',
-  'valueEth',
-  'cbvEth',
-  'ebvEth',
-  'nmvEth',
-]
-
-const USD_INDEX = {
-  TVL: 1,
-  CBV: 2,
-  EBV: 3,
-  NMV: 4,
-}
-
-const ETH_INDEX = {
-  TVL: 5,
-  CBV: 6,
-  EBV: 7,
-  NMV: 8,
-}
-
-const PERIODS = [
-  ['hourly', 60 * 60],
-  ['sixHourly', 6 * 60 * 60],
-  ['daily', 24 * 60 * 60],
-] as const
-
 export function generateTvlApiResponse(
   hourlyReports: AggregatedReportRecord[],
   sixHourlyReports: AggregatedReportRecord[],
@@ -91,26 +59,103 @@ function updateAggregates(
   },
   charts: Map<ProjectId, TvlApiCharts>,
 ) {
-  if (project.isLayer2) {
-    aggregates.layers2s = mergeAggregates(
-      aggregates.layers2s,
+  function merge(aggregate: TvlApiCharts, projectId: ProjectId) {
+    return mergeAggregates(
+      aggregate,
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      charts.get(project.id)!,
-    )
-  } else {
-    aggregates.bridges = mergeAggregates(
-      aggregates.bridges,
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      charts.get(project.id)!,
+      charts.get(projectId)!,
     )
   }
+  merge(aggregates.combined, project.id)
 
-  aggregates.combined = mergeAggregates(
-    aggregates.combined,
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    charts.get(project.id)!,
-  )
+  if (project.isLayer2) {
+    aggregates.layers2s = merge(aggregates.layers2s, project.id)
+  } else {
+    aggregates.bridges = merge(aggregates.bridges, project.id)
+  }
 }
+
+function mergeAggregates(
+  aggregates: TvlApiCharts,
+  projectCharts: TvlApiCharts,
+): TvlApiCharts {
+  function mergeCharts(a: TvlApiChart, b: TvlApiChart): TvlApiChart {
+    return {
+      types: a.types, // Assuming types are constant and identical
+      data: mergeAndSumChartPoints(a.data, b.data),
+    }
+  }
+
+  return {
+    hourly: mergeCharts(aggregates.hourly, projectCharts.hourly),
+    sixHourly: mergeCharts(aggregates.sixHourly, projectCharts.sixHourly),
+    daily: mergeCharts(aggregates.daily, projectCharts.daily),
+  }
+}
+
+// This relies on an assumption that aggregate that first aggregate element is older or equal to first project element
+// and on the fact that the interval between consecutive elements is the same
+function mergeAndSumChartPoints(
+  aggregate: TvlApiChartPoint[],
+  project: TvlApiChartPoint[],
+): TvlApiChartPoint[] {
+  const startingIndexInAggregates = aggregate.findIndex(
+    (a) => a[0].toNumber() === project[0][0].toNumber(),
+  )
+
+  let projectIndex = 0
+
+  for (let i = startingIndexInAggregates; i < aggregate.length; i++) {
+    aggregate[i] = sumChartPoints(aggregate[i], project[projectIndex])
+    projectIndex++
+  }
+
+  return aggregate
+}
+
+// Function to sum two chart points with the same timestamp
+function sumChartPoints(
+  a: TvlApiChartPoint,
+  b: TvlApiChartPoint,
+): TvlApiChartPoint {
+  return a.map((value, index) =>
+    // @ts-expect-error first element should not be summed
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/restrict-plus-operands
+    index === 0 ? value : value + b[index],
+  ) as TvlApiChartPoint
+}
+
+export const TYPE_LABELS: TvlApiChart['types'] = [
+  'timestamp',
+  'valueUsd',
+  'cbvUsd',
+  'ebvUsd',
+  'nmvUsd',
+  'valueEth',
+  'cbvEth',
+  'ebvEth',
+  'nmvEth',
+]
+
+const USD_INDEX = {
+  TVL: 1,
+  CBV: 2,
+  EBV: 3,
+  NMV: 4,
+}
+
+const ETH_INDEX = {
+  TVL: 5,
+  CBV: 6,
+  EBV: 7,
+  NMV: 8,
+}
+
+const PERIODS = [
+  ['hourly', 60 * 60],
+  ['sixHourly', 6 * 60 * 60],
+  ['daily', 24 * 60 * 60],
+] as const
 
 function getEmptyCharts(
   projects: { id: ProjectId; isLayer2: boolean; sinceTimestamp: UnixTime }[],
@@ -146,56 +191,6 @@ function getEmptyAggregates(
     combined: getEmptyChart(minTimestamp, untilTimestamp),
   }
   return aggregates
-}
-
-// Function to sum two chart points with the same timestamp
-function sumChartPoints(
-  a: TvlApiChartPoint,
-  b: TvlApiChartPoint,
-): TvlApiChartPoint {
-  return a.map((value, index) =>
-    // @ts-expect-error first element should not be summed
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/restrict-plus-operands
-    index === 0 ? value : value + b[index],
-  ) as TvlApiChartPoint
-}
-
-// This relies on an assumption that aggregate that first aggregate element is older or equal to first project element
-// and on the fact that the interval between consecutive elements is the same
-function mergeAndSumChartPoints(
-  aggregate: TvlApiChartPoint[],
-  project: TvlApiChartPoint[],
-): TvlApiChartPoint[] {
-  const id = aggregate.findIndex(
-    (a) => a[0].toNumber() === project[0][0].toNumber(),
-  )
-
-  let ii = 0
-
-  for (let i = id; i < aggregate.length; i++) {
-    aggregate[i] = sumChartPoints(aggregate[i], project[ii])
-    ii++
-  }
-
-  return aggregate
-}
-
-function mergeCharts(a: TvlApiChart, b: TvlApiChart): TvlApiChart {
-  return {
-    types: a.types, // Assuming types are constant and identical
-    data: mergeAndSumChartPoints(a.data, b.data),
-  }
-}
-
-function mergeAggregates(
-  aggregates: TvlApiCharts,
-  projectCharts: TvlApiCharts,
-): TvlApiCharts {
-  return {
-    hourly: mergeCharts(aggregates.hourly, projectCharts.hourly),
-    sixHourly: mergeCharts(aggregates.sixHourly, projectCharts.sixHourly),
-    daily: mergeCharts(aggregates.daily, projectCharts.daily),
-  }
 }
 
 function getEmptyChart(
