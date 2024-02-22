@@ -35,12 +35,15 @@ export class FinalityRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getProjectsSyncedOnTimestamp(
-    timestamp: UnixTime,
-  ): Promise<ProjectId[]> {
+  async findLatestByProjectId(
+    projectId: ProjectId,
+  ): Promise<FinalityRecord | undefined> {
     const knex = await this.knex()
-    const rows = await knex('finality').where('timestamp', timestamp.toDate())
-    return rows.map((row) => ProjectId(row.project_id))
+    const row = await knex('finality')
+      .where('project_id', projectId.toString())
+      .orderBy('timestamp', 'desc')
+      .first()
+    return row ? toRecord(row) : undefined
   }
 
   async findProjectFinalityOnTimestamp(
@@ -56,13 +59,24 @@ export class FinalityRepository extends BaseRepository {
   }
 
   async addMany(
-    transactions: FinalityRecord[],
+    records: FinalityRecord[],
     trx?: Knex.Transaction,
   ): Promise<number> {
     const knex = await this.knex(trx)
-    const rows: FinalityRow[] = transactions.map(toRow)
+    const rows: FinalityRow[] = records.map(toRow)
     await knex.batchInsert('finality', rows, 10_000)
     return rows.length
+  }
+
+  async add(record: FinalityRecord, trx?: Knex.Transaction): Promise<string> {
+    const knex = await this.knex(trx)
+
+    const row: FinalityRow = toRow(record)
+    const [inserted] = await knex('finality')
+      .insert(row)
+      .returning('project_id')
+
+    return inserted.project_id
   }
 
   async deleteAll() {

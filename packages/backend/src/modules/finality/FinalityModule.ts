@@ -15,6 +15,7 @@ import { FinalityController } from './api/FinalityController'
 import { createFinalityRouter } from './api/FinalityRouter'
 import { FinalityIndexer } from './FinalityIndexer'
 import { FinalityRepository } from './repositories/FinalityRepository'
+import { FinalityConfig } from './types/FinalityConfig'
 
 export function createFinalityModule(
   config: Config,
@@ -51,37 +52,40 @@ export function createFinalityModule(
   )
   const ethereumRPC = new RpcClient(ethereumProvider, logger)
 
-  const runtimeConfigurations = config.projects
-    .map((p) => {
-      if (p.finalityConfig?.type === 'Linea') {
-        return {
-          projectId: p.projectId,
-          analyzer: new LineaFinalityAnalyzer(
-            ethereumRPC,
-            livenessRepository,
-            p.projectId,
-            'STATE',
-          ),
+  const runtimeConfigurations: FinalityConfig[] =
+    config.finality.indexerConfigurations
+      .map((configuration) => {
+        if (configuration.type === 'Linea') {
+          return {
+            projectId: configuration.projectId,
+            analyzer: new LineaFinalityAnalyzer(
+              ethereumRPC,
+              livenessRepository,
+              configuration.projectId,
+              'STATE',
+            ),
+            minTimestamp: configuration.minTimestamp,
+          }
         }
-      }
-    })
-    .filter(notUndefined)
+      })
+      .filter(notUndefined)
 
-  const finalityIndexer = new FinalityIndexer(
-    logger,
-    livenessIndexer,
-    indexerStateRepository,
-    finalityRepository,
-    runtimeConfigurations,
+  const finalityIndexers = runtimeConfigurations.map(
+    (runtimeConfiguration) =>
+      new FinalityIndexer(
+        logger,
+        livenessIndexer,
+        indexerStateRepository,
+        finalityRepository,
+        runtimeConfiguration,
+      ),
   )
-
-  const isIndexerEnabled = config.finality.indexerEnabled
 
   const start = async () => {
     logger = logger.for('FinalityModule')
     logger.info('Starting...')
 
-    if (isIndexerEnabled) {
+    for (const finalityIndexer of finalityIndexers) {
       await finalityIndexer.start()
     }
   }

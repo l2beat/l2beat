@@ -40,6 +40,30 @@ describeDatabase(FinalityRepository.name, (database) => {
   })
 
   describe(FinalityRepository.prototype.addMany.name, () => {
+    it('adds new row', async () => {
+      await repository.add({
+        projectId: ProjectId('project-c'),
+        timestamp: UnixTime.fromDate(new Date('2021-01-01T03:00:00Z')),
+        minimumTimeToInclusion: 1,
+        maximumTimeToInclusion: 3,
+        averageTimeToInclusion: 2,
+      })
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([
+        ...DATA,
+        {
+          projectId: ProjectId('project-c'),
+          timestamp: UnixTime.fromDate(new Date('2021-01-01T03:00:00Z')),
+          minimumTimeToInclusion: 1,
+          maximumTimeToInclusion: 3,
+          averageTimeToInclusion: 2,
+        },
+      ])
+    })
+  })
+
+  describe(FinalityRepository.prototype.addMany.name, () => {
     it('adds new rows', async () => {
       const newRows = [
         {
@@ -119,31 +143,40 @@ describeDatabase(FinalityRepository.name, (database) => {
     },
   )
 
-  describe(
-    FinalityRepository.prototype.getProjectsSyncedOnTimestamp.name,
-    () => {
-      it('should return all projects ids which record on a given timestamp', async () => {
-        const target = UnixTime.fromDate(new Date('2021-01-01T01:00:00Z'))
-        const newRow = [
-          {
-            projectId: ProjectId('project-c'),
-            timestamp: target,
-            minimumTimeToInclusion: 2,
-            maximumTimeToInclusion: 4,
-            averageTimeToInclusion: 3,
-          },
-        ]
-        await repository.addMany(newRow)
+  describe(FinalityRepository.prototype.findLatestByProjectId.name, () => {
+    it('finds a latest record by timestamp', async () => {
+      const newRows = [
+        {
+          projectId: ProjectId('project-c'),
+          timestamp: UnixTime.fromDate(new Date('2021-01-01T03:00:00Z')),
+          minimumTimeToInclusion: 1,
+          maximumTimeToInclusion: 3,
+          averageTimeToInclusion: 2,
+        },
+        {
+          projectId: ProjectId('project-c'),
+          timestamp: UnixTime.fromDate(new Date('2021-01-01T04:00:00Z')),
+          minimumTimeToInclusion: 2,
+          maximumTimeToInclusion: 4,
+          averageTimeToInclusion: 3,
+        },
+        {
+          projectId: ProjectId('project-h'),
+          timestamp: UnixTime.fromDate(new Date('2024-01-01T04:00:00Z')),
+          minimumTimeToInclusion: 2,
+          maximumTimeToInclusion: 4,
+          averageTimeToInclusion: 3,
+        },
+      ]
+      await repository.addMany(newRows)
 
-        const results = await repository.getProjectsSyncedOnTimestamp(target)
+      const result = await repository.findLatestByProjectId(
+        ProjectId('project-c'),
+      )
 
-        expect(results).toEqualUnsorted([
-          ProjectId('project-a'),
-          ProjectId('project-c'),
-        ])
-      })
-    },
-  )
+      expect(result).toEqual(newRows[1])
+    })
+  })
 
   describe(FinalityRepository.prototype.deleteAll.name, () => {
     it('should delete all rows', async () => {
