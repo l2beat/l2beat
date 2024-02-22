@@ -29,4 +29,10 @@ export interface ScalingFinalityViewEntry {
     warning?: string
   }
   finalizationPeriod?: string
+  syncStatus: SyncStatus
+}
+
+export type SyncStatus = {
+  isSynced: boolean
+  displaySyncedUntil: string
 }
