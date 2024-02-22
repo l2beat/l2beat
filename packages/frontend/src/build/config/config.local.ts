@@ -11,7 +11,8 @@ export function getLocalConfig(): Config {
       activity: useMock,
       liveness: useMock,
       finality: useMock,
-      diffHistory: true,
+      diffHistory: false,
+      tvlBreakdown: false,
       buildAllProjectPages: true,
     },
     backend: {
