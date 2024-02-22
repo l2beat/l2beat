@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.43.2
+
+### Patch Changes
+
+- Add zkSync Era as a chain
+
 ## 0.43.1
 
 ### Patch Changes
