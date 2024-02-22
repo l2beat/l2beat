@@ -129,9 +129,8 @@ describe(aggregateReports.name, () => {
     projectId: ProjectId,
     type: ReportProject['type'],
     isUpcoming = false,
-    isLayer3 = false,
   ): ReportProject {
-    return { projectId, type, escrows: [], isUpcoming, isLayer3 }
+    return { projectId, type, escrows: [], isUpcoming }
   }
 
   function record(

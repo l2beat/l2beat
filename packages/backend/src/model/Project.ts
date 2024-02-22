@@ -35,7 +35,6 @@ export interface Project {
   isArchived?: boolean
   type: 'layer2' | 'bridge'
   isUpcoming?: boolean
-  isLayer3?: boolean
   escrows: ProjectEscrow[]
   transactionApi?: Layer2TransactionApi
   livenessConfig?: LivenessConfig
