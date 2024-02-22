@@ -68,8 +68,8 @@ async function main() {
 
   console.log(
     'fetching vaults data (this will take around ' +
-    (vaults.length * 2).toString() +
-    ' seconds)...',
+      (vaults.length * 2).toString() +
+      ' seconds)...',
   )
   const vaultsData = []
   for (const vault of vaults) {
@@ -145,7 +145,8 @@ async function main() {
     SOCKET_DISCOVERY_CONFIG_PATH,
     JSON.stringify(
       {
-        $schema: 'https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json',
+        $schema:
+          'https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json',
         chain: discoveryConfig.chain,
         name: discoveryConfig.name,
         initialAddresses: discoveryConfig.initialAddresses,
