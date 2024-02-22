@@ -7,6 +7,7 @@ import { Project } from '../model/Project'
 import { ActivityTransactionConfig } from '../modules/activity/ActivityTransactionConfig'
 import { MulticallConfigEntry } from '../peripherals/multicall/types'
 import { ResolvedFeatureFlag } from './FeatureFlags'
+import { FinalityIndexerConfig } from './features/finality'
 
 export interface Config {
   readonly name: string
@@ -84,6 +85,7 @@ export interface LivenessConfig {
 export interface FinalityConfig {
   readonly ethereumProviderUrl: string
   readonly ethereumProviderCallsPerMinute: number
+  readonly indexerConfigurations: FinalityIndexerConfig[]
 }
 
 export interface BlockscoutChainConfig {

@@ -28,6 +28,10 @@ export function createFinalityModule(
     logger.info('Finality module disabled')
     return
   }
+  if (config.finality.indexerConfigurations.length === 0) {
+    logger.info('Finality module disabled, no valid configurations')
+    return
+  }
 
   if (!livenessIndexer) {
     logger.error('To run finality you have to run Liveness')
@@ -52,22 +56,23 @@ export function createFinalityModule(
   )
   const ethereumRPC = new RpcClient(ethereumProvider, logger)
 
-  const runtimeConfigurations: FinalityConfig[] = config.projects
-    .map((p) => {
-      if (p.finalityConfig?.type === 'Linea') {
-        return {
-          projectId: p.projectId,
-          analyzer: new LineaFinalityAnalyzer(
-            ethereumRPC,
-            livenessRepository,
-            p.projectId,
-            'STATE',
-          ),
-          minTimestamp: p.finalityConfig.minTimestamp,
+  const runtimeConfigurations: FinalityConfig[] =
+    config.finality.indexerConfigurations
+      .map((configuration) => {
+        if (configuration.type === 'Linea') {
+          return {
+            projectId: configuration.projectId,
+            analyzer: new LineaFinalityAnalyzer(
+              ethereumRPC,
+              livenessRepository,
+              configuration.projectId,
+              'STATE',
+            ),
+            minTimestamp: configuration.minTimestamp,
+          }
         }
-      }
-    })
-    .filter(notUndefined)
+      })
+      .filter(notUndefined)
 
   const finalityIndexers = runtimeConfigurations.map(
     (runtimeConfiguration) =>
