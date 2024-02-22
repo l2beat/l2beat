@@ -1,5 +1,5 @@
 {
-  "$schema": "../../config.schema.json",
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
   "chain": "ethereum",
   "name": "canvasconnect",
   "initialAddresses": ["0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d"],

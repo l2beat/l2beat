@@ -1,5 +1,5 @@
 {
-  "$schema": "../../config.schema.json",
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
   "chain": "ethereum",
   "name": "zkfair",
   "initialAddresses": ["0x9cb4706e20A18E59a48ffa7616d700A3891e1861"],
