@@ -3,9 +3,11 @@ import { DiscoveryOutput } from '@l2beat/discovery-types'
 import { readdirSync } from 'fs'
 import { readFile } from 'fs/promises'
 import { parse, ParseError } from 'jsonc-parser'
+import { posix } from 'path'
 
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import { DiscoveryConfig } from './DiscoveryConfig'
+import { DiscoveryMeta } from './DiscoveryMeta'
 import { RawDiscoveryConfig } from './RawDiscoveryConfig'
 
 export class ConfigReader {
@@ -38,6 +40,33 @@ export class ConfigReader {
     return config
   }
 
+  async readMeta(
+    name: string,
+    chain: string,
+  ): Promise<DiscoveryMeta | undefined> {
+    const projectPath = posix.join('discovery', name)
+    const chainPath = posix.join(projectPath, chain)
+    const metaPath = posix.join(chainPath, 'meta.json')
+
+    assert(
+      fileExistsCaseSensitive(projectPath),
+      'Project not found, check if case matches',
+    )
+    assert(
+      fileExistsCaseSensitive(chainPath),
+      'Chain not found in project, check if case matches',
+    )
+
+    if (!fileExistsCaseSensitive(metaPath)) {
+      return undefined
+    }
+
+    const contents = await readFile(metaPath, 'utf-8')
+
+    const meta = DiscoveryMeta.parse(JSON.parse(contents))
+    return meta
+  }
+
   async readDiscovery(name: string, chain: string): Promise<DiscoveryOutput> {
     assert(
       fileExistsCaseSensitive(`discovery/${name}`),
@@ -53,9 +82,9 @@ export class ConfigReader {
       'utf-8',
     )
 
-    const discovery = JSON.parse(contents) as unknown as DiscoveryOutput
-    assert(discovery.chain === chain, 'Chain mismatch in discovered.json')
-    return discovery
+    const meta = JSON.parse(contents) as unknown as DiscoveryOutput
+    assert(meta.chain === chain, 'Chain mismatch in discovered.json')
+    return meta
   }
 
   readAllChains(): string[] {

@@ -13,28 +13,35 @@ import { EthereumAddress } from '../../utils/EthereumAddress'
 import { formatSI, getThroughput, timed } from '../../utils/timing'
 import { Analysis } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
+import { DiscoveryMeta } from '../config/DiscoveryMeta'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { removeSharedNesting } from '../source/removeSharedNesting'
 import { PerContractSource } from '../source/SourceCodeService'
 import { toDiscoveryOutput } from './toDiscoveryOutput'
+import { toMetaOutput } from './toMetaOutput'
 import { toPrettyJson } from './toPrettyJson'
+
+export interface SaveDiscoveryResultOptions {
+  rootFolder?: string
+  sourcesFolder?: string
+  discoveryFilename?: string
+  metaFilename?: string
+}
 
 export async function saveDiscoveryResult(
   results: Analysis[],
   config: DiscoveryConfig,
+  meta: DiscoveryMeta | undefined,
   blockNumber: number,
   logger: DiscoveryLogger,
-  options: {
-    rootFolder?: string
-    sourcesFolder?: string
-    discoveryFilename?: string
-  },
+  options: SaveDiscoveryResultOptions,
 ): Promise<void> {
   const root =
     options.rootFolder ?? posix.join('discovery', config.name, config.chain)
   await mkdirp(root)
 
   await saveDiscoveredJson(root, results, config, blockNumber, options)
+  await saveMetaJson(root, results, meta, options)
   await saveSources(root, results, options)
   await saveFlatSources(root, results, logger, options)
 }
@@ -44,11 +51,7 @@ async function saveDiscoveredJson(
   results: Analysis[],
   config: DiscoveryConfig,
   blockNumber: number,
-  options: {
-    rootFolder?: string
-    sourcesFolder?: string
-    discoveryFilename?: string
-  },
+  options: SaveDiscoveryResultOptions,
 ): Promise<void> {
   const project = toDiscoveryOutput(
     config.name,
@@ -62,14 +65,22 @@ async function saveDiscoveredJson(
   await writeFile(posix.join(rootPath, discoveryFilename), json)
 }
 
+async function saveMetaJson(
+  rootPath: string,
+  results: Analysis[],
+  meta: DiscoveryMeta | undefined,
+  options: SaveDiscoveryResultOptions,
+): Promise<void> {
+  const project = toMetaOutput(results, meta)
+  const json = await toPrettyJson(project)
+  const metaFilename = options.metaFilename ?? 'meta.json'
+  await writeFile(posix.join(rootPath, metaFilename), json)
+}
+
 async function saveSources(
   rootPath: string,
   results: Analysis[],
-  options: {
-    rootFolder?: string
-    sourcesFolder?: string
-    discoveryFilename?: string
-  },
+  options: SaveDiscoveryResultOptions,
 ): Promise<void> {
   const sourcesFolder = options.sourcesFolder ?? '.code'
   const sourcesPath = posix.join(rootPath, sourcesFolder)
@@ -106,11 +117,7 @@ async function saveFlatSources(
   rootPath: string,
   results: Analysis[],
   logger: DiscoveryLogger,
-  options: {
-    rootFolder?: string
-    sourcesFolder?: string
-    discoveryFilename?: string
-  },
+  options: SaveDiscoveryResultOptions,
 ): Promise<void> {
   const flatSourcesFolder = `.flat${options.sourcesFolder ?? ''}`
   const flatSourcesPath = posix.join(rootPath, flatSourcesFolder)

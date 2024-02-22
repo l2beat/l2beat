@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.43.1
+
+### Patch Changes
+
+- Add meta.json
+
 ## 0.43.0
 
 ### Minor Changes

@@ -1,0 +1,50 @@
+{
+  "$id": "https://l2beat.com/meta.schema.json",
+  "title": "Discovery meta information",
+  "description": "File with additional information about interpreting project state.",
+  "required": ["metas"],
+  "type": "object",
+  "properties": {
+    "metas": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/contract" }
+    }
+  },
+  "unevaluatedProperties": false,
+  "$defs": {
+    "contract": {
+      "type": "object",
+      "required": ["name", "values"],
+      "properties": {
+        "name": { "type": "string" },
+        "review": { "$ref": "#/$defs/review" },
+        "values": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/review" }
+        }
+      }
+    },
+    "review": {
+      "type": "object",
+      "required": ["description", "severity", "type"],
+      "properties": {
+        "description": { "type": ["string", "null"] },
+        "severity": {
+          "type": ["string", "null"],
+          "enum": ["LOW", "MID", "HIGH", null]
+        },
+        "type": {
+          "type": ["string", "null"],
+          "enum": [
+            "STRUCTURE",
+            "L2",
+            "EXTERNAL",
+            "RISK_PARAMETER",
+            "PERMISSION",
+            null
+          ]
+        }
+      }
+    }
+  }
+}
