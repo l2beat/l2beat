@@ -28,10 +28,6 @@ export function createFinalityModule(
     logger.info('Finality module disabled')
     return
   }
-  if (config.finality.indexerConfigurations.length === 0) {
-    logger.info('Finality module disabled, no valid configurations')
-    return
-  }
 
   if (!livenessIndexer) {
     logger.error('To run finality you have to run Liveness')
