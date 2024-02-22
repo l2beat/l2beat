@@ -99,6 +99,10 @@ const meta: Meta<typeof ScalingFinalityView> = {
           maximumInSeconds: 2240,
         },
         finalizationPeriod: formatSeconds(3600, { fullUnit: true }),
+        syncStatus: {
+          isSynced: true,
+          displaySyncedUntil: '2024 Feb 12 12:00:00 (UTC)',
+        },
       },
       {
         name: 'ApeX',
@@ -117,6 +121,10 @@ const meta: Meta<typeof ScalingFinalityView> = {
           maximumInSeconds: 1259,
         },
         finalizationPeriod: formatSeconds(2 * 3600, { fullUnit: true }),
+        syncStatus: {
+          isSynced: true,
+          displaySyncedUntil: '2024 Feb 12 12:00:00 (UTC)',
+        },
       },
       {
         name: 'Arbitrum One',
@@ -220,6 +228,10 @@ const meta: Meta<typeof ScalingFinalityView> = {
           maximumInSeconds: 4584,
         },
         finalizationPeriod: formatSeconds(3 * 3600, { fullUnit: true }),
+        syncStatus: {
+          isSynced: true,
+          displaySyncedUntil: '2024 Feb 12 12:00:00 (UTC)',
+        },
       },
       {
         name: 'Base',
@@ -303,6 +315,10 @@ const meta: Meta<typeof ScalingFinalityView> = {
           maximumInSeconds: 1626,
         },
         finalizationPeriod: formatSeconds(4 * 3600, { fullUnit: true }),
+        syncStatus: {
+          isSynced: false,
+          displaySyncedUntil: '2024 Feb 12 12:00:00 (UTC)',
+        },
       },
       {
         name: 'dYdX v3',
@@ -386,6 +402,10 @@ const meta: Meta<typeof ScalingFinalityView> = {
           maximumInSeconds: 67229,
         },
         finalizationPeriod: formatSeconds(5 * 3600, { fullUnit: true }),
+        syncStatus: {
+          isSynced: true,
+          displaySyncedUntil: '2024 Feb 12 12:00:00 (UTC)',
+        },
       },
       {
         name: 'Linea',
@@ -482,6 +502,10 @@ const meta: Meta<typeof ScalingFinalityView> = {
           maximumInSeconds: 78212,
         },
         finalizationPeriod: formatSeconds(6 * 3600, { fullUnit: true }),
+        syncStatus: {
+          isSynced: true,
+          displaySyncedUntil: '2024 Feb 12 12:00:00 (UTC)',
+        },
       },
       {
         name: 'Myria',
@@ -499,6 +523,10 @@ const meta: Meta<typeof ScalingFinalityView> = {
           maximumInSeconds: 2646,
         },
         finalizationPeriod: formatSeconds(7 * 3600, { fullUnit: true }),
+        syncStatus: {
+          isSynced: true,
+          displaySyncedUntil: '2024 Feb 12 12:00:00 (UTC)',
+        },
       },
       {
         name: 'OP Mainnet',
@@ -582,6 +610,10 @@ const meta: Meta<typeof ScalingFinalityView> = {
           maximumInSeconds: 1211,
         },
         finalizationPeriod: formatSeconds(8 * 3600, { fullUnit: true }),
+        syncStatus: {
+          isSynced: true,
+          displaySyncedUntil: '2024 Feb 12 12:00:00 (UTC)',
+        },
       },
       {
         name: 'Scroll',
@@ -677,6 +709,10 @@ const meta: Meta<typeof ScalingFinalityView> = {
           maximumInSeconds: 294,
         },
         finalizationPeriod: formatSeconds(120, { fullUnit: true }),
+        syncStatus: {
+          isSynced: true,
+          displaySyncedUntil: '2024 Feb 12 12:00:00 (UTC)',
+        },
       },
       {
         name: 'tanX',
@@ -694,6 +730,10 @@ const meta: Meta<typeof ScalingFinalityView> = {
           maximumInSeconds: 2129,
         },
         finalizationPeriod: formatSeconds(24 * 3600, { fullUnit: true }),
+        syncStatus: {
+          isSynced: true,
+          displaySyncedUntil: '2024 Feb 12 12:00:00 (UTC)',
+        },
       },
     ],
   },
