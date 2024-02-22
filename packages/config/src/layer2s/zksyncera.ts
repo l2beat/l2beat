@@ -156,6 +156,7 @@ export const zksyncera: Layer2 = {
     },
     finality: {
       type: 'zkSyncEra',
+      minTimestamp: new UnixTime(1708556400),
       lag: 0,
     },
   },

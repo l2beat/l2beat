@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { notUndefined } from '@l2beat/shared-pure'
+import { assertUnreachable, notUndefined } from '@l2beat/shared-pure'
 import { ethers } from 'ethers'
 
 import { Config } from '../../config'
@@ -64,18 +64,23 @@ export function createFinalityModule(
 
   const runtimeConfigurations = config.finality.indexerConfigurations
     .map((configuration) => {
-      if (configuration.type === 'Linea') {
-        return {
-          projectId: configuration.projectId,
-          analyzer: lineaAnalyzer,
-          minTimestamp: configuration.minTimestamp,
-        }
-      } else if (configuration.type === 'zkSyncEra') {
-        return {
-          projectId: configuration.projectId,
-          analyzer: zkSyncEraAnalyzer,
-          minTimestamp: configuration.minTimestamp,
-        }
+      switch (configuration.type) {
+        case 'Linea':
+          return {
+            projectId: configuration.projectId,
+            analyzer: lineaAnalyzer,
+            minTimestamp: configuration.minTimestamp,
+          }
+        case 'zkSyncEra':
+          return {
+            projectId: configuration.projectId,
+            analyzer: zkSyncEraAnalyzer,
+            minTimestamp: configuration.minTimestamp,
+          }
+        case 'OPStack':
+          throw new Error('OPStack finality is not supported')
+        default:
+          assertUnreachable(configuration)
       }
     })
     .filter(notUndefined)
