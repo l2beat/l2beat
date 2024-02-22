@@ -1,0 +1,33 @@
+{
+  "name": "zklink",
+  "chain": "zksync2",
+  "blockNumber": 27211739,
+  "configHash": "0x9a95cbb9d934e95171fa761475038aad2883c62cf3dfc8a52db2a6dd5d00509a",
+  "version": 3,
+  "contracts": [
+    {
+      "name": "zkLink",
+      "address": "0x0669ef7718376591AE0756A56255c75D2e712d87",
+      "unverified": true,
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xE2612BE89838f41Ec63515D1D3659AC5F0B82F10",
+        "admin": "0x7595fD90F2428D99919bF398496eBaFb390a74E5"
+      },
+      "implementations": ["0xE2612BE89838f41Ec63515D1D3659AC5F0B82F10"],
+      "sinceTimestamp": 1704863143,
+      "derivedName": ""
+    },
+    {
+      "name": "",
+      "address": "0x7595fD90F2428D99919bF398496eBaFb390a74E5",
+      "unverified": true,
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1704863155
+    }
+  ],
+  "eoas": [],
+  "abis": {}
+}
