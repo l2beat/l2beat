@@ -15,9 +15,9 @@ describe(generateTvlApiResponse.name, () => {
       [],
       [],
       [
-        { id: ProjectId('arbitrum'), isLayer2: true, sinceTimestamp },
-        { id: ProjectId('optimism'), isLayer2: true, sinceTimestamp },
-        { id: ProjectId('avalanche'), isLayer2: true, sinceTimestamp },
+        { id: ProjectId('arbitrum'), type: 'layer2', sinceTimestamp },
+        { id: ProjectId('optimism'), type: 'layer2', sinceTimestamp },
+        { id: ProjectId('avalanche'), type: 'layer2', sinceTimestamp },
       ],
       untilTimestamp,
     )
@@ -38,7 +38,7 @@ describe(generateTvlApiResponse.name, () => {
         [],
         [],
         [],
-        [{ id: ProjectId(project), isLayer2: true, sinceTimestamp }],
+        [{ id: ProjectId(project), type: 'layer2', sinceTimestamp }],
         untilTimestamp,
       )
     }
@@ -206,7 +206,7 @@ describe(generateTvlApiResponse.name, () => {
         [],
         [],
         [],
-        [{ id: ProjectId('arbitrum'), isLayer2: true, sinceTimestamp: t0 }],
+        [{ id: ProjectId('arbitrum'), type: 'layer2', sinceTimestamp: t0 }],
         t1,
       )
 
@@ -233,7 +233,7 @@ describe(generateTvlApiResponse.name, () => {
         [],
         [],
         [],
-        [{ id: ProjectId('arbitrum'), isLayer2: true, sinceTimestamp }],
+        [{ id: ProjectId('arbitrum'), type: 'layer2', sinceTimestamp }],
         untilTimestamp,
       )
 
@@ -257,7 +257,7 @@ describe(generateTvlApiResponse.name, () => {
         [],
         [],
         [],
-        [{ id: ProjectId('arbitrum'), isLayer2: true, sinceTimestamp }],
+        [{ id: ProjectId('arbitrum'), type: 'layer2', sinceTimestamp }],
         untilTimestamp,
       )
 
@@ -271,20 +271,27 @@ describe(generateTvlApiResponse.name, () => {
     it('generates aggregates for layer2s, bridges and combined', () => {
       const t0 = UnixTime.fromDate(new Date('2024-01-01T00:00:00Z'))
 
-      const projects = [
+      const projects: {
+        id: ProjectId
+        type: 'layer2' | 'bridge'
+        sinceTimestamp: UnixTime
+      }[] = [
         {
           id: ProjectId('arbitrum'),
-          isLayer2: true,
+          type: 'layer2',
+          sinceTimestamp: t0,
         },
         {
           id: ProjectId('optimism'),
-          isLayer2: true,
+          type: 'layer2',
+          sinceTimestamp: t0,
         },
         {
           id: ProjectId('stargate'),
-          isLayer2: false,
+          type: 'bridge',
+          sinceTimestamp: t0,
         },
-      ].map((p) => ({ ...p, sinceTimestamp: t0 }))
+      ]
 
       const mock = (projectId: ProjectId, timestamp: UnixTime) =>
         getMockAggregatedRecord(projectId, timestamp, 32n, 12n, 16n, 4n)

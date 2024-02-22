@@ -95,6 +95,7 @@ export class TvlController {
   }
 
   async getTvlApiResponse(): Promise<TvlResult> {
+    // aggregated status
     const status = await this.getTvlModuleStatus()
 
     if (!status.latestTimestamp) {
@@ -111,6 +112,8 @@ export class TvlController {
       }
     }
 
+    // aggregated
+    // reports
     const [hourlyReports, sixHourlyReports, dailyReports, latestReports] =
       await Promise.all([
         this.aggregatedReportRepository.getHourlyWithAnyType(
@@ -140,8 +143,9 @@ export class TvlController {
 
       projects.push({
         id: project.projectId,
-        isLayer2: project.type === 'layer2',
+        type: project.type,
         sinceTimestamp,
+        isUpcoming: project.isUpcoming,
       })
     }
 

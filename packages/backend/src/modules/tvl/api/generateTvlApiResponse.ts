@@ -1,3 +1,4 @@
+import { assert } from '@l2beat/backend-tools'
 import {
   ProjectId,
   TvlApiChart,
@@ -17,9 +18,15 @@ export function generateTvlApiResponse(
   sixHourlyReports: AggregatedReportRecord[],
   dailyReports: AggregatedReportRecord[],
   latestReports: ReportRecord[],
-  projects: { id: ProjectId; isLayer2: boolean; sinceTimestamp: UnixTime }[],
+  projects: {
+    id: ProjectId
+    type: 'layer2' | 'bridge'
+    isUpcoming?: boolean
+    sinceTimestamp: UnixTime
+  }[],
   untilTimestamp: UnixTime,
 ): TvlApiResponse {
+  console.time('generateTvlApiResponse')
   const charts = getEmptyCharts(projects, untilTimestamp)
   fillCharts(charts, hourlyReports, sixHourlyReports, dailyReports)
 
@@ -35,12 +42,16 @@ export function generateTvlApiResponse(
         tokens: getProjectTokensCharts(groupedLatestReports, project.id),
       }
 
+      console.time('update aggregates')
       updateAggregates(project, aggregates, charts)
+      console.timeEnd('update aggregates')
 
       return acc
     },
     {},
   )
+
+  console.timeEnd('generateTvlApiResponse')
 
   return {
     layers2s: aggregates.layers2s,
@@ -51,7 +62,12 @@ export function generateTvlApiResponse(
 }
 
 function updateAggregates(
-  project: { id: ProjectId; isLayer2: boolean; sinceTimestamp: UnixTime },
+  project: {
+    id: ProjectId
+    type: 'layer2' | 'bridge'
+    isUpcoming?: boolean
+    sinceTimestamp: UnixTime
+  },
   aggregates: {
     layers2s: TvlApiCharts
     bridges: TvlApiCharts
@@ -59,6 +75,10 @@ function updateAggregates(
   },
   charts: Map<ProjectId, TvlApiCharts>,
 ) {
+  if (project.isUpcoming) {
+    return
+  }
+
   function merge(aggregate: TvlApiCharts, projectId: ProjectId) {
     return mergeAggregates(
       aggregate,
@@ -68,9 +88,9 @@ function updateAggregates(
   }
   merge(aggregates.combined, project.id)
 
-  if (project.isLayer2) {
+  if (project.type === 'layer2') {
     aggregates.layers2s = merge(aggregates.layers2s, project.id)
-  } else {
+  } else if (project.type === 'bridge') {
     aggregates.bridges = merge(aggregates.bridges, project.id)
   }
 }
@@ -101,6 +121,11 @@ function mergeAndSumChartPoints(
 ): TvlApiChartPoint[] {
   const startingIndexInAggregates = aggregate.findIndex(
     (a) => a[0].toNumber() === project[0][0].toNumber(),
+  )
+
+  assert(
+    aggregate.slice(startingIndexInAggregates).length === project.length,
+    'Programmer error: Expected arrays to be aligned to the same untilTimestamp',
   )
 
   let projectIndex = 0
@@ -158,7 +183,7 @@ const PERIODS = [
 ] as const
 
 function getEmptyCharts(
-  projects: { id: ProjectId; isLayer2: boolean; sinceTimestamp: UnixTime }[],
+  projects: { id: ProjectId; sinceTimestamp: UnixTime }[],
   untilTimestamp: UnixTime,
 ) {
   return new Map<ProjectId, TvlApiCharts>(
@@ -170,16 +195,20 @@ function getEmptyCharts(
 }
 
 function getEmptyAggregates(
-  projects: { id: ProjectId; isLayer2: boolean; sinceTimestamp: UnixTime }[],
+  projects: {
+    id: ProjectId
+    type: 'layer2' | 'bridge'
+    sinceTimestamp: UnixTime
+  }[],
   untilTimestamp: UnixTime,
 ) {
   const minLayer2Timestamp = projects
-    .filter((p) => p.isLayer2)
+    .filter((p) => p.type === 'layer2')
     .map((x) => x.sinceTimestamp)
     .reduce((min, current) => UnixTime.min(min, current), untilTimestamp)
 
   const minBridgeTimestamp = projects
-    .filter((p) => !p.isLayer2)
+    .filter((p) => p.type === 'bridge')
     .map((x) => x.sinceTimestamp)
     .reduce((min, current) => UnixTime.min(min, current), untilTimestamp)
 
