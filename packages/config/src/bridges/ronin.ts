@@ -143,18 +143,18 @@ export const ronin: Bridge = {
   contracts: {
     // TODO: we need all contracts (check roles on escrows) and a diagram
     addresses: [
-      discovery.getContractDetails('MainchainGateway', {
-        description: `Bridge V3 contract handling deposits and withdrawals.`,
-        ...upgrades,
-      }),
-      discovery.getContractDetails('MainchainBridgeManager', {
-        description: `Contract storing all operators, governors and their associated weights. It is used to manage all administrative actions of the bridge.`,
-        ...upgrades,
-      }),
-      discovery.getContractDetails('PauseEnforcer', {
-        description: `Contract allowing PAUSER to pause the bridge.`,
-        ...upgrades,
-      }),
+      discovery.getContractDetails(
+        'MainchainGateway',
+        `Bridge V3 contract handling deposits and withdrawals.`,
+      ),
+      discovery.getContractDetails(
+        'MainchainBridgeManager',
+        `Contract storing all operators, governors and their associated weights. It is used to manage all administrative actions of the bridge.`,
+      ),
+      discovery.getContractDetails(
+        'PauseEnforcer',
+        `Contract allowing PAUSER to pause the bridge.`,
+      ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
