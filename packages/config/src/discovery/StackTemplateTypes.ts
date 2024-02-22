@@ -1,12 +1,16 @@
-export type StackPermissionsTag = 'admin' | 'owner' | 'owned'
+export type StackPermissionsTag = 'admin' | 'owner'
 
-export const StackPermissionsTagDescription: Record<
+export interface StackPermissionsTagDescription {
+  direct: string
+  referenced?: string
+}
+
+export const StackPermissionsTagDescriptions: Record<
   StackPermissionsTag,
-  string
+  StackPermissionsTagDescription
 > = {
-  admin: 'Admin of {0}.',
-  owner: 'Owner of {0}.',
-  owned: 'Owned by {0}.',
+  admin: { direct: 'Admin of {0}.' },
+  owner: { direct: 'Owner of {0}.', referenced: 'Owned by {0}.' },
 }
 
 export interface StackPermissionTemplate {

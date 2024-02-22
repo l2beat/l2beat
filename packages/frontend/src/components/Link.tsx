@@ -1,6 +1,7 @@
 import React, { ComponentPropsWithoutRef } from 'react'
 
 import { cn } from '../utils/cn'
+import { isOutLink } from '../utils/isOutLink'
 import { ArrowRightIcon } from './icons'
 
 type LinkProps<T extends React.ElementType> = {
@@ -73,9 +74,4 @@ export function Link<T extends React.ElementType>({
       </span>
     </Comp>
   )
-}
-
-export function isOutLink(href: string | undefined | null) {
-  if (!href) return false
-  return /^https?:\/\//.test(href)
 }

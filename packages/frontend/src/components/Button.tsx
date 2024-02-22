@@ -2,9 +2,10 @@ import { cva, VariantProps } from 'class-variance-authority'
 import React from 'react'
 
 import { cn } from '../utils/cn'
+import { PlainLink } from './PlainLink'
 
 const buttonVariants = cva(
-  'cursor-pointer flex justify-center items-center transition-colors duration-100 px-6 py-2 text-center font-bold',
+  'cursor-pointer flex justify-center w-max items-center transition-colors duration-100 px-6 py-2 text-center font-bold',
   {
     variants: {
       variant: {
@@ -23,18 +24,29 @@ const buttonVariants = cva(
   },
 )
 
-type Props = {
+type Props<T extends React.ElementType> = {
   children: React.ReactNode
   className?: string
-} & VariantProps<typeof buttonVariants>
+  as?: T
+} & VariantProps<typeof buttonVariants> &
+  React.ComponentPropsWithoutRef<T>
 
-export function Button({ children, className, variant, size, ...rest }: Props) {
+export function Button<T extends React.ElementType>({
+  children,
+  className,
+  as,
+  variant,
+  size,
+  ...rest
+}: Props<T>) {
+  const Comp = as === 'a' ? PlainLink : 'button'
+
   return (
-    <button
+    <Comp
       className={cn(buttonVariants({ variant, size }), className)}
       {...rest}
     >
       {children}
-    </button>
+    </Comp>
   )
 }

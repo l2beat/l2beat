@@ -20,8 +20,7 @@ export abstract class BaseAnalyzer {
     to: UnixTime,
     granularity: number,
   ) {
-    assert(to.toNumber() > from.toNumber())
-    const interval = (to.toNumber() - from.toNumber()) / granularity
+    const interval = this.getInterval(from, to, granularity)
 
     const transactions = (
       await Promise.all(
@@ -52,6 +51,11 @@ export abstract class BaseAnalyzer {
     ).flat()
 
     return finalityDelays
+  }
+
+  private getInterval(from: UnixTime, to: UnixTime, granularity: number) {
+    assert(to.toNumber() > from.toNumber())
+    return (to.toNumber() - from.toNumber()) / granularity
   }
 
   abstract getProjectId(): ProjectId

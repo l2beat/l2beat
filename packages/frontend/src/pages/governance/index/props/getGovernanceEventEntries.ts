@@ -1,4 +1,4 @@
-import { ContentEntry } from '../../../../content/getContent'
+import { CollectionEntry } from '../../../../content/getCollection'
 import { formatTimestamp } from '../../../../utils'
 import {
   getOneTimeEvents,
@@ -9,14 +9,14 @@ export interface GovernanceEventEntry {
   title: string
   subtitle: string | undefined
   link: string
-  location: string
+  location: string | undefined
   startDate: Date
   displayDate: string
   highlighted: boolean | undefined
 }
 
 export function getGovernanceEventEntries(
-  events: ContentEntry<'events'>[],
+  events: CollectionEntry<'events'>[],
 ): GovernanceEventEntry[] {
   const oneTimeEvents = getOneTimeEvents(events)
 
@@ -36,6 +36,10 @@ function getGovernanceEventEntry(event: OneTimeEvent): GovernanceEventEntry {
 }
 
 function getNiceEventDate(event: OneTimeEvent) {
+  if (event.data.toBeAnnounced) {
+    return 'To be announced'
+  }
+
   const startDay = event.data.startDate.getDate()
   const startTimestamp = Math.ceil(event.data.startDate.getTime() / 1000)
 

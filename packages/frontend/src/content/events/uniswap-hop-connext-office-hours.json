@@ -1,0 +1,18 @@
+{
+  "type": "recurring",
+  "title": "Office Hours",
+  "subtitle": "Uniswap, Hop, Connext",
+  "sinceDate": "2023-08-01",
+  "futureEventsCount": 3,
+  "dayOfWeek": 5,
+  "startDate": {
+    "hour": 16,
+    "minute": 0
+  },
+  "endDate": {
+    "hour": 17,
+    "minute": 0
+  },
+  "location": "Online",
+  "link": "https://meet.google.com/twm-jafw-esn"
+}

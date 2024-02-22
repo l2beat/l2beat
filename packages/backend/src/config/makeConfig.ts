@@ -10,6 +10,7 @@ import {
   getChainActivityConfig,
   getProjectsWithActivity,
 } from './features/activity'
+import { getFinalityIndexerConfigurations } from './features/finality'
 import { getChainsWithTokens, getChainTvlConfig } from './features/tvl'
 import { getChainDiscoveryConfig } from './features/updateMonitor'
 import { getGitCommitHash } from './getGitCommitHash'
@@ -118,12 +119,12 @@ export function makeConfig(
       minTimestamp: UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
     },
     finality: flags.isEnabled('finality') && {
-      indexerEnabled: flags.isEnabled('finality', 'indexer'),
       ethereumProviderUrl: env.string('FINALITY_ETHEREUM_PROVIDER_URL'),
       ethereumProviderCallsPerMinute: env.integer(
         'FINALITY_ETHEREUM_PROVIDER_CALLS_PER_MINUTE',
         600,
       ),
+      indexerConfigurations: getFinalityIndexerConfigurations(flags),
     },
     activity: flags.isEnabled('activity') && {
       starkexApiKey: env.string('STARKEX_API_KEY'),

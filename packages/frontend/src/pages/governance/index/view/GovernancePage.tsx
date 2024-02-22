@@ -35,9 +35,9 @@ export function GovernancePage(props: GovernancePageProps) {
       <Navbar {...props.navbar} />
       <Header
         delegatedProjects={props.delegatedProjects}
-        pageContentClassName="md:px-2 lg:px-12 justify-start"
+        pageContentClassName="md:px-6 lg:px-12 justify-start"
       />
-      <PageContent type="wider" className="md:px-6 lg:px-12">
+      <PageContent type="subpage" className="md:px-6 lg:px-12">
         <main className="grid md:mt-20 md:gap-6 lg:grid-cols-8 lg:gap-8 [&>*:nth-child(odd)]:bg-transparent md:[&>*:nth-child(odd)]:bg-gray-100 md:[&>*:nth-child(odd)]:dark:dark:bg-zinc-900">
           <RecentPublicationsSection
             publications={props.publications}

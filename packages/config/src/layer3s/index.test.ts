@@ -103,4 +103,17 @@ describe('layer3s', () => {
       })
     })
   })
+
+  describe('state validation', () => {
+    describe('every description ends with a dot', () => {
+      for (const layer3 of layer3s) {
+        if (!layer3.stateValidation) continue
+
+        expect(layer3.stateValidation?.description.endsWith('.')).toEqual(true)
+        layer3.stateValidation?.categories.forEach((category) => {
+          expect(category.description.endsWith('.')).toEqual(true)
+        })
+      }
+    })
+  })
 })

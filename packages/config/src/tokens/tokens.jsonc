@@ -481,6 +481,10 @@
       "address": "0x949D48EcA67b17269629c7194F4b727d4Ef9E5d6"
     },
     {
+      "symbol": "mETH",
+      "address": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa"
+    },
+    {
       "symbol": "MELD",
       "address": "0x333000333b26eE30214B4af6419D9ab07a450400"
     },
@@ -748,6 +752,10 @@
     {
       "symbol": "STARL",
       "address": "0x8E6cd950Ad6ba651F6DD608Dc70e5886B1AA6B24"
+    },
+    {
+      "symbol": "STRK",
+      "address": "0xca14007eff0db1f8135f4c25b34de49ab0d42766"
     },
     {
       "symbol": "stETH",

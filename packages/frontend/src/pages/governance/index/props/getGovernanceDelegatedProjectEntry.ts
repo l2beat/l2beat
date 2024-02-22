@@ -1,4 +1,4 @@
-import { ContentEntry } from '../../../../content/getContent'
+import { CollectionEntry } from '../../../../content/getCollection'
 
 export interface GovernanceDelegatedProjectEntry {
   id: string
@@ -7,7 +7,7 @@ export interface GovernanceDelegatedProjectEntry {
 }
 
 export function getGovernanceDelegatedProjectEntry(
-  delegatedProject: ContentEntry<'delegatedProjects'>,
+  delegatedProject: CollectionEntry<'delegatedProjects'>,
 ): GovernanceDelegatedProjectEntry {
   return {
     id: delegatedProject.id,

@@ -62,37 +62,40 @@ export function createFinalityModule(
     livenessRepository,
   )
 
-  const runtimeConfigurations = config.projects
-    .map((p) => {
-      if (p.finalityConfig?.type === 'Linea') {
+  const runtimeConfigurations = config.finality.indexerConfigurations
+    .map((configuration) => {
+      if (configuration.type === 'Linea') {
         return {
-          projectId: p.projectId,
+          projectId: configuration.projectId,
           analyzer: lineaAnalyzer,
+          minTimestamp: configuration.minTimestamp,
         }
-      } else if (p.finalityConfig?.type === 'zkSyncEra') {
+      } else if (configuration.type === 'zkSyncEra') {
         return {
-          projectId: p.projectId,
+          projectId: configuration.projectId,
           analyzer: zkSyncEraAnalyzer,
+          minTimestamp: configuration.minTimestamp,
         }
       }
     })
     .filter(notUndefined)
 
-  const finalityIndexer = new FinalityIndexer(
-    logger,
-    livenessIndexer,
-    indexerStateRepository,
-    finalityRepository,
-    runtimeConfigurations,
+  const finalityIndexers = runtimeConfigurations.map(
+    (runtimeConfiguration) =>
+      new FinalityIndexer(
+        logger,
+        livenessIndexer,
+        indexerStateRepository,
+        finalityRepository,
+        runtimeConfiguration,
+      ),
   )
-
-  const isIndexerEnabled = config.finality.indexerEnabled
 
   const start = async () => {
     logger = logger.for('FinalityModule')
     logger.info('Starting...')
 
-    if (isIndexerEnabled) {
+    for (const finalityIndexer of finalityIndexers) {
       await finalityIndexer.start()
     }
   }

@@ -22,6 +22,7 @@ import { degate3 } from './degate3'
 import { dydx } from './dydx'
 import { eclipse } from './eclipse'
 import { frame } from './frame'
+import { fraxtal } from './fraxtal'
 import { fuel } from './fuel'
 import { fuelv1 } from './fuelv1'
 import { gluon } from './gluon'
@@ -47,6 +48,7 @@ import { mode } from './mode'
 import { molten } from './molten'
 import { morph } from './morph'
 import { myria } from './myria'
+import { nil } from './nil'
 import { nova } from './nova'
 import { oev } from './oev'
 import { ola } from './ola'
@@ -114,6 +116,7 @@ export const layer2s: Layer2[] = [
   dydx,
   eclipse,
   frame,
+  fraxtal,
   fuel,
   fuelv1,
   gluon,
@@ -138,6 +141,7 @@ export const layer2s: Layer2[] = [
   molten,
   morph,
   myria,
+  nil,
   nova,
   oev,
   ola,

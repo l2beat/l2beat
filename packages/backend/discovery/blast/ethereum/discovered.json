@@ -1,8 +1,8 @@
 {
   "name": "blast",
   "chain": "ethereum",
-  "blockNumber": 18771421,
-  "configHash": "0x5562b16b7419fc49bcd1b3a88c9356477e94bbaa49fca779fbdac9c9494b32d8",
+  "blockNumber": 19260868,
+  "configHash": "0x24892ab65b460d4b6d2fea88a3bc196c6826ccc92f7b4b45a36a9aedf58954ef",
   "version": 3,
   "contracts": [
     {
@@ -10,36 +10,27 @@
       "address": "0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d",
       "upgradeability": {
         "type": "EIP1967 proxy",
-        "implementation": "0x829e8Bf84569A0B2da7B27f975F026fDb6e0a774",
+        "implementation": "0x0bD88b59D580549285f0A207Db5F06bf24a8e561",
         "admin": "0x0000000000000000000000000000000000000000"
       },
-      "implementations": ["0x829e8Bf84569A0B2da7B27f975F026fDb6e0a774"],
+      "implementations": ["0x0bD88b59D580549285f0A207Db5F06bf24a8e561"],
       "sinceTimestamp": 1700359187,
       "values": {
         "CURVE_3POOL": "0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7",
         "DAI": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "DSR_MANAGER": "0x373238337Bfe1146fb49989fc222523f83081dDb",
+        "getMainnetBridge": "EXPECT_REVERT",
         "isTransitionEnabled": false,
         "LIDO": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
         "owner": "0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "proposedBridgeReadyAt": 0,
-        "proposedMainnetBridge": [
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000"
-        ],
-        "proposedUpgrade": [
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000"
-        ],
-        "proposedUpgradeReadyAt": 0,
         "PSM": "0x89B78CfA322F6C5dE0aBcEecab66Aee45393cC5A",
         "staker": "0x9eDFc192fC4d29b8f2b18f484211161b6Fc8063E",
-        "totalETHBalance": "326551911902768732774701",
-        "totalETHShares": "325810312923678335669485",
-        "totalUSDBalanceNoUpdate": "99782852838814615562176348",
-        "totalUSDShares": "99496855398121481403916834",
+        "totalETHBalance": "588328022058127353162445",
+        "totalETHShares": "583120899532743788664542",
+        "totalUSDBalanceNoUpdate": "161240019791146667262191360",
+        "totalUSDShares": "159313844392883549238821701",
         "USDC": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "USDT": "0xdAC17F958D2ee523a2206206994597C13D831ec7"
       },
@@ -66,7 +57,7 @@
           "0x46e31F27Df5047D7Fad9b1E8DFFec635cF6efAcF"
         ],
         "getThreshold": 3,
-        "nonce": 6,
+        "nonce": 8,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -81,21 +72,14 @@
     "0xb7c719eB2649c1F03bFab68b0AAa35AD538a7cC8"
   ],
   "abis": {
-    "0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d": [
-      "constructor(address _logic, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
-    ],
-    "0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C": [
-      "constructor(address _singleton)"
-    ],
-    "0x829e8Bf84569A0B2da7B27f975F026fDb6e0a774": [
+    "0x0bD88b59D580549285f0A207Db5F06bf24a8e561": [
       "constructor()",
       "error BridgeIsNotSet()",
       "error CallerIsNotStaker()",
       "error InsufficientFunds()",
-      "error InvalidDepositor()",
+      "error InvalidRecipient()",
+      "error InvalidRecipientSignature()",
+      "error OnlyEOA()",
       "error SharesNotInitiated()",
       "error TransitionIsEnabled()",
       "error TransitionNotEnabled()",
@@ -109,10 +93,6 @@
       "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "event Paused(address account)",
-      "event ProposeTransition(address mainnetBridge)",
-      "event ProposeUpgrade(address upgradeTo)",
-      "event ResetProposedTransition()",
-      "event ResetProposedUpgrade()",
       "event USDDeposited(address indexed user, uint256 shares, uint256 amount, uint256 daiAmount)",
       "event Unpaused(address account)",
       "event Upgraded(address indexed implementation)",
@@ -126,8 +106,6 @@
       "function USDT() view returns (address)",
       "function acceptOwnership()",
       "function balanceOf(address user) view returns (uint256 ethBalance, uint256 usdBalance)",
-      "function cancelProposeTransition()",
-      "function cancelProposedUpgrade()",
       "function depositDAI(uint256 daiAmount)",
       "function depositDAIWithPermit(uint256 daiAmount, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s)",
       "function depositETH() payable",
@@ -147,12 +125,6 @@
       "function pause()",
       "function paused() view returns (bool)",
       "function pendingOwner() view returns (address)",
-      "function proposeTransition(address proposedBridge)",
-      "function proposeUpgrade(address upgradeTo)",
-      "function proposedBridgeReadyAt() view returns (uint256)",
-      "function proposedMainnetBridge() view returns (address to, bytes32 codehash)",
-      "function proposedUpgrade() view returns (address to, bytes32 codehash)",
-      "function proposedUpgradeReadyAt() view returns (uint256)",
       "function proxiableUUID() view returns (bytes32)",
       "function renounceOwnership()",
       "function setStaker(address _staker)",
@@ -165,13 +137,22 @@
       "function totalUSDBalanceNoUpdate() view returns (uint256)",
       "function totalUSDShares() view returns (uint256)",
       "function transferOwnership(address newOwner)",
-      "function transition()",
+      "function transition(address recipient, uint8 v, bytes32 r, bytes32 s, uint32 minGasLimit)",
+      "function transition(uint32 minGasLimit)",
       "function transitioned(address) view returns (bool)",
       "function unpause()",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
-      "function usdShares(address) view returns (uint256)",
-      "function withdrawAndLosePoints()"
+      "function usdShares(address) view returns (uint256)"
+    ],
+    "0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d": [
+      "constructor(address _logic, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C": [
+      "constructor(address _singleton)"
     ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",

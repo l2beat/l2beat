@@ -10,7 +10,6 @@ import { ReferenceList, TechnologyReference } from './ReferenceList'
 import { RiskList, TechnologyRisk } from './RiskList'
 import { ProjectSectionId } from './sectionId'
 import { TechnologyIncompleteShort } from './TechnologyIncomplete'
-import { UnderReviewCallout } from './UnderReviewCallout'
 
 export interface ContractsSectionProps {
   id: ProjectSectionId
@@ -42,8 +41,9 @@ export function ContractsSection(props: ContractsSectionProps) {
       title={props.title}
       id={props.id}
       sectionOrder={props.sectionOrder}
+      isUnderReview={props.isUnderReview}
+      includeChildrenIfUnderReview
     >
-      {props.isUnderReview ? <UnderReviewCallout className="mb-4" /> : null}
       {props.isIncomplete && <TechnologyIncompleteShort />}
       {props.architectureImage && (
         <figure className="mb-8 mt-4 text-center">
