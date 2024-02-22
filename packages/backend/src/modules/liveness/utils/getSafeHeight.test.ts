@@ -78,6 +78,23 @@ describe(getSafeHeight.name, () => {
 
     expect(result).toEqual(MIN_TIMESTAMP.toNumber())
   })
+
+  it('synced archived configuration does not affect safe height', () => {
+    const databaseEntries: LivenessConfigurationRecord[] = [
+      {
+        ...getMockRecord(MIN_TIMESTAMP, NOW),
+        untilTimestamp: NOW.add(-7, 'days'),
+        lastSyncedTimestamp: NOW.add(-7, 'days'),
+      },
+      {
+        ...getMockRecord(MIN_TIMESTAMP, NOW),
+      },
+    ]
+
+    const result = getSafeHeight(databaseEntries, [], MIN_TIMESTAMP)
+
+    expect(result).toEqual(NOW.toNumber())
+  })
 })
 
 function getMockConfiguration(sinceTimestamp: UnixTime) {
