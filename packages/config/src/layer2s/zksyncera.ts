@@ -78,6 +78,26 @@ export const zksyncera: Layer2 = {
         : undefined,
     },
   },
+  chainConfig: {
+    name: 'zksync2',
+    chainId: 324,
+    explorerUrl: 'https://era.zksync.network/',
+    explorerApi: {
+      url: 'https://api-era.zksync.network/api',
+      type: 'etherscan',
+    },
+    // ~ Timestamp of block number 0 on Arbitrum
+    minTimestampForTvl: UnixTime.fromDate(new Date('2023-02-14T14:22:22Z')),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xF9cda624FBC7e059355ce98a31693d299FACd963'),
+        batchSize: 150,
+        sinceBlock: 3908235,
+        version: '3',
+      },
+    ],
+    coingeckoPlatform: 'zksync',
+  },
   config: {
     escrows: [
       discovery.getEscrowDetails({

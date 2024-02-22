@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xbcb805032fb166ca2799e910ffbea72c1f2247c8
+Generated with discovered.json: 0x14d9b19467d9931e8e784dc1bb808d2eb2229e8f
 
-# Diff at Thu, 01 Feb 2024 12:02:10 GMT:
+# Diff at Thu, 22 Feb 2024 08:26:15 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current block number: 19133455
+- current block number: 19281960
 
 ## Description
 
@@ -20,5 +20,17 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract Arbitrator (0x683669E5B6cDc6636673a5f7ddB68E20812216F5) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract zkSyncL1Gateway (0x98CEDA04E4a1FDc0fd025FB73e48e609AD00673B) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LineaL1Gateway (0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c) {
     }
 ```

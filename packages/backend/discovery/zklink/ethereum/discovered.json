@@ -1,7 +1,7 @@
 {
   "name": "zklink",
   "chain": "ethereum",
-  "blockNumber": 19133455,
+  "blockNumber": 19281960,
   "configHash": "0x7fcf37840be364e77be828e6b115edd30f082ec93c869c78b3b675419a8d51e8",
   "version": 3,
   "contracts": [
