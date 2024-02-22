@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.43.3
+
+### Patch Changes
+
+- Fix Scroll source code flattening
+
 ## 0.43.2
 
 ### Patch Changes

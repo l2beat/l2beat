@@ -142,6 +142,11 @@ async function saveFlatSources(
           }))
           .filter((e) => e.path.endsWith('.sol'))
 
+        if (input.length === 0) {
+          logger.log(`[SKIP]: ${contract.name}-${source.name} no .sol files`)
+          continue
+        }
+
         const result = timed(() => {
           const parsedFileManager = ParsedFilesManager.parseFiles(
             input,

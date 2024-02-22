@@ -172,6 +172,7 @@ export function getASTIdentifiers(baseNode: AST.BaseASTNode | null): string[] {
     case 'UnaryOperation':
     case 'NewExpression':
     case 'BooleanLiteral':
+    case 'HexLiteral':
     case 'NumberLiteral':
     case 'StringLiteral':
     case 'NameValueExpression': {
