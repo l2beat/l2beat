@@ -2,9 +2,37 @@
   "name": "ronin",
   "chain": "ethereum",
   "blockNumber": 19277773,
-  "configHash": "0xbb67c73c6b93a7e12319658d6b39db041ce7d409de671a5ef4a1874a7ead315a",
+  "configHash": "0x97f11aa9d2828bf122272ed384eca8c8eb308aa5ea8844bf19fb36cd950ef011",
   "version": 3,
   "contracts": [
+    {
+      "name": "RoninBridgeAdminMultiSig",
+      "address": "0x2DA02aC5f19Ae362a4121718d990e655eB628D96",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1562142059,
+      "values": {
+        "calcMaxWithdraw": 0,
+        "dailyLimit": 0,
+        "getOwners": [
+          "0xE5EB222996967BE79468C28bA39D665fd96E8b30",
+          "0x6bfC8F9096446d350713C4eB9d9b68866F87a9d0",
+          "0xaD99Fc4d593bAe582c2Ca83aCD98Ae6fcDb36192"
+        ],
+        "lastDay": 1653566443,
+        "MAX_OWNER_COUNT": 50,
+        "owners": [
+          "0xE5EB222996967BE79468C28bA39D665fd96E8b30",
+          "0x6bfC8F9096446d350713C4eB9d9b68866F87a9d0",
+          "0xaD99Fc4d593bAe582c2Ca83aCD98Ae6fcDb36192"
+        ],
+        "required": 2,
+        "spentToday": 0,
+        "transactionCount": 24
+      },
+      "derivedName": "MultiSigWalletWithDailyLimit"
+    },
     {
       "name": "MainchainGateway",
       "address": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08",
@@ -17,6 +45,21 @@
       "sinceTimestamp": 1655883630,
       "values": {
         "_MAX_PERCENTAGE": 1000000,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x2DA02aC5f19Ae362a4121718d990e655eB628D96"]
+          },
+          "WITHDRAWAL_UNLOCKER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": [
+              "0x58a8DcFdeF9BB5E164382562317C13D6F2A706F4",
+              "0xE5EB222996967BE79468C28bA39D665fd96E8b30",
+              "0x6bfC8F9096446d350713C4eB9d9b68866F87a9d0",
+              "0xaD99Fc4d593bAe582c2Ca83aCD98Ae6fcDb36192"
+            ]
+          }
+        },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "depositCount": 60864,
         "DOMAIN_SEPARATOR": "0x2b00d883a78a8b8d324cfe3cc451d9550b8509512a316b5dba270df178853071",
@@ -40,6 +83,12 @@
       },
       "sinceTimestamp": 1697008163,
       "values": {
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          }
+        },
         "DOMAIN_SEPARATOR": "0x9408194fe4a32106a620466afdd1b7827ec744a26bd1d6e99423a57405e1ed63",
         "getBridgeOperators": [
           "0xc23F2907Bc11848B5d5cEdBB835e915D7b760d99",
@@ -121,11 +170,22 @@
       },
       "sinceTimestamp": 1679637023,
       "values": {
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x2DA02aC5f19Ae362a4121718d990e655eB628D96"]
+          },
+          "SENTRY_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x8B35C5E273525a4Ca61025812f29C17727948f57"]
+          }
+        },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "emergency": false,
         "SENTRY_ROLE": "0x5bea60102f2a7acc9e82b1af0e3bd4069661102bb5dd143a6051cd1980dded1c",
         "target": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08"
-      }
+      },
+      "derivedName": "PauseEnforcer"
     }
   ],
   "eoas": [
@@ -145,26 +205,31 @@
     "0x54C8C42F07007D43c3049bEF6f10eA68687d43ef",
     "0x564DcB855Eb360826f27D1Eb9c57cbbe6C76F50F",
     "0x5832C3219c1dA998e828E1a2406B73dbFC02a70C",
+    "0x58a8DcFdeF9BB5E164382562317C13D6F2A706F4",
     "0x58aBcBCAb52dEE942491700CD0DB67826BBAA8C6",
     "0x5e04DC8156ce222289d52487dbAdCb01C8c990f9",
     "0x60c4B72fc62b3e3a74e283aA9Ba20d61dD4d8F1b",
     "0x66225AcC78Be789C57a11C9a18F051C779d678B5",
+    "0x6bfC8F9096446d350713C4eB9d9b68866F87a9d0",
     "0x72A69B04B59C36fCED19ac54209beF878e84FcBF",
     "0x73f5B22312B7B2B3B1Cd179fC62269aB369c8206",
     "0x772112C7e5dD4ed663e844e79d77c1569a2E88ce",
     "0x77Ab649Caa7B4b673C9f2cF069900DF48114d79D",
+    "0x8B35C5E273525a4Ca61025812f29C17727948f57",
     "0x8c4AD2DC12AdB9aD115e37EE9aD2e00E343EDf85",
     "0x8d4f4e4ba313c4332e720445d8268E087D5C19b8",
     "0x9B0612E43855ef9a7c329ee89653bA45273B550e",
     "0xA441f1399C8c023798586fbbBcF35f27279638a1",
     "0xA91D05b7c6e684F43E8Fe0c25B3c4Bb1747A2a9E",
     "0xAD23e87306aa3c7B95ee760e86f40F3021E5Fa18",
+    "0xaD99Fc4d593bAe582c2Ca83aCD98Ae6fcDb36192",
     "0xbaCB04eA617b3E5EEe0E3f6E8FCB5Ba886B83958",
     "0xc092Fa0C772b3c850e676c57d8737BB39084B9AC",
     "0xc23F2907Bc11848B5d5cEdBB835e915D7b760d99",
     "0xD9d5b3E58fa693B468a20C716793B18A1195380a",
     "0xe258f9996723B910712D6E67ADa4EafC15F7F101",
     "0xe38aFbE7738b6Ec4280A6bCa1176c1C1A928A19C",
+    "0xE5EB222996967BE79468C28bA39D665fd96E8b30",
     "0xE795F18F2F5DF5a666994e839b98263Dba86C902",
     "0xe880802580a1fbdeF67ACe39D1B21c5b2C74f059",
     "0xEC5c90401F95F8c49b1E133E94F09D85b21d96a4",
@@ -175,6 +240,45 @@
     "0xff30Ed09E3AE60D39Bce1727ee3292fD76A6FAce"
   ],
   "abis": {
+    "0x2DA02aC5f19Ae362a4121718d990e655eB628D96": [
+      "function owners(uint256) view returns (address)",
+      "function removeOwner(address owner)",
+      "function revokeConfirmation(uint256 transactionId)",
+      "function isOwner(address) view returns (bool)",
+      "function confirmations(uint256, address) view returns (bool)",
+      "function calcMaxWithdraw() view returns (uint256)",
+      "function getTransactionCount(bool pending, bool executed) view returns (uint256 count)",
+      "function dailyLimit() view returns (uint256)",
+      "function lastDay() view returns (uint256)",
+      "function addOwner(address owner)",
+      "function isConfirmed(uint256 transactionId) view returns (bool)",
+      "function getConfirmationCount(uint256 transactionId) view returns (uint256 count)",
+      "function transactions(uint256) view returns (address destination, uint256 value, bytes data, bool executed)",
+      "function getOwners() view returns (address[])",
+      "function getTransactionIds(uint256 from, uint256 to, bool pending, bool executed) view returns (uint256[] _transactionIds)",
+      "function getConfirmations(uint256 transactionId) view returns (address[] _confirmations)",
+      "function transactionCount() view returns (uint256)",
+      "function changeRequirement(uint256 _required)",
+      "function confirmTransaction(uint256 transactionId)",
+      "function submitTransaction(address destination, uint256 value, bytes data) returns (uint256 transactionId)",
+      "function changeDailyLimit(uint256 _dailyLimit)",
+      "function MAX_OWNER_COUNT() view returns (uint256)",
+      "function required() view returns (uint256)",
+      "function replaceOwner(address owner, address newOwner)",
+      "function executeTransaction(uint256 transactionId)",
+      "function spentToday() view returns (uint256)",
+      "constructor(address[] _owners, uint256 _required, uint256 _dailyLimit)",
+      "event DailyLimitChange(uint256 dailyLimit)",
+      "event Confirmation(address indexed sender, uint256 indexed transactionId)",
+      "event Revocation(address indexed sender, uint256 indexed transactionId)",
+      "event Submission(uint256 indexed transactionId)",
+      "event Execution(uint256 indexed transactionId)",
+      "event ExecutionFailure(uint256 indexed transactionId)",
+      "event Deposit(address indexed sender, uint256 value)",
+      "event OwnerAddition(address indexed owner)",
+      "event OwnerRemoval(address indexed owner)",
+      "event RequirementChange(uint256 required)"
+    ],
     "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",

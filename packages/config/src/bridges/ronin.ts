@@ -144,26 +144,21 @@ export const ronin: Bridge = {
     // TODO: we need all contracts (check roles on escrows) and a diagram
     addresses: [
       discovery.getContractDetails('MainchainGateway', {
-        description: `Upgradeable Bridge V3 contract.`,
+        description: `Bridge V3 contract handling deposits and withdrawals.`,
+        ...upgrades,
+      }),
+      discovery.getContractDetails('MainchainBridgeManager', {
+        description: `Contract storing all operators, governors and their associated weights. It is used to manage all administrative actions of the bridge.`,
+        ...upgrades,
+      }),
+      discovery.getContractDetails('PauseEnforcer', {
+        description: `Contract allowing PAUSER to pause the bridge.`,
         ...upgrades,
       }),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
-    {
-      name: 'MainchainBridgeManager',
-      accounts: [
-        {
-          address: discovery.getContractUpgradeabilityParam(
-            'MainchainGateway',
-            'admin',
-          ),
-          type: 'Contract',
-        },
-      ],
-      description: `Can propose upgrades to the bridge and invoke admin functions.`,
-    },
     {
       name: 'MainchainBridgeManager Operators',
       accounts: discovery.getPermissionedAccounts(
@@ -181,11 +176,36 @@ export const ronin: Bridge = {
       description: `List of governors that can update their corresponding operators and change bridge parameters.`,
     },
     {
-      name: 'MainchainGatewayV3 Emergency Pauser',
+      name: 'Ronin Bridge AdminMultiSig', // non-standard MultiSig
+      accounts: [
+        {
+          address: discovery.getContract('RoninBridgeAdminMultiSig').address,
+          type: 'MultiSig',
+        },
+      ],
+      description:
+        'Admin of the Ronin Bridge, can upgrade the bridge and change Sentry Account. This is a non-standard MultiSig with 2 / 3 threshold.',
+    },
+    {
+      name: 'Ronin Bridge AdminMultiSig participants', // non-standard MultiSig owners
+      accounts: discovery.getPermissionedAccounts(
+        'RoninBridgeAdminMultiSig',
+        'getOwners',
+      ),
+
+      description: 'Those are the participants of the AdminMultisig.',
+    },
+    {
+      name: 'MainchainGatewayV3 Sentry Account',
       accounts: [
         discovery.getPermissionedAccount('MainchainGateway', 'emergencyPauser'),
       ],
       description: 'An address that can pause the bridge in case of emergency.',
+    },
+    {
+      name: 'MainchainGatewayV3 Withdrawal Unlockers',
+      accounts: [], // TODO: use getRoleMembersFromAccessControl('WITHDRAWAL_UNLOCKER_ROLE') when available
+      description: 'Addresses that can unlock withdrawals.',
     },
   ],
 }
