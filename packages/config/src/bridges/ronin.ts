@@ -18,11 +18,6 @@ const thresholdArray = discovery.getContractValue<number[]>(
 )
 const thresholdPerc = thresholdArray[0]
 
-const upgrades = {
-  upgradableBy: ['MainchainBridgeManager'],
-  upgradeDelay: 'No delay',
-}
-
 const operatorsString = `${thresholdPerc}% out of ${operatorsCount}`
 
 export const ronin: Bridge = {
@@ -143,10 +138,14 @@ export const ronin: Bridge = {
   contracts: {
     // TODO: we need all contracts (check roles on escrows) and a diagram
     addresses: [
-      discovery.getContractDetails(
-        'MainchainGateway',
-        `Bridge V3 contract handling deposits and withdrawals.`,
-      ),
+      {
+        ...discovery.getContractDetails(
+          'MainchainGateway',
+          `Bridge V3 contract handling deposits and withdrawals.`,
+        ),
+        upgradableBy: ['MainchainBridgeManager Governors'],
+        upgradeDelay: 'No delay',
+      },
       discovery.getContractDetails(
         'MainchainBridgeManager',
         `Contract storing all operators, governors and their associated weights. It is used to manage all administrative actions of the bridge.`,
@@ -173,7 +172,7 @@ export const ronin: Bridge = {
         'MainchainBridgeManager',
         'getGovernors',
       ),
-      description: `List of governors that can update their corresponding operators and change bridge parameters.`,
+      description: `List of governors that can update their corresponding operators, upgrade and change bridge parameters.`,
     },
     {
       name: 'Ronin Bridge AdminMultiSig', // non-standard MultiSig
@@ -184,7 +183,7 @@ export const ronin: Bridge = {
         },
       ],
       description:
-        'Admin of the Ronin Bridge, can upgrade the bridge and change Sentry Account. This is a non-standard MultiSig with 2 / 3 threshold.',
+        'Admin of the Ronin Bridge, can change Sentry Account and accounts able to unlock withdrawals. This is a non-standard MultiSig with 2 / 3 threshold.',
     },
     {
       name: 'Ronin Bridge AdminMultiSig participants', // non-standard MultiSig owners
