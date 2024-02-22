@@ -26,7 +26,6 @@ export function generateTvlApiResponse(
   }[],
   untilTimestamp: UnixTime,
 ): TvlApiResponse {
-  console.time('generateTvlApiResponse')
   const charts = getEmptyCharts(projects, untilTimestamp)
   fillCharts(charts, hourlyReports, sixHourlyReports, dailyReports)
 
@@ -42,16 +41,12 @@ export function generateTvlApiResponse(
         tokens: getProjectTokensCharts(groupedLatestReports, project.id),
       }
 
-      console.time('update aggregates')
       updateAggregates(project, aggregates, charts)
-      console.timeEnd('update aggregates')
 
       return acc
     },
     {},
   )
-
-  console.timeEnd('generateTvlApiResponse')
 
   return {
     layers2s: aggregates.layers2s,
