@@ -86,7 +86,7 @@ export const zksyncera: Layer2 = {
       url: 'https://api-era.zksync.network/api',
       type: 'etherscan',
     },
-    // ~ Timestamp of block number 0 on Arbitrum
+    // ~ Timestamp of block number 1 on ZksyncEra
     minTimestampForTvl: UnixTime.fromDate(new Date('2023-02-14T14:22:22Z')),
     multicallContracts: [
       {
