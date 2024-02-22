@@ -1,15 +1,21 @@
-Generated with discovered.json: 0x4a3e58bcf9ac48089d5559c3d508b3afb2fd9ae4
+Generated with discovered.json: 0x05585b7034e5debaf1889679b55eb870a9a37b99
 
-# Diff at Wed, 21 Feb 2024 18:20:27 GMT:
+# Diff at Thu, 22 Feb 2024 12:48:31 GMT:
 
 - author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
-- current block number: 19277773
+- current block number: 19283248
 
 ## Description
 
-Ignored unnecessary method.
+Added access control to the discovery.
 
 ## Initial discovery
+
+```diff
++   Status: CREATED
+    contract RoninBridgeAdminMultiSig (0x2DA02aC5f19Ae362a4121718d990e655eB628D96) {
+    }
+```
 
 ```diff
 +   Status: CREATED
