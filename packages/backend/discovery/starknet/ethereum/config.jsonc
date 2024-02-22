@@ -16,7 +16,8 @@
     "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
     "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
     "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
-    "0x023A2aAc5d0fa69E3243994672822BA43E34E5C9"
+    "0x023A2aAc5d0fa69E3243994672822BA43E34E5C9",
+    "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
   ],
   "names": {
     "0x0437465dfb5B79726e35F08559B0cBea55bb585C": "DAIBridge",
@@ -37,7 +38,8 @@
     "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C": "FXSBridge",
     "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8": "sfrxETHBridge",
     "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5": "LUSDBridge",
-    "0x023A2aAc5d0fa69E3243994672822BA43E34E5C9": "LORDSBridge"
+    "0x023A2aAc5d0fa69E3243994672822BA43E34E5C9": "LORDSBridge",
+    "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4": "STRKBridge"
   },
   "sharedModules": {
     "SHARPVerifierProxy": "l2beat-starkware"
@@ -345,6 +347,28 @@
     },
     "BridgeMultisig": {
       "ignoreInWatchMode": ["nonce"]
+    },
+    "STRKBridge": {
+      "fields": {
+        "manager": {
+          "type": "starkWareNamedStorage",
+          "tag": "STARKNET_TOKEN_BRIDGE_MANAGER_SLOT_TAG",
+          "returnType": "address"
+        },
+        "accessControl": {
+          "type": "accessControl",
+          "roleNames": {
+            "0x00d2ead78c620e94b02d0a996e99298c59ddccfa1d8a0149080ac3a20de06068": "APP_GOVERNOR",
+            "0x03e615638e0b79444a70f8c695bf8f2a47033bf1cf95691ec3130f64939cee99": "APP_ROLE_ADMIN",
+            "0x03711c9d994faf6055172091cb841fd4831aa743e6f3315163b06a122c841846": "GOVERNANCE_ADMIN",
+            "0x023edb77f7c8cc9e38e8afe78954f703aeeda7fffe014eeb6e56ea84e62f6da7": "OPERATOR",
+            "0x026bd110619d11cfdfc28e281df893bc24828e89177318e9dbd860cdaedeb6b3": "SECURITY_ADMIN",
+            "0x037693ba312785932d430dccf0f56ffedd0aa7c0f8b6da2cc4530c2717689b96": "SECURITY_AGENT",
+            "0x0128d63adbf6b09002c26caf55c47e2f26635807e3ef1b027218aa74c8d61a3e": "TOKEN_ADMIN",
+            "0x0251e864ca2a080f55bce5da2452e8cfcafdbc951a3e7fff5023d558452ec228": "UPGRADE_GOVERNOR"
+          }
+        }
+      }
     }
   }
 }

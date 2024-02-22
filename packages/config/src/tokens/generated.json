@@ -2776,6 +2776,21 @@
       "formula": "locked"
     },
     {
+      "id": "strk-starknet-token",
+      "name": "StarkNet Token",
+      "coingeckoId": "starknet",
+      "address": "0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766",
+      "symbol": "STRK",
+      "decimals": 18,
+      "deploymentTimestamp": 1668610211,
+      "coingeckoListingTimestamp": 1708473600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/26433/large/starknet.png?1696525507",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "starl-starlink",
       "name": "StarLink",
       "coingeckoId": "starlink",

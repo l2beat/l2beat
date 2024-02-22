@@ -45,9 +45,7 @@ export function buildReportTree(
   reports: ReportRecord[],
   projects: ReportProject[],
 ): NotAggregatedReportTree {
-  const projectMap = new Map([
-    ...projects.map((x) => [x.projectId, x] as const),
-  ])
+  const projectMap = new Map(projects.map((x) => [x.projectId, x] as const))
 
   const uniqueProjects = [...projectMap.values()]
 
