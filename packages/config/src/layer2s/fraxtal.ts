@@ -13,7 +13,7 @@ export const fraxtal: Layer2 = underReview({
     purposes: ['Universal', 'DeFi'],
     category: 'Optimistic Rollup',
     links: {
-      websites: ['https://www.frax.com/'],
+      websites: ['https://frax.com/'],
       apps: ['https://app.frax.finance/'],
       documentation: ['https://docs.frax.com/'],
       explorers: ['https://fraxscan.com/'],
