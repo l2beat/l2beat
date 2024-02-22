@@ -1711,6 +1711,21 @@
       "formula": "locked"
     },
     {
+      "id": "lqty-lqty",
+      "name": "LQTY",
+      "coingeckoId": "liquity",
+      "address": "0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
+      "symbol": "LQTY",
+      "decimals": 18,
+      "deploymentTimestamp": 1617611590,
+      "coingeckoListingTimestamp": 1617580800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14665/large/200-lqty-icon.png?1696514340",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "lyxe-lukso-token",
       "name": "LUKSO Token",
       "coingeckoId": "lukso-token",
