@@ -10,6 +10,7 @@ import {
 import { ChainConverter } from '../../tools/ChainConverter'
 import { UpdateNotifierRepository } from './repositories/UpdateNotifierRepository'
 import { UpdateNotifier } from './UpdateNotifier'
+import { printAsciiTable } from '../../tools/printAsciiTable'
 
 const BLOCK = 123
 
@@ -239,54 +240,62 @@ describe(UpdateNotifier.name, () => {
 
       const reminders = {
         ['project-a']: [
-            {
-                chainName: 'ethereum',
-                severityCounts: {
-                    low: 1,
-                    medium: 0,
-                    high: 2,
-                    unknown: 4
-                }
+          {
+            chainName: 'ethereum',
+            severityCounts: {
+              low: 1,
+              medium: 0,
+              high: 2,
+              unknown: 4,
             },
-            {
-                chainName: 'arbitrum',
-                severityCounts: {
-                    low: 0,
-                    medium: 0,
-                    high: 0,
-                    unknown: 12
-                }
-            }
+          },
+          {
+            chainName: 'arbitrum',
+            severityCounts: {
+              low: 0,
+              medium: 0,
+              high: 0,
+              unknown: 12,
+            },
+          },
         ],
         ['project-b']: [
-            {
-                chainName: 'ethereum',
-                severityCounts: {
-                    low: 0,
-                    medium: 2,
-                    high: 3,
-                    unknown: 0
-                }
+          {
+            chainName: 'ethereum',
+            severityCounts: {
+              low: 0,
+              medium: 2,
+              high: 3,
+              unknown: 0,
             },
-            {
-                chainName: 'optimism',
-                severityCounts: {
-                    low: 0,
-                    medium: 0,
-                    high: 3,
-                    unknown: 4
-                }
-            }
+          },
+          {
+            chainName: 'optimism',
+            severityCounts: {
+              low: 0,
+              medium: 0,
+              high: 3,
+              unknown: 4,
+            },
+          },
         ],
       }
       const timestamp = UnixTime.now().toStartOf('day').add(6, 'hours')
+      const headers = ['Project', 'Chain', 'High', 'Mid', 'Low', '???']
+      const rows = [
+          ["project-a", "ethereum", "2", "0", "1", "4"],
+          ["project-a", "arbitrum", "0", "0", "0", "12"],
+          ["project-b", "ethereum", "3", "2", "0", "0"],
+          ["project-b", "optimism", "3", "0", "0", "4"]
+      ]
+      const table = printAsciiTable(headers, rows)
 
       await updateNotifier.sendDailyReminder(reminders, timestamp)
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
-        `# Daily bot report @ ${timestamp.toYYYYMMDD()}\n\n:x: Detected changes :x:\n\`\`\`\n- project-a (ethereum, arbitrum)\n- project-b (ethereum, optimism)\n\`\`\`\n`,
+        `# Daily bot report @ ${timestamp.toYYYYMMDD()}\n\n:x: Detected changes with following severities :x:\n\`\`\`\n${table}\n\`\`\`\n`,
         'INTERNAL',
       )
     })

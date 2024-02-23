@@ -10,6 +10,7 @@ import { UpdateNotifierRepository } from './repositories/UpdateNotifierRepositor
 import { diffToMessages } from './utils/diffToMessages'
 import { filterDiff } from './utils/filterDiff'
 import { isNineAM } from './utils/isNineAM'
+import { printAsciiTable } from '../../tools/printAsciiTable'
 
 export interface UpdateMetadata {
   blockNumber: number
@@ -155,14 +156,8 @@ export class UpdateNotifier {
 
     let internals = ''
     if (!isEmpty(reminders)) {
-      const projectNames = Object.keys(reminders)
-      const longestProjectName = Math.max(...projectNames.map((n) => n.length))
-
-      const messages = Object.entries(reminders).map(([project, entries]) =>
-        formatDailyReminderChainEntries(project, entries, longestProjectName),
-      )
-
-      internals = `\`\`\`\n${messages.join('\n')}\n\`\`\``
+      const table = formatRemindersAsTable(reminders)
+      internals = `\`\`\`\n${table}\n\`\`\``
     } else {
       internals = ':white_check_mark: everything is up to date'
     }
@@ -174,30 +169,28 @@ export class UpdateNotifier {
   }
 }
 
-function formatDailyReminderChainEntries(
-  projectName: string,
-  chainChanges: DailyReminderChainEntry[],
-  longestProjectName: number,
+function formatRemindersAsTable(
+    reminders: Record<string, DailyReminderChainEntry[]>,
 ): string {
-  const projectNameWithPadding = projectName.padEnd(longestProjectName, ' ')
-  const chains = chainChanges.map((chain) => {
-    const { low, medium, high, unknown } = chain.severityCounts
+    const headers = ['Project', 'Chain', 'High', 'Mid', 'Low', '???']
+    const rows = Object.entries(reminders).flatMap(([project, chains]) => {
+        return chains.map(({chainName, severityCounts: severity}) => {
+            return [
+                project,
+                chainName,
+                severity.high.toString(),
+                severity.medium.toString(),
+                severity.low.toString(),
+                severity.unknown.toString(),
+            ]
+        })
+    })
 
-    let severities = []
-    severities.push(low > 0 ? `${low} low` : '')
-    severities.push(medium > 0 ? `${medium} medium` : '')
-    severities.push(high > 0 ? `${high} high` : '')
-    severities.push(unknown > 0 ? `${unknown} unknown` : '')
-    severities = severities.filter((s) => s.length > 0)
-
-    return `${chain.chainName} - ${severities.join(', ')} severity`
-  })
-
-  return `- ${projectNameWithPadding} (${chains.join(' | ')})`
+  return printAsciiTable(headers, rows)
 }
 
 function getDailyReminderHeader(timestamp: UnixTime): string {
-  return `# Daily bot report @ ${timestamp.toYYYYMMDD()}\n\n:x: Detected changes :x:`
+  return `# Daily bot report @ ${timestamp.toYYYYMMDD()}\n\n:x: Detected changes with following severities :x:`
 }
 
 function countDiff(diff: DiscoveryDiff[]): number {
