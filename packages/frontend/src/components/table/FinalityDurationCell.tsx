@@ -37,7 +37,7 @@ export function FinalityDurationCell(props: Props) {
               <HorizontalSeparator className="my-2 dark:border-slate-600" />
             </>
           )}
-          <span>30-day avg. time to inclusion</span>
+          <span>Past day avg. time to inclusion</span>
           <ul className="mt-1 list-inside list-disc">
             {props.data.minimumInSeconds && (
               <li className="flex justify-between gap-4">
