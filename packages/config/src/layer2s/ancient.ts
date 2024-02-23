@@ -27,5 +27,11 @@ export const ancient: Layer2 = underReview({
       ],
     },
   },
-  escrows: [],
+  escrows: [
+    {
+      address: EthereumAddress('0x12d4E64E1B46d27A00fe392653A894C1dd36fb80'),
+      sinceTimestamp: new UnixTime(1706054400),
+      tokens: '*',
+    },
+  ],
 })
