@@ -1,7 +1,9 @@
-import { upcoming } from './templates/upcoming'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+
+import { underReview } from './templates/underReview'
 import { Layer2 } from './types'
 
-export const ancient: Layer2 = upcoming({
+export const ancient: Layer2 = underReview({
   id: 'ancient',
   display: {
     name: 'Ancient8',
@@ -13,9 +15,9 @@ export const ancient: Layer2 = upcoming({
     provider: 'OP Stack',
     links: {
       websites: ['https://ancient8.gg/'],
-      apps: [],
+      apps: ['https://bridge.ancient8.gg/'],
       documentation: ['https://docs.ancient8.gg/'],
-      explorers: ['https://testnet.a8scan.io/'],
+      explorers: ['https://scan.ancient8.gg/'],
       repositories: [],
       socialMedia: [
         'https://twitter.com/Ancient8_gg',
@@ -25,4 +27,11 @@ export const ancient: Layer2 = upcoming({
       ],
     },
   },
+  escrows: [
+    {
+      address: EthereumAddress('0x12d4E64E1B46d27A00fe392653A894C1dd36fb80'),
+      sinceTimestamp: new UnixTime(1706054400),
+      tokens: '*',
+    },
+  ],
 })
