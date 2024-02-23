@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { DiscoveryDiff } from '@l2beat/discovery'
+import { ConfigReader, DiscoveryDiff } from '@l2beat/discovery'
 import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { Channel, DiscordClient } from '../../peripherals/discord/DiscordClient'
@@ -25,6 +25,7 @@ export class UpdateNotifier {
     private readonly updateNotifierRepository: UpdateNotifierRepository,
     private readonly discordClient: DiscordClient | undefined,
     private readonly chainConverter: ChainConverter,
+    private readonly configReader: ConfigReader,
     private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
