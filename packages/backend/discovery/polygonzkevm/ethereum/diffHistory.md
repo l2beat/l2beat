@@ -1,3 +1,44 @@
+Generated with discovered.json: 0xa044c3c3b7dd5811d191b9d7da48b7a243b45f1c
+
+# Diff at Thu, 22 Feb 2024 11:24:11 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@74fbd7f65d394338041f8804041b27ceceea98b1 block: 19263381
+- current block number: 19282832
+
+## Description
+
+Added way to discover rollups added to the RollupManager. Currently we do not support ignoring nested values.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+      values.rollupsData.0.6:
+-        1990615
++        1991783
+      values.rollupsData.0.5:
+-        1990630
++        1991800
+      values.rollupsData.0.4:
+-        "0x6116cb825d6526a68480b15d3958bc28af06dc073278d491f6c1c14b435e6694"
++        "0x8ad85f1e7b882d12cf6c64cf256cab8d255d6085e8109400741d82850a1d944b"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19263381 (main branch discovery), not current.
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+      values.rollupsData:
++        [["0x519E42c24163192Dca44CD3fBDCEBF6be9130987",1101,"0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8",7,"0x6116cb825d6526a68480b15d3958bc28af06dc073278d491f6c1c14b435e6694",1990630,1990615,0,0,1984749,0,0]]
+    }
+```
+
 Generated with discovered.json: 0xea555dc810751b7357d2f5afb96482369ae5b864
 
 # Diff at Wed, 14 Feb 2024 14:38:23 GMT:
