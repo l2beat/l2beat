@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { LivenessType, UnixTime } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import { BaseAnalyzer } from './types/BaseAnalyzer'
@@ -11,6 +11,10 @@ type LineaDecoded = [
 ]
 
 export class LineaFinalityAnalyzer extends BaseAnalyzer {
+  override getLivenessType(): LivenessType {
+    return 'STATE'
+  }
+
   async getFinality(transaction: {
     txHash: string
     timestamp: UnixTime

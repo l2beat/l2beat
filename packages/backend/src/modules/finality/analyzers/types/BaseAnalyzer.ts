@@ -14,7 +14,6 @@ export abstract class BaseAnalyzer {
     protected readonly provider: RpcClient,
     protected readonly livenessRepository: LivenessRepository,
     protected readonly projectId: ProjectId,
-    protected readonly livenessType: LivenessType,
   ) {}
 
   async getFinalityWithGranularity(
@@ -32,7 +31,7 @@ export abstract class BaseAnalyzer {
 
           return this.livenessRepository.findTransactionWithinTimeRange(
             this.projectId,
-            this.livenessType,
+            this.getLivenessType(),
             targetTimestamp,
             lowerBound,
           )
@@ -60,6 +59,7 @@ export abstract class BaseAnalyzer {
     return (to.toNumber() - from.toNumber()) / granularity
   }
 
+  abstract getLivenessType(): LivenessType
   abstract getFinality(transaction: {
     txHash: string
     timestamp: UnixTime

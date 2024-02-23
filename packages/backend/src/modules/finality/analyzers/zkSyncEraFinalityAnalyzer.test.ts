@@ -4,20 +4,20 @@ import { utils } from 'ethers'
 
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { LivenessRepository } from '../../liveness/repositories/LivenessRepository'
-import { LineaFinalityAnalyzer } from './LineaFinalityAnalyzer'
+import { zkSyncEraFinalityAnalyzer } from './zkSyncEraFinalityAnalyzer'
 
-describe(LineaFinalityAnalyzer.name, () => {
-  describe(LineaFinalityAnalyzer.prototype.getFinality.name, () => {
+describe(zkSyncEraFinalityAnalyzer.name, () => {
+  describe(zkSyncEraFinalityAnalyzer.prototype.getFinality.name, () => {
     it('correctly decode and returns correct data', async () => {
       const livenessRepository = getMockLivenessRepository()
       const provider = getMockRpcClient()
 
       const l1Timestamp = 1705407431
 
-      const calculator = new LineaFinalityAnalyzer(
+      const calculator = new zkSyncEraFinalityAnalyzer(
         provider,
         livenessRepository,
-        ProjectId('linea'),
+        ProjectId('zksync2'),
       )
       const results = await calculator.getFinality({
         txHash: '0x121',
@@ -31,16 +31,16 @@ describe(LineaFinalityAnalyzer.name, () => {
   })
 
   describe(
-    LineaFinalityAnalyzer.prototype.getFinalityWithGranularity.name,
+    zkSyncEraFinalityAnalyzer.prototype.getFinalityWithGranularity.name,
     () => {
       it('correctly split date for a given granularity', async () => {
         const livenessRepository = getMockLivenessRepository()
         const provider = getMockRpcClient()
         const start = UnixTime.now().toStartOf('hour')
-        const calculator = new LineaFinalityAnalyzer(
+        const calculator = new zkSyncEraFinalityAnalyzer(
           provider,
           livenessRepository,
-          ProjectId('linea'),
+          ProjectId('zksync2'),
         )
 
         await calculator.getFinalityWithGranularity(
@@ -53,8 +53,8 @@ describe(LineaFinalityAnalyzer.name, () => {
           livenessRepository.findTransactionWithinTimeRange,
         ).toHaveBeenNthCalledWith(
           1,
-          ProjectId('linea'),
-          LivenessType('STATE'),
+          ProjectId('zksync2'),
+          LivenessType('PROOF'),
           start,
           start.add(-600, 'seconds'),
         )
@@ -63,8 +63,8 @@ describe(LineaFinalityAnalyzer.name, () => {
           livenessRepository.findTransactionWithinTimeRange,
         ).toHaveBeenNthCalledWith(
           6,
-          ProjectId('linea'),
-          LivenessType('STATE'),
+          ProjectId('zksync2'),
+          LivenessType('PROOF'),
           start.add(-600 * 5, 'seconds'),
           start.add(-600 * 6, 'seconds'),
         )
@@ -103,10 +103,10 @@ describe(LineaFinalityAnalyzer.name, () => {
             }),
         })
 
-        const calculator = new LineaFinalityAnalyzer(
+        const calculator = new zkSyncEraFinalityAnalyzer(
           provider,
           livenessRepository,
-          ProjectId('linea'),
+          ProjectId('zksync2'),
         )
         const results = await calculator.getFinalityWithGranularity(
           start.add(-1, 'hours'),
@@ -162,23 +162,26 @@ const DATA2_TIMESTAMPS = [
 
 function getMockCallData(timestamps: number[]): string {
   const fnSignature =
-    'finalizeBlocks((bytes32,uint32,bytes[],bytes32[],bytes,uint16[])[], bytes, uint256, bytes32)'
+    'proveBatches((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32), (uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[], (uint256[],uint256[]))'
   const iface = new utils.Interface([`function ${fnSignature}`])
 
-  const tuples = timestamps.map((timestamp) => [
-    utils.formatBytes32String(''),
-    timestamp,
-    [utils.randomBytes(0), utils.randomBytes(0)],
-    [utils.keccak256('0x'), utils.keccak256('0x')],
-    utils.randomBytes(0),
-    [],
-  ])
+  const tuples = timestamps
+    .slice(1)
+    .map((timestamp) => createMockTuple(timestamp))
 
-  const sampleData = [
-    tuples,
-    utils.randomBytes(0),
+  const sampleData = [createMockTuple(timestamps[0]), tuples, [[], []]]
+  return iface.encodeFunctionData('proveBatches', sampleData)
+}
+
+function createMockTuple(timestamp: number) {
+  return [
     0,
     utils.formatBytes32String(''),
+    0,
+    0,
+    utils.formatBytes32String(''),
+    utils.formatBytes32String(''),
+    timestamp,
+    utils.formatBytes32String(''),
   ]
-  return iface.encodeFunctionData('finalizeBlocks', sampleData)
 }
