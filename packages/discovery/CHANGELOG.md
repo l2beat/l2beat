@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.43.4
+
+### Patch Changes
+
+- Flattener now supports context in the remappings
+
 ## 0.43.3
 
 ### Patch Changes

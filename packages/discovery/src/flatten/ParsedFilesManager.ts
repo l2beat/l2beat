@@ -46,6 +46,7 @@ export interface FileContent {
 }
 
 export interface Remapping {
+  context: string
   prefix: string
   target: string
 }
@@ -161,7 +162,11 @@ export class ParsedFilesManager {
         'Invalid import directive',
       )
 
-      const remappedPath = resolveRemappings(i.path, remappings)
+      const remappedPath = resolveImportRemappings(
+        i.path,
+        remappings,
+        file.path,
+      )
       const importedFile = this.resolveImportPath(file, remappedPath)
 
       const alreadyImported =
@@ -337,12 +342,21 @@ function extractNamespace(identifier: string): string {
 
 function decodeRemappings(remappingStrings: string[]): Remapping[] {
   return remappingStrings.map((r) => {
-    const [prefix, target] = r.split('=')
-
     assert(r.includes('='), 'Invalid remapping, lacking "=" sign.')
+
+    const [contextPrefix, target] = r.split('=')
+    assert(contextPrefix !== undefined, 'Invalid remapping, missing prefix.')
+
+    let context = undefined
+    let prefix: string | undefined = contextPrefix
+    if (contextPrefix.includes(':')) {
+      ;[context, prefix] = contextPrefix.split(':')
+    }
+    context ??= ''
+
     assert(prefix !== undefined, 'Invalid remapping, missing prefix.')
     assert(target !== undefined, 'Invalid remapping, missing target.')
-    return { prefix, target }
+    return { context, prefix, target }
   })
 }
 
@@ -358,6 +372,48 @@ function resolveRemappings(path: string, remappings: Remapping[]): string {
   }
 
   return path
+}
+
+function resolveImportRemappings(
+  path: string,
+  remappings: Remapping[],
+  context: string,
+): string {
+  let longestPrefix = 0
+  let longestContext = 0
+  let longest: Remapping | undefined = undefined
+
+  for (const remapping of remappings) {
+    const isSmallerContext = remapping.context.length < longestContext
+    if (isSmallerContext) {
+      continue
+    }
+    const isContextPrefix = context.startsWith(remapping.context)
+    if (!isContextPrefix) {
+      continue
+    }
+    const isSmallerPrefix =
+      remapping.prefix.length < longestPrefix &&
+      remapping.context.length === longestContext
+    if (isSmallerPrefix) {
+      continue
+    }
+    const isPrefixMatch = path.startsWith(remapping.prefix)
+    if (!isPrefixMatch) {
+      continue
+    }
+
+    longestContext = remapping.context.length
+    longestPrefix = remapping.prefix.length
+    longest = remapping
+  }
+
+  if (longest === undefined) {
+    return path
+  }
+
+  const result = posix.join(longest.target, path.slice(longest.prefix.length))
+  return result
 }
 
 function findOne<T>(

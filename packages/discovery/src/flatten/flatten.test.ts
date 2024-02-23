@@ -12,7 +12,11 @@ describe('flatten', () => {
     const CONTRACT4_SOURCE = 'contract C4 { function r4(L1.S1 arg) public {} }'
     const LIBRARY_SOURCE = 'library L1 { struct S1 { uint256 x; } }'
 
-    const remappings = ['remappedPath1=path1', 'remappedPath2=path2']
+    const remappings = [
+      'remappedPath1=path1',
+      'Root.sol:remappedPath2=path2',
+      'remappedPath2=path3',
+    ]
     const files: FileContent[] = [
       {
         path: 'Root.sol',
