@@ -20,8 +20,8 @@ import {
   LivenessRepository,
 } from '../../liveness/repositories/LivenessRepository'
 import {
+  FinalityRecord,
   FinalityRepository,
-  ProjectFinalityRecord,
 } from '../repositories/FinalityRepository'
 import { FinalityController } from './FinalityController'
 
@@ -65,6 +65,8 @@ describe(FinalityController.name, () => {
         }),
       )
       const project2Result = {
+        projectId: ProjectId('project2'),
+        timestamp: new UnixTime(1000),
         minimumTimeToInclusion: 1,
         averageTimeToInclusion: 2,
         maximumTimeToInclusion: 3,
@@ -93,15 +95,14 @@ describe(FinalityController.name, () => {
       const last30Days = calculateDetailsFor(records, '30d')
 
       assert(last30Days, 'last30Days is undefined')
-      const expected = {
-        averageInSeconds: last30Days.averageInSeconds / 2 + 0,
-        maximumInSeconds: last30Days.maximumInSeconds,
-      }
-
       const result = await finalityController.getFinality()
       if (result.type === 'success') {
         expect(result.data.projects.project1).toEqual({
-          timeToInclusion: expected,
+          timeToInclusion: {
+            averageInSeconds: last30Days.averageInSeconds / 2 + 0,
+            maximumInSeconds: last30Days.maximumInSeconds,
+          },
+          syncedUntil: records[0].timestamp,
         })
         expect(result.data.projects.project2).toEqual({
           timeToInclusion: {
@@ -109,6 +110,7 @@ describe(FinalityController.name, () => {
             maximumInSeconds: project2Result.maximumTimeToInclusion,
             minimumInSeconds: project2Result.minimumTimeToInclusion,
           },
+          syncedUntil: project2Result.timestamp,
         })
       }
     })
@@ -171,13 +173,15 @@ describe(FinalityController.name, () => {
       const last30Days = calculateDetailsFor(records, '30d')
 
       assert(last30Days, 'last30Days is undefined')
-      const expected = {
-        averageInSeconds: last30Days.averageInSeconds / 2 + 0,
-        maximumInSeconds: last30Days.maximumInSeconds,
-      }
 
       const result = await finalityController.getOPStackFinality(projects)
-      expect(result.project1).toEqual({ timeToInclusion: expected })
+      expect(result.project1).toEqual({
+        timeToInclusion: {
+          averageInSeconds: last30Days.averageInSeconds / 2 + 0,
+          maximumInSeconds: last30Days.maximumInSeconds,
+        },
+        syncedUntil: records[0].timestamp,
+      })
     })
   })
 
@@ -192,16 +196,19 @@ describe(FinalityController.name, () => {
         getMockLivenessRepository([]),
         getMockFinalityRepository([
           {
+            projectId: ProjectId('project1'),
+            timestamp: new UnixTime(1000),
             minimumTimeToInclusion: 1,
             averageTimeToInclusion: 2,
             maximumTimeToInclusion: 3,
           },
           {
+            projectId: ProjectId('project3'),
+            timestamp: new UnixTime(12000),
             minimumTimeToInclusion: 4,
             averageTimeToInclusion: 5,
             maximumTimeToInclusion: 6,
           },
-          undefined,
         ]),
         getMockIndexerStateRepository(CLOCK.getLastHour()),
         projects,
@@ -216,13 +223,15 @@ describe(FinalityController.name, () => {
             averageInSeconds: 2,
             maximumInSeconds: 3,
           },
+          syncedUntil: new UnixTime(1000),
         },
-        project2: {
+        project3: {
           timeToInclusion: {
             minimumInSeconds: 4,
             averageInSeconds: 5,
             maximumInSeconds: 6,
           },
+          syncedUntil: new UnixTime(12000),
         },
       })
     })
@@ -250,16 +259,9 @@ function getMockIndexerStateRepository(data: UnixTime) {
   })
 }
 
-function getMockFinalityRepository(
-  records?: (ProjectFinalityRecord | undefined)[],
-) {
-  const mock = mockFn()
-  records?.forEach((r) => {
-    mock.resolvesToOnce(r)
-  })
-
+function getMockFinalityRepository(records: FinalityRecord[] = []) {
   return mockObject<FinalityRepository>({
-    findProjectFinalityOnTimestamp: mock,
+    getLatestGroupedByProjectId: mockFn().resolvesTo(records),
     addMany() {
       return Promise.resolve(1)
     },

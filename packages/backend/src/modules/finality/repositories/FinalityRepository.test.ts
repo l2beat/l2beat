@@ -39,7 +39,7 @@ describeDatabase(FinalityRepository.name, (database) => {
     await repository.addMany(DATA)
   })
 
-  describe(FinalityRepository.prototype.addMany.name, () => {
+  describe(FinalityRepository.prototype.add.name, () => {
     it('adds new row', async () => {
       await repository.add({
         projectId: ProjectId('project-c'),
@@ -139,6 +139,86 @@ describeDatabase(FinalityRepository.name, (database) => {
           target,
         )
         expect(result).toEqual(undefined)
+      })
+    },
+  )
+
+  describe(
+    FinalityRepository.prototype.getLatestGroupedByProjectId.name,
+    () => {
+      it('returns empty array if no records', async () => {
+        await repository.deleteAll()
+
+        const result = await repository.getLatestGroupedByProjectId([
+          ProjectId('project-a'),
+        ])
+
+        expect(result).toEqual([])
+      })
+
+      it('returns latest rows grouped by projectId', async () => {
+        const additionalRows = [
+          {
+            projectId: ProjectId('project-b'),
+            timestamp: UnixTime.fromDate(new Date('2021-02-01T00:00:00Z')),
+            minimumTimeToInclusion: 1,
+            maximumTimeToInclusion: 3,
+            averageTimeToInclusion: 2,
+          },
+          {
+            projectId: ProjectId('project-c'),
+            timestamp: UnixTime.fromDate(new Date('2024-01-01T01:00:00Z')),
+            minimumTimeToInclusion: 2,
+            maximumTimeToInclusion: 4,
+            averageTimeToInclusion: 3,
+          },
+          {
+            projectId: ProjectId('project-c'),
+            timestamp: UnixTime.fromDate(new Date('2021-01-01T02:00:00Z')),
+            minimumTimeToInclusion: 4,
+            maximumTimeToInclusion: 8,
+            averageTimeToInclusion: 6,
+          },
+          {
+            projectId: ProjectId('project-d'),
+            timestamp: UnixTime.fromDate(new Date('2021-01-01T02:00:00Z')),
+            minimumTimeToInclusion: 4,
+            maximumTimeToInclusion: 8,
+            averageTimeToInclusion: 6,
+          },
+        ]
+
+        await repository.addMany(additionalRows)
+
+        const result = await repository.getLatestGroupedByProjectId([
+          ProjectId('project-a'),
+          ProjectId('project-b'),
+          ProjectId('project-c'),
+        ])
+
+        expect(result).toEqualUnsorted([
+          {
+            projectId: ProjectId('project-a'),
+            timestamp: UnixTime.fromDate(new Date('2021-01-01T02:00:00Z')),
+            minimumTimeToInclusion: 4,
+            maximumTimeToInclusion: 8,
+            averageTimeToInclusion: 6,
+          },
+          {
+            projectId: ProjectId('project-b'),
+            timestamp: UnixTime.fromDate(new Date('2021-02-01T00:00:00Z')),
+            minimumTimeToInclusion: 1,
+            maximumTimeToInclusion: 3,
+            averageTimeToInclusion: 2,
+          },
+          {
+            projectId: ProjectId('project-c'),
+            timestamp: UnixTime.fromDate(new Date('2024-01-01T01:00:00Z')),
+            minimumTimeToInclusion: 2,
+            maximumTimeToInclusion: 4,
+            averageTimeToInclusion: 3,
+          },
+        ])
       })
     },
   )

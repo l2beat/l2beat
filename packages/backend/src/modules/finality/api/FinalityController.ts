@@ -1,10 +1,9 @@
 import {
-  assert,
   FinalityApiResponse,
   LivenessType,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { partition } from 'lodash'
+import { keyBy, mapValues, partition } from 'lodash'
 
 import { Project } from '../../../model/Project'
 import { IndexerStateRepository } from '../../../peripherals/database/repositories/IndexerStateRepository'
@@ -63,32 +62,23 @@ export class FinalityController {
   async getProjectsFinality(
     projects: Project[],
   ): Promise<FinalityApiResponse['projects']> {
-    const result: FinalityApiResponse['projects'] = {}
-    const targetTimestamp = UnixTime.now().toStartOf('day')
+    const projectIds = projects.map((p) => p.projectId)
+    const records = await this.finalityRepository.getLatestGroupedByProjectId(
+      projectIds,
+    )
 
-    await Promise.all(
-      projects.map(async (project) => {
-        assert(
-          project.finalityConfig,
-          'Finality config should not be undefined here',
-        )
-        const projectResult =
-          await this.finalityRepository.findProjectFinalityOnTimestamp(
-            project.projectId,
-            targetTimestamp,
-          )
-
-        if (projectResult) {
-          result[project.projectId.toString()] = {
-            timeToInclusion: {
-              averageInSeconds: projectResult.averageTimeToInclusion,
-              maximumInSeconds: projectResult.maximumTimeToInclusion,
-              minimumInSeconds: projectResult.minimumTimeToInclusion,
-            },
-          }
-        }
+    const result: FinalityApiResponse['projects'] = mapValues(
+      keyBy(records, 'projectId'),
+      (record) => ({
+        timeToInclusion: {
+          minimumInSeconds: record.minimumTimeToInclusion,
+          maximumInSeconds: record.maximumTimeToInclusion,
+          averageInSeconds: record.averageTimeToInclusion,
+        },
+        syncedUntil: record.timestamp,
       }),
     )
+
     return result
   }
 
@@ -107,14 +97,20 @@ export class FinalityController {
           UnixTime.now().add(-30, 'days'),
         )
 
+        const latestRecord = records.at(0)
+        if (!latestRecord) return
+
         const intervals = calcAvgsPerProject(records)
         const projectResult = divideAndAddLag(
           intervals,
           project.finalityConfig.lag,
         )
+        const syncedUntil = latestRecord.timestamp
+
         if (projectResult) {
           result[project.projectId.toString()] = {
             timeToInclusion: projectResult,
+            syncedUntil,
           }
         }
       }),

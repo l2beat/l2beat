@@ -58,6 +58,35 @@ export class FinalityRepository extends BaseRepository {
     return row ? toProjectFinalityRecord(row) : undefined
   }
 
+  async getLatestGroupedByProjectId(
+    projectIds: ProjectId[],
+  ): Promise<FinalityRecord[]> {
+    const knex = await this.knex()
+
+    const maxTimestampSubquery = knex('finality')
+      .select('project_id')
+      .max('timestamp as max_timestamp')
+      .whereIn(
+        'project_id',
+        projectIds?.map((p) => p.toString()),
+      )
+      .groupBy('project_id')
+      .as('max_f')
+
+    const query: FinalityRow[] = await knex('finality as f').join(
+      maxTimestampSubquery,
+      function () {
+        this.on('f.project_id', '=', 'max_f.project_id').andOn(
+          'f.timestamp',
+          '=',
+          'max_f.max_timestamp',
+        )
+      },
+    )
+
+    return query.map(toRecord)
+  }
+
   async addMany(
     records: FinalityRecord[],
     trx?: Knex.Transaction,

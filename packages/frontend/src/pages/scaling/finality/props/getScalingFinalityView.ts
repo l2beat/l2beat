@@ -1,11 +1,13 @@
 import { Layer2, ScalingProjectDataAvailabilityMode } from '@l2beat/config'
 import {
   assertUnreachable,
-  FinalityDataPoint,
+  FinalityProjectData,
   formatSeconds,
   notUndefined,
+  UnixTime,
 } from '@l2beat/shared-pure'
 
+import { formatTimestamp } from '../../../../utils'
 import { orderByTvl } from '../../../../utils/orderByTvl'
 import { FinalityPagesData, ScalingFinalityViewEntry } from '../types'
 import { ScalingFinalityViewProps } from '../view/ScalingFinalityView'
@@ -18,6 +20,7 @@ export function getScalingFinalityView(
 
   const includedProjects = getIncludedProjects(projects)
   const orderedProjects = orderByTvl(includedProjects, tvlApiResponse)
+
   return {
     items: orderedProjects
       .map((project) => {
@@ -26,10 +29,7 @@ export function getScalingFinalityView(
         if (!finalityProjectData?.timeToInclusion) {
           return
         }
-        return getScalingFinalityViewEntry(
-          project,
-          finalityProjectData.timeToInclusion,
-        )
+        return getScalingFinalityViewEntry(project, finalityProjectData)
       })
       .filter(notUndefined),
   }
@@ -37,8 +37,12 @@ export function getScalingFinalityView(
 
 export function getScalingFinalityViewEntry(
   project: Layer2,
-  timeToInclusion: FinalityDataPoint,
+  finalityProjectData: FinalityProjectData,
 ): ScalingFinalityViewEntry {
+  const isSynced = UnixTime.now()
+    .add(-6, 'hours')
+    .lte(finalityProjectData.syncedUntil)
+
   return {
     name: project.display.name,
     shortName: project.display.shortName,
@@ -51,7 +55,7 @@ export function getScalingFinalityViewEntry(
     purposes: project.display.purposes,
     stage: project.stage,
     timeToInclusion: {
-      ...timeToInclusion,
+      ...finalityProjectData.timeToInclusion,
       warning: project.display.finality?.warning,
     },
     finalizationPeriod:
@@ -60,6 +64,16 @@ export function getScalingFinalityViewEntry(
             fullUnit: true,
           })
         : undefined,
+    syncStatus: {
+      isSynced,
+      displaySyncedUntil: formatTimestamp(
+        finalityProjectData.syncedUntil.toNumber(),
+        {
+          mode: 'datetime',
+          longMonthName: true,
+        },
+      ),
+    },
   }
 }
 

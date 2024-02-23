@@ -680,7 +680,10 @@ export function getScalingFinalityColumnsConfig() {
     {
       name: 'Time to inclusion\n30-day avg.',
       getValue: (project) => (
-        <FinalityDurationCell data={project.timeToInclusion} />
+        <FinalityDurationCell
+          data={project.timeToInclusion}
+          syncStatus={project.syncStatus}
+        />
       ),
       tooltip:
         'The average time it would take for an L2 transaction to be included on the L1. Please note, this is an approximate estimation and is different than Time to finality since it ignores the overhead time to reach L1 finality after L1 inclusion.',
@@ -693,11 +696,7 @@ export function getScalingFinalityColumnsConfig() {
       name: 'State update delay',
       tooltip:
         'Time interval between time to finality and state root submission.',
-      getValue: () => (
-        <span className="rounded bg-gray-200 px-1.5 py-px text-center font-medium text-gray-500 dark:bg-neutral-700 dark:text-gray-50">
-          Coming soon
-        </span>
-      ),
+      getValue: () => <Badge type="gray">COMING SOON</Badge>,
     },
     {
       name: 'Execution delay',
