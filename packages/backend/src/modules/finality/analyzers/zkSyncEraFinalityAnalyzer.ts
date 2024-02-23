@@ -1,4 +1,4 @@
-import { LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { LivenessType, UnixTime } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import { BaseAnalyzer } from './types/BaseAnalyzer'
@@ -11,11 +11,7 @@ type zkSyncEraDecoded = [
 
 export class zkSyncEraFinalityAnalyzer extends BaseAnalyzer {
   getLivenessType(): LivenessType {
-    return LivenessType('PROOF')
-  }
-
-  getProjectId(): ProjectId {
-    return ProjectId('zksync2')
+    return 'PROOF'
   }
 
   async getFinality(transaction: { txHash: string; timestamp: UnixTime }) {

@@ -1,4 +1,4 @@
-import { LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { LivenessType, UnixTime } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import { BaseAnalyzer } from './types/BaseAnalyzer'
@@ -11,9 +11,6 @@ type LineaDecoded = [
 ]
 
 export class LineaFinalityAnalyzer extends BaseAnalyzer {
-  override getProjectId(): ProjectId {
-    return ProjectId('linea')
-  }
   override getLivenessType(): LivenessType {
     return 'STATE'
   }

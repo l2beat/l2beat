@@ -3,6 +3,7 @@ import { assertUnreachable, notUndefined } from '@l2beat/shared-pure'
 import { ethers } from 'ethers'
 
 import { Config } from '../../config'
+import { FinalityIndexerConfig } from '../../config/features/finality'
 import { Database } from '../../peripherals/database/Database'
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
@@ -52,38 +53,11 @@ export function createFinalityModule(
   )
   const ethereumRPC = new RpcClient(ethereumProvider, logger)
 
-  const lineaAnalyzer = new LineaFinalityAnalyzer(
+  const runtimeConfigurations = initializeConfigurations(
     ethereumRPC,
     livenessRepository,
+    config.finality.indexerConfigurations,
   )
-
-  const zkSyncEraAnalyzer = new zkSyncEraFinalityAnalyzer(
-    ethereumRPC,
-    livenessRepository,
-  )
-
-  const runtimeConfigurations = config.finality.indexerConfigurations
-    .map((configuration) => {
-      switch (configuration.type) {
-        case 'Linea':
-          return {
-            projectId: configuration.projectId,
-            analyzer: lineaAnalyzer,
-            minTimestamp: configuration.minTimestamp,
-          }
-        case 'zkSyncEra':
-          return {
-            projectId: configuration.projectId,
-            analyzer: zkSyncEraAnalyzer,
-            minTimestamp: configuration.minTimestamp,
-          }
-        case 'OPStack':
-          throw new Error('OPStack finality is not supported')
-        default:
-          assertUnreachable(configuration)
-      }
-    })
-    .filter(notUndefined)
 
   const finalityIndexers = runtimeConfigurations.map(
     (runtimeConfiguration) =>
@@ -109,4 +83,41 @@ export function createFinalityModule(
     start,
     routers: [finalityRouter],
   }
+}
+
+function initializeConfigurations(
+  ethereumRPC: RpcClient,
+  livenessRepository: LivenessRepository,
+  configs: FinalityIndexerConfig[],
+) {
+  return configs
+    .map((configuration) => {
+      switch (configuration.type) {
+        case 'Linea':
+          return {
+            projectId: configuration.projectId,
+            analyzer: new LineaFinalityAnalyzer(
+              ethereumRPC,
+              livenessRepository,
+              configuration.projectId,
+            ),
+            minTimestamp: configuration.minTimestamp,
+          }
+        case 'zkSyncEra':
+          return {
+            projectId: configuration.projectId,
+            analyzer: new zkSyncEraFinalityAnalyzer(
+              ethereumRPC,
+              livenessRepository,
+              configuration.projectId,
+            ),
+            minTimestamp: configuration.minTimestamp,
+          }
+        case 'OPStack':
+          throw new Error('OPStack finality is not supported')
+        default:
+          assertUnreachable(configuration)
+      }
+    })
+    .filter(notUndefined)
 }
