@@ -2,10 +2,13 @@
   "$id": "https://l2beat.com/meta.schema.json",
   "title": "Discovery meta information",
   "description": "File with additional information about interpreting project state.",
-  "required": ["metas"],
+  "required": ["contracts"],
   "type": "object",
   "properties": {
-    "metas": {
+    "$schema": {
+      "type": "string"
+    },
+    "contracts": {
       "type": "array",
       "items": { "$ref": "#/$defs/contract" }
     }
