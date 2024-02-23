@@ -156,7 +156,7 @@ export const near: Bridge = {
   permissions: [
     ...discovery.getMultisigPermission(
       'BridgeAdminMultisig',
-      'Can pause and reconfigure the bridge with no delay, can remove all tokens from Escrow via adminTransfer() method.',
+      'Admin can pause/unpause contracts, modify contracts storage and delegate call to any contract. This allows for any arbitrary action including removal of all tokens from escrows.',
     ),
   ],
 }
