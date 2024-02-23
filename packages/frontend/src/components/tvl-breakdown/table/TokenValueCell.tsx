@@ -20,8 +20,8 @@ export function TokenValueCell(props: TokenValueCellProps) {
     token?.formula === 'totalSupply'
       ? 'total supply'
       : token?.formula === 'circulatingSupply'
-        ? 'circulating supply'
-        : ''
+      ? 'circulating supply'
+      : ''
 
   return props.forCanonical && props.escrows ? (
     <Tooltip>

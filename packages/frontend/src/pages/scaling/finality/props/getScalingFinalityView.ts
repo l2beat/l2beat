@@ -74,10 +74,7 @@ export function getScalingFinalityViewEntry(
 }
 
 function isSynced(syncedUntil: UnixTime) {
-  return UnixTime.now()
-  .add(-1, 'days')
-  .add(-1, 'hours')
-  .lte(syncedUntil)
+  return UnixTime.now().add(-1, 'days').add(-1, 'hours').lte(syncedUntil)
 }
 
 function getIncludedProjects(projects: Layer2[]) {

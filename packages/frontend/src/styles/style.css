@@ -27,9 +27,7 @@ body {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
-  src:
-    local('Roboto'),
-    local('Roboto-Regular'),
+  src: local('Roboto'), local('Roboto-Regular'),
     url('/fonts/roboto/roboto-v30-latin-regular.woff2') format('woff2'),
     url('/fonts/roboto/roboto-v30-latin-regular.woff') format('woff');
 }
@@ -39,9 +37,7 @@ body {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 500;
-  src:
-    local('Roboto Medium'),
-    local('Roboto-Medium'),
+  src: local('Roboto Medium'), local('Roboto-Medium'),
     url('/fonts/roboto/roboto-v30-latin-500.woff2') format('woff2'),
     url('/fonts/roboto/roboto-v30-latin-500.woff') format('woff');
 }
@@ -51,9 +47,7 @@ body {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 700;
-  src:
-    local('Roboto Bold'),
-    local('Roboto-Bold'),
+  src: local('Roboto Bold'), local('Roboto-Bold'),
     url('/fonts/roboto/roboto-v30-latin-700.woff2') format('woff2'),
     url('/fonts/roboto/roboto-v30-latin-700.woff') format('woff');
 }

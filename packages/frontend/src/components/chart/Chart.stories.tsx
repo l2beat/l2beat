@@ -148,7 +148,7 @@ const tokens = [
       },
       iconUrl:
         'https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880',
-    }) as const,
+    } as const),
 )
 
 export const Primary: Story = {}

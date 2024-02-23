@@ -112,7 +112,7 @@ function getAnomalyEntries(
             type: typeToDisplayType(a),
             timestamp: a.timestamp.toNumber(),
             durationInSeconds: a.durationInSeconds,
-          }) as const,
+          } as const),
       )
       anomalies.sort((a, b) => a.timestamp - b.timestamp)
       result.push({
