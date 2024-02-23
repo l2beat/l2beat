@@ -94,7 +94,7 @@ function generateAnomalies() {
               )
               .add(Math.round(Math.random() * 172800), 'seconds'),
             durationInSeconds: generateRandomTime(),
-          } as const),
+          }) as const,
       )
     : []
 }

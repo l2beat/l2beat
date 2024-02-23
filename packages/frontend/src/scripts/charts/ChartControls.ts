@@ -138,10 +138,10 @@ export class ChartControls {
                   info: TokenInfo.parse(JSON.parse(selectValue)),
                 }
               : type === 'tvl'
-              ? { type: 'project-tvl', slug: this.projectSlug }
-              : type === 'detailedTvl'
-              ? { type: 'project-detailed-tvl', slug: this.projectSlug }
-              : { type: 'project-activity', slug: this.projectSlug }
+                ? { type: 'project-tvl', slug: this.projectSlug }
+                : type === 'detailedTvl'
+                  ? { type: 'project-detailed-tvl', slug: this.projectSlug }
+                  : { type: 'project-activity', slug: this.projectSlug }
 
           this.updateChartType(chartType)
         }
