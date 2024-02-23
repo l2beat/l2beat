@@ -17,6 +17,7 @@ describe(zkSyncEraFinalityAnalyzer.name, () => {
       const calculator = new zkSyncEraFinalityAnalyzer(
         provider,
         livenessRepository,
+        ProjectId('zksync2'),
       )
       const results = await calculator.getFinality({
         txHash: '0x121',
@@ -39,6 +40,7 @@ describe(zkSyncEraFinalityAnalyzer.name, () => {
         const calculator = new zkSyncEraFinalityAnalyzer(
           provider,
           livenessRepository,
+          ProjectId('zksync2'),
         )
 
         await calculator.getFinalityWithGranularity(
@@ -104,6 +106,7 @@ describe(zkSyncEraFinalityAnalyzer.name, () => {
         const calculator = new zkSyncEraFinalityAnalyzer(
           provider,
           livenessRepository,
+          ProjectId('zksync2'),
         )
         const results = await calculator.getFinalityWithGranularity(
           start.add(-1, 'hours'),
