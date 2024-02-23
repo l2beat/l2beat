@@ -39,10 +39,6 @@ export function getScalingFinalityViewEntry(
   project: Layer2,
   finalityProjectData: FinalityProjectData,
 ): ScalingFinalityViewEntry {
-  const isSynced = UnixTime.now()
-    .add(-6, 'hours')
-    .lte(finalityProjectData.syncedUntil)
-
   return {
     name: project.display.name,
     shortName: project.display.shortName,
@@ -65,7 +61,7 @@ export function getScalingFinalityViewEntry(
           })
         : undefined,
     syncStatus: {
-      isSynced,
+      isSynced: isSynced(finalityProjectData.syncedUntil),
       displaySyncedUntil: formatTimestamp(
         finalityProjectData.syncedUntil.toNumber(),
         {
@@ -75,6 +71,13 @@ export function getScalingFinalityViewEntry(
       ),
     },
   }
+}
+
+function isSynced(syncedUntil: UnixTime) {
+  return UnixTime.now()
+  .add(-1, 'days')
+  .add(-1, 'hours')
+  .lte(syncedUntil)
 }
 
 function getIncludedProjects(projects: Layer2[]) {
