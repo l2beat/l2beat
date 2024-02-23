@@ -1,5 +1,5 @@
 {
-  "$schema": "../../config.schema.json",
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
   "chain": "ethereum",
   "name": "polynetwork",
   "initialAddresses": ["0x81910675dbaf69dee0fd77570bfd07f8e436386a"],
