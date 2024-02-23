@@ -238,8 +238,46 @@ describe(UpdateNotifier.name, () => {
       )
 
       const reminders = {
-        ['project-a']: ['ethereum', 'arbitrum'],
-        ['project-b']: ['ethereum', 'optimism'],
+        ['project-a']: [
+            {
+                chainName: 'ethereum',
+                severityCounts: {
+                    low: 1,
+                    medium: 0,
+                    high: 2,
+                    unknown: 4
+                }
+            },
+            {
+                chainName: 'arbitrum',
+                severityCounts: {
+                    low: 0,
+                    medium: 0,
+                    high: 0,
+                    unknown: 12
+                }
+            }
+        ],
+        ['project-b']: [
+            {
+                chainName: 'ethereum',
+                severityCounts: {
+                    low: 0,
+                    medium: 2,
+                    high: 3,
+                    unknown: 0
+                }
+            },
+            {
+                chainName: 'optimism',
+                severityCounts: {
+                    low: 0,
+                    medium: 0,
+                    high: 3,
+                    unknown: 4
+                }
+            }
+        ],
       }
       const timestamp = UnixTime.now().toStartOf('day').add(6, 'hours')
 

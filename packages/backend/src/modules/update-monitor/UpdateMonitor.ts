@@ -15,7 +15,7 @@ import { TaskQueue } from '../../tools/queue/TaskQueue'
 import { DiscoveryRunner } from './DiscoveryRunner'
 import { UpdateMonitorRepository } from './repositories/UpdateMonitorRepository'
 import { sanitizeDiscoveryOutput } from './sanitizeDiscoveryOutput'
-import { UpdateNotifier } from './UpdateNotifier'
+import { DailyReminderChainEntry, UpdateNotifier } from './UpdateNotifier'
 import { findDependents } from './utils/findDependents'
 import { findUnknownContracts } from './utils/findUnknownContracts'
 
@@ -64,8 +64,10 @@ export class UpdateMonitor {
     await this.updateNotifier.sendDailyReminder(reminders, timestamp)
   }
 
-  async generateDailyReminder(): Promise<Record<string, string[]>> {
-    const result: Record<string, string[]> = {}
+  async generateDailyReminder(): Promise<
+    Record<string, DailyReminderChainEntry[]>
+  > {
+    const result: Record<string, DailyReminderChainEntry[]> = {}
 
     for (const runner of this.discoveryRunners) {
       const projectConfigs = await this.configReader.readAllConfigsForChain(
@@ -94,7 +96,15 @@ export class UpdateMonitor {
 
         if (diff.length > 0) {
           result[projectConfig.name] ??= []
-          result[projectConfig.name].push(runner.chain)
+          result[projectConfig.name].push({
+            chainName: runner.chain,
+            severityCounts: {
+              low: 0,
+              medium: 1,
+              high: 1,
+              unknown: 0,
+            },
+          })
         }
       }
     }

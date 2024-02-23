@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ConfigReader, DiscoveryDiff } from '@l2beat/discovery'
 import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { isEmpty } from 'lodash'
 
 import { Channel, DiscordClient } from '../../peripherals/discord/DiscordClient'
 import { ChainConverter } from '../../tools/ChainConverter'
@@ -15,6 +16,16 @@ export interface UpdateMetadata {
   chainId: ChainId
   dependents: string[]
   unknownContracts: EthereumAddress[]
+}
+
+export interface DailyReminderChainEntry {
+  chainName: string
+  severityCounts: {
+    low: number
+    medium: number
+    high: number
+    unknown: number
+  }
 }
 
 const OCCURRENCE_LIMIT = 3
@@ -135,7 +146,7 @@ export class UpdateNotifier {
   }
 
   async sendDailyReminder(
-    reminders: Record<string, string[]>,
+    reminders: Record<string, DailyReminderChainEntry[]>,
     timestamp: UnixTime,
   ): Promise<void> {
     if (!isNineAM(timestamp, 'CET')) {
@@ -143,13 +154,12 @@ export class UpdateNotifier {
     }
 
     let internals = ''
-    if (Object.entries(reminders).length > 0) {
-      const maxLength = Math.max(
-        ...Object.keys(reminders).map((name) => name.length),
-      )
-      const messages = Object.entries(reminders).map(
-        ([project, chains]) =>
-          `- ${project.padEnd(maxLength, ' ')} (${chains.join(', ')})`,
+    if (!isEmpty(reminders)) {
+      const projectNames = Object.keys(reminders)
+      const longestProjectName = Math.max(...projectNames.map((n) => n.length))
+
+      const messages = Object.entries(reminders).map(([project, entries]) =>
+        formatDailyReminderChainEntries(project, entries, longestProjectName),
       )
 
       internals = `\`\`\`\n${messages.join('\n')}\n\`\`\``
@@ -160,10 +170,30 @@ export class UpdateNotifier {
     const notifyMessage = `${getDailyReminderHeader(timestamp)}\n${internals}\n`
 
     await this.notify(notifyMessage, 'INTERNAL')
-    this.logger.info('Daily reminder sent', {
-      reminders: reminders,
-    })
+    this.logger.info('Daily reminder sent', { reminders })
   }
+}
+
+function formatDailyReminderChainEntries(
+  projectName: string,
+  chainChanges: DailyReminderChainEntry[],
+  longestProjectName: number,
+): string {
+  const projectNameWithPadding = projectName.padEnd(longestProjectName, ' ')
+  const chains = chainChanges.map((chain) => {
+    const { low, medium, high, unknown } = chain.severityCounts
+
+    let severities = []
+    severities.push(low > 0 ? `${low} low` : '')
+    severities.push(medium > 0 ? `${medium} medium` : '')
+    severities.push(high > 0 ? `${high} high` : '')
+    severities.push(unknown > 0 ? `${unknown} unknown` : '')
+    severities = severities.filter((s) => s.length > 0)
+
+    return `${chain.chainName} - ${severities.join(', ')} severity`
+  })
+
+  return `- ${projectNameWithPadding} (${chains.join(' | ')})`
 }
 
 function getDailyReminderHeader(timestamp: UnixTime): string {
