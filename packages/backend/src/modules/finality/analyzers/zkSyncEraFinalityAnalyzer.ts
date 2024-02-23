@@ -22,7 +22,7 @@ export class zkSyncEraFinalityAnalyzer extends BaseAnalyzer {
     const tx = await this.provider.getTransaction(transaction.txHash)
     const l1Timestamp = transaction.timestamp
 
-    const decodedInput = decodeInput(tx.data)
+    const decodedInput = this.decodeInput(tx.data)
     const timestamps: number[] = []
 
     timestamps.push(Number(decodedInput[0][6]))
@@ -32,15 +32,15 @@ export class zkSyncEraFinalityAnalyzer extends BaseAnalyzer {
 
     return timestamps.map((l2Timestamp) => l1Timestamp.toNumber() - l2Timestamp)
   }
-}
 
-function decodeInput(data: string) {
-  const fnSignature =
-    'proveBatches((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32), (uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[], (uint256[],uint256[]))'
-  const i = new utils.Interface([`function ${fnSignature}`])
-  const decodedInput = i.decodeFunctionData(
-    fnSignature,
-    data,
-  ) as zkSyncEraDecoded
-  return decodedInput
+  private decodeInput(data: string) {
+    const fnSignature =
+      'proveBatches((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32), (uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[], (uint256[],uint256[]))'
+    const i = new utils.Interface([`function ${fnSignature}`])
+    const decodedInput = i.decodeFunctionData(
+      fnSignature,
+      data,
+    ) as zkSyncEraDecoded
+    return decodedInput
+  }
 }
