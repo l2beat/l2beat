@@ -334,7 +334,7 @@ export const scroll: Layer2 = {
       discovery.getContractDetails('TimelockMid', {
         description: `${formatSeconds(
           timelockMidDelay,
-        )} timelock. Can update the verifier and manage the USDC gateway bridge. The ScrollMultisig can propose and cancel transactions, and the ExecutorMultisig can execute them.`,
+        )} timelock. Can manage the USDC gateway bridge. The ScrollMultisig can propose and cancel transactions, and the ExecutorMultisig can execute them.`,
       }),
       discovery.getContractDetails('TimelockFast', {
         description: `${formatSeconds(
