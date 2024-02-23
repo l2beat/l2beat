@@ -94,7 +94,7 @@ export class FinalityController {
         const records = await this.livenessRepository.getByProjectIdAndType(
           project.projectId,
           LivenessType('DA'),
-          UnixTime.now().add(-30, 'days'),
+          UnixTime.now().add(-1, 'days'),
         )
 
         const latestRecord = records.at(0)
