@@ -1,5 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
+import { subtractOne } from '../common/assessCount'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { opStack } from './templates/opStack'
 import { Layer2 } from './types'
@@ -54,6 +55,13 @@ export const aevo: Layer2 = opStack({
   l1StandardBridgeEscrow: EthereumAddress(
     '0x4082C9647c098a6493fb499EaE63b5ce3259c574',
   ),
+  transactionApi: {
+    type: 'rpc',
+    defaultUrl: 'https://mainnet.optimism.io/',
+    startBlock: 1,
+    defaultCallsPerMinute: 800,
+    assessCount: subtractOne,
+  },
   genesisTimestamp: new UnixTime(1679202395),
   l2OutputOracle: discovery.getContract('L2OutputOracle'),
   portal: discovery.getContract('OptimismPortal'),
