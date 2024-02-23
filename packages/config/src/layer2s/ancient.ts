@@ -1,6 +1,6 @@
-import { underReview } from './templates/underReview'
-import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
+import { underReview } from './templates/underReview'
 import { Layer2 } from './types'
 
 export const ancient: Layer2 = underReview({
