@@ -12,13 +12,6 @@ import { diffToMessages } from './utils/diffToMessages'
 import { filterDiff } from './utils/filterDiff'
 import { isNineAM } from './utils/isNineAM'
 
-export interface UpdateMetadata {
-  blockNumber: number
-  chainId: ChainId
-  dependents: string[]
-  unknownContracts: EthereumAddress[]
-}
-
 export interface DailyReminderChainEntry {
   chainName: string
   severityCounts: {
@@ -46,14 +39,17 @@ export class UpdateNotifier {
   async handleUpdate(
     name: string,
     diff: DiscoveryDiff[],
-    metadata: UpdateMetadata,
+    blockNumber: number,
+    chainId: ChainId,
+    dependents: string[],
+    unknownContracts: EthereumAddress[],
   ) {
     // TODO(radomski): Discord notifications for chains different than
     // Ethereum are for now disabled. We still want to update the database
     // with the newest discovery but we don't want to notify about changes on
     // for example Arbitrum chain since there are a lot of changes that we
     // have not yet looked at.
-    if (metadata.chainId !== ChainId.ETHEREUM) {
+    if (chainId !== ChainId.ETHEREUM) {
       return
     }
 
@@ -61,15 +57,15 @@ export class UpdateNotifier {
     await this.updateNotifierRepository.add({
       projectName: name,
       diff,
-      blockNumber: metadata.blockNumber,
-      chainId: metadata.chainId,
+      blockNumber: blockNumber,
+      chainId: chainId,
     })
 
     const timeFence = UnixTime.now().add(-HOUR_RANGE, 'hours')
     const previousRecords = await this.updateNotifierRepository.getNewerThan(
       timeFence,
       name,
-      metadata.chainId,
+      chainId,
     )
 
     const throttled = fieldThrottleDiff(previousRecords, diff, OCCURRENCE_LIMIT)
@@ -90,9 +86,9 @@ export class UpdateNotifier {
       name,
       throttled,
       emptyDiscoveryMeta,
-      metadata.blockNumber,
-      this.chainConverter.toName(metadata.chainId),
-      metadata.dependents,
+      blockNumber,
+      this.chainConverter.toName(chainId),
+      dependents,
       nonce,
     )
     await this.notify(messages, 'INTERNAL')
@@ -102,7 +98,7 @@ export class UpdateNotifier {
       throttledCount: diff.length - throttled.length,
     })
 
-    const filteredDiff = filterDiff(throttled, metadata.unknownContracts)
+    const filteredDiff = filterDiff(throttled, unknownContracts)
     if (filteredDiff.length === 0) {
       return
     }
@@ -110,9 +106,9 @@ export class UpdateNotifier {
       name,
       filteredDiff,
       emptyDiscoveryMeta,
-      metadata.blockNumber,
-      this.chainConverter.toName(metadata.chainId),
-      metadata.dependents,
+      blockNumber,
+      this.chainConverter.toName(chainId),
+      dependents,
     )
     await this.notify(filteredMessages, 'PUBLIC')
     this.logger.info('Updates detected, notification sent [PUBLIC]', {

@@ -54,12 +54,14 @@ describe(UpdateNotifier.name, () => {
         },
       ]
 
-      await updateNotifier.handleUpdate(project, changes, {
+      await updateNotifier.handleUpdate(
+        project,
+        changes,
+        BLOCK,
+        ChainId.ETHEREUM,
         dependents,
-        blockNumber: BLOCK,
-        unknownContracts: [],
-        chainId: ChainId.ETHEREUM,
-      })
+        [],
+      )
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
@@ -120,12 +122,14 @@ describe(UpdateNotifier.name, () => {
         },
       ]
 
-      await updateNotifier.handleUpdate(project, changes, {
+      await updateNotifier.handleUpdate(
+        project,
+        changes,
+        BLOCK,
+        ChainId.ETHEREUM,
         dependents,
-        blockNumber: BLOCK,
-        unknownContracts: [],
-        chainId: ChainId.ETHEREUM,
-      })
+        [],
+      )
 
       const internalMsg =
         `> #0000 (block_number=${BLOCK})\n\n` +
@@ -194,12 +198,14 @@ describe(UpdateNotifier.name, () => {
         },
       ]
 
-      await updateNotifier.handleUpdate(project, changes, {
+      await updateNotifier.handleUpdate(
+        project,
+        changes,
+        BLOCK,
+        ChainId.ETHEREUM,
         dependents,
-        blockNumber: BLOCK,
-        unknownContracts: [],
-        chainId: ChainId.ETHEREUM,
-      })
+        [],
+      )
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(

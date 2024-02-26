@@ -287,12 +287,14 @@ export class UpdateMonitor {
         this.configReader,
         chain,
       )
-      await this.updateNotifier.handleUpdate(projectConfig.name, diff, {
-        dependents,
-        chainId: this.chainConverter.toChainId(chain),
+      await this.updateNotifier.handleUpdate(
+        projectConfig.name,
+        diff,
         blockNumber,
+        this.chainConverter.toChainId(chain),
+        dependents,
         unknownContracts,
-      })
+      )
       changesDetected.inc()
     }
   }

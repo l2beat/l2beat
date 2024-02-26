@@ -25,7 +25,7 @@ import {
   UpdateMonitorRepository,
 } from './repositories/UpdateMonitorRepository'
 import { UpdateMonitor } from './UpdateMonitor'
-import { UpdateMetadata, UpdateNotifier } from './UpdateNotifier'
+import { UpdateNotifier } from './UpdateNotifier'
 
 const PROJECT_A = 'project-a'
 const PROJECT_B = 'project-b'
@@ -269,13 +269,19 @@ describe(UpdateMonitor.name, () => {
         1,
         PROJECT_A,
         mockDiff,
-        UPDATE_METADATA,
+        BLOCK_NUMBER,
+        ChainId.ETHEREUM,
+        [],
+        [],
       )
       expect(updateNotifier.handleUpdate).toHaveBeenNthCalledWith(
         2,
         PROJECT_B,
         mockDiff,
-        UPDATE_METADATA,
+        BLOCK_NUMBER,
+        ChainId.ETHEREUM,
+        [],
+        [],
       )
     })
 
@@ -914,11 +920,4 @@ const OPTIONS: DiscoveryRunnerOptions = {
   logger: Logger.SILENT.for('UpdateMonitor'),
   runSanityCheck: true,
   injectInitialAddresses: true,
-}
-
-const UPDATE_METADATA: UpdateMetadata = {
-  unknownContracts: [],
-  blockNumber: BLOCK_NUMBER,
-  dependents: [],
-  chainId: ChainId.ETHEREUM,
 }
