@@ -50,7 +50,7 @@ export const ancient: Layer2 = opStack({
   ),
   rpcUrl: 'https://rpc.ancient8.gg/',
   genesisTimestamp: new UnixTime(1705985147),
-  
+
   l2OutputOracle: discovery.getContract('L2OutputOracle'),
   portal: discovery.getContract('OptimismPortal'),
   isNodeAvailable: 'UnderReview',
