@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { SyncStatus } from '../../pages/scaling/finality/types'
+import { SyncStatus } from '../../pages/types'
 import { NotSyncedBadge } from '../badge/NotSyncedBadge'
 import { ShieldIcon, UnderReviewIcon } from '../icons'
 import { UnverifiedIcon } from '../icons/symbols/UnverifiedIcon'

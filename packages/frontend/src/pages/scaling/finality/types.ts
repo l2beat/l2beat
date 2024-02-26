@@ -6,6 +6,8 @@ import {
 } from '@l2beat/config'
 import { FinalityApiResponse, TvlApiResponse } from '@l2beat/shared-pure'
 
+import { SyncStatus } from '../../types'
+
 export interface FinalityPagesData {
   finalityApiResponse: FinalityApiResponse
   tvlApiResponse: TvlApiResponse
@@ -34,9 +36,4 @@ export interface ScalingFinalityViewEntryData {
     warning?: string
   }
   syncStatus: SyncStatus
-}
-
-export type SyncStatus = {
-  isSynced: boolean
-  displaySyncedUntil: string
 }
