@@ -68,6 +68,6 @@
         }
       }
     },
-    "L1ERC721BridgeImplementation": {"ignoreDiscovery": true}
+    "L1ERC721BridgeImplementation": { "ignoreDiscovery": true }
   }
 }
