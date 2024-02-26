@@ -11,6 +11,11 @@ const upgradeability = {
   upgradeDelay: 'No delay',
 }
 
+const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
+  'L2OutputOracle',
+  'FINALIZATION_PERIOD_SECONDS',
+)
+
 export const ancient: Layer2 = opStack({
   discovery,
   display: {
@@ -35,13 +40,17 @@ export const ancient: Layer2 = opStack({
       ],
     },
     activityDataSource: 'Blockchain RPC',
+    finality: {
+      finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
+    },
   },
   upgradeability,
   l1StandardBridgeEscrow: EthereumAddress(
     '0x12d4E64E1B46d27A00fe392653A894C1dd36fb80',
   ),
   rpcUrl: 'https://rpc.ancient8.gg/',
-  genesisTimestamp: new UnixTime(1706054400),
+  genesisTimestamp: new UnixTime(1705985147),
+  
   l2OutputOracle: discovery.getContract('L2OutputOracle'),
   portal: discovery.getContract('OptimismPortal'),
   isNodeAvailable: 'UnderReview',
