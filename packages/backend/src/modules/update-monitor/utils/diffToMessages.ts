@@ -5,7 +5,7 @@ import { MAX_MESSAGE_LENGTH } from '../../../peripherals/discord/DiscordClient'
 export function diffToMessages(
   name: string,
   diffs: DiscoveryDiff[],
-  meta: DiscoveryMeta,
+  meta: DiscoveryMeta | undefined,
   blockNumber: number,
   chain: string,
   dependents: string[],

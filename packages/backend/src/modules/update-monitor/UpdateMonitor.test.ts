@@ -143,7 +143,7 @@ describe(UpdateMonitor.name, () => {
         },
 
         readMeta: async () => {
-          return { contracts: [] }
+          return undefined
         },
       })
 
@@ -218,6 +218,10 @@ describe(UpdateMonitor.name, () => {
           mockConfig(PROJECT_A),
           mockConfig(PROJECT_B),
         ],
+
+        readMeta: async () => {
+          return undefined
+        },
       })
 
       const repository = mockObject<UpdateMonitorRepository>({
@@ -269,6 +273,7 @@ describe(UpdateMonitor.name, () => {
         1,
         PROJECT_A,
         mockDiff,
+        undefined,
         BLOCK_NUMBER,
         ChainId.ETHEREUM,
         [],
@@ -278,6 +283,7 @@ describe(UpdateMonitor.name, () => {
         2,
         PROJECT_B,
         mockDiff,
+        undefined,
         BLOCK_NUMBER,
         ChainId.ETHEREUM,
         [],
@@ -379,6 +385,9 @@ describe(UpdateMonitor.name, () => {
           contracts: [],
           version: 0,
         }),
+        readMeta: async () => {
+          return undefined
+        },
       })
 
       const repository = mockObject<UpdateMonitorRepository>({
@@ -778,7 +787,7 @@ describe(UpdateMonitor.name, () => {
         },
 
         readMeta: async () => {
-          return { contracts: [] }
+          return undefined
         },
       })
       const updateMonitor = new UpdateMonitor(

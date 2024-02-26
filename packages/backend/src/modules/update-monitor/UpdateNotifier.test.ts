@@ -57,6 +57,7 @@ describe(UpdateNotifier.name, () => {
       await updateNotifier.handleUpdate(
         project,
         changes,
+        undefined,
         BLOCK,
         ChainId.ETHEREUM,
         dependents,
@@ -125,6 +126,7 @@ describe(UpdateNotifier.name, () => {
       await updateNotifier.handleUpdate(
         project,
         changes,
+        undefined,
         BLOCK,
         ChainId.ETHEREUM,
         dependents,
@@ -201,6 +203,7 @@ describe(UpdateNotifier.name, () => {
       await updateNotifier.handleUpdate(
         project,
         changes,
+        undefined,
         BLOCK,
         ChainId.ETHEREUM,
         dependents,

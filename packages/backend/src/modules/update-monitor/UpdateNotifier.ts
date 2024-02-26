@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { ConfigReader, DiscoveryDiff } from '@l2beat/discovery'
+import { ConfigReader, DiscoveryDiff, DiscoveryMeta } from '@l2beat/discovery'
 import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { isEmpty } from 'lodash'
 
@@ -39,6 +39,7 @@ export class UpdateNotifier {
   async handleUpdate(
     name: string,
     diff: DiscoveryDiff[],
+    meta: DiscoveryMeta | undefined,
     blockNumber: number,
     chainId: ChainId,
     dependents: string[],
@@ -79,13 +80,10 @@ export class UpdateNotifier {
       return
     }
 
-    const emptyDiscoveryMeta = {
-      contracts: [],
-    }
     const messages = diffToMessages(
       name,
       throttled,
-      emptyDiscoveryMeta,
+      meta,
       blockNumber,
       this.chainConverter.toName(chainId),
       dependents,
@@ -105,7 +103,7 @@ export class UpdateNotifier {
     const filteredMessages = diffToMessages(
       name,
       filteredDiff,
-      emptyDiscoveryMeta,
+      meta,
       blockNumber,
       this.chainConverter.toName(chainId),
       dependents,
