@@ -173,20 +173,61 @@ function formatRemindersAsTable(
   reminders: Record<string, DailyReminderChainEntry[]>,
 ): string {
   const headers = ['Project', 'Chain', 'High', 'Mid', 'Low', '???']
-  const rows = Object.entries(reminders).flatMap(([project, chains]) => {
-    return chains.map(({ chainName, severityCounts: severity }) => {
-      return [
-        project,
-        chainName,
-        severity.high.toString(),
-        severity.medium.toString(),
-        severity.low.toString(),
-        severity.unknown.toString(),
-      ]
-    })
+
+  const flat = flattenReminders(reminders)
+  const sorted = flat.sort((a, b) => {
+    const {
+      low: aLow,
+      medium: aMedium,
+      high: aHigh,
+      unknown: aUnknown,
+    } = a.chainEntry.severityCounts
+    const {
+      low: bLow,
+      medium: bMedium,
+      high: bHigh,
+      unknown: bUnknown,
+    } = b.chainEntry.severityCounts
+
+    const aSum = aHigh * 1000 + aMedium * 100 + aLow * 10 + aUnknown
+    const bSum = bHigh * 1000 + bMedium * 100 + bLow * 10 + bUnknown
+
+    return bSum - aSum
+  })
+
+  const rows = sorted.map(({ projectName, chainEntry }) => {
+    const { chainName, severityCounts } = chainEntry
+    return [
+      projectName,
+      chainName,
+      severityCounts.high.toString(),
+      severityCounts.medium.toString(),
+      severityCounts.low.toString(),
+      severityCounts.unknown.toString(),
+    ]
   })
 
   return printAsciiTable(headers, rows)
+}
+
+function flattenReminders(
+  reminders: Record<string, DailyReminderChainEntry[]>,
+): {
+  projectName: string
+  chainEntry: DailyReminderChainEntry
+}[] {
+  const entries: {
+    projectName: string
+    chainEntry: DailyReminderChainEntry
+  }[] = []
+
+  Object.entries(reminders).forEach(([key, values]) => {
+    values.forEach((chainEntry) => {
+      entries.push({ projectName: key, chainEntry })
+    })
+  })
+
+  return entries
 }
 
 function getDailyReminderHeader(timestamp: UnixTime): string {

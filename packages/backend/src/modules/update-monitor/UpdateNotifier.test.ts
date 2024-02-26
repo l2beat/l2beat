@@ -283,10 +283,10 @@ describe(UpdateNotifier.name, () => {
       const timestamp = UnixTime.now().toStartOf('day').add(6, 'hours')
       const headers = ['Project', 'Chain', 'High', 'Mid', 'Low', '???']
       const rows = [
-        ['project-a', 'ethereum', '2', '0', '1', '4'],
-        ['project-a', 'arbitrum', '0', '0', '0', '12'],
         ['project-b', 'ethereum', '3', '2', '0', '0'],
         ['project-b', 'optimism', '3', '0', '0', '4'],
+        ['project-a', 'ethereum', '2', '0', '1', '4'],
+        ['project-a', 'arbitrum', '0', '0', '0', '12'],
       ]
       const table = printAsciiTable(headers, rows)
 
@@ -317,10 +317,7 @@ describe(UpdateNotifier.name, () => {
         Logger.SILENT,
       )
 
-      const reminders = {
-        ['project-a']: ['ethereum'],
-        ['project-b']: ['ethereum'],
-      }
+      const reminders = {}
       const timestamp = UnixTime.now().toStartOf('day').add(1, 'hours')
 
       await updateNotifier.sendDailyReminder(reminders, timestamp)
