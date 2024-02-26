@@ -1,8 +1,8 @@
 {
   "name": "ancient",
   "chain": "ethereum",
-  "blockNumber": 19291199,
-  "configHash": "0x315df78c27d9b1bb3ade92814f42d166ea36fc12cf22ca26d279b9831d56d435",
+  "blockNumber": 19310944,
+  "configHash": "0x44ee711e03b2c93a537555ee7172bf444847475a1046051b6feedc149dae1506",
   "version": 3,
   "contracts": [
     {
@@ -18,7 +18,7 @@
       "sinceTimestamp": 1706027447,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619811",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619848",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -43,9 +43,12 @@
       "implementations": ["0x188370729584052260214A6e0847B9810e3a120d"],
       "sinceTimestamp": 1706027447,
       "values": {
-        "batcherHash": "0x0000000000000000000000006079e9c37b87fe06d0bde2431a0fa309826c9b67",
+        "batcherHash": "0x6079e9c37b87fE06D0bDe2431a0fa309826c9b67",
         "gasLimit": 30000000,
         "minimumGasLimit": 21000000,
+        "opStackDA": {
+          "isSomeTxsLengthEqualToCelestiaDAExample": true
+        },
         "overhead": 188,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "resourceConfig": [
@@ -56,12 +59,14 @@
           1000000,
           "340282366920938463463374607431768211455"
         ],
-        "scalar": 205200,
+        "scalar": 68400,
+        "sequencerInbox": "0xd5df46c580fD2FBdaEE751dc535E14295C0336F3",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
         "unsafeBlockSigner": "0x132F4CbD6aE20b264620602fd4faa7a10B084f8c",
         "version": "1.3.1",
         "VERSION": 0
-      }
+      },
+      "derivedName": "SystemConfig"
     },
     {
       "name": "L1StandardBridge",
@@ -142,7 +147,7 @@
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
         ],
         "getThreshold": 3,
-        "nonce": 11,
+        "nonce": 12,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -161,7 +166,7 @@
         "GUARDIAN": "0x1B1ecDdbd5F9601b34262Aa3Ca346209E61aA68f",
         "L2_ORACLE": "0xB09DC08428C8b4EFB4ff9C0827386CDF34277996",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 490798, 19288518],
+        "params": [1000000000, 490798, 19308940],
         "paused": false,
         "SYSTEM_CONFIG": "0x0b4cfc49aCc656CE6D03CB0794860Da92bE3E8ec",
         "version": "1.7.2"
@@ -196,10 +201,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 1335600,
-        "latestOutputIndex": 741,
-        "nextBlockNumber": 1337400,
-        "nextOutputIndex": 742,
+        "latestBlockNumber": 1454400,
+        "latestOutputIndex": 807,
+        "nextBlockNumber": 1456200,
+        "nextOutputIndex": 808,
         "PROPOSER": "0xAF24199C29D5cc3fd298356137913A42847eA690",
         "startingBlockNumber": 0,
         "startingTimestamp": 1706027387,
@@ -236,10 +241,12 @@
     "0x4200000000000000000000000000000000000010",
     "0x4200000000000000000000000000000000000014",
     "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
+    "0x6079e9c37b87fE06D0bDe2431a0fa309826c9b67",
     "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
     "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
     "0xAF24199C29D5cc3fd298356137913A42847eA690",
     "0xcdD7FE91F5e2dCf8a0B30C4127c8D54e3F2a469c",
+    "0xd5df46c580fD2FBdaEE751dc535E14295C0336F3",
     "0xE3a87D0eE19c66d0d22F2AEf50c78d4C4FEeA5FB",
     "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
   ],
