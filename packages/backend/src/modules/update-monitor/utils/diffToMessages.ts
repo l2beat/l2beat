@@ -1,4 +1,4 @@
-import { DiscoveryDiff, DiscoveryMeta, FieldDiff } from '@l2beat/discovery'
+import { ContractMeta, DiscoveryDiff, DiscoveryMeta, FieldDiff, ValueMeta } from '@l2beat/discovery'
 
 import { MAX_MESSAGE_LENGTH } from '../../../peripherals/discord/DiscordClient'
 
@@ -18,7 +18,7 @@ export function diffToMessages(
 
   const maxLength = MAX_MESSAGE_LENGTH - overheadLength
   const messages = diffs.flatMap((diff) =>
-    contractDiffToMessages(diff, maxLength),
+    contractDiffToMessages(diff, getContractMeta(meta, diff.name), maxLength),
   )
 
   const bundledMessages = bundleMessages(messages, maxLength)
@@ -30,6 +30,7 @@ export function diffToMessages(
 
 export function contractDiffToMessages(
   diff: DiscoveryDiff,
+  contractMeta: ContractMeta | undefined,
   maxLength = MAX_MESSAGE_LENGTH,
 ): string[] {
   if (diff.type === 'created') {
@@ -42,12 +43,13 @@ export function contractDiffToMessages(
 
   const contractHeader = [
     `${diff.name} | ${diff.address.toString()}`,
+    `+++ description: ${contractMeta?.description ?? 'None'}`,
     '',
     '',
   ].join('\n')
   const maxLengthAdjusted = maxLength - contractHeader.length
   const messages =
-    diff.diff?.map((d) => fieldDiffToMessage(d, maxLengthAdjusted)) ?? []
+    diff.diff?.map((d) => fieldDiffToMessage(d, getValueMeta(contractMeta, d.key), maxLengthAdjusted)) ?? []
 
   //bundle message is called second time to handle situation when
   //diff in a single contract would result in a message larger than MAX_MESSAGE_LENGTH
@@ -60,8 +62,7 @@ export function contractDiffToMessages(
 // that every element of messages array is no longer than MAX_MESSAGE_LENGTH
 export function bundleMessages(
   messages: string[],
-  maxLength: number,
-): string[] {
+  maxLength: number,): string[] {
   const bundle: string[] = ['']
   let index = 0
 
@@ -86,9 +87,14 @@ function hideOverflow(str: string, maxLength: number) {
 
 export function fieldDiffToMessage(
   diff: FieldDiff,
+  valueMeta: ValueMeta | undefined,
   maxLength = MAX_MESSAGE_LENGTH,
 ): string {
   let message = ''
+
+  message += valueMeta?.description ? `+++ description: ${valueMeta.description}\n` : ''
+  message += valueMeta?.type ? `+++ type: ${valueMeta.type}\n` : ''
+  message += valueMeta?.severity ? `+++ severity: ${valueMeta.severity}\n` : ''
 
   if (diff.key !== undefined) {
     message += `${diff.key}\n`
@@ -139,6 +145,14 @@ function getDependentsMessage(dependents: string[]) {
     ' ' +
     wrapBoldAndItalic(dependents.join(', ') + '.')
   )
+}
+
+function getContractMeta(meta: DiscoveryMeta | undefined, name: string) {
+  return meta?.contracts.find((c) => c.name === name)
+}
+
+function getValueMeta(contractMeta: ContractMeta | undefined, name: string | undefined) {
+  return name !== undefined ? contractMeta?.values[name.replace("values.", "")] : undefined
 }
 
 export function formatNonce(nonce: number): string {
