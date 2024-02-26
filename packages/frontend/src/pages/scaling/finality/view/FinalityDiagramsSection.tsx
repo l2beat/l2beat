@@ -47,21 +47,25 @@ function Diagram({ diagram }: { diagram: FinalityDiagram }) {
       </div>
       <img
         loading="lazy"
+        alt={`${diagram.name} diagram`}
         src={diagram.src.dark.desktop}
         className="mx-auto hidden w-[calc(100%-190px)] dark:md:block"
       />
       <img
         loading="lazy"
+        alt={`${diagram.name} diagram`}
         src={diagram.src.dark.mobile}
         className="hidden size-full dark:block md:!hidden"
       />
       <img
         loading="lazy"
+        alt={`${diagram.name} diagram`}
         src={diagram.src.light.desktop}
         className="mx-auto hidden w-[calc(100%-190px)] dark:hidden md:block"
       />
       <img
         loading="lazy"
+        alt={`${diagram.name} diagram`}
         src={diagram.src.light.mobile}
         className="size-full dark:hidden md:hidden"
       />
