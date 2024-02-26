@@ -4,6 +4,7 @@ import {
   diffDiscovery,
   DiscoveryConfig,
   DiscoveryDiff,
+  DiscoveryMeta,
 } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { assert, UnixTime } from '@l2beat/shared-pure'
@@ -83,6 +84,10 @@ export class UpdateMonitor {
           continue
         }
 
+        const meta = await this.configReader.readMeta(
+          projectConfig.name,
+          runner.chain,
+        )
         const committed = await this.configReader.readDiscovery(
           projectConfig.name,
           runner.chain,
@@ -94,16 +99,13 @@ export class UpdateMonitor {
           projectConfig,
         )
 
+        const severityCounts = countSeverities(diff, meta)
+
         if (diff.length > 0) {
           result[projectConfig.name] ??= []
           result[projectConfig.name].push({
             chainName: runner.chain,
-            severityCounts: {
-              low: 0,
-              medium: 1,
-              high: 1,
-              unknown: 0,
-            },
+            severityCounts,
           })
         }
       }
@@ -331,3 +333,49 @@ const errorsCount = new Gauge({
   name: 'discovery_watcher_errors',
   help: 'Value showing amount of errors in the update cycle',
 })
+
+function countSeverities(diffs: DiscoveryDiff[], meta?: DiscoveryMeta) {
+  const result = { low: 0, medium: 0, high: 0, unknown: 0 }
+  if (meta === undefined) {
+    return result
+  }
+
+  const VALUES_PREFIX = 'values.'
+  for (const diff of diffs) {
+    const contract = meta.contracts.find((c) => c.name === diff.name)
+    if (contract === undefined || diff.diff === undefined) {
+      continue
+    }
+
+    for (const field of diff.diff) {
+      if (field.key === undefined) {
+        continue
+      }
+      const key = field.key.startsWith(VALUES_PREFIX)
+        ? field.key.slice(VALUES_PREFIX.length)
+        : field.key
+      if (contract.values[key] === undefined) {
+        continue
+      }
+
+      const severity = contract.values[key].severity
+
+      switch (severity) {
+        case 'LOW':
+          result.low++
+          break
+        case 'MEDIUM':
+          result.medium++
+          break
+        case 'HIGH':
+          result.high++
+          break
+        case null:
+          result.unknown++
+          break
+      }
+    }
+  }
+
+  return result
+}

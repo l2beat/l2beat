@@ -5,12 +5,12 @@ import { isEmpty } from 'lodash'
 
 import { Channel, DiscordClient } from '../../peripherals/discord/DiscordClient'
 import { ChainConverter } from '../../tools/ChainConverter'
+import { printAsciiTable } from '../../tools/printAsciiTable'
 import { fieldThrottleDiff } from './fieldThrottleDiff'
 import { UpdateNotifierRepository } from './repositories/UpdateNotifierRepository'
 import { diffToMessages } from './utils/diffToMessages'
 import { filterDiff } from './utils/filterDiff'
 import { isNineAM } from './utils/isNineAM'
-import { printAsciiTable } from '../../tools/printAsciiTable'
 
 export interface UpdateMetadata {
   blockNumber: number
@@ -170,21 +170,21 @@ export class UpdateNotifier {
 }
 
 function formatRemindersAsTable(
-    reminders: Record<string, DailyReminderChainEntry[]>,
+  reminders: Record<string, DailyReminderChainEntry[]>,
 ): string {
-    const headers = ['Project', 'Chain', 'High', 'Mid', 'Low', '???']
-    const rows = Object.entries(reminders).flatMap(([project, chains]) => {
-        return chains.map(({chainName, severityCounts: severity}) => {
-            return [
-                project,
-                chainName,
-                severity.high.toString(),
-                severity.medium.toString(),
-                severity.low.toString(),
-                severity.unknown.toString(),
-            ]
-        })
+  const headers = ['Project', 'Chain', 'High', 'Mid', 'Low', '???']
+  const rows = Object.entries(reminders).flatMap(([project, chains]) => {
+    return chains.map(({ chainName, severityCounts: severity }) => {
+      return [
+        project,
+        chainName,
+        severity.high.toString(),
+        severity.medium.toString(),
+        severity.low.toString(),
+        severity.unknown.toString(),
+      ]
     })
+  })
 
   return printAsciiTable(headers, rows)
 }

@@ -1,5 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
-import { ConfigReader, DiscoveryConfig, DiscoveryDiff } from '@l2beat/discovery'
+import {
+  ConfigReader,
+  DiscoveryConfig,
+  DiscoveryDiff,
+  ValueMeta,
+} from '@l2beat/discovery'
 import type {
   ContractParameters,
   DiscoveryOutput,
@@ -136,6 +141,10 @@ describe(UpdateMonitor.name, () => {
         readAllConfigsForChain: async (chain: string) => {
           return [mockConfig(PROJECT_A, chain)]
         },
+
+        readMeta: async () => {
+          return { contracts: [] }
+        },
       })
 
       const repository = mockObject<UpdateMonitorRepository>({
@@ -181,7 +190,16 @@ describe(UpdateMonitor.name, () => {
       expect(updateNotifier.sendDailyReminder).toHaveBeenCalledTimes(1)
       expect(updateNotifier.sendDailyReminder).toHaveBeenCalledWith(
         {
-          ['project-a']: ['ethereum', 'arbitrum'],
+          ['project-a']: [
+            {
+              chainName: 'ethereum',
+              severityCounts: { low: 0, medium: 0, high: 0, unknown: 0 },
+            },
+            {
+              chainName: 'arbitrum',
+              severityCounts: { low: 0, medium: 0, high: 0, unknown: 0 },
+            },
+          ],
         },
         timestamp,
       )
@@ -669,6 +687,32 @@ describe(UpdateMonitor.name, () => {
 
           return [mockConfig(PROJECT_A, chain), mockConfig(PROJECT_B, chain)]
         },
+
+        readMeta: async (_: string, chain: string) => {
+          let valueMeta: ValueMeta | undefined = undefined
+          if (chain === 'arbitrum') {
+            valueMeta = {
+              severity: null,
+              description: null,
+              type: null,
+            }
+          } else {
+            valueMeta = {
+              severity: 'MEDIUM',
+              description: null,
+              type: null,
+            }
+          }
+
+          return {
+            contracts: [
+              {
+                name: NAME_A,
+                values: { a: valueMeta },
+              },
+            ],
+          }
+        },
       })
       const updateMonitor = new UpdateMonitor(
         runners,
@@ -687,8 +731,18 @@ describe(UpdateMonitor.name, () => {
 
       expect(Object.entries(result).length).toEqual(runners.length)
       expect(result).toEqual({
-        [PROJECT_A]: ['ethereum'],
-        [PROJECT_B]: ['arbitrum'],
+        [PROJECT_A]: [
+          {
+            chainName: 'ethereum',
+            severityCounts: { low: 0, medium: 1, high: 0, unknown: 0 },
+          },
+        ],
+        [PROJECT_B]: [
+          {
+            chainName: 'arbitrum',
+            severityCounts: { low: 0, medium: 0, high: 0, unknown: 1 },
+          },
+        ],
       })
     })
 
@@ -716,6 +770,10 @@ describe(UpdateMonitor.name, () => {
         readAllConfigsForChain: async (chain: string) => {
           return [mockConfig(PROJECT_A, chain)]
         },
+
+        readMeta: async () => {
+          return { contracts: [] }
+        },
       })
       const updateMonitor = new UpdateMonitor(
         runners,
@@ -735,7 +793,16 @@ describe(UpdateMonitor.name, () => {
       expect(Object.entries(result).length).toEqual(1)
       expect(result[PROJECT_A].length).toEqual(2)
       expect(result).toEqual({
-        [PROJECT_A]: ['ethereum', 'arbitrum'],
+        [PROJECT_A]: [
+          {
+            chainName: 'ethereum',
+            severityCounts: { low: 0, medium: 0, high: 0, unknown: 0 },
+          },
+          {
+            chainName: 'arbitrum',
+            severityCounts: { low: 0, medium: 0, high: 0, unknown: 0 },
+          },
+        ],
       })
     })
 

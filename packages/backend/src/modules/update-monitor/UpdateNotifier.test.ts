@@ -8,9 +8,9 @@ import {
   MAX_MESSAGE_LENGTH,
 } from '../../peripherals/discord/DiscordClient'
 import { ChainConverter } from '../../tools/ChainConverter'
+import { printAsciiTable } from '../../tools/printAsciiTable'
 import { UpdateNotifierRepository } from './repositories/UpdateNotifierRepository'
 import { UpdateNotifier } from './UpdateNotifier'
-import { printAsciiTable } from '../../tools/printAsciiTable'
 
 const BLOCK = 123
 
@@ -283,10 +283,10 @@ describe(UpdateNotifier.name, () => {
       const timestamp = UnixTime.now().toStartOf('day').add(6, 'hours')
       const headers = ['Project', 'Chain', 'High', 'Mid', 'Low', '???']
       const rows = [
-          ["project-a", "ethereum", "2", "0", "1", "4"],
-          ["project-a", "arbitrum", "0", "0", "0", "12"],
-          ["project-b", "ethereum", "3", "2", "0", "0"],
-          ["project-b", "optimism", "3", "0", "0", "4"]
+        ['project-a', 'ethereum', '2', '0', '1', '4'],
+        ['project-a', 'arbitrum', '0', '0', '0', '12'],
+        ['project-b', 'ethereum', '3', '2', '0', '0'],
+        ['project-b', 'optimism', '3', '0', '0', '4'],
       ]
       const table = printAsciiTable(headers, rows)
 
