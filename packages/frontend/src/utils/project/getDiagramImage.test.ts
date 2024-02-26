@@ -1,7 +1,11 @@
 import { expect } from 'earl'
 import { it } from 'mocha'
 
-import { DiagramType, getDiagramImage } from './getDiagramImage'
+import {
+  DiagramType,
+  getDiagramImage,
+  getDiagramImageOrThrow,
+} from './getDiagramImage'
 
 const fileName = 'random-file-name-that-does-not-exist'
 const diagramTypes: DiagramType[] = [
@@ -15,40 +19,38 @@ describe(getDiagramImage.name, () => {
   for (const type of diagramTypes) {
     describe(type, () => {
       it('returns the correct path if the file exists', async () => {
-        const result = getDiagramImage(type, fileName, undefined, {
+        const result = getDiagramImage(type, fileName, {
           existsSync: () => true,
         })
         expect(result).toEqual(`/images/${type}/${fileName}.png`)
-
-        const result2 = getDiagramImage(
-          type,
-          fileName,
-          { throwOnMissing: true },
-          {
-            existsSync: () => true,
-          },
-        )
-        expect(result2).toEqual(`/images/${type}/${fileName}.png`)
-      })
-
-      it('throws if the file does not exist and throwOnMissing is true', () => {
-        expect(() =>
-          getDiagramImage(
-            type,
-            fileName,
-            { throwOnMissing: true },
-            {
-              existsSync: () => false,
-            },
-          ),
-        ).toThrow(`Diagram image not found: /images/${type}/${fileName}.png`)
       })
 
       it('returns undefined if the file does not exist', () => {
-        const result = getDiagramImage(type, fileName, undefined, {
+        const result = getDiagramImage(type, fileName, {
           existsSync: () => false,
         })
         expect(result).toBeNullish()
+      })
+    })
+  }
+})
+
+describe(getDiagramImageOrThrow.name, () => {
+  for (const type of diagramTypes) {
+    describe(type, () => {
+      it('returns the correct path if the file exists', async () => {
+        const result = getDiagramImageOrThrow(type, fileName, {
+          existsSync: () => true,
+        })
+        expect(result).toEqual(`/images/${type}/${fileName}.png`)
+      })
+
+      it('throws an error if the file does not exist', () => {
+        expect(() => {
+          getDiagramImageOrThrow(type, fileName, {
+            existsSync: () => false,
+          })
+        }).toThrow(`Diagram image not found: /images/${type}/${fileName}.png`)
       })
     })
   }

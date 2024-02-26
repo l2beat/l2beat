@@ -7,21 +7,27 @@ export type DiagramType =
   | 'state-validation'
   | 'finality'
 
-interface Options {
-  throwOnMissing?: boolean
-}
-
 export function getDiagramImage(
   type: DiagramType,
   fileName: string,
-  opts?: Options,
   _fs = { existsSync: fs.existsSync },
-) {
+): string | undefined {
   const filePath = `/images/${type}/${fileName}.png`
   const exists = _fs.existsSync(path.join(__dirname, '../../static', filePath))
-  if (!exists && opts?.throwOnMissing) {
-    throw new Error(`Diagram image not found: ${filePath}`)
-  }
 
   return exists ? filePath : undefined
+}
+
+export function getDiagramImageOrThrow(
+  type: DiagramType,
+  fileName: string,
+  _fs = { existsSync: fs.existsSync },
+): string {
+  const filePath = getDiagramImage(type, fileName, _fs)
+
+  if (!filePath) {
+    throw new Error(`Diagram image not found: /images/${type}/${fileName}.png`)
+  }
+
+  return filePath
 }

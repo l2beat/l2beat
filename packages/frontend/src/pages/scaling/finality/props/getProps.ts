@@ -1,6 +1,6 @@
 import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
-import { getDiagramImage } from '../../../../utils/project/getDiagramImage'
+import { getDiagramImageOrThrow } from '../../../../utils/project/getDiagramImage'
 import { Wrapped } from '../../../Page'
 import { FinalityPagesData } from '../types'
 import { FinalityPageProps } from '../view/ScalingFinalityPage'
@@ -71,5 +71,5 @@ const diagrams = [
 ]
 
 function getDiagram(diagramName: string) {
-  return getDiagramImage('finality', diagramName, { throwOnMissing: true })
+  return getDiagramImageOrThrow('finality', diagramName)
 }
