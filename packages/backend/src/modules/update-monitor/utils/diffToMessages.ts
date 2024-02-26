@@ -2,25 +2,16 @@ import { DiscoveryDiff, FieldDiff } from '@l2beat/discovery'
 
 import { MAX_MESSAGE_LENGTH } from '../../../peripherals/discord/DiscordClient'
 
-export interface DiffMetadata {
-  blockNumber: number
-  chain: string
-  dependents: string[]
-  nonce?: number
-}
-
 export function diffToMessages(
   name: string,
   diffs: DiscoveryDiff[],
-  metadata: DiffMetadata,
+  blockNumber: number,
+  chain: string,
+  dependents: string[],
+  nonce?: number,
 ): string[] {
-  const header = getHeader(
-    name,
-    metadata.chain,
-    metadata.blockNumber,
-    metadata.nonce,
-  )
-  const dependentsMessage = getDependentsMessage(metadata.dependents)
+  const header = getHeader(name, chain, blockNumber, nonce)
+  const dependentsMessage = getDependentsMessage(dependents)
   const overheadLength =
     header.length + dependentsMessage.length + wrapDiffCodeBlock('').length
 
@@ -48,7 +39,11 @@ export function contractDiffToMessages(
     return [`- Deleted contract: ${diff.name} | ${diff.address.toString()}\n\n`]
   }
 
-  const contractHeader = `${diff.name} | ${diff.address.toString()}\n\n`
+  const contractHeader = [
+    `${diff.name} | ${diff.address.toString()}`,
+    '',
+    '',
+  ].join('\n')
   const maxLengthAdjusted = maxLength - contractHeader.length
   const messages =
     diff.diff?.map((d) => fieldDiffToMessage(d, maxLengthAdjusted)) ?? []

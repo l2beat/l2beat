@@ -48,11 +48,13 @@ describe('Discord message formatting', () => {
         },
       ]
 
-      const result = diffToMessages(name, diff, {
+      const result = diffToMessages(
+        name,
+        diff,
+        BLOCK_NUMBER,
+        'ethereum',
         dependents,
-        blockNumber: BLOCK_NUMBER,
-        chain: 'ethereum',
-      })
+      )
 
       const expected = [
         `***${name}*** | detected changes on chain: ***ethereum***\`\`\`diff`,
@@ -93,11 +95,13 @@ describe('Discord message formatting', () => {
         },
       ]
 
-      const result = diffToMessages(name, diff, {
+      const result = diffToMessages(
+        name,
+        diff,
+        BLOCK_NUMBER,
+        'ethereum',
         dependents,
-        blockNumber: BLOCK_NUMBER,
-        chain: 'ethereum',
-      })
+      )
 
       const expected = [
         `***${name}*** | detected changes on chain: ***ethereum***\n`,
@@ -130,12 +134,14 @@ describe('Discord message formatting', () => {
         differences.push(diff)
       }
 
-      const result = diffToMessages(name, differences, {
+      const result = diffToMessages(
+        name,
+        differences,
+        BLOCK_NUMBER,
+        'ethereum',
         dependents,
-        blockNumber: BLOCK_NUMBER,
         nonce,
-        chain: 'ethereum',
-      })
+      )
 
       const firstPart = [
         `> ${formatNonce(
@@ -200,12 +206,14 @@ describe('Discord message formatting', () => {
         '```',
       ]
 
-      const result = diffToMessages(PROJECT, [contractDiff], {
-        dependents: [],
-        blockNumber: BLOCK_NUMBER,
+      const result = diffToMessages(
+        PROJECT,
+        [contractDiff],
+        BLOCK_NUMBER,
+        'ethereum',
+        [],
         nonce,
-        chain: 'ethereum',
-      })
+      )
 
       expect(result).toEqual([firstPart.join(''), secondPart.join('')])
       expect(firstPart.join('').length).toEqual(1992)
@@ -242,12 +250,14 @@ describe('Discord message formatting', () => {
         .map((d) => fieldDiffToMessage(d, MAX_MESSAGE_LENGTH - overheadLength))
         .join('')
 
-      const result = diffToMessages(PROJECT, [contractDiff], {
-        dependents: [],
-        blockNumber: BLOCK_NUMBER,
+      const result = diffToMessages(
+        PROJECT,
+        [contractDiff],
+        BLOCK_NUMBER,
+        'ethereum',
+        [],
         nonce,
-        chain: 'ethereum',
-      })
+      )
 
       expect(result).toEqual([part.join('')])
       expect(result.length).toEqual(1)

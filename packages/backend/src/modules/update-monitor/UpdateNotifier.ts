@@ -83,12 +83,14 @@ export class UpdateNotifier {
       return
     }
 
-    const messages = diffToMessages(name, throttled, {
-      dependents: metadata.dependents,
-      blockNumber: metadata.blockNumber,
-      chain: this.chainConverter.toName(metadata.chainId),
+    const messages = diffToMessages(
+      name,
+      throttled,
+      metadata.blockNumber,
+      this.chainConverter.toName(metadata.chainId),
+      metadata.dependents,
       nonce,
-    })
+    )
     await this.notify(messages, 'INTERNAL')
     this.logger.info('Updates detected, notification sent [INTERNAL]', {
       name,
@@ -100,11 +102,13 @@ export class UpdateNotifier {
     if (filteredDiff.length === 0) {
       return
     }
-    const filteredMessages = diffToMessages(name, filteredDiff, {
-      dependents: metadata.dependents,
-      blockNumber: metadata.blockNumber,
-      chain: this.chainConverter.toName(metadata.chainId),
-    })
+    const filteredMessages = diffToMessages(
+      name,
+      filteredDiff,
+      metadata.blockNumber,
+      this.chainConverter.toName(metadata.chainId),
+      metadata.dependents,
+    )
     await this.notify(filteredMessages, 'PUBLIC')
     this.logger.info('Updates detected, notification sent [PUBLIC]', {
       name,
