@@ -19,6 +19,10 @@ const ADDRESS = EthereumAddress('0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01')
 const PROJECT = 'system'
 const BLOCK_NUMBER = 123456789
 
+const EMPTY_DISCOVERY_META = {
+  contracts: [],
+}
+
 describe('Discord message formatting', () => {
   describe(diffToMessages.name, () => {
     it('correctly formats a message', () => {
@@ -51,6 +55,7 @@ describe('Discord message formatting', () => {
       const result = diffToMessages(
         name,
         diff,
+        EMPTY_DISCOVERY_META,
         BLOCK_NUMBER,
         'ethereum',
         dependents,
@@ -98,6 +103,7 @@ describe('Discord message formatting', () => {
       const result = diffToMessages(
         name,
         diff,
+        EMPTY_DISCOVERY_META,
         BLOCK_NUMBER,
         'ethereum',
         dependents,
@@ -137,6 +143,7 @@ describe('Discord message formatting', () => {
       const result = diffToMessages(
         name,
         differences,
+        EMPTY_DISCOVERY_META,
         BLOCK_NUMBER,
         'ethereum',
         dependents,
@@ -209,6 +216,7 @@ describe('Discord message formatting', () => {
       const result = diffToMessages(
         PROJECT,
         [contractDiff],
+        EMPTY_DISCOVERY_META,
         BLOCK_NUMBER,
         'ethereum',
         [],
@@ -253,6 +261,7 @@ describe('Discord message formatting', () => {
       const result = diffToMessages(
         PROJECT,
         [contractDiff],
+        EMPTY_DISCOVERY_META,
         BLOCK_NUMBER,
         'ethereum',
         [],

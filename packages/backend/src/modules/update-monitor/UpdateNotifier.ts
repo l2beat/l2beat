@@ -83,9 +83,13 @@ export class UpdateNotifier {
       return
     }
 
+    const emptyDiscoveryMeta = {
+      contracts: [],
+    }
     const messages = diffToMessages(
       name,
       throttled,
+      emptyDiscoveryMeta,
       metadata.blockNumber,
       this.chainConverter.toName(metadata.chainId),
       metadata.dependents,
@@ -105,6 +109,7 @@ export class UpdateNotifier {
     const filteredMessages = diffToMessages(
       name,
       filteredDiff,
+      emptyDiscoveryMeta,
       metadata.blockNumber,
       this.chainConverter.toName(metadata.chainId),
       metadata.dependents,

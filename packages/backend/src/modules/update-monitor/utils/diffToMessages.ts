@@ -1,10 +1,11 @@
-import { DiscoveryDiff, FieldDiff } from '@l2beat/discovery'
+import { DiscoveryDiff, DiscoveryMeta, FieldDiff } from '@l2beat/discovery'
 
 import { MAX_MESSAGE_LENGTH } from '../../../peripherals/discord/DiscordClient'
 
 export function diffToMessages(
   name: string,
   diffs: DiscoveryDiff[],
+  meta: DiscoveryMeta,
   blockNumber: number,
   chain: string,
   dependents: string[],
