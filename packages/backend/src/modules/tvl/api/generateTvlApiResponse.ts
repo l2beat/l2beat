@@ -114,20 +114,20 @@ function mergeAndSumChartPoints(
   aggregate: TvlApiChartPoint[],
   project: TvlApiChartPoint[],
 ): TvlApiChartPoint[] {
-  const startingIndexInAggregates = aggregate.findIndex(
+  const aggregateOffset = aggregate.findIndex(
     (a) => a[0].toNumber() === project[0][0].toNumber(),
   )
 
   assert(
-    aggregate.slice(startingIndexInAggregates).length === project.length,
+    aggregate.slice(aggregateOffset).length === project.length,
     'Programmer error: Expected arrays to be aligned to the same untilTimestamp',
   )
 
-  let projectIndex = 0
-
-  for (let i = startingIndexInAggregates; i < aggregate.length; i++) {
-    aggregate[i] = sumChartPoints(aggregate[i], project[projectIndex])
-    projectIndex++
+  for (let i = 0; i < project.length; i++) {
+    aggregate[i + aggregateOffset] = sumChartPoints(
+      aggregate[i + aggregateOffset],
+      project[i],
+    )
   }
 
   return aggregate
@@ -138,11 +138,17 @@ function sumChartPoints(
   a: TvlApiChartPoint,
   b: TvlApiChartPoint,
 ): TvlApiChartPoint {
-  return a.map((value, index) =>
-    // @ts-expect-error first element should not be summed
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/restrict-plus-operands
-    index === 0 ? value : value + b[index],
-  ) as TvlApiChartPoint
+  assert(
+    a[0].toNumber() === b[0].toNumber(),
+    'Programmer error: Timestamps do not match',
+  )
+
+  for (let i = 1; i < a.length; i++) {
+    // @ts-expect-error - all elements from index 1 are numbers
+    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+    a[i] += b[i]
+  }
+  return a
 }
 
 export const TYPE_LABELS: TvlApiChart['types'] = [
