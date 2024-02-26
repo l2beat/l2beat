@@ -679,17 +679,18 @@ export function getScalingFinalityColumnsConfig() {
     },
     {
       name: 'Past day avg.\nTime to inclusion',
-      getValue: (project) => (
-        <FinalityDurationCell
-          data={project.timeToInclusion}
-          syncStatus={project.syncStatus}
-        />
-      ),
+      getValue: (project) =>
+        project.data ? (
+          <FinalityDurationCell data={project.data} />
+        ) : (
+          <Badge type="gray">COMING SOON</Badge>
+        ),
       tooltip:
         'The average time it would take for an L2 transaction to be included on the L1. Please note, this is an approximate estimation and is different than Time to finality since it ignores the overhead time to reach L1 finality after L1 inclusion.',
       sorting: {
         rule: 'numeric',
-        getOrderValue: (project) => project.timeToInclusion.averageInSeconds,
+        getOrderValue: (project) =>
+          project.data?.timeToInclusion.averageInSeconds,
       },
     },
     {

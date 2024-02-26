@@ -138,6 +138,9 @@ export const polygonzkevm: Layer2 = {
       explanation:
         'Polygon zkEVM is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1. State updates are a three step process: first blocks are committed to L1, then they are proved, and then it is possible to execute them.',
     },
+    finality: {
+      finalizationPeriod: 0,
+    },
   },
   config: {
     escrows: [
@@ -250,6 +253,7 @@ export const polygonzkevm: Layer2 = {
         },
       ],
     },
+    finality: 'coming soon',
   },
   chainConfig: {
     name: 'polygonzkevm',

@@ -186,6 +186,7 @@ export const linea: Layer2 = {
         },
       ],
     },
+    finality: 'coming soon',
   },
   chainConfig: {
     name: 'linea',

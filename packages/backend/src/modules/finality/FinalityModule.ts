@@ -114,7 +114,7 @@ function initializeConfigurations(
             minTimestamp: configuration.minTimestamp,
           }
         case 'OPStack':
-          throw new Error('OPStack finality is not supported')
+          throw new Error('Not supported in indexer')
         default:
           assertUnreachable(configuration)
       }

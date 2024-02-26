@@ -47,7 +47,9 @@ export class FinalityController {
     const projects: FinalityApiResponse['projects'] = {}
 
     const [OPStackProjects, otherProjects] = partition(
-      this.projects.filter((p) => !p.isArchived && p.finalityConfig),
+      this.projects.filter(
+        (p) => !p.isArchived && p.finalityConfig !== undefined,
+      ),
       (p) => p.finalityConfig?.type === 'OPStack',
     )
     const OPStackFinality = await this.getOPStackFinality(OPStackProjects)

@@ -19,25 +19,24 @@ export function getScalingFinalityView(
   const { finalityApiResponse, tvlApiResponse } = pagesData
 
   const includedProjects = getIncludedProjects(projects)
-  const orderedProjects = orderByTvl(includedProjects, tvlApiResponse)
+  const orderedProjectsByTvl = orderByTvl(includedProjects, tvlApiResponse)
+  const orderedProjects = moveComingSoonToEnd(orderedProjectsByTvl)
 
   return {
     items: orderedProjects
-      .map((project) => {
-        const finalityProjectData =
-          finalityApiResponse.projects[project.id.toString()]
-        if (!finalityProjectData?.timeToInclusion) {
-          return
-        }
-        return getScalingFinalityViewEntry(project, finalityProjectData)
-      })
+      .map((project) =>
+        getScalingFinalityViewEntry(
+          project,
+          finalityApiResponse.projects[project.id.toString()],
+        ),
+      )
       .filter(notUndefined),
   }
 }
 
 export function getScalingFinalityViewEntry(
   project: Layer2,
-  finalityProjectData: FinalityProjectData,
+  finalityProjectData: FinalityProjectData | undefined,
 ): ScalingFinalityViewEntry {
   return {
     name: project.display.name,
@@ -50,16 +49,29 @@ export function getScalingFinalityViewEntry(
     redWarning: project.display.redWarning,
     purposes: project.display.purposes,
     stage: project.stage,
-    timeToInclusion: {
-      ...finalityProjectData.timeToInclusion,
-      warning: project.display.finality?.warning,
-    },
+    data: getFinalityData(finalityProjectData, project),
     finalizationPeriod:
       project.display.finality?.finalizationPeriod !== undefined
         ? formatSeconds(project.display.finality.finalizationPeriod, {
             fullUnit: true,
           })
         : undefined,
+  }
+}
+
+function getFinalityData(
+  finalityProjectData: FinalityProjectData | undefined,
+  project: Layer2,
+) {
+  if (!finalityProjectData || !project.config.finality) return undefined
+
+  return {
+    timeToInclusion: {
+      averageInSeconds: finalityProjectData.timeToInclusion.averageInSeconds,
+      minimumInSeconds: finalityProjectData.timeToInclusion.minimumInSeconds,
+      maximumInSeconds: finalityProjectData.timeToInclusion.maximumInSeconds,
+      warning: project.display.finality?.warning,
+    },
     syncStatus: {
       isSynced: isSynced(finalityProjectData.syncedUntil),
       displaySyncedUntil: formatTimestamp(
@@ -78,7 +90,27 @@ function isSynced(syncedUntil: UnixTime) {
 }
 
 function getIncludedProjects(projects: Layer2[]) {
-  return projects.filter((p) => !p.isUpcoming && !p.isArchived)
+  return projects.filter(
+    (p) => !p.isUpcoming && !p.isArchived && p.config.finality,
+  )
+}
+
+function moveComingSoonToEnd(projects: Layer2[]) {
+  return [...projects].sort((a, b) => {
+    if (
+      a.config.finality === 'coming soon' &&
+      b.config.finality !== 'coming soon'
+    ) {
+      return 1
+    }
+    if (
+      b.config.finality === 'coming soon' &&
+      a.config.finality !== 'coming soon'
+    ) {
+      return -1
+    }
+    return 0
+  })
 }
 
 function daModeToDisplay(daMode: ScalingProjectDataAvailabilityMode) {

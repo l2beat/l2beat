@@ -15,6 +15,7 @@ export function getFinalityIndexerConfigurations(
       if (
         !layer2.config.finality ||
         !flags.isEnabled('finality', layer2.id.toString()) ||
+        layer2.config.finality === 'coming soon' ||
         layer2.config.finality.type === 'OPStack'
       ) {
         return
