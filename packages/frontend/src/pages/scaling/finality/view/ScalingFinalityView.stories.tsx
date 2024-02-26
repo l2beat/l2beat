@@ -737,7 +737,6 @@ const meta: Meta<typeof ScalingFinalityView> = {
             displaySyncedUntil: '2024 Feb 12 12:00:00 (UTC)',
           },
         },
-        finalizationPeriod: formatSeconds(120, { fullUnit: true }),
       },
       {
         name: 'tanX',
@@ -750,17 +749,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
         redWarning: undefined,
         purposes: ['Exchange'],
         stage: { stage: 'NotApplicable' },
-        data: {
-          timeToInclusion: {
-            minimumInSeconds: undefined,
-            averageInSeconds: 175511,
-            maximumInSeconds: 2129,
-          },
-          syncStatus: {
-            isSynced: true,
-            displaySyncedUntil: '2024 Feb 12 12:00:00 (UTC)',
-          },
-        },
+        data: undefined,
         finalizationPeriod: formatSeconds(24 * 3600, { fullUnit: true }),
       },
     ],
