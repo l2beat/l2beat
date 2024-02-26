@@ -1,8 +1,8 @@
 {
   "name": "fraxtal",
   "chain": "ethereum",
-  "blockNumber": 19288448,
-  "configHash": "0xc12ba05e9c18a3808a260b33dc12eb67ef835cbf4eb47a987edaf5ab2d880a74",
+  "blockNumber": 19313039,
+  "configHash": "0x7bfb8f09be310bf0ca0083d97725e5715a5e20b9a731f61e94e2a0b997182a19",
   "version": 3,
   "contracts": [
     {
@@ -13,8 +13,8 @@
       },
       "sinceTimestamp": 1602667372,
       "values": {
-        "get_deposit_count": "0xcbc1130000000000",
-        "get_deposit_root": "0xefe3bb610cd97e2230a6a60e97e703c652889a5a2e57f218e8fc67d6b245a7f6"
+        "get_deposit_count": "0xa0db130000000000",
+        "get_deposit_root": "0x27814e692a3b4b577ded9e3448082cab355ebb46203009eb3afd22d5e6d49390"
       }
     },
     {
@@ -182,7 +182,7 @@
         "owner": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
         "symbol": "frxETH",
         "timelock_address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
-        "totalSupply": "307721327069603931258275"
+        "totalSupply": "304879363759890058217034"
       }
     },
     {
@@ -221,10 +221,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 927000,
-        "latestOutputIndex": 514,
-        "nextBlockNumber": 928800,
-        "nextOutputIndex": 515,
+        "latestBlockNumber": 1074600,
+        "latestOutputIndex": 596,
+        "nextBlockNumber": 1076400,
+        "nextOutputIndex": 597,
         "proposer": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
         "PROPOSER": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
         "startingBlockNumber": 0,
@@ -256,7 +256,7 @@
           "0x6e74053a3798e0fC9a9775F7995316b27f21c4D2"
         ],
         "getThreshold": 3,
-        "nonce": 865,
+        "nonce": 876,
         "VERSION": "1.3.0"
       }
     },
@@ -289,7 +289,7 @@
       "derivedName": "AddressManager"
     },
     {
-      "name": "L1ERC721BridgeProxy",
+      "name": "L1ERC721Bridge",
       "address": "0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5",
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -323,12 +323,12 @@
         "lastRewardAmount": "161190000000000000000",
         "lastSync": 1708565855,
         "name": "Staked Frax Ether",
-        "pricePerShare": "1076187189856323240",
+        "pricePerShare": "1076569088841256140",
         "rewardsCycleEnd": 1709164800,
         "rewardsCycleLength": 604800,
         "symbol": "sfrxETH",
-        "totalAssets": "226787657093972978554198",
-        "totalSupply": "210732537268214785836763"
+        "totalAssets": "223445312208268170064343",
+        "totalSupply": "207553156155327769403076"
       },
       "derivedName": "sfrxETH"
     },
@@ -353,7 +353,7 @@
           "0x05FB8eC3C41da95b26fCb85503DaF8B89B89A935"
         ],
         "getThreshold": 3,
-        "nonce": 5296,
+        "nonce": 5313,
         "VERSION": "1.3.0"
       }
     },
@@ -365,7 +365,7 @@
       },
       "sinceTimestamp": 1665022895,
       "values": {
-        "currentWithheldETH": "244741487584124164250",
+        "currentWithheldETH": "53878924826978127522",
         "DEPOSIT_SIZE": "32000000000000000000",
         "depositContract": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
         "depositEtherPaused": false,

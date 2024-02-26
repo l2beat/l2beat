@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xac7b091ff0a2fb4b4cfa742d58aee8eb1629844f
+Generated with discovered.json: 0xace0a86583a9eae479dee5755a8c324249fb14b3
 
-# Diff at Fri, 23 Feb 2024 06:17:50 GMT:
+# Diff at Mon, 26 Feb 2024 16:51:34 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current block number: 19288448
+- current block number: 19313039
 
 ## Description
 
@@ -91,7 +91,7 @@ Add discovery to Fraxtal.
 
 ```diff
 +   Status: CREATED
-    contract L1ERC721BridgeProxy (0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5) {
+    contract L1ERC721Bridge (0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5) {
     }
 ```
 
