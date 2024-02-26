@@ -91,7 +91,12 @@ function isSynced(syncedUntil: UnixTime) {
 
 function getIncludedProjects(projects: Layer2[]) {
   return projects.filter(
-    (p) => !p.isUpcoming && !p.isArchived && p.config.finality,
+    (p) =>
+      !p.isUpcoming &&
+      !p.isArchived &&
+      p.config.finality &&
+      (p.display.category === 'ZK Rollup' ||
+        p.display.category === 'Optimistic Rollup'),
   )
 }
 
