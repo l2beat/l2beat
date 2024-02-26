@@ -38,9 +38,9 @@ export function FinalityDiagramsSection({ diagrams, className }: Props) {
 
 function Diagram({ diagram }: { diagram: FinalityDiagram }) {
   return (
-    <div className="flex flex-col gap-4 rounded-lg border-2 border-gray-50 bg-[#F1F3F7] p-4 dark:border-zinc-500 dark:bg-zinc-900 md:flex-row md:gap-0 md:p-8">
+    <div className="flex flex-col gap-3 rounded-lg border-2 border-gray-50 bg-[#F1F3F7] p-4 dark:border-zinc-500 dark:bg-zinc-900 md:flex-row md:gap-0 md:p-8">
       <div className="flex flex-col justify-between md:w-[190px]">
-        <h3 className="text-balance text-xl font-bold dark:text-[#F27935]">
+        <h3 className="whitespace-pre-line text-xl font-bold leading-tight dark:text-[#F27935]">
           {diagram.name}
         </h3>
         <Logo className="hidden scale-75 md:block" animated={false} />

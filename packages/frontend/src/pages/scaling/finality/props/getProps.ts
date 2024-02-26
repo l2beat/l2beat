@@ -30,7 +30,7 @@ export function getProps(
 
 const diagrams = [
   {
-    name: 'State diff ZK rollups',
+    name: 'State diff\nZK rollups',
     src: {
       dark: {
         desktop: getDiagram('state-diff-zk-dark'),
@@ -43,7 +43,7 @@ const diagrams = [
     },
   },
   {
-    name: 'Transaction data Optimistic rollups',
+    name: 'Transaction data\nOptimistic rollups',
     src: {
       dark: {
         desktop: getDiagram('transaction-data-optimistic-dark'),
@@ -56,7 +56,7 @@ const diagrams = [
     },
   },
   {
-    name: 'Transaction data ZK rollups',
+    name: 'Transaction data\nZK rollups',
     src: {
       dark: {
         desktop: getDiagram('transaction-data-zk-dark'),
