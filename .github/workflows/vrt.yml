@@ -29,3 +29,5 @@ jobs:
         env:
           LOST_PIXEL_API_KEY: ba4cba9b-3f2d-47d2-9788-4ed86cda43b2
           LOST_PIXEL_CONFIG_DIR: /github/workspace/packages/frontend
+        with:
+          FINALIZE: true
