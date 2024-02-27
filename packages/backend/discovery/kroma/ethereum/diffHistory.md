@@ -1,3 +1,24 @@
+Generated with discovered.json: 0xf9a2868df47939ae03b5391125f035a38ff09445
+
+# Diff at Tue, 27 Feb 2024 09:26:18 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@4f9617ef0b726c0af67b0e31e0d1ed434f10f1ef block: 19182633
+- current block number: 19317972
+
+## Description
+
+A Kroma validator has created a challenge (challenging a state root) for the first time.
+
+## Watched changes
+
+```diff
+    contract Colosseum (0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a) {
+      values.challengedRoots[0]:
++        4062
+    }
+```
+
 Generated with discovered.json: 0xf2efb953c5d3442db9a5c3a901d3af836fbd3787
 
 # Diff at Thu, 08 Feb 2024 09:45:31 GMT:
