@@ -69,14 +69,14 @@ describe(UpdateNotifier.name, () => {
         1,
         '> #0000 (block_number=123)\n\n***project-a*** | detected changes on chain: ***ethereum***```diff\nContract | ' +
           address.toString() +
-          '\n\nA\n- 1\n+ 2\n\n```',
+          '\n+++ description: None\n\nA\n- 1\n+ 2\n\n```',
         'INTERNAL',
       )
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         2,
         '***project-a*** | detected changes on chain: ***ethereum***```diff\nContract | ' +
           address.toString() +
-          '\n\nA\n- 1\n+ 2\n\n```',
+          '\n+++ description: None\n\nA\n- 1\n+ 2\n\n```',
         'PUBLIC',
       )
       expect(updateNotifierRepository.add).toHaveBeenCalledTimes(1)
@@ -136,15 +136,15 @@ describe(UpdateNotifier.name, () => {
       const internalMsg =
         `> #0000 (block_number=${BLOCK})\n\n` +
         `***project-a*** | detected changes on chain: ***ethereum***\`\`\`diff\nContract | ${address.toString()}` +
-        '\n\nWarning: Message has been truncated\nA\n' +
+        '\n+++ description: None\n\nWarning: Message has been truncated\nA\n' +
         `- ${'A'.repeat(1000)}\n` +
-        `+ ${'B'.repeat(800)}...\n\`\`\``
+        `+ ${'B'.repeat(778)}...\n\`\`\``
 
       const publicMsg =
         `***project-a*** | detected changes on chain: ***ethereum***\`\`\`diff\nContract | ${address.toString()}` +
-        '\n\nWarning: Message has been truncated\nA\n' +
+        '\n+++ description: None\n\nWarning: Message has been truncated\nA\n' +
         `- ${'A'.repeat(1000)}\n` +
-        `+ ${'B'.repeat(828)}...\n\`\`\``
+        `+ ${'B'.repeat(806)}...\n\`\`\``
 
       expect(internalMsg.length).toBeLessThanOrEqual(MAX_MESSAGE_LENGTH)
       expect(publicMsg.length).toBeLessThanOrEqual(MAX_MESSAGE_LENGTH)
@@ -215,7 +215,7 @@ describe(UpdateNotifier.name, () => {
         1,
         '> #0000 (block_number=123)\n\n***project-a*** | detected changes on chain: ***ethereum***```diff\nContract | ' +
           address.toString() +
-          '\n\nerrors\n+ Execution reverted\n\n```',
+          '\n+++ description: None\n\nerrors\n+ Execution reverted\n\n```',
         'INTERNAL',
       )
       expect(updateNotifierRepository.add).toHaveBeenCalledTimes(1)
@@ -292,10 +292,10 @@ describe(UpdateNotifier.name, () => {
       const timestamp = UnixTime.now().toStartOf('day').add(6, 'hours')
       const headers = ['Project', 'Chain', 'High', 'Mid', 'Low', '???']
       const rows = [
-        ['project-b', 'ethereum', '3', '2', '0', '0'],
-        ['project-b', 'optimism', '3', '0', '0', '4'],
-        ['project-a', 'ethereum', '2', '0', '1', '4'],
-        ['project-a', 'arbitrum', '0', '0', '0', '12'],
+        ['project-b', 'ethereum', '3', '2', '', ''],
+        ['project-b', 'optimism', '3', '', '', '4'],
+        ['project-a', 'ethereum', '2', '', '1', '4'],
+        ['project-a', 'arbitrum', '', '', '', '12'],
       ]
       const table = printAsciiTable(headers, rows)
 

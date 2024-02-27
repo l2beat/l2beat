@@ -192,21 +192,21 @@ function formatRemindersAsTable(
       unknown: bUnknown,
     } = b.chainEntry.severityCounts
 
-    const aSum = aHigh * 1000 + aMedium * 100 + aLow * 10 + aUnknown
-    const bSum = bHigh * 1000 + bMedium * 100 + bLow * 10 + bUnknown
+    const aSum = aHigh * 1e9 + aMedium * 1e6 + aLow * 1e3 + aUnknown
+    const bSum = bHigh * 1e9 + bMedium * 1e6 + bLow * 1e3 + bUnknown
 
     return bSum - aSum
   })
 
   const rows = sorted.map(({ projectName, chainEntry }) => {
-    const { chainName, severityCounts } = chainEntry
+    const { chainName, severityCounts: s } = chainEntry
     return [
       projectName,
       chainName,
-      severityCounts.high.toString(),
-      severityCounts.medium.toString(),
-      severityCounts.low.toString(),
-      severityCounts.unknown.toString(),
+      s.high === 0 ? '' : s.high.toString(),
+      s.medium === 0 ? '' : s.medium.toString(),
+      s.low === 0 ? '' : s.low.toString(),
+      s.unknown === 0 ? '' : s.unknown.toString(),
     ]
   })
 

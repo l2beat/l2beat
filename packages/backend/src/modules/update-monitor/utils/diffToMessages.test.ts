@@ -64,9 +64,9 @@ describe('Discord message formatting', () => {
       const expected = [
         `***${name}*** | detected changes on chain: ***ethereum***\`\`\`diff`,
         '\n',
-        contractDiffToMessages(diff[0])[0],
-        contractDiffToMessages(diff[1])[0],
-        contractDiffToMessages(diff[2])[0],
+        contractDiffToMessages(diff[0], undefined)[0],
+        contractDiffToMessages(diff[1], undefined)[0],
+        contractDiffToMessages(diff[2], undefined)[0],
         '```',
       ]
 
@@ -116,9 +116,9 @@ describe('Discord message formatting', () => {
         wrapBoldAndItalic('system1, system2.'),
         '```diff',
         '\n',
-        contractDiffToMessages(diff[0])[0],
-        contractDiffToMessages(diff[1])[0],
-        contractDiffToMessages(diff[2])[0],
+        contractDiffToMessages(diff[0], undefined)[0],
+        contractDiffToMessages(diff[1], undefined)[0],
+        contractDiffToMessages(diff[2], undefined)[0],
         '```',
       ]
 
@@ -154,7 +154,7 @@ describe('Discord message formatting', () => {
         `> ${formatNonce(
           nonce,
         )} (block_number=${BLOCK_NUMBER})\n\n***${name}*** | detected changes on chain: ***ethereum***\`\`\`diff\n`,
-        differences.slice(0, 25).map(contractDiffToMessages).join(''),
+        differences.slice(0, 25).map(d => contractDiffToMessages(d, undefined)).join(''),
         '```',
       ]
 
@@ -162,7 +162,7 @@ describe('Discord message formatting', () => {
         `> ${formatNonce(
           nonce,
         )} (block_number=${BLOCK_NUMBER})\n\n***${name}*** | detected changes on chain: ***ethereum***\`\`\`diff\n`,
-        differences.slice(25).map(contractDiffToMessages).join(''),
+        differences.slice(25).map(d => contractDiffToMessages(d, undefined)).join(''),
         '```',
       ]
 
@@ -196,7 +196,7 @@ describe('Discord message formatting', () => {
         'Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n\n',
         diff
           .slice(0, 102)
-          .map((d) => fieldDiffToMessage(d))
+          .map((d) => fieldDiffToMessage(d, undefined))
           .join(''),
         '```',
       ]
@@ -208,7 +208,7 @@ describe('Discord message formatting', () => {
         'Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n\n',
         diff
           .slice(102)
-          .map((d) => fieldDiffToMessage(d))
+          .map((d) => fieldDiffToMessage(d, undefined))
           .join(''),
         '```',
       ]
@@ -255,7 +255,7 @@ describe('Discord message formatting', () => {
 
       const overheadLength = sum(part.map((e) => e.length))
       part[2] = diff
-        .map((d) => fieldDiffToMessage(d, MAX_MESSAGE_LENGTH - overheadLength))
+        .map((d) => fieldDiffToMessage(d, undefined, MAX_MESSAGE_LENGTH - overheadLength))
         .join('')
 
       const result = diffToMessages(
@@ -296,7 +296,7 @@ describe('Discord message formatting', () => {
         ],
       }
 
-      const result = contractDiffToMessages(diff)
+      const result = contractDiffToMessages(diff, undefined)
 
       const expected = [
         `Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n\n`,
@@ -319,7 +319,7 @@ describe('Discord message formatting', () => {
         type: 'deleted',
       }
 
-      const result = contractDiffToMessages(diff)
+      const result = contractDiffToMessages(diff, undefined)
 
       const expected = `- Deleted contract: Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n\n`
 
@@ -333,7 +333,7 @@ describe('Discord message formatting', () => {
         type: 'created',
       }
 
-      const result = contractDiffToMessages(diff)
+      const result = contractDiffToMessages(diff, undefined)
 
       const expected = `+ New contract: Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n\n`
 
@@ -365,7 +365,7 @@ describe('Discord message formatting', () => {
         after: '2',
       }
 
-      const result = fieldDiffToMessage(diff)
+      const result = fieldDiffToMessage(diff, undefined)
 
       expect(result).toEqual('count\n- 1\n+ 2\n\n')
     })
@@ -375,7 +375,7 @@ describe('Discord message formatting', () => {
         key: 'count',
         before: undefined,
       }
-      const result = fieldDiffToMessage(undefinedBefore)
+      const result = fieldDiffToMessage(undefinedBefore, undefined)
       expect(result).toEqual('count\n- undefined\n\n')
     })
 
@@ -385,7 +385,7 @@ describe('Discord message formatting', () => {
         after: undefined,
       }
 
-      const result2 = fieldDiffToMessage(undefinedAfter)
+      const result2 = fieldDiffToMessage(undefinedAfter, undefined)
       expect(result2).toEqual('count\n+ undefined\n\n')
     })
   })
