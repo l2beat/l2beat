@@ -25,7 +25,8 @@ export function FinalityDiagramsSection({ diagrams, className }: Props) {
   if (diagrams.length === 0) return null
 
   return (
-    <section className={className}>
+    // TODO: re-enable section once diagrams are ready
+    <section className={className} style={{ display: 'none' }}>
       <h2 className="mb-6 text-3xl font-bold">Finality diagrams</h2>
       <div className="flex flex-col gap-4">
         {diagrams.map((diagram) => (
