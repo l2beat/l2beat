@@ -1,6 +1,7 @@
 import { Layer2, ScalingProjectDataAvailabilityMode } from '@l2beat/config'
 import {
   assertUnreachable,
+  FinalityApiResponse,
   FinalityProjectData,
   formatSeconds,
   notUndefined,
@@ -18,9 +19,12 @@ export function getScalingFinalityView(
 ): ScalingFinalityViewProps {
   const { finalityApiResponse, tvlApiResponse } = pagesData
 
-  const includedProjects = getIncludedProjects(projects)
+  const includedProjects = getIncludedProjects(projects, finalityApiResponse)
   const orderedProjectsByTvl = orderByTvl(includedProjects, tvlApiResponse)
-  const orderedProjects = moveComingSoonToEnd(orderedProjectsByTvl)
+  const orderedProjects = moveComingSoonToEnd(
+    orderedProjectsByTvl,
+    finalityApiResponse,
+  )
 
   return {
     items: orderedProjects
@@ -63,8 +67,7 @@ function getFinalityData(
   finalityProjectData: FinalityProjectData | undefined,
   project: Layer2,
 ) {
-  if (!finalityProjectData || !project.config.finality) return undefined
-
+  if (!finalityProjectData) return undefined
   return {
     timeToInclusion: {
       averageInSeconds: finalityProjectData.timeToInclusion.averageInSeconds,
@@ -89,28 +92,40 @@ function isSynced(syncedUntil: UnixTime) {
   return UnixTime.now().add(-1, 'days').add(-1, 'hours').lte(syncedUntil)
 }
 
-function getIncludedProjects(projects: Layer2[]) {
+function getIncludedProjects(
+  projects: Layer2[],
+  finalityApiResponse: FinalityApiResponse,
+) {
   return projects.filter(
     (p) =>
       !p.isUpcoming &&
       !p.isArchived &&
-      p.config.finality &&
+      (p.config.finality || finalityApiResponse.projects[p.id.toString()]) &&
       (p.display.category === 'ZK Rollup' ||
         p.display.category === 'Optimistic Rollup'),
   )
 }
 
-function moveComingSoonToEnd(projects: Layer2[]) {
+function moveComingSoonToEnd(
+  projects: Layer2[],
+  finalityApiResponse: FinalityApiResponse,
+) {
   return [...projects].sort((a, b) => {
+    const aResponse = finalityApiResponse.projects[a.id.toString()]
+    const bResponse = finalityApiResponse.projects[b.id.toString()]
+    const isAConfigured =
+      a.config.finality && a.config.finality !== 'coming soon'
+    const isBConfigured =
+      b.config.finality && b.config.finality !== 'coming soon'
     if (
-      a.config.finality === 'coming soon' &&
-      b.config.finality !== 'coming soon'
+      (!isAConfigured && isBConfigured) ||
+      (aResponse === undefined && bResponse !== undefined)
     ) {
       return 1
     }
     if (
-      b.config.finality === 'coming soon' &&
-      a.config.finality !== 'coming soon'
+      (!isBConfigured && isAConfigured) ||
+      (bResponse === undefined && aResponse !== undefined)
     ) {
       return -1
     }
