@@ -4,6 +4,7 @@ import {
   diffDiscovery,
   DiscoveryConfig,
   DiscoveryDiff,
+  DiscoveryMeta,
 } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { assert, UnixTime } from '@l2beat/shared-pure'
@@ -15,9 +16,10 @@ import { TaskQueue } from '../../tools/queue/TaskQueue'
 import { DiscoveryRunner } from './DiscoveryRunner'
 import { UpdateMonitorRepository } from './repositories/UpdateMonitorRepository'
 import { sanitizeDiscoveryOutput } from './sanitizeDiscoveryOutput'
-import { UpdateNotifier } from './UpdateNotifier'
+import { DailyReminderChainEntry, UpdateNotifier } from './UpdateNotifier'
 import { findDependents } from './utils/findDependents'
 import { findUnknownContracts } from './utils/findUnknownContracts'
+import { removeArraySuffix } from './utils/removeArraySuffix'
 
 export class UpdateMonitor {
   private readonly taskQueue: TaskQueue<UnixTime>
@@ -64,8 +66,10 @@ export class UpdateMonitor {
     await this.updateNotifier.sendDailyReminder(reminders, timestamp)
   }
 
-  async generateDailyReminder(): Promise<Record<string, string[]>> {
-    const result: Record<string, string[]> = {}
+  async generateDailyReminder(): Promise<
+    Record<string, DailyReminderChainEntry[]>
+  > {
+    const result: Record<string, DailyReminderChainEntry[]> = {}
 
     for (const runner of this.discoveryRunners) {
       const projectConfigs = await this.configReader.readAllConfigsForChain(
@@ -81,6 +85,10 @@ export class UpdateMonitor {
           continue
         }
 
+        const meta = await this.configReader.readMeta(
+          projectConfig.name,
+          runner.chain,
+        )
         const committed = await this.configReader.readDiscovery(
           projectConfig.name,
           runner.chain,
@@ -92,9 +100,14 @@ export class UpdateMonitor {
           projectConfig,
         )
 
+        const severityCounts = countSeverities(diff, meta)
+
         if (diff.length > 0) {
           result[projectConfig.name] ??= []
-          result[projectConfig.name].push(runner.chain)
+          result[projectConfig.name].push({
+            chainName: runner.chain,
+            severityCounts,
+          })
         }
       }
     }
@@ -275,12 +288,15 @@ export class UpdateMonitor {
         this.configReader,
         chain,
       )
-      await this.updateNotifier.handleUpdate(projectConfig.name, diff, {
-        dependents,
-        chainId: this.chainConverter.toChainId(chain),
+      await this.updateNotifier.handleUpdate(
+        projectConfig.name,
+        diff,
+        await this.configReader.readMeta(projectConfig.name, chain),
         blockNumber,
+        this.chainConverter.toChainId(chain),
+        dependents,
         unknownContracts,
-      })
+      )
       changesDetected.inc()
     }
   }
@@ -321,3 +337,50 @@ const errorsCount = new Gauge({
   name: 'discovery_watcher_errors',
   help: 'Value showing amount of errors in the update cycle',
 })
+
+function countSeverities(diffs: DiscoveryDiff[], meta?: DiscoveryMeta) {
+  const result = { low: 0, medium: 0, high: 0, unknown: 0 }
+  if (meta === undefined) {
+    return result
+  }
+
+  const VALUES_PREFIX = 'values.'
+  for (const diff of diffs) {
+    const contract = meta.contracts.find((c) => c.name === diff.name)
+    if (contract === undefined || diff.diff === undefined) {
+      continue
+    }
+
+    for (const field of diff.diff) {
+      if (field.key === undefined) {
+        continue
+      }
+      const key = field.key.startsWith(VALUES_PREFIX)
+        ? removeArraySuffix(field.key.slice(VALUES_PREFIX.length))
+        : removeArraySuffix(field.key)
+
+      if (contract.values[key] === undefined) {
+        continue
+      }
+
+      const severity = contract.values[key].severity
+
+      switch (severity) {
+        case 'LOW':
+          result.low++
+          break
+        case 'MEDIUM':
+          result.medium++
+          break
+        case 'HIGH':
+          result.high++
+          break
+        case null:
+          result.unknown++
+          break
+      }
+    }
+  }
+
+  return result
+}
