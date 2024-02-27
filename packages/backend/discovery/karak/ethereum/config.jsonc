@@ -6,7 +6,7 @@
     "0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3" // L1StandardBridge
   ],
   "names": {
-    "0x3e2Ea9B92B7E48A52296fD261dc26fd995284631": "L1StandardBridge",
+    "0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3": "L1StandardBridge",
     "0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73": "OptimismPortal",
     "0x0a23342520Aa8Ca963c4201801F4D3E95e731637": "L2OutputOracle",
     "0xF2C89960B6D63eC6c61dF3EA8BaFa0a02c26e8C9": "AddressManager",
