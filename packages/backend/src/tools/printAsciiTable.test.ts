@@ -71,10 +71,10 @@ describe(printAsciiTable.name, () => {
     const table = printAsciiTable(headers, rows)
     expect(table).toEqual(
       [
-          '|          Snake | Venomous |        Origin |',
-          '|----------------|----------|---------------|',
-          '|    Black mamba |      Yes |        Africa |',
-          '| Green anaconda |          | South America |',
+        '|          Snake | Venomous |        Origin |',
+        '|----------------|----------|---------------|',
+        '|    Black mamba |      Yes |        Africa |',
+        '| Green anaconda |          | South America |',
       ].join('\n'),
     )
   })

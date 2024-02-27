@@ -154,7 +154,10 @@ describe('Discord message formatting', () => {
         `> ${formatNonce(
           nonce,
         )} (block_number=${BLOCK_NUMBER})\n\n***${name}*** | detected changes on chain: ***ethereum***\`\`\`diff\n`,
-        differences.slice(0, 25).map(d => contractDiffToMessages(d, undefined)).join(''),
+        differences
+          .slice(0, 25)
+          .map((d) => contractDiffToMessages(d, undefined))
+          .join(''),
         '```',
       ]
 
@@ -162,7 +165,10 @@ describe('Discord message formatting', () => {
         `> ${formatNonce(
           nonce,
         )} (block_number=${BLOCK_NUMBER})\n\n***${name}*** | detected changes on chain: ***ethereum***\`\`\`diff\n`,
-        differences.slice(25).map(d => contractDiffToMessages(d, undefined)).join(''),
+        differences
+          .slice(25)
+          .map((d) => contractDiffToMessages(d, undefined))
+          .join(''),
         '```',
       ]
 
@@ -255,7 +261,9 @@ describe('Discord message formatting', () => {
 
       const overheadLength = sum(part.map((e) => e.length))
       part[2] = diff
-        .map((d) => fieldDiffToMessage(d, undefined, MAX_MESSAGE_LENGTH - overheadLength))
+        .map((d) =>
+          fieldDiffToMessage(d, undefined, MAX_MESSAGE_LENGTH - overheadLength),
+        )
         .join('')
 
       const result = diffToMessages(

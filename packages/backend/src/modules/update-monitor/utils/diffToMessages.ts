@@ -1,4 +1,10 @@
-import { ContractMeta, DiscoveryDiff, DiscoveryMeta, FieldDiff, ValueMeta } from '@l2beat/discovery'
+import {
+  ContractMeta,
+  DiscoveryDiff,
+  DiscoveryMeta,
+  FieldDiff,
+  ValueMeta,
+} from '@l2beat/discovery'
 
 import { MAX_MESSAGE_LENGTH } from '../../../peripherals/discord/DiscordClient'
 
@@ -49,7 +55,13 @@ export function contractDiffToMessages(
   ].join('\n')
   const maxLengthAdjusted = maxLength - contractHeader.length
   const messages =
-    diff.diff?.map((d) => fieldDiffToMessage(d, getValueMeta(contractMeta, d.key), maxLengthAdjusted)) ?? []
+    diff.diff?.map((d) =>
+      fieldDiffToMessage(
+        d,
+        getValueMeta(contractMeta, d.key),
+        maxLengthAdjusted,
+      ),
+    ) ?? []
 
   //bundle message is called second time to handle situation when
   //diff in a single contract would result in a message larger than MAX_MESSAGE_LENGTH
@@ -62,7 +74,8 @@ export function contractDiffToMessages(
 // that every element of messages array is no longer than MAX_MESSAGE_LENGTH
 export function bundleMessages(
   messages: string[],
-  maxLength: number,): string[] {
+  maxLength: number,
+): string[] {
   const bundle: string[] = ['']
   let index = 0
 
@@ -92,8 +105,10 @@ export function fieldDiffToMessage(
 ): string {
   let message = ''
 
-  message += valueMeta?.description ? `+++ description: ${valueMeta.description}\n` : ''
-  message += valueMeta?.type ? `+++ type: ${valueMeta.type}\n` : ''
+  message += valueMeta?.description
+    ? `+++ description: ${valueMeta.description}\n`
+    : ''
+  message += valueMeta?.type ? `+++ type: ${valueMeta.type.toString()}\n` : ''
   message += valueMeta?.severity ? `+++ severity: ${valueMeta.severity}\n` : ''
 
   if (diff.key !== undefined) {
@@ -151,8 +166,13 @@ function getContractMeta(meta: DiscoveryMeta | undefined, name: string) {
   return meta?.contracts.find((c) => c.name === name)
 }
 
-function getValueMeta(contractMeta: ContractMeta | undefined, name: string | undefined) {
-  return name !== undefined ? contractMeta?.values[name.replace("values.", "")] : undefined
+function getValueMeta(
+  contractMeta: ContractMeta | undefined,
+  name: string | undefined,
+) {
+  return name !== undefined
+    ? contractMeta?.values[name.replace('values.', '')]
+    : undefined
 }
 
 export function formatNonce(nonce: number): string {
