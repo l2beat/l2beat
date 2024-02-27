@@ -60,4 +60,22 @@ describe(printAsciiTable.name, () => {
       ].join('\n'),
     )
   })
+
+  it('handles spaces', () => {
+    const headers = ['Snake', 'Venomous', 'Origin']
+    const rows = [
+      ['Black mamba', 'Yes', 'Africa'],
+      ['Green anaconda', ' ', 'South America'],
+    ]
+
+    const table = printAsciiTable(headers, rows)
+    expect(table).toEqual(
+      [
+          '|          Snake | Venomous |        Origin |',
+          '|----------------|----------|---------------|',
+          '|    Black mamba |      Yes |        Africa |',
+          '| Green anaconda |          | South America |',
+      ].join('\n'),
+    )
+  })
 })
