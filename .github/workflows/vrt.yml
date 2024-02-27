@@ -1,14 +1,12 @@
+name: Visual regression testing
+
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    paths:
+      - "packages/frontend/**"
 
 jobs:
   lost_pixel:
-    name: Visual regression testing
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -33,4 +31,4 @@ jobs:
         uses: lost-pixel/lost-pixel@next
         env:
           LOST_PIXEL_API_KEY: ba4cba9b-3f2d-47d2-9788-4ed86cda43b2
-          LOST_PIXEL_CONFIG_DIR: /packages/frontend
+          LOST_PIXEL_CONFIG_DIR: /github/workspace/packages/frontend
