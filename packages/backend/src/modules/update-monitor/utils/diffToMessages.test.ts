@@ -193,9 +193,9 @@ describe('Discord message formatting', () => {
         `> ${formatNonce(
           nonce,
         )} (block_number=${BLOCK_NUMBER})\n\n***${PROJECT}*** | detected changes on chain: ***ethereum***\`\`\`diff\n`,
-        'Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n\n',
+        'Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n+++ description: None\n\n',
         diff
-          .slice(0, 102)
+          .slice(0, 101)
           .map((d) => fieldDiffToMessage(d, undefined))
           .join(''),
         '```',
@@ -205,9 +205,9 @@ describe('Discord message formatting', () => {
         `> ${formatNonce(
           nonce,
         )} (block_number=${BLOCK_NUMBER})\n\n***${PROJECT}*** | detected changes on chain: ***ethereum***\`\`\`diff\n`,
-        'Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n\n',
+        'Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n+++ description: None\n\n',
         diff
-          .slice(102)
+          .slice(101)
           .map((d) => fieldDiffToMessage(d, undefined))
           .join(''),
         '```',
@@ -224,8 +224,8 @@ describe('Discord message formatting', () => {
       )
 
       expect(result).toEqual([firstPart.join(''), secondPart.join('')])
-      expect(firstPart.join('').length).toEqual(1992)
-      expect(secondPart.join('').length).toEqual(1920)
+      expect(firstPart.join('').length).toEqual(1996)
+      expect(secondPart.join('').length).toEqual(1960)
     })
 
     it('truncates contract with diff larger than 2000 characters from a single change', () => {
@@ -248,7 +248,7 @@ describe('Discord message formatting', () => {
         `> ${formatNonce(
           nonce,
         )} (block_number=${BLOCK_NUMBER})\n\n***${PROJECT}*** | detected changes on chain: ***ethereum***\`\`\`diff\n`,
-        'Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n\n',
+        'Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n+++ description: None\n\n',
         '', // placeholder, replaced lower down
         '```',
       ]
@@ -299,7 +299,8 @@ describe('Discord message formatting', () => {
       const result = contractDiffToMessages(diff, undefined)
 
       const expected = [
-        `Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n\n`,
+        `Contract | 0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01\n`,
+        `+++ description: None\n\n`,
         `count\n`,
         `- 1\n`,
         `+ 2\n\n`,
