@@ -10,6 +10,11 @@ export type {
 export { AddressAnalyzer } from './discovery/analysis/AddressAnalyzer'
 export { ConfigReader } from './discovery/config/ConfigReader'
 export { DiscoveryConfig } from './discovery/config/DiscoveryConfig'
+export type {
+  ContractMeta,
+  DiscoveryMeta,
+  ValueMeta,
+} from './discovery/config/DiscoveryMeta'
 export { DiscoveryLogger } from './discovery/DiscoveryLogger'
 export {
   DISCOVERY_LOGIC_VERSION,

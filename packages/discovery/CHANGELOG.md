@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.43.5
+
+### Patch Changes
+
+- Export type
+
 ## 0.43.4
 
 ### Patch Changes
