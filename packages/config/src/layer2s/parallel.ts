@@ -82,7 +82,6 @@ export const parallel: Layer2 = orbitStackL2({
       description: 'EOA that can execute upgrades via the UpgradeExecutor.',
     },
   ],
-
   milestones: [
     {
       name: 'Parallel Mainnet closed launch',
