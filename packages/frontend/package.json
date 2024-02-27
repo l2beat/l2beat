@@ -47,6 +47,7 @@
     "fs-extra": "^10.1.0",
     "gray-matter": "^4.0.3",
     "lodash": "^4.17.21",
+    "lost-pixel": "^3.13.0",
     "markdown-it": "^13.0.1",
     "puppeteer": "^14.3.0",
     "qrcode": "^1.5.1",

@@ -1,0 +1,55 @@
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lost_pixel:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        config:
+          - {
+              package: "packages/frontend",
+              name: "Lost Pixel for Frontend",
+              command: "yarn storybook:build",
+            }
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: "yarn"
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Start App
+        run: cd ${{ matrix.config.package }} && ${{ matrix.config.command }} &
+
+      - name: ${{ matrix.config.name }}
+        uses: lost-pixel/lost-pixel@next
+        env:
+          LOST_PIXEL_API_KEY: ba4cba9b-3f2d-47d2-9788-4ed86cda43b2
+          LOST_PIXEL_CONFIG_DIR: ${{ matrix.config.package }}
+  finalize:
+    needs: [lost_pixel]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Lost Pixel Finalize
+        uses: lost-pixel/lost-pixel@next
+        env:
+          LOST_PIXEL_API_KEY: ba4cba9b-3f2d-47d2-9788-4ed86cda43b2
+          LOST_PIXEL_CONFIG_DIR: packages/frontend
+        with:
+          FINALIZE: true
