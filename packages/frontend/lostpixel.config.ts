@@ -2,7 +2,7 @@ import { CustomProjectConfig } from 'lost-pixel'
 
 export const config: CustomProjectConfig = {
   storybookShots: {
-    storybookUrl: './storybook-static',
+    storybookUrl: '/github/workspace/packages/frontend/storybook-static',
   },
 
   lostPixelProjectId: 'clsyhac3l1hlvll0e72atmqc8',
