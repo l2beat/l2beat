@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { ConfigReader, DiscoveryDiff } from '@l2beat/discovery'
+import { ConfigReader, DiscoveryDiff, DiscoveryMeta } from '@l2beat/discovery'
 import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
@@ -65,16 +65,135 @@ describe(UpdateNotifier.name, () => {
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
-        '> #0000 (block_number=123)\n\n***project-a*** | detected changes on chain: ***ethereum***```diff\nContract | ' +
-          address.toString() +
-          '\n+++ description: None\n\nA\n- 1\n+ 2\n\n```',
+        [
+            '> #0000 (block_number=123)',
+            '',
+            '***project-a*** | detected changes on chain: ***ethereum***```diff',
+            `Contract | ${address.toString()}`,
+            '+++ description: None',
+            '',
+            'A',
+            '- 1',
+            '+ 2',
+            '',
+            '```'
+        ].join('\n'),
         'INTERNAL',
       )
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         2,
-        '***project-a*** | detected changes on chain: ***ethereum***```diff\nContract | ' +
-          address.toString() +
-          '\n+++ description: None\n\nA\n- 1\n+ 2\n\n```',
+        [
+            '***project-a*** | detected changes on chain: ***ethereum***```diff',
+            `Contract | ${address.toString()}`,
+            '+++ description: None',
+            '',
+            'A',
+            '- 1',
+            '+ 2',
+            '',
+            '```'
+        ].join('\n'),
+        'PUBLIC',
+      )
+      expect(updateNotifierRepository.add).toHaveBeenCalledTimes(1)
+      expect(updateNotifierRepository.add).toHaveBeenCalledWith({
+        projectName: project,
+        diff: changes,
+        blockNumber: BLOCK,
+        chainId: ChainId.ETHEREUM,
+      })
+    })
+
+    it('sends notifications about the changes with meta', async () => {
+      const discordClient = mockObject<DiscordClient>({
+        sendMessage: async () => {},
+      })
+
+      const updateNotifierRepository = mockObject<UpdateNotifierRepository>({
+        add: async () => 0,
+        findLatestId: async () => undefined,
+        getNewerThan: async () => [],
+      })
+      updateNotifierRepository.findLatestId.resolvesToOnce(undefined)
+      updateNotifierRepository.findLatestId.resolvesToOnce(0)
+
+      const updateNotifier = new UpdateNotifier(
+        updateNotifierRepository,
+        discordClient,
+        chainConverter,
+        Logger.SILENT,
+      )
+
+      const project = 'project-a'
+      const dependents: string[] = []
+      const address = EthereumAddress.random()
+      const changes: DiscoveryDiff[] = [
+        {
+          name: 'Contract',
+          address,
+          diff: [{ key: 'A', before: '1', after: '2' }],
+        },
+      ]
+      const meta: DiscoveryMeta = {
+          contracts: [
+              {
+                  name: 'Contract',
+                  values: {
+                      "A": {
+                          type: null,
+                          severity: "MEDIUM",
+                          description: "This should never be equal to two"
+                      }
+                  }
+              }
+          ]
+      }
+
+      await updateNotifier.handleUpdate(
+        project,
+        changes,
+        meta,
+        BLOCK,
+        ChainId.ETHEREUM,
+        dependents,
+        [],
+      )
+
+      expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
+      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
+        1,
+        [
+            '> #0000 (block_number=123)',
+            '',
+            '***project-a*** | detected changes on chain: ***ethereum***```diff',
+            `Contract | ${address.toString()}`,
+            '+++ description: None',
+            '',
+            '+++ description: This should never be equal to two',
+            '+++ severity: MEDIUM',
+            'A',
+            '- 1',
+            '+ 2',
+            '',
+            '```'
+        ].join('\n'),
+        'INTERNAL',
+      )
+      expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
+        2,
+        [
+            '***project-a*** | detected changes on chain: ***ethereum***```diff',
+            `Contract | ${address.toString()}`,
+            '+++ description: None',
+            '',
+            '+++ description: This should never be equal to two',
+            '+++ severity: MEDIUM',
+            'A',
+            '- 1',
+            '+ 2',
+            '',
+            '```'
+        ].join('\n'),
         'PUBLIC',
       )
       expect(updateNotifierRepository.add).toHaveBeenCalledTimes(1)
