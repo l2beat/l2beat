@@ -7,6 +7,7 @@ import {
 } from '@l2beat/discovery'
 
 import { MAX_MESSAGE_LENGTH } from '../../../peripherals/discord/DiscordClient'
+import { removeArraySuffix } from './removeArraySuffix'
 
 export function diffToMessages(
   name: string,
@@ -171,7 +172,7 @@ function getValueMeta(
   name: string | undefined,
 ) {
   return name !== undefined
-    ? contractMeta?.values[name.replace('values.', '')]
+    ? contractMeta?.values[removeArraySuffix(name.replace('values.', ''))]
     : undefined
 }
 

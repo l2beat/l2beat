@@ -19,6 +19,7 @@ import { sanitizeDiscoveryOutput } from './sanitizeDiscoveryOutput'
 import { DailyReminderChainEntry, UpdateNotifier } from './UpdateNotifier'
 import { findDependents } from './utils/findDependents'
 import { findUnknownContracts } from './utils/findUnknownContracts'
+import { removeArraySuffix } from './utils/removeArraySuffix'
 
 export class UpdateMonitor {
   private readonly taskQueue: TaskQueue<UnixTime>
@@ -355,8 +356,9 @@ function countSeverities(diffs: DiscoveryDiff[], meta?: DiscoveryMeta) {
         continue
       }
       const key = field.key.startsWith(VALUES_PREFIX)
-        ? field.key.slice(VALUES_PREFIX.length)
-        : field.key
+        ? removeArraySuffix(field.key.slice(VALUES_PREFIX.length))
+        : removeArraySuffix(field.key)
+
       if (contract.values[key] === undefined) {
         continue
       }
