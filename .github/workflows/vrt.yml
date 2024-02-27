@@ -1,9 +1,6 @@
 name: Visual regression testing
 
-on:
-  push:
-    paths:
-      - "packages/frontend/**"
+on: [push]
 
 jobs:
   lost_pixel:
