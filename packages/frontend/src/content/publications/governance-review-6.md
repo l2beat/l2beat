@@ -13,11 +13,9 @@ Optimism announced its 4th $OP airdrop which was aimed at creators with addresse
 
 You can read more about the airdrop and find the link to the claiming page [here](https://community.optimism.io/docs/governance/airdrop-4/).
 
-
 ### **Next Joint-House (Token + Citizen) Community Call**
 
 Michael [announced](https://gov.optimism.io/t/joint-house-token-citizen-community-call-will-be-tuesday-february-27th-10-00-pt-13-00-et-18-00-gmt-19-00-cet/7694) that the next community call is going to be a joint call between both Token and Citizen Houses and it will take place on Tuesday, February 27th, 2024.
-
 
 ### **[Discussion] Impact=Profit is a bad meme and mechanism**
 
@@ -31,13 +29,11 @@ What are your thoughts regarding the 4th airdrop? Are there any topics you would
 
 You can find us to discuss all the above and more during our [Optimism Office Hours](http://meet.google.com/pem-jzrh-gkq) every Tuesday at 4 pm UTC.
 
-
 ## **Arbitrum**
 
 ### **[RFC] Questbook DDA Program Request for Continuation**
 
 Srijith, the program manager for Questbook DDA grants program, [submitted an RFC](https://forum.arbitrum.foundation/t/questbook-dda-program-phase-2-request-for-continuation/21326) which seeks to continue the program with the same domains (New Protocol Ideas, Gaming, Dev Tooling on One and NOVA, and Education Growth, Community and Events) for another 6 months, with a new budget of $4,000,000. Each domain would have $920,000 distributed through grants, while $320,000 would be used to cover the costs of the program, including the compensation for the program manager and domain allocators.
-
 
 ### **[RFC] Plurality Labs Milestone 1B(ridge)**
 
@@ -45,12 +41,9 @@ DisruptionJoe [submitted an RFC](https://forum.arbitrum.foundation/t/non-constit
 
 The 3 key changes in the new proposal are:
 
-
-
 1. **Plurality Labs Board:** A board of top voices in the Arbitrum community for oversight, and to ensure decentralized decision-making.
-2. **Human validations:** Thrive Protocol enables Plurality Labs to validate when value is created, and pay out funds to projects upon value creation. 
+2. **Human validations:** Thrive Protocol enables Plurality Labs to validate when value is created, and pay out funds to projects upon value creation.
 3. **Team upgrade:** They’ll be bringing out the big guns for this one, adding team members that know grants, know DAOs, and know scale.
-
 
 ### **[RFC] RnDAO proposal for an Arbitrum Collab Tech Business Cluster**
 
@@ -58,13 +51,10 @@ Daniel from RnDAO [submitted an RFC](https://forum.arbitrum.foundation/t/proposa
 
 Through a [pilot grant to RnDAO via Plurality Labs](https://forum.arbitrum.foundation/t/plurality-labs-arbitrum-dao-x-rndao-co-lab/20138/7), RnDAO is running a builders pipeline program, consisting of two steps:
 
-
-
 1. **Research Fellowship**: 3-month paid Fellowship for aspiring builders to dive deep and validate a problem through user research, market research, and engaging with experts.
 2. **Venture Programme:** 4–6 month program with 50k Arb and $100k worth of hands-on support for builders to build a team, develop an MVP, and market-test their solution.
 
 The initial pilot enabled funding for 6 seats in the Fellowships program and 1 seat in the Venture Programme. And is set to finish at the end of Q1. With the current RFC, RnDAO proposes that ArbitrumDAO funds the next step in this Business Cluster development initiative.
-
 
 ### **Writing Your First Proposal to the ArbitrumDAO**
 
@@ -78,9 +68,7 @@ With both Questbook and Plurality Labs’ grant programs nearing their end, the 
 
 You can find us to discuss all the above and more during our [Arbitrum Office Hours](http://meet.google.com/jkj-nnop-arc) every Thursday at 4 pm UTC.
 
-
 ## **Uniswap**
-
 
 ### **On Chain Vote — Uniswap Revitalization and Growth**
 
@@ -90,25 +78,19 @@ If the proposal is successful, 549,000 UNI will be transferred to the [Uniswap A
 
 The [Tally vote](https://www.tally.xyz/gov/uniswap/proposal/59?chart=list) ends on February 18th at 9:21 pm UTC.
 
-
 ### **[RFC] Activate Uniswap Protocol Governance**
 
 Erin, the Governance Lead at Uniswap Foundation, [submitted an RFC](https://gov.uniswap.org/t/rfc-activate-uniswap-protocol-governance/22936) on behalf of the Foundation that proposes to upgrade the protocol such that its fee mechanism rewards UNI token holders who have delegated and staked their tokens.
 
 Uniswap Foundation has funded two new smart contracts which, if implemented by this governance proposal, would:
 
-
-
 1. Upgrade Uniswap Protocol Governance to enable the permissionless and programmatic collection of protocol fees
 2. Distribute any protocol fees pro-rata to UNI token holders who have staked and delegated their votes
 3. Allow for governance to continue to control core parameters: which pools are charged a fee, and the magnitude of the fee
 
-
 ### **[RFC] Uniswap Delegate Reward**
 
 Doo from Stable Lab [submitted an RFC](https://gov.uniswap.org/t/rfc-uniswap-delegate-reward/22909) which proposes a 6-month program with a total budget of $600K in UNI to incentivize and reward Uniswap delegates based on 3 main factors:
-
-
 
 1. Voting participation
 2. Communication
@@ -116,17 +98,13 @@ Doo from Stable Lab [submitted an RFC](https://gov.uniswap.org/t/rfc-uniswap-del
 
 The eligibility requirements are being discussed, but the proposed requirements for the time being are:
 
-
-
-* Having >=80% participation & communication in votes the last 3 months, and
-* Having over 500,000 UNI delegated, or
-* Holding a “Badge”, which is an endorsement from a delegate with over 500,000 UNI voting power
-
+- Having >=80% participation & communication in votes the last 3 months, and
+- Having over 500,000 UNI delegated, or
+- Holding a “Badge”, which is an endorsement from a delegate with over 500,000 UNI voting power
 
 ### **[RFC] Uniswap Delegate Gas Rebates**
 
 Bobbay from UMA [submitted an RFC](https://gov.uniswap.org/t/rfc-uniswap-delegate-gas-rebates/22910/1) that seeks to introduce gas rebates for delegates’ on-chain voting costs based on their participation metrics to retain current delegates as well as lower the entry barrier to participating in Uniswap DAO. The proposal requests a total budget of $50K in ETH to reimburse active Uniswap Delegates.
-
 
 ### **January 24 Uniswap Report**
 
@@ -140,16 +118,13 @@ Both the proposal to upgrade the fee mechanism to reward UNI stakers and delegat
 
 You can catch us to discuss all the above and more during our [Uniswap Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
-
 ## **Hop**
-
 
 ### **Temp Check — [HIP-44] Treasury Diversification for Ongoing DAO Expenses**
 
 This proposal by Shane of Hop Foundation proposes that we sell 25% of Hop DAO’s ARB holdings (209,251 ARB) for USDC. This should raise approximately $440k for Hop DAO at current prices (~$2.10) to cover ongoing expenses, including [Authereum Labs Engagement](https://snapshot.org/#/hop.eth/proposal/0x94e63e85f806639fd26ad49b723ad291080e7877a3c0dba9f8580c5a5d649856), and the compensation of [Hop Community Moderators](https://snapshot.org/#/hop.eth/proposal/0xbdba0110dd0cb0bded91f16be2b1e7e2e3c3f026924f90e1bd9d15fcb07a9440).
 
 The [Snapshot vote](https://snapshot.org/#/hop.eth/proposal/0x66739b4f25d1acfb20861a62b16919a7e6562a67767d3e4c01909c47b7337fa0) ends on February 26th, 2024 at 09:48 pm UTC.
-
 
 ### **Temp Check — [HIP-45] Head of DAO Operations Election**
 
@@ -165,9 +140,7 @@ We’re keen to discuss whether it makes sense to approach treasury diversificat
 
 You can find us to discuss all the above and more during our [Hop Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
-
 ## **Polygon**
-
 
 ### **Goodbye Polygon Wallet**
 
@@ -181,14 +154,11 @@ We’re always happy to chat with Polygon ecosystem participants, ranging from d
 
 You can find us to discuss all things Polygon at our [Polygon Office Hours](http://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
-
 ## **Starknet**
-
 
 ### **$STRK Airdrop**
 
 The Starknet Foundation [announced the $STRK airdrop](https://twitter.com/StarknetFndn/status/1759910415335600584) on February 20th and it will be available for eligible participants to claim until June 20th.
-
 
 ### **Starknet v0.13.1: Fee Reduction**
 
@@ -202,9 +172,7 @@ We expect $STRK airdrop to kick things off in terms of Starknet governance. We�
 
 You can find us to discuss all things Starknet during our [Starknet Office Hours](http://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
-
 ## **Connext**
-
 
 ### **[RFC] Incentivized NEXT-wETH Gauge at Bunni on Ethereum Mainnet**
 
@@ -212,16 +180,13 @@ You can find us to discuss all things Starknet during our [Starknet Office Hours
 
 The overall cost to the DAO would be 5400 $NEXT ,$200 of which will go for pool establishment and initial liquidity provisioning, with the remaining going to liquidity providers as incentives.
 
-
 ### **[RFC] Connext Expansion Proposal V2**
 
 Nadjana from the Connext Foundation [submitted an RFC](https://forum.connext.network/t/rfc-connext-expansion-proposal-v2/1061) that seeks approval from the Connext DAO to allow the Connext Foundation to add future protocol support for additional chains at its discretion in advance of the next network upgrade, which aims to make the process more automated.
 
-
 ### **[RFC] Execution Bond Change**
 
 Nadjana from the Connext Foundation [submitted another RFC](https://forum.connext.network/t/rfc-execution-bond-change/1077/3) that proposes changing the 5 WETH bond needed to request proposal execution to 2 WETH, so oSnap bot can request execution and execute transactions automatically. Reducing the bond from 5 to 2 WETH would enable us to run a bot by the oSnap team that will automatically execute transactions going forward.
-
 
 ### **[RFC] Seed $NEXT liquidity in Stella Lending Pools**
 
