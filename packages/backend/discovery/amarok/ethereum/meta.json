@@ -337,6 +337,7 @@
     },
     {
       "name": "WatcherManager",
+      "description": "Contract maintaining a list of Watchers able to stop the bridge if fraud is detected.",
       "values": {
         "delay": {
           "description": null,
@@ -574,9 +575,9 @@
           "type": null
         },
         "watcherManager": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Contract maintaining a list of Watchers able to stop the bridge if fraud is detected.",
+          "severity": "MID",
+          "type": "PERMISSION"
         },
         "connectors": {
           "description": null,
