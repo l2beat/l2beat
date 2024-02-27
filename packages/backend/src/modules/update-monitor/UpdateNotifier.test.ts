@@ -25,7 +25,6 @@ describe(UpdateNotifier.name, () => {
       const discordClient = mockObject<DiscordClient>({
         sendMessage: async () => {},
       })
-      const configReader = mockObject<ConfigReader>({})
 
       const updateNotifierRepository = mockObject<UpdateNotifierRepository>({
         add: async () => 0,
@@ -39,7 +38,6 @@ describe(UpdateNotifier.name, () => {
         updateNotifierRepository,
         discordClient,
         chainConverter,
-        configReader,
         Logger.SILENT,
       )
 
@@ -92,7 +90,6 @@ describe(UpdateNotifier.name, () => {
       const discordClient = mockObject<DiscordClient>({
         sendMessage: async () => {},
       })
-      const configReader = mockObject<ConfigReader>({})
 
       const updateNotifierRepository = mockObject<UpdateNotifierRepository>({
         add: async () => 0,
@@ -106,7 +103,6 @@ describe(UpdateNotifier.name, () => {
         updateNotifierRepository,
         discordClient,
         chainConverter,
-        configReader,
         Logger.SILENT,
       )
 
@@ -172,7 +168,6 @@ describe(UpdateNotifier.name, () => {
       const discordClient = mockObject<DiscordClient>({
         sendMessage: async () => {},
       })
-      const configReader = mockObject<ConfigReader>({})
 
       const updateNotifierRepository = mockObject<UpdateNotifierRepository>({
         add: async () => 0,
@@ -185,7 +180,6 @@ describe(UpdateNotifier.name, () => {
         updateNotifierRepository,
         discordClient,
         chainConverter,
-        configReader,
         Logger.SILENT,
       )
 
@@ -233,7 +227,6 @@ describe(UpdateNotifier.name, () => {
       const updateNotifierRepository = mockObject<UpdateNotifierRepository>({
         add: async () => 0,
       })
-      const configReader = mockObject<ConfigReader>({})
 
       const discordClient = mockObject<DiscordClient>({
         sendMessage: async () => {},
@@ -243,7 +236,6 @@ describe(UpdateNotifier.name, () => {
         updateNotifierRepository,
         discordClient,
         chainConverter,
-        configReader,
         Logger.SILENT,
       )
 
@@ -313,7 +305,6 @@ describe(UpdateNotifier.name, () => {
       const discordClient = mockObject<DiscordClient>({
         sendMessage: async () => {},
       })
-      const configReader = mockObject<ConfigReader>({})
       const updateNotifierRepository = mockObject<UpdateNotifierRepository>({
         add: async () => 0,
         findLatestId: async () => undefined,
@@ -322,7 +313,6 @@ describe(UpdateNotifier.name, () => {
         updateNotifierRepository,
         discordClient,
         chainConverter,
-        configReader,
         Logger.SILENT,
       )
 

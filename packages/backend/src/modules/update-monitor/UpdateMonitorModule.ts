@@ -61,7 +61,6 @@ export function createUpdateMonitorModule(
     updateNotifierRepository,
     discordClient,
     chainConverter,
-    configReader,
     logger,
   )
 

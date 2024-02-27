@@ -30,7 +30,6 @@ export class UpdateNotifier {
     private readonly updateNotifierRepository: UpdateNotifierRepository,
     private readonly discordClient: DiscordClient | undefined,
     private readonly chainConverter: ChainConverter,
-    private readonly configReader: ConfigReader,
     private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
