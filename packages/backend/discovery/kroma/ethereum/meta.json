@@ -200,9 +200,9 @@
       "name": "SecurityCouncil",
       "values": {
         "COLOSSEUM": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Contract used to challenge state roots and prove fraud.",
+          "severity": "HIGH",
+          "type": "STRUCTURAL"
         },
         "GOVERNOR": {
           "description": null,
@@ -300,9 +300,9 @@
       "name": "L2OutputOracle",
       "values": {
         "COLOSSEUM": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Contract used to challenge state roots and prove fraud.",
+          "severity": "HIGH",
+          "type": "STRUCTURAL"
         },
         "FINALIZATION_PERIOD_SECONDS": {
           "description": null,
@@ -704,9 +704,9 @@
           "type": null
         },
         "challengedRoots": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "State roots that have been challenged by the validators. Challenges are created when, according to the validators, the roots commit to an incorrect L2 state.",
+          "severity": "LOW",
+          "type": "OTHER"
         }
       }
     },
