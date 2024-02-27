@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { ConfigReader, DiscoveryDiff, DiscoveryMeta } from '@l2beat/discovery'
+import { DiscoveryDiff, DiscoveryMeta } from '@l2beat/discovery'
 import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
@@ -66,32 +66,32 @@ describe(UpdateNotifier.name, () => {
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
         [
-            '> #0000 (block_number=123)',
-            '',
-            '***project-a*** | detected changes on chain: ***ethereum***```diff',
-            `Contract | ${address.toString()}`,
-            '+++ description: None',
-            '',
-            'A',
-            '- 1',
-            '+ 2',
-            '',
-            '```'
+          '> #0000 (block_number=123)',
+          '',
+          '***project-a*** | detected changes on chain: ***ethereum***```diff',
+          `Contract | ${address.toString()}`,
+          '+++ description: None',
+          '',
+          'A',
+          '- 1',
+          '+ 2',
+          '',
+          '```',
         ].join('\n'),
         'INTERNAL',
       )
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         2,
         [
-            '***project-a*** | detected changes on chain: ***ethereum***```diff',
-            `Contract | ${address.toString()}`,
-            '+++ description: None',
-            '',
-            'A',
-            '- 1',
-            '+ 2',
-            '',
-            '```'
+          '***project-a*** | detected changes on chain: ***ethereum***```diff',
+          `Contract | ${address.toString()}`,
+          '+++ description: None',
+          '',
+          'A',
+          '- 1',
+          '+ 2',
+          '',
+          '```',
         ].join('\n'),
         'PUBLIC',
       )
@@ -135,18 +135,18 @@ describe(UpdateNotifier.name, () => {
         },
       ]
       const meta: DiscoveryMeta = {
-          contracts: [
-              {
-                  name: 'Contract',
-                  values: {
-                      "A": {
-                          type: null,
-                          severity: "MEDIUM",
-                          description: "This should never be equal to two"
-                      }
-                  }
-              }
-          ]
+        contracts: [
+          {
+            name: 'Contract',
+            values: {
+              A: {
+                type: null,
+                severity: 'MEDIUM',
+                description: 'This should never be equal to two',
+              },
+            },
+          },
+        ],
       }
 
       await updateNotifier.handleUpdate(
@@ -163,36 +163,36 @@ describe(UpdateNotifier.name, () => {
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
         [
-            '> #0000 (block_number=123)',
-            '',
-            '***project-a*** | detected changes on chain: ***ethereum***```diff',
-            `Contract | ${address.toString()}`,
-            '+++ description: None',
-            '',
-            '+++ description: This should never be equal to two',
-            '+++ severity: MEDIUM',
-            'A',
-            '- 1',
-            '+ 2',
-            '',
-            '```'
+          '> #0000 (block_number=123)',
+          '',
+          '***project-a*** | detected changes on chain: ***ethereum***```diff',
+          `Contract | ${address.toString()}`,
+          '+++ description: None',
+          '',
+          '+++ description: This should never be equal to two',
+          '+++ severity: MEDIUM',
+          'A',
+          '- 1',
+          '+ 2',
+          '',
+          '```',
         ].join('\n'),
         'INTERNAL',
       )
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         2,
         [
-            '***project-a*** | detected changes on chain: ***ethereum***```diff',
-            `Contract | ${address.toString()}`,
-            '+++ description: None',
-            '',
-            '+++ description: This should never be equal to two',
-            '+++ severity: MEDIUM',
-            'A',
-            '- 1',
-            '+ 2',
-            '',
-            '```'
+          '***project-a*** | detected changes on chain: ***ethereum***```diff',
+          `Contract | ${address.toString()}`,
+          '+++ description: None',
+          '',
+          '+++ description: This should never be equal to two',
+          '+++ severity: MEDIUM',
+          'A',
+          '- 1',
+          '+ 2',
+          '',
+          '```',
         ].join('\n'),
         'PUBLIC',
       )

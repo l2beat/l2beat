@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { ConfigReader, DiscoveryDiff, DiscoveryMeta } from '@l2beat/discovery'
+import { DiscoveryDiff, DiscoveryMeta } from '@l2beat/discovery'
 import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { isEmpty } from 'lodash'
 
