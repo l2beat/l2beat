@@ -647,6 +647,7 @@
     },
     {
       "name": "Colosseum",
+      "description": "Contract used to challenge state roots and prove fraud.",
       "values": {
         "BISECTION_TIMEOUT": {
           "description": null,
