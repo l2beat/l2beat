@@ -676,6 +676,13 @@ export const starknet: Layer2 = {
   ],
   milestones: [
     {
+      name: 'Starknet Provisions',
+      link: 'https://www.starknet.io/en/content/starknet-provisions-program',
+      date: '2024-02-14T00:00:00Z',
+      description:
+        'Starknet begins allocating $STRK to early contributors and users.',
+    },
+    {
       name: 'Starknet Alpha',
       link: 'https://medium.com/starkware/starknet-alpha-now-on-mainnet-4cf35efd1669',
       date: '2021-11-29T00:00:00Z',
