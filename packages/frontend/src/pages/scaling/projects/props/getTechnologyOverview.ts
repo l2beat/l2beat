@@ -21,10 +21,11 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
       title: 'Technology',
       isUnderReview: project.isUnderReview ?? project.technology.isUnderReview,
       items: [
-        makeTechnologyChoice(
-          'state-correctness',
-          project.technology.stateCorrectness,
-        ),
+        project.technology.stateCorrectness &&
+          makeTechnologyChoice(
+            'state-correctness',
+            project.technology.stateCorrectness,
+          ),
         project.technology.newCryptography &&
           makeTechnologyChoice(
             'new-cryptography',

@@ -11,11 +11,9 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
-  NEW_CRYPTOGRAPHY,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
-  STATE_CORRECTNESS,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
@@ -282,24 +280,6 @@ export const zksyncera: Layer2 = {
     },
   ),
   technology: {
-    stateCorrectness: {
-      ...STATE_CORRECTNESS.VALIDITY_PROOFS,
-      references: [
-        {
-          text: 'Validity proofs - zkSync FAQ',
-          href: 'https://era.zksync.io/docs/dev/fundamentals/rollups.html#optimistic-rollups-versus-zk-rollups',
-        },
-      ],
-    },
-    newCryptography: {
-      ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
-      references: [
-        {
-          text: "What are rollups? - Developer's documentation",
-          href: 'https://era.zksync.io/docs/dev/fundamentals/rollups.html#what-are-zk-rollups',
-        },
-      ],
-    },
     dataAvailability: {
       ...DATA_AVAILABILITY.ON_CHAIN,
       references: [],
@@ -386,6 +366,12 @@ export const zksyncera: Layer2 = {
         title: 'ZK Circuits',
         description:
           'zkSync Era circuits are built from Boojum and are designed to replicate the behavior of the EVM. The source code can be found [here](https://github.com/matter-labs/era-zkevm_circuits/tree/main). The circuits are checked against tests that can be found [here](https://github.com/matter-labs/era-zkevm_test_harness/tree/main).',
+        risks: [
+          {
+            category: 'Funds can be lost if',
+            text: 'the proof system is implemented incorrectly.',
+          },
+        ],
       },
       {
         title: 'Verification Keys Generation',
