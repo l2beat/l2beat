@@ -122,7 +122,7 @@ async function saveFlatSources(
   const flatSourcesFolder = `.flat${options.sourcesFolder ?? ''}`
   const flatSourcesPath = posix.join(rootPath, flatSourcesFolder)
   const allContractNames = results.map((c) =>
-    c.type !== 'EOA' ? c.name : 'EOA',
+    c.type !== 'EOA' ? c.derivedName ?? c.name : 'EOA',
   )
 
   await rimraf(flatSourcesPath)

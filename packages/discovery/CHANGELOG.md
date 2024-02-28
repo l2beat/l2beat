@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.43.6
+
+### Patch Changes
+
+- Fix edge case in saving flattened sources
+
 ## 0.43.5
 
 ### Patch Changes
