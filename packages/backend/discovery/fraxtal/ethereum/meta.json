@@ -2,26 +2,6 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "MintableERC20FactoryProxy",
-      "values": {
-        "bridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "BRIDGE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "L1StandardBridge",
       "values": {
         "l2TokenBridge": {
@@ -100,106 +80,6 @@
           "type": null
         },
         "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "OptimismPortal",
-      "values": {
-        "FRXETH": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "FRXETH_MINTER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "guardian": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "GUARDIAN": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "L2_ORACLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2Oracle": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2Sender": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "params": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "superchainConfig": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "SYSTEM_CONFIG": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "systemConfig": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "AddressManager",
-      "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ProxyAdmin",
-      "values": {
-        "addressManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isUpgrading": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
           "description": null,
           "severity": null,
           "type": null
@@ -452,39 +332,114 @@
       }
     },
     {
-      "name": "frxETHMinter",
+      "name": "AddressManager",
       "values": {
-        "currentWithheldETH": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "MintableERC20FactoryProxy",
+      "values": {
+        "bridge": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "DEPOSIT_SIZE": {
+        "BRIDGE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "depositContract": {
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OptimismPortal",
+      "values": {
+        "FRXETH": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "depositEtherPaused": {
+        "FRXETH_MINTER": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "frxETHToken": {
+        "guardian": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "nominatedOwner": {
+        "GUARDIAN": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "numValidators": {
+        "L2_ORACLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2Oracle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2Sender": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "params": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "superchainConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SYSTEM_CONFIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "systemConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "addressManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isUpgrading": {
           "description": null,
           "severity": null,
           "type": null
@@ -493,36 +448,11 @@
           "description": null,
           "severity": null,
           "type": null
-        },
-        "RATIO_PRECISION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "sfrxETHToken": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "submitPaused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "timelock_address": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "withholdRatio": {
-          "description": null,
-          "severity": null,
-          "type": null
         }
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "FraxtalMultisig",
       "values": {
         "domainSeparator": {
           "description": null,
@@ -637,6 +567,126 @@
       }
     },
     {
+      "name": "frxETHMinter",
+      "values": {
+        "currentWithheldETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEPOSIT_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "depositContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "depositEtherPaused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "frxETHToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nominatedOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "numValidators": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RATIO_PRECISION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sfrxETHToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "submitPaused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "timelock_address": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "withholdRatio": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "DepositContract",
+      "values": {
+        "get_deposit_count": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "get_deposit_root": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Timelock",
+      "values": {
+        "admin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "GRACE_PERIOD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAXIMUM_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MINIMUM_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "sfrxETH",
       "values": {
         "asset": {
@@ -702,57 +752,7 @@
       }
     },
     {
-      "name": "DepositContract",
-      "values": {
-        "get_deposit_count": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "get_deposit_root": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "Timelock",
-      "values": {
-        "admin": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "delay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "GRACE_PERIOD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MAXIMUM_DELAY": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MINIMUM_DELAY": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pendingAdmin": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "GnosisSafe",
+      "name": "frxETHMultisig",
       "values": {
         "domainSeparator": {
           "description": null,
@@ -787,7 +787,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "TimelockMultisig",
       "values": {
         "domainSeparator": {
           "description": null,

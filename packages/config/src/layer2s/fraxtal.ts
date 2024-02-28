@@ -76,11 +76,44 @@ export const fraxtal: Layer2 = opStack({
     GUARDIAN: 'Guardian',
     CHALLENGER: 'Challenger',
   },
-  nonTemplatePermissions: [],
+  nonTemplatePermissions: [
+    ...discovery.getMultisigPermission(
+      'FraxtalMultisig',
+      'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Guardian of the FraxchainPortal, meaning it can halt withdrawals. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power). This address is also the permissioned challenger of the system. It can delete non finalized roots without going through the fault proof process.',
+    ),
+    ...discovery.getMultisigPermission(
+      'frxETHMultisig',
+      'This address is the owner of the gas token contract frxETH, and the frxETHMinter contract. It can pause and unpause ETH deposits, and change how much ETH is withheld from each submit() transaction.',
+    ),
+    ...discovery.getMultisigPermission(
+      'TimelockMultisig',
+      'This address is the owner of the timelock smart contract. It can queue, cancel, and execute transactions in the timelock (e.g., adding and removing frxETH whitelisted minters).',
+    ),
+  ],
   nonTemplateContracts: [
     discovery.getContractDetails('L1ERC721Bridge', {
       description:
         'The L1ERC721Bridge contract is the main entry point to deposit ERC721 tokens from L1 to L2.',
+      ...upgradeability,
+    }),
+    discovery.getContractDetails('frxETH', {
+      description:
+        'Fraxtal uses Frax Ether (frxETH) as the designated gas token, allowing users to utilize frxETH to pay for blockspace.',
+      ...upgradeability,
+    }),
+    discovery.getContractDetails('frxETHMinter', {
+      description:
+        'Authorized minter contract for frxETH, accepts user-supplied ETH and converts it to frxETH.',
+      ...upgradeability,
+    }),
+    discovery.getContractDetails('sfrxETH', {
+      description:
+        'Vault token contract (ERC-4626) for staked frxETH. The smart contract receives frxETH tokens and mints sfrxETH tokens.',
+      ...upgradeability,
+    }),
+    discovery.getContractDetails('Timelock', {
+      description:
+        'Allows for time-delayed execution of transactions in the FrxETH smart contract, such as adding and removing whitelisted minters.',
       ...upgradeability,
     }),
   ],

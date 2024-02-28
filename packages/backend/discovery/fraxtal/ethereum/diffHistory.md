@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xace0a86583a9eae479dee5755a8c324249fb14b3
+Generated with discovered.json: 0x91a4f3d1ae462bb90e67131d0331c08cb24817b0
 
-# Diff at Mon, 26 Feb 2024 16:51:34 GMT:
+# Diff at Wed, 28 Feb 2024 10:09:33 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current block number: 19313039
+- current block number: 19325340
 
 ## Description
 
@@ -73,7 +73,7 @@ Add discovery to Fraxtal.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x8306300ffd616049FD7e4b0354a64Da835c1A81C) {
+    contract frxETHMultisig (0x8306300ffd616049FD7e4b0354a64Da835c1A81C) {
     }
 ```
 
@@ -103,7 +103,7 @@ Add discovery to Fraxtal.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27) {
+    contract TimelockMultisig (0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27) {
     }
 ```
 
@@ -115,6 +115,6 @@ Add discovery to Fraxtal.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0xe0d7755252873c4eF5788f7f45764E0e17610508) {
+    contract FraxtalMultisig (0xe0d7755252873c4eF5788f7f45764E0e17610508) {
     }
 ```
