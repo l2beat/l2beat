@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x262728a31db821ecad67931fd4f52bea4f69220a
+Generated with discovered.json: 0x4994070662bbd95d21b8c9c1ab21761f41503e62
 
-# Diff at Wed, 28 Feb 2024 07:59:45 GMT:
+# Diff at Wed, 28 Feb 2024 08:50:37 GMT:
 
 - author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
-- current block number: 19324699
+- current block number: 19324951
 
 ## Description
 
@@ -25,7 +25,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x28A227d4faF0f4f75897438E24C43EF1CDABb920) {
+    contract KarakMultisig (0x28A227d4faF0f4f75897438E24C43EF1CDABb920) {
     }
 ```
 

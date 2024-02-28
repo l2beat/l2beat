@@ -19,6 +19,7 @@ const upgradeability = {
 }
 
 export const karak: Layer2 = opStack({
+  daProvider: 'Celestia',
   discovery,
   display: {
     name: 'Karak',
