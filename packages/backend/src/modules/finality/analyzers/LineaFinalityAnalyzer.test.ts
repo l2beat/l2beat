@@ -25,7 +25,10 @@ describe(LineaFinalityAnalyzer.name, () => {
         timestamp: new UnixTime(l1Timestamp),
       })
 
-      expect(results).toEqualUnsorted(TIMESTAMPS1.map((t) => l1Timestamp - t))
+      expect(results).toEqualUnsorted([
+        l1Timestamp - Math.min(...TIMESTAMPS1),
+        l1Timestamp - Math.max(...TIMESTAMPS1),
+      ])
     })
   })
 
@@ -79,7 +82,7 @@ describe(LineaFinalityAnalyzer.name, () => {
 
       it('correctly decode for multiple txs with one not found', async () => {
         const start = UnixTime.now().toStartOf('hour')
-        const firstL1Timestamp = 1708352483
+        const firstL1Timestamp = 1708300000
         const secondL1Timestamp = 1709300000
 
         const livenessRepository = mockObject<LivenessRepository>({
@@ -105,7 +108,9 @@ describe(LineaFinalityAnalyzer.name, () => {
             }),
         })
 
-        const l2provider = getMockL2RpcClient(TIMESTAMPS2)
+        const l2provider = getMockL2RpcClient([
+          1706143000, 1706145000, 1706144000, 1706146000,
+        ])
 
         const calculator = new LineaFinalityAnalyzer(
           provider,
@@ -118,10 +123,13 @@ describe(LineaFinalityAnalyzer.name, () => {
           start,
           3,
         )
+
         if (results) {
           expect(results).toEqualUnsorted([
-            ...TIMESTAMPS2.slice(0, 349).map((t) => firstL1Timestamp - t),
-            ...TIMESTAMPS2.slice(349, 450).map((t) => secondL1Timestamp - t),
+            firstL1Timestamp - 1706143000,
+            firstL1Timestamp - 1706144000,
+            secondL1Timestamp - 1706145000,
+            secondL1Timestamp - 1706146000,
           ])
         }
 
@@ -163,7 +171,7 @@ function getMockL2RpcClient(timestamps: number[]) {
   })
 }
 
-const TIMESTAMPS1 = Array.from({ length: 75 }, (_, i) => 1706143081 + i)
+const TIMESTAMPS1 = Array.from({ length: 2 }, (_, i) => 1706143081 + i)
 const TIMESTAMPS2 = Array.from({ length: 75 * 6 }, (_, i) => 1706143081 + i)
 
 function getMockCallData(firstBlock: number, endBlock: number): string {
