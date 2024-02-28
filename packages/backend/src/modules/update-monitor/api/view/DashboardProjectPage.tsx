@@ -4,6 +4,7 @@ import { default as React } from 'react'
 import { Page } from '../../../status/Page'
 import { reactToHtml } from '../../../status/reactToHtml'
 import { getContractMeta, getValueMeta } from '../../utils/metaGetters'
+import { sortBySeverity } from '../../utils/sortDiffs'
 import { DashboardContract } from '../props/getDashboardContracts'
 import { Contract } from './components/Contract'
 import { Diff } from './components/Diff'
@@ -42,7 +43,7 @@ export function DashboardProjectPage(props: ConfigPageProps) {
                     {`+++ description: ${contractMeta?.description ?? 'None'}`}
                   </span>
                   <ul>
-                    {(d.diff ?? []).map((x, index2) => {
+                    {sortBySeverity(d.diff, contractMeta).map((x, index2) => {
                       const valueMeta = getValueMeta(contractMeta, x.key)
                       return (
                         <li key={index2} style={{ marginLeft: '12px' }}>
