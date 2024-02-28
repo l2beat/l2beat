@@ -1,6 +1,5 @@
 import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
 
-import { DERIVATION } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
@@ -27,7 +26,7 @@ export const karak: Layer2 = opStack({
     warning:
       'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description: 'Karak is ....',
-    purposes: ['Universal', 'NFT'],
+    purposes: ['Universal'],
     links: {
       websites: ['https://karak.network/'],
       apps: ['https://karak.network/karak-xp/'],
@@ -87,7 +86,7 @@ export const karak: Layer2 = opStack({
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'KarakMultisig',
-      'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
+      'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Challenger and Guardian of the OptimismPortal, meaning it can halt withdrawals and change incorrect state roots. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
     ),
   ],
   nonTemplateContracts: [
