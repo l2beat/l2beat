@@ -29,18 +29,16 @@ export const karak: Layer2 = opStack({
     description: 'Karak is ....',
     purposes: ['Universal', 'NFT'],
     links: {
-      websites: ['https://zora.energy/', 'https://zora.co/'], //TODO: change this
-      apps: [],
-      documentation: ['https://docs.zora.co/docs/zora-network/intro'], //TODO: change this
-      explorers: [
-        'https://explorer.zora.energy/', //TODO: change this
-        'https://zora.superscan.network', //TODO: change this
+      websites: ['https://karak.network/'],
+      apps: ['https://karak.network/karak-xp/'],
+      documentation: [
+        'https://docs.karak.network/karak/general/karak-overview',
       ],
-      repositories: ['https://github.com/ourzora/optimism'], //TODO: change this
+      explorers: ['https://explorer.karak.network/'],
+      repositories: [],
       socialMedia: [
-        'https://twitter.com/ourZORA', //TODO: change this
-        'https://instagram.com/our.zora', //TODO: change this
-        'https://zora.community', //TODO: change this
+        'https://twitter.com/Karak_Network',
+        'https://t.me/Karak_Network',
       ],
     },
     activityDataSource: 'Blockchain RPC',
@@ -62,7 +60,7 @@ export const karak: Layer2 = opStack({
   l1StandardBridgeEscrow: EthereumAddress(
     '0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3',
   ),
-  rpcUrl: 'https://rpc.zora.co', //TODO: change this
+  rpcUrl: 'https://rpc.karak.network/',
   finality: {
     type: 'OPStack',
     lag: 0,
@@ -71,7 +69,14 @@ export const karak: Layer2 = opStack({
   l2OutputOracle: discovery.getContract('L2OutputOracle'),
   portal: discovery.getContract('OptimismPortal'),
   isNodeAvailable: true,
-  milestones: [],
+  milestones: [
+    {
+      name: 'Karak Network Early Access Launch',
+      link: 'https://x.com/Karak_Network/status/1762561646999068899?s=20',
+      date: '2024-02-27T00:00:00Z',
+      description: 'Karak Network is live on mainnet.',
+    },
+  ],
   knowledgeNuggets: [],
   roleOverrides: {
     batcherHash: 'Sequencer',
