@@ -116,7 +116,7 @@ async function analyseAllOrbitChains(): Promise<void> {
       'Rollup:',
       rollup?.values?.chainId,
       ':',
-      getChainName(rollup.values.chainId),
+      getChainName(rollup?.values?.chainId as number),
     )
   }
   console.log()
@@ -130,7 +130,10 @@ async function analyseAllOrbitChains(): Promise<void> {
   const data = []
   for (const rollup of rollups) {
     data.push({
-      name: getChainName(rollup?.values?.chainId),
+      name:
+        rollup && rollup.values
+          ? getChainName(rollup.values.chainId as number)
+          : 'Unknown chainId',
       confirmPeriodBlocks: rollup?.values?.confirmPeriodBlocks,
       extraChallengeTimeBlocks: rollup?.values?.extraChallengeTimeBlocks,
       VALIDATOR_AFK_BLOCKS: rollup?.values?.VALIDATOR_AFK_BLOCKS,
@@ -141,7 +144,10 @@ async function analyseAllOrbitChains(): Promise<void> {
   const data1 = []
   for (const rollup of rollups) {
     data1.push({
-      name: getChainName(rollup?.values.chainId),
+      name:
+        rollup && rollup.values
+          ? getChainName(rollup.values.chainId as number)
+          : 'Unknown chainId',
       setValidatorCount: rollup?.values?.setValidatorCount,
       stakerCount: rollup?.values?.stakerCount,
     })
@@ -151,7 +157,10 @@ async function analyseAllOrbitChains(): Promise<void> {
   const data2 = []
   for (const rollup of rollups) {
     data2.push({
-      name: getChainName(rollup?.values.chainId),
+      name:
+        rollup && rollup.values
+          ? getChainName(rollup.values.chainId as number)
+          : 'Unknown chainId',
       baseStake: rollup?.values?.baseStake,
       currentRequiredStake: rollup?.values?.currentRequiredStake,
       stakeToken: rollup?.values?.stakeToken,
@@ -162,7 +171,10 @@ async function analyseAllOrbitChains(): Promise<void> {
   const data3 = []
   for (const rollup of rollups) {
     data3.push({
-      name: getChainName(rollup?.values.chainId),
+      name:
+        rollup && rollup.values
+          ? getChainName(rollup.values.chainId as number)
+          : 'Unknown chainId',
       wasmModuleRoot: rollup?.values?.wasmModuleRoot,
       isERC20Enabled: rollup?.values?.isERC20Enabled,
     })
@@ -172,6 +184,10 @@ async function analyseAllOrbitChains(): Promise<void> {
 
 async function compareTwoOrbitChain(config: Config): Promise<void> {
   console.log('Analyzing', config.input)
+  if (config.input === undefined || config.input.length !== 2) {
+    console.log('Please provide two orbit chains to compare')
+    return
+  }
   const configReader = new ConfigReader()
   const discovery1 = await configReader.readDiscovery(
     config.input[0],
@@ -257,8 +273,10 @@ async function compareTwoOrbitChain(config: Config): Promise<void> {
     },
     {
       name: 'wasmModuleRoot',
-      chain1: (rollupProxy1?.values?.wasmModuleRoot as string)?.slice(0, 10) + '...',
-      chain2: (rollupProxy2?.values?.wasmModuleRoot as string)?.slice(0, 10) + '...',
+      chain1:
+        (rollupProxy1?.values?.wasmModuleRoot as string)?.slice(0, 10) + '...',
+      chain2:
+        (rollupProxy2?.values?.wasmModuleRoot as string)?.slice(0, 10) + '...',
       description: descriptions['wasmModuleRoot'],
     },
     {

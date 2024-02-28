@@ -1,5 +1,4 @@
 import { ConfigReader } from '@l2beat/discovery'
-import { assert } from '@l2beat/shared-pure'
 
 const chainMapping: Record<string, string> = {
   optimism: 'ethereum',
@@ -31,10 +30,14 @@ async function main() {
       printUsage()
       break
     case 'findSimilar':
-      await analyseAllOpStackChains(config.input[0])
+      if (config.input && config.input.length > 0) {
+        await analyseAllOpStackChains(config.input[0])
+      } else {
+        console.log('No chain name provided for findSimilar mode')
+      }
       break
     case 'all':
-      await analyseAllOpStackChains()
+      await analyseAllOpStackChains(null)
       break
   }
 }
@@ -108,9 +111,11 @@ function findMostSimilar(
   return mostSimilar
 }
 
-async function analyseAllOpStackChains(chainToCompare: string): Promise<void> {
+async function analyseAllOpStackChains(
+  chainToCompare: string | null,
+): Promise<void> {
   const configReader = new ConfigReader()
-  const opStackChains = []
+  const opStackChains = [] as OpStackChain[]
   for (const [chain, mapping] of Object.entries(chainMapping)) {
     console.log('reading', chain)
     const discovery = await configReader.readDiscovery(chain, mapping)
@@ -135,14 +140,14 @@ async function analyseAllOpStackChains(chainToCompare: string): Promise<void> {
 
     const opStackChain = {
       chain: chain,
-      OptimismPortal: optimismPortal?.values.version,
-      L1StandardBridge: l1StandardBridge?.values.version,
-      L1ERC721Bridge: l1ERC721Bridge?.values.version,
-      SystemConfig: systemConfig?.values.version,
-      L1CrossDomainMessenger: l1CrossDomainMessenger?.values.version,
-      L2OutputOracle: L2OutputOracle?.values.version,
+      OptimismPortal: optimismPortal?.values?.version,
+      L1StandardBridge: l1StandardBridge?.values?.version,
+      L1ERC721Bridge: l1ERC721Bridge?.values?.version,
+      SystemConfig: systemConfig?.values?.version,
+      L1CrossDomainMessenger: l1CrossDomainMessenger?.values?.version,
+      L2OutputOracle: L2OutputOracle?.values?.version,
     }
-    opStackChains.push(opStackChain)
+    opStackChains.push(opStackChain as OpStackChain)
   }
   console.table(opStackChains)
 
@@ -150,7 +155,7 @@ async function analyseAllOpStackChains(chainToCompare: string): Promise<void> {
     console.log('comparing to', chainToCompare)
     const chainToCompareTo = opStackChains.find(
       (obj) => obj.chain === chainToCompare,
-    )
+    ) as OpStackChain
     const mostSimilar = findMostSimilar(chainToCompareTo, opStackChains)
 
     console.log(`most similar to ${chainToCompare}:`, mostSimilar)
