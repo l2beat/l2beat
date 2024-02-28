@@ -145,7 +145,8 @@ async function main() {
     SOCKET_DISCOVERY_CONFIG_PATH,
     JSON.stringify(
       {
-        $schema: '../../config.schema.json',
+        $schema:
+          'https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json',
         chain: discoveryConfig.chain,
         name: discoveryConfig.name,
         initialAddresses: discoveryConfig.initialAddresses,

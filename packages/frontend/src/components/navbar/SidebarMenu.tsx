@@ -5,7 +5,7 @@ import { FinalityIcon } from '../icons/pages/FinalityIcon'
 import { LivenessIcon } from '../icons/pages/LivenessIcon'
 import { MenuCloseIcon } from '../icons/symbols/MenuCloseIcon'
 import { Logo } from '../Logo'
-import { OutLink } from '../OutLink'
+import { PlainLink } from '../PlainLink'
 import { DarkThemeToggle } from './DarkThemeToggle'
 import { HiringBadge } from './HiringBadge'
 import { SocialLinks, SocialLinksProps } from './SocialLinks'
@@ -101,7 +101,7 @@ export function SidebarMenu(props: SidebarMenuProps) {
         <hr className="mb-6 mt-8 w-full border-gray-200 dark:border-gray-850" />
         <ul className="flex flex-col gap-4 px-6 text-sm font-medium">
           <li>
-            <OutLink href={props.forumLink}>Forum</OutLink>
+            <PlainLink href={props.forumLink}>Forum</PlainLink>
           </li>
           <li>
             <a href="/donate">Donate</a>
@@ -119,13 +119,13 @@ export function SidebarMenu(props: SidebarMenuProps) {
             <a href="/faq">FAQ</a>
           </li>
           <li>
-            <OutLink
+            <PlainLink
               className="flex items-center"
-              href="https://www.notion.so/native/l2beat/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f"
+              href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f"
             >
               Jobs
               {props.showHiringBadge && <HiringBadge className="ml-2" />}
-            </OutLink>
+            </PlainLink>
           </li>
         </ul>
         <hr className="my-6 w-full border-gray-200 dark:border-gray-850" />

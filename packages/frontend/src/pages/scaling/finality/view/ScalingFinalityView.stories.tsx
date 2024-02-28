@@ -94,11 +94,15 @@ const meta: Meta<typeof ScalingFinalityView> = {
             text: 'There is no available node software that can reconstruct the state from L1 data, hence there is no way to verify that this system is a rollup.',
           },
         },
-        timeToFinalize: {
+        timeToInclusion: {
           averageInSeconds: 344900,
           maximumInSeconds: 2240,
         },
         finalizationPeriod: formatSeconds(3600, { fullUnit: true }),
+        syncStatus: {
+          isSynced: true,
+          displaySyncedUntil: '2024 Feb 12 12:00:00 (UTC)',
+        },
       },
       {
         name: 'ApeX',
@@ -111,11 +115,16 @@ const meta: Meta<typeof ScalingFinalityView> = {
         redWarning: undefined,
         purposes: ['Exchange'],
         stage: { stage: 'NotApplicable' },
-        timeToFinalize: {
+        timeToInclusion: {
+          minimumInSeconds: 78,
           averageInSeconds: 15078,
           maximumInSeconds: 1259,
         },
         finalizationPeriod: formatSeconds(2 * 3600, { fullUnit: true }),
+        syncStatus: {
+          isSynced: true,
+          displaySyncedUntil: '2024 Feb 12 12:00:00 (UTC)',
+        },
       },
       {
         name: 'Arbitrum One',
@@ -214,11 +223,15 @@ const meta: Meta<typeof ScalingFinalityView> = {
           ],
           message: undefined,
         },
-        timeToFinalize: {
+        timeToInclusion: {
           averageInSeconds: 2329,
           maximumInSeconds: 4584,
         },
         finalizationPeriod: formatSeconds(3 * 3600, { fullUnit: true }),
+        syncStatus: {
+          isSynced: true,
+          displaySyncedUntil: '2024 Feb 12 12:00:00 (UTC)',
+        },
       },
       {
         name: 'Base',
@@ -297,11 +310,15 @@ const meta: Meta<typeof ScalingFinalityView> = {
           ],
           message: undefined,
         },
-        timeToFinalize: {
+        timeToInclusion: {
           averageInSeconds: 410,
           maximumInSeconds: 1626,
         },
         finalizationPeriod: formatSeconds(4 * 3600, { fullUnit: true }),
+        syncStatus: {
+          isSynced: false,
+          displaySyncedUntil: '2024 Feb 12 12:00:00 (UTC)',
+        },
       },
       {
         name: 'dYdX v3',
@@ -379,11 +396,16 @@ const meta: Meta<typeof ScalingFinalityView> = {
           ],
           message: undefined,
         },
-        timeToFinalize: {
+        timeToInclusion: {
+          minimumInSeconds: 555,
           averageInSeconds: 18555,
           maximumInSeconds: 67229,
         },
         finalizationPeriod: formatSeconds(5 * 3600, { fullUnit: true }),
+        syncStatus: {
+          isSynced: true,
+          displaySyncedUntil: '2024 Feb 12 12:00:00 (UTC)',
+        },
       },
       {
         name: 'Linea',
@@ -475,11 +497,15 @@ const meta: Meta<typeof ScalingFinalityView> = {
             text: 'There is no available node software that can reconstruct the state from L1 data, hence there is no way to verify that this system is a rollup.',
           },
         },
-        timeToFinalize: {
+        timeToInclusion: {
           averageInSeconds: 96,
           maximumInSeconds: 78212,
         },
         finalizationPeriod: formatSeconds(6 * 3600, { fullUnit: true }),
+        syncStatus: {
+          isSynced: true,
+          displaySyncedUntil: '2024 Feb 12 12:00:00 (UTC)',
+        },
       },
       {
         name: 'Myria',
@@ -492,11 +518,15 @@ const meta: Meta<typeof ScalingFinalityView> = {
         redWarning: undefined,
         purposes: ['NFT', 'Exchange'],
         stage: { stage: 'NotApplicable' },
-        timeToFinalize: {
+        timeToInclusion: {
           averageInSeconds: 819,
           maximumInSeconds: 2646,
         },
         finalizationPeriod: formatSeconds(7 * 3600, { fullUnit: true }),
+        syncStatus: {
+          isSynced: true,
+          displaySyncedUntil: '2024 Feb 12 12:00:00 (UTC)',
+        },
       },
       {
         name: 'OP Mainnet',
@@ -575,11 +605,15 @@ const meta: Meta<typeof ScalingFinalityView> = {
           ],
           message: undefined,
         },
-        timeToFinalize: {
+        timeToInclusion: {
           averageInSeconds: 185585,
           maximumInSeconds: 1211,
         },
         finalizationPeriod: formatSeconds(8 * 3600, { fullUnit: true }),
+        syncStatus: {
+          isSynced: true,
+          displaySyncedUntil: '2024 Feb 12 12:00:00 (UTC)',
+        },
       },
       {
         name: 'Scroll',
@@ -670,11 +704,15 @@ const meta: Meta<typeof ScalingFinalityView> = {
             text: 'There is no available node software that can reconstruct the state from L1 data, hence there is no way to verify that this system is a rollup.',
           },
         },
-        timeToFinalize: {
+        timeToInclusion: {
           averageInSeconds: 4899,
           maximumInSeconds: 294,
         },
         finalizationPeriod: formatSeconds(120, { fullUnit: true }),
+        syncStatus: {
+          isSynced: true,
+          displaySyncedUntil: '2024 Feb 12 12:00:00 (UTC)',
+        },
       },
       {
         name: 'tanX',
@@ -687,11 +725,15 @@ const meta: Meta<typeof ScalingFinalityView> = {
         redWarning: undefined,
         purposes: ['Exchange'],
         stage: { stage: 'NotApplicable' },
-        timeToFinalize: {
+        timeToInclusion: {
           averageInSeconds: 175511,
           maximumInSeconds: 2129,
         },
         finalizationPeriod: formatSeconds(24 * 3600, { fullUnit: true }),
+        syncStatus: {
+          isSynced: true,
+          displaySyncedUntil: '2024 Feb 12 12:00:00 (UTC)',
+        },
       },
     ],
   },

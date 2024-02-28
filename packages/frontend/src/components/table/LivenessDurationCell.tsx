@@ -2,6 +2,8 @@ import { LivenessApiProject } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { ScalingLivenessViewEntry } from '../../pages/scaling/liveness/types'
+import { Badge } from '../badge/Badge'
+import { UpcomingBadge } from '../badge/UpcomingBadge'
 import { RoundedWarningIcon } from '../icons'
 import { WarningBar } from '../project/WarningBar'
 import {
@@ -24,11 +26,7 @@ export function LivenessDurationCell(props: {
     props.project?.category === 'ZK Rollup' &&
     props.dataType === 'proofSubmissions'
   ) {
-    return (
-      <div className="rounded bg-gray-200 px-1.5 py-px text-center font-medium text-gray-500 dark:bg-neutral-700 dark:text-gray-50">
-        Coming soon
-      </div>
-    )
+    return <UpcomingBadge />
   }
 
   if (!props.durationInSeconds) {
@@ -42,8 +40,10 @@ export function LivenessDurationCell(props: {
           : undefined
     return (
       <Tooltip>
-        <TooltipTrigger className="rounded bg-gray-200 px-1.5 py-px text-center font-medium uppercase text-gray-500 dark:bg-neutral-700 dark:text-gray-50">
-          n/a
+        <TooltipTrigger>
+          <Badge type="gray" className="uppercase">
+            n/a
+          </Badge>
         </TooltipTrigger>
         <TooltipContent>{tooltipText}</TooltipContent>
       </Tooltip>

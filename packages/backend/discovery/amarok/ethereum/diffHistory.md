@@ -1,3 +1,57 @@
+Generated with discovered.json: 0xedbcbcd69c61aab19a00452e1a0f26ed281f8f56
+
+# Diff at Tue, 27 Feb 2024 09:09:39 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@4f9617ef0b726c0af67b0e31e0d1ed434f10f1ef block: 19267405
+- current block number: 19317899
+
+## Description
+
+Two Watcher addresses are changed.
+
+## Watched changes
+
+```diff
+    contract WatcherManager (0x79e6E0242405A66B2dd8B96DEd3b2F0216Fd417d) {
+      values.WATCHERS.1:
+-        "0x917133b1dE100E9fF8F03E24c43F9272dD6A8E99"
++        "0x151Ea574C62b505aEe2F89f33D8c152E28A956b0"
+      values.WATCHERS.0:
+-        "0x9c77788d761ee0347Ab550883237CeD274a0F248"
++        "0x56dD71fffD089EdAdbA8eCdaaDb94269713f8f4d"
+    }
+```
+
+Generated with discovered.json: 0x76284a08ee267ddde579dbc4f104ea8865a380fa
+
+# Diff at Tue, 20 Feb 2024 07:23:08 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@308930b4cc7f93870a161e88abb1361d44caae90 block: 19176699
+- current block number: 19267405
+
+## Description
+
+A new proposal is submitted, related to identifier update, and a new relayer is added.
+
+## Watched changes
+
+```diff
+    contract GovernorV2 (0x7b292034084A41B9D441B71b6E3557Edd0463fa8) {
+      values.numProposals:
+-        198
++        199
+    }
+```
+
+```diff
+    contract ConnextBridge (0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6) {
+      values.RELAYERS[13]:
++        "0xF9D64d54D32EE2BDceAAbFA60C4C438E224427d0"
+    }
+```
+
 Generated with discovered.json: 0x658319b9c3fe837c9e09311f58fef75b5fc7adcd
 
 # Diff at Wed, 07 Feb 2024 13:46:24 GMT:

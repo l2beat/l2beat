@@ -1,6 +1,6 @@
 import { ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
 
-import { UpdaterStatus } from '../../status/api/view/TvlStatusPage'
+import { UpdaterStatus } from '../api/status/TvlStatusPage'
 import { ReportRecord } from '../repositories/ReportRepository'
 
 export interface ReportUpdater {

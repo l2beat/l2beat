@@ -11,6 +11,7 @@ interface Props {
   className?: string
   children: ReactNode
   isUnderReview?: boolean
+  includeChildrenIfUnderReview?: boolean
 }
 
 export function ProjectDetailsSection(props: Props) {
@@ -28,7 +29,18 @@ export function ProjectDetailsSection(props: Props) {
         sectionOrder={props.sectionOrder}
         className="mb-6"
       />
-      {props.isUnderReview ? <UnderReviewCallout /> : props.children}
+      {props.isUnderReview ? (
+        props.includeChildrenIfUnderReview ? (
+          <>
+            <UnderReviewCallout className="mb-6" />
+            {props.children}
+          </>
+        ) : (
+          <UnderReviewCallout />
+        )
+      ) : (
+        props.children
+      )}
     </section>
   )
 }

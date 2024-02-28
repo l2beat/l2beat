@@ -17,7 +17,7 @@ export function ScalingFinalityView({ items }: ScalingFinalityViewProps) {
   const columnsConfig = getScalingFinalityColumnsConfig()
 
   return (
-    <section className="flex flex-col gap-y-2">
+    <section>
       <TableView columnsConfig={columnsConfig} rows={rows} items={items} />
     </section>
   )

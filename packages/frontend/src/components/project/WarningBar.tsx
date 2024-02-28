@@ -3,7 +3,7 @@ import React from 'react'
 import { cn } from '../../utils/cn'
 import { OutLinkIcon, ShieldIcon } from '../icons'
 import { Markdown } from '../Markdown'
-import { OutLink } from '../OutLink'
+import { PlainLink } from '../PlainLink'
 import { Callout } from './Callout'
 
 export interface WarningBarProps {
@@ -37,7 +37,7 @@ export function WarningBar({
   const Icon = icon ?? ShieldIcon
   if (href) {
     return (
-      <OutLink href={href}>
+      <PlainLink href={href}>
         <Callout
           className={cn('p-4', className)}
           color={color}
@@ -50,7 +50,7 @@ export function WarningBar({
             </div>
           }
         />
-      </OutLink>
+      </PlainLink>
     )
   }
 

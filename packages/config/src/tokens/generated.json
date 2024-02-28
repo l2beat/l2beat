@@ -1711,6 +1711,21 @@
       "formula": "locked"
     },
     {
+      "id": "lqty-lqty",
+      "name": "LQTY",
+      "coingeckoId": "liquity",
+      "address": "0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
+      "symbol": "LQTY",
+      "decimals": 18,
+      "deploymentTimestamp": 1617611590,
+      "coingeckoListingTimestamp": 1617580800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14665/large/200-lqty-icon.png?1696514340",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "lyxe-lukso-token",
       "name": "LUKSO Token",
       "coingeckoId": "lukso-token",
@@ -1871,6 +1886,21 @@
       "coingeckoListingTimestamp": 1635897600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/19304/large/Db4XqML.png?1696518747",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "meth-meth",
+      "name": "mETH",
+      "coingeckoId": "mantle-staked-ether",
+      "address": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
+      "symbol": "mETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1696584719,
+      "coingeckoListingTimestamp": 1701993600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33345/large/symbol_transparent_bg.png?1701697066",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"
@@ -2756,6 +2786,21 @@
       "coingeckoListingTimestamp": 1647561600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24413/large/STG_LOGO.png?1696523595",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "strk-starknet-token",
+      "name": "StarkNet Token",
+      "coingeckoId": "starknet",
+      "address": "0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766",
+      "symbol": "STRK",
+      "decimals": 18,
+      "deploymentTimestamp": 1668610211,
+      "coingeckoListingTimestamp": 1708473600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/26433/large/starknet.png?1696525507",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"

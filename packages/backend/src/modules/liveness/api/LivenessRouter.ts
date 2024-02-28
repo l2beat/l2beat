@@ -5,9 +5,11 @@ import { z } from 'zod'
 import { withTypedContext } from '../../../api/types'
 import { Config } from '../../../config'
 import { LivenessController } from './LivenessController'
+import { LivenessStatusController } from './LivenessStatusController'
 
 export function createLivenessRouter(
   livenessController: LivenessController,
+  livenessStatusController: LivenessStatusController,
   config: Config,
 ) {
   const router = new Router()
@@ -55,6 +57,10 @@ export function createLivenessRouter(
       },
     ),
   )
+
+  router.get('/status/liveness', async (ctx) => {
+    ctx.body = await livenessStatusController.getLivenessStatus()
+  })
 
   return router
 }

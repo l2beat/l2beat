@@ -23,6 +23,7 @@ export function getPermissionsSection(
     title: 'Permissions',
     verificationStatus,
     manuallyVerifiedContracts,
+    isUnderReview: project.isUnderReview,
     permissions: [],
   }
 

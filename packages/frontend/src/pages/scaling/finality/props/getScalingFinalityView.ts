@@ -1,11 +1,13 @@
 import { Layer2, ScalingProjectDataAvailabilityMode } from '@l2beat/config'
 import {
   assertUnreachable,
-  FinalityDataPoint,
+  FinalityProjectData,
   formatSeconds,
   notUndefined,
+  UnixTime,
 } from '@l2beat/shared-pure'
 
+import { formatTimestamp } from '../../../../utils'
 import { orderByTvl } from '../../../../utils/orderByTvl'
 import { FinalityPagesData, ScalingFinalityViewEntry } from '../types'
 import { ScalingFinalityViewProps } from '../view/ScalingFinalityView'
@@ -18,15 +20,16 @@ export function getScalingFinalityView(
 
   const includedProjects = getIncludedProjects(projects)
   const orderedProjects = orderByTvl(includedProjects, tvlApiResponse)
+
   return {
     items: orderedProjects
       .map((project) => {
-        const finalityDataPoint =
+        const finalityProjectData =
           finalityApiResponse.projects[project.id.toString()]
-        if (!finalityDataPoint) {
+        if (!finalityProjectData?.timeToInclusion) {
           return
         }
-        return getScalingFinalityViewEntry(project, finalityDataPoint)
+        return getScalingFinalityViewEntry(project, finalityProjectData)
       })
       .filter(notUndefined),
   }
@@ -34,7 +37,7 @@ export function getScalingFinalityView(
 
 export function getScalingFinalityViewEntry(
   project: Layer2,
-  finalityDataPoint: FinalityDataPoint,
+  finalityProjectData: FinalityProjectData,
 ): ScalingFinalityViewEntry {
   return {
     name: project.display.name,
@@ -47,16 +50,31 @@ export function getScalingFinalityViewEntry(
     redWarning: project.display.redWarning,
     purposes: project.display.purposes,
     stage: project.stage,
-    timeToFinalize: {
-      ...finalityDataPoint,
+    timeToInclusion: {
+      ...finalityProjectData.timeToInclusion,
       warning: project.display.finality?.warning,
     },
-    finalizationPeriod: project.display.finality?.finalizationPeriod
-      ? formatSeconds(project.display.finality.finalizationPeriod, {
-          fullUnit: true,
-        })
-      : undefined,
+    finalizationPeriod:
+      project.display.finality?.finalizationPeriod !== undefined
+        ? formatSeconds(project.display.finality.finalizationPeriod, {
+            fullUnit: true,
+          })
+        : undefined,
+    syncStatus: {
+      isSynced: isSynced(finalityProjectData.syncedUntil),
+      displaySyncedUntil: formatTimestamp(
+        finalityProjectData.syncedUntil.toNumber(),
+        {
+          mode: 'datetime',
+          longMonthName: true,
+        },
+      ),
+    },
   }
+}
+
+function isSynced(syncedUntil: UnixTime) {
+  return UnixTime.now().add(-1, 'days').add(-1, 'hours').lte(syncedUntil)
 }
 
 function getIncludedProjects(projects: Layer2[]) {

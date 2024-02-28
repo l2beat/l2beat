@@ -3,14 +3,11 @@ import { z } from 'zod'
 
 import { withTypedContext } from '../../../api/types'
 import { Clock } from '../../../tools/Clock'
-import {
-  getSyncStatus,
-  renderTvlStatusPage,
-} from '../../status/api/view/TvlStatusPage'
-import { renderTvlStatusPageDetailed } from '../../status/api/view/TvlStatusPageDetailed'
 import { TvlModule } from '../modules/types'
 import { PriceUpdater } from '../PriceUpdater'
 import { AggregatedReportUpdater } from '../reports/AggregatedReportUpdater'
+import { getSyncStatus, renderTvlStatusPage } from './status/TvlStatusPage'
+import { renderTvlStatusPageDetailed } from './status/TvlStatusPageDetailed'
 
 export function createTvlStatusRouter(
   clock: Clock,
@@ -23,7 +20,7 @@ export function createTvlStatusRouter(
   const statuses = [
     {
       groupName: 'shared',
-      updaters: [aggregatedReportUpdater, priceUpdater],
+      updaters: [priceUpdater, aggregatedReportUpdater],
     },
     ...modules.map((x) => {
       const reports = x.reportUpdaters ?? []
@@ -31,7 +28,7 @@ export function createTvlStatusRouter(
 
       return {
         groupName: x.chain,
-        updaters: [...reports, ...data],
+        updaters: [...data, ...reports],
       }
     }),
   ]

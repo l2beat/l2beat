@@ -99,6 +99,11 @@ And a set the following variables for each enabled chain:
 - `TVL_<CHAIN>_RPC_CALLS_PER_MINUTE` - Optional. Rate limits the number of calls to the RPC. Defaults to 60
 - `TVL_<CHAIN>_ETHERSCAN_API_KEY` - Etherscan API key. Only needed if the chain uses Etherscan. Blockscout doesn't need it.
 
+**Feature flags:**
+
+- `tvl` - enables tvl feature
+- `tvl.[project_id]` - enables tvl for project with given project_id
+
 ### `liveness` feature
 
 The liveness feature is configured via the following environment variables:
@@ -109,10 +114,19 @@ The liveness feature is configured via the following environment variables:
 - `LIVENESS_BIGQUERY_LIMIT_GB` - Optional. Defaults to 15
 - `LIVENESS_BIGQUERY_WARNING_LIMIT_GB` - Optional. Defaults to 8
 
+**Feature flags:**
+
+- `liveness` - enables liveness feature
+
 ### `finality` feature
 
 - `FINALITY_ETHEREUM_PROVIDER_URL` - Ethereum RPC url
 - `FINALITY_ETHEREUM_PROVIDER_CALLS_PER_MINUTE` - Optional. Rate limits the number of calls to the RPC. Defaults to 600
+
+**Feature flags:**
+
+- `finality` - enables finality feature
+- `finality.[project_id]` - enables finality for project with given project_id
 
 In development.
 
@@ -129,9 +143,17 @@ And a set the following variables for each enabled chain:
 - `ACTIVITY_<CHAIN>_URL` - RPC url for the chain, for example from Alchemy
 - `ACTIVITY_<CHAIN>_CALLS` - Optional. Rate limits the number of calls to the RPC
 
+**Feature flags:**
+
+- `activity` - enables activity feature
+
 ### `status` feature
 
 The status feature doesn't require any configuration.
+
+**Feature flags:**
+
+- `status` - enables the status feature
 
 ### `updateMonitor` feature
 
@@ -148,9 +170,34 @@ And a set the following variables for each enabled chain:
 - `DISCOVERY_<CHAIN>_RPC_GETLOGS_MAX_RANGE` - Optional. Limits the range of getLogs calls
 - `DISCOVERY_<ENV_NAME>_ETHERSCAN_API_KEY` - Etherscan API key
 
+**Feature flags:**
+
+- `updateMonitor` - enables the update monitor
+
 ### `diffHistory` feature
 
 The diffHistory feature is configured per chain with the same variables as the `updateMonitor` feature.
+
+**Feature flags:**
+
+- `diffHistory` - enables the diff history
+
+### `tvlCleaner` feature
+
+The tvlCleaner feature is designed to remove redundant data kept in database. It will only keep the sixHourly data 93 days to the past and hourly data 10 days to the past.
+
+**Feature flags:**
+
+- `tvlCleaner` - enables the cleaner
+
+### `cache` feature
+
+The cache feature is running functions every 10 minutes that would be ran on endpoint invoke.
+
+**Feature flags:**
+
+- `cache.liveness` - enables the cache for the liveness endpoint
+- `cache.tvl` - enables the cache for the tvl endpoint
 
 ### Logging
 

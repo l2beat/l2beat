@@ -42,7 +42,7 @@ export function TechnologySection({
     >
       {items.map((item, i) => (
         <div className="mt-4 md:mt-6" key={i}>
-          <h3 id={item.id} className="text-xl font-bold">
+          <h3 id={item.id} className="text-lg font-bold md:text-xl">
             <a href={`#${item.id}`}>{item.name}</a>
           </h3>
           {item.isIncomplete && <TechnologyIncompleteShort />}

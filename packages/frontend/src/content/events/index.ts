@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { defineCollection } from '../defineCollection'
+
 export const OneTimeEvent = z.object({
   type: z.literal('one-time'),
   highlighted: z.boolean().optional(),
@@ -7,8 +9,9 @@ export const OneTimeEvent = z.object({
   subtitle: z.string().optional(),
   startDate: z.coerce.date(),
   endDate: z.coerce.date().optional(),
-  location: z.string(),
+  location: z.string().optional(),
   link: z.string().url(),
+  toBeAnnounced: z.boolean().optional(),
 })
 
 export const RecurringEvent = z.object({
@@ -29,11 +32,12 @@ export const RecurringEvent = z.object({
       minute: z.number().min(0).max(59),
     })
     .optional(),
-  location: z.string(),
+  location: z.string().optional(),
   link: z.string().url(),
   cancelledAt: z.array(z.coerce.date()).optional(),
 })
 
-export const eventsContent = {
+export const eventsCollection = defineCollection({
+  type: 'data',
   schema: z.discriminatedUnion('type', [OneTimeEvent, RecurringEvent]),
-} as const
+})
