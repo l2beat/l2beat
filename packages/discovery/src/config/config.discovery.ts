@@ -35,6 +35,7 @@ export function getDiscoveryCliConfig(cli: CliParameters): DiscoveryCliConfig {
       dev: cli.dev,
       blockNumber: cli.blockNumber,
       sourcesFolder: cli.sourcesFolder,
+      flatSourcesFolder: cli.flatSourcesFolder,
       discoveryFilename: cli.discoveryFilename,
     },
     singleDiscovery: singleDiscoveryEnabled && {

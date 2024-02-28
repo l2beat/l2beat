@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.43.7
+
+### Patch Changes
+
+- Add --flat-sources-folder as cli parameter
+
 ## 0.43.6
 
 ### Patch Changes

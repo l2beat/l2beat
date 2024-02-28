@@ -69,6 +69,7 @@ export function discover(
     dryRun: config.dryRun === true,
     dev: config.dev === true,
     sourcesFolder: config.sourcesFolder,
+    flatSourcesFolder: config.flatSourcesFolder,
     discoveryFilename: config.discoveryFilename,
     blockNumber: config.blockNumber,
   })

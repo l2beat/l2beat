@@ -16,6 +16,7 @@ export interface DiscoveryModuleConfig {
   readonly dev?: boolean
   readonly blockNumber?: number
   readonly sourcesFolder?: string
+  readonly flatSourcesFolder?: string
   readonly discoveryFilename?: string
 }
 

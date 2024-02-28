@@ -37,6 +37,7 @@ describe(getCliParameters.name, () => {
       dryRun: false,
       dev: false,
       sourcesFolder: undefined,
+      flatSourcesFolder: undefined,
       discoveryFilename: undefined,
       blockNumber: undefined,
     })
@@ -51,6 +52,7 @@ describe(getCliParameters.name, () => {
       dryRun: true,
       dev: false,
       sourcesFolder: undefined,
+      flatSourcesFolder: undefined,
       discoveryFilename: undefined,
       blockNumber: undefined,
     })
@@ -72,7 +74,29 @@ describe(getCliParameters.name, () => {
       dryRun: false,
       dev: true,
       sourcesFolder: '.code@1234',
+      flatSourcesFolder: undefined,
       discoveryFilename: 'discovery@1234',
+      blockNumber: undefined,
+    })
+  })
+
+  it('discover ethereum foo --flat-sources-folder=.flat@1234 --sources-folder=.code@1234', () => {
+    const cli = getCliParameters([
+      'discover',
+      'ethereum',
+      'foo',
+      '--flat-sources-folder=.flat@1234',
+      '--sources-folder=.code@1234',
+    ])
+    expect(cli).toEqual({
+      mode: 'discover',
+      chain: 'ethereum',
+      project: 'foo',
+      dryRun: false,
+      dev: false,
+      sourcesFolder: '.code@1234',
+      flatSourcesFolder: '.flat@1234',
+      discoveryFilename: undefined,
       blockNumber: undefined,
     })
   })
@@ -102,6 +126,7 @@ describe(getCliParameters.name, () => {
       dryRun: true,
       dev: false,
       sourcesFolder: undefined,
+      flatSourcesFolder: undefined,
       discoveryFilename: undefined,
       blockNumber: 5678,
     })

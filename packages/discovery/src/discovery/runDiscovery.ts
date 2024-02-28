@@ -60,6 +60,7 @@ export async function runDiscovery(
     logger,
     {
       sourcesFolder: config.sourcesFolder,
+      flatSourcesFolder: config.flatSourcesFolder,
       discoveryFilename: config.discoveryFilename,
     },
   )

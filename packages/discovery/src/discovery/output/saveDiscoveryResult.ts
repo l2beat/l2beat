@@ -24,6 +24,7 @@ import { toPrettyJson } from './toPrettyJson'
 export interface SaveDiscoveryResultOptions {
   rootFolder?: string
   sourcesFolder?: string
+  flatSourcesFolder?: string
   discoveryFilename?: string
   metaFilename?: string
 }
@@ -119,7 +120,7 @@ async function saveFlatSources(
   logger: DiscoveryLogger,
   options: SaveDiscoveryResultOptions,
 ): Promise<void> {
-  const flatSourcesFolder = `.flat${options.sourcesFolder ?? ''}`
+  const flatSourcesFolder = options.flatSourcesFolder ?? '.flat'
   const flatSourcesPath = posix.join(rootPath, flatSourcesFolder)
   const allContractNames = results.map((c) =>
     c.type !== 'EOA' ? c.derivedName ?? c.name : 'EOA',
