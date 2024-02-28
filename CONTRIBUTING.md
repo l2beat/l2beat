@@ -73,7 +73,7 @@ If you want to add a new Layer 2 project you can do that by opening a PR. To do 
        that is located at `packages/frontend/src/components/table/TechnologyCell.tsx`.
 6. Make sure that things like linting, formatting and tests are all passing. To
    check their status you can run `yarn lint:fix`, `yarn format:fix` or `yarn test`
-   respectively. We greatly encourge doing this before the last step as it
+   respectively. We greatly encourage doing this before the last step as it
    shortens the amount of time needed for your project to be added.
 7. Open a PR :D
 
@@ -101,7 +101,7 @@ If you want to add a new Layer 3 project you can do that by opening a PR. To do 
      already) and set the technology provider your project is based on.
 6. Make sure that things like linting, formatting and tests are all passing. To
    check their status you can run `yarn lint:fix`, `yarn format:fix` or `yarn test`
-   respectively. We greatly encourge doing this before the last step as it
+   respectively. We greatly encourage doing this before the last step as it
    shortens the amount of time needed for your project to be added.
 7. Open a PR :D
 
