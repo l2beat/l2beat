@@ -2,7 +2,7 @@
   "name": "karak",
   "chain": "ethereum",
   "blockNumber": 19324699,
-  "configHash": "0x5c746e2e3147a097e65c00672bdc5df830b31faf1eb07a3b905fe4d239ec8a91",
+  "configHash": "0x9adbf6e08596a75fded910b072724ebabdb16e69b58a373908a7739e61163a80",
   "version": 3,
   "contracts": [
     {
@@ -45,13 +45,13 @@
       },
       "sinceTimestamp": 1703048687,
       "values": {
-        "addressManager": "0x9BFfA66a8FcAAd7AC9ea7c7d4b9a6fc46777022d",
+        "addressManager": "0xF2C89960B6D63eC6c61dF3EA8BaFa0a02c26e8C9",
         "isUpgrading": false,
         "owner": "0x28A227d4faF0f4f75897438E24C43EF1CDABb920"
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "KarakMultisig",
       "address": "0x28A227d4faF0f4f75897438E24C43EF1CDABb920",
       "upgradeability": {
         "type": "gnosis safe",
@@ -73,7 +73,8 @@
         "getThreshold": 3,
         "nonce": 3,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "SystemConfig",

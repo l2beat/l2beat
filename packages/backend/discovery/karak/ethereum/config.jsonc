@@ -11,7 +11,8 @@
     "0x0a23342520Aa8Ca963c4201801F4D3E95e731637": "L2OutputOracle",
     "0xF2C89960B6D63eC6c61dF3EA8BaFa0a02c26e8C9": "AddressManager",
     "0x9BFfA66a8FcAAd7AC9ea7c7d4b9a6fc46777022d": "L1CrossDomainMessenger",
-    "0x622333688CC1878C7ff4205c89bDe051798788A7": "SystemConfig"
+    "0x622333688CC1878C7ff4205c89bDe051798788A7": "SystemConfig",
+    "0x28A227d4faF0f4f75897438E24C43EF1CDABb920": "KarakMultisig"
   },
   "overrides": {
     "OptimismPortal": {
