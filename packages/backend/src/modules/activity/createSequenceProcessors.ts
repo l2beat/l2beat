@@ -8,6 +8,7 @@ import { Config } from '../../config'
 import { AztecClient } from '../../peripherals/aztec/AztecClient'
 import { Database } from '../../peripherals/database/Database'
 import { LoopringClient } from '../../peripherals/loopring/LoopringClient'
+import { DegateClient } from '../../peripherals/degate/DegateClient'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { StarkexClient } from '../../peripherals/starkex/StarkexClient'
 import { StarknetClient } from '../../peripherals/starknet/StarknetClient'
@@ -15,6 +16,7 @@ import { ZksyncClient } from '../../peripherals/zksync/ZksyncClient'
 import { Clock } from '../../tools/Clock'
 import { AztecCounter } from './counters/AztecCounter'
 import { LoopringCounter } from './counters/LoopringCounter'
+import { DegateCounter } from './counters/DegateCounter'
 import { RpcCounter } from './counters/RpcCounter'
 import { StarkexCounter } from './counters/StarkexCounter'
 import { StarknetCounter } from './counters/StarknetCounter'
@@ -146,6 +148,25 @@ export function createSequenceProcessors(
             sequenceProcessorRepository,
             blockRepository,
             loopringClient,
+            taggedLogger,
+            getBatchSizeFromCallsPerMinute(config.callsPerMinute),
+          )
+        }
+
+        case 'degate': {
+          const degateClient = new DegateClient(
+            http,
+            taggedLogger,
+            config.url,
+            {
+              callsPerMinute: config.callsPerMinute,
+            },
+          )
+          return new DegateCounter(
+            id,
+            sequenceProcessorRepository,
+            blockRepository,
+            degateClient,
             taggedLogger,
             getBatchSizeFromCallsPerMinute(config.callsPerMinute),
           )
