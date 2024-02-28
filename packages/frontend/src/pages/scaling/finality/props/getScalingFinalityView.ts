@@ -20,11 +20,7 @@ export function getScalingFinalityView(
   const { finalityApiResponse, tvlApiResponse } = pagesData
 
   const includedProjects = getIncludedProjects(projects, finalityApiResponse)
-  const orderedProjectsByTvl = orderByTvl(includedProjects, tvlApiResponse)
-  const orderedProjects = moveComingSoonToEnd(
-    orderedProjectsByTvl,
-    finalityApiResponse,
-  )
+  const orderedProjects = orderByTvl(includedProjects, tvlApiResponse)
 
   return {
     items: orderedProjects
@@ -54,12 +50,11 @@ export function getScalingFinalityViewEntry(
     purposes: project.display.purposes,
     stage: project.stage,
     data: getFinalityData(finalityProjectData, project),
-    finalizationPeriod:
-      project.display.finality?.finalizationPeriod !== undefined
-        ? formatSeconds(project.display.finality.finalizationPeriod, {
-            fullUnit: true,
-          })
-        : undefined,
+    finalizationPeriod: project.display.finality?.finalizationPeriod
+      ? formatSeconds(project.display.finality.finalizationPeriod, {
+          fullUnit: true,
+        })
+      : 'None',
   }
 }
 
@@ -104,33 +99,6 @@ function getIncludedProjects(
       (p.display.category === 'ZK Rollup' ||
         p.display.category === 'Optimistic Rollup'),
   )
-}
-
-function moveComingSoonToEnd(
-  projects: Layer2[],
-  finalityApiResponse: FinalityApiResponse,
-) {
-  return [...projects].sort((a, b) => {
-    const aResponse = finalityApiResponse.projects[a.id.toString()]
-    const bResponse = finalityApiResponse.projects[b.id.toString()]
-    const isAConfigured =
-      a.config.finality && a.config.finality !== 'coming soon'
-    const isBConfigured =
-      b.config.finality && b.config.finality !== 'coming soon'
-    if (
-      (!isAConfigured && isBConfigured) ||
-      (aResponse === undefined && bResponse !== undefined)
-    ) {
-      return 1
-    }
-    if (
-      (!isBConfigured && isAConfigured) ||
-      (bResponse === undefined && aResponse !== undefined)
-    ) {
-      return -1
-    }
-    return 0
-  })
 }
 
 function daModeToDisplay(daMode: ScalingProjectDataAvailabilityMode) {
