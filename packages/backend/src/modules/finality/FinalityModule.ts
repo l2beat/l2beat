@@ -51,12 +51,25 @@ export function createFinalityModule(
   const ethereumProvider = new ethers.providers.JsonRpcProvider(
     config.finality.ethereumProviderUrl,
   )
-  const ethereumRPC = new RpcClient(ethereumProvider, logger)
+  const ethereumRPC = new RpcClient(
+    ethereumProvider,
+    logger,
+    config.finality.ethereumProviderCallsPerMinute,
+  )
+  const lineaProvider = new ethers.providers.JsonRpcProvider(
+    config.finality.lineaProviderUrl,
+  )
+  const lineaRPC = new RpcClient(
+    lineaProvider,
+    logger,
+    config.finality.lineaProviderCallsPerMinute,
+  )
 
   const runtimeConfigurations = initializeConfigurations(
     ethereumRPC,
     livenessRepository,
     config.finality.indexerConfigurations,
+    lineaRPC,
   )
 
   const finalityIndexers = runtimeConfigurations.map(
@@ -89,6 +102,7 @@ function initializeConfigurations(
   ethereumRPC: RpcClient,
   livenessRepository: LivenessRepository,
   configs: FinalityIndexerConfig[],
+  lineaRPC: RpcClient,
 ) {
   return configs
     .map((configuration) => {
@@ -100,6 +114,7 @@ function initializeConfigurations(
               ethereumRPC,
               livenessRepository,
               configuration.projectId,
+              lineaRPC,
             ),
             minTimestamp: configuration.minTimestamp,
           }
