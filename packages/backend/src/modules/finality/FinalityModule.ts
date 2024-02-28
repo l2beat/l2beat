@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { assertUnreachable, notUndefined } from '@l2beat/shared-pure'
+import { assert, assertUnreachable, notUndefined } from '@l2beat/shared-pure'
 import { ethers } from 'ethers'
 
 import { Config } from '../../config'
@@ -56,20 +56,12 @@ export function createFinalityModule(
     logger,
     config.finality.ethereumProviderCallsPerMinute,
   )
-  const lineaProvider = new ethers.providers.JsonRpcProvider(
-    config.finality.lineaProviderUrl,
-  )
-  const lineaRPC = new RpcClient(
-    lineaProvider,
-    logger,
-    config.finality.lineaProviderCallsPerMinute,
-  )
 
   const runtimeConfigurations = initializeConfigurations(
     ethereumRPC,
     livenessRepository,
     config.finality.indexerConfigurations,
-    lineaRPC,
+    logger,
   )
 
   const finalityIndexers = runtimeConfigurations.map(
@@ -102,7 +94,7 @@ function initializeConfigurations(
   ethereumRPC: RpcClient,
   livenessRepository: LivenessRepository,
   configs: FinalityIndexerConfig[],
-  lineaRPC: RpcClient,
+  logger: Logger,
 ) {
   return configs
     .map((configuration) => {
@@ -114,7 +106,7 @@ function initializeConfigurations(
               ethereumRPC,
               livenessRepository,
               configuration.projectId,
-              lineaRPC,
+              getL2RPC(configuration, logger),
             ),
             minTimestamp: configuration.minTimestamp,
           }
@@ -135,4 +127,13 @@ function initializeConfigurations(
       }
     })
     .filter(notUndefined)
+}
+
+function getL2RPC(configuration: FinalityIndexerConfig, logger: Logger) {
+  assert(
+    configuration.url,
+    `${configuration.projectId.toString()}: L2 provider URL is not defined`,
+  )
+  const L2provider = new ethers.providers.JsonRpcProvider(configuration.url)
+  return new RpcClient(L2provider, logger, configuration.callsPerMinute)
 }
