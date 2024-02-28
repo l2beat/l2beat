@@ -22,15 +22,11 @@ export class LineaFinalityAnalyzer extends BaseAnalyzer {
     const firstBlockInData = Number(decodedInput[0][3])
     const lastBlockInData = Number(decodedInput[0][4])
 
-    const timestampsPromises = Array.from(
-      { length: lastBlockInData - firstBlockInData + 1 },
-      async (_, i) => {
-        assert(this.l2Provider, 'Linea provider is not set')
-        const block = await this.l2Provider.getBlock(firstBlockInData + i)
-        return block.timestamp
-      },
-    )
-    const timestamps = await Promise.all(timestampsPromises)
+    assert(this.l2Provider, 'Linea RPC provider not defined')
+    const timestamps = await Promise.all([
+      (await this.l2Provider.getBlock(firstBlockInData)).timestamp,
+      (await this.l2Provider.getBlock(lastBlockInData)).timestamp,
+    ])
 
     return timestamps.map((l2Timestamp) => l1Timestamp.toNumber() - l2Timestamp)
   }
