@@ -80,8 +80,8 @@
           "type": null
         },
         "paused": {
-          "description": null,
-          "severity": null,
+          "description": "Whether the sendTransaction function is paused or not. Affects the sequencer failure risk.",
+          "severity": "high",
           "type": null
         }
       }

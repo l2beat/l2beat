@@ -180,7 +180,7 @@ export const scroll: Layer2 = {
         {
           contract: 'ScrollChain',
           references: [
-            'https://etherscan.io/address/0x2e07f0fba71709bb5e1f045b02152e45b451d75f#code#F1#L319',
+            'https://etherscan.io/address/0xFA148514d03420b7b1a13eC74da06D2Ca875539C#code',
           ],
         },
       ],
@@ -191,7 +191,7 @@ export const scroll: Layer2 = {
         {
           contract: 'ScrollChain',
           references: [
-            'https://etherscan.io/address/0x2e07f0fba71709bb5e1f045b02152e45b451d75f#code#F1#L164',
+            'https://etherscan.io/address/0xFA148514d03420b7b1a13eC74da06D2Ca875539C#code',
           ],
         },
       ],
@@ -213,13 +213,13 @@ export const scroll: Layer2 = {
         {
           contract: 'L1MessageQueue',
           references: [
-            'https://etherscan.io/address/0xbc9d741501a20f962756c95bf906b4abffadcf8f#code#F1#L286',
+            'https://etherscan.io/address/0xeBaed7A81c298B24EE6d59c22698A951dc448E01#code',
           ],
         },
         {
-          contract: 'L1MessageQueue',
+          contract: 'EnforcedTxGateway',
           references: [
-            'https://etherscan.io/address/0xbc9d741501a20f962756c95bf906b4abffadcf8f#code#F1#71',
+            'https://etherscan.io/address/0x642af405bF64660665B37977449C9C536B806318#code',
           ],
         },
       ],
@@ -230,7 +230,7 @@ export const scroll: Layer2 = {
         {
           contract: 'ScrollChain',
           references: [
-            'https://etherscan.io/address/0x2e07f0fba71709bb5e1f045b02152e45b451d75f#code#F1#L296',
+            'https://etherscan.io/address/0xFA148514d03420b7b1a13eC74da06D2Ca875539C#code',
           ],
         },
       ],
@@ -243,8 +243,8 @@ export const scroll: Layer2 = {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
         {
-          text: 'ScrollChain.sol#L319 - Etherscan source code, verifyAggregateProof() call',
-          href: 'https://etherscan.io/address/0x2e07f0fba71709bb5e1f045b02152e45b451d75f#code#F1#L319',
+          text: 'ScrollChain.sol#L341 - Etherscan source code, verifyAggregateProof() call',
+          href: 'https://etherscan.io/address/0xFA148514d03420b7b1a13eC74da06D2Ca875539C#code#F1#L341',
         },
       ],
     },
@@ -252,8 +252,8 @@ export const scroll: Layer2 = {
       ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
       references: [
         {
-          text: 'ScrollChain.sol#L164 - Etherscan source code commitBatch() function',
-          href: 'https://etherscan.io/address/0x2e07f0fba71709bb5e1f045b02152e45b451d75f#code#F1#L164',
+          text: 'ScrollChain.sol#L186 - Etherscan source, code commitBatch() function',
+          href: 'https://etherscan.io/address/0xFA148514d03420b7b1a13eC74da06D2Ca875539C#code#F1#L186',
         },
       ],
     },
@@ -261,8 +261,8 @@ export const scroll: Layer2 = {
       ...OPERATOR.CENTRALIZED_OPERATOR,
       references: [
         {
-          text: 'ScrollChain.sol#L296 - Etherscan source code, finalizeBatchWithProof() function modifier',
-          href: 'https://etherscan.io/address/0x2e07f0fba71709bb5e1f045b02152e45b451d75f#code#F1#L296',
+          text: 'ScrollChain.sol#L312 - Etherscan source code, finalizeBatchWithProof() function modifier',
+          href: 'https://etherscan.io/address/0xFA148514d03420b7b1a13eC74da06D2Ca875539C#code#F1#L312',
         },
       ],
     },
@@ -270,8 +270,8 @@ export const scroll: Layer2 = {
       ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
       references: [
         {
-          text: 'L1MessageQueue.sol#L71 - Etherscan source code, skippedMessageBitmap mapping',
-          href: 'https://etherscan.io/address/0xbc9d741501a20f962756c95bf906b4abffadcf8f#code#F1#L71',
+          text: 'EnforcedTxGateway.sol#L93 - Etherscan source code, EnforcedTxGateway is paused',
+          href: 'https://etherscan.io/address/0x642af405bF64660665B37977449C9C536B806318#code#F1#L93',
         },
       ],
     },
