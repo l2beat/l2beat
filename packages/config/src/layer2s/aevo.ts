@@ -57,7 +57,6 @@ export const aevo: Layer2 = opStack({
   ),
   transactionApi: {
     type: 'rpc',
-    defaultUrl: 'https://mainnet.optimism.io/',
     startBlock: 1,
     defaultCallsPerMinute: 800,
     assessCount: subtractOne,
