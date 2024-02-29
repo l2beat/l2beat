@@ -169,6 +169,11 @@ export const linea: Layer2 = {
         },
       ],
     },
+    finality: {
+      type: 'Linea',
+      lag: 0,
+      minTimestamp: new UnixTime(1707813551),
+    },
   },
   chainConfig: {
     name: 'linea',
