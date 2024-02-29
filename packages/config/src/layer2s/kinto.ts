@@ -1,7 +1,9 @@
-import { upcoming } from './templates/upcoming'
+import { underReview } from './templates/underReview'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+
 import { Layer2 } from './types'
 
-export const kinto: Layer2 = upcoming({
+export const kinto: Layer2 = underReview({
   id: 'kinto',
   display: {
     name: 'Kinto',
@@ -24,4 +26,11 @@ export const kinto: Layer2 = upcoming({
       ],
     },
   },
+  escrows: [
+    {
+      address: EthereumAddress('0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB'),
+      sinceTimestamp: new UnixTime(1702607855),
+      tokens: '*',
+    },
+  ],
 })
