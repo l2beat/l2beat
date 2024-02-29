@@ -26,6 +26,10 @@ export {
   diffDiscovery,
   type DiscoveryDiff,
 } from './discovery/output/diffDiscovery'
+export {
+  contractDiffToMarkdown,
+  discoveryDiffToMarkdown,
+} from './discovery/output/diffToMarkdown'
 export { toDiscoveryOutput } from './discovery/output/toDiscoveryOutput'
 export { DiscoveryProvider } from './discovery/provider/DiscoveryProvider'
 export { MulticallClient } from './discovery/provider/multicall/MulticallClient'
@@ -37,6 +41,9 @@ export { RateLimitedProvider } from './discovery/provider/RateLimitedProvider'
 export { ProxyDetector } from './discovery/proxies/ProxyDetector'
 export { deduplicateAbi } from './discovery/source/deduplicateAbi'
 export { SourceCodeService } from './discovery/source/SourceCodeService'
+export { getContractMeta, getValueMeta } from './discovery/utils/metaGetters'
+export { normalizeDiffPath } from './discovery/utils/normalizeDiffPath'
+export { sortBySeverity } from './discovery/utils/sortDiffs'
 export {
   calculateInversion,
   type InvertedAddressDetails,

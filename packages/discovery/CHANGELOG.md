@@ -1,5 +1,12 @@
 # @l2beat/discovery
 
+## 0.44.0
+
+### Minor Changes
+
+- Import discovery diff related utilities from L2BEAT.
+  Mainly focusing on importing and improving diffToMarkdown functionality.
+
 ## 0.43.7
 
 ### Patch Changes
