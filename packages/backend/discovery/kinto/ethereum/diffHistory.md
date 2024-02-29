@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x2b670aad66790844919f101b6582c9f8fe4f6813
+Generated with discovered.json: 0x50d6722354494b687ac508ca07db90dad18f27bd
 
-# Diff at Thu, 29 Feb 2024 14:57:35 GMT:
+# Diff at Thu, 29 Feb 2024 15:36:49 GMT:
 
 - author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
-- current block number: 19333907
+- current block number: 19334101
 
 ## Description
 
@@ -14,6 +14,12 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract OneStepProofEntry (0x09824fe72BFF474d16D9c2774432E381BBD60662) {
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d) {
     }
 ```
 

@@ -18,6 +18,8 @@ function getArbOSVersion(wasmModuleRoot: string): string {
       'v10.2',
     '0x1024d5971f781dd930c46b5fb6fb571e6af9f31b5dc191b82e82036c207cc968':
       '?????',
+    '0x965a35130f4e34b7b2339eac03b2eacc659e2dafe850d213ea6a7cdf9edfa99f':
+      'Stylus',
   }
   if (wasmModuleRoot === undefined) {
     return 'Unspecified'

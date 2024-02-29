@@ -1,7 +1,7 @@
 {
   "name": "kinto",
   "chain": "ethereum",
-  "blockNumber": 19333907,
+  "blockNumber": 19334101,
   "configHash": "0xb12bc3b6281017544f423e4697a7bf6066d50186d6fe538f8f95ee4a4f289d22",
   "version": 3,
   "contracts": [
@@ -120,7 +120,7 @@
         "zombieLatestStakedNode": []
       },
       "errors": {
-        "validators": "bad response (status=400, headers={\"date\":\"Thu, 29 Feb 2024 15:03:21 GMT\",\"content-type\":\"application/json\",\"content-length\":\"249\",\"connection\":\"close\",\"x-alchemy-trace-id\":\"5df7fcb8bb74b736ab41b2d02fca4ebe\",\"cf-cache-status\":\"DYNAMIC\",\"set-cookie\":\"_cfuvid=0n7DgU.2YfQ.aDKxMyHiCOh0m7trI_4wvBLAv_kJ7UE-1709219001093-0.0-604800000; path=/; domain=.alchemyapi.io; HttpOnly; Secure; SameSite=None\",\"server\":\"cloudflare\",\"cf-ray\":\"85d1cb241d3f0422-MAD\"}, body=\"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":43,\\\"error\\\":{\\\"code\\\":-32600,\\\"message\\\":\\\"debug_traceTransaction is not available on the Free tier - upgrade to Growth, Scale, or Enterprise for access. See available methods at https://docs.alchemy.com/alchemy/documentation/apis\\\"}}\", requestBody=\"{\\\"method\\\":\\\"debug_traceTransaction\\\",\\\"params\\\":[\\\"0xd51bb4d6150d5fbaa61cf5281598b18c4efba4284aecb4420fc8d834dba357d8\\\",{\\\"tracer\\\":\\\"callTracer\\\"}],\\\"id\\\":43,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://eth-mainnet.alchemyapi.io/v2/lKiftrWAsB1ft0B-zx3YaiQtJnlG-y9N\", code=SERVER_ERROR, version=web/5.7.1)"
+        "validators": "bad response (status=400, headers={\"date\":\"Thu, 29 Feb 2024 15:36:33 GMT\",\"content-type\":\"application/json\",\"content-length\":\"250\",\"connection\":\"close\",\"x-alchemy-trace-id\":\"65b9d87169ef4300c2b1d570a0467649\",\"cf-cache-status\":\"DYNAMIC\",\"set-cookie\":\"_cfuvid=IC7WnAUSuriN69kzhFn45qyupOBzlf.J6ZDrYb12eEE-1709220993513-0.0-604800000; path=/; domain=.alchemyapi.io; HttpOnly; Secure; SameSite=None\",\"server\":\"cloudflare\",\"cf-ray\":\"85d1fbc8ca66314b-MAD\"}, body=\"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":187,\\\"error\\\":{\\\"code\\\":-32600,\\\"message\\\":\\\"debug_traceTransaction is not available on the Free tier - upgrade to Growth, Scale, or Enterprise for access. See available methods at https://docs.alchemy.com/alchemy/documentation/apis\\\"}}\", requestBody=\"{\\\"method\\\":\\\"debug_traceTransaction\\\",\\\"params\\\":[\\\"0xd51bb4d6150d5fbaa61cf5281598b18c4efba4284aecb4420fc8d834dba357d8\\\",{\\\"tracer\\\":\\\"callTracer\\\"}],\\\"id\\\":187,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://eth-mainnet.alchemyapi.io/v2/lKiftrWAsB1ft0B-zx3YaiQtJnlG-y9N\", code=SERVER_ERROR, version=web/5.7.1)"
       },
       "derivedName": "RollupProxy"
     },
@@ -241,11 +241,11 @@
           "0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F"
         ],
         "allowedOutboxList": ["0x655761AD5FC251F414D6993A73184B0669F278c8"],
-        "delayedMessageCount": 1118,
+        "delayedMessageCount": 1119,
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerInbox": "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
-        "sequencerMessageCount": 1047,
-        "sequencerReportedSubMessageCount": 115949
+        "sequencerMessageCount": 1048,
+        "sequencerReportedSubMessageCount": 115959
       },
       "derivedName": "Bridge"
     },
@@ -318,7 +318,7 @@
       "implementations": ["0x873484Ba63353C8b71210ce123B465512d408B27"],
       "sinceTimestamp": 1702607855,
       "values": {
-        "batchCount": 1047,
+        "batchCount": 1048,
         "bridge": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
@@ -332,7 +332,7 @@
         "totalDelayedMessagesRead": 1117
       },
       "errors": {
-        "batchPosters": "bad response (status=400, headers={\"date\":\"Thu, 29 Feb 2024 15:03:21 GMT\",\"content-type\":\"application/json\",\"content-length\":\"249\",\"connection\":\"close\",\"x-alchemy-trace-id\":\"5c11f6f4b544e3a4b21b925994cfe086\",\"cf-cache-status\":\"DYNAMIC\",\"set-cookie\":\"_cfuvid=K6ejLPQKo2fHD05K.kxBPUSNn3SbLVMdVHB2Vyw4.Uo-1709219001325-0.0-604800000; path=/; domain=.alchemyapi.io; HttpOnly; Secure; SameSite=None\",\"server\":\"cloudflare\",\"cf-ray\":\"85d1cb2419075e28-MAD\"}, body=\"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":44,\\\"error\\\":{\\\"code\\\":-32600,\\\"message\\\":\\\"debug_traceTransaction is not available on the Free tier - upgrade to Growth, Scale, or Enterprise for access. See available methods at https://docs.alchemy.com/alchemy/documentation/apis\\\"}}\", requestBody=\"{\\\"method\\\":\\\"debug_traceTransaction\\\",\\\"params\\\":[\\\"0xd51bb4d6150d5fbaa61cf5281598b18c4efba4284aecb4420fc8d834dba357d8\\\",{\\\"tracer\\\":\\\"callTracer\\\"}],\\\"id\\\":44,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://eth-mainnet.alchemyapi.io/v2/lKiftrWAsB1ft0B-zx3YaiQtJnlG-y9N\", code=SERVER_ERROR, version=web/5.7.1)"
+        "batchPosters": "bad response (status=400, headers={\"date\":\"Thu, 29 Feb 2024 15:36:33 GMT\",\"content-type\":\"application/json\",\"content-length\":\"250\",\"connection\":\"close\",\"x-alchemy-trace-id\":\"00a0956599f649aebad32f38b6f90a75\",\"cf-cache-status\":\"DYNAMIC\",\"set-cookie\":\"_cfuvid=G2ozs8pcDJrtrXybLyzmvWgqaSGzv4x_9OhYLY1KXUA-1709220993048-0.0-604800000; path=/; domain=.alchemyapi.io; HttpOnly; Secure; SameSite=None\",\"server\":\"cloudflare\",\"cf-ray\":\"85d1fbc41cb660ca-MAD\"}, body=\"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":173,\\\"error\\\":{\\\"code\\\":-32600,\\\"message\\\":\\\"debug_traceTransaction is not available on the Free tier - upgrade to Growth, Scale, or Enterprise for access. See available methods at https://docs.alchemy.com/alchemy/documentation/apis\\\"}}\", requestBody=\"{\\\"method\\\":\\\"debug_traceTransaction\\\",\\\"params\\\":[\\\"0xd51bb4d6150d5fbaa61cf5281598b18c4efba4284aecb4420fc8d834dba357d8\\\",{\\\"tracer\\\":\\\"callTracer\\\"}],\\\"id\\\":173,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://eth-mainnet.alchemyapi.io/v2/lKiftrWAsB1ft0B-zx3YaiQtJnlG-y9N\", code=SERVER_ERROR, version=web/5.7.1)"
       },
       "derivedName": "SequencerInbox"
     }
