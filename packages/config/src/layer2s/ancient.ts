@@ -17,6 +17,7 @@ const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
 )
 
 export const ancient: Layer2 = opStack({
+  daProvider: 'Celestia',
   discovery,
   display: {
     name: 'Ancient8',
