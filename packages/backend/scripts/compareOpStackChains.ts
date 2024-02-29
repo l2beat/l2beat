@@ -12,6 +12,7 @@ const chainMapping: Record<string, string> = {
   publicgoodsnetwork: 'ethereum',
   hypr: 'ethereum',
   orderly: 'ethereum',
+  karak: 'ethereum',
 }
 
 void main().catch((e) => {

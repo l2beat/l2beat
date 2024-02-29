@@ -7,7 +7,7 @@ import {
 } from '@l2beat/discovery'
 
 import { MAX_MESSAGE_LENGTH } from '../../../peripherals/discord/DiscordClient'
-import { removeArraySuffix } from './removeArraySuffix'
+import { getContractMeta, getValueMeta } from './metaGetters'
 
 export function diffToMessages(
   name: string,
@@ -161,19 +161,6 @@ function getDependentsMessage(dependents: string[]) {
     ' ' +
     wrapBoldAndItalic(dependents.join(', ') + '.')
   )
-}
-
-function getContractMeta(meta: DiscoveryMeta | undefined, name: string) {
-  return meta?.contracts.find((c) => c.name === name)
-}
-
-function getValueMeta(
-  contractMeta: ContractMeta | undefined,
-  name: string | undefined,
-) {
-  return name !== undefined
-    ? contractMeta?.values[removeArraySuffix(name.replace('values.', ''))]
-    : undefined
 }
 
 export function formatNonce(nonce: number): string {
