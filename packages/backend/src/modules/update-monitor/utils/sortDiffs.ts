@@ -1,6 +1,4 @@
-import { ContractMeta, FieldDiff } from '@l2beat/discovery'
-
-import { normalizeDiffPath } from './normalizeDiffPath'
+import { ContractMeta, FieldDiff, normalizeDiffPath } from '@l2beat/discovery'
 
 const severityAsNumber = {
   HIGH: 3,

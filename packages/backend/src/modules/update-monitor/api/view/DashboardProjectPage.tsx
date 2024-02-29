@@ -1,9 +1,13 @@
-import { DiscoveryDiff, DiscoveryMeta } from '@l2beat/discovery'
+import {
+  DiscoveryDiff,
+  DiscoveryMeta,
+  getContractMeta,
+  getValueMeta,
+} from '@l2beat/discovery'
 import { default as React } from 'react'
 
 import { Page } from '../../../status/Page'
 import { reactToHtml } from '../../../status/reactToHtml'
-import { getContractMeta, getValueMeta } from '../../utils/metaGetters'
 import { sortBySeverity } from '../../utils/sortDiffs'
 import { DashboardContract } from '../props/getDashboardContracts'
 import { Contract } from './components/Contract'

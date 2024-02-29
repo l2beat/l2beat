@@ -9,6 +9,7 @@ import {
   diffDiscovery,
   discover,
   DiscoveryDiff,
+  discoveryDiffToMarkdown,
   getChainConfig,
 } from '@l2beat/discovery'
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -16,7 +17,6 @@ import { DiscoveryOutput } from '@l2beat/discovery-types'
 import { assert } from '@l2beat/shared-pure'
 import { execSync } from 'child_process'
 import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
-import { toUpper } from 'lodash'
 import { rimraf } from 'rimraf'
 
 import { updateDiffHistoryHash } from '../src/modules/update-monitor/utils/hashing'
@@ -252,39 +252,6 @@ function getGitUser(): { name: string; email: string } {
     console.log('No git user found')
     return { name: 'unknown', email: 'unknown' }
   }
-}
-
-function contractDiffToMarkdown(diff: DiscoveryDiff): string {
-  const result = []
-  result.push('```diff')
-  if (diff.type) {
-    const marker = diff.type === 'created' ? '+' : '-'
-    result.push(`${marker}   Status: ${toUpper(diff.type)}`)
-  }
-  result.push(`    contract ${diff.name} (${diff.address.toString()}) {`)
-  if (diff.diff) {
-    for (const valueDiff of diff.diff) {
-      const varName = valueDiff.key ?? 'unknown'
-      result.push(`      ${varName}:`)
-      if (valueDiff.before) {
-        result.push(`-        ${valueDiff.before}`)
-      }
-      if (valueDiff.after) {
-        result.push(`+        ${valueDiff.after}`)
-      }
-    }
-  }
-  result.push('    }')
-  result.push('```')
-  return result.join('\n')
-}
-
-function discoveryDiffToMarkdown(diffs: DiscoveryDiff[]): string {
-  const result = []
-  for (const diff of diffs) {
-    result.push(contractDiffToMarkdown(diff))
-  }
-  return result.join('\n\n')
 }
 
 function generateDiffHistoryMarkdown(

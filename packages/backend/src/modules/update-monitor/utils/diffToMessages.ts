@@ -3,11 +3,12 @@ import {
   DiscoveryDiff,
   DiscoveryMeta,
   FieldDiff,
+  getContractMeta,
+  getValueMeta,
   ValueMeta,
 } from '@l2beat/discovery'
 
 import { MAX_MESSAGE_LENGTH } from '../../../peripherals/discord/DiscordClient'
-import { getContractMeta, getValueMeta } from './metaGetters'
 
 export function diffToMessages(
   name: string,
