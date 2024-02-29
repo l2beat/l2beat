@@ -1,5 +1,14 @@
 import { assert } from '@l2beat/backend-tools'
 
+const VALUES_PREFIX = 'values.'
+
+export function normalizeDiffPath(path: string): string {
+  const pathWithoutPrefix = path.startsWith(VALUES_PREFIX)
+    ? path.substring(VALUES_PREFIX.length)
+    : path
+  return removeArraySuffix(pathWithoutPrefix)
+}
+
 export function removeArraySuffix(path: string): string {
   if (path.includes('.')) {
     const [name, ...rest] = path.split('.')

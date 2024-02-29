@@ -1,8 +1,10 @@
-import { DiscoveryDiff } from '@l2beat/discovery'
+import { DiscoveryDiff, DiscoveryMeta } from '@l2beat/discovery'
 import { default as React } from 'react'
 
 import { Page } from '../../../status/Page'
 import { reactToHtml } from '../../../status/reactToHtml'
+import { getContractMeta, getValueMeta } from '../../utils/metaGetters'
+import { sortBySeverity } from '../../utils/sortDiffs'
 import { DashboardContract } from '../props/getDashboardContracts'
 import { Contract } from './components/Contract'
 import { Diff } from './components/Diff'
@@ -13,6 +15,7 @@ interface ConfigPageProps {
   projectName: string
   contracts: DashboardContract[]
   diff?: DiscoveryDiff[]
+  meta: DiscoveryMeta | undefined
 }
 
 export function DashboardProjectPage(props: ConfigPageProps) {
@@ -28,21 +31,30 @@ export function DashboardProjectPage(props: ConfigPageProps) {
             ⚠️ Detected changes
           </summary>
           <p>
-            {props.diff.map((d, index) => (
-              <p style={{ marginTop: '8px' }} key={index}>
-                <span style={{ fontWeight: 'bold' }}>
-                  {d.name} - {d.address.toString()}
-                </span>
-                <br />
-                <ul>
-                  {(d.diff ?? []).map((x, index2) => (
-                    <li key={index2} style={{ marginLeft: '12px' }}>
-                      <Diff diff={x} />
-                    </li>
-                  ))}
-                </ul>
-              </p>
-            ))}
+            {props.diff.map((d, index) => {
+              const contractMeta = getContractMeta(props.meta, d.name)
+              return (
+                <p style={{ marginTop: '8px' }} key={index}>
+                  <span style={{ fontWeight: 'bold' }}>
+                    {d.name} - {d.address.toString()}
+                  </span>
+                  <br />
+                  <span>
+                    {`+++ description: ${contractMeta?.description ?? 'None'}`}
+                  </span>
+                  <ul>
+                    {sortBySeverity(d.diff, contractMeta).map((x, index2) => {
+                      const valueMeta = getValueMeta(contractMeta, x.key)
+                      return (
+                        <li key={index2} style={{ marginLeft: '12px' }}>
+                          <Diff diff={x} valueMeta={valueMeta} />
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </p>
+              )
+            })}
           </p>
         </details>
       )}
