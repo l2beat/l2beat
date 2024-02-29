@@ -21,7 +21,7 @@ export function diffToMessage(
   const overheadLength = header.length + dependentsMessage.length
   const maxLength = MAX_MESSAGE_LENGTH - overheadLength
 
-  const message = discoveryDiffToMarkdown(diffs, meta, maxLength);
+  const message = discoveryDiffToMarkdown(diffs, meta, maxLength)
 
   return `${header}${dependentsMessage}${message}`
 }

@@ -1,4 +1,4 @@
-import { DiscoveryDiff, FieldDiff, discoveryDiffToMarkdown } from '@l2beat/discovery'
+import { DiscoveryDiff, discoveryDiffToMarkdown } from '@l2beat/discovery'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
@@ -104,7 +104,7 @@ describe('Discord message formatting', () => {
         wrapItalic('This is a shared module, used by the following projects:'),
         ' ',
         wrapBoldAndItalic('system1, system2.'),
-        discoveryDiffToMarkdown(diff, undefined)
+        discoveryDiffToMarkdown(diff, undefined),
       ]
 
       expect(result).toEqual(expected.join(''))

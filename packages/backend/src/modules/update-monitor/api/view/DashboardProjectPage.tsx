@@ -3,7 +3,7 @@ import {
   DiscoveryMeta,
   getContractMeta,
   getValueMeta,
-  sortBySeverity
+  sortBySeverity,
 } from '@l2beat/discovery'
 import { default as React } from 'react'
 

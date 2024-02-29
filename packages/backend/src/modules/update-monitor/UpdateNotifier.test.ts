@@ -245,26 +245,26 @@ describe(UpdateNotifier.name, () => {
       )
 
       const internalMessage = [
-          '> #0000 (block_number=123)',
-          '',
-          '***project-a*** | detected changes on chain: ***ethereum***```diff',
-          `    contract Contract (${address.toString()}) {`,
-          '    +++ description: None',
-          '      A:',
-          `-        ${'A'.repeat(1000)}`,
-          `+        ${'B'.repeat(756)}... (message too long)`,
-          '```',
-        ].join('\n')
+        '> #0000 (block_number=123)',
+        '',
+        '***project-a*** | detected changes on chain: ***ethereum***```diff',
+        `    contract Contract (${address.toString()}) {`,
+        '    +++ description: None',
+        '      A:',
+        `-        ${'A'.repeat(1000)}`,
+        `+        ${'B'.repeat(756)}... (message too long)`,
+        '```',
+      ].join('\n')
 
       const publicMessage = [
-          '***project-a*** | detected changes on chain: ***ethereum***```diff',
-          `    contract Contract (${address.toString()}) {`,
-          '    +++ description: None',
-          '      A:',
-          `-        ${'A'.repeat(1000)}`,
-          `+        ${'B'.repeat(784)}... (message too long)`,
-          '```',
-        ].join('\n')
+        '***project-a*** | detected changes on chain: ***ethereum***```diff',
+        `    contract Contract (${address.toString()}) {`,
+        '    +++ description: None',
+        '      A:',
+        `-        ${'A'.repeat(1000)}`,
+        `+        ${'B'.repeat(784)}... (message too long)`,
+        '```',
+      ].join('\n')
 
       expect(internalMessage.length).toBeLessThanOrEqual(MAX_MESSAGE_LENGTH)
       expect(publicMessage.length).toBeLessThanOrEqual(MAX_MESSAGE_LENGTH)
