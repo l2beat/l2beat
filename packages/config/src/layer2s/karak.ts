@@ -26,7 +26,7 @@ export const karak: Layer2 = opStack({
     slug: 'karak',
     warning:
       'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
-    description: 'Karak is ....',
+    description: 'Karak is a general-purpose Optimistic Rollup.',
     purposes: ['Universal'],
     links: {
       websites: ['https://karak.network/'],
@@ -65,7 +65,7 @@ export const karak: Layer2 = opStack({
     type: 'OPStack',
     lag: 0,
   },
-  genesisTimestamp: new UnixTime(1686695915), //TODO: change this
+  genesisTimestamp: new UnixTime(1703226695), //First sequencer transaction
   l2OutputOracle: discovery.getContract('L2OutputOracle'),
   portal: discovery.getContract('OptimismPortal'),
   isNodeAvailable: true,
