@@ -152,6 +152,7 @@ async function performDiscoveryOnPreviousBlock(
   const root = `discovery/${projectName}/${chain}`
   // Remove any old sources we fetched before, so that their count doesn't grow
   await rimraf(`${root}/.code@*`, { glob: true })
+  await rimraf(`${root}/.flat@*`, { glob: true })
 
   const blockNumberFromMainBranch = discoveryFromMainBranch.blockNumber
 
@@ -160,6 +161,7 @@ async function performDiscoveryOnPreviousBlock(
     chain: getChainConfig(chain),
     blockNumber: blockNumberFromMainBranch,
     sourcesFolder: `.code@${blockNumberFromMainBranch}`,
+    flatSourcesFolder: `.flat@${blockNumberFromMainBranch}`,
     discoveryFilename: `discovered@${blockNumberFromMainBranch}.json`,
   })
 
