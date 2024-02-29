@@ -10,6 +10,7 @@ import {
   discover,
   DiscoveryDiff,
   discoveryDiffToMarkdown,
+  DiscoveryMeta,
   getChainConfig,
 } from '@l2beat/discovery'
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -47,6 +48,7 @@ async function updateDiffHistoryFile() {
   const configReader = new ConfigReader()
   const curDiscovery = await configReader.readDiscovery(projectName, chain)
   const config = await configReader.readConfig(projectName, chain)
+  const meta = await configReader.readMeta(projectName, chain)
   const discoveryFolder = `./discovery/${projectName}/${chain}`
   const { content: discoveryJsonFromMainBranch, mainBranchHash } =
     getFileVersionOnMainBranch(`${discoveryFolder}/discovered.json`)
@@ -90,6 +92,7 @@ async function updateDiffHistoryFile() {
       discoveryFromMainBranch?.blockNumber,
       curDiscovery.blockNumber,
       diff,
+      meta,
       configRelatedDiff,
       mainBranchHash,
       codeDiff,
@@ -258,6 +261,7 @@ function generateDiffHistoryMarkdown(
   blockNumberFromMainBranchDiscovery: number | undefined,
   curBlockNumber: number,
   diffs: DiscoveryDiff[],
+  meta: DiscoveryMeta | undefined,
   configRelatedDiff: DiscoveryDiff[],
   mainBranchHash: string,
   codeDiff?: string,
@@ -296,7 +300,7 @@ function generateDiffHistoryMarkdown(
       result.push('## Watched changes')
     }
     result.push('')
-    result.push(discoveryDiffToMarkdown(diffs))
+    result.push(discoveryDiffToMarkdown(diffs, meta))
     result.push('')
   }
 
@@ -319,7 +323,7 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block ${blockNumberFromMainBranchDiscovery} (main branch discovery), not current.`,
     )
     result.push('')
-    result.push(discoveryDiffToMarkdown(configRelatedDiff))
+    result.push(discoveryDiffToMarkdown(configRelatedDiff, meta))
     result.push('')
   }
 

@@ -3,12 +3,12 @@ import {
   DiscoveryMeta,
   getContractMeta,
   getValueMeta,
+  sortBySeverity
 } from '@l2beat/discovery'
 import { default as React } from 'react'
 
 import { Page } from '../../../status/Page'
 import { reactToHtml } from '../../../status/reactToHtml'
-import { sortBySeverity } from '../../utils/sortDiffs'
 import { DashboardContract } from '../props/getDashboardContracts'
 import { Contract } from './components/Contract'
 import { Diff } from './components/Diff'
