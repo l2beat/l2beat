@@ -1,6 +1,7 @@
 import { expect } from 'earl'
 
 import { printAsciiTable } from './printAsciiTable'
+import chalk from 'chalk'
 
 describe(printAsciiTable.name, () => {
   it('should print a table', () => {
@@ -75,6 +76,24 @@ describe(printAsciiTable.name, () => {
         '|----------------|----------|---------------|',
         '|    Black mamba |      Yes |        Africa |',
         '| Green anaconda |          | South America |',
+      ].join('\n'),
+    )
+  })
+
+  it('handles ansi escape codes', () => {
+    const headers = ['Snake', 'Venomous', 'Origin']
+    const rows = [
+      ['Black mamba', 'Yes', chalk.green('Africa')],
+      [chalk.red('Green anaconda'), ' ', 'South America'],
+    ]
+
+    const table = printAsciiTable(headers, rows)
+    expect(table).toEqual(
+      [
+        '|          Snake | Venomous |        Origin |',
+        '|----------------|----------|---------------|',
+        `|    Black mamba |      Yes |        ${chalk.green('Africa')} |`,
+        `| ${chalk.red('Green anaconda')} |          | South America |`,
       ].join('\n'),
     )
   })
