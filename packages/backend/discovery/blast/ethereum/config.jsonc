@@ -90,21 +90,17 @@
       // TODO: In review
       "ignoreDiscovery": true
     },
-    "ETHYieldManager": {
-      // TODO: In review
-      "ignoreDiscovery": true
-    },
     "USDYieldManager": {
       // TODO: In review
       "ignoreDiscovery": true
     },
-    "WithdrawalQueueERC721": {
-      "ignoreInWatchMode": [
-        "getLastCheckpointIndex",
-        "getLastFinalizedRequestId",
-        "getLockedEtherAmount"
-      ]
-    },
+    // "WithdrawalQueueERC721": {
+    //   "ignoreInWatchMode": [
+    //     "getLastCheckpointIndex",
+    //     "getLastFinalizedRequestId",
+    //     "getLockedEtherAmount"
+    //   ]
+    // },
     "Lido": {
       "ignoreDiscovery": true
     },

@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xe5754a705ac13e0ac22d20425654dd61184846c0
+Generated with discovered.json: 0xd7b5a29c6417765e76a8c2a625f2d82edd1e9d72
 
-# Diff at Fri, 01 Mar 2024 14:11:16 GMT:
+# Diff at Fri, 01 Mar 2024 14:14:26 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
 - comparing to: main@b9ede39955273871351ca0f0c491301537f7a861 block: 19260868
-- current block number: 19340833
+- current block number: 19340848
 
 ## Description
 
@@ -81,7 +81,19 @@ this commit is in under-review state.
 
 ```diff
 +   Status: CREATED
+    contract ETHYieldManager (0x98078db053902644191f93988341E31289E1C8FE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract L1ERC721Bridge (0xa45A0c7C47DB8C6e99b2d7C4939F7f7Cf69C8975)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Insurance (0xcFF70D7F37b1EBeE89c08E485f08ACAB5f6ff873)
     +++ description: None
 ```
 
@@ -116,6 +128,131 @@ this commit is in under-review state.
  .../.code/BlastMultisig/implementation/meta.txt    |    2 +
  .../.code/BlastMultisig/proxy/GnosisSafeProxy.sol  |  155 +++
  .../ethereum/.code/BlastMultisig/proxy/meta.txt    |    2 +
+ .../contracts/interfaces/IERC20.sol                |    6 +
+ .../contracts/proxy/utils/Initializable.sol        |  138 +++
+ .../contracts/token/ERC20/IERC20.sol               |   82 ++
+ .../token/ERC20/extensions/draft-IERC20Permit.sol  |   60 ++
+ .../contracts/token/ERC20/utils/SafeERC20.sol      |  116 ++
+ .../contracts/utils/Address.sol                    |  222 ++++
+ .../contracts/utils/Strings.sol                    |   75 ++
+ .../contracts/utils/math/Math.sol                  |  226 ++++
+ .../contracts/utils/math/SafeCast.sol              | 1135 ++++++++++++++++++++
+ .../contracts/utils/math/SignedMath.sol            |   43 +
+ .../contracts/utils/structs/EnumerableSet.sol      |  367 +++++++
+ .../contracts/access/Ownable2StepUpgradeable.sol   |   71 ++
+ .../contracts/access/OwnableUpgradeable.sol        |   95 ++
+ .../contracts/proxy/utils/Initializable.sol        |  166 +++
+ .../contracts/utils/AddressUpgradeable.sol         |  244 +++++
+ .../contracts/utils/ContextUpgradeable.sol         |   37 +
+ .../lib/solmate/src/tokens/ERC20.sol               |  206 ++++
+ .../lib/solmate/src/utils/FixedPointMathLib.sol    |  366 +++++++
+ .../lib/solmate/src/utils/SafeTransferLib.sol      |  129 +++
+ .../.code/ETHYieldManager/implementation/meta.txt  |    2 +
+ .../implementation/src/L1/L2OutputOracle.sol       |  304 ++++++
+ .../implementation/src/L1/OptimismPortal.sol       |  490 +++++++++
+ .../implementation/src/L1/ResourceMetering.sol     |  162 +++
+ .../implementation/src/L1/SystemConfig.sol         |  371 +++++++
+ .../implementation/src/L2/Blast.sol                |  336 ++++++
+ .../ETHYieldManager/implementation/src/L2/Gas.sol  |  329 ++++++
+ .../implementation/src/L2/Shares.sol               |  129 +++
+ .../implementation/src/libraries/Arithmetic.sol    |   28 +
+ .../implementation/src/libraries/Burn.sol          |   32 +
+ .../implementation/src/libraries/Bytes.sol         |  144 +++
+ .../implementation/src/libraries/Constants.sol     |   50 +
+ .../implementation/src/libraries/Encoding.sol      |  136 +++
+ .../implementation/src/libraries/Hashing.sol       |  124 +++
+ .../implementation/src/libraries/Predeploys.sol    |   95 ++
+ .../implementation/src/libraries/SafeCall.sol      |  142 +++
+ .../implementation/src/libraries/Storage.sol       |   69 ++
+ .../implementation/src/libraries/Types.sol         |   70 ++
+ .../implementation/src/libraries/rlp/RLPReader.sol |  262 +++++
+ .../implementation/src/libraries/rlp/RLPWriter.sol |  163 +++
+ .../src/libraries/trie/MerkleTrie.sol              |  220 ++++
+ .../src/libraries/trie/SecureMerkleTrie.sol        |   49 +
+ .../src/mainnet-bridge/DelegateCalls.sol           |   48 +
+ .../src/mainnet-bridge/ETHYieldManager.sol         |   50 +
+ .../src/mainnet-bridge/USDConversions.sol          |  218 ++++
+ .../src/mainnet-bridge/YieldManager.sol            |  421 ++++++++
+ .../withdrawal-queue/WithdrawalQueue.sol           |  442 ++++++++
+ .../yield-providers/YieldProvider.sol              |  183 ++++
+ .../src/universal/CrossDomainMessenger.sol         |  389 +++++++
+ .../implementation/src/universal/ISemver.sol       |   13 +
+ .../implementation/src/universal/Semver.sol        |   40 +
+ .../src/vendor/AddressAliasHelper.sol              |   43 +
+ .../contracts/proxy/utils/Initializable.sol        |  138 +++
+ .../contracts/utils/Address.sol                    |  222 ++++
+ .../contracts/utils/math/Math.sol                  |  226 ++++
+ .../contracts/utils/math/SignedMath.sol            |   43 +
+ .../lib/solmate/src/utils/FixedPointMathLib.sol    |  366 +++++++
+ .../ethereum/.code/ETHYieldManager/proxy/meta.txt  |    2 +
+ .../proxy/src/L1/ResourceMetering.sol              |  162 +++
+ .../proxy/src/legacy/L1ChugSplashProxy.sol         |  232 ++++
+ .../proxy/src/libraries/Arithmetic.sol             |   28 +
+ .../ETHYieldManager/proxy/src/libraries/Burn.sol   |   32 +
+ .../proxy/src/libraries/Constants.sol              |   50 +
+ .../contracts/interfaces/IERC20.sol                |    6 +
+ .../contracts/proxy/utils/Initializable.sol        |  138 +++
+ .../contracts/token/ERC20/IERC20.sol               |   82 ++
+ .../token/ERC20/extensions/draft-IERC20Permit.sol  |   60 ++
+ .../contracts/token/ERC20/utils/SafeERC20.sol      |  116 ++
+ .../contracts/utils/Address.sol                    |  222 ++++
+ .../contracts/utils/Strings.sol                    |   75 ++
+ .../contracts/utils/math/Math.sol                  |  226 ++++
+ .../contracts/utils/math/SafeCast.sol              | 1135 ++++++++++++++++++++
+ .../contracts/utils/math/SignedMath.sol            |   43 +
+ .../contracts/utils/structs/EnumerableSet.sol      |  367 +++++++
+ .../contracts/access/Ownable2StepUpgradeable.sol   |   71 ++
+ .../contracts/access/OwnableUpgradeable.sol        |   95 ++
+ .../contracts/proxy/utils/Initializable.sol        |  166 +++
+ .../contracts/utils/AddressUpgradeable.sol         |  244 +++++
+ .../contracts/utils/ContextUpgradeable.sol         |   37 +
+ .../lib/solmate/src/tokens/ERC20.sol               |  206 ++++
+ .../lib/solmate/src/utils/FixedPointMathLib.sol    |  366 +++++++
+ .../lib/solmate/src/utils/SafeTransferLib.sol      |  129 +++
+ .../.code/Insurance/implementation/meta.txt        |    2 +
+ .../implementation/src/L1/L2OutputOracle.sol       |  304 ++++++
+ .../implementation/src/L1/OptimismPortal.sol       |  490 +++++++++
+ .../implementation/src/L1/ResourceMetering.sol     |  162 +++
+ .../implementation/src/L1/SystemConfig.sol         |  371 +++++++
+ .../Insurance/implementation/src/L2/Blast.sol      |  336 ++++++
+ .../.code/Insurance/implementation/src/L2/Gas.sol  |  329 ++++++
+ .../Insurance/implementation/src/L2/Shares.sol     |  129 +++
+ .../implementation/src/libraries/Arithmetic.sol    |   28 +
+ .../implementation/src/libraries/Burn.sol          |   32 +
+ .../implementation/src/libraries/Bytes.sol         |  144 +++
+ .../implementation/src/libraries/Constants.sol     |   52 +
+ .../implementation/src/libraries/Encoding.sol      |  136 +++
+ .../implementation/src/libraries/Hashing.sol       |  124 +++
+ .../implementation/src/libraries/Predeploys.sol    |   95 ++
+ .../implementation/src/libraries/SafeCall.sol      |  142 +++
+ .../implementation/src/libraries/Storage.sol       |   69 ++
+ .../implementation/src/libraries/Types.sol         |   70 ++
+ .../implementation/src/libraries/rlp/RLPReader.sol |  262 +++++
+ .../implementation/src/libraries/rlp/RLPWriter.sol |  163 +++
+ .../src/libraries/trie/MerkleTrie.sol              |  220 ++++
+ .../src/libraries/trie/SecureMerkleTrie.sol        |   49 +
+ .../src/mainnet-bridge/DelegateCalls.sol           |   48 +
+ .../src/mainnet-bridge/ETHYieldManager.sol         |   50 +
+ .../src/mainnet-bridge/Insurance.sol               |   63 ++
+ .../src/mainnet-bridge/USDConversions.sol          |  218 ++++
+ .../src/mainnet-bridge/YieldManager.sol            |  421 ++++++++
+ .../withdrawal-queue/WithdrawalQueue.sol           |  442 ++++++++
+ .../yield-providers/YieldProvider.sol              |  183 ++++
+ .../src/universal/CrossDomainMessenger.sol         |  389 +++++++
+ .../implementation/src/universal/ISemver.sol       |   13 +
+ .../implementation/src/universal/Semver.sol        |   40 +
+ .../src/vendor/AddressAliasHelper.sol              |   43 +
+ .../contracts/proxy/utils/Initializable.sol        |  138 +++
+ .../contracts/utils/Address.sol                    |  222 ++++
+ .../contracts/utils/math/Math.sol                  |  226 ++++
+ .../contracts/utils/math/SignedMath.sol            |   43 +
+ .../lib/solmate/src/utils/FixedPointMathLib.sol    |  366 +++++++
+ .../blast/ethereum/.code/Insurance/proxy/meta.txt  |    2 +
+ .../Insurance/proxy/src/L1/ResourceMetering.sol    |  162 +++
+ .../proxy/src/legacy/L1ChugSplashProxy.sol         |  232 ++++
+ .../Insurance/proxy/src/libraries/Arithmetic.sol   |   28 +
+ .../.code/Insurance/proxy/src/libraries/Burn.sol   |   32 +
+ .../Insurance/proxy/src/libraries/Constants.sol    |   50 +
  .../contracts/interfaces/IERC20.sol                |    6 +
  .../contracts/proxy/utils/Initializable.sol        |  138 +++
  .../contracts/token/ERC20/ERC20.sol                |  383 +++++++
@@ -506,7 +643,7 @@ this commit is in under-review state.
  .../SystemConfig/proxy/src/libraries/Burn.sol      |   32 +
  .../SystemConfig/proxy/src/libraries/Constants.sol |   50 +
  .../SystemConfig/proxy/src/universal/Proxy.sol     |  168 +++
- 412 files changed, 60353 insertions(+)
+ 537 files changed, 82096 insertions(+)
 ```
 
 ## Config/verification related changes

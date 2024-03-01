@@ -1,8 +1,8 @@
 {
   "name": "blast",
   "chain": "ethereum",
-  "blockNumber": 19340833,
-  "configHash": "0x820ca1b7149ac2315851f15efddf4e16ae595532bc15f8cd007f0f892e578584",
+  "blockNumber": 19340848,
+  "configHash": "0xaa1ba421e58ea06b1d537d5d87ee57c5673ff5342652046b710c923efd548fc1",
   "version": 3,
   "contracts": [
     {
@@ -21,7 +21,7 @@
         "L2_ORACLE": "0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76",
         "l2Oracle": "0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 1927894, 19340833],
+        "params": [1000000000, 400000, 19340848],
         "paused": false,
         "SYSTEM_CONFIG": "0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9",
         "systemConfig": "0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9",
@@ -156,7 +156,7 @@
       "sinceTimestamp": 1708812983,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292639447",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292639456",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -192,10 +192,10 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "PSM": "0x89B78CfA322F6C5dE0aBcEecab66Aee45393cC5A",
         "staker": "0x9eDFc192fC4d29b8f2b18f484211161b6Fc8063E",
-        "totalETHBalance": "142121261681889514066129",
-        "totalETHShares": "140706173786293596706572",
-        "totalUSDBalanceNoUpdate": "32691362644945743061399353",
-        "totalUSDShares": "32252782197960195751619930",
+        "totalETHBalance": "141919599098248598658452",
+        "totalETHShares": "140506519137832314054246",
+        "totalUSDBalanceNoUpdate": "32691169933712793208680222",
+        "totalUSDShares": "32252582491528153269738237",
         "USDC": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "USDT": "0xdAC17F958D2ee523a2206206994597C13D831ec7"
       },
@@ -296,6 +296,53 @@
       "derivedName": "L2OutputOracle"
     },
     {
+      "name": "ETHYieldManager",
+      "address": "0x98078db053902644191f93988341E31289E1C8FE",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xf2F6148327B3020610FCa26E094D9A5cc4689525",
+        "admin": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883"
+      },
+      "implementations": ["0xf2F6148327B3020610FCa26E094D9A5cc4689525"],
+      "sinceTimestamp": 1708812935,
+      "values": {
+        "accumulatedNegativeYields": 0,
+        "admin": "0xF0218c491421B5830cbf96804CD9680b56ef70BD",
+        "availableBalance": "5089206326412676222939",
+        "blastBridge": "0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115",
+        "getLastCheckpointId": 5,
+        "getLastFinalizedRequestId": 42,
+        "getLastRequestId": 314,
+        "getLockedBalance": "7273904440000000000000",
+        "getProviderInfoAt": [
+          [
+            "0xa9a273106b6a6346a0d4fadf546958a10e831e1594b2598065098554b0f8b5d6",
+            "0x4316A00D31da1313617DbB04fD92F9fF8D1aF7Db",
+            "494025835709703704601078",
+            0,
+            "493983307705724120970957",
+            "494025835709703704601078",
+            "42528003979583630121"
+          ]
+        ],
+        "insurance": "0xcFF70D7F37b1EBeE89c08E485f08ACAB5f6ff873",
+        "insuranceFeeBips": 1000,
+        "insuranceWithdrawalBuffer": 10,
+        "MAX_INSURANCE_FEE_BIPS": 10000,
+        "owner": "0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05",
+        "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "portal": "0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb",
+        "sharePrice": "1000000000000000000000000000",
+        "TOKEN": "0x0000000000000000000000000000000000000000",
+        "tokenBalance": "12363110766412676222939",
+        "totalProviderValue": "494025835709703704601078",
+        "totalValue": "499115042036116380824017",
+        "unfinalizedRequestNumber": 272,
+        "version": "1.0.0"
+      },
+      "derivedName": "ETHYieldManager"
+    },
+    {
       "name": "L1ERC721Bridge",
       "address": "0xa45A0c7C47DB8C6e99b2d7C4939F7f7Cf69C8975",
       "upgradeability": {
@@ -311,6 +358,21 @@
         "OTHER_BRIDGE": "0x4200000000000000000000000000000000000014",
         "otherBridge": "0x4200000000000000000000000000000000000014",
         "version": "1.4.1"
+      }
+    },
+    {
+      "name": "Insurance",
+      "address": "0xcFF70D7F37b1EBeE89c08E485f08ACAB5f6ff873",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x787BC7274Ba165d1dd3D89c1a9159cFf5f92B327",
+        "admin": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883"
+      },
+      "implementations": ["0x787BC7274Ba165d1dd3D89c1a9159cFf5f92B327"],
+      "sinceTimestamp": 1708812959,
+      "values": {
+        "admin": "0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05",
+        "version": "1.0.0"
       }
     },
     {
@@ -346,6 +408,7 @@
     "0x9eDFc192fC4d29b8f2b18f484211161b6Fc8063E",
     "0xAb5972612e8CEe66f246feaCB8D500DF3C6cfADA",
     "0xb7c719eB2649c1F03bFab68b0AAa35AD538a7cC8",
+    "0xF0218c491421B5830cbf96804CD9680b56ef70BD",
     "0xf97eC9b92Efda3afe52945B4e9adE0394C9E705d",
     "0xFf00000000000000000000000000000000081457"
   ],
@@ -521,6 +584,19 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
+    "0x787BC7274Ba165d1dd3D89c1a9159cFf5f92B327": [
+      "constructor(address _yieldManager)",
+      "error CannotSetAdminAsZeroAddress()",
+      "error InsufficientBalance()",
+      "error OnlyAdmin()",
+      "error OnlyAdminOrYieldManager()",
+      "event Initialized(uint8 version)",
+      "function admin() view returns (address)",
+      "function coverLoss(address token, uint256 amount)",
+      "function initialize(address _admin)",
+      "function setAdmin(address _admin)",
+      "function version() view returns (string)"
+    ],
     "0x7A2075519Dd9598b62075FD397aF0Dd34b14619a": [
       "constructor()",
       "event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
@@ -590,6 +666,14 @@
       "function successfulMessages(bytes32) view returns (bool)",
       "function version() view returns (string)",
       "function xDomainMessageSender() view returns (address)"
+    ],
+    "0x98078db053902644191f93988341E31289E1C8FE": [
+      "constructor(address _owner)",
+      "function getImplementation() returns (address)",
+      "function getOwner() returns (address)",
+      "function setCode(bytes _code)",
+      "function setOwner(address _owner)",
+      "function setStorage(bytes32 _key, bytes32 _value)"
     ],
     "0xA150f19B681a06E1a0B7E03934299a9bf9238cb7": [
       "constructor()",
@@ -683,6 +767,14 @@
       "function createStandardL2Token(address _remoteToken, string _name, string _symbol) returns (address)",
       "function initialize(address _bridge)",
       "function version() view returns (string)"
+    ],
+    "0xcFF70D7F37b1EBeE89c08E485f08ACAB5f6ff873": [
+      "constructor(address _owner)",
+      "function getImplementation() returns (address)",
+      "function getOwner() returns (address)",
+      "function setCode(bytes _code)",
+      "function setOwner(address _owner)",
+      "function setStorage(bytes32 _key, bytes32 _value)"
     ],
     "0xD2C23A5A280AFF9182b953579f62EDdDF1c7ff22": [
       "constructor()",
@@ -803,6 +895,83 @@
       "function renounceOwnership()",
       "function setAddress(string _name, address _address)",
       "function transferOwnership(address newOwner)"
+    ],
+    "0xf2F6148327B3020610FCa26E094D9A5cc4689525": [
+      "constructor()",
+      "error CallerIsNotAdmin()",
+      "error CallerIsNotBlastBridge()",
+      "error CallerIsNotPortal()",
+      "error CallerIsNotRecipient()",
+      "error FailedToInitializeProvider()",
+      "error InsufficientBalance()",
+      "error InsufficientInsuranceBalance()",
+      "error InvalidHint(uint256 _hint)",
+      "error InvalidRequestId(uint256 _requestId)",
+      "error InvalidRequestIdRange(uint256 startId, uint256 endId)",
+      "error InvalidSharePrice()",
+      "error NegativeYieldFromInsuredProvider()",
+      "error NegativeYieldIncrease()",
+      "error ProviderAddressDoesNotMatchIndex()",
+      "error ProviderNotFound()",
+      "error RequestAlreadyClaimed(uint256 _requestId)",
+      "error RequestIdsNotSorted()",
+      "error RequestNotFoundOrNotFinalized(uint256 _requestId)",
+      "error TotalValueIsZero()",
+      "error WithdrawalTransferFailed()",
+      "error YieldProviderIsNotMeantForThisManager()",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event WithdrawalClaimed(uint256 indexed requestId, address indexed recipient, uint256 amountOfETH)",
+      "event WithdrawalRequested(uint256 indexed requestId, address indexed requestor, address indexed recipient, uint256 amount)",
+      "event WithdrawalsFinalized(uint256 indexed from, uint256 indexed to, uint256 indexed checkpointId, uint256 amountOfETHLocked, uint256 timestamp, uint256 sharePrice)",
+      "event YieldReport(int256 yield, uint256 insurancePremiumPaid, uint256 insuranceWithdrawn)",
+      "function MAX_INSURANCE_FEE_BIPS() view returns (uint256)",
+      "function TOKEN() view returns (address)",
+      "function acceptOwnership()",
+      "function accumulatedNegativeYields() view returns (uint256)",
+      "function addProvider(address provider)",
+      "function admin() view returns (address)",
+      "function availableBalance() view returns (uint256)",
+      "function blastBridge() view returns (address)",
+      "function claimWithdrawal(uint256 _requestId, uint256 _hintId) returns (bool success)",
+      "function commitYieldReport(bool enableInsurance)",
+      "function commitYieldReportAfterInsuranceWithdrawal(address token, uint256 amount)",
+      "function finalize(uint256 requestId) returns (uint256 checkpointId)",
+      "function findCheckpointHint(uint256 _requestId, uint256 _start, uint256 _end) view returns (uint256)",
+      "function findCheckpointHints(uint256[] _requestIds, uint256 _firstIndex, uint256 _lastIndex) view returns (uint256[] hintIds)",
+      "function getClaimableEther(uint256[] _requestIds, uint256[] _hintIds) view returns (uint256[] claimableEthValues)",
+      "function getLastCheckpointId() view returns (uint256)",
+      "function getLastFinalizedRequestId() view returns (uint256)",
+      "function getLastRequestId() view returns (uint256)",
+      "function getLockedBalance() view returns (uint256)",
+      "function getProviderInfoAt(uint256 idx) view returns (tuple(bytes32 id, address providerAddress, uint256 stakedBalance, uint256 pendingBalance, uint256 stakedPrincipal, uint256 totalValue, int256 yield) info)",
+      "function getWithdrawalRequests(address _owner) view returns (uint256[] requestIds)",
+      "function getWithdrawalStatus(uint256[] _requestIds) view returns (tuple(uint256 amount, address recipient, uint256 timestamp, bool isFinalized, bool isClaimed)[] statuses)",
+      "function initialize(address _portal, address _owner)",
+      "function insurance() view returns (address)",
+      "function insuranceFeeBips() view returns (uint256)",
+      "function insuranceWithdrawalBuffer() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function portal() view returns (address)",
+      "function recordNegativeYield(uint256 amount)",
+      "function recordStakedDeposit(address providerAddress, uint256 amount)",
+      "function removeProvider(address provider)",
+      "function renounceOwnership()",
+      "function requestWithdrawal(uint256 amount) returns (uint256)",
+      "function setAdmin(address _admin)",
+      "function setBlastBridge(address _blastBridge)",
+      "function setInsurance(address _insurance, uint256 _insuranceFeeBips, uint256 _withdrawalBuffer)",
+      "function sharePrice() view returns (uint256)",
+      "function stake(uint256 idx, address providerAddress, uint256 amount)",
+      "function tokenBalance() view returns (uint256)",
+      "function totalProviderValue() view returns (uint256 sum)",
+      "function totalValue() view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "function unfinalizedRequestNumber() view returns (uint256)",
+      "function unstake(uint256 idx, address providerAddress, uint256 amount)",
+      "function version() view returns (string)"
     ]
   }
 }
