@@ -1,0 +1,125 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "Bridge",
+      "values": {
+        "CURVE_3POOL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DAI": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DSR_MANAGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isTransitionEnabled": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "LIDO": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PSM": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "staker": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalETHBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalETHShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalUSDBalanceNoUpdate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalUSDShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "USDC": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "USDT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "BridgeOwner",
+      "values": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}
