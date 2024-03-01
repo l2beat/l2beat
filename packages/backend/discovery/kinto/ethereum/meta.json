@@ -47,21 +47,6 @@
       }
     },
     {
-      "name": "RollupEventInbox",
-      "values": {
-        "bridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "rollup": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "Inbox",
       "values": {
         "allowListEnabled": {
@@ -157,64 +142,14 @@
       }
     },
     {
-      "name": "SequencerInbox",
+      "name": "RollupEventInbox",
       "values": {
-        "batchCount": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "bridge": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "DATA_AUTHENTICATED_FLAG": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "HEADER_LENGTH": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "maxDataSize": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "maxTimeVariation": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "rollup": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalDelayedMessagesRead": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "IS_HARDCODED_SEQUENCER_BATCH_POSTER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "keySetUpdates": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "sequencerVersion": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "setIsBatchPosterCount": {
           "description": null,
           "severity": null,
           "type": null
@@ -384,6 +319,11 @@
           "severity": null,
           "type": null
         },
+        "validators": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "zombieAddress": {
           "description": null,
           "severity": null,
@@ -397,33 +337,78 @@
       }
     },
     {
-      "name": "ValidatorUtils",
-      "values": {}
-    },
-    {
-      "name": "UpgradeExecutor",
+      "name": "SequencerInbox",
       "values": {
-        "ADMIN_ROLE": {
+        "batchCount": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "DEFAULT_ADMIN_ROLE": {
+        "bridge": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "EXECUTOR_ROLE": {
+        "DATA_AUTHENTICATED_FLAG": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "accessControl": {
+        "HEADER_LENGTH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxDataSize": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxTimeVariation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rollup": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalDelayedMessagesRead": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "batchPosters": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "IS_HARDCODED_SEQUENCER_BATCH_POSTER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "keySetUpdates": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sequencerVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "setIsBatchPosterCount": {
           "description": null,
           "severity": null,
           "type": null
         }
       }
+    },
+    {
+      "name": "ValidatorUtils",
+      "values": {}
     },
     {
       "name": "ChallengeManager",
@@ -464,6 +449,31 @@
           "type": null
         },
         "template": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "UpgradeExecutor",
+      "values": {
+        "ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EXECUTOR_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accessControl": {
           "description": null,
           "severity": null,
           "type": null
@@ -535,15 +545,15 @@
       "values": {}
     },
     {
-      "name": "OneStepProverMemory",
-      "values": {}
-    },
-    {
       "name": "OneStepProverHostIo",
       "values": {}
     },
     {
       "name": "OneStepProverMath",
+      "values": {}
+    },
+    {
+      "name": "OneStepProverMemory",
       "values": {}
     },
     {
