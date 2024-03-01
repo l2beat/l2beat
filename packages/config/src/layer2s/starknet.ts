@@ -369,9 +369,10 @@ export const starknet: Layer2 = {
       defaultUrl: 'https://starknet-mainnet.public.blastapi.io',
       defaultCallsPerMinute: 120,
     },
-    liveness: {
-      proofSubmissions: [
-        {
+    trackedTransactions: [
+      {
+        uses: [{ type: 'liveness', subType: 'proofSubmissions' }],
+        query: {
           formula: 'sharpSubmission',
           sinceTimestamp: new UnixTime(1636978914),
           untilTimestamp: new UnixTime(1702921247),
@@ -379,7 +380,10 @@ export const starknet: Layer2 = {
             '1865367024509426979036104162713508294334262484507712987283009063059134893433',
           ],
         },
-        {
+      },
+      {
+        uses: [{ type: 'liveness', subType: 'proofSubmissions' }],
+        query: {
           formula: 'sharpSubmission',
           sinceTimestamp: new UnixTime(1702921247),
           untilTimestamp: new UnixTime(1704855731),
@@ -387,17 +391,20 @@ export const starknet: Layer2 = {
             '54878256403880350656938046611252303365750679698042371543935159963667935317',
           ],
         },
-        {
+      },
+      {
+        uses: [{ type: 'liveness', subType: 'proofSubmissions' }],
+        query: {
           formula: 'sharpSubmission',
           sinceTimestamp: new UnixTime(1704855731),
           programHashes: [
             '2479841346739966073527450029179698923866252973805981504232089731754042431018',
           ],
         },
-      ],
-      batchSubmissions: [],
-      stateUpdates: [
-        {
+      },
+      {
+        uses: [{ type: 'liveness', subType: 'stateUpdates' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
@@ -407,8 +414,8 @@ export const starknet: Layer2 = {
             'function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)',
           sinceTimestamp: new UnixTime(1636978914),
         },
-      ],
-    },
+      },
+    ],
   },
   riskView: makeBridgeCompatible({
     stateValidation: {

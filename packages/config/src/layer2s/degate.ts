@@ -85,11 +85,10 @@ export const degate: Layer2 = {
         tokens: '*',
       }),
     ],
-    liveness: {
-      proofSubmissions: [],
-      batchSubmissions: [],
-      stateUpdates: [
-        {
+    trackedTransactions: [
+      {
+        uses: [{ type: 'liveness', subType: 'stateUpdates' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x6B937A5920726e70c5bF1d4d4E18EEeEd46FaE83',
@@ -100,8 +99,8 @@ export const degate: Layer2 = {
           sinceTimestamp: new UnixTime(1681993655),
           untilTimestamp: new UnixTime(1695902495),
         },
-      ],
-    },
+      },
+    ],
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
