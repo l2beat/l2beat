@@ -3,7 +3,7 @@ import { assert, assertUnreachable, notUndefined } from '@l2beat/shared-pure'
 import { ethers } from 'ethers'
 
 import { Config } from '../../config'
-import { FinalityIndexerConfig } from '../../config/features/finality'
+import { FinalityProjectConfig } from '../../config/features/finality'
 import { Database } from '../../peripherals/database/Database'
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
@@ -43,7 +43,7 @@ export function createFinalityModule(
     livenessRepository,
     finalityRepository,
     indexerStateRepository,
-    config.projects,
+    config.finality.configurations,
     clock,
   )
   const finalityRouter = createFinalityRouter(finalityController)
@@ -60,7 +60,7 @@ export function createFinalityModule(
   const runtimeConfigurations = initializeConfigurations(
     ethereumRPC,
     livenessRepository,
-    config.finality.indexerConfigurations,
+    config.finality.configurations,
     logger,
   )
 
@@ -93,7 +93,7 @@ export function createFinalityModule(
 function initializeConfigurations(
   ethereumRPC: RpcClient,
   livenessRepository: LivenessRepository,
-  configs: FinalityIndexerConfig[],
+  configs: FinalityProjectConfig[],
   logger: Logger,
 ) {
   return configs
@@ -121,7 +121,7 @@ function initializeConfigurations(
             minTimestamp: configuration.minTimestamp,
           }
         case 'OPStack':
-          throw new Error('OPStack finality is not supported')
+          return
         default:
           assertUnreachable(configuration)
       }
@@ -129,7 +129,7 @@ function initializeConfigurations(
     .filter(notUndefined)
 }
 
-function getL2RPC(configuration: FinalityIndexerConfig, logger: Logger) {
+function getL2RPC(configuration: FinalityProjectConfig, logger: Logger) {
   assert(
     configuration.url,
     `${configuration.projectId.toString()}: L2 provider URL is not defined`,

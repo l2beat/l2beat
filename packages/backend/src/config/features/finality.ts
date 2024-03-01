@@ -4,22 +4,22 @@ import { notUndefined, ProjectId } from '@l2beat/shared-pure'
 
 import { FeatureFlags } from '../FeatureFlags'
 
-export type FinalityIndexerConfig = Layer2FinalityConfig & {
+export type FinalityProjectConfig = Layer2FinalityConfig & {
   projectId: ProjectId
   url?: string
   callsPerMinute?: number
 }
 
-export function getFinalityIndexerConfigurations(
+export function getFinalityConfigurations(
   flags: FeatureFlags,
   env: Env,
-): FinalityIndexerConfig[] {
+): FinalityProjectConfig[] {
   return layer2s
     .map((layer2) => {
       if (
         !layer2.config.finality ||
         !flags.isEnabled('finality', layer2.id.toString()) ||
-        layer2.config.finality.type === 'OPStack'
+        layer2.isArchived
       ) {
         return
       }
