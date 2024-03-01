@@ -158,8 +158,10 @@ export const linea: Layer2 = {
       },
       {
         uses: [
-          { type: 'liveness', subType: 'stateUpdates' },
-          { type: 'liveness', subType: 'proofSubmissions' },
+          {
+            type: 'liveness',
+            subType: 'stateUpdates',
+          },
         ],
         query: {
           formula: 'functionCall',
