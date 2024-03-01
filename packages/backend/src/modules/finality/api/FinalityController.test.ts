@@ -8,7 +8,7 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { Project } from '../../../model/Project'
+import { FinalityProjectConfig } from '../../../config/features/finality'
 import { IndexerStateRepository } from '../../../peripherals/database/repositories/IndexerStateRepository'
 import { Clock } from '../../../tools/Clock'
 import {
@@ -297,17 +297,14 @@ function mockProjectConfig(
     type: FinalityType
     lag: number
   }[],
-): Project[] {
+): FinalityProjectConfig[] {
   return records
     .filter((x, i, a) => a.indexOf(x) === i)
     .map((project) =>
-      mockObject<Project>({
+      mockObject<FinalityProjectConfig>({
         projectId: project.projectId,
-        isArchived: false,
-        finalityConfig: mockObject<Project['finalityConfig']>({
-          type: project.type,
-          lag: project.lag,
-        }),
+        type: project.type,
+        lag: project.lag,
       }),
     )
 }
