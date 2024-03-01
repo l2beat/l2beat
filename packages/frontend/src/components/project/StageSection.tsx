@@ -138,7 +138,7 @@ export function StageSection(props: StageSectionProps) {
               <ChevronDownIcon className="transition-transform duration-300 peer-checked:-rotate-180" />
             </label>
             <ul
-              className="pointer-events-none mx-4 hidden space-y-2 pb-4 md:px-4 md:pb-6"
+              className="mx-4 hidden space-y-2 pb-4 md:px-4 md:pb-6"
               data-role="dropdown-item"
             >
               {satisfied.map((req, i) => (
