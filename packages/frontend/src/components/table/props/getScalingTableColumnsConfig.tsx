@@ -17,7 +17,13 @@ import { cn } from '../../../utils/cn'
 import { formatTps } from '../../../utils/formatTps'
 import { AnomalyIndicator } from '../../AnomalyIndicator'
 import { Badge } from '../../badge/Badge'
-import { CanonicalIcon, ExternalIcon, InfoIcon, NativeIcon } from '../../icons'
+import {
+  CanonicalIcon,
+  ExternalIcon,
+  InfoIcon,
+  NativeIcon,
+  RoundedWarningIcon,
+} from '../../icons'
 import { StageCell } from '../../stages/StageCell'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/Tooltip'
 import { FinalityDurationCell } from '../FinalityDurationCell'
@@ -29,6 +35,7 @@ import { ColumnConfig } from '../types'
 import { ValueWithPercentageCell } from '../ValueWithPercentageCell'
 import { getProjectWithIndexColumns } from './getProjectWithIndexColumns'
 import { getOrderValueBySentiment } from './sorting/getOrderValueBySentiment'
+import { getStageOrderValue } from './sorting/getStageOrderValue'
 
 export function getActiveScalingSummaryColumnsConfig() {
   const columns: ColumnConfig<ScalingL2SummaryViewEntry>[] = [
@@ -64,27 +71,7 @@ export function getActiveScalingSummaryColumnsConfig() {
       tooltip: 'Rollup stage based on its features and maturity.',
       getValue: (project) => <StageCell stageConfig={project.stage} />,
       sorting: {
-        getOrderValue: (project) => {
-          const stage = project.stage.stage
-          if (stage === 'NotApplicable' || stage === 'UnderReview') {
-            return undefined
-          }
-          if (stage === 'Stage 0') {
-            if (project.stage.message?.type === 'warning') {
-              return 0
-            }
-
-            if (project.stage.message?.type === 'underReview') {
-              return 1
-            }
-
-            return 2
-          }
-          if (stage === 'Stage 1') {
-            return 3
-          }
-          return 4
-        },
+        getOrderValue: (project) => getStageOrderValue(project.stage),
         rule: 'numeric',
       },
     },
@@ -100,16 +87,33 @@ export function getActiveScalingSummaryColumnsConfig() {
       align: 'right',
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
-      getValue: (project) => (
-        <>
-          <NumberCell className="font-bold" tooltip={project.tvlTooltip}>
-            {project.tvl?.displayValue}
-          </NumberCell>
-          <NumberCell signed className="ml-1 w-[72px] !text-base font-medium ">
-            {project.sevenDayChange}
-          </NumberCell>
-        </>
-      ),
+      getValue: (project) =>
+        project.slug === 'polygonzkevm' ? (
+          <Tooltip>
+            <TooltipTrigger className="relative flex items-center gap-1">
+              <NumberCell className="font-bold" tooltip={project.tvlTooltip}>
+                {project.tvl?.displayValue}
+              </NumberCell>
+              <NumberCell signed className="w-[72px] !text-base  font-medium">
+                {project.sevenDayChange}
+              </NumberCell>
+              <RoundedWarningIcon className="absolute -right-1.5 size-4 fill-yellow-700 dark:fill-yellow-300" />
+            </TooltipTrigger>
+            <TooltipContent>
+              The TVL is currently shared among all projects using the shared
+              Polygon CDK contracts.
+            </TooltipContent>
+          </Tooltip>
+        ) : (
+          <>
+            <NumberCell className="font-bold" tooltip={project.tvlTooltip}>
+              {project.tvl?.displayValue}
+            </NumberCell>
+            <NumberCell signed className="ml-1 w-[72px] !text-base font-medium">
+              {project.sevenDayChange}
+            </NumberCell>
+          </>
+        ),
       sorting: {
         getOrderValue: (project) => project.tvl?.value,
         rule: 'numeric',
@@ -270,12 +274,27 @@ export function getScalingTvlColumnsConfig() {
           tooltip: 'Total = Canonical + External + Native',
           align: 'center',
           noPaddingRight: true,
-          getValue: (project) => (
-            <ValueWithPercentageCell
-              value={project.tvl?.displayValue}
-              percentChange={project.tvlChange}
-            />
-          ),
+          getValue: (project) =>
+            project.slug === 'polygonzkevm' ? (
+              <Tooltip>
+                <TooltipTrigger className="relative flex items-center gap-1">
+                  <ValueWithPercentageCell
+                    value={project.tvl?.displayValue}
+                    percentChange={project.tvlChange}
+                  />
+                  <RoundedWarningIcon className="absolute -right-5 size-5 fill-yellow-700 pl-1 dark:fill-yellow-300" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  The TVL is currently shared among all projects using the
+                  shared Polygon CDK contracts.
+                </TooltipContent>
+              </Tooltip>
+            ) : (
+              <ValueWithPercentageCell
+                value={project.tvl?.displayValue}
+                percentChange={project.tvlChange}
+              />
+            ),
           sorting: {
             getOrderValue: (project) =>
               project.tvl?.value !== 0 ? project.tvl?.value : undefined,
