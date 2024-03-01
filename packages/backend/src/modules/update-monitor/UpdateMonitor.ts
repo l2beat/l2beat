@@ -5,6 +5,7 @@ import {
   DiscoveryConfig,
   DiscoveryDiff,
   DiscoveryMeta,
+  normalizeDiffPath,
 } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
 import { assert, UnixTime } from '@l2beat/shared-pure'
@@ -19,7 +20,6 @@ import { sanitizeDiscoveryOutput } from './sanitizeDiscoveryOutput'
 import { DailyReminderChainEntry, UpdateNotifier } from './UpdateNotifier'
 import { findDependents } from './utils/findDependents'
 import { findUnknownContracts } from './utils/findUnknownContracts'
-import { normalizeDiffPath } from './utils/normalizeDiffPath'
 
 export class UpdateMonitor {
   private readonly taskQueue: TaskQueue<UnixTime>

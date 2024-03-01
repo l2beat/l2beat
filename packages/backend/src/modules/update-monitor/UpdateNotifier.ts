@@ -8,7 +8,7 @@ import { ChainConverter } from '../../tools/ChainConverter'
 import { printAsciiTable } from '../../tools/printAsciiTable'
 import { fieldThrottleDiff } from './fieldThrottleDiff'
 import { UpdateNotifierRepository } from './repositories/UpdateNotifierRepository'
-import { diffToMessages } from './utils/diffToMessages'
+import { diffToMessage } from './utils/diffToMessage'
 import { filterDiff } from './utils/filterDiff'
 import { isNineAM } from './utils/isNineAM'
 
@@ -79,7 +79,7 @@ export class UpdateNotifier {
       return
     }
 
-    const messages = diffToMessages(
+    const message = diffToMessage(
       name,
       throttled,
       meta,
@@ -88,7 +88,7 @@ export class UpdateNotifier {
       dependents,
       nonce,
     )
-    await this.notify(messages, 'INTERNAL')
+    await this.notify(message, 'INTERNAL')
     this.logger.info('Updates detected, notification sent [INTERNAL]', {
       name,
       amount: countDiff(throttled),
@@ -99,7 +99,7 @@ export class UpdateNotifier {
     if (filteredDiff.length === 0) {
       return
     }
-    const filteredMessages = diffToMessages(
+    const filteredMessage = diffToMessage(
       name,
       filteredDiff,
       meta,
@@ -107,7 +107,7 @@ export class UpdateNotifier {
       this.chainConverter.toName(chainId),
       dependents,
     )
-    await this.notify(filteredMessages, 'PUBLIC')
+    await this.notify(filteredMessage, 'PUBLIC')
     this.logger.info('Updates detected, notification sent [PUBLIC]', {
       name,
       amount: countDiff(filteredDiff),
