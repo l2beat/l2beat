@@ -124,7 +124,7 @@ export function makeConfig(
         'FINALITY_ETHEREUM_PROVIDER_CALLS_PER_MINUTE',
         600,
       ),
-      indexerConfigurations: getFinalityIndexerConfigurations(flags),
+      indexerConfigurations: getFinalityIndexerConfigurations(flags, env),
     },
     activity: flags.isEnabled('activity') && {
       starkexApiKey: env.string('STARKEX_API_KEY'),

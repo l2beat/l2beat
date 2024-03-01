@@ -19,7 +19,7 @@ import { sanitizeDiscoveryOutput } from './sanitizeDiscoveryOutput'
 import { DailyReminderChainEntry, UpdateNotifier } from './UpdateNotifier'
 import { findDependents } from './utils/findDependents'
 import { findUnknownContracts } from './utils/findUnknownContracts'
-import { removeArraySuffix } from './utils/removeArraySuffix'
+import { normalizeDiffPath } from './utils/normalizeDiffPath'
 
 export class UpdateMonitor {
   private readonly taskQueue: TaskQueue<UnixTime>
@@ -344,7 +344,6 @@ function countSeverities(diffs: DiscoveryDiff[], meta?: DiscoveryMeta) {
     return result
   }
 
-  const VALUES_PREFIX = 'values.'
   for (const diff of diffs) {
     const contract = meta.contracts.find((c) => c.name === diff.name)
     if (contract === undefined || diff.diff === undefined) {
@@ -355,9 +354,7 @@ function countSeverities(diffs: DiscoveryDiff[], meta?: DiscoveryMeta) {
       if (field.key === undefined) {
         continue
       }
-      const key = field.key.startsWith(VALUES_PREFIX)
-        ? removeArraySuffix(field.key.slice(VALUES_PREFIX.length))
-        : removeArraySuffix(field.key)
+      const key = normalizeDiffPath(field.key)
 
       if (contract.values[key] === undefined) {
         continue
