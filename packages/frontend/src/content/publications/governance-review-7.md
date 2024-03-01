@@ -7,13 +7,11 @@
 
 ## **Optimism**
 
-
 ### **Experimentation: Impact Metric based voting**
 
 Jonas from the Optimism Foundation [published a post](https://gov.optimism.io/t/experimentation-impact-metric-based-voting/7727/1) that describes the ongoing experiment of impact metric-based voting. In the post, you can find information about a prototype of a metric-based voting interface called ‘impact calculator’. The idea is that badgeholders will be able to choose what types of impact they think are important and assign different weights to them instead of going through each project and evaluating it individually.
 
 There’s also a call for feedback at the end of the post with some specific questions so make sure you go and drop your thoughts in the replies below.
-
 
 ### **Building a private, on-chain, implementation for RetroPGF**
 
@@ -27,9 +25,7 @@ While RPGF has been an overall successful endeavor, there are still ways in whic
 
 You can find us to discuss all the above and more during our [Optimism Office Hours](meet.google.com/pem-jzrh-gkq) every Tuesday at 4 pm UTC.
 
-
 ## **Arbitrum**
-
 
 ### **Temp Check - Proposal to fund Plurality Labs Milestone 1B(ridge)**
 
@@ -39,11 +35,9 @@ The [Snapshot vote](https://snapshot.org/#/arbitrumfoundation.eth/proposal/0x243
 
 As L2BEAT, we’ll be abstaining from this vote as we’re part of the Advisory Board which is tasked with overseeing the execution by Plurality Labs.
 
-
 ### **[RFC] Delegate to a public access, public good retail enfranchisement pool through Event Horizon**
 
 EventHorizonDAO [submitted an RFC](https://forum.arbitrum.foundation/t/delegate-to-a-public-access-public-good-retail-enfranchisement-pool-through-event-horizon/21523) that seeks to request a delegation (not grant) of 5,000,000 ARB to a public access-voter block subject to meeting emission timelines as well as participation/output-based KPIs outlined below and a clawback after 1 year if the DAO votes to do so. Arbitrum community members may mint a free, soul-bound Voter Pass which allows them to take part in mobilizing this voter pool.
-
 
 ### **GovHack Proposals**
 
@@ -51,26 +45,23 @@ During [GovHack](https://forum.arbitrum.foundation/t/govhack-ethdenver-powered-b
 
 **Discuss with L2BEAT**
 
-Even though GovHack is now finished, the proposals created during the event don’t have to be. There were a lot of interesting topics being discussed and being worked on and we believe it’s worthwhile to bring some of the proposals to the DAO, improve them, and have them go through the governance process. Also, we find the concept of meta-governance interesting and we’re keen to discuss it with others in the community to form a stronger opinion on it. 
+Even though GovHack is now finished, the proposals created during the event don’t have to be. There were a lot of interesting topics being discussed and being worked on and we believe it’s worthwhile to bring some of the proposals to the DAO, improve them, and have them go through the governance process. Also, we find the concept of meta-governance interesting and we’re keen to discuss it with others in the community to form a stronger opinion on it.
 
 **When/where to catch us:**
 
 You can find us to discuss all the above and more during our [Arbitrum Office Hours](meet.google.com/jkj-nnop-arc) every Thursday at 4 pm UTC.
 
-
 ## **Uniswap**
 
 **Discuss with L2BEAT**
 
-With everyone away at ETHDenver, more things are happening IRL than in the forums. GovHack is expected to create some activity in the DAO and we’re looking forward to seeing what comes out of it. 
+With everyone away at ETHDenver, more things are happening IRL than in the forums. GovHack is expected to create some activity in the DAO and we’re looking forward to seeing what comes out of it.
 
 **When/where to catch us:**
 
 You can find us to discuss all things Uniswap during our [Uniswap Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
-
 ## **Hop**
-
 
 ### **[RFC] Renewal of the Hop Delegate Incentivization Trial (3rd Period)**
 
@@ -78,15 +69,13 @@ Following up on an RFC submitted in January, [Francom proposed](https://forum.ho
 
 **Discuss with L2BEAT**
 
-Although we understand the notion that delegate incentives can potentially attract people to participate in governance, we’re skeptical of their ability to attract _new _people to participate in the DAO, simply because the requirements to receive delegate incentives already exclude new participants by default. 
+Although we understand the notion that delegate incentives can potentially attract people to participate in governance, we’re skeptical of their ability to attract \_new \_people to participate in the DAO, simply because the requirements to receive delegate incentives already exclude new participants by default.
 
 **When/where to catch us:**
 
 You can find us to discuss all the above and more during our [Hop Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 4 pm UTC.
 
-
 ## **Polygon**
-
 
 ### **[PRC-34] Polygon Staking Layer**
 
@@ -94,11 +83,9 @@ Gretzke from PolygonLabs [published a PIP](https://forum.polygon.technology/t/pr
 
 You can [find the PRC here](https://github.com/maticnetwork/Polygon-Improvement-Proposals/blob/main/PIPs/PRC/PRC-34.md).
 
-
 ### **Account Abstraction Proposals Comparison**
 
 Gretzke from PolygonLabs [published](https://forum.polygon.technology/t/account-abstraction-proposals-comparison/13595) a comparison between different account abstraction proposals, following [PIP–22](https://github.com/maticnetwork/Polygon-Improvement-Proposals/blob/main/PIPs/PIP-22.md) that proposed to add account abstraction capabilities to the Polygon PoS network. The comparison discusses the most prominent AA proposals and evaluates their advantages and disadvantages.
-
 
 ### **zkEVM: The Elderberry upgrade is on testnet**
 
@@ -112,9 +99,7 @@ We’re interested in discussing both the Polygon Restaking Layer and the Accoun
 
 You can find us to discuss all the above and more during our [Polygon Office Hours](meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
-
 ## **Starknet**
-
 
 ### **Starknet v0.13.1 pre-release notes**
 
@@ -130,9 +115,7 @@ We’re looking to connect with active participants in Starknet. Whether you’r
 
 You can find us to discuss all things Starknet during our [Starknet Office Hours](http://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
-
 ## **Connext**
-
 
 ### **On Chain Vote - The Rollup Ecosystem Education Partnership Proposal**
 
