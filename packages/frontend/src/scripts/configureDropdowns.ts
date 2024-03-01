@@ -17,14 +17,12 @@ export function configureDropdowns() {
     const closeDropdown = () => {
       hiddenItems.forEach((item) => {
         item.classList.add('hidden')
-        item.classList.add('pointer-events-none')
       })
     }
 
     const openDropdown = () => {
       hiddenItems.forEach((item) => {
         item.classList.toggle('hidden')
-        item.classList.toggle('pointer-events-none')
       })
     }
 
