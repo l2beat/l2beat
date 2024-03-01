@@ -4,9 +4,27 @@ import { assert } from '@l2beat/shared-pure'
 const chainMapping: Record<string, string> = {
   arbitrum: 'ethereum',
   parallel: 'ethereum',
+  kinto: 'ethereum',
   xai: 'arbitrum',
   deri: 'arbitrum',
   rari: 'arbitrum',
+}
+
+function getArbOSVersion(wasmModuleRoot: string): string {
+  const wasmRoots: Record<string, string> = {
+    '0xf4389b835497a910d7ba3ebfb77aa93da985634f3c052de1290360635be40c4a':
+      'v11.0',
+    '0x0754e09320c381566cc0449904c377a52bd34a6b9404432e80afd573b67f7b17':
+      'v10.2',
+    '0x1024d5971f781dd930c46b5fb6fb571e6af9f31b5dc191b82e82036c207cc968':
+      '?????',
+    '0x965a35130f4e34b7b2339eac03b2eacc659e2dafe850d213ea6a7cdf9edfa99f':
+      'Stylus',
+  }
+  if (wasmModuleRoot === undefined) {
+    return 'Unspecified'
+  }
+  return wasmRoots[wasmModuleRoot] || 'Unknown'
 }
 
 function getChainName(chainId: number | undefined): string {
@@ -16,6 +34,7 @@ function getChainName(chainId: number | undefined): string {
     660279: 'xai',
     20231119: 'deri',
     1380012617: 'rari',
+    7887: 'kinto',
   }
   if (chainId === undefined) {
     return 'Unknown chainId'
@@ -57,7 +76,7 @@ async function main() {
 
 function printUsage(): void {
   console.log(
-    'Usage: yarn analyse-orbit-chains <--chains=<firstOrbitchain, secondOrbitChain> | --all>',
+    'Usage: yarn compare-orbit-chains <--chains=<firstOrbitchain, secondOrbitChain> | --all>',
   )
 }
 
@@ -176,6 +195,7 @@ async function analyseAllOrbitChains(): Promise<void> {
           ? getChainName(rollup.values.chainId as number)
           : 'Unknown chainId',
       wasmModuleRoot: rollup?.values?.wasmModuleRoot,
+      arbOsVersion: getArbOSVersion(rollup?.values?.wasmModuleRoot as string),
       isERC20Enabled: rollup?.values?.isERC20Enabled,
     })
   }
