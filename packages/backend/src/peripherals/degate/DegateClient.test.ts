@@ -13,9 +13,12 @@ describe(DegateClient.name, () => {
         fetch: async () =>
           new Response(
             JSON.stringify({
-              blockId: 42,
-              createdAt: 1000,
-              transactions: [{ txType: 'foo' }],
+              code: 0,
+              data: {
+                blockId: 42,
+                createdAt: 1000,
+                transactions: [{ txType: 'foo' }],
+              },
             }),
           ),
       })
