@@ -164,7 +164,7 @@ export const zksyncera: Layer2 = {
     stateValidation: {
       value: 'ZK proofs',
       description:
-        'Uses PLONK zero-knowledge proof system with KZG commitments.',
+        'Utilizes PLONK arithmetization and STARK proof system with KZG commitments, wrapped in a pairing-based SNARK for efficient Ethereum verification; the SNARK wrapper requires a trusted setup.',
       sentiment: 'good',
       sources: [
         {

@@ -260,7 +260,9 @@ export const polygonzkevm: Layer2 = {
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
-      ...RISK_VIEW.STATE_ZKP_SN,
+      value: 'ZK proofs',
+      description: 'The Polygon zkEVM utilizes a combination of zk-STARKs for their speed and lack of trusted setup requirement, and zk-SNARKs, encapsulated by a STARK recursion component, to achieve state correctness with increased efficiency and reduced gas costs, although the zk-SNARK component requires a trusted setup.',
+      sentiment: 'good',
       sources: [
         {
           contract: 'PolygonRollupManager',
