@@ -3,12 +3,12 @@
   "chain": "ethereum",
   "name": "blast",
   "initialAddresses": [
-    "0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d",
-    "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
-    "0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115"
+    "0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d", //LaunchBridge
+    "0x697402166Fbf2F22E970df8a6486Ef171dbfc524", //L1StandardBridge
+    "0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115" //L1BlastBridge
   ],
   "names": {
-    "0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d": "Bridge",
+    "0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d": "LaunchBridge",
     "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84": "Lido",
     "0x6B175474E89094C44Da98b954EedeAC495271d0F": "DAI",
     "0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7": "CURVE_3POOL",
@@ -90,9 +90,30 @@
       // TODO: In review
       "ignoreDiscovery": true
     },
+    //TODO: Read ProviderInfo
     "USDYieldManager": {
-      // TODO: In review
-      "ignoreDiscovery": true
+      "ignoreMethods": [
+        "availableBalance",
+        "tokenBalance",
+        "getProviderInfoAt",
+        "totalProviderValue",
+        "totalValue"
+      ]
+    },
+    //TODO: Read ProviderInfo
+    "ETHYieldManager": {
+      "ignoreMethods": [
+        "availableBalance",
+        "tokenBalance",
+        "getProviderInfoAt",
+        "totalProviderValue",
+        "totalValue",
+        "getLastCheckpointId",
+        "getLastFinalizedRequestId",
+        "getLastRequestId",
+        "getLockedBalance",
+        "unfinalizedRequestNumber"
+      ]
     },
     // "WithdrawalQueueERC721": {
     //   "ignoreInWatchMode": [
@@ -125,8 +146,8 @@
     "PSM": {
       "ignoreDiscovery": true
     },
-    "Bridge": {
-      "ignoreMethods": ["getMainnetBridge", "proxiableUUID"],
+    "LaunchBridge": {
+      "ignoreMethods": ["proxiableUUID"],
       "ignoreInWatchMode": [
         "totalETHBalance",
         "totalETHShares",
