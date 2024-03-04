@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.44.1
+
+### Patch Changes
+
+- Allow for n-darray in normalizeDiffPath
+
 ## 0.44.0
 
 ### Minor Changes

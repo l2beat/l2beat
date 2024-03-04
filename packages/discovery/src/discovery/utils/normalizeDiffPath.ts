@@ -19,12 +19,12 @@ export function removeArraySuffix(path: string): string {
   if (path.includes('.')) {
     const [name, ...rest] = path.split('.')
 
-    assert(rest.length === 1, `Expected ${path} to have only one suffix`)
+    assert(rest.length >= 1, `Unreachable code`)
+    assert(name !== undefined, `Unexpected undefined value`)
     assert(
-      name !== undefined && rest[0] !== undefined,
-      `Unexpected undefined value`,
+      rest.every((p) => p.length > 0 && isIntNumeric(p)),
+      `Expected ${path} to have only numeric suffixes`,
     )
-    assert(isIntNumeric(rest[0]), `Expected ${rest[0]} to be a number`)
     return name
   }
 
