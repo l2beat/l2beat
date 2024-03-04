@@ -4006,8 +4006,7 @@
       "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Blast",
-        "slug": "blast"
+        "bridge": "Blast"
       }
     }
   ]
