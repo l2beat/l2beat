@@ -91,7 +91,7 @@
       "ignoreDiscovery": true
     },
     //TODO: Read ProviderInfo
-    "USDYieldManager": { 
+    "USDYieldManager": {
       "ignoreMethods": [
         "availableBalance",
         "tokenBalance",
