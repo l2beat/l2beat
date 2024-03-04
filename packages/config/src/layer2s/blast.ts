@@ -1,9 +1,7 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
-
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { underReview } from './templates/underReview'
 import { Layer2 } from './types'
-import { UnixTime } from '@l2beat/discovery'
 
 const discovery = new ProjectDiscovery('blast')
 
