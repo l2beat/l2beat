@@ -3,6 +3,7 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { underReview } from './templates/underReview'
 import { Layer2 } from './types'
+import { UnixTime } from '@l2beat/discovery'
 
 const discovery = new ProjectDiscovery('blast')
 
@@ -40,5 +41,9 @@ export const blast: Layer2 = underReview({
       description: 'Pre-launch Blast bridge.',
       tokens: '*',
     }),
+    {address: EthereumAddress('0xa230285d5683C74935aD14c446e137c8c8828438'),
+    tokens:['DAI'],
+    sinceTimestamp: new UnixTime(1708766147),
+    }
   ],
 })
