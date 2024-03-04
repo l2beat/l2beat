@@ -125,21 +125,21 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
               assessCount: subtractOne,
             }
           : undefined),
-      liveness:
-        templateVars.daProvider !== undefined
-          ? undefined
-          : {
-              proofSubmissions: [],
-              batchSubmissions: [
-                {
+      trackedTransactions:
+        templateVars.daProvider === undefined
+          ? [
+              {
+                uses: [{ type: 'liveness', subType: 'batchSubmissions' }],
+                query: {
                   formula: 'transfer',
                   from: sequencerAddress,
                   to: sequencerInbox,
                   sinceTimestamp: templateVars.genesisTimestamp,
                 },
-              ],
-              stateUpdates: [
-                {
+              },
+              {
+                uses: [{ type: 'liveness', subType: 'stateUpdates' }],
+                query: {
                   formula: 'functionCall',
                   address: templateVars.l2OutputOracle.address,
                   selector: '0x9aaab648',
@@ -150,8 +150,9 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
                       templateVars.genesisTimestamp.toNumber(),
                   ),
                 },
-              ],
-            },
+              },
+            ]
+          : undefined,
       finality:
         templateVars.daProvider !== undefined
           ? undefined

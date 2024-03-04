@@ -96,9 +96,10 @@ export const paradex: Layer2 = {
           'Paradex USDC Escrow.' + ' ' + escrowUSDCMaxTotalBalanceString,
       }),
     ],
-    liveness: {
-      proofSubmissions: [
-        {
+    trackedTransactions: [
+      {
+        uses: [{ type: 'liveness', subType: 'proofSubmissions' }],
+        query: {
           formula: 'sharpSubmission',
           sinceTimestamp: new UnixTime(1636978914),
           untilTimestamp: new UnixTime(1704729971),
@@ -106,7 +107,10 @@ export const paradex: Layer2 = {
             '3258367057337572248818716706664617507069572185152472699066582725377748079373',
           ],
         },
-        {
+      },
+      {
+        uses: [{ type: 'liveness', subType: 'proofSubmissions' }],
+        query: {
           formula: 'sharpSubmission',
           sinceTimestamp: new UnixTime(1704729971),
           untilTimestamp: new UnixTime(1706626427),
@@ -114,7 +118,10 @@ export const paradex: Layer2 = {
             '54878256403880350656938046611252303365750679698042371543935159963667935317',
           ],
         },
-        {
+      },
+      {
+        uses: [{ type: 'liveness', subType: 'proofSubmissions' }],
+        query: {
           // Updated to this program hash in tx 0x7eb527c897e8449234ad770573a2a5ba3737e6b9014600c261741bc258849639
           formula: 'sharpSubmission',
           sinceTimestamp: new UnixTime(1706626427),
@@ -122,10 +129,10 @@ export const paradex: Layer2 = {
             '2479841346739966073527450029179698923866252973805981504232089731754042431018',
           ],
         },
-      ],
-      batchSubmissions: [],
-      stateUpdates: [
-        {
+      },
+      {
+        uses: [{ type: 'liveness', subType: 'stateUpdates' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xF338cad020D506e8e3d9B4854986E0EcE6C23640',
@@ -135,8 +142,8 @@ export const paradex: Layer2 = {
             'function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)',
           sinceTimestamp: new UnixTime(1689850631),
         },
-      ],
-    },
+      },
+    ],
   },
   riskView: makeBridgeCompatible({
     stateValidation: {

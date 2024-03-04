@@ -146,10 +146,10 @@ export const kroma: Layer2 = {
       startBlock: 1,
       assessCount: subtractOne,
     },
-    liveness: {
-      proofSubmissions: [],
-      batchSubmissions: [
-        {
+    trackedTransactions: [
+      {
+        uses: [{ type: 'liveness', subType: 'batchSubmissions' }],
+        query: {
           formula: 'transfer',
           from: EthereumAddress(
             discovery.getContractValue('SystemConfig', 'batcherHash'),
@@ -159,9 +159,10 @@ export const kroma: Layer2 = {
           ),
           sinceTimestamp: new UnixTime(1693883663),
         },
-      ],
-      stateUpdates: [
-        {
+      },
+      {
+        uses: [{ type: 'liveness', subType: 'stateUpdates' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6',
@@ -171,8 +172,8 @@ export const kroma: Layer2 = {
             'function submitL2Output(bytes32 _outputRoot,uint256 _l2BlockNumber,bytes32 _l1BlockHash,uint256 _l1BlockNumber)',
           sinceTimestamp: new UnixTime(1693880579),
         },
-      ],
-    },
+      },
+    ],
     finality: {
       type: 'OPStack',
       lag: 0,
