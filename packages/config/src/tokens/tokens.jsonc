@@ -1230,7 +1230,7 @@
       "type": "EBV",
       "formula": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Blast",
+        "bridge": "Blast"
       },
       "coingeckoId": "usdb"
     }
