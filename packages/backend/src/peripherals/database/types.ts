@@ -173,6 +173,8 @@ declare module 'knex/types/tables' {
 
   interface TrackedTxConfigRow {
     project_id: string
+    type: string
+    subtype: string | null
     debug_info: string
     since_timestamp: Date
     until_timestamp: Date

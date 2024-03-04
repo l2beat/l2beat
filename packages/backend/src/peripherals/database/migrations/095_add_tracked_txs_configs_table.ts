@@ -16,6 +16,8 @@ import { Knex } from 'knex'
 export async function up(knex: Knex) {
   await knex.schema.createTable('tracked_txs_configs', function (table) {
     table.string('project_id').notNullable()
+    table.string('type').notNullable()
+    table.string('subtype')
     table.string('debug_info').notNullable()
     table.dateTime('since_timestamp', { useTz: false })
     table.dateTime('until_timestamp', { useTz: false })
