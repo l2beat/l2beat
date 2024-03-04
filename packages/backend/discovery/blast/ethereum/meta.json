@@ -92,41 +92,6 @@
       }
     },
     {
-      "name": "L1StandardBridge",
-      "values": {
-        "l2TokenBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "messenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MESSENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OTHER_BRIDGE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "otherBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "L1BlastBridge",
       "values": {
         "ethYieldManager": {
@@ -170,6 +135,41 @@
           "type": null
         },
         "usdYieldManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1StandardBridge",
+      "values": {
+        "l2TokenBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MESSENGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OTHER_BRIDGE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "otherBridge": {
           "description": null,
           "severity": null,
           "type": null
@@ -379,7 +379,72 @@
           "severity": null,
           "type": null
         },
-        "availableBalance": {
+        "blastBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "insurance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "insuranceFeeBips": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "insuranceWithdrawalBuffer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_INSURANCE_FEE_BIPS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "portal": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharePrice": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TOKEN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "USDYieldManager",
+      "values": {
+        "accumulatedNegativeYields": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "admin": {
           "description": null,
           "severity": null,
           "type": null
@@ -454,32 +519,12 @@
           "severity": null,
           "type": null
         },
-        "tokenBalance": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalProviderValue": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalValue": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "unfinalizedRequestNumber": {
           "description": null,
           "severity": null,
           "type": null
         },
         "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getProviderInfoAt": {
           "description": null,
           "severity": null,
           "type": null
@@ -490,6 +535,21 @@
       "name": "AddressManager",
       "values": {
         "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Insurance",
+      "values": {
+        "admin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
           "description": null,
           "severity": null,
           "type": null
@@ -525,21 +585,6 @@
           "type": null
         },
         "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "Insurance",
-      "values": {
-        "admin": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
           "description": null,
           "severity": null,
           "type": null
@@ -635,6 +680,21 @@
           "type": null
         },
         "deletedOutputs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Insurance",
+      "values": {
+        "admin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
           "description": null,
           "severity": null,
           "type": null
@@ -775,6 +835,11 @@
           "type": null
         },
         "opStackDA": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sequencerInbox": {
           "description": null,
           "severity": null,
           "type": null

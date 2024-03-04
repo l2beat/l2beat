@@ -1,3 +1,74 @@
+Generated with discovered.json: 0x1e9f26865d3ec0429a0cda6113646e364c3281df
+
+# Diff at Mon, 04 Mar 2024 10:56:28 GMT:
+
+- author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
+- comparing to: main@46496e7b791dcbec71231179f69ae70b677b485e block: 19340848
+- current block number: 19361335
+
+## Description
+
+Blast is using different Yield Providers and generally invests token deposits
+to a bridge on L1. We should in the future discover different yield providers
+but this will require discovery improvements. Right now the decision is made
+to treat minted tokens on BLAST as externally bridged given fundamentally different
+risk profile of these tokens.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19340848 (main branch discovery), not current.
+
+```diff
+    contract Bridge (0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d) {
+    +++ description: None
+      name:
+-        "Bridge"
++        "LaunchBridge"
+      values.getMainnetBridge:
++        "0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115"
+    }
+```
+
+```diff
+    contract ETHYieldManager (0x98078db053902644191f93988341E31289E1C8FE) {
+    +++ description: None
+      values.availableBalance:
+-        "5089206326412676222939"
+      values.getLastCheckpointId:
+-        5
+      values.getLastFinalizedRequestId:
+-        42
+      values.getLastRequestId:
+-        314
+      values.getLockedBalance:
+-        "7273904440000000000000"
+      values.getProviderInfoAt:
+-        [["0xa9a273106b6a6346a0d4fadf546958a10e831e1594b2598065098554b0f8b5d6","0x4316A00D31da1313617DbB04fD92F9fF8D1aF7Db","494025835709703704601078",0,"493983307705724120970957","494025835709703704601078","42528003979583630121"]]
+      values.tokenBalance:
+-        "12363110766412676222939"
+      values.totalProviderValue:
+-        "494025835709703704601078"
+      values.totalValue:
+-        "499115042036116380824017"
+      values.unfinalizedRequestNumber:
+-        272
+    }
+```
+
+```diff
++   Status: CREATED
+    contract USDYieldManager (0xa230285d5683C74935aD14c446e137c8c8828438)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Insurance (0xBbE2cd60BD30Ef2aaceFD74C3199282ee35fBBa6)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xd7b5a29c6417765e76a8c2a625f2d82edd1e9d72
 
 # Diff at Fri, 01 Mar 2024 14:14:26 GMT:

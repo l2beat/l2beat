@@ -90,9 +90,30 @@
       // TODO: In review
       "ignoreDiscovery": true
     },
-    "USDYieldManager": {
-      // TODO: In review
-      "ignoreDiscovery": true
+    //TODO: Read ProviderInfo
+    "USDYieldManager": { 
+      "ignoreMethods": [
+        "availableBalance",
+        "tokenBalance",
+        "getProviderInfoAt",
+        "totalProviderValue",
+        "totalValue"
+      ]
+    },
+    //TODO: Read ProviderInfo
+    "ETHYieldManager": {
+      "ignoreMethods": [
+        "availableBalance",
+        "tokenBalance",
+        "getProviderInfoAt",
+        "totalProviderValue",
+        "totalValue",
+        "getLastCheckpointId",
+        "getLastFinalizedRequestId",
+        "getLastRequestId",
+        "getLockedBalance",
+        "unfinalizedRequestNumber"
+      ]
     },
     // "WithdrawalQueueERC721": {
     //   "ignoreInWatchMode": [
