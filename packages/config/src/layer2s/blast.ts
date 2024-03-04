@@ -39,9 +39,10 @@ export const blast: Layer2 = underReview({
       description: 'Pre-launch Blast bridge.',
       tokens: '*',
     }),
-    {address: EthereumAddress('0xa230285d5683C74935aD14c446e137c8c8828438'),
-    tokens:['DAI'],
-    sinceTimestamp: new UnixTime(1708766147),
-    }
+    {
+      address: EthereumAddress('0xa230285d5683C74935aD14c446e137c8c8828438'),
+      tokens: ['DAI'],
+      sinceTimestamp: new UnixTime(1708766147),
+    },
   ],
 })
