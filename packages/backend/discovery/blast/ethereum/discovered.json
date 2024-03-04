@@ -1,8 +1,8 @@
 {
   "name": "blast",
   "chain": "ethereum",
-  "blockNumber": 19340848,
-  "configHash": "0xaa1ba421e58ea06b1d537d5d87ee57c5673ff5342652046b710c923efd548fc1",
+  "blockNumber": 19360931,
+  "configHash": "0xc6585266031807869fe28cd7ef98bfd61eccfec1b4dbf745d154735eb5398715",
   "version": 3,
   "contracts": [
     {
@@ -21,7 +21,7 @@
         "L2_ORACLE": "0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76",
         "l2Oracle": "0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 400000, 19340848],
+        "params": [1000000000, 400000, 19360931],
         "paused": false,
         "SYSTEM_CONFIG": "0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9",
         "systemConfig": "0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9",
@@ -156,7 +156,7 @@
       "sinceTimestamp": 1708812983,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292639456",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292650862",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -172,7 +172,7 @@
       "derivedName": "L1CrossDomainMessenger"
     },
     {
-      "name": "Bridge",
+      "name": "LaunchBridge",
       "address": "0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d",
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -185,6 +185,7 @@
         "CURVE_3POOL": "0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7",
         "DAI": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "DSR_MANAGER": "0x373238337Bfe1146fb49989fc222523f83081dDb",
+        "getMainnetBridge": "0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115",
         "isTransitionEnabled": true,
         "LIDO": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
         "owner": "0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C",
@@ -192,10 +193,10 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "PSM": "0x89B78CfA322F6C5dE0aBcEecab66Aee45393cC5A",
         "staker": "0x9eDFc192fC4d29b8f2b18f484211161b6Fc8063E",
-        "totalETHBalance": "141919599098248598658452",
-        "totalETHShares": "140506519137832314054246",
-        "totalUSDBalanceNoUpdate": "32691169933712793208680222",
-        "totalUSDShares": "32252582491528153269738237",
+        "totalETHBalance": "47778610303442110754092",
+        "totalETHShares": "47294097306716177030214",
+        "totalUSDBalanceNoUpdate": "11809277815916731479421558",
+        "totalUSDShares": "11646475264350054826576093",
         "USDC": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "USDT": "0xdAC17F958D2ee523a2206206994597C13D831ec7"
       },
@@ -281,10 +282,10 @@
         "finalizationPeriodSeconds": 1036800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 244800,
-        "latestOutputIndex": 135,
-        "nextBlockNumber": 246600,
-        "nextOutputIndex": 136,
+        "latestBlockNumber": 365400,
+        "latestOutputIndex": 202,
+        "nextBlockNumber": 367200,
+        "nextOutputIndex": 203,
         "proposer": "0x082b616Ec99167B2FEdee053F07db6795D4dA821",
         "PROPOSER": "0x082b616Ec99167B2FEdee053F07db6795D4dA821",
         "startingBlockNumber": 0,
@@ -308,21 +309,21 @@
       "values": {
         "accumulatedNegativeYields": 0,
         "admin": "0xF0218c491421B5830cbf96804CD9680b56ef70BD",
-        "availableBalance": "5089206326412676222939",
+        "availableBalance": "1601927881621539624759",
         "blastBridge": "0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115",
-        "getLastCheckpointId": 5,
-        "getLastFinalizedRequestId": 42,
-        "getLastRequestId": 314,
-        "getLockedBalance": "7273904440000000000000",
+        "getLastCheckpointId": 6,
+        "getLastFinalizedRequestId": 1003,
+        "getLastRequestId": 1072,
+        "getLockedBalance": "25381806781674187700653",
         "getProviderInfoAt": [
           [
             "0xa9a273106b6a6346a0d4fadf546958a10e831e1594b2598065098554b0f8b5d6",
             "0x4316A00D31da1313617DbB04fD92F9fF8D1aF7Db",
-            "494025835709703704601078",
+            "589956611446804081165206",
             0,
-            "493983307705724120970957",
-            "494025835709703704601078",
-            "42528003979583630121"
+            "589956611446804081166021",
+            "589956611446804081165206",
+            -815
           ]
         ],
         "insurance": "0xcFF70D7F37b1EBeE89c08E485f08ACAB5f6ff873",
@@ -334,10 +335,10 @@
         "portal": "0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb",
         "sharePrice": "1000000000000000000000000000",
         "TOKEN": "0x0000000000000000000000000000000000000000",
-        "tokenBalance": "12363110766412676222939",
-        "totalProviderValue": "494025835709703704601078",
-        "totalValue": "499115042036116380824017",
-        "unfinalizedRequestNumber": 272,
+        "tokenBalance": "26983734663295727325412",
+        "totalProviderValue": "589956611446804081165206",
+        "totalValue": "591558539328425620789965",
+        "unfinalizedRequestNumber": 69,
         "version": "1.0.0"
       },
       "derivedName": "ETHYieldManager"
