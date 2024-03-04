@@ -12,6 +12,7 @@ export interface underReviewConfig {
   id: string
   display: Omit<Layer2Display, 'dataAvailabilityMode'>
   escrows: ScalingProjectEscrow[]
+  chainConfig?: Layer2['chainConfig']
 }
 
 export function underReview(templateVars: underReviewConfig): Layer2 {
@@ -32,5 +33,6 @@ export function underReview(templateVars: underReviewConfig): Layer2 {
     riskView: UNDER_REVIEW_RISK_VIEW,
     technology: TECHNOLOGY.UNDER_REVIEW,
     contracts: CONTRACTS.UNDER_REVIEW,
+    chainConfig: templateVars.chainConfig,
   }
 }

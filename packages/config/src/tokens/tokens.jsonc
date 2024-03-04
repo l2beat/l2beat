@@ -1222,5 +1222,18 @@
       },
       "coingeckoId": "weth"
     }
+  ],
+  "blast": [
+    {
+      "symbol": "USDB",
+      "address": "0x4300000000000000000000000000000000000003",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Blast",
+        "slug": "blast"
+      },
+      "coingeckoId": "usdb"
+    }
   ]
 }

@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { underReview } from './templates/underReview'
@@ -23,6 +23,24 @@ export const blast: Layer2 = underReview({
       repositories: [],
       socialMedia: ['https://twitter.com/Blast_L2'],
     },
+  },
+  chainConfig: {
+    name: 'blast',
+    chainId: 81457,
+    explorerUrl: 'https://blastscan.io/',
+    explorerApi: {
+      url: 'https://api.blastscan.io/api',
+      type: 'etherscan',
+    },
+    minTimestampForTvl: UnixTime.fromDate(new Date('2024-02-24T21:23:35Z')),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 88189,
+        version: '3',
+      },
+    ],
   },
   escrows: [
     discovery.getEscrowDetails({
