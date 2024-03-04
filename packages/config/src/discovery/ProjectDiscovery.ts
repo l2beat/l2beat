@@ -8,6 +8,7 @@ import {
   assert,
   EthereumAddress,
   gatherAddressesFromUpgradeability,
+  notUndefined,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
@@ -30,9 +31,15 @@ import {
   OP_STACK_CONTRACT_DESCRIPTION,
   OP_STACK_PERMISSION_TEMPLATES,
   OpStackContractName,
-  OpStackTag,
-  OpStackTagDescription,
 } from './OpStackTypes'
+import {
+  ORBIT_STACK_CONTRACT_DESCRIPTION,
+  ORBIT_STACK_PERMISSION_TEMPLATES,
+  OrbitStackContractName,
+} from './OrbitStackTypes'
+import { PermissionedContract } from './PermissionedContract'
+import { StackPermissionTemplate } from './StackTemplateTypes'
+import { findRoleMatchingTemplate } from './values/templateUtils'
 
 type AllKeys<T> = T extends T ? keyof T : never
 
@@ -55,7 +62,7 @@ export class ProjectDiscovery {
   private readonly discovery: DiscoveryOutput
   constructor(
     public readonly projectName: string,
-    public readonly devId: string = 'ethereum',
+    public readonly chain: string = 'ethereum',
     private readonly fs: Filesystem = filesystem,
   ) {
     this.discovery = this.getDiscoveryJson(projectName)
@@ -64,7 +71,7 @@ export class ProjectDiscovery {
   private getDiscoveryJson(project: string): DiscoveryOutput {
     const discoveryFile = this.fs.readFileSync(
       path.resolve(
-        `../backend/discovery/${project}/${this.devId}/discovered.json`,
+        `../backend/discovery/${project}/${this.chain}/discovered.json`,
       ),
     )
 
@@ -96,7 +103,7 @@ export class ProjectDiscovery {
       name: contract.name,
       address: contract.address,
       upgradeability: contract.upgradeability,
-      devId: this.devId,
+      chain: this.chain,
       ...descriptionOrOptions,
     }
   }
@@ -157,73 +164,83 @@ export class ProjectDiscovery {
     overrides?: Record<string, string>,
     contractOverrides?: Record<string, string>,
   ): ScalingProjectPermission[] {
+    return this.getStackTemplatePermissions(
+      OP_STACK_PERMISSION_TEMPLATES,
+      overrides,
+      contractOverrides,
+    )
+  }
+
+  getOrbitStackPermissions(
+    overrides?: Record<string, string>,
+    contractOverrides?: Record<string, string>,
+  ): ScalingProjectPermission[] {
+    return this.getStackTemplatePermissions(
+      ORBIT_STACK_PERMISSION_TEMPLATES,
+      overrides,
+      contractOverrides,
+    )
+  }
+
+  getStackTemplatePermissions(
+    templates: StackPermissionTemplate[],
+    overrides?: Record<string, string>,
+    contractOverrides?: Record<string, string>,
+  ): ScalingProjectPermission[] {
     const inversion = this.getInversion()
 
-    const result: Record<
-      string,
-      {
-        name: string
-        address: EthereumAddress
-        contractDescription: Record<string, string[]>
-        taggedNames: Record<string, string[]>
-      }
-    > = {}
+    const contracts: Record<string, PermissionedContract> = {}
+    const getContract = (name: string, address: EthereumAddress) => {
+      contracts[name] ??= new PermissionedContract(name, address)
+      return contracts[name]
+    }
 
-    for (const template of OP_STACK_PERMISSION_TEMPLATES) {
-      for (const contract of inversion.values()) {
-        const role = contract.roles.find(
-          (r) =>
-            r.name === template.role.value &&
-            r.atName ===
-              (contractOverrides?.[template.role.contract] ??
-                template.role.contract),
+    for (const template of templates) {
+      for (const invertedContract of inversion.values()) {
+        const role = findRoleMatchingTemplate(
+          invertedContract,
+          template,
+          contractOverrides,
         )
         if (!role) {
           continue
         }
 
-        const contractKey = overrides?.[role.name] ?? contract.name ?? role.name
+        const contractKey =
+          overrides?.[role.name] ?? invertedContract.name ?? role.name
 
-        result[contractKey] ??= {
-          name: contractKey,
-          address: EthereumAddress(contract.address),
-          contractDescription: {},
-          taggedNames: {},
-        }
-        const entry = result[contractKey]
+        const contractAddress = EthereumAddress(invertedContract.address)
+        const contract = getContract(contractKey, contractAddress)
+        const referenced = getContract(role.atName, role.atAddress)
 
         if (template.description !== undefined) {
-          entry.contractDescription[role.name] ??= []
-          entry.contractDescription[role.name].push(
+          contract.addDescription(
             stringFormat(template.description, role.atName),
           )
         }
 
         if (template.tags !== undefined) {
           for (const tag of template.tags) {
-            entry.taggedNames[tag] ??= []
-            entry.taggedNames[tag].push(role.atName)
+            contract.addTag(tag, role.atName)
+            referenced.addTagReference(tag, contractKey)
           }
         }
       }
     }
 
-    return Object.values(result).map((entry) => ({
-      name: entry.name,
-      accounts: [this.formatPermissionedAccount(entry.address)],
-      description: Object.values(entry.contractDescription)
-        .flat()
-        .concat(
-          Object.entries(entry.taggedNames).map(([tag, contracts]) =>
-            stringFormat(
-              OpStackTagDescription[tag as OpStackTag],
-              contracts.join(', '),
-            ),
-          ),
-        )
-        .join(' '),
-      devId: this.devId,
-    }))
+    return Object.values(contracts)
+      .map((contract) => {
+        const description = contract.generateDescription()
+        if (description !== '') {
+          return {
+            name: contract.name,
+            accounts: [this.formatPermissionedAccount(contract.address)],
+            description,
+            chain: this.chain,
+          }
+        }
+      })
+      .filter(notUndefined)
   }
 
   getMultisigPermission(
@@ -249,16 +266,24 @@ export class ProjectDiscovery {
             type: 'MultiSig',
           },
         ],
-        devId: this.devId,
+        chain: this.chain,
       },
       {
         name: `${identifier} participants`,
         description: `Those are the participants of the ${identifier}.`,
         accounts: this.getPermissionedAccounts(identifier, 'getOwners'),
         references,
-        devId: this.devId,
+        chain: this.chain,
       },
     ]
+  }
+
+  getAccessControlRolePermission(
+    contractIdentifier: string,
+    role: string,
+  ): ScalingProjectPermissionedAccount[] {
+    const { members } = this.getAccessControlField(contractIdentifier, role)
+    return members.map((member) => this.formatPermissionedAccount(member))
   }
 
   getContract(identifier: string): ContractParameters {
@@ -361,7 +386,7 @@ export class ProjectDiscovery {
       address: contract.address,
       name: contract.name,
       upgradeability: contract.upgradeability,
-      devId: this.devId,
+      chain: this.chain,
       ...descriptionOrOptions,
     }
   }
@@ -403,7 +428,7 @@ export class ProjectDiscovery {
           type: 'Contract',
         },
       ],
-      devId: this.devId,
+      chain: this.chain,
       description,
     }
   }
@@ -444,6 +469,42 @@ export class ProjectDiscovery {
     return result
   }
 
+  getAccessControlField(
+    contractIdentifier: string,
+    roleName: string,
+  ): {
+    adminRole: EthereumAddress[]
+    members: EthereumAddress[]
+  } {
+    const accessControl = this.getContractValue<
+      Partial<
+        Record<
+          string,
+          {
+            adminRole: string
+            members: string[]
+          }
+        >
+      >
+    >(contractIdentifier, 'accessControl')
+    const role = accessControl && accessControl[roleName]
+    assert(role, `Role ${roleName} does not exist`)
+    const adminRole = accessControl[role.adminRole]
+    assert(adminRole, `Admin role ${role.adminRole} does not exist`)
+
+    assert(
+      [...adminRole.members, ...role.members].every((address) =>
+        EthereumAddress.check(address),
+      ),
+      `Role ${roleName}/${role.adminRole} has invalid addresses`,
+    )
+
+    return {
+      adminRole: adminRole.members.map((m) => EthereumAddress(m)),
+      members: role.members.map(EthereumAddress),
+    }
+  }
+
   getAllContractAddresses(): EthereumAddress[] {
     const addressesWithinUpgradeability = this.discovery.contracts.flatMap(
       (contract) => gatherAddressesFromUpgradeability(contract.upgradeability),
@@ -478,6 +539,19 @@ export class ProjectDiscovery {
           overrides?.[d.name] ?? d.name,
         ),
         ...upgradesProxy,
+      }),
+    )
+  }
+
+  getOrbitStackContractDetails(
+    overrides?: Partial<Record<OrbitStackContractName, string>>,
+  ): ScalingProjectContractSingleAddress[] {
+    return ORBIT_STACK_CONTRACT_DESCRIPTION.map((d) =>
+      this.getContractDetails(overrides?.[d.name] ?? d.name, {
+        description: stringFormat(
+          d.coreDescription,
+          overrides?.[d.name] ?? d.name,
+        ),
       }),
     )
   }

@@ -19,11 +19,17 @@ export type ScalingProjectRiskCategory =
 
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
 
+type WarningSentiment = 'bad' | 'warning'
+export interface WarningWithSentiment {
+  text: string
+  sentiment: WarningSentiment
+}
+
 export interface ScalingProjectRiskViewEntry {
   value: string
   description: string
   sentiment: Sentiment
-  warning?: string
+  warning?: WarningWithSentiment
   // second line in risk view
   secondLine?: string
   secondSentiment?: 'warning' | 'bad'

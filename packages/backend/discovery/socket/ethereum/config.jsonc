@@ -1,0 +1,89 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "chain": "ethereum",
+  "name": "socket",
+  "initialAddresses": [
+    "0x943AC2775928318653e91d350574436A1b9b16f9",
+    "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d"
+  ],
+  "names": {
+    "0x943AC2775928318653e91d350574436A1b9b16f9": "Socket",
+    "0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287": "OptimismSwitchboard",
+    "0x053407DFA30267f6332f3c94a9e9F704A55e62CD": "PolygonL1Switchboard",
+    "0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe": "ArbitrumL1Switchboard",
+    "0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA": "OptimismSwitchboard2",
+    "0xD5a83a40F262E2247e6566171f9ADc76b745F5cD": "FastSwitchboard",
+    "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d": "USDC Vault",
+    "0x246d38588b16Dd877c558b245e6D5a711C649fCF": "USDCVaultOwner"
+  },
+  "overrides": {
+    "Socket": {
+      "ignoreInWatchMode": ["globalMessageCount"],
+      "fields": {
+        "plugs": {
+          "type": "arrayFromOneEvent",
+          "event": "PlugConnected",
+          "valueKey": "plug",
+          "ignoreRelative": true
+        },
+        "inboundSwitchboards": {
+          "type": "arrayFromOneEvent",
+          "event": "PlugConnected",
+          "valueKey": "inboundSwitchboard"
+        },
+        "outboundSwitchboards": {
+          "type": "arrayFromOneEvent",
+          "event": "PlugConnected",
+          "valueKey": "outboundSwitchboard"
+        }
+      }
+    },
+    "OptimismSwitchboard": {
+      "ignoreRelatives": [
+        "capacitor__",
+        "crossDomainMessenger__",
+        "remoteNativeSwitchboard"
+      ]
+    },
+    "OptimismSwitchboard2": {
+      "ignoreRelatives": [
+        "capacitor__",
+        "crossDomainMessenger__",
+        "remoteNativeSwitchboard"
+      ]
+    },
+    "PolygonL1Switchboard": {
+      "ignoreRelatives": [
+        "capacitor__",
+        "checkpointManager",
+        "fxRoot",
+        "remoteNativeSwitchboard"
+      ]
+    },
+    "ArbitrumL1Switchboard": {
+      "ignoreRelatives": [
+        "capacitor__",
+        "bridge__",
+        "inbox__",
+        "outbox__",
+        "remoteNativeSwitchboard"
+      ]
+    },
+    "FastSwitchboard": {
+      "fields": {
+        "accessControl": {
+          "type": "accessControl",
+          "roleNames": {
+            "0x71840dc4906352362b0cdaf79870196c8e42acafade72d5d5a6d59291253ceb1": "GOVERNANCE_ROLE"
+          }
+        }
+      }
+    },
+    "USDC Vault": {
+      "ignoreMethods": ["token__"]
+    },
+    "USDCVaultOwner": {
+      "ignoreInWatchMode": ["nonce"]
+    }
+  }
+}

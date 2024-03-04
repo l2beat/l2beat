@@ -3,18 +3,19 @@ import { HttpClient } from '@l2beat/shared'
 
 import { ApiServer } from './api/ApiServer'
 import { Config } from './config'
-import { Clock } from './core/Clock'
 import { createActivityModule } from './modules/activity/ActivityModule'
 import { ApplicationModule } from './modules/ApplicationModule'
 import { createDiffHistoryModule } from './modules/diff-history/createDiffHistoryModule'
 import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createHealthModule } from './modules/health/HealthModule'
+import { LivenessIndexer } from './modules/liveness/LivenessIndexer'
 import { createLivenessModule } from './modules/liveness/LivenessModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createStatusModule } from './modules/status/StatusModule'
-import { createTvlModule } from './modules/tvl/TvlModule'
+import { createTvlModule } from './modules/tvl/modules/TvlModule'
 import { createUpdateMonitorModule } from './modules/update-monitor/UpdateMonitorModule'
-import { Database } from './peripherals/database/shared/Database'
+import { Database } from './peripherals/database/Database'
+import { Clock } from './tools/Clock'
 import { getErrorReportingMiddleware, reportError } from './tools/ErrorReporter'
 
 export class Application {
@@ -43,6 +44,8 @@ export class Application {
       config.clock.safeTimeOffsetSeconds,
     )
 
+    const livenessModule = createLivenessModule(config, logger, database, clock)
+
     const modules: (ApplicationModule | undefined)[] = [
       createHealthModule(config),
       createMetricsModule(config),
@@ -50,9 +53,15 @@ export class Application {
       createActivityModule(config, logger, http, database, clock),
       createUpdateMonitorModule(config, logger, http, database, clock),
       createDiffHistoryModule(config, logger, database),
-      createStatusModule(config, logger, database, clock),
-      createLivenessModule(config, logger, database, clock),
-      createFinalityModule(config, logger, database, clock),
+      createStatusModule(config, logger),
+      livenessModule,
+      createFinalityModule(
+        config,
+        logger,
+        database,
+        clock,
+        livenessModule?.indexer as LivenessIndexer,
+      ),
     ]
 
     const apiServer = new ApiServer(
@@ -63,7 +72,7 @@ export class Application {
     )
 
     this.start = async () => {
-      logger.for(this).info('Starting')
+      logger.for(this).info('Starting', { features: config.flags })
 
       await apiServer.listen()
 

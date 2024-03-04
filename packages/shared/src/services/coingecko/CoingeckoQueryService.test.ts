@@ -41,8 +41,8 @@ describe(CoingeckoQueryService.name, () => {
       expect(coingeckoClient.getCoinMarketChartRange).toHaveBeenOnlyCalledWith(
         CoingeckoId('weth'),
         'usd',
-        UnixTime.fromDate(new Date('2021-01-01')).add(-12, 'hours'),
-        UnixTime.fromDate(new Date('2021-02-01')).add(12, 'hours'),
+        UnixTime.fromDate(new Date('2021-01-01')).add(-3, 'days'),
+        UnixTime.fromDate(new Date('2021-02-01')).add(3, 'days'),
         undefined,
       )
     })
@@ -657,7 +657,7 @@ describe.skip(CoingeckoQueryService.name + ' e2e tests', function () {
   const TOKEN = CoingeckoId('ethereum')
   const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
   const DAYS_SPAN = 90
-  const MAX_TRESHOLD_MINUTES = 25
+  const MAX_THRESHOLD_MINUTES = 25
   const EXPECTED_HOURLY_FAULT_RATIO = 0.15
 
   const httpClient = new HttpClient()
@@ -677,7 +677,7 @@ describe.skip(CoingeckoQueryService.name + ' e2e tests', function () {
 
     console.log('Token = ', TOKEN)
     console.log('Days span = ', DAYS_SPAN)
-    console.log('Max fault [min] = ', MAX_TRESHOLD_MINUTES)
+    console.log('Max fault [min] = ', MAX_THRESHOLD_MINUTES)
     console.log('=================')
     console.log('Fault ratio = ', Math.round(ratio * 100) / 100)
     console.log('Expected hourly fault ratio = ', EXPECTED_HOURLY_FAULT_RATIO)
@@ -698,7 +698,7 @@ describe.skip(CoingeckoQueryService.name + ' e2e tests', function () {
   const getFaultRatio = (data: QueryResultPoint[]) => {
     const faultyData = data
       .map((i) => i.deltaMs / 1000 / 60)
-      .filter((i) => i > MAX_TRESHOLD_MINUTES)
+      .filter((i) => i > MAX_THRESHOLD_MINUTES)
 
     return faultyData.length / data.length
   }

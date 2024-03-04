@@ -1,9 +1,9 @@
 export type ScalingProjectPurpose =
   | 'AI'
   | 'AMM'
+  | 'Auctions'
   | 'Bitcoin DApps'
   | 'Bug bounty'
-  | 'DEX'
   | 'DeFi'
   | 'Exchange'
   | 'Gaming'
@@ -15,3 +15,4 @@ export type ScalingProjectPurpose =
   | 'Privacy'
   | 'Universal'
   | 'Social'
+  | 'RWA'

@@ -17,10 +17,10 @@ export const hyphen: Bridge = {
     links: {
       websites: ['https://hyphen.biconomy.io/'],
       documentation: [
-        'https://docs.biconomy.io/products/hyphen-instant-cross-chain-transfers',
+        'https://docs-gasless.biconomy.io/products/hyphen-instant-cross-chain-transfers',
       ],
       explorers: ['https://hyphen-stats.biconomy.io/'],
-      repositories: ['https://github.com/bcnmy'],
+      repositories: ['https://github.com/bcnmy/hyphen-sdk'],
       socialMedia: [
         'https://discord.gg/yuxXPqu82F',
         'https://twitter.com/biconomy',

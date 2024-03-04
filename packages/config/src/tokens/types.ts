@@ -5,45 +5,55 @@ import {
   EthereumAddress,
   numberAs,
   stringAs,
-  Token,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
-import { tokens } from './tokenList.json'
-
-const TokenInfo = z.object({
-  /** Internal token id. Usually ticker-name */
+export type GeneratedToken = z.infer<typeof GeneratedToken>
+export const GeneratedToken = z.object({
   id: stringAs((s) => AssetId(s)),
-  /** Token name as dictated by the token contract */
   name: z.string(),
-  /** Token Coingecko API id. Used to fetch prices */
   coingeckoId: stringAs((s) => CoingeckoId(s)),
-  /** Token address. Only Ether has no address */
   address: stringAs((s) => EthereumAddress(s)).optional(),
-  /** Token symbol as dictated by the token contract */
   symbol: z.string(),
-  /** Token decimals as dictated by the token contract */
   decimals: z.number(),
-  /** Timestamp of the token contract deployment transaction */
-  sinceTimestamp: numberAs((n) => new UnixTime(n)),
-  /** Which category does the token belong to */
-  category: z.union([
-    z.literal('ether'),
-    z.literal('stablecoin'),
-    z.literal('other'),
-  ]),
-  /** URL to icon for this token, provided by Coingecko */
+  deploymentTimestamp: numberAs((n) => new UnixTime(n)),
+  coingeckoListingTimestamp: numberAs((n) => new UnixTime(n)),
+  /** @deprecated */
+  category: z.enum(['ether', 'stablecoin', 'other']),
   iconUrl: z.optional(z.string()),
+  chainId: numberAs(ChainId),
+  type: z.enum(['CBV', 'EBV', 'NMV']),
+  formula: z.enum(['totalSupply', 'locked', 'circulatingSupply']),
+  bridgedUsing: z.optional(
+    z.object({
+      bridge: z.string(),
+      slug: z.string().optional(),
+    }),
+  ),
 })
 
-export function getCanonicalTokens(): Token[] {
-  return tokens
-    .map((t) => TokenInfo.parse(t))
-    .map((t) => ({
-      ...t,
-      chainId: ChainId.ETHEREUM,
-      type: 'CBV',
-      formula: 'locked',
-    }))
-}
+export type SourceEntry = z.infer<typeof SourceEntry>
+export const SourceEntry = z.object({
+  symbol: z.string(),
+  address: stringAs(EthereumAddress).optional(),
+  coingeckoId: stringAs(CoingeckoId).optional(),
+  category: z.enum(['ether', 'stablecoin', 'other']).optional(),
+  type: z.enum(['CBV', 'EBV', 'NMV']).optional(),
+  formula: z.enum(['totalSupply', 'locked', 'circulatingSupply']).optional(),
+  bridgedUsing: z
+    .object({
+      bridge: z.string(),
+      slug: z.string().optional(),
+    })
+    .optional(),
+})
+
+export type Source = z.infer<typeof Source>
+export const Source = z.record(z.array(SourceEntry))
+
+export type Output = z.infer<typeof Output>
+export const Output = z.object({
+  comment: z.string().optional(),
+  tokens: z.array(GeneratedToken),
+})

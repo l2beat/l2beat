@@ -84,12 +84,12 @@ describe('layer2s', () => {
     })
   })
 
-  describe('devId equals project id', () => {
+  describe('chain name equals project id', () => {
     for (const layer2 of layer2s) {
-      const devId = layer2.chainConfig?.devId
-      if (devId !== undefined) {
+      const name = layer2.chainConfig?.name
+      if (name !== undefined) {
         it(layer2.id.toString(), () => {
-          expect(devId).toEqual(layer2.id.toString())
+          expect(name).toEqual(layer2.id.toString())
         })
       }
     }
@@ -135,15 +135,30 @@ describe('layer2s', () => {
     })
   })
 
+  describe('finality', () => {
+    describe('every project with finality enabled has finalizationPeriod property', () => {
+      const projectsWithFinality = layer2s.filter((p) => p.config.finality)
+      for (const project of projectsWithFinality) {
+        it(project.id.toString(), () => {
+          expect(project.display.finality?.finalizationPeriod).not.toBeNullish()
+        })
+      }
+    })
+  })
+
   describe('activity', () => {
     describe('custom URL starts with https', () => {
       const layers2WithUrls = layer2s.flatMap((layer2) => {
         const { transactionApi } = layer2.config
 
-        if (transactionApi && 'url' in transactionApi && transactionApi.url) {
+        if (
+          transactionApi &&
+          'defaultUrl' in transactionApi &&
+          transactionApi.defaultUrl
+        ) {
           return {
             id: layer2.id,
-            url: transactionApi.url,
+            url: transactionApi.defaultUrl,
           }
         }
 
@@ -254,7 +269,7 @@ describe('layer2s', () => {
     })
   })
 
-  describe('sentences', () => {
+  describe('display', () => {
     describe('every description ends with a dot', () => {
       for (const layer2 of layer2s) {
         it(layer2.display.name, () => {
@@ -466,6 +481,19 @@ describe('layer2s', () => {
             })
           }
         }
+      }
+    })
+  })
+
+  describe('state validation', () => {
+    describe('every description ends with a dot', () => {
+      for (const layer2 of layer2s) {
+        if (!layer2.stateValidation) continue
+
+        expect(layer2.stateValidation?.description.endsWith('.')).toEqual(true)
+        layer2.stateValidation?.categories.forEach((category) => {
+          expect(category.description.endsWith('.')).toEqual(true)
+        })
       }
     })
   })

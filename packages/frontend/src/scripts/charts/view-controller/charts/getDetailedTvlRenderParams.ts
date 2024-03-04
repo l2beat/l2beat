@@ -27,7 +27,7 @@ export function getDetailedTvlRenderParams(
             ? [cbvEth + ebvEth + nmvEth, ebvEth + nmvEth, nmvEth]
             : [cbv + ebv + nmv, ebv + nmv, nmv],
           data: {
-            date: formatTimestamp(timestamp, { withTime: true }),
+            date: formatTimestamp(timestamp, { mode: 'datetime' }),
             usd,
             cbv,
             ebv,

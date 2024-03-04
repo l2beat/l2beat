@@ -1,4 +1,5 @@
-import { formatSeconds } from '../utils/formatSeconds'
+import { formatSeconds } from '@l2beat/shared-pure'
+
 import { ScalingProjectRisk } from './ScalingProjectRisk'
 import { ScalingProjectTechnologyChoice } from './ScalingProjectTechnologyChoice'
 
@@ -32,7 +33,7 @@ function STARKEX_SPOT_WITHDRAW(delay?: number): ScalingProjectTechnologyChoice {
     references: [
       {
         text: 'Censorship Prevention - StarkEx documentation',
-        href: 'https://docs.starkware.co/starkex-v3/architecture/overview#8-censorship-prevention',
+        href: 'https://docs.starkware.co/starkex/architecture/solution-architecture.html#8-censorship-prevention',
       },
     ],
   }

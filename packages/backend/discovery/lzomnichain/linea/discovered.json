@@ -1,8 +1,8 @@
 {
   "name": "lzomnichain",
   "chain": "linea",
-  "blockNumber": 1584748,
-  "configHash": "0x85ad14d968e93178621aed80565c6996d71ee1c6f946d2d16a15ccc8f030aaa7",
+  "blockNumber": 1773788,
+  "configHash": "0xe3ce2593bf49b29d9093aa1c84b1e7224a27912b49497d4d58b50972bc063519",
   "version": 3,
   "contracts": [
     {
@@ -42,8 +42,10 @@
           "125": 20,
           "126": 20,
           "145": 20,
+          "150": 20,
           "151": 20,
           "158": 20,
+          "159": 20,
           "165": 20,
           "167": 20,
           "175": 20,
@@ -109,11 +111,19 @@
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           },
+          "150": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
           "151": {
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           },
           "158": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "159": {
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           },
@@ -259,6 +269,14 @@
             "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
             "relayer": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"
           },
+          "150": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 10,
+            "oracle": "0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa",
+            "relayer": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"
+          },
           "151": {
             "inboundProofLib": 2,
             "inboundBlockConfirm": 5,
@@ -270,6 +288,14 @@
           "158": {
             "inboundProofLib": 2,
             "inboundBlockConfirm": 20,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 10,
+            "oracle": "0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa",
+            "relayer": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"
+          },
+          "159": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 2,
             "outboundProofType": 2,
             "outboundBlockConfirm": 10,
             "oracle": "0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa",
@@ -426,11 +452,19 @@
             "0x2D61DCDD36F10b22176E0433B86F74567d529aAa",
             "0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"
           ],
+          "150": [
+            "0x2D61DCDD36F10b22176E0433B86F74567d529aAa",
+            "0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"
+          ],
           "151": [
             "0x2D61DCDD36F10b22176E0433B86F74567d529aAa",
             "0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"
           ],
           "158": [
+            "0x2D61DCDD36F10b22176E0433B86F74567d529aAa",
+            "0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"
+          ],
+          "159": [
             "0x2D61DCDD36F10b22176E0433B86F74567d529aAa",
             "0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"
           ],
@@ -500,8 +534,10 @@
           "125": 2,
           "126": 2,
           "145": 2,
+          "150": 2,
           "151": 2,
           "158": 2,
+          "159": 2,
           "165": 2,
           "167": 2,
           "175": 2,
@@ -530,8 +566,10 @@
           "125": "0x000000000000000000000000377530cda84dfb2673bf4d145dcf0c4d7fdcb5b6",
           "126": "0x0000000000000000000000004d73adb72bc3dd368966edd0f0b2148401a178e2",
           "145": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "150": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "151": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "158": "0x000000000000000000000000fe7c30860d01e28371d40434806f4a8fcdd3a098",
+          "159": "0x000000000000000000000000c1b15d3b262beec0e3565c11c9e0f6134bdacb36",
           "165": "0x000000000000000000000000042b8289c97896529ec2fe49ba1a8b9c956a86cc",
           "167": "0x000000000000000000000000e9ba4c1e76d874a43942718dafc96009ec9d9917",
           "175": "0x0000000000000000000000002d61dcdd36f10b22176e0433b86f74567d529aaa",

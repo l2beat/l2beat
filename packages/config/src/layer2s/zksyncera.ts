@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -13,7 +18,6 @@ import {
   STATE_CORRECTNESS,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { formatSeconds } from '../utils/formatSeconds'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -54,6 +58,7 @@ export const zksyncera: Layer2 = {
       documentation: ['https://era.zksync.io/docs/'],
       explorers: [
         'https://explorer.zksync.io/',
+        'https://era.zksync.network/',
         'https://zksync-era.l2scan.co/',
       ],
       repositories: ['https://github.com/matter-labs/zksync-era'],
@@ -71,6 +76,9 @@ export const zksyncera: Layer2 = {
       explanation: delay
         ? `zkSync Era is a ZK rollup that posts state diffs to the L1. Transactions within a state diff can be considered final when proven on L1 using a ZK proof, except that an operator can revert them if not executed yet. Currently, there is at least a ${delay} delay between state diffs verification and the execution of the corresponding state actions.`
         : undefined,
+    },
+    finality: {
+      finalizationPeriod: executionDelay,
     },
   },
   config: {
@@ -93,9 +101,9 @@ export const zksyncera: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
+      defaultUrl: 'https://mainnet.era.zksync.io',
+      defaultCallsPerMinute: 1500,
       startBlock: 1,
-      url: 'https://mainnet.era.zksync.io',
-      callsPerMinute: 1500,
     },
     liveness: {
       proofSubmissions: [
@@ -146,6 +154,11 @@ export const zksyncera: Layer2 = {
         },
       ],
     },
+    finality: {
+      type: 'zkSyncEra',
+      minTimestamp: new UnixTime(1708556400),
+      lag: 0,
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
@@ -163,14 +176,14 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0xc40e5BE1a6D18DdB14268D32dc6075FCf72fF16d#code#F1#L365',
-            'https://etherscan.io/address/0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7#code#F5#L26',
+            'https://etherscan.io/address/0x3a4ef67C6cAb51444E5d3861843F7f4a37F64F0a#code#F1#L363',
+            'https://etherscan.io/address/0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B#code#F5#L26',
           ],
         },
         {
           contract: 'Verifier',
           references: [
-            'https://etherscan.io/address/0xB465882F67d236DcC0D090F78ebb0d838e9719D8#code#F1#L348',
+            'https://etherscan.io/address/0x3390051435eCB25a9610A1cF17d1BA0a228A0560#code#F1#L345',
           ],
         },
       ],
@@ -192,7 +205,7 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7#code#F1#L128',
+            'https://etherscan.io/address/0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B#code#F1#L125',
           ],
         },
       ],
@@ -206,8 +219,7 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0xAeA49FCEbe3A93ADaE67FF668C0ac87799537967#code#F1#L100',
-            'https://etherscan.io/address/0xAeA49FCEbe3A93ADaE67FF668C0ac87799537967#code#F5#L58',
+            'https://etherscan.io/address/0xE6426c725cB507168369c10284390E59d91eC821#code#F1#L107',
             'https://etherscan.io/address/0x0b622A2061EaccAE1c664eBC3E868b8438e03F61#code#F1#L37',
             'https://etherscan.io/address/0x0b622A2061EaccAE1c664eBC3E868b8438e03F61#code#F1#L169',
           ],
@@ -220,8 +232,8 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7#code#F10#L56',
-            'https://etherscan.io/address/0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7#code#F10#L73',
+            'https://etherscan.io/address/0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B#code#F10#L57',
+            'https://etherscan.io/address/0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B#code#F10#L74',
           ],
         },
       ],
@@ -236,7 +248,7 @@ export const zksyncera: Layer2 = {
         {
           contract: 'zkSync',
           references: [
-            'https://etherscan.io/address/0xc40e5BE1a6D18DdB14268D32dc6075FCf72fF16d#code#F1#L186',
+            'https://etherscan.io/address/0x3a4ef67C6cAb51444E5d3861843F7f4a37F64F0a#code#F1#L187',
           ],
         },
       ],
@@ -360,6 +372,27 @@ export const zksyncera: Layer2 = {
     genesisState: 'There have been neither genesis states nor regenesis.',
     dataFormat:
       'Details on data format can be found [here](https://github.com/matter-labs/zksync-era/blob/main/docs/guides/advanced/pubdata.md).',
+  },
+  stateValidation: {
+    description:
+      'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.',
+    categories: [
+      {
+        title: 'Prover Architecture',
+        description:
+          'zkSync Era proof system Boojum can be found [here](https://github.com/matter-labs/era-boojum/tree/main) and contains essential tools like the Prover, the Verifier, and other backend components. The specs of the system can be found [here](https://github.com/matter-labs/zksync-era/tree/main/docs/specs/prover).',
+      },
+      {
+        title: 'ZK Circuits',
+        description:
+          'zkSync Era circuits are built from Boojum and are designed to replicate the behavior of the EVM. The source code can be found [here](https://github.com/matter-labs/era-zkevm_circuits/tree/main). The circuits are checked against tests that can be found [here](https://github.com/matter-labs/era-zkevm_test_harness/tree/main).',
+      },
+      {
+        title: 'Verification Keys Generation',
+        description:
+          'SNARK verification keys can be generated and checked against the Ethereum verifier contract using [this tool](https://github.com/matter-labs/zksync-era/tree/main/prover/vk_setup_data_generator_server_fri). The system requires a trusted setup.',
+      },
+    ],
   },
   permissions: [
     ...discovery.getMultisigPermission(

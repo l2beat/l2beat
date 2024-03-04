@@ -1,7 +1,57 @@
+Generated with discovered.json: 0xf9a2868df47939ae03b5391125f035a38ff09445
+
+# Diff at Tue, 27 Feb 2024 09:26:18 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@4f9617ef0b726c0af67b0e31e0d1ed434f10f1ef block: 19182633
+- current block number: 19317972
+
+## Description
+
+A Kroma validator has created a challenge (challenging a state root) for the first time.
+
+## Watched changes
+
+```diff
+    contract Colosseum (0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a) {
+      values.challengedRoots[0]:
++        4062
+    }
+```
+
+Generated with discovered.json: 0xf2efb953c5d3442db9a5c3a901d3af836fbd3787
+
+# Diff at Thu, 08 Feb 2024 09:45:31 GMT:
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: main@0a61ea8397e7cdcf34b79a079bc53c0c2e703fe2 block: 18940443
+- current block number: 19182633
+
+## Description
+
+Add opStackDA and opStackSequencerInbox handlers
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18940443 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35) {
+      values.opStackDA:
++        {"isSomeTxsLengthEqualToCelestiaDAExample":false}
+      values.sequencerInbox:
++        "0xfF00000000000000000000000000000000000255"
+    }
+```
+
+Generated with discovered.json: 0x5c2d3985c37d7e2b7bfa690fefaec55556e068d8
+
 # Diff at Fri, 05 Jan 2024 10:21:46 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@ea50ecee4d08800c3cff3742fc1c8912fc54c16c
+- comparing to: main@ea50ecee4d08800c3cff3742fc1c8912fc54c16c
 
 ## Description
 
@@ -28,7 +78,7 @@ The Security Council is now a 7/9 multisig, satisfying the requirements to be co
 # Diff at Thu, 23 Nov 2023 10:41:14 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@4c7175133fcba5685ddf8bf8d42acc70413b9b0c
+- comparing to: main@4c7175133fcba5685ddf8bf8d42acc70413b9b0c
 
 ## Description
 
@@ -68,7 +118,7 @@ Not sure what's going on here. Look at the description below this one.
 # Diff at Wed, 22 Nov 2023 09:43:04 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@265d269ec8f97fee9cd01487403d12ff66e8509f
+- comparing to: main@265d269ec8f97fee9cd01487403d12ff66e8509f
 
 ## Description
 
@@ -251,7 +301,7 @@ Slightly tweaked the logic to select the next proposer, related to some small ch
 # Diff at Fri, 03 Nov 2023 09:59:02 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@9fa31f2a6274083dfe7f01b69d1220921459db02
+- comparing to: main@9fa31f2a6274083dfe7f01b69d1220921459db02
 
 ## Description
 
@@ -296,7 +346,7 @@ Slightly tweaked the logic to select the next proposer, related to some small ch
 # Diff at Fri, 29 Sep 2023 07:58:06 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: master@af96105393755c6fead3fa1b6c9845f238580952
+- comparing to: main@af96105393755c6fead3fa1b6c9845f238580952
 
 ## Watched changes
 

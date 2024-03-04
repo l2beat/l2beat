@@ -1,5 +1,5 @@
 {
-  "$schema": "../../config.schema.json",
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
   "chain": "ethereum",
   "name": "aevo",
   "initialAddresses": ["0x4082C9647c098a6493fb499EaE63b5ce3259c574"],
@@ -50,8 +50,19 @@
           "type": "call",
           "method": "function batcherHash() view returns (address)",
           "args": []
+        },
+        "opStackDA": {
+          "type": "opStackDA",
+          "sequencerAddress": "{{ batcherHash }}"
+        },
+        "sequencerInbox": {
+          "type": "opStackSequencerInbox",
+          "sequencerAddress": "{{ batcherHash }}"
         }
       }
+    },
+    "AevoMultiSig": {
+      "ignoreInWatchMode": ["nonce"]
     }
   }
 }

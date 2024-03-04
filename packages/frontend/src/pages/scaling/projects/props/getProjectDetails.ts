@@ -7,6 +7,7 @@ import isEmpty from 'lodash/isEmpty'
 
 import { ChartProps } from '../../../../components'
 import { getContractSection } from '../../../../utils/project/getContractSection'
+import { getDiagramImage } from '../../../../utils/project/getDiagramImage'
 import { getPermissionsSection } from '../../../../utils/project/getPermissionsSection'
 import {
   getProjectEditLink,
@@ -27,8 +28,8 @@ import {
   ProjectDetailsTechnologyIncompleteNote,
   ProjectDetailsTechnologySection,
   ProjectDetailsUpcomingDisclaimer,
+  ProjectDetailsUpgradesAndGovernanceSection,
 } from '../../../types'
-import { getDetailedDescriptionSection } from './getDetailedDescriptionSection'
 import { getTechnologyOverview } from './getTechnologyOverview'
 
 export function getProjectDetails(
@@ -49,16 +50,20 @@ export function getProjectDetails(
 
   items.push({
     type: 'ChartSection',
-    props: { ...chart, id: 'chart', title: 'Chart' },
+    props: {
+      ...chart,
+      id: 'chart',
+      title: 'Chart',
+    },
   })
 
   if (!isUpcoming && project.milestones && !isEmpty(project.milestones)) {
     items.push({
       type: 'MilestonesSection',
       props: {
-        milestones: project.milestones,
         id: 'milestones',
         title: 'Milestones',
+        milestones: project.milestones,
       },
     })
   }
@@ -66,7 +71,12 @@ export function getProjectDetails(
   if (project.display.detailedDescription) {
     items.push({
       type: 'DetailedDescriptionSection',
-      props: getDetailedDescriptionSection(project),
+      props: {
+        id: 'detailed-description',
+        title: 'Detailed description',
+        description: project.display.description,
+        detailedDescription: project.display.detailedDescription,
+      },
     })
   }
 
@@ -127,6 +137,7 @@ export function getProjectDetails(
         props: {
           id: 'state-derivation',
           title: 'State derivation',
+          isUnderReview: project.isUnderReview,
           ...project.stateDerivation,
         },
       })
@@ -138,7 +149,9 @@ export function getProjectDetails(
         props: {
           id: 'state-validation',
           title: 'State validation',
+          image: getDiagramImage('state-validation', project.display.slug),
           stateValidation: project.stateValidation,
+          isUnderReview: project.isUnderReview,
         },
       })
     }
@@ -154,6 +167,22 @@ export function getProjectDetails(
         },
       }),
     )
+
+    if (project.upgradesAndGovernance) {
+      items.push({
+        type: 'UpgradesAndGovernanceSection',
+        props: {
+          id: 'upgrades-and-governance',
+          title: 'Upgrades & Governance',
+          content: project.upgradesAndGovernance,
+          image: getDiagramImage(
+            'upgrades-and-governance',
+            project.display.slug,
+          ),
+          isUnderReview: project.isUnderReview,
+        },
+      })
+    }
 
     if (permissionsSection) {
       items.push({
@@ -222,3 +251,4 @@ export type ScalingDetailsSection =
   | ProjectDetailsPermissionsSection
   | ProjectDetailsContractsSection
   | ProjectDetailsStageSection
+  | ProjectDetailsUpgradesAndGovernanceSection

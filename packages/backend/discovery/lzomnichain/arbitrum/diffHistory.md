@@ -1,7 +1,93 @@
-# Diff at Tue, 09 Jan 2024 16:43:12 GMT:
+Generated with discovered.json: 0xfade3659ca05af16babf43cf19c5ae0235d2db41
+
+# Diff at Mon, 22 Jan 2024 17:01:57 GMT
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@f58cc44bf923844f52038487bcd5a563329f4b43 block: 168740974
+- current block number: 173078316
+
+## Description
+
+Default lib switched to FPValidator.
+New path-ways added.
+
+## Watched changes
+
+```diff
+    contract UltraLightNodeV2 (0x4D73AdB72bC3DD368966edD0f0b2148401A178E2) {
+      values.chainAddressSizeMap.234:
++        20
+      values.defaultAdapterParams.234:
++        {"proofType":2,"adapterParams":"0x00010000000000000000000000000000000000000000000000000000000000030d40"}
+      values.defaultAppConfig.101.inboundProofLib:
+-        1
++        2
+      values.defaultAppConfig.101.outboundProofType:
+-        1
++        2
+      values.defaultAppConfig.102.inboundProofLib:
+-        1
++        2
+      values.defaultAppConfig.102.outboundProofType:
+-        1
++        2
+      values.defaultAppConfig.106.inboundProofLib:
+-        1
++        2
+      values.defaultAppConfig.106.outboundProofType:
+-        1
++        2
+      values.defaultAppConfig.109.inboundProofLib:
+-        1
++        2
+      values.defaultAppConfig.109.outboundProofType:
+-        1
++        2
+      values.defaultAppConfig.110.inboundProofLib:
+-        1
++        2
+      values.defaultAppConfig.110.outboundProofType:
+-        1
++        2
+      values.defaultAppConfig.111.inboundProofLib:
+-        1
++        2
+      values.defaultAppConfig.111.outboundProofType:
+-        1
++        2
+      values.defaultAppConfig.112.inboundProofLib:
+-        1
++        2
+      values.defaultAppConfig.112.outboundProofType:
+-        1
++        2
+      values.defaultAppConfig.115.inboundProofLib:
+-        1
++        2
+      values.defaultAppConfig.115.outboundProofType:
+-        1
++        2
+      values.defaultAppConfig.126.inboundProofLib:
+-        1
++        2
+      values.defaultAppConfig.126.outboundProofType:
+-        1
++        2
+      values.defaultAppConfig.234:
++        {"inboundProofLib":2,"inboundBlockConfirm":5,"outboundProofType":2,"outboundBlockConfirm":20,"oracle":"0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f","relayer":"0x177d36dBE2271A4DdB2Ad8304d82628eb921d790"}
+      values.inboundProofLibrary.234:
++        ["0x462F7eC57C6492B983a8C8322B4369a7f149B859","0x87794d2f64e076694a153aFdb12cA62eb9C2ea5B"]
+      values.supportedOutboundProof.234:
++        2
+      values.ulnLookup.234:
++        "0x000000000000000000000000980205d352f198748b626f6f7c38a8a5663ec981"
+    }
+```
+
+# Diff at Tue, 09 Jan 2024 16:43:12 GMT
 
 - author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
-- comparing to: master@0b578574e6a64020b5157f700c09de14e6b3eed3 block: 117399533
+- comparing to: main@0b578574e6a64020b5157f700c09de14e6b3eed3 block: 117399533
 - current block number: 168740974
 
 ## Description

@@ -22,7 +22,7 @@ import {
   makeLivenessFunctionCall,
   makeLivenessSharpSubmissions,
   makeLivenessTransfer,
-} from '../core/liveness/types/LivenessConfig'
+} from '../modules/liveness/types/LivenessConfig'
 
 interface LivenessConfig {
   entries: LivenessConfigEntry[]
@@ -31,6 +31,7 @@ interface LivenessConfig {
 
 export interface Project {
   projectId: ProjectId
+  slug: string
   isArchived?: boolean
   type: 'layer2' | 'bridge'
   isUpcoming?: boolean
@@ -50,6 +51,7 @@ export interface ProjectEscrow {
 export function layer2ToProject(layer2: Layer2): Project {
   return {
     projectId: layer2.id,
+    slug: layer2.display.slug,
     type: 'layer2',
     isUpcoming: layer2.isUpcoming,
     isArchived: layer2.isArchived,
@@ -70,6 +72,7 @@ export function layer2ToProject(layer2: Layer2): Project {
 export function bridgeToProject(bridge: Bridge): Project {
   return {
     projectId: bridge.id,
+    slug: bridge.display.slug,
     type: 'bridge',
     escrows: bridge.config.escrows.map((escrow) => ({
       address: escrow.address,

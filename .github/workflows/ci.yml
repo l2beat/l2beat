@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - master
+      - main
   merge_group:
 
 jobs:
@@ -87,7 +88,7 @@ jobs:
         run: yarn --frozen-lockfile
 
       - name: Test
-        run: yarn test
+        run: yarn test --reporter min
 
   lint:
     name: Lint

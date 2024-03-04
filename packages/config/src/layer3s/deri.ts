@@ -1,12 +1,12 @@
 import { ProjectId } from '@l2beat/shared-pure'
 
-import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from '../common'
-import { Layer3 } from './types'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 
-export const deri: Layer3 = {
-  type: 'layer3',
-  isUnderReview: true,
-  id: ProjectId('deri'),
+const discovery = new ProjectDiscovery('deri', 'arbitrum')
+
+export const deri = orbitStackL3({
+  discovery,
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Deri',
@@ -14,8 +14,6 @@ export const deri: Layer3 = {
     description:
       'Deri is an Ethereum Layer-3 that leverages Arbitrum Nitro to enable efficient cross-chain futures, options, and derivatives.',
     purposes: ['DeFi'],
-    category: 'Optimistic Rollup',
-    provider: 'Arbitrum Orbit',
     links: {
       websites: ['https://deri.io/'],
       apps: [],
@@ -28,12 +26,20 @@ export const deri: Layer3 = {
         'https://discord.com/invite/kb8ZbYgp8M',
       ],
     },
-    dataAvailabilityMode: 'NotApplicable',
   },
-  config: {
-    escrows: [],
-  },
-  contracts: CONTRACTS.EMPTY,
-  riskView: UPCOMING_RISK_VIEW,
-  technology: TECHNOLOGY.UPCOMING,
-}
+
+  bridge: discovery.getContract('Bridge'),
+  rollupProxy: discovery.getContract('RollupProxy'),
+  sequencerInbox: discovery.getContract('SequencerInbox'),
+
+  nonTemplatePermissions: [
+    {
+      name: 'OwnerEOA',
+      accounts: discovery.getAccessControlRolePermission(
+        'UpgradeExecutor',
+        'EXECUTOR_ROLE',
+      ),
+      description: 'EOA that can execute upgrade via the UpgradeExecutor.',
+    },
+  ],
+})

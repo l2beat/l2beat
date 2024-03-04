@@ -112,7 +112,6 @@ describe('projects', () => {
       )
       for (const link of links) {
         it(link, () => {
-          console.log(link)
           expect(link).toMatchRegex(/^https:\/\//)
         })
       }

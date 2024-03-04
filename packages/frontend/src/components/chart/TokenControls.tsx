@@ -1,7 +1,7 @@
-import classNames from 'classnames'
 import React from 'react'
 
 import { TokenInfo } from '../../scripts/charts/types'
+import { cn } from '../../utils/cn'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { Link } from '../Link'
 import { RichSelect } from '../RichSelect'
@@ -26,7 +26,7 @@ export function TokenControls({
 
   return (
     <div
-      className={classNames('flex h-full')}
+      className={cn('flex h-full')}
       data-role="chart-token-element"
       data-tvl-only
     >
@@ -64,7 +64,7 @@ function TokenList({ tokens }: { tokens: TokenControl[] }) {
               </div>
               <HorizontalSeparator className="mb-4 border-gray-400 dark:border-gray-650" />
               <div
-                className="grid grid-cols-1 gap-x-6 md:grid-cols-3"
+                className="grid grid-cols-1 gap-x-6 md:grid-cols-2 lg:grid-cols-3"
                 data-role="chart-token-controls"
               >
                 {p.tokens.map((token, j) => (
@@ -74,7 +74,7 @@ function TokenList({ tokens }: { tokens: TokenControl[] }) {
                     className="md:!py-1.5"
                     key={j}
                   >
-                    <img src={token.iconUrl} className="h-4 w-4 rounded-full" />
+                    <img src={token.iconUrl} className="size-4 rounded-full" />
                     <span className="text-sm font-bold">{token.name}</span> (
                     {token.info.symbol})
                   </RichSelect.Item>

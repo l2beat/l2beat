@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -13,7 +18,6 @@ import { subtractOne } from '../common/assessCount'
 import { RISK_VIEW } from '../common/riskView'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
-import { formatSeconds } from '../utils/formatSeconds'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
@@ -102,6 +106,22 @@ export const kroma: Layer2 = {
         finalizationPeriod,
       )} after it has been posted.`,
     },
+    finality: {
+      warning:
+        "It's assumed that transaction data batches are submitted sequentially.",
+      finalizationPeriod,
+    },
+  },
+  chainConfig: {
+    name: 'kroma',
+    chainId: 255,
+    explorerUrl: 'https://kromascan.com',
+    explorerApi: {
+      url: 'https://api.kromascan.com/api',
+      type: 'etherscan',
+    },
+    multicallContracts: [],
+    minTimestampForTvl: UnixTime.fromDate(new Date('2023-09-05T03:00:00Z')),
   },
   config: {
     escrows: [
@@ -121,9 +141,9 @@ export const kroma: Layer2 = {
     ],
     transactionApi: {
       type: 'rpc',
+      defaultUrl: 'https://api.kroma.network',
+      defaultCallsPerMinute: 1500,
       startBlock: 1,
-      url: 'https://api.kroma.network',
-      callsPerMinute: 1500,
       assessCount: subtractOne,
     },
     liveness: {
@@ -131,8 +151,12 @@ export const kroma: Layer2 = {
       batchSubmissions: [
         {
           formula: 'transfer',
-          from: EthereumAddress('0x41b8cD6791De4D8f9E0eaF7861aC506822AdcE12'),
-          to: EthereumAddress('0xfF00000000000000000000000000000000000255'),
+          from: EthereumAddress(
+            discovery.getContractValue('SystemConfig', 'batcherHash'),
+          ),
+          to: EthereumAddress(
+            discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+          ),
           sinceTimestamp: new UnixTime(1693883663),
         },
       ],
@@ -148,6 +172,10 @@ export const kroma: Layer2 = {
           sinceTimestamp: new UnixTime(1693880579),
         },
       ],
+    },
+    finality: {
+      type: 'OPStack',
+      lag: 0,
     },
   },
   riskView: makeBridgeCompatible({
@@ -340,7 +368,7 @@ export const kroma: Layer2 = {
   },
   stateDerivation: {
     nodeSoftware:
-      'Kroma nodes source code, including full node, proposer and validator, can be found [here](https://github.com/kroma-network/kroma). Also, the geth server, source maintained [here](https://github.com/kroma-network/go-ethereum), is a fork of go-ethereum. For more details on how they are different from the Optimism implementation, see [here](https://github.com/kroma-network/kroma/blob/main/specs/differences-from-optimism-bedrock.md).' +
+      'Kroma nodes source code, including full node, proposer and validator, can be found [here](https://github.com/kroma-network/kroma). Also, the geth server, source maintained [here](https://github.com/kroma-network/go-ethereum), is a fork of go-ethereum. For more details on how they are different from the Optimism implementation, see [here](https://github.com/kroma-network/kroma/blob/dev/specs/differences-from-optimism.md).' +
       '\n' +
       'The instructions to run the proposer (called validator) and the ZK prover, are documented [here](https://docs.kroma.network/developers/running-nodes-on-kroma).',
     compressionScheme:

@@ -1,23 +1,32 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
-import { existsSync } from 'fs'
+import { existsSync, mkdirSync } from 'fs'
 import { readFile, writeFile } from 'fs/promises'
+import path from 'path'
 import z from 'zod'
 
-export const FileStructure = z.object({
-  projects: z.record(z.boolean()),
-  contracts: z.record(z.boolean()),
-})
+export const FileStructure = z.record(z.boolean())
 export type FileStructure = z.infer<typeof FileStructure>
 
 export type VerificationMap = Record<string, boolean>
+export type VerificationMapPerChain = Record<string, VerificationMap>
+
+export const PROJECTS_OUTPUT_PATH = 'src/verification/projects.json'
+export function getOutputPath(chain: string) {
+  return `src/verification/${chain}/verified.json`
+}
 
 export async function loadPreviouslyVerifiedContracts(
-  filePath: string,
+  chain: string,
 ): Promise<Set<EthereumAddress>> {
+  const filePath = getOutputPath(chain)
+  if (!existsSync(filePath)) {
+    mkdirSync(path.dirname(filePath))
+    return new Set()
+  }
   const verified = await loadVerifiedJson(filePath)
-  const contractAddresses = Object.keys(verified.contracts)
+  const contractAddresses = Object.keys(verified)
   const verifiedAddresses = contractAddresses
-    .filter((a) => !!verified.contracts[a])
+    .filter((a) => !!verified[a])
     .map(EthereumAddress)
   console.log(
     `Loaded ${verifiedAddresses.length} previously verified contracts.`,
@@ -28,23 +37,15 @@ export async function loadPreviouslyVerifiedContracts(
 export async function loadVerifiedJson(
   filePath: string,
 ): Promise<FileStructure> {
-  if (!existsSync(filePath)) {
-    return { projects: {}, contracts: {} }
-  }
   const data = await readFile(filePath, 'utf-8')
   return FileStructure.parse(JSON.parse(data))
 }
 
-export async function saveResult(
+export async function saveResult<T>(
   filePath: string,
-  addressVerificationMap: VerificationMap,
-  projectVerificationMap: VerificationMap,
+  result: Record<string, T>,
 ) {
-  const output = {
-    updatedAt: new Date().toISOString(),
-    projects: sortObjectKeys(projectVerificationMap),
-    contracts: sortObjectKeys(addressVerificationMap),
-  }
+  const output = sortObjectKeys(result)
   await writeFile(filePath, JSON.stringify(output, null, 2) + '\n')
 }
 

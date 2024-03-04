@@ -1,5 +1,5 @@
 {
-  "$schema": "../../config.schema.json",
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
   "chain": "ethereum",
   "name": "parallel",
   "initialAddresses": [
@@ -18,7 +18,13 @@
     "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89": "UpgradeExecutor",
     "0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d": "L1ERC20Gateway",
     "0xa1c86E2362dba0525075622af6d5f739B1304D45": "L1CustomGateway",
-    "0x150286BdbE7C8Cd23D41a8e1e64438e0dc04dc3d": "L1WETHGateway"
+    "0x150286BdbE7C8Cd23D41a8e1e64438e0dc04dc3d": "L1WETHGateway",
+    "0x4811500e0d376Fa8d2EA3CCb7c61E0afB4F5A7f1": "OneStepProverMemory",
+    "0x89AF7C4C2198c426cFe6E86de0680A0850503e06": "OneStepProverMath",
+    "0x99a2A31300816C1FA3f40818AC9280fe7271F878": "OneStepProverHostIo",
+    "0xDf94F0474F205D086dbc2e66D69a856FCf520622": "OneStepProver0",
+    "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d": "ProxyAdmin",
+    "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": "OwnerMultisig"
   },
   "overrides": {
     "ChallengeManager": {
@@ -54,6 +60,10 @@
             "challenger",
             "challengedNode"
           ]
+        },
+        "validators": {
+          "type": "arbitrumActors",
+          "actorType": "validator"
         }
       }
     },
@@ -80,6 +90,9 @@
           "method": "function isBatchPoster(address) external view returns (bool)",
           "args": ["0x5eAD389b57d533A94a0eacd570Dc1CC59C25F2D4"]
         },
+        "sequencerVersion": {
+          "type": "arbitrumSequencerVersion"
+        },
         // when this changes, it means the sequencers have changed
         "setIsBatchPosterCount": {
           "type": "eventCount",
@@ -88,6 +101,17 @@
             "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
             // id == 6 is emitted inside setValidator()
             "0x0000000000000000000000000000000000000000000000000000000000000001"
+          ]
+        },
+        "batchPosters": {
+          "type": "arbitrumActors",
+          "actorType": "batchPoster"
+        },
+        "keySetUpdates": {
+          "type": "eventCount",
+          "topics": [
+            // SetValidKeyset(bytes32,bytes)
+            "0xabca9b7986bc22ad0160eb0cb88ae75411eacfba4052af0b457a9335ef655722"
           ]
         }
       }
@@ -101,6 +125,9 @@
     },
     "L1WETHGateway": {
       "ignoreMethods": ["l1Weth"]
+    },
+    "OwnerMultisig": {
+      "ignoreMethods": ["nonce"]
     }
   }
 }

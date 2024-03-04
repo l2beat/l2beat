@@ -18,7 +18,7 @@ export function TvlBreakdownHeader(props: TvlBreakdownHeaderProps) {
         }}
         subPageName="TVL Breakdown"
       />
-      <div className="mt-4 mb-4 flex flex-col items-start justify-between gap-[10px] md:mt-[38px] md:flex-row md:items-center">
+      <div className="my-4 flex flex-col items-start justify-between gap-[10px] md:mt-[38px] md:flex-row md:items-center">
         <h2 className="text-[28px] font-bold md:text-3xl">TVL Breakdown</h2>
         <div className="text-xs font-medium text-gray-500 dark:text-gray-550">
           Timestamp:&nbsp;

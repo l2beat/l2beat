@@ -1,8 +1,12 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  formatSeconds,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { CONTRACTS } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { formatSeconds } from '../utils/formatSeconds'
 import { RISK_VIEW } from './common'
 import { polygonpos } from './polygonpos'
 import { Bridge } from './types'
@@ -126,7 +130,7 @@ export const polygonplasma: Bridge = {
       }),
       discovery.getContractDetails('Registry', {
         description:
-          'Contract mantaining the addresses of the contracts used in the system.',
+          'Contract maintaining the addresses of the contracts used in the system.',
       }),
       discovery.getContractDetails('StakeManager', {
         description:

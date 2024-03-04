@@ -22,6 +22,7 @@ import { degate3 } from './degate3'
 import { dydx } from './dydx'
 import { eclipse } from './eclipse'
 import { frame } from './frame'
+import { fraxtal } from './fraxtal'
 import { fuel } from './fuel'
 import { fuelv1 } from './fuelv1'
 import { gluon } from './gluon'
@@ -30,7 +31,7 @@ import { hermez } from './hermez'
 import { honeypot } from './honeypot'
 import { hypr } from './hypr'
 import { immutablex } from './immutablex'
-import { immutablezkevm } from './immutablezkevm'
+import { karak } from './karak'
 import { kinto } from './kinto'
 import { kroma } from './kroma'
 import { layer2finance } from './layer2finance'
@@ -48,11 +49,14 @@ import { mode } from './mode'
 import { molten } from './molten'
 import { morph } from './morph'
 import { myria } from './myria'
+import { nil } from './nil'
 import { nova } from './nova'
+import { oev } from './oev'
 import { ola } from './ola'
 import { omgnetwork } from './omgnetwork'
 import { optimism } from './optimism'
 import { orb3 } from './orb3'
+import { orderly } from './orderly'
 import { palm } from './palm'
 import { paradex } from './paradex'
 import { parallel } from './parallel'
@@ -72,9 +76,12 @@ import { stealthchain } from './stealthchain'
 import { taiko } from './taiko'
 import { tanx } from './tanx'
 import { ten } from './ten'
+import { tradable } from './tradable'
 import { Layer2 } from './types'
 import { x1 } from './x1'
 import { xchain } from './xchain'
+import { zentachain } from './zentachain'
+import { zkcandy } from './zkcandy'
 import { zkfair } from './zkfair'
 import { zkspace } from './zkspace'
 import { zkswap } from './zkswap'
@@ -110,6 +117,7 @@ export const layer2s: Layer2[] = [
   dydx,
   eclipse,
   frame,
+  fraxtal,
   fuel,
   fuelv1,
   gluon,
@@ -117,7 +125,7 @@ export const layer2s: Layer2[] = [
   hermez,
   hypr,
   immutablex,
-  immutablezkevm,
+  karak,
   kinto,
   kroma,
   layer2finance,
@@ -135,11 +143,14 @@ export const layer2s: Layer2[] = [
   molten,
   morph,
   myria,
+  nil,
   nova,
+  oev,
   ola,
   omgnetwork,
   optimism,
   orb3,
+  orderly,
   palm,
   paradex,
   parallel,
@@ -159,8 +170,11 @@ export const layer2s: Layer2[] = [
   taiko,
   tanx,
   ten,
+  tradable,
   x1,
   xchain,
+  zentachain,
+  zkcandy,
   zkfair,
   zkspace,
   zkswap,

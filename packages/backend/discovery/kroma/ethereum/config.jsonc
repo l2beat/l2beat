@@ -1,5 +1,5 @@
 {
-  "$schema": "../../config.schema.json",
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
   "chain": "ethereum",
   "name": "kroma",
   "initialAddresses": [
@@ -81,7 +81,8 @@
         "validators": {
           "type": "dynamicArray",
           "slot": 54,
-          "returnType": "address"
+          "returnType": "address",
+          "ignoreRelative": true
         }
       }
     },
@@ -125,6 +126,14 @@
           "type": "call",
           "method": "function batcherHash() view returns (address)",
           "args": []
+        },
+        "opStackDA": {
+          "type": "opStackDA",
+          "sequencerAddress": "{{ batcherHash }}"
+        },
+        "sequencerInbox": {
+          "type": "opStackSequencerInbox",
+          "sequencerAddress": "{{ batcherHash }}"
         }
       }
     }

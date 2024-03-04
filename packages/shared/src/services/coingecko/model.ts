@@ -27,13 +27,15 @@ export const CoinMetadata = z.object({
   }),
 })
 
+const NumberOrString = z.union([z.number(), z.string().transform(Number)])
+
 export type CoinMarketChartRangeResult = z.infer<
   typeof CoinMarketChartRangeResult
 >
 export const CoinMarketChartRangeResult = z.object({
-  prices: z.array(z.tuple([z.number(), z.number()])),
-  market_caps: z.array(z.tuple([z.number(), z.number()])),
-  total_volumes: z.array(z.tuple([z.number(), z.number()])),
+  prices: z.array(z.tuple([NumberOrString, NumberOrString])),
+  market_caps: z.array(z.tuple([NumberOrString, NumberOrString])),
+  total_volumes: z.array(z.tuple([NumberOrString, NumberOrString])),
 })
 
 export interface CoinMarketChartRangeData {

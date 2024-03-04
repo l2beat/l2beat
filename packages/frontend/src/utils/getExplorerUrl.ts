@@ -1,18 +1,20 @@
-import { chainsByDevId } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
+import { chains } from '@l2beat/config'
+import { assert, ChainId } from '@l2beat/shared-pure'
 
-export function getExplorerUrl(devId?: string) {
-  const defaultExplorer = 'https://etherscan.io'
-  if (devId === undefined) {
-    return defaultExplorer
-  }
-
-  const chain = chainsByDevId.get(devId)
-  assert(chain !== undefined, 'Could not find chain config for devId: ' + devId)
+export function getExplorerUrl(chain: string) {
+  const chainConfig = chains.find((c) => c.name === chain)
   assert(
-    chain.explorerUrl !== undefined,
-    'Chain config has no explorerUrl, devId: ' + chain.devId,
+    chainConfig !== undefined,
+    'Could not find chain config for chain: ' + chain,
+  )
+  assert(
+    chainConfig.explorerUrl !== undefined,
+    'Chain config has no explorerUrl, chain: ' + chainConfig.name,
   )
 
-  return chain.explorerUrl
+  return chainConfig.explorerUrl
+}
+
+export function getExplorerUrlByChainId(chainId: ChainId): string | undefined {
+  return chains.find((c) => c.chainId === chainId.valueOf())?.explorerUrl
 }

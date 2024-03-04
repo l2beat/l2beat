@@ -10,7 +10,7 @@ import {
   ProjectLinkIcon,
 } from '../icons'
 import { Link } from '../Link'
-import { OutLink } from '../OutLink'
+import { PlainLink } from '../PlainLink'
 import { parseSocial } from '../project/links/LinkSectionLink'
 
 interface LinkSectionProps {
@@ -38,14 +38,14 @@ function ProjectLinkItem({ projectLink }: LinkSectionItemProps) {
     projectLink.name !== 'Changelog'
   ) {
     return (
-      <div className="flex cursor-pointer flex-row items-center gap-1.5 rounded-lg bg-gray-100 py-1.5 px-2 text-xs font-medium transition-colors hover:bg-gray-200 dark:bg-zinc-900 dark:hover:bg-zinc-700">
-        <OutLink
+      <div className="flex cursor-pointer flex-row items-center gap-1.5 rounded-lg bg-gray-100 px-2 py-1.5 text-xs font-medium transition-colors hover:bg-gray-200 dark:bg-zinc-900 dark:hover:bg-zinc-700">
+        <PlainLink
           href={projectLink.links[0]}
           className="flex flex-row items-center gap-1.5"
         >
           <ProjectLinkIcon name={projectLink.name} />
           {projectLink.name} <OutLinkIcon />
-        </OutLink>
+        </PlainLink>
       </div>
     )
   }
@@ -53,7 +53,7 @@ function ProjectLinkItem({ projectLink }: LinkSectionItemProps) {
   if (projectLink.name === 'Changelog') {
     assert(projectLink.links.length === 1)
     return (
-      <div className="flex cursor-pointer flex-row items-center gap-1.5 rounded-lg bg-gradient-to-r from-purple-100 to-pink-100 py-1.5 px-2 text-xs font-medium text-white transition-colors">
+      <div className="flex cursor-pointer flex-row items-center gap-1.5 rounded-lg bg-gradient-to-r from-purple-100 to-pink-100 px-2 py-1.5 text-xs font-medium text-white transition-colors">
         <Link
           href={projectLink.links[0]}
           className="flex flex-row items-center gap-1.5"
@@ -79,10 +79,10 @@ function ProjectLinkItem({ projectLink }: LinkSectionItemProps) {
         const parsedSocial =
           projectLink.name === 'Social' ? parseSocial(link) : undefined
         return (
-          <OutLink
+          <PlainLink
             key={link}
             href={link}
-            className="flex items-center gap-1.5 rounded-lg py-1.5 px-3 text-xs font-medium transition-colors hover:bg-gray-200 dark:hover:bg-zinc-700"
+            className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors hover:bg-gray-200 dark:hover:bg-zinc-700"
           >
             {parsedSocial?.platform && (
               <ProductIcon
@@ -93,7 +93,7 @@ function ProjectLinkItem({ projectLink }: LinkSectionItemProps) {
             )}
             {parsedSocial ? parsedSocial.text : formatLink(link)}{' '}
             <OutLinkIcon />
-          </OutLink>
+          </PlainLink>
         )
       })}
     </HoverableDropdown>

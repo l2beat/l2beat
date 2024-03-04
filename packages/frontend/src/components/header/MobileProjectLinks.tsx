@@ -1,6 +1,6 @@
-import { default as classNames } from 'classnames'
 import React from 'react'
 
+import { cn } from '../../utils/cn'
 import { ChevronDownIcon, ProjectLink } from '../icons'
 import { LinkSectionLink } from '../project/links/LinkSectionLink'
 
@@ -10,12 +10,13 @@ interface MobileProjectLinksProps {
 
 export function MobileProjectLinks(props: MobileProjectLinksProps) {
   return (
-    <div className="Dropdown">
+    <div data-role="dropdown">
       <label className="flex items-center justify-between py-4">
         <input
           type="checkbox"
           autoComplete="off"
-          className="Dropdown-Button peer hidden"
+          className="peer hidden"
+          data-role="dropdown-button"
         />
         <div>
           <span className="font-bold">Links:</span>
@@ -25,7 +26,7 @@ export function MobileProjectLinks(props: MobileProjectLinksProps) {
         </div>
         <ChevronDownIcon className="transition-transform duration-300 peer-checked:-rotate-180" />
       </label>
-      <div className="Dropdown-Item hidden">
+      <div className="hidden" data-role="dropdown-item">
         <table className="w-full table-fixed border-collapse text-left text-xs">
           <tbody>
             {props.projectLinks.map(({ name, links }, i) => (
@@ -34,14 +35,14 @@ export function MobileProjectLinks(props: MobileProjectLinksProps) {
                 key={i}
               >
                 <th
-                  className={classNames(
+                  className={cn(
                     'w-[110px] py-3 align-top font-medium text-gray-500 dark:text-gray-550',
                     i === 0 && 'pt-0',
                   )}
                 >
                   {name}
                 </th>
-                <td className={classNames('py-3', i === 0 && 'pt-0')}>
+                <td className={cn('py-3', i === 0 && 'pt-0')}>
                   {links.map((x, i) => (
                     <LinkSectionLink key={i} href={x} name={name} />
                   ))}

@@ -22,6 +22,8 @@ export function getProps(
       navbar: getNavbarProps(config, 'scaling'),
       footer: getFooterProps(config),
       showActivity: config.features.activity,
+      showLiveness: config.features.liveness,
+      showFinality: config.features.finality,
     },
     wrapper: {
       banner: config.features.banner,

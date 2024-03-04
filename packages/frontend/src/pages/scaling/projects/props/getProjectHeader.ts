@@ -76,6 +76,10 @@ export function getProjectHeader(
     },
     tpsDaily: tpsDaily?.toFixed(2) ?? '',
     tpsWeeklyChange,
+    tvlWarning:
+      project.id === ProjectId('polygonzkevm')
+        ? 'The TVL is currently shared among all projects using the shared Polygon CDK contracts.'
+        : undefined,
     transactionMonthlyCount:
       transactionMonthlyCount !== undefined
         ? formatLargeNumber(transactionMonthlyCount)

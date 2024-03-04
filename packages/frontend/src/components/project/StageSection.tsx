@@ -14,12 +14,12 @@ import { StageBadge } from '../stages/StageBadge'
 import { StageDisclaimer } from '../stages/StageDisclaimer'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
 import { ProjectSectionId } from './sectionId'
-import { UnderReviewCallout } from './UnderReviewCallout'
 import { WarningBar } from './WarningBar'
 
 export interface StageSectionProps {
   title: string
   id: ProjectSectionId
+  sectionOrder: number
   icon: string
   name: string
   type: string
@@ -30,12 +30,18 @@ export interface StageSectionProps {
 export function StageSection(props: StageSectionProps) {
   if (props.stageConfig.stage === 'UnderReview' || props.isUnderReview) {
     return (
-      <ProjectDetailsSection title={props.title} id={props.id} className="mt-4">
+      <ProjectDetailsSection
+        title={props.title}
+        id={props.id}
+        sectionOrder={props.sectionOrder}
+        isUnderReview
+        includeChildrenIfUnderReview
+      >
         <div className="mb-6 font-medium">
           <img
             src={props.icon}
             alt={props.name}
-            className="relative -top-0.5 mr-2 inline-block h-6 w-6"
+            className="relative -top-0.5 mr-2 inline-block size-6"
           />
           {props.name} is currently
           <StageBadge
@@ -45,7 +51,6 @@ export function StageSection(props: StageSectionProps) {
           />
           for stage assignment.
         </div>
-        <UnderReviewCallout />
       </ProjectDetailsSection>
     )
   }
@@ -56,12 +61,16 @@ export function StageSection(props: StageSectionProps) {
       : UnderReviewIcon
 
   return (
-    <ProjectDetailsSection title={props.title} id={props.id} className="mt-4">
+    <ProjectDetailsSection
+      title={props.title}
+      id={props.id}
+      sectionOrder={props.sectionOrder}
+    >
       <div className="mb-6 font-medium">
         <img
           src={props.icon}
           alt={props.name}
-          className="relative -top-0.5 mr-2 inline-block h-6 w-6"
+          className="relative -top-0.5 mr-2 inline-block size-6"
         />
         {props.name} is a{' '}
         <StageBadge
@@ -90,13 +99,15 @@ export function StageSection(props: StageSectionProps) {
         return (
           <div
             key={stage.stage}
-            className="Dropdown mb-4 rounded-lg bg-gray-100 dark:bg-neutral-700"
+            className="mb-4 rounded-lg bg-gray-200 dark:bg-zinc-700"
+            data-role="dropdown"
           >
             <label className="flex cursor-pointer items-center justify-between p-4">
               <input
                 type="checkbox"
                 autoComplete="off"
-                className="Dropdown-Button peer hidden"
+                className="peer hidden"
+                data-role="dropdown-button"
               />
               <div className="flex select-none items-center gap-3">
                 <StageBadge stage={stage.stage} big />
@@ -116,7 +127,7 @@ export function StageSection(props: StageSectionProps) {
                 ) : (
                   <div className="flex items-center gap-2">
                     {stage.stage === 'Stage 0' ? (
-                      <RoundedWarningIcon className="h-4 w-4 shrink-0 fill-yellow-300" />
+                      <RoundedWarningIcon className="size-4 shrink-0 fill-yellow-300" />
                     ) : (
                       <MissingIcon className="shrink-0" />
                     )}
@@ -126,7 +137,10 @@ export function StageSection(props: StageSectionProps) {
               </div>
               <ChevronDownIcon className="transition-transform duration-300 peer-checked:-rotate-180" />
             </label>
-            <ul className="Dropdown-Item pointer-events-none mx-4 hidden space-y-2 pb-4 md:px-4 md:pb-6">
+            <ul
+              className="mx-4 hidden space-y-2 pb-4 md:px-4 md:pb-6"
+              data-role="dropdown-item"
+            >
               {satisfied.map((req, i) => (
                 <li key={i} className="flex">
                   <SatisfiedIcon className="relative top-0.5 shrink-0" />
@@ -146,7 +160,7 @@ export function StageSection(props: StageSectionProps) {
               {missing.map((req, i) => (
                 <li key={i} className="flex">
                   {stage.stage === 'Stage 0' ? (
-                    <RoundedWarningIcon className="h-4 w-4 shrink-0 fill-yellow-300" />
+                    <RoundedWarningIcon className="size-4 shrink-0 fill-yellow-300" />
                   ) : (
                     <MissingIcon className="relative top-0.5 shrink-0" />
                   )}

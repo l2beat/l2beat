@@ -43,130 +43,173 @@ Optionally if you want to speed up the price collection obtain an api key from:
 Once you have everything create a `.env` file that configures the app's
 environment variables. One variable per line `KEY=value`.
 
-#### Required
+### Database
 
-- `LOCAL_DB_URL` - Database url used in `yarn start`. You most likely want to set this to `postgresql://postgres:password@localhost:5432/l2beat_local`
-- `TEST_DB_URL` - Database url used in `yarn test`. You most likely want to set this to `postgresql://postgres:password@localhost:5432/l2beat_test`
-- `DATABASE_URL` - Database url used in production deployment
-- `TVL_ETHEREUM_ETHERSCAN_API_KEY` - API key for Etherscan
-- `TVL_ETHEREUM_PROVIDER_URL` - API Url for Ethereum QuickNode provider
-
-#### Optional
-
-- `STARKEX_API_KEY` - Starkex API key
-- `COINGECKO_API_KEY` (Optional) - API key for Coingecko
-- `LOG_LEVEL` (Optional) - String specifying the log level, options: "NONE", "CRITICAL", "ERROR", "WARN", "INFO", "DEBUG", "TRACE"
-- `PORT` (Optional) - The port on which the application exposes the api
-- `FRESH_START` (default `false`) - When set to `true` it will rollback all database migrations on start before migrating to latest version
-- `ACTIVITY_ENABLED` (default `false`) - When set to `true` activity feature is enabled
-- `TVL_ENABLED` (default `true`) - When set to `true` tvl module is enabled
-- `TVL_ETHEREUM_ENABLED` (default `true`) - When set to `true` ethereum tvl sync is enabled
-- `TVL_ARBITRUM_ENABLED` (default `false`) - When set to `true` arbitrum tvl sync is enabled
-- `TVL_OPTIMISM_ENABLED` (default `false`) - When set to `true` optimism tvl sync is enabled
-- `TVL_BASE_ENABLED` (default `false`) - When set to `true` base tvl sync is enabled
-- `TVL_ARBITRUM_PROVIDER_URL` - API Url for Arbitrum QuickNode provider
-- `TVL_OPTIMISM_PROVIDER_URL` - API Url for Optimism QuickNode provider
-- `TVL_BASE_PROVIDER_URL` - API Url for Base QuickNode provider
-- `TVL_ARBITRUM_ETHERSCAN_API_KEY` - API key for Arbiscan
-- `TVL_OPTIMISM_ETHERSCAN_API_KEY` - API key for Optimistic etherscan
-- `TVL_BASE_ETHERSCAN_API_KEY` - API key for Basescan
-- `STATUS_ENABLE`(default `true`) - enable/disable status module
-- `ACTIVITY_PROJECTS_EXCLUDED_FROM_API` - allows to exclude certain projects from the activity API response
-
-#### Discovery/Bot related
-
-- `DISCOVERY_ETHEREUM_RPC_URL`
-- `DISCOVERY_ETHEREUM_RPC_GETLOGS_MAX_RANGE` - maximum range for getLogs() call. Optional, by default no limit.
-- `DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY`
-- `WATCHMODE_ENABLED` (Optional) - Enable update monitor's watch mode
-- `UPDATE_MONITOR_RUN_ON_START` (default `true`) - Prevent UpdateMonitor from running on start when developing locally
-- `PUBLIC_DISCORD_CHANNEL_ID` - public channel id the message will be sent to
-- `INTERNAL_DISCORD_CHANNEL_ID` - internal channel id the message will be sent to
-- `DISCORD_TOKEN` - Bot account authentication token, for more details go to `DiscordClient.ts`
-
-##### Multichain discovery CLI
-
-If you want to use multichain discovery cli, make sure you include the `RPC_URL` and `ETHERSCAN_API_KEY` for desired chains. If you want to use one RPC provider, all of them (unless stated in brackets) are supported by <https://www.quicknode.com/> and <https://www.ankr.com/>. Etherscan API key should be created by creating an account on Etherscan instance for every chain separately (check config.discovery.ts for etherscan links).
-
-- `DISCOVERY_ARBITRUM_RPC_URL` (Optional)
-- `DISCOVERY_ARBITRUM_ETHERSCAN_API_KEY` (Optional)
-- `DISCOVERY_OPTIMISM_RPC_URL` (Optional)
-- `DISCOVERY_OPTIMISM_ETHERSCAN_API_KEY` (Optional)
-- `DISCOVERY_POLYGON_POS_RPC_URL` (Optional)
-- `DISCOVERY_POLYGON_POS_ETHERSCAN_API_KEY` (Optional)
-- `DISCOVERY_BSC_RPC_URL` (Optional)
-- `DISCOVERY_BSC_ETHERSCAN_API_KEY` (Optional)
-- `DISCOVERY_AVALANCHE_RPC_URL` (Optional)
-- `DISCOVERY_AVALANCHE_ETHERSCAN_API_KEY` (Optional)
-- `DISCOVERY_CELO_RPC_URL` (Optional)
-- `DISCOVERY_CELO_ETHERSCAN_API_KEY` (Optional)
-- `DISCOVERY_LINEA_RPC_URL` (Optional) (Infura)
-- `DISCOVERY_LINEA_ETHERSCAN_API_KEY` (Optional)
-- `DISCOVERY_BASE_RPC_URL` (Optional)
-- `DISCOVERY_BASE_ETHERSCAN_API_KEY` (Optional)
-- `DISCOVERY_POLYGON_ZKEVM_RPC_URL` (Optional)
-- `DISCOVERY_POLYGON_ZKEVM_ETHERSCAN_API_KEY` (Optional)
-- `DISCOVERY_GNOSIS_RPC_URL` (Optional)
-- `DISCOVERY_GNOSIS_ETHERSCAN_API_KEY` (Optional)
-
-#### .env boilerplate
-
-```bash
-LOCAL_DB_URL=postgresql://postgres:password@localhost:5432/l2beat_local
-TEST_DB_URL=postgresql://postgres:password@localhost:5432/l2beat_test
-DATABASE_URL=
-
-TVL_ETHEREUM_ETHERSCAN_API_KEY=
-TVL_ETHEREUM_PROVIDER_URL=
-
-#-----OPTIONAL-----
-# STARKEX_API_KEY=
-# COINGECKO_API_KEY=
-# LOG_LEVEL=
-# PORT=
-# FRESH_START=
-# ACTIVITY_ENABLED=
-# TVL_ENABLED=
-# ETHEREUM_TVL_ENABLED=
-# ARBITRUM_TVL_ENABLED=
-# ARBISCAN_API_KEY=
-# ARBITRUM_PROVIDER_URL=
-## Should tvl endpoint return 404 if data is not synced yet? - defaults to false
-# ERROR_ON_UNSYNCED_TVL=true
-# UPDATE_MONITOR_RUN_ON_START=
-# ACTIVITY_PROJECTS_EXCLUDED_FROM_API=project-a project-b
-
-#-----DISCOVERY-----
-# WATCHMODE_ENABLED=
-# PUBLIC_DISCORD_CHANNEL_ID=
-# INTERNAL_DISCORD_CHANNEL_ID=
-# DISCORD_TOKEN=
-# DISCOVERY_ETHEREUM_RPC_URL=
-# DISCOVERY_ETHEREUM_RPC_GETLOGS_MAX_RANGE=
-# DISCOVERY_ETHEREUM_ETHERSCAN_API_KEY=
-
-#-----DISCOVERY CLI (MULTICHAIN, OPTIONAL)-----
-# DISCOVERY_ARBITRUM_RPC_URL=
-# DISCOVERY_ARBITRUM_ETHERSCAN_API_KEY=
-# DISCOVERY_OPTIMISM_RPC_URL=
-# DISCOVERY_OPTIMISM_ETHERSCAN_API_KEY=
-# DISCOVERY_POLYGON_POS_RPC_URL=
-# DISCOVERY_POLYGON_POS_ETHERSCAN_API_KEY=
-# DISCOVERY_BSC_RPC_URL=
-# DISCOVERY_BSC_ETHERSCAN_API_KEY=
-# DISCOVERY_AVALANCHE_RPC_URL=
-# DISCOVERY_AVALANCHE_ETHERSCAN_API_KEY=
-# DISCOVERY_CELO_RPC_URL=
-# DISCOVERY_CELO_ETHERSCAN_API_KEY=
-# DISCOVERY_LINEA_RPC_URL=
-# DISCOVERY_LINEA_ETHERSCAN_API_KEY=
-# DISCOVERY_BASE_RPC_URL=
-# DISCOVERY_BASE_ETHERSCAN_API_KEY=
-# DISCOVERY_POLYGON_ZKEVM_RPC_URL=
-# DISCOVERY_POLYGON_ZKEVM_ETHERSCAN_API_KEY=
-
+For local development you set the following variables:
 
 ```
+LOCAL_DB_URL=postgresql://postgres:password@localhost:5432/l2beat_local
+TEST_DB_URL=postgresql://postgres:password@localhost:5432/l2beat_test
+```
+
+If you used a different database setup modify those values accordingly. The
+`TEST_DB_URL` is used by only the test suite. Omitting this variable will cause
+the database tests to be skipped.
+
+You might want to clear the database before running the backend. You can do it
+by setting `FRESH_START=true` env variable.
+
+### Features
+
+The backend can do a lot of things and you most likely don't want to run it all locally. You can enable/disable features by using the feature flag system configured via the `FEATURES` environment variable.
+
+Below are some examples of possible configurations:
+
+```sh
+# enable all features
+FEATURES=*
+
+# enable everything except tvl
+FEATURES=*,!tvl
+
+# enable only tvl
+FEATURES=tvl
+
+# enable tvl and activity
+FEATURES=tvl,activity
+
+# enable tvl, but not for arbitrum
+FEATURES=tvl,!tvl.arbitrum
+
+# enable tvl, but only for ethereum
+FEATURES=tvl,!tvl.*,tvl.ethereum
+```
+
+### `tvl` feature
+
+The tvl feature is configured via the following environment variables:
+
+- `ERROR_ON_UNSYNCED_TVL` - Optional. Defaults to false
+
+- `COINGECKO_API_KEY` - Optional. Speeds up price collection. See https://www.coingecko.com/en/api/pricing
+
+And a set the following variables for each enabled chain:
+
+- `TVL_<CHAIN>_PROVIDER_URL` - RPC url for the chain, for example from Alchemy
+- `TVL_<CHAIN>_RPC_CALLS_PER_MINUTE` - Optional. Rate limits the number of calls to the RPC. Defaults to 60
+- `TVL_<CHAIN>_ETHERSCAN_API_KEY` - Etherscan API key. Only needed if the chain uses Etherscan. Blockscout doesn't need it.
+
+**Feature flags:**
+
+- `tvl` - enables tvl feature
+- `tvl.[project_id]` - enables tvl for project with given project_id
+
+### `liveness` feature
+
+The liveness feature is configured via the following environment variables:
+
+- `LIVENESS_CLIENT_EMAIL` - BigQuery credentials
+- `LIVENESS_PRIVATE_KEY` - BigQuery credentials
+- `LIVENESS_PROJECT_ID` - BigQuery credentials
+- `LIVENESS_BIGQUERY_LIMIT_GB` - Optional. Defaults to 15
+- `LIVENESS_BIGQUERY_WARNING_LIMIT_GB` - Optional. Defaults to 8
+
+**Feature flags:**
+
+- `liveness` - enables liveness feature
+
+### `finality` feature
+
+- `FINALITY_ETHEREUM_PROVIDER_URL` - Ethereum RPC url
+- `FINALITY_ETHEREUM_PROVIDER_CALLS_PER_MINUTE` - Optional. Rate limits the number of calls to the RPC. Defaults to 600
+
+**Feature flags:**
+
+- `finality` - enables finality feature
+- `finality.[project_id]` - enables finality for project with given project_id
+
+In development.
+
+### `activity` feature
+
+The activity feature is configured via the following environment variables:
+
+- `STARKEX_API_KEY`
+- `STARKEX_CALLS_PER_MINUTE` - Optional. Rate limits the number of calls to the RPC. Defaults to 600
+- `ACTIVITY_PROJECTS_EXCLUDED_FROM_API` - Optional. Space separated list of project ids to exclude from the API.
+
+And a set the following variables for each enabled chain:
+
+- `ACTIVITY_<CHAIN>_URL` - RPC url for the chain, for example from Alchemy
+- `ACTIVITY_<CHAIN>_CALLS` - Optional. Rate limits the number of calls to the RPC
+
+**Feature flags:**
+
+- `activity` - enables activity feature
+
+### `status` feature
+
+The status feature doesn't require any configuration.
+
+**Feature flags:**
+
+- `status` - enables the status feature
+
+### `updateMonitor` feature
+
+The updateMonitor feature is configured via the following environment variables:
+
+- `UPDATE_MONITOR_RUN_ON_START` - Optional. Defaults to true
+- `DISCORD_TOKEN` - Optional. Discord bot token
+- `INTERNAL_DISCORD_CHANNEL_ID` - Optional. Discord channel id for internal messages
+- `PUBLIC_DISCORD_CHANNEL_ID` - Optional. Discord channel id for public messages
+
+And a set the following variables for each enabled chain:
+
+- `DISCOVERY_<CHAIN>_RPC_URL` - RPC url for the chain, for example from Alchemy
+- `DISCOVERY_<CHAIN>_RPC_GETLOGS_MAX_RANGE` - Optional. Limits the range of getLogs calls
+- `DISCOVERY_<ENV_NAME>_ETHERSCAN_API_KEY` - Etherscan API key
+
+**Feature flags:**
+
+- `updateMonitor` - enables the update monitor
+
+### `diffHistory` feature
+
+The diffHistory feature is configured per chain with the same variables as the `updateMonitor` feature.
+
+**Feature flags:**
+
+- `diffHistory` - enables the diff history
+
+### `tvlCleaner` feature
+
+The tvlCleaner feature is designed to remove redundant data kept in database. It will only keep the sixHourly data 93 days to the past and hourly data 10 days to the past.
+
+**Feature flags:**
+
+- `tvlCleaner` - enables the cleaner
+
+### `cache` feature
+
+The cache feature is running functions every 10 minutes that would be ran on endpoint invoke.
+
+**Feature flags:**
+
+- `cache.liveness` - enables the cache for the liveness endpoint
+- `cache.tvl` - enables the cache for the tvl endpoint
+
+### Logging
+
+You can configure the log level by setting the `LOG_LEVEL` variable. The possible values are:
+
+- `NONE` (disables all logging)
+- `CRITICAL`
+- `ERROR`
+- `WARN`
+- `INFO` (default)
+- `DEBUG`
+- `TRACE`
 
 ## Scripts
 
@@ -197,72 +240,7 @@ TVL_ETHEREUM_PROVIDER_URL=
 
 The `/status` endpoints were created to see the current state of our backend.
 
----
-
-#### `/status/discovery`
-
-Discovery dashboard showing current discovered.json & potential diffs for every project
-
-Example
-
-```
-https://api.l2beat.com/status/discovery
-```
-
-#### `/status/tvl`
-
-Endpoint showing the current sync status of our TVL module
-
-Example
-
-```
-https://api.l2beat.com/status/tvl
-```
-
-#### `/status/prices`
-
-Query parameters:
-
-- `from` - (number) UTC timestamp from when to start the query (default earliest)
-- `to` - (number) UTC timestamp when to end the query (default latest)
-
-Example
-
-```
-https://api.l2beat.com/status/prices?from=1687599307&to=1690191307
-```
-
----
-
-#### `/status/balances`
-
-Query parameters:
-
-- `from` - (number) UTC timestamp from when to start the query (default earliest)
-- `to` - (number) UTC timestamp when to end the query (default latest)
-- `chainId` - (number) which chainId to check the status of (default 1 (ETH))
-
-Example
-
-```
-https://api.l2beat.com/status/balances?chainId=1&from=1687599307&to=1690191307
-```
-
----
-
-#### `/status/reports`
-
-Query parameters:
-
-- `from` - (number) UTC timestamp from when to start the query (default earliest)
-- `to` - (number) UTC timestamp when to end the query (default latest)
-- `chainId` - (number) which chainId to check the status of (default 1 (ETH))
-- `type` - (string) which value type to check the status of(default CBV)
-
-Example
-
-```
-https://api.l2beat.com/status/reports/?chainId=1&type=CBV&from=1687599307&to=1690191307
-```
-
----
+- `/activity/status`
+- `/status/discovery`
+- `/status/liveness`
+- `/status/tvl`

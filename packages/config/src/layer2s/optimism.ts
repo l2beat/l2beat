@@ -1,17 +1,9 @@
-import {
-  AssetId,
-  ChainId,
-  CoingeckoId,
-  EthereumAddress,
-  Token,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION, MILESTONES, NUGGETS } from '../common'
 import { subtractOneAfterBlockInclusive } from '../common/assessCount'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
-import { formatSeconds } from '../utils/formatSeconds'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { opStack } from './templates/opStack'
 import { Layer2 } from './types'
@@ -22,83 +14,10 @@ const upgradeability = {
   upgradeDelay: 'No delay',
 }
 
-const challengePeriod: number = discovery.getContractValue<number>(
+const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
   'L2OutputOracle',
   'FINALIZATION_PERIOD_SECONDS',
 )
-
-const TOKENS: Omit<Token, 'chainId'>[] = [
-  {
-    id: AssetId('op-optimism'),
-    name: 'Optimism',
-    coingeckoId: CoingeckoId('optimism'),
-    address: EthereumAddress('0x4200000000000000000000000000000000000042'),
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/25244/large/Optimism.png?1660904599',
-    symbol: 'OP',
-    decimals: 18,
-    sinceTimestamp: new UnixTime(1654039974),
-    category: 'other',
-    type: 'NMV',
-    formula: 'circulatingSupply',
-  },
-  {
-    id: AssetId.USDC_ON_OPTIMISM,
-    name: 'USD Coin',
-    coingeckoId: CoingeckoId('usd-coin'),
-    address: EthereumAddress('0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85'),
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png?1547042389',
-    symbol: 'USDC',
-    decimals: 6,
-    sinceTimestamp: new UnixTime(1668453318),
-    category: 'stablecoin',
-    type: 'NMV',
-    formula: 'totalSupply',
-  },
-  {
-    id: AssetId('optimism:kwenta-kwenta'),
-    name: 'Kwenta',
-    symbol: 'KWENTA',
-    decimals: 18,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/27409/large/kwenta.png?1668768595',
-    address: EthereumAddress('0x920cf626a271321c151d027030d5d08af699456b'),
-    coingeckoId: CoingeckoId('kwenta'),
-    sinceTimestamp: new UnixTime(1668733200),
-    category: 'other',
-    type: 'NMV',
-    formula: 'circulatingSupply',
-  },
-  {
-    id: AssetId('optimism:velo-velodrome-finance'),
-    name: 'Velodrome Finance',
-    symbol: 'VELO',
-    decimals: 18,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/25783/large/velo.png?1653817876',
-    address: EthereumAddress('0x9560e827af36c94d2ac33a39bce1fe78631088db'),
-    coingeckoId: CoingeckoId('velodrome-finance'),
-    sinceTimestamp: new UnixTime(1687392369),
-    category: 'other',
-    type: 'NMV',
-    formula: 'circulatingSupply',
-  },
-  {
-    id: AssetId('optimism:exa-exactly-token'),
-    name: 'Exactly Token',
-    symbol: 'EXA',
-    decimals: 18,
-    iconUrl:
-      'https://assets.coingecko.com/coins/images/31089/large/EXA.png?1696529921',
-    address: EthereumAddress('0x1e925de1c68ef83bd98ee3e130ef14a50309c01b'),
-    coingeckoId: CoingeckoId('exa'),
-    sinceTimestamp: new UnixTime(1691546460),
-    category: 'other',
-    type: 'NMV',
-    formula: 'circulatingSupply',
-  },
-]
 
 export const optimism: Layer2 = opStack({
   discovery,
@@ -136,11 +55,13 @@ export const optimism: Layer2 = opStack({
       explanation: `Optimism is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
         HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
       )} or until it gets published. The state root gets finalized ${formatSeconds(
-        challengePeriod,
+        FINALIZATION_PERIOD_SECONDS,
       )} after it has been posted.`,
     },
+    finality: {
+      finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
+    },
   },
-  tokenList: TOKENS.map((t) => ({ ...t, chainId: ChainId.OPTIMISM })),
   associatedTokens: ['OP'],
   upgradeability,
   l1StandardBridgeEscrow: EthereumAddress(
@@ -148,13 +69,10 @@ export const optimism: Layer2 = opStack({
   ),
   transactionApi: {
     type: 'rpc',
+    defaultUrl: 'https://mainnet.optimism.io/',
     startBlock: 1,
     assessCount: subtractOneAfterBlockInclusive(105235064),
   },
-  sequencerAddress: EthereumAddress(
-    discovery.getContractValue('SystemConfig', 'batcherHash'),
-  ),
-  inboxAddress: EthereumAddress('0xFF00000000000000000000000000000000000010'),
   genesisTimestamp: new UnixTime(1686074603),
   finality: {
     type: 'OPStack',
@@ -167,7 +85,10 @@ export const optimism: Layer2 = opStack({
     genesisState:
       'Since OP Mainnet has migrated from the OVM to Bedrock, a node must be synced using a data directory that can be found [here](https://community.optimism.io/docs/useful-tools/networks/#links). To reproduce the migration itself, see this [guide](https://blog.oplabs.co/reproduce-bedrock-migration/).',
   },
+  upgradesAndGovernance:
+    'All contracts are upgradable by the `ProxyAdmin` which is controlled by a 2/2 multisig composed by the Optimism Foundation and a Security Council. Currently, the Guardian, the Proposer and the Challenger roles are assigned to single actors and are immutable, meaning that an implementation upgrade is required to update them. \n\nThe `FoundationMultisig_2` controls both the Guardian and Challenger role. The single Sequencer actor can be modified by the `FoundationMultisig_2` via the `SystemConfig` contract. \n\nAt the moment, for regular upgrades, the DAO signals its intent by voting on upgrade proposals, but has no direct control over the upgrade process.',
   isNodeAvailable: true,
+  hasProperSecurityCouncil: false,
   milestones: [
     {
       name: 'Fault Proof System is live on OP Goerli',
@@ -272,12 +193,30 @@ export const optimism: Layer2 = opStack({
   },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
-      'OptimismMultisig',
-      'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals, and as a Challenger for state roots. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
+      'ProxyAdminOwner',
+      'Owner of the ProxyAdmin. It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component.',
+    ),
+    ...discovery.getMultisigPermission(
+      'FoundationMultisig_1',
+      'Member of the ProxyAdminOwner.',
+    ),
+    ...discovery.getMultisigPermission(
+      'SecurityCouncilMultisig',
+      'Member of the ProxyAdminOwner.',
+      [
+        {
+          text: 'Security Council members - Optimism Collective forum',
+          href: 'https://gov.optimism.io/t/security-council-vote-2-initial-member-ratification/7118',
+        },
+      ],
+    ),
+    ...discovery.getMultisigPermission(
+      'FoundationMultisig_2',
+      'This address is the owner of the following contracts: SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals, and as a Challenger for state roots.',
     ),
   ],
   chainConfig: {
-    devId: 'optimism',
+    name: 'optimism',
     chainId: 10,
     explorerUrl: 'https://optimistic.etherscan.io',
     explorerApi: {
@@ -288,5 +227,20 @@ export const optimism: Layer2 = opStack({
     // The first full hour timestamp that will return the block number
     // https://optimistic.etherscan.io/block/138
     minTimestampForTvl: UnixTime.fromDate(new Date('2021-11-11T22:00:00Z')),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 4286263,
+        version: '3',
+      },
+      {
+        sinceBlock: 0,
+        batchSize: 150,
+        address: EthereumAddress('0xE295aD71242373C37C5FdA7B57F26f9eA1088AFe'),
+        version: 'optimism',
+      },
+    ],
+    coingeckoPlatform: 'optimistic-ethereum',
   },
 })

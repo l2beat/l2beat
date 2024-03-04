@@ -1,12 +1,17 @@
-import classNames from 'classnames'
 import React from 'react'
 
 import { unifyPercentagesAsIntegers } from '../../utils'
 import { formatUSD } from '../../utils/utils'
 import { UpcomingBadge } from '../badge/UpcomingBadge'
-import { CanonicalIcon, ExternalIcon, NativeIcon } from '../icons'
+import {
+  CanonicalIcon,
+  ExternalIcon,
+  NativeIcon,
+  RoundedWarningIcon,
+} from '../icons'
 import { Link } from '../Link'
 import { PercentChange } from '../PercentChange'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 
 export interface TvlStats {
   tvlChange: string
@@ -19,7 +24,10 @@ export interface TvlStats {
 export interface TvlSummaryProps {
   stats?: TvlStats
   tvlBreakdownHref?: string
+  tvlWarning?: string
   showTvlBreakdown?: boolean
+  isArchived?: boolean
+  type?: 'bridge' | 'layer2' | 'layer3'
 }
 
 export function TvlSummary(props: TvlSummaryProps) {
@@ -52,33 +60,28 @@ export function TvlSummary(props: TvlSummaryProps) {
           shortLabel: 'Canonical',
           value: formatUSD(props.stats.canonical),
           usage: usage?.canonical ?? 1,
-          icon: <CanonicalIcon className="h-[9px] w-[9px]" />,
+          icon: <CanonicalIcon className="size-[9px]" />,
         },
         {
           label: 'Externally Bridged',
           shortLabel: 'External',
           value: formatUSD(props.stats.external),
           usage: usage?.external ?? 1,
-          icon: <ExternalIcon className="h-[10px] w-[10px]" />,
+          icon: <ExternalIcon className="size-[10px]" />,
         },
         {
           label: 'Natively Minted',
           shortLabel: 'Native',
           value: formatUSD(props.stats.native),
           usage: usage?.native ?? 1,
-          icon: <NativeIcon className="h-[8px] w-[8px]" />,
+          icon: <NativeIcon className="size-[8px]" />,
         },
       ]
     : []
 
   return (
     <div className="bg-gray-100 p-4 dark:bg-zinc-900 md:flex md:flex-col md:gap-3 md:rounded-lg md:px-6 md:py-4">
-      <div
-        className={classNames(
-          'flex w-full flex-wrap items-baseline justify-between',
-          'md:gap-2',
-        )}
-      >
+      <div className="flex w-full flex-wrap items-baseline justify-between md:gap-2">
         <span className="text-lg font-medium md:hidden md:text-xs md:font-normal md:text-gray-500 md:dark:text-gray-600">
           Value Locked
         </span>
@@ -86,17 +89,39 @@ export function TvlSummary(props: TvlSummaryProps) {
           TVL
         </span>
 
-        {props.stats ? (
-          <div className="flex items-center gap-2 md:gap-1">
-            <p className="text-lg font-bold md:text-2xl md:leading-none">
-              {formatUSD(props.stats.tvl)}
-            </p>
-            {props.stats.tvl > 0 && (
-              <p className="text-xs font-bold md:text-base">
-                <PercentChange value={props.stats.tvlChange} />
+        {props.stats && (props.stats.tvl > 0 || props.isArchived) ? (
+          props.tvlWarning ? (
+            <Tooltip>
+              <TooltipTrigger className="flex items-center gap-1">
+                <p className="text-lg font-bold md:text-2xl md:leading-none">
+                  {formatUSD(props.stats.tvl)}
+                </p>
+                {props.stats.tvl > 0 && (
+                  <p className="text-xs font-bold md:text-base">
+                    <PercentChange value={props.stats.tvlChange} />
+                  </p>
+                )}
+                {props.tvlWarning && (
+                  <RoundedWarningIcon className="size-4 fill-yellow-700 dark:fill-yellow-300" />
+                )}
+              </TooltipTrigger>
+              <TooltipContent>{props.tvlWarning}</TooltipContent>
+            </Tooltip>
+          ) : (
+            <div className="flex items-center gap-1">
+              <p className="text-lg font-bold md:text-2xl md:leading-none">
+                {formatUSD(props.stats.tvl)}
               </p>
-            )}
-          </div>
+              {props.stats.tvl > 0 && (
+                <p className="text-xs font-bold md:text-base">
+                  <PercentChange value={props.stats.tvlChange} />
+                </p>
+              )}
+              {props.tvlWarning && (
+                <RoundedWarningIcon className="size-4 fill-yellow-700 dark:fill-yellow-300" />
+              )}
+            </div>
+          )
         ) : (
           <div className="w-auto">
             <UpcomingBadge />
@@ -136,7 +161,7 @@ export function TvlSummary(props: TvlSummaryProps) {
                 className="flex w-full flex-wrap items-end justify-between"
               >
                 <div className="flex items-center gap-1">
-                  <div className="flex h-2.5 w-2.5 items-center justify-center">
+                  <div className="flex size-2.5 items-center justify-center">
                     {s.icon}
                   </div>
                   <span className="text-xs leading-none text-gray-500 dark:text-gray-600">
@@ -158,7 +183,7 @@ export function TvlSummary(props: TvlSummaryProps) {
         </>
       ) : null}
       {props.showTvlBreakdown ? (
-        <div className="flex justify-center">
+        <div className="mt-2 flex justify-center md:mt-0">
           <Link href={props.tvlBreakdownHref} className="text-xs">
             View TVL Breakdown
           </Link>

@@ -2,7 +2,7 @@
   "name": "polygon-pos",
   "chain": "ethereum",
   "blockNumber": 17770180,
-  "configHash": "0xac0e650429335471436f5a7062a14488f3a41f97824925e0c15d306720a1ad44",
+  "configHash": "0xb8528a8124102b9ffec26837d8f1e40ad17f143a9f191fbeed14763bd7124c56",
   "version": 3,
   "contracts": [
     {

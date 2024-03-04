@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { Badge } from './Badge'
 
 export interface UpcomingBadgeProps {
@@ -9,13 +10,15 @@ export interface UpcomingBadgeProps {
 
 export function UpcomingBadge(props: UpcomingBadgeProps) {
   return (
-    <Badge
-      className={props.className}
-      type="gray"
-      title="The data for this item is not available yet"
-      oneSize
-    >
-      {props.isShort ? '?' : 'Coming soon'}
-    </Badge>
+    <Tooltip>
+      <TooltipTrigger>
+        <Badge className={props.className} type="gray" size="small">
+          {props.isShort ? '?' : 'Coming soon'}
+        </Badge>
+      </TooltipTrigger>
+      <TooltipContent>
+        The data for this item is not available yet
+      </TooltipContent>
+    </Tooltip>
   )
 }

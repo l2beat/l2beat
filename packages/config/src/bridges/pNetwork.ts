@@ -159,6 +159,14 @@ export const pNetwork: Bridge = {
         discovery.getPermissionedAccount('UOS Vault', 'PNETWORK'),
       ],
     },
+    {
+      name: 'pNetwork DAO',
+      description:
+        'A voting contract that controls the inflation withdrawal logic of PNT token.',
+      accounts: [
+        discovery.getPermissionedAccount('EthPntv2', 'inflationOwner'),
+      ],
+    },
     ...discovery.getMultisigPermission(
       'pNetwork Multisig',
       'Can upgrade ERC20 Vault V2.',

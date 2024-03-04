@@ -5,20 +5,12 @@ const SECONDS_PER_HOUR = 3600
 export function getHourlyTimestamps(from: UnixTime, to: UnixTime): UnixTime[] {
   if (from.gt(to)) throw new Error('FROM cannot be greater than TO')
 
-  const [start, end] = adjust(from, to)
+  from = from.toEndOf('hour')
+  to = to.toStartOf('hour')
 
   const result: UnixTime[] = []
-  const TIME_STEP = SECONDS_PER_HOUR
-  for (let i = start.toNumber(); i <= end.toNumber(); i += TIME_STEP) {
+  for (let i = from.toNumber(); i <= to.toNumber(); i += SECONDS_PER_HOUR) {
     result.push(new UnixTime(i))
   }
   return result
-}
-
-function adjust(from: UnixTime, to: UnixTime) {
-  const period = 'hour'
-  return [
-    from.isFull(period) ? from : from.toNext(period),
-    to.isFull(period) ? to : to.toStartOf(period),
-  ]
 }

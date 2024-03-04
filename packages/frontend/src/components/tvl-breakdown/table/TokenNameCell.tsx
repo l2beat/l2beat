@@ -10,7 +10,7 @@ export function TokenNameCell(props: TokenNameCellProps) {
   const token = safeGetTokenByAssetId(props.assetId)
   return (
     <div className="flex items-center justify-start gap-2 pr-5">
-      <img src={token?.iconUrl} className="h-5 w-5 rounded-full" />
+      <img src={token?.iconUrl} className="size-5 rounded-full" />
       <span className="text-xs font-medium">{token?.symbol}</span>
     </div>
   )

@@ -34,6 +34,12 @@ function getScalingLivenessViewEntry(
   livenessResponse: LivenessApiResponse,
 ): ScalingLivenessViewEntry {
   const liveness = livenessResponse.projects[project.id.toString()]
+  if (!liveness) {
+    throw new Error(
+      `Liveness data not found for project ${project.display.name}`,
+    )
+  }
+
   return {
     name: project.display.name,
     shortName: project.display.shortName,
@@ -47,18 +53,19 @@ function getScalingLivenessViewEntry(
     stage: project.stage,
     explanation: project.display.liveness?.explanation,
     stateUpdates: {
-      ...liveness?.stateUpdates,
+      ...liveness.stateUpdates,
       warning: project.display.liveness?.warnings?.stateUpdates,
     },
     batchSubmissions: {
-      ...liveness?.batchSubmissions,
+      ...liveness.batchSubmissions,
       warning: project.display.liveness?.warnings?.batchSubmissions,
     },
     proofSubmissions: {
-      ...liveness?.proofSubmissions,
+      ...liveness.proofSubmissions,
       warning: project.display.liveness?.warnings?.proofSubmissions,
     },
-    anomalyEntries: getAnomalyEntries(liveness?.anomalies),
+    anomalyEntries: getAnomalyEntries(liveness.anomalies),
+    isSynced: liveness.isSynced,
   }
 }
 
@@ -105,7 +112,7 @@ function getAnomalyEntries(
             type: typeToDisplayType(a),
             timestamp: a.timestamp.toNumber(),
             durationInSeconds: a.durationInSeconds,
-          } as const),
+          }) as const,
       )
       anomalies.sort((a, b) => a.timestamp - b.timestamp)
       result.push({

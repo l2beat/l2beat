@@ -35,8 +35,8 @@ export function getProps(
   const chartType: ChartType = project
     ? { type: 'project-tvl', slug: project.display.slug }
     : type === 'layers2s'
-    ? { type: 'layer2-tvl' }
-    : { type: 'bridges-tvl', includeCanonical: false }
+      ? { type: 'layer2-tvl' }
+      : { type: 'bridges-tvl', includeCanonical: false }
 
   return {
     props: {
@@ -47,7 +47,8 @@ export function getProps(
       chartType,
     },
     wrapper: {
-      htmlClassName: 'light meta',
+      htmlClassName: 'light overflow-hidden h-[100vh] meta',
+      bodyClassName: 'overflow-hidden h-[100vh]',
       metadata: { title: 'Meta Image', description: '', image: '', url: '' },
       preloadApi: getChartUrl(chartType),
       banner: false,
@@ -71,7 +72,8 @@ export function getPropsActivity(
       tpsWeeklyChange: weeklyChange,
     },
     wrapper: {
-      htmlClassName: 'light meta',
+      htmlClassName: 'light overflow-hidden h-[100vh] meta',
+      bodyClassName: 'overflow-hidden h-[100vh]',
       metadata: { title: 'Meta Image', description: '', image: '', url: '' },
       preloadApi: getChartUrl({ type: 'layer2-activity' }),
       banner: false,
@@ -95,8 +97,8 @@ export function getPropsDetailed(
   const chartType: ChartType = project
     ? { type: 'project-detailed-tvl', slug: project.display.slug }
     : type === 'layers2s'
-    ? { type: 'layer2-detailed-tvl' }
-    : { type: 'bridges-tvl', includeCanonical: false }
+      ? { type: 'layer2-detailed-tvl' }
+      : { type: 'bridges-tvl', includeCanonical: false }
 
   return {
     props: {
@@ -107,7 +109,8 @@ export function getPropsDetailed(
       chartType,
     },
     wrapper: {
-      htmlClassName: 'light meta',
+      htmlClassName: 'light overflow-hidden h-[100vh] meta',
+      bodyClassName: 'overflow-hidden h-[100vh]',
       metadata: { title: 'Meta Image', description: '', image: '', url: '' },
       preloadApi: getChartUrl(chartType),
       banner: false,

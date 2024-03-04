@@ -14,6 +14,7 @@ export class LoopringClient {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly logger: Logger,
+    private readonly url: string,
     opts?: LoopringClientOpts,
   ) {
     this.logger = logger.for(this)
@@ -36,7 +37,7 @@ export class LoopringClient {
 
   private async call(block: Block) {
     const query = new URLSearchParams({ id: block.toString() })
-    const url = `https://api3.loopring.io/api/v3/block/getBlock?${query.toString()}`
+    const url = `${this.url}/block/getBlock?${query.toString()}`
 
     const start = Date.now()
     const { httpResponse, error } = await this.httpClient

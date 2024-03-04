@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/ban-types
 export interface ProjectId extends String {
   _ProjectIdBrand: string
 }
@@ -14,8 +15,3 @@ ProjectId.LAYER2S = ProjectId('l2beat-layer2s')
 ProjectId.BRIDGES = ProjectId('l2beat-bridges')
 ProjectId.ETHEREUM = ProjectId('ethereum')
 ProjectId.ARBITRUM = ProjectId('arbitrum')
-ProjectId.OPTIMISM = ProjectId('optimism')
-ProjectId.BASE = ProjectId('base')
-ProjectId.LYRA = ProjectId('lyra')
-ProjectId.LINEA = ProjectId('linea')
-ProjectId.MANTAPACIFIC = ProjectId('mantapacific')

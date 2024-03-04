@@ -3,28 +3,26 @@ import { makeQuery } from './query'
 export function configureDropdowns() {
   const { $$ } = makeQuery(document.body)
 
-  if (!document.querySelector('.Dropdown')) {
-    return
-  }
-
-  const dropdowns = $$('.Dropdown')
+  const dropdowns = $$('[data-role=dropdown]')
 
   for (const dropdown of dropdowns) {
-    const button = dropdown.querySelector<HTMLInputElement>('.Dropdown-Button')
+    const button = dropdown.querySelector<HTMLInputElement>(
+      '[data-role=dropdown-button]',
+    )
     if (!button) continue
-    const hiddenItems = dropdown.querySelectorAll<HTMLElement>('.Dropdown-Item')
+    const hiddenItems = dropdown.querySelectorAll<HTMLElement>(
+      '[data-role=dropdown-item]',
+    )
 
     const closeDropdown = () => {
       hiddenItems.forEach((item) => {
         item.classList.add('hidden')
-        item.classList.add('pointer-events-none')
       })
     }
 
     const openDropdown = () => {
       hiddenItems.forEach((item) => {
         item.classList.toggle('hidden')
-        item.classList.toggle('pointer-events-none')
       })
     }
 

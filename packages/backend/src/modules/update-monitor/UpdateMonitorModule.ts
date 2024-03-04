@@ -8,16 +8,19 @@ import {
 import { HttpClient } from '@l2beat/shared'
 
 import { Config } from '../../config'
-import { Clock } from '../../core/Clock'
-import { createDiscoveryRunner } from '../../core/discovery/createDiscoveryRunner'
-import { UpdateMonitor } from '../../core/discovery/UpdateMonitor'
-import { UpdateNotifier } from '../../core/discovery/UpdateNotifier'
-import { UpdateMonitorRepository } from '../../peripherals/database/discovery/UpdateMonitorRepository'
-import { UpdateNotifierRepository } from '../../peripherals/database/discovery/UpdateNotifierRepository'
-import { DiscoveryCacheRepository } from '../../peripherals/database/DiscoveryCacheRepository'
-import { Database } from '../../peripherals/database/shared/Database'
+import { Database } from '../../peripherals/database/Database'
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'
+import { ChainConverter } from '../../tools/ChainConverter'
+import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
+import { UpdateMonitorController } from './api/UpdateMonitorController'
+import { createUpdateMonitorRouter } from './api/UpdateMonitorRouter'
+import { createDiscoveryRunner } from './createDiscoveryRunner'
+import { DiscoveryCacheRepository } from './repositories/DiscoveryCacheRepository'
+import { UpdateMonitorRepository } from './repositories/UpdateMonitorRepository'
+import { UpdateNotifierRepository } from './repositories/UpdateNotifierRepository'
+import { UpdateMonitor } from './UpdateMonitor'
+import { UpdateNotifier } from './UpdateNotifier'
 
 export function createUpdateMonitorModule(
   config: Config,
@@ -53,9 +56,11 @@ export function createUpdateMonitorModule(
     logger,
   )
 
+  const chainConverter = new ChainConverter(config.chains)
   const updateNotifier = new UpdateNotifier(
     updateNotifierRepository,
     discordClient,
+    chainConverter,
     logger,
   )
 
@@ -78,10 +83,19 @@ export function createUpdateMonitorModule(
     configReader,
     updateMonitorRepository,
     clock,
+    chainConverter,
     logger,
     !!config.updateMonitor.runOnStart,
     DISCOVERY_LOGIC_VERSION,
   )
+
+  const updateMonitorController = new UpdateMonitorController(
+    updateMonitorRepository,
+    config.projects,
+    configReader,
+    chainConverter,
+  )
+  const updateMonitorRouter = createUpdateMonitorRouter(updateMonitorController)
 
   const start = async () => {
     logger = logger.for('UpdateMonitorModule')
@@ -91,7 +105,7 @@ export function createUpdateMonitorModule(
   }
 
   return {
-    routers: [],
+    routers: [updateMonitorRouter],
     start,
   }
 }

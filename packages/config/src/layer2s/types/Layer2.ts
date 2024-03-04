@@ -12,6 +12,7 @@ import {
 import { ChainConfig } from '../../common/ChainConfig'
 import { ScalingProjectRiskView } from '../../common/ScalingProjectRiskView'
 import { ScalingProjectStateDerivation } from '../../common/ScalingProjectStateDerivation'
+import { ScalingProjectStateValidation } from '../../common/ScalingProjectStateValidation'
 import { ScalingProjectTechnology } from '../../common/ScalingProjectTechnology'
 import { StageConfig } from '../common/stages/types'
 import { Layer2FinalityConfig } from './Layer2FinalityConfig'
@@ -42,10 +43,12 @@ export interface Layer2 {
   technology: ScalingProjectTechnology
   /** Open-source node details */
   stateDerivation?: ScalingProjectStateDerivation
-  /** How project validates state? */
-  stateValidation?: string
+  /** Explains how project validates state */
+  stateValidation?: ScalingProjectStateValidation
   /** List of smart contracts used in the layer2 */
   contracts: ScalingProjectContracts
+  /** Upgrades and governance explained */
+  upgradesAndGovernance?: string
   /** List of permissioned addresses */
   permissions?: ScalingProjectPermission[] | 'UnderReview'
   /** Links to recent developments, milestones achieved by the project */
@@ -57,8 +60,9 @@ export interface Layer2 {
 export interface Layer2Display extends ScalingProjectDisplay {
   /** Technology provider */
   provider?: Layer2Provider
-  /** Explanation on how liveness data is gathered for given project */
+  /** Tooltip contents for liveness tab for given project */
   liveness?: Layer2LivenessDisplay
+  finality?: Layer2FinalityDisplay
 }
 export interface Layer2LivenessDisplay {
   explanation?: string
@@ -67,6 +71,13 @@ export interface Layer2LivenessDisplay {
     batchSubmissions?: string
     proofSubmissions?: string
   }
+}
+
+export interface Layer2FinalityDisplay {
+  /** Warning tooltip content for finality tab for given project */
+  warning?: string
+  /** Finalization period displayed in table for given project (time in seconds) */
+  finalizationPeriod?: number
 }
 
 export interface Layer2Config extends ScalingProjectConfig {

@@ -55,13 +55,22 @@ export const amarok: Bridge = {
       {
         address: EthereumAddress('0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6'),
         sinceTimestamp: new UnixTime(1671625595),
-        tokens: ['USDC', 'WETH'],
+        tokens: ['USDC', 'WETH', 'USDT', 'DAI', 'Metis', 'alUSD'],
       },
     ],
   },
   technology: {
     canonical: false,
-    destination: ['Gnosis', 'Optimism', 'Arbitrum', 'Polygon', 'BSC'],
+    destination: [
+      'Gnosis',
+      'Optimism',
+      'Arbitrum',
+      'Polygon',
+      'BSC',
+      'Base',
+      'Linea',
+      'Metis',
+    ],
     principleOfOperation: {
       name: 'Principle of operation',
       description: `The bridge can operate in one of two modes, Optimistic or Slow. They differ in how the messages are sent between chains. In Optimistic Mode\
@@ -131,6 +140,10 @@ export const amarok: Bridge = {
         'Contract for sending/receiving messages from mainnet to Polygon via Polygon FxChannel AMB.',
       ),
       discovery.getContractDetails(
+        'PolygonZkHubConnector',
+        'Contract for sending/receiving messages from mainnet to PolygonZKEVM via PolygonZKEVM AMB.',
+      ),
+      discovery.getContractDetails(
         'GnosisHubConnector',
         'Contract for sending/receiving messages from mainnet to Gnosis via Gnosis AMB.',
       ),
@@ -140,12 +153,28 @@ export const amarok: Bridge = {
         as soon as Optimism state root is recorded on Ethereum w/out waiting for the 7-day fraud proof delay window.',
       ),
       discovery.getContractDetails(
+        'NewOptimismHubConnector',
+        'Contract for sending/receiving messages from mainnet to Optimism, duplicate of OptimismHubConnector.',
+      ),
+      discovery.getContractDetails(
+        'MantleHubConnector',
+        'Contract for sending/receiving messages from mainnet to Mantle via Optimism AMB.',
+      ),
+      discovery.getContractDetails(
+        'OptimismV0HubConnector',
+        'Contract for sending/receiving messages from mainnet to pre-bedrock Optimism based projects via Optimism AMB.',
+      ),
+      discovery.getContractDetails(
         'ArbitrumHubConnector',
         'Contract for sending/receiving messages from mainnet to Optimism via Arbitrum AMB transport layer. Note that it reads messages from Arbitrum as soon as Arbitrum state root is recorded on Ethereum w/out waiting for the 7-day fraud proof delay window.',
       ),
       discovery.getContractDetails(
         'WormholeHubConnector',
         'Contract for sending/receiving messages using Wormhole.',
+      ),
+      discovery.getContractDetails(
+        'NewWormholeHubConnector',
+        'Contract for sending/receiving messages using Wormhole, duplicate of WormholeHubConnector.',
       ),
       discovery.getContractDetails(
         'LineaHubConnector',

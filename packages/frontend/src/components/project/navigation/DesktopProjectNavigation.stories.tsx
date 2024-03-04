@@ -12,10 +12,11 @@ const sections: ScalingDetailsSection[] = range(10).map(() => ({
   props: {
     id: 'detailed-description',
     title: 'Example',
+    sectionOrder: 1,
     issueLink:
       'https://github.com/l2beat/l2beat/issues/new?title=Problem: zkSync Era project page&labels=website',
     editLink:
-      'https://github.com/l2beat/l2beat/edit/master/packages/config/src/layer2s/zksync-era.ts',
+      'https://github.com/l2beat/l2beat/edit/main/packages/config/src/layer2s/zksync-era.ts',
     description:
       'zkSync Era is a general-purpose zk-rollup platform from Matter Labs aiming at implementing nearly full EVM compatibility in its zk-friendly custom virtual machine.',
     detailedDescription:

@@ -6,7 +6,7 @@ import { PagesData } from '../../Page'
 import { getProps } from './props'
 import { ScalingTvlPage } from './view/ScalingTvlPage'
 
-export function getDetailedTvlPage(config: Config, pagesData: PagesData) {
+export function getTvlPage(config: Config, pagesData: PagesData) {
   const { props, wrapper } = getProps(config, pagesData)
   return {
     slug: '/scaling/tvl',

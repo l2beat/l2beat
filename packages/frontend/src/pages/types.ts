@@ -11,73 +11,81 @@ import { StateDerivationSectionProps } from '../components/project/StateDerivati
 import { StateValidationSectionProps } from '../components/project/StateValidationSection'
 import { TechnologyIncompleteProps } from '../components/project/TechnologyIncomplete'
 import { TechnologySectionProps } from '../components/project/TechnologySection'
+import { UpgradesAndGovernanceSectionProps } from '../components/project/UpgradesAndGovernanceSection'
 
 export interface ValueWithDisplayValue {
   value: number
   displayValue: string
 }
 
+type ProjectDetailsProps<T> = Omit<T, 'sectionOrder'>
+
 export interface ProjectDetailsChartSection {
   type: 'ChartSection'
-  props: ChartSectionProps
+  props: ProjectDetailsProps<ChartSectionProps>
 }
 export interface ProjectDetailsDetailedDescriptionSection {
   type: 'DetailedDescriptionSection'
-  props: DetailedDescriptionSectionProps
+  props: ProjectDetailsProps<DetailedDescriptionSectionProps>
 }
 
 export interface ProjectDetailsMilestonesSection {
   type: 'MilestonesSection'
-  props: MilestonesSectionProps
+  props: ProjectDetailsProps<MilestonesSectionProps>
 }
 
 export interface ProjectDetailsKnowledgeNuggetsSection {
   type: 'KnowledgeNuggetsSection'
-  props: KnowledgeNuggetsProps
+  props: ProjectDetailsProps<KnowledgeNuggetsProps>
 }
 
 export interface ProjectDetailsRiskAnalysisSection {
   type: 'RiskAnalysisSection'
-  props: RiskAnalysisProps
+  props: ProjectDetailsProps<RiskAnalysisProps>
 }
 
 export interface ProjectDetailsRiskSection {
   type: 'RiskSection'
-  props: RiskSectionProps
+  props: ProjectDetailsProps<RiskSectionProps>
 }
 
 export interface ProjectDetailsStageSection {
   type: 'StageSection'
-  props: StageSectionProps
+  props: ProjectDetailsProps<StageSectionProps>
 }
 
 export interface ProjectDetailsTechnologyIncompleteNote {
   type: 'TechnologyIncompleteNote'
-  props: TechnologyIncompleteProps
+  props: ProjectDetailsProps<TechnologyIncompleteProps>
 }
 export interface ProjectDetailsTechnologySection {
   type: 'TechnologySection'
-  props: TechnologySectionProps
+  props: ProjectDetailsProps<TechnologySectionProps>
 }
 
 export interface ProjectDetailsStateDerivationSection {
   type: 'StateDerivationSection'
-  props: StateDerivationSectionProps
+  props: ProjectDetailsProps<StateDerivationSectionProps>
 }
 
 export interface ProjectDetailsStateValidationSection {
   type: 'StateValidationSection'
-  props: StateValidationSectionProps
+  props: ProjectDetailsProps<StateValidationSectionProps>
+}
+
+export interface ProjectDetailsUpgradesAndGovernanceSection {
+  type: 'UpgradesAndGovernanceSection'
+  props: ProjectDetailsProps<UpgradesAndGovernanceSectionProps>
 }
 
 export interface ProjectDetailsPermissionsSection {
   type: 'PermissionsSection'
-  props: PermissionsSectionProps
+  props: ProjectDetailsProps<PermissionsSectionProps>
 }
 
 export interface ProjectDetailsContractsSection {
   type: 'ContractsSection'
-  props: ContractsSectionProps
+  props: ProjectDetailsProps<ContractsSectionProps>
 }
 
 export interface ProjectDetailsUpcomingDisclaimer {

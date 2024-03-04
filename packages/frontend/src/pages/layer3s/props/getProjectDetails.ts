@@ -5,7 +5,9 @@ import {
 } from '@l2beat/shared-pure'
 import isEmpty from 'lodash/isEmpty'
 
+import { ChartProps } from '../../../components'
 import { getContractSection } from '../../../utils/project/getContractSection'
+import { getDiagramImage } from '../../../utils/project/getDiagramImage'
 import { getPermissionsSection } from '../../../utils/project/getPermissionsSection'
 import {
   getProjectEditLink,
@@ -13,6 +15,7 @@ import {
 } from '../../../utils/project/links'
 import { getRiskValues } from '../../../utils/risks/values'
 import {
+  ProjectDetailsChartSection,
   ProjectDetailsContractsSection,
   ProjectDetailsDetailedDescriptionSection,
   ProjectDetailsKnowledgeNuggetsSection,
@@ -25,13 +28,13 @@ import {
   ProjectDetailsTechnologySection,
   ProjectDetailsUpcomingDisclaimer,
 } from '../../types'
-import { getDetailedDescriptionSection } from './getDetailedDescriptionSection'
 import { getTechnologyOverview } from './getTechnologyOverview'
 
 export function getProjectDetails(
   project: Layer3,
   verificationStatus: VerificationStatus,
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
+  chart: ChartProps,
 ) {
   const isUpcoming = project.isUpcoming
 
@@ -43,6 +46,15 @@ export function getProjectDetails(
     manuallyVerifiedContracts,
   )
   const items: ScalingDetailsItem[] = []
+
+  items.push({
+    type: 'ChartSection',
+    props: {
+      ...chart,
+      id: 'chart',
+      title: 'Chart',
+    },
+  })
 
   if (!isUpcoming && project.milestones && !isEmpty(project.milestones)) {
     items.push({
@@ -58,7 +70,12 @@ export function getProjectDetails(
   if (project.display.detailedDescription) {
     items.push({
       type: 'DetailedDescriptionSection',
-      props: getDetailedDescriptionSection(project),
+      props: {
+        id: 'detailed-description',
+        title: 'Detailed description',
+        description: project.display.description,
+        detailedDescription: project.display.detailedDescription,
+      },
     })
   }
 
@@ -105,6 +122,7 @@ export function getProjectDetails(
           id: 'state-derivation',
           title: 'State derivation',
           ...project.stateDerivation,
+          isUnderReview: project.isUnderReview,
         },
       })
     }
@@ -115,7 +133,9 @@ export function getProjectDetails(
         props: {
           id: 'state-validation',
           title: 'State validation',
+          image: getDiagramImage('state-validation', project.display.slug),
           stateValidation: project.stateValidation,
+          isUnderReview: project.isUnderReview,
         },
       })
     }
@@ -127,6 +147,7 @@ export function getProjectDetails(
           items: section.items,
           id: section.id,
           title: section.title,
+
           isUnderReview: section.isUnderReview,
         },
       }),
@@ -145,11 +166,13 @@ export function getProjectDetails(
 
     items.push({
       type: 'ContractsSection',
-      props: getContractSection(
-        project,
-        verificationStatus,
-        manuallyVerifiedContracts,
-      ),
+      props: {
+        ...getContractSection(
+          project,
+          verificationStatus,
+          manuallyVerifiedContracts,
+        ),
+      },
     })
 
     if (project.knowledgeNuggets && !isEmpty(project.knowledgeNuggets)) {
@@ -188,6 +211,7 @@ type ProjectDetailsNonSectionElement =
   | ProjectDetailsUpcomingDisclaimer
 
 export type ScalingDetailsSection =
+  | ProjectDetailsChartSection
   | ProjectDetailsDetailedDescriptionSection
   | ProjectDetailsMilestonesSection
   | ProjectDetailsKnowledgeNuggetsSection

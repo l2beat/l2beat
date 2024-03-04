@@ -8,9 +8,11 @@ export function getLocalConfig(): Config {
     features: {
       ...common.features,
       // The local backend doesn't support activity
-      liveness: useMock,
       activity: useMock,
-      diffHistory: true,
+      liveness: useMock,
+      finality: useMock,
+      // There is no need to run it locally by default
+      diffHistory: false,
       buildAllProjectPages: true,
     },
     backend: {

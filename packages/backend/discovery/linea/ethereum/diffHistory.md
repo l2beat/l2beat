@@ -1,7 +1,147 @@
+Generated with discovered.json: 0xe1b854d9d1e0fdb4f36dc514fe720231b67a1c02
+
+# Diff at Wed, 14 Feb 2024 13:10:31 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@c9d75a79ee568ba0a609342a536c18c36c61cf35 block: 19012997
+- current block number: 19226416
+
+## Description
+
+Major upgrade. Mainly related to reducing fees with compression and aggregated proofs.
+
+### ZkEvmV2
+
+It's now inherited by the LineaRollup contract. The `setVerifierAddress` function has been moved to LineaRollup. The pause system has been tweaked but it's equivalent.
+It's still possible to finalize blocks without proofs.
+
+### LineaRollup
+
+A VERIFIER_SETTER_ROLE is introduced that can call the `setVerifierAddress` function. Data and proof submission are now two separate steps.
+Compressed data is posted using the `submitData` function and proofs are submitted with the `finalizeCompressedBlocksWithProofs` or `finalizeCompressedBlocksWithoutProof`.
+
+### L1MessageManager
+
+Inherited by LineaRollup. It has been renamed to L1MessageManagerV1 without big changes and it's now inherited by the new L1MessageManager. It mainly contains helper functions.
+
+### L1MessageService
+
+Inherited by LineaRollup. It has been renamed to L1MessageServiceV1 without big changes and it's now inherited by the new L1MessageService. It mainly contains helper functions.
+
+Claiming messages now requires a Merkle proof. Previously, individual hashes for each message were saved but now they are aggregated.
+
+## Watched changes
+
+```diff
+    contract zkEVM (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+      upgradeability.implementation:
+-        "0xb32c3D0dDb0063FfB15E8a50b40cC62230D820B3"
++        "0xAA4b3a9515c921996Abe7930bF75Eff7466a4457"
+      implementations.0:
+-        "0xb32c3D0dDb0063FfB15E8a50b40cC62230D820B3"
++        "0xAA4b3a9515c921996Abe7930bF75Eff7466a4457"
+      values.accessControl.OPERATOR_ROLE.members[1]:
++        "0xa9268341831eFa4937537bc3e9EB36DbecE83C7e"
+      values.accessControl.VERIFIER_SETTER_ROLE:
++        {"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xd6B95c960779c72B8C6752119849318E5d550574"]}
+      values.GENERAL_PAUSE_TYPE:
+-        "0x06193bb948d6b7a6fcbe51c193ccf2183bb5d979b6ae5d3a6971b8851461d3b0"
++        1
+      values.L1_L2_PAUSE_TYPE:
+-        "0x9a80e24e463f00a8763c4dcec6a92d07d33272fa5db895d8589be70dccb002df"
++        2
+      values.L2_L1_PAUSE_TYPE:
+-        "0x21ea2f4fee4bcb623de15ac222ea5c1464307d884f23394b78ddc07f9c9c7cd8"
++        3
+      values.PROVING_SYSTEM_PAUSE_TYPE:
+-        "0x3a56b1bd788a764cbd923badb6d0719f21f520455285bf6877e636d08708878d"
++        4
+      values.verifiers.0:
+-        "0x1111111111111111111111111111111111111111"
++        "0xfB0C26A89833762b65098dD66b6Ae04b34D153be"
+      values.provenCompressedBlocksWithoutProof:
++        [2242752]
+      values.provenNonCompressedBlocksWithoutProof:
++        []
+      values.systemMigrationBlock:
++        19219000
+      values.VERIFIER_SETTER_ROLE:
++        "0x32937fd5162e282df7e9a14a5073a2425321c7966eaf70ed6c838a1006d84c4c"
+      errors:
+-        {"provenCompressedBlocksWithoutProof":"Cannot find a matching event for DataFinalized","provenNonCompressedBlocksWithoutProof":"Cannot find a matching event for BlockFinalized"}
+      derivedName:
+-        "ZkEvmV2"
++        "LineaRollup"
+    }
+```
+
+```diff
+    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083) {
+      values.roles.roles.1.functions.0xd19d4B5d358258f05D7B411E21A1460D11B0876F.pauseByType(bytes32):
+-        {"options":"None","wildcarded":true,"parameters":[]}
+      values.roles.roles.1.functions.0xd19d4B5d358258f05D7B411E21A1460D11B0876F.pauseByType(uint8):
++        {"options":"None","wildcarded":true,"parameters":[]}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierForDataAggregation (0xfB0C26A89833762b65098dD66b6Ae04b34D153be) {
+    }
+```
+
+## Source code changes
+
+```diff
+.../PlonkVerifierForDataAggregation.sol            | 1365 ++++++++++++++++++++
+ .../.code/PlonkVerifierForDataAggregation/meta.txt |    2 +
+ .../contracts/utils/structs/BitMaps.sol            |   51 +
+ .../zkEVM/implementation/contracts/LineaRollup.sol |  438 +++++++
+ .../zkEVM/implementation/contracts/ZkEvmV2.sol     |  156 +--
+ .../contracts/interfaces/IGenericErrors.sol        |    7 +-
+ .../contracts/interfaces/IMessageService.sol       |   16 +-
+ .../contracts/interfaces/IPauseManager.sol         |   15 +-
+ .../contracts/interfaces/IRateLimiter.sol          |   14 +-
+ .../contracts/interfaces/l1/IL1MessageManager.sol  |   45 +
+ .../interfaces/l1/IL1MessageManagerV1.sol}         |   16 +-
+ .../contracts/interfaces/l1/IL1MessageService.sol  |   59 +
+ .../contracts/interfaces/l1/ILineaRollup.sol       |  229 ++++
+ .../contracts/interfaces/l1}/IPlonkVerifier.sol    |    5 +-
+ .../contracts/interfaces/l1}/IZkEvmV2.sol          |   56 +-
+ .../zkEVM/implementation/contracts/lib/Utils.sol   |   18 +
+ .../messageService/l1/L1MessageManager.sol         |  133 +-
+ .../messageService/l1/L1MessageService.sol         |  204 ++-
+ .../messageService/l1/v1/L1MessageManagerV1.sol    |   94 ++
+ .../messageService/l1/v1/L1MessageServiceV1.sol    |  138 ++
+ .../contracts/messageService/lib/Codec.sol         |    8 +-
+ .../contracts/messageService/lib/PauseManager.sol  |   91 +-
+ .../contracts/messageService/lib/RateLimiter.sol   |   17 +-
+ .../contracts/messageService/lib/Rlp.sol           |    5 +-
+ .../lib/SparseMerkleTreeVerifier.sol               |   47 +
+ .../messageService/lib/TransactionDecoder.sol      |   13 +-
+ .../zkEVM/implementation/meta.txt                  |    4 +-
+ 27 files changed, 2829 insertions(+), 417 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19012997 (main branch discovery), not current.
+
+```diff
+    contract zkEVM (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+      errors:
++        {"provenCompressedBlocksWithoutProof":"Cannot find a matching event for DataFinalized","provenNonCompressedBlocksWithoutProof":"Cannot find a matching event for BlockFinalized"}
+    }
+```
+
+Generated with discovered.json: 0xf96825b03558d1edcc98e9c0f78df07f66bd73a2
+
 # Diff at Mon, 15 Jan 2024 14:53:19 GMT
 
 - author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: master@51b4576752b780b70ed977cf2d54041a7eb81039 block: 18618865
+- comparing to: main@51b4576752b780b70ed977cf2d54041a7eb81039 block: 18618865
 - current block number: 19012997
 
 ## Description
@@ -31,7 +171,7 @@ Assigned member can now invoke:
 # Diff at Thu, 23 Nov 2023 15:07:23 GMT
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: master@2ff45714640abe4c50d283967078888d4af81d78
+- comparing to: main@2ff45714640abe4c50d283967078888d4af81d78
 
 ## Description
 
@@ -98,7 +238,7 @@ AccessControl in Scroll.
 # Diff at Mon, 16 Oct 2023 07:14:10 GMT
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: master@a2d21b0282f36d2369596c2fe3bb3e7746063abe
+- comparing to: main@a2d21b0282f36d2369596c2fe3bb3e7746063abe
 
 ## Description
 
