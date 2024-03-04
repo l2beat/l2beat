@@ -95,11 +95,10 @@ export const rhinofi: Layer2 = {
       sinceTimestamp: new UnixTime(1590491810),
       resyncLastDays: 7,
     },
-    liveness: {
-      proofSubmissions: [],
-      batchSubmissions: [],
-      stateUpdates: [
-        {
+    trackedTransactions: [
+      {
+        uses: [{ type: 'liveness', subType: 'stateUpdates' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b',
@@ -109,8 +108,8 @@ export const rhinofi: Layer2 = {
             'function updateState(uint256[] publicInput, uint256[] applicationData)',
           sinceTimestamp: new UnixTime(1590491810),
         },
-      ],
-    },
+      },
+    ],
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,

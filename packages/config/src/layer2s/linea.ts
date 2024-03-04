@@ -125,16 +125,10 @@ export const linea: Layer2 = {
       defaultUrl: 'https://linea-mainnet.infura.io/v3',
       startBlock: 1,
     },
-    liveness: {
-      proofSubmissions: [],
-      duplicateData: [
-        {
-          from: 'stateUpdates',
-          to: 'proofSubmissions',
-        },
-      ],
-      batchSubmissions: [
-        {
+    trackedTransactions: [
+      {
+        uses: [{ type: 'liveness', subType: 'batchSubmissions' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xd19d4B5d358258f05D7B411E21A1460D11B0876F',
@@ -144,9 +138,16 @@ export const linea: Layer2 = {
             'function submitData((bytes32,bytes32,bytes32,uint256,uint256,bytes32,bytes))',
           sinceTimestamp: new UnixTime(1707813551),
         },
-      ],
-      stateUpdates: [
-        {
+      },
+      {
+        uses: [
+          {
+            type: 'liveness',
+            subType: 'stateUpdates',
+            duplicateTo: 'proofSubmissions',
+          },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xd19d4B5d358258f05D7B411E21A1460D11B0876F',
@@ -157,7 +158,16 @@ export const linea: Layer2 = {
           sinceTimestamp: new UnixTime(1689159923),
           untilTimestamp: new UnixTime(1707813551),
         },
-        {
+      },
+      {
+        uses: [
+          {
+            type: 'liveness',
+            subType: 'stateUpdates',
+            duplicateTo: 'proofSubmissions',
+          },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xd19d4B5d358258f05D7B411E21A1460D11B0876F',
@@ -167,8 +177,8 @@ export const linea: Layer2 = {
             'function finalizeCompressedBlocksWithProof(bytes,uint256,(bytes32,bytes32[],bytes32,uint256,uint256,uint256,bytes32,uint256,bytes32[],uint256,bytes))',
           sinceTimestamp: new UnixTime(1707813551),
         },
-      ],
-    },
+      },
+    ],
     finality: {
       type: 'Linea',
       lag: 0,

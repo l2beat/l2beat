@@ -112,11 +112,10 @@ export const aztecconnect: Layer2 = {
         tokens: ['ETH', 'DAI', 'wstETH'],
       },
     ],
-    liveness: {
-      proofSubmissions: [],
-      batchSubmissions: [],
-      stateUpdates: [
-        {
+    trackedTransactions: [
+      {
+        uses: [{ type: 'liveness', subType: 'stateUpdates' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455',
@@ -125,8 +124,8 @@ export const aztecconnect: Layer2 = {
           functionSignature: 'function processRollup(bytes ,bytes _signatures)',
           sinceTimestamp: new UnixTime(1654638194),
         },
-      ],
-    },
+      },
+    ],
   },
   riskView: makeBridgeCompatible({
     stateValidation: {

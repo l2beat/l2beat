@@ -101,17 +101,16 @@ export const degate3: Layer2 = {
         tokens: '*',
       }),
     ],
-    liveness: {
-      duplicateData: [
-        {
-          from: 'stateUpdates',
-          to: 'proofSubmissions',
-        },
-      ],
-      proofSubmissions: [],
-      batchSubmissions: [],
-      stateUpdates: [
-        {
+    trackedTransactions: [
+      {
+        uses: [
+          {
+            type: 'liveness',
+            subType: 'stateUpdates',
+            duplicateTo: 'proofSubmissions',
+          },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x9b93e47b7F61ad1358Bd47Cd01206708E85AE5eD',
@@ -121,8 +120,8 @@ export const degate3: Layer2 = {
             'function submitBlocks(bool isDataCompressed,bytes data)',
           sinceTimestamp: new UnixTime(1699747007),
         },
-      ],
-    },
+      },
+    ],
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,

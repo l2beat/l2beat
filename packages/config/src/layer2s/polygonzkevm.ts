@@ -164,16 +164,10 @@ export const polygonzkevm: Layer2 = {
       defaultCallsPerMinute: 500,
       startBlock: 1,
     },
-    liveness: {
-      duplicateData: [
-        {
-          from: 'stateUpdates',
-          to: 'proofSubmissions',
-        },
-      ],
-      proofSubmissions: [],
-      batchSubmissions: [
-        {
+    trackedTransactions: [
+      {
+        uses: [{ type: 'liveness', subType: 'batchSubmissions' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
@@ -184,7 +178,10 @@ export const polygonzkevm: Layer2 = {
           sinceTimestamp: new UnixTime(1679653163),
           untilTimestamp: new UnixTime(1707822059),
         },
-        {
+      },
+      {
+        uses: [{ type: 'liveness', subType: 'batchSubmissions' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
@@ -194,9 +191,16 @@ export const polygonzkevm: Layer2 = {
             'function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)',
           sinceTimestamp: new UnixTime(1707822059),
         },
-      ],
-      stateUpdates: [
-        {
+      },
+      {
+        uses: [
+          {
+            type: 'liveness',
+            subType: 'stateUpdates',
+            duplicateTo: 'proofSubmissions',
+          },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
@@ -207,7 +211,16 @@ export const polygonzkevm: Layer2 = {
           sinceTimestamp: new UnixTime(1679653163),
           untilTimestamp: new UnixTime(1707822059),
         },
-        {
+      },
+      {
+        uses: [
+          {
+            type: 'liveness',
+            subType: 'stateUpdates',
+            duplicateTo: 'proofSubmissions',
+          },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
@@ -218,7 +231,16 @@ export const polygonzkevm: Layer2 = {
           sinceTimestamp: new UnixTime(1679653163),
           untilTimestamp: new UnixTime(1707822059),
         },
-        {
+      },
+      {
+        uses: [
+          {
+            type: 'liveness',
+            subType: 'stateUpdates',
+            duplicateTo: 'proofSubmissions',
+          },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
@@ -228,7 +250,16 @@ export const polygonzkevm: Layer2 = {
             'verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[])',
           sinceTimestamp: new UnixTime(1707822059),
         },
-        {
+      },
+      {
+        uses: [
+          {
+            type: 'liveness',
+            subType: 'stateUpdates',
+            duplicateTo: 'proofSubmissions',
+          },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
@@ -238,8 +269,8 @@ export const polygonzkevm: Layer2 = {
             'verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[])',
           sinceTimestamp: new UnixTime(1707822059),
         },
-      ],
-    },
+      },
+    ],
   },
   chainConfig: {
     name: 'polygonzkevm',

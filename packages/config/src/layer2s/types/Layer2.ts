@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   KnowledgeNugget,
@@ -16,7 +16,6 @@ import { ScalingProjectStateValidation } from '../../common/ScalingProjectStateV
 import { ScalingProjectTechnology } from '../../common/ScalingProjectTechnology'
 import { StageConfig } from '../common/stages/types'
 import { Layer2FinalityConfig } from './Layer2FinalityConfig'
-import { Layer2Liveness } from './Layer2LivenessConfig'
 import { Layer2TransactionApi } from './Layer2TransactionApi'
 
 export interface Layer2 {
@@ -83,8 +82,51 @@ export interface Layer2FinalityDisplay {
 export interface Layer2Config extends ScalingProjectConfig {
   /** API parameters used to get transaction count */
   transactionApi?: Layer2TransactionApi
-  /** Configuration for getting state updates and batch submission */
-  liveness?: Layer2Liveness
+  /** List of transactions that are tracked by our backend */
+  trackedTransactions?: TrackedTransaction[]
   /** Configuration for getting finality data */
   finality?: Layer2FinalityConfig
+}
+
+type TrackedTransaction = {
+  uses: TrackedTransactionUse[]
+  query: TrackedTransactionQuery
+}
+
+type TrackedTransactionUse = {
+  type: TrackedTransactionType
+  subType: TrackedTransactionSubType
+  duplicateTo?: TrackedTransactionSubType
+}
+
+type TrackedTransactionType = 'liveness'
+type TrackedTransactionSubType =
+  | 'stateUpdates'
+  | 'batchSubmissions'
+  | 'proofSubmissions'
+
+type TrackedTransactionQuery = FunctionCall | Transfer | SharpSubmission
+
+interface FunctionCall {
+  formula: 'functionCall'
+  address: EthereumAddress
+  selector: `0x${string}`
+  functionSignature: string
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
+}
+
+interface Transfer {
+  formula: 'transfer'
+  from: EthereumAddress
+  to: EthereumAddress
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
+}
+
+interface SharpSubmission {
+  formula: 'sharpSubmission'
+  programHashes: string[]
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
 }
