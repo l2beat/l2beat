@@ -1,17 +1,10 @@
-import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { HARDCODED } from '../discovery/values/hardcoded'
-import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { opStack } from './templates/opStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('fraxtal')
-
-const FINALIZATION_PERIOD_SECONDS = discovery.getContractValue<number>(
-  'L2OutputOracle',
-  'FINALIZATION_PERIOD_SECONDS',
-)
 
 const upgradeability = {
   upgradableBy: ['ProxyAdmin'],
@@ -19,6 +12,42 @@ const upgradeability = {
 }
 
 export const fraxtal: Layer2 = opStack({
+  daProvider: {
+    name: 'External',
+    riskView: {
+      value: 'External - Fraxtal Custom Module',
+      description:
+        'Fraxtal uses a separate data availability module developed by the Frax Core Team. The data needed for proof construction is not published on-chain.',
+      sentiment: 'bad',
+    },
+    technology: {
+      name: 'Data required to compute fraud proof is not published on chain, and currently not publicly accessible.',
+      description:
+        'Fraxtal uses a separate data availability module developed by the Frax Core Team. Data is posted off chain, and only hashes of blob data is published on an on-chain inbox.',
+      references: [
+        {
+          text: 'Fraxtal documentation',
+          href: 'https://docs.frax.com/fraxtal',
+        },
+        {
+          text: 'On-Chain Inbox',
+          href: 'https://etherscan.io/address/0xff000000000000000000000000000000000420fc',
+        },
+      ],
+      risks: [
+        {
+          category: 'Funds can be lost if',
+          text: 'the data is not made available on the external provider.',
+          isCritical: true,
+        },
+        {
+          category: 'Funds can be lost if',
+          text: 'the sequencer posts an unavailable or malicious transaction root.',
+          isCritical: true,
+        },
+      ],
+    },
+  },
   discovery,
   display: {
     name: 'Fraxtal',
@@ -41,29 +70,12 @@ export const fraxtal: Layer2 = opStack({
       ],
     },
     activityDataSource: 'Blockchain RPC',
-    liveness: {
-      warnings: {
-        stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
-      },
-      explanation: `Fraxtal is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
-        HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
-      )} or until it gets published. The state root gets finalized ${formatSeconds(
-        FINALIZATION_PERIOD_SECONDS,
-      )} after it has been posted.`,
-    },
-    finality: {
-      finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
-    },
   },
   upgradeability,
   l1StandardBridgeEscrow: EthereumAddress(
     '0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2',
   ),
   rpcUrl: 'https://rpc.frax.com',
-  finality: {
-    type: 'OPStack',
-    lag: 0,
-  },
   genesisTimestamp: new UnixTime(1706811599),
   l2OutputOracle: discovery.getContract('L2OutputOracle'),
   portal: discovery.getContract('OptimismPortal'),
@@ -99,22 +111,18 @@ export const fraxtal: Layer2 = opStack({
     discovery.getContractDetails('frxETH', {
       description:
         'Fraxtal uses Frax Ether (frxETH) as the designated gas token, allowing users to utilize frxETH to pay for blockspace.',
-      ...upgradeability,
     }),
     discovery.getContractDetails('frxETHMinter', {
       description:
         'Authorized minter contract for frxETH, accepts user-supplied ETH and converts it to frxETH.',
-      ...upgradeability,
     }),
     discovery.getContractDetails('sfrxETH', {
       description:
         'Vault token contract (ERC-4626) for staked frxETH. The smart contract receives frxETH tokens and mints sfrxETH tokens.',
-      ...upgradeability,
     }),
     discovery.getContractDetails('Timelock', {
       description:
         'Allows for time-delayed execution of transactions in the FrxETH smart contract, such as adding and removing whitelisted minters.',
-      ...upgradeability,
     }),
   ],
   nonTemplateEscrows: [],
