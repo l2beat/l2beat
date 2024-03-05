@@ -27,6 +27,7 @@ export interface Config {
   readonly api: ApiConfig
   readonly health: HealthConfig
   readonly tvl: TvlConfig
+  readonly tvl2: boolean
   readonly liveness: LivenessConfig | false
   readonly finality: FinalityConfig | false
   readonly activity: ActivityConfig | false
