@@ -8,6 +8,7 @@ interface Config {
   subcommand: 'run' | 'help'
   firstProjectName?: string
   secondProjectName?: string
+  forceTable?: boolean
 }
 
 interface HashedFileContent {
@@ -58,16 +59,22 @@ function parseCliParameters(): Config {
   let firstProjectName = args.shift()
   let secondProjectName = args.shift()
 
+  let forceTable = false
+  if(args.includes('--force-table')) {
+      forceTable = true
+  }
+
   return {
     subcommand: 'run',
     firstProjectName,
     secondProjectName,
+    forceTable
   }
 }
 
 function printUsage(): void {
   console.log(
-    'Usage: yarn compare-flat-sources <project1> <project2>',
+    'Usage: yarn compare-flat-sources <project1> <project2> --force-table',
   )
 }
 
@@ -91,20 +98,22 @@ async function compareFlatSources(config: Config): Promise<void> {
       matrix[c1.path] = c1Object
   }
 
-  printResult(firstProject, secondProject, matrix)
+  printResult(config, firstProject, secondProject, matrix)
 }
 
 function printResult(
+    config: Config,
     firstProject: Project,
     secondProject: Project,
     matrix: Record<string, Record<string, string>>
 ): void {
-    printTable(firstProject, secondProject, matrix)
+    printTable(config, firstProject, secondProject, matrix)
     const concatenatedSimilarity = estimateSimilarity(firstProject.concatenatedSource, secondProject.concatenatedSource)
-    console.log(`Estimated similarity between two projects: ${colorMap(concatenatedSimilarity)}`)
+    console.log(`\nEstimated similarity between two projects: ${colorMap(concatenatedSimilarity)}`)
 }
 
 function printTable(
+    config: Config,
     firstProject: Project,
     secondProject: Project,
     matrix: Record<string, Record<string, string>>
@@ -114,9 +123,10 @@ function printTable(
     const widths = [computeTableWidth(firstProject), computeTableWidth(secondProject)]
     const minTableWidth = Math.min(...widths)
 
-    if(minTableWidth > terminalWidth) {
-        console.log("Table is too wide to fit in the terminal")
+    if(minTableWidth > terminalWidth && !config.forceTable) {
+        console.log(`${chalk.yellow("WARNING")}: Table is too wide to fit in the terminal`)
         console.log(`Terminal is ${terminalWidth} characters wide, table is ${minTableWidth} characters wide`)
+        console.log(`Use ${chalk.magenta("--force-table")} to print the table anyway.`)
         return;
     }
 
