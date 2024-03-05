@@ -171,7 +171,7 @@ declare module 'knex/types/tables' {
     average_time_to_inclusion: number
   }
 
-  interface TrackedTxConfigRow {
+  interface TrackedTxsConfigRow {
     project_id: string
     type: string
     subtype: string | null
@@ -228,7 +228,7 @@ declare module 'knex/types/tables' {
     indexer_state: IndexerStateRow
     tvl_cleaner: TvlCleanerRow
     finality: FinalityRow
-    tracked_txs_configs: TrackedTxConfigRow
+    tracked_txs_configs: TrackedTxsConfigRow
   }
 }
 
