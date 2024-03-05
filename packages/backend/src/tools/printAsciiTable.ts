@@ -35,6 +35,7 @@ export function printAsciiTable(headers: string[], rows: string[][]): string {
 }
 
 function stripAnsiEscapeCodes(str: string): string {
-  const ansiEscapeCodesPattern = /\\x1b\[[0-9;]*m/g
+  // eslint-disable-next-line no-control-regex
+  const ansiEscapeCodesPattern = /\x1b\[[0-9;]*m/g
   return str.replace(ansiEscapeCodesPattern, '')
 }
