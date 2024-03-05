@@ -1,4 +1,9 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  TrackedTxsConfigSubtype,
+  TrackedTxsConfigType,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 export type Layer2TxConfig = {
   uses: TrackedTxUse[]
@@ -6,16 +11,10 @@ export type Layer2TxConfig = {
 }
 
 export type TrackedTxUse = {
-  type: Layer2TrackedTxConfigType
-  subType: Layer2TrackedTxConfigSubType
-  duplicateTo?: Layer2TrackedTxConfigSubType
+  type: TrackedTxsConfigType
+  subType: TrackedTxsConfigSubtype
+  duplicateTo?: TrackedTxsConfigSubtype
 }
-
-export type Layer2TrackedTxConfigType = 'liveness'
-export type Layer2TrackedTxConfigSubType =
-  | 'stateUpdates'
-  | 'batchSubmissions'
-  | 'proofSubmissions'
 
 type TrackedTxQuery = FunctionCall | Transfer | SharpSubmission
 
