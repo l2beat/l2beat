@@ -10,15 +10,16 @@ interface Config {
   secondProjectName?: string
 }
 
-interface FileContent {
+interface HashedFileContent {
     path: string
+    hashChunks: HashedChunks[]
     content: string
 }
 
 interface Project {
     name: string
-    concatenatedSources: string
-    sources: FileContent[]
+    concatenatedSource: HashedFileContent
+    sources: HashedFileContent[]
 }
 
 interface HashedChunks {
@@ -83,7 +84,7 @@ async function compareFlatSources(config: Config): Promise<void> {
       let c1Object: Record<string, string> = {}
 
       for(const c2 of secondProject.sources) {
-          const similarity = estimateSimilarity(c1.content, c2.content)
+          const similarity = estimateSimilarity(c1, c2)
           c1Object[c2.path] = colorMap(similarity)
       }
 
@@ -99,7 +100,7 @@ function printResult(
     matrix: Record<string, Record<string, string>>
 ): void {
     printTable(firstProject, secondProject, matrix)
-    const concatenatedSimilarity = estimateSimilarity(firstProject.concatenatedSources, secondProject.concatenatedSources)
+    const concatenatedSimilarity = estimateSimilarity(firstProject.concatenatedSource, secondProject.concatenatedSource)
     console.log(`Estimated similarity between two projects: ${colorMap(concatenatedSimilarity)}`)
 }
 
@@ -173,22 +174,31 @@ function removeCommonPath(fileIds: FileId[]): FileId[] {
 async function readProject(projectName: string): Promise<Project> {
     const sources = await getFlatSources(projectName)
     const concatenatedSources = sources.map((source) => source.content).join('')
-    return { name: projectName, concatenatedSources, sources}
+    const concatenatedSourceHashChunks = buildSimilarityHashmap(concatenatedSources)
+    return { name: projectName, concatenatedSource:{
+        path: `virtualPath.sol`,
+        hashChunks: concatenatedSourceHashChunks,
+        content: concatenatedSources
+    }, sources}
 }
 
 async function getFlatSources(
   project: string,
-): Promise<FileContent[]> {
+): Promise<HashedFileContent[]> {
     const path = `./discovery/${project}/ethereum/.flat/`
 
     const filePaths = await listFilesRecursively(path)
     const allFilesAreSol = filePaths.every((file) => file.endsWith('.sol'))
     assert(allFilesAreSol, 'All files should be .sol files')
 
-    const contents: FileContent[] = []
+    const contents: HashedFileContent[] = []
     for(const filePath of filePaths.filter((file) => !file.endsWith('.p.sol'))) {
         const content = await readFile(filePath, 'utf-8')
-        contents.push({ path: filePath, content })
+        contents.push({ 
+            path: filePath,
+            hashChunks: buildSimilarityHashmap(content),
+            content
+        })
     }
 
     return contents
@@ -206,33 +216,30 @@ async function listFilesRecursively(path: string): Promise<string[]> {
   return files.flat()
 }
 
-function estimateSimilarity(lhs: string, rhs: string): number {
-    const lhsChunks = buildSimilarityHashmap(lhs)
-    const rhsChunks = buildSimilarityHashmap(rhs)
-
+function estimateSimilarity(lhs: HashedFileContent, rhs: HashedFileContent): number {
     let lhsIndex = 0
     let rhsIndex = 0
     let sourceCopied = 0
 
     while(true) {
-        const lhsIsDone = lhsIndex === lhsChunks.length
+        const lhsIsDone = lhsIndex === lhs.hashChunks.length
         if(lhsIsDone) {
             break
         }
 
-        while(rhsIndex < rhsChunks.length) {
-            if(lhsChunks[lhsIndex].content <= rhsChunks[rhsIndex].content) {
+        while(rhsIndex < rhs.hashChunks.length) {
+            if(lhs.hashChunks[lhsIndex].content <= rhs.hashChunks[rhsIndex].content) {
                 break
             }
 
             rhsIndex++
         }
 
-        let lhsCount = lhsChunks[lhsIndex].length
+        let lhsCount = lhs.hashChunks[lhsIndex].length
         let rhsCount = 0
 
-        if(rhsIndex < rhsChunks.length && lhsChunks[lhsIndex].content === rhsChunks[rhsIndex].content) {
-            rhsCount = rhsChunks[rhsIndex].length
+        if(rhsIndex < rhs.hashChunks.length && lhs.hashChunks[lhsIndex].content === rhs.hashChunks[rhsIndex].content) {
+            rhsCount = rhs.hashChunks[rhsIndex].length
             rhsIndex++;
         }
 
@@ -240,7 +247,7 @@ function estimateSimilarity(lhs: string, rhs: string): number {
         lhsIndex++;
     }
 
-    return sourceCopied / Math.max(lhs.length, rhs.length)
+    return sourceCopied / Math.max(lhs.content.length, rhs.content.length)
 }
 
 function buildSimilarityHashmap(input: string): HashedChunks[] {
