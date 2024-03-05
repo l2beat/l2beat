@@ -1,8 +1,9 @@
-import { assert } from "@l2beat/backend-tools"
-import { readFile, readdir } from 'fs/promises'
-import { resolve, basename } from 'path'
+import { assert } from '@l2beat/backend-tools'
 import chalk from 'chalk'
-import { printAsciiTable } from "../src/tools/printAsciiTable"
+import { readdir, readFile } from 'fs/promises'
+import { resolve } from 'path'
+
+import { printAsciiTable } from '../src/tools/printAsciiTable'
 
 interface Config {
   subcommand: 'run' | 'help'
@@ -12,15 +13,15 @@ interface Config {
 }
 
 interface HashedFileContent {
-    path: string
-    hashChunks: HashedChunks[]
-    content: string
+  path: string
+  hashChunks: HashedChunks[]
+  content: string
 }
 
 interface Project {
-    name: string
-    concatenatedSource: HashedFileContent
-    sources: HashedFileContent[]
+  name: string
+  concatenatedSource: HashedFileContent
+  sources: HashedFileContent[]
 }
 
 interface HashedChunks {
@@ -29,8 +30,8 @@ interface HashedChunks {
 }
 
 interface FileId {
-    id: string
-    path: string
+  id: string
+  path: string
 }
 
 void main().catch((e) => {
@@ -56,19 +57,19 @@ function parseCliParameters(): Config {
     return { subcommand: 'help' }
   }
 
-  let firstProjectName = args.shift()
-  let secondProjectName = args.shift()
+  const firstProjectName = args.shift()
+  const secondProjectName = args.shift()
 
   let forceTable = false
-  if(args.includes('--force-table')) {
-      forceTable = true
+  if (args.includes('--force-table')) {
+    forceTable = true
   }
 
   return {
     subcommand: 'run',
     firstProjectName,
     secondProjectName,
-    forceTable
+    forceTable,
   }
 }
 
@@ -85,141 +86,177 @@ async function compareFlatSources(config: Config): Promise<void> {
   let firstProject = undefined
   let secondProject = undefined
   try {
-      firstProject = await readProject(config.firstProjectName)
-      secondProject = await readProject(config.secondProjectName)
-  } catch(e) {
-      console.log(e)
-      console.log(`\n${chalk.red("ERROR:")} Failed to read projects! Try to ${chalk.magenta("run discovery")} for both projects to make sure that flat sources exist.`)
-      return
+    firstProject = await readProject(config.firstProjectName)
+    secondProject = await readProject(config.secondProjectName)
+  } catch (e) {
+    console.log(e)
+    console.log(
+      `\n${chalk.red('ERROR:')} Failed to read projects! Try to ${chalk.magenta(
+        'run discovery',
+      )} for both projects to make sure that flat sources exist.`,
+    )
+    return
   }
-  
-  let matrix: Record<string, Record<string, string>> = {}
 
-  for(const c1 of firstProject.sources) {
-      let c1Object: Record<string, string> = {}
+  const matrix: Record<string, Record<string, string>> = {}
 
-      for(const c2 of secondProject.sources) {
-          const similarity = estimateSimilarity(c1, c2)
-          c1Object[c2.path] = colorMap(similarity)
-      }
+  for (const c1 of firstProject.sources) {
+    const c1Object: Record<string, string> = {}
 
-      matrix[c1.path] = c1Object
+    for (const c2 of secondProject.sources) {
+      const similarity = estimateSimilarity(c1, c2)
+      c1Object[c2.path] = colorMap(similarity)
+    }
+
+    matrix[c1.path] = c1Object
   }
 
   printResult(config, firstProject, secondProject, matrix)
 }
 
 function printResult(
-    config: Config,
-    firstProject: Project,
-    secondProject: Project,
-    matrix: Record<string, Record<string, string>>
+  config: Config,
+  firstProject: Project,
+  secondProject: Project,
+  matrix: Record<string, Record<string, string>>,
 ): void {
-    printTable(config, firstProject, secondProject, matrix)
-    const concatenatedSimilarity = estimateSimilarity(firstProject.concatenatedSource, secondProject.concatenatedSource)
-    console.log(`\nEstimated similarity between two projects: ${colorMap(concatenatedSimilarity)}`)
+  printTable(config, firstProject, secondProject, matrix)
+  const concatenatedSimilarity = estimateSimilarity(
+    firstProject.concatenatedSource,
+    secondProject.concatenatedSource,
+  )
+  console.log(
+    `\nEstimated similarity between two projects: ${colorMap(
+      concatenatedSimilarity,
+    )}`,
+  )
 }
 
 function printTable(
-    config: Config,
-    firstProject: Project,
-    secondProject: Project,
-    matrix: Record<string, Record<string, string>>
+  config: Config,
+  firstProject: Project,
+  secondProject: Project,
+  matrix: Record<string, Record<string, string>>,
 ): void {
-    const terminalWidth = process.stdout.columns
+  const terminalWidth = process.stdout.columns
 
-    const widths = [computeTableWidth(firstProject), computeTableWidth(secondProject)]
-    const minTableWidth = Math.min(...widths)
+  const widths = [
+    computeTableWidth(firstProject),
+    computeTableWidth(secondProject),
+  ]
+  const minTableWidth = Math.min(...widths)
 
-    if(minTableWidth > terminalWidth && !config.forceTable) {
-        console.log(`${chalk.yellow("WARNING")}: Table is too wide to fit in the terminal`)
-        console.log(`Terminal is ${terminalWidth} characters wide, table is ${minTableWidth} characters wide`)
-        console.log(`Use ${chalk.magenta("--force-table")} to print the table anyway.`)
-        return;
-    }
+  if (minTableWidth > terminalWidth && !config.forceTable) {
+    console.log(
+      `${chalk.yellow('WARNING')}: Table is too wide to fit in the terminal`,
+    )
+    console.log(
+      `Terminal is ${terminalWidth} characters wide, table is ${minTableWidth} characters wide`,
+    )
+    console.log(
+      `Use ${chalk.magenta('--force-table')} to print the table anyway.`,
+    )
+    return
+  }
 
-    const shouldTranspose = widths[0] < widths[1]
-    const aIds = removeCommonPath(firstProject.sources.map((source, i) => ({id: `A${i}`, path: source.path})))
-    const bIds = removeCommonPath(secondProject.sources.map((source, i) => ({id: `B${i}`, path: source.path})))
+  const shouldTranspose = widths[0] < widths[1]
+  const aIds = removeCommonPath(
+    firstProject.sources.map((source, i) => ({
+      id: `A${i}`,
+      path: source.path,
+    })),
+  )
+  const bIds = removeCommonPath(
+    secondProject.sources.map((source, i) => ({
+      id: `B${i}`,
+      path: source.path,
+    })),
+  )
 
-    const header = ["IDs", ...((shouldTranspose ? aIds : bIds).map(({id}) => id))]
-    let rows = Object.values(matrix).map(row => Object.values(row))
+  const header = ['IDs', ...(shouldTranspose ? aIds : bIds).map(({ id }) => id)]
+  let rows = Object.values(matrix).map((row) => Object.values(row))
 
-    if(shouldTranspose) {
-        rows = transpose(rows)
-    }
+  if (shouldTranspose) {
+    rows = transpose(rows)
+  }
 
-    for(const [i, row] of rows.entries()) {
-        row.unshift(shouldTranspose ? bIds[i].id : aIds[i].id)
-    }
+  for (const [i, row] of rows.entries()) {
+    row.unshift(shouldTranspose ? bIds[i].id : aIds[i].id)
+  }
 
-    const table = printAsciiTable(header, rows)
+  const table = printAsciiTable(header, rows)
 
-    console.log(`= ${firstProject.name} `.padEnd(36, '='))
-    console.log(aIds.map((e) => `${e.id} - ${e.path}`).join('\n'))
-    console.log(`= ${secondProject.name} `.padEnd(36, '='))
-    console.log(bIds.map((e) => `${e.id} - ${e.path}`).join('\n'))
-    console.log("====================================\n")
-    console.log(table)
+  console.log(`= ${firstProject.name} `.padEnd(36, '='))
+  console.log(aIds.map((e) => `${e.id} - ${e.path}`).join('\n'))
+  console.log(`= ${secondProject.name} `.padEnd(36, '='))
+  console.log(bIds.map((e) => `${e.id} - ${e.path}`).join('\n'))
+  console.log('====================================\n')
+  console.log(table)
 }
 
 function transpose(input: string[][]): string[][] {
-    return input[0].map((_, i) => input.map((row) => row[i]))
+  return input[0].map((_, i) => input.map((row) => row[i]))
 }
 
 function computeTableWidth(project: Project): number {
-    return project.sources.length * 6 + 5 + project.sources.length + 2
+  return project.sources.length * 6 + 5 + project.sources.length + 2
 }
 
 function removeCommonPath(fileIds: FileId[]): FileId[] {
-    const findCommonPath = (array: string[]) => {
-        if (array.length === 0) return '';
-        
-        let prefix = array[0];
-        for (let i = 1; i < array.length; i++) {
-            while (array[i].indexOf(prefix) !== 0) {
-                prefix = prefix.substring(0, prefix.length - 1);
-                if (prefix === '') return '';
-            }
-        }
-        return prefix;
-    };
+  const findCommonPath = (array: string[]) => {
+    if (array.length === 0) return ''
 
-    const commonPath = findCommonPath(fileIds.map((fileId) => fileId.path));
-    return fileIds.map((fileId) => ({ id: fileId.id, path: fileId.path.substring(commonPath.length) }));
+    let prefix = array[0]
+    for (let i = 1; i < array.length; i++) {
+      while (array[i].indexOf(prefix) !== 0) {
+        prefix = prefix.substring(0, prefix.length - 1)
+        if (prefix === '') return ''
+      }
+    }
+    return prefix
+  }
+
+  const commonPath = findCommonPath(fileIds.map((fileId) => fileId.path))
+  return fileIds.map((fileId) => ({
+    id: fileId.id,
+    path: fileId.path.substring(commonPath.length),
+  }))
 }
 
 async function readProject(projectName: string): Promise<Project> {
-    const sources = await getFlatSources(projectName)
-    const concatenatedSources = sources.map((source) => source.content).join('')
-    const concatenatedSourceHashChunks = buildSimilarityHashmap(concatenatedSources)
-    return { name: projectName, concatenatedSource:{
-        path: `virtualPath.sol`,
-        hashChunks: concatenatedSourceHashChunks,
-        content: concatenatedSources
-    }, sources}
+  const sources = await getFlatSources(projectName)
+  const concatenatedSources = sources.map((source) => source.content).join('')
+  const concatenatedSourceHashChunks =
+    buildSimilarityHashmap(concatenatedSources)
+  return {
+    name: projectName,
+    concatenatedSource: {
+      path: `virtualPath.sol`,
+      hashChunks: concatenatedSourceHashChunks,
+      content: concatenatedSources,
+    },
+    sources,
+  }
 }
 
-async function getFlatSources(
-  project: string,
-): Promise<HashedFileContent[]> {
-    const path = `./discovery/${project}/ethereum/.flat/`
+async function getFlatSources(project: string): Promise<HashedFileContent[]> {
+  const path = `./discovery/${project}/ethereum/.flat/`
 
-    const filePaths = await listFilesRecursively(path)
-    const allFilesAreSol = filePaths.every((file) => file.endsWith('.sol'))
-    assert(allFilesAreSol, 'All files should be .sol files')
+  const filePaths = await listFilesRecursively(path)
+  const allFilesAreSol = filePaths.every((file) => file.endsWith('.sol'))
+  assert(allFilesAreSol, 'All files should be .sol files')
 
-    const contents: HashedFileContent[] = []
-    for(const filePath of filePaths.filter((file) => !file.endsWith('.p.sol'))) {
-        const content = await readFile(filePath, 'utf-8')
-        contents.push({ 
-            path: filePath,
-            hashChunks: buildSimilarityHashmap(content),
-            content
-        })
-    }
+  const contents: HashedFileContent[] = []
+  for (const filePath of filePaths.filter((file) => !file.endsWith('.p.sol'))) {
+    const content = await readFile(filePath, 'utf-8')
+    contents.push({
+      path: filePath,
+      hashChunks: buildSimilarityHashmap(content),
+      content,
+    })
+  }
 
-    return contents
+  return contents
 }
 
 async function listFilesRecursively(path: string): Promise<string[]> {
@@ -234,123 +271,136 @@ async function listFilesRecursively(path: string): Promise<string[]> {
   return files.flat()
 }
 
-function estimateSimilarity(lhs: HashedFileContent, rhs: HashedFileContent): number {
-    let lhsIndex = 0
-    let rhsIndex = 0
-    let sourceCopied = 0
+function estimateSimilarity(
+  lhs: HashedFileContent,
+  rhs: HashedFileContent,
+): number {
+  let lhsIndex = 0
+  let rhsIndex = 0
+  let sourceCopied = 0
 
-    while(true) {
-        const lhsIsDone = lhsIndex === lhs.hashChunks.length
-        if(lhsIsDone) {
-            break
-        }
-
-        while(rhsIndex < rhs.hashChunks.length) {
-            if(lhs.hashChunks[lhsIndex].content <= rhs.hashChunks[rhsIndex].content) {
-                break
-            }
-
-            rhsIndex++
-        }
-
-        let lhsCount = lhs.hashChunks[lhsIndex].length
-        let rhsCount = 0
-
-        if(rhsIndex < rhs.hashChunks.length && lhs.hashChunks[lhsIndex].content === rhs.hashChunks[rhsIndex].content) {
-            rhsCount = rhs.hashChunks[rhsIndex].length
-            rhsIndex++;
-        }
-
-        sourceCopied += Math.min(lhsCount, rhsCount);
-        lhsIndex++;
+  while (true) {
+    const lhsIsDone = lhsIndex === lhs.hashChunks.length
+    if (lhsIsDone) {
+      break
     }
 
-    return sourceCopied / Math.max(lhs.content.length, rhs.content.length)
+    while (rhsIndex < rhs.hashChunks.length) {
+      if (
+        lhs.hashChunks[lhsIndex].content <= rhs.hashChunks[rhsIndex].content
+      ) {
+        break
+      }
+
+      rhsIndex++
+    }
+
+    const lhsCount = lhs.hashChunks[lhsIndex].length
+    let rhsCount = 0
+
+    if (
+      rhsIndex < rhs.hashChunks.length &&
+      lhs.hashChunks[lhsIndex].content === rhs.hashChunks[rhsIndex].content
+    ) {
+      rhsCount = rhs.hashChunks[rhsIndex].length
+      rhsIndex++
+    }
+
+    sourceCopied += Math.min(lhsCount, rhsCount)
+    lhsIndex++
+  }
+
+  return sourceCopied / Math.max(lhs.content.length, rhs.content.length)
 }
 
 function buildSimilarityHashmap(input: string): HashedChunks[] {
-    let lines = splitLineKeepingNewlines(input)
+  const lines = splitLineKeepingNewlines(input)
 
-    const stringChunks = lines.flatMap((line) => {
-        const result = []
-        for (let i = 0; i < line.length; i += 64) {
-            result.push(line.slice(i, i + 64))
-        }
-        return result
-    })
-
-    checkIfLineCountIsCorrect(input, lines)
-
-    const map = new Map<string, number>()
-
-    for(const stringChunk of stringChunks) {
-        const element = map.get(stringChunk)
-
-        if(element !== undefined) {
-            map.set(stringChunk, element + stringChunk.length)
-        } else {
-            map.set(stringChunk, stringChunk.length)
-        }
+  const stringChunks = lines.flatMap((line) => {
+    const result = []
+    for (let i = 0; i < line.length; i += 64) {
+      result.push(line.slice(i, i + 64))
     }
+    return result
+  })
 
-    // Transform that map to an array of Chunk objects
-    const chunks: HashedChunks[] = Array.from(map).map(([content, length]) => ({ content, length }))
-    // Sort alphabetically by content
-    chunks.sort((lhs, rhs) => lhs.content.localeCompare(rhs.content))
+  checkIfLineCountIsCorrect(input, lines)
 
-    return chunks
+  const map = new Map<string, number>()
+
+  for (const stringChunk of stringChunks) {
+    const element = map.get(stringChunk)
+
+    if (element !== undefined) {
+      map.set(stringChunk, element + stringChunk.length)
+    } else {
+      map.set(stringChunk, stringChunk.length)
+    }
+  }
+
+  // Transform that map to an array of Chunk objects
+  const chunks: HashedChunks[] = Array.from(map).map(([content, length]) => ({
+    content,
+    length,
+  }))
+  // Sort alphabetically by content
+  chunks.sort((lhs, rhs) => lhs.content.localeCompare(rhs.content))
+
+  return chunks
 }
 
 function checkIfLineCountIsCorrect(input: string, lines: string[]): void {
-    const inputLines = input.split('\n')
-    if(inputLines.at(-1) === '') {
-        inputLines.pop()
-    }
-    const inputLineCount = inputLines.length
-    const linesLineCount = lines.length
+  const inputLines = input.split('\n')
+  if (inputLines.at(-1) === '') {
+    inputLines.pop()
+  }
+  const inputLineCount = inputLines.length
+  const linesLineCount = lines.length
 
-    if (inputLineCount !== linesLineCount) {
-        throw new Error(`Line count mismatch: ${inputLineCount} vs ${linesLineCount}`)
-    }
+  if (inputLineCount !== linesLineCount) {
+    throw new Error(
+      `Line count mismatch: ${inputLineCount} vs ${linesLineCount}`,
+    )
+  }
 }
 
 function splitLineKeepingNewlines(input: string): string[] {
-    let lines = [];
-    let start = 0;
+  const lines = []
+  let start = 0
 
-    for (let i = 0; i < input.length; i++) {
-        if (input[i] === '\n') {
-            let part = input.substring(start, i + 1);
-            lines.push(part);
-            start = i + 1;
-        }
+  for (let i = 0; i < input.length; i++) {
+    if (input[i] === '\n') {
+      const part = input.substring(start, i + 1)
+      lines.push(part)
+      start = i + 1
     }
+  }
 
-    if (start < input.length) {
-        lines.push(input.substring(start));
-    }
+  if (start < input.length) {
+    lines.push(input.substring(start))
+  }
 
-    return lines;
+  return lines
 }
 
 function colorMap(value: number): string {
-    const valueString = value.toFixed(2)
+  const valueString = value.toFixed(2)
 
-    if (value < 0.125) {
-        return chalk.grey(valueString);
-    } else if (value < 0.25) {
-        return chalk.red(valueString);
-    } else if (value < 0.375) {
-        return chalk.redBright(valueString);
-    } else if (value < 0.5) {
-        return chalk.magenta(valueString);
-    } else if (value < 0.625) {
-        return chalk.magentaBright(valueString);
-    } else if (value < 0.75) {
-        return chalk.yellow(valueString);
-    } else if (value < 0.875) {
-        return chalk.yellowBright(valueString);
-    } else {
-        return chalk.greenBright(valueString);
-    }
+  if (value < 0.125) {
+    return chalk.grey(valueString)
+  } else if (value < 0.25) {
+    return chalk.red(valueString)
+  } else if (value < 0.375) {
+    return chalk.redBright(valueString)
+  } else if (value < 0.5) {
+    return chalk.magenta(valueString)
+  } else if (value < 0.625) {
+    return chalk.magentaBright(valueString)
+  } else if (value < 0.75) {
+    return chalk.yellow(valueString)
+  } else if (value < 0.875) {
+    return chalk.yellowBright(valueString)
+  } else {
+    return chalk.greenBright(valueString)
+  }
 }

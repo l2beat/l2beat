@@ -1,7 +1,7 @@
+import chalk from 'chalk'
 import { expect } from 'earl'
 
 import { printAsciiTable } from './printAsciiTable'
-import chalk from 'chalk'
 
 describe(printAsciiTable.name, () => {
   it('should print a table', () => {
