@@ -4,8 +4,14 @@ import { expect, mockObject } from 'earl'
 import { Knex } from 'knex'
 
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
-import { HourlyIndexer } from './HourlyIndexer'
-import { LivenessClient } from './LivenessClient'
+import { HourlyIndexer } from '../tracked-txs/HourlyIndexer'
+import {
+  adjustToForBigqueryCall,
+  findConfigurationsToSync,
+} from '../tracked-txs/utils'
+import { diffLivenessConfigurations } from '../tracked-txs/utils/diffLivenessConfigurations'
+import { getSafeHeight } from '../tracked-txs/utils/getSafeHeight'
+import { LivenessClient } from '../tracked-txs/utils/TrackedTxsClient'
 import { LivenessIndexer } from './LivenessIndexer'
 import {
   LivenessConfigurationRecord,
@@ -20,9 +26,6 @@ import {
   makeLivenessFunctionCall,
 } from './types/LivenessConfig'
 import { LivenessId } from './types/LivenessId'
-import { adjustToForBigqueryCall, findConfigurationsToSync } from './utils'
-import { diffLivenessConfigurations } from './utils/diffLivenessConfigurations'
-import { getSafeHeight } from './utils/getSafeHeight'
 
 const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2023-05-01T00:00:00Z'))
 const TRX = mockObject<Knex.Transaction>({})

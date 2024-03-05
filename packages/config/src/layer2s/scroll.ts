@@ -139,7 +139,7 @@ export const scroll: Layer2 = {
       defaultCallsPerMinute: 120,
       startBlock: 1,
     },
-    trackedTransactions: [
+    trackedTxs: [
       {
         uses: [
           {

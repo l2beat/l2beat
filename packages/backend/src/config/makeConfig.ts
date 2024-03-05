@@ -104,7 +104,7 @@ export function makeConfig(
         }),
       ),
     },
-    liveness: flags.isEnabled('liveness') && {
+    trackedTxsConfig: flags.isEnabled('tracked-txs') && {
       bigQuery: {
         clientEmail: env.string('LIVENESS_CLIENT_EMAIL'),
         privateKey: env.string('LIVENESS_PRIVATE_KEY').replace(/\\n/g, '\n'),

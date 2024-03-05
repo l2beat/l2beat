@@ -146,7 +146,7 @@ export const kroma: Layer2 = {
       startBlock: 1,
       assessCount: subtractOne,
     },
-    trackedTransactions: [
+    trackedTxs: [
       {
         uses: [{ type: 'liveness', subType: 'batchSubmissions' }],
         query: {

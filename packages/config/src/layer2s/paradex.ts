@@ -96,7 +96,7 @@ export const paradex: Layer2 = {
           'Paradex USDC Escrow.' + ' ' + escrowUSDCMaxTotalBalanceString,
       }),
     ],
-    trackedTransactions: [
+    trackedTxs: [
       {
         uses: [{ type: 'liveness', subType: 'proofSubmissions' }],
         query: {

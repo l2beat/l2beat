@@ -99,7 +99,7 @@ export const bobanetwork: Layer2 = {
       defaultCallsPerMinute: 200,
       startBlock: 1,
     },
-    trackedTransactions: [
+    trackedTxs: [
       {
         uses: [{ type: 'liveness', subType: 'batchSubmissions' }],
         query: {

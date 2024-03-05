@@ -4,16 +4,16 @@ import { ChildIndexer } from '@l2beat/uif'
 import { Knex } from 'knex'
 
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
-import { HourlyIndexer } from './HourlyIndexer'
+import { HourlyIndexer } from '../tracked-txs/HourlyIndexer'
+import { adjustToForBigqueryCall } from '../tracked-txs/utils'
+import { diffLivenessConfigurations } from '../tracked-txs/utils/diffLivenessConfigurations'
+import { findConfigurationsToSync } from '../tracked-txs/utils/findConfigurationsToSync'
+import { getSafeHeight } from '../tracked-txs/utils/getSafeHeight'
 import { LivenessClient } from './LivenessClient'
 import { LivenessConfigurationRepository } from './repositories/LivenessConfigurationRepository'
 import { LivenessRepository } from './repositories/LivenessRepository'
 import { LivenessConfigEntry } from './types/LivenessConfig'
 import { LivenessId } from './types/LivenessId'
-import { adjustToForBigqueryCall } from './utils'
-import { diffLivenessConfigurations } from './utils/diffLivenessConfigurations'
-import { findConfigurationsToSync } from './utils/findConfigurationsToSync'
-import { getSafeHeight } from './utils/getSafeHeight'
 
 export class LivenessIndexer extends ChildIndexer {
   readonly indexerId = 'liveness_indexer'
@@ -173,7 +173,7 @@ export class LivenessIndexer extends ChildIndexer {
 
   /**
    * WARNING: this method does not do anything
-   * 
+   *
     In our case there is no re-org handling so we do not have to worry
     that our data will become invalid.
     Also there is no need to handle the case when the server is randomly shut down during update,

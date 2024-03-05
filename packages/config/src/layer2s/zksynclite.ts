@@ -96,7 +96,7 @@ export const zksynclite: Layer2 = {
       defaultUrl: 'https://api.zksync.io/api/v0.2',
       defaultCallsPerMinute: 3_000,
     },
-    trackedTransactions: [
+    trackedTxs: [
       {
         uses: [{ type: 'liveness', subType: 'proofSubmissions' }],
         query: {

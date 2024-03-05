@@ -112,7 +112,7 @@ export const aztecconnect: Layer2 = {
         tokens: ['ETH', 'DAI', 'wstETH'],
       },
     ],
-    trackedTransactions: [
+    trackedTxs: [
       {
         uses: [{ type: 'liveness', subType: 'stateUpdates' }],
         query: {

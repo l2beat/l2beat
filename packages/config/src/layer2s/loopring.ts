@@ -102,7 +102,7 @@ export const loopring: Layer2 = {
       defaultUrl: 'https://api3.loopring.io/api/v3',
       defaultCallsPerMinute: 240,
     },
-    trackedTransactions: [
+    trackedTxs: [
       {
         uses: [
           {
