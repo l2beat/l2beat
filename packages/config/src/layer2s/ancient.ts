@@ -1,7 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { opStack } from './templates/opStack'
+import { CELESTIA_DA_PROVIDER, opStack } from './templates/opStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('ancient')
@@ -17,7 +17,7 @@ const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
 )
 
 export const ancient: Layer2 = opStack({
-  daProvider: 'Celestia',
+  daProvider: CELESTIA_DA_PROVIDER,
   discovery,
   display: {
     name: 'Ancient8',
