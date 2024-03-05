@@ -21,7 +21,7 @@ export const fraxtal: Layer2 = opStack({
       sentiment: 'bad',
     },
     technology: {
-      name: 'Data required to compute fraud proof is not published on chain, and currently not publicly accessible.',
+      name: 'Data required to compute fraud proof is not published on chain, and currently not publicly accessible',
       description:
         'Fraxtal uses a separate data availability module developed by the Frax Core Team. Data is posted off chain, and only hashes of blob data is published on an on-chain inbox.',
       references: [
