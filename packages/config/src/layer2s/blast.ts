@@ -11,6 +11,11 @@ const upgradeability = {
   upgradeDelay: 'No delay',
 }
 
+const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
+  'L2OutputOracle',
+  'FINALIZATION_PERIOD_SECONDS',
+)
+
 export const blast: Layer2 = opStack({
   discovery,
   display: {
@@ -29,6 +34,9 @@ export const blast: Layer2 = opStack({
       explorers: ['https://blastscan.io'],
       repositories: [],
       socialMedia: ['https://twitter.com/Blast_L2'],
+    },
+    finality: {
+      finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
     },
   },
   upgradeability,
@@ -64,23 +72,23 @@ export const blast: Layer2 = opStack({
   nonTemplateContracts: [
     discovery.getContractDetails('L1BlastBridge', {
       description:
-        'The L1 Bridge to Blast with the facility to invest escrowed tokens',
+        'The L1 Bridge to Blast with the facility to invest escrowed tokens.',
       ...upgradeability,
     }),
     discovery.getContractDetails('ETHYieldManager', {
-      description: 'Contract managing Yield Providers for ETH',
+      description: 'Contract managing Yield Providers for ETH.',
       ...upgradeability,
     }),
     discovery.getContractDetails('USDYieldManager', {
-      description: 'Contract managing Yield Providers for stablecoins',
+      description: 'Contract managing Yield Providers for stablecoins.',
       ...upgradeability,
     }),
     discovery.getContractDetails('LidoYieldProvider', {
-      description: 'Yield Provider for ETH investing ETH into stETH',
+      description: 'Yield Provider for ETH investing ETH into stETH.',
       ...upgradeability,
     }),
     discovery.getContractDetails('DSRYieldProvider', {
-      description: 'Yield Provider for DAI investing DAI into the MakerDAO DSR',
+      description: 'Yield Provider for DAI investing DAI into the MakerDAO DSR.',
       ...upgradeability,
     }),
   ],
@@ -102,7 +110,7 @@ export const blast: Layer2 = opStack({
     discovery.getEscrowDetails({
       address: EthereumAddress('0xa230285d5683C74935aD14c446e137c8c8828438'),
       name: 'Interest-bearing DAI Vault',
-      tokens: [''],
+      tokens: [],
       description:
         'Escrow for DAI that is invested into a yield-bearing contracts such as MakerDAO DSR.',
     }),
