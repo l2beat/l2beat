@@ -105,7 +105,7 @@ export const zksyncera: Layer2 = {
       defaultCallsPerMinute: 1500,
       startBlock: 1,
     },
-    trackedTransactions: [
+    trackedTxs: [
       {
         uses: [{ type: 'liveness', subType: 'proofSubmissions' }],
         query: {

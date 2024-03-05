@@ -125,7 +125,7 @@ export const linea: Layer2 = {
       defaultUrl: 'https://linea-mainnet.infura.io/v3',
       startBlock: 1,
     },
-    trackedTransactions: [
+    trackedTxs: [
       {
         uses: [{ type: 'liveness', subType: 'batchSubmissions' }],
         query: {

@@ -1,10 +1,4 @@
-import {
-  EthereumAddress,
-  ProjectId,
-  TrackedTxsConfigSubtype,
-  TrackedTxsConfigType,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 
 import {
   KnowledgeNugget,
@@ -22,6 +16,7 @@ import { ScalingProjectStateValidation } from '../../common/ScalingProjectStateV
 import { ScalingProjectTechnology } from '../../common/ScalingProjectTechnology'
 import { StageConfig } from '../common/stages/types'
 import { Layer2FinalityConfig } from './Layer2FinalityConfig'
+import { Layer2TxConfig } from './Layer2TrackedTxsConfig'
 import { Layer2TransactionApi } from './Layer2TransactionApi'
 
 export interface Layer2 {
@@ -89,44 +84,7 @@ export interface Layer2Config extends ScalingProjectConfig {
   /** API parameters used to get transaction count */
   transactionApi?: Layer2TransactionApi
   /** List of transactions that are tracked by our backend */
-  trackedTransactions?: TrackedTransaction[]
+  trackedTxs?: Layer2TxConfig[]
   /** Configuration for getting finality data */
   finality?: Layer2FinalityConfig
-}
-
-type TrackedTransaction = {
-  uses: TrackedTransactionUse[]
-  query: TrackedTransactionQuery
-}
-
-type TrackedTransactionUse = {
-  type: TrackedTxsConfigType
-  subType: TrackedTxsConfigSubtype
-  duplicateTo?: TrackedTxsConfigSubtype
-}
-
-type TrackedTransactionQuery = FunctionCall | Transfer | SharpSubmission
-
-interface FunctionCall {
-  formula: 'functionCall'
-  address: EthereumAddress
-  selector: `0x${string}`
-  functionSignature: string
-  sinceTimestamp: UnixTime
-  untilTimestamp?: UnixTime
-}
-
-interface Transfer {
-  formula: 'transfer'
-  from: EthereumAddress
-  to: EthereumAddress
-  sinceTimestamp: UnixTime
-  untilTimestamp?: UnixTime
-}
-
-interface SharpSubmission {
-  formula: 'sharpSubmission'
-  programHashes: string[]
-  sinceTimestamp: UnixTime
-  untilTimestamp?: UnixTime
 }

@@ -130,7 +130,7 @@ export const dydx: Layer2 = {
       sinceTimestamp: new UnixTime(1613033682),
       resyncLastDays: 7,
     },
-    trackedTransactions: [
+    trackedTxs: [
       {
         uses: [{ type: 'liveness', subType: 'proofSubmissions' }],
         query: {

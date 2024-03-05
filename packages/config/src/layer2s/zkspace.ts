@@ -68,7 +68,7 @@ export const zkspace: Layer2 = {
         tokens: '*',
       }),
     ],
-    trackedTransactions: [
+    trackedTxs: [
       {
         uses: [
           {

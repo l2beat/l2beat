@@ -101,7 +101,7 @@ export const degate3: Layer2 = {
         tokens: '*',
       }),
     ],
-    trackedTransactions: [
+    trackedTxs: [
       {
         uses: [
           {

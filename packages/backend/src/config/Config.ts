@@ -21,7 +21,7 @@ export interface Config {
   readonly api: ApiConfig
   readonly health: HealthConfig
   readonly tvl: TvlConfig
-  readonly liveness: LivenessConfig | false
+  readonly trackedTxsConfig: TrackedTxsConfig | false
   readonly finality: FinalityConfig | false
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
@@ -71,7 +71,7 @@ export interface TvlConfig {
   readonly modules: ChainTvlConfig[]
 }
 
-export interface LivenessConfig {
+export interface TrackedTxsConfig {
   readonly bigQuery: {
     readonly clientEmail: string
     readonly privateKey: string

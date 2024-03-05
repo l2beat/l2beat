@@ -50,6 +50,7 @@ export function createLivenessModule(
   const runtimeConfigurations = config.projects.flatMap(
     (project) => project.livenessConfig?.entries ?? [],
   )
+
   const liveness = new LivenessIndexer(
     logger,
     hourlyIndexer,

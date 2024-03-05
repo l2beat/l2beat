@@ -125,7 +125,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
               assessCount: subtractOne,
             }
           : undefined),
-      trackedTransactions:
+      trackedTxs:
         templateVars.daProvider === undefined
           ? [
               {
