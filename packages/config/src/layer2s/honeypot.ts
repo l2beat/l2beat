@@ -81,7 +81,7 @@ export const honeypot: Layer2 = {
         description: 'Contract storing bounty funds.',
       }),
     ],
-    trackedTransactions: [
+    trackedTxs: [
       {
         uses: [{ type: 'liveness', subType: 'stateUpdates' }],
         query: {

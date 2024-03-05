@@ -85,7 +85,7 @@ export const degate: Layer2 = {
         tokens: '*',
       }),
     ],
-    trackedTransactions: [
+    trackedTxs: [
       {
         uses: [{ type: 'liveness', subType: 'stateUpdates' }],
         query: {

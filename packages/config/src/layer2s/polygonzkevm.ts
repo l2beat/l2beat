@@ -164,7 +164,7 @@ export const polygonzkevm: Layer2 = {
       defaultCallsPerMinute: 500,
       startBlock: 1,
     },
-    trackedTransactions: [
+    trackedTxs: [
       {
         uses: [{ type: 'liveness', subType: 'batchSubmissions' }],
         query: {

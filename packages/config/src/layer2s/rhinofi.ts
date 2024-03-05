@@ -95,7 +95,7 @@ export const rhinofi: Layer2 = {
       sinceTimestamp: new UnixTime(1590491810),
       resyncLastDays: 7,
     },
-    trackedTransactions: [
+    trackedTxs: [
       {
         uses: [{ type: 'liveness', subType: 'stateUpdates' }],
         query: {
