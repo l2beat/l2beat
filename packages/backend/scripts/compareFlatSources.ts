@@ -82,8 +82,16 @@ async function compareFlatSources(config: Config): Promise<void> {
   assert(config.firstProjectName, 'project1 is required')
   assert(config.secondProjectName, 'project2 is required')
 
-  const firstProject = await readProject(config.firstProjectName)
-  const secondProject = await readProject(config.secondProjectName)
+  let firstProject = undefined
+  let secondProject = undefined
+  try {
+      firstProject = await readProject(config.firstProjectName)
+      secondProject = await readProject(config.secondProjectName)
+  } catch(e) {
+      console.log(e)
+      console.log(`\n${chalk.red("ERROR:")} Failed to read projects! Try to ${chalk.magenta("run discovery")} for both projects to make sure that flat sources exist.`)
+      return
+  }
   
   let matrix: Record<string, Record<string, string>> = {}
 
