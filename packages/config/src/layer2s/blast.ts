@@ -81,6 +81,12 @@ export const blast: Layer2 = opStack({
   genesisTimestamp: new UnixTime(1708825259), //First sequencer transaction
   l2OutputOracle: discovery.getContract('L2OutputOracle'),
   portal: discovery.getContract('OptimismPortal'),
+  nonTemplatePermissions: [
+    ...discovery.getMultisigPermission(
+      'BlastMultisig',
+      'This address is the owner of all upgradable contracts. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals and as a Challenger. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
+    ),
+  ],
   nonTemplateContracts: [
     discovery.getContractDetails('L1BlastBridge', {
       description:
@@ -129,7 +135,14 @@ export const blast: Layer2 = opStack({
     }),
   ],
   isNodeAvailable: false,
-  milestones: [],
+  milestones: [
+    {
+      name: 'Blast Network Launch',
+      link: 'https://x.com/Blast_L2/status/1763316176263008551?s=20',
+      date: '2024-02-29T00:00:00Z',
+      description: 'Blast Network is live on mainnet.',
+    },
+  ],
   roleOverrides: {
     batcherHash: 'Sequencer',
     PROPOSER: 'Proposer',
