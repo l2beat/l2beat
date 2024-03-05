@@ -1,34 +1,14 @@
 import Router from '@koa/router'
-import { CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { Config } from '../../../config'
 import { ChainConverter } from '../../../tools/ChainConverter'
-
-type Token = TotalSupplyToken | CirculatingSupplyToken | EscrowBalanceToken
-
-interface EscrowBalanceToken {
-  type: 'ESCROW_BALANCE'
-  address: EthereumAddress | 'native'
-  chain: string
-  project: string
-  escrow: EthereumAddress
-  sinceTimestamp: UnixTime
-}
-
-interface TotalSupplyToken {
-  type: 'TOTAL_SUPPLY'
-  address: EthereumAddress
-  chain: string
-  project: string
-  sinceTimestamp: UnixTime
-}
-
-interface CirculatingSupplyToken {
-  type: 'CIRCULATING_SUPPLY'
-  coingeckoId: CoingeckoId
-  project: string
-  sinceTimestamp: UnixTime
-}
+import {
+  CirculatingSupplyToken,
+  EscrowBalanceToken,
+  Token2,
+  TotalSupplyToken,
+} from '../Token2'
+import { renderTokensStatusPage } from './TokensStatusPage'
 
 export function createTvl2StatusRouter(config: Config) {
   const router = new Router()
@@ -70,13 +50,13 @@ export function createTvl2StatusRouter(config: Config) {
     })),
   )
 
-  const tokens: Token[] = [
+  const tokens: Token2[] = [
     ...totalSupplyTokens,
     ...circulatingSupplyTokens,
     ...escrowBalanceTokens.flat(),
   ]
 
-  const tokensByChain: Record<string, Token[]> = {}
+  const tokensByChain: Record<string, Token2[]> = {}
 
   for (const token of tokens) {
     if (token.type === 'CIRCULATING_SUPPLY') {
@@ -94,7 +74,7 @@ export function createTvl2StatusRouter(config: Config) {
     }
   }
 
-  const tokensByProject: Record<string, Token[]> = {}
+  const tokensByProject: Record<string, Token2[]> = {}
 
   for (const token of tokens) {
     if (tokensByProject[token.project]) {
@@ -105,7 +85,11 @@ export function createTvl2StatusRouter(config: Config) {
   }
 
   router.get('/status/tokens', (ctx) => {
-    ctx.body = tokensByProject
+    ctx.body = renderTokensStatusPage({
+      tokens,
+      tokensByChain,
+      tokensByProject,
+    })
   })
 
   return router
