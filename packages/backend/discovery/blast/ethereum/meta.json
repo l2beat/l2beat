@@ -2,6 +2,156 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
+      "name": "DSRYieldProvider",
+      "values": {
+        "id": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "supportsInsurancePayment": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "YIELD_MANAGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1BlastBridge",
+      "values": {
+        "ethYieldManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MESSENGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OTHER_BRIDGE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "otherBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "portal": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "usdYieldManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "LidoYieldProvider",
+      "values": {
+        "id": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "supportsInsurancePayment": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "YIELD_MANAGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1StandardBridge",
+      "values": {
+        "l2TokenBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MESSENGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OTHER_BRIDGE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "otherBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "LaunchBridge",
       "values": {
         "CURVE_3POOL": {
@@ -92,96 +242,6 @@
       }
     },
     {
-      "name": "L1BlastBridge",
-      "values": {
-        "ethYieldManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "messenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MESSENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OTHER_BRIDGE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "otherBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "portal": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "usdYieldManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L1StandardBridge",
-      "values": {
-        "l2TokenBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "messenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MESSENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OTHER_BRIDGE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "otherBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "ProxyAdmin",
       "values": {
         "addressManager": {
@@ -195,171 +255,6 @@
           "type": null
         },
         "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "BridgeOwner",
-      "values": {
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "OptimismPortal",
-      "values": {
-        "guardian": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "GUARDIAN": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "L2_ORACLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2Oracle": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2Sender": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "params": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "SYSTEM_CONFIG": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "systemConfig": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "yieldManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L1CrossDomainMessenger",
-      "values": {
-        "MESSAGE_VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "messageNonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_GAS_CALLDATA_OVERHEAD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OTHER_MESSENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "portal": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PORTAL": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RELAY_CALL_OVERHEAD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RELAY_CONSTANT_OVERHEAD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RELAY_GAS_CHECK_BUFFER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RELAY_RESERVED_GAS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
           "description": null,
           "severity": null,
           "type": null
@@ -532,6 +427,171 @@
       }
     },
     {
+      "name": "OptimismPortal",
+      "values": {
+        "guardian": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "GUARDIAN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L2_ORACLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2Oracle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2Sender": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "params": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SYSTEM_CONFIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "systemConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "yieldManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "BridgeOwner",
+      "values": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1CrossDomainMessenger",
+      "values": {
+        "MESSAGE_VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messageNonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_GAS_CALLDATA_OVERHEAD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OTHER_MESSENGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "portal": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PORTAL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RELAY_CALL_OVERHEAD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RELAY_CONSTANT_OVERHEAD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RELAY_GAS_CHECK_BUFFER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RELAY_RESERVED_GAS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "AddressManager",
       "values": {
         "owner": {
@@ -585,6 +645,21 @@
           "type": null
         },
         "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Insurance",
+      "values": {
+        "admin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
           "description": null,
           "severity": null,
           "type": null
@@ -680,21 +755,6 @@
           "type": null
         },
         "deletedOutputs": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "Insurance",
-      "values": {
-        "admin": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
           "description": null,
           "severity": null,
           "type": null

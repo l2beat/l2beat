@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xa25560c940e0490eb1d54824c4d7f2c78ddfd63a
+
+# Diff at Tue, 05 Mar 2024 13:29:25 GMT:
+
+- author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
+- comparing to: main@541f7d14c59a0819aaf94266509647d70949b121 block: 19361335
+- current block number: 19369263
+
+## Description
+
+Added manually Yield Providers. This will have to be updated to find them automatically.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19361335 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract DSRYieldProvider (0x0733F618118bF420b6b604c969498ecf143681a8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LidoYieldProvider (0x4316A00D31da1313617DbB04fD92F9fF8D1aF7Db)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x1e9f26865d3ec0429a0cda6113646e364c3281df
 
 # Diff at Mon, 04 Mar 2024 10:56:28 GMT:

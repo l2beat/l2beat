@@ -5,7 +5,9 @@
   "initialAddresses": [
     "0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d", //LaunchBridge
     "0x697402166Fbf2F22E970df8a6486Ef171dbfc524", //L1StandardBridge
-    "0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115" //L1BlastBridge
+    "0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115", //L1BlastBridge
+    "0x0733F618118bF420b6b604c969498ecf143681a8", //DSRYieldProvider
+    "0x4316A00D31da1313617DbB04fD92F9fF8D1aF7Db" //LidoYieldProvider
   ],
   "names": {
     "0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d": "LaunchBridge",
@@ -83,12 +85,35 @@
       }
     },
     "LidoYieldProvider": {
-      // TODO: In review
-      "ignoreDiscovery": true
+      "ignoreRelative": ["LIDO", "THIS", "WITHDRAWAL_QUEUE"], //TODO: why this does not work ????
+      "ignoreMethods": [
+        "insuranceBalance",
+        "lastClaimedIndex",
+        "lastUnstakeRequestIndex",
+        "unstakeRequests",
+        "yield",
+        "claimBatchSize",
+        "pendingBalance",
+        "stakedBalance",
+        "stakedPrincipal",
+        "totalValue",
+        "LIDO", // TODO: Remove
+        "THIS",
+        "WITHDRAWAL_QUEUE"
+      ]
     },
     "DSRYieldProvider": {
-      // TODO: In review
-      "ignoreDiscovery": true
+      "ignoreRelative": ["DAI", "DSR_MANAGER"], //TODO: why this does not work ????
+      "ignoreMethods": [
+        "insuranceBalance",
+        "pendingBalance",
+        "stakedBalance",
+        "stakedPrincipal",
+        "totalValue",
+        "yield",
+        "DAI",
+        "DSR_MANAGER" // TODO: Remove
+      ]
     },
     //TODO: Read ProviderInfo
     "USDYieldManager": {
