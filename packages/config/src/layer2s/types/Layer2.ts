@@ -1,4 +1,10 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  ProjectId,
+  TrackedTxsConfigSubtype,
+  TrackedTxsConfigType,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import {
   KnowledgeNugget,
@@ -94,16 +100,10 @@ type TrackedTransaction = {
 }
 
 type TrackedTransactionUse = {
-  type: TrackedTransactionType
-  subType: TrackedTransactionSubType
-  duplicateTo?: TrackedTransactionSubType
+  type: TrackedTxsConfigType
+  subType: TrackedTxsConfigSubtype
+  duplicateTo?: TrackedTxsConfigSubtype
 }
-
-type TrackedTransactionType = 'liveness'
-type TrackedTransactionSubType =
-  | 'stateUpdates'
-  | 'batchSubmissions'
-  | 'proofSubmissions'
 
 type TrackedTransactionQuery = FunctionCall | Transfer | SharpSubmission
 
