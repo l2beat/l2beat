@@ -6,13 +6,19 @@ import { printAsciiTable } from "../src/tools/printAsciiTable"
 
 interface Config {
   subcommand: 'run' | 'help'
-  project1?: string
-  project2?: string
+  firstProjectName?: string
+  secondProjectName?: string
 }
 
 interface FileContent {
     path: string
     content: string
+}
+
+interface Project {
+    name: string
+    concatenatedSources: string
+    sources: FileContent[]
 }
 
 interface HashedChunks {
@@ -48,13 +54,13 @@ function parseCliParameters(): Config {
     return { subcommand: 'help' }
   }
 
-  let project1 = args.shift()
-  let project2 = args.shift()
+  let firstProjectName = args.shift()
+  let secondProjectName = args.shift()
 
   return {
     subcommand: 'run',
-    project1,
-    project2,
+    firstProjectName,
+    secondProjectName,
   }
 }
 
@@ -65,18 +71,18 @@ function printUsage(): void {
 }
 
 async function compareFlatSources(config: Config): Promise<void> {
-  assert(config.project1, 'project1 is required')
-  assert(config.project2, 'project2 is required')
+  assert(config.firstProjectName, 'project1 is required')
+  assert(config.secondProjectName, 'project2 is required')
 
-  const project1Sources = await getFlatSources(config.project1)
-  const project2Sources = await getFlatSources(config.project2)
-
+  const firstProject = await readProject(config.firstProjectName)
+  const secondProject = await readProject(config.secondProjectName)
+  
   let matrix: Record<string, Record<string, string>> = {}
 
-  for(const c1 of project1Sources) {
+  for(const c1 of firstProject.sources) {
       let c1Object: Record<string, string> = {}
 
-      for(const c2 of project2Sources) {
+      for(const c2 of secondProject.sources) {
           const similarity = estimateSimilarity(c1.content, c2.content)
           c1Object[c2.path] = colorMap(similarity)
       }
@@ -84,29 +90,66 @@ async function compareFlatSources(config: Config): Promise<void> {
       matrix[c1.path] = c1Object
   }
 
-  printResult(config.project1, project1Sources, config.project2, project2Sources, matrix)
+  printResult(firstProject, secondProject, matrix)
 }
 
 function printResult(
-    project1Name: string,
-    project1Sources: FileContent[],
-    project2Name: string,
-    project2Sources: FileContent[],
+    firstProject: Project,
+    secondProject: Project,
     matrix: Record<string, Record<string, string>>
 ): void {
-    const aIds = removeCommonPath(project1Sources.map((source, i) => ({id: `A${i}`, path: source.path})))
-    const bIds = removeCommonPath(project2Sources.map((source, i) => ({id: `B${i}`, path: source.path})))
+    printTable(firstProject, secondProject, matrix)
+    const concatenatedSimilarity = estimateSimilarity(firstProject.concatenatedSources, secondProject.concatenatedSources)
+    console.log(`Estimated similarity between two projects: ${colorMap(concatenatedSimilarity)}`)
+}
 
-    const header = ["IDs", ...bIds.map(({id}) => id)]
-    const rows = Object.values(matrix).map((row, j) => [aIds[j].id, ...Object.values(row)])
+function printTable(
+    firstProject: Project,
+    secondProject: Project,
+    matrix: Record<string, Record<string, string>>
+): void {
+    const terminalWidth = process.stdout.columns
+
+    const widths = [computeTableWidth(firstProject), computeTableWidth(secondProject)]
+    const minTableWidth = Math.min(...widths)
+
+    if(minTableWidth > terminalWidth) {
+        console.log("Table is too wide to fit in the terminal")
+        console.log(`Terminal is ${terminalWidth} characters wide, table is ${minTableWidth} characters wide`)
+        return;
+    }
+
+    const shouldTranspose = widths[0] < widths[1]
+    const aIds = removeCommonPath(firstProject.sources.map((source, i) => ({id: `A${i}`, path: source.path})))
+    const bIds = removeCommonPath(secondProject.sources.map((source, i) => ({id: `B${i}`, path: source.path})))
+
+    const header = ["IDs", ...((shouldTranspose ? aIds : bIds).map(({id}) => id))]
+    let rows = Object.values(matrix).map(row => Object.values(row))
+
+    if(shouldTranspose) {
+        rows = transpose(rows)
+    }
+
+    for(const [i, row] of rows.entries()) {
+        row.unshift(shouldTranspose ? bIds[i].id : aIds[i].id)
+    }
+
     const table = printAsciiTable(header, rows)
 
-    console.log(`= ${project1Name} `.padEnd(36, '='))
+    console.log(`= ${firstProject.name} `.padEnd(36, '='))
     console.log(aIds.map((e) => `${e.id} - ${e.path}`).join('\n'))
-    console.log(`= ${project2Name} `.padEnd(36, '='))
+    console.log(`= ${secondProject.name} `.padEnd(36, '='))
     console.log(bIds.map((e) => `${e.id} - ${e.path}`).join('\n'))
     console.log("====================================\n")
     console.log(table)
+}
+
+function transpose(input: string[][]): string[][] {
+    return input[0].map((_, i) => input.map((row) => row[i]))
+}
+
+function computeTableWidth(project: Project): number {
+    return project.sources.length * 6 + 5 + project.sources.length + 2
 }
 
 function removeCommonPath(fileIds: FileId[]): FileId[] {
@@ -125,6 +168,12 @@ function removeCommonPath(fileIds: FileId[]): FileId[] {
 
     const commonPath = findCommonPath(fileIds.map((fileId) => fileId.path));
     return fileIds.map((fileId) => ({ id: fileId.id, path: fileId.path.substring(commonPath.length) }));
+}
+
+async function readProject(projectName: string): Promise<Project> {
+    const sources = await getFlatSources(projectName)
+    const concatenatedSources = sources.map((source) => source.content).join('')
+    return { name: projectName, concatenatedSources, sources}
 }
 
 async function getFlatSources(
