@@ -202,7 +202,7 @@
         "COLOSSEUM": {
           "description": "Contract used to challenge state roots and prove fraud.",
           "severity": "HIGH",
-          "type": "STRUCTURAL"
+          "type": "STRUCTURE"
         },
         "GOVERNOR": {
           "description": null,
@@ -302,7 +302,7 @@
         "COLOSSEUM": {
           "description": "Contract used to challenge state roots and prove fraud.",
           "severity": "HIGH",
-          "type": "STRUCTURAL"
+          "type": "STRUCTURE"
         },
         "FINALIZATION_PERIOD_SECONDS": {
           "description": null,
@@ -707,7 +707,7 @@
         "challengedRoots": {
           "description": "State roots that have been challenged by the validators. Challenges are created when, according to the validators, the roots commit to an incorrect L2 state.",
           "severity": "LOW",
-          "type": "OTHER"
+          "type": null
         }
       }
     },
