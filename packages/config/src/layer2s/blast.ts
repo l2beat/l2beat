@@ -41,7 +41,7 @@ export const blast: Layer2 = opStack({
       warnings: {
         stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
       },
-      explanation: `Zora is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
+      explanation: `Blast is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
         HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
       )} or until it gets published. The state root gets finalized ${formatSeconds(
         FINALIZATION_PERIOD_SECONDS,
@@ -86,6 +86,12 @@ export const blast: Layer2 = opStack({
       'BlastMultisig',
       'This address is the owner of all upgradable contracts. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals and as a Challenger. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
     ),
+    {
+      name: 'SystemConfig Owner.',
+      description:
+        'Account priviliged to change System Config parameters such as Sequencer Address and gas limit.',
+      accounts: [discovery.getPermissionedAccount('SystemConfig', 'owner')],
+    },
   ],
   nonTemplateContracts: [
     discovery.getContractDetails('L1BlastBridge', {
@@ -151,18 +157,3 @@ export const blast: Layer2 = opStack({
   },
   knowledgeNuggets: [],
 })
-
-/*  escrows: [
-    discovery.getEscrowDetails({
-      address: EthereumAddress('0x98078db053902644191f93988341E31289E1C8FE'),
-      description:
-        'Destination for transitioning funds from the old bridge after mainnet launch.',
-      tokens: '*',
-    }),
-    discovery.getEscrowDetails({
-      address: EthereumAddress('0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d'),
-      description: 'Pre-launch Blast bridge.',
-      tokens: '*',
-    }),
-  ],
-  */
