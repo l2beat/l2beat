@@ -13,6 +13,7 @@ const chainMapping: Record<string, string> = {
   hypr: 'ethereum',
   orderly: 'ethereum',
   karak: 'ethereum',
+  blast: 'ethereum',
 }
 
 void main().catch((e) => {

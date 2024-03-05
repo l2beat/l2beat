@@ -2,6 +2,41 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
+      "name": "L1StandardBridge",
+      "values": {
+        "l2TokenBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MESSENGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OTHER_BRIDGE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "otherBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "LaunchBridge",
       "values": {
         "CURVE_3POOL": {
@@ -147,34 +182,84 @@
       }
     },
     {
-      "name": "L1StandardBridge",
+      "name": "DSRYieldProvider",
       "values": {
-        "l2TokenBridge": {
+        "DAI": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "messenger": {
+        "DSR_MANAGER": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "MESSENGER": {
+        "id": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "OTHER_BRIDGE": {
+        "name": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "otherBridge": {
+        "supportsInsurancePayment": {
           "description": null,
           "severity": null,
           "type": null
         },
         "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "YIELD_MANAGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "LidoYieldProvider",
+      "values": {
+        "id": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "LIDO": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "supportsInsurancePayment": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "THIS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "WITHDRAWAL_QUEUE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "YIELD_MANAGER": {
           "description": null,
           "severity": null,
           "type": null
@@ -195,41 +280,6 @@
           "type": null
         },
         "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "BridgeOwner",
-      "values": {
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
           "description": null,
           "severity": null,
           "type": null
@@ -290,146 +340,6 @@
           "type": null
         },
         "yieldManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L1CrossDomainMessenger",
-      "values": {
-        "MESSAGE_VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "messageNonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_GAS_CALLDATA_OVERHEAD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OTHER_MESSENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "portal": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PORTAL": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RELAY_CALL_OVERHEAD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RELAY_CONSTANT_OVERHEAD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RELAY_GAS_CHECK_BUFFER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RELAY_RESERVED_GAS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ETHYieldManager",
-      "values": {
-        "accumulatedNegativeYields": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "admin": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "blastBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "insurance": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "insuranceFeeBips": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "insuranceWithdrawalBuffer": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MAX_INSURANCE_FEE_BIPS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pendingOwner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "portal": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "sharePrice": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "TOKEN": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
           "description": null,
           "severity": null,
           "type": null
@@ -532,9 +442,69 @@
       }
     },
     {
-      "name": "AddressManager",
+      "name": "ETHYieldManager",
       "values": {
+        "accumulatedNegativeYields": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "admin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "blastBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "insurance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "insuranceFeeBips": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "insuranceWithdrawalBuffer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_INSURANCE_FEE_BIPS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "portal": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharePrice": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TOKEN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
           "description": null,
           "severity": null,
           "type": null
@@ -542,14 +512,114 @@
       }
     },
     {
-      "name": "Insurance",
+      "name": "BridgeOwner",
       "values": {
-        "admin": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1CrossDomainMessenger",
+      "values": {
+        "MESSAGE_VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messageNonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_GAS_CALLDATA_OVERHEAD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OTHER_MESSENGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "portal": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PORTAL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RELAY_CALL_OVERHEAD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RELAY_CONSTANT_OVERHEAD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RELAY_GAS_CHECK_BUFFER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RELAY_RESERVED_GAS": {
           "description": null,
           "severity": null,
           "type": null
         },
         "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "AddressManager",
+      "values": {
+        "owner": {
           "description": null,
           "severity": null,
           "type": null
@@ -585,6 +655,36 @@
           "type": null
         },
         "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Insurance",
+      "values": {
+        "admin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Insurance",
+      "values": {
+        "admin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
           "description": null,
           "severity": null,
           "type": null
@@ -680,21 +780,6 @@
           "type": null
         },
         "deletedOutputs": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "Insurance",
-      "values": {
-        "admin": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
           "description": null,
           "severity": null,
           "type": null
@@ -847,26 +932,6 @@
       }
     },
     {
-      "name": "OptimismMintableERC20Factory",
-      "values": {
-        "bridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "BRIDGE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "L1ERC721Bridge",
       "values": {
         "messenger": {
@@ -885,6 +950,26 @@
           "type": null
         },
         "otherBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OptimismMintableERC20Factory",
+      "values": {
+        "bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "BRIDGE": {
           "description": null,
           "severity": null,
           "type": null
