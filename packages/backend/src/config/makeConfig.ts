@@ -104,6 +104,7 @@ export function makeConfig(
         }),
       ),
     },
+    tvl2: flags.isEnabled('tvl2'),
     liveness: flags.isEnabled('liveness') && {
       bigQuery: {
         clientEmail: env.string('LIVENESS_CLIENT_EMAIL'),
