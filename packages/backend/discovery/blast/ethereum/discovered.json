@@ -1,8 +1,8 @@
 {
   "name": "blast",
   "chain": "ethereum",
-  "blockNumber": 19369263,
-  "configHash": "0xf3fcd22be5af986208be15201286aecd457bd65d6a23bda7e396ad2e7fd9164e",
+  "blockNumber": 19369456,
+  "configHash": "0x552701c1c3c53a13d1166681f5b17abda66e5f51ec53ac4afe41251f07b711c3",
   "version": 3,
   "contracts": [
     {
@@ -13,6 +13,8 @@
       },
       "sinceTimestamp": 1708813619,
       "values": {
+        "DAI": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "DSR_MANAGER": "0x373238337Bfe1146fb49989fc222523f83081dDb",
         "id": "0xa340565b0237e0597f1c820779aaf92cd8ba65935a16e48e782f483b31b229d2",
         "name": "DSRYieldProvider",
         "supportsInsurancePayment": true,
@@ -37,7 +39,7 @@
         "L2_ORACLE": "0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76",
         "l2Oracle": "0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 1221596, 19369256],
+        "params": [1000000000, 200000, 19369453],
         "paused": false,
         "SYSTEM_CONFIG": "0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9",
         "systemConfig": "0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9",
@@ -91,9 +93,12 @@
       "sinceTimestamp": 1708813595,
       "values": {
         "id": "0xa9a273106b6a6346a0d4fadf546958a10e831e1594b2598065098554b0f8b5d6",
+        "LIDO": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
         "name": "LidoYieldProvider",
         "supportsInsurancePayment": true,
+        "THIS": "0x4316A00D31da1313617DbB04fD92F9fF8D1aF7Db",
         "version": "1.0.0",
+        "WITHDRAWAL_QUEUE": "0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
         "YIELD_MANAGER": "0x98078db053902644191f93988341E31289E1C8FE"
       },
       "derivedName": "LidoYieldProvider"
@@ -188,7 +193,7 @@
       "sinceTimestamp": 1708812983,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292652749",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292652783",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -225,9 +230,9 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "PSM": "0x89B78CfA322F6C5dE0aBcEecab66Aee45393cC5A",
         "staker": "0x9eDFc192fC4d29b8f2b18f484211161b6Fc8063E",
-        "totalETHBalance": "40503036097250241909004",
-        "totalETHShares": "40084305909357032018384",
-        "totalUSDBalanceNoUpdate": "10486953726992310240114331",
+        "totalETHBalance": "40172954327139179113393",
+        "totalETHShares": "39757636604456894783237",
+        "totalUSDBalanceNoUpdate": "10486991303321973968470458",
         "totalUSDShares": "10340773322158447427081650",
         "USDC": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "USDT": "0xdAC17F958D2ee523a2206206994597C13D831ec7"
@@ -314,10 +319,10 @@
         "finalizationPeriodSeconds": 1036800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 415800,
-        "latestOutputIndex": 230,
-        "nextBlockNumber": 417600,
-        "nextOutputIndex": 231,
+        "latestBlockNumber": 417600,
+        "latestOutputIndex": 231,
+        "nextBlockNumber": 419400,
+        "nextOutputIndex": 232,
         "proposer": "0x082b616Ec99167B2FEdee053F07db6795D4dA821",
         "PROPOSER": "0x082b616Ec99167B2FEdee053F07db6795D4dA821",
         "startingBlockNumber": 0,

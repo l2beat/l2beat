@@ -85,7 +85,7 @@
       }
     },
     "LidoYieldProvider": {
-      "ignoreRelative": ["LIDO", "THIS", "WITHDRAWAL_QUEUE"], //TODO: why this does not work ????
+      "ignoreRelatives": ["LIDO", "THIS", "WITHDRAWAL_QUEUE"],
       "ignoreMethods": [
         "insuranceBalance",
         "lastClaimedIndex",
@@ -96,23 +96,18 @@
         "pendingBalance",
         "stakedBalance",
         "stakedPrincipal",
-        "totalValue",
-        "LIDO", // TODO: Remove
-        "THIS",
-        "WITHDRAWAL_QUEUE"
+        "totalValue"
       ]
     },
     "DSRYieldProvider": {
-      "ignoreRelative": ["DAI", "DSR_MANAGER"], //TODO: why this does not work ????
+      "ignoreRelatives": ["DAI", "DSR_MANAGER"],
       "ignoreMethods": [
         "insuranceBalance",
         "pendingBalance",
         "stakedBalance",
         "stakedPrincipal",
         "totalValue",
-        "yield",
-        "DAI",
-        "DSR_MANAGER" // TODO: Remove
+        "yield"
       ]
     },
     //TODO: Read ProviderInfo
