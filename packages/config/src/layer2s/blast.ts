@@ -88,7 +88,8 @@ export const blast: Layer2 = opStack({
       ...upgradeability,
     }),
     discovery.getContractDetails('DSRYieldProvider', {
-      description: 'Yield Provider for DAI investing DAI into the MakerDAO DSR.',
+      description:
+        'Yield Provider for DAI investing DAI into the MakerDAO DSR.',
       ...upgradeability,
     }),
   ],
