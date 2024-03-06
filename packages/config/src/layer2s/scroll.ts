@@ -67,7 +67,6 @@ export const scroll: Layer2 = {
       explorers: [
         'https://scrollscan.com/',
         'https://blockscout.scroll.io',
-        'https://scroll.unifra.xyz/',
         'https://ondora.xyz/network/scroll',
         'https://scroll.l2scan.co/',
       ],
