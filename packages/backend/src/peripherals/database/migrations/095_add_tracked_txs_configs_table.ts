@@ -23,6 +23,8 @@ export async function up(knex: Knex) {
     table.dateTime('until_timestamp', { useTz: false })
     table.dateTime('last_synced_timestamp', { useTz: false })
     table.string('config_hash').notNullable()
+
+    table.index('config_hash')
   })
 }
 
