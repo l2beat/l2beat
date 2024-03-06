@@ -15,15 +15,15 @@ export const fraxtal: Layer2 = opStack({
   daProvider: {
     name: 'External',
     riskView: {
-      value: 'External - Fraxtal Custom Module',
+      value: 'External',
       description:
-        'Fraxtal uses a separate data availability module developed by the Frax Core Team. The data needed for proof construction is not published on-chain.',
+        'Proof construction and state derivation rely fully on data that is NOT published on chain. Fraxtal uses a separate data availability module developed by the Frax Core Team, and data availability attestations are not published on chain.',
       sentiment: 'bad',
     },
     technology: {
       name: 'Data required to compute fraud proof is not published on chain, and currently not publicly accessible',
       description:
-        'Fraxtal uses a separate data availability module developed by the Frax Core Team. Data is posted off chain, and only hashes of blob data is published on an on-chain inbox.',
+        'Fraxtal uses a separate data availability module developed by the Frax Core Team. Data is posted off chain, and only hashes of blob data is published on an on chain inbox.',
       references: [
         {
           text: 'Fraxtal documentation',
