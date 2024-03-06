@@ -177,8 +177,8 @@ declare module 'knex/types/tables' {
     subtype: string | null
     debug_info: string
     since_timestamp: Date
-    until_timestamp: Date
-    last_synced_timestamp: Date
+    until_timestamp: Date | null
+    last_synced_timestamp: Date | null
     config_hash: string
   }
 

@@ -5,13 +5,13 @@ import { Knex } from 'knex'
 
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
 import { HourlyIndexer } from '../tracked-txs/HourlyIndexer'
+import { LivenessClient } from '../tracked-txs/TrackedTxsClient'
 import {
   adjustToForBigqueryCall,
   findConfigurationsToSync,
 } from '../tracked-txs/utils'
 import { diffLivenessConfigurations } from '../tracked-txs/utils/diffLivenessConfigurations'
 import { getSafeHeight } from '../tracked-txs/utils/getSafeHeight'
-import { LivenessClient } from '../tracked-txs/utils/TrackedTxsClient'
 import { LivenessIndexer } from './LivenessIndexer'
 import {
   LivenessConfigurationRecord,

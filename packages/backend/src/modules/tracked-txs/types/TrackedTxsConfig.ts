@@ -1,6 +1,8 @@
 import { Layer2TxConfig } from '@l2beat/config'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
+import { TrackedTxsConfigHash } from './TrackedTxsConfigHash'
+
 export type TrackedTxsConfig = {
   entries: TrackedTxsConfigEntry[]
 }
@@ -11,7 +13,7 @@ export type TrackedTxsConfigEntry =
   | TrackedTxSharpSubmission
 
 interface TrackedTxConfigBase {
-  // TODO: (tracked_tx) add configHash
+  configHash: TrackedTxsConfigHash
   projectId: ProjectId
   uses: Layer2TxConfig['uses']
   sinceTimestamp: UnixTime

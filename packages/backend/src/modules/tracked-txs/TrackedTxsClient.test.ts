@@ -2,21 +2,21 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { readFileSync } from 'fs'
 
-import { BigQueryClient } from '../../../peripherals/bigquery/BigQueryClient'
+import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
+import { TrackedTxsClient } from './TrackedTxsClient'
 import {
   BigQueryFunctionCallResult,
   BigQueryTransferResult,
-} from '../types/model'
+} from './types/model'
 import {
   TrackedTxFunctionCall,
   TrackedTxsConfigEntry,
   TrackedTxSharpSubmission,
   TrackedTxTransfer,
-} from '../types/TrackedTxsConfig'
-import { getFunctionCallQuery, getTransferQuery } from './sql'
-import { TrackedTxsClient } from './TrackedTxsClient'
-import { transformFunctionCallsQueryResult } from './transformFunctionCallsQueryResult'
-import { transformTransfersQueryResult } from './transformTransfersQueryResult'
+} from './types/TrackedTxsConfig'
+import { getFunctionCallQuery, getTransferQuery } from './utils/sql'
+import { transformFunctionCallsQueryResult } from './utils/transformFunctionCallsQueryResult'
+import { transformTransfersQueryResult } from './utils/transformTransfersQueryResult'
 
 const FROM = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
 const TO = UnixTime.fromDate(new Date('2022-01-01T02:00:00Z'))
