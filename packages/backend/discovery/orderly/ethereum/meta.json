@@ -2,6 +2,36 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
+      "name": "L1StandardBridge",
+      "values": {
+        "l2TokenBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MESSENGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OTHER_BRIDGE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "L1ERC721Bridge",
       "values": {
         "messenger": {
@@ -32,69 +62,19 @@
       }
     },
     {
-      "name": "OptimismPortal",
+      "name": "ProxyAdmin",
       "values": {
-        "GUARDIAN": {
+        "addressManager": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "L2_ORACLE": {
+        "isUpgrading": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "l2Sender": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "params": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "SYSTEM_CONFIG": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L1StandardBridge",
-      "values": {
-        "l2TokenBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "messenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MESSENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OTHER_BRIDGE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
+        "owner": {
           "description": null,
           "severity": null,
           "type": null
@@ -167,18 +147,8 @@
       }
     },
     {
-      "name": "ProxyAdmin",
+      "name": "AddressManager",
       "values": {
-        "addressManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isUpgrading": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "owner": {
           "description": null,
           "severity": null,
@@ -187,9 +157,74 @@
       }
     },
     {
-      "name": "AddressManager",
+      "name": "OptimismPortal",
       "values": {
-        "owner": {
+        "GUARDIAN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L2_ORACLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2Sender": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "params": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SYSTEM_CONFIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OrderlyMultisig",
+      "values": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
           "description": null,
           "severity": null,
           "type": null
@@ -330,8 +365,8 @@
           "type": null
         },
         "scalar": {
-          "description": null,
-          "severity": null,
+          "description": "A system configuration parameter used as dynamic L2 gas overhead in the L2 fee calculation.",
+          "severity": "LOW",
           "type": null
         },
         "UNSAFE_BLOCK_SIGNER_SLOT": {
@@ -365,41 +400,6 @@
           "type": null
         },
         "sequencerInbox": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "Ancient8Multisig",
-      "values": {
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
           "description": null,
           "severity": null,
           "type": null
