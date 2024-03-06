@@ -24,6 +24,7 @@ export interface HeaderProps {
   isUpcoming?: boolean
   isUnderReview?: boolean
   tvlBreakdownHref?: string
+  tvlWarning?: string
   showTvlBreakdown?: boolean
   showProjectUnderReview?: boolean
   risks?: RiskValues
@@ -108,6 +109,7 @@ export function DetailsHeader(props: HeaderProps) {
               <TvlSummary
                 stats={props.stats.l2Tvl}
                 tvlBreakdownHref={props.tvlBreakdownHref}
+                tvlWarning={props.tvlWarning}
                 showTvlBreakdown={props.showTvlBreakdown}
                 isArchived={props.isArchived}
                 type={props.type}

@@ -9,6 +9,8 @@ import {
   diffDiscovery,
   discover,
   DiscoveryDiff,
+  discoveryDiffToMarkdown,
+  DiscoveryMeta,
   getChainConfig,
 } from '@l2beat/discovery'
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -16,7 +18,6 @@ import { DiscoveryOutput } from '@l2beat/discovery-types'
 import { assert } from '@l2beat/shared-pure'
 import { execSync } from 'child_process'
 import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
-import { toUpper } from 'lodash'
 import { rimraf } from 'rimraf'
 
 import { updateDiffHistoryHash } from '../src/modules/update-monitor/utils/hashing'
@@ -47,6 +48,7 @@ async function updateDiffHistoryFile() {
   const configReader = new ConfigReader()
   const curDiscovery = await configReader.readDiscovery(projectName, chain)
   const config = await configReader.readConfig(projectName, chain)
+  const meta = await configReader.readMeta(projectName, chain)
   const discoveryFolder = `./discovery/${projectName}/${chain}`
   const { content: discoveryJsonFromMainBranch, mainBranchHash } =
     getFileVersionOnMainBranch(`${discoveryFolder}/discovered.json`)
@@ -90,6 +92,7 @@ async function updateDiffHistoryFile() {
       discoveryFromMainBranch?.blockNumber,
       curDiscovery.blockNumber,
       diff,
+      meta,
       configRelatedDiff,
       mainBranchHash,
       codeDiff,
@@ -152,6 +155,7 @@ async function performDiscoveryOnPreviousBlock(
   const root = `discovery/${projectName}/${chain}`
   // Remove any old sources we fetched before, so that their count doesn't grow
   await rimraf(`${root}/.code@*`, { glob: true })
+  await rimraf(`${root}/.flat@*`, { glob: true })
 
   const blockNumberFromMainBranch = discoveryFromMainBranch.blockNumber
 
@@ -160,6 +164,7 @@ async function performDiscoveryOnPreviousBlock(
     chain: getChainConfig(chain),
     blockNumber: blockNumberFromMainBranch,
     sourcesFolder: `.code@${blockNumberFromMainBranch}`,
+    flatSourcesFolder: `.flat@${blockNumberFromMainBranch}`,
     discoveryFilename: `discovered@${blockNumberFromMainBranch}.json`,
   })
 
@@ -252,43 +257,11 @@ function getGitUser(): { name: string; email: string } {
   }
 }
 
-function contractDiffToMarkdown(diff: DiscoveryDiff): string {
-  const result = []
-  result.push('```diff')
-  if (diff.type) {
-    const marker = diff.type === 'created' ? '+' : '-'
-    result.push(`${marker}   Status: ${toUpper(diff.type)}`)
-  }
-  result.push(`    contract ${diff.name} (${diff.address.toString()}) {`)
-  if (diff.diff) {
-    for (const valueDiff of diff.diff) {
-      const varName = valueDiff.key ?? 'unknown'
-      result.push(`      ${varName}:`)
-      if (valueDiff.before) {
-        result.push(`-        ${valueDiff.before}`)
-      }
-      if (valueDiff.after) {
-        result.push(`+        ${valueDiff.after}`)
-      }
-    }
-  }
-  result.push('    }')
-  result.push('```')
-  return result.join('\n')
-}
-
-function discoveryDiffToMarkdown(diffs: DiscoveryDiff[]): string {
-  const result = []
-  for (const diff of diffs) {
-    result.push(contractDiffToMarkdown(diff))
-  }
-  return result.join('\n\n')
-}
-
 function generateDiffHistoryMarkdown(
   blockNumberFromMainBranchDiscovery: number | undefined,
   curBlockNumber: number,
   diffs: DiscoveryDiff[],
+  meta: DiscoveryMeta | undefined,
   configRelatedDiff: DiscoveryDiff[],
   mainBranchHash: string,
   codeDiff?: string,
@@ -327,7 +300,7 @@ function generateDiffHistoryMarkdown(
       result.push('## Watched changes')
     }
     result.push('')
-    result.push(discoveryDiffToMarkdown(diffs))
+    result.push(discoveryDiffToMarkdown(diffs, meta))
     result.push('')
   }
 
@@ -350,7 +323,7 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block ${blockNumberFromMainBranchDiscovery} (main branch discovery), not current.`,
     )
     result.push('')
-    result.push(discoveryDiffToMarkdown(configRelatedDiff))
+    result.push(discoveryDiffToMarkdown(configRelatedDiff, meta))
     result.push('')
   }
 

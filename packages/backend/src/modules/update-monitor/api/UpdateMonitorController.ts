@@ -44,6 +44,7 @@ export class UpdateMonitorController {
   ): Promise<string> {
     const discovery = await this.configReader.readDiscovery(project, chain)
     const config = await this.configReader.readConfig(project, chain)
+    const meta = await this.configReader.readMeta(project, chain)
     const contracts = getDashboardContracts(discovery, config)
 
     const diff: DiscoveryDiff[] = await getDiff(
@@ -58,6 +59,7 @@ export class UpdateMonitorController {
       projectName: project,
       contracts,
       diff,
+      meta,
     })
   }
 }

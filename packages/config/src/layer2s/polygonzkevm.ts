@@ -14,7 +14,6 @@ import {
   makeBridgeCompatible,
   NUGGETS,
   RISK_VIEW,
-  ScalingProjectPermissionedAccount,
   SEQUENCER_NO_MECHANISM,
   STATE_CORRECTNESS,
 } from '../common'
@@ -92,15 +91,6 @@ const isForcedBatchDisallowed =
 const ESCROW_wstETH_ADDRESS = '0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01'
 const ESCROW_USDC_ADDRESS = '0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB'
 const ESCROW_DAI_ADDRESS = '0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98'
-
-const roles = discovery.getContractValue<{
-  TRUSTED_AGGREGATOR: { members: string[] }
-}>('PolygonRollupManager', 'accessControl')
-
-const aggregators: ScalingProjectPermissionedAccount[] =
-  roles.TRUSTED_AGGREGATOR.members.map((address) =>
-    discovery.formatPermissionedAccount(address),
-  )
 
 export const polygonzkevm: Layer2 = {
   type: 'layer2',
@@ -441,7 +431,10 @@ export const polygonzkevm: Layer2 = {
     },
     {
       name: 'Proposer (Trusted Aggregator)',
-      accounts: aggregators,
+      accounts: discovery.getAccessControlRolePermission(
+        'PolygonRollupManager',
+        'TRUSTED_AGGREGATOR',
+      ),
       description: `The trusted proposer (called Aggregator) provides ZK proofs for all the supported systems. In case they are unavailable a mechanism for users to submit proofs on their own exists, but is behind a ${trustedAggregatorTimeoutString} delay for proving and a ${pendingStateTimeoutString} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
     },
     ...discovery.getMultisigPermission(
