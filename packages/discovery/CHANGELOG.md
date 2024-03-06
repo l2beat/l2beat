@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.44.2
+
+### Patch Changes
+
+- Fix an edge case in import resolving.
+
 ## 0.44.1
 
 ### Patch Changes

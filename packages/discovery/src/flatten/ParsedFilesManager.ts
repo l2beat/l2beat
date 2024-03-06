@@ -169,17 +169,19 @@ export class ParsedFilesManager {
       )
       const importedFile = this.resolveImportPath(file, remappedPath)
 
-      const alreadyImported =
-        alreadyImportedObjects.get(importedFile.path) ?? []
-      assert(
-        alreadyImported.length <= importedFile.contractDeclarations.length,
-        'Already imported more than there are contracts in the file',
-      )
-      const gotEverything =
-        alreadyImported.length === importedFile.contractDeclarations.length
-      if (gotEverything) {
-        return []
+      let alreadyImported = alreadyImportedObjects.get(importedFile.path)
+      if (alreadyImported !== undefined) {
+        assert(
+          alreadyImported.length <= importedFile.contractDeclarations.length,
+          'Already imported more than there are contracts in the file',
+        )
+        const gotEverything =
+          alreadyImported.length === importedFile.contractDeclarations.length
+        if (gotEverything) {
+          return []
+        }
       }
+      alreadyImported ??= []
 
       const result = []
       const importEverything = i.symbolAliases === null
@@ -217,7 +219,11 @@ export class ParsedFilesManager {
           importedName: alias[1] ?? alias[0],
         }
 
-        if (!alreadyImported.includes(object.originalName)) {
+        const isAlreadyImported = alreadyImported.includes(object.originalName)
+        const isContract = importedFile.contractDeclarations.some(
+          (c) => c.name === object.originalName,
+        )
+        if (!isAlreadyImported && isContract) {
           alreadyImported.push(object.originalName)
           result.push(object)
         }
