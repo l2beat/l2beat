@@ -3990,6 +3990,24 @@
         "bridge": "Layer Zero",
         "slug": "omnichain"
       }
+    },
+    {
+      "id": "blast:usdb-usdb",
+      "name": "USDB",
+      "coingeckoId": "usdb",
+      "address": "0x4300000000000000000000000000000000000003",
+      "symbol": "USDB",
+      "decimals": 18,
+      "deploymentTimestamp": 1708809815,
+      "coingeckoListingTimestamp": 1709251200,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35595/large/65c67f0ebf2f6a1bd0feb13c_usdb-icon-yellow.png?1709255427",
+      "chainId": 81457,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Blast"
+      }
     }
   ]
 }

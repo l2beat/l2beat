@@ -24,7 +24,9 @@
     "typecheck": "tsc --noEmit",
     "find-common-contracts": "ts-node --transpile-only scripts/findCommonContracts.ts",
     "update-diff-history": "ts-node --transpile-only scripts/updateDiffHistory.ts",
-    "powerdiff": "ts-node --transpile-only scripts/powerdiff.ts"
+    "powerdiff": "ts-node --transpile-only scripts/powerdiff.ts",
+    "compare-orbit-chains": "ts-node --transpile-only scripts/compareOrbitChains.ts",
+    "compare-opstack-chains": "ts-node --transpile-only scripts/compareOpStackChains.ts"
   },
   "dependencies": {
     "@bugsnag/js": "^7.22.3",
@@ -33,7 +35,7 @@
     "@koa/router": "^12.0.0",
     "@l2beat/backend-tools": "^0.5.0",
     "@l2beat/config": "*",
-    "@l2beat/discovery": "0.43.5",
+    "@l2beat/discovery": "0.44.0",
     "@l2beat/discovery-types": "0.8.0",
     "@l2beat/shared": "*",
     "@l2beat/shared-pure": "*",

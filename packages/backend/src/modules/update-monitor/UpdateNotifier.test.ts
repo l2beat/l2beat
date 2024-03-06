@@ -69,13 +69,12 @@ describe(UpdateNotifier.name, () => {
           '> #0000 (block_number=123)',
           '',
           '***project-a*** | detected changes on chain: ***ethereum***```diff',
-          `Contract | ${address.toString()}`,
-          '+++ description: None',
-          '',
-          'A',
-          '- 1',
-          '+ 2',
-          '',
+          `    contract Contract (${address.toString()}) {`,
+          '    +++ description: None',
+          '      A:',
+          '-        1',
+          '+        2',
+          '    }',
           '```',
         ].join('\n'),
         'INTERNAL',
@@ -84,13 +83,12 @@ describe(UpdateNotifier.name, () => {
         2,
         [
           '***project-a*** | detected changes on chain: ***ethereum***```diff',
-          `Contract | ${address.toString()}`,
-          '+++ description: None',
-          '',
-          'A',
-          '- 1',
-          '+ 2',
-          '',
+          `    contract Contract (${address.toString()}) {`,
+          '    +++ description: None',
+          '      A:',
+          '-        1',
+          '+        2',
+          '    }',
           '```',
         ].join('\n'),
         'PUBLIC',
@@ -166,15 +164,14 @@ describe(UpdateNotifier.name, () => {
           '> #0000 (block_number=123)',
           '',
           '***project-a*** | detected changes on chain: ***ethereum***```diff',
-          `Contract | ${address.toString()}`,
-          '+++ description: None',
-          '',
+          `    contract Contract (${address.toString()}) {`,
+          '    +++ description: None',
           '+++ description: This should never be equal to two',
           '+++ severity: MEDIUM',
-          'A',
-          '- 1',
-          '+ 2',
-          '',
+          '      A:',
+          '-        1',
+          '+        2',
+          '    }',
           '```',
         ].join('\n'),
         'INTERNAL',
@@ -183,15 +180,14 @@ describe(UpdateNotifier.name, () => {
         2,
         [
           '***project-a*** | detected changes on chain: ***ethereum***```diff',
-          `Contract | ${address.toString()}`,
-          '+++ description: None',
-          '',
+          `    contract Contract (${address.toString()}) {`,
+          '    +++ description: None',
           '+++ description: This should never be equal to two',
           '+++ severity: MEDIUM',
-          'A',
-          '- 1',
-          '+ 2',
-          '',
+          '      A:',
+          '-        1',
+          '+        2',
+          '    }',
           '```',
         ].join('\n'),
         'PUBLIC',
@@ -248,30 +244,39 @@ describe(UpdateNotifier.name, () => {
         [],
       )
 
-      const internalMsg =
-        `> #0000 (block_number=${BLOCK})\n\n` +
-        `***project-a*** | detected changes on chain: ***ethereum***\`\`\`diff\nContract | ${address.toString()}` +
-        '\n+++ description: None\n\nWarning: Message has been truncated\nA\n' +
-        `- ${'A'.repeat(1000)}\n` +
-        `+ ${'B'.repeat(778)}...\n\`\`\``
+      const internalMessage = [
+        '> #0000 (block_number=123)',
+        '',
+        '***project-a*** | detected changes on chain: ***ethereum***```diff',
+        `    contract Contract (${address.toString()}) {`,
+        '    +++ description: None',
+        '      A:',
+        `-        ${'A'.repeat(1000)}`,
+        `+        ${'B'.repeat(756)}... (message too long)`,
+        '```',
+      ].join('\n')
 
-      const publicMsg =
-        `***project-a*** | detected changes on chain: ***ethereum***\`\`\`diff\nContract | ${address.toString()}` +
-        '\n+++ description: None\n\nWarning: Message has been truncated\nA\n' +
-        `- ${'A'.repeat(1000)}\n` +
-        `+ ${'B'.repeat(806)}...\n\`\`\``
+      const publicMessage = [
+        '***project-a*** | detected changes on chain: ***ethereum***```diff',
+        `    contract Contract (${address.toString()}) {`,
+        '    +++ description: None',
+        '      A:',
+        `-        ${'A'.repeat(1000)}`,
+        `+        ${'B'.repeat(784)}... (message too long)`,
+        '```',
+      ].join('\n')
 
-      expect(internalMsg.length).toBeLessThanOrEqual(MAX_MESSAGE_LENGTH)
-      expect(publicMsg.length).toBeLessThanOrEqual(MAX_MESSAGE_LENGTH)
+      expect(internalMessage.length).toBeLessThanOrEqual(MAX_MESSAGE_LENGTH)
+      expect(publicMessage.length).toBeLessThanOrEqual(MAX_MESSAGE_LENGTH)
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(2)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
-        internalMsg,
+        internalMessage,
         'INTERNAL',
       )
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         2,
-        publicMsg,
+        publicMessage,
         'PUBLIC',
       )
       expect(updateNotifierRepository.add).toHaveBeenCalledTimes(1)
@@ -326,9 +331,17 @@ describe(UpdateNotifier.name, () => {
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
       expect(discordClient.sendMessage).toHaveBeenNthCalledWith(
         1,
-        '> #0000 (block_number=123)\n\n***project-a*** | detected changes on chain: ***ethereum***```diff\nContract | ' +
-          address.toString() +
-          '\n+++ description: None\n\nerrors\n+ Execution reverted\n\n```',
+        [
+          '> #0000 (block_number=123)',
+          '',
+          '***project-a*** | detected changes on chain: ***ethereum***```diff',
+          `    contract Contract (${address.toString()}) {`,
+          '    +++ description: None',
+          '      errors:',
+          '+        Execution reverted',
+          '    }',
+          '```',
+        ].join('\n'),
         'INTERNAL',
       )
       expect(updateNotifierRepository.add).toHaveBeenCalledTimes(1)

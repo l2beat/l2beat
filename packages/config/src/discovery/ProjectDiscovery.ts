@@ -278,6 +278,14 @@ export class ProjectDiscovery {
     ]
   }
 
+  getAccessControlRolePermission(
+    contractIdentifier: string,
+    role: string,
+  ): ScalingProjectPermissionedAccount[] {
+    const { members } = this.getAccessControlField(contractIdentifier, role)
+    return members.map((member) => this.formatPermissionedAccount(member))
+  }
+
   getContract(identifier: string): ContractParameters {
     try {
       identifier = utils.getAddress(identifier)
@@ -459,6 +467,42 @@ export class ProjectDiscovery {
     )
 
     return result
+  }
+
+  getAccessControlField(
+    contractIdentifier: string,
+    roleName: string,
+  ): {
+    adminRole: EthereumAddress[]
+    members: EthereumAddress[]
+  } {
+    const accessControl = this.getContractValue<
+      Partial<
+        Record<
+          string,
+          {
+            adminRole: string
+            members: string[]
+          }
+        >
+      >
+    >(contractIdentifier, 'accessControl')
+    const role = accessControl && accessControl[roleName]
+    assert(role, `Role ${roleName} does not exist`)
+    const adminRole = accessControl[role.adminRole]
+    assert(adminRole, `Admin role ${role.adminRole} does not exist`)
+
+    assert(
+      [...adminRole.members, ...role.members].every((address) =>
+        EthereumAddress.check(address),
+      ),
+      `Role ${roleName}/${role.adminRole} has invalid addresses`,
+    )
+
+    return {
+      adminRole: adminRole.members.map((m) => EthereumAddress(m)),
+      members: role.members.map(EthereumAddress),
+    }
   }
 
   getAllContractAddresses(): EthereumAddress[] {

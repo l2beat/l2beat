@@ -203,7 +203,10 @@ export const ronin: Bridge = {
     },
     {
       name: 'MainchainGatewayV3 Withdrawal Unlockers',
-      accounts: [], // TODO: use getRoleMembersFromAccessControl('WITHDRAWAL_UNLOCKER_ROLE') when available
+      accounts: discovery.getAccessControlRolePermission(
+        'MainchainGateway',
+        'WITHDRAWAL_UNLOCKER_ROLE',
+      ),
       description: 'Addresses that can unlock withdrawals.',
     },
   ],

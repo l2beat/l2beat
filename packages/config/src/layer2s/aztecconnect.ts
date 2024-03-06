@@ -388,7 +388,7 @@ export const aztecconnect: Layer2 = {
     },
     {
       title: 'Understanding PLONK',
-      url: 'https://vitalik.ca/general/2019/09/22/plonk.html',
+      url: 'https://vitalik.eth.limo/general/2019/09/22/plonk.html',
       thumbnail: NUGGETS.THUMBNAILS.VITALIK_01,
     },
   ],
