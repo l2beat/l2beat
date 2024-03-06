@@ -5,7 +5,7 @@ import { LzOAppsController } from './LzOappsController'
 export function createLzOAppsRouter(controller: LzOAppsController) {
   const router = new Router()
 
-  router.get('/layerzero-oapps', (ctx) => {
+  router.get('/api/integrations/layerzero-oapps', (ctx) => {
     ctx.body = controller.getOApps()
   })
 
