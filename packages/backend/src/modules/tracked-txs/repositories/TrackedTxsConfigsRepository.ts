@@ -48,8 +48,8 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
     const knex = await this.knex(trx)
 
     const insertedRows = await knex('tracked_txs_configs')
-      .insert(records.map(toNewRow).flat())
-      .returning('id')
+      .insert(records.flatMap(toNewRow))
+      .returning('config_hash')
 
     return insertedRows
       .map((row) =>
@@ -136,7 +136,7 @@ function toRecord(row: TrackedTxsConfigRow): TrackedTxsConfigRecord {
   }
 }
 
-function toNewRow(entry: TrackedTxsConfigEntry): TrackedTxsConfigRow[] {
+export function toNewRow(entry: TrackedTxsConfigEntry): TrackedTxsConfigRow[] {
   return entry.uses.map((use) => ({
     project_id: entry.projectId.toString(),
     config_hash: use.configHash.toString(),
