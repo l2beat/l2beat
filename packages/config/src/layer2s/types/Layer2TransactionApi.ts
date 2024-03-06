@@ -28,5 +28,6 @@ export type Layer2TransactionApi =
   | SimpleTransactionApi<'aztec'>
   | SimpleTransactionApi<'zksync'>
   | SimpleTransactionApi<'loopring'>
+  | SimpleTransactionApi<'degate'>
   | RpcTransactionApi
   | StarkexTransactionApi
