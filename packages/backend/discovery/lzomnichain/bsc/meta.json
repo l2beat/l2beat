@@ -1,0 +1,428 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "UltraLightNodeV2",
+      "values": {
+        "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "CONFIG_TYPE_ORACLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "CONFIG_TYPE_OUTBOUND_BLOCK_CONFIRMATIONS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "CONFIG_TYPE_OUTBOUND_PROOF_TYPE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "CONFIG_TYPE_RELAYER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "endpoint": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "layerZeroToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "localChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonceContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "treasuryContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "treasuryZROFees": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainAddressSizeMap": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultAdapterParams": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultAppConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "inboundProofLibrary": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "supportedOutboundProof": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ulnLookup": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "NonceContract",
+      "values": {
+        "endpoint": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "VerifierNetwork",
+      "values": {
+        "allowlistSize": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultMultiplierBps": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "priceFeed": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "quorum": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "signerSize": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "vid": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "workerFeeLib": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "TreasuryV2",
+      "values": {
+        "feeEnabled": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nativeBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "uln": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "zroEnabled": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "zroFee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "MPTValidator01",
+      "values": {
+        "getProofType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getUtilsVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PACKET_SIGNATURE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proofType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stargateBridgeAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stargateTokenAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "utilsVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "FPValidator",
+      "values": {
+        "getProofType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getUtilsVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proofType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stargateBridgeAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stargateTokenAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "utilsVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "LayerZero Multisig",
+      "values": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Endpoint",
+      "values": {
+        "BLOCK_VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultReceiveLibraryAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultReceiveVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultSendLibrary": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultSendVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isReceivingPayload": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isSendingPayload": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "libraryLookup": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "VerifierFeeLib",
+      "values": {}
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    }
+  ]
+}

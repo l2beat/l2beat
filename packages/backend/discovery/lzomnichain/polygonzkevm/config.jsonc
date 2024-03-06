@@ -22,6 +22,14 @@
       }
     },
     "UltraLightNodeV2": {
+      "ignoreInWatchMode": [
+        "chainAddressSizeMap",
+        "defaultAppConfig",
+        "defaultAdapterParams",
+        "inboundProofLibrary",
+        "supportedOutboundProof",
+        "ulnLookup"
+      ],
       "fields": {
         "chainAddressSizeMap": {
           "type": "stateFromEvent",
