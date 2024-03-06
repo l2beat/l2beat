@@ -8,7 +8,7 @@ Generated with discovered.json: 0xeedf768927c66f9e3e9594005bea7982654706a9
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+The L2GasPriceOracle is now not used anymore and it has been incorporated into the L1MessageQueue contract.
 
 ## Config/verification related changes
 
@@ -74,6 +74,10 @@ Same changes.
 ### ScrollChain
 
 Same changes. In addition, the verifier is now immutable.
+
+### EnforcedTxGateway
+
+Currently paused, so no risk has changed.
 
 ## Watched changes
 
