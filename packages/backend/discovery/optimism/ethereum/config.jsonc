@@ -33,7 +33,8 @@
     "0x73b047fe6337183A454c5217241D780a932777bD": "LidoEmergencyBrakeMultisig",
     "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A": "ProxyAdminOwner",
     "0x847B5c174615B1B7fDF770882256e2D3E95b9D92": "FoundationMultisig_1",
-    "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": "SecurityCouncilMultisig"
+    "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": "SecurityCouncilMultisig",
+    "0x95703e0982140D16f8ebA6d158FccEde42f04a4C": "SuperchainConfig"
   },
   "overrides": {
     "AddressManager": {
