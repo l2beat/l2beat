@@ -8,8 +8,6 @@ Generated with discovered.json: 0x5fa08b3a2322e373062b7d84998ac427346b7e7b
 
 ## Description
 
-Provide description of changes. This section will be preserved.
-
 New proposal created and executed with the description "Unfreeze bridges".
 
 ## Watched changes
