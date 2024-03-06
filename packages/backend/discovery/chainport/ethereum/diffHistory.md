@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x5fa08b3a2322e373062b7d84998ac427346b7e7b
+
+# Diff at Wed, 06 Mar 2024 10:38:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@724fc93d9bd160395a856b93ce5016ca876c6436 block: 19118389
+- current block number: 19375580
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+New proposal created and executed with the description "Unfreeze bridges".
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
+      values.proposalCount:
+-        48
++        49
+    }
+```
+
 Generated with discovered.json: 0x860ce22e6e5ca8d7087c013b808735c88781475f
 
 # Diff at Tue, 30 Jan 2024 09:20:32 GMT:
