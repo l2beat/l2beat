@@ -76,6 +76,7 @@ import { stealthchain } from './stealthchain'
 import { taiko } from './taiko'
 import { tanx } from './tanx'
 import { ten } from './ten'
+import { termstructure } from './termstructure'
 import { tradable } from './tradable'
 import { Layer2 } from './types'
 import { x1 } from './x1'
@@ -170,6 +171,7 @@ export const layer2s: Layer2[] = [
   taiko,
   tanx,
   ten,
+  termstructure,
   tradable,
   x1,
   xchain,
