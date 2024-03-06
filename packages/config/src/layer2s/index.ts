@@ -31,6 +31,7 @@ import { hermez } from './hermez'
 import { honeypot } from './honeypot'
 import { hypr } from './hypr'
 import { immutablex } from './immutablex'
+import { karak } from './karak'
 import { kinto } from './kinto'
 import { kroma } from './kroma'
 import { layer2finance } from './layer2finance'
@@ -75,6 +76,7 @@ import { stealthchain } from './stealthchain'
 import { taiko } from './taiko'
 import { tanx } from './tanx'
 import { ten } from './ten'
+import { termstructure } from './termstructure'
 import { tradable } from './tradable'
 import { Layer2 } from './types'
 import { x1 } from './x1'
@@ -124,6 +126,7 @@ export const layer2s: Layer2[] = [
   hermez,
   hypr,
   immutablex,
+  karak,
   kinto,
   kroma,
   layer2finance,
@@ -168,6 +171,7 @@ export const layer2s: Layer2[] = [
   taiko,
   tanx,
   ten,
+  termstructure,
   tradable,
   x1,
   xchain,

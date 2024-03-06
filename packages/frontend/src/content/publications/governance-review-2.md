@@ -71,7 +71,7 @@ While the proposal itself is legitimately looking for funding, Thechaingamer.eth
 
 ### **[RFC] Arbitrum Stable Treasury Endowment Program (STEP)**
 
-Devansh [shared the final version of the STEP proposal](https://forum.arbitrum.foundation/t/final-arbitrum-stable-treasury-endowment-program/20139/33) on behalf of the relevant working group and they’re planning to move the proposal to temp-check on Monday 29th of January, contigent on feedback received.
+Devansh [shared the final version of the STEP proposal](https://forum.arbitrum.foundation/t/final-arbitrum-stable-treasury-endowment-program/20139/33) on behalf of the relevant working group and they’re planning to move the proposal to temp-check on Monday 29th of January, contingent on feedback received.
 
 The TL;DR of the proposal is that it’s a framework which aims to support the RWA ecosystem on Arbitrum by diversifying 10, 22.5 or 35 million ARB from the DAO’s treasury into stable & liquid US t-bills or money market instruments earning a rate of return roughly equivalent to US Treasuries (hereby called ‘stable RWAs’). The program is supposed to be a trial run for an even larger program down the road. The proposal contains a lot of specific details around operations, legal implications and cost breakdown which is best to look into directly.
 

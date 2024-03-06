@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x3cbbe86d1549ff16f956680e8ecb073e926f6be1
+
+# Diff at Tue, 05 Mar 2024 16:23:09 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@529206d4dcd4dd7502f78a4a18a97240a3a0211b block: 19182535
+- current block number: 19370130
+
+## Description
+
+Scalar - a system configuration parameter used as dynamic L2 gas overhead in the L2 fee calculation, has been decreased.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664) {
+    +++ description: None
+      values.scalar:
+-        68400
++        13680
+    }
+```
+
 Generated with discovered.json: 0xbe756234887059a7f1f0faab5602440c3db37a6d
 
 # Diff at Thu, 08 Feb 2024 09:25:18 GMT:
