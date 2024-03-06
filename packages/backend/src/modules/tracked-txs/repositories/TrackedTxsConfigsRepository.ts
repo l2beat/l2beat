@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
+  notUndefined,
   ProjectId,
   TrackedTxsConfigSubtype,
   TrackedTxsConfigType,
@@ -39,7 +40,7 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
     const rows = await knex('tracked_txs_configs')
     return rows.map(toRecord)
   }
-  // TODO: (tracked_tx)
+
   async addMany(
     records: TrackedTxsConfigEntry[],
     trx?: Knex.Transaction,
@@ -47,12 +48,16 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
     const knex = await this.knex(trx)
 
     const insertedRows = await knex('tracked_txs_configs')
-      .insert(records.map(toNewRow))
+      .insert(records.map(toNewRow).flat())
       .returning('id')
 
-    return insertedRows.map((row) =>
-      TrackedTxsConfigHash.unsafe(row.config_hash),
-    )
+    return insertedRows
+      .map((row) =>
+        row.config_hash
+          ? TrackedTxsConfigHash.unsafe(row.config_hash)
+          : undefined,
+      )
+      .filter(notUndefined)
   }
 
   // TODO: (tracked_tx) to add after adding config_hash to liveness table
@@ -131,17 +136,17 @@ function toRecord(row: TrackedTxsConfigRow): TrackedTxsConfigRecord {
   }
 }
 
-function toNewRow(entry: TrackedTxsConfigEntry): TrackedTxsConfigRow {
-  return {
-    config_hash: entry.configHash.valueOf(),
+function toNewRow(entry: TrackedTxsConfigEntry): TrackedTxsConfigRow[] {
+  return entry.uses.map((use) => ({
     project_id: entry.projectId.toString(),
-    type: entry.type,
-    subtype: entry.subtype ?? null,
+    config_hash: use.configHash.toString(),
+    type: use.type,
+    subtype: use.subType,
     since_timestamp: entry.sinceTimestamp.toDate(),
     until_timestamp: entry.untilTimestamp?.toDate() ?? null,
     last_synced_timestamp: null,
     debug_info: toDebugInfo(entry),
-  }
+  }))
 }
 
 function toDebugInfo(value: TrackedTxsConfigEntry): string {

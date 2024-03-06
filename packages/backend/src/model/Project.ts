@@ -18,7 +18,9 @@ import {
   SHARP_SUBMISSION_ADDRESS,
   SHARP_SUBMISSION_SELECTOR,
   TrackedTxsConfig,
+  TrackedTxUseWithConfigHash,
 } from '../modules/tracked-txs/types/TrackedTxsConfig'
+import { TrackedTxsConfigHash } from '../modules/tracked-txs/types/TrackedTxsConfigHash'
 
 export interface Project {
   projectId: ProjectId
@@ -93,7 +95,7 @@ function toBackendTrackedTxsConfig(
           projectId,
           address: SHARP_SUBMISSION_ADDRESS,
           selector: SHARP_SUBMISSION_SELECTOR,
-          uses: config.uses,
+          uses: getTrackedTxsConfigUses(config),
           ...query,
         }
       }
@@ -101,8 +103,20 @@ function toBackendTrackedTxsConfig(
       return {
         projectId,
         ...query,
-        uses: config.uses,
+        uses: getTrackedTxsConfigUses(config),
       }
     }),
   }
+}
+
+function getTrackedTxsConfigUses(
+  config: Layer2TxConfig,
+): TrackedTxUseWithConfigHash[] {
+  return config.uses.map((use) => ({
+    ...use,
+    configHash: TrackedTxsConfigHash([
+      JSON.stringify({ type: use.type, subtype: use.subType }),
+      JSON.stringify(config.query),
+    ]),
+  }))
 }

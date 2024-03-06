@@ -6,11 +6,11 @@ import {
 } from '@l2beat/shared-pure'
 
 export type Layer2TxConfig = {
-  uses: TrackedTxUse[]
+  uses: Layer2TrackedTxUse[]
   query: TrackedTxQuery
 }
 
-export type TrackedTxUse = {
+export type Layer2TrackedTxUse = {
   type: TrackedTxsConfigType
   subType: TrackedTxsConfigSubtype
   duplicateTo?: TrackedTxsConfigSubtype
