@@ -1,14 +1,20 @@
-Generated with discovered.json: 0x244bc19aad375eaaba0c155d2224f36fdfb8cf56
+Generated with discovered.json: 0x73720a3eaa19fcaa23f7cfa430c9ea5d48aa25df
 
-# Diff at Wed, 06 Mar 2024 15:10:10 GMT:
+# Diff at Wed, 06 Mar 2024 22:46:02 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@237a9d8802d6b77ea68f596e77a028c3f0e27e68 block: 19210753
-- current block number: 19376934
+- current block number: 19379201
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Introduced SuperchainConfig contract, able to pause the following functions:
+OptimismPortal.proveWithdrawalTransaction()
+OptimismPortal.finalizeWithdrawalTransaction()
+L1CrossDomainMessenger.relayMessage()
+StandardBridge.finalizeBridgeERC20()
+StandardBridge.finalizeBridgeETH()
+L1ERC721Bridge.finalizeBridgeERC721().
 
 ## Watched changes
 
