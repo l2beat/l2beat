@@ -78,7 +78,7 @@ export const sygma: Bridge = {
     validation: {
       name: 'Transfers are externally verified',
       description:
-        'The Sygma MPC Relayer is a set of decentralized permissioned network agents and is the entry-level into Sygma verification systems. On each deposit event or cross-chain message, the trusted relayers on the Sygma protocol perform an MPC ceremony utilizing threshold signature signing (TSS) to jointly attest to the validity of the cross-chain message prior to execution. Although entry-level, an MPC relayer architecture represents a significant increase in security versus traditional multisig bridges, ensuring that no single participant can defeat an honest majority.',
+        'The Sygma MPC Relayer is a set of decentralized permissioned network agents and is the entry-level into Sygma verification systems. On each deposit event or cross-chain message, the trusted relayers on the Sygma protocol perform an MPC ceremony utilizing threshold signature signing (TSS) to jointly attest to the validity of the cross-chain message prior to execution. Although entry-level, an MPC relayer architecture represents a significant increase in security versus traditional multisig bridges, ensuring that no single participant can defeat an honest majority. The current Sygma relayer network consists of a set of federated entities including Bware Labs, Phala Network, ChainSafe Systems, and Sygma Labs.',
       references: [],
       risks: [
         {
