@@ -1,9 +1,13 @@
-import { Logger } from '@l2beat/backend-tools'
+import { assert, Logger } from '@l2beat/backend-tools'
 import { DiscoveryDiff, DiscoveryMeta } from '@l2beat/discovery'
 import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { isEmpty } from 'lodash'
 
-import { Channel, DiscordClient } from '../../peripherals/discord/DiscordClient'
+import {
+  Channel,
+  DiscordClient,
+  MAX_MESSAGE_LENGTH,
+} from '../../peripherals/discord/DiscordClient'
 import { ChainConverter } from '../../tools/ChainConverter'
 import { printAsciiTable } from '../../tools/printAsciiTable'
 import { fieldThrottleDiff } from './fieldThrottleDiff'
@@ -157,9 +161,18 @@ export class UpdateNotifier {
     }
 
     let internals = ''
+    const header = `${getDailyReminderHeader(timestamp)}\n${internals}\n`
+
     if (!isEmpty(reminders)) {
+      const monospaceBlockFence = '```'
+      const safetyMargin = 10
+      const maxLength = MAX_MESSAGE_LENGTH - header.length - safetyMargin
       const table = formatRemindersAsTable(reminders)
-      internals = `\`\`\`\n${table}\n\`\`\``
+      internals = handleOverflow(
+        `\`\`\`\n${table}\n`,
+        maxLength,
+        monospaceBlockFence,
+      )
     } else {
       internals = ':white_check_mark: everything is up to date'
     }
@@ -247,4 +260,25 @@ function countDiff(diff: DiscoveryDiff[]): number {
     }
   }
   return count
+}
+
+function handleOverflow(
+  str: string,
+  maxLength: number,
+  userSuffix = '',
+): string {
+  const WARNING_MESSAGE = '... (message too long)'
+  assert(
+    maxLength > WARNING_MESSAGE.length + userSuffix.length,
+    'maxLength must be greater than WARNING_MESSAGE.length + userSuffix.length',
+  )
+
+  if (str.length + userSuffix.length <= maxLength) {
+    return str + userSuffix
+  }
+
+  return `${str.substring(
+    0,
+    maxLength - WARNING_MESSAGE.length - userSuffix.length,
+  )}${WARNING_MESSAGE}${userSuffix}`
 }

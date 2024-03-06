@@ -10,7 +10,7 @@ import {
 import { ChainConverter } from '../../tools/ChainConverter'
 import { printAsciiTable } from '../../tools/printAsciiTable'
 import { UpdateNotifierRepository } from './repositories/UpdateNotifierRepository'
-import { UpdateNotifier } from './UpdateNotifier'
+import { DailyReminderChainEntry, UpdateNotifier } from './UpdateNotifier'
 
 const BLOCK = 123
 
@@ -431,6 +431,64 @@ describe(UpdateNotifier.name, () => {
         `# Daily bot report @ ${timestamp.toYYYYMMDD()}\n\n:x: Detected changes with following severities :x:\n\`\`\`\n${table}\n\`\`\`\n`,
         'INTERNAL',
       )
+    })
+
+    it('truncates daily reminder', async () => {
+      const randomReminder = (chain: string): DailyReminderChainEntry => ({
+        chainName: chain,
+        severityCounts: {
+          low: 0,
+          medium: 0,
+          high: 0,
+          unknown: 0,
+        },
+      })
+
+      const updateNotifierRepository = mockObject<UpdateNotifierRepository>({
+        add: async () => 0,
+      })
+
+      const discordClient = mockObject<DiscordClient>({
+        sendMessage: async (msg: string) => {
+          expect(msg.length <= MAX_MESSAGE_LENGTH)
+        },
+      })
+
+      const updateNotifier = new UpdateNotifier(
+        updateNotifierRepository,
+        discordClient,
+        chainConverter,
+        Logger.SILENT,
+      )
+
+      const reminders = {
+        ['project-a']: [
+          randomReminder('ethereum'),
+          randomReminder('arbitrum'),
+          randomReminder('steelchain'),
+          randomReminder('aluminiumchain'),
+          randomReminder('copperchain'),
+          randomReminder('chainwhip'),
+        ],
+        ['project-b']: [
+          randomReminder('ethereum'),
+          randomReminder('optimism'),
+          randomReminder(
+            'verylongchainnametobumpupthebytecountthatgoesforeverandeverandomgcanyoumakeitalittlesmallerpleaseeeee',
+          ),
+        ],
+        ['project-c']: [
+          randomReminder('steelchain'),
+          randomReminder('aluminiumchain'),
+          randomReminder('copperchain'),
+          randomReminder('chainwhip'),
+        ],
+      }
+      const timestamp = UnixTime.now().toStartOf('day').add(6, 'hours')
+
+      await updateNotifier.sendDailyReminder(reminders, timestamp)
+
+      expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
     })
 
     it('does not send daily reminder at other hour', async () => {
