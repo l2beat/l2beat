@@ -36,6 +36,7 @@ export const optimism: Layer2 = opStack({
       explorers: [
         'https://optimistic.etherscan.io',
         'https://optimism.blockscout.com/',
+        'https://mainnet.superscan.network',
       ],
       repositories: ['https://github.com/ethereum-optimism/optimism'],
       socialMedia: [
