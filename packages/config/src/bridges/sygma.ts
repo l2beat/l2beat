@@ -15,9 +15,9 @@ export const sygma: Bridge = {
     slug: 'sygma',
     category: 'Hybrid',
     description:
-      'Sygma is a modular, open-source, cross-chain connectivity protocol. With Sygma, developers can easily extend their applications across EVM, Substrate, and beyond.',
+      'Sygma is a modular, open-source, cross-consensus interoperability protocol enabling asset transfers, non-fungible tokens, and decentralized finance. With Sygma, developers can easily extend their applications across Ethereum mainnet, Base, Cronos, Polygon, Gnosis, Polkadot, Kusama, and other Substrate-based chains with active work on Bitcoin and Cosmos SDK interoperability.',
     detailedDescription: 
-      `Sygma is a hybrid bridging protocol that currently leverages an MPC-based relayer network along with threshold signature schemes (TSS) to facilitate cross-chain transfers. There is ongoing efforts underway to implement optimistic, trust-minimized cross-chain block header oracles (Zipline), as well as a ZK-based block header oracle (Spectre) to provide tailored security for different bridging use-cases.`,
+      `Sygma seeks to solve interoperability challenges via innovations in dynamic cross-chain message routing and Zero-knowledge (Spectre) and Optimistic (Zipline) co-processing capabilities. The system is designed to automatically take a user's context into account, selecting the most optimal combination of verification systems and tailoring its security path, abstracting even the most arduous cross-chain complexities.`,
     links: {
       websites: [
         'https://buildwithsygma.com/',
@@ -71,14 +71,14 @@ export const sygma: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        `Sygma is a hybrid bridging protocol that currently leverages an MPC-based relayer network along with threshold signature schemes (TSS) to facilitate cross-chain transfers. There is ongoing efforts underway to implement optimistic, trust-minimized cross-chain block header oracles (Zipline), as well as a ZK-based block header oracle (Spectre) to provide tailored security for different bridging use-cases.`,
+        `Sygma uses verification systems that have been architected to provide the most optionality in order to reach cross-chain consensus. The tailored security verification systems using multi-party computation (MPC), Spectre (ZK), and Zipline (Optimistic) balances degrees of trust minimization and can be combined to ensure the highest level of security.`,
       references: [],
       risks: [],
     },
     validation: {
       name: 'Transfers are externally verified',
       description:
-        'A Sygma relayer network, operated by a trusted federation of entities (incl. Sygma Labs, Bware Labs, Phala Network, and ChainSafe), listens, parses, and passes along events related to cross-chain transfers or generic message passing. The relayer nodes in this network utilizes a variety of verification systems (currently MPC) to sign off on generic messages and/or token release/minting.',
+        'The Sygma MPC Relayer is a set of decentralized permissioned network agents and is the entry-level into Sygma verification systems. On each deposit event or cross-chain message, the trusted relayers on the Sygma protocol perform an MPC ceremony utilizing threshold signature signing (TSS) to jointly attest to the validity of the cross-chain message prior to execution. Although entry-level, an MPC relayer architecture represents a significant increase in security versus traditional multisig bridges, ensuring that no single participant can defeat an honest majority.',
       references: [],
       risks: [
         {
