@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xeedf768927c66f9e3e9594005bea7982654706a9
+
+# Diff at Wed, 06 Mar 2024 09:27:59 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@d60150e480982ada7064a8773c7df37943e92432 block: 19290165
+- current block number: 19375229
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19290165 (main branch discovery), not current.
+
+```diff
+    contract L2GasPriceOracle (0x987e300fDfb06093859358522a79098848C33852) {
+    +++ description: None
+      name:
+-        "L2GasPriceOracle"
++        "OLD_L2GasPriceOracle"
+    }
+```
+
 Generated with discovered.json: 0x51e6f3f4e484657baa2d2b4469fd0867d1cd86ca
 
 # Diff at Fri, 23 Feb 2024 12:04:50 GMT:

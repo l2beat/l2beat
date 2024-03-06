@@ -39,6 +39,11 @@ const upgradesScrollMultisig = {
   upgradeDelay: 'No delay',
 }
 
+const isEnforcedTxGatewayPaused = discovery.getContractValue<boolean>(
+  'EnforcedTxGateway',
+  'paused',
+)
+
 const upgradeDelay = 0
 
 export const scroll: Layer2 = {
@@ -313,14 +318,9 @@ export const scroll: Layer2 = {
         description:
           'Contains the array of queued L1 -> L2 messages, either appended using the L1ScrollMessenger or the EnforcedTxGateway. The latter contract, which would allow users to send L2 messages from L1 with their own address as the sender, is not enabled yet.',
       }),
-      discovery.getContractDetails('L2GasPriceOracle', {
-        description:
-          'Contract used to relay the L2 basefee on L1 in a trusted way using a whitelist. It is also used to store and update values related to intrinsic gas cost calculations.',
-        ...upgradesScrollMultisig,
-      }),
       discovery.getContractDetails('Whitelist', {
         description:
-          'Contract used to store whitelists for the L2GasPriceOracle contract.',
+          'Contract implementing a generic whitelist. Currently used to define the actor that can relay the L2 basefee on L1.',
       }),
       discovery.getContractDetails('ScrollOwner', {
         description:
@@ -393,7 +393,16 @@ export const scroll: Layer2 = {
       }),
       discovery.getContractDetails('EnforcedTxGateway', {
         description:
-          'Contracts to force L1 -> L2 messages with the proper sender. Currently not enabled.',
+          'Contracts to force L1 -> L2 messages with the proper sender.',
+        ...upgradesScrollMultisig,
+        pausable: {
+          paused: isEnforcedTxGatewayPaused,
+          pausableBy: ['ScrollOwner'],
+        },
+      }),
+      discovery.getContractDetails('OLD_L2GasPriceOracle', {
+        description:
+          'Deprecated: the functionality of this contract has been moved to the L1MessageQueue contract. It was used to relay the L2 basefee on L1 in a trusted way using a whitelist. It was also used to store and update values related to intrinsic gas cost calculations.',
         ...upgradesScrollMultisig,
       }),
     ],

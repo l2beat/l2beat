@@ -2,91 +2,6 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "L1GatewayRouter",
-      "values": {
-        "defaultERC20Gateway": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "ethGateway": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "gatewayInContext": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L1ERC1155Gateway",
-      "values": {
-        "counterpart": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "messenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "router": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "EnforcedTxGateway",
-      "values": {
-        "DOMAIN_SEPARATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "eip712Domain": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "feeVault": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "messageQueue": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": "Whether the sendTransaction function is paused or not. Affects the sequencer failure risk.",
-          "severity": "high",
-          "type": null
-        }
-      }
-    },
-    {
       "name": "L1USDCGateway",
       "values": {
         "circleCaller": {
@@ -137,7 +52,32 @@
       }
     },
     {
-      "name": "L1CustomERC20Gateway",
+      "name": "L1GatewayRouter",
+      "values": {
+        "defaultERC20Gateway": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ethGateway": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "gatewayInContext": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1ERC721Gateway",
       "values": {
         "counterpart": {
           "description": null,
@@ -162,7 +102,7 @@
       }
     },
     {
-      "name": "L1ERC721Gateway",
+      "name": "L1ERC1155Gateway",
       "values": {
         "counterpart": {
           "description": null,
@@ -217,7 +157,107 @@
       }
     },
     {
+      "name": "L1CustomERC20Gateway",
+      "values": {
+        "counterpart": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "router": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "EnforcedTxGateway",
+      "values": {
+        "DOMAIN_SEPARATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eip712Domain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "feeVault": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messageQueue": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": "Whether the sendTransaction function is paused or not. Affects the sequencer failure risk.",
+          "severity": "HIGH",
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L2CustomERC20GatewayFallback",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "L2ERC721GatewayFallback",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L2ERC1155GatewayFallback",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L2WETHGatewayFallback",
       "values": {
         "owner": {
           "description": null,
@@ -262,36 +302,6 @@
       }
     },
     {
-      "name": "L2CustomERC20GatewayFallback",
-      "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L2ERC1155GatewayFallback",
-      "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L2WETHGatewayFallback",
-      "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "L1StandardERC20Gateway",
       "values": {
         "counterpart": {
@@ -320,61 +330,6 @@
           "type": null
         },
         "router": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L1MessageQueue",
-      "values": {
-        "enforcedTxGateway": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "gasOracle": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "maxGasLimit": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "messenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nextCrossDomainMessageIndex": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pendingQueueIndex": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "scrollChain": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ProxyAdmin",
-      "values": {
-        "owner": {
           "description": null,
           "severity": null,
           "type": null
@@ -452,24 +407,14 @@
       }
     },
     {
-      "name": "ScrollOwner",
+      "name": "L1MessageQueue",
       "values": {
-        "DEFAULT_ADMIN_ROLE": {
+        "enforcedTxGateway": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "accessControl": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L2GasPriceOracle",
-      "values": {
-        "intrinsicParams": {
+        "gasOracle": {
           "description": null,
           "severity": null,
           "type": null
@@ -479,37 +424,17 @@
           "severity": null,
           "type": null
         },
-        "owner": {
+        "maxGasLimit": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "whitelist": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ScrollChain",
-      "values": {
-        "lastFinalizedBatchIndex": {
+        "messenger": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "layer2ChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "maxNumTxInChunk": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "messageQueue": {
+        "nextCrossDomainMessageIndex": {
           "description": null,
           "severity": null,
           "type": null
@@ -519,27 +444,17 @@
           "severity": null,
           "type": null
         },
-        "paused": {
+        "pendingQueueIndex": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "verifier": {
+        "scrollChain": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "provers": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "revertedBatches": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "sequencers": {
+        "whitelistChecker": {
           "description": null,
           "severity": null,
           "type": null
@@ -547,34 +462,14 @@
       }
     },
     {
-      "name": "EmergencyMultisig",
+      "name": "ScrollOwner",
       "values": {
-        "domainSeparator": {
+        "DEFAULT_ADMIN_ROLE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
+        "accessControl": {
           "description": null,
           "severity": null,
           "type": null
@@ -593,6 +488,36 @@
     },
     {
       "name": "L2TokenImplementationFallback",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L2StandardERC20GatewayFallback",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L2ETHGatewayFallback",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L2ScrollMessengerFallback",
       "values": {
         "owner": {
           "description": null,
@@ -630,76 +555,6 @@
           "type": null
         },
         "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L2ETHGatewayFallback",
-      "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "TimelockFast",
-      "values": {
-        "CANCELLER_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DEFAULT_ADMIN_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "EXECUTOR_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getMinDelay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PROPOSER_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "TIMELOCK_ADMIN_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "accessControl": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L2StandardERC20GatewayFallback",
-      "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L2ScrollMessengerFallback",
-      "values": {
-        "owner": {
           "description": null,
           "severity": null,
           "type": null
@@ -802,14 +657,54 @@
       }
     },
     {
-      "name": "MultipleVersionRollupVerifier",
+      "name": "TimelockFast",
       "values": {
-        "latestVerifier": {
+        "CANCELLER_ROLE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "legacyVerifiersLength": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EXECUTOR_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getMinDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROPOSER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TIMELOCK_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OLD_L2GasPriceOracle",
+      "values": {
+        "intrinsicParams": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2BaseFee": {
           "description": null,
           "severity": null,
           "type": null
@@ -819,12 +714,97 @@
           "severity": null,
           "type": null
         },
-        "scrollChain": {
+        "whitelist": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "EmergencyMultisig",
+      "values": {
+        "domainSeparator": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "legacyVerifiers": {
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ScrollChain",
+      "values": {
+        "lastFinalizedBatchIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "layer2ChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxNumTxInChunk": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messageQueue": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "verifier": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "provers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "revertedBatches": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sequencers": {
           "description": null,
           "severity": null,
           "type": null
@@ -860,6 +840,36 @@
           "type": null
         },
         "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "MultipleVersionRollupVerifier",
+      "values": {
+        "latestVerifier": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "legacyVerifiersLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "scrollChain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "legacyVerifiers": {
           "description": null,
           "severity": null,
           "type": null
