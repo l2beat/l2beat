@@ -177,6 +177,21 @@
       }
     },
     {
+      "name": "OrderRegistry",
+      "values": {
+        "hasRegisteredFact": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "identify": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "GpsFactRegistryAdapter",
       "values": {
         "gpsContract": {
@@ -195,21 +210,6 @@
           "type": null
         },
         "programHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "OrderRegistry",
-      "values": {
-        "hasRegisteredFact": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "identify": {
           "description": null,
           "severity": null,
           "type": null
