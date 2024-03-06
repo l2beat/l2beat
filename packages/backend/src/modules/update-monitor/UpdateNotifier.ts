@@ -164,10 +164,15 @@ export class UpdateNotifier {
     const header = `${getDailyReminderHeader(timestamp)}\n${internals}\n`
 
     if (!isEmpty(reminders)) {
-        const monospaceBlockFence = '```'
-        const maxLength = MAX_MESSAGE_LENGTH - header.length - monospaceBlockFence.length
+      const monospaceBlockFence = '```'
+      const safetyMargin = 10
+      const maxLength = MAX_MESSAGE_LENGTH - header.length - safetyMargin
       const table = formatRemindersAsTable(reminders)
-      internals = handleOverflow(`\`\`\`\n${table}\n`, maxLength, monospaceBlockFence)
+      internals = handleOverflow(
+        `\`\`\`\n${table}\n`,
+        maxLength,
+        monospaceBlockFence,
+      )
     } else {
       internals = ':white_check_mark: everything is up to date'
     }
