@@ -6,6 +6,13 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('fraxtal')
 
+const timelockDelay = discovery.getContractValue<number>(
+  'Timelock',
+  'delay',
+)
+
+const timelockDelayHours = timelockDelay / 3600
+
 const upgradeability = {
   upgradableBy: ['ProxyAdmin'],
   upgradeDelay: 'No delay',
@@ -122,7 +129,7 @@ export const fraxtal: Layer2 = opStack({
     }),
     discovery.getContractDetails('Timelock', {
       description:
-        'Allows for time-delayed execution of transactions in the FrxETH smart contract, such as adding and removing whitelisted minters.',
+        `Allows for time-delayed execution of transactions in the FrxETH smart contract, such as adding and removing whitelisted minters. Delay is set to ${timelockDelayHours} hours.`,
     }),
   ],
   nonTemplateEscrows: [],
