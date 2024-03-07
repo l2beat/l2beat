@@ -15,9 +15,10 @@ import {
 } from '../../../peripherals/database/BaseRepository'
 import { Database } from '../../../peripherals/database/Database'
 import { TrackedTxsConfigEntry } from '../types/TrackedTxsConfig'
-import { TrackedTxsConfigHash } from '../types/TrackedTxsConfigHash'
+import { TrackedTxsId } from '../types/TrackedTxsId'
 
 export interface TrackedTxsConfigRecord {
+  id: TrackedTxsId
   projectId: ProjectId
   type: TrackedTxsConfigType
   subtype?: TrackedTxsConfigSubtype
@@ -25,7 +26,6 @@ export interface TrackedTxsConfigRecord {
   untilTimestamp?: UnixTime
   lastSyncedTimestamp?: UnixTime
   debugInfo: string
-  config_hash: TrackedTxsConfigHash
 }
 
 export class TrackedTxsConfigsRepository extends BaseRepository {
@@ -43,19 +43,15 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
   async addMany(
     records: TrackedTxsConfigEntry[],
     trx?: Knex.Transaction,
-  ): Promise<TrackedTxsConfigHash[]> {
+  ): Promise<TrackedTxsId[]> {
     const knex = await this.knex(trx)
 
     const insertedRows = await knex('tracked_txs_configs')
       .insert(records.flatMap(toNewRow))
-      .returning('config_hash')
+      .returning('id')
 
     return insertedRows
-      .map((row) =>
-        row.config_hash
-          ? TrackedTxsConfigHash.unsafe(row.config_hash)
-          : undefined,
-      )
+      .map((row) => (row.id ? TrackedTxsId.unsafe(row.id) : undefined))
       .filter(notUndefined)
   }
 
@@ -72,26 +68,26 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
   // }
 
   async setLastSyncedTimestamp(
-    config_hashes: TrackedTxsConfigHash[],
+    trackedTxsIds: TrackedTxsId[],
     lastSyncedTimestamp: UnixTime,
     trx?: Knex.Transaction,
   ) {
     const knex = await this.knex(trx)
 
     return await knex('tracked_txs_configs')
-      .whereIn('config_hash', config_hashes)
+      .whereIn('id', trackedTxsIds)
       .update({ last_synced_timestamp: lastSyncedTimestamp.toDate() })
   }
 
   async setUntilTimestamp(
-    config_hash: TrackedTxsConfigHash,
+    trackedTxsId: TrackedTxsId,
     untilTimestamp: UnixTime,
     trx?: Knex.Transaction,
   ) {
     const knex = await this.knex(trx)
 
     return await knex('tracked_txs_configs')
-      .where({ config_hash: config_hash.valueOf() })
+      .where({ id: trackedTxsId.valueOf() })
       .update({ until_timestamp: untilTimestamp.toDate() })
   }
 
@@ -100,15 +96,12 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
     return knex('tracked_txs_configs').delete()
   }
 
-  async deleteMany(
-    config_hashes: TrackedTxsConfigHash[],
-    trx?: Knex.Transaction,
-  ) {
+  async deleteMany(trackedTxsIds: TrackedTxsId[], trx?: Knex.Transaction) {
     const knex = await this.knex(trx)
     return knex('tracked_txs_configs')
       .whereIn(
-        'config_hash',
-        config_hashes.map((h) => h.valueOf()),
+        'id',
+        trackedTxsIds.map((id) => id.valueOf()),
       )
       .delete()
   }
@@ -124,7 +117,7 @@ function toRecord(row: TrackedTxsConfigRow): TrackedTxsConfigRecord {
     : undefined
 
   return {
-    config_hash: TrackedTxsConfigHash.unsafe(row.config_hash),
+    id: TrackedTxsId.unsafe(row.id),
     projectId: ProjectId(row.project_id),
     type: TrackedTxsConfigType.parse(row.type),
     subtype: row.subtype
@@ -139,8 +132,8 @@ function toRecord(row: TrackedTxsConfigRow): TrackedTxsConfigRecord {
 
 export function toNewRow(entry: TrackedTxsConfigEntry): TrackedTxsConfigRow[] {
   return entry.uses.map((use) => ({
+    id: use.id.toString(),
     project_id: entry.projectId.toString(),
-    config_hash: use.configHash.toString(),
     type: use.type,
     subtype: use.subType,
     since_timestamp: entry.sinceTimestamp.toDate(),

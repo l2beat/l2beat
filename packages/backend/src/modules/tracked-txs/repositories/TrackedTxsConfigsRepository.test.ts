@@ -14,7 +14,7 @@ import {
   TrackedTxFunctionCall,
   TrackedTxsConfigEntry,
 } from '../types/TrackedTxsConfig'
-import { TrackedTxsConfigHash } from '../types/TrackedTxsConfigHash'
+import { TrackedTxsId } from '../types/TrackedTxsId'
 import {
   toNewRow,
   TrackedTxsConfigRecord,
@@ -30,7 +30,7 @@ export const TRACKED_TXS_CONFIGS: TrackedTxsConfigEntry[] = [
       {
         type: 'liveness',
         subType: 'batchSubmissions',
-        configHash: TrackedTxsConfigHash(['0x13']),
+        id: TrackedTxsId(['0x13']),
       },
     ],
   }),
@@ -43,7 +43,7 @@ export const TRACKED_TXS_CONFIGS: TrackedTxsConfigEntry[] = [
       {
         type: 'liveness',
         subType: 'proofSubmissions',
-        configHash: TrackedTxsConfigHash(['0x123']),
+        id: TrackedTxsId(['0x123']),
       },
     ],
   }),
@@ -81,8 +81,8 @@ describeDatabase(TrackedTxsConfigsRepository.name, (database) => {
 
         await repository.setLastSyncedTimestamp(
           [
-            TRACKED_TXS_CONFIGS[0].uses[0].configHash,
-            TRACKED_TXS_CONFIGS[1].uses[0].configHash,
+            TRACKED_TXS_CONFIGS[0].uses[0].id,
+            TRACKED_TXS_CONFIGS[1].uses[0].id,
           ],
           latest,
         )
@@ -110,10 +110,7 @@ describeDatabase(TrackedTxsConfigsRepository.name, (database) => {
 
         const latest = UnixTime.now()
 
-        await repository.setLastSyncedTimestamp(
-          [TrackedTxsConfigHash([''])],
-          latest,
-        )
+        await repository.setLastSyncedTimestamp([TrackedTxsId([''])], latest)
 
         const results = await repository.getAll()
         expect(results).toEqualUnsorted([...entryToResult(TRACKED_TXS_CONFIGS)])
@@ -150,10 +147,7 @@ describeDatabase(TrackedTxsConfigsRepository.name, (database) => {
 
       const untilTimestamp = UnixTime.now()
 
-      await repository.setUntilTimestamp(
-        TrackedTxsConfigHash(['']),
-        untilTimestamp,
-      )
+      await repository.setUntilTimestamp(TrackedTxsId(['']), untilTimestamp)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([...entryToResult(TRACKED_TXS_CONFIGS)])
@@ -217,7 +211,7 @@ function entryToResult(entires: TrackedTxsConfigEntry[]) {
 
 function toRecord(entry: TrackedTxsConfigRow): TrackedTxsConfigRecord {
   return {
-    config_hash: TrackedTxsConfigHash.unsafe(entry.config_hash),
+    id: TrackedTxsId.unsafe(entry.id),
     subtype: entry.subtype
       ? TrackedTxsConfigSubtype.parse(entry.subtype)
       : undefined,
@@ -242,12 +236,12 @@ function makeTrackedTxsFunctionCall(
     sinceTimestamp: START,
     uses: [
       {
-        configHash: TrackedTxsConfigHash(['0x']),
+        id: TrackedTxsId(['0x']),
         type: 'liveness',
         subType: 'batchSubmissions',
       },
       {
-        configHash: TrackedTxsConfigHash(['0x012']),
+        id: TrackedTxsId(['0x012']),
         type: 'liveness',
         subType: 'stateUpdates',
       },

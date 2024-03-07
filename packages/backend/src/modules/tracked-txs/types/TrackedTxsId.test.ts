@@ -1,26 +1,26 @@
 import { expect } from 'earl'
 
-import { TrackedTxsConfigHash } from './TrackedTxsConfigHash'
+import { TrackedTxsId } from './TrackedTxsId'
 
-describe(TrackedTxsConfigHash.name, () => {
+describe(TrackedTxsId.name, () => {
   it('generates identifier from array of strings', () => {
     const input = ['a', 'b', 'c']
 
-    const id = TrackedTxsConfigHash(input)
+    const id = TrackedTxsId(input)
     const expected = 'fa1844c2'
     expect(id.toString()).toEqual(expected)
   })
 
   it('works for empty array', () => {
-    const id = TrackedTxsConfigHash([])
+    const id = TrackedTxsId([])
     const expected = '4f53cda1'
     expect(id.toString()).toEqual(expected)
   })
 
   describe('.random', () => {
     it('generates random string', () => {
-      const first = TrackedTxsConfigHash.random()
-      const second = TrackedTxsConfigHash.random()
+      const first = TrackedTxsId.random()
+      const second = TrackedTxsId.random()
       expect(first).not.toEqual(second)
     })
   })

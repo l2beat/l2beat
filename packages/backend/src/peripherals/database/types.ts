@@ -172,6 +172,7 @@ declare module 'knex/types/tables' {
   }
 
   interface TrackedTxsConfigRow {
+    id: string
     project_id: string
     type: string
     subtype: string | null
@@ -179,7 +180,6 @@ declare module 'knex/types/tables' {
     since_timestamp: Date
     until_timestamp: Date | null
     last_synced_timestamp: Date | null
-    config_hash: string
   }
 
   interface DiscoveryCacheRow {

@@ -20,7 +20,7 @@ import {
   TrackedTxsConfig,
   TrackedTxUseWithConfigHash,
 } from '../modules/tracked-txs/types/TrackedTxsConfig'
-import { TrackedTxsConfigHash } from '../modules/tracked-txs/types/TrackedTxsConfigHash'
+import { TrackedTxsId } from '../modules/tracked-txs/types/TrackedTxsId'
 
 export interface Project {
   projectId: ProjectId
@@ -114,7 +114,7 @@ function getTrackedTxsConfigUses(
 ): TrackedTxUseWithConfigHash[] {
   return config.uses.map((use) => ({
     ...use,
-    configHash: TrackedTxsConfigHash([
+    id: TrackedTxsId([
       JSON.stringify({ type: use.type, subtype: use.subType }),
       JSON.stringify(config.query),
     ]),
