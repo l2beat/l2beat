@@ -14,11 +14,11 @@ import {
   CheckConvention,
 } from '../../../peripherals/database/BaseRepository'
 import { Database } from '../../../peripherals/database/Database'
+import { TrackedTxId } from '../types/TrackedTxId'
 import { TrackedTxsConfigEntry } from '../types/TrackedTxsConfig'
-import { TrackedTxsId } from '../types/TrackedTxsId'
 
 export interface TrackedTxsConfigRecord {
-  id: TrackedTxsId
+  id: TrackedTxId
   projectId: ProjectId
   type: TrackedTxsConfigType
   subtype?: TrackedTxsConfigSubtype
@@ -43,7 +43,7 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
   async addMany(
     records: TrackedTxsConfigEntry[],
     trx?: Knex.Transaction,
-  ): Promise<TrackedTxsId[]> {
+  ): Promise<TrackedTxId[]> {
     const knex = await this.knex(trx)
 
     const insertedRows = await knex('tracked_txs_configs')
@@ -51,7 +51,7 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
       .returning('id')
 
     return insertedRows
-      .map((row) => (row.id ? TrackedTxsId.unsafe(row.id) : undefined))
+      .map((row) => (row.id ? TrackedTxId.unsafe(row.id) : undefined))
       .filter(notUndefined)
   }
 
@@ -68,7 +68,7 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
   // }
 
   async setLastSyncedTimestamp(
-    trackedTxsIds: TrackedTxsId[],
+    trackedTxsIds: TrackedTxId[],
     lastSyncedTimestamp: UnixTime,
     trx?: Knex.Transaction,
   ) {
@@ -80,7 +80,7 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
   }
 
   async setUntilTimestamp(
-    trackedTxsId: TrackedTxsId,
+    trackedTxsId: TrackedTxId,
     untilTimestamp: UnixTime,
     trx?: Knex.Transaction,
   ) {
@@ -96,7 +96,7 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
     return knex('tracked_txs_configs').delete()
   }
 
-  async deleteMany(trackedTxsIds: TrackedTxsId[], trx?: Knex.Transaction) {
+  async deleteMany(trackedTxsIds: TrackedTxId[], trx?: Knex.Transaction) {
     const knex = await this.knex(trx)
     return knex('tracked_txs_configs')
       .whereIn(
@@ -117,7 +117,7 @@ function toRecord(row: TrackedTxsConfigRow): TrackedTxsConfigRecord {
     : undefined
 
   return {
-    id: TrackedTxsId.unsafe(row.id),
+    id: TrackedTxId.unsafe(row.id),
     projectId: ProjectId(row.project_id),
     type: TrackedTxsConfigType.parse(row.type),
     subtype: row.subtype

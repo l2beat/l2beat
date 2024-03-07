@@ -14,13 +14,13 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
+import { TrackedTxId } from '../modules/tracked-txs/types/TrackedTxId'
 import {
   SHARP_SUBMISSION_ADDRESS,
   SHARP_SUBMISSION_SELECTOR,
   TrackedTxsConfig,
   TrackedTxUseWithConfigHash,
 } from '../modules/tracked-txs/types/TrackedTxsConfig'
-import { TrackedTxsId } from '../modules/tracked-txs/types/TrackedTxsId'
 
 export interface Project {
   projectId: ProjectId
@@ -114,7 +114,7 @@ function getTrackedTxsConfigUses(
 ): TrackedTxUseWithConfigHash[] {
   return config.uses.map((use) => ({
     ...use,
-    id: TrackedTxsId([
+    id: TrackedTxId([
       JSON.stringify({ type: use.type, subtype: use.subType }),
       JSON.stringify(config.query),
     ]),

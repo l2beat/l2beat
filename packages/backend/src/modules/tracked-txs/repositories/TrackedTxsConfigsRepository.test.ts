@@ -10,11 +10,11 @@ import { expect } from 'earl'
 import { TrackedTxsConfigRow } from 'knex/types/tables'
 
 import { describeDatabase } from '../../../test/database'
+import { TrackedTxId } from '../types/TrackedTxId'
 import {
   TrackedTxFunctionCall,
   TrackedTxsConfigEntry,
 } from '../types/TrackedTxsConfig'
-import { TrackedTxsId } from '../types/TrackedTxsId'
 import {
   toNewRow,
   TrackedTxsConfigRecord,
@@ -30,7 +30,7 @@ export const TRACKED_TXS_CONFIGS: TrackedTxsConfigEntry[] = [
       {
         type: 'liveness',
         subType: 'batchSubmissions',
-        id: TrackedTxsId(['0x13']),
+        id: TrackedTxId(['0x13']),
       },
     ],
   }),
@@ -43,7 +43,7 @@ export const TRACKED_TXS_CONFIGS: TrackedTxsConfigEntry[] = [
       {
         type: 'liveness',
         subType: 'proofSubmissions',
-        id: TrackedTxsId(['0x123']),
+        id: TrackedTxId(['0x123']),
       },
     ],
   }),
@@ -110,7 +110,7 @@ describeDatabase(TrackedTxsConfigsRepository.name, (database) => {
 
         const latest = UnixTime.now()
 
-        await repository.setLastSyncedTimestamp([TrackedTxsId([''])], latest)
+        await repository.setLastSyncedTimestamp([TrackedTxId([''])], latest)
 
         const results = await repository.getAll()
         expect(results).toEqualUnsorted([...entryToResult(TRACKED_TXS_CONFIGS)])
@@ -147,7 +147,7 @@ describeDatabase(TrackedTxsConfigsRepository.name, (database) => {
 
       const untilTimestamp = UnixTime.now()
 
-      await repository.setUntilTimestamp(TrackedTxsId(['']), untilTimestamp)
+      await repository.setUntilTimestamp(TrackedTxId(['']), untilTimestamp)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([...entryToResult(TRACKED_TXS_CONFIGS)])
@@ -211,7 +211,7 @@ function entryToResult(entires: TrackedTxsConfigEntry[]) {
 
 function toRecord(entry: TrackedTxsConfigRow): TrackedTxsConfigRecord {
   return {
-    id: TrackedTxsId.unsafe(entry.id),
+    id: TrackedTxId.unsafe(entry.id),
     subtype: entry.subtype
       ? TrackedTxsConfigSubtype.parse(entry.subtype)
       : undefined,
@@ -236,12 +236,12 @@ function makeTrackedTxsFunctionCall(
     sinceTimestamp: START,
     uses: [
       {
-        id: TrackedTxsId(['0x']),
+        id: TrackedTxId(['0x']),
         type: 'liveness',
         subType: 'batchSubmissions',
       },
       {
-        id: TrackedTxsId(['0x012']),
+        id: TrackedTxId(['0x012']),
         type: 'liveness',
         subType: 'stateUpdates',
       },
