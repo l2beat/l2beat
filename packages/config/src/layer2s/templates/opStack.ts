@@ -80,6 +80,10 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
   const sequencerInbox = EthereumAddress(
     templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
   )
+  const optimismPortalTokens = [
+    'ETH',
+    ...(templateVars.nonTemplateOptimismPortalEscrowTokens ?? []),
+  ]
   return {
     type: 'layer2',
     id: ProjectId(templateVars.discovery.projectName),
@@ -107,8 +111,8 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
       escrows: [
         templateVars.discovery.getEscrowDetails({
           address: templateVars.portal.address,
-          tokens: ['ETH', ...(templateVars.nonTemplateOptimismPortalEscrowTokens ?? [])],
-          description: 'Main entry point for users depositing ETH.',
+          tokens: optimismPortalTokens,
+          description: `Main entry point for users depositing ${optimismPortalTokens.join(', ')}.`,
           ...templateVars.upgradeability,
         }),
         templateVars.discovery.getEscrowDetails({
