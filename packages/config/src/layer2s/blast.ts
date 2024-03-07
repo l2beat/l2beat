@@ -50,6 +50,10 @@ export const blast: Layer2 = opStack({
     finality: {
       finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
     },
+    tvlWarning: {
+      content: "The TVL does not account for rehypothecated tokens.",
+      sentiment: "bad"
+    }
   },
   upgradeability,
   l1StandardBridgeEscrow: EthereumAddress(
