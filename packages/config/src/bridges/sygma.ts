@@ -71,7 +71,7 @@ export const sygma: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        `Sygma uses verification systems that have been architected to provide the most optionality in order to reach cross-chain consensus. The tailored security verification systems currently uses multi-party computation (MPC) and threshold signature schemes (TSS) to facilitate cross-chain execution. Soon, the combiniation of MPC, Spectre (ZK), and Zipline (Optimistic) will allow for balancing degrees of trust minimization to ensure the highest level of security.`,
+        `Sygma currently leverages an MPC relayer network along with threshold signature schemes (TSS) to facilitate cross-chain transfers.`,
       references: [],
       risks: [],
     },
