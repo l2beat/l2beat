@@ -240,7 +240,7 @@ Read only the first 5 prime elements from the array
 {
   "type": "array",
   "method": "owners",
-  "indices": [2,3,5,7,11]
+  "indices": [2, 3, 5, 7, 11]
 }
 ```
 
@@ -335,7 +335,7 @@ Call a method that you know currently reverts but might change it's behaviour in
 {
   "type": "call",
   "method": "function revertIfNotPaused()",
-  "expectRevert": true,
+  "expectRevert": true
 }
 ```
 
@@ -614,11 +614,11 @@ You want to create an array of values `x` from that event only when `y` is equal
   "fields": {
     "blockSubmitters": {
       "type": "arrayFromOneEventWithArg",
-        "event": "Event",
-        "valueKey": "x",
-        "flagKey": "allowed",
-        "arg": "y",
-        "argValue": "1234"
+      "event": "Event",
+      "valueKey": "x",
+      "flagKey": "allowed",
+      "arg": "y",
+      "argValue": "1234"
     }
   }
 }
@@ -703,6 +703,7 @@ Example event:
 `event DefaultConfigsSet(tuple(uint32 eid, tuple(...) config)[] params)`
 
 Logic:
+
 1. Get all logs for the event
 2. Group logs by returnParam[0] (it is always eid with current approach)
 3. Expand tuple of values into named values dictionary if expandParam is provided
@@ -861,7 +862,6 @@ Extract the address of the place where the sequencer is going to be posting call
   }
 },
 ```
-
 
 ## Cache
 
