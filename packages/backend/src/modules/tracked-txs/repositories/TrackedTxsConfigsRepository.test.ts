@@ -218,8 +218,10 @@ function entryToResult(entires: TrackedTxsConfigEntry[]) {
 function toRecord(entry: TrackedTxsConfigRow): TrackedTxsConfigRecord {
   return {
     config_hash: TrackedTxsConfigHash.unsafe(entry.config_hash),
-    subtype: entry.subtype ? TrackedTxsConfigSubtype(entry.subtype) : undefined,
-    type: TrackedTxsConfigType(entry.type),
+    subtype: entry.subtype
+      ? TrackedTxsConfigSubtype.parse(entry.subtype)
+      : undefined,
+    type: TrackedTxsConfigType.parse(entry.type),
     projectId: ProjectId(entry.project_id),
     sinceTimestamp: UnixTime.fromDate(entry.since_timestamp),
     untilTimestamp: entry.until_timestamp

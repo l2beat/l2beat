@@ -28,7 +28,6 @@ export interface TrackedTxsConfigRecord {
   config_hash: TrackedTxsConfigHash
 }
 
-// TODO: add tests when finished
 export class TrackedTxsConfigsRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
@@ -127,8 +126,10 @@ function toRecord(row: TrackedTxsConfigRow): TrackedTxsConfigRecord {
   return {
     config_hash: TrackedTxsConfigHash.unsafe(row.config_hash),
     projectId: ProjectId(row.project_id),
-    type: TrackedTxsConfigType(row.type),
-    subtype: row.subtype ? TrackedTxsConfigSubtype(row.subtype) : undefined,
+    type: TrackedTxsConfigType.parse(row.type),
+    subtype: row.subtype
+      ? TrackedTxsConfigSubtype.parse(row.subtype)
+      : undefined,
     sinceTimestamp: UnixTime.fromDate(row.since_timestamp),
     untilTimestamp,
     lastSyncedTimestamp,

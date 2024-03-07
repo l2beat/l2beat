@@ -1,14 +1,4 @@
-export type TrackedTxsConfigType = 'liveness'
+import { z } from 'zod'
 
-export function isTrackedTxsConfigType(
-  value: string,
-): value is TrackedTxsConfigType {
-  return value === 'liveness'
-}
-
-export function TrackedTxsConfigType(value: string): TrackedTxsConfigType {
-  if (!isTrackedTxsConfigType(value)) {
-    throw new Error(`Invalid tracked txs config type: ${value}`)
-  }
-  return value
-}
+export type TrackedTxsConfigType = z.infer<typeof TrackedTxsConfigType>
+export const TrackedTxsConfigType = z.literal('liveness')
