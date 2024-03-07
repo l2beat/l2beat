@@ -51,7 +51,7 @@ export const blast: Layer2 = opStack({
       finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
     },
     tvlWarning: {
-      content: 'The TVL does not account for rehypothecated tokens.',
+      content: 'The TVL does account for rehypothecated tokens.',
       sentiment: 'bad',
     },
   },
