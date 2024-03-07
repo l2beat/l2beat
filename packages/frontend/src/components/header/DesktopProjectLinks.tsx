@@ -10,7 +10,7 @@ import {
   ProjectLinkIcon,
 } from '../icons'
 import { Link } from '../Link'
-import { OutLink } from '../OutLink'
+import { PlainLink } from '../PlainLink'
 import { parseSocial } from '../project/links/LinkSectionLink'
 
 interface LinkSectionProps {
@@ -39,13 +39,13 @@ function ProjectLinkItem({ projectLink }: LinkSectionItemProps) {
   ) {
     return (
       <div className="flex cursor-pointer flex-row items-center gap-1.5 rounded-lg bg-gray-100 px-2 py-1.5 text-xs font-medium transition-colors hover:bg-gray-200 dark:bg-zinc-900 dark:hover:bg-zinc-700">
-        <OutLink
+        <PlainLink
           href={projectLink.links[0]}
           className="flex flex-row items-center gap-1.5"
         >
           <ProjectLinkIcon name={projectLink.name} />
           {projectLink.name} <OutLinkIcon />
-        </OutLink>
+        </PlainLink>
       </div>
     )
   }
@@ -79,7 +79,7 @@ function ProjectLinkItem({ projectLink }: LinkSectionItemProps) {
         const parsedSocial =
           projectLink.name === 'Social' ? parseSocial(link) : undefined
         return (
-          <OutLink
+          <PlainLink
             key={link}
             href={link}
             className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors hover:bg-gray-200 dark:hover:bg-zinc-700"
@@ -93,7 +93,7 @@ function ProjectLinkItem({ projectLink }: LinkSectionItemProps) {
             )}
             {parsedSocial ? parsedSocial.text : formatLink(link)}{' '}
             <OutLinkIcon />
-          </OutLink>
+          </PlainLink>
         )
       })}
     </HoverableDropdown>

@@ -150,15 +150,10 @@ export const synapse: Bridge = {
     {
       name: 'Nodes',
       description: 'Can withdraw funds and mint SynERC20 Wrapped tokens.',
-      accounts: [
-        {
-          // TODO: add support for deeper queries SynapseBridge.accessControl.NODEGROUP_ROLE.members
-          address: EthereumAddress(
-            '0x230A1AC45690B9Ae1176389434610B9526d2f21b',
-          ),
-          type: 'EOA',
-        },
-      ],
+      accounts: discovery.getAccessControlRolePermission(
+        'SynapseBridge',
+        'NODEGROUP_ROLE',
+      ),
     },
   ],
 }

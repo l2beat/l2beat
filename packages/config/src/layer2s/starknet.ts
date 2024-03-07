@@ -48,6 +48,7 @@ const ESCROW_FXS_ADDRESS = '0x66ba83ba3D3AD296424a2258145d9910E9E40B7C'
 const ESCROW_SFRXETH_ADDRESS = '0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8'
 const ESCROW_LUSD_ADDRESS = '0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5'
 const ESCROW_LORDS_ADDRESS = '0x023A2aAc5d0fa69E3243994672822BA43E34E5C9'
+const ESCROW_STRK_ADDRESS = '0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4'
 
 const escrowETHDelaySeconds = discovery.getContractUpgradeabilityParam(
   ESCROW_ETH_ADDRESS,
@@ -93,6 +94,10 @@ const escrowLUSDDelaySeconds = discovery.getContractUpgradeabilityParam(
   ESCROW_LUSD_ADDRESS,
   'upgradeDelay',
 )
+const escrowSTRKDelaySeconds = discovery.getContractUpgradeabilityParam(
+  ESCROW_STRK_ADDRESS,
+  'upgradeDelay',
+)
 
 const minDelay = Math.min(
   escrowETHDelaySeconds,
@@ -102,6 +107,7 @@ const minDelay = Math.min(
   starknetDelaySeconds,
   escrowWSTETHDelaySeconds,
   escrowRETHDelaySeconds,
+  escrowSTRKDelaySeconds,
 )
 
 function formatMaxTotalBalanceString(
@@ -123,73 +129,78 @@ function formatMaxTotalBalanceString(
 
 const escrowETHMaxTotalBalanceString = formatMaxTotalBalanceString(
   'ETH',
-  discovery.getContractValue<number>('ETH Bridge', 'maxTotalBalance'),
+  discovery.getContractValue<number>('ETHBridge', 'maxTotalBalance'),
   18,
 )
 
 const escrowWBTCMaxTotalBalanceString = formatMaxTotalBalanceString(
   'WBTC',
-  discovery.getContractValue<number>('WBTC Bridge', 'maxTotalBalance'),
+  discovery.getContractValue<number>('WBTCBridge', 'maxTotalBalance'),
   8,
 )
 
 const escrowUSDCMaxTotalBalanceString = formatMaxTotalBalanceString(
   'USDC',
-  discovery.getContractValue<number>('USDC Bridge', 'maxTotalBalance'),
+  discovery.getContractValue<number>('USDCBridge', 'maxTotalBalance'),
   6,
 )
 
 const escrowUSDTMaxTotalBalanceString = formatMaxTotalBalanceString(
   'USDT',
-  discovery.getContractValue<number>('USDT Bridge', 'maxTotalBalance'),
+  discovery.getContractValue<number>('USDTBridge', 'maxTotalBalance'),
   6,
 )
 
 const escrowWSTETHMaxTotalBalanceString = formatMaxTotalBalanceString(
   'wstETH',
-  discovery.getContractValue<number>('wstETH Bridge', 'maxTotalBalance'),
+  discovery.getContractValue<number>('wstETHBridge', 'maxTotalBalance'),
   18,
 )
 
 const escrowRETHMaxTotalBalanceString = formatMaxTotalBalanceString(
   'rETH',
-  discovery.getContractValue<number>('rETH Bridge', 'maxTotalBalance'),
+  discovery.getContractValue<number>('rETHBridge', 'maxTotalBalance'),
   18,
 )
 
 const escrowUNIMaxTotalBalanceString = formatMaxTotalBalanceString(
   'UNI',
-  discovery.getContractValue<number>('UNI Bridge', 'maxTotalBalance'),
+  discovery.getContractValue<number>('UNIBridge', 'maxTotalBalance'),
   18,
 )
 
 const escrowFRAXMaxTotalBalanceString = formatMaxTotalBalanceString(
   'FRAX',
-  discovery.getContractValue<number>('FRAX Bridge', 'maxTotalBalance'),
+  discovery.getContractValue<number>('FRAXBridge', 'maxTotalBalance'),
   18,
 )
 
 const escrowFXSMaxTotalBalanceString = formatMaxTotalBalanceString(
   'FXS',
-  discovery.getContractValue<number>('FXS Bridge', 'maxTotalBalance'),
+  discovery.getContractValue<number>('FXSBridge', 'maxTotalBalance'),
   18,
 )
 
 const escrowSFRXETHMaxTotalBalanceString = formatMaxTotalBalanceString(
   'sfrxETH',
-  discovery.getContractValue<number>('sfrxETH Bridge', 'maxTotalBalance'),
+  discovery.getContractValue<number>('sfrxETHBridge', 'maxTotalBalance'),
   18,
 )
 
 const escrowLUSDMaxTotalBalanceString = formatMaxTotalBalanceString(
   'LUSD',
-  discovery.getContractValue<number>('LUSD Bridge', 'maxTotalBalance'),
+  discovery.getContractValue<number>('LUSDBridge', 'maxTotalBalance'),
   18,
 )
 
 const escrowDAIMaxTotalBalanceString = formatMaxTotalBalanceString(
   'DAI',
   discovery.getContractValue<number>('L1DaiGateway', 'ceiling'),
+  18,
+)
+const escrowSTRKMaxTotalBalanceString = formatMaxTotalBalanceString(
+  'DAI',
+  discovery.getContractValue<number>('STRKBridge', 'maxTotalBalance'),
   18,
 )
 
@@ -232,6 +243,7 @@ export const starknet: Layer2 = {
     },
   },
   config: {
+    associatedTokens: ['STRK'],
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_ETH_ADDRESS),
@@ -344,6 +356,13 @@ export const starknet: Layer2 = {
         tokens: ['LORDS'],
         description: 'StarkGate bridge for LORDS.',
       }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress(ESCROW_STRK_ADDRESS),
+        tokens: ['STRK'],
+        description:
+          'StarkGate bridge for STRK.' + ' ' + escrowSTRKMaxTotalBalanceString,
+        upgradeDelay: formatSeconds(escrowSTRKDelaySeconds),
+      }),
     ],
     transactionApi: {
       type: 'starknet',
@@ -363,16 +382,16 @@ export const starknet: Layer2 = {
         {
           formula: 'sharpSubmission',
           sinceTimestamp: new UnixTime(1702921247),
-          untilTimestamp: new UnixTime(1704898931),
+          untilTimestamp: new UnixTime(1704855731),
           programHashes: [
             '54878256403880350656938046611252303365750679698042371543935159963667935317',
           ],
         },
         {
           formula: 'sharpSubmission',
-          sinceTimestamp: new UnixTime(1704898931),
+          sinceTimestamp: new UnixTime(1704855731),
           programHashes: [
-            '2590421891839256512113614983194993186457498815986333310670788206383913888162',
+            '2479841346739966073527450029179698923866252973805981504232089731754042431018',
           ],
         },
       ],
@@ -527,7 +546,7 @@ export const starknet: Layer2 = {
         delayDescriptionFromSeconds(starknetDelaySeconds),
     },
     ...discovery.getMultisigPermission(
-      'Proxy Multisig',
+      'ProxyMultisig',
       'One of Proxy Governors.',
     ),
     {
@@ -635,10 +654,27 @@ export const starknet: Layer2 = {
     },
     ...discovery.getMultisigPermission(
       'BridgeMultisig',
-      'Can upgrade the following bridges: WBTC, ETH, USDT, USDC.',
+      'Can upgrade the following bridges: FRAX, FXS, sfrxETH, USDT, WBTC, ETH, USDT, and additional permissions on other bridges, like setting the max total balance or activate withdrawal limits.',
     ),
+    {
+      name: 'StarkGate STRK owner',
+      accounts: discovery.getAccessControlRolePermission(
+        'STRKBridge',
+        'GOVERNANCE_ADMIN',
+      ),
+      description:
+        'Can upgrade implementation of the STRK escrow, potentially gaining access to all funds stored in the bridge. ' +
+        delayDescriptionFromSeconds(escrowSTRKDelaySeconds),
+    },
   ],
   milestones: [
+    {
+      name: 'Starknet Provisions',
+      link: 'https://www.starknet.io/en/content/starknet-provisions-program',
+      date: '2024-02-14T00:00:00Z',
+      description:
+        'Starknet begins allocating $STRK to early contributors and users.',
+    },
     {
       name: 'Starknet Alpha',
       link: 'https://medium.com/starkware/starknet-alpha-now-on-mainnet-4cf35efd1669',

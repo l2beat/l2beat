@@ -1,5 +1,5 @@
 {
-  "$schema": "../../config.schema.json",
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
   "chain": "ethereum",
   "name": "satellite",
   "initialAddresses": ["0x4F4495243837681061C4743b74B3eEdf548D56A5"],

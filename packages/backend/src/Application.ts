@@ -10,6 +10,7 @@ import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createHealthModule } from './modules/health/HealthModule'
 import { LivenessIndexer } from './modules/liveness/LivenessIndexer'
 import { createLivenessModule } from './modules/liveness/LivenessModule'
+import { createLzOAppsModule } from './modules/lz-oapps/createLzOAppsModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createStatusModule } from './modules/status/StatusModule'
 import { createTvlModule } from './modules/tvl/modules/TvlModule'
@@ -53,7 +54,7 @@ export class Application {
       createActivityModule(config, logger, http, database, clock),
       createUpdateMonitorModule(config, logger, http, database, clock),
       createDiffHistoryModule(config, logger, database),
-      createStatusModule(config, logger, database, clock),
+      createStatusModule(config, logger),
       livenessModule,
       createFinalityModule(
         config,
@@ -62,6 +63,7 @@ export class Application {
         clock,
         livenessModule?.indexer as LivenessIndexer,
       ),
+      createLzOAppsModule(config, logger),
     ]
 
     const apiServer = new ApiServer(

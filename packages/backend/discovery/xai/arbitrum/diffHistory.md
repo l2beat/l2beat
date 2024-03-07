@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x275442cd2cf2edcdd371a58695931131fb9430fd
+
+# Diff at Fri, 16 Feb 2024 07:26:55 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@a6356b2783ea71be1ce7003098f574ebc90b553b block: 177621512
+- current block number: 181262302
+
+## Description
+
+Update in nonce, now ignored.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 177621512 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafeL2 (0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E) {
+      name:
+-        "GnosisSafeL2"
++        "ExecutorMultisig"
+      values.nonce:
+-        2
+    }
+```
+
 Generated with discovered.json: 0x1331038a7bf98dc70733792489ed180c671bcb35
 
 # Diff at Mon, 05 Feb 2024 08:16:18 GMT:

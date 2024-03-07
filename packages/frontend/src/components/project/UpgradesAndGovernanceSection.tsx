@@ -10,6 +10,7 @@ export interface UpgradesAndGovernanceSectionProps {
   sectionOrder: number
   content: string
   image: string | undefined
+  isUnderReview: boolean | undefined
 }
 
 export function UpgradesAndGovernanceSection(
@@ -20,6 +21,8 @@ export function UpgradesAndGovernanceSection(
       id={props.id}
       title={props.title}
       sectionOrder={props.sectionOrder}
+      isUnderReview={props.isUnderReview}
+      includeChildrenIfUnderReview
     >
       {props.image && (
         <figure className="mb-8 mt-4 text-center">

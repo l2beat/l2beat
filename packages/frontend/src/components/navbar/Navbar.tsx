@@ -3,7 +3,7 @@ import React from 'react'
 import { Config } from '../../build/config'
 import { MenuOpenIcon } from '../icons'
 import { Logo } from '../Logo'
-import { OutLink } from '../OutLink'
+import { PlainLink } from '../PlainLink'
 import { Banner } from './Banner'
 import { DarkThemeToggle } from './DarkThemeToggle'
 import { HiringBadge } from './HiringBadge'
@@ -101,12 +101,12 @@ export function Navbar(props: NavbarProps) {
             <VerticalBar />
             <ul className="flex h-full items-center gap-1.5">
               <li className="h-full">
-                <OutLink
+                <PlainLink
                   className="flex h-full items-center px-2 font-medium"
                   href={props.forumLink}
                 >
                   Forum
-                </OutLink>
+                </PlainLink>
               </li>
               <li className="h-full">
                 <PageLink
@@ -136,13 +136,13 @@ export function Navbar(props: NavbarProps) {
                 </PageLink>
               </li>
               <li className="h-full">
-                <OutLink
+                <PlainLink
                   className="flex h-full items-center px-2 font-medium"
                   href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f"
                 >
                   Jobs
                   {props.showHiringBadge && <HiringBadge className="ml-1" />}
-                </OutLink>
+                </PlainLink>
               </li>
             </ul>
             <VerticalBar />

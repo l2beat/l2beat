@@ -22,7 +22,7 @@ import {
 import { ContractsSectionProps } from '../../components/project/ContractsSection'
 import { getExplorerUrl } from '../getExplorerUrl'
 import { languageJoin } from '../utils'
-import { getArchitectureImage } from './getArchitectureImage'
+import { getDiagramImage } from './getDiagramImage'
 
 export function getContractSection(
   project: Layer2 | Layer3 | Bridge,
@@ -74,7 +74,7 @@ export function getContractSection(
     contracts: contracts ?? [],
     escrows: escrows,
     risks: risks,
-    architectureImage: getArchitectureImage(project.display.slug),
+    architectureImage: getDiagramImage('architecture', project.display.slug),
     references: project.contracts?.references ?? [],
     isIncomplete: project.contracts?.isIncomplete,
     isUnderReview: project.isUnderReview ?? project.contracts?.isUnderReview,

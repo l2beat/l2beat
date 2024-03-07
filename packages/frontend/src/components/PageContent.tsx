@@ -4,7 +4,7 @@ import { cn } from '../utils/cn'
 
 export interface PageContentProps {
   children: ReactNode
-  type?: 'narrow' | 'wider'
+  type?: 'subpage' | 'article'
   mobileFull?: boolean
   className?: string
 }
@@ -19,8 +19,8 @@ export function PageContent({
     <div
       className={cn(
         'max-w-[1256px]',
-        type === 'narrow' && 'max-w-[1064px]',
-        type === 'wider' && 'max-w-[1296px]',
+        type === 'subpage' && 'max-w-[1296px]',
+        type === 'article' && 'max-w-[816px]',
         'mx-auto h-full leading-[1.15] md:px-12',
         !mobileFull && 'px-4',
         className,

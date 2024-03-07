@@ -12,15 +12,10 @@ export class Clock {
   ) {}
 
   getFirstHour(): UnixTime {
-    let result = this.minTimestamp
-
-    if (!result.isFull('hour')) {
-      result = result.toNext('hour')
-    }
+    const result = this.minTimestamp.toEndOf('hour')
     if (result.gt(this.getLastHour())) {
       throw new Error('minTimestamp must be in the past')
     }
-
     return result
   }
 

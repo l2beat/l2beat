@@ -37,7 +37,7 @@ module.exports = {
       pulse: 'pulse 5s ease-in-out infinite forwards',
     },
     fontSize: {
-      '3xs': ['8px', '12px'],
+      '3xs': ['10px', '15px'],
       '2xs': ['12px', '16px'],
       xs: ['14px', '20px'],
       sm: ['15px', '22px'],
@@ -188,6 +188,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['Roboto', 'Arial', 'sans-serif'],
+        'roboto-serif': ['Roboto Serif', 'Roboto', 'Arial'],
         lora: ['Lora', 'serif'],
       },
       spacing: {

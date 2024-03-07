@@ -3,7 +3,7 @@ import { Hash256, UnixTime } from '@l2beat/shared-pure'
 
 import { Clock } from '../../../tools/Clock'
 import { TaskQueue } from '../../../tools/queue/TaskQueue'
-import { UpdaterStatus } from '../../status/api/view/TvlStatusPage'
+import { UpdaterStatus } from '../api/status/TvlStatusPage'
 import { ReportUpdater } from '../assets'
 import { AggregatedReportRepository } from '../repositories/AggregatedReportRepository'
 import { AggregatedReportStatusRepository } from '../repositories/AggregatedReportStatusRepository'

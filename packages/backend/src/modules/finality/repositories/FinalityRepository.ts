@@ -17,6 +17,12 @@ export interface FinalityRecord {
   averageTimeToInclusion: number
 }
 
+export interface ProjectFinalityRecord {
+  minimumTimeToInclusion: number
+  maximumTimeToInclusion: number
+  averageTimeToInclusion: number
+}
+
 export class FinalityRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
@@ -29,27 +35,90 @@ export class FinalityRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getProjectsSyncedOnTimestamp(
-    timestamp: UnixTime,
-  ): Promise<ProjectId[]> {
+  async findLatestByProjectId(
+    projectId: ProjectId,
+  ): Promise<FinalityRecord | undefined> {
     const knex = await this.knex()
-    const rows = await knex('finality').where('timestamp', timestamp.toDate())
-    return rows.map((row) => ProjectId(row.project_id))
+    const row = await knex('finality')
+      .where('project_id', projectId.toString())
+      .orderBy('timestamp', 'desc')
+      .first()
+    return row ? toRecord(row) : undefined
+  }
+
+  async findProjectFinalityOnTimestamp(
+    projectId: ProjectId,
+    timestamp: UnixTime,
+  ): Promise<ProjectFinalityRecord | undefined> {
+    const knex = await this.knex()
+    const row = await knex('finality')
+      .where('timestamp', timestamp.toDate())
+      .where('project_id', projectId.toString())
+      .first()
+    return row ? toProjectFinalityRecord(row) : undefined
+  }
+
+  async getLatestGroupedByProjectId(
+    projectIds: ProjectId[],
+  ): Promise<FinalityRecord[]> {
+    const knex = await this.knex()
+
+    const maxTimestampSubquery = knex('finality')
+      .select('project_id')
+      .max('timestamp as max_timestamp')
+      .whereIn(
+        'project_id',
+        projectIds?.map((p) => p.toString()),
+      )
+      .groupBy('project_id')
+      .as('max_f')
+
+    const query: FinalityRow[] = await knex('finality as f').join(
+      maxTimestampSubquery,
+      function () {
+        this.on('f.project_id', '=', 'max_f.project_id').andOn(
+          'f.timestamp',
+          '=',
+          'max_f.max_timestamp',
+        )
+      },
+    )
+
+    return query.map(toRecord)
   }
 
   async addMany(
-    transactions: FinalityRecord[],
+    records: FinalityRecord[],
     trx?: Knex.Transaction,
   ): Promise<number> {
     const knex = await this.knex(trx)
-    const rows: FinalityRow[] = transactions.map(toRow)
+    const rows: FinalityRow[] = records.map(toRow)
     await knex.batchInsert('finality', rows, 10_000)
     return rows.length
+  }
+
+  async add(record: FinalityRecord, trx?: Knex.Transaction): Promise<string> {
+    const knex = await this.knex(trx)
+
+    const row: FinalityRow = toRow(record)
+    const [inserted] = await knex('finality')
+      .insert(row)
+      .returning('project_id')
+
+    return inserted.project_id
   }
 
   async deleteAll() {
     const knex = await this.knex()
     return knex('finality').delete()
+  }
+}
+
+function toProjectFinalityRecord(row: FinalityRow): ProjectFinalityRecord {
+  return {
+    minimumTimeToInclusion: row.minimum_time_to_inclusion,
+    maximumTimeToInclusion: row.maximum_time_to_inclusion,
+    averageTimeToInclusion: row.average_time_to_inclusion,
   }
 }
 

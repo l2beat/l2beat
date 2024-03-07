@@ -17,7 +17,13 @@ import { cn } from '../../../utils/cn'
 import { formatTps } from '../../../utils/formatTps'
 import { AnomalyIndicator } from '../../AnomalyIndicator'
 import { Badge } from '../../badge/Badge'
-import { CanonicalIcon, ExternalIcon, InfoIcon, NativeIcon } from '../../icons'
+import {
+  CanonicalIcon,
+  ExternalIcon,
+  InfoIcon,
+  NativeIcon,
+  RoundedWarningIcon,
+} from '../../icons'
 import { StageCell } from '../../stages/StageCell'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/Tooltip'
 import { FinalityDurationCell } from '../FinalityDurationCell'
@@ -29,6 +35,7 @@ import { ColumnConfig } from '../types'
 import { ValueWithPercentageCell } from '../ValueWithPercentageCell'
 import { getProjectWithIndexColumns } from './getProjectWithIndexColumns'
 import { getOrderValueBySentiment } from './sorting/getOrderValueBySentiment'
+import { getStageOrderValue } from './sorting/getStageOrderValue'
 
 export function getActiveScalingSummaryColumnsConfig() {
   const columns: ColumnConfig<ScalingL2SummaryViewEntry>[] = [
@@ -64,27 +71,7 @@ export function getActiveScalingSummaryColumnsConfig() {
       tooltip: 'Rollup stage based on its features and maturity.',
       getValue: (project) => <StageCell stageConfig={project.stage} />,
       sorting: {
-        getOrderValue: (project) => {
-          const stage = project.stage.stage
-          if (stage === 'NotApplicable' || stage === 'UnderReview') {
-            return undefined
-          }
-          if (stage === 'Stage 0') {
-            if (project.stage.message?.type === 'warning') {
-              return 0
-            }
-
-            if (project.stage.message?.type === 'underReview') {
-              return 1
-            }
-
-            return 2
-          }
-          if (stage === 'Stage 1') {
-            return 3
-          }
-          return 4
-        },
+        getOrderValue: (project) => getStageOrderValue(project.stage),
         rule: 'numeric',
       },
     },
@@ -100,16 +87,33 @@ export function getActiveScalingSummaryColumnsConfig() {
       align: 'right',
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
-      getValue: (project) => (
-        <>
-          <NumberCell className="font-bold" tooltip={project.tvlTooltip}>
-            {project.tvl?.displayValue}
-          </NumberCell>
-          <NumberCell signed className="ml-1 w-[72px] !text-base font-medium ">
-            {project.sevenDayChange}
-          </NumberCell>
-        </>
-      ),
+      getValue: (project) =>
+        project.slug === 'polygonzkevm' ? (
+          <Tooltip>
+            <TooltipTrigger className="relative flex items-center gap-1">
+              <NumberCell className="font-bold" tooltip={project.tvlTooltip}>
+                {project.tvl?.displayValue}
+              </NumberCell>
+              <NumberCell signed className="w-[72px] !text-base  font-medium">
+                {project.sevenDayChange}
+              </NumberCell>
+              <RoundedWarningIcon className="absolute -right-1.5 size-4 fill-yellow-700 dark:fill-yellow-300" />
+            </TooltipTrigger>
+            <TooltipContent>
+              The TVL is currently shared among all projects using the shared
+              Polygon CDK contracts.
+            </TooltipContent>
+          </Tooltip>
+        ) : (
+          <>
+            <NumberCell className="font-bold" tooltip={project.tvlTooltip}>
+              {project.tvl?.displayValue}
+            </NumberCell>
+            <NumberCell signed className="ml-1 w-[72px] !text-base font-medium">
+              {project.sevenDayChange}
+            </NumberCell>
+          </>
+        ),
       sorting: {
         getOrderValue: (project) => project.tvl?.value,
         rule: 'numeric',
@@ -270,12 +274,27 @@ export function getScalingTvlColumnsConfig() {
           tooltip: 'Total = Canonical + External + Native',
           align: 'center',
           noPaddingRight: true,
-          getValue: (project) => (
-            <ValueWithPercentageCell
-              value={project.tvl?.displayValue}
-              percentChange={project.tvlChange}
-            />
-          ),
+          getValue: (project) =>
+            project.slug === 'polygonzkevm' ? (
+              <Tooltip>
+                <TooltipTrigger className="relative flex items-center gap-1">
+                  <ValueWithPercentageCell
+                    value={project.tvl?.displayValue}
+                    percentChange={project.tvlChange}
+                  />
+                  <RoundedWarningIcon className="absolute -right-5 size-5 fill-yellow-700 pl-1 dark:fill-yellow-300" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  The TVL is currently shared among all projects using the
+                  shared Polygon CDK contracts.
+                </TooltipContent>
+              </Tooltip>
+            ) : (
+              <ValueWithPercentageCell
+                value={project.tvl?.displayValue}
+                percentChange={project.tvlChange}
+              />
+            ),
           sorting: {
             getOrderValue: (project) =>
               project.tvl?.value !== 0 ? project.tvl?.value : undefined,
@@ -424,7 +443,7 @@ export function getScalingActivityColumnsConfig() {
           <NumberCell>{formatTps(project.data.tpsDaily)}</NumberCell>
         ) : (
           <Badge type="gray" className="mr-0 w-full text-center lg:mr-4">
-            MISSING ACTIVITY DATA
+            MISSING DATA
           </Badge>
         ),
       removeCellOnFalsyValue: true,
@@ -516,21 +535,33 @@ export function getScalingLivenessColumnsConfig() {
         {
           name: 'Tx data\nsubmissions',
           tooltip: 'How often transaction batches are submitted to the L1',
-          getValue: (project) => {
-            return (
+          colSpan: (project) => (!project.isSynced ? 3 : undefined),
+          getValue: (project) =>
+            project.isSynced ? (
               <LivenessDurationTimeRangeCell
                 data={project.batchSubmissions}
                 project={project}
                 dataType="batchSubmissions"
               />
-            )
-          },
+            ) : (
+              <Badge type="gray" className="mr-0 w-full text-center lg:mr-4">
+                COMING SOON
+              </Badge>
+            ),
           sorting: {
-            getOrderValue: (project) => ({
-              '30D': project.batchSubmissions?.last30Days?.averageInSeconds,
-              '90D': project.batchSubmissions?.last90Days?.averageInSeconds,
-              MAX: project.batchSubmissions?.allTime?.averageInSeconds,
-            }),
+            getOrderValue: (project) => {
+              if (!project.isSynced)
+                return {
+                  '30D': undefined,
+                  '90D': undefined,
+                  MAX: undefined,
+                }
+              return {
+                '30D': project.batchSubmissions?.last30Days?.averageInSeconds,
+                '90D': project.batchSubmissions?.last90Days?.averageInSeconds,
+                MAX: project.batchSubmissions?.allTime?.averageInSeconds,
+              }
+            },
             defaultOrderKey: '30D',
             rule: 'numeric',
           },
@@ -538,21 +569,29 @@ export function getScalingLivenessColumnsConfig() {
         {
           name: 'Proof\nsubmissions',
           tooltip: 'How often validity proofs are submitted to the L1',
-          getValue: (project) => {
-            return (
+          getValue: (project) =>
+            project.isSynced ? (
               <LivenessDurationTimeRangeCell
                 data={project.proofSubmissions}
                 project={project}
                 dataType="proofSubmissions"
               />
-            )
-          },
+            ) : undefined,
+          removeCellOnFalsyValue: true,
           sorting: {
-            getOrderValue: (project) => ({
-              '30D': project.proofSubmissions?.last30Days?.averageInSeconds,
-              '90D': project.proofSubmissions?.last90Days?.averageInSeconds,
-              MAX: project.proofSubmissions?.allTime?.averageInSeconds,
-            }),
+            getOrderValue: (project) => {
+              if (!project.isSynced)
+                return {
+                  '30D': undefined,
+                  '90D': undefined,
+                  MAX: undefined,
+                }
+              return {
+                '30D': project.proofSubmissions?.last30Days?.averageInSeconds,
+                '90D': project.proofSubmissions?.last90Days?.averageInSeconds,
+                MAX: project.proofSubmissions?.allTime?.averageInSeconds,
+              }
+            },
             defaultOrderKey: '30D',
             rule: 'numeric',
           },
@@ -560,21 +599,29 @@ export function getScalingLivenessColumnsConfig() {
         {
           name: 'State\nupdates',
           tooltip: 'How often state roots are submitted to the L1',
-          getValue: (project) => {
-            return (
+          getValue: (project) =>
+            project.isSynced ? (
               <LivenessDurationTimeRangeCell
                 data={project.stateUpdates}
                 project={project}
                 dataType="stateUpdates"
               />
-            )
-          },
+            ) : undefined,
+          removeCellOnFalsyValue: true,
           sorting: {
-            getOrderValue: (project) => ({
-              '30D': project.stateUpdates?.last30Days?.averageInSeconds,
-              '90D': project.stateUpdates?.last90Days?.averageInSeconds,
-              MAX: project.stateUpdates?.allTime?.averageInSeconds,
-            }),
+            getOrderValue: (project) => {
+              if (!project.isSynced)
+                return {
+                  '30D': undefined,
+                  '90D': undefined,
+                  MAX: undefined,
+                }
+              return {
+                '30D': project.stateUpdates?.last30Days?.averageInSeconds,
+                '90D': project.stateUpdates?.last90Days?.averageInSeconds,
+                MAX: project.stateUpdates?.allTime?.averageInSeconds,
+              }
+            },
             defaultOrderKey: '30D',
             rule: 'numeric',
           },
@@ -602,8 +649,8 @@ export function getScalingLivenessColumnsConfig() {
       align: 'center',
       getValue: (project) => (
         <AnomalyIndicator
-          anomalyEntries={project.anomalyEntries}
-          showComingSoon={project.slug === 'linea'}
+          anomalyEntries={project.isSynced ? project.anomalyEntries : []}
+          showComingSoon={!project.isSynced || project.slug === 'linea'}
         />
       ),
     },
@@ -650,26 +697,25 @@ export function getScalingFinalityColumnsConfig() {
       },
     },
     {
-      name: 'Time to inclusion\n30-day avg.',
+      name: 'Past day avg.\nTime to inclusion',
       getValue: (project) => (
-        <FinalityDurationCell data={project.timeToFinalize} />
+        <FinalityDurationCell
+          data={project.timeToInclusion}
+          syncStatus={project.syncStatus}
+        />
       ),
       tooltip:
         'The average time it would take for an L2 transaction to be included on the L1. Please note, this is an approximate estimation and is different than Time to finality since it ignores the overhead time to reach L1 finality after L1 inclusion.',
       sorting: {
         rule: 'numeric',
-        getOrderValue: (project) => project.timeToFinalize.averageInSeconds,
+        getOrderValue: (project) => project.timeToInclusion.averageInSeconds,
       },
     },
     {
       name: 'State update delay',
       tooltip:
         'Time interval between time to finality and state root submission.',
-      getValue: () => (
-        <span className="rounded bg-gray-200 px-1.5 py-px text-center font-medium text-gray-500 dark:bg-neutral-700 dark:text-gray-50">
-          Coming soon
-        </span>
-      ),
+      getValue: () => <Badge type="gray">COMING SOON</Badge>,
     },
     {
       name: 'Execution delay',

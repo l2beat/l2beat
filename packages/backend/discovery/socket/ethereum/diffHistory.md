@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x37cb2efea554c7c5038c7efcd12e8cd84046d16f
+
+# Diff at Wed, 06 Mar 2024 11:01:08 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@724fc93d9bd160395a856b93ce5016ca876c6436 block: 19212794
+- current block number: 19375693
+
+## Description
+
+Three new plugs.
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
+      values.plugs[15]:
++        "0x4ab7B94BA3f3CF69354Eb2f6b5E856DC61e13660"
+      values.plugs[14]:
++        "0x8F4e67C61232167584333e23D7d67BD73d80a4F5"
+      values.plugs[13]:
++        "0x68411d61adF1341A6392C87A93941FdD3EE7DF8E"
+    }
+```
+
 Generated with discovered.json: 0xbe11b5db1a4e90286ad51c890467859b0f633f8f
 
 # Diff at Mon, 12 Feb 2024 15:19:43 GMT:

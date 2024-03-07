@@ -14,7 +14,6 @@ import { StageBadge } from '../stages/StageBadge'
 import { StageDisclaimer } from '../stages/StageDisclaimer'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
 import { ProjectSectionId } from './sectionId'
-import { UnderReviewCallout } from './UnderReviewCallout'
 import { WarningBar } from './WarningBar'
 
 export interface StageSectionProps {
@@ -35,6 +34,8 @@ export function StageSection(props: StageSectionProps) {
         title={props.title}
         id={props.id}
         sectionOrder={props.sectionOrder}
+        isUnderReview
+        includeChildrenIfUnderReview
       >
         <div className="mb-6 font-medium">
           <img
@@ -50,7 +51,6 @@ export function StageSection(props: StageSectionProps) {
           />
           for stage assignment.
         </div>
-        <UnderReviewCallout />
       </ProjectDetailsSection>
     )
   }
@@ -138,7 +138,7 @@ export function StageSection(props: StageSectionProps) {
               <ChevronDownIcon className="transition-transform duration-300 peer-checked:-rotate-180" />
             </label>
             <ul
-              className="pointer-events-none mx-4 hidden space-y-2 pb-4 md:px-4 md:pb-6"
+              className="mx-4 hidden space-y-2 pb-4 md:px-4 md:pb-6"
               data-role="dropdown-item"
             >
               {satisfied.map((req, i) => (

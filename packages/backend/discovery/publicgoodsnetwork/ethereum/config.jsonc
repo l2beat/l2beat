@@ -1,5 +1,5 @@
 {
-  "$schema": "../../config.schema.json",
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
   "chain": "ethereum",
   "name": "publicgoodsnetwork",
   "initialAddresses": ["0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b"],

@@ -22,10 +22,17 @@ export interface ScalingFinalityViewEntry {
   redWarning: string | undefined
   purposes: ScalingProjectPurpose[]
   stage: StageConfig
-  timeToFinalize: {
+  timeToInclusion: {
+    minimumInSeconds?: number
     averageInSeconds: number
     maximumInSeconds: number
     warning?: string
   }
   finalizationPeriod?: string
+  syncStatus: SyncStatus
+}
+
+export type SyncStatus = {
+  isSynced: boolean
+  displaySyncedUntil: string
 }
