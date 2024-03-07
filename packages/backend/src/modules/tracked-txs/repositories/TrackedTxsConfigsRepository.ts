@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
+  notUndefined,
   ProjectId,
   TrackedTxsConfigSubtype,
   TrackedTxsConfigType,
@@ -14,9 +15,10 @@ import {
 } from '../../../peripherals/database/BaseRepository'
 import { Database } from '../../../peripherals/database/Database'
 import { TrackedTxsConfigEntry } from '../types/TrackedTxsConfig'
-import { TrackedTxsConfigHash } from '../types/TrackedTxsConfigHash'
+import { TrackedTxsId } from '../types/TrackedTxsId'
 
 export interface TrackedTxsConfigRecord {
+  id: TrackedTxsId
   projectId: ProjectId
   type: TrackedTxsConfigType
   subtype?: TrackedTxsConfigSubtype
@@ -24,10 +26,8 @@ export interface TrackedTxsConfigRecord {
   untilTimestamp?: UnixTime
   lastSyncedTimestamp?: UnixTime
   debugInfo: string
-  config_hash: TrackedTxsConfigHash
 }
 
-// TODO: add tests when finished
 export class TrackedTxsConfigsRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
@@ -39,20 +39,20 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
     const rows = await knex('tracked_txs_configs')
     return rows.map(toRecord)
   }
-  // TODO: (tracked_tx)
+
   async addMany(
     records: TrackedTxsConfigEntry[],
     trx?: Knex.Transaction,
-  ): Promise<TrackedTxsConfigHash[]> {
+  ): Promise<TrackedTxsId[]> {
     const knex = await this.knex(trx)
 
     const insertedRows = await knex('tracked_txs_configs')
-      .insert(records.map(toNewRow))
+      .insert(records.flatMap(toNewRow))
       .returning('id')
 
-    return insertedRows.map((row) =>
-      TrackedTxsConfigHash.unsafe(row.config_hash),
-    )
+    return insertedRows
+      .map((row) => (row.id ? TrackedTxsId.unsafe(row.id) : undefined))
+      .filter(notUndefined)
   }
 
   // TODO: (tracked_tx) to add after adding config_hash to liveness table
@@ -68,26 +68,26 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
   // }
 
   async setLastSyncedTimestamp(
-    config_hashes: TrackedTxsConfigHash[],
+    trackedTxsIds: TrackedTxsId[],
     lastSyncedTimestamp: UnixTime,
     trx?: Knex.Transaction,
   ) {
     const knex = await this.knex(trx)
 
     return await knex('tracked_txs_configs')
-      .whereIn('config_hash', config_hashes)
+      .whereIn('id', trackedTxsIds)
       .update({ last_synced_timestamp: lastSyncedTimestamp.toDate() })
   }
 
   async setUntilTimestamp(
-    config_hash: TrackedTxsConfigHash,
+    trackedTxsId: TrackedTxsId,
     untilTimestamp: UnixTime,
     trx?: Knex.Transaction,
   ) {
     const knex = await this.knex(trx)
 
     return await knex('tracked_txs_configs')
-      .where({ config_hash: config_hash.valueOf() })
+      .where({ id: trackedTxsId.valueOf() })
       .update({ until_timestamp: untilTimestamp.toDate() })
   }
 
@@ -96,15 +96,12 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
     return knex('tracked_txs_configs').delete()
   }
 
-  async deleteMany(
-    config_hashes: TrackedTxsConfigHash[],
-    trx?: Knex.Transaction,
-  ) {
+  async deleteMany(trackedTxsIds: TrackedTxsId[], trx?: Knex.Transaction) {
     const knex = await this.knex(trx)
     return knex('tracked_txs_configs')
       .whereIn(
-        'config_hash',
-        config_hashes.map((h) => h.valueOf()),
+        'id',
+        trackedTxsIds.map((id) => id.valueOf()),
       )
       .delete()
   }
@@ -120,10 +117,12 @@ function toRecord(row: TrackedTxsConfigRow): TrackedTxsConfigRecord {
     : undefined
 
   return {
-    config_hash: TrackedTxsConfigHash.unsafe(row.config_hash),
+    id: TrackedTxsId.unsafe(row.id),
     projectId: ProjectId(row.project_id),
-    type: TrackedTxsConfigType(row.type),
-    subtype: row.subtype ? TrackedTxsConfigSubtype(row.subtype) : undefined,
+    type: TrackedTxsConfigType.parse(row.type),
+    subtype: row.subtype
+      ? TrackedTxsConfigSubtype.parse(row.subtype)
+      : undefined,
     sinceTimestamp: UnixTime.fromDate(row.since_timestamp),
     untilTimestamp,
     lastSyncedTimestamp,
@@ -131,17 +130,17 @@ function toRecord(row: TrackedTxsConfigRow): TrackedTxsConfigRecord {
   }
 }
 
-function toNewRow(entry: TrackedTxsConfigEntry): TrackedTxsConfigRow {
-  return {
-    config_hash: entry.configHash.valueOf(),
+export function toNewRow(entry: TrackedTxsConfigEntry): TrackedTxsConfigRow[] {
+  return entry.uses.map((use) => ({
+    id: use.id.toString(),
     project_id: entry.projectId.toString(),
-    type: entry.type,
-    subtype: entry.subtype ?? null,
+    type: use.type,
+    subtype: use.subType,
     since_timestamp: entry.sinceTimestamp.toDate(),
     until_timestamp: entry.untilTimestamp?.toDate() ?? null,
     last_synced_timestamp: null,
     debug_info: toDebugInfo(entry),
-  }
+  }))
 }
 
 function toDebugInfo(value: TrackedTxsConfigEntry): string {

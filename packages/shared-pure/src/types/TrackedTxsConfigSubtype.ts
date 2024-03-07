@@ -1,23 +1,8 @@
-export type TrackedTxsConfigSubtype =
-  | 'stateUpdates'
-  | 'batchSubmissions'
-  | 'proofSubmissions'
+import { z } from 'zod'
 
-export function isTrackedTxsConfigSubtype(
-  value: string,
-): value is TrackedTxsConfigSubtype {
-  return (
-    value === 'stateUpdates' ||
-    value === 'batchSubmissions' ||
-    value === 'proofSubmissions'
-  )
-}
-
-export function TrackedTxsConfigSubtype(
-  value: string,
-): TrackedTxsConfigSubtype {
-  if (!isTrackedTxsConfigSubtype(value)) {
-    throw new Error(`Invalid tracked txs config subtype: ${value}`)
-  }
-  return value
-}
+export type TrackedTxsConfigSubtype = z.infer<typeof TrackedTxsConfigSubtype>
+export const TrackedTxsConfigSubtype = z.union([
+  z.literal('stateUpdates'),
+  z.literal('batchSubmissions'),
+  z.literal('proofSubmissions'),
+])

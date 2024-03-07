@@ -1,14 +1,10 @@
 /*
                       ====== IMPORTANT NOTICE ======
-
 DO NOT EDIT OR RENAME THIS FILE
-
 This is a migration file. Once created the file should not be renamed or edited,
 because migrations are only run once on the production server.
-
 If you find that something was incorrectly set up in the `up` function you
 should create a new migration file that fixes the issue.
-
 */
 
 import { Knex } from 'knex'
@@ -29,9 +25,9 @@ export async function up(knex: Knex) {
     table.dateTime('since_timestamp', { useTz: false })
     table.dateTime('until_timestamp', { useTz: false })
     table.dateTime('last_synced_timestamp', { useTz: false })
-    table.string('config_hash').notNullable()
+    table.string('id').notNullable()
 
-    table.index('config_hash')
+    table.index('id')
   })
 
   // LIVENESS
@@ -39,17 +35,11 @@ export async function up(knex: Knex) {
     table.dropForeign(['liveness_id'])
     table.dropPrimary()
     table.dropColumn('liveness_id')
-    table.string('config_hash', 8).notNullable()
-    table.index('config_hash')
+    table.string('tracked_tx_id', 8).notNullable()
+    table.index('tracked_tx_id')
   })
 
-  await addForeign(
-    knex,
-    'liveness',
-    'config_hash',
-    'tracked_txs_configs',
-    'config_hash',
-  )
+  await addForeign(knex, 'liveness', 'tracked_tx_id', 'tracked_txs_configs')
 }
 
 export async function down(knex: Knex) {
@@ -70,9 +60,9 @@ export async function down(knex: Knex) {
   })
 
   await knex.schema.alterTable('liveness', (table) => {
-    table.dropForeign(['config_hash'])
+    table.dropForeign(['tracked_tx_id'])
     table.dropPrimary()
-    table.dropColumn('config_hash')
+    table.dropColumn('tracked_tx_id')
     table.string('liveness_id', 8).notNullable()
     table.index('liveness_id')
   })
