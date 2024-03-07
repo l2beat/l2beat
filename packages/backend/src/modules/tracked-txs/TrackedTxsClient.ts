@@ -1,22 +1,22 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
-import { BigQueryClient } from '../../../peripherals/bigquery/BigQueryClient'
+import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import {
   BigQueryFunctionCallResult,
   BigQueryTransferResult,
   ParsedBigQueryFunctionCallResult,
   ParsedBigQueryResult,
   ParsedBigQueryTransferResult,
-} from '../types/model'
+} from './types/model'
 import {
   TrackedTxFunctionCall,
   TrackedTxsConfigEntry,
   TrackedTxSharpSubmission,
   TrackedTxTransfer,
-} from '../types/TrackedTxsConfig'
-import { getFunctionCallQuery, getTransferQuery } from './sql'
-import { transformFunctionCallsQueryResult } from './transformFunctionCallsQueryResult'
-import { transformTransfersQueryResult } from './transformTransfersQueryResult'
+} from './types/TrackedTxsConfig'
+import { getFunctionCallQuery, getTransferQuery } from './utils/sql'
+import { transformFunctionCallsQueryResult } from './utils/transformFunctionCallsQueryResult'
+import { transformTransfersQueryResult } from './utils/transformTransfersQueryResult'
 
 export class TrackedTxsClient {
   constructor(private readonly bigquery: BigQueryClient) {}
