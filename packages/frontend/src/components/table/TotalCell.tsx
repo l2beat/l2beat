@@ -2,6 +2,7 @@ import React from 'react'
 
 import { ScalingL2SummaryViewEntry } from '../../pages/scaling/summary/types'
 import { getSentimentFillColor } from '../../utils/sentimentFillColor'
+import { Badge } from '../badge/Badge'
 import { RoundedWarningIcon } from '../icons'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { NumberCell } from './NumberCell'
@@ -11,7 +12,7 @@ export interface TotalCellProps {
 }
 
 export function TotalCell({ project }: TotalCellProps) {
-  const content = (
+  const content = project.tvl ? (
     <>
       <NumberCell className="font-bold" tooltip={project.tvlTooltip}>
         {project.tvl?.displayValue}
@@ -20,6 +21,10 @@ export function TotalCell({ project }: TotalCellProps) {
         {project.sevenDayChange}
       </NumberCell>
     </>
+  ) : (
+    <Badge type="gray" className="mx-auto translate-x-[11.5px]">
+      Coming soon
+    </Badge>
   )
 
   if (project.tvlWarning) {
