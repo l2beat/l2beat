@@ -2,101 +2,6 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "L2OutputOracle",
-      "values": {
-        "challenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "CHALLENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "FINALIZATION_PERIOD_SECONDS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "finalizationPeriodSeconds": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "L2_BLOCK_TIME": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2BlockTime": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "latestBlockNumber": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "latestOutputIndex": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nextBlockNumber": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nextOutputIndex": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "proposer": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PROPOSER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "startingBlockNumber": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "startingTimestamp": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "SUBMISSION_INTERVAL": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "submissionInterval": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "deletedOutputs": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "ProxyAdmin",
       "values": {
         "addressManager": {
@@ -117,44 +22,9 @@
       }
     },
     {
-      "name": "L1StandardBridge",
+      "name": "AddressManager",
       "values": {
-        "l2TokenBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "messenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MESSENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OTHER_BRIDGE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "otherBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "superchainConfig": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
+        "owner": {
           "description": null,
           "severity": null,
           "type": null
@@ -252,16 +122,6 @@
       }
     },
     {
-      "name": "AddressManager",
-      "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "L1ERC721Bridge",
       "values": {
         "messenger": {
@@ -295,6 +155,146 @@
           "type": null
         },
         "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1StandardBridge",
+      "values": {
+        "l2TokenBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MESSENGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OTHER_BRIDGE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "otherBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "superchainConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L2OutputOracle",
+      "values": {
+        "challenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "CHALLENGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FINALIZATION_PERIOD_SECONDS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "finalizationPeriodSeconds": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L2_BLOCK_TIME": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2BlockTime": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestBlockNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestOutputIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nextBlockNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nextOutputIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proposer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROPOSER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "startingBlockNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "startingTimestamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SUBMISSION_INTERVAL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "submissionInterval": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "deletedOutputs": {
           "description": null,
           "severity": null,
           "type": null
@@ -452,71 +452,6 @@
       }
     },
     {
-      "name": "FraxtalMultisig",
-      "values": {
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "SuperchainConfig",
-      "values": {
-        "guardian": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "GUARDIAN_SLOT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PAUSED_SLOT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "frxETHMinter",
       "values": {
         "currentWithheldETH": {
@@ -587,6 +522,71 @@
       }
     },
     {
+      "name": "SuperchainConfig",
+      "values": {
+        "guardian": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "GUARDIAN_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAUSED_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "FraxtalMultisig",
+      "values": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "frxETH",
       "values": {
         "decimals": {
@@ -630,6 +630,21 @@
           "type": null
         },
         "minters_array": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "DepositContract",
+      "values": {
+        "get_deposit_count": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "get_deposit_root": {
           "description": null,
           "severity": null,
           "type": null
@@ -765,21 +780,6 @@
           "type": null
         },
         "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "DepositContract",
-      "values": {
-        "get_deposit_count": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "get_deposit_root": {
           "description": null,
           "severity": null,
           "type": null
