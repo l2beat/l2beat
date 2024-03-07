@@ -13,7 +13,7 @@ export interface TotalCellProps {
 export function TotalCell({ project }: TotalCellProps) {
   const content = (
     <>
-      <NumberCell className="font-bold" tooltip={project.tvlTooltip}>
+      <NumberCell className="font-bold" tooltip={project.tvlWarning ? undefined : project.tvlTooltip}>
         {project.tvl?.displayValue}
       </NumberCell>
       <NumberCell signed className="ml-1 w-[72px] !text-base font-medium">
