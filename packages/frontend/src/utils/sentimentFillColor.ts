@@ -1,4 +1,4 @@
-export function getSentimentColor(severity: 'warning' | 'bad') {
+export function getSentimentFillColor(severity: 'warning' | 'bad') {
   switch (severity) {
     case 'warning':
       return 'fill-yellow-700 dark:fill-yellow-300'
