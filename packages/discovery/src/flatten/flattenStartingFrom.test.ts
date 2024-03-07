@@ -10,11 +10,20 @@ import {
 
 describe(flattenStartingFrom.name, () => {
   const DUMMY_AST_NODE = {}
-  const LIBRARY_SOURCE = 'library Contract2 { function lf() public {} }'
-  const BASE_SOURCE = 'contract Contract3 { function bcf() public {} }'
+  const LIBRARY_SOURCE =
+    'library Contract2\r\n{\r\n function lf() public {}\r\n }'
+  const BASE_SOURCE =
+    'contract Contract3\r\n{\r\n function bcf() public {}\r\n }'
   const ROOT_SOURCE =
-    'contract Contract1 is Contract3 { function cf() public { Contract2.lf(); this.bcf(); } }'
+    'contract Contract1 is Contract3\r\n {\r\n function cf() public {\r\n Contract2.lf(); this.bcf();\r\n }\r\n }'
   const ROOT_FILE_SOURCE = `${LIBRARY_SOURCE}${BASE_SOURCE}${ROOT_SOURCE}`
+
+  const LIBRARY_SOURCE_UNIX =
+    'library Contract2\n{\n function lf() public {}\n }'
+  const BASE_SOURCE_UNIX =
+    'contract Contract3\n{\n function bcf() public {}\n }'
+  const ROOT_SOURCE_UNIX =
+    'contract Contract1 is Contract3\n {\n function cf() public {\n Contract2.lf(); this.bcf();\n }\n }'
 
   const LIBRARY_CONTRACT: ContractDeclaration = {
     name: 'Contract2',
@@ -92,7 +101,7 @@ describe(flattenStartingFrom.name, () => {
     const result = flattenStartingFrom(rootContractName, parsedFileManager)
 
     expect(result).toEqual(
-      [LIBRARY_SOURCE, BASE_SOURCE, ROOT_SOURCE].join('\n\n'),
+      [LIBRARY_SOURCE_UNIX, BASE_SOURCE_UNIX, ROOT_SOURCE_UNIX].join('\n\n'),
     )
   })
 

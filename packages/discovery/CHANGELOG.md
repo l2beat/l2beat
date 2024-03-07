@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.44.3
+
+### Patch Changes
+
+- Flattening results always have unix line encodings
+
 ## 0.44.2
 
 ### Patch Changes

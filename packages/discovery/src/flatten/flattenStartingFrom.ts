@@ -49,11 +49,15 @@ export function flattenStartingFrom(
     stack.push(...getStackEntries(foundContract))
   }
 
-  return flatSource.trimEnd()
+  return changeLineEndingsToUnix(flatSource.trimEnd())
 }
 
 function formatSource(source: string, byteRange: ByteRange): string {
   return source.slice(byteRange.start, byteRange.end + 1) + '\n\n'
+}
+
+function changeLineEndingsToUnix(source: string): string {
+  return source.replace(/\r\n/g, '\n')
 }
 
 function getUniqueContractId(entry: ContractFilePair): string {
