@@ -1,3 +1,52 @@
+Generated with discovered.json: 0xc776573184b74c22a61dc03318859dd4c0928cea
+
+# Diff at Thu, 07 Mar 2024 15:46:08 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@b0c42602239073a6821d73af2ad55522306d8622 block: 19374912
+- current block number: 19384276
+
+## Description
+
+Ignored nonces, totalSupply and deposit count/root methods.
+
+## Watched changes
+
+```diff
+    contract frxETHMultisig (0x8306300ffd616049FD7e4b0354a64Da835c1A81C) {
+    +++ description: None
+      values.getOwners.0:
+-        "0xf4E1d185666a624099298FcC42C50ba662DC7e52"
++        "0xcbc616D595D38483e6AdC45C7E426f44bF230928"
+    }
+```
+
+```diff
+    contract TimelockMultisig (0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27) {
+    +++ description: None
+      values.getOwners.1:
+-        "0xf4E1d185666a624099298FcC42C50ba662DC7e52"
++        "0xcbc616D595D38483e6AdC45C7E426f44bF230928"
+    }
+```
+
+```diff
+    contract frxETHMinter (0xbAFA44EFE7901E04E39Dad13167D089C559c1138) {
+    +++ description: None
+      values.numValidators:
+-        212
++        211
+    }
+```
+
+```diff
+    contract FraxtalMultisig (0xe0d7755252873c4eF5788f7f45764E0e17610508) {
+    +++ description: None
+      values.getOwners[5]:
+-        "0xE7c147CD1A7c05a6e73217645547582024E87a9B"
+    }
+```
+
 Generated with discovered.json: 0xa0e7c3cc5c7b0345b997f268444feac8ada39a1b
 
 # Diff at Wed, 06 Mar 2024 08:24:18 GMT:
