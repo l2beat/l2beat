@@ -37,6 +37,7 @@ export const blast: Layer2 = opStack({
       repositories: [],
       socialMedia: ['https://twitter.com/Blast_L2'],
     },
+    activityDataSource: 'Blockchain RPC',
     liveness: {
       warnings: {
         stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
@@ -49,6 +50,10 @@ export const blast: Layer2 = opStack({
     },
     finality: {
       finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
+    },
+    tvlWarning: {
+      content: 'The TVL does account for rehypothecated tokens.',
+      sentiment: 'bad',
     },
   },
   upgradeability,

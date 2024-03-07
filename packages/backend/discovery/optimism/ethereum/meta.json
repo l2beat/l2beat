@@ -2,7 +2,177 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "KromaPortal",
+      "name": "StateCommitmentChain",
+      "values": {
+        "batches": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FRAUD_PROOF_WINDOW": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLastSequencerTimestamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalBatches": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalElements": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "libAddressManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SEQUENCER_PUBLISH_WINDOW": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CanonicalTransactionChain",
+      "values": {
+        "batches": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "enqueueGasCost": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "enqueueL2GasPrepaid": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLastBlockNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLastTimestamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getNextQueueIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getNumPendingQueueElements": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getQueueLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalBatches": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalElements": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2GasDiscountDivisor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "libAddressManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_ROLLUP_TX_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxTransactionGasLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_ROLLUP_TX_GAS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SynthetixBridgeEscrow",
+      "values": {
+        "nominatedOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1DAITokenBridge",
+      "values": {
+        "escrow": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isOpen": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1Token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2DAITokenBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2Token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OptimismPortal",
       "values": {
         "GUARDIAN": {
           "description": null,
@@ -25,8 +195,8 @@
           "type": null
         },
         "paused": {
-          "description": null,
-          "severity": null,
+          "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused.",
+          "severity": "HIGH",
           "type": null
         },
         "SYSTEM_CONFIG": {
@@ -34,36 +204,6 @@
           "severity": null,
           "type": null
         },
-        "VALIDATOR_POOL": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "ZK_MERKLE_TRIE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L1StandardBridge",
-      "values": {
-        "MESSENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OTHER_BRIDGE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "version": {
           "description": null,
           "severity": null,
@@ -72,19 +212,104 @@
       }
     },
     {
-      "name": "L1ERC721Bridge",
+      "name": "AddressManager",
       "values": {
-        "MESSENGER": {
+        "owner": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "OTHER_BRIDGE": {
+        "BondManager": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "version": {
+        "OVM_BondManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OVM_CanonicalTransactionChain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OVM_ChainStorageContainer_CTC_batches": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OVM_ChainStorageContainer_CTC_queue": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OVM_ChainStorageContainer_SCC_batches": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OVM_DecompressionPrecompileAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OVM_ExecutionManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OVM_FraudVerifier": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OVM_L1MultiMessageRelayer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OVM_L2CrossDomainMessenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OVM_Proposer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OVM_SafetyChecker": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OVM_Sequencer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OVM_StateCommitmentChain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OVM_StateManagerFactory": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OVM_StateTransitionerFactory": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "Proxy__OVM_L1CrossDomainMessenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "Proxy__OVM_L1StandardBridge": {
           "description": null,
           "severity": null,
           "type": null
@@ -92,84 +317,138 @@
       }
     },
     {
-      "name": "UpgradeGovernor",
+      "name": "wstETHEscrow",
       "values": {
-        "BALLOT_TYPEHASH": {
+        "DEFAULT_ADMIN_ROLE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "clock": {
+        "DEPOSITS_DISABLER_ROLE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "CLOCK_MODE": {
+        "DEPOSITS_ENABLER_ROLE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "COUNTING_MODE": {
+        "isDepositsEnabled": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "eip712Domain": {
+        "isInitialized": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "EXTENDED_BALLOT_TYPEHASH": {
+        "isWithdrawalsEnabled": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "name": {
+        "l1Token": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "proposalThreshold": {
+        "l2Token": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "quorumDenominator": {
+        "l2TokenBridge": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "quorumNumerator": {
+        "messenger": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "timelock": {
+        "proxy__getAdmin": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "token": {
+        "proxy__getImplementation": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "version": {
+        "proxy__getIsOssified": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "votingDelay": {
+        "WITHDRAWALS_DISABLER_ROLE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "votingPeriod": {
+        "WITHDRAWALS_ENABLER_ROLE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "state": {
+        "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1Escrow",
+      "values": {}
+    },
+    {
+      "name": "SCCStorageContainerBatches_OLD",
+      "values": {
+        "getGlobalMetadata": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "length": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "libAddressManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SCCStorageContainerBatches",
+      "values": {
+        "getGlobalMetadata": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "length": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "libAddressManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
           "description": null,
           "severity": null,
           "type": null
@@ -179,6 +458,16 @@
     {
       "name": "ProxyAdmin",
       "values": {
+        "addressManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isUpgrading": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "owner": {
           "description": null,
           "severity": null,
@@ -187,24 +476,84 @@
       }
     },
     {
-      "name": "SecurityCouncil",
+      "name": "SynthetixMultisig",
       "values": {
-        "COLOSSEUM": {
-          "description": "Contract used to challenge state roots and prove fraud.",
-          "severity": "HIGH",
-          "type": "STRUCTURE"
-        },
-        "GOVERNOR": {
+        "domainSeparator": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "quorum": {
+        "getChainId": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "transactionCount": {
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CTCStorageContainerBatches",
+      "values": {
+        "getGlobalMetadata": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "length": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "libAddressManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1StandardBridge",
+      "values": {
+        "l2TokenBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MESSENGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OTHER_BRIDGE": {
           "description": null,
           "severity": null,
           "type": null
@@ -217,74 +566,39 @@
       }
     },
     {
-      "name": "L2OutputOracle",
+      "name": "FoundationMultisig_2",
       "values": {
-        "COLOSSEUM": {
-          "description": "Contract used to challenge state roots and prove fraud.",
-          "severity": "HIGH",
-          "type": "STRUCTURE"
-        },
-        "FINALIZATION_PERIOD_SECONDS": {
+        "domainSeparator": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "L2_BLOCK_TIME": {
+        "getModules": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "latestBlockNumber": {
+        "getOwners": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "latestOutputIndex": {
+        "getThreshold": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "nextBlockNumber": {
+        "NAME": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "nextOutputIndex": {
+        "nonce": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "startingBlockNumber": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "startingTimestamp": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "SUBMISSION_INTERVAL": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VALIDATOR_POOL": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ZKMerkleTrie",
-      "values": {
-        "POSEIDON2": {
+        "VERSION": {
           "description": null,
           "severity": null,
           "type": null
@@ -324,11 +638,6 @@
           "severity": null,
           "type": null
         },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "PORTAL": {
           "description": null,
           "severity": null,
@@ -362,34 +671,59 @@
       }
     },
     {
-      "name": "Timelock",
+      "name": "L2OutputOracle",
       "values": {
-        "CANCELLER_ROLE": {
+        "CHALLENGER": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "DEFAULT_ADMIN_ROLE": {
+        "FINALIZATION_PERIOD_SECONDS": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "EXECUTOR_ROLE": {
+        "L2_BLOCK_TIME": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getMinDelay": {
+        "latestBlockNumber": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "PROPOSER_ROLE": {
+        "latestOutputIndex": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "TIMELOCK_ADMIN_ROLE": {
+        "nextBlockNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nextOutputIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROPOSER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "startingBlockNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "startingTimestamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SUBMISSION_INTERVAL": {
           "description": null,
           "severity": null,
           "type": null
@@ -399,167 +733,12 @@
           "severity": null,
           "type": null
         },
-        "accessControl": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "SecurityCouncilToken",
-      "values": {
-        "clock": {
+        "computeL2Timestamp": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "CLOCK_MODE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DOMAIN_SEPARATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "eip712Domain": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "name": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "symbol": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalSupply": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getApproved": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "locked": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "ownerOf": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "tokens": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "tokenURI": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "tokenOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ValidatorPool",
-      "values": {
-        "L2_ORACLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MAX_UNBOND": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nextValidator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PORTAL": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "REQUIRED_BOND_AMOUNT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "ROUND_DURATION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "SECURITY_COUNCIL": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "TAX_DENOMINATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "TAX_NUMERATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "TRUSTED_VALIDATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "validatorCount": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VAULT_REWARD_GAS_LIMIT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "validators": {
+        "deletedOutputs": {
           "description": null,
           "severity": null,
           "type": null
@@ -609,11 +788,6 @@
           "severity": null,
           "type": null
         },
-        "validatorRewardScalar": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "version": {
           "description": null,
           "severity": null,
@@ -642,78 +816,139 @@
       }
     },
     {
-      "name": "Colosseum",
+      "name": "GnosisSafe",
       "values": {
-        "BISECTION_TIMEOUT": {
+        "domainSeparator": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "CREATION_PERIOD_SECONDS": {
+        "getChainId": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "DUMMY_HASH": {
+        "getOwners": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "L2_ORACLE": {
+        "getThreshold": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "L2_ORACLE_SUBMISSION_INTERVAL": {
+        "nonce": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "MAX_TXS": {
+        "VERSION": {
           "description": null,
           "severity": null,
-          "type": null
-        },
-        "PROVING_TIMEOUT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "SECURITY_COUNCIL": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "ZK_MERKLE_TRIE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "ZK_VERIFIER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "challengedRoots": {
-          "description": "State roots that have been challenged by the validators. Challenges are created when, according to the validators, the roots commit to an incorrect L2 state.",
-          "severity": "LOW",
           "type": null
         }
       }
     },
     {
-      "name": "Poseidon2",
-      "values": {}
+      "name": "ProxyAdminOwner",
+      "values": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
     },
     {
-      "name": "ZKVerifier",
+      "name": "FoundationMultisig_1",
       "values": {
-        "version": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SecurityCouncilMultisig",
+      "values": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
           "description": null,
           "severity": null,
           "type": null
