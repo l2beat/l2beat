@@ -15,7 +15,7 @@ export const sygma: Bridge = {
     slug: 'sygma',
     category: 'Hybrid',
     description:
-      'Sygma is a modular, open-source, cross-consensus interoperability protocol enabling asset transfers, non-fungible tokens, and decentralized finance. With Sygma, developers can easily extend their applications across Ethereum mainnet, Base, Cronos, Polygon, Gnosis, Polkadot, Kusama, and other Substrate-based chains with active work on Bitcoin and Cosmos SDK interoperability.',
+      'Sygma is a modular, open-source, cross-consensus interoperability protocol enabling asset transfers, non-fungible tokens, and cross-chain execution. With Sygma, developers can easily extend their applications across Ethereum mainnet, Base, Cronos, Polygon, Gnosis, Polkadot, Kusama, and other Substrate-based chains with active work on Bitcoin and Cosmos SDK interoperability.',
     detailedDescription: 
       `Sygma seeks to solve interoperability challenges via innovations in dynamic cross-chain message routing and Zero-knowledge (Spectre) and Optimistic (Zipline) co-processing capabilities. The system is designed to automatically take a user's context into account, selecting the most optimal combination of verification systems and tailoring its security path, abstracting even the most arduous cross-chain complexities.`,
     links: {
