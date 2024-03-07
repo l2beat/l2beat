@@ -130,7 +130,7 @@ export const polygonzkevm: Layer2 = {
     },
     tvlWarning: {
       content: "The TVL is currently shared among all projects using the shared Polygon CDK contracts.",
-      severity: "yellow"
+      sentiment: "warning"
     }
   },
   config: {

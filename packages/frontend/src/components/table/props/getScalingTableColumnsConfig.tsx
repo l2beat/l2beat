@@ -15,22 +15,17 @@ import { ScalingTvlViewEntry } from '../../../pages/scaling/tvl/types'
 import { formatLargeNumber } from '../../../utils'
 import { cn } from '../../../utils/cn'
 import { formatTps } from '../../../utils/formatTps'
-import { getWarningColor } from '../../../utils/warningColor'
 import { AnomalyIndicator } from '../../AnomalyIndicator'
 import { Badge } from '../../badge/Badge'
-import {
-  CanonicalIcon,
-  ExternalIcon,
-  InfoIcon,
-  NativeIcon,
-  RoundedWarningIcon,
-} from '../../icons'
+import { CanonicalIcon, ExternalIcon, InfoIcon, NativeIcon } from '../../icons'
 import { StageCell } from '../../stages/StageCell'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/Tooltip'
 import { FinalityDurationCell } from '../FinalityDurationCell'
 import { NumberCell } from '../NumberCell'
 import { RiskCell } from '../RiskCell'
 import { RosetteCell } from '../RosetteCell'
+import { TotalCell } from '../TotalCell'
+import { TotalValue } from '../TotalValue'
 import { TypeCell, TypeColumnTooltip } from '../TypeCell'
 import { ColumnConfig } from '../types'
 import { ValueWithPercentageCell } from '../ValueWithPercentageCell'
@@ -88,33 +83,7 @@ export function getActiveScalingSummaryColumnsConfig() {
       align: 'right',
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
-      getValue: (project) =>
-        project.tvlWarning !== undefined ? (
-          <Tooltip>
-            <TooltipTrigger className="relative flex items-center gap-1">
-              <NumberCell className="font-bold">
-                {project.tvl?.displayValue}
-              </NumberCell>
-              <NumberCell signed className="w-[72px] !text-base  font-medium">
-                {project.sevenDayChange}
-              </NumberCell>
-
-              <RoundedWarningIcon
-                className={`absolute -right-4 size-4 ${getWarningColor(project.tvlWarning.severity)}`}
-              />
-            </TooltipTrigger>
-            <TooltipContent>{project.tvlWarning.content}</TooltipContent>
-          </Tooltip>
-        ) : (
-          <>
-            <NumberCell className="font-bold" tooltip={project.tvlTooltip}>
-              {project.tvl?.displayValue}
-            </NumberCell>
-            <NumberCell signed className="ml-1 w-[72px] !text-base font-medium">
-              {project.sevenDayChange}
-            </NumberCell>
-          </>
-        ),
+      getValue: (project) => <TotalCell project={project} />,
       sorting: {
         getOrderValue: (project) => project.tvl?.value,
         rule: 'numeric',
@@ -275,26 +244,7 @@ export function getScalingTvlColumnsConfig() {
           tooltip: 'Total = Canonical + External + Native',
           align: 'center',
           noPaddingRight: true,
-          getValue: (project) =>
-            project.tvlWarning !== undefined ? (
-              <Tooltip>
-                <TooltipTrigger className="relative flex items-center gap-1">
-                  <ValueWithPercentageCell
-                    value={project.tvl?.displayValue}
-                    percentChange={project.tvlChange}
-                  />
-                  <RoundedWarningIcon
-                    className={`absolute -right-5 size-5 pl-1 ${getWarningColor(project.tvlWarning.severity)}`}
-                  />
-                </TooltipTrigger>
-                <TooltipContent>{project.tvlWarning.content}</TooltipContent>
-              </Tooltip>
-            ) : (
-              <ValueWithPercentageCell
-                value={project.tvl?.displayValue}
-                percentChange={project.tvlChange}
-              />
-            ),
+          getValue: (project) => <TotalValue project={project} />,
           sorting: {
             getOrderValue: (project) =>
               project.tvl?.value !== 0 ? project.tvl?.value : undefined,

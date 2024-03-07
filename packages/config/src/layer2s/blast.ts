@@ -52,7 +52,7 @@ export const blast: Layer2 = opStack({
     },
     tvlWarning: {
       content: "The TVL does not account for rehypothecated tokens.",
-      severity: "red"
+      sentiment: "bad"
     }
   },
   upgradeability,
