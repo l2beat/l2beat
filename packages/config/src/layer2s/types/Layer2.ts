@@ -8,7 +8,6 @@ import {
   ScalingProjectContracts,
   ScalingProjectDisplay,
   ScalingProjectPermission,
-  Sentiment,
 } from '../../common'
 import { ChainConfig } from '../../common/ChainConfig'
 import { ScalingProjectRiskView } from '../../common/ScalingProjectRiskView'
@@ -96,5 +95,5 @@ export interface Layer2TVLWarning {
   /** Content of the warning */
   content: string
   /** Color with which the warning should be displayed */
-  sentiment: "bad" | "warning"
+  sentiment: 'bad' | 'warning'
 }
