@@ -127,15 +127,10 @@ describeDatabase(TrackedTxsConfigsRepository.name, (database) => {
         ...toRecord(toNewRow(TRACKED_TXS_CONFIGS[0])[0]),
         untilTimestamp: untilTimestamp,
       }
-      console.log('updatedRow', [
-        updatedRow,
-        ...entryToResult(TRACKED_TXS_CONFIGS.slice(1)),
-      ])
 
       await repository.setUntilTimestamp(newIds[0], untilTimestamp)
-
       const results = await repository.getAll()
-      console.log(results)
+
       expect(results).toEqualUnsorted([
         updatedRow,
         ...entryToResult(TRACKED_TXS_CONFIGS.slice(1)),

@@ -14,10 +14,12 @@ export async function up(knex: Knex) {
   await knex('liveness').delete()
   await knex('liveness_configuration').delete()
 
+  await dropForeign(knex, 'liveness', 'liveness_id')
   // CONFIGURATIONS
   await knex.schema.dropTable('liveness_configuration')
 
   await knex.schema.createTable('tracked_txs_configs', function (table) {
+    table.string('id').notNullable().primary()
     table.string('project_id').notNullable()
     table.string('type').notNullable()
     table.string('subtype')
@@ -25,15 +27,12 @@ export async function up(knex: Knex) {
     table.dateTime('since_timestamp', { useTz: false })
     table.dateTime('until_timestamp', { useTz: false })
     table.dateTime('last_synced_timestamp', { useTz: false })
-    table.string('id').notNullable()
 
     table.index('id')
   })
 
   // LIVENESS
   await knex.schema.alterTable('liveness', (table) => {
-    table.dropForeign(['liveness_id'])
-    table.dropPrimary()
     table.dropColumn('liveness_id')
     table.string('tracked_tx_id', 8).notNullable()
     table.index('tracked_tx_id')
@@ -84,5 +83,11 @@ async function addForeign(
       .inTable(foreignTable)
       .onDelete('CASCADE')
       .onUpdate('CASCADE')
+  })
+}
+
+async function dropForeign(knex: Knex, tableName: string, columnName: string) {
+  await knex.schema.alterTable(tableName, (table) => {
+    table.dropForeign([columnName])
   })
 }
