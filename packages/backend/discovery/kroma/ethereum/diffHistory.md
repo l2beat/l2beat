@@ -8,7 +8,7 @@ Generated with discovered.json: 0x66e7d57ef59143fb02afe041c6d98f4b33e448d9
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+One SC member is added and the threshold has been updated accordingly to be above 75%. The delay has been removed so the risk has been updated.
 
 ## Watched changes
 
