@@ -129,4 +129,5 @@ export const fraxtal: Layer2 = opStack({
     }),
   ],
   nonTemplateEscrows: [],
+  nonTemplateOptimismPortalEscrowTokens: ['frxETH'],
 })
