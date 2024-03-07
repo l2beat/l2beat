@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { opStack } from './templates/opStack'
@@ -6,12 +6,9 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('fraxtal')
 
-const timelockDelay = discovery.getContractValue<number>(
-  'Timelock',
-  'delay',
+const timelockDelay = formatSeconds(
+  discovery.getContractValue('Timelock', 'delay'),
 )
-
-const timelockDelayHours = timelockDelay / 3600
 
 const upgradeability = {
   upgradableBy: ['ProxyAdmin'],
@@ -128,8 +125,7 @@ export const fraxtal: Layer2 = opStack({
         'Vault token contract (ERC-4626) for staked frxETH. The smart contract receives frxETH tokens and mints sfrxETH tokens.',
     }),
     discovery.getContractDetails('Timelock', {
-      description:
-        `Allows for time-delayed execution of transactions in the FrxETH smart contract, such as adding and removing whitelisted minters. Delay is set to ${timelockDelayHours} hours.`,
+      description: `Allows for time-delayed execution of transactions in the FrxETH smart contract, such as adding and removing whitelisted minters. Delay is set to ${timelockDelay}.`,
     }),
   ],
   nonTemplateEscrows: [],
