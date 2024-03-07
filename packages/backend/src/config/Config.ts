@@ -7,6 +7,7 @@ import { Project } from '../model/Project'
 import { ActivityTransactionConfig } from '../modules/activity/ActivityTransactionConfig'
 import { MulticallConfigEntry } from '../peripherals/multicall/types'
 import { ResolvedFeatureFlag } from './FeatureFlags'
+import { FinalityProjectConfig } from './features/finality'
 
 export interface Config {
   readonly name: string
@@ -25,6 +26,7 @@ export interface Config {
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
   readonly diffHistory: DiffHistoryConfig | false
+  readonly lzOAppsEnabled: boolean
   readonly statusEnabled: boolean
   readonly chains: { name: string; chainId: ChainId }[]
   readonly flags: ResolvedFeatureFlag[]
@@ -82,9 +84,9 @@ export interface LivenessConfig {
 }
 
 export interface FinalityConfig {
-  readonly indexerEnabled: boolean
   readonly ethereumProviderUrl: string
   readonly ethereumProviderCallsPerMinute: number
+  readonly configurations: FinalityProjectConfig[]
 }
 
 export interface BlockscoutChainConfig {

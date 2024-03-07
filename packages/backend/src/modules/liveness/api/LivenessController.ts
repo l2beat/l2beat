@@ -12,7 +12,7 @@ import { IndexerStateRepository } from '../../../peripherals/database/repositori
 import { Clock } from '../../../tools/Clock'
 import { TaskQueue } from '../../../tools/queue/TaskQueue'
 import { LivenessRepository } from '../repositories/LivenessRepository'
-import { calculateAnomaliesPerProject } from './calculateAnomalies'
+import { calculateAnomalies } from './calculateAnomalies'
 import {
   calcIntervalWithAvgsPerProject,
   LivenessRecordWithInterval,
@@ -105,6 +105,11 @@ export class LivenessController {
       if (project.livenessConfig === undefined) {
         continue
       }
+
+      const isSynced = project.livenessConfig.entries.some(
+        (e) => !e.untilTimestamp || e.untilTimestamp.gt(UnixTime.now()),
+      )
+
       const records =
         await this.livenessRepository.getWithTypeDistinctTimestamp(
           project.projectId,
@@ -114,9 +119,9 @@ export class LivenessController {
 
       const intervals = calcIntervalWithAvgsPerProject(groupedByType)
 
-      const withAnomalies = calculateAnomaliesPerProject(intervals)
+      const withAnomalies = calculateAnomalies(intervals)
 
-      if (withAnomalies && project.livenessConfig.duplicateData) {
+      if (project.livenessConfig.duplicateData) {
         for (const duplicateData of project.livenessConfig.duplicateData) {
           withAnomalies[duplicateData.to] = {
             ...withAnomalies[duplicateData.from],
@@ -124,7 +129,10 @@ export class LivenessController {
         }
       }
 
-      projects[project.projectId.toString()] = withAnomalies
+      projects[project.projectId.toString()] = {
+        ...withAnomalies,
+        isSynced,
+      }
     }
 
     return { type: 'success', data: { projects } }

@@ -1,5 +1,5 @@
 {
-  "$schema": "../../config.schema.json",
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
   "chain": "celo",
   "name": "opticsV2",
   "initialAddresses": ["0xd13aC1024d266B73180cA7445Ca0E78b3Acfe8CE"],

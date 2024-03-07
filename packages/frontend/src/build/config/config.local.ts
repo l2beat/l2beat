@@ -11,9 +11,9 @@ export function getLocalConfig(): Config {
       activity: useMock,
       liveness: useMock,
       finality: useMock,
-      diffHistory: true,
+      // There is no need to run it locally by default
+      diffHistory: false,
       buildAllProjectPages: true,
-      governancePage: true,
     },
     backend: {
       apiUrl: 'http://localhost:3000',

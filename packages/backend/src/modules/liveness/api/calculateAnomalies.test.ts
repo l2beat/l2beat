@@ -12,28 +12,27 @@ describe(calculateAnomalies.name, () => {
     ]
 
     const result = calculateAnomalies({
-      project1: {
-        batchSubmissions: {
-          records: RECORDS,
-          last30Days: undefined,
-          last90Days: undefined,
-          allTime: undefined,
-        },
-        stateUpdates: {
-          records: [],
-          last30Days: undefined,
-          last90Days: undefined,
-          allTime: undefined,
-        },
-        proofSubmissions: {
-          records: [],
-          last30Days: undefined,
-          last90Days: undefined,
-          allTime: undefined,
-        },
+      batchSubmissions: {
+        records: RECORDS,
+        last30Days: undefined,
+        last90Days: undefined,
+        allTime: undefined,
+      },
+      stateUpdates: {
+        records: [],
+        last30Days: undefined,
+        last90Days: undefined,
+        allTime: undefined,
+      },
+      proofSubmissions: {
+        records: [],
+        last30Days: undefined,
+        last90Days: undefined,
+        allTime: undefined,
       },
     })
-    expect(result.projects.project1?.anomalies).toEqual([
+
+    expect(result.anomalies).toEqual([
       {
         timestamp: ANOMALY_RECORD.timestamp,
         durationInSeconds: ANOMALY_RECORD.previousRecordInterval,

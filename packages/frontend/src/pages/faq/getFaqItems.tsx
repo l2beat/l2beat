@@ -267,7 +267,7 @@ export function getFaqItems(): FaqItem[] {
           </p>
           <p className="mt-4">
             For more details see the{' '}
-            <Link href="https://vitalik.ca/general/2021/01/05/rollup.html">
+            <Link href="https://vitalik.eth.limo/general/2021/01/05/rollup.html">
               Incomplete guide to Rollups
             </Link>{' '}
             by Vitalik Buterin.

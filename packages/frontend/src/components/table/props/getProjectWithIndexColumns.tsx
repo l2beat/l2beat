@@ -16,6 +16,7 @@ const stickyColumnBackgroundClasses = cn(
 )
 
 export function getProjectWithIndexColumns(opts?: {
+  isSynced?: boolean
   indexAsDefaultSort: boolean
 }): ColumnConfig<ScalingEntry | BridgesEntry>[] {
   const columns: ColumnConfig<ScalingEntry | BridgesEntry>[] = [

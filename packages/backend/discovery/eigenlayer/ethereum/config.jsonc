@@ -1,5 +1,5 @@
 {
-  "$schema": "../../config.schema.json",
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
   "chain": "ethereum",
   "name": "eigenlayer",
   "initialAddresses": ["0x858646372CC42E1A627fcE94aa7A7033e7CF075A"],

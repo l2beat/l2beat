@@ -1,10 +1,5 @@
 import { ContractParameters } from '@l2beat/discovery-types'
-import {
-  assertUnreachable,
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -36,7 +31,17 @@ import {
   Layer2TransactionApi,
 } from '../types'
 
-type DAProvider = 'Celestia'
+export const CELESTIA_DA_PROVIDER: DAProvider = {
+  name: 'Celestia',
+  riskView: RISK_VIEW.DATA_CELESTIA(false),
+  technology: DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(false),
+}
+
+export interface DAProvider {
+  name: string
+  riskView: ScalingProjectRiskViewEntry
+  technology: ScalingProjectTechnologyChoice
+}
 
 export interface OpStackConfig {
   daProvider?: DAProvider
@@ -423,25 +428,11 @@ function safeGetImplementation(contract: ContractParameters): string {
 }
 
 function riskViewDA(DA: DAProvider | undefined): ScalingProjectRiskViewEntry {
-  switch (DA) {
-    case 'Celestia':
-      return RISK_VIEW.DATA_CELESTIA(false)
-    case undefined:
-      return RISK_VIEW.DATA_ON_CHAIN
-    default:
-      assertUnreachable(DA)
-  }
+  return DA === undefined ? RISK_VIEW.DATA_ON_CHAIN : DA.riskView
 }
 
 function technologyDA(
   DA: DAProvider | undefined,
 ): ScalingProjectTechnologyChoice {
-  switch (DA) {
-    case 'Celestia':
-      return DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(false)
-    case undefined:
-      return DATA_AVAILABILITY.ON_CHAIN
-    default:
-      assertUnreachable(DA)
-  }
+  return DA === undefined ? DATA_AVAILABILITY.ON_CHAIN : DA.technology
 }

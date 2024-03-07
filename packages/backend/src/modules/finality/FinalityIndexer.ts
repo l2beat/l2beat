@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
-import { assert, UnixTime } from '@l2beat/shared-pure'
-import { ChildIndexer } from '@l2beat/uif'
+import { UnixTime } from '@l2beat/shared-pure'
+import { ChildIndexer, Retries } from '@l2beat/uif'
+import { mean } from 'lodash'
 
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
 import { LivenessIndexer } from '../liveness/LivenessIndexer'
@@ -9,7 +10,6 @@ import {
   FinalityRepository,
 } from './repositories/FinalityRepository'
 import { FinalityConfig } from './types/FinalityConfig'
-import { findConfigurationsToSync } from './utils/findConfigurationsToSync'
 
 /*
   Once per day we want to fetch finality data for each project for last 24h, with granularity of 10 minutes,
@@ -17,21 +17,25 @@ import { findConfigurationsToSync } from './utils/findConfigurationsToSync'
 */
 const FINALITY_GRANULARITY = 24 * 6
 
+const UPDATE_RETRY_STRATEGY = Retries.exponentialBackOff({
+  maxAttempts: 10,
+  initialTimeoutMs: 1000,
+})
+
 export class FinalityIndexer extends ChildIndexer {
-  readonly indexerId = 'finality_indexer'
-  // Indexer need to have a minimum timestamp to start from, we set it to the date when the indexer was created
-  readonly minTimestamp = UnixTime.fromDate(
-    new Date('2024-02-07T00:00:00.000Z'),
-  )
+  readonly indexerId
 
   constructor(
     logger: Logger,
     parentIndexer: LivenessIndexer,
     private readonly stateRepository: IndexerStateRepository,
     private readonly finalityRepository: FinalityRepository,
-    private readonly runtimeConfigurations: FinalityConfig[],
+    private readonly configuration: FinalityConfig,
   ) {
-    super(logger, [parentIndexer])
+    super(logger.tag(configuration.projectId.toString()), [parentIndexer], {
+      updateRetryStrategy: UPDATE_RETRY_STRATEGY,
+    })
+    this.indexerId = `finality_indexer_${configuration.projectId.toString()}`
   }
 
   override async start(): Promise<void> {
@@ -41,89 +45,72 @@ export class FinalityIndexer extends ChildIndexer {
   }
 
   override async update(from: number, to: number): Promise<number> {
-    const targetTo = new UnixTime(from)
-      .toStartOf('day')
-      .add(1, 'days')
-      .toNumber()
+    const targetTimestamp = new UnixTime(to).toStartOf('day')
 
-    if (targetTo < this.minTimestamp.toNumber()) {
+    if (to < this.configuration.minTimestamp.toNumber()) {
       this.logger.debug('Update skipped: target earlier than minimumTimestamp')
-      return Math.min(this.minTimestamp.toNumber(), to)
-    }
-
-    if (targetTo > to) {
-      this.logger.debug('Update skipped: not full day')
       return to
     }
 
-    const targetTimestamp = new UnixTime(targetTo)
-
-    const configurationsToSync = await this.getSyncStatus(targetTimestamp)
-
-    if (configurationsToSync.length === 0) {
-      this.logger.debug('Update skipped: no configurations to sync', {
+    const isSynced = await this.isConfigurationSynced(targetTimestamp)
+    if (isSynced) {
+      this.logger.debug('Update skipped: configuration already synced', {
         from,
-        to: targetTo,
+        to,
+        targetTimestamp,
       })
-      return targetTimestamp.toNumber()
+      return to
     }
 
     const finalityData = await this.getFinalityData(
       targetTimestamp,
-      configurationsToSync,
+      this.configuration,
     )
 
-    await this.finalityRepository.addMany(finalityData)
+    if (finalityData) {
+      await this.finalityRepository.add(finalityData)
+    }
 
     this.logger.info('Update finished', {
       from,
-      to: targetTimestamp,
+      to,
       targetTimestamp,
-      projects: configurationsToSync.map((c) => c.projectId.toString()),
+      finalityData,
     })
-    return targetTimestamp.toNumber()
+
+    return to
   }
 
-  async getSyncStatus(targetTimestamp: UnixTime) {
-    const syncedProjectsForLastDay =
-      await this.finalityRepository.getProjectsSyncedOnTimestamp(
-        targetTimestamp,
-      )
-
-    const configurationsToSyncForLastDay = findConfigurationsToSync(
-      this.runtimeConfigurations,
-      syncedProjectsForLastDay,
+  async isConfigurationSynced(targetTimestamp: UnixTime) {
+    const latestSynced = await this.finalityRepository.findLatestByProjectId(
+      this.configuration.projectId,
     )
 
-    return configurationsToSyncForLastDay
+    return !!latestSynced?.timestamp.gte(targetTimestamp)
   }
 
   async getFinalityData(
     to: UnixTime,
-    configurations: FinalityConfig[],
-  ): Promise<FinalityRecord[]> {
+    configuration: FinalityConfig,
+  ): Promise<FinalityRecord | undefined> {
     const from = to.add(-1, 'days')
 
-    const data: FinalityRecord[] = []
+    const projectFinalityTimestamps =
+      await configuration.analyzer.getFinalityWithGranularity(
+        from,
+        to,
+        FINALITY_GRANULARITY,
+      )
 
-    for (const configuration of configurations) {
-      const projectFinalityData =
-        await configuration.analyzer.getFinalityWithGranularity(
-          from,
-          to,
-          FINALITY_GRANULARITY,
-        )
+    if (!projectFinalityTimestamps) return
 
-      if (projectFinalityData) {
-        data.push({
-          projectId: configuration.projectId,
-          timestamp: to,
-          ...projectFinalityData,
-        })
-      }
+    return {
+      projectId: configuration.projectId,
+      timestamp: to,
+      minimumTimeToInclusion: Math.min(...projectFinalityTimestamps),
+      maximumTimeToInclusion: Math.max(...projectFinalityTimestamps),
+      averageTimeToInclusion: Math.round(mean(projectFinalityTimestamps)),
     }
-
-    return data
   }
 
   private async initialize() {
@@ -131,7 +118,7 @@ export class FinalityIndexer extends ChildIndexer {
   }
 
   async initializeIndexerState() {
-    const safeHeight = this.minTimestamp.toNumber()
+    const safeHeight = this.configuration.minTimestamp.toNumber()
     const indexerState = await this.stateRepository.findIndexerState(
       this.indexerId,
     )
@@ -140,18 +127,10 @@ export class FinalityIndexer extends ChildIndexer {
       await this.stateRepository.add({
         indexerId: this.indexerId,
         safeHeight,
-        minTimestamp: this.minTimestamp,
+        minTimestamp: this.configuration.minTimestamp,
       })
       return
     }
-
-    // We prevent updating the minimum timestamp of the indexer.
-    // This functionality can be added in the future if needed.
-    assert(
-      indexerState.minTimestamp &&
-        this.minTimestamp.equals(indexerState.minTimestamp),
-      'Minimum timestamp of this indexer cannot be updated',
-    )
 
     await this.setSafeHeight(safeHeight)
   }
@@ -160,7 +139,9 @@ export class FinalityIndexer extends ChildIndexer {
     const indexerState = await this.stateRepository.findIndexerState(
       this.indexerId,
     )
-    return indexerState?.safeHeight ?? this.minTimestamp.toNumber()
+    return (
+      indexerState?.safeHeight ?? this.configuration.minTimestamp.toNumber()
+    )
   }
 
   override async setSafeHeight(safeHeight: number): Promise<void> {
@@ -169,7 +150,7 @@ export class FinalityIndexer extends ChildIndexer {
 
   /**
    * WARNING: this method does not do anything
-   * 
+   *
     In our case there is no re-org handling so we do not have to worry
     that our data will become invalid.
     Also there is no need to handle the case when the server is randomly shut down during update,

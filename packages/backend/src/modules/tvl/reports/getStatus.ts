@@ -1,6 +1,6 @@
-import { getHourlyTimestamps, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 
-import { StatusPoint } from '../../status/api/view/TvlStatusPage'
+import { StatusPoint } from '../api/status/TvlStatusPage'
 
 export function getStatus(
   updaterName: string,
@@ -9,33 +9,40 @@ export function getStatus(
   knownSet: Set<number>,
   minTimestamp?: UnixTime,
 ) {
-  const timestamps = getHourlyTimestamps(from, to).sort(
+  from = minTimestamp ? UnixTime.min(from, minTimestamp) : from
+  const timestamps = getRelevantTimestamps(from, to).sort(
     (a, b) => b.toNumber() - a.toNumber(),
   )
 
-  const statuses: StatusPoint[] = timestamps.map((timestamp) => {
-    if (minTimestamp && timestamp.toNumber() < minTimestamp.toNumber()) {
-      return {
-        timestamp,
-        status: 'notApplicable',
-      }
-    }
-
-    if (knownSet.has(timestamp.toNumber())) {
-      return {
-        timestamp,
-        status: 'synced',
-      }
-    }
-
-    return {
+  const statuses = timestamps.map(
+    (timestamp): StatusPoint => ({
       timestamp,
-      status: 'notSynced',
-    }
-  })
+      status: knownSet.has(timestamp.toNumber())
+        ? 'synced'
+        : minTimestamp && timestamp.lt(minTimestamp)
+        ? 'notApplicable'
+        : 'notSynced',
+    }),
+  )
 
-  return {
-    updaterName,
-    statuses: statuses,
+  return { updaterName, statuses: statuses }
+}
+
+const ONE_HOUR = 3600
+
+function getRelevantTimestamps(from: UnixTime, to: UnixTime) {
+  const timestamps = []
+  const hourlyCutoff = to.add(-7, 'days')
+  const sixHourlyCutoff = to.add(-90, 'days')
+  for (let i = from.toNumber(); i <= to.toNumber(); i += ONE_HOUR) {
+    const timestamp = new UnixTime(i)
+    if (
+      timestamp.isFull('day') ||
+      (timestamp.isFull('six hours') && timestamp.gte(sixHourlyCutoff)) ||
+      timestamp.gte(hourlyCutoff)
+    ) {
+      timestamps.push(timestamp)
+    }
   }
+  return timestamps
 }

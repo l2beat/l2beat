@@ -1,3 +1,66 @@
+Generated with discovered.json: 0x6aa238b93e1fb75daa84f0b1ea40a61326c2f152
+
+# Diff at Wed, 14 Feb 2024 10:08:14 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@6045526c8b7e15993de0acdd037b3ffbaa1bedda block: 18820326
+- current block number: 19225512
+
+## Description
+
+A new pool for mETH is added. The Default basis point multiplier of the Google Oracle is updated (related to fees). The latest version of the LayerZero Endpoint contract is updated:
+
+- Version 4: 0xd231084bfb234c107d3ee2b22f97f3346fdaf705 (SendUln301)
+- Version 5: 0x245b6e8ffe9ea5fc301e32d16f66bd4c2123eefc (ReceiveUln301)
+
+## Watched changes
+
+```diff
+    contract Factory (0x06D538690AF257Da524f25D0CD52fD85b1c2173E) {
+      values.allPools[12]:
++        "0xA572d137666DCbAdFA47C3fC41F15e90134C618c"
+      values.allPoolsLength:
+-        12
++        13
+    }
+```
+
+```diff
+    contract Endpoint (0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675) {
+      values.latestVersion:
+-        3
++        5
+    }
+```
+
+```diff
+    contract Google Cloud Oracle (0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc) {
+      values.defaultMultiplierBps:
+-        12000
++        12100
+    }
+```
+
+```diff
++   Status: CREATED
+    contract mETH Pool (0xA572d137666DCbAdFA47C3fC41F15e90134C618c) {
+    }
+```
+
+## Source code changes
+
+```diff
+.../@openzeppelin/contracts/access/Ownable.sol     |  68 +++
+ .../@openzeppelin/contracts/math/SafeMath.sol      | 214 +++++++
+ .../@openzeppelin/contracts/utils/Context.sol      |  24 +
+ .../contracts/utils/ReentrancyGuard.sol            |  62 ++
+ .../.code/mETH Pool/contracts/LPTokenERC20.sol     | 134 +++++
+ .../ethereum/.code/mETH Pool/contracts/Pool.sol    | 644 +++++++++++++++++++++
+ .../contracts/interfaces/IStargateFeeLibrary.sol   |  17 +
+ .../stargate/ethereum/.code/mETH Pool/meta.txt     |   2 +
+ 8 files changed, 1165 insertions(+)
+```
+
 Generated with discovered.json: 0x98cb3e3594feadbd9145ee754066d371eda0c119
 
 # Diff at Tue, 19 Dec 2023 13:36:06 GMT:

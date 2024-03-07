@@ -1,0 +1,575 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "USDC Vault",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Socket",
+      "values": {
+        "capacitorFactory__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainSlug": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "executionManager__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "globalMessageCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasher__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nominee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "transmitManager__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "inboundSwitchboards": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "outboundSwitchboards": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "plugs": {
+          "description": "Array of plug contract addresses",
+          "severity": "LOW",
+          "type": "STRUCTURE"
+        }
+      }
+    },
+    {
+      "name": "TransmitManager",
+      "values": {
+        "chainSlug": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nominee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "signatureVerifier__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "socket__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CapacitorFactory",
+      "values": {
+        "maxAllowedPacketLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minAllowedPacketLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nominee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Hasher",
+      "values": {
+        "nominee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ArbitrumL1Switchboard",
+      "values": {
+        "bridge__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "capacitor__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainSlug": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "inbox__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isGlobalTipped": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isInitialized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nominee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "outbox__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "remoteNativeSwitchboard": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "signatureVerifier__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "socket__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "switchboardFees": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "verificationOverheadFees": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "PolygonL1Switchboard",
+      "values": {
+        "capacitor__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainSlug": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "checkpointManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "fxChildTunnel": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "fxRoot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isGlobalTipped": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isInitialized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nominee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "remoteNativeSwitchboard": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SEND_MESSAGE_EVENT_SIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "signatureVerifier__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "socket__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "switchboardFees": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "verificationOverheadFees": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ExecutionManager",
+      "values": {
+        "chainSlug": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nominee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "signatureVerifier__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "socket__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OptimismSwitchboard",
+      "values": {
+        "capacitor__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainSlug": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "crossDomainMessenger__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isGlobalTipped": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isInitialized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nominee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "receiveGasLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "remoteNativeSwitchboard": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "signatureVerifier__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "socket__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "switchboardFees": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "verificationOverheadFees": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OptimismSwitchboard2",
+      "values": {
+        "capacitor__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainSlug": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "crossDomainMessenger__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isGlobalTipped": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isInitialized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nominee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "receiveGasLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "remoteNativeSwitchboard": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "signatureVerifier__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "socket__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "switchboardFees": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "verificationOverheadFees": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "USDCVaultOwner",
+      "values": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "FastSwitchboard",
+      "values": {
+        "chainSlug": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isGlobalTipped": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nominee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "signatureVerifier__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "socket__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "timeoutInSeconds": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SignatureVerifier",
+      "values": {
+        "nominee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}

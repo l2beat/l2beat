@@ -1,8 +1,8 @@
 {
   "name": "pNetwork",
   "chain": "ethereum",
-  "blockNumber": 19118450,
-  "configHash": "0xc12f151d384d4d14f3487d41f29326cbae9c990c180b055c38a6e6c17942d9b9",
+  "blockNumber": 19375664,
+  "configHash": "0x145d5c3bd9b7d36ccf9a046eaa61e534f7f19a26381ad046bed5f4b972fa6de1",
   "version": 3,
   "contracts": [
     {
@@ -55,7 +55,7 @@
         "proxyType": 2,
         "supportRequiredPct": "510000000000000000",
         "token": "0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E",
-        "votesLength": 35
+        "votesLength": 37
       },
       "derivedName": "DandelionVoting"
     },
@@ -290,7 +290,7 @@
         "parentToken": "0x0000000000000000000000000000000000000000",
         "symbol": "daoPNT",
         "tokenFactory": "0xA29EF584c389c67178aE9152aC9C543f9156E2B3",
-        "totalSupply": "8442070804266401825573160",
+        "totalSupply": "8130023513119641381588056",
         "transfersEnabled": false,
         "version": "MMT_0.1"
       },
@@ -307,17 +307,17 @@
       "implementations": ["0xd88a13c72443D069Fc0d44A4989AC8dd132Ac38b"],
       "sinceTimestamp": 1664208803,
       "values": {
-        "currentMonthNumber": 0,
-        "currentMonthWithdrawnAmount": "1100000000000000000000000",
+        "currentMonthNumber": 1,
+        "currentMonthWithdrawnAmount": "1260000000000000000000000",
         "currentYearNumber": 0,
-        "currentYearWithdrawnAmount": "1100000000000000000000000",
+        "currentYearWithdrawnAmount": "2360000000000000000000000",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0xdb94fb7fdbffd548b5e058fcd76cc73c6bfae4843b728c540043b00b4ff00049",
         "inflationOwner": "0x2211bFD97b1c02aE8Ac305d206e9780ba7D8BfF4",
         "isWhitelistingEnabled": true,
         "maxWithdrawableAmounts": [
-          "835504574192816912588654",
-          "18255045741928169125886545"
+          "675504574192816912588654",
+          "16995045741928169125886545"
         ],
         "monthlyRateCap": 200,
         "monthlyWithdrawableLimit": "1935504574192816912588654",
@@ -325,10 +325,11 @@
         "PNT_INIT_TOTAL_SUPPLY": "96775228709640845629432729",
         "RATE_DIVISOR": 10000,
         "symbol": "ethPNT",
-        "totalSupply": "9900000000000000000000000",
+        "totalSupply": "11160000000000000000000000",
         "yearlyRateCap": 2000,
         "yearlyWithdrawableLimit": "19355045741928169125886545"
-      }
+      },
+      "derivedName": "EthPntv2"
     },
     {
       "name": "ACL",

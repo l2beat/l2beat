@@ -1,7 +1,8 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
+import { subtractOne } from '../common/assessCount'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { opStack } from './templates/opStack'
+import { CELESTIA_DA_PROVIDER, opStack } from './templates/opStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('aevo')
@@ -12,7 +13,7 @@ const upgradeability = {
 }
 
 export const aevo: Layer2 = opStack({
-  daProvider: 'Celestia',
+  daProvider: CELESTIA_DA_PROVIDER,
   discovery,
   display: {
     name: 'Aevo',
@@ -54,6 +55,12 @@ export const aevo: Layer2 = opStack({
   l1StandardBridgeEscrow: EthereumAddress(
     '0x4082C9647c098a6493fb499EaE63b5ce3259c574',
   ),
+  transactionApi: {
+    type: 'rpc',
+    startBlock: 1,
+    defaultCallsPerMinute: 800,
+    assessCount: subtractOne,
+  },
   genesisTimestamp: new UnixTime(1679202395),
   l2OutputOracle: discovery.getContract('L2OutputOracle'),
   portal: discovery.getContract('OptimismPortal'),

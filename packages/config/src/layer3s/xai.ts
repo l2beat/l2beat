@@ -1,20 +1,10 @@
-import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 
-import { ScalingProjectPermissionedAccount } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 import { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('xai', 'arbitrum')
-
-const roles = discovery.getContractValue<{
-  EXECUTOR_ROLE: { members: string[] }
-}>('UpgradeExecutor', 'accessControl')
-
-const MultisigExecutor: ScalingProjectPermissionedAccount = {
-  address: EthereumAddress(roles.EXECUTOR_ROLE.members[0]),
-  type: 'MultiSig',
-}
 
 export const xai: Layer3 = orbitStackL3({
   discovery,
@@ -47,7 +37,10 @@ export const xai: Layer3 = orbitStackL3({
   nonTemplatePermissions: [
     {
       name: 'RollupOwner',
-      accounts: [MultisigExecutor],
+      accounts: discovery.getAccessControlRolePermission(
+        'UpgradeExecutor',
+        'EXECUTOR_ROLE',
+      ),
       description:
         'Multisig that can execute upgrades via the UpgradeExecutor.',
     },

@@ -1,5 +1,5 @@
 {
-  "$schema": "../../config.schema.json",
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
   "chain": "ethereum",
   "name": "stargate",
   "initialAddresses": ["0x8731d54E9D02c286767d56ac03e8037C07e01e98"],
@@ -24,7 +24,8 @@
     "0x9cef9a0b1bE0D289ac9f4a98ff317c33EAA84eb8": "MAI Pool",
     "0xd8772edBF88bBa2667ed011542343b0eDDaCDa47": "METIS Pool",
     "0x430Ebff5E3E80A6C58E7e6ADA1d90F5c28AA116d": "USDT Pool2",
-    "0x1CE66c52C36757Daf6551eDc04800A0Ec9983A09": "WOO Pool"
+    "0x1CE66c52C36757Daf6551eDc04800A0Ec9983A09": "WOO Pool",
+    "0xA572d137666DCbAdFA47C3fC41F15e90134C618c": "mETH Pool"
   },
   "overrides": {
     "Factory": {
@@ -321,6 +322,27 @@
       }
     },
     "DAI Pool": {
+      "ignoreRelatives": ["token"],
+      "ignoreMethods": ["amountLPtoLD", "DOMAIN_SEPARATOR", "PERMIT_TYPEHASH"],
+      "ignoreInWatchMode": [
+        "deltaCredit",
+        "eqFeePool",
+        "protocolFeeBalance",
+        "totalLiquidity",
+        "totalSupply",
+        "chainPaths",
+        "getChainPathsLength",
+        "totalWeight"
+      ],
+      "fields": {
+        "chainPaths": {
+          "type": "array",
+          "method": "chainPaths",
+          "length": "{{ getChainPathsLength }}"
+        }
+      }
+    },
+    "mETH Pool": {
       "ignoreRelatives": ["token"],
       "ignoreMethods": ["amountLPtoLD", "DOMAIN_SEPARATOR", "PERMIT_TYPEHASH"],
       "ignoreInWatchMode": [

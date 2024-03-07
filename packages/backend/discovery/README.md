@@ -29,7 +29,7 @@ A file `discovered.json` will appear in this folder, showing you this project's 
 
 **Parameters:**
 
-- `"$schema": "../../config.schema.json"`
+- `"$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json"`
 - `name` - name of the project
 - `initialAddresses: address[]` - array of addresses that discovery will start from. Discovery will download the contract ABI, read all the available values, and walk through all the contracts found there (`maxDepth` defaults to 7). By default, discovery checks only `view` or `constant` methods with no arguments or with exactly one argument of `uint256` (array). To check other functions you'll need to write custom handlers (see `overrides`). Sometimes the most central address is enough here, but in case of a more complex implementation, you will need to add more to cover all important contracts. Usually 3 addresses here is enough.
 - `names: Record<address, string>` - (optional) key-value object, with addresses as keys. It will allow you to override the name of the contract in discovery (ex. `Bridge` instead of `Bridge_v1`)
@@ -39,7 +39,7 @@ A file `discovered.json` will appear in this folder, showing you this project's 
 
 ```
 {
-  "$schema": "../../config.schema.json"
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json"
   name: "project_a",
   initialAddresses: ["0x1234", "0x5678"],
   names: {
@@ -241,6 +241,7 @@ The call handler allows you to call view methods with arguments of your choosing
 - `method` - (optional) the name or abi of the method to be called. If omitted the name of the field is used. The abi should be provided in the human readable abi format.
 - `args` - an array of values that will be passed as arguments to the method call, e.g. `[1, "0x1234", false]`. It supports field references, e.g. `"{{ value }}"`.
 - `ignoreRelative` - (optional) if set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.
+- `expectRevert` - a bool that specifies if the method is expected to revert. This is useful when the method currently reverts but is expected to be changed in the future.
 
 **Examples:**
 

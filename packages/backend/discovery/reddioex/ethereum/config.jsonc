@@ -1,5 +1,5 @@
 {
-  "$schema": "../../config.schema.json",
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
   "chain": "ethereum",
   "name": "reddioex",
   "initialAddresses": ["0xB62BcD40A24985f560b5a9745d478791d8F1945C"],
