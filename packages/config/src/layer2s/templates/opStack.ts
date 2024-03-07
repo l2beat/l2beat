@@ -65,6 +65,7 @@ export interface OpStackConfig {
   nonTemplatePermissions?: ScalingProjectPermission[]
   nonTemplateContracts?: ScalingProjectContract[]
   nonTemplateEscrows: ScalingProjectEscrow[]
+  nonTemplateOptimismPortalEscrowTokens?: string[]
   associatedTokens?: string[]
   isNodeAvailable: boolean | 'UnderReview'
   chainConfig?: ChainConfig
@@ -106,7 +107,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
       escrows: [
         templateVars.discovery.getEscrowDetails({
           address: templateVars.portal.address,
-          tokens: ['ETH'],
+          tokens: ['ETH', ...(templateVars.nonTemplateOptimismPortalEscrowTokens ?? [])],
           description: 'Main entry point for users depositing ETH.',
           ...templateVars.upgradeability,
         }),
