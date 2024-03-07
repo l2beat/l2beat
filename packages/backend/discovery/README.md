@@ -8,7 +8,7 @@
 - `yarn invert [chain] [project] --mermaid` builds a mermaid graph of the project
 - `yarn discover:single [chain] [address]` run a discovery on the address (no config needed, useful for experimenting)
 
-supported chains: checkout config.discovery.ts
+A list of currently supported chains is [here](https://github.com/l2beat/tools/blob/main/packages/discovery/src/config/chains.ts)
 
 # Discovery documentation
 
@@ -67,7 +67,7 @@ A file `discovered.json` will appear in this folder, showing you this project's 
 
 ## Overrides
 
-The most powerful feature in the discovery. It will allow:
+Are the most powerful feature of discovery, they allow for:
 
 1. Adding handlers to longer arrays (`maxLength` defaults to 5).
 2. Reading values directly from storage slot (eg. for `private` variables).
@@ -80,7 +80,7 @@ All of the parameters are optional:
 
 - `proxyType` - manual proxy override. Most of the times, discovery is smart enough to detect proxyType, useful when that's not the case
 - `ignoreDiscovery: boolean` - if set to `true`, discovery will not consider this contract as a `relative`, effectively skipping discovery of this contract
-- `ignoreRelative: field[]` - discovery will not consider this contract as a `relative`. The difference between `ignoreDiscovery` and `ignoreRelative` is that `ignoreRelative` is configured per field, while `ignoreDiscovery` is configured per contract
+- `ignoreRelatives: field[]` - discovery will not consider this contract as a `relative`. The difference between `ignoreDiscovery` and `ignoreRelatives` is that `ignoreRelatives` is configured per field, while `ignoreDiscovery` is configured per contract. Notice that `ignoreRelatives` is a field of a contract and `ignoreRelative` (without the `s`) is a field of a handler.
 - `ignoreMethods: field[]` - discovery will skip this method
 - `ignoreInWatchMode: field[]` - if set to `true`, the `UpdateMonitor` will not notify change of this value
 - `fields: Record<field, Handler>` - custom fields that represent more complex values of the contract: ex. arrays longer than 5 and private variables
@@ -92,6 +92,7 @@ All of the parameters are optional:
   "proxyType": "proxy",
   "ignoreDiscovery": true,
   "ignoreMethods": ["method_a", "method_b"],
+  "ignoreRelatives": ["loopbackAddress"],
   "ignoreInWatchMode": ["method_c"],
   "fields": {
     "field_a": {
@@ -118,6 +119,7 @@ The storage handler allows you to read values directly from storage.
   - an array of the above values. In this case the values are hashed to produce a key corresponding to a mapping. Given a mapping of `address => boolean` at the storage location `5` to get the value for some specific address you should set the slot to: `[5, "0x6B175474E89094C44Da98b954EedeAC495271d0F"]`
 - `offset` - (optional) value to be added to the slot. This is useful if whatever you are accessing is a large struct and you want to get a specific field.
 - `returnType` - (optional) specifies how to interpret the resulting `bytes32` result. Possible options are `"address"`, `"bytes"` (default), `"number"`.
+- `ignoreRelative` - (optional) if set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.
 
 **Examples:**
 
@@ -178,6 +180,7 @@ Such methods are automatically called by default, but the results are limited to
 
 - `type` - always the literal: `"array"`
 - `method` - (optional) the name or abi of the method to be called. If omitted the name of the field is used. The abi should be provided in the human readable abi format.
+- `indices` - (optional) an array of numbers, e.g. `[1,3,5]` a reference to another field, e.g. `{{ value }}` that will be used as indices to access a given array.
 - `length` - (optional) a number, e.g. `3` or a reference to another field, e.g. `{{ value }}` that will be used to determine the number of calls. If this is not provided the method is called until it reverts.
 - `maxLength` - (optional) a guard against infinite loops. Prevents the method to be called an excessive number of times. Defaults to `100`.
 - `startIndex` - (optional) the index of the first element to be read. Defaults to `0`.
@@ -231,6 +234,48 @@ Read a very large array:
 }
 ```
 
+Read only the first 5 prime elements from the array
+
+```json
+{
+  "type": "array",
+  "method": "owners",
+  "indices": [2, 3, 5, 7, 11]
+}
+```
+
+### Dynamic array handler
+
+Reads the entire dynamic array which length is stored at slot `x`.
+To understand why you need to provide the length slot read [the Solidity docs](https://docs.soliditylang.org/en/v0.8.24/internals/layout_in_storage.html#mappings-and-dynamic-arrays).
+
+**Parameters**:
+
+- `type` - always the literal: `"dynamicArray"`
+- `slot` - can be one of the following:
+  - a number, e.g. `1`
+  - a hex string, e.g. `"0x1234"`
+  - a reference to another field, e.g. `"{{ value }}"`
+- `returnType` - (optional) has to be address. If the array is of a different type talk with devs to extend this.
+- `ignoreRelative` - (optional) if set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.
+
+**Examples:**
+
+Read a dynamic array with length stored in slot 54 of type address, ignore addresses from rediscovery.
+
+```json
+{
+  "fields": {
+    "validators": {
+      "type": "dynamicArray",
+      "slot": 54,
+      "returnType": "address",
+      "ignoreRelative": true
+    }
+  }
+}
+```
+
 ### Call handler
 
 The call handler allows you to call view methods with arguments of your choosing. This is especially useful for methods that take 1 or more arguments, because we don't usually know what arguments to provide to call them automatically.
@@ -281,6 +326,16 @@ Call a method and reference other fields in arguments:
   "type": "call",
   "method": "function balanceOf(address owner) view returns (uint256)",
   "args": ["{{ admin }}"]
+}
+```
+
+Call a method that you know currently reverts but might change it's behaviour in the future:
+
+```json
+{
+  "type": "call",
+  "method": "function revertIfNotPaused()",
+  "expectRevert": true
 }
 ```
 
@@ -381,6 +436,39 @@ Specify some names:
 }
 ```
 
+### Linea access control handler
+
+This handler allows you to analyze a Zodiac GnosisSafe module that exhibits an
+extended AccessControl pattern. At the time of writing this, only Linea is
+known to use this module.
+
+**Parameters:**
+
+- `type` - always the literal: `"lineaRolesModule"`
+- `roleNames` - (optional) a record of bytes32 role hashes to predefined role names. Usually this handler is pretty good at guessing, so this is often unnecessary
+- `ignoreRelative` - (optional) if set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.
+
+**Examples:**
+
+Analyze the contract:
+
+```json
+{
+  "type": "lineaRolesModule"
+}
+```
+
+Specify some names:
+
+```json
+{
+  "type": "lineaRolesModule",
+  "roleNames": {
+    "0x3f3b3bf06419b25db8f1ac3dfb014d79b6fb633e65d1ca540c6a3c665e32e106": "GOBLIN_ROLE"
+  }
+}
+```
+
 ### StarkWare named storage handler
 
 This handler allows you to read values from contracts using StarkWare's named storage pattern. This handler only supports simple values and does not support mappings and other possible types.
@@ -413,6 +501,30 @@ Read the stored value and return it as address:
 }
 ```
 
+### StarkWare Governance handler
+
+Downloads events emitted (`event LogNewGovernorAccepted(address acceptedGovernor)`) and filters the address through a function, thus producing an array of addresses.
+
+**Parameters:**
+
+- `type` - always the literal: `"starkWareGovernance"`
+- `filterBy` - the name of a function that will be used a filter to determine if the address from the event emitted is the governor we want
+
+**Examples:**
+
+Assumes there is a function `function starknetIsGovernor(address user) view returns (bool)` in the abi.
+Collect all the events and check if the address emitted in each event when given as a argument to this function returns true.
+If it does, add it to the result
+
+```json
+{
+  "governors": {
+    "type": "starkWareGovernance",
+    "filterBy": "starknetIsGovernor"
+  }
+}
+```
+
 ### Array from one event handler
 
 This handler allows you to collect values emitted by a smart contract through a single event type. It can either collect all values or use a flag to determine whether to add/remove a value.
@@ -423,8 +535,11 @@ This handler allows you to collect values emitted by a smart contract through a 
 - `event` - the name or abi of the event to be queried. The abi should be provided in the human readable abi format
 - `valueKey` - the key of the event member to collect. The event must actually have a member with this name
 - `flagKey` - (optional) the key of the event member to use to decide whether to add or remove a given value. That member must be a `bool`, where `true` means add, `false` means remove
+- `flagTrueValues` - (optional) an array of either string, number of boolean that is going to be treated as a true value.
+- `flagFalseValues` - (optional) an array of either string, number of boolean that is going to be treated as a false value.
 - `invert` - (optional) inverts the behavior of the flag, `false` means add, `true` means remove
 - `ignoreRelative` - (optional) if set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.
+- `topics` - array of topics to filter events by.
 
 **Examples:**
 
@@ -458,6 +573,54 @@ Use the invert option to handle a tricky case, where the flag means remove:
   "valueKey": "person",
   "flagKey": "removed",
   "invert": true
+}
+```
+
+Gather only people that are 18 or 21
+
+```json
+{
+  "type": "arrayFromOneEvent",
+  "event": "event WeirdEvent(address person, uint256 number)",
+  "valueKey": "person",
+  "flagKey": "removed",
+  "flagTrueValues: [18, 21],
+}
+```
+
+### Array from one event with argument handler
+
+This handler allows you to collect values emitted by a smart contract through a single event type.
+It filters out events based on the argument and it's value.
+
+**Parameters:**
+
+- `type` - always the literal: `"arrayFromOneEventWithArg"`
+- `event` - the name or abi of the event to be queried. The abi should be provided in the human readable abi format
+- `valueKey` - the key of the event member to collect. The event must actually have a member with this name
+- `flagKey` - (optional) the key of the event member to use to decide whether to add or remove a given value. That member must be a `bool`, where `true` means add, `false` means remove
+- `invert` - (optional) inverts the behavior of the flag, `false` means add, `true` means remove
+- `arg` - string name of the argument you want to query
+- `argValue` - the value of the above argument that is treated as true
+- `ignoreRelative` - (optional) if set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.
+
+**Examples:**
+
+Assume that there is an event emitted of type `Event(x,y,z)`.
+You want to create an array of values `x` from that event only when `y` is equal to `1234`.
+
+```json
+{
+  "fields": {
+    "blockSubmitters": {
+      "type": "arrayFromOneEventWithArg",
+      "event": "Event",
+      "valueKey": "x",
+      "flagKey": "allowed",
+      "arg": "y",
+      "argValue": "1234"
+    }
+  }
 }
 ```
 
@@ -513,6 +676,7 @@ This handler allows you to collect values emitted by a smart contract through a 
 - `onlyValue` - (optional, default: `false`) when `true`, the `groupBy` key is removed from the output record.
 - `multipleInGroup` - (optional, default: `false`) when `true`, each grouping key will point to an array of values if more than one value exist.
 - `ignoreRelative` - (optional, default: `false`) if set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.
+- `topics` - array of topics to filter events by.
 
 **Examples:**
 
@@ -527,6 +691,175 @@ Assumes there is `event AddInboundProofLibraryForChain(uint16 chainId, address l
   "onlyValue": true,
   "multipleInGroup": true,
   "ignoreRelative": true
+},
+```
+
+### State from event tuple handler
+
+Similar to the handler above but works on tuples are event arguments.
+Written specially for LayerZero v2 contracts, below is the logic of the handler:
+
+Example event:
+`event DefaultConfigsSet(tuple(uint32 eid, tuple(...) config)[] params)`
+
+Logic:
+
+1. Get all logs for the event
+2. Group logs by returnParam[0] (it is always eid with current approach)
+3. Expand tuple of values into named values dictionary if expandParam is provided
+4. Keep only the latest log for each group
+
+**Parameters:**
+
+- `type` - the literal: `"stateFromEventTuple"`
+- `event` - the name or abi of the event to be queried. The abi should be provided in the human readable abi format
+- `returnParams` - array of strings that represent event keys that we want to save
+- `expandParam` - (optional) name of the return parameter to expand into a dictionary
+- `ignoreRelative` - (optional, default: `false`) if set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.
+
+### Constructor args handler
+
+Creates a new field in the result with the value provioded.
+
+**Parameters:**
+
+- `type` - the literal: `"constructorArgs"`
+- `nameArgs` - (optional) a boolean value, by default the result is an array of arguments - false state, if set to true the array will be decoded into a dictionary with names of the arguments and their values
+
+**Examples:**
+
+```json
+{
+  "fields": {
+    "constructorArgs": {
+      "type": "constructorArgs"
+    }
+  }
+},
+```
+
+### Hardcoded handler
+
+Creates a new field in the result with the value provioded.
+
+**Parameters:**
+
+- `type` - the literal: `"hardcoded"`
+- `value` - any value you want to have in the result
+
+**Examples:**
+
+```json
+{
+  "fields": {
+    "securityCouncilThreshold": {
+      "type": "hardcoded",
+      "value": 9
+    },
+  }
+},
+```
+
+### Arbitrum actors handler
+
+Extracts an array of actors from the Arbitrum stack. Both validators and batch posters are encoded the same way so using this handler you can extract either.
+
+**Parameters:**
+
+- `type` - the literal: `"arbitrumActors"`
+- `actorType` - one of two literals: `"validator"` or `"batchPoster"`
+
+**Examples:**
+
+```json
+{
+  "fields": {
+    "batchPosters": {
+      "type": "arbitrumActors",
+      "actorType": "batchPoster"
+    },
+  }
+},
+```
+
+### Arbitrum DAC keyset handler
+
+Extracts the DAC keyset from projects based on Orbit stack.
+
+**Parameters:**
+
+- `type` - the literal: `"arbitrumDACKeyest"`
+
+**Examples:**
+
+```json
+{
+  "fields": {
+    "dacKeyset": {
+      "type": "arbitrumDACKeyset"
+    },
+  }
+},
+```
+
+### Arbitrum Sequencer version handler
+
+Extract the sequencer version from data posted by projects based on Orbit stacks.
+Using this value you can determine if the data is posted an L1 or to a DAC.
+
+**Parameters:**
+
+- `type` - the literal: `"arbitrumSequencerVersion"`
+
+**Examples:**
+
+```json
+{
+  "fields": {
+    "sequencerVersion": {
+      "type": "arbitrumSequencerVersion"
+    },
+  }
+},
+```
+
+### Optimism DA handler
+
+Downloads the last ten transactions submitted to L1 by a sequencer and compares the calldata length to see if it looks like the rollup is posting data to an external DA, like Celestia.
+
+**Parameters:**
+
+- `type` - the literal: `"opStackDA"`
+- `sequencerAddress` - the address of the sequencer
+
+**Examples:**
+
+```json
+{
+  "opStackDA": {
+    "type": "opStackDA",
+    "sequencerAddress": "{{ batcherHash }}"
+  },
+},
+```
+
+### Optimism Sequencer inbox handler
+
+Extract the address of the place where the sequencer is going to be posting calldata.
+
+**Parameters:**
+
+- `type` - the literal: `"opStackSequencerInbox"`
+- `sequencerAddress` - the address of the sequencer
+
+**Examples:**
+
+```json
+{
+  "sequencerInbox": {
+    "type": "opStackSequencerInbox",
+    "sequencerAddress": "{{ batcherHash }}"
+  }
 },
 ```
 
