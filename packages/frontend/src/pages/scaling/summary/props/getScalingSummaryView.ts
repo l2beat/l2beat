@@ -67,6 +67,7 @@ function getScalingL2SummaryEntry(
     showProjectUnderReview: isAnySectionUnderReview(project),
     isUpcoming: project.isUpcoming,
     redWarning: project.display.redWarning,
+    tvlWarning: project.display.tvlWarning,
     tvl:
       stats && escrowsConfigured(project)
         ? {

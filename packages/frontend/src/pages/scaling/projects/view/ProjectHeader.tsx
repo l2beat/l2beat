@@ -1,4 +1,8 @@
-import { ScalingProjectPurpose, StageConfig } from '@l2beat/config'
+import {
+  Layer2TVLWarning,
+  ScalingProjectPurpose,
+  StageConfig,
+} from '@l2beat/config'
 import { pluralize } from '@l2beat/shared-pure'
 import React from 'react'
 
@@ -36,7 +40,7 @@ export interface ProjectHeaderProps {
   tvlBreakdown: TokenBreakdownProps | undefined
   showTvlBreakdown: boolean
   tvlBreakdownHref: string
-  tvlWarning?: string
+  tvlWarning?: Layer2TVLWarning
   risks: RiskValues
   links: ProjectLink[]
   stage: StageConfig
