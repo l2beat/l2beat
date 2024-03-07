@@ -1,6 +1,10 @@
 import { branded, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
+export type ParsedBigQueryResult =
+  | ParsedBigQueryTransferResult
+  | ParsedBigQueryFunctionCallResult
+
 export type BigQueryFunctionCallResult = z.infer<
   typeof BigQueryFunctionCallResult
 >

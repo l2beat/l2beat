@@ -5,6 +5,7 @@ import {
   BigQueryFunctionCallResult,
   BigQueryTransferResult,
   ParsedBigQueryFunctionCallResult,
+  ParsedBigQueryResult,
   ParsedBigQueryTransferResult,
 } from '../types/model'
 import {
@@ -24,9 +25,7 @@ export class TrackedTxsClient {
     configurations: TrackedTxsConfigEntry[],
     from: UnixTime,
     to: UnixTime,
-  ): Promise<
-    (ParsedBigQueryFunctionCallResult | ParsedBigQueryTransferResult)[]
-  > {
+  ): Promise<ParsedBigQueryResult[]> {
     const transfersConfig = configurations.filter(
       (c): c is TrackedTxTransfer => c.formula === 'transfer',
     )

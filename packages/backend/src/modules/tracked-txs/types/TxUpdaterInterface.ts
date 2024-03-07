@@ -1,3 +1,5 @@
+import { ParsedBigQueryResult } from './model'
+
 export interface TxUpdaterInterface {
-  update: () => void
+  update: (txs: ParsedBigQueryResult[]) => void
 }
