@@ -1,11 +1,11 @@
 import { LivenessDataPoint, UnixTime } from '@l2beat/shared-pure'
 import { Dictionary } from 'lodash'
 
-import { LivenessRecordWithProjectIdAndType } from '../repositories/LivenessRepository'
+import { LivenessRecordWithProjectIdAndSubtype } from '../repositories/LivenessRepository'
 import { GroupedByType } from './groupByType'
 
 export type LivenessRecordWithInterval = Omit<
-  LivenessRecordWithProjectIdAndType,
+  LivenessRecordWithProjectIdAndSubtype,
   'projectId'
 > & {
   previousRecordInterval?: number
@@ -44,13 +44,13 @@ export function calculateIntervalWithAverages(
     string,
     {
       batchSubmissions: {
-        records: Omit<LivenessRecordWithProjectIdAndType, 'projectId'>[]
+        records: Omit<LivenessRecordWithProjectIdAndSubtype, 'projectId'>[]
       }
       stateUpdates: {
-        records: Omit<LivenessRecordWithProjectIdAndType, 'projectId'>[]
+        records: Omit<LivenessRecordWithProjectIdAndSubtype, 'projectId'>[]
       }
       proofSubmissions: {
-        records: Omit<LivenessRecordWithProjectIdAndType, 'projectId'>[]
+        records: Omit<LivenessRecordWithProjectIdAndSubtype, 'projectId'>[]
       }
     }
   >,

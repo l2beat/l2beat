@@ -16,7 +16,7 @@ import {
   calculateIntervals,
 } from '../../liveness/api/calculateIntervalWithAverages'
 import {
-  LivenessRecordWithProjectIdAndType,
+  LivenessRecordWithProjectIdAndSubtype,
   LivenessRepository,
 } from '../../liveness/repositories/LivenessRepository'
 import {
@@ -44,7 +44,7 @@ describe(FinalityController.name, () => {
     })
 
     it('correctly calculate avg, min and max', async () => {
-      const RECORDS: LivenessRecordWithProjectIdAndType[] = []
+      const RECORDS: LivenessRecordWithProjectIdAndSubtype[] = []
 
       RECORDS.push(
         ...Array.from({ length: 5 }).map((_, i) => {
@@ -137,7 +137,7 @@ describe(FinalityController.name, () => {
 
   describe(FinalityController.prototype.getOPStackFinality.name, () => {
     it('correctly calculate avg, min and max', async () => {
-      const RECORDS: LivenessRecordWithProjectIdAndType[] = []
+      const RECORDS: LivenessRecordWithProjectIdAndSubtype[] = []
 
       RECORDS.push(
         ...Array.from({ length: 5 }).map((_, i) => {
@@ -272,7 +272,7 @@ function getMockFinalityRepository(records: FinalityRecord[] = []) {
 }
 
 function getMockLivenessRepository(
-  records: LivenessRecordWithProjectIdAndType[],
+  records: LivenessRecordWithProjectIdAndSubtype[],
 ) {
   return mockObject<LivenessRepository>({
     getByProjectIdAndType(projectId: ProjectId) {

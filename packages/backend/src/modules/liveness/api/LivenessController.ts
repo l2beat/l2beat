@@ -111,7 +111,7 @@ export class LivenessController {
       )
 
       const records =
-        await this.livenessRepository.getWithTypeDistinctTimestamp(
+        await this.livenessRepository.getWithSubtypeDistinctTimestamp(
           project.projectId,
         )
 
@@ -191,7 +191,7 @@ export class LivenessController {
             return
           }
           const records =
-            await this.livenessRepository.getTransactionWithTypeDistinctTimestamp(
+            await this.livenessRepository.getTransactionWithSubtypeDistinctTimestamp(
               project.projectId,
               last30Days,
             )

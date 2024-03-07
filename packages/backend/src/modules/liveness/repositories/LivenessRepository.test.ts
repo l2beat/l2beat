@@ -270,10 +270,10 @@ describeDatabase(LivenessRepository.name, (database) => {
   )
 
   describe(
-    LivenessRepository.prototype.getWithTypeDistinctTimestamp.name,
+    LivenessRepository.prototype.getWithSubtypeDistinctTimestamp.name,
     () => {
       it('join and returns data with type', async () => {
-        const result = await repository.getWithTypeDistinctTimestamp(
+        const result = await repository.getWithSubtypeDistinctTimestamp(
           LIVENESS_CONFIGS[0].projectId,
         )
         const expected = [
@@ -311,7 +311,7 @@ describeDatabase(LivenessRepository.name, (database) => {
             livenessId: LIVENESS_CONFIGS[2].id,
           })),
         )
-        const result = await repository.getWithTypeDistinctTimestamp(
+        const result = await repository.getWithSubtypeDistinctTimestamp(
           LIVENESS_CONFIGS[2].projectId,
         )
 
@@ -360,7 +360,7 @@ describeDatabase(LivenessRepository.name, (database) => {
           })),
         )
 
-        const result = await repository.getWithTypeDistinctTimestamp(
+        const result = await repository.getWithSubtypeDistinctTimestamp(
           LIVENESS_CONFIGS[2].projectId,
         )
 

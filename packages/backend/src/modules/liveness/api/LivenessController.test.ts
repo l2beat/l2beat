@@ -11,7 +11,7 @@ import { Project } from '../../../model/Project'
 import { IndexerStateRepository } from '../../../peripherals/database/repositories/IndexerStateRepository'
 import { Clock } from '../../../tools/Clock'
 import {
-  LivenessRecordWithProjectIdAndType,
+  LivenessRecordWithProjectIdAndSubtype,
   LivenessRepository,
 } from '../repositories/LivenessRepository'
 import {
@@ -26,7 +26,7 @@ describe(LivenessController.name, () => {
 
     // TODO: unskip it
     it.skip('correctly finds anomalies', async () => {
-      const RECORDS: LivenessRecordWithProjectIdAndType[] = []
+      const RECORDS: LivenessRecordWithProjectIdAndSubtype[] = []
 
       RECORDS.push(
         ...Array.from({ length: 500 }).map((_, i) => ({
@@ -63,7 +63,7 @@ describe(LivenessController.name, () => {
     })
 
     it('returns empty array if no anomalies', async () => {
-      const RECORDS: LivenessRecordWithProjectIdAndType[] = []
+      const RECORDS: LivenessRecordWithProjectIdAndSubtype[] = []
 
       RECORDS.push(
         ...Array.from({ length: 10 }).map((_, i) => ({
@@ -101,7 +101,7 @@ describe(LivenessController.name, () => {
     })
 
     it('correctly calculate avg, min and max', async () => {
-      const RECORDS: LivenessRecordWithProjectIdAndType[] = []
+      const RECORDS: LivenessRecordWithProjectIdAndSubtype[] = []
 
       RECORDS.push(
         ...Array.from({ length: 30 + 60 / 2 + 30 / 3 }).map((_, i) => {
@@ -195,10 +195,10 @@ function getMockIndexerStateRepository(data: UnixTime) {
 }
 
 function getMockLivenessRepository(
-  records: LivenessRecordWithProjectIdAndType[],
+  records: LivenessRecordWithProjectIdAndSubtype[],
 ) {
   return mockObject<LivenessRepository>({
-    getWithTypeDistinctTimestamp(projectId: ProjectId) {
+    getWithSubtypeDistinctTimestamp(projectId: ProjectId) {
       return Promise.resolve(records.filter((x) => x.projectId === projectId))
     },
     addMany() {
@@ -211,7 +211,7 @@ function getMockLivenessRepository(
 }
 
 function mockProjectConfig(
-  records: LivenessRecordWithProjectIdAndType[],
+  records: LivenessRecordWithProjectIdAndSubtype[],
 ): Project[] {
   return records
     .map((x) => x.projectId)
