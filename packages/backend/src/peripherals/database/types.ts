@@ -171,6 +171,17 @@ declare module 'knex/types/tables' {
     average_time_to_inclusion: number
   }
 
+  interface TrackedTxsConfigRow {
+    id: string
+    project_id: string
+    type: string
+    subtype: string | null
+    debug_info: string
+    since_timestamp: Date
+    until_timestamp: Date | null
+    last_synced_timestamp: Date | null
+  }
+
   interface DiscoveryCacheRow {
     key: string
     value: string
@@ -217,6 +228,7 @@ declare module 'knex/types/tables' {
     indexer_state: IndexerStateRow
     tvl_cleaner: TvlCleanerRow
     finality: FinalityRow
+    tracked_txs_configs: TrackedTxsConfigRow
   }
 }
 
