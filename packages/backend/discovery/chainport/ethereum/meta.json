@@ -1,0 +1,144 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "MultisigVault2",
+      "values": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "MultisigVault1",
+      "values": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Vault6",
+      "values": {}
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ChainportCongress",
+      "values": {
+        "getMembersRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proposalCount": {
+          "description": "The amount of proposals ever created. Goes up by 1 for each proposal.",
+          "severity": "MEDIUM",
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ChainportCongressMembersRegistry",
+      "values": {
+        "chainportCongress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getAllMemberAddresses": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getMinimalQuorum": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getNumberOfMembers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "allMembers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}
