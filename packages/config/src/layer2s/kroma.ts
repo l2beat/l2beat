@@ -246,7 +246,7 @@ export const kroma: Layer2 = {
       stage1: {
         stateVerificationOnL1: false,
         fraudProofSystemAtLeast5Outsiders: true,
-        usersHave7DaysToExit: true,
+        usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,
       },
