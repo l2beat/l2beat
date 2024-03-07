@@ -48,7 +48,7 @@ export const sygma: Bridge = {
     validatedBy: {
       value: 'Third party',
       description:
-        '4/6 of the MPC group (the Sygma relayer network) is required to create a cross-chain message with the MPC signature.', // sygma eng team currently developing a zk methodology for block header oracle verification which we will implement on mainnet relayers soon. additionally, optimistic approach coming as well. we call this "tailored security"
+        '4/7 of the MPC group (the Sygma relayer network) is required to create a cross-chain message with the MPC signature.', // sygma eng team currently developing a zk methodology for block header oracle verification which we will implement on mainnet relayers soon. additionally, optimistic approach coming as well. we call this "tailored security"
       sentiment: 'neutral',
     },
     sourceUpgradeability: {
