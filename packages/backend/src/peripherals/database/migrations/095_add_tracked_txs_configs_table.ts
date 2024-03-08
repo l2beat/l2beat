@@ -27,8 +27,6 @@ export async function up(knex: Knex) {
     table.dateTime('since_timestamp', { useTz: false })
     table.dateTime('until_timestamp', { useTz: false })
     table.dateTime('last_synced_timestamp', { useTz: false })
-
-    table.index('id')
   })
 
   // LIVENESS
