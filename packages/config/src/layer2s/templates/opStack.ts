@@ -88,17 +88,16 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
   const postsToCelestia = templateVars.discovery.getContractValue<{
     isSomeTxsLengthEqualToCelestiaDAExample: boolean
   }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
-  const daProvider = templateVars.daProvider ?? (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
+  const daProvider =
+    templateVars.daProvider ??
+    (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
   return {
     type: 'layer2',
     id: ProjectId(templateVars.discovery.projectName),
     display: {
       ...templateVars.display,
       provider: 'OP Stack',
-      category:
-        daProvider !== undefined
-          ? 'Optimium'
-          : 'Optimistic Rollup',
+      category: daProvider !== undefined ? 'Optimium' : 'Optimistic Rollup',
       dataAvailabilityMode:
         daProvider !== undefined ? 'NotApplicable' : 'TxData',
       warning:
@@ -167,10 +166,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
                 },
               ],
             },
-      finality:
-        daProvider !== undefined
-          ? undefined
-          : templateVars.finality,
+      finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
     chainConfig: templateVars.chainConfig,
     riskView: makeBridgeCompatible({
