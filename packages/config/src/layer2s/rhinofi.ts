@@ -7,15 +7,16 @@ import {
 
 import {
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
+  makeDataAvailabilityConfig,
   NEW_CRYPTOGRAPHY,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
@@ -43,6 +44,8 @@ const freezeGracePeriod = discovery.getContractValue<number>(
   'FREEZE_GRACE_PERIOD',
 )
 
+const committee = getCommittee(discovery)
+
 export const rhinofi: Layer2 = {
   type: 'layer2',
   id: ProjectId('deversifi'),
@@ -53,7 +56,6 @@ export const rhinofi: Layer2 = {
     purposes: ['Exchange'],
     provider: 'StarkEx',
     category: 'Validium',
-    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://rhino.fi/'],
       apps: ['https://app.rhino.fi/'],
@@ -112,10 +114,22 @@ export const rhinofi: Layer2 = {
       ],
     },
   },
+  dataAvailability: makeDataAvailabilityConfig({
+    type: 'Off chain (DAC)',
+    fallback: 'None',
+    config: {
+      membersCount: committee.accounts.length,
+      requiredSignatures: committee.minSigners,
+    },
+    mode: 'State diffs',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: {
-      ...RISK_VIEW.DATA_EXTERNAL_DAC(),
+      ...RISK_VIEW.DATA_EXTERNAL_DAC({
+        membersCount: committee.accounts.length,
+        requiredSignatures: committee.minSigners,
+      }),
       sources: [
         {
           contract: 'StarkExchange',
@@ -140,7 +154,7 @@ export const rhinofi: Layer2 = {
   technology: {
     stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
     newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
-    dataAvailability: DATA_AVAILABILITY.STARKEX_OFF_CHAIN,
+    dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKEX_OFF_CHAIN,
     operator: OPERATOR.STARKEX_OPERATOR,
     forceTransactions: FORCE_TRANSACTIONS.STARKEX_SPOT_WITHDRAW(),
     exitMechanisms: EXITS.STARKEX_PERPETUAL,
@@ -164,7 +178,7 @@ export const rhinofi: Layer2 = {
         'Can upgrade the implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
         delayDescriptionFromString(upgradeDelay),
     },
-    getCommittee(discovery),
+    committee,
     ...getSHARPVerifierGovernors(discovery, verifierAddress),
     {
       name: 'Operators',

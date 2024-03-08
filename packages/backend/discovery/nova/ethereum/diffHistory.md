@@ -1,3 +1,35 @@
+Generated with discovered.json: 0xce1846ca8a71c542f62d345e25419cdb72e8f071
+
+# Diff at Fri, 08 Mar 2024 11:12:54 GMT:
+
+- author: torztomasz (<tomasz.torz@l2beat.com>)
+- comparing to: main@f09f798ebd2ae57f4c76e08114d608edf0a51c7b block: 19132347
+- current block number: 19390070
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19132347 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b) {
+    +++ description: None
+      values.dacKeyset.threshold:
+-        2
+      values.dacKeyset.keyCount:
+-        6
+      values.dacKeyset.requiredSignatures:
++        5
+      values.dacKeyset.membersCount:
++        6
+    }
+```
+
 Generated with discovered.json: 0x11137089528e466103478529e9825c95fb2f9c20
 
 # Diff at Thu, 01 Feb 2024 08:18:12 GMT:

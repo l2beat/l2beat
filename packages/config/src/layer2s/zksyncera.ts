@@ -7,15 +7,16 @@ import {
 
 import {
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
+  makeDataAvailabilityConfig,
   NEW_CRYPTOGRAPHY,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
@@ -50,7 +51,6 @@ export const zksyncera: Layer2 = {
     purposes: ['Universal'],
     provider: 'ZK Stack',
     category: 'ZK Rollup',
-    dataAvailabilityMode: 'StateDiffs',
     links: {
       websites: ['https://zksync.io/', 'https://ecosystem.zksync.io/'],
       apps: ['https://bridge.zksync.io/', 'https://portal.zksync.io/'],
@@ -161,6 +161,11 @@ export const zksyncera: Layer2 = {
       lag: 0,
     },
   },
+  dataAvailability: makeDataAvailabilityConfig({
+    type: 'On chain',
+    layer: 'Ethereum (calldata)',
+    mode: 'State diffs (compressed)',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: {
       value: 'ZK proofs',
@@ -302,7 +307,7 @@ export const zksyncera: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...DATA_AVAILABILITY.ON_CHAIN,
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN,
       references: [],
     },
     operator: {

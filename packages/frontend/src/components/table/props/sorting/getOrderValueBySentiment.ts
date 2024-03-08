@@ -1,4 +1,4 @@
-import { Sentiment } from '@l2beat/config'
+import { Sentiment } from '@l2beat/shared-pure'
 
 export function getOrderValueBySentiment<T extends { sentiment: Sentiment }>(
   item: T | undefined,

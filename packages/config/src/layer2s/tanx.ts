@@ -7,14 +7,15 @@ import {
 
 import {
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
+  makeDataAvailabilityConfig,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
@@ -44,6 +45,8 @@ const freezeGracePeriod = discovery.getContractValue<number>(
   'FREEZE_GRACE_PERIOD',
 )
 
+const committee = getCommittee(discovery)
+
 export const tanx: Layer2 = {
   type: 'layer2',
   id: ProjectId('brine'),
@@ -53,7 +56,6 @@ export const tanx: Layer2 = {
     description: 'tanX is a DEX powered by StarkEx technology.',
     purposes: ['Exchange'],
     category: 'Validium',
-    dataAvailabilityMode: 'NotApplicable',
     provider: 'StarkEx',
     links: {
       websites: ['https://tanx.fi/'],
@@ -87,10 +89,22 @@ export const tanx: Layer2 = {
       resyncLastDays: 7,
     },
   },
+  dataAvailability: makeDataAvailabilityConfig({
+    type: 'Off chain (DAC)',
+    fallback: 'None',
+    config: {
+      membersCount: committee.accounts.length,
+      requiredSignatures: committee.minSigners,
+    },
+    mode: 'State diffs',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: {
-      ...RISK_VIEW.DATA_EXTERNAL_DAC(),
+      ...RISK_VIEW.DATA_EXTERNAL_DAC({
+        membersCount: committee.accounts.length,
+        requiredSignatures: committee.minSigners,
+      }),
       sources: [
         {
           contract: 'Committee',
@@ -108,7 +122,7 @@ export const tanx: Layer2 = {
   }),
   technology: {
     stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
-    dataAvailability: DATA_AVAILABILITY.STARKEX_OFF_CHAIN,
+    dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKEX_OFF_CHAIN,
     operator: OPERATOR.STARKEX_OPERATOR,
     forceTransactions: FORCE_TRANSACTIONS.STARKEX_SPOT_WITHDRAW(),
     exitMechanisms: EXITS.STARKEX_SPOT,
@@ -132,7 +146,7 @@ export const tanx: Layer2 = {
         'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
         delayDescriptionFromString(upgradeDelay),
     },
-    getCommittee(discovery),
+    committee,
     ...getSHARPVerifierGovernors(discovery, verifierAddress),
     {
       name: 'Operators',

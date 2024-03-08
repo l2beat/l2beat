@@ -1,14 +1,15 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
+  makeDataAvailabilityConfig,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
@@ -23,7 +24,7 @@ export const fuelv1: Layer2 = {
       'Fuel v1 is the first Optimistic Rollup live on Ethereum, supporting payments.',
     purposes: ['Payments'],
     category: 'Optimistic Rollup',
-    dataAvailabilityMode: 'TxData',
+
     links: {
       websites: ['https://fuel.sh/'],
       apps: [],
@@ -53,6 +54,11 @@ export const fuelv1: Layer2 = {
       },
     ],
   },
+  dataAvailability: makeDataAvailabilityConfig({
+    type: 'On chain',
+    layer: 'Ethereum (calldata)',
+    mode: 'Transactions data',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_FP_1R,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -101,7 +107,7 @@ export const fuelv1: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...DATA_AVAILABILITY.ON_CHAIN,
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN,
       references: [
         {
           text: 'Background - Fuel documentation',

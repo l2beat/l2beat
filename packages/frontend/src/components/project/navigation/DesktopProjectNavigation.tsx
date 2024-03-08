@@ -4,7 +4,7 @@ import { BridgeDetailsSection } from '../../../pages/bridges/projects/props/getP
 import { ScalingDetailsSection } from '../../../pages/scaling/projects/props/getProjectDetails'
 import { cn } from '../../../utils/cn'
 import { HorizontalSeparator } from '../../HorizontalSeparator'
-import { SummaryIcon } from '../../icons/projects/SummaryIcon'
+import { SummaryIcon } from '../../icons/pages/SummaryIcon'
 import { UnderReviewCallout } from '../UnderReviewCallout'
 import { DESKTOP_PROJECT_NAVIGATION_IDS } from './ids'
 
@@ -67,7 +67,7 @@ export function DesktopProjectNavigation({
           className="flex flex-row items-center gap-3 opacity-60 transition-opacity hover:opacity-100"
           id={DESKTOP_PROJECT_NAVIGATION_IDS.summaryItem}
         >
-          <SummaryIcon />
+          <SummaryIcon className="size-6" />
           Summary
         </a>
         <ProjectNavigationList sections={sections} />

@@ -1,4 +1,4 @@
-import { Sentiment } from '@l2beat/config'
+import { Sentiment } from '@l2beat/shared-pure'
 
 export function sentimentToFillColor(sentiment: Sentiment): string {
   switch (sentiment) {

@@ -8,15 +8,16 @@ import {
 
 import {
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
+  makeDataAvailabilityConfig,
   NEW_CRYPTOGRAPHY,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
@@ -215,7 +216,6 @@ export const starknet: Layer2 = {
       'Starknet is a general purpose ZK Rollup based on STARKs and the Cairo VM.',
     purposes: ['Universal'],
     category: 'ZK Rollup',
-    dataAvailabilityMode: 'StateDiffs',
 
     links: {
       apps: ['https://dappland.com/', 'https://starknet-ecosystem.com/'],
@@ -410,6 +410,11 @@ export const starknet: Layer2 = {
       ],
     },
   },
+  dataAvailability: makeDataAvailabilityConfig({
+    type: 'On chain',
+    layer: 'Ethereum (calldata)',
+    mode: 'State diffs',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
@@ -493,7 +498,7 @@ export const starknet: Layer2 = {
       ],
     },
     newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
-    dataAvailability: DATA_AVAILABILITY.STARKNET_ON_CHAIN,
+    dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKNET_ON_CHAIN,
     operator: {
       ...OPERATOR.CENTRALIZED_OPERATOR,
       description:

@@ -7,14 +7,15 @@ import {
 
 import {
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
   makeBridgeCompatible,
+  makeDataAvailabilityConfig,
   RISK_VIEW,
   SEQUENCER_NO_MECHANISM,
   STATE_CORRECTNESS,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { Layer2 } from './types'
@@ -58,7 +59,7 @@ const exitWindowRisk = {
     trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
   )}.`,
   warning: {
-    text: 'The ZkFair Owner can upgrade with no delay.',
+    value: 'The ZkFair Owner can upgrade with no delay.',
     sentiment: 'bad',
   },
 } as const
@@ -74,17 +75,15 @@ const isForcedBatchDisallowed = discovery.getContractValue<boolean>(
   'isForcedBatchDisallowed',
 )
 
-const DACSize = discovery.getContractValue<number>(
+const membersCount = discovery.getContractValue<number>(
   'DataAvailabilityCommittee',
   'getAmountOfMembers',
 )
 
-const DACThreshold = discovery.getContractValue<number>(
+const requiredSignatures = discovery.getContractValue<number>(
   'DataAvailabilityCommittee',
   'requiredAmountOfSignatures',
 )
-
-const DACThresholdString = `${DACThreshold}/${DACSize}`
 
 export const zkfair: Layer2 = {
   type: 'layer2',
@@ -97,7 +96,6 @@ export const zkfair: Layer2 = {
     description: 'ZKFair is a Validium based on Polygon CDK and Celestia DA.',
     purposes: ['Universal'],
     category: 'Validium',
-    dataAvailabilityMode: 'NotApplicable',
     provider: 'Polygon',
     links: {
       websites: ['https://zkfair.io/'],
@@ -139,6 +137,15 @@ export const zkfair: Layer2 = {
     ],
     coingeckoPlatform: 'zkfair',
   },
+  dataAvailability: makeDataAvailabilityConfig({
+    type: 'Off chain (DAC)',
+    fallback: 'None',
+    config: {
+      membersCount,
+      requiredSignatures,
+    },
+    mode: 'State diffs',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
@@ -152,7 +159,10 @@ export const zkfair: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...RISK_VIEW.DATA_EXTERNAL_DAC(),
+      ...RISK_VIEW.DATA_EXTERNAL_DAC({
+        membersCount,
+        requiredSignatures,
+      }),
       sources: [
         {
           contract: 'CDKValidium',
@@ -207,7 +217,7 @@ export const zkfair: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...DATA_AVAILABILITY.GENERIC_OFF_CHAIN,
+      ...TECHNOLOGY_DATA_AVAILABILITY.GENERIC_OFF_CHAIN,
       references: [
         {
           text: 'CDKValidium.sol#L494 - Etherscan source code, sequencedBatches mapping',
@@ -300,7 +310,7 @@ export const zkfair: Layer2 = {
 
         return members
       })(),
-      description: `Members of the Data Availability Committee. The setup is equivalent to a ${DACThresholdString} multisig.`,
+      description: `Members of the Data Availability Committee. The setup is equivalent to a ${requiredSignatures}/${membersCount} multisig.`,
     },
     {
       name: 'DAC Owner',

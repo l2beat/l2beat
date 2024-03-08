@@ -7,7 +7,7 @@ import {
   NavbarProps,
 } from '../../../../components'
 import { About } from '../../../../components/About'
-import { RiskHeader } from '../../../../components/header/RiskHeader'
+import { SimplePageHeader } from '../../../../components/header/SimplePageHeader'
 import { ScalingNavigationTabs } from '../../../../components/navigation-tabs/ScalingNavigationTabs'
 import { OtherSites } from '../../../../components/other-sites/OtherSites'
 import { PageContent } from '../../../../components/PageContent'
@@ -34,7 +34,7 @@ export function ScalingRiskPage(props: ScalingRiskPageProps) {
           selected="risk"
         />
         <main>
-          <RiskHeader />
+          <SimplePageHeader>Risk Analysis</SimplePageHeader>
           <ScalingRiskView {...props.riskView} />
           <OtherSites />
           <About />

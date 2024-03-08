@@ -19,7 +19,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
         shortName: undefined,
         slug: 'aevo',
         category: 'Optimistic Rollup',
-        dataAvailabilityMode: 'Transaction data',
+        dataAvailabilityMode: 'Transactions data',
         provider: 'OP Stack',
         warning:
           'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
@@ -131,7 +131,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
         shortName: undefined,
         slug: 'arbitrum',
         category: 'Optimistic Rollup',
-        dataAvailabilityMode: 'Transaction data',
+        dataAvailabilityMode: 'Transactions data',
         provider: 'Arbitrum',
         warning:
           'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
@@ -238,7 +238,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
         shortName: undefined,
         slug: 'base',
         category: 'Optimistic Rollup',
-        dataAvailabilityMode: 'Transaction data',
+        dataAvailabilityMode: 'Transactions data',
         provider: 'OP Stack',
         warning:
           'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
@@ -412,7 +412,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
         shortName: undefined,
         slug: 'linea',
         category: 'ZK Rollup',
-        dataAvailabilityMode: 'Transaction data',
+        dataAvailabilityMode: 'Transactions data',
         provider: undefined,
         warning: 'The circuit of the program being proven is not public.',
         redWarning: undefined,
@@ -533,7 +533,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
         shortName: undefined,
         slug: 'optimism',
         category: 'Optimistic Rollup',
-        dataAvailabilityMode: 'Transaction data',
+        dataAvailabilityMode: 'Transactions data',
         provider: 'OP Stack',
         warning:
           'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
@@ -620,7 +620,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
         shortName: undefined,
         slug: 'scroll',
         category: 'ZK Rollup',
-        dataAvailabilityMode: 'Transaction data',
+        dataAvailabilityMode: 'Transactions data',
         provider: undefined,
         warning: undefined,
         redWarning: undefined,

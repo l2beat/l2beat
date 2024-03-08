@@ -1299,7 +1299,7 @@ export const ActiveWithRollupsOnly: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     await userEvent.click(canvas.getByText('Active projects'), { delay: 25 })
-    await userEvent.click(canvas.getByText('Show rollups only'))
+    await userEvent.click(canvas.getByText('Rollups only'))
   },
 }
 
@@ -1314,7 +1314,7 @@ export const UpcomingWithRollupsOnly: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     await userEvent.click(canvas.getByText('Upcoming projects'), { delay: 25 })
-    await userEvent.click(canvas.getByText('Show rollups only'))
+    await userEvent.click(canvas.getByText('Rollups only'))
   },
 }
 
@@ -1329,6 +1329,6 @@ export const ArchivedWithRollupsOnly: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     await userEvent.click(canvas.getByText('Archived projects'), { delay: 25 })
-    await userEvent.click(canvas.getByText('Show rollups only'))
+    await userEvent.click(canvas.getByText('Rollups only'))
   },
 }

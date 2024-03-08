@@ -14,6 +14,7 @@ import { getMultisigReportDownloadPage } from './multisig-report'
 import { outputPages } from './output'
 import { Page, PagesData } from './Page'
 import { getActivityPage } from './scaling/activity'
+import { getScalingDataAvailabilityPage } from './scaling/data-availability'
 import { getDiffHistoryPages } from './scaling/diff-history'
 import { getFinalityPage } from './scaling/finality'
 import { getLivenessPage } from './scaling/liveness'
@@ -98,6 +99,8 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     pages.push(getGovernancePublicationsPage(config))
     pages.push(...getGovernancePublicationPages(config))
   }
+
+  pages.push(getScalingDataAvailabilityPage(config, { tvlApiResponse }))
 
   outputPages(pages)
 }

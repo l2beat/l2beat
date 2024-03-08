@@ -31,7 +31,6 @@ export const zklinknexus: Layer3 = {
         'https://t.me/zkLinkorg',
       ],
     },
-    dataAvailabilityMode: 'StateDiffs',
   },
   config: {
     escrows: [],

@@ -3,11 +3,11 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   KnowledgeNugget,
   makeBridgeCompatible,
+  makeDataAvailabilityConfig,
   Milestone,
   NUGGETS,
   OPERATOR,
@@ -18,6 +18,7 @@ import {
   ScalingProjectRiskViewEntry,
   ScalingProjectStateDerivation,
   ScalingProjectTechnologyChoice,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { subtractOne } from '../../common/assessCount'
 import { ChainConfig } from '../../common/ChainConfig'
@@ -34,7 +35,7 @@ import {
 export const CELESTIA_DA_PROVIDER: DAProvider = {
   name: 'Celestia',
   riskView: RISK_VIEW.DATA_CELESTIA(false),
-  technology: DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(false),
+  technology: TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(false),
 }
 
 export interface DAProvider {
@@ -98,8 +99,6 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
       ...templateVars.display,
       provider: 'OP Stack',
       category: daProvider !== undefined ? 'Optimium' : 'Optimistic Rollup',
-      dataAvailabilityMode:
-        daProvider !== undefined ? 'NotApplicable' : 'TxData',
       warning:
         templateVars.display.warning === undefined
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
@@ -169,6 +168,19 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
       finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
     chainConfig: templateVars.chainConfig,
+    dataAvailability:
+      daProvider !== undefined
+        ? makeDataAvailabilityConfig({
+            type: 'Off chain',
+            layers: ['Celestia', 'Ethereum (calldata)'],
+            bridge: 'None',
+            mode: 'Transactions data (compressed)',
+          })
+        : makeDataAvailabilityConfig({
+            type: 'On chain',
+            layer: 'Ethereum (calldata)',
+            mode: 'Transactions data (compressed)',
+          }),
     riskView: makeBridgeCompatible({
       stateValidation: RISK_VIEW.STATE_NONE,
       dataAvailability: {
@@ -440,5 +452,7 @@ function riskViewDA(DA: DAProvider | undefined): ScalingProjectRiskViewEntry {
 function technologyDA(
   DA: DAProvider | undefined,
 ): ScalingProjectTechnologyChoice {
-  return DA === undefined ? DATA_AVAILABILITY.ON_CHAIN : DA.technology
+  return DA === undefined
+    ? TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN
+    : DA.technology
 }
