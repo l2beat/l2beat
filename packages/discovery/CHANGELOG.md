@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.44.5
+
+### Patch Changes
+
+- Remove the need to have numeric suffixes in normalizing diff path
+
 ## 0.44.4
 
 ### Minor Changes

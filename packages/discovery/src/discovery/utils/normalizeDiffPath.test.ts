@@ -42,9 +42,7 @@ describe(normalizeDiffPath.name, () => {
   })
 
   it('should throw on different prefix', () => {
-    expect(() => normalizeDiffPath('test.values.0')).toThrow(
-      'Expected test.values.0 to have only numeric suffixes',
-    )
+    expect(normalizeDiffPath('test.values.0')).toEqual('test.values.0')
   })
 })
 
@@ -69,17 +67,9 @@ describe(removeArraySuffix.name, () => {
   })
 
   it('should throw if the suffix is not a decimal number', () => {
-    expect(() => removeArraySuffix('test.a')).toThrow(
-      'Expected test.a to have only numeric suffixes',
-    )
-    expect(() => removeArraySuffix('test.1a')).toThrow(
-      'Expected test.1a to have only numeric suffixes',
-    )
-    expect(() => removeArraySuffix('test.1e2')).toThrow(
-      'Expected test.1e2 to have only numeric suffixes',
-    )
-    expect(() => removeArraySuffix('test.0.')).toThrow(
-      'Expected test.0. to have only numeric suffixes',
-    )
+    expect(removeArraySuffix('test.a')).toEqual('test.a')
+    expect(removeArraySuffix('test.1a')).toEqual('test.1a')
+    expect(removeArraySuffix('test.1e2')).toEqual('test.1e2')
+    expect(removeArraySuffix('test.0.')).toEqual('test.0.')
   })
 })

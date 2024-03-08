@@ -21,10 +21,10 @@ export function removeArraySuffix(path: string): string {
 
     assert(rest.length >= 1, `Unreachable code`)
     assert(name !== undefined, `Unexpected undefined value`)
-    assert(
-      rest.every((p) => p.length > 0 && isIntNumeric(p)),
-      `Expected ${path} to have only numeric suffixes`,
-    )
+
+    if (!rest.every((p) => p.length > 0 && isIntNumeric(p))) {
+      return path
+    }
     return name
   }
 
