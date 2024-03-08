@@ -17,14 +17,10 @@ export function orderByTvl<
     const tvl =
       tvlApiResponse.projects[project.id.toString()]?.charts.hourly.data.at(
         -1,
-      )?.[1] ?? 0
+      )?.[1]
 
     if (tvl) {
-      return (
-        tvlApiResponse.projects[project.id.toString()]?.charts.hourly.data.at(
-          -1,
-        )?.[1] ?? 0
-      )
+      return tvl ?? 0
     }
 
     const useTvlFrom = useTvlFromMap[project.id.toString()]
