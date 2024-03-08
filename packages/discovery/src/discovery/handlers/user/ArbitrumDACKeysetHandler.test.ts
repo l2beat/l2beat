@@ -55,8 +55,8 @@ describe(ArbitrumDACKeysetHandler.name, () => {
     expect(value).toEqual({
       field: 'someName',
       value: {
-        threshold: 4,
-        keyCount: 7,
+        requiredSignatures: 4,
+        membersCount: 7,
       },
     })
   })
@@ -83,8 +83,8 @@ describe(ArbitrumDACKeysetHandler.name, () => {
     expect(value).toEqual({
       field: 'someName',
       value: {
-        threshold: 0,
-        keyCount: 0,
+        requiredSignatures: 0,
+        membersCount: 0,
       },
     })
   })

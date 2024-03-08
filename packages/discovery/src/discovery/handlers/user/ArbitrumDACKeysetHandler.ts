@@ -43,26 +43,26 @@ export class ArbitrumDACKeysetHandler implements ClassicHandler {
       blockNumber,
     )
 
-    const { threshold, keyCount } = decodeLastEvent(events)
+    const { requiredSignatures, membersCount } = decodeLastEvent(events)
 
     return {
       field: this.field,
       value: {
-        threshold: threshold,
-        keyCount: keyCount,
+        requiredSignatures,
+        membersCount,
       },
     }
   }
 }
 
 function decodeLastEvent(events: providers.Log[]): {
-  threshold: number
-  keyCount: number
+  requiredSignatures: number
+  membersCount: number
 } {
   if (events.length === 0) {
     return {
-      threshold: 0,
-      keyCount: 0,
+      requiredSignatures: 0,
+      membersCount: 0,
     }
   }
 
@@ -72,11 +72,13 @@ function decodeLastEvent(events: providers.Log[]): {
 
   // NOTE(radomski): Schema is not public, but we know that the first 8 bytes are the threshold and the next 8 are the keyCount
   const keysetBytes = Bytes.fromHex(decodedEvent.keysetBytes as string)
-  const threshold = keysetBytes.slice(0, 8).toNumber()
-  const keyCount = keysetBytes.slice(8, 16).toNumber()
+  const assummedHonestMembers = keysetBytes.slice(0, 8).toNumber()
+  const membersCount = keysetBytes.slice(8, 16).toNumber()
+
+  const requiredSignatures = membersCount - assummedHonestMembers + 1
 
   return {
-    threshold,
-    keyCount,
+    requiredSignatures,
+    membersCount,
   }
 }
