@@ -73,7 +73,6 @@ export interface OpStackConfig {
   hasProperSecurityCouncil?: boolean
 }
 
-
 export function opStack(templateVars: OpStackConfig): Layer2 {
   const sequencerAddress = EthereumAddress(
     templateVars.discovery.getContractValue('SystemConfig', 'batcherHash'),
