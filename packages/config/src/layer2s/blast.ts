@@ -33,10 +33,7 @@ export const blast: Layer2 = opStack({
         'https://blast.io/en/bridge',
       ],
       documentation: ['https://docs.blast.io/about-blast'],
-      explorers: [
-        'https://blastscan.io',
-        'https://blastexplorer.io',
-      ],
+      explorers: ['https://blastscan.io', 'https://blastexplorer.io'],
       repositories: [],
       socialMedia: ['https://twitter.com/Blast_L2'],
     },
