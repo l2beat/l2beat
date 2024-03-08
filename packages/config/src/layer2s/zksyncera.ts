@@ -46,7 +46,7 @@ export const zksyncera: Layer2 = {
       ? `Withdrawals are delayed by ${delay}. The length of the delay can be arbitrarily set by a MultiSig.`
       : undefined,
     description:
-      'zkSync Era is a general-purpose ZK Rollup by Matter Labs with full EVM compatibility.',
+      'zkSync Era is a general-purpose ZK Rollup with full EVM compatibility.',
     purposes: ['Universal'],
     provider: 'ZK Stack',
     category: 'ZK Rollup',
