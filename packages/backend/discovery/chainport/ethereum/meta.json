@@ -2,7 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "MultisigVault2",
+      "name": "MultisigVault1",
       "values": {
         "domainSeparator": {
           "description": null,
@@ -37,7 +37,7 @@
       }
     },
     {
-      "name": "MultisigVault1",
+      "name": "MultisigVault2",
       "values": {
         "domainSeparator": {
           "description": null,
