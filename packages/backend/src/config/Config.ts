@@ -1,6 +1,12 @@
 import { LoggerOptions } from '@l2beat/backend-tools'
 import { DiscoveryChainConfig } from '@l2beat/discovery'
-import { ChainId, ProjectId, Token, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainId,
+  ProjectId,
+  Token,
+  TokenQuery,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
 import { Project } from '../model/Project'
@@ -31,6 +37,7 @@ export interface Config {
   readonly chains: { name: string; chainId: ChainId }[]
   readonly flags: ResolvedFeatureFlag[]
   readonly tvlCleanerEnabled: boolean
+  readonly queries: TokenQuery[]
 }
 
 export type LoggerConfig = Pick<LoggerOptions, 'logLevel' | 'format'> &

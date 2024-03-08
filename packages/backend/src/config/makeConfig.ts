@@ -1,9 +1,10 @@
-import { Env, LoggerOptions } from '@l2beat/backend-tools'
+import { assert, Env, LoggerOptions } from '@l2beat/backend-tools'
 import { bridges, chains, layer2s, tokenList } from '@l2beat/config'
 import { ConfigReader } from '@l2beat/discovery'
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, Token, TokenQuery, UnixTime } from '@l2beat/shared-pure'
 
-import { bridgeToProject, layer2ToProject } from '../model/Project'
+import { bridgeToProject, layer2ToProject, Project } from '../model/Project'
+import { ChainConverter } from '../tools/ChainConverter'
 import { Config, DiscordConfig } from './Config'
 import { FeatureFlags } from './FeatureFlags'
 import {
@@ -30,9 +31,13 @@ export function makeConfig(
   ).append('status')
   const minBlockTimestamp = minTimestampOverride ?? getEthereumMinTimestamp()
 
+  const projects = layer2s
+    .map(layer2ToProject)
+    .concat(bridges.map(bridgeToProject))
+
   return {
     name,
-    projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
+    projects: projects,
     tokens: tokenList,
     logger: {
       logLevel: env.string('LOG_LEVEL', 'INFO') as LoggerOptions['logLevel'],
@@ -154,6 +159,7 @@ export function makeConfig(
     chains: chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
     tvlCleanerEnabled: flags.isEnabled('tvlCleaner'),
     flags: flags.getResolved(),
+    queries: getQueries(projects, tokenList),
   }
 }
 
@@ -183,4 +189,57 @@ function getDiscordConfig(env: Env, isLocal?: boolean): DiscordConfig | false {
       callsPerMinute: 3000,
     }
   )
+}
+function getQueries(projects: Project[], tokenList: Token[]): TokenQuery[] {
+  const chainConverter = new ChainConverter(
+    chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
+  )
+  const notEthereumTokens: TokenQuery[] = []
+
+  for (const token of tokenList) {
+    if (token.chainId !== ChainId.ETHEREUM) {
+      switch (token.formula) {
+        case 'totalSupply':
+          assert(token.address, 'Token address is required for total supply')
+          notEthereumTokens.push({
+            address: token.address ?? 'native',
+            chain: chainConverter.toName(token.chainId),
+            sinceTimestamp: token.sinceTimestamp,
+            price: { type: 'coingecko', coingeckoId: token.coingeckoId },
+            amount: { type: 'totalSupply', address: token.address },
+          })
+          break
+        case 'circulatingSupply':
+          notEthereumTokens.push({
+            address: token.address ?? 'native',
+            chain: chainConverter.toName(token.chainId),
+            sinceTimestamp: token.sinceTimestamp,
+            price: { type: 'coingecko', coingeckoId: token.coingeckoId },
+            amount: {
+              type: 'circulatingSupply',
+              coingeckoId: token.coingeckoId,
+            },
+          })
+          break
+        case 'locked':
+          throw new Error('Locked tokens are derived from projects list')
+      }
+    }
+  }
+
+  for (const project of projects) {
+    for (const escrow of project.escrows) {
+      for (const token of escrow.tokens) {
+        notEthereumTokens.push({
+          address: token.address ?? 'native',
+          chain: chainConverter.toName(token.chainId),
+          sinceTimestamp: token.sinceTimestamp,
+          price: { type: 'coingecko', coingeckoId: token.coingeckoId },
+          amount: { type: 'escrow', escrowAddress: escrow.address },
+        })
+      }
+    }
+  }
+
+  return notEthereumTokens
 }
