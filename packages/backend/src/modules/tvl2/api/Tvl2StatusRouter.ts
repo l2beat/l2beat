@@ -1,6 +1,8 @@
 import Router from '@koa/router'
 import { TokenQuery, UnixTime } from '@l2beat/shared-pure'
+import { z } from 'zod'
 
+import { withTypedContext } from '../../../api/types'
 import { Config } from '../../../config'
 import { Clock } from '../../../tools/Clock'
 import { renderTokensStatusPage } from './TokensStatusPage'
@@ -65,6 +67,29 @@ export function createTvl2StatusRouter(config: Config, clock: Clock) {
       tokensByProject,
     })
   })
+
+  router.get(
+    '/status/tokens/list',
+    withTypedContext(
+      z.object({
+        query: z.object({
+          chain: z.string().optional(),
+          project: z.string().optional(),
+        }),
+      }),
+      (ctx) => {
+        const filteredByChain = config.queries.filter((t) =>
+          ctx.query.chain ? t.chain === ctx.query.chain : true,
+        )
+
+        const filteredByProject = filteredByChain.filter((t) =>
+          ctx.query.project ? t.project === ctx.query.project : true,
+        )
+
+        ctx.body = JSON.stringify(filteredByProject)
+      },
+    ),
+  )
 
   return router
 }

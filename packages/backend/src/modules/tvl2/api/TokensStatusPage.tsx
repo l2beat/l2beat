@@ -30,20 +30,7 @@ export function TokensStatusPage({
           All <CountBadge count={tokens.length} />
         </label>
         <div className="tab">
-          <div>
-            Target data points:{' '}
-            {tokens.reduce((sum, token) => sum + token.dataPoints, 0) * 2}
-            <div>hourly</div>
-            <div>sixHourly</div>
-            <div>daily</div>
-          </div>
-          <div>
-            Prices: {tokens.reduce((sum, token) => sum + token.dataPoints, 0)}
-          </div>
-          <div>
-            Amounts: {tokens.reduce((sum, token) => sum + token.dataPoints, 0)}
-          </div>
-          <a href="#">see all</a>
+          <LinkToList name="list" chain={undefined} project={undefined} />
         </div>
         <input type="radio" name="tabs" id="tabtwo" />
         <label htmlFor="tabtwo">
@@ -54,10 +41,7 @@ export function TokensStatusPage({
             .sort(([_, a], [__, b]) => b.length - a.length)
             .map(([chain, tokens]) => (
               <Group key={chain} title={chain} count={tokens.length}>
-                tokens
-                {/* {tokens.map((token, i) => (
-                <Token key={i} token={token} />
-              ))} */}
+                <LinkToList name="list" chain={chain} project={undefined} />
               </Group>
             ))}
         </div>
@@ -71,10 +55,7 @@ export function TokensStatusPage({
             .sort(([_, a], [__, b]) => b.length - a.length)
             .map(([chain, tokens]) => (
               <Group key={chain} title={chain} count={tokens.length}>
-                tokens
-                {/* {tokens.map((token, i) => (
-                <Token key={i} token={token} />
-              ))} */}
+                <LinkToList name="list" chain={undefined} project={chain} />
               </Group>
             ))}
         </div>
@@ -85,6 +66,34 @@ export function TokensStatusPage({
 
 export function renderTokensStatusPage(props: TokensStatusPageProps) {
   return reactToHtml(<TokensStatusPage {...props} />)
+}
+
+export function LinkToList({
+  name,
+  chain,
+  project,
+}: {
+  name: string
+  chain?: string
+  project?: string
+}) {
+  const query = new URLSearchParams()
+  if (chain) {
+    query.set('chain', chain)
+  }
+  if (project) {
+    query.set('project', project)
+  }
+
+  const url = `/status/tokens/list${
+    query.size > 0 ? '?' : ''
+  }${query.toString()}`
+
+  return (
+    <a href={url.toString()} target="_blank" rel="noreferrer">
+      {name}
+    </a>
+  )
 }
 
 export function Group({
