@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x86f5a697e88e62dc3e2832bb21f5115cd2bec5e2
+
+# Diff at Fri, 08 Mar 2024 08:53:50 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a10be30b5303dc6a457478efdaca424c246501ca block: 19375580
+- current block number: 19389379
+
+## Description
+
+New proposal created and executed with the description "Change Arbitrage Settings on Main and Side Bridges".
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
++++ description: The amount of proposals ever created. Goes up by 1 for each proposal.
++++ severity: MEDIUM
+      values.proposalCount:
+-        49
++        50
+    }
+```
+
 Generated with discovered.json: 0x5fa08b3a2322e373062b7d84998ac427346b7e7b
 
 # Diff at Wed, 06 Mar 2024 10:38:21 GMT:
