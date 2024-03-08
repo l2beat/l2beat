@@ -3,13 +3,13 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { describeDatabase } from '../../../test/database'
-import { LivenessConfigurationRepository } from './LivenessConfigurationRepository'
-import { LIVENESS_CONFIGS } from './LivenessConfigurationRepository.test'
+import { TrackedTxsConfigsRepository } from '../../tracked-txs/repositories/TrackedTxsConfigsRepository'
+import { TRACKED_TXS_CONFIGS } from '../../tracked-txs/repositories/TrackedTxsConfigsRepository.test'
 import { LivenessRecord, LivenessRepository } from './LivenessRepository'
 
 describeDatabase(LivenessRepository.name, (database) => {
   const repository = new LivenessRepository(database, Logger.SILENT)
-  const configRepository = new LivenessConfigurationRepository(
+  const configRepository = new TrackedTxsConfigsRepository(
     database,
     Logger.SILENT,
   )
@@ -20,26 +20,26 @@ describeDatabase(LivenessRepository.name, (database) => {
       timestamp: START.add(-1, 'hours'),
       blockNumber: 12345,
       txHash: '0x1234567890abcdef',
-      livenessId: LIVENESS_CONFIGS[0].id,
+      trackedTxId: TRACKED_TXS_CONFIGS[0].uses[0].id,
     },
     {
       timestamp: START.add(-2, 'hours'),
       blockNumber: 12346,
       txHash: '0xabcdef1234567890',
-      livenessId: LIVENESS_CONFIGS[1].id,
+      trackedTxId: TRACKED_TXS_CONFIGS[1].uses[0].id,
     },
     {
       timestamp: START.add(-3, 'hours'),
       blockNumber: 12347,
       txHash: '0x12345678901abcdef',
-      livenessId: LIVENESS_CONFIGS[2].id,
+      trackedTxId: TRACKED_TXS_CONFIGS[2].uses[0].id,
     },
   ]
 
   beforeEach(async function () {
     this.timeout(10000)
     await configRepository.deleteAll()
-    await configRepository.addMany(LIVENESS_CONFIGS)
+    await configRepository.addMany(TRACKED_TXS_CONFIGS)
     await repository.deleteAll()
     await repository.addMany(
       DATA.map((e) => ({
@@ -55,13 +55,13 @@ describeDatabase(LivenessRepository.name, (database) => {
           timestamp: START.add(-5, 'hours'),
           blockNumber: 12349,
           txHash: '0x1234567890abcdef1',
-          livenessId: LIVENESS_CONFIGS[0].id,
+          trackedTxId: TRACKED_TXS_CONFIGS[0].uses[0].id,
         },
         {
           timestamp: START.add(-6, 'hours'),
           blockNumber: 12350,
           txHash: '0xabcdef1234567892',
-          livenessId: LIVENESS_CONFIGS[0].id,
+          trackedTxId: TRACKED_TXS_CONFIGS[0].uses[0].id,
         },
       ]
       await repository.addMany(newRows)
@@ -86,7 +86,7 @@ describeDatabase(LivenessRepository.name, (database) => {
           timestamp: START.add(-i, 'hours'),
           blockNumber: i,
           txHash: `0xabcdef1234567892${i}`,
-          livenessId: LIVENESS_CONFIGS[0].id,
+          trackedTxId: TRACKED_TXS_CONFIGS[0].uses[0].id,
         })
       }
       await expect(repository.addMany(records)).not.toBeRejected()
@@ -119,25 +119,25 @@ describeDatabase(LivenessRepository.name, (database) => {
     it('should delete rows inserted after certain timestamp for given configuration id', async () => {
       await repository.deleteAll()
 
-      const configurationId = LIVENESS_CONFIGS[0].id
-      const records = [
+      const configurationId = TRACKED_TXS_CONFIGS[0].uses[0].id
+      const records: LivenessRecord[] = [
         {
           timestamp: START.add(1, 'hours'),
           blockNumber: 12345,
           txHash: '0x1234567890abcdef',
-          livenessId: configurationId,
+          trackedTxId: configurationId,
         },
         {
           timestamp: START.add(2, 'hours'),
           blockNumber: 12346,
           txHash: '0xabcdef1234567890',
-          livenessId: configurationId,
+          trackedTxId: configurationId,
         },
         {
           timestamp: START.add(2, 'hours'),
           blockNumber: 12346,
           txHash: '0xabcdef1234567890',
-          livenessId: LIVENESS_CONFIGS[1].id,
+          trackedTxId: TRACKED_TXS_CONFIGS[1].uses[0].id,
         },
       ]
       await repository.addMany(records)
@@ -153,15 +153,15 @@ describeDatabase(LivenessRepository.name, (database) => {
   describe(LivenessRepository.prototype.getByProjectIdAndType.name, () => {
     it('should return rows with given project id and type', async () => {
       const results = await repository.getByProjectIdAndType(
-        LIVENESS_CONFIGS[0].projectId,
-        LIVENESS_CONFIGS[0].type,
+        TRACKED_TXS_CONFIGS[0].projectId,
+        TRACKED_TXS_CONFIGS[0].uses[0].subType,
         START.add(-1, 'hours'),
       )
 
       expect(results).toEqual([
         {
           timestamp: DATA[0].timestamp,
-          type: LIVENESS_CONFIGS[0].type,
+          subtype: TRACKED_TXS_CONFIGS[0].uses[0].subType,
         },
       ])
     })
@@ -173,32 +173,32 @@ describeDatabase(LivenessRepository.name, (database) => {
       it('should return tx hash for given project id and timestamp when no exact hour', async () => {
         await repository.deleteAll()
 
-        const configuration = LIVENESS_CONFIGS[0]
-        const records = [
+        const configuration = TRACKED_TXS_CONFIGS[0]
+        const records: LivenessRecord[] = [
           {
             timestamp: UnixTime.fromDate(new Date('2021-01-01T10:30:00Z')),
             blockNumber: 12345,
             txHash: '0x1234567890abcdef',
-            livenessId: configuration.id,
+            trackedTxId: configuration.uses[0].id,
           },
           {
             timestamp: UnixTime.fromDate(new Date('2021-01-01T10:45:00Z')),
             blockNumber: 12346,
             txHash: '0xabcdef1234567890',
-            livenessId: configuration.id,
+            trackedTxId: configuration.uses[0].id,
           },
           {
             timestamp: UnixTime.fromDate(new Date('2021-01-01T11:01:00Z')),
             blockNumber: 12347,
             txHash: '0xabcdef1234567891',
-            livenessId: configuration.id,
+            trackedTxId: configuration.uses[0].id,
           },
         ]
         await repository.addMany(records)
 
         const result = await repository.findTransactionWithinTimeRange(
           configuration.projectId,
-          configuration.type,
+          configuration.uses[0].subType,
           UnixTime.fromDate(new Date('2021-01-01T11:00:00Z')),
           UnixTime.fromDate(new Date('2021-01-01T10:00:00Z')),
         )
@@ -212,32 +212,32 @@ describeDatabase(LivenessRepository.name, (database) => {
       it('should return tx hash for given project id and timestamp inclusive hour', async () => {
         await repository.deleteAll()
 
-        const configuration = LIVENESS_CONFIGS[0]
-        const records = [
+        const configuration = TRACKED_TXS_CONFIGS[0]
+        const records: LivenessRecord[] = [
           {
             timestamp: UnixTime.fromDate(new Date('2021-01-01T10:00:00Z')),
             blockNumber: 12345,
             txHash: '0x1234567890abcdef',
-            livenessId: configuration.id,
+            trackedTxId: configuration.uses[0].id,
           },
           {
             timestamp: UnixTime.fromDate(new Date('2021-01-01T11:00:00Z')),
             blockNumber: 12346,
             txHash: '0xabcdef1234567890',
-            livenessId: configuration.id,
+            trackedTxId: configuration.uses[0].id,
           },
           {
             timestamp: UnixTime.fromDate(new Date('2021-01-01T12:00:00Z')),
             blockNumber: 12347,
             txHash: '0xabcdef1234567892',
-            livenessId: configuration.id,
+            trackedTxId: configuration.uses[0].id,
           },
         ]
         await repository.addMany(records)
 
         const result = await repository.findTransactionWithinTimeRange(
           configuration.projectId,
-          configuration.type,
+          configuration.uses[0].subType,
           UnixTime.fromDate(new Date('2021-01-01T11:00:00Z')),
           UnixTime.fromDate(new Date('2021-01-01T10:00:00Z')),
         )
@@ -254,12 +254,12 @@ describeDatabase(LivenessRepository.name, (database) => {
             timestamp: START.add(-2, 'hours'),
             blockNumber: 12346,
             txHash: '0x1234567890abcdff',
-            livenessId: LIVENESS_CONFIGS[0].id,
+            trackedTxId: TRACKED_TXS_CONFIGS[0].uses[0].id,
           },
         ])
         const result = await repository.findTransactionWithinTimeRange(
-          LIVENESS_CONFIGS[0].projectId,
-          LIVENESS_CONFIGS[0].type,
+          TRACKED_TXS_CONFIGS[0].projectId,
+          TRACKED_TXS_CONFIGS[0].uses[0].subType,
           START.add(-8, 'hours'),
           START.add(-9, 'hours'),
         )
@@ -270,16 +270,16 @@ describeDatabase(LivenessRepository.name, (database) => {
   )
 
   describe(
-    LivenessRepository.prototype.getWithTypeDistinctTimestamp.name,
+    LivenessRepository.prototype.getWithSubtypeDistinctTimestamp.name,
     () => {
       it('join and returns data with type', async () => {
-        const result = await repository.getWithTypeDistinctTimestamp(
-          LIVENESS_CONFIGS[0].projectId,
+        const result = await repository.getWithSubtypeDistinctTimestamp(
+          TRACKED_TXS_CONFIGS[0].projectId,
         )
         const expected = [
           {
             timestamp: DATA[0].timestamp,
-            type: LIVENESS_CONFIGS[0].type,
+            subtype: TRACKED_TXS_CONFIGS[0].uses[0].subType,
           },
         ]
 
@@ -308,21 +308,21 @@ describeDatabase(LivenessRepository.name, (database) => {
         await repository.addMany(
           NEW_DATA.map((e) => ({
             ...e,
-            livenessId: LIVENESS_CONFIGS[2].id,
+            trackedTxId: TRACKED_TXS_CONFIGS[2].uses[0].id,
           })),
         )
-        const result = await repository.getWithTypeDistinctTimestamp(
-          LIVENESS_CONFIGS[2].projectId,
+        const result = await repository.getWithSubtypeDistinctTimestamp(
+          TRACKED_TXS_CONFIGS[2].projectId,
         )
 
         const expected = [
           {
             timestamp: NEW_DATA[1].timestamp,
-            type: LIVENESS_CONFIGS[2].type,
+            subtype: TRACKED_TXS_CONFIGS[2].uses[0].subType,
           },
           {
             timestamp: NEW_DATA[2].timestamp,
-            type: LIVENESS_CONFIGS[2].type,
+            subtype: TRACKED_TXS_CONFIGS[2].uses[0].subType,
           },
         ]
         expect(result).toEqualUnsorted(expected)
@@ -356,32 +356,32 @@ describeDatabase(LivenessRepository.name, (database) => {
         await repository.addMany(
           NEW_DATA.map((e) => ({
             ...e,
-            livenessId: LIVENESS_CONFIGS[2].id,
+            trackedTxId: TRACKED_TXS_CONFIGS[2].uses[0].id,
           })),
         )
 
-        const result = await repository.getWithTypeDistinctTimestamp(
-          LIVENESS_CONFIGS[2].projectId,
+        const result = await repository.getWithSubtypeDistinctTimestamp(
+          TRACKED_TXS_CONFIGS[2].projectId,
         )
 
-        const type = LIVENESS_CONFIGS[2].type
+        const subtype = TRACKED_TXS_CONFIGS[2].uses[0].subType
 
         const expected = [
           {
             timestamp: NEW_DATA[2].timestamp,
-            type,
+            subtype,
           },
           {
             timestamp: NEW_DATA[1].timestamp,
-            type,
+            subtype,
           },
           {
             timestamp: NEW_DATA[0].timestamp,
-            type,
+            subtype,
           },
           {
             timestamp: NEW_DATA[3].timestamp,
-            type,
+            subtype,
           },
         ]
 

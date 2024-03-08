@@ -1,6 +1,6 @@
-import { LivenessRecordWithType } from '../repositories/LivenessRepository'
+import { LivenessRecordWithSubtype } from '../repositories/LivenessRepository'
 
-export interface GroupedByType<T = LivenessRecordWithType> {
+export interface GroupedByType<T = LivenessRecordWithSubtype> {
   batchSubmissions: {
     records: T[]
   }
@@ -13,7 +13,7 @@ export interface GroupedByType<T = LivenessRecordWithType> {
 }
 
 export function groupByType<
-  T extends { type: string } = LivenessRecordWithType,
+  T extends { type: string } = LivenessRecordWithSubtype,
 >(records: T[]): GroupedByType<T> {
   const result: GroupedByType<T> = {
     batchSubmissions: {

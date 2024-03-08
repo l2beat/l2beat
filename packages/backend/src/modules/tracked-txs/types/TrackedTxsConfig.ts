@@ -1,7 +1,7 @@
 import { Layer2TrackedTxUse } from '@l2beat/config'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { TrackedTxsId } from './TrackedTxsId'
+import { TrackedTxId } from './TrackedTxId'
 
 export const SHARP_SUBMISSION_ADDRESS = EthereumAddress(
   '0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60',
@@ -18,7 +18,7 @@ export type TrackedTxsConfigEntry =
   | TrackedTxSharpSubmission
 
 export interface TrackedTxUseWithConfigHash extends Layer2TrackedTxUse {
-  id: TrackedTxsId
+  id: TrackedTxId
 }
 
 interface TrackedTxConfigBase {
