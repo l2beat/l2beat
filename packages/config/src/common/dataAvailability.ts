@@ -178,13 +178,13 @@ function getOffChainBridgeDescription(
 ): string {
   switch (bridge) {
     case 'None':
-      return 'There is no bridge that can attest to the validity of the data posted.'
+      return 'There is no bridge that can attest if the data has been made available.'
     case 'Optimistic':
       return 'There is a mechanism that allows validators to request that the Sequencer posts data on-chain via L1 contract if they find that data is unavailable.'
     case 'DAC Members':
-      return 'There is a threshold of members that must sign and attest that the data is correct and available.'
+      return 'There is a threshold of members that must sign and attest that the data has been made available.'
     default:
-      return `There is a threshold of ${bridge} that must sign and attest that the data is correct and available.`
+      return `There is a threshold of ${bridge} that must sign and attest that the data the data has been made available.`
   }
 }
 
