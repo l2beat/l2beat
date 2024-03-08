@@ -715,7 +715,8 @@ export function getScalingDataAvailabilityColumnsConfig() {
     },
     {
       name: 'DA Bridge',
-      tooltip: 'The DA bridge used for informing Ethereum contracts if data has been made available.',
+      tooltip:
+        'The DA bridge used for informing Ethereum contracts if data has been made available.',
       getValue: (project) => (
         <SentimentText
           sentiment={project.dataAvailability.bridge.sentiment}
