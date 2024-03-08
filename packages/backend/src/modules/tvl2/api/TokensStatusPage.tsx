@@ -4,14 +4,13 @@ import React from 'react'
 import { Page } from '../../status/Page'
 import { reactToHtml } from '../../status/reactToHtml'
 
-interface TokenQueryWithDatapoints extends TokenQuery {
-  dataPoints: number
+interface TokenQueryWithTarget extends TokenQuery {
+  targetDataPoints: number
 }
-
 interface TokensStatusPageProps {
-  tokens: TokenQueryWithDatapoints[]
-  tokensByChain: Record<string, TokenQueryWithDatapoints[]>
-  tokensByProject: Record<string, TokenQueryWithDatapoints[]>
+  tokens: TokenQueryWithTarget[]
+  tokensByChain: Record<string, TokenQueryWithTarget[]>
+  tokensByProject: Record<string, TokenQueryWithTarget[]>
 }
 
 // move all outside the tab
@@ -25,7 +24,7 @@ export function TokensStatusPage({
   return (
     <Page title="Tokens">
       <div className="tabs">
-        <input type="radio" name="tabs" id="tabone" checked />
+        <input type="radio" name="tabs" id="tabone" readOnly checked />
         <label htmlFor="tabone">
           All <CountBadge count={tokens.length} />
         </label>
@@ -73,10 +72,13 @@ export function renderTokensStatusPage(props: TokensStatusPageProps) {
   return reactToHtml(<TokensStatusPage {...props} />)
 }
 
-function Stats({ tokens }: { tokens: TokenQueryWithDatapoints[] }) {
+function Stats({ tokens }: { tokens: TokenQueryWithTarget[] }) {
   return (
     <div>
-      Target data points: {tokens.reduce((acc, t) => acc + t.dataPoints, 0)}
+      Target data points:{' '}
+      {tokens
+        .reduce((acc, t) => acc + t.targetDataPoints, 0)
+        .toLocaleString('en-US')}
     </div>
   )
 }
