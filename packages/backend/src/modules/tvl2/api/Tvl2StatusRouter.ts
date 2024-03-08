@@ -14,57 +14,12 @@ export interface TokenQueryWithTarget extends TokenQuery {
 export function createTvl2StatusRouter(config: Config, clock: Clock) {
   const router = new Router()
 
-  const tokensByChain: Record<string, TokenQueryWithTarget[]> = {}
-
-  for (const token of config.queries) {
-    if (token.amount.type === 'circulatingSupply') {
-      if (tokensByChain['coingecko']) {
-        tokensByChain['coingecko'].push({
-          ...token,
-          targetDataPoints: getTargetDataPoints(token, clock),
-        })
-      } else {
-        tokensByChain['coingecko'] = [
-          { ...token, targetDataPoints: getTargetDataPoints(token, clock) },
-        ]
-      }
-    } else {
-      if (tokensByChain[token.chain]) {
-        tokensByChain[token.chain].push({
-          ...token,
-          targetDataPoints: getTargetDataPoints(token, clock),
-        })
-      } else {
-        tokensByChain[token.chain] = [
-          { ...token, targetDataPoints: getTargetDataPoints(token, clock) },
-        ]
-      }
-    }
-  }
-
-  const tokensByProject: Record<string, TokenQueryWithTarget[]> = {}
-
-  for (const token of config.queries) {
-    if (tokensByProject[token.project]) {
-      tokensByProject[token.project].push({
-        ...token,
-        targetDataPoints: getTargetDataPoints(token, clock),
-      })
-    } else {
-      tokensByProject[token.project] = [
-        { ...token, targetDataPoints: getTargetDataPoints(token, clock) },
-      ]
-    }
-  }
-
   router.get('/status/tokens', (ctx) => {
     ctx.body = renderTokensStatusPage({
       tokens: config.queries.map((t) => ({
         ...t,
         targetDataPoints: getTargetDataPoints(t, clock),
       })),
-      tokensByChain,
-      tokensByProject,
     })
   })
 

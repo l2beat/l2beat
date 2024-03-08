@@ -1,4 +1,5 @@
 import { TokenQuery } from '@l2beat/shared-pure'
+import { groupBy } from 'lodash'
 import React from 'react'
 
 import { Page } from '../../status/Page'
@@ -9,18 +10,15 @@ interface TokenQueryWithTarget extends TokenQuery {
 }
 interface TokensStatusPageProps {
   tokens: TokenQueryWithTarget[]
-  tokensByChain: Record<string, TokenQueryWithTarget[]>
-  tokensByProject: Record<string, TokenQueryWithTarget[]>
 }
 
 // move all outside the tab
 // when clicking on chain/project navigate to new tab JSON
 
-export function TokensStatusPage({
-  tokens,
-  tokensByChain,
-  tokensByProject,
-}: TokensStatusPageProps) {
+export function TokensStatusPage({ tokens }: TokensStatusPageProps) {
+  const tokensByChain = groupBy(tokens, 'chain')
+  const tokensByProject = groupBy(tokens, 'project')
+
   return (
     <Page title="Tokens">
       <div className="tabs">
@@ -46,6 +44,14 @@ export function TokensStatusPage({
               <Group key={chain} title={chain} count={tokens.length}>
                 <Stats tokens={tokens} />
                 <LinkToList chain={chain} project={undefined} />
+                {Object.entries(groupBy(tokensByChain[chain], 'project'))
+                  .sort(([_, a], [__, b]) => b.length - a.length)
+                  .map(([chain, tokens]) => (
+                    <Group key={chain} title={chain} count={tokens.length}>
+                      <Stats tokens={tokens} />
+                      <LinkToList chain={chain} project={undefined} />
+                    </Group>
+                  ))}
               </Group>
             ))}
         </div>
@@ -56,10 +62,18 @@ export function TokensStatusPage({
         <div className="tab">
           {Object.entries(tokensByProject)
             .sort(([_, a], [__, b]) => b.length - a.length)
-            .map(([chain, tokens]) => (
-              <Group key={chain} title={chain} count={tokens.length}>
+            .map(([project, tokens]) => (
+              <Group key={project} title={project} count={tokens.length}>
                 <Stats tokens={tokens} />
-                <LinkToList chain={undefined} project={chain} />
+                <LinkToList chain={undefined} project={project} />
+                {Object.entries(groupBy(tokensByProject[project], 'chain'))
+                  .sort(([_, a], [__, b]) => b.length - a.length)
+                  .map(([chain, tokens]) => (
+                    <Group key={chain} title={chain} count={tokens.length}>
+                      <Stats tokens={tokens} />
+                      <LinkToList chain={chain} project={undefined} />
+                    </Group>
+                  ))}
               </Group>
             ))}
         </div>
