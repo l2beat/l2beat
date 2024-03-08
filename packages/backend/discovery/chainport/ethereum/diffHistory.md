@@ -9,6 +9,7 @@ Generated with discovered.json: 0x86f5a697e88e62dc3e2832bb21f5115cd2bec5e2
 ## Description
 
 New proposal created and executed with the description "Change Arbitrage Settings on Main and Side Bridges".
+It called `setArbitrageManagerAndLimit()` but we can't see what this is doing because the targets have unverified sources.
 
 ## Watched changes
 
