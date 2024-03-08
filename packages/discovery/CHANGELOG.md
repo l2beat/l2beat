@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.44.4
+
+### Minor Changes
+
+- Change ArbitrumDAC values calculation
+
 ## 0.44.3
 
 ### Patch Changes
