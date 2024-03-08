@@ -82,151 +82,6 @@
       }
     },
     {
-      "name": "TransmitManager",
-      "values": {
-        "chainSlug": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nominee": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "signatureVerifier__": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "socket__": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "CapacitorFactory",
-      "values": {
-        "maxAllowedPacketLength": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "minAllowedPacketLength": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nominee": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "Hasher",
-      "values": {
-        "nominee": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ArbitrumL1Switchboard",
-      "values": {
-        "bridge__": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "capacitor__": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "chainSlug": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "inbox__": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isGlobalTipped": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isInitialized": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nominee": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "outbox__": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "remoteNativeSwitchboard": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "signatureVerifier__": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "socket__": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "switchboardFees": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "verificationOverheadFees": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "PolygonL1Switchboard",
       "values": {
         "capacitor__": {
@@ -307,36 +162,6 @@
       }
     },
     {
-      "name": "ExecutionManager",
-      "values": {
-        "chainSlug": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nominee": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "signatureVerifier__": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "socket__": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "OptimismSwitchboard",
       "values": {
         "capacitor__": {
@@ -375,6 +200,156 @@
           "type": null
         },
         "receiveGasLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "remoteNativeSwitchboard": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "signatureVerifier__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "socket__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "switchboardFees": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "verificationOverheadFees": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ExecutionManager",
+      "values": {
+        "chainSlug": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nominee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "signatureVerifier__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "socket__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Hasher",
+      "values": {
+        "nominee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "TransmitManager",
+      "values": {
+        "chainSlug": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nominee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "signatureVerifier__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "socket__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ArbitrumL1Switchboard",
+      "values": {
+        "bridge__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "capacitor__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainSlug": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "inbox__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isGlobalTipped": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isInitialized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nominee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "outbox__": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
           "description": null,
           "severity": null,
           "type": null
@@ -505,6 +480,31 @@
           "type": null
         },
         "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CapacitorFactory",
+      "values": {
+        "maxAllowedPacketLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minAllowedPacketLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nominee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
           "description": null,
           "severity": null,
           "type": null
