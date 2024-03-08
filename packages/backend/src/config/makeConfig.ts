@@ -208,6 +208,7 @@ function getQueries(projects: Project[], tokenList: Token[]): TokenQuery[] {
             sinceTimestamp: token.sinceTimestamp,
             price: { type: 'coingecko', coingeckoId: token.coingeckoId },
             amount: { type: 'totalSupply', address: token.address },
+            project: chainConverter.toName(token.chainId),
           })
           break
         case 'circulatingSupply':
@@ -220,6 +221,7 @@ function getQueries(projects: Project[], tokenList: Token[]): TokenQuery[] {
               type: 'circulatingSupply',
               coingeckoId: token.coingeckoId,
             },
+            project: chainConverter.toName(token.chainId),
           })
           break
         case 'locked':
@@ -237,6 +239,7 @@ function getQueries(projects: Project[], tokenList: Token[]): TokenQuery[] {
           sinceTimestamp: token.sinceTimestamp,
           price: { type: 'coingecko', coingeckoId: token.coingeckoId },
           amount: { type: 'escrow', escrowAddress: escrow.address },
+          project: project.projectId.toString(),
         })
       }
     }

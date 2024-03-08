@@ -3,7 +3,6 @@ import React from 'react'
 
 import { Page } from '../../status/Page'
 import { reactToHtml } from '../../status/reactToHtml'
-import { Token2 } from '../Token2'
 
 interface TokensStatusPageProps {
   tokens: TokenQuery[]
@@ -85,38 +84,6 @@ export function Group({
       <p>{children}</p>
     </details>
   )
-}
-
-export function Token({ token }: { token: Token2 }) {
-  switch (token.type) {
-    case 'CIRCULATING_SUPPLY':
-      return (
-        <div>
-          <span>{token.type}</span>
-          <span>{token.project}</span>
-          <span>{token.coingeckoId}</span>
-        </div>
-      )
-
-    case 'TOTAL_SUPPLY':
-      return (
-        <div>
-          <span>{token.type}</span>
-          <span>{token.project}</span>
-          <span>{token.address}</span>
-        </div>
-      )
-
-    case 'ESCROW_BALANCE':
-      return (
-        <div>
-          <span>{token.type}</span>
-          <span>{token.project}</span>
-          <span>{token.address}</span>
-          <span>{token.escrow}</span>
-        </div>
-      )
-  }
 }
 
 export function CountBadge({ count }: { count: number }) {
