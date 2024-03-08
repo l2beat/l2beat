@@ -2,7 +2,7 @@ import { hashJson } from '@l2beat/shared-pure'
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export interface TrackedTxId extends String {
-  _TrackedTxsConfigHashBrand: string
+  _TrackedTxIdBrand: string
 }
 
 export function TrackedTxId(values: string[]) {
