@@ -4,10 +4,14 @@ import React from 'react'
 import { Page } from '../../status/Page'
 import { reactToHtml } from '../../status/reactToHtml'
 
+interface TokenQueryWithDatapoints extends TokenQuery {
+  dataPoints: number
+}
+
 interface TokensStatusPageProps {
-  tokens: TokenQuery[]
-  tokensByChain: Record<string, TokenQuery[]>
-  tokensByProject: Record<string, TokenQuery[]>
+  tokens: TokenQueryWithDatapoints[]
+  tokensByChain: Record<string, TokenQueryWithDatapoints[]>
+  tokensByProject: Record<string, TokenQueryWithDatapoints[]>
 }
 
 // move all outside the tab
@@ -21,17 +25,30 @@ export function TokensStatusPage({
   return (
     <Page title="Tokens">
       <div className="tabs">
-        <input type="radio" name="tabs" id="tabone" />
+        <input type="radio" name="tabs" id="tabone" checked />
         <label htmlFor="tabone">
           All <CountBadge count={tokens.length} />
         </label>
         <div className="tab">
-          {/* {tokens.map((token, i) => (
-            <Token key={i} token={token} />
-          ))} */}
+          <div>
+            Target data points:{' '}
+            {tokens.reduce((sum, token) => sum + token.dataPoints, 0) * 2}
+            <div>hourly</div>
+            <div>sixHourly</div>
+            <div>daily</div>
+          </div>
+          <div>
+            Prices: {tokens.reduce((sum, token) => sum + token.dataPoints, 0)}
+          </div>
+          <div>
+            Amounts: {tokens.reduce((sum, token) => sum + token.dataPoints, 0)}
+          </div>
+          <a href="#">see all</a>
         </div>
         <input type="radio" name="tabs" id="tabtwo" />
-        <label htmlFor="tabtwo">By chain</label>
+        <label htmlFor="tabtwo">
+          By chain <CountBadge count={Object.entries(tokensByChain).length} />
+        </label>
         <div className="tab">
           {Object.entries(tokensByChain)
             .sort(([_, a], [__, b]) => b.length - a.length)
@@ -45,7 +62,10 @@ export function TokensStatusPage({
             ))}
         </div>
         <input type="radio" name="tabs" id="tabthree" />
-        <label htmlFor="tabthree">By project</label>
+        <label htmlFor="tabthree">
+          By project{' '}
+          <CountBadge count={Object.entries(tokensByProject).length} />
+        </label>
         <div className="tab">
           {Object.entries(tokensByProject)
             .sort(([_, a], [__, b]) => b.length - a.length)
