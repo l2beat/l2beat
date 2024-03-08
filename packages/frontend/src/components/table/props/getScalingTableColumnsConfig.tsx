@@ -698,7 +698,7 @@ export function getScalingDataAvailabilityColumnsConfig() {
     {
       name: 'DA Layer',
       tooltip:
-        'The data availability layer where the data (transaction data or state diffs) is posted.',
+        'The data availability layer where the data (transaction data or state diffs) is published.',
       getValue: (project) => (
         <SentimentText
           sentiment={project.dataAvailability.layer.sentiment}
@@ -715,7 +715,7 @@ export function getScalingDataAvailabilityColumnsConfig() {
     },
     {
       name: 'DA Bridge',
-      tooltip: 'The solution used for verifying the availability of the data.',
+      tooltip: 'The DA bridge used for informing Ethereum contracts if data has been made available.',
       getValue: (project) => (
         <SentimentText
           sentiment={project.dataAvailability.bridge.sentiment}
