@@ -97,10 +97,12 @@ export function getActiveScalingSummaryColumnsConfig() {
       minimalWidth: true,
       headClassName: '!pr-4',
       getValue: (project) =>
-        project.tvlBreakdown && (
+        project.tvlBreakdown ? (
           <NumberCell className="pr-4">
             {project.marketShare?.displayValue}
           </NumberCell>
+        ) : (
+          <span className="pr-4">—</span>
         ),
       sorting: {
         getOrderValue: (project) => project.marketShare?.value,
