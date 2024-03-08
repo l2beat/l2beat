@@ -30,32 +30,37 @@ export function TokensStatusPage({
           All <CountBadge count={tokens.length} />
         </label>
         <div className="tab">
-          <LinkToList name="list" chain={undefined} project={undefined} />
+          <div className={`card`}>
+            <p>Summary</p>
+            <Stats tokens={tokens} />
+            <LinkToList chain={undefined} project={undefined} />
+          </div>
         </div>
         <input type="radio" name="tabs" id="tabtwo" />
         <label htmlFor="tabtwo">
-          By chain <CountBadge count={Object.entries(tokensByChain).length} />
+          Chains <CountBadge count={Object.entries(tokensByChain).length} />
         </label>
         <div className="tab">
           {Object.entries(tokensByChain)
             .sort(([_, a], [__, b]) => b.length - a.length)
             .map(([chain, tokens]) => (
               <Group key={chain} title={chain} count={tokens.length}>
-                <LinkToList name="list" chain={chain} project={undefined} />
+                <Stats tokens={tokens} />
+                <LinkToList chain={chain} project={undefined} />
               </Group>
             ))}
         </div>
         <input type="radio" name="tabs" id="tabthree" />
         <label htmlFor="tabthree">
-          By project{' '}
-          <CountBadge count={Object.entries(tokensByProject).length} />
+          Projects <CountBadge count={Object.entries(tokensByProject).length} />
         </label>
         <div className="tab">
           {Object.entries(tokensByProject)
             .sort(([_, a], [__, b]) => b.length - a.length)
             .map(([chain, tokens]) => (
               <Group key={chain} title={chain} count={tokens.length}>
-                <LinkToList name="list" chain={undefined} project={chain} />
+                <Stats tokens={tokens} />
+                <LinkToList chain={undefined} project={chain} />
               </Group>
             ))}
         </div>
@@ -68,15 +73,15 @@ export function renderTokensStatusPage(props: TokensStatusPageProps) {
   return reactToHtml(<TokensStatusPage {...props} />)
 }
 
-export function LinkToList({
-  name,
-  chain,
-  project,
-}: {
-  name: string
-  chain?: string
-  project?: string
-}) {
+function Stats({ tokens }: { tokens: TokenQueryWithDatapoints[] }) {
+  return (
+    <div>
+      Target data points: {tokens.reduce((acc, t) => acc + t.dataPoints, 0)}
+    </div>
+  )
+}
+
+function LinkToList({ chain, project }: { chain?: string; project?: string }) {
   const query = new URLSearchParams()
   if (chain) {
     query.set('chain', chain)
@@ -91,12 +96,12 @@ export function LinkToList({
 
   return (
     <a href={url.toString()} target="_blank" rel="noreferrer">
-      {name}
+      view list
     </a>
   )
 }
 
-export function Group({
+function Group({
   title,
   children,
   count,
@@ -115,7 +120,7 @@ export function Group({
   )
 }
 
-export function CountBadge({ count }: { count: number }) {
+function CountBadge({ count }: { count: number }) {
   return (
     <span
       style={{
