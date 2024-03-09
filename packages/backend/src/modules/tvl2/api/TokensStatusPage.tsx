@@ -29,7 +29,12 @@ export function TokensStatusPage({ tokens }: TokensStatusPageProps) {
         <div className="tab">
           <div className={`card`}>
             <p>Summary</p>
-            <Stats tokens={tokens} />
+            <Stats title="Target amounts data points" tokens={tokens} />
+            <Stats
+              title="Target prices data points"
+              tokens={deduplicateTokens(tokens)}
+            />
+            {deduplicateTokens(tokens).length}
             <LinkToList chain={undefined} project={undefined} />
           </div>
         </div>
@@ -42,13 +47,16 @@ export function TokensStatusPage({ tokens }: TokensStatusPageProps) {
             .sort(([_, a], [__, b]) => b.length - a.length)
             .map(([chain, tokens]) => (
               <Group key={chain} title={chain} count={tokens.length}>
-                <Stats tokens={tokens} />
+                <Stats title="Target amounts data points" tokens={tokens} />
                 <LinkToList chain={chain} project={undefined} />
                 {Object.entries(groupBy(tokensByChain[chain], 'project'))
                   .sort(([_, a], [__, b]) => b.length - a.length)
                   .map(([chain, tokens]) => (
                     <Group key={chain} title={chain} count={tokens.length}>
-                      <Stats tokens={tokens} />
+                      <Stats
+                        title="Target amounts data points"
+                        tokens={tokens}
+                      />
                       <LinkToList chain={chain} project={undefined} />
                     </Group>
                   ))}
@@ -64,13 +72,16 @@ export function TokensStatusPage({ tokens }: TokensStatusPageProps) {
             .sort(([_, a], [__, b]) => b.length - a.length)
             .map(([project, tokens]) => (
               <Group key={project} title={project} count={tokens.length}>
-                <Stats tokens={tokens} />
+                <Stats title="Target amounts data points" tokens={tokens} />
                 <LinkToList chain={undefined} project={project} />
                 {Object.entries(groupBy(tokensByProject[project], 'chain'))
                   .sort(([_, a], [__, b]) => b.length - a.length)
                   .map(([chain, tokens]) => (
                     <Group key={chain} title={chain} count={tokens.length}>
-                      <Stats tokens={tokens} />
+                      <Stats
+                        title="Target amounts data points"
+                        tokens={tokens}
+                      />
                       <LinkToList chain={chain} project={undefined} />
                     </Group>
                   ))}
@@ -86,10 +97,28 @@ export function renderTokensStatusPage(props: TokensStatusPageProps) {
   return reactToHtml(<TokensStatusPage {...props} />)
 }
 
-function Stats({ tokens }: { tokens: TokenQueryWithTarget[] }) {
+function deduplicateTokens(tokens: TokenQueryWithTarget[]) {
+  const seen = new Set<string>()
+  return tokens.filter((t) => {
+    const key = `${t.chain}-${t.address.toString()}`
+    if (seen.has(key)) {
+      return false
+    }
+    seen.add(key)
+    return true
+  })
+}
+
+function Stats({
+  title,
+  tokens,
+}: {
+  title: string
+  tokens: TokenQueryWithTarget[]
+}) {
   return (
     <div>
-      Target data points:{' '}
+      {title}:{' '}
       {tokens
         .reduce((acc, t) => acc + t.targetDataPoints, 0)
         .toLocaleString('en-US')}

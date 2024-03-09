@@ -84,5 +84,5 @@ export function getTargetDataPoints(token: TokenQuery, clock: Clock) {
   const hourlyDataPoints =
     hourlyDiff > 0 ? Math.floor(hourlyDiff / 3600) + 1 : 0
 
-  return dailyDataPoints + 1 + sixHourlyDataPoints + hourlyDataPoints + 1
+  return dailyDataPoints + sixHourlyDataPoints + hourlyDataPoints
 }
