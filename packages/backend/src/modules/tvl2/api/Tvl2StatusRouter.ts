@@ -49,7 +49,7 @@ export function createTvl2StatusRouter(config: Config, clock: Clock) {
   return router
 }
 
-function getTargetDataPoints(token: TokenQuery, clock: Clock) {
+export function getTargetDataPoints(token: TokenQuery, clock: Clock) {
   const start = token.sinceTimestamp.gt(clock.getFirstHour())
     ? token.sinceTimestamp
     : clock.getFirstHour()
@@ -84,5 +84,5 @@ function getTargetDataPoints(token: TokenQuery, clock: Clock) {
   const hourlyDataPoints =
     hourlyDiff > 0 ? Math.floor(hourlyDiff / 3600) + 1 : 0
 
-  return dailyDataPoints + sixHourlyDataPoints + hourlyDataPoints
+  return dailyDataPoints + 1 + sixHourlyDataPoints + hourlyDataPoints + 1
 }
