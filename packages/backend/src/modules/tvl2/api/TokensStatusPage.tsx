@@ -34,7 +34,6 @@ export function TokensStatusPage({ tokens }: TokensStatusPageProps) {
               title="Target prices data points"
               tokens={deduplicateTokens(tokens)}
             />
-            {deduplicateTokens(tokens).length}
             <LinkToList chain={undefined} project={undefined} />
           </div>
         </div>
