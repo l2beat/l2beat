@@ -274,6 +274,11 @@
       "address": "0x4da0C48376C277cdBd7Fc6FdC6936DEE3e4AdF75"
     },
     {
+      "symbol": "ezETH",
+      "address": "0xbf5495efe5db9ce00f80364c8b423567e58d2110",
+      "coingeckoId": "renzo-restaked-eth"
+    },
+    {
       "symbol": "ETH",
       "category": "ether"
     },
@@ -1238,5 +1243,18 @@
       },
       "coingeckoId": "usdb"
     }
+  ],
+  "mode": [
+    {
+      "symbol": "ezETH",
+      "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+      "coingeckoId": "renzo-restaked-eth",
+      "type": "EBV",
+      "formula": "circulatingSupply",
+      "bridgedUsing": {
+        "bridge": "Connext",
+        "slug": "connext"
+      }
+    },
   ]
 }
