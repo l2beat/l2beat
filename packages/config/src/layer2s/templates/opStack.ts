@@ -10,6 +10,8 @@ import {
   makeDataAvailabilityConfig,
   Milestone,
   NUGGETS,
+  OffChainDataAvailabilityFallback,
+  OffChainDataAvailabilityLayer,
   OPERATOR,
   RISK_VIEW,
   ScalingProjectContract,
@@ -39,7 +41,8 @@ export const CELESTIA_DA_PROVIDER: DAProvider = {
 }
 
 export interface DAProvider {
-  name: string
+  name: Exclude<OffChainDataAvailabilityLayer, 'DAC'>
+  fallback?: OffChainDataAvailabilityFallback
   riskView: ScalingProjectRiskViewEntry
   technology: ScalingProjectTechnologyChoice
 }
@@ -172,7 +175,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
       daProvider !== undefined
         ? makeDataAvailabilityConfig({
             type: 'Off chain',
-            layers: ['Celestia', 'Ethereum (calldata)'],
+            layers: [daProvider.name, daProvider.fallback ?? 'None'],
             bridge: 'None',
             mode: 'Transactions data (compressed)',
           })
