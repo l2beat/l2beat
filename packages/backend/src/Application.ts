@@ -9,9 +9,9 @@ import { createDiffHistoryModule } from './modules/diff-history/createDiffHistor
 import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createHealthModule } from './modules/health/HealthModule'
 import { LivenessIndexer } from './modules/liveness/LivenessIndexer'
-import { createLivenessModule } from './modules/liveness/LivenessModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createStatusModule } from './modules/status/StatusModule'
+import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
 import { createTvlModule } from './modules/tvl/modules/TvlModule'
 import { createUpdateMonitorModule } from './modules/update-monitor/UpdateMonitorModule'
 import { Database } from './peripherals/database/Database'
@@ -44,7 +44,12 @@ export class Application {
       config.clock.safeTimeOffsetSeconds,
     )
 
-    const livenessModule = createLivenessModule(config, logger, database, clock)
+    const trackedTxsModule = createTrackedTxsModule(
+      config,
+      logger,
+      database,
+      clock,
+    )
 
     const modules: (ApplicationModule | undefined)[] = [
       createHealthModule(config),
@@ -54,13 +59,13 @@ export class Application {
       createUpdateMonitorModule(config, logger, http, database, clock),
       createDiffHistoryModule(config, logger, database),
       createStatusModule(config, logger),
-      livenessModule,
+      trackedTxsModule,
       createFinalityModule(
         config,
         logger,
         database,
         clock,
-        livenessModule?.indexer as LivenessIndexer,
+        trackedTxsModule?.indexer as LivenessIndexer,
       ),
     ]
 

@@ -4,11 +4,12 @@ import { readFileSync } from 'fs'
 
 import {
   BigQueryFunctionCallResult,
-  ParsedBigQueryFunctionCallResult,
+  TrackedTxFunctionCallResult,
 } from '../types/model'
+import { TrackedTxId } from '../types/TrackedTxId'
 import {
-  TrackedTxFunctionCall,
-  TrackedTxSharpSubmission,
+  TrackedTxFunctionCallConfig,
+  TrackedTxSharpSubmissionConfig,
 } from '../types/TrackedTxsConfig'
 import { transformFunctionCallsQueryResult } from './transformFunctionCallsQueryResult'
 
@@ -33,14 +34,20 @@ const paradexProgramHash =
 
 describe(transformFunctionCallsQueryResult.name, () => {
   it('should transform results', () => {
-    const functionCalls: TrackedTxFunctionCall[] = [
+    const functionCalls: TrackedTxFunctionCallConfig[] = [
       {
         formula: 'functionCall',
         projectId: ProjectId('project1'),
         address: ADDRESS_1,
         selector: SELECTOR_1,
         sinceTimestamp: SINCE_TIMESTAMP,
-        uses: [],
+        uses: [
+          {
+            type: 'liveness',
+            subType: 'batchSubmissions',
+            id: TrackedTxId.random(),
+          },
+        ],
       },
       {
         formula: 'functionCall',
@@ -48,11 +55,17 @@ describe(transformFunctionCallsQueryResult.name, () => {
         address: ADDRESS_2,
         selector: SELECTOR_2,
         sinceTimestamp: SINCE_TIMESTAMP,
-        uses: [],
+        uses: [
+          {
+            type: 'liveness',
+            subType: 'stateUpdates',
+            id: TrackedTxId.random(),
+          },
+        ],
       },
     ]
 
-    const sharpSubmissions: TrackedTxSharpSubmission[] = [
+    const sharpSubmissions: TrackedTxSharpSubmissionConfig[] = [
       {
         formula: 'sharpSubmission',
         projectId: ProjectId('project2'),
@@ -60,7 +73,13 @@ describe(transformFunctionCallsQueryResult.name, () => {
         programHashes: [paradexProgramHash],
         address: EthereumAddress.random(),
         selector: '0x9b3b76cc',
-        uses: [],
+        uses: [
+          {
+            type: 'liveness',
+            subType: 'proofSubmissions',
+            id: TrackedTxId.random(),
+          },
+        ],
       },
     ]
 
@@ -71,8 +90,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
         block_timestamp: timestamp,
         input: SELECTOR_1,
         to_address: ADDRESS_1,
-        gas_price: 100,
-        receipt_gas_used: 5000,
       },
       {
         hash: txHashes[1],
@@ -80,8 +97,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
         block_timestamp: timestamp,
         input: SELECTOR_2,
         to_address: ADDRESS_2,
-        gas_price: 1000,
-        receipt_gas_used: 20,
       },
       {
         hash: txHashes[2],
@@ -89,39 +104,37 @@ describe(transformFunctionCallsQueryResult.name, () => {
         block_timestamp: timestamp,
         input: sharpInput,
         to_address: sharpSubmissions[0].address,
-        gas_price: 2031,
-        receipt_gas_used: 2050,
       },
     ]
-    const expected: ParsedBigQueryFunctionCallResult[] = [
+    const expected: TrackedTxFunctionCallResult[] = [
       {
         type: 'functionCall',
+        projectId: functionCalls[0].projectId,
+        use: functionCalls[0].uses[0],
         hash: txHashes[0],
         blockNumber: block,
         blockTimestamp: timestamp,
         toAddress: ADDRESS_1,
-        gasPrice: 100,
-        gasUsed: 5000,
         input: SELECTOR_1,
       },
       {
         type: 'functionCall',
+        projectId: functionCalls[1].projectId,
+        use: functionCalls[1].uses[0],
         hash: txHashes[1],
         blockNumber: block,
         blockTimestamp: timestamp,
         toAddress: ADDRESS_2,
-        gasPrice: 1000,
-        gasUsed: 20,
         input: SELECTOR_2,
       },
       {
         type: 'functionCall',
+        projectId: sharpSubmissions[0].projectId,
+        use: sharpSubmissions[0].uses[0],
         hash: txHashes[2],
         blockNumber: block,
         blockTimestamp: timestamp,
         toAddress: sharpSubmissions[0].address,
-        gasPrice: 2031,
-        gasUsed: 2050,
         input: sharpInput,
       },
     ]
@@ -135,7 +148,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
   })
 
   it('throws when there is no matching configuration', () => {
-    const functionCalls: TrackedTxFunctionCall[] = [
+    const functionCalls: TrackedTxFunctionCallConfig[] = [
       {
         formula: 'functionCall',
         projectId: ProjectId('project1'),
@@ -153,8 +166,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
         input: 'random-string',
         block_number: block,
         block_timestamp: timestamp,
-        gas_price: 25,
-        receipt_gas_used: 100,
       },
     ]
 
@@ -164,7 +175,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
   })
 
   it('includes only configurations which program hashes were proven', () => {
-    const sharpSubmissions: TrackedTxSharpSubmission[] = [
+    const sharpSubmissions: TrackedTxSharpSubmissionConfig[] = [
       {
         formula: 'sharpSubmission',
         projectId: ProjectId('project1'),
@@ -172,7 +183,13 @@ describe(transformFunctionCallsQueryResult.name, () => {
         programHashes: [paradexProgramHash],
         address: EthereumAddress.random(),
         selector: '0x9b3b76cc',
-        uses: [],
+        uses: [
+          {
+            type: 'liveness',
+            subType: 'proofSubmissions',
+            id: TrackedTxId.random(),
+          },
+        ],
       },
       {
         formula: 'sharpSubmission',
@@ -192,20 +209,18 @@ describe(transformFunctionCallsQueryResult.name, () => {
         input: sharpInput,
         block_number: block,
         block_timestamp: timestamp,
-        gas_price: 1000,
-        receipt_gas_used: 20,
       },
     ]
 
-    const expected: ParsedBigQueryFunctionCallResult[] = [
+    const expected: TrackedTxFunctionCallResult[] = [
       {
         type: 'functionCall',
+        projectId: sharpSubmissions[0].projectId,
+        use: sharpSubmissions[0].uses[0],
         hash: txHashes[0],
         blockNumber: block,
         blockTimestamp: timestamp,
         toAddress: sharpSubmissions[0].address,
-        gasPrice: 1000,
-        gasUsed: 20,
         input: sharpInput,
       },
     ]

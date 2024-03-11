@@ -13,33 +13,26 @@ export function getTransferQuery(
       c.from.toLowerCase(),
       c.to.toLowerCase(),
     ]),
-    from.toDate().toISOString(),
-    to.toDate().toISOString(),
   ]
 
-  // TODO: (tracked_tx) reinvestigate this query, maybe traces are not needed
   const query = `
     SELECT
-      txs.hash,
-      txs.from_address
-      txs.to_address,
-      txs.block_number,
-      txs.block_timestamp,
-      txs.gas_price
-      txs.receipt_gas_used
+      block_number,
+      from_address,
+      to_address,
+      block_timestamp,
+      transaction_hash
     FROM
-      bigquery-public-data.crypto_ethereum.transactions as txs
-    LEFT JOIN bigquery-public-data.crypto_ethereum.traces as traces
-      ON traces.status = 1
-      AND traces.call_type = 'call'
-      AND traces.block_timestamp >= TIMESTAMP(?)
-      AND traces.block_timestamp < TIMESTAMP(?)
-      AND (
-        ${transfersConfig
-          .map(() => `(traces.from_address = ? AND traces.to_address = ?)`)
-          .join(' OR ')}
-      )
-    WHERE block_timestamp >= TIMESTAMP(?) AND block_timestamp < TIMESTAMP(?)
+      bigquery-public-data.crypto_ethereum.traces
+    WHERE call_type = 'call'
+    AND status = 1
+    AND block_timestamp >= TIMESTAMP(?)
+    AND block_timestamp < TIMESTAMP(?)
+    AND (
+      ${transfersConfig
+        .map(() => `(from_address = ? AND to_address = ?)`)
+        .join(' OR ')}
+    )
   `
 
   return { query, params }

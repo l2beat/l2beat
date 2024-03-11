@@ -1,5 +1,16 @@
-import { branded, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  branded,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { z } from 'zod'
+
+import { TrackedTxUseWithId } from './TrackedTxsConfig'
+
+export type TrackedTxResult =
+  | TrackedTxTransferResult
+  | TrackedTxFunctionCallResult
 
 export type BigQueryFunctionCallResult = z.infer<
   typeof BigQueryFunctionCallResult
@@ -11,19 +22,17 @@ export const BigQueryFunctionCallResult = z.object({
     .object({ value: z.string() })
     .transform((v) => UnixTime.fromDate(new Date(v.value))),
   to_address: branded(z.string(), EthereumAddress),
-  gas_price: z.number(),
-  receipt_gas_used: z.number(),
   input: z.string(),
 })
 
-export type ParsedBigQueryFunctionCallResult = {
+export type TrackedTxFunctionCallResult = {
   type: 'functionCall'
+  projectId: ProjectId
+  use: TrackedTxUseWithId
   hash: string
   blockNumber: number
   blockTimestamp: UnixTime
   toAddress: EthereumAddress
-  gasPrice: number
-  gasUsed: number
   input: string
 }
 
@@ -36,17 +45,15 @@ export const BigQueryTransferResult = z.object({
     .transform((v) => UnixTime.fromDate(new Date(v.value))),
   from_address: branded(z.string(), EthereumAddress),
   to_address: branded(z.string(), EthereumAddress),
-  gas_price: z.number(),
-  receipt_gas_used: z.number(),
 })
 
-export type ParsedBigQueryTransferResult = {
+export type TrackedTxTransferResult = {
   type: 'transfer'
+  projectId: ProjectId
+  use: TrackedTxUseWithId
   hash: string
   blockNumber: number
   blockTimestamp: UnixTime
   fromAddress: EthereumAddress
   toAddress: EthereumAddress
-  gasPrice: number
-  gasUsed: number
 }

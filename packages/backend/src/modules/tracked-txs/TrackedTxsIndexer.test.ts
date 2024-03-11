@@ -1,73 +1,82 @@
 import { Logger } from '@l2beat/backend-tools'
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import {
+  EthereumAddress,
+  ProjectId,
+  TrackedTxsConfigType,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import { expect, mockFn, mockObject } from 'earl'
 import { Knex } from 'knex'
 
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
+import { LivenessClient } from '../liveness/LivenessClient'
 import { HourlyIndexer } from '../tracked-txs/HourlyIndexer'
-import { LivenessClient } from '../tracked-txs/TrackedTxsClient'
-import {
-  adjustToForBigqueryCall,
-  findConfigurationsToSync,
-} from '../tracked-txs/utils'
-import { diffLivenessConfigurations } from '../tracked-txs/utils/diffTrackedTxConfigurations'
+import { TrackedTxsClient } from '../tracked-txs/TrackedTxsClient'
+import { adjustToForBigqueryCall } from '../tracked-txs/utils'
 import { getSafeHeight } from '../tracked-txs/utils/getSafeHeight'
-import { LivenessIndexer } from './LivenessIndexer'
 import {
-  LivenessConfigurationRecord,
-  LivenessConfigurationRepository,
-} from './repositories/LivenessConfigurationRepository'
-import {
-  LivenessRecord,
-  LivenessRepository,
-} from './repositories/LivenessRepository'
-import {
-  LivenessConfigEntry,
-  makeLivenessFunctionCall,
-} from './types/LivenessConfig'
-import { LivenessId } from './types/LivenessId'
+  TrackedTxsConfigRecord,
+  TrackedTxsConfigsRepository,
+} from './repositories/TrackedTxsConfigsRepository'
+import { TrackedTxsIndexer } from './TrackedTxsIndexer'
+import { TrackedTxResult } from './types/model'
+import { TrackedTxConfigEntry } from './types/TrackedTxsConfig'
+import { TrackedTxId } from './types/TrackedTxId'
+import { TxUpdaterInterface } from './types/TxUpdaterInterface'
+import { diffTrackedTxConfigurations } from './utils/diffTrackedTxConfigurations'
+import { findConfigurationsToSync } from './utils/findConfigurationsToSync'
 
 const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2023-05-01T00:00:00Z'))
 const TRX = mockObject<Knex.Transaction>({})
 
-describe(LivenessIndexer.name, () => {
-  describe(LivenessIndexer.prototype.update.name, () => {
-    it('updates liveness data', async () => {
+describe(TrackedTxsIndexer.name, () => {
+  describe(TrackedTxsIndexer.prototype.update.name, () => {
+    it('downloads data and passes it to updaters', async () => {
       const from = MIN_TIMESTAMP.add(365, 'days')
       const to = from.add(1, 'hours')
       const runtimeEntries = getMockRuntimeConfigurations()
-      const databaseEntries = runtimeEntries.map((r) => toRecord(r, from))
+      const databaseEntries = runtimeEntries.flatMap((r) => toRecords(r, from))
       const configurationRepository = getMockConfigRepository(databaseEntries)
-      const livenessRepository = getMockLivenessRepository()
-      const livenessResults = getMockLivenessResults()
-      const livenessClient = mockObject<LivenessClient>({
-        getLivenessData: async () => livenessResults,
+      const trackedTxResults = getMockTrackedTxResults()
+      const trackedTxsClient = mockObject<TrackedTxsClient>({
+        getData: async () => trackedTxResults,
       })
-      const livenessIndexer = getMockLivenessIndexer({
-        configurationRepository,
-        livenessRepository,
-        runtimeEntries,
-        livenessClient,
+
+      const livenessUpdater = mockObject<TxUpdaterInterface>({
+        update: mockFn(),
+      })
+      const mockedUpdaters = {
+        liveness: livenessUpdater,
+      }
+
+      const trackedTxIndexer = getMockTrackedTxsIndexer({
+        configRepository: configurationRepository,
+        configs: runtimeEntries,
+        trackedTxsClient,
+        updaters: mockedUpdaters,
       })
       const [configurationsToSync, adjustedTo] =
-        await livenessIndexer.getConfiguration(from.toNumber(), to.toNumber())
+        await trackedTxIndexer.getConfiguration(from.toNumber(), to.toNumber())
 
-      const value = await livenessIndexer.update(from.toNumber(), to.toNumber())
+      const value = await trackedTxIndexer.update(
+        from.toNumber(),
+        to.toNumber(),
+      )
 
       expect(value).toEqual(adjustedTo.toNumber())
-      expect(livenessClient.getLivenessData).toHaveBeenOnlyCalledWith(
+      expect(trackedTxsClient.getData).toHaveBeenOnlyCalledWith(
         configurationsToSync,
         from,
         adjustedTo,
       )
-      expect(livenessRepository.addMany).toHaveBeenOnlyCalledWith(
-        livenessResults,
+      expect(livenessUpdater.update).toHaveBeenOnlyCalledWith(
+        trackedTxResults,
         TRX,
       )
       expect(
         configurationRepository.setLastSyncedTimestamp,
       ).toHaveBeenOnlyCalledWith(
-        runtimeEntries.map((r) => r.id),
+        runtimeEntries.flatMap((r) => r.uses.map((u) => u.id)),
         adjustedTo,
         TRX,
       )
@@ -76,37 +85,40 @@ describe(LivenessIndexer.name, () => {
     it('skips update if there are no configurations to sync', async () => {
       const from = MIN_TIMESTAMP
       const to = from.add(365, 'days')
-      const runtimeEntries = getMockRuntimeConfigurations()
-      const databaseEntries = runtimeEntries.map((r) => toRecord(r, to))
-      const configurationRepository = getMockConfigRepository(databaseEntries)
-      const livenessIndexer = getMockLivenessIndexer({
-        configurationRepository,
-        runtimeEntries,
+      const configs = getMockRuntimeConfigurations()
+      const databaseEntries = configs.flatMap((r) => toRecords(r, to))
+      const configRepository = getMockConfigRepository(databaseEntries)
+      const trackedTxsIndexer = getMockTrackedTxsIndexer({
+        configRepository,
+        configs,
       })
       const livenessClient = mockObject<LivenessClient>({
         getLivenessData: async () => [],
       })
       const adjustedTo = adjustToForBigqueryCall(from.toNumber(), to.toNumber())
 
-      const value = await livenessIndexer.update(from.toNumber(), to.toNumber())
+      const value = await trackedTxsIndexer.update(
+        from.toNumber(),
+        to.toNumber(),
+      )
 
       expect(value).toEqual(adjustedTo.toNumber())
       expect(livenessClient.getLivenessData).not.toHaveBeenCalled()
     })
   })
 
-  describe(LivenessIndexer.prototype.getConfiguration.name, () => {
+  describe(TrackedTxsIndexer.prototype.getConfiguration.name, () => {
     it('adjusts to and finds configurations to sync', async () => {
       const from = MIN_TIMESTAMP
       const to = from.add(365, 'days')
 
       const runtimeEntries = getMockRuntimeConfigurations()
-      const databaseEntries = runtimeEntries.map((r) => toRecord(r))
-      const configurationRepository = getMockConfigRepository(databaseEntries)
+      const databaseEntries = runtimeEntries.flatMap((r) => toRecords(r))
+      const configRepository = getMockConfigRepository(databaseEntries)
 
-      const livenessIndexer = getMockLivenessIndexer({
-        configurationRepository,
-        runtimeEntries,
+      const livenessIndexer = getMockTrackedTxsIndexer({
+        configRepository,
+        configs: runtimeEntries,
       })
 
       const [configurationsToSync, adjustedTo] =
@@ -128,11 +140,11 @@ describe(LivenessIndexer.name, () => {
 
       expect(configurationsToSync).toEqual(expectedConfigurationsToSync)
 
-      expect(configurationRepository.getAll).toHaveBeenCalledTimes(1)
+      expect(configRepository.getAll).toHaveBeenCalledTimes(1)
     })
   })
 
-  describe(LivenessIndexer.prototype.start.name, () => {
+  describe(TrackedTxsIndexer.prototype.start.name, () => {
     it('initializes configurations and indexer state', async () => {
       const runtimeEntries = [
         getMockRuntimeConfigurations()[0],
@@ -142,33 +154,41 @@ describe(LivenessIndexer.name, () => {
         },
       ]
 
-      const databaseEntries: LivenessConfigurationRecord[] = [
-        mockObject<LivenessConfigurationRecord>({
-          id: LivenessId.random(),
+      const databaseEntries: TrackedTxsConfigRecord[] = [
+        mockObject<TrackedTxsConfigRecord>({
           sinceTimestamp: MIN_TIMESTAMP,
           untilTimestamp: undefined,
           lastSyncedTimestamp: undefined,
+          type: 'liveness',
+          subtype: 'batchSubmissions',
+          id: TrackedTxId.random(),
         }),
-        {
-          ...toRecord(runtimeEntries[1]),
+        mockObject<TrackedTxsConfigRecord>({
+          ...toRecords(runtimeEntries[1]),
           untilTimestamp: undefined,
-        },
+        }),
         // rest of the configurations would be considered "toAdd"
       ]
 
       const configurationRepository = getMockConfigRepository(databaseEntries)
-      const livenessRepository = getMockLivenessRepository()
       const stateRepository = getMockStateRepository()
-      const livenessIndexer = getMockLivenessIndexer({
-        configurationRepository,
-        livenessRepository,
-        stateRepository,
-        runtimeEntries,
+
+      const mockedLivenessUpdater = mockObject<TxUpdaterInterface>({
+        deleteAfter: mockFn(),
       })
 
-      await livenessIndexer.start()
+      const trackedTxsIndexer = getMockTrackedTxsIndexer({
+        configRepository: configurationRepository,
+        stateRepository,
+        configs: runtimeEntries,
+        updaters: {
+          liveness: mockedLivenessUpdater,
+        },
+      })
 
-      const { toAdd, toRemove, toTrim } = diffLivenessConfigurations(
+      await trackedTxsIndexer.start()
+
+      const { toAdd, toRemove, toTrim } = diffTrackedTxConfigurations(
         runtimeEntries,
         databaseEntries,
       )
@@ -184,7 +204,7 @@ describe(LivenessIndexer.name, () => {
       expect(
         configurationRepository.setUntilTimestamp,
       ).toHaveBeenOnlyCalledWith(toTrim[0].id, toTrim[0].untilTimestamp, TRX)
-      expect(livenessRepository.deleteAfter).toHaveBeenOnlyCalledWith(
+      expect(mockedLivenessUpdater.deleteAfter).toHaveBeenOnlyCalledWith(
         toTrim[0].id,
         toTrim[0].untilTimestamp,
         TRX,
@@ -199,7 +219,7 @@ describe(LivenessIndexer.name, () => {
         MIN_TIMESTAMP.add(-1, 'days'),
       )
       expect(stateRepository.setSafeHeight).toHaveBeenOnlyCalledWith(
-        livenessIndexer.indexerId,
+        trackedTxsIndexer.indexerId,
         syncStatus,
         TRX,
       )
@@ -211,18 +231,16 @@ describe(LivenessIndexer.name, () => {
 
     it('indexer state undefined', async () => {
       const configurationRepository = getMockConfigRepository([])
-      const livenessRepository = getMockLivenessRepository()
       const stateRepository = mockObject<IndexerStateRepository>({
         findIndexerState: async () => undefined,
         add: async () => '',
         setSafeHeight: async () => 0,
         runInTransaction: async (fn) => fn(TRX),
       })
-      const livenessIndexer = getMockLivenessIndexer({
-        configurationRepository,
-        livenessRepository,
+      const livenessIndexer = getMockTrackedTxsIndexer({
+        configRepository: configurationRepository,
         stateRepository,
-        runtimeEntries: [],
+        configs: [],
       })
 
       await livenessIndexer.start()
@@ -238,7 +256,7 @@ describe(LivenessIndexer.name, () => {
     })
   })
 
-  describe(LivenessIndexer.prototype.getSafeHeight.name, () => {
+  describe(TrackedTxsIndexer.prototype.getSafeHeight.name, () => {
     it('returns safe height from DB', async () => {
       const safeHeightDB = 123
       const stateRepository = mockObject<IndexerStateRepository>({
@@ -248,7 +266,7 @@ describe(LivenessIndexer.name, () => {
           minTimestamp: MIN_TIMESTAMP,
         }),
       })
-      const livenessIndexer = getMockLivenessIndexer({ stateRepository })
+      const livenessIndexer = getMockTrackedTxsIndexer({ stateRepository })
 
       const safeHeight = await livenessIndexer.getSafeHeight()
 
@@ -261,7 +279,7 @@ describe(LivenessIndexer.name, () => {
       const stateRepository = mockObject<IndexerStateRepository>({
         findIndexerState: async () => undefined,
       })
-      const livenessIndexer = getMockLivenessIndexer({ stateRepository })
+      const livenessIndexer = getMockTrackedTxsIndexer({ stateRepository })
 
       const safeHeight = await livenessIndexer.getSafeHeight()
 
@@ -272,12 +290,12 @@ describe(LivenessIndexer.name, () => {
     })
   })
 
-  describe(LivenessIndexer.prototype.setSafeHeight.name, () => {
+  describe(TrackedTxsIndexer.prototype.setSafeHeight.name, () => {
     it('saves safe height in the database', async () => {
       const stateRepository = mockObject<IndexerStateRepository>({
         setSafeHeight: async () => 0, // return value is not important
       })
-      const livenessIndexer = getMockLivenessIndexer({ stateRepository })
+      const livenessIndexer = getMockTrackedTxsIndexer({ stateRepository })
 
       const safeHeight = MIN_TIMESTAMP.add(1, 'hours').toNumber()
       await livenessIndexer.setSafeHeight(safeHeight, TRX)
@@ -293,7 +311,7 @@ describe(LivenessIndexer.name, () => {
       const stateRepository = mockObject<IndexerStateRepository>({
         setSafeHeight: async () => 0, // return value is not important
       })
-      const livenessIndexer = getMockLivenessIndexer({ stateRepository })
+      const livenessIndexer = getMockTrackedTxsIndexer({ stateRepository })
 
       const incorrectHeight = MIN_TIMESTAMP.add(-1, 'hours').toNumber()
       await expect(
@@ -304,9 +322,9 @@ describe(LivenessIndexer.name, () => {
     })
   })
 
-  describe(LivenessIndexer.prototype.invalidate.name, () => {
+  describe(TrackedTxsIndexer.prototype.invalidate.name, () => {
     it('only returns target height', async () => {
-      const livenessIndexer = getMockLivenessIndexer({})
+      const livenessIndexer = getMockTrackedTxsIndexer({})
 
       const targetHeight = 1
       const value = await livenessIndexer.invalidate(targetHeight)
@@ -316,49 +334,41 @@ describe(LivenessIndexer.name, () => {
   })
 })
 
-function getMockLivenessIndexer(params: {
+function getMockTrackedTxsIndexer(params: {
   stateRepository?: IndexerStateRepository
-  configurationRepository?: LivenessConfigurationRepository
-  livenessRepository?: LivenessRepository
-  runtimeEntries?: LivenessConfigEntry[]
-  livenessClient?: LivenessClient
+  configRepository?: TrackedTxsConfigsRepository
+  configs?: TrackedTxConfigEntry[]
+  trackedTxsClient?: TrackedTxsClient
+  updaters?: Record<TrackedTxsConfigType, TxUpdaterInterface>
 }) {
   const {
     stateRepository,
-    configurationRepository,
-    livenessRepository,
-    runtimeEntries,
-    livenessClient,
+    configRepository,
+    configs,
+    trackedTxsClient,
+    updaters,
   } = params
 
-  return new LivenessIndexer(
+  return new TrackedTxsIndexer(
     Logger.SILENT,
     mockObject<HourlyIndexer>({
       start: async () => {},
       tick: async () => 1,
       subscribe: () => {},
     }),
-    livenessClient ?? mockObject<LivenessClient>({}),
+    trackedTxsClient ?? mockObject<TrackedTxsClient>({}),
     stateRepository ?? mockObject<IndexerStateRepository>({}),
-    livenessRepository ?? mockObject<LivenessRepository>({}),
-    configurationRepository ?? mockObject<LivenessConfigurationRepository>({}),
-    runtimeEntries ?? [],
+    configRepository ?? mockObject<TrackedTxsConfigsRepository>({}),
+    configs ?? [],
+    updaters ?? {
+      liveness: mockObject<TxUpdaterInterface>({}),
+    },
     MIN_TIMESTAMP,
   )
 }
 
-function getMockLivenessRepository() {
-  return mockObject<LivenessRepository>({
-    deleteAfter: async () => 0,
-    runInTransaction: async (fn) => fn(TRX),
-    addMany: async () => 0,
-  })
-}
-
-function getMockConfigRepository(
-  databaseEntries: LivenessConfigurationRecord[],
-) {
-  return mockObject<LivenessConfigurationRepository>({
+function getMockConfigRepository(databaseEntries: TrackedTxsConfigRecord[]) {
+  return mockObject<TrackedTxsConfigsRepository>({
     addMany: async () => [],
     deleteMany: async () => 0,
     setUntilTimestamp: async () => 0,
@@ -369,7 +379,7 @@ function getMockConfigRepository(
 
 function getMockStateRepository(
   indexerState = {
-    indexerId: 'liveness_indexer',
+    indexerId: 'tracked_txs_indexer',
     safeHeight: MIN_TIMESTAMP.toNumber(),
     minTimestamp: MIN_TIMESTAMP,
   },
@@ -383,56 +393,88 @@ function getMockStateRepository(
   return stateRepository
 }
 
-function getMockRuntimeConfigurations() {
+function getMockRuntimeConfigurations(): TrackedTxConfigEntry[] {
   return [
-    makeLivenessFunctionCall({
+    {
+      formula: 'functionCall',
       projectId: ProjectId('test'),
-      type: 'STATE',
-      formula: 'functionCall',
       address: EthereumAddress.random(),
       selector: '0x',
       sinceTimestamp: MIN_TIMESTAMP,
-    }),
-    // this one has updated untilTimestamp
-    makeLivenessFunctionCall({
+      uses: [
+        {
+          type: 'liveness',
+          subType: 'batchSubmissions',
+          id: TrackedTxId.random(),
+        },
+      ],
+    },
+    {
+      formula: 'functionCall',
       projectId: ProjectId('test2'),
-      type: 'STATE',
-      formula: 'functionCall',
       address: EthereumAddress.random(),
       selector: '0x',
       sinceTimestamp: MIN_TIMESTAMP,
-    }),
+      uses: [
+        {
+          type: 'liveness',
+          subType: 'stateUpdates',
+          id: TrackedTxId.random(),
+        },
+      ],
+    },
   ]
 }
 
-function getMockLivenessResults(): LivenessRecord[] {
+function getMockTrackedTxResults(): TrackedTxResult[] {
   return [
     {
-      livenessId: getMockRuntimeConfigurations()[0].id,
+      type: 'functionCall',
+      projectId: ProjectId('test'),
       blockNumber: 1,
-      timestamp: UnixTime.now(),
-      txHash: '',
+      blockTimestamp: UnixTime.now(),
+      toAddress: EthereumAddress.random(),
+      gasPrice: 25,
+      gasUsed: 100,
+      input: '',
+      hash: '',
+      use: {
+        type: 'liveness',
+        subType: 'batchSubmissions',
+        id: getMockRuntimeConfigurations()[0].uses[0].id,
+      },
     },
     {
-      livenessId: getMockRuntimeConfigurations()[1].id,
+      type: 'transfer',
+      use: {
+        id: getMockRuntimeConfigurations()[1].uses[0].id,
+        type: 'liveness',
+        subType: 'stateUpdates',
+      },
       blockNumber: 1,
-      timestamp: UnixTime.now(),
-      txHash: '',
+      blockTimestamp: UnixTime.now(),
+      hash: '',
+      gasPrice: 25,
+      gasUsed: 100,
+      fromAddress: EthereumAddress.random(),
+      toAddress: EthereumAddress.random(),
+      projectId: ProjectId('test2'),
     },
   ]
 }
 
-function toRecord(
-  entry: LivenessConfigEntry,
+function toRecords(
+  entry: TrackedTxConfigEntry,
   lastSyncedTimestamp?: UnixTime,
-): LivenessConfigurationRecord {
-  return {
-    id: entry.id,
+): TrackedTxsConfigRecord[] {
+  return entry.uses.map((use) => ({
+    id: use.id,
     projectId: entry.projectId,
-    type: entry.type,
+    type: use.type,
+    subType: use.subType,
     sinceTimestamp: entry.sinceTimestamp,
     untilTimestamp: entry.untilTimestamp,
     debugInfo: '',
     lastSyncedTimestamp,
-  }
+  }))
 }
