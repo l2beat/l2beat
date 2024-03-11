@@ -1,13 +1,8 @@
-import { ProjectId } from '@l2beat/shared-pure'
-
-import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from '../common'
+import { underReviewL3 } from '../layer2s/templates/underReview'
 import { Layer3 } from './types'
 
-export const zklinknexus: Layer3 = {
-  type: 'layer3',
-  isUpcoming: false,
-  isUnderReview: true,
-  id: ProjectId('zklinknexus'),
+export const zklinknexus: Layer3 = underReviewL3({
+  id: 'zklinknexus',
   // TODO(Linea, zkSync Era): zkLink Nexus is a multi-chain zkRollup architecture. In addition to Linea, it currently supports zkSync Era and will support more Layer2s in the future.
   hostChain: 'Multiple',
   display: {
@@ -31,12 +26,5 @@ export const zklinknexus: Layer3 = {
         'https://t.me/zkLinkorg',
       ],
     },
-    dataAvailabilityMode: 'StateDiffs',
   },
-  config: {
-    escrows: [],
-  },
-  contracts: CONTRACTS.EMPTY,
-  riskView: UPCOMING_RISK_VIEW,
-  technology: TECHNOLOGY.UPCOMING,
-}
+})
