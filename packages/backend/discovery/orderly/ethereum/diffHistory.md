@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x940396c48db183a1eb9d2666297c97cbfe6814e7
+
+# Diff at Mon, 11 Mar 2024 13:09:36 GMT:
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: main@64454506aee2b4b4e15b121f096369e92ec4cf20 block: 19370130
+- current block number: 19412055
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664) {
+    +++ description: None
+      values.opStackDA:
+-        {"isSomeTxsLengthEqualToCelestiaDAExample":true,"isSequencerSendingBlobTx":false}
+      values.sequencerInbox:
+-        "0x08aA34cC843CeEBcC88A627F18430294aA9780be"
+      errors:
++        {"opStackDA":"network timeout at: https://api.etherscan.io/api?module=account&action=txlist&address=0xf8dB8Aba597fF36cCD16fECfbb1B816B3236E9b8&startblock=0&endblock=19412055&page=1&offset=20&sort=desc&apikey=RC2W28PYNA2EUU86RJW52W2QXDXF13EWFK","sequencerInbox":"network timeout at: https://api.etherscan.io/api?module=account&action=txlist&address=0xf8dB8Aba597fF36cCD16fECfbb1B816B3236E9b8&startblock=0&endblock=19412055&page=1&offset=20&sort=desc&apikey=RC2W28PYNA2EUU86RJW52W2QXDXF13EWFK"}
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19370130 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664) {
+    +++ description: None
+      values.opStackDA.isSequencerSendingBlobTx:
++        false
+    }
+```
+
 Generated with discovered.json: 0x3cbbe86d1549ff16f956680e8ecb073e926f6be1
 
 # Diff at Tue, 05 Mar 2024 16:23:09 GMT:

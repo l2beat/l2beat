@@ -1,7 +1,7 @@
 {
   "name": "orderly",
   "chain": "ethereum",
-  "blockNumber": 19370130,
+  "blockNumber": 19412055,
   "configHash": "0x83e6e290ccdacb6a1b867c42af8d197202b79b71e677a0aa66db7358547d40fa",
   "version": 3,
   "contracts": [
@@ -46,10 +46,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 6521400,
-        "latestOutputIndex": 3622,
-        "nextBlockNumber": 6523200,
-        "nextOutputIndex": 3623,
+        "latestBlockNumber": 6775200,
+        "latestOutputIndex": 3763,
+        "nextBlockNumber": 6777000,
+        "nextOutputIndex": 3764,
         "PROPOSER": "0x74BaD482a7f73C8286F50D8Aa03e53b7d24A5f3B",
         "startingBlockNumber": 0,
         "startingTimestamp": 1696608227,
@@ -84,9 +84,6 @@
         "batcherHash": "0xf8dB8Aba597fF36cCD16fECfbb1B816B3236E9b8",
         "gasLimit": 30000000,
         "minimumGasLimit": 21000000,
-        "opStackDA": {
-          "isSomeTxsLengthEqualToCelestiaDAExample": true
-        },
         "overhead": 188,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "resourceConfig": [
@@ -98,11 +95,14 @@
           "340282366920938463463374607431768211455"
         ],
         "scalar": 13680,
-        "sequencerInbox": "0x08aA34cC843CeEBcC88A627F18430294aA9780be",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
         "unsafeBlockSigner": "0xceED24B1Fd4A4393f6A9D2B137D9597dd5482569",
         "version": "1.3.1",
         "VERSION": 0
+      },
+      "errors": {
+        "opStackDA": "network timeout at: https://api.etherscan.io/api?module=account&action=txlist&address=0xf8dB8Aba597fF36cCD16fECfbb1B816B3236E9b8&startblock=0&endblock=19412055&page=1&offset=20&sort=desc&apikey=RC2W28PYNA2EUU86RJW52W2QXDXF13EWFK",
+        "sequencerInbox": "network timeout at: https://api.etherscan.io/api?module=account&action=txlist&address=0xf8dB8Aba597fF36cCD16fECfbb1B816B3236E9b8&startblock=0&endblock=19412055&page=1&offset=20&sort=desc&apikey=RC2W28PYNA2EUU86RJW52W2QXDXF13EWFK"
       },
       "derivedName": "SystemConfig"
     },
@@ -234,7 +234,6 @@
   ],
   "eoas": [
     "0x000000000000000000000000000000000000dEaD",
-    "0x08aA34cC843CeEBcC88A627F18430294aA9780be",
     "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
     "0x4200000000000000000000000000000000000007",
     "0x4200000000000000000000000000000000000010",

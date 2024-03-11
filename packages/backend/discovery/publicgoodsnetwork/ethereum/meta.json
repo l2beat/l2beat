@@ -2,36 +2,6 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "L1ERC721Bridge",
-      "values": {
-        "messenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MESSENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OTHER_BRIDGE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "otherBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "L1StandardBridge",
       "values": {
         "l2TokenBridge": {
@@ -55,6 +25,26 @@
           "type": null
         },
         "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "addressManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isUpgrading": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
           "description": null,
           "severity": null,
           "type": null
@@ -127,18 +117,8 @@
       }
     },
     {
-      "name": "ProxyAdmin",
+      "name": "AddressManager",
       "values": {
-        "addressManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isUpgrading": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "owner": {
           "description": null,
           "severity": null,
@@ -147,9 +127,34 @@
       }
     },
     {
-      "name": "AddressManager",
+      "name": "PGNMultisig",
       "values": {
-        "owner": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
           "description": null,
           "severity": null,
           "type": null
@@ -197,42 +202,7 @@
       }
     },
     {
-      "name": "OrderlyMultisig",
-      "values": {
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ChallengerMultisig",
+      "name": "GuardianMultisig",
       "values": {
         "domainSeparator": {
           "description": null,
@@ -365,8 +335,8 @@
           "type": null
         },
         "scalar": {
-          "description": "A system configuration parameter used as dynamic L2 gas overhead in the L2 fee calculation.",
-          "severity": "LOW",
+          "description": null,
+          "severity": null,
           "type": null
         },
         "UNSAFE_BLOCK_SIGNER_SLOT": {

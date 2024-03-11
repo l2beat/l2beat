@@ -32,6 +32,41 @@
       }
     },
     {
+      "name": "OptimismMintableERC20Factory",
+      "values": {
+        "BRIDGE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "addressManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isUpgrading": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "L1StandardBridge",
       "values": {
         "l2TokenBridge": {
@@ -127,26 +162,6 @@
       }
     },
     {
-      "name": "ProxyAdmin",
-      "values": {
-        "addressManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isUpgrading": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "AddressManager",
       "values": {
         "owner": {
@@ -197,42 +212,7 @@
       }
     },
     {
-      "name": "OrderlyMultisig",
-      "values": {
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ChallengerMultisig",
+      "name": "ZoraMultisig",
       "values": {
         "domainSeparator": {
           "description": null,
@@ -365,8 +345,8 @@
           "type": null
         },
         "scalar": {
-          "description": "A system configuration parameter used as dynamic L2 gas overhead in the L2 fee calculation.",
-          "severity": "LOW",
+          "description": null,
+          "severity": null,
           "type": null
         },
         "UNSAFE_BLOCK_SIGNER_SLOT": {
@@ -400,6 +380,41 @@
           "type": null
         },
         "sequencerInbox": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ChallengerMultisig",
+      "values": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
           "description": null,
           "severity": null,
           "type": null

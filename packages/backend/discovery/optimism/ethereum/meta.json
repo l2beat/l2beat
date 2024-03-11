@@ -2,6 +2,56 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
+      "name": "SynthetixBridgeEscrow",
+      "values": {
+        "nominatedOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1DAITokenBridge",
+      "values": {
+        "escrow": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isOpen": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1Token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2DAITokenBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2Token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "StateCommitmentChain",
       "values": {
         "batches": {
@@ -122,64 +172,24 @@
       }
     },
     {
-      "name": "SynthetixBridgeEscrow",
-      "values": {
-        "nominatedOwner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L1DAITokenBridge",
-      "values": {
-        "escrow": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isOpen": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l1Token": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2DAITokenBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2Token": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "messenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "OptimismPortal",
       "values": {
+        "guardian": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "GUARDIAN": {
           "description": null,
           "severity": null,
           "type": null
         },
         "L2_ORACLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2Oracle": {
           "description": null,
           "severity": null,
           "type": null
@@ -199,7 +209,17 @@
           "severity": "HIGH",
           "type": null
         },
+        "superchainConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "SYSTEM_CONFIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "systemConfig": {
           "description": null,
           "severity": null,
           "type": null
@@ -406,7 +426,52 @@
       "values": {}
     },
     {
+      "name": "ProxyAdmin",
+      "values": {
+        "addressManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isUpgrading": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "SCCStorageContainerBatches_OLD",
+      "values": {
+        "getGlobalMetadata": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "length": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "libAddressManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CTCStorageContainerBatches",
       "values": {
         "getGlobalMetadata": {
           "description": null,
@@ -456,19 +521,74 @@
       }
     },
     {
-      "name": "ProxyAdmin",
+      "name": "L1StandardBridge",
       "values": {
-        "addressManager": {
+        "l2TokenBridge": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "isUpgrading": {
+        "messenger": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "owner": {
+        "MESSENGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OTHER_BRIDGE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "otherBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "superchainConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SuperchainConfig",
+      "values": {
+        "guardian": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "GUARDIAN_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAUSED_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
           "description": null,
           "severity": null,
           "type": null
@@ -494,101 +614,6 @@
           "type": null
         },
         "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "CTCStorageContainerBatches",
-      "values": {
-        "getGlobalMetadata": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "length": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "libAddressManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L1StandardBridge",
-      "values": {
-        "l2TokenBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "messenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MESSENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OTHER_BRIDGE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "FoundationMultisig_2",
-      "values": {
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getModules": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "NAME": {
           "description": null,
           "severity": null,
           "type": null
@@ -638,6 +663,16 @@
           "severity": null,
           "type": null
         },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "portal": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "PORTAL": {
           "description": null,
           "severity": null,
@@ -663,6 +698,11 @@
           "severity": null,
           "type": null
         },
+        "superchainConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "version": {
           "description": null,
           "severity": null,
@@ -673,6 +713,11 @@
     {
       "name": "L2OutputOracle",
       "values": {
+        "challenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "CHALLENGER": {
           "description": null,
           "severity": null,
@@ -683,7 +728,17 @@
           "severity": null,
           "type": null
         },
+        "finalizationPeriodSeconds": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "L2_BLOCK_TIME": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2BlockTime": {
           "description": null,
           "severity": null,
           "type": null
@@ -708,6 +763,11 @@
           "severity": null,
           "type": null
         },
+        "proposer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "PROPOSER": {
           "description": null,
           "severity": null,
@@ -728,6 +788,11 @@
           "severity": null,
           "type": null
         },
+        "submissionInterval": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "version": {
           "description": null,
           "severity": null,
@@ -739,6 +804,46 @@
           "type": null
         },
         "deletedOutputs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "FoundationMultisig_2",
+      "values": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getModules": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "NAME": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
           "description": null,
           "severity": null,
           "type": null
@@ -816,7 +921,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "ProxyAdminOwner",
       "values": {
         "domainSeparator": {
           "description": null,
@@ -851,7 +956,7 @@
       }
     },
     {
-      "name": "ProxyAdminOwner",
+      "name": "GnosisSafe",
       "values": {
         "domainSeparator": {
           "description": null,
