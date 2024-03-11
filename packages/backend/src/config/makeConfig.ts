@@ -37,19 +37,11 @@ export function makeConfig(
     env.string('FEATURES', isLocal ? '' : '*'),
   ).append('status')
   const minBlockTimestamp = minTimestampOverride ?? getEthereumMinTimestamp()
-
-  const projects = layer2s
-    .map(layer2ToProject)
-    .concat(bridges.map(bridgeToProject))
-
-  const chainConverter = new ChainConverter(
-    chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
-  )
-  const chainToProject = getChainToProjectMapping(layer2s, chainConverter)
+  const tvl2Config = getTvl2Config()
 
   return {
     name,
-    projects: projects,
+    projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
     tokens: tokenList,
     logger: {
       logLevel: env.string('LOG_LEVEL', 'INFO') as LoggerOptions['logLevel'],
@@ -121,15 +113,7 @@ export function makeConfig(
         }),
       ),
     },
-    tvl2: flags.isEnabled('tvl2') && {
-      amounts: getAmountsConfig(
-        projects,
-        tokenList,
-        chainConverter,
-        chainToProject,
-      ),
-      prices: getPricesConfig(tokenList, chainConverter),
-    },
+    tvl2: flags.isEnabled('tvl2') && tvl2Config,
     liveness: flags.isEnabled('liveness') && {
       bigQuery: {
         clientEmail: env.string('LIVENESS_CLIENT_EMAIL'),
@@ -181,6 +165,29 @@ export function makeConfig(
     tvlCleanerEnabled: flags.isEnabled('tvlCleaner'),
     flags: flags.getResolved(),
   }
+}
+
+function getTvl2Config() {
+  const projects = layer2s
+    .map(layer2ToProject)
+    .concat(bridges.map(bridgeToProject))
+
+  const chainConverter = new ChainConverter(
+    chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
+  )
+  const chainToProject = getChainToProjectMapping(layer2s, chainConverter)
+
+  const tvl2Config = {
+    amounts: getAmountsConfig(
+      projects,
+      tokenList,
+      chainConverter,
+      chainToProject,
+    ),
+    prices: getPricesConfig(tokenList, chainConverter),
+  }
+
+  return tvl2Config
 }
 
 function getEthereumMinTimestamp() {
