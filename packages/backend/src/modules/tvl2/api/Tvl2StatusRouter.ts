@@ -3,7 +3,7 @@ import { TokenQuery } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 import { withTypedContext } from '../../../api/types'
-import { Config } from '../../../config'
+import { Tvl2Config } from '../../../config/Config'
 import { Clock } from '../../../tools/Clock'
 import { renderTokensStatusPage } from './TokensStatusPage'
 
@@ -11,7 +11,7 @@ export interface TokenQueryWithTarget extends TokenQuery {
   targetDataPoints: number
 }
 
-export function createTvl2StatusRouter(config: Config, clock: Clock) {
+export function createTvl2StatusRouter(config: Tvl2Config, clock: Clock) {
   const router = new Router()
 
   router.get('/status/tokens', (ctx) => {

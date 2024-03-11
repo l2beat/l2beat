@@ -15,7 +15,7 @@ export function createTvl2Module(
     return
   }
 
-  const statusRouter = createTvl2StatusRouter(config, clock)
+  const statusRouter = createTvl2StatusRouter(config.tvl2, clock)
 
   const start = () => {
     logger = logger.for('Tvl2Module')

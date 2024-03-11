@@ -109,7 +109,9 @@ export function makeConfig(
         }),
       ),
     },
-    tvl2: flags.isEnabled('tvl2'),
+    tvl2: flags.isEnabled('tvl2') && {
+      queries: getQueries(projects, tokenList),
+    },
     liveness: flags.isEnabled('liveness') && {
       bigQuery: {
         clientEmail: env.string('LIVENESS_CLIENT_EMAIL'),
@@ -160,7 +162,6 @@ export function makeConfig(
     chains: chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
     tvlCleanerEnabled: flags.isEnabled('tvlCleaner'),
     flags: flags.getResolved(),
-    queries: getQueries(projects, tokenList),
   }
 }
 

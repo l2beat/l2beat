@@ -27,7 +27,7 @@ export interface Config {
   readonly api: ApiConfig
   readonly health: HealthConfig
   readonly tvl: TvlConfig
-  readonly tvl2: boolean
+  readonly tvl2: Tvl2Config | false
   readonly liveness: LivenessConfig | false
   readonly finality: FinalityConfig | false
   readonly activity: ActivityConfig | false
@@ -38,7 +38,6 @@ export interface Config {
   readonly chains: { name: string; chainId: ChainId }[]
   readonly flags: ResolvedFeatureFlag[]
   readonly tvlCleanerEnabled: boolean
-  readonly queries: TokenQuery[]
 }
 
 export type LoggerConfig = Pick<LoggerOptions, 'logLevel' | 'format'> &
@@ -78,6 +77,10 @@ export interface TvlConfig {
   readonly coingeckoApiKey: string | undefined
   readonly ethereum: ChainTvlConfig
   readonly modules: ChainTvlConfig[]
+}
+
+export interface Tvl2Config {
+  readonly queries: TokenQuery[]
 }
 
 export interface LivenessConfig {
