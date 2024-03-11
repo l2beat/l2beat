@@ -82,6 +82,9 @@ export const zksynclite: Layer2 = {
       explanation:
         'zkSync Lite is a ZK rollup that posts state diffs to the L1. Transactions within a state diff can be considered final when proven on L1 using a ZK proof, except that an operator can revert them if not executed yet.',
     },
+    finality: {
+      finalizationPeriod: 0,
+    },
   },
   config: {
     escrows: [
@@ -123,6 +126,7 @@ export const zksynclite: Layer2 = {
         },
       ],
     },
+    finality: 'coming soon',
   },
   riskView: makeBridgeCompatible({
     stateValidation: {

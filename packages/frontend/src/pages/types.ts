@@ -18,6 +18,11 @@ export interface ValueWithDisplayValue {
   displayValue: string
 }
 
+export type SyncStatus = {
+  isSynced: boolean
+  displaySyncedUntil: string
+}
+
 type ProjectDetailsProps<T> = Omit<T, 'sectionOrder'>
 
 export interface ProjectDetailsChartSection {

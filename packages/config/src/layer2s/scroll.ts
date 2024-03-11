@@ -97,6 +97,9 @@ export const scroll: Layer2 = {
       explanation:
         'Scroll is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1, but the owner can revert them if the corresponding root has not yet be confirmed.',
     },
+    finality: {
+      finalizationPeriod: 0,
+    },
   },
   stage: getStage({
     stage0: {
@@ -176,6 +179,7 @@ export const scroll: Layer2 = {
         },
       ],
     },
+    finality: 'coming soon',
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
