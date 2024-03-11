@@ -22,28 +22,24 @@ export function getFunctionCallQuery(
       c.address.toLowerCase(),
       c.selector.toLowerCase() + '%',
     ]),
-    from.toDate().toISOString(),
-    to.toDate().toISOString(),
   ]
 
   const query = `
     SELECT
-      txs.hash, txs.to_address, txs.block_number, txs.block_timestamp, txs.gas_price, txs.receipt_gas_used,
-      CASE WHEN txs.to_address IN UNNEST(?) THEN traces.input ELSE LEFT(traces.input, 10) END AS input,
+      block_number,
+      CASE WHEN to_address IN UNNEST(?) THEN input ELSE LEFT(input, 10) END AS input,
+      to_address,
+      block_timestamp,
+      transaction_hash
     FROM
-      bigquery-public-data.crypto_ethereum.transactions as txs
-    LEFT JOIN bigquery-public-data.crypto_ethereum.traces as traces
-      ON txs.hash = traces.transaction_hash
-      AND traces.call_type = 'call'
-      AND traces.status = 1
-      AND traces.block_timestamp >= TIMESTAMP(?)
-      AND traces.block_timestamp < TIMESTAMP(?)
-      AND (
-        ${configs
-          .map(() => `(traces.to_address = ? AND traces.input LIKE ?)`)
-          .join(' OR ')}
-      )
-    WHERE txs.block_timestamp >= TIMESTAMP(?) AND txs.block_timestamp < TIMESTAMP(?)
+      bigquery-public-data.crypto_ethereum.traces
+    WHERE call_type = 'call'
+    AND status = 1
+    AND block_timestamp >= TIMESTAMP(?)
+    AND block_timestamp < TIMESTAMP(?)
+    AND (
+      ${configs.map(() => `(to_address = ? AND input LIKE ?)`).join(' OR ')}
+    )
   `
 
   // @ts-expect-error BigQuery types are wrong
@@ -52,8 +48,6 @@ export function getFunctionCallQuery(
     'STRING',
     'STRING',
     ...configs.flatMap(() => ['STRING', 'STRING']),
-    'STRING',
-    `STRING`,
   ]
 
   return { query, params, types }

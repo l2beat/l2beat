@@ -9,10 +9,10 @@ import {
   BigQueryTransferResult,
 } from './types/model'
 import {
-  TrackedTxFunctionCall,
-  TrackedTxsConfigEntry,
-  TrackedTxSharpSubmission,
-  TrackedTxTransfer,
+  TrackedTxConfigEntry,
+  TrackedTxFunctionCallConfig,
+  TrackedTxSharpSubmissionConfig,
+  TrackedTxTransferConfig,
 } from './types/TrackedTxsConfig'
 import { getFunctionCallQuery, getTransferQuery } from './utils/sql'
 import { transformFunctionCallsQueryResult } from './utils/transformFunctionCallsQueryResult'
@@ -74,7 +74,7 @@ const sharpInput = readFileSync(inputFile, 'utf-8')
 const paradexProgramHash =
   '3258367057337572248818716706664617507069572185152472699066582725377748079373'
 
-const CONFIGURATIONS: TrackedTxsConfigEntry[] = [
+const CONFIGURATIONS: TrackedTxConfigEntry[] = [
   {
     projectId: ProjectId('project1'),
     formula: 'transfer',
@@ -106,8 +106,8 @@ const CONFIGURATIONS: TrackedTxsConfigEntry[] = [
 const TRANSFERS_RESPONSE = [
   {
     hash: TX_HASH,
-    from_address: (CONFIGURATIONS[0] as TrackedTxTransfer).from,
-    to_address: (CONFIGURATIONS[0] as TrackedTxTransfer).to,
+    from_address: (CONFIGURATIONS[0] as TrackedTxTransferConfig).from,
+    to_address: (CONFIGURATIONS[0] as TrackedTxTransferConfig).to,
     block_timestamp: toBigQueryDate(FROM),
     block_number: BLOCK,
     gas_price: 25,
@@ -116,7 +116,7 @@ const TRANSFERS_RESPONSE = [
 ]
 const parsedTransfers = BigQueryTransferResult.array().parse(TRANSFERS_RESPONSE)
 const TRANSFERS_RESULT = transformTransfersQueryResult(
-  [CONFIGURATIONS[0] as TrackedTxTransfer],
+  [CONFIGURATIONS[0] as TrackedTxTransferConfig],
   parsedTransfers,
 )
 
@@ -125,16 +125,16 @@ const FUNCTIONS_RESPONSE = [
     hash: TX_HASH,
     block_number: BLOCK,
     block_timestamp: toBigQueryDate(FROM),
-    to_address: (CONFIGURATIONS[1] as TrackedTxFunctionCall).address,
+    to_address: (CONFIGURATIONS[1] as TrackedTxFunctionCallConfig).address,
     gas_price: 1000,
     receipt_gas_used: 200000,
-    input: (CONFIGURATIONS[1] as TrackedTxFunctionCall).selector,
+    input: (CONFIGURATIONS[1] as TrackedTxFunctionCallConfig).selector,
   },
   {
     hash: TX_HASH,
     block_number: BLOCK,
     block_timestamp: toBigQueryDate(FROM),
-    to_address: (CONFIGURATIONS[2] as TrackedTxFunctionCall).address,
+    to_address: (CONFIGURATIONS[2] as TrackedTxFunctionCallConfig).address,
     gas_price: 1500,
     receipt_gas_used: 200000,
     input: sharpInput,
@@ -144,21 +144,21 @@ const FUNCTIONS_RESPONSE = [
 const parsedFunctionCalls =
   BigQueryFunctionCallResult.array().parse(FUNCTIONS_RESPONSE)
 const FUNCTIONS_RESULT = transformFunctionCallsQueryResult(
-  [CONFIGURATIONS[1] as TrackedTxFunctionCall],
-  [CONFIGURATIONS[2] as TrackedTxSharpSubmission],
+  [CONFIGURATIONS[1] as TrackedTxFunctionCallConfig],
+  [CONFIGURATIONS[2] as TrackedTxSharpSubmissionConfig],
   parsedFunctionCalls,
 )
 
 const TRANSFERS_SQL = getTransferQuery(
-  [CONFIGURATIONS[0] as TrackedTxTransfer],
+  [CONFIGURATIONS[0] as TrackedTxTransferConfig],
   FROM,
   TO,
 )
 const FUNCTIONS_SQL = getFunctionCallQuery(
   (
     CONFIGURATIONS.slice(1) as (
-      | TrackedTxFunctionCall
-      | TrackedTxSharpSubmission
+      | TrackedTxFunctionCallConfig
+      | TrackedTxSharpSubmissionConfig
     )[]
   ).map((c) => ({
     address: c.address,

@@ -9,13 +9,17 @@ export const SHARP_SUBMISSION_ADDRESS = EthereumAddress(
 export const SHARP_SUBMISSION_SELECTOR = '0x9b3b76cc'
 
 export type TrackedTxsConfig = {
-  entries: TrackedTxsConfigEntry[]
+  entries: TrackedTxConfigEntry[]
 }
 
-export type TrackedTxsConfigEntry =
-  | TrackedTxFunctionCall
-  | TrackedTxTransfer
-  | TrackedTxSharpSubmission
+export type TrackedTxConfigEntry =
+  | TrackedTxFunctionCallConfig
+  | TrackedTxTransferConfig
+  | TrackedTxSharpSubmissionConfig
+
+export interface TrackedTxUseWithId extends Layer2TrackedTxUse {
+  id: TrackedTxId
+}
 
 export interface TrackedTxUseWithConfigHash extends Layer2TrackedTxUse {
   id: TrackedTxId
@@ -23,24 +27,24 @@ export interface TrackedTxUseWithConfigHash extends Layer2TrackedTxUse {
 
 interface TrackedTxConfigBase {
   projectId: ProjectId
-  uses: TrackedTxUseWithConfigHash[]
+  uses: TrackedTxUseWithId[]
   sinceTimestamp: UnixTime
   untilTimestamp?: UnixTime
 }
 
-export interface TrackedTxFunctionCall extends TrackedTxConfigBase {
+export interface TrackedTxFunctionCallConfig extends TrackedTxConfigBase {
   formula: 'functionCall'
   address: EthereumAddress
   selector: string
 }
 
-export interface TrackedTxTransfer extends TrackedTxConfigBase {
+export interface TrackedTxTransferConfig extends TrackedTxConfigBase {
   formula: 'transfer'
   from: EthereumAddress
   to: EthereumAddress
 }
 
-export interface TrackedTxSharpSubmission extends TrackedTxConfigBase {
+export interface TrackedTxSharpSubmissionConfig extends TrackedTxConfigBase {
   formula: 'sharpSubmission'
   address: EthereumAddress
   selector: string

@@ -4,14 +4,15 @@ import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import {
   BigQueryFunctionCallResult,
   BigQueryTransferResult,
-  ParsedBigQueryFunctionCallResult,
-  ParsedBigQueryTransferResult,
+  TrackedTxFunctionCallResult,
+  TrackedTxResult,
+  TrackedTxTransferResult,
 } from './types/model'
 import {
-  TrackedTxFunctionCall,
-  TrackedTxsConfigEntry,
-  TrackedTxSharpSubmission,
-  TrackedTxTransfer,
+  TrackedTxConfigEntry,
+  TrackedTxFunctionCallConfig,
+  TrackedTxSharpSubmissionConfig,
+  TrackedTxTransferConfig,
 } from './types/TrackedTxsConfig'
 import { getFunctionCallQuery, getTransferQuery } from './utils/sql'
 import { transformFunctionCallsQueryResult } from './utils/transformFunctionCallsQueryResult'
@@ -21,20 +22,19 @@ export class TrackedTxsClient {
   constructor(private readonly bigquery: BigQueryClient) {}
 
   async getData(
-    configurations: TrackedTxsConfigEntry[],
+    configurations: TrackedTxConfigEntry[],
     from: UnixTime,
     to: UnixTime,
-  ): Promise<
-    (ParsedBigQueryFunctionCallResult | ParsedBigQueryTransferResult)[]
-  > {
+  ): Promise<TrackedTxResult[]> {
     const transfersConfig = configurations.filter(
-      (c): c is TrackedTxTransfer => c.formula === 'transfer',
+      (c): c is TrackedTxTransferConfig => c.formula === 'transfer',
     )
     const functionCallsConfig = configurations.filter(
-      (c): c is TrackedTxFunctionCall => c.formula === 'functionCall',
+      (c): c is TrackedTxFunctionCallConfig => c.formula === 'functionCall',
     )
     const sharpSubmissionsConfig = configurations.filter(
-      (c): c is TrackedTxSharpSubmission => c.formula === 'sharpSubmission',
+      (c): c is TrackedTxSharpSubmissionConfig =>
+        c.formula === 'sharpSubmission',
     )
 
     const [transfers, functionCalls] = await Promise.all([
@@ -51,10 +51,10 @@ export class TrackedTxsClient {
   }
 
   async getTransfers(
-    transfersConfig: TrackedTxTransfer[],
+    transfersConfig: TrackedTxTransferConfig[],
     from: UnixTime,
     to: UnixTime,
-  ): Promise<ParsedBigQueryTransferResult[]> {
+  ): Promise<TrackedTxTransferResult[]> {
     if (transfersConfig.length === 0) return Promise.resolve([])
 
     const query = getTransferQuery(transfersConfig, from, to)
@@ -65,11 +65,11 @@ export class TrackedTxsClient {
   }
 
   async getFunctionCalls(
-    functionCallsConfig: TrackedTxFunctionCall[],
-    sharpSubmissionsConfig: TrackedTxSharpSubmission[],
+    functionCallsConfig: TrackedTxFunctionCallConfig[],
+    sharpSubmissionsConfig: TrackedTxSharpSubmissionConfig[],
     from: UnixTime,
     to: UnixTime,
-  ): Promise<ParsedBigQueryFunctionCallResult[]> {
+  ): Promise<TrackedTxFunctionCallResult[]> {
     if (functionCallsConfig.length === 0 && sharpSubmissionsConfig.length === 0)
       return Promise.resolve([])
 
@@ -96,8 +96,8 @@ export class TrackedTxsClient {
 }
 
 function combineCalls(
-  functionCallsConfig: TrackedTxFunctionCall[],
-  sharpSubmissionsConfig: TrackedTxSharpSubmission[],
+  functionCallsConfig: TrackedTxFunctionCallConfig[],
+  sharpSubmissionsConfig: TrackedTxSharpSubmissionConfig[],
 ) {
   // TODO: unique
   return [

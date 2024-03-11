@@ -12,8 +12,8 @@ import { TrackedTxsConfigRow } from 'knex/types/tables'
 import { describeDatabase } from '../../../test/database'
 import { TrackedTxId } from '../types/TrackedTxId'
 import {
-  TrackedTxFunctionCall,
-  TrackedTxsConfigEntry,
+  TrackedTxConfigEntry,
+  TrackedTxFunctionCallConfig,
 } from '../types/TrackedTxsConfig'
 import {
   toNewRow,
@@ -23,7 +23,7 @@ import {
 
 const START = UnixTime.now()
 
-export const TRACKED_TXS_CONFIGS: TrackedTxsConfigEntry[] = [
+export const TRACKED_TXS_CONFIGS: TrackedTxConfigEntry[] = [
   makeTrackedTxsFunctionCall({
     projectId: ProjectId('project1'),
     uses: [
@@ -200,7 +200,7 @@ describeDatabase(TrackedTxsConfigsRepository.name, (database) => {
   })
 })
 
-function entryToResult(entires: TrackedTxsConfigEntry[]) {
+function entryToResult(entires: TrackedTxConfigEntry[]) {
   return entires.flatMap(toNewRow).map(toRecord)
 }
 
@@ -221,8 +221,8 @@ function toRecord(entry: TrackedTxsConfigRow): TrackedTxsConfigRecord {
   }
 }
 function makeTrackedTxsFunctionCall(
-  props?: Partial<TrackedTxFunctionCall>,
-): TrackedTxFunctionCall {
+  props?: Partial<TrackedTxFunctionCallConfig>,
+): TrackedTxFunctionCallConfig {
   return {
     formula: 'functionCall',
     address: EthereumAddress.random(),

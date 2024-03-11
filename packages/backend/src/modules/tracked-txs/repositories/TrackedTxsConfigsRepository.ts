@@ -15,7 +15,7 @@ import {
 } from '../../../peripherals/database/BaseRepository'
 import { Database } from '../../../peripherals/database/Database'
 import { TrackedTxId } from '../types/TrackedTxId'
-import { TrackedTxsConfigEntry } from '../types/TrackedTxsConfig'
+import { TrackedTxConfigEntry } from '../types/TrackedTxsConfig'
 
 export interface TrackedTxsConfigRecord {
   id: TrackedTxId
@@ -41,7 +41,7 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
   }
 
   async addMany(
-    records: TrackedTxsConfigEntry[],
+    records: TrackedTxConfigEntry[],
     trx?: Knex.Transaction,
   ): Promise<TrackedTxId[]> {
     const knex = await this.knex(trx)
@@ -68,26 +68,26 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
   // }
 
   async setLastSyncedTimestamp(
-    trackedTxsIds: TrackedTxId[],
+    trackedTxIds: TrackedTxId[],
     lastSyncedTimestamp: UnixTime,
     trx?: Knex.Transaction,
   ) {
     const knex = await this.knex(trx)
 
     return await knex('tracked_txs_configs')
-      .whereIn('id', trackedTxsIds)
+      .whereIn('id', trackedTxIds)
       .update({ last_synced_timestamp: lastSyncedTimestamp.toDate() })
   }
 
   async setUntilTimestamp(
-    trackedTxsId: TrackedTxId,
+    trackedTxId: TrackedTxId,
     untilTimestamp: UnixTime,
     trx?: Knex.Transaction,
   ) {
     const knex = await this.knex(trx)
 
     return await knex('tracked_txs_configs')
-      .where({ id: trackedTxsId.valueOf() })
+      .where({ id: trackedTxId.valueOf() })
       .update({ until_timestamp: untilTimestamp.toDate() })
   }
 
@@ -96,12 +96,12 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
     return knex('tracked_txs_configs').delete()
   }
 
-  async deleteMany(trackedTxsIds: TrackedTxId[], trx?: Knex.Transaction) {
+  async deleteMany(trackedTxIds: TrackedTxId[], trx?: Knex.Transaction) {
     const knex = await this.knex(trx)
     return knex('tracked_txs_configs')
       .whereIn(
         'id',
-        trackedTxsIds.map((id) => id.valueOf()),
+        trackedTxIds.map((id) => id.valueOf()),
       )
       .delete()
   }
@@ -130,7 +130,7 @@ function toRecord(row: TrackedTxsConfigRow): TrackedTxsConfigRecord {
   }
 }
 
-export function toNewRow(entry: TrackedTxsConfigEntry): TrackedTxsConfigRow[] {
+export function toNewRow(entry: TrackedTxConfigEntry): TrackedTxsConfigRow[] {
   return entry.uses.map((use) => ({
     id: use.id.toString(),
     project_id: entry.projectId.toString(),
@@ -143,7 +143,7 @@ export function toNewRow(entry: TrackedTxsConfigEntry): TrackedTxsConfigRow[] {
   }))
 }
 
-function toDebugInfo(value: TrackedTxsConfigEntry): string {
+function toDebugInfo(value: TrackedTxConfigEntry): string {
   if (value.formula === 'transfer') {
     return `Transfer: ${value.from.toString()} -> ${value.to.toString()}`
   } else {

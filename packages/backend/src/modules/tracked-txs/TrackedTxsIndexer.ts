@@ -1,31 +1,31 @@
 import { assert, Logger } from '@l2beat/backend-tools'
-import { UnixTime } from '@l2beat/shared-pure'
+import { TrackedTxsConfigType, UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
 import { Knex } from 'knex'
 
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
-import { HourlyIndexer } from '../tracked-txs/HourlyIndexer'
-import { adjustToForBigqueryCall } from '../tracked-txs/utils'
-import { diffLivenessConfigurations } from '../tracked-txs/utils/diffTrackedTxConfigurations'
-import { findConfigurationsToSync } from '../tracked-txs/utils/findConfigurationsToSync'
-import { getSafeHeight } from '../tracked-txs/utils/getSafeHeight'
-import { LivenessClient } from './LivenessClient'
-import { LivenessConfigurationRepository } from './repositories/LivenessConfigurationRepository'
-import { LivenessRepository } from './repositories/LivenessRepository'
-import { LivenessConfigEntry } from './types/LivenessConfig'
-import { LivenessId } from './types/LivenessId'
+import { HourlyIndexer } from './HourlyIndexer'
+import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
+import { TrackedTxsClient } from './TrackedTxsClient'
+import { TrackedTxConfigEntry } from './types/TrackedTxsConfig'
+import { TrackedTxId } from './types/TrackedTxId'
+import { TxUpdaterInterface } from './types/TxUpdaterInterface'
+import { adjustToForBigqueryCall } from './utils'
+import { diffTrackedTxConfigurations } from './utils/diffTrackedTxConfigurations'
+import { findConfigurationsToSync } from './utils/findConfigurationsToSync'
+import { getSafeHeight } from './utils/getSafeHeight'
 
-export class LivenessIndexer extends ChildIndexer {
-  readonly indexerId = 'liveness_indexer'
+export class TrackedTxsIndexer extends ChildIndexer {
+  readonly indexerId = 'tracked_txs_indexer'
 
   constructor(
     logger: Logger,
     parentIndexer: HourlyIndexer,
-    private readonly livenessClient: LivenessClient,
+    private readonly trackedTxsClient: TrackedTxsClient,
     private readonly stateRepository: IndexerStateRepository,
-    private readonly livenessRepository: LivenessRepository,
-    private readonly configurationRepository: LivenessConfigurationRepository,
-    private readonly runtimeConfigurations: LivenessConfigEntry[],
+    private readonly configRepository: TrackedTxsConfigsRepository,
+    private readonly configs: TrackedTxConfigEntry[],
+    private readonly updaters: Record<TrackedTxsConfigType, TxUpdaterInterface>,
     private readonly minTimestamp: UnixTime,
   ) {
     super(logger, [parentIndexer])
@@ -38,6 +38,7 @@ export class LivenessIndexer extends ChildIndexer {
   }
 
   override async update(from: number, to: number): Promise<number> {
+    const unixFrom = new UnixTime(from)
     const [configurations, adjustedTo] = await this.getConfiguration(from, to)
 
     if (configurations.length === 0) {
@@ -45,27 +46,41 @@ export class LivenessIndexer extends ChildIndexer {
       return adjustedTo.toNumber()
     }
 
-    const data = await this.livenessClient.getLivenessData(
-      configurations,
-      new UnixTime(from),
+    const txs = await this.trackedTxsClient.getData(
+      this.configs,
+      unixFrom,
       adjustedTo,
     )
 
-    await this.livenessRepository.runInTransaction(async (trx) => {
-      await this.livenessRepository.addMany(data, trx)
+    await this.configRepository.runInTransaction(async (trx) => {
+      for (const [type, updater] of Object.entries(this.updaters)) {
+        const filteredTxs = txs.filter((tx) => tx.use.type === type)
+        await updater.update(filteredTxs, trx)
+      }
 
-      await this.configurationRepository.setLastSyncedTimestamp(
-        configurations.map((c) => c.id),
+      const configIds = configurations.flatMap((config) =>
+        config.uses.map((use) => use.id),
+      )
+      await this.configRepository.setLastSyncedTimestamp(
+        configIds,
         adjustedTo,
         trx,
       )
     })
 
+    const updatePromises = Object.entries(this.updaters).map(
+      async ([type, updater]) => {
+        const filtered = txs.filter((tx) => tx.use.type === type)
+        await updater.update(filtered)
+      },
+    )
+    await Promise.all(updatePromises)
+
     this.logger.info('Updated', {
       from,
       adjustedTo: adjustedTo,
       usedConfigurations: configurations.length,
-      fetchedDataPoints: data.length,
+      fetchedTxsCount: txs.length,
     })
     return adjustedTo.toNumber()
   }
@@ -73,13 +88,13 @@ export class LivenessIndexer extends ChildIndexer {
   async getConfiguration(
     from: number,
     to: number,
-  ): Promise<[LivenessConfigEntry[], UnixTime]> {
+  ): Promise<[TrackedTxConfigEntry[], UnixTime]> {
     const adjustedTo = adjustToForBigqueryCall(from, to)
 
-    const databaseEntries = await this.configurationRepository.getAll()
+    const databaseEntries = await this.configRepository.getAll()
 
     const configurationsToSync = findConfigurationsToSync(
-      this.runtimeConfigurations,
+      this.configs,
       databaseEntries,
       new UnixTime(from),
       adjustedTo,
@@ -88,38 +103,40 @@ export class LivenessIndexer extends ChildIndexer {
     return [configurationsToSync, adjustedTo]
   }
 
-  private async initialize() {
-    const databaseEntries = await this.configurationRepository.getAll()
-    const { toAdd, toRemove, toTrim } = diffLivenessConfigurations(
-      this.runtimeConfigurations,
+  private async initialize(): Promise<void> {
+    const databaseEntries = await this.configRepository.getAll()
+    const { toAdd, toRemove, toTrim } = diffTrackedTxConfigurations(
+      this.configs,
       databaseEntries,
     )
 
     const safeHeight = getSafeHeight(databaseEntries, toAdd, this.minTimestamp)
 
     await this.stateRepository.runInTransaction(async (trx) => {
-      await this.configurationRepository.addMany(toAdd, trx)
-      // this will also delete records from "liveness" using CASCADE constraint
-      await this.configurationRepository.deleteMany(toRemove, trx)
+      await this.configRepository.addMany(toAdd, trx)
+
+      await this.configRepository.deleteMany(toRemove, trx)
       await this.trimConfigurations(toTrim, trx)
       await this.initializeIndexerState(safeHeight, trx)
     })
   }
 
   private async trimConfigurations(
-    toTrim: { id: LivenessId; untilTimestamp: UnixTime }[],
+    toTrim: { id: TrackedTxId; untilTimestamp: UnixTime }[],
     trx: Knex.Transaction,
   ) {
     // there can be a situation where untilTimestamp was set retroactively
-    // in this case we want to delete the liveness records that were added during this "misconfiguration" period
+    // in this case we want to invoke deleteAfter on updaters for all the configurations that were added during this "misconfiguration" period
     await Promise.all(
       toTrim.map(async (c) => {
-        await this.configurationRepository.setUntilTimestamp(
+        await this.configRepository.setUntilTimestamp(
           c.id,
           c.untilTimestamp,
           trx,
         )
-        await this.livenessRepository.deleteAfter(c.id, c.untilTimestamp, trx)
+        for (const updater of Object.values(this.updaters)) {
+          await updater.deleteAfter(c.id, c.untilTimestamp, trx)
+        }
       }),
     )
   }
@@ -156,6 +173,7 @@ export class LivenessIndexer extends ChildIndexer {
     const indexerState = await this.stateRepository.findIndexerState(
       this.indexerId,
     )
+
     return indexerState?.safeHeight ?? this.minTimestamp.toNumber()
   }
 
