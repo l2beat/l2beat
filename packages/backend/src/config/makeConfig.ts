@@ -167,29 +167,6 @@ export function makeConfig(
   }
 }
 
-function getTvl2Config() {
-  const projects = layer2s
-    .map(layer2ToProject)
-    .concat(bridges.map(bridgeToProject))
-
-  const chainConverter = new ChainConverter(
-    chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
-  )
-  const chainToProject = getChainToProjectMapping(layer2s, chainConverter)
-
-  const tvl2Config = {
-    amounts: getAmountsConfig(
-      projects,
-      tokenList,
-      chainConverter,
-      chainToProject,
-    ),
-    prices: getPricesConfig(tokenList, chainConverter),
-  }
-
-  return tvl2Config
-}
-
 function getEthereumMinTimestamp() {
   const minBlockTimestamp = chains.find(
     (c) => c.name === 'ethereum',
@@ -216,6 +193,29 @@ function getDiscordConfig(env: Env, isLocal?: boolean): DiscordConfig | false {
       callsPerMinute: 3000,
     }
   )
+}
+
+function getTvl2Config() {
+  const projects = layer2s
+    .map(layer2ToProject)
+    .concat(bridges.map(bridgeToProject))
+
+  const chainConverter = new ChainConverter(
+    chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
+  )
+  const chainToProject = getChainToProjectMapping(layer2s, chainConverter)
+
+  const tvl2Config = {
+    amounts: getAmountsConfig(
+      projects,
+      tokenList,
+      chainConverter,
+      chainToProject,
+    ),
+    prices: getPricesConfig(tokenList, chainConverter),
+  }
+
+  return tvl2Config
 }
 
 function getAmountsConfig(
