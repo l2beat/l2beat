@@ -23,6 +23,8 @@ const abi = new utils.Interface([
   'event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)',
 ])
 
+const DEFAULT_ADMIN_ROLE_BYTES = '0x' + '0'.repeat(64)
+
 export class AccessControlHandler implements ClassicHandler {
   readonly dependencies: string[] = []
   private readonly knownNames = new Map<string, string>()
@@ -33,7 +35,7 @@ export class AccessControlHandler implements ClassicHandler {
     abi: string[],
     readonly logger: DiscoveryLogger,
   ) {
-    this.knownNames.set('0x' + '0'.repeat(64), 'DEFAULT_ADMIN_ROLE')
+    this.knownNames.set(DEFAULT_ADMIN_ROLE_BYTES, 'DEFAULT_ADMIN_ROLE')
     for (const [hash, name] of Object.entries(definition.roleNames ?? {})) {
       this.knownNames.set(hash, name)
     }
@@ -57,68 +59,94 @@ export class AccessControlHandler implements ClassicHandler {
     blockNumber: number,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, ['Checking AccessControl'])
-    const logs = await provider.getLogs(
+    const unnamedRoles = await fetchAccessControl(
+      provider,
       address,
-      [
-        [
-          abi.getEventTopic('RoleGranted'),
-          abi.getEventTopic('RoleRevoked'),
-          abi.getEventTopic('RoleAdminChanged'),
-        ],
-      ],
-      0,
       blockNumber,
     )
-
-    const roles: Record<
-      string,
-      {
-        adminRole: string
-        members: Set<EthereumAddress>
-      }
-    > = {}
-
-    getRole('DEFAULT_ADMIN_ROLE')
-
-    function getRole(role: string): {
-      adminRole: string
-      members: Set<EthereumAddress>
-    } {
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      const value = roles[role] ?? {
-        adminRole: 'DEFAULT_ADMIN_ROLE',
-        members: new Set(),
-      }
-      roles[role] = value
-      return value
-    }
-
-    for (const log of logs) {
-      const parsed = parseRoleLog(log)
-      const role = getRole(this.getRoleName(parsed.role))
-      if (parsed.type === 'RoleAdminChanged') {
-        role.adminRole = this.getRoleName(parsed.adminRole)
-      } else if (parsed.type === 'RoleGranted') {
-        role.members.add(parsed.account)
-      } else {
-        role.members.delete(parsed.account)
-      }
-    }
 
     return {
       field: this.field,
       value: Object.fromEntries(
-        Object.entries(roles).map(([role, config]) => [
-          role,
-          {
-            adminRole: config.adminRole,
-            members: [...config.members].map((x) => x.toString()),
-          },
-        ]),
+        Object.entries(unnamedRoles).map(([role, { adminRole, members }]) => {
+          return [
+            this.getRoleName(role),
+            { adminRole: this.getRoleName(adminRole), members },
+          ]
+        }),
       ),
       ignoreRelative: this.definition.ignoreRelative,
     }
   }
+}
+
+export interface AccessControlType {
+  readonly adminRole: string
+  readonly members: string[]
+}
+
+export async function fetchAccessControl(
+  provider: DiscoveryProvider,
+  address: EthereumAddress,
+  blockNumber: number,
+): Promise<Record<string, AccessControlType>> {
+  const logs = await provider.getLogs(
+    address,
+    [
+      [
+        abi.getEventTopic('RoleGranted'),
+        abi.getEventTopic('RoleRevoked'),
+        abi.getEventTopic('RoleAdminChanged'),
+      ],
+    ],
+    0,
+    blockNumber,
+  )
+
+  const roles: Record<
+    string,
+    {
+      adminRole: string
+      members: Set<EthereumAddress>
+    }
+  > = {}
+
+  getRole(DEFAULT_ADMIN_ROLE_BYTES)
+
+  function getRole(role: string): {
+    adminRole: string
+    members: Set<EthereumAddress>
+  } {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    const value = roles[role] ?? {
+      adminRole: DEFAULT_ADMIN_ROLE_BYTES,
+      members: new Set(),
+    }
+    roles[role] = value
+    return value
+  }
+
+  for (const log of logs) {
+    const parsed = parseRoleLog(log)
+    const role = getRole(parsed.role)
+    if (parsed.type === 'RoleAdminChanged') {
+      role.adminRole = parsed.adminRole
+    } else if (parsed.type === 'RoleGranted') {
+      role.members.add(parsed.account)
+    } else {
+      role.members.delete(parsed.account)
+    }
+  }
+
+  return Object.fromEntries(
+    Object.entries(roles).map(([role, config]) => [
+      role,
+      {
+        adminRole: config.adminRole,
+        members: [...config.members].map((x) => x.toString()),
+      },
+    ]),
+  )
 }
 
 function parseRoleLog(log: providers.Log):

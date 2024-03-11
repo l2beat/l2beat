@@ -4,6 +4,7 @@ import { BigNumber, utils } from 'ethers'
 import { Bytes } from '../../../utils/Bytes'
 import { EthereumAddress } from '../../../utils/EthereumAddress'
 import { Hash256 } from '../../../utils/Hash256'
+import { parseSemver, Semver } from '../../../utils/semver'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
 import { bytes32ToAddress } from '../../utils/address'
 import { getCallResult } from '../../utils/getCallResult'
@@ -63,7 +64,7 @@ async function getUpgradeDelay(
 
 // Web3.solidityKeccak(['string'], ["StarkWare2019.finalization-flag-slot"]).
 const FINALIZED_STATE_SLOT = Bytes.fromHex(
-  '0x7184681641399eb4ad2fdb92114857ee6ff239f94ad635a1779978947b8843be',
+  '0x7d433c6f837e8f93009937c466c82efbb5ba621fae36886d0cac433c5d0aa7d2',
 )
 
 async function getFinalizedState(
@@ -79,6 +80,26 @@ async function getFinalizedState(
   return !BigNumber.from(stored.toString()).eq(0)
 }
 
+async function getProxyVersion(
+  provider: DiscoveryProvider,
+  address: EthereumAddress,
+  blockNumber: number,
+): Promise<Semver | undefined> {
+  const versionString = await getCallResult<string>(
+    provider,
+    address,
+    'function PROXY_VERSION() view returns (string)',
+    [],
+    blockNumber,
+  )
+
+  if (!versionString) {
+    return undefined
+  }
+
+  return parseSemver(versionString)
+}
+
 export async function detectStarkWareProxy(
   provider: DiscoveryProvider,
   address: EthereumAddress,
@@ -88,12 +109,18 @@ export async function detectStarkWareProxy(
   if (implementation === EthereumAddress.ZERO) {
     return
   }
+
+  const proxyVersion = await getProxyVersion(provider, address, blockNumber)
+  if (!proxyVersion) {
+    return undefined
+  }
+
   const [callImplementation, upgradeDelay, isFinal, proxyGovernance] =
     await Promise.all([
       getCallImplementation(provider, address, blockNumber),
       getUpgradeDelay(provider, address, blockNumber),
       getFinalizedState(provider, address, blockNumber),
-      getProxyGovernance(provider, address, blockNumber),
+      getProxyGovernance(provider, address, blockNumber, proxyVersion),
     ])
 
   const diamond = await getStarkWareDiamond(

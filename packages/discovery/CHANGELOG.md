@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.44.6
+
+### Patch Changes
+
+- Handle StarkWare proxy version 5
+
 ## 0.44.5
 
 ### Patch Changes
