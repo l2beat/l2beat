@@ -4,12 +4,13 @@ import { readFileSync } from 'fs'
 
 import {
   BigQueryFunctionCallResult,
-  ParsedBigQueryFunctionCallResult,
+  TrackedTxFunctionCallResult,
 } from '../types/model'
 import {
-  TrackedTxFunctionCall,
-  TrackedTxSharpSubmission,
+  TrackedTxFunctionCallConfig,
+  TrackedTxSharpSubmissionConfig,
 } from '../types/TrackedTxsConfig'
+import { TrackedTxsId } from '../types/TrackedTxsId'
 import { transformFunctionCallsQueryResult } from './transformFunctionCallsQueryResult'
 
 const ADDRESS_1 = EthereumAddress.random()
@@ -33,14 +34,20 @@ const paradexProgramHash =
 
 describe(transformFunctionCallsQueryResult.name, () => {
   it('should transform results', () => {
-    const functionCalls: TrackedTxFunctionCall[] = [
+    const functionCalls: TrackedTxFunctionCallConfig[] = [
       {
         formula: 'functionCall',
         projectId: ProjectId('project1'),
         address: ADDRESS_1,
         selector: SELECTOR_1,
         sinceTimestamp: SINCE_TIMESTAMP,
-        uses: [],
+        uses: [
+          {
+            type: 'liveness',
+            subType: 'batchSubmissions',
+            id: TrackedTxsId.random(),
+          },
+        ],
       },
       {
         formula: 'functionCall',
@@ -48,11 +55,17 @@ describe(transformFunctionCallsQueryResult.name, () => {
         address: ADDRESS_2,
         selector: SELECTOR_2,
         sinceTimestamp: SINCE_TIMESTAMP,
-        uses: [],
+        uses: [
+          {
+            type: 'liveness',
+            subType: 'stateUpdates',
+            id: TrackedTxsId.random(),
+          },
+        ],
       },
     ]
 
-    const sharpSubmissions: TrackedTxSharpSubmission[] = [
+    const sharpSubmissions: TrackedTxSharpSubmissionConfig[] = [
       {
         formula: 'sharpSubmission',
         projectId: ProjectId('project2'),
@@ -60,7 +73,13 @@ describe(transformFunctionCallsQueryResult.name, () => {
         programHashes: [paradexProgramHash],
         address: EthereumAddress.random(),
         selector: '0x9b3b76cc',
-        uses: [],
+        uses: [
+          {
+            type: 'liveness',
+            subType: 'proofSubmissions',
+            id: TrackedTxsId.random(),
+          },
+        ],
       },
     ]
 
@@ -93,9 +112,11 @@ describe(transformFunctionCallsQueryResult.name, () => {
         receipt_gas_used: 2050,
       },
     ]
-    const expected: ParsedBigQueryFunctionCallResult[] = [
+    const expected: TrackedTxFunctionCallResult[] = [
       {
         type: 'functionCall',
+        projectId: functionCalls[0].projectId,
+        use: functionCalls[0].uses[0],
         hash: txHashes[0],
         blockNumber: block,
         blockTimestamp: timestamp,
@@ -106,6 +127,8 @@ describe(transformFunctionCallsQueryResult.name, () => {
       },
       {
         type: 'functionCall',
+        projectId: functionCalls[1].projectId,
+        use: functionCalls[1].uses[0],
         hash: txHashes[1],
         blockNumber: block,
         blockTimestamp: timestamp,
@@ -116,6 +139,8 @@ describe(transformFunctionCallsQueryResult.name, () => {
       },
       {
         type: 'functionCall',
+        projectId: sharpSubmissions[0].projectId,
+        use: sharpSubmissions[0].uses[0],
         hash: txHashes[2],
         blockNumber: block,
         blockTimestamp: timestamp,
@@ -135,7 +160,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
   })
 
   it('throws when there is no matching configuration', () => {
-    const functionCalls: TrackedTxFunctionCall[] = [
+    const functionCalls: TrackedTxFunctionCallConfig[] = [
       {
         formula: 'functionCall',
         projectId: ProjectId('project1'),
@@ -164,7 +189,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
   })
 
   it('includes only configurations which program hashes were proven', () => {
-    const sharpSubmissions: TrackedTxSharpSubmission[] = [
+    const sharpSubmissions: TrackedTxSharpSubmissionConfig[] = [
       {
         formula: 'sharpSubmission',
         projectId: ProjectId('project1'),
@@ -172,7 +197,13 @@ describe(transformFunctionCallsQueryResult.name, () => {
         programHashes: [paradexProgramHash],
         address: EthereumAddress.random(),
         selector: '0x9b3b76cc',
-        uses: [],
+        uses: [
+          {
+            type: 'liveness',
+            subType: 'proofSubmissions',
+            id: TrackedTxsId.random(),
+          },
+        ],
       },
       {
         formula: 'sharpSubmission',
@@ -197,9 +228,11 @@ describe(transformFunctionCallsQueryResult.name, () => {
       },
     ]
 
-    const expected: ParsedBigQueryFunctionCallResult[] = [
+    const expected: TrackedTxFunctionCallResult[] = [
       {
         type: 'functionCall',
+        projectId: sharpSubmissions[0].projectId,
+        use: sharpSubmissions[0].uses[0],
         hash: txHashes[0],
         blockNumber: block,
         blockTimestamp: timestamp,

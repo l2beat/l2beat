@@ -2,19 +2,19 @@ import { assert } from '@l2beat/shared-pure'
 
 import {
   BigQueryFunctionCallResult,
-  ParsedBigQueryFunctionCallResult,
+  TrackedTxFunctionCallResult,
 } from '../types/model'
 import {
-  TrackedTxFunctionCall,
-  TrackedTxSharpSubmission,
+  TrackedTxFunctionCallConfig,
+  TrackedTxSharpSubmissionConfig,
 } from '../types/TrackedTxsConfig'
 import { isProgramHashProven } from './isProgramHashProven'
 
 export function transformFunctionCallsQueryResult(
-  functionCalls: TrackedTxFunctionCall[],
-  sharpSubmissions: TrackedTxSharpSubmission[],
+  functionCalls: TrackedTxFunctionCallConfig[],
+  sharpSubmissions: TrackedTxSharpSubmissionConfig[],
   queryResults: BigQueryFunctionCallResult[],
-): ParsedBigQueryFunctionCallResult[] {
+): TrackedTxFunctionCallResult[] {
   return queryResults.flatMap((r) => {
     const selector = r.input.slice(0, 10)
 
@@ -34,18 +34,23 @@ export function transformFunctionCallsQueryResult(
       isProgramHashProven(r, c.programHashes),
     )
 
-    const results = [...matchingCalls, ...filteredSubmissions].map(
-      () =>
-        ({
-          type: 'functionCall',
-          hash: r.hash,
-          blockNumber: r.block_number,
-          blockTimestamp: r.block_timestamp,
-          toAddress: r.to_address,
-          gasPrice: r.gas_price,
-          gasUsed: r.receipt_gas_used,
-          input: r.input,
-        } as const),
+    const results = [...matchingCalls, ...filteredSubmissions].flatMap(
+      (config) =>
+        config.uses.map(
+          (use) =>
+            ({
+              type: 'functionCall',
+              use,
+              projectId: config.projectId,
+              hash: r.hash,
+              blockNumber: r.block_number,
+              blockTimestamp: r.block_timestamp,
+              toAddress: r.to_address,
+              gasPrice: r.gas_price,
+              gasUsed: r.receipt_gas_used,
+              input: r.input,
+            } as const),
+        ),
     )
 
     return results

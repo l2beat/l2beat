@@ -3,21 +3,31 @@ import { notUndefined } from '@l2beat/shared-pure'
 
 import { Config } from '../../config'
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
+import { Database } from '../../peripherals/database/Database'
+import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
 import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
 import { HourlyIndexer } from './HourlyIndexer'
+import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
+import { TrackedTxsClient } from './TrackedTxsClient'
 import { TrackedTxsIndexer } from './TrackedTxsIndexer'
-import { TrackedTxsClient } from './utils/TrackedTxsClient'
 
-export function createTrackedTransactionsModule(
+export function createTrackedTxsModule(
   config: Config,
   logger: Logger,
+  database: Database,
   clock: Clock,
 ): ApplicationModule | undefined {
   if (!config.trackedTxsConfig) {
     logger.info('Tracked transactions module disabled')
     return
   }
+
+  const indexerStateRepository = new IndexerStateRepository(database, logger)
+  const trackedTxsConfigsRepository = new TrackedTxsConfigsRepository(
+    database,
+    logger,
+  )
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
 
@@ -41,9 +51,12 @@ export function createTrackedTransactionsModule(
   const trackedTxsIndexer = new TrackedTxsIndexer(
     logger,
     hourlyIndexer,
-    runtimeConfigurations,
     trackedTxsClient,
-    [],
+    indexerStateRepository,
+    trackedTxsConfigsRepository,
+    runtimeConfigurations,
+    {},
+    config.trackedTxsConfig.minTimestamp,
   )
 
   const start = async () => {

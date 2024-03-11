@@ -1,9 +1,16 @@
-import { branded, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import {
+  branded,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { z } from 'zod'
 
-export type ParsedBigQueryResult =
-  | ParsedBigQueryTransferResult
-  | ParsedBigQueryFunctionCallResult
+import { TrackedTxUseWithId } from './TrackedTxsConfig'
+
+export type TrackedTxResult =
+  | TrackedTxTransferResult
+  | TrackedTxFunctionCallResult
 
 export type BigQueryFunctionCallResult = z.infer<
   typeof BigQueryFunctionCallResult
@@ -20,8 +27,10 @@ export const BigQueryFunctionCallResult = z.object({
   input: z.string(),
 })
 
-export type ParsedBigQueryFunctionCallResult = {
+export type TrackedTxFunctionCallResult = {
   type: 'functionCall'
+  projectId: ProjectId
+  use: TrackedTxUseWithId
   hash: string
   blockNumber: number
   blockTimestamp: UnixTime
@@ -44,8 +53,10 @@ export const BigQueryTransferResult = z.object({
   receipt_gas_used: z.number(),
 })
 
-export type ParsedBigQueryTransferResult = {
+export type TrackedTxTransferResult = {
   type: 'transfer'
+  projectId: ProjectId
+  use: TrackedTxUseWithId
   hash: string
   blockNumber: number
   blockTimestamp: UnixTime

@@ -14,7 +14,7 @@ import {
   CheckConvention,
 } from '../../../peripherals/database/BaseRepository'
 import { Database } from '../../../peripherals/database/Database'
-import { TrackedTxsConfigEntry } from '../types/TrackedTxsConfig'
+import { TrackedTxConfigEntry } from '../types/TrackedTxsConfig'
 import { TrackedTxsId } from '../types/TrackedTxsId'
 
 export interface TrackedTxsConfigRecord {
@@ -41,7 +41,7 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
   }
 
   async addMany(
-    records: TrackedTxsConfigEntry[],
+    records: TrackedTxConfigEntry[],
     trx?: Knex.Transaction,
   ): Promise<TrackedTxsId[]> {
     const knex = await this.knex(trx)
@@ -130,7 +130,7 @@ function toRecord(row: TrackedTxsConfigRow): TrackedTxsConfigRecord {
   }
 }
 
-export function toNewRow(entry: TrackedTxsConfigEntry): TrackedTxsConfigRow[] {
+export function toNewRow(entry: TrackedTxConfigEntry): TrackedTxsConfigRow[] {
   return entry.uses.map((use) => ({
     id: use.id.toString(),
     project_id: entry.projectId.toString(),
@@ -143,7 +143,7 @@ export function toNewRow(entry: TrackedTxsConfigEntry): TrackedTxsConfigRow[] {
   }))
 }
 
-function toDebugInfo(value: TrackedTxsConfigEntry): string {
+function toDebugInfo(value: TrackedTxConfigEntry): string {
   if (value.formula === 'transfer') {
     return `Transfer: ${value.from.toString()} -> ${value.to.toString()}`
   } else {

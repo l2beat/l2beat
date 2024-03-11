@@ -1,11 +1,9 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import {
-  BigQueryTransferResult,
-  ParsedBigQueryTransferResult,
-} from '../types/model'
-import { TrackedTxTransfer } from '../types/TrackedTxsConfig'
+import { BigQueryTransferResult, TrackedTxTransferResult } from '../types/model'
+import { TrackedTxTransferConfig } from '../types/TrackedTxsConfig'
+import { TrackedTxsId } from '../types/TrackedTxsId'
 import { transformTransfersQueryResult } from './transformTransfersQueryResult'
 
 const ADDRESS_1 = EthereumAddress.random()
@@ -20,14 +18,25 @@ const RESULT_TIMESTAMP = UnixTime.fromDate(new Date('2022-01-01T01:00:00Z'))
 
 describe(transformTransfersQueryResult.name, () => {
   it('should transform results', () => {
-    const config: TrackedTxTransfer[] = [
+    const config: TrackedTxTransferConfig[] = [
       {
         formula: 'transfer',
         projectId: ProjectId('project1'),
         from: ADDRESS_1,
         to: ADDRESS_2,
         sinceTimestamp: SINCE_TIMESTAMP,
-        uses: [],
+        uses: [
+          {
+            id: TrackedTxsId.unsafe('0x1'),
+            type: 'liveness',
+            subType: 'batchSubmissions',
+          },
+          {
+            id: TrackedTxsId.unsafe('0x2'),
+            type: 'liveness',
+            subType: 'stateUpdates',
+          },
+        ],
       },
       {
         formula: 'transfer',
@@ -35,7 +44,13 @@ describe(transformTransfersQueryResult.name, () => {
         from: ADDRESS_3,
         to: ADDRESS_4,
         sinceTimestamp: SINCE_TIMESTAMP,
-        uses: [],
+        uses: [
+          {
+            id: TrackedTxsId.unsafe('0x3'),
+            type: 'liveness',
+            subType: 'stateUpdates',
+          },
+        ],
       },
       {
         formula: 'transfer',
@@ -43,7 +58,13 @@ describe(transformTransfersQueryResult.name, () => {
         from: ADDRESS_5,
         to: ADDRESS_6,
         sinceTimestamp: SINCE_TIMESTAMP,
-        uses: [],
+        uses: [
+          {
+            id: TrackedTxsId.unsafe('0x4'),
+            type: 'liveness',
+            subType: 'proofSubmissions',
+          },
+        ],
       },
     ]
 
@@ -83,9 +104,11 @@ describe(transformTransfersQueryResult.name, () => {
         receipt_gas_used: 1000,
       },
     ]
-    const expected: ParsedBigQueryTransferResult[] = [
+    const expected: TrackedTxTransferResult[] = [
       {
         type: 'transfer',
+        projectId: config[0].projectId,
+        use: config[0].uses[0],
         hash: txHashes[0],
         blockNumber: block,
         blockTimestamp: RESULT_TIMESTAMP,
@@ -96,6 +119,20 @@ describe(transformTransfersQueryResult.name, () => {
       },
       {
         type: 'transfer',
+        projectId: config[0].projectId,
+        use: config[0].uses[1],
+        hash: txHashes[0],
+        blockNumber: block,
+        blockTimestamp: RESULT_TIMESTAMP,
+        fromAddress: ADDRESS_1,
+        toAddress: ADDRESS_2,
+        gasPrice: 25,
+        gasUsed: 100,
+      },
+      {
+        type: 'transfer',
+        projectId: config[1].projectId,
+        use: config[1].uses[0],
         hash: txHashes[1],
         blockNumber: block,
         blockTimestamp: RESULT_TIMESTAMP,
@@ -106,6 +143,8 @@ describe(transformTransfersQueryResult.name, () => {
       },
       {
         type: 'transfer',
+        projectId: config[2].projectId,
+        use: config[2].uses[0],
         hash: txHashes[2],
         blockNumber: block,
         blockTimestamp: RESULT_TIMESTAMP,
@@ -122,7 +161,7 @@ describe(transformTransfersQueryResult.name, () => {
   })
 
   it('should throw when there is no matching config', () => {
-    const config: TrackedTxTransfer[] = [
+    const config: TrackedTxTransferConfig[] = [
       {
         formula: 'transfer',
         projectId: ProjectId('project1'),

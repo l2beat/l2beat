@@ -1,14 +1,19 @@
 import { assert, Logger } from '@l2beat/backend-tools'
-import { UnixTime } from '@l2beat/shared-pure'
+import { TrackedTxsConfigType, UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
 import { Knex } from 'knex'
 
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
 import { HourlyIndexer } from './HourlyIndexer'
-import { TrackedTxsConfigEntry } from './types/TrackedTxsConfig'
+import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
+import { TrackedTxsClient } from './TrackedTxsClient'
+import { TrackedTxConfigEntry } from './types/TrackedTxsConfig'
+import { TrackedTxsId } from './types/TrackedTxsId'
 import { TxUpdaterInterface } from './types/TxUpdaterInterface'
 import { adjustToForBigqueryCall } from './utils'
-import { TrackedTxsClient } from './utils/TrackedTxsClient'
+import { diffTrackedTxConfigurations } from './utils/diffTrackedTxConfigurations'
+import { findConfigurationsToSync } from './utils/findConfigurationsToSync'
+import { getSafeHeight } from './utils/getSafeHeight'
 
 export class TrackedTxsIndexer extends ChildIndexer {
   readonly indexerId = 'tracked_txs_indexer'
@@ -18,14 +23,21 @@ export class TrackedTxsIndexer extends ChildIndexer {
     parentIndexer: HourlyIndexer,
     private readonly trackedTxsClient: TrackedTxsClient,
     private readonly stateRepository: IndexerStateRepository,
-    private readonly configs: TrackedTxsConfigEntry[],
-    private readonly updaters: TxUpdaterInterface[],
+    private readonly configRepository: TrackedTxsConfigsRepository,
+    private readonly configs: TrackedTxConfigEntry[],
+    private readonly updaters: Record<TrackedTxsConfigType, TxUpdaterInterface>,
     private readonly minTimestamp: UnixTime,
   ) {
     super(logger, [parentIndexer])
   }
 
-  protected override async update(from: number, to: number): Promise<number> {
+  override async start(): Promise<void> {
+    this.logger.info('Starting...')
+    await this.initialize()
+    await super.start()
+  }
+
+  override async update(from: number, to: number): Promise<number> {
     const unixFrom = new UnixTime(from)
     const [configurations, adjustedTo] = await this.getConfiguration(from, to)
 
@@ -40,7 +52,29 @@ export class TrackedTxsIndexer extends ChildIndexer {
       adjustedTo,
     )
 
-    this.updaters.forEach((updater) => updater.update(txs))
+    await this.configRepository.runInTransaction(async (trx) => {
+      for (const [type, updater] of Object.entries(this.updaters)) {
+        const filteredTxs = txs.filter((tx) => tx.use.type === type)
+        await updater.update(filteredTxs, trx)
+      }
+
+      const configIds = configurations.flatMap((config) =>
+        config.uses.map((use) => use.id),
+      )
+      await this.configRepository.setLastSyncedTimestamp(
+        configIds,
+        adjustedTo,
+        trx,
+      )
+    })
+
+    const updatePromises = Object.entries(this.updaters).map(
+      async ([type, updater]) => {
+        const filtered = txs.filter((tx) => tx.use.type === type)
+        await updater.update(filtered)
+      },
+    )
+    await Promise.all(updatePromises)
 
     this.logger.info('Updated', {
       from,
@@ -54,10 +88,10 @@ export class TrackedTxsIndexer extends ChildIndexer {
   async getConfiguration(
     from: number,
     to: number,
-  ): Promise<[TrackedTxsConfigEntry[], UnixTime]> {
+  ): Promise<[TrackedTxConfigEntry[], UnixTime]> {
     const adjustedTo = adjustToForBigqueryCall(from, to)
 
-    const databaseEntries = await this.configurationRepository.getAll()
+    const databaseEntries = await this.configRepository.getAll()
 
     const configurationsToSync = findConfigurationsToSync(
       this.configs,
@@ -69,6 +103,72 @@ export class TrackedTxsIndexer extends ChildIndexer {
     return [configurationsToSync, adjustedTo]
   }
 
+  private async initialize(): Promise<void> {
+    const databaseEntries = await this.configRepository.getAll()
+    const { toAdd, toRemove, toTrim } = diffTrackedTxConfigurations(
+      this.configs,
+      databaseEntries,
+    )
+
+    const safeHeight = getSafeHeight(databaseEntries, toAdd, this.minTimestamp)
+
+    await this.stateRepository.runInTransaction(async (trx) => {
+      await this.configRepository.addMany(toAdd, trx)
+
+      await this.configRepository.deleteMany(toRemove, trx)
+      await this.trimConfigurations(toTrim, trx)
+      await this.initializeIndexerState(safeHeight, trx)
+    })
+  }
+
+  private async trimConfigurations(
+    toTrim: { id: TrackedTxsId; untilTimestamp: UnixTime }[],
+    trx: Knex.Transaction,
+  ) {
+    // there can be a situation where untilTimestamp was set retroactively
+    // in this case we want to invoke deleteAfter on updaters for all the configurations that were added during this "misconfiguration" period
+    await Promise.all(
+      toTrim.map(async (c) => {
+        await this.configRepository.setUntilTimestamp(
+          c.id,
+          c.untilTimestamp,
+          trx,
+        )
+        for (const updater of Object.values(this.updaters)) {
+          await updater.deleteAfter(c.id, c.untilTimestamp, trx)
+        }
+      }),
+    )
+  }
+
+  async initializeIndexerState(safeHeight: number, trx?: Knex.Transaction) {
+    const indexerState = await this.stateRepository.findIndexerState(
+      this.indexerId,
+    )
+
+    if (indexerState === undefined) {
+      await this.stateRepository.add(
+        {
+          indexerId: this.indexerId,
+          safeHeight,
+          minTimestamp: this.minTimestamp,
+        },
+        trx,
+      )
+      return
+    }
+
+    // We prevent updating the minimum timestamp of the indexer.
+    // This functionality can be added in the future if needed.
+    assert(
+      indexerState.minTimestamp &&
+        this.minTimestamp.equals(indexerState.minTimestamp),
+      'Minimum timestamp of this indexer cannot be updated',
+    )
+
+    await this.setSafeHeight(safeHeight, trx)
+  }
+
   override async getSafeHeight(): Promise<number> {
     const indexerState = await this.stateRepository.findIndexerState(
       this.indexerId,
@@ -77,7 +177,7 @@ export class TrackedTxsIndexer extends ChildIndexer {
     return indexerState?.safeHeight ?? this.minTimestamp.toNumber()
   }
 
-  protected override async setSafeHeight(
+  override async setSafeHeight(
     safeHeight: number,
     trx?: Knex.Transaction,
   ): Promise<void> {
