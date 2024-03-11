@@ -4,10 +4,10 @@ import {
   calculateDetailsFor,
   calculateIntervals,
 } from '../../liveness/api/calculateIntervalWithAverages'
-import { LivenessRecordWithType } from '../../liveness/repositories/LivenessRepository'
+import { LivenessRecordWithSubtype } from '../../liveness/repositories/LivenessRepository'
 
 export function calcAvgsPerProject(
-  records: LivenessRecordWithType[],
+  records: LivenessRecordWithSubtype[],
 ): FinalityDataPoint | undefined {
   calculateIntervals(records)
   const result = calculateDetailsFor(records, '30d')

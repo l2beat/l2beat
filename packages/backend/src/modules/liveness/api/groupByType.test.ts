@@ -1,7 +1,7 @@
 import { LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { LivenessRecordWithProjectIdAndType } from '../repositories/LivenessRepository'
+import { LivenessRecordWithProjectIdAndSubtype } from '../repositories/LivenessRepository'
 import { groupByType } from './groupByType'
 
 describe(groupByType.name, () => {
@@ -23,7 +23,7 @@ describe(groupByType.name, () => {
 })
 
 const NOW = UnixTime.now()
-const MOCK_DATA: LivenessRecordWithProjectIdAndType[] = [
+const MOCK_DATA: LivenessRecordWithProjectIdAndSubtype[] = [
   {
     projectId: ProjectId('project1'),
     timestamp: NOW.add(-1, 'hours'),
