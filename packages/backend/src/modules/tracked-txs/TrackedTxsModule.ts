@@ -7,10 +7,15 @@ import { Database } from '../../peripherals/database/Database'
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
 import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
+import { LivenessUpdater } from '../liveness/LivenessUpdater'
+import { LivenessRepository } from '../liveness/repositories/LivenessRepository'
 import { HourlyIndexer } from './HourlyIndexer'
 import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsClient } from './TrackedTxsClient'
-import { TrackedTxsIndexer } from './TrackedTxsIndexer'
+import {
+  TrackedTxsIndexer,
+  TrackedTxsIndexerUpdaters,
+} from './TrackedTxsIndexer'
 
 export function createTrackedTxsModule(
   config: Config,
@@ -48,6 +53,8 @@ export function createTrackedTxsModule(
     .flatMap((project) => project.trackedTxsConfig?.entries)
     .filter(notUndefined)
 
+  const updaters = initializeUpdaters(config, database, logger)
+
   const trackedTxsIndexer = new TrackedTxsIndexer(
     logger,
     hourlyIndexer,
@@ -55,7 +62,7 @@ export function createTrackedTxsModule(
     indexerStateRepository,
     trackedTxsConfigsRepository,
     runtimeConfigurations,
-    {},
+    updaters,
     config.trackedTxsConfig.minTimestamp,
   )
 
@@ -72,4 +79,19 @@ export function createTrackedTxsModule(
     routers: [],
     indexer: trackedTxsIndexer,
   }
+}
+
+function initializeUpdaters(
+  config: Config,
+  database: Database,
+  logger: Logger,
+): TrackedTxsIndexerUpdaters {
+  const livenessRepository = new LivenessRepository(database, logger)
+  const livenessUpdater = new LivenessUpdater(livenessRepository, logger)
+
+  const updaters: TrackedTxsIndexerUpdaters = {
+    liveness: livenessUpdater,
+  }
+
+  return updaters
 }

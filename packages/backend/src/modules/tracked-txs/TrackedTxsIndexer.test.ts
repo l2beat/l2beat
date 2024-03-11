@@ -20,8 +20,8 @@ import {
 } from './repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsIndexer } from './TrackedTxsIndexer'
 import { TrackedTxResult } from './types/model'
-import { TrackedTxConfigEntry } from './types/TrackedTxsConfig'
 import { TrackedTxId } from './types/TrackedTxId'
+import { TrackedTxConfigEntry } from './types/TrackedTxsConfig'
 import { TxUpdaterInterface } from './types/TxUpdaterInterface'
 import { diffTrackedTxConfigurations } from './utils/diffTrackedTxConfigurations'
 import { findConfigurationsToSync } from './utils/findConfigurationsToSync'
@@ -434,8 +434,6 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       blockNumber: 1,
       blockTimestamp: UnixTime.now(),
       toAddress: EthereumAddress.random(),
-      gasPrice: 25,
-      gasUsed: 100,
       input: '',
       hash: '',
       use: {
@@ -454,8 +452,6 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       blockNumber: 1,
       blockTimestamp: UnixTime.now(),
       hash: '',
-      gasPrice: 25,
-      gasUsed: 100,
       fromAddress: EthereumAddress.random(),
       toAddress: EthereumAddress.random(),
       projectId: ProjectId('test2'),

@@ -15,6 +15,11 @@ import { diffTrackedTxConfigurations } from './utils/diffTrackedTxConfigurations
 import { findConfigurationsToSync } from './utils/findConfigurationsToSync'
 import { getSafeHeight } from './utils/getSafeHeight'
 
+export type TrackedTxsIndexerUpdaters = Record<
+  TrackedTxsConfigType,
+  TxUpdaterInterface
+>
+
 export class TrackedTxsIndexer extends ChildIndexer {
   readonly indexerId = 'tracked_txs_indexer'
 
@@ -25,7 +30,7 @@ export class TrackedTxsIndexer extends ChildIndexer {
     private readonly stateRepository: IndexerStateRepository,
     private readonly configRepository: TrackedTxsConfigsRepository,
     private readonly configs: TrackedTxConfigEntry[],
-    private readonly updaters: Record<TrackedTxsConfigType, TxUpdaterInterface>,
+    private readonly updaters: TrackedTxsIndexerUpdaters,
     private readonly minTimestamp: UnixTime,
   ) {
     super(logger, [parentIndexer])
@@ -67,14 +72,6 @@ export class TrackedTxsIndexer extends ChildIndexer {
         trx,
       )
     })
-
-    const updatePromises = Object.entries(this.updaters).map(
-      async ([type, updater]) => {
-        const filtered = txs.filter((tx) => tx.use.type === type)
-        await updater.update(filtered)
-      },
-    )
-    await Promise.all(updatePromises)
 
     this.logger.info('Updated', {
       from,
