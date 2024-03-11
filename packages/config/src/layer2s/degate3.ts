@@ -104,6 +104,11 @@ export const degate3: Layer2 = {
         tokens: '*',
       }),
     ],
+    transactionApi: {
+      type: 'degate',
+      defaultUrl: 'https://v1-mainnet-backend.degate.com/order-book-api',
+      defaultCallsPerMinute: 120,
+    },
     liveness: {
       duplicateData: [
         {

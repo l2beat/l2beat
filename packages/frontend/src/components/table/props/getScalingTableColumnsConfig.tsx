@@ -24,11 +24,14 @@ import { FinalityDurationCell } from '../FinalityDurationCell'
 import { NumberCell } from '../NumberCell'
 import { RiskCell } from '../RiskCell'
 import { RosetteCell } from '../RosetteCell'
+import { TotalCell } from '../TotalCell'
+import { TotalValue } from '../TotalValue'
 import { TypeCell, TypeColumnTooltip } from '../TypeCell'
 import { ColumnConfig } from '../types'
 import { ValueWithPercentageCell } from '../ValueWithPercentageCell'
 import { getProjectWithIndexColumns } from './getProjectWithIndexColumns'
 import { getOrderValueBySentiment } from './sorting/getOrderValueBySentiment'
+import { getStageOrderValue } from './sorting/getStageOrderValue'
 
 export function getActiveScalingSummaryColumnsConfig() {
   const columns: ColumnConfig<ScalingL2SummaryViewEntry>[] = [
@@ -64,27 +67,7 @@ export function getActiveScalingSummaryColumnsConfig() {
       tooltip: 'Rollup stage based on its features and maturity.',
       getValue: (project) => <StageCell stageConfig={project.stage} />,
       sorting: {
-        getOrderValue: (project) => {
-          const stage = project.stage.stage
-          if (stage === 'NotApplicable' || stage === 'UnderReview') {
-            return undefined
-          }
-          if (stage === 'Stage 0') {
-            if (project.stage.message?.type === 'warning') {
-              return 0
-            }
-
-            if (project.stage.message?.type === 'underReview') {
-              return 1
-            }
-
-            return 2
-          }
-          if (stage === 'Stage 1') {
-            return 3
-          }
-          return 4
-        },
+        getOrderValue: (project) => getStageOrderValue(project.stage),
         rule: 'numeric',
       },
     },
@@ -100,16 +83,7 @@ export function getActiveScalingSummaryColumnsConfig() {
       align: 'right',
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
-      getValue: (project) => (
-        <>
-          <NumberCell className="font-bold" tooltip={project.tvlTooltip}>
-            {project.tvl?.displayValue}
-          </NumberCell>
-          <NumberCell signed className="ml-1 w-[72px] !text-base font-medium ">
-            {project.sevenDayChange}
-          </NumberCell>
-        </>
-      ),
+      getValue: (project) => <TotalCell project={project} />,
       sorting: {
         getOrderValue: (project) => project.tvl?.value,
         rule: 'numeric',
@@ -123,10 +97,12 @@ export function getActiveScalingSummaryColumnsConfig() {
       minimalWidth: true,
       headClassName: '!pr-4',
       getValue: (project) =>
-        project.tvlBreakdown && (
+        project.tvlBreakdown ? (
           <NumberCell className="pr-4">
             {project.marketShare?.displayValue}
           </NumberCell>
+        ) : (
+          <span className="pr-4">—</span>
         ),
       sorting: {
         getOrderValue: (project) => project.marketShare?.value,
@@ -270,12 +246,7 @@ export function getScalingTvlColumnsConfig() {
           tooltip: 'Total = Canonical + External + Native',
           align: 'center',
           noPaddingRight: true,
-          getValue: (project) => (
-            <ValueWithPercentageCell
-              value={project.tvl?.displayValue}
-              percentChange={project.tvlChange}
-            />
-          ),
+          getValue: (project) => <TotalValue project={project} />,
           sorting: {
             getOrderValue: (project) =>
               project.tvl?.value !== 0 ? project.tvl?.value : undefined,

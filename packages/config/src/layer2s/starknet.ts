@@ -16,7 +16,6 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
-  ScalingProjectPermissionedAccount,
   STATE_CORRECTNESS,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -204,15 +203,6 @@ const escrowSTRKMaxTotalBalanceString = formatMaxTotalBalanceString(
   discovery.getContractValue<number>('STRKBridge', 'maxTotalBalance'),
   18,
 )
-
-const strkBridgeRoles = discovery.getContractValue<{
-  GOVERNANCE_ADMIN: { members: string[] }
-}>('STRKBridge', 'accessControl')
-
-const strkGovernor: ScalingProjectPermissionedAccount[] =
-  strkBridgeRoles.GOVERNANCE_ADMIN.members.map((address) =>
-    discovery.formatPermissionedAccount(address),
-  )
 
 export const starknet: Layer2 = {
   type: 'layer2',
@@ -672,13 +662,23 @@ export const starknet: Layer2 = {
     ),
     {
       name: 'StarkGate STRK owner',
-      accounts: strkGovernor,
+      accounts: discovery.getAccessControlRolePermission(
+        'STRKBridge',
+        'GOVERNANCE_ADMIN',
+      ),
       description:
         'Can upgrade implementation of the STRK escrow, potentially gaining access to all funds stored in the bridge. ' +
         delayDescriptionFromSeconds(escrowSTRKDelaySeconds),
     },
   ],
   milestones: [
+    {
+      name: 'Starknet Provisions',
+      link: 'https://www.starknet.io/en/content/starknet-provisions-program',
+      date: '2024-02-14T00:00:00Z',
+      description:
+        'Starknet begins allocating $STRK to early contributors and users.',
+    },
     {
       name: 'Starknet Alpha',
       link: 'https://medium.com/starkware/starknet-alpha-now-on-mainnet-4cf35efd1669',

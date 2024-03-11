@@ -10,7 +10,7 @@ import {
   getChainActivityConfig,
   getProjectsWithActivity,
 } from './features/activity'
-import { getFinalityIndexerConfigurations } from './features/finality'
+import { getFinalityConfigurations } from './features/finality'
 import { getChainsWithTokens, getChainTvlConfig } from './features/tvl'
 import { getChainDiscoveryConfig } from './features/updateMonitor'
 import { getGitCommitHash } from './getGitCommitHash'
@@ -124,7 +124,7 @@ export function makeConfig(
         'FINALITY_ETHEREUM_PROVIDER_CALLS_PER_MINUTE',
         600,
       ),
-      indexerConfigurations: getFinalityIndexerConfigurations(flags),
+      configurations: getFinalityConfigurations(flags, env),
     },
     activity: flags.isEnabled('activity') && {
       starkexApiKey: env.string('STARKEX_API_KEY'),
@@ -136,6 +136,7 @@ export function makeConfig(
         .filter((x) => flags.isEnabled('activity', x.id.toString()))
         .map((x) => ({ id: x.id, config: getChainActivityConfig(env, x) })),
     },
+    lzOAppsEnabled: flags.isEnabled('lzOApps'),
     statusEnabled: flags.isEnabled('status'),
     updateMonitor: flags.isEnabled('updateMonitor') && {
       runOnStart: isLocal

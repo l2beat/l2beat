@@ -259,4 +259,16 @@ describe('discovery config.jsonc', () => {
       }
     })
   })
+
+  describe('meta.json is of correct schema', () => {
+    it('every name is unique', async () => {
+      for (const configs of chainConfigs ?? []) {
+        for (const c of configs) {
+          await expect(
+            async () => await configReader.readMeta(c.name, c.chain),
+          ).not.toBeRejected()
+        }
+      }
+    })
+  })
 })

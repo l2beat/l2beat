@@ -14,7 +14,6 @@ import {
   makeBridgeCompatible,
   NUGGETS,
   RISK_VIEW,
-  ScalingProjectPermissionedAccount,
   SEQUENCER_NO_MECHANISM,
   STATE_CORRECTNESS,
 } from '../common'
@@ -93,15 +92,6 @@ const ESCROW_wstETH_ADDRESS = '0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01'
 const ESCROW_USDC_ADDRESS = '0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB'
 const ESCROW_DAI_ADDRESS = '0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98'
 
-const roles = discovery.getContractValue<{
-  TRUSTED_AGGREGATOR: { members: string[] }
-}>('PolygonRollupManager', 'accessControl')
-
-const aggregators: ScalingProjectPermissionedAccount[] =
-  roles.TRUSTED_AGGREGATOR.members.map((address) =>
-    discovery.formatPermissionedAccount(address),
-  )
-
 export const polygonzkevm: Layer2 = {
   type: 'layer2',
   id: ProjectId('polygonzkevm'),
@@ -137,6 +127,11 @@ export const polygonzkevm: Layer2 = {
     liveness: {
       explanation:
         'Polygon zkEVM is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1. State updates are a three step process: first blocks are committed to L1, then they are proved, and then it is possible to execute them.',
+    },
+    tvlWarning: {
+      content:
+        'The TVL is currently shared among all projects using the shared Polygon CDK contracts.',
+      sentiment: 'warning',
     },
     finality: {
       finalizationPeriod: 0,
@@ -423,7 +418,7 @@ export const polygonzkevm: Layer2 = {
       'Node software can be found [here](https://github.com/0xPolygonHermez/zkevm-node).',
     compressionScheme: 'No compression scheme yet.',
     genesisState:
-      'The genesis state, whose corresponding root is accessible as Batch 0 root in the `batchNumToStateRoot` method of PolygonZkEvm, is available [here](https://github.com/0xPolygonHermez/zkevm-contracts/blob/main/deployment/genesis.json).',
+      'The genesis state, whose corresponding root is accessible as Batch 0 root in the `batchNumToStateRoot` method of PolygonZkEvm, is available [here](https://github.com/0xPolygonHermez/zkevm-contracts/blob/0d0e69a6f299e273343461f6350343cf4b048269/deployment/genesis.json).',
     dataFormat:
       'The trusted sequencer batches transactions according to the specifications documented [here](https://docs.polygon.technology/zkEVM/architecture/protocol/transaction-life-cycle/transaction-batching/).',
   },
@@ -445,7 +440,10 @@ export const polygonzkevm: Layer2 = {
     },
     {
       name: 'Proposer (Trusted Aggregator)',
-      accounts: aggregators,
+      accounts: discovery.getAccessControlRolePermission(
+        'PolygonRollupManager',
+        'TRUSTED_AGGREGATOR',
+      ),
       description: `The trusted proposer (called Aggregator) provides ZK proofs for all the supported systems. In case they are unavailable a mechanism for users to submit proofs on their own exists, but is behind a ${trustedAggregatorTimeoutString} delay for proving and a ${pendingStateTimeoutString} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
     },
     ...discovery.getMultisigPermission(

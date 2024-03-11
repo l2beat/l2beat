@@ -76,6 +76,7 @@ export function getProjectHeader(
     },
     tpsDaily: tpsDaily?.toFixed(2) ?? '',
     tpsWeeklyChange,
+    tvlWarning: project.display.tvlWarning,
     transactionMonthlyCount:
       transactionMonthlyCount !== undefined
         ? formatLargeNumber(transactionMonthlyCount)

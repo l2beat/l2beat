@@ -5,7 +5,7 @@ import {
 } from '@l2beat/shared-pure'
 import { keyBy, mapValues, partition } from 'lodash'
 
-import { Project } from '../../../model/Project'
+import { FinalityProjectConfig } from '../../../config/features/finality'
 import { IndexerStateRepository } from '../../../peripherals/database/repositories/IndexerStateRepository'
 import { Clock } from '../../../tools/Clock'
 import { LivenessRepository } from '../../liveness/repositories/LivenessRepository'
@@ -28,7 +28,7 @@ export class FinalityController {
     private readonly livenessRepository: LivenessRepository,
     private readonly finalityRepository: FinalityRepository,
     private readonly indexerStateRepository: IndexerStateRepository,
-    private readonly projects: Project[],
+    private readonly projects: FinalityProjectConfig[],
     private readonly clock: Clock,
   ) {}
 
@@ -47,10 +47,8 @@ export class FinalityController {
     const projects: FinalityApiResponse['projects'] = {}
 
     const [OPStackProjects, otherProjects] = partition(
-      this.projects.filter(
-        (p) => !p.isArchived && p.finalityConfig !== undefined,
-      ),
-      (p) => p.finalityConfig?.type === 'OPStack',
+      this.projects,
+      (p) => p.type === 'OPStack',
     )
     const OPStackFinality = await this.getOPStackFinality(OPStackProjects)
     Object.assign(projects, OPStackFinality)
@@ -62,7 +60,7 @@ export class FinalityController {
   }
 
   async getProjectsFinality(
-    projects: Project[],
+    projects: FinalityProjectConfig[],
   ): Promise<FinalityApiResponse['projects']> {
     const projectIds = projects.map((p) => p.projectId)
     const records = await this.finalityRepository.getLatestGroupedByProjectId(
@@ -85,14 +83,11 @@ export class FinalityController {
   }
 
   async getOPStackFinality(
-    projects: Project[],
+    projects: FinalityProjectConfig[],
   ): Promise<FinalityApiResponse['projects']> {
     const result: FinalityApiResponse['projects'] = {}
     await Promise.all(
       projects.map(async (project) => {
-        if (project.finalityConfig === undefined) {
-          return
-        }
         const records = await this.livenessRepository.getByProjectIdAndType(
           project.projectId,
           LivenessType('DA'),
@@ -103,10 +98,7 @@ export class FinalityController {
         if (!latestRecord) return
 
         const intervals = calcAvgsPerProject(records)
-        const projectResult = divideAndAddLag(
-          intervals,
-          project.finalityConfig.lag,
-        )
+        const projectResult = divideAndAddLag(intervals, project.lag)
         const syncedUntil = latestRecord.timestamp
 
         if (projectResult) {

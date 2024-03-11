@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x66e7d57ef59143fb02afe041c6d98f4b33e448d9
+
+# Diff at Thu, 07 Mar 2024 12:54:19 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@ef5ca32c526f9f368a9df9c40dfdb81fe1a9382c block: 19317972
+- current block number: 19383415
+
+## Description
+
+One SC member is added and the threshold has been updated accordingly to be above 75%. The delay has been removed so the risk has been updated.
+
+## Watched changes
+
+```diff
+    contract Timelock (0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1) {
+    +++ description: None
+      values.getMinDelay:
+-        604800
++        0
+    }
+```
+
+```diff
+    contract SecurityCouncil (0x3de211088dF516da72efe68D386b561BEE256Ec4) {
+    +++ description: None
+      values.quorum:
+-        7
++        8
+    }
+```
+
+```diff
+    contract SecurityCouncilToken (0xe4D08346609055c091D3DEECdAAd3Bf83119B08c) {
+    +++ description: None
+      values.tokenOwners[9]:
++        "0x77Fe100758c5320cdfBb4f4a0Bed57885c97158A"
+      values.tokens[9]:
++        11
+      values.totalSupply:
+-        9
++        10
+    }
+```
+
+Generated with discovered.json: 0xf9a2868df47939ae03b5391125f035a38ff09445
+
+# Diff at Tue, 27 Feb 2024 09:26:18 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@4f9617ef0b726c0af67b0e31e0d1ed434f10f1ef block: 19182633
+- current block number: 19317972
+
+## Description
+
+A Kroma validator has created a challenge (challenging a state root) for the first time.
+
+## Watched changes
+
+```diff
+    contract Colosseum (0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a) {
+      values.challengedRoots[0]:
++        4062
+    }
+```
+
 Generated with discovered.json: 0xf2efb953c5d3442db9a5c3a901d3af836fbd3787
 
 # Diff at Thu, 08 Feb 2024 09:45:31 GMT:
