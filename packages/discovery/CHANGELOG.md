@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.45.1
+
+### Patch Changes
+
+- Fix the StarkWareProxy handler versioning heuristic
+
 ## 0.45.0
 
 ### Minor Changes

@@ -94,7 +94,16 @@ async function getProxyVersion(
   )
 
   if (!versionString) {
-    return undefined
+    // NOTE(radomski): Early proxies do not have the PROXY_VERSION variable in
+    // their source code. For example
+    // https://etherscan.io/address/0xD54f502e184B6B739d7D27a6410a67dc462D69c8
+    // does not include it. If we treat is as lower than 5.0.0 it's going to
+    // pass fine through everything else
+    return {
+      major: 1,
+      minor: 0,
+      patch: 0,
+    }
   }
 
   return parseSemver(versionString)
