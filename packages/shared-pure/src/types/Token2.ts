@@ -16,4 +16,6 @@ export interface Token2 {
   // for now it is used only for status endpoint
   // before production use it should be changed
   project: string
+  symbol: string
+  name: string
 }

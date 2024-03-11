@@ -213,6 +213,8 @@ function getTokensInNewFormat(
             price: { type: 'coingecko', coingeckoId: token.coingeckoId },
             amount: { type: 'totalSupply', address: token.address },
             project: chainConverter.toName(token.chainId),
+            symbol: token.symbol,
+            name: token.name,
           })
           break
         case 'circulatingSupply':
@@ -226,6 +228,8 @@ function getTokensInNewFormat(
               coingeckoId: token.coingeckoId,
             },
             project: chainConverter.toName(token.chainId),
+            symbol: token.symbol,
+            name: token.name,
           })
           break
         case 'locked':
@@ -244,6 +248,8 @@ function getTokensInNewFormat(
           price: { type: 'coingecko', coingeckoId: token.coingeckoId },
           amount: { type: 'escrow', escrowAddress: escrow.address },
           project: project.projectId.toString(),
+          symbol: token.symbol,
+          name: token.name,
         })
       }
     }

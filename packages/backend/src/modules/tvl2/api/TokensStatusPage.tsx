@@ -5,40 +5,53 @@ import React from 'react'
 import { Page } from '../../status/Page'
 import { reactToHtml } from '../../status/reactToHtml'
 
-interface TokenQueryWithTarget extends Token2 {
+interface Token2WithTarget extends Token2 {
   targetDataPoints: number
 }
 interface TokensStatusPageProps {
-  tokens: TokenQueryWithTarget[]
+  tokens: Token2WithTarget[]
 }
-
-// move all outside the tab
-// when clicking on chain/project navigate to new tab JSON
 
 export function TokensStatusPage({ tokens }: TokensStatusPageProps) {
   const tokensByChain = groupBy(tokens, 'chain')
   const tokensByProject = groupBy(tokens, 'project')
+  const deduplicatedTokens = deduplicateTokens(tokens)
 
   return (
     <Page title="Tokens">
       <div className="tabs">
-        <input type="radio" name="tabs" id="tabone" readOnly checked />
-        <label htmlFor="tabone">
+        <input type="radio" name="tabs" id="all" readOnly checked />
+        <label htmlFor="all">
           All <CountBadge count={tokens.length} />
         </label>
         <div className="tab">
           <div className={`card`}>
-            <p>Summary</p>
-            <Stats title="Target amounts data points" tokens={tokens} />
-            <Stats
-              title="Target prices data points"
-              tokens={deduplicateTokens(tokens)}
-            />
+            <p>Amounts</p>
+            <div>Tokens: {tokens.length}</div>
+            <DataPointsStats title="Target data points" tokens={tokens} />
+
             <LinkToList chain={undefined} project={undefined} />
           </div>
+
+          <div className={`card`}>
+            <p>Prices</p>
+
+            <div>Unique tokens: {deduplicatedTokens.length}</div>
+            <DataPointsStats
+              title="Target data points"
+              tokens={deduplicatedTokens}
+            />
+
+            {deduplicatedTokens
+              .sort((a, b) => a.symbol.localeCompare(b.symbol))
+              .map((token) => (
+                <PriceTokens key={token.address.toString()} token={token} />
+              ))}
+          </div>
         </div>
-        <input type="radio" name="tabs" id="tabtwo" />
-        <label htmlFor="tabtwo">
+
+        <input type="radio" name="tabs" id="chains" />
+        <label htmlFor="chains">
           Chains <CountBadge count={Object.entries(tokensByChain).length} />
         </label>
         <div className="tab">
@@ -46,14 +59,18 @@ export function TokensStatusPage({ tokens }: TokensStatusPageProps) {
             .sort(([_, a], [__, b]) => b.length - a.length)
             .map(([chain, tokens]) => (
               <Group key={chain} title={chain} count={tokens.length}>
-                <Stats title="Target amounts data points" tokens={tokens} />
+                <div>Tokens: {tokens.length}</div>
+
+                <DataPointsStats title="Target data points" tokens={tokens} />
                 <LinkToList chain={chain} project={undefined} />
                 {Object.entries(groupBy(tokensByChain[chain], 'project'))
                   .sort(([_, a], [__, b]) => b.length - a.length)
                   .map(([chain, tokens]) => (
                     <Group key={chain} title={chain} count={tokens.length}>
-                      <Stats
-                        title="Target amounts data points"
+                      <div>Tokens: {tokens.length}</div>
+
+                      <DataPointsStats
+                        title="Target data points"
                         tokens={tokens}
                       />
                       <LinkToList chain={chain} project={undefined} />
@@ -62,8 +79,9 @@ export function TokensStatusPage({ tokens }: TokensStatusPageProps) {
               </Group>
             ))}
         </div>
-        <input type="radio" name="tabs" id="tabthree" />
-        <label htmlFor="tabthree">
+
+        <input type="radio" name="tabs" id="projects" />
+        <label htmlFor="projects">
           Projects <CountBadge count={Object.entries(tokensByProject).length} />
         </label>
         <div className="tab">
@@ -71,14 +89,16 @@ export function TokensStatusPage({ tokens }: TokensStatusPageProps) {
             .sort(([_, a], [__, b]) => b.length - a.length)
             .map(([project, tokens]) => (
               <Group key={project} title={project} count={tokens.length}>
-                <Stats title="Target amounts data points" tokens={tokens} />
+                <div>Tokens: {tokens.length}</div>
+                <DataPointsStats title="Target data points" tokens={tokens} />
                 <LinkToList chain={undefined} project={project} />
                 {Object.entries(groupBy(tokensByProject[project], 'chain'))
                   .sort(([_, a], [__, b]) => b.length - a.length)
                   .map(([chain, tokens]) => (
                     <Group key={chain} title={chain} count={tokens.length}>
-                      <Stats
-                        title="Target amounts data points"
+                      <div>Tokens: {tokens.length}</div>
+                      <DataPointsStats
+                        title="Target data points"
                         tokens={tokens}
                       />
                       <LinkToList chain={chain} project={undefined} />
@@ -96,7 +116,7 @@ export function renderTokensStatusPage(props: TokensStatusPageProps) {
   return reactToHtml(<TokensStatusPage {...props} />)
 }
 
-function deduplicateTokens(tokens: TokenQueryWithTarget[]) {
+function deduplicateTokens(tokens: Token2WithTarget[]) {
   const seen = new Set<string>()
   return tokens.filter((t) => {
     const key = `${t.chain}-${t.address.toString()}`
@@ -108,12 +128,12 @@ function deduplicateTokens(tokens: TokenQueryWithTarget[]) {
   })
 }
 
-function Stats({
+function DataPointsStats({
   title,
   tokens,
 }: {
   title: string
-  tokens: TokenQueryWithTarget[]
+  tokens: Token2WithTarget[]
 }) {
   return (
     <div>
@@ -122,6 +142,19 @@ function Stats({
         .reduce((acc, t) => acc + t.targetDataPoints, 0)
         .toLocaleString('en-US')}
     </div>
+  )
+}
+
+function PriceTokens({ token }: { token: Token2WithTarget }) {
+  return (
+    <details>
+      <summary>{token.symbol}</summary>
+      <p>
+        <div>chain: {token.chain}</div>
+        <div>address: {token.address}</div>
+        <div>price: {JSON.stringify(token.price)}</div>
+      </p>
+    </details>
   )
 }
 
