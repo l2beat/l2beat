@@ -32,7 +32,7 @@ export const astarzkevm: Layer2 = underReviewL2({
   escrows: [
     {
       address: EthereumAddress('0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe'),
-      sinceTimestamp: new UnixTime(1702607855),
+      sinceTimestamp: new UnixTime(1741703227),
       tokens: '*',
     },
   ],
