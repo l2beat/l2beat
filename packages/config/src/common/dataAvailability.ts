@@ -131,6 +131,11 @@ function getOffChainLayerDescription(
         'The data is posted to MantleDA (contracts are forked from EigenDA with significant modifications, most importantly removal of slashing conditions).',
       )
       break
+    case 'FraxtalDA':
+      descriptions.push(
+        'The data is posted to FraxtalDA which is a separate data availability module developed by the Frax Core Team. Data is posted off chain, and only hashes of blob data is published on an on chain inbox.',
+      )
+      break
     default:
       assertUnreachable(layer)
   }
@@ -162,6 +167,7 @@ function getOffChainLayerSentiment(
     case 'DAC':
     case 'External':
     case 'MantleDA':
+    case 'FraxtalDA':
       return 'warning'
     case 'Celestia':
       return 'good'

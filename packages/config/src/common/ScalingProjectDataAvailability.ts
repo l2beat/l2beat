@@ -28,6 +28,7 @@ export type OffChainDataAvailabilityLayer =
   | 'Celestia'
   | 'External'
   | 'MantleDA'
+  | 'FraxtalDA'
 
 export type OffChainDataAvailabilityFallback = OnChainDataAvailabilityLayer
 
