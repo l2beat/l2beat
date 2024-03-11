@@ -4,7 +4,7 @@ import {
   ChainId,
   ProjectId,
   Token,
-  TokenQuery,
+  Token2,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
@@ -80,7 +80,7 @@ export interface TvlConfig {
 }
 
 export interface Tvl2Config {
-  readonly queries: TokenQuery[]
+  readonly tokens: Token2[]
 }
 
 export interface LivenessConfig {

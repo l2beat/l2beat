@@ -2,7 +2,7 @@ import { CoingeckoId } from './CoingeckoId'
 import { EthereumAddress } from './EthereumAddress'
 import { UnixTime } from './UnixTime'
 
-export interface TokenQuery {
+export interface Token2 {
   address: EthereumAddress | 'native'
   chain: string
   sinceTimestamp: UnixTime

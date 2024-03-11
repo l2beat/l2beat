@@ -1,5 +1,5 @@
 import Router from '@koa/router'
-import { TokenQuery } from '@l2beat/shared-pure'
+import { Token2 } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 import { withTypedContext } from '../../../api/types'
@@ -7,7 +7,7 @@ import { Tvl2Config } from '../../../config/Config'
 import { Clock } from '../../../tools/Clock'
 import { renderTokensStatusPage } from './TokensStatusPage'
 
-export interface TokenQueryWithTarget extends TokenQuery {
+export interface TokenQueryWithTarget extends Token2 {
   targetDataPoints: number
 }
 
@@ -16,7 +16,7 @@ export function createTvl2StatusRouter(config: Tvl2Config, clock: Clock) {
 
   router.get('/status/tokens', (ctx) => {
     ctx.body = renderTokensStatusPage({
-      tokens: config.queries.map((t) => ({
+      tokens: config.tokens.map((t) => ({
         ...t,
         targetDataPoints: getTargetDataPoints(t, clock),
       })),
@@ -33,7 +33,7 @@ export function createTvl2StatusRouter(config: Tvl2Config, clock: Clock) {
         }),
       }),
       (ctx) => {
-        const filteredByChain = config.queries.filter((t) =>
+        const filteredByChain = config.tokens.filter((t) =>
           ctx.query.chain ? t.chain === ctx.query.chain : true,
         )
 
@@ -49,7 +49,7 @@ export function createTvl2StatusRouter(config: Tvl2Config, clock: Clock) {
   return router
 }
 
-export function getTargetDataPoints(token: TokenQuery, clock: Clock) {
+export function getTargetDataPoints(token: Token2, clock: Clock) {
   const start = token.sinceTimestamp.gt(clock.getFirstHour())
     ? token.sinceTimestamp
     : clock.getFirstHour()

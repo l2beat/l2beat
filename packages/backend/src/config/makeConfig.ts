@@ -1,7 +1,7 @@
 import { assert, Env, LoggerOptions } from '@l2beat/backend-tools'
 import { bridges, chains, layer2s, tokenList } from '@l2beat/config'
 import { ConfigReader } from '@l2beat/discovery'
-import { ChainId, Token, TokenQuery, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, Token, Token2, UnixTime } from '@l2beat/shared-pure'
 
 import { bridgeToProject, layer2ToProject, Project } from '../model/Project'
 import { ChainConverter } from '../tools/ChainConverter'
@@ -110,7 +110,7 @@ export function makeConfig(
       ),
     },
     tvl2: flags.isEnabled('tvl2') && {
-      queries: getQueries(projects, tokenList),
+      tokens: getTokensInNewFormat(projects, tokenList),
     },
     liveness: flags.isEnabled('liveness') && {
       bigQuery: {
@@ -192,11 +192,14 @@ function getDiscordConfig(env: Env, isLocal?: boolean): DiscordConfig | false {
     }
   )
 }
-function getQueries(projects: Project[], tokenList: Token[]): TokenQuery[] {
+function getTokensInNewFormat(
+  projects: Project[],
+  tokenList: Token[],
+): Token2[] {
   const chainConverter = new ChainConverter(
     chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
   )
-  const notEthereumTokens: TokenQuery[] = []
+  const notEthereumTokens: Token2[] = []
 
   for (const token of tokenList) {
     if (token.chainId !== ChainId.ETHEREUM) {

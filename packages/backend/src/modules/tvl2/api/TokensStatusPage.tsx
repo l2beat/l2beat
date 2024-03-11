@@ -1,11 +1,11 @@
-import { TokenQuery } from '@l2beat/shared-pure'
+import { Token2 } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import React from 'react'
 
 import { Page } from '../../status/Page'
 import { reactToHtml } from '../../status/reactToHtml'
 
-interface TokenQueryWithTarget extends TokenQuery {
+interface TokenQueryWithTarget extends Token2 {
   targetDataPoints: number
 }
 interface TokensStatusPageProps {

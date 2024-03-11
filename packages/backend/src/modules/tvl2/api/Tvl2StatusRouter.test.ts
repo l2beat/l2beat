@@ -1,4 +1,4 @@
-import { TokenQuery, UnixTime } from '@l2beat/shared-pure'
+import { Token2, UnixTime } from '@l2beat/shared-pure'
 import { install, InstalledClock } from '@sinonjs/fake-timers'
 import { expect, mockObject } from 'earl'
 
@@ -21,7 +21,7 @@ describe(getTargetDataPoints.name, () => {
     const now = UnixTime.now().add(-7, 'days').toStartOf('hour')
     const clock = new Clock(now, 60 * 60)
 
-    const token = mockObject<TokenQuery>({
+    const token = mockObject<Token2>({
       sinceTimestamp: new UnixTime(0),
     })
 
@@ -44,7 +44,7 @@ describe(getTargetDataPoints.name, () => {
     const now = UnixTime.now().add(-totalDays, 'days').toStartOf('hour')
     const clock = new Clock(now, 60 * 60)
 
-    const token = mockObject<TokenQuery>({
+    const token = mockObject<Token2>({
       sinceTimestamp: new UnixTime(0),
     })
 
@@ -67,7 +67,7 @@ describe(getTargetDataPoints.name, () => {
     const now = new UnixTime(0)
     const clock = new Clock(now, 60 * 60)
 
-    const token = mockObject<TokenQuery>({
+    const token = mockObject<Token2>({
       sinceTimestamp: UnixTime.now().add(-totalDays, 'days').toStartOf('hour'),
     })
 
