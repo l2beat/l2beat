@@ -1,4 +1,4 @@
-import { LivenessType, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { calculateAnomalies } from './calculateAnomalies'
@@ -36,7 +36,7 @@ describe(calculateAnomalies.name, () => {
       {
         timestamp: ANOMALY_RECORD.timestamp,
         durationInSeconds: ANOMALY_RECORD.previousRecordInterval,
-        type: ANOMALY_RECORD.type,
+        type: ANOMALY_RECORD.subtype,
       },
     ])
   })
@@ -46,12 +46,12 @@ const lastHour = UnixTime.now().toStartOf('hour')
 
 const ANOMALY_RECORD = {
   timestamp: lastHour,
-  type: LivenessType('DA'),
+  subtype: 'batchSubmissions' as const,
   previousRecordInterval: 50 * 24 * 3600,
 }
 
 const GOOD_RECORDS = Array.from({ length: 4000 }).map((_, i) => ({
   timestamp: lastHour.add(-i, 'hours'),
-  type: LivenessType('DA'),
+  subtype: 'batchSubmissions' as const,
   previousRecordInterval: 3600,
 }))

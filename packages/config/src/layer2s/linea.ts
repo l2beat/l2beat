@@ -144,7 +144,6 @@ export const linea: Layer2 = {
           {
             type: 'liveness',
             subType: 'stateUpdates',
-            duplicateTo: 'proofSubmissions',
           },
         ],
         query: {
@@ -164,7 +163,6 @@ export const linea: Layer2 = {
           {
             type: 'liveness',
             subType: 'stateUpdates',
-            duplicateTo: 'proofSubmissions',
           },
         ],
         query: {
@@ -179,6 +177,12 @@ export const linea: Layer2 = {
         },
       },
     ],
+    liveness: {
+      duplicateData: {
+        from: 'stateUpdates',
+        to: 'proofSubmissions',
+      },
+    },
     finality: {
       type: 'Linea',
       lag: 0,

@@ -8,7 +8,6 @@ import { ApplicationModule } from './modules/ApplicationModule'
 import { createDiffHistoryModule } from './modules/diff-history/createDiffHistoryModule'
 import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createHealthModule } from './modules/health/HealthModule'
-import { LivenessIndexer } from './modules/liveness/LivenessIndexer'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createStatusModule } from './modules/status/StatusModule'
 import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
@@ -65,7 +64,7 @@ export class Application {
         logger,
         database,
         clock,
-        trackedTxsModule?.indexer as LivenessIndexer,
+        trackedTxsModule?.indexer,
       ),
     ]
 

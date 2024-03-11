@@ -16,6 +16,7 @@ import { ScalingProjectStateValidation } from '../../common/ScalingProjectStateV
 import { ScalingProjectTechnology } from '../../common/ScalingProjectTechnology'
 import { StageConfig } from '../common/stages/types'
 import { Layer2FinalityConfig } from './Layer2FinalityConfig'
+import { Layer2LivenessConfig } from './Layer2LivenessConfig'
 import { Layer2TxConfig } from './Layer2TrackedTxsConfig'
 import { Layer2TransactionApi } from './Layer2TransactionApi'
 
@@ -85,6 +86,8 @@ export interface Layer2Config extends ScalingProjectConfig {
   transactionApi?: Layer2TransactionApi
   /** List of transactions that are tracked by our backend */
   trackedTxs?: Layer2TxConfig[]
+  /** Configuration for getting liveness data */
+  liveness?: Layer2LivenessConfig
   /** Configuration for getting finality data */
   finality?: Layer2FinalityConfig
 }

@@ -197,7 +197,6 @@ export const polygonzkevm: Layer2 = {
           {
             type: 'liveness',
             subType: 'stateUpdates',
-            duplicateTo: 'proofSubmissions',
           },
         ],
         query: {
@@ -217,7 +216,6 @@ export const polygonzkevm: Layer2 = {
           {
             type: 'liveness',
             subType: 'stateUpdates',
-            duplicateTo: 'proofSubmissions',
           },
         ],
         query: {
@@ -237,7 +235,6 @@ export const polygonzkevm: Layer2 = {
           {
             type: 'liveness',
             subType: 'stateUpdates',
-            duplicateTo: 'proofSubmissions',
           },
         ],
         query: {
@@ -256,7 +253,6 @@ export const polygonzkevm: Layer2 = {
           {
             type: 'liveness',
             subType: 'stateUpdates',
-            duplicateTo: 'proofSubmissions',
           },
         ],
         query: {
@@ -271,6 +267,12 @@ export const polygonzkevm: Layer2 = {
         },
       },
     ],
+    liveness: {
+      duplicateData: {
+        from: 'stateUpdates',
+        to: 'proofSubmissions',
+      },
+    },
   },
   chainConfig: {
     name: 'polygonzkevm',

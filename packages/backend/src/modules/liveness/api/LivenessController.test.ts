@@ -1,15 +1,12 @@
-import {
-  assert,
-  Hash256,
-  LivenessType,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { assert, Hash256, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
+import { range } from 'lodash'
 
 import { Project } from '../../../model/Project'
 import { IndexerStateRepository } from '../../../peripherals/database/repositories/IndexerStateRepository'
 import { Clock } from '../../../tools/Clock'
+import { TrackedTxId } from '../../tracked-txs/types/TrackedTxId'
+import { TrackedTxConfigEntry } from '../../tracked-txs/types/TrackedTxsConfig'
 import {
   LivenessRecordWithProjectIdAndSubtype,
   LivenessRepository,
@@ -29,16 +26,19 @@ describe(LivenessController.name, () => {
       const RECORDS: LivenessRecordWithProjectIdAndSubtype[] = []
 
       RECORDS.push(
-        ...Array.from({ length: 500 }).map((_, i) => ({
-          projectId: ProjectId('project1'),
-          timestamp: START.add(-i, 'hours'),
-          type: LivenessType('DA'),
-        })),
+        ...range(500).map(
+          (_, i) =>
+            ({
+              projectId: ProjectId('project1'),
+              timestamp: START.add(-i, 'hours'),
+              subtype: 'batchSubmissions',
+            } as const),
+        ),
       )
       RECORDS.push({
         projectId: ProjectId('project1'),
         timestamp: START.add(-1000, 'hours'),
-        type: LivenessType('DA'),
+        subtype: 'batchSubmissions',
       })
 
       const livenessController = new LivenessController(
@@ -56,7 +56,7 @@ describe(LivenessController.name, () => {
           {
             timestamp: RECORDS.at(-2)!.timestamp,
             durationInSeconds: 501 * 3600,
-            type: LivenessType('DA'),
+            type: 'batchSubmissions',
           },
         ])
       }
@@ -66,11 +66,14 @@ describe(LivenessController.name, () => {
       const RECORDS: LivenessRecordWithProjectIdAndSubtype[] = []
 
       RECORDS.push(
-        ...Array.from({ length: 10 }).map((_, i) => ({
-          projectId: ProjectId('project1'),
-          timestamp: START.add(-i, 'hours'),
-          type: LivenessType('DA'),
-        })),
+        ...range(10).map(
+          (_, i) =>
+            ({
+              projectId: ProjectId('project1'),
+              timestamp: START.add(-i, 'hours'),
+              subtype: 'batchSubmissions',
+            } as const),
+        ),
       )
       const livenessController = new LivenessController(
         getMockLivenessRepository(RECORDS),
@@ -104,7 +107,7 @@ describe(LivenessController.name, () => {
       const RECORDS: LivenessRecordWithProjectIdAndSubtype[] = []
 
       RECORDS.push(
-        ...Array.from({ length: 30 + 60 / 2 + 30 / 3 }).map((_, i) => {
+        ...range(30 + 60 / 2 + 30 / 3).map((_, i) => {
           let daysToAdd = 0
           if (i < 30) {
             daysToAdd = i
@@ -117,7 +120,7 @@ describe(LivenessController.name, () => {
           return {
             projectId: ProjectId('project1'),
             timestamp: START.add(-daysToAdd, 'days'),
-            type: LivenessType('DA'),
+            subtype: 'batchSubmissions' as const,
           }
         }),
       )
@@ -220,10 +223,21 @@ function mockProjectConfig(
       mockObject<Project>({
         projectId,
         isArchived: false,
-        livenessConfig: mockObject<Project['livenessConfig']>({
-          entries: [],
-          duplicateData: [],
-        }),
+        trackedTxsConfig: {
+          entries: [
+            mockObject<TrackedTxConfigEntry>({
+              uses: [
+                {
+                  type: 'liveness',
+                  subType: 'batchSubmissions',
+                  id: TrackedTxId.random(),
+                },
+              ],
+              untilTimestamp: UnixTime.now(),
+            }),
+          ],
+        },
+        livenessConfig: undefined,
       }),
     )
 }

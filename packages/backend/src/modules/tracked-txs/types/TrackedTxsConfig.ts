@@ -21,10 +21,6 @@ export interface TrackedTxUseWithId extends Layer2TrackedTxUse {
   id: TrackedTxId
 }
 
-export interface TrackedTxUseWithConfigHash extends Layer2TrackedTxUse {
-  id: TrackedTxId
-}
-
 interface TrackedTxConfigBase {
   projectId: ProjectId
   uses: TrackedTxUseWithId[]

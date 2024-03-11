@@ -107,7 +107,6 @@ export const degate3: Layer2 = {
           {
             type: 'liveness',
             subType: 'stateUpdates',
-            duplicateTo: 'proofSubmissions',
           },
         ],
         query: {
@@ -122,6 +121,12 @@ export const degate3: Layer2 = {
         },
       },
     ],
+    liveness: {
+      duplicateData: {
+        from: 'stateUpdates',
+        to: 'proofSubmissions',
+      },
+    },
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,

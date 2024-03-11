@@ -80,6 +80,9 @@ export interface TrackedTxsConfig {
     readonly queryWarningLimitGb: number
   }
   readonly minTimestamp: UnixTime
+  readonly uses: {
+    readonly liveness: boolean
+  }
 }
 
 export interface FinalityConfig {

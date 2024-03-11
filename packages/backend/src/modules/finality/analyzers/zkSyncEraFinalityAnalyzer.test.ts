@@ -1,4 +1,4 @@
-import { LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
 
@@ -54,7 +54,7 @@ describe(zkSyncEraFinalityAnalyzer.name, () => {
         ).toHaveBeenNthCalledWith(
           1,
           ProjectId('zksync2'),
-          LivenessType('PROOF'),
+          'proofSubmissions',
           start,
           start.add(-600, 'seconds'),
         )
@@ -64,7 +64,7 @@ describe(zkSyncEraFinalityAnalyzer.name, () => {
         ).toHaveBeenNthCalledWith(
           6,
           ProjectId('zksync2'),
-          LivenessType('PROOF'),
+          'proofSubmissions',
           start.add(-600 * 5, 'seconds'),
           start.add(-600 * 6, 'seconds'),
         )

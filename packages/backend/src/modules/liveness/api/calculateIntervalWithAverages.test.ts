@@ -1,4 +1,4 @@
-import { LivenessType, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { cloneDeep } from 'lodash'
 
@@ -14,46 +14,46 @@ const NOW = UnixTime.now()
 const RECORDS: LivenessRecordWithInterval[] = [
   {
     timestamp: NOW,
-    type: LivenessType('DA'),
+    subtype: 'batchSubmissions',
     previousRecordInterval: 3600,
   },
   {
     timestamp: NOW.add(-1, 'hours'),
-    type: LivenessType('DA'),
+    subtype: 'batchSubmissions',
     previousRecordInterval: 7200,
   },
   {
     timestamp: NOW.add(-3, 'hours'),
-    type: LivenessType('DA'),
+    subtype: 'batchSubmissions',
     previousRecordInterval: 86_400 * 31 - 10_800,
   },
   {
     timestamp: NOW.add(-31, 'days'),
-    type: LivenessType('STATE'),
+    subtype: 'stateUpdates',
   },
   {
     timestamp: NOW.add(-31, 'days').add(-1, 'hours'),
-    type: LivenessType('STATE'),
+    subtype: 'stateUpdates',
   },
   {
     timestamp: NOW.add(-91, 'days'),
-    type: LivenessType('DA'),
+    subtype: 'batchSubmissions',
   },
   {
     timestamp: NOW.add(-92, 'days'),
-    type: LivenessType('DA'),
+    subtype: 'batchSubmissions',
   },
   {
     timestamp: NOW.add(-93, 'days'),
-    type: LivenessType('DA'),
+    subtype: 'batchSubmissions',
   },
   {
     timestamp: NOW.add(-93, 'days'),
-    type: LivenessType('PROOF'),
+    subtype: 'proofSubmissions',
   },
   {
     timestamp: NOW.add(-94, 'days'),
-    type: LivenessType('PROOF'),
+    subtype: 'proofSubmissions',
   },
 ]
 
@@ -62,17 +62,17 @@ describe(calculateIntervals.name, () => {
     const expected: LivenessRecordWithInterval[] = [
       {
         timestamp: NOW,
-        type: LivenessType('DA'),
+        subtype: 'batchSubmissions',
         previousRecordInterval: 3600,
       },
       {
         timestamp: NOW.add(-1, 'hours'),
-        type: LivenessType('DA'),
+        subtype: 'batchSubmissions',
         previousRecordInterval: 2 * 3600,
       },
       {
         timestamp: NOW.add(-3, 'hours'),
-        type: LivenessType('DA'),
+        subtype: 'batchSubmissions',
       },
     ]
     const input = cloneDeep(RECORDS).slice(0, 3)
@@ -85,9 +85,7 @@ describe(calculateIntervals.name, () => {
 
 describe(calculateMinMaxAverages.name, () => {
   it('returns the averages for stateUpdates with undefined', () => {
-    const input = cloneDeep(RECORDS).filter(
-      (r) => r.type === LivenessType('STATE'),
-    )
+    const input = cloneDeep(RECORDS).filter((r) => r.subtype === 'stateUpdates')
     calculateIntervals(input)
     const result = calculateMinMaxAverages(input)
     const expected = {
@@ -109,7 +107,7 @@ describe(calculateMinMaxAverages.name, () => {
     const input = cloneDeep(RECORDS)
     calculateIntervals(input)
     const result = calculateMinMaxAverages(
-      input.filter((r) => r.type === LivenessType('DA')),
+      input.filter((r) => r.subtype === 'batchSubmissions'),
     )
     const expected = {
       last30Days: {
@@ -137,27 +135,27 @@ describe(calculateIntervalWithAverages.name, () => {
     const result = calculateIntervalWithAverages({
       project1: {
         batchSubmissions: {
-          records: RECORDS.filter((r) => r.type === LivenessType('DA')),
+          records: RECORDS.filter((r) => r.subtype === 'batchSubmissions'),
         },
         stateUpdates: {
-          records: RECORDS.filter((r) => r.type === LivenessType('STATE')),
+          records: RECORDS.filter((r) => r.subtype === 'stateUpdates'),
         },
         proofSubmissions: {
-          records: RECORDS.filter((r) => r.type === LivenessType('PROOF')),
+          records: RECORDS.filter((r) => r.subtype === 'proofSubmissions'),
         },
       },
     })
 
     const batchSubmissionRecords = cloneDeep(RECORDS).filter(
-      (r) => r.type === LivenessType('DA'),
+      (r) => r.subtype === 'batchSubmissions',
     )
     calculateIntervals(batchSubmissionRecords)
     const stateUpdateRecords = cloneDeep(RECORDS).filter(
-      (r) => r.type === LivenessType('STATE'),
+      (r) => r.subtype === 'stateUpdates',
     )
     calculateIntervals(stateUpdateRecords)
     const proofSubmissionsRecords = cloneDeep(RECORDS).filter(
-      (r) => r.type === LivenessType('PROOF'),
+      (r) => r.subtype === 'proofSubmissions',
     )
     calculateIntervals(proofSubmissionsRecords)
 

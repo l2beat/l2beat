@@ -117,6 +117,9 @@ export function makeConfig(
       },
       // TODO: figure out how to set it for local development
       minTimestamp: UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
+      uses: {
+        liveness: flags.isEnabled('tracked-txs', 'liveness'),
+      },
     },
     finality: flags.isEnabled('finality') && {
       ethereumProviderUrl: env.string('FINALITY_ETHEREUM_PROVIDER_URL'),

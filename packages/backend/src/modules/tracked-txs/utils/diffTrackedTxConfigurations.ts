@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
 import { TrackedTxsConfigRecord } from '../repositories/TrackedTxsConfigsRepository'
-import { TrackedTxConfigEntry } from '../types/TrackedTxsConfig'
 import { TrackedTxId } from '../types/TrackedTxId'
+import { TrackedTxConfigEntry } from '../types/TrackedTxsConfig'
 
 export function diffTrackedTxConfigurations(
   runtimeEntries: TrackedTxConfigEntry[],

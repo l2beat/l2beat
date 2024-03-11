@@ -3,6 +3,7 @@ import {
   getCanonicalTokenBySymbol,
   Layer2,
   Layer2FinalityConfig,
+  Layer2LivenessConfig,
   Layer2TransactionApi,
   Layer2TxConfig,
   tokenList,
@@ -32,6 +33,7 @@ export interface Project {
   escrows: ProjectEscrow[]
   transactionApi?: Layer2TransactionApi
   trackedTxsConfig?: TrackedTxsConfig
+  livenessConfig?: Layer2LivenessConfig
   finalityConfig?: Layer2FinalityConfig
 }
 
@@ -61,6 +63,7 @@ export function layer2ToProject(layer2: Layer2): Project {
       layer2.id,
       layer2.config.trackedTxs,
     ),
+    livenessConfig: layer2.config.liveness,
     finalityConfig: layer2.config.finality,
   }
 }

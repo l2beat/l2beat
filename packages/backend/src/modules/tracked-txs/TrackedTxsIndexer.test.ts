@@ -9,7 +9,6 @@ import { expect, mockFn, mockObject } from 'earl'
 import { Knex } from 'knex'
 
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
-import { LivenessClient } from '../liveness/LivenessClient'
 import { HourlyIndexer } from '../tracked-txs/HourlyIndexer'
 import { TrackedTxsClient } from '../tracked-txs/TrackedTxsClient'
 import { adjustToForBigqueryCall } from '../tracked-txs/utils'
@@ -43,10 +42,11 @@ describe(TrackedTxsIndexer.name, () => {
       })
 
       const livenessUpdater = mockObject<TxUpdaterInterface>({
-        update: mockFn(),
+        update: mockFn(async () => {}),
       })
       const mockedUpdaters = {
         liveness: livenessUpdater,
+        // TODO: (fees) while adding fees add a test for 2 updaters and check if it correctly filters txs
       }
 
       const trackedTxIndexer = getMockTrackedTxsIndexer({
@@ -92,8 +92,8 @@ describe(TrackedTxsIndexer.name, () => {
         configRepository,
         configs,
       })
-      const livenessClient = mockObject<LivenessClient>({
-        getLivenessData: async () => [],
+      const trackedTxsClient = mockObject<TrackedTxsClient>({
+        getData: async () => [],
       })
       const adjustedTo = adjustToForBigqueryCall(from.toNumber(), to.toNumber())
 
@@ -103,7 +103,7 @@ describe(TrackedTxsIndexer.name, () => {
       )
 
       expect(value).toEqual(adjustedTo.toNumber())
-      expect(livenessClient.getLivenessData).not.toHaveBeenCalled()
+      expect(trackedTxsClient.getData).not.toHaveBeenCalled()
     })
   })
 
@@ -164,7 +164,7 @@ describe(TrackedTxsIndexer.name, () => {
           id: TrackedTxId.random(),
         }),
         mockObject<TrackedTxsConfigRecord>({
-          ...toRecords(runtimeEntries[1]),
+          ...toRecords(runtimeEntries[1])[0],
           untilTimestamp: undefined,
         }),
         // rest of the configurations would be considered "toAdd"
@@ -174,7 +174,7 @@ describe(TrackedTxsIndexer.name, () => {
       const stateRepository = getMockStateRepository()
 
       const mockedLivenessUpdater = mockObject<TxUpdaterInterface>({
-        deleteAfter: mockFn(),
+        deleteAfter: mockFn(async () => {}),
       })
 
       const trackedTxsIndexer = getMockTrackedTxsIndexer({
@@ -301,7 +301,7 @@ describe(TrackedTxsIndexer.name, () => {
       await livenessIndexer.setSafeHeight(safeHeight, TRX)
 
       expect(stateRepository.setSafeHeight).toHaveBeenOnlyCalledWith(
-        'liveness_indexer',
+        'tracked_txs_indexer',
         safeHeight,
         TRX,
       )
@@ -374,6 +374,7 @@ function getMockConfigRepository(databaseEntries: TrackedTxsConfigRecord[]) {
     setUntilTimestamp: async () => 0,
     getAll: async () => databaseEntries,
     setLastSyncedTimestamp: async () => 0,
+    runInTransaction: mockFn(async (fn) => fn(TRX)),
   })
 }
 

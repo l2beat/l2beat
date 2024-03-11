@@ -1,8 +1,4 @@
-import {
-  FinalityApiResponse,
-  LivenessType,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { FinalityApiResponse, UnixTime } from '@l2beat/shared-pure'
 import { keyBy, mapValues, partition } from 'lodash'
 
 import { FinalityProjectConfig } from '../../../config/features/finality'
@@ -90,7 +86,7 @@ export class FinalityController {
       projects.map(async (project) => {
         const records = await this.livenessRepository.getByProjectIdAndType(
           project.projectId,
-          LivenessType('DA'),
+          'batchSubmissions',
           UnixTime.now().add(-1, 'days'),
         )
 
