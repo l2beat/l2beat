@@ -1,9 +1,9 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
-import { underReview } from './templates/underReview'
+import { underReviewL2 } from './templates/underReview'
 import { Layer2 } from './types'
 
-export const kinto: Layer2 = underReview({
+export const kinto: Layer2 = underReviewL2({
   id: 'kinto',
   display: {
     name: 'Kinto',

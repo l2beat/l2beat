@@ -89,7 +89,7 @@ export interface Layer2Config extends ScalingProjectConfig {
   /** Configuration for getting state updates and batch submission */
   liveness?: Layer2Liveness
   /** Configuration for getting finality data */
-  finality?: Layer2FinalityConfig
+  finality?: Layer2FinalityConfig | 'coming soon'
 }
 
 export interface Layer2TVLWarning {

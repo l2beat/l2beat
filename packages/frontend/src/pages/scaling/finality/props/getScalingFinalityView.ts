@@ -1,6 +1,7 @@
 import { Layer2, ScalingProjectDataAvailabilityMode } from '@l2beat/config'
 import {
   assertUnreachable,
+  FinalityApiResponse,
   FinalityProjectData,
   formatSeconds,
   notUndefined,
@@ -18,26 +19,24 @@ export function getScalingFinalityView(
 ): ScalingFinalityViewProps {
   const { finalityApiResponse, tvlApiResponse } = pagesData
 
-  const includedProjects = getIncludedProjects(projects)
+  const includedProjects = getIncludedProjects(projects, finalityApiResponse)
   const orderedProjects = orderByTvl(includedProjects, tvlApiResponse)
 
   return {
     items: orderedProjects
-      .map((project) => {
-        const finalityProjectData =
-          finalityApiResponse.projects[project.id.toString()]
-        if (!finalityProjectData?.timeToInclusion) {
-          return
-        }
-        return getScalingFinalityViewEntry(project, finalityProjectData)
-      })
+      .map((project) =>
+        getScalingFinalityViewEntry(
+          project,
+          finalityApiResponse.projects[project.id.toString()],
+        ),
+      )
       .filter(notUndefined),
   }
 }
 
 export function getScalingFinalityViewEntry(
   project: Layer2,
-  finalityProjectData: FinalityProjectData,
+  finalityProjectData: FinalityProjectData | undefined,
 ): ScalingFinalityViewEntry {
   return {
     name: project.display.name,
@@ -50,16 +49,27 @@ export function getScalingFinalityViewEntry(
     redWarning: project.display.redWarning,
     purposes: project.display.purposes,
     stage: project.stage,
+    data: getFinalityData(finalityProjectData, project),
+    finalizationPeriod: project.display.finality?.finalizationPeriod
+      ? formatSeconds(project.display.finality.finalizationPeriod, {
+          fullUnit: true,
+        })
+      : 'None',
+  }
+}
+
+function getFinalityData(
+  finalityProjectData: FinalityProjectData | undefined,
+  project: Layer2,
+) {
+  if (!finalityProjectData) return undefined
+  return {
     timeToInclusion: {
-      ...finalityProjectData.timeToInclusion,
+      averageInSeconds: finalityProjectData.timeToInclusion.averageInSeconds,
+      minimumInSeconds: finalityProjectData.timeToInclusion.minimumInSeconds,
+      maximumInSeconds: finalityProjectData.timeToInclusion.maximumInSeconds,
       warning: project.display.finality?.warning,
     },
-    finalizationPeriod:
-      project.display.finality?.finalizationPeriod !== undefined
-        ? formatSeconds(project.display.finality.finalizationPeriod, {
-            fullUnit: true,
-          })
-        : undefined,
     syncStatus: {
       isSynced: isSynced(finalityProjectData.syncedUntil),
       displaySyncedUntil: formatTimestamp(
@@ -77,8 +87,18 @@ function isSynced(syncedUntil: UnixTime) {
   return UnixTime.now().add(-1, 'days').add(-1, 'hours').lte(syncedUntil)
 }
 
-function getIncludedProjects(projects: Layer2[]) {
-  return projects.filter((p) => !p.isUpcoming && !p.isArchived)
+function getIncludedProjects(
+  projects: Layer2[],
+  finalityApiResponse: FinalityApiResponse,
+) {
+  return projects.filter(
+    (p) =>
+      !p.isUpcoming &&
+      !p.isArchived &&
+      (p.config.finality || finalityApiResponse.projects[p.id.toString()]) &&
+      (p.display.category === 'ZK Rollup' ||
+        p.display.category === 'Optimistic Rollup'),
+  )
 }
 
 function daModeToDisplay(daMode: ScalingProjectDataAvailabilityMode) {

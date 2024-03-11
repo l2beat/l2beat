@@ -100,7 +100,11 @@ export const arbitrum: Layer2 = {
       websites: ['https://arbitrum.io/', 'https://arbitrum.foundation/'],
       apps: [],
       documentation: ['https://developer.arbitrum.io/'],
-      explorers: ['https://arbiscan.io', 'https://explorer.arbitrum.io/'],
+      explorers: [
+        'https://arbiscan.io',
+        'https://explorer.arbitrum.io/',
+        'https://arbitrum.l2scan.co/',
+      ],
       repositories: [
         'https://github.com/ArbitrumFoundation/docs',
         'https://github.com/ArbitrumFoundation/governance',
@@ -126,6 +130,7 @@ export const arbitrum: Layer2 = {
         challengeWindow * assumedBlockTime,
       )} after it has been posted.`,
     },
+    finality: { finalizationPeriod: challengeWindowSeconds },
   },
   config: {
     associatedTokens: ['ARB'],
@@ -183,6 +188,7 @@ export const arbitrum: Layer2 = {
       assessCount: subtractOneAfterBlockInclusive(22207818),
       startBlock: 1,
     },
+    finality: 'coming soon',
     liveness: {
       proofSubmissions: [],
       batchSubmissions: [
