@@ -1,10 +1,11 @@
 import { LoggerOptions } from '@l2beat/backend-tools'
 import { DiscoveryChainConfig } from '@l2beat/discovery'
 import {
+  AmountConfigEntry,
   ChainId,
+  PriceConfigEntry,
   ProjectId,
   Token,
-  Token2,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
@@ -80,7 +81,8 @@ export interface TvlConfig {
 }
 
 export interface Tvl2Config {
-  readonly tokens: Token2[]
+  readonly prices: PriceConfigEntry[]
+  readonly amounts: AmountConfigEntry[]
 }
 
 export interface LivenessConfig {

@@ -1,7 +1,14 @@
 import { assert, Env, LoggerOptions } from '@l2beat/backend-tools'
 import { bridges, chains, layer2s, tokenList } from '@l2beat/config'
 import { ConfigReader } from '@l2beat/discovery'
-import { ChainId, Token, Token2, UnixTime } from '@l2beat/shared-pure'
+import {
+  AmountConfigEntry,
+  ChainId,
+  PriceConfigEntry,
+  ProjectId,
+  Token,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { bridgeToProject, layer2ToProject, Project } from '../model/Project'
 import { ChainConverter } from '../tools/ChainConverter'
@@ -110,7 +117,8 @@ export function makeConfig(
       ),
     },
     tvl2: flags.isEnabled('tvl2') && {
-      tokens: getTokensInNewFormat(projects, tokenList),
+      amounts: getAmountsConfig(projects, tokenList),
+      prices: getPricesConfig(tokenList),
     },
     liveness: flags.isEnabled('liveness') && {
       bigQuery: {
@@ -192,44 +200,40 @@ function getDiscordConfig(env: Env, isLocal?: boolean): DiscordConfig | false {
     }
   )
 }
-function getTokensInNewFormat(
+function getAmountsConfig(
   projects: Project[],
   tokenList: Token[],
-): Token2[] {
+): AmountConfigEntry[] {
   const chainConverter = new ChainConverter(
     chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
   )
-  const notEthereumTokens: Token2[] = []
+  const entries: AmountConfigEntry[] = []
 
   for (const token of tokenList) {
     if (token.chainId !== ChainId.ETHEREUM) {
       switch (token.formula) {
         case 'totalSupply':
           assert(token.address, 'Token address is required for total supply')
-          notEthereumTokens.push({
-            address: token.address ?? 'native',
+          entries.push({
+            type: 'totalSupply',
+            address: token.address,
             chain: chainConverter.toName(token.chainId),
             sinceTimestamp: token.sinceTimestamp,
-            price: { type: 'coingecko', coingeckoId: token.coingeckoId },
-            amount: { type: 'totalSupply', address: token.address },
-            project: chainConverter.toName(token.chainId),
-            symbol: token.symbol,
-            name: token.name,
+            project: ProjectId('todo'),
+            source: toSource(token.type),
+            includeInTotal: true,
           })
           break
         case 'circulatingSupply':
-          notEthereumTokens.push({
+          entries.push({
+            type: 'circulatingSupply',
             address: token.address ?? 'native',
             chain: chainConverter.toName(token.chainId),
             sinceTimestamp: token.sinceTimestamp,
-            price: { type: 'coingecko', coingeckoId: token.coingeckoId },
-            amount: {
-              type: 'circulatingSupply',
-              coingeckoId: token.coingeckoId,
-            },
-            project: chainConverter.toName(token.chainId),
-            symbol: token.symbol,
-            name: token.name,
+            coingeckoId: token.coingeckoId,
+            project: ProjectId('todo'),
+            source: toSource(token.type),
+            includeInTotal: true,
           })
           break
         case 'locked':
@@ -241,19 +245,68 @@ function getTokensInNewFormat(
   for (const project of projects) {
     for (const escrow of project.escrows) {
       for (const token of escrow.tokens) {
-        notEthereumTokens.push({
+        entries.push({
+          type: 'escrow',
           address: token.address ?? 'native',
           chain: chainConverter.toName(token.chainId),
           sinceTimestamp: token.sinceTimestamp,
-          price: { type: 'coingecko', coingeckoId: token.coingeckoId },
-          amount: { type: 'escrow', escrowAddress: escrow.address },
-          project: project.projectId.toString(),
-          symbol: token.symbol,
-          name: token.name,
+          escrowAddress: escrow.address,
+          project: ProjectId('todo'),
+          source: toSource(token.type),
+          includeInTotal: true,
         })
       }
     }
   }
 
-  return notEthereumTokens
+  return entries
+}
+
+function getPricesConfig(tokenList: Token[]): PriceConfigEntry[] {
+  const chainConverter = new ChainConverter(
+    chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
+  )
+
+  const uniqueEntries = new Map<string, PriceConfigEntry>()
+
+  for (const token of tokenList) {
+    const chain = chainConverter.toName(token.chainId)
+    const key = `${chain}-${(token.address ?? 'native').toString()}`
+    const curr = uniqueEntries.get(key)
+
+    if (curr === undefined) {
+      uniqueEntries.set(key, {
+        type: 'coingecko',
+        address: token.address ?? 'native',
+        chain: chain,
+        sinceTimestamp: token.sinceTimestamp,
+        coingeckoId: token.coingeckoId,
+      })
+    } else {
+      if (token.sinceTimestamp.lt(curr.sinceTimestamp)) {
+        uniqueEntries.set(key, {
+          type: 'coingecko',
+          address: token.address ?? 'native',
+          chain: chain,
+          sinceTimestamp: token.sinceTimestamp,
+          coingeckoId: token.coingeckoId,
+        })
+      }
+    }
+  }
+
+  return Array.from(uniqueEntries.values())
+}
+
+function toSource(
+  type: 'CBV' | 'EBV' | 'NMV',
+): 'native' | 'canonical' | 'external' {
+  switch (type) {
+    case 'CBV':
+      return 'canonical'
+    case 'EBV':
+      return 'external'
+    case 'NMV':
+      return 'native'
+  }
 }

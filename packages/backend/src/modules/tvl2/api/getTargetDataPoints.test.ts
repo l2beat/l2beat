@@ -1,9 +1,9 @@
-import { Token2, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { install, InstalledClock } from '@sinonjs/fake-timers'
-import { expect, mockObject } from 'earl'
+import { expect } from 'earl'
 
 import { Clock } from '../../../tools/Clock'
-import { getTargetDataPoints } from './Tvl2StatusRouter'
+import { getTargetDataPoints } from './getTargetDataPoints'
 
 describe(getTargetDataPoints.name, () => {
   let time: InstalledClock
@@ -21,9 +21,9 @@ describe(getTargetDataPoints.name, () => {
     const now = UnixTime.now().add(-7, 'days').toStartOf('hour')
     const clock = new Clock(now, 60 * 60)
 
-    const token = mockObject<Token2>({
+    const token = {
       sinceTimestamp: new UnixTime(0),
-    })
+    }
 
     const result = getTargetDataPoints(token, clock)
     const expected = 7 * 24
@@ -44,9 +44,9 @@ describe(getTargetDataPoints.name, () => {
     const now = UnixTime.now().add(-totalDays, 'days').toStartOf('hour')
     const clock = new Clock(now, 60 * 60)
 
-    const token = mockObject<Token2>({
+    const token = {
       sinceTimestamp: new UnixTime(0),
-    })
+    }
 
     const result = getTargetDataPoints(token, clock)
 
@@ -67,9 +67,9 @@ describe(getTargetDataPoints.name, () => {
     const now = new UnixTime(0)
     const clock = new Clock(now, 60 * 60)
 
-    const token = mockObject<Token2>({
+    const token = {
       sinceTimestamp: UnixTime.now().add(-totalDays, 'days').toStartOf('hour'),
-    })
+    }
 
     const result = getTargetDataPoints(token, clock)
 
