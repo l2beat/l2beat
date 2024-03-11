@@ -100,7 +100,11 @@ export const arbitrum: Layer2 = {
       websites: ['https://arbitrum.io/', 'https://arbitrum.foundation/'],
       apps: [],
       documentation: ['https://developer.arbitrum.io/'],
-      explorers: ['https://arbiscan.io', 'https://explorer.arbitrum.io/'],
+      explorers: [
+        'https://arbiscan.io',
+        'https://explorer.arbitrum.io/',
+        'https://arbitrum.l2scan.co/',
+      ],
       repositories: [
         'https://github.com/ArbitrumFoundation/docs',
         'https://github.com/ArbitrumFoundation/governance',
