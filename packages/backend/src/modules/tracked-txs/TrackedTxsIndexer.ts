@@ -101,11 +101,18 @@ export class TrackedTxsIndexer extends ChildIndexer {
   }
 
   private async initialize(): Promise<void> {
+    this.logger.info('Initializing...')
     const databaseEntries = await this.configRepository.getAll()
     const { toAdd, toRemove, toTrim } = diffTrackedTxConfigurations(
       this.configs,
       databaseEntries,
     )
+
+    this.logger.info('Modifying tracked txs configs', {
+      added: toAdd.map((add) => add.id),
+      removed: toRemove,
+      trimmed: toTrim.map((trim) => trim.id),
+    })
 
     const safeHeight = getSafeHeight(databaseEntries, toAdd, this.minTimestamp)
 

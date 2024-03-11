@@ -16,7 +16,7 @@ export type BigQueryFunctionCallResult = z.infer<
   typeof BigQueryFunctionCallResult
 >
 export const BigQueryFunctionCallResult = z.object({
-  hash: z.string(),
+  transaction_hash: z.string(),
   block_number: z.number(),
   block_timestamp: z
     .object({ value: z.string() })
@@ -38,7 +38,7 @@ export type TrackedTxFunctionCallResult = {
 
 export type BigQueryTransferResult = z.infer<typeof BigQueryTransferResult>
 export const BigQueryTransferResult = z.object({
-  hash: z.string(),
+  transaction_hash: z.string(),
   block_number: z.number(),
   block_timestamp: z
     .object({ value: z.string() })

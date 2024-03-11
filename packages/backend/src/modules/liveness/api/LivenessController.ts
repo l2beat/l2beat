@@ -100,7 +100,7 @@ export class LivenessController {
   async getLiveness(): Promise<LivenessResult> {
     const requiredTimestamp = this.clock.getLastHour().add(-1, 'hours')
     const indexerState = await this.indexerStateRepository.findIndexerState(
-      'liveness_indexer',
+      'tracked_txs_indexer',
     )
     if (
       indexerState === undefined ||

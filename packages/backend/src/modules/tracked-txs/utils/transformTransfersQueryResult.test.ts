@@ -79,21 +79,21 @@ describe(transformTransfersQueryResult.name, () => {
       {
         from_address: ADDRESS_1,
         to_address: ADDRESS_2,
-        hash: txHashes[0],
+        transaction_hash: txHashes[0],
         block_number: block,
         block_timestamp: RESULT_TIMESTAMP,
       },
       {
         from_address: ADDRESS_3,
         to_address: ADDRESS_4,
-        hash: txHashes[1],
+        transaction_hash: txHashes[1],
         block_number: block,
         block_timestamp: RESULT_TIMESTAMP,
       },
       {
         from_address: ADDRESS_5,
         to_address: ADDRESS_6,
-        hash: txHashes[2],
+        transaction_hash: txHashes[2],
         block_number: block,
         block_timestamp: RESULT_TIMESTAMP,
       },
@@ -160,7 +160,7 @@ describe(transformTransfersQueryResult.name, () => {
 
     const queryResults: BigQueryTransferResult[] = [
       {
-        hash: '',
+        transaction_hash: '',
         block_number: 1,
         block_timestamp: RESULT_TIMESTAMP,
         from_address: EthereumAddress.random(),

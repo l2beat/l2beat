@@ -85,21 +85,21 @@ describe(transformFunctionCallsQueryResult.name, () => {
 
     const queryResults: BigQueryFunctionCallResult[] = [
       {
-        hash: txHashes[0],
+        transaction_hash: txHashes[0],
         block_number: block,
         block_timestamp: timestamp,
         input: SELECTOR_1,
         to_address: ADDRESS_1,
       },
       {
-        hash: txHashes[1],
+        transaction_hash: txHashes[1],
         block_number: block,
         block_timestamp: timestamp,
         input: SELECTOR_2,
         to_address: ADDRESS_2,
       },
       {
-        hash: txHashes[2],
+        transaction_hash: txHashes[2],
         block_number: block,
         block_timestamp: timestamp,
         input: sharpInput,
@@ -161,7 +161,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
 
     const queryResults: BigQueryFunctionCallResult[] = [
       {
-        hash: txHashes[0],
+        transaction_hash: txHashes[0],
         to_address: EthereumAddress.random(),
         input: 'random-string',
         block_number: block,
@@ -204,7 +204,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
 
     const queryResults: BigQueryFunctionCallResult[] = [
       {
-        hash: txHashes[0],
+        transaction_hash: txHashes[0],
         to_address: sharpSubmissions[0].address,
         input: sharpInput,
         block_number: block,

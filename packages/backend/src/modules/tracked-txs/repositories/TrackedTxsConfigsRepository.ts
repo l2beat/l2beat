@@ -15,7 +15,10 @@ import {
 } from '../../../peripherals/database/BaseRepository'
 import { Database } from '../../../peripherals/database/Database'
 import { TrackedTxId } from '../types/TrackedTxId'
-import { TrackedTxConfigEntry } from '../types/TrackedTxsConfig'
+import {
+  TrackedTxConfigEntry,
+  TrackedTxUseWithId,
+} from '../types/TrackedTxsConfig'
 
 export interface TrackedTxsConfigRecord {
   id: TrackedTxId
@@ -41,13 +44,13 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
   }
 
   async addMany(
-    records: TrackedTxConfigEntry[],
+    records: TrackedTxsConfigRecord[],
     trx?: Knex.Transaction,
   ): Promise<TrackedTxId[]> {
     const knex = await this.knex(trx)
 
     const insertedRows = await knex('tracked_txs_configs')
-      .insert(records.flatMap(toNewRow))
+      .insert(records.map(toRow))
       .returning('id')
 
     return insertedRows
@@ -130,17 +133,32 @@ function toRecord(row: TrackedTxsConfigRow): TrackedTxsConfigRecord {
   }
 }
 
-export function toNewRow(entry: TrackedTxConfigEntry): TrackedTxsConfigRow[] {
-  return entry.uses.map((use) => ({
-    id: use.id.toString(),
+export function trackedTxConfigEntryToRow(
+  entry: TrackedTxConfigEntry,
+  entryUse: TrackedTxUseWithId,
+) {
+  return {
+    id: entryUse.id,
+    debugInfo: toDebugInfo(entry),
+    projectId: entry.projectId,
+    type: entryUse.type,
+    subtype: entryUse.subType,
+    sinceTimestamp: entry.sinceTimestamp,
+    untilTimestamp: entry.untilTimestamp,
+  }
+}
+
+function toRow(entry: TrackedTxsConfigRecord): TrackedTxsConfigRow {
+  return {
+    id: entry.id.toString(),
     project_id: entry.projectId.toString(),
-    type: use.type,
-    subtype: use.subType,
+    type: entry.type,
+    subtype: entry.subtype ?? null,
     since_timestamp: entry.sinceTimestamp.toDate(),
     until_timestamp: entry.untilTimestamp?.toDate() ?? null,
     last_synced_timestamp: null,
-    debug_info: toDebugInfo(entry),
-  }))
+    debug_info: entry.debugInfo,
+  }
 }
 
 function toDebugInfo(value: TrackedTxConfigEntry): string {

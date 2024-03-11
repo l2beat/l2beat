@@ -1,11 +1,10 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
 import { TrackedTxsConfigRecord } from '../repositories/TrackedTxsConfigsRepository'
-import { TrackedTxConfigEntry } from '../types/TrackedTxsConfig'
 
 export function getSafeHeight(
   databaseEntries: TrackedTxsConfigRecord[],
-  toAdd: TrackedTxConfigEntry[],
+  toAdd: TrackedTxsConfigRecord[],
   minTimestamp: UnixTime,
 ): number {
   if (databaseEntries.length === 0 && toAdd.length === 0) {

@@ -8,6 +8,7 @@ import { ApplicationModule } from './modules/ApplicationModule'
 import { createDiffHistoryModule } from './modules/diff-history/createDiffHistoryModule'
 import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createHealthModule } from './modules/health/HealthModule'
+import { createLivenessModule } from './modules/liveness/LivenessModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createStatusModule } from './modules/status/StatusModule'
 import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
@@ -59,6 +60,8 @@ export class Application {
       createDiffHistoryModule(config, logger, database),
       createStatusModule(config, logger),
       trackedTxsModule,
+      // TODO: (tracked_tx) return updater from module
+      createLivenessModule(config, logger, database, clock),
       createFinalityModule(
         config,
         logger,

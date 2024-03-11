@@ -113,11 +113,13 @@ function toBackendTrackedTxsConfig(
 }
 
 function getTrackedTxsConfigUses(config: Layer2TxConfig): TrackedTxUseWithId[] {
+  const { untilTimestamp: _, ...queryWithoutUntilTimestamp } = config.query
+
   return config.uses.map((use) => ({
     ...use,
     id: TrackedTxId([
-      JSON.stringify({ type: use.type, subtype: use.subType }),
-      JSON.stringify(config.query),
+      JSON.stringify(use),
+      JSON.stringify(queryWithoutUntilTimestamp),
     ]),
   }))
 }
