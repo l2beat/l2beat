@@ -130,6 +130,7 @@ export const arbitrum: Layer2 = {
         challengeWindow * assumedBlockTime,
       )} after it has been posted.`,
     },
+    finality: { finalizationPeriod: challengeWindowSeconds },
   },
   config: {
     associatedTokens: ['ARB'],
@@ -187,6 +188,7 @@ export const arbitrum: Layer2 = {
       assessCount: subtractOneAfterBlockInclusive(22207818),
       startBlock: 1,
     },
+    finality: 'coming soon',
     liveness: {
       proofSubmissions: [],
       batchSubmissions: [
