@@ -41,7 +41,7 @@
         },
         "maxTotalBalance": {
           "description": "Maximum bridge balance allowed (currentBalance + depositAmount <= maxTotalBalance)",
-          "severity": "MID",
+          "severity": "MEDIUM",
           "type": "RISK_PARAMETER"
         },
         "PROXY_GOVERNANCE_TAG": {
