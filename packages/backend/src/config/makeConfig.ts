@@ -1,5 +1,5 @@
 import { assert, Env, LoggerOptions } from '@l2beat/backend-tools'
-import { bridges, chains, layer2s, tokenList } from '@l2beat/config'
+import { bridges, chains, Layer2, layer2s, tokenList } from '@l2beat/config'
 import { ConfigReader } from '@l2beat/discovery'
 import {
   AmountConfigEntry,
@@ -41,6 +41,11 @@ export function makeConfig(
   const projects = layer2s
     .map(layer2ToProject)
     .concat(bridges.map(bridgeToProject))
+
+  const chainConverter = new ChainConverter(
+    chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
+  )
+  const chainToProject = getChainToProjectMapping(layer2s, chainConverter)
 
   return {
     name,
@@ -117,8 +122,13 @@ export function makeConfig(
       ),
     },
     tvl2: flags.isEnabled('tvl2') && {
-      amounts: getAmountsConfig(projects, tokenList),
-      prices: getPricesConfig(tokenList),
+      amounts: getAmountsConfig(
+        projects,
+        tokenList,
+        chainConverter,
+        chainToProject,
+      ),
+      prices: getPricesConfig(tokenList, chainConverter),
     },
     liveness: flags.isEnabled('liveness') && {
       bigQuery: {
@@ -200,26 +210,30 @@ function getDiscordConfig(env: Env, isLocal?: boolean): DiscordConfig | false {
     }
   )
 }
+
 function getAmountsConfig(
   projects: Project[],
   tokenList: Token[],
+  chainConverter: ChainConverter,
+  chainToProject: Map<string, ProjectId>,
 ): AmountConfigEntry[] {
-  const chainConverter = new ChainConverter(
-    chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
-  )
   const entries: AmountConfigEntry[] = []
 
   for (const token of tokenList) {
     if (token.chainId !== ChainId.ETHEREUM) {
+      const project = chainToProject.get(chainConverter.toName(token.chainId))
+      assert(project, 'Project is required for token')
+
       switch (token.formula) {
         case 'totalSupply':
           assert(token.address, 'Token address is required for total supply')
+
           entries.push({
             type: 'totalSupply',
             address: token.address,
             chain: chainConverter.toName(token.chainId),
             sinceTimestamp: token.sinceTimestamp,
-            project: ProjectId('todo'),
+            project,
             source: toSource(token.type),
             includeInTotal: true,
           })
@@ -231,7 +245,7 @@ function getAmountsConfig(
             chain: chainConverter.toName(token.chainId),
             sinceTimestamp: token.sinceTimestamp,
             coingeckoId: token.coingeckoId,
-            project: ProjectId('todo'),
+            project,
             source: toSource(token.type),
             includeInTotal: true,
           })
@@ -251,7 +265,7 @@ function getAmountsConfig(
           chain: chainConverter.toName(token.chainId),
           sinceTimestamp: token.sinceTimestamp,
           escrowAddress: escrow.address,
-          project: ProjectId('todo'),
+          project: project.projectId,
           source: toSource(token.type),
           includeInTotal: true,
         })
@@ -262,11 +276,10 @@ function getAmountsConfig(
   return entries
 }
 
-function getPricesConfig(tokenList: Token[]): PriceConfigEntry[] {
-  const chainConverter = new ChainConverter(
-    chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
-  )
-
+function getPricesConfig(
+  tokenList: Token[],
+  chainConverter: ChainConverter,
+): PriceConfigEntry[] {
   const uniqueEntries = new Map<string, PriceConfigEntry>()
 
   for (const token of tokenList) {
@@ -296,6 +309,22 @@ function getPricesConfig(tokenList: Token[]): PriceConfigEntry[] {
   }
 
   return Array.from(uniqueEntries.values())
+}
+
+function getChainToProjectMapping(
+  layer2s: Layer2[],
+  chainConverter: ChainConverter,
+) {
+  const chainToProject = new Map<string, ProjectId>()
+
+  for (const project of layer2s) {
+    if (project.chainConfig) {
+      const chain = chainConverter.toName(ChainId(project.chainConfig.chainId))
+      chainToProject.set(chain, project.id)
+    }
+  }
+
+  return chainToProject
 }
 
 function toSource(
