@@ -26,6 +26,27 @@ function REGULAR(
   }
 }
 
+function REGULAR_YIELDING(
+  type: 'zk' | 'optimistic',
+  timeSeconds?: number,
+): ScalingProjectTechnologyChoice {
+  const finalized = type === 'zk' ? 'proven' : 'finalized'
+  const timeString =
+    timeSeconds !== undefined
+      ? `takes a challenge period of ${formatSeconds(timeSeconds)}`
+      : 'usually takes several days'
+  const time =
+    type === 'optimistic'
+      ? ` The process of block finalization ${timeString} to complete.`
+      : ''
+  return {
+    name: 'Regular exit',
+    description: `The user initiates the withdrawal by submitting a regular transaction on this chain. When the block containing that transaction is ${finalized} the funds become available for withdrawal on L1.${time} Once funds are added to the withdrawal queue, operator must ensure there is enough liquidity for withdrawals. If not, they need to reclaim tokens from Yield Providers`,
+    risks: [],
+    references: [],
+  }
+}
+
 function FORCED(
   orHalt?: 'forced-withdrawals' | 'all-withdrawals',
 ): ScalingProjectTechnologyChoice {
@@ -187,8 +208,21 @@ export const RISK_CENTRALIZED_VALIDATOR: ScalingProjectRisk = {
   isCritical: true,
 }
 
+export const RISK_REHYPOTHECATED_ASSETS: ScalingProjectRisk = {
+  category: 'Funds can lose value if',
+  text: 'there is a hack or the yield goes negative for yield providers.',
+  isCritical: true,
+}
+
+export const RISK_LACK_OF_LIQUIDITY: ScalingProjectRisk = {
+  category: 'Funds can be frozen if',
+  text: 'there is not enough liquidity in the bridge, transactions are locked in withdrawal queue.',
+  isCritical: true,
+}
+
 export const EXITS = {
   REGULAR,
+  REGULAR_YIELDING,
   FORCED,
   EMERGENCY,
   AUTONOMOUS,
@@ -205,5 +239,7 @@ export const EXITS = {
   STARKNET: [STARKNET_REGULAR, STARKNET_EMERGENCY],
   PLASMA,
   RISK_CENTRALIZED_VALIDATOR,
+  RISK_REHYPOTHECATED_ASSETS,
+  RISK_LACK_OF_LIQUIDITY,
   OPERATOR_CENSORS_WITHDRAWAL,
 }

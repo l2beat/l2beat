@@ -5,6 +5,7 @@ import { HARDCODED } from '../discovery/values/hardcoded'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { opStack } from './templates/opStack'
 import { Layer2 } from './types'
+import { EXITS } from '../common'
 
 const discovery = new ProjectDiscovery('blast')
 
@@ -55,6 +56,46 @@ export const blast: Layer2 = opStack({
       content: 'The TVL does account for rehypothecated tokens.',
       sentiment: 'bad',
     },
+  },
+  nonTemplateTechnology: {
+    exitMechanisms: [
+        {
+          ...EXITS.REGULAR_YIELDING(
+            'optimistic',
+            discovery.getContractValue<number>(
+              'L2OutputOracle',
+              'FINALIZATION_PERIOD_SECONDS',
+            ),
+          ),
+          references: [
+            {
+              text: 'OptimismPortal.sol - Etherscan source code, proveWithdrawalTransaction function',
+              href: `https://etherscan.io/address/${"123"}#code`,
+            },
+            {
+              text: 'OptimismPortal.sol - Etherscan source code, finalizeWithdrawalTransaction function',
+              href: `https://etherscan.io/address/${"123"}#code`,
+            },
+            {
+              text: 'L2OutputOracle.sol - Etherscan source code, PROPOSER check',
+              href: `https://etherscan.io/address/${"123"}#code`,
+            },
+          ],
+          risks: [
+            EXITS.RISK_REHYPOTHECATED_ASSETS,
+            EXITS.RISK_LACK_OF_LIQUIDITY
+          ],
+        },
+      {
+        ...EXITS.FORCED('all-withdrawals'),
+        references: [
+          {
+            text: 'Forced withdrawal from an OP Stack blockchain',
+            href: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
+          },
+        ],
+      }
+    ]
   },
   upgradeability,
   l1StandardBridgeEscrow: EthereumAddress(
