@@ -39,6 +39,11 @@ const upgradesScrollMultisig = {
   upgradeDelay: 'No delay',
 }
 
+const isEnforcedTxGatewayPaused = discovery.getContractValue<boolean>(
+  'EnforcedTxGateway',
+  'paused',
+)
+
 const upgradeDelay = 0
 
 export const scroll: Layer2 = {
@@ -179,7 +184,7 @@ export const scroll: Layer2 = {
         {
           contract: 'ScrollChain',
           references: [
-            'https://etherscan.io/address/0x2e07f0fba71709bb5e1f045b02152e45b451d75f#code#F1#L319',
+            'https://etherscan.io/address/0xFA148514d03420b7b1a13eC74da06D2Ca875539C#code',
           ],
         },
       ],
@@ -190,7 +195,7 @@ export const scroll: Layer2 = {
         {
           contract: 'ScrollChain',
           references: [
-            'https://etherscan.io/address/0x2e07f0fba71709bb5e1f045b02152e45b451d75f#code#F1#L164',
+            'https://etherscan.io/address/0xFA148514d03420b7b1a13eC74da06D2Ca875539C#code',
           ],
         },
       ],
@@ -212,13 +217,13 @@ export const scroll: Layer2 = {
         {
           contract: 'L1MessageQueue',
           references: [
-            'https://etherscan.io/address/0xbc9d741501a20f962756c95bf906b4abffadcf8f#code#F1#L286',
+            'https://etherscan.io/address/0xeBaed7A81c298B24EE6d59c22698A951dc448E01#code',
           ],
         },
         {
-          contract: 'L1MessageQueue',
+          contract: 'EnforcedTxGateway',
           references: [
-            'https://etherscan.io/address/0xbc9d741501a20f962756c95bf906b4abffadcf8f#code#F1#71',
+            'https://etherscan.io/address/0x642af405bF64660665B37977449C9C536B806318#code',
           ],
         },
       ],
@@ -229,7 +234,7 @@ export const scroll: Layer2 = {
         {
           contract: 'ScrollChain',
           references: [
-            'https://etherscan.io/address/0x2e07f0fba71709bb5e1f045b02152e45b451d75f#code#F1#L296',
+            'https://etherscan.io/address/0xFA148514d03420b7b1a13eC74da06D2Ca875539C#code',
           ],
         },
       ],
@@ -242,8 +247,8 @@ export const scroll: Layer2 = {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
         {
-          text: 'ScrollChain.sol#L319 - Etherscan source code, verifyAggregateProof() call',
-          href: 'https://etherscan.io/address/0x2e07f0fba71709bb5e1f045b02152e45b451d75f#code#F1#L319',
+          text: 'ScrollChain.sol#L341 - Etherscan source code, verifyAggregateProof() call',
+          href: 'https://etherscan.io/address/0xFA148514d03420b7b1a13eC74da06D2Ca875539C#code#F1#L341',
         },
       ],
     },
@@ -251,8 +256,8 @@ export const scroll: Layer2 = {
       ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
       references: [
         {
-          text: 'ScrollChain.sol#L164 - Etherscan source code commitBatch() function',
-          href: 'https://etherscan.io/address/0x2e07f0fba71709bb5e1f045b02152e45b451d75f#code#F1#L164',
+          text: 'ScrollChain.sol#L186 - Etherscan source, code commitBatch() function',
+          href: 'https://etherscan.io/address/0xFA148514d03420b7b1a13eC74da06D2Ca875539C#code#F1#L186',
         },
       ],
     },
@@ -260,8 +265,8 @@ export const scroll: Layer2 = {
       ...OPERATOR.CENTRALIZED_OPERATOR,
       references: [
         {
-          text: 'ScrollChain.sol#L296 - Etherscan source code, finalizeBatchWithProof() function modifier',
-          href: 'https://etherscan.io/address/0x2e07f0fba71709bb5e1f045b02152e45b451d75f#code#F1#L296',
+          text: 'ScrollChain.sol#L312 - Etherscan source code, finalizeBatchWithProof() function modifier',
+          href: 'https://etherscan.io/address/0xFA148514d03420b7b1a13eC74da06D2Ca875539C#code#F1#L312',
         },
       ],
     },
@@ -269,8 +274,8 @@ export const scroll: Layer2 = {
       ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
       references: [
         {
-          text: 'L1MessageQueue.sol#L71 - Etherscan source code, skippedMessageBitmap mapping',
-          href: 'https://etherscan.io/address/0xbc9d741501a20f962756c95bf906b4abffadcf8f#code#F1#L71',
+          text: 'EnforcedTxGateway.sol#L93 - Etherscan source code, EnforcedTxGateway is paused',
+          href: 'https://etherscan.io/address/0x642af405bF64660665B37977449C9C536B806318#code#F1#L93',
         },
       ],
     },
@@ -312,14 +317,9 @@ export const scroll: Layer2 = {
         description:
           'Contains the array of queued L1 -> L2 messages, either appended using the L1ScrollMessenger or the EnforcedTxGateway. The latter contract, which would allow users to send L2 messages from L1 with their own address as the sender, is not enabled yet.',
       }),
-      discovery.getContractDetails('L2GasPriceOracle', {
-        description:
-          'Contract used to relay the L2 basefee on L1 in a trusted way using a whitelist. It is also used to store and update values related to intrinsic gas cost calculations.',
-        ...upgradesScrollMultisig,
-      }),
       discovery.getContractDetails('Whitelist', {
         description:
-          'Contract used to store whitelists for the L2GasPriceOracle contract.',
+          'Contract implementing a generic whitelist. Currently used to define the actor that can relay the L2 basefee on L1.',
       }),
       discovery.getContractDetails('ScrollOwner', {
         description:
@@ -333,7 +333,7 @@ export const scroll: Layer2 = {
       discovery.getContractDetails('TimelockMid', {
         description: `${formatSeconds(
           timelockMidDelay,
-        )} timelock. Can update the verifier and manage the USDC gateway bridge. The ScrollMultisig can propose and cancel transactions, and the ExecutorMultisig can execute them.`,
+        )} timelock. Can manage the USDC gateway bridge. The ScrollMultisig can propose and cancel transactions, and the ExecutorMultisig can execute them.`,
       }),
       discovery.getContractDetails('TimelockFast', {
         description: `${formatSeconds(
@@ -392,7 +392,16 @@ export const scroll: Layer2 = {
       }),
       discovery.getContractDetails('EnforcedTxGateway', {
         description:
-          'Contracts to force L1 -> L2 messages with the proper sender. Currently not enabled.',
+          'Contracts to force L1 -> L2 messages with the proper sender.',
+        ...upgradesScrollMultisig,
+        pausable: {
+          paused: isEnforcedTxGatewayPaused,
+          pausableBy: ['ScrollOwner'],
+        },
+      }),
+      discovery.getContractDetails('OLD_L2GasPriceOracle', {
+        description:
+          'Deprecated: the functionality of this contract has been moved to the L1MessageQueue contract. It was used to relay the L2 basefee on L1 in a trusted way using a whitelist. It was also used to store and update values related to intrinsic gas cost calculations.',
         ...upgradesScrollMultisig,
       }),
     ],

@@ -17,19 +17,15 @@ import { cn } from '../../../utils/cn'
 import { formatTps } from '../../../utils/formatTps'
 import { AnomalyIndicator } from '../../AnomalyIndicator'
 import { Badge } from '../../badge/Badge'
-import {
-  CanonicalIcon,
-  ExternalIcon,
-  InfoIcon,
-  NativeIcon,
-  RoundedWarningIcon,
-} from '../../icons'
+import { CanonicalIcon, ExternalIcon, InfoIcon, NativeIcon } from '../../icons'
 import { StageCell } from '../../stages/StageCell'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/Tooltip'
 import { FinalityDurationCell } from '../FinalityDurationCell'
 import { NumberCell } from '../NumberCell'
 import { RiskCell } from '../RiskCell'
 import { RosetteCell } from '../RosetteCell'
+import { TotalCell } from '../TotalCell'
+import { TotalValue } from '../TotalValue'
 import { TypeCell, TypeColumnTooltip } from '../TypeCell'
 import { ColumnConfig } from '../types'
 import { ValueWithPercentageCell } from '../ValueWithPercentageCell'
@@ -87,33 +83,7 @@ export function getActiveScalingSummaryColumnsConfig() {
       align: 'right',
       noPaddingRight: true,
       headClassName: '-translate-x-[72px]',
-      getValue: (project) =>
-        project.slug === 'polygonzkevm' ? (
-          <Tooltip>
-            <TooltipTrigger className="relative flex items-center gap-1">
-              <NumberCell className="font-bold" tooltip={project.tvlTooltip}>
-                {project.tvl?.displayValue}
-              </NumberCell>
-              <NumberCell signed className="w-[72px] !text-base  font-medium">
-                {project.sevenDayChange}
-              </NumberCell>
-              <RoundedWarningIcon className="absolute -right-1.5 size-4 fill-yellow-700 dark:fill-yellow-300" />
-            </TooltipTrigger>
-            <TooltipContent>
-              The TVL is currently shared among all projects using the shared
-              Polygon CDK contracts.
-            </TooltipContent>
-          </Tooltip>
-        ) : (
-          <>
-            <NumberCell className="font-bold" tooltip={project.tvlTooltip}>
-              {project.tvl?.displayValue}
-            </NumberCell>
-            <NumberCell signed className="ml-1 w-[72px] !text-base font-medium">
-              {project.sevenDayChange}
-            </NumberCell>
-          </>
-        ),
+      getValue: (project) => <TotalCell project={project} />,
       sorting: {
         getOrderValue: (project) => project.tvl?.value,
         rule: 'numeric',
@@ -127,10 +97,12 @@ export function getActiveScalingSummaryColumnsConfig() {
       minimalWidth: true,
       headClassName: '!pr-4',
       getValue: (project) =>
-        project.tvlBreakdown && (
+        project.tvlBreakdown ? (
           <NumberCell className="pr-4">
             {project.marketShare?.displayValue}
           </NumberCell>
+        ) : (
+          <span className="pr-4">—</span>
         ),
       sorting: {
         getOrderValue: (project) => project.marketShare?.value,
@@ -274,27 +246,7 @@ export function getScalingTvlColumnsConfig() {
           tooltip: 'Total = Canonical + External + Native',
           align: 'center',
           noPaddingRight: true,
-          getValue: (project) =>
-            project.slug === 'polygonzkevm' ? (
-              <Tooltip>
-                <TooltipTrigger className="relative flex items-center gap-1">
-                  <ValueWithPercentageCell
-                    value={project.tvl?.displayValue}
-                    percentChange={project.tvlChange}
-                  />
-                  <RoundedWarningIcon className="absolute -right-5 size-5 fill-yellow-700 pl-1 dark:fill-yellow-300" />
-                </TooltipTrigger>
-                <TooltipContent>
-                  The TVL is currently shared among all projects using the
-                  shared Polygon CDK contracts.
-                </TooltipContent>
-              </Tooltip>
-            ) : (
-              <ValueWithPercentageCell
-                value={project.tvl?.displayValue}
-                percentChange={project.tvlChange}
-              />
-            ),
+          getValue: (project) => <TotalValue project={project} />,
           sorting: {
             getOrderValue: (project) =>
               project.tvl?.value !== 0 ? project.tvl?.value : undefined,

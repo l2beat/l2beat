@@ -2,26 +2,6 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "L1ERC721Bridge",
-      "values": {
-        "MESSENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OTHER_BRIDGE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "KromaPortal",
       "values": {
         "GUARDIAN": {
@@ -65,6 +45,46 @@
           "type": null
         },
         "ZK_MERKLE_TRIE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1StandardBridge",
+      "values": {
+        "MESSENGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OTHER_BRIDGE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1ERC721Bridge",
+      "values": {
+        "MESSENGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OTHER_BRIDGE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
           "description": null,
           "severity": null,
           "type": null
@@ -157,39 +177,9 @@
       }
     },
     {
-      "name": "L1StandardBridge",
-      "values": {
-        "MESSENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OTHER_BRIDGE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "ProxyAdmin",
       "values": {
         "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ZKMerkleTrie",
-      "values": {
-        "POSEIDON2": {
           "description": null,
           "severity": null,
           "type": null
@@ -215,76 +205,6 @@
           "type": null
         },
         "transactionCount": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L1CrossDomainMessenger",
-      "values": {
-        "MESSAGE_VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "messageNonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_GAS_CALLDATA_OVERHEAD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OTHER_MESSENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PORTAL": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RELAY_CALL_OVERHEAD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RELAY_CONSTANT_OVERHEAD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RELAY_GAS_CHECK_BUFFER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RELAY_RESERVED_GAS": {
           "description": null,
           "severity": null,
           "type": null
@@ -350,6 +270,86 @@
           "type": null
         },
         "VALIDATOR_POOL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ZKMerkleTrie",
+      "values": {
+        "POSEIDON2": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1CrossDomainMessenger",
+      "values": {
+        "MESSAGE_VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messageNonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_GAS_CALLDATA_OVERHEAD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OTHER_MESSENGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PORTAL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RELAY_CALL_OVERHEAD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RELAY_CONSTANT_OVERHEAD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RELAY_GAS_CHECK_BUFFER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RELAY_RESERVED_GAS": {
           "description": null,
           "severity": null,
           "type": null
@@ -492,81 +492,6 @@
       }
     },
     {
-      "name": "SystemConfig",
-      "values": {
-        "gasLimit": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "minimumGasLimit": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "overhead": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "resourceConfig": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "scalar": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "UNSAFE_BLOCK_SIGNER_SLOT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "unsafeBlockSigner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "validatorRewardScalar": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "batcherHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "opStackDA": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "sequencerInbox": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "ValidatorPool",
       "values": {
         "L2_ORACLE": {
@@ -642,12 +567,82 @@
       }
     },
     {
-      "name": "Poseidon2",
-      "values": {}
+      "name": "SystemConfig",
+      "values": {
+        "gasLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minimumGasLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "overhead": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "resourceConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "scalar": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "UNSAFE_BLOCK_SIGNER_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "unsafeBlockSigner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "validatorRewardScalar": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "batcherHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "opStackDA": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sequencerInbox": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
     },
     {
       "name": "Colosseum",
-      "description": "Contract used to challenge state roots and prove fraud.",
       "values": {
         "BISECTION_TIMEOUT": {
           "description": null,
@@ -710,6 +705,10 @@
           "type": null
         }
       }
+    },
+    {
+      "name": "Poseidon2",
+      "values": {}
     },
     {
       "name": "ZKVerifier",
