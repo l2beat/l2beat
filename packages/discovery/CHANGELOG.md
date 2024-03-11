@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.45.0
+
+### Minor Changes
+
+- Add OP stack blob transaction checker
+
 ## 0.44.6
 
 ### Patch Changes

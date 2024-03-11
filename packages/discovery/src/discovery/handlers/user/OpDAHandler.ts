@@ -27,10 +27,14 @@ const OP_STACK_CELESTIA_DA_EXAMPLE_INPUT =
   '0xce62ae09000000000098e29cf2952f1f2de47a587994a1ab8eeacbe6e5725251873117fb675f63ac7c'
 
 /**
+ * https://eips.ethereum.org/EIPS/eip-4844#parameters
+ */
+const BLOB_TX_TYPE = 3
+
+/**
  * This is a OP Stack specific handler that is used to check if
  * the OP Stack project is still posting the transaction data on Ethereum.
  */
-
 export class OpStackDAHandler implements ClassicHandler {
   readonly dependencies: string[] = []
 
@@ -67,10 +71,18 @@ export class OpStackDAHandler implements ClassicHandler {
       (tx) => tx.input.length === OP_STACK_CELESTIA_DA_EXAMPLE_INPUT.length,
     )
 
+    const rpcTxs = await Promise.all(
+      last10Txs.map((tx) => provider.getTransaction(tx.hash)),
+    )
+    const isSequencerSendingBlobTx = rpcTxs.some(
+      (tx) => tx.type === BLOB_TX_TYPE,
+    )
+
     return {
       field: this.field,
       value: {
         isSomeTxsLengthEqualToCelestiaDAExample,
+        isSequencerSendingBlobTx,
       },
     }
   }

@@ -140,7 +140,7 @@ export class EtherscanLikeClient {
   async getLast10OutgoingTxs(
     address: EthereumAddress,
     blockNumber: number,
-  ): Promise<{ input: string; to: EthereumAddress }[]> {
+  ): Promise<{ input: string; to: EthereumAddress; hash: Hash256 }[]> {
     const response = await this.call('account', 'txlist', {
       address: address.toString(),
       startblock: '0',
@@ -165,6 +165,7 @@ export class EtherscanLikeClient {
     return outgoingTxs.map((r) => ({
       input: r.input,
       to: EthereumAddress(r.to),
+      hash: Hash256(r.hash),
     }))
   }
 
