@@ -3,8 +3,8 @@ import { UnixTime } from '@l2beat/shared-pure'
 
 import { TrackedTxsConfigsRepository } from '../tracked-txs/repositories/TrackedTxsConfigsRepository'
 import {
-  ParsedBigQueryFunctionCallResult,
-  ParsedBigQueryTransferResult,
+  TrackedTxFunctionCallResult,
+  TrackedTxTransferResult,
 } from '../tracked-txs/types/model'
 import {
   LivenessRecord,
@@ -19,10 +19,7 @@ export class LivenessUpdater {
   ) {}
 
   async update(
-    transactions: (
-      | ParsedBigQueryFunctionCallResult
-      | ParsedBigQueryTransferResult
-    )[],
+    transactions: (TrackedTxFunctionCallResult | TrackedTxTransferResult)[],
     from: UnixTime,
     to: UnixTime,
   ) {
@@ -45,10 +42,7 @@ export class LivenessUpdater {
   }
 
   transformTransactions(
-    transactions: (
-      | ParsedBigQueryFunctionCallResult
-      | ParsedBigQueryTransferResult
-    )[],
+    transactions: (TrackedTxFunctionCallResult | TrackedTxTransferResult)[],
   ): LivenessRecord[] {
     return transactions.map((t) => ({
       timestamp: t.blockTimestamp,
