@@ -1,0 +1,5 @@
+{
+  "term": "Hash",
+  "definition": "A fixed-length fingerprint of variable-size input, produced by a hash function.",
+  "isSpicy": false
+}

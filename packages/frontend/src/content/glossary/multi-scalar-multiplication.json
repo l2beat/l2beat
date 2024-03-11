@@ -1,0 +1,5 @@
+{
+  "term": "Multi-scalar multiplication (MSM)",
+  "definition": "The algorithm for calculating the sum of multiple scalar multiplications (products of a real number and a matrix) to reduce the number of group operations as much as possible. As MSM accounts for 80% of prover’s work fast MSM dominates prover’s costs improving ZKP efficiency.",
+  "isSpicy": false
+}

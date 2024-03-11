@@ -1,0 +1,5 @@
+{
+  "term": "Threshold cryptography",
+  "definition": "A type of cryptography where multiple parties jointly hold a secret key and must cooperate to perform cryptographic operations, enabling more secure and decentralized system.",
+  "isSpicy": false
+}

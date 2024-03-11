@@ -1,0 +1,5 @@
+{
+  "term": "Optimistic rollup",
+  "definition": "A rollup that optimistically updates state with the possibility of fraud proofs being generated to revert faulty state transitions. Optimistic rollups have primarily been EVM-compatible to date. Compared to ZK-Rollups, they have longer time to finality as there is a time window (challenge period) during which anyone can challenge the results of a rollup transaction by computing a fraud proof.",
+  "isSpicy": false
+}

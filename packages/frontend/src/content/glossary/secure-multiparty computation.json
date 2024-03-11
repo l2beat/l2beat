@@ -1,0 +1,5 @@
+{
+  "term": "Secure multiparty computation",
+  "definition": "A type of computation where multiple parties jointly compute a function without revealing their inputs to each other, allowing for privacy-preserving computation.",
+  "isSpicy": false
+}

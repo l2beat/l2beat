@@ -1,0 +1,5 @@
+{
+  "term": "Client",
+  "definition": "Sometimes labelled interchangeably as a “node”, they are tasked with processing transactions and managing the rollup’s state. They run the computations for each transaction according to the rollup’s virtual machine and protocol rules. If comparing to Ethereum clients, these would be execution clients such as Geth, as opposed to consensus clients.",
+  "isSpicy": false
+}

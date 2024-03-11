@@ -1,0 +1,5 @@
+{
+  "term": "PLONK",
+  "definition": "A general-purpose zero-knowledge proof scheme relying on KZG polynomial commitment scheme. It uses a universal (or updateable) trusted setup.\nIt is theoretically compatible with any (achievable) tradeoff between proof size and security assumptions. For example, if we substitute KZG for FRI PLONK will turn into a kind of STARK.",
+  "isSpicy": false
+}

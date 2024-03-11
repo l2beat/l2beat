@@ -1,0 +1,5 @@
+{
+  "term": "Blobs",
+  "definition": "The data that a rollup publishes to its L1/data availability (DA) layer. They consist of the L2 transactions that are rolled up, along with some metadata. Blobs are introduced as a new transaction type within Ethereum with EIP-4844, and has rollup scaling specifically in mind. Blobs persist on Ethereum’s Beacon Chain ephemerally.",
+  "isSpicy": false
+}

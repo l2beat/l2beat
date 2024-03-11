@@ -1,0 +1,5 @@
+{
+  "term": "STARK",
+  "definition": "Short for \"scalable transparent argument of knowledge\", a STARK is a type of zero-knowledge proof that resolves one of the primary weaknesses of ZK-SNARKs, its reliance on a \"trusted setup”. STARKs also come with much simpler cryptographic assumptions, avoiding the need for elliptic curves, pairings, and the knowledge-of-exponent assumption and instead relying purely on hashes and information theory. This means that they are secure even against attackers with quantum computers.",
+  "isSpicy": false
+}

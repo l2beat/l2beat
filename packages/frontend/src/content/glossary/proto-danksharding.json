@@ -1,0 +1,5 @@
+{
+  "term": "Proto-danksharding (EIP-4844)",
+  "definition": "A proposal to implement most of the logic and architecture that make up a full Danksharding spec (eg. transaction formats, verification rules), but not yet actually implementing any sharding. In a proto-danksharding implementation, all validators and users still have to directly validate the availability of the full data.",
+  "isSpicy": false
+}

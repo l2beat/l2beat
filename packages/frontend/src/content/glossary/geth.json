@@ -1,0 +1,5 @@
+{
+  "term": "Geth (Go Ethereum)",
+  "definition": "An Ethereum execution client, meaning it handles transactions, deployment and execution of smart contracts and contains an embedded computer known as the Ethereum Virtual Machine. Running Geth alongside a consensus client turns a computer into a full Ethereum node, or validator.",
+  "isSpicy": false
+}

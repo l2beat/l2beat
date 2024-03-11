@@ -1,0 +1,5 @@
+{
+  "term": "Prover",
+  "definition": "An entity that generates the cryptographic proof to convince the verifier that the statement is true (without revealing its inputs). In a ZK-Rollup, the prover generates the ZK (validity) proof to submit to the verifier contract.\nIf used in the context of an optimistic rollup, the prover generates the fraud proof to show that an incorrect state was submitted.",
+  "isSpicy": false
+}

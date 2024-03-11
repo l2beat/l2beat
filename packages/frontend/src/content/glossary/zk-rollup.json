@@ -1,0 +1,5 @@
+{
+  "term": "ZK-Rollup",
+  "definition": "A rollup that uses ZKPs (also often called validity proofs to validate the correctness of the state transition function and update the rollup state. This is one of two main types of rollup constructions, along with optimistic rollups. In general, ZK-Rollups do not provide privacy preserving properties; privacy preserving ZK-Rollups are sometimes called ZK-ZK-Rollups.Last updated on October 16, 2023Spicy terms 🌶️",
+  "isSpicy": false
+}

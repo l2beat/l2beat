@@ -1,0 +1,5 @@
+{
+  "term": "Layer 2",
+  "definition": "Layer 2 (L2) is a category of technical solutions which build upon an L1 with the aim of improving scalability, privacy, or other properties. L2s make use of L1 to bootstrap security and settlement guarantees. The L2 and L1 de-composition represents an example of a modular blockchain framework.",
+  "isSpicy": true
+}

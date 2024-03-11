@@ -1,0 +1,5 @@
+{
+  "term": "Bytecode-compatible (EVM-compatible) ZK-EVM",
+  "definition": "A ZK-Rollup that can interpret and execute Ethereum bytecode, with some changes made to certain components of the EVM, such as different gas costs, or some unsupported features. (Type 2.5 and 3 in Vitalik's classification (opens in a new tab)).",
+  "isSpicy": true
+}

@@ -1,0 +1,5 @@
+{
+  "term": "Danksharding",
+  "definition": "A sharding design proposed for Ethereum. Instead of providing more space for transactions, Ethereum sharding provides more space for blobs of data. Verifying a blob simply requires checking that the blob is available - that it can be downloaded from the network. The data space in these blobs is expected to be used by layer-2 rollup protocols.\nIn comparison to other sharding mechanisms, where there are a fixed number of shards with distinct blocks and distinct block proposers, in Danksharding there is only one proposer that chooses all transactions and all data that go into that slot.",
+  "isSpicy": false
+}

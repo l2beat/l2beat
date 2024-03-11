@@ -1,0 +1,5 @@
+{
+  "term": "Maximal Extractable Value (MEV)",
+  "definition": "The maximum profit that can be extracted from block production by including, excluding, and reodering transactions in a block. In rollups, proposers (sequencers) and prover are the network participants that receive rewards for building and proving blocks.",
+  "isSpicy": false
+}

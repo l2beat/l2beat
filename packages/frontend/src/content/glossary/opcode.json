@@ -1,0 +1,5 @@
+{
+  "term": "Opcode",
+  "definition": "A binary instruction code that defines a specific operation or computational task that the EVM or other VMs can perform. In the context of rollups, opcode- and bytecode-level compatibility refers to the ability to execute smart contracts with or without modification.",
+  "isSpicy": false
+}

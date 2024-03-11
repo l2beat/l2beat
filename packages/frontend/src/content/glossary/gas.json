@@ -1,0 +1,5 @@
+{
+  "term": "Gas",
+  "definition": "A virtual fuel used to execute smart contracts on a rollup. The EVM (or other VM within the rollup) uses an accounting mechanism to correspond the consumption of gas to the consumption of computing resources, and to limit the consumption of computing resources.",
+  "isSpicy": false
+}

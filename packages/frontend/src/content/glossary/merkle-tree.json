@@ -1,0 +1,5 @@
+{
+  "term": "Merkle tree",
+  "definition": "A hash-based data structure in which each leaf node is a hash of a block of data, and each non-leaf node is a hash of its children. The root of the tree is a cryptographic fingerprint of the entire data structure. Merkle trees (Merkle Patricia Tries) are used in Ethereum to efficiently store key-value pairs.",
+  "isSpicy": false
+}

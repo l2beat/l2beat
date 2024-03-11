@@ -1,0 +1,5 @@
+{
+  "term": "ZK-EVM",
+  "definition": "A ZK-EVM is understood as either:\nA set of circuits that prove the execution of the Ethereum Virtual Machine (EVM). It is the core component of a ZK-Rollup that generates validity proofs to verify the correctness of programs.\nThe ZK-Rollup as a whole which offers EVM-compatible execution, and proves that execution with circuits that generate validity proofs.\nLast updated on March 16, 2023How to contributeOther terms",
+  "isSpicy": true
+}

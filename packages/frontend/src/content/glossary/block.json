@@ -1,0 +1,5 @@
+{
+  "term": "Block",
+  "definition": "An ordered list of transactions and chain-related metadata that gets bundled together and published to the L1/DA layer. Nodes execute the transactions contained within blocks to change the rollup chain’s state. Protocol rules dictate what constitutes a valid block, and invalid blocks are skipped over.",
+  "isSpicy": false
+}

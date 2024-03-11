@@ -1,0 +1,5 @@
+{
+  "term": "Time Delay",
+  "definition": "In regards to upgradeability, a predefined amount of time that must elapse before the rollup smart contracts or parameters are updated. This protects users from malicious upgrades by giving them time to exit the rollup before upgrades come into effect.",
+  "isSpicy": false
+}

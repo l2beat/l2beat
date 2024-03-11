@@ -1,0 +1,5 @@
+{
+  "term": "Network",
+  "definition": "A constellation of nodes (peers) that communicate via a peer-to-peer protocol, for example, in propagating transactions and blocks to other nodes.",
+  "isSpicy": false
+}

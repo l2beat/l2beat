@@ -1,0 +1,5 @@
+{
+  "term": "Fast Fourier Transform (FFT)",
+  "definition": "An algorithm that computes the Discrete Fourier Transform (DFT) of a sequence in a more efficient manner; that is, taking O(n * log(n)) instead of O(n * n). It is used for extremely fast multiplication of large numbers, multiplication of polynomials, and extremely fast generation and recovery of erasure codes.",
+  "isSpicy": false
+}

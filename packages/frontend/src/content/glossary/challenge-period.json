@@ -1,0 +1,5 @@
+{
+  "term": "Challenge period",
+  "definition": "In optimistic rollups, the window of time wherein network participants can assert that some fraud was included in a prior block. Most optimistic rollups currently specify a challenge window of 7 days. By extending the period, there is more time for participants to guard against fraud (invalid state transitions), but also more time until finality is reached.",
+  "isSpicy": false
+}

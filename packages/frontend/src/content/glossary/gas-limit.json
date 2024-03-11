@@ -1,0 +1,5 @@
+{
+  "term": "Gas limit",
+  "definition": "The maximum amount of gas a transaction or block may consume.",
+  "isSpicy": false
+}

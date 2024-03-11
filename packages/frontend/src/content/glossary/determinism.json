@@ -1,0 +1,5 @@
+{
+  "term": "Determinism",
+  "definition": "The concept of some function or process having a single outcome that is knowable by all participants. In the context of a rollup, it generally refers to the new state being calculable given a prior state and a list of transactions to be executed.",
+  "isSpicy": false
+}

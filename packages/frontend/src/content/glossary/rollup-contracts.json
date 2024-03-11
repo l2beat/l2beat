@@ -1,0 +1,5 @@
+{
+  "term": "Rollup contracts",
+  "definition": "A bundle of smart contracts running on Ethereum that controls a rollup protocol. It includes the main contract which stores rollup blocks, tracks deposits, and monitors state updates, and the verifier contract which verifies zero-knowledge proofs submitted by provers.",
+  "isSpicy": false
+}

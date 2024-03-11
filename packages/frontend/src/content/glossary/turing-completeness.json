@@ -1,0 +1,5 @@
+{
+  "term": "Turing completeness",
+  "definition": "A system of data-manipulation rules (such as a computer's instruction set, a programming language, or a cellular automaton) is said to be \"Turing-complete\" or \"computationally universal\" if it is able to recognize or decide other data-manipulation rule sets.",
+  "isSpicy": false
+}

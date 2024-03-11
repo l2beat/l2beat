@@ -1,0 +1,5 @@
+{
+  "term": "Data availability",
+  "definition": "The property of a rollup’s state being reachable by any node retrieving the inputs that were rolled up and executed to reach said state. Data availability (DA), specifically decoupling it from the rollup nodes themselves, is one of the preeminent factors which allows a rollup to scale securely. A rollup is faced with a decision of what to use as a DA layer to guarantee that any node can retrieve this data--permissionlessly under any circumstance. For this reason, using Ethereum for DA currently provides the strongest security guarantees. If data is stored somewhere other than a permissionless L1, then the L2 is not a rollup, but some other type of L2.",
+  "isSpicy": true
+}
