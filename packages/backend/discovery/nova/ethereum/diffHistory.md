@@ -8,7 +8,7 @@ Generated with discovered.json: 0xce1846ca8a71c542f62d345e25419cdb72e8f071
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+The ArbitrumDACKeysetHandler has been changed in a way to make values more readable. No values were changed inside smart contracts, only the handler.
 
 ## Config/verification related changes
 
