@@ -88,7 +88,7 @@ export const mantle: Layer2 = {
   },
   dataAvailability: makeDataAvailabilityConfig({
     type: 'Off chain',
-    layers: ['MantleDA', 'None'],
+    layers: ['MantleDA'],
     bridge: 'None',
     mode: 'Transactions data',
   }),

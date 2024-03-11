@@ -116,7 +116,6 @@ export const rhinofi: Layer2 = {
   },
   dataAvailability: makeDataAvailabilityConfig({
     type: 'Off chain (DAC)',
-    fallback: 'None',
     config: {
       membersCount: committee.accounts.length,
       requiredSignatures: committee.minSigners,

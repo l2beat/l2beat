@@ -143,7 +143,6 @@ export const apex: Layer2 = {
   },
   dataAvailability: makeDataAvailabilityConfig({
     type: 'Off chain (DAC)',
-    fallback: 'None',
     config: dacConfig,
     mode: 'State diffs',
   }),

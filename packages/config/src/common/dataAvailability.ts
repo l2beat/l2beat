@@ -140,9 +140,6 @@ function getOffChainLayerDescription(
   }
 
   switch (fallback) {
-    case 'None':
-      descriptions.push('There is no fallback mechanism.')
-      break
     case 'Ethereum (blobs or calldata)':
     case 'Ethereum (blobs)':
     case 'Ethereum (calldata)':

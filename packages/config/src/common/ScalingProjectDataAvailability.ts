@@ -29,9 +29,7 @@ export type OffChainDataAvailabilityLayer =
   | 'External'
   | 'MantleDA'
 
-export type OffChainDataAvailabilityFallback =
-  | OnChainDataAvailabilityLayer
-  | 'None'
+export type OffChainDataAvailabilityFallback = OnChainDataAvailabilityLayer
 
 export type OffChainDataAvailabilityBridge =
   | 'None'

@@ -139,7 +139,6 @@ export const zkfair: Layer2 = {
   },
   dataAvailability: makeDataAvailabilityConfig({
     type: 'Off chain (DAC)',
-    fallback: 'None',
     config: {
       membersCount,
       requiredSignatures,

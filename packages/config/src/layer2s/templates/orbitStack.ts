@@ -375,7 +375,6 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
 
           return makeDataAvailabilityConfig({
             type: 'Off chain (DAC)',
-            fallback: 'None',
             config: { membersCount, requiredSignatures },
             mode: 'Transactions data (compressed)',
           })

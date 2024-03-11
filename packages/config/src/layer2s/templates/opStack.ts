@@ -175,7 +175,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
       daProvider !== undefined
         ? makeDataAvailabilityConfig({
             type: 'Off chain',
-            layers: [daProvider.name, daProvider.fallback ?? 'None'],
+            layers: [daProvider.name, daProvider.fallback],
             bridge: 'None',
             mode: 'Transactions data (compressed)',
           })

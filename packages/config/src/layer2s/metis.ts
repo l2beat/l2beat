@@ -70,7 +70,7 @@ export const metis: Layer2 = {
   },
   dataAvailability: makeDataAvailabilityConfig({
     type: 'Off chain',
-    layers: ['MEMO', 'None'],
+    layers: ['MEMO'],
     bridge: 'Optimistic',
     mode: 'Transactions data',
   }),
