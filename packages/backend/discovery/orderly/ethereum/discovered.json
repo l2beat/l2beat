@@ -1,7 +1,7 @@
 {
   "name": "orderly",
   "chain": "ethereum",
-  "blockNumber": 19370130,
+  "blockNumber": 19412725,
   "configHash": "0x83e6e290ccdacb6a1b867c42af8d197202b79b71e677a0aa66db7358547d40fa",
   "version": 3,
   "contracts": [
@@ -46,10 +46,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 6521400,
-        "latestOutputIndex": 3622,
-        "nextBlockNumber": 6523200,
-        "nextOutputIndex": 3623,
+        "latestBlockNumber": 6778800,
+        "latestOutputIndex": 3765,
+        "nextBlockNumber": 6780600,
+        "nextOutputIndex": 3766,
         "PROPOSER": "0x74BaD482a7f73C8286F50D8Aa03e53b7d24A5f3B",
         "startingBlockNumber": 0,
         "startingTimestamp": 1696608227,
@@ -85,7 +85,8 @@
         "gasLimit": 30000000,
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isSomeTxsLengthEqualToCelestiaDAExample": true
+          "isSomeTxsLengthEqualToCelestiaDAExample": true,
+          "isSequencerSendingBlobTx": false
         },
         "overhead": 188,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",

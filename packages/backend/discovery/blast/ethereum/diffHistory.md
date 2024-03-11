@@ -1,3 +1,47 @@
+Generated with discovered.json: 0x15c383d1d808622bddcc23f20acc371a66bd7a71
+
+# Diff at Mon, 11 Mar 2024 12:49:39 GMT:
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: main@64454506aee2b4b4e15b121f096369e92ec4cf20 block: 19369456
+- current block number: 19411954
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9) {
+    +++ description: None
+      values.opStackDA:
++        {"isSomeTxsLengthEqualToCelestiaDAExample":false,"isSequencerSendingBlobTx":false}
+      values.sequencerInbox:
++        "0xFf00000000000000000000000000000000081457"
+      errors:
+-        {"opStackDA":"network timeout at: https://api.etherscan.io/api?module=account&action=txlist&address=0x415c8893D514F9BC5211d36eEDA4183226b84AA7&startblock=0&endblock=19369456&page=1&offset=20&sort=desc&apikey=RC2W28PYNA2EUU86RJW52W2QXDXF13EWFK","sequencerInbox":"network timeout at: https://api.etherscan.io/api?module=account&action=txlist&address=0x415c8893D514F9BC5211d36eEDA4183226b84AA7&startblock=0&endblock=19369456&page=1&offset=20&sort=desc&apikey=RC2W28PYNA2EUU86RJW52W2QXDXF13EWFK"}
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19369456 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9) {
+    +++ description: None
+      values.opStackDA:
+-        {"isSomeTxsLengthEqualToCelestiaDAExample":false}
+      values.sequencerInbox:
+-        "0xFf00000000000000000000000000000000081457"
+      errors:
++        {"opStackDA":"network timeout at: https://api.etherscan.io/api?module=account&action=txlist&address=0x415c8893D514F9BC5211d36eEDA4183226b84AA7&startblock=0&endblock=19369456&page=1&offset=20&sort=desc&apikey=RC2W28PYNA2EUU86RJW52W2QXDXF13EWFK","sequencerInbox":"network timeout at: https://api.etherscan.io/api?module=account&action=txlist&address=0x415c8893D514F9BC5211d36eEDA4183226b84AA7&startblock=0&endblock=19369456&page=1&offset=20&sort=desc&apikey=RC2W28PYNA2EUU86RJW52W2QXDXF13EWFK"}
+    }
+```
+
 Generated with discovered.json: 0xa46181ad6f33c6f53fd35605946f062d156b404c
 
 # Diff at Tue, 05 Mar 2024 14:07:32 GMT:

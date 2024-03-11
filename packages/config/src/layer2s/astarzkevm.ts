@@ -11,6 +11,8 @@ export const astarzkevm: Layer2 = upcoming({
     purposes: ['Universal'],
     category: 'ZK Rollup',
     provider: 'Polygon',
+    headerWarning:
+      'Astar zkEVM is using AggLayer, meaning it shares the TVL escrow contracts with Polygon zkEVM and other connected chains. For now, you can check its TVL [here](https://dune.com/hashed_official/astar-zkevm). We have not verified it so proceed with caution.',
     links: {
       websites: ['https://astar.network/astar2'],
       apps: [],
