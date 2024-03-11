@@ -366,7 +366,7 @@
         },
         "WATCHERS": {
           "description": "Permissioned set of actors who can pause certain bridge components and remove connectors.",
-          "severity": "Low",
+          "severity": "LOW",
           "type": "PERMISSION"
         }
       }
@@ -576,7 +576,7 @@
         },
         "watcherManager": {
           "description": "Contract maintaining a list of Watchers able to stop the bridge if fraud is detected.",
-          "severity": "MID",
+          "severity": "MEDIUM",
           "type": "PERMISSION"
         },
         "connectors": {

@@ -8,6 +8,7 @@ import {
   ScalingProjectContracts,
   ScalingProjectDisplay,
   ScalingProjectPermission,
+  Sentiment,
 } from '../../common'
 import { ChainConfig } from '../../common/ChainConfig'
 import { ScalingProjectRiskView } from '../../common/ScalingProjectRiskView'
@@ -64,6 +65,8 @@ export interface Layer2Display extends ScalingProjectDisplay {
   /** Tooltip contents for liveness tab for given project */
   liveness?: Layer2LivenessDisplay
   finality?: Layer2FinalityDisplay
+  /** Warning for TVL */
+  tvlWarning?: Layer2TVLWarning
 }
 export interface Layer2LivenessDisplay {
   explanation?: string
@@ -89,5 +92,12 @@ export interface Layer2Config extends ScalingProjectConfig {
   /** Configuration for getting liveness data */
   liveness?: Layer2LivenessConfig
   /** Configuration for getting finality data */
-  finality?: Layer2FinalityConfig
+  finality?: Layer2FinalityConfig | 'coming soon'
+}
+
+export interface Layer2TVLWarning {
+  /** Content of the warning */
+  content: string
+  /** Color with which the warning should be displayed */
+  sentiment: Extract<Sentiment, 'bad' | 'warning'>
 }

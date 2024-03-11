@@ -1,8 +1,8 @@
 {
   "name": "lzomnichain",
   "chain": "polygonzkevm",
-  "blockNumber": 9115900,
-  "configHash": "0x5a5e6dc8aad55acdfa8f29e4f4037002b6c0c9850386620439b5b13a33c7094c",
+  "blockNumber": 10513424,
+  "configHash": "0x9ee5d18520bdef0bd3a57cebfb66432dbdaa00201552564d115761c44cf0f581",
   "version": 3,
   "contracts": [
     {
@@ -81,8 +81,12 @@
         "getChainId": 158,
         "isReceivingPayload": false,
         "isSendingPayload": false,
-        "latestVersion": 1,
-        "libraryLookup": ["0xFe7C30860D01e28371D40434806F4A8fcDD3A098"],
+        "latestVersion": 3,
+        "libraryLookup": [
+          "0xFe7C30860D01e28371D40434806F4A8fcDD3A098",
+          "0x8161B3B224Cd6ce37cC20BE61607C3E19eC2A8A6",
+          "0x23ec43e2b8f9aE21D895eEa5a1a9c444fe301044"
+        ],
         "owner": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
       },
       "derivedName": "Endpoint"
@@ -134,13 +138,16 @@
           "151": 20,
           "158": 20,
           "165": 20,
+          "175": 20,
           "177": 20,
           "181": 20,
           "183": 20,
           "184": 20,
+          "195": 20,
           "202": 20,
           "210": 20,
-          "214": 20
+          "214": 20,
+          "243": 20
         },
         "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": 2,
         "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": 1,
@@ -205,6 +212,10 @@
             "proofType": 2,
             "adapterParams": "0x000100000000000000000000000000000000000000000000000000000000003d0900"
           },
+          "175": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
           "177": {
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
@@ -221,6 +232,10 @@
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           },
+          "195": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
           "202": {
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
@@ -230,6 +245,10 @@
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           },
           "214": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "243": {
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           }
@@ -347,6 +366,14 @@
             "oracle": "0xA6Bf2bE6c60175601BF88217c75dD4b14ABB5FBb",
             "relayer": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"
           },
+          "175": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 20,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0xA6Bf2bE6c60175601BF88217c75dD4b14ABB5FBb",
+            "relayer": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"
+          },
           "177": {
             "inboundProofLib": 2,
             "inboundBlockConfirm": 2,
@@ -379,6 +406,14 @@
             "oracle": "0xA6Bf2bE6c60175601BF88217c75dD4b14ABB5FBb",
             "relayer": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"
           },
+          "195": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0xA6Bf2bE6c60175601BF88217c75dD4b14ABB5FBb",
+            "relayer": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"
+          },
           "202": {
             "inboundProofLib": 2,
             "inboundBlockConfirm": 5,
@@ -396,6 +431,14 @@
             "relayer": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"
           },
           "214": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0xA6Bf2bE6c60175601BF88217c75dD4b14ABB5FBb",
+            "relayer": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"
+          },
+          "243": {
             "inboundProofLib": 2,
             "inboundBlockConfirm": 5,
             "outboundProofType": 2,
@@ -456,6 +499,10 @@
             "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675"
           ],
           "165": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
+          "175": [
+            "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
+            "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675"
+          ],
           "177": [
             "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
             "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675"
@@ -472,6 +519,10 @@
             "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
             "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675"
           ],
+          "195": [
+            "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
+            "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675"
+          ],
           "202": [
             "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
             "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675"
@@ -481,6 +532,10 @@
             "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675"
           ],
           "214": [
+            "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
+            "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675"
+          ],
+          "243": [
             "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
             "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675"
           ]
@@ -504,13 +559,16 @@
           "151": 2,
           "158": 2,
           "165": 2,
+          "175": 2,
           "177": 2,
           "181": 2,
           "183": 2,
           "184": 2,
+          "195": 2,
           "202": 2,
           "210": 2,
-          "214": 2
+          "214": 2,
+          "243": 2
         },
         "treasuryContract": "0x6F475642a6e85809B1c36Fa62763669b1b48DD5B",
         "treasuryZROFees": 0,
@@ -529,13 +587,16 @@
           "151": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "158": "0x000000000000000000000000fe7c30860d01e28371d40434806f4a8fcdd3a098",
           "165": "0x000000000000000000000000042b8289c97896529ec2fe49ba1a8b9c956a86cc",
+          "175": "0x0000000000000000000000002d61dcdd36f10b22176e0433b86f74567d529aaa",
           "177": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "181": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "183": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "184": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "195": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "202": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "210": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
-          "214": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251"
+          "214": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "243": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251"
         }
       },
       "derivedName": "UltraLightNodeV2"

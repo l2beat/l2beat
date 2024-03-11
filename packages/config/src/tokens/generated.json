@@ -1216,6 +1216,21 @@
       "formula": "locked"
     },
     {
+      "id": "frxeth-frax-ether",
+      "name": "Frax Ether",
+      "coingeckoId": "frax-ether",
+      "address": "0x5E8422345238F34275888049021821E8E08CAa1f",
+      "symbol": "frxETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1665022895,
+      "coingeckoListingTimestamp": 1669161600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/28284/large/frxETH_icon.png?1696527284",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "fxs-frax-share",
       "name": "Frax Share",
       "coingeckoId": "frax-share",

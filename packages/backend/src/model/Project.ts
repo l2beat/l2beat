@@ -64,7 +64,10 @@ export function layer2ToProject(layer2: Layer2): Project {
       layer2.config.trackedTxs,
     ),
     livenessConfig: layer2.config.liveness,
-    finalityConfig: layer2.config.finality,
+    finalityConfig:
+      layer2.config.finality !== 'coming soon'
+        ? layer2.config.finality
+        : undefined,
   }
 }
 

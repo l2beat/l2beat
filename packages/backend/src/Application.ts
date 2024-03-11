@@ -9,6 +9,7 @@ import { createDiffHistoryModule } from './modules/diff-history/createDiffHistor
 import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createHealthModule } from './modules/health/HealthModule'
 import { createLivenessModule } from './modules/liveness/LivenessModule'
+import { createLzOAppsModule } from './modules/lz-oapps/createLzOAppsModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createStatusModule } from './modules/status/StatusModule'
 import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
@@ -69,6 +70,7 @@ export class Application {
         clock,
         trackedTxsModule?.indexer,
       ),
+      createLzOAppsModule(config, logger),
     ]
 
     const apiServer = new ApiServer(
