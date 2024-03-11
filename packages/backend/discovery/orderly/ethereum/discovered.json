@@ -1,7 +1,7 @@
 {
   "name": "orderly",
   "chain": "ethereum",
-  "blockNumber": 19412680,
+  "blockNumber": 19412725,
   "configHash": "0x83e6e290ccdacb6a1b867c42af8d197202b79b71e677a0aa66db7358547d40fa",
   "version": 3,
   "contracts": [

@@ -1,58 +1,14 @@
-Generated with discovered.json: 0x132d2502d33d2c4d6eef79fcfc19686878762b9e
+Generated with discovered.json: 0x27306da2737a02c26f8c4f41629c815ee18b5695
 
-# Diff at Mon, 11 Mar 2024 15:15:07 GMT:
+# Diff at Mon, 11 Mar 2024 15:24:12 GMT:
 
-- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
-- comparing to: main@d1cd75b0c2a255e9afc17cba3beb16bc161dc14a block: 19412055
-- current block number: 19412680
-
-## Description
-
-Update OP stack DA handler
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 19412055 (main branch discovery), not current.
-
-```diff
-    contract SystemConfig (0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664) {
-    +++ description: None
-      values.opStackDA:
-+        {"isSomeTxsLengthEqualToCelestiaDAExample":true,"isSequencerSendingBlobTx":false}
-      values.sequencerInbox:
-+        "0x08aA34cC843CeEBcC88A627F18430294aA9780be"
-      errors:
--        {"opStackDA":"network timeout at: https://api.etherscan.io/api?module=account&action=txlist&address=0xf8dB8Aba597fF36cCD16fECfbb1B816B3236E9b8&startblock=0&endblock=19412055&page=1&offset=20&sort=desc&apikey=RC2W28PYNA2EUU86RJW52W2QXDXF13EWFK","sequencerInbox":"network timeout at: https://api.etherscan.io/api?module=account&action=txlist&address=0xf8dB8Aba597fF36cCD16fECfbb1B816B3236E9b8&startblock=0&endblock=19412055&page=1&offset=20&sort=desc&apikey=RC2W28PYNA2EUU86RJW52W2QXDXF13EWFK"}
-    }
-```
-
-Generated with discovered.json: 0x940396c48db183a1eb9d2666297c97cbfe6814e7
-
-# Diff at Mon, 11 Mar 2024 13:09:36 GMT:
-
-- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
-- comparing to: main@64454506aee2b4b4e15b121f096369e92ec4cf20 block: 19370130
-- current block number: 19412055
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@d2d5fba14a44528004eaad2e4389550987c4f3cd block: 19370130
+- current block number: 19412725
 
 ## Description
 
-Provide description of changes. This section will be preserved.
-
-## Watched changes
-
-```diff
-    contract SystemConfig (0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664) {
-    +++ description: None
-      values.opStackDA:
--        {"isSomeTxsLengthEqualToCelestiaDAExample":true,"isSequencerSendingBlobTx":false}
-      values.sequencerInbox:
--        "0x08aA34cC843CeEBcC88A627F18430294aA9780be"
-      errors:
-+        {"opStackDA":"network timeout at: https://api.etherscan.io/api?module=account&action=txlist&address=0xf8dB8Aba597fF36cCD16fECfbb1B816B3236E9b8&startblock=0&endblock=19412055&page=1&offset=20&sort=desc&apikey=RC2W28PYNA2EUU86RJW52W2QXDXF13EWFK","sequencerInbox":"network timeout at: https://api.etherscan.io/api?module=account&action=txlist&address=0xf8dB8Aba597fF36cCD16fECfbb1B816B3236E9b8&startblock=0&endblock=19412055&page=1&offset=20&sort=desc&apikey=RC2W28PYNA2EUU86RJW52W2QXDXF13EWFK"}
-    }
-```
+Update OP stack DA handler.
 
 ## Config/verification related changes
 
