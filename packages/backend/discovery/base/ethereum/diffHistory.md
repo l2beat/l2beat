@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x344f98dfb9a45ff46b90d16771333c22eec6f0c0
+
+# Diff at Mon, 11 Mar 2024 12:52:00 GMT:
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: main@64454506aee2b4b4e15b121f096369e92ec4cf20 block: 19176777
+- current block number: 19411971
+
+## Description
+
+Update OP stack DA handler
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19176777 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: None
+      values.opStackDA.isSequencerSendingBlobTx:
++        false
+    }
+```
+
 Generated with discovered.json: 0x38be013948f7ef1753cbf9d4a57c31e079275867
 
 # Diff at Wed, 07 Feb 2024 14:02:18 GMT:
