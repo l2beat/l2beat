@@ -24,14 +24,14 @@ export const astarzkevm: Layer2 = underReviewL2({
       socialMedia: [
         'https://twitter.com/AstarNetwork',
         'https://discord.com/invite/astarnetwork',
-        'https://www.youtube.com/@AstarNetwork',
+        'https://youtube.com/@AstarNetwork',
         'https://t.me/PlasmOfficial',
       ],
     },
   },
   escrows: [
     {
-      address: EthereumAddress('0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe'),
+      address: EthereumAddress('0xDeB736d28472D765830ae8eF8260ADD2A2E17923'),
       sinceTimestamp: new UnixTime(1741703227),
       tokens: '*',
     },
