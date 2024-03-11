@@ -14,7 +14,6 @@ import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
-import { name } from 'mocha'
 
 const discovery = new ProjectDiscovery('bobanetwork')
 
