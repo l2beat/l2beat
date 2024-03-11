@@ -6,11 +6,11 @@ import {
   BigQueryFunctionCallResult,
   TrackedTxFunctionCallResult,
 } from '../types/model'
+import { TrackedTxId } from '../types/TrackedTxId'
 import {
   TrackedTxFunctionCallConfig,
   TrackedTxSharpSubmissionConfig,
 } from '../types/TrackedTxsConfig'
-import { TrackedTxsId } from '../types/TrackedTxsId'
 import { transformFunctionCallsQueryResult } from './transformFunctionCallsQueryResult'
 
 const ADDRESS_1 = EthereumAddress.random()
@@ -45,7 +45,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
           {
             type: 'liveness',
             subType: 'batchSubmissions',
-            id: TrackedTxsId.random(),
+            id: TrackedTxId.random(),
           },
         ],
       },
@@ -59,7 +59,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
           {
             type: 'liveness',
             subType: 'stateUpdates',
-            id: TrackedTxsId.random(),
+            id: TrackedTxId.random(),
           },
         ],
       },
@@ -77,7 +77,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
           {
             type: 'liveness',
             subType: 'proofSubmissions',
-            id: TrackedTxsId.random(),
+            id: TrackedTxId.random(),
           },
         ],
       },
@@ -90,8 +90,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
         block_timestamp: timestamp,
         input: SELECTOR_1,
         to_address: ADDRESS_1,
-        gas_price: 100,
-        receipt_gas_used: 5000,
       },
       {
         hash: txHashes[1],
@@ -99,8 +97,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
         block_timestamp: timestamp,
         input: SELECTOR_2,
         to_address: ADDRESS_2,
-        gas_price: 1000,
-        receipt_gas_used: 20,
       },
       {
         hash: txHashes[2],
@@ -108,8 +104,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
         block_timestamp: timestamp,
         input: sharpInput,
         to_address: sharpSubmissions[0].address,
-        gas_price: 2031,
-        receipt_gas_used: 2050,
       },
     ]
     const expected: TrackedTxFunctionCallResult[] = [
@@ -121,8 +115,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
         blockNumber: block,
         blockTimestamp: timestamp,
         toAddress: ADDRESS_1,
-        gasPrice: 100,
-        gasUsed: 5000,
         input: SELECTOR_1,
       },
       {
@@ -133,8 +125,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
         blockNumber: block,
         blockTimestamp: timestamp,
         toAddress: ADDRESS_2,
-        gasPrice: 1000,
-        gasUsed: 20,
         input: SELECTOR_2,
       },
       {
@@ -145,8 +135,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
         blockNumber: block,
         blockTimestamp: timestamp,
         toAddress: sharpSubmissions[0].address,
-        gasPrice: 2031,
-        gasUsed: 2050,
         input: sharpInput,
       },
     ]
@@ -178,8 +166,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
         input: 'random-string',
         block_number: block,
         block_timestamp: timestamp,
-        gas_price: 25,
-        receipt_gas_used: 100,
       },
     ]
 
@@ -201,7 +187,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
           {
             type: 'liveness',
             subType: 'proofSubmissions',
-            id: TrackedTxsId.random(),
+            id: TrackedTxId.random(),
           },
         ],
       },
@@ -223,8 +209,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
         input: sharpInput,
         block_number: block,
         block_timestamp: timestamp,
-        gas_price: 1000,
-        receipt_gas_used: 20,
       },
     ]
 
@@ -237,8 +221,6 @@ describe(transformFunctionCallsQueryResult.name, () => {
         blockNumber: block,
         blockTimestamp: timestamp,
         toAddress: sharpSubmissions[0].address,
-        gasPrice: 1000,
-        gasUsed: 20,
         input: sharpInput,
       },
     ]

@@ -8,7 +8,7 @@ import { HourlyIndexer } from './HourlyIndexer'
 import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsClient } from './TrackedTxsClient'
 import { TrackedTxConfigEntry } from './types/TrackedTxsConfig'
-import { TrackedTxsId } from './types/TrackedTxsId'
+import { TrackedTxId } from './types/TrackedTxId'
 import { TxUpdaterInterface } from './types/TxUpdaterInterface'
 import { adjustToForBigqueryCall } from './utils'
 import { diffTrackedTxConfigurations } from './utils/diffTrackedTxConfigurations'
@@ -122,7 +122,7 @@ export class TrackedTxsIndexer extends ChildIndexer {
   }
 
   private async trimConfigurations(
-    toTrim: { id: TrackedTxsId; untilTimestamp: UnixTime }[],
+    toTrim: { id: TrackedTxId; untilTimestamp: UnixTime }[],
     trx: Knex.Transaction,
   ) {
     // there can be a situation where untilTimestamp was set retroactively

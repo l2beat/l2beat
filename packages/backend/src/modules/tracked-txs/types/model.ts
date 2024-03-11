@@ -22,8 +22,6 @@ export const BigQueryFunctionCallResult = z.object({
     .object({ value: z.string() })
     .transform((v) => UnixTime.fromDate(new Date(v.value))),
   to_address: branded(z.string(), EthereumAddress),
-  gas_price: z.number(),
-  receipt_gas_used: z.number(),
   input: z.string(),
 })
 
@@ -35,8 +33,6 @@ export type TrackedTxFunctionCallResult = {
   blockNumber: number
   blockTimestamp: UnixTime
   toAddress: EthereumAddress
-  gasPrice: number
-  gasUsed: number
   input: string
 }
 
@@ -49,8 +45,6 @@ export const BigQueryTransferResult = z.object({
     .transform((v) => UnixTime.fromDate(new Date(v.value))),
   from_address: branded(z.string(), EthereumAddress),
   to_address: branded(z.string(), EthereumAddress),
-  gas_price: z.number(),
-  receipt_gas_used: z.number(),
 })
 
 export type TrackedTxTransferResult = {
@@ -62,6 +56,4 @@ export type TrackedTxTransferResult = {
   blockTimestamp: UnixTime
   fromAddress: EthereumAddress
   toAddress: EthereumAddress
-  gasPrice: number
-  gasUsed: number
 }

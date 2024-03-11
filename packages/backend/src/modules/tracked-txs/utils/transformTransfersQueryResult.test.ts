@@ -2,8 +2,8 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { BigQueryTransferResult, TrackedTxTransferResult } from '../types/model'
+import { TrackedTxId } from '../types/TrackedTxId'
 import { TrackedTxTransferConfig } from '../types/TrackedTxsConfig'
-import { TrackedTxsId } from '../types/TrackedTxsId'
 import { transformTransfersQueryResult } from './transformTransfersQueryResult'
 
 const ADDRESS_1 = EthereumAddress.random()
@@ -27,12 +27,12 @@ describe(transformTransfersQueryResult.name, () => {
         sinceTimestamp: SINCE_TIMESTAMP,
         uses: [
           {
-            id: TrackedTxsId.unsafe('0x1'),
+            id: TrackedTxId.unsafe('0x1'),
             type: 'liveness',
             subType: 'batchSubmissions',
           },
           {
-            id: TrackedTxsId.unsafe('0x2'),
+            id: TrackedTxId.unsafe('0x2'),
             type: 'liveness',
             subType: 'stateUpdates',
           },
@@ -46,7 +46,7 @@ describe(transformTransfersQueryResult.name, () => {
         sinceTimestamp: SINCE_TIMESTAMP,
         uses: [
           {
-            id: TrackedTxsId.unsafe('0x3'),
+            id: TrackedTxId.unsafe('0x3'),
             type: 'liveness',
             subType: 'stateUpdates',
           },
@@ -60,7 +60,7 @@ describe(transformTransfersQueryResult.name, () => {
         sinceTimestamp: SINCE_TIMESTAMP,
         uses: [
           {
-            id: TrackedTxsId.unsafe('0x4'),
+            id: TrackedTxId.unsafe('0x4'),
             type: 'liveness',
             subType: 'proofSubmissions',
           },
@@ -82,8 +82,6 @@ describe(transformTransfersQueryResult.name, () => {
         hash: txHashes[0],
         block_number: block,
         block_timestamp: RESULT_TIMESTAMP,
-        gas_price: 25,
-        receipt_gas_used: 100,
       },
       {
         from_address: ADDRESS_3,
@@ -91,8 +89,6 @@ describe(transformTransfersQueryResult.name, () => {
         hash: txHashes[1],
         block_number: block,
         block_timestamp: RESULT_TIMESTAMP,
-        gas_price: 50,
-        receipt_gas_used: 50,
       },
       {
         from_address: ADDRESS_5,
@@ -100,8 +96,6 @@ describe(transformTransfersQueryResult.name, () => {
         hash: txHashes[2],
         block_number: block,
         block_timestamp: RESULT_TIMESTAMP,
-        gas_price: 10,
-        receipt_gas_used: 1000,
       },
     ]
     const expected: TrackedTxTransferResult[] = [
@@ -114,8 +108,6 @@ describe(transformTransfersQueryResult.name, () => {
         blockTimestamp: RESULT_TIMESTAMP,
         fromAddress: ADDRESS_1,
         toAddress: ADDRESS_2,
-        gasPrice: 25,
-        gasUsed: 100,
       },
       {
         type: 'transfer',
@@ -126,8 +118,6 @@ describe(transformTransfersQueryResult.name, () => {
         blockTimestamp: RESULT_TIMESTAMP,
         fromAddress: ADDRESS_1,
         toAddress: ADDRESS_2,
-        gasPrice: 25,
-        gasUsed: 100,
       },
       {
         type: 'transfer',
@@ -138,8 +128,6 @@ describe(transformTransfersQueryResult.name, () => {
         blockTimestamp: RESULT_TIMESTAMP,
         fromAddress: ADDRESS_3,
         toAddress: ADDRESS_4,
-        gasPrice: 50,
-        gasUsed: 50,
       },
       {
         type: 'transfer',
@@ -150,8 +138,6 @@ describe(transformTransfersQueryResult.name, () => {
         blockTimestamp: RESULT_TIMESTAMP,
         fromAddress: ADDRESS_5,
         toAddress: ADDRESS_6,
-        gasPrice: 10,
-        gasUsed: 1000,
       },
     ]
 
@@ -179,8 +165,6 @@ describe(transformTransfersQueryResult.name, () => {
         block_timestamp: RESULT_TIMESTAMP,
         from_address: EthereumAddress.random(),
         to_address: EthereumAddress.random(),
-        gas_price: 25,
-        receipt_gas_used: 100,
       },
     ]
 

@@ -2,19 +2,19 @@ import { UnixTime } from '@l2beat/shared-pure'
 
 import { TrackedTxsConfigRecord } from '../repositories/TrackedTxsConfigsRepository'
 import { TrackedTxConfigEntry } from '../types/TrackedTxsConfig'
-import { TrackedTxsId } from '../types/TrackedTxsId'
+import { TrackedTxId } from '../types/TrackedTxId'
 
 export function diffTrackedTxConfigurations(
   runtimeEntries: TrackedTxConfigEntry[],
   databaseEntries: TrackedTxsConfigRecord[],
 ): {
   toAdd: TrackedTxConfigEntry[]
-  toTrim: { id: TrackedTxsId; untilTimestamp: UnixTime }[]
-  toRemove: TrackedTxsId[]
+  toTrim: { id: TrackedTxId; untilTimestamp: UnixTime }[]
+  toRemove: TrackedTxId[]
 } {
   const toAdd: TrackedTxConfigEntry[] = []
-  const toTrim: { id: TrackedTxsId; untilTimestamp: UnixTime }[] = []
-  const toRemove: TrackedTxsId[] = []
+  const toTrim: { id: TrackedTxId; untilTimestamp: UnixTime }[] = []
+  const toRemove: TrackedTxId[] = []
 
   for (const entry of runtimeEntries) {
     for (const entryUse of entry.uses) {

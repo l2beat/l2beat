@@ -29,8 +29,6 @@ export function transformTransfersQueryResult(
             blockTimestamp: r.block_timestamp,
             fromAddress: r.from_address,
             toAddress: r.to_address,
-            gasPrice: r.gas_price,
-            gasUsed: r.receipt_gas_used,
           } as const),
       ),
     )

@@ -46,8 +46,6 @@ export function transformFunctionCallsQueryResult(
               blockNumber: r.block_number,
               blockTimestamp: r.block_timestamp,
               toAddress: r.to_address,
-              gasPrice: r.gas_price,
-              gasUsed: r.receipt_gas_used,
               input: r.input,
             } as const),
         ),

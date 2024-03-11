@@ -21,7 +21,7 @@ import {
 import { TrackedTxsIndexer } from './TrackedTxsIndexer'
 import { TrackedTxResult } from './types/model'
 import { TrackedTxConfigEntry } from './types/TrackedTxsConfig'
-import { TrackedTxsId } from './types/TrackedTxsId'
+import { TrackedTxId } from './types/TrackedTxId'
 import { TxUpdaterInterface } from './types/TxUpdaterInterface'
 import { diffTrackedTxConfigurations } from './utils/diffTrackedTxConfigurations'
 import { findConfigurationsToSync } from './utils/findConfigurationsToSync'
@@ -161,7 +161,7 @@ describe(TrackedTxsIndexer.name, () => {
           lastSyncedTimestamp: undefined,
           type: 'liveness',
           subtype: 'batchSubmissions',
-          id: TrackedTxsId.random(),
+          id: TrackedTxId.random(),
         }),
         mockObject<TrackedTxsConfigRecord>({
           ...toRecords(runtimeEntries[1]),
@@ -405,7 +405,7 @@ function getMockRuntimeConfigurations(): TrackedTxConfigEntry[] {
         {
           type: 'liveness',
           subType: 'batchSubmissions',
-          id: TrackedTxsId.random(),
+          id: TrackedTxId.random(),
         },
       ],
     },
@@ -419,7 +419,7 @@ function getMockRuntimeConfigurations(): TrackedTxConfigEntry[] {
         {
           type: 'liveness',
           subType: 'stateUpdates',
-          id: TrackedTxsId.random(),
+          id: TrackedTxId.random(),
         },
       ],
     },
