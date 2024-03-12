@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xadc349d9e6976d8002ea8b4cdd33a0b9ceb922c3
+
+# Diff at Tue, 12 Mar 2024 12:53:59 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@ebf63b5a101c82d4f98039b92aa9ea0b6ae71f26 block: 19175701
+- current block number: 19419124
+
+## Description
+
+The withdawal queue was automatically activated by a large withdrawal. The triggering and subsequent withdrawals are thus delayed by currently 24h.
+
+## Watched changes
+
+```diff
+    contract Bridge (0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6) {
+    +++ description: None
+      values.withdrawalQueueActivated:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x1bfd88e8a84f5b16a6ef0f7978717f4177dac648
 
 # Diff at Wed, 07 Feb 2024 10:24:15 GMT:

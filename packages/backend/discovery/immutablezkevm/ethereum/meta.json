@@ -1,0 +1,304 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "Bridge",
+      "values": {
+        "ADAPTOR_MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "childERC20Bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "childETHToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "childTokenTemplate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEPOSIT_SIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "imxCumulativeDepositLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "initializerAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAP_TOKEN_SIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "NATIVE_ETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "NATIVE_IMX": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAUSER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rootBridgeAdaptor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rootIMXToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rootWETHToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "UNLIMITED_DEPOSIT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "UNPAUSER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VARIABLE_MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "WITHDRAW_SIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "withdrawalDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "withdrawalQueueActivated": {
+          "description": "If true, the withdrawal queue is activated and withdrawals are delayed for a duration defined by withdrawalDelay.",
+          "severity": "MEDIUM",
+          "type": "RISK_PARAMETER"
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ChildERC20",
+      "values": {
+        "bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rootToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "RootAxelarBridgeAdaptor",
+      "values": {
+        "BRIDGE_MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "childBridgeAdaptor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "childChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "GAS_SERVICE_MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "gasService": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "gateway": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "initializerAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rootBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TARGET_MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "AxelarGatewayProxyMultisig",
+      "values": {}
+    },
+    {
+      "name": "OwnerMultisig",
+      "values": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "AxelarGasService",
+      "values": {
+        "contractId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "gasCollector": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Operators",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}
