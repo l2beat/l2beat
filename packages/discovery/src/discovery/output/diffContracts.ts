@@ -44,9 +44,9 @@ export function diffContracts(
       case 'A':
         {
           const r: FieldDiff = {
-            key: `${difference.path?.join('.') ?? 'undefined'}[${
+            key: `${difference.path?.join('.') ?? 'undefined'}.${
               difference.index
-            }]`,
+            }`,
           }
           if (difference.item.kind === 'N') {
             r.after = JSON.stringify(difference.item.rhs)

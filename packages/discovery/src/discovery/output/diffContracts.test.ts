@@ -62,7 +62,7 @@ describe(diffContracts.name, () => {
       },
       { key: 'values.A', before: 'true', after: 'false' },
       { key: 'values.B', before: 'true' },
-      { key: 'values.D[3]', after: '4' },
+      { key: 'values.D.3', after: '4' },
     ])
   })
 })

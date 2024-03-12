@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.45.3
+
+### Patch Changes
+
+- Make the array syntax consistent
+
 ## 0.45.2
 
 ### Patch Changes
