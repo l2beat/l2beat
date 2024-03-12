@@ -1,0 +1,265 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "L1ERC20Bridge",
+      "values": {
+        "l2Bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2TokenBeacon": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2TokenProxyBytecodeHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "zkSync",
+      "values": {
+        "facetAddresses": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "facets": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getFirstUnprocessedPriorityTx": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getGovernor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getL2BootloaderBytecodeHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getL2DefaultAccountBytecodeHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getL2SystemContractsUpgradeBatchNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getL2SystemContractsUpgradeBlockNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getL2SystemContractsUpgradeTxHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPendingGovernor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPriorityQueueSize": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPriorityTxMaxGasLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getProtocolVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalBatchesCommitted": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalBatchesExecuted": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalBatchesVerified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalBlocksCommitted": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalBlocksExecuted": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalBlocksVerified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalPriorityTxs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getVerifier": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getVerifierParams": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isDiamondStorageFrozen": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "priorityQueueFrontOperation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "validators": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Governance",
+      "values": {
+        "minDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "securityCouncil": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Verifier",
+      "values": {
+        "verificationKeyHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ValidatorTimelock",
+      "values": {
+        "executionDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getName": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "validator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "zkSyncContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getCommittedBatchTimestamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "zkSync Era Multisig",
+      "values": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}
