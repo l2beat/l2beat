@@ -11,6 +11,9 @@
     "0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446": "Committee",
     "0xc3a27F45015E2c36ce3cC78c662c5f259c26Cf25": "Operator"
   },
+  "sharedModules": {
+    "SHARPVerifierProxy": "l2beat-starkware"
+  },
   "overrides": {
     "StarkExchange": {
       "ignoreMethods": [
@@ -36,9 +39,6 @@
           "removeKey": "operator"
         }
       }
-    },
-    "SHARPVerifierGovernorMultisig": {
-      "ignoreInWatchMode": ["nonce"]
     },
     "Committee": {
       "fields": {

@@ -23,6 +23,7 @@ import {
   getProxyGovernance,
   getSHARPVerifierContracts,
   getSHARPVerifierGovernors,
+  getSHARPVerifierUpgradeDelay,
 } from '../discovery/starkware'
 import { delayDescriptionFromString } from '../utils/delayDescription'
 import { Layer2 } from './types'
@@ -36,6 +37,10 @@ const freezeGracePeriod = discovery.getContractValue<number>(
 const upgradeDelaySeconds = discovery.getContractUpgradeabilityParam(
   'StarkExchange',
   'upgradeDelay',
+)
+const includingSHARPUpgradeDelaySeconds = Math.min(
+  upgradeDelaySeconds,
+  getSHARPVerifierUpgradeDelay(),
 )
 const upgradeDelay = formatSeconds(upgradeDelaySeconds)
 const verifierAddress = discovery.getAddressFromValue(
@@ -107,7 +112,10 @@ export const sorare: Layer2 = {
         },
       ],
     },
-    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelaySeconds, freezeGracePeriod),
+    exitWindow: RISK_VIEW.EXIT_WINDOW(
+      includingSHARPUpgradeDelaySeconds,
+      freezeGracePeriod,
+    ),
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(freezeGracePeriod),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP_NFT,
     destinationToken: RISK_VIEW.CANONICAL,
@@ -130,7 +138,11 @@ export const sorare: Layer2 = {
       ),
       ...getSHARPVerifierContracts(discovery, verifierAddress),
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(upgradeDelaySeconds)],
+    risks: [
+      CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(
+        includingSHARPUpgradeDelaySeconds,
+      ),
+    ],
   },
   permissions: [
     {
