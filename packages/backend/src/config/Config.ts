@@ -26,6 +26,7 @@ export interface Config {
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
   readonly diffHistory: DiffHistoryConfig | false
+  readonly lzOAppsEnabled: boolean
   readonly statusEnabled: boolean
   readonly chains: { name: string; chainId: ChainId }[]
   readonly flags: ResolvedFeatureFlag[]
@@ -80,6 +81,9 @@ export interface TrackedTxsConfig {
     readonly queryWarningLimitGb: number
   }
   readonly minTimestamp: UnixTime
+  readonly uses: {
+    readonly liveness: boolean
+  }
 }
 
 export interface FinalityConfig {

@@ -3,6 +3,7 @@ import {
   getCanonicalTokenBySymbol,
   Layer2,
   Layer2FinalityConfig,
+  Layer2LivenessConfig,
   Layer2TransactionApi,
   Layer2TxConfig,
   tokenList,
@@ -32,6 +33,7 @@ export interface Project {
   escrows: ProjectEscrow[]
   transactionApi?: Layer2TransactionApi
   trackedTxsConfig?: TrackedTxsConfig
+  livenessConfig?: Layer2LivenessConfig
   finalityConfig?: Layer2FinalityConfig
 }
 
@@ -61,7 +63,11 @@ export function layer2ToProject(layer2: Layer2): Project {
       layer2.id,
       layer2.config.trackedTxs,
     ),
-    finalityConfig: layer2.config.finality,
+    livenessConfig: layer2.config.liveness,
+    finalityConfig:
+      layer2.config.finality !== 'coming soon'
+        ? layer2.config.finality
+        : undefined,
   }
 }
 
@@ -110,11 +116,13 @@ function toBackendTrackedTxsConfig(
 }
 
 function getTrackedTxsConfigUses(config: Layer2TxConfig): TrackedTxUseWithId[] {
+  const { untilTimestamp: _, ...queryWithoutUntilTimestamp } = config.query
+
   return config.uses.map((use) => ({
     ...use,
     id: TrackedTxId([
-      JSON.stringify({ type: use.type, subtype: use.subType }),
-      JSON.stringify(config.query),
+      JSON.stringify(use),
+      JSON.stringify(queryWithoutUntilTimestamp),
     ]),
   }))
 }

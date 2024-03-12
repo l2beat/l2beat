@@ -13,7 +13,6 @@ export type Layer2TxConfig = {
 export type Layer2TrackedTxUse = {
   type: TrackedTxsConfigType
   subType: TrackedTxsConfigSubtype
-  duplicateTo?: TrackedTxsConfigSubtype
 }
 
 type TrackedTxQuery = FunctionCall | Transfer | SharpSubmission

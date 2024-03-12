@@ -7,13 +7,18 @@ import { IndexerStateRepository } from '../../peripherals/database/repositories/
 import { HourlyIndexer } from './HourlyIndexer'
 import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsClient } from './TrackedTxsClient'
-import { TrackedTxConfigEntry } from './types/TrackedTxsConfig'
 import { TrackedTxId } from './types/TrackedTxId'
+import { TrackedTxConfigEntry } from './types/TrackedTxsConfig'
 import { TxUpdaterInterface } from './types/TxUpdaterInterface'
 import { adjustToForBigqueryCall } from './utils'
 import { diffTrackedTxConfigurations } from './utils/diffTrackedTxConfigurations'
 import { findConfigurationsToSync } from './utils/findConfigurationsToSync'
 import { getSafeHeight } from './utils/getSafeHeight'
+
+export type TrackedTxsIndexerUpdaters = Record<
+  TrackedTxsConfigType,
+  TxUpdaterInterface
+>
 
 export class TrackedTxsIndexer extends ChildIndexer {
   readonly indexerId = 'tracked_txs_indexer'
@@ -25,7 +30,7 @@ export class TrackedTxsIndexer extends ChildIndexer {
     private readonly stateRepository: IndexerStateRepository,
     private readonly configRepository: TrackedTxsConfigsRepository,
     private readonly configs: TrackedTxConfigEntry[],
-    private readonly updaters: Record<TrackedTxsConfigType, TxUpdaterInterface>,
+    private readonly updaters: TrackedTxsIndexerUpdaters,
     private readonly minTimestamp: UnixTime,
   ) {
     super(logger, [parentIndexer])
@@ -39,6 +44,7 @@ export class TrackedTxsIndexer extends ChildIndexer {
 
   override async update(from: number, to: number): Promise<number> {
     const unixFrom = new UnixTime(from)
+
     const [configurations, adjustedTo] = await this.getConfiguration(from, to)
 
     if (configurations.length === 0) {
@@ -47,7 +53,7 @@ export class TrackedTxsIndexer extends ChildIndexer {
     }
 
     const txs = await this.trackedTxsClient.getData(
-      this.configs,
+      configurations,
       unixFrom,
       adjustedTo,
     )
@@ -67,14 +73,6 @@ export class TrackedTxsIndexer extends ChildIndexer {
         trx,
       )
     })
-
-    const updatePromises = Object.entries(this.updaters).map(
-      async ([type, updater]) => {
-        const filtered = txs.filter((tx) => tx.use.type === type)
-        await updater.update(filtered)
-      },
-    )
-    await Promise.all(updatePromises)
 
     this.logger.info('Updated', {
       from,
@@ -104,17 +102,23 @@ export class TrackedTxsIndexer extends ChildIndexer {
   }
 
   private async initialize(): Promise<void> {
+    this.logger.info('Initializing...')
     const databaseEntries = await this.configRepository.getAll()
     const { toAdd, toRemove, toTrim } = diffTrackedTxConfigurations(
       this.configs,
       databaseEntries,
     )
 
+    this.logger.info('Modifying tracked txs configs', {
+      added: toAdd.map((add) => add.id),
+      removed: toRemove,
+      trimmed: toTrim.map((trim) => trim.id),
+    })
+
     const safeHeight = getSafeHeight(databaseEntries, toAdd, this.minTimestamp)
 
     await this.stateRepository.runInTransaction(async (trx) => {
       await this.configRepository.addMany(toAdd, trx)
-
       await this.configRepository.deleteMany(toRemove, trx)
       await this.trimConfigurations(toTrim, trx)
       await this.initializeIndexerState(safeHeight, trx)

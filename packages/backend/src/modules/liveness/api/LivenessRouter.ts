@@ -1,15 +1,17 @@
 import Router from '@koa/router'
-import { branded, LivenessType, ProjectId } from '@l2beat/shared-pure'
+import {
+  branded,
+  ProjectId,
+  TrackedTxsConfigSubtype,
+} from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 import { withTypedContext } from '../../../api/types'
 import { Config } from '../../../config'
 import { LivenessController } from './LivenessController'
-import { LivenessStatusController } from './LivenessStatusController'
 
 export function createLivenessRouter(
   livenessController: LivenessController,
-  livenessStatusController: LivenessStatusController,
   config: Config,
 ) {
   const router = new Router()
@@ -44,7 +46,7 @@ export function createLivenessRouter(
       z.object({
         params: z.object({
           projectId: branded(z.string(), ProjectId),
-          livenessType: branded(z.string(), LivenessType),
+          livenessType: TrackedTxsConfigSubtype,
         }),
       }),
       async (ctx) => {
@@ -57,10 +59,6 @@ export function createLivenessRouter(
       },
     ),
   )
-
-  router.get('/status/liveness', async (ctx) => {
-    ctx.body = await livenessStatusController.getLivenessStatus()
-  })
 
   return router
 }

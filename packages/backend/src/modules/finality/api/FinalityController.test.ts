@@ -1,12 +1,7 @@
 import { FinalityType } from '@l2beat/config'
-import {
-  assert,
-  Hash256,
-  LivenessType,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { assert, Hash256, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
+import { range } from 'lodash'
 
 import { FinalityProjectConfig } from '../../../config/features/finality'
 import { IndexerStateRepository } from '../../../peripherals/database/repositories/IndexerStateRepository'
@@ -47,21 +42,21 @@ describe(FinalityController.name, () => {
       const RECORDS: LivenessRecordWithProjectIdAndSubtype[] = []
 
       RECORDS.push(
-        ...Array.from({ length: 5 }).map((_, i) => {
+        ...range(5).map((_, i) => {
           return {
             projectId: ProjectId('project1'),
             timestamp: START.add(-i, 'days'),
-            type: LivenessType('DA'),
-          }
+            subtype: 'batchSubmissions',
+          } as const
         }),
       )
       RECORDS.push(
-        ...Array.from({ length: 3 }).map((_, i) => {
+        ...range(3).map((_, i) => {
           return {
             projectId: ProjectId('project1'),
             timestamp: START.add(-(5 + i * 2), 'days'),
-            type: LivenessType('DA'),
-          }
+            subtype: 'batchSubmissions',
+          } as const
         }),
       )
       const project2Result = {
@@ -140,21 +135,21 @@ describe(FinalityController.name, () => {
       const RECORDS: LivenessRecordWithProjectIdAndSubtype[] = []
 
       RECORDS.push(
-        ...Array.from({ length: 5 }).map((_, i) => {
+        ...range(5).map((_, i) => {
           return {
             projectId: ProjectId('project1'),
             timestamp: START.add(-i, 'days'),
-            type: LivenessType('DA'),
-          }
+            subtype: 'batchSubmissions',
+          } as const
         }),
       )
       RECORDS.push(
-        ...Array.from({ length: 3 }).map((_, i) => {
+        ...range(3).map((_, i) => {
           return {
             projectId: ProjectId('project1'),
             timestamp: START.add(-(5 + i * 2), 'days'),
-            type: LivenessType('DA'),
-          }
+            subtype: 'batchSubmissions',
+          } as const
         }),
       )
       const projects = mockProjectConfig([

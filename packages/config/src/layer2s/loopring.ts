@@ -73,6 +73,9 @@ export const loopring: Layer2 = {
       explanation:
         'Loopring is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
     },
+    finality: {
+      finalizationPeriod: 0,
+    },
   },
   config: {
     associatedTokens: ['LRC'],
@@ -108,7 +111,6 @@ export const loopring: Layer2 = {
           {
             type: 'liveness',
             subType: 'stateUpdates',
-            duplicateTo: 'proofSubmissions',
           },
         ],
         query: {
@@ -123,6 +125,13 @@ export const loopring: Layer2 = {
         },
       },
     ],
+    liveness: {
+      duplicateData: {
+        from: 'stateUpdates',
+        to: 'proofSubmissions',
+      },
+    },
+    finality: 'coming soon',
   },
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,

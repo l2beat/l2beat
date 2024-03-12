@@ -1,3 +1,52 @@
+Generated with discovered.json: 0x86f5a697e88e62dc3e2832bb21f5115cd2bec5e2
+
+# Diff at Fri, 08 Mar 2024 08:53:50 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a10be30b5303dc6a457478efdaca424c246501ca block: 19375580
+- current block number: 19389379
+
+## Description
+
+New proposal created and executed with the description "Change Arbitrage Settings on Main and Side Bridges".
+It called `setArbitrageManagerAndLimit()` but we can't see what this is doing because the targets have unverified sources.
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
++++ description: The amount of proposals ever created. Goes up by 1 for each proposal.
++++ severity: MEDIUM
+      values.proposalCount:
+-        49
++        50
+    }
+```
+
+Generated with discovered.json: 0x5fa08b3a2322e373062b7d84998ac427346b7e7b
+
+# Diff at Wed, 06 Mar 2024 10:38:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@724fc93d9bd160395a856b93ce5016ca876c6436 block: 19118389
+- current block number: 19375580
+
+## Description
+
+New proposal created and executed with the description "Unfreeze bridges".
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
+      values.proposalCount:
+-        48
++        49
+    }
+```
+
 Generated with discovered.json: 0x860ce22e6e5ca8d7087c013b808735c88781475f
 
 # Diff at Tue, 30 Jan 2024 09:20:32 GMT:

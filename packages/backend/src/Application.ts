@@ -8,7 +8,8 @@ import { ApplicationModule } from './modules/ApplicationModule'
 import { createDiffHistoryModule } from './modules/diff-history/createDiffHistoryModule'
 import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createHealthModule } from './modules/health/HealthModule'
-import { LivenessIndexer } from './modules/liveness/LivenessIndexer'
+import { createLivenessModule } from './modules/liveness/LivenessModule'
+import { createLzOAppsModule } from './modules/lz-oapps/createLzOAppsModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createStatusModule } from './modules/status/StatusModule'
 import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
@@ -44,11 +45,13 @@ export class Application {
       config.clock.safeTimeOffsetSeconds,
     )
 
+    const livenessModule = createLivenessModule(config, logger, database, clock)
     const trackedTxsModule = createTrackedTxsModule(
       config,
       logger,
       database,
       clock,
+      livenessModule?.updater,
     )
 
     const modules: (ApplicationModule | undefined)[] = [
@@ -60,13 +63,16 @@ export class Application {
       createDiffHistoryModule(config, logger, database),
       createStatusModule(config, logger),
       trackedTxsModule,
+      // TODO: (tracked_tx) return updater from module
+      livenessModule,
       createFinalityModule(
         config,
         logger,
         database,
         clock,
-        trackedTxsModule?.indexer as LivenessIndexer,
+        trackedTxsModule?.indexer,
       ),
+      createLzOAppsModule(config, logger),
     ]
 
     const apiServer = new ApiServer(

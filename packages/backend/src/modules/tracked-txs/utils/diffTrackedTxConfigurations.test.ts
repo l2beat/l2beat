@@ -1,113 +1,133 @@
-// import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-// import { expect } from 'earl'
-// TODO: (tracked_tx) add this later
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { expect } from 'earl'
 
-// import {
-//   LivenessConfigEntry,
-//   makeLivenessFunctionCall,
-//   makeLivenessTransfer,
-// } from '../../liveness/types/LivenessConfig'
-// import { diffLivenessConfigurations } from './diffLivenessConfigurations'
+import { trackedTxConfigEntryToRecord } from '../repositories/TrackedTxsConfigsRepository'
+import { TrackedTxId } from '../types/TrackedTxId'
+import { TrackedTxConfigEntry } from '../types/TrackedTxsConfig'
+import { diffTrackedTxConfigurations } from './diffTrackedTxConfigurations'
 
-// describe(diffLivenessConfigurations.name, () => {
-//   describe('added', () => {
-//     it('finds configs not saved in the DB', () => {
-//       const result = diffLivenessConfigurations(
-//         CONFIGURATIONS,
-//         DB_CONFIGURATIONS.slice(0, 1),
-//       )
+describe(diffTrackedTxConfigurations.name, () => {
+  describe('added', () => {
+    it('finds configs not saved in the DB', () => {
+      const result = diffTrackedTxConfigurations(
+        CONFIGURATIONS,
+        DB_CONFIGURATIONS.slice(0, 1),
+      )
 
-//       const added: LivenessConfigEntry[] = CONFIGURATIONS.slice(1)
+      const added: TrackedTxConfigEntry[] = CONFIGURATIONS.slice(1)
 
-//       expect(result.toAdd).toEqualUnsorted(added)
-//     })
+      expect(result.toAdd).toEqualUnsorted(configurationsToRecords(added))
+    })
 
-//     it('no configs to add', () => {
-//       const result = diffLivenessConfigurations(
-//         CONFIGURATIONS,
-//         DB_CONFIGURATIONS,
-//       )
+    it('no configs to add', () => {
+      const result = diffTrackedTxConfigurations(
+        CONFIGURATIONS,
+        DB_CONFIGURATIONS,
+      )
 
-//       expect(result.toAdd).toEqual([])
-//     })
-//   })
+      expect(result.toAdd).toEqual([])
+    })
+  })
 
-//   describe('updated', () => {
-//     it('finds configs which untilTimestamp have changed', () => {
-//       const changedUntilTimestamp = UnixTime.now()
+  describe('updated', () => {
+    it('finds configs which untilTimestamp have changed', () => {
+      const changedUntilTimestamp = UnixTime.now()
 
-//       const updated = {
-//         ...CONFIGURATIONS[1],
-//         untilTimestamp: changedUntilTimestamp,
-//       }
+      const updated = {
+        ...CONFIGURATIONS[1],
+        untilTimestamp: changedUntilTimestamp,
+      }
 
-//       const result = diffLivenessConfigurations(
-//         [...CONFIGURATIONS.slice(0, 1), updated],
-//         DB_CONFIGURATIONS,
-//       )
+      const result = diffTrackedTxConfigurations(
+        [...CONFIGURATIONS.slice(0, 1), updated],
+        DB_CONFIGURATIONS,
+      )
+      configurationsToRecords([updated])
 
-//       expect(result.toTrim).toEqualUnsorted([
-//         { id: updated.id, untilTimestamp: changedUntilTimestamp },
-//       ])
-//     })
+      expect(result.toTrim).toEqualUnsorted(
+        configurationsToRecords([updated]).map((r) => ({
+          id: r.id,
+          untilTimestamp: changedUntilTimestamp,
+        })),
+      )
+    })
 
-//     it('no configs to update', () => {
-//       const result = diffLivenessConfigurations(
-//         CONFIGURATIONS,
-//         DB_CONFIGURATIONS,
-//       )
+    it('no configs to update', () => {
+      const result = diffTrackedTxConfigurations(
+        CONFIGURATIONS,
+        DB_CONFIGURATIONS,
+      )
 
-//       expect(result.toAdd).toEqual([])
-//     })
-//   })
+      expect(result.toAdd).toEqual([])
+    })
+  })
 
-//   describe('phased out', () => {
-//     it("finds configs present in the DB but not included in any project's config", () => {
-//       const result = diffLivenessConfigurations(
-//         CONFIGURATIONS.slice(1),
-//         DB_CONFIGURATIONS,
-//       )
+  describe('phased out', () => {
+    it("finds configs present in the DB but not included in any project's config", () => {
+      const result = diffTrackedTxConfigurations(
+        CONFIGURATIONS.slice(1),
+        DB_CONFIGURATIONS,
+      )
 
-//       expect(result.toRemove).toEqualUnsorted(
-//         CONFIGURATIONS.slice(0, 1).map((c) => c.id),
-//       )
-//     })
+      expect(result.toRemove).toEqualUnsorted(
+        configurationsToRecords(CONFIGURATIONS.slice(0, 1)).map((r) => r.id),
+      )
+    })
 
-//     it('no configs to phase out', () => {
-//       const result = diffLivenessConfigurations(
-//         CONFIGURATIONS,
-//         DB_CONFIGURATIONS,
-//       )
+    it('no configs to phase out', () => {
+      const result = diffTrackedTxConfigurations(
+        CONFIGURATIONS,
+        DB_CONFIGURATIONS,
+      )
 
-//       expect(result.toRemove).toEqual([])
-//     })
-//   })
-// })
+      expect(result.toRemove).toEqual([])
+    })
+  })
+})
 
-// const FROM = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
+const FROM = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
 
-// const CONFIGURATIONS: LivenessConfigEntry[] = [
-//   makeLivenessTransfer({
-//     projectId: ProjectId('project1'),
-//     formula: 'transfer',
-//     from: EthereumAddress.random(),
-//     to: EthereumAddress.random(),
-//     type: 'DA',
-//     sinceTimestamp: FROM,
-//     untilTimestamp: FROM.add(2, 'days'),
-//   }),
-//   makeLivenessFunctionCall({
-//     projectId: ProjectId('project1'),
-//     formula: 'functionCall',
-//     address: EthereumAddress.random(),
-//     selector: '0x9aaab648',
-//     sinceTimestamp: FROM,
-//     type: 'STATE',
-//   }),
-// ]
+const CONFIGURATIONS: TrackedTxConfigEntry[] = [
+  {
+    projectId: ProjectId('project1'),
+    formula: 'transfer',
+    from: EthereumAddress.random(),
+    to: EthereumAddress.random(),
+    sinceTimestamp: FROM,
+    untilTimestamp: FROM.add(2, 'days'),
+    uses: [
+      {
+        type: 'liveness',
+        subType: 'batchSubmissions',
+        id: TrackedTxId.random(),
+      },
+    ],
+  },
+  {
+    projectId: ProjectId('project1'),
+    formula: 'functionCall',
+    address: EthereumAddress.random(),
+    selector: '0x9aaab648',
+    sinceTimestamp: FROM,
+    uses: [
+      { type: 'liveness', subType: 'stateUpdates', id: TrackedTxId.random() },
+      {
+        type: 'liveness',
+        subType: 'proofSubmissions',
+        id: TrackedTxId.random(),
+      },
+    ],
+  },
+]
 
-// const DB_CONFIGURATIONS = CONFIGURATIONS.map((c) => ({
-//   ...c,
-//   lastSyncedTimestamp: undefined,
-//   debugInfo: '',
-// }))
+const DB_CONFIGURATIONS = CONFIGURATIONS.flatMap((c) =>
+  c.uses.map((u) => ({
+    ...c,
+    ...u,
+    lastSyncedTimestamp: undefined,
+    debugInfo: '',
+  })),
+)
+
+const configurationsToRecords = (configs: TrackedTxConfigEntry[]) =>
+  configs.flatMap((c) => c.uses.map((u) => trackedTxConfigEntryToRecord(c, u)))

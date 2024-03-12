@@ -2,13 +2,53 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "LaunchBridge",
+      "name": "LidoYieldProvider",
       "values": {
-        "CURVE_3POOL": {
+        "id": {
           "description": null,
           "severity": null,
           "type": null
         },
+        "LIDO": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "supportsInsurancePayment": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "THIS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "WITHDRAWAL_QUEUE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "YIELD_MANAGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "DSRYieldProvider",
+      "values": {
         "DAI": {
           "description": null,
           "severity": null,
@@ -19,72 +59,27 @@
           "severity": null,
           "type": null
         },
-        "getMainnetBridge": {
+        "id": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "isTransitionEnabled": {
+        "name": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "LIDO": {
+        "supportsInsurancePayment": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "owner": {
+        "version": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pendingOwner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PSM": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "staker": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalETHBalance": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalETHShares": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalUSDBalanceNoUpdate": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalUSDShares": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "USDC": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "USDT": {
+        "YIELD_MANAGER": {
           "description": null,
           "severity": null,
           "type": null
@@ -175,6 +170,96 @@
           "type": null
         },
         "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "LaunchBridge",
+      "values": {
+        "CURVE_3POOL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DAI": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DSR_MANAGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getMainnetBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isTransitionEnabled": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "LIDO": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PSM": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "staker": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalETHBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalETHShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalUSDBalanceNoUpdate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalUSDShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "USDC": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "USDT": {
           "description": null,
           "severity": null,
           "type": null
@@ -290,76 +375,6 @@
           "type": null
         },
         "yieldManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L1CrossDomainMessenger",
-      "values": {
-        "MESSAGE_VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "messageNonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_GAS_CALLDATA_OVERHEAD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OTHER_MESSENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "portal": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PORTAL": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RELAY_CALL_OVERHEAD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RELAY_CONSTANT_OVERHEAD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RELAY_GAS_CHECK_BUFFER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RELAY_RESERVED_GAS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
           "description": null,
           "severity": null,
           "type": null
@@ -532,6 +547,76 @@
       }
     },
     {
+      "name": "L1CrossDomainMessenger",
+      "values": {
+        "MESSAGE_VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messageNonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_GAS_CALLDATA_OVERHEAD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OTHER_MESSENGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "portal": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PORTAL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RELAY_CALL_OVERHEAD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RELAY_CONSTANT_OVERHEAD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RELAY_GAS_CHECK_BUFFER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RELAY_RESERVED_GAS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "AddressManager",
       "values": {
         "owner": {
@@ -585,6 +670,21 @@
           "type": null
         },
         "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Insurance",
+      "values": {
+        "admin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
           "description": null,
           "severity": null,
           "type": null
@@ -680,21 +780,6 @@
           "type": null
         },
         "deletedOutputs": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "Insurance",
-      "values": {
-        "admin": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
           "description": null,
           "severity": null,
           "type": null
@@ -830,16 +915,6 @@
           "type": null
         },
         "batcherHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "opStackDA": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "sequencerInbox": {
           "description": null,
           "severity": null,
           "type": null

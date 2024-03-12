@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xcf708385b5c467d77a70de0b7dfb36c5e9df798d
+
+# Diff at Mon, 11 Mar 2024 11:54:57 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@0a20664a6b5ee1585ee305022d1fb61c48648854 block: 19126264
+- current block number: 19411688
+
+## Description
+
+The maximum allowed balance of the bridge in USDC is doubled from 10 to 20 million USDC.
+
+## Watched changes
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: None
+      values.maxTotalBalance:
+-        10000000000000
++        20000000000000
+    }
+```
+
 Generated with discovered.json: 0x9add5ea9290632cfcb71c7da24b5711ae9e16a1d
 
 # Diff at Wed, 31 Jan 2024 11:48:50 GMT:

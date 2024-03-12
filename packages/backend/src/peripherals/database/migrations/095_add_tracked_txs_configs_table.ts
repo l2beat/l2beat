@@ -36,7 +36,13 @@ export async function up(knex: Knex) {
     table.index('tracked_tx_id')
   })
 
-  await addForeign(knex, 'liveness', 'tracked_tx_id', 'tracked_txs_configs')
+  await addForeign(
+    knex,
+    'liveness',
+    'tracked_tx_id',
+    'tracked_txs_configs',
+    'id',
+  )
 }
 
 export async function down(knex: Knex) {
@@ -44,6 +50,7 @@ export async function down(knex: Knex) {
   await knex('liveness').delete()
   await knex('tracked_txs_configs').delete()
 
+  await dropForeign(knex, 'liveness', 'tracked_tx_id')
   await knex.schema.dropTable('tracked_txs_configs')
 
   await knex.schema.createTable('liveness_configuration', function (table) {
@@ -57,14 +64,18 @@ export async function down(knex: Knex) {
   })
 
   await knex.schema.alterTable('liveness', (table) => {
-    table.dropForeign(['tracked_tx_id'])
-    table.dropPrimary()
     table.dropColumn('tracked_tx_id')
     table.string('liveness_id', 8).notNullable()
     table.index('liveness_id')
   })
 
-  await addForeign(knex, 'liveness', 'liveness_id', 'liveness_configuration')
+  await addForeign(
+    knex,
+    'liveness',
+    'liveness_id',
+    'liveness_configuration',
+    'id',
+  )
 }
 
 async function addForeign(
@@ -72,7 +83,7 @@ async function addForeign(
   tableName: string,
   columnName: string,
   foreignTable: string,
-  foreignKey = 'id',
+  foreignKey: string,
 ) {
   await knex.schema.alterTable(tableName, (table) => {
     table

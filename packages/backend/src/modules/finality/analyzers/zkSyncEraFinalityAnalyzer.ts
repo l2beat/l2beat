@@ -1,4 +1,4 @@
-import { LivenessType, UnixTime } from '@l2beat/shared-pure'
+import { TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import { BaseAnalyzer } from './types/BaseAnalyzer'
@@ -10,8 +10,8 @@ type zkSyncEraDecoded = [
 ]
 
 export class zkSyncEraFinalityAnalyzer extends BaseAnalyzer {
-  getLivenessType(): LivenessType {
-    return 'PROOF'
+  getTrackedTxSubtype(): TrackedTxsConfigSubtype {
+    return 'proofSubmissions'
   }
 
   async getFinality(transaction: { txHash: string; timestamp: UnixTime }) {

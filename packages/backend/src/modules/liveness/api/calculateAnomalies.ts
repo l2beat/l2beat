@@ -134,7 +134,7 @@ function findAnomalies(
       anomalies.push({
         timestamp: record.timestamp,
         durationInSeconds: record.previousRecordInterval,
-        type: record.type,
+        type: record.subtype,
       })
     }
   })

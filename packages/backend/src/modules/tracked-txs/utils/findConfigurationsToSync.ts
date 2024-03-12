@@ -1,5 +1,5 @@
 import { assert } from '@l2beat/backend-tools'
-import { UnixTime } from '@l2beat/shared-pure'
+import { notUndefined, UnixTime } from '@l2beat/shared-pure'
 
 import { TrackedTxsConfigRecord } from '../repositories/TrackedTxsConfigsRepository'
 import { TrackedTxConfigEntry } from '../types/TrackedTxsConfig'
@@ -11,18 +11,29 @@ export function findConfigurationsToSync(
   from: UnixTime,
   to: UnixTime,
 ): TrackedTxConfigEntry[] {
-  return runtimeConfigurations.filter((entry) => {
-    const dbEntry = databaseEntries.find((dbEntry) =>
-      entry.uses.map((u) => u.id).includes(dbEntry.id),
-    )
-    assert(dbEntry, 'Database entry should not be undefined here!')
+  return runtimeConfigurations
+    .map((config) => {
+      const filteredUses = config.uses.filter((use) => {
+        const dbEntry = databaseEntries.find((dbEntry) => dbEntry.id === use.id)
+        assert(dbEntry, 'Database entry should not be undefined here!')
 
-    return isTimestampInRange(
-      entry.sinceTimestamp,
-      entry.untilTimestamp,
-      dbEntry.lastSyncedTimestamp,
-      from,
-      to,
-    )
-  })
+        return isTimestampInRange(
+          config.sinceTimestamp,
+          config.untilTimestamp,
+          dbEntry.lastSyncedTimestamp,
+          from,
+          to,
+        )
+      })
+
+      if (filteredUses.length === 0) {
+        return
+      }
+
+      return {
+        ...config,
+        uses: filteredUses,
+      }
+    })
+    .filter(notUndefined)
 }

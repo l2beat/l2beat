@@ -144,7 +144,6 @@ export const linea: Layer2 = {
           {
             type: 'liveness',
             subType: 'stateUpdates',
-            duplicateTo: 'proofSubmissions',
           },
         ],
         query: {
@@ -164,7 +163,6 @@ export const linea: Layer2 = {
           {
             type: 'liveness',
             subType: 'stateUpdates',
-            duplicateTo: 'proofSubmissions',
           },
         ],
         query: {
@@ -179,6 +177,12 @@ export const linea: Layer2 = {
         },
       },
     ],
+    liveness: {
+      duplicateData: {
+        from: 'stateUpdates',
+        to: 'proofSubmissions',
+      },
+    },
     finality: {
       type: 'Linea',
       lag: 0,
@@ -382,14 +386,6 @@ export const linea: Layer2 = {
       discovery.getContractDetails(
         'Timelock',
         `Owner of the ProxyAdmin and Verifier Setter. The current delay is ${timelockDelayString}.`,
-      ),
-      discovery.getContractDetails(
-        'PlonkVerifierFull',
-        'Plonk verifier contract used by the Linea zkEVM rollup.',
-      ),
-      discovery.getContractDetails(
-        'PlonkVerifierFullLarge',
-        'Plonk verifier contract used by the Linea zkEVM rollup.',
       ),
       discovery.getContractDetails('ERC20Bridge', {
         description: 'Contract used to bridge ERC20 tokens.',

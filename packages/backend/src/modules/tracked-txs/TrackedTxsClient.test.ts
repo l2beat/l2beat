@@ -105,7 +105,7 @@ const CONFIGURATIONS: TrackedTxConfigEntry[] = [
 
 const TRANSFERS_RESPONSE = [
   {
-    hash: TX_HASH,
+    transaction_hash: TX_HASH,
     from_address: (CONFIGURATIONS[0] as TrackedTxTransferConfig).from,
     to_address: (CONFIGURATIONS[0] as TrackedTxTransferConfig).to,
     block_timestamp: toBigQueryDate(FROM),
@@ -122,7 +122,7 @@ const TRANSFERS_RESULT = transformTransfersQueryResult(
 
 const FUNCTIONS_RESPONSE = [
   {
-    hash: TX_HASH,
+    transaction_hash: TX_HASH,
     block_number: BLOCK,
     block_timestamp: toBigQueryDate(FROM),
     to_address: (CONFIGURATIONS[1] as TrackedTxFunctionCallConfig).address,
@@ -131,7 +131,7 @@ const FUNCTIONS_RESPONSE = [
     input: (CONFIGURATIONS[1] as TrackedTxFunctionCallConfig).selector,
   },
   {
-    hash: TX_HASH,
+    transaction_hash: TX_HASH,
     block_number: BLOCK,
     block_timestamp: toBigQueryDate(FROM),
     to_address: (CONFIGURATIONS[2] as TrackedTxFunctionCallConfig).address,

@@ -114,6 +114,9 @@ export const dydx: Layer2 = {
       explanation:
         'dYdX is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. The verification is done as part of the state update.',
     },
+    finality: {
+      finalizationPeriod: 0,
+    },
   },
   config: {
     escrows: [
@@ -158,6 +161,7 @@ export const dydx: Layer2 = {
         },
       },
     ],
+    finality: 'coming soon',
   },
   riskView: makeBridgeCompatible({
     stateValidation: {

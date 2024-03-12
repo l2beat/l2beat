@@ -1,51 +1,33 @@
 import { Logger } from '@l2beat/backend-tools'
-import {
-  EthereumAddress,
-  ProjectId,
-  TrackedTxsConfigSubtype,
-  TrackedTxsConfigType,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { TrackedTxsConfigRow } from 'knex/types/tables'
 
 import { describeDatabase } from '../../../test/database'
 import { TrackedTxId } from '../types/TrackedTxId'
 import {
-  TrackedTxConfigEntry,
-  TrackedTxFunctionCallConfig,
-} from '../types/TrackedTxsConfig'
-import {
-  toNewRow,
   TrackedTxsConfigRecord,
   TrackedTxsConfigsRepository,
 } from './TrackedTxsConfigsRepository'
 
 const START = UnixTime.now()
 
-export const TRACKED_TXS_CONFIGS: TrackedTxConfigEntry[] = [
-  makeTrackedTxsFunctionCall({
+export const TRACKED_TXS_RECORDS: TrackedTxsConfigRecord[] = [
+  makeTrackedTxsConfigRecord({
     projectId: ProjectId('project1'),
-    uses: [
-      {
-        type: 'liveness',
-        subType: 'batchSubmissions',
-        id: TrackedTxId(['0x13']),
-      },
-    ],
+    type: 'liveness',
+    subtype: 'batchSubmissions',
+    id: TrackedTxId(['0x13']),
+    sinceTimestamp: START.add(-1, 'hours'),
+    debugInfo: '',
   }),
-  makeTrackedTxsFunctionCall({
+  makeTrackedTxsConfigRecord({
     projectId: ProjectId('project2'),
   }),
-  makeTrackedTxsFunctionCall({
+  makeTrackedTxsConfigRecord({
     projectId: ProjectId('project3'),
-    uses: [
-      {
-        type: 'liveness',
-        subType: 'proofSubmissions',
-        id: TrackedTxId(['0x123']),
-      },
-    ],
+    type: 'liveness',
+    subtype: 'proofSubmissions',
+    id: TrackedTxId(['0x123']),
   }),
 ]
 
@@ -58,12 +40,10 @@ describeDatabase(TrackedTxsConfigsRepository.name, (database) => {
 
   describe(TrackedTxsConfigsRepository.prototype.addMany.name, () => {
     it('should add new rows', async () => {
-      await repository.addMany(TRACKED_TXS_CONFIGS)
+      await repository.addMany(TRACKED_TXS_RECORDS)
       const results = await repository.getAll()
 
-      expect(results).toEqualUnsorted(
-        TRACKED_TXS_CONFIGS.flatMap(toNewRow).map(toRecord),
-      )
+      expect(results).toEqualUnsorted(TRACKED_TXS_RECORDS)
     })
 
     it('empty array', async () => {
@@ -75,15 +55,12 @@ describeDatabase(TrackedTxsConfigsRepository.name, (database) => {
     TrackedTxsConfigsRepository.prototype.setLastSyncedTimestamp.name,
     () => {
       it('updates last synced timestamp of given configuration', async () => {
-        await repository.addMany(TRACKED_TXS_CONFIGS)
+        await repository.addMany(TRACKED_TXS_RECORDS)
 
         const latest = UnixTime.now()
 
         await repository.setLastSyncedTimestamp(
-          [
-            TRACKED_TXS_CONFIGS[0].uses[0].id,
-            TRACKED_TXS_CONFIGS[1].uses[0].id,
-          ],
+          [TRACKED_TXS_RECORDS[0].id, TRACKED_TXS_RECORDS[1].id],
           latest,
         )
 
@@ -91,40 +68,39 @@ describeDatabase(TrackedTxsConfigsRepository.name, (database) => {
 
         expect(results).toEqualUnsorted([
           {
-            ...toRecord(toNewRow(TRACKED_TXS_CONFIGS[0])[0]),
+            ...TRACKED_TXS_RECORDS[0],
             lastSyncedTimestamp: latest,
           },
           {
-            ...toRecord(toNewRow(TRACKED_TXS_CONFIGS[1])[0]),
+            ...TRACKED_TXS_RECORDS[1],
             lastSyncedTimestamp: latest,
           },
           {
-            ...toRecord(toNewRow(TRACKED_TXS_CONFIGS[1])[1]),
+            ...TRACKED_TXS_RECORDS[2],
           },
-          ...entryToResult(TRACKED_TXS_CONFIGS.slice(2)),
         ])
       })
 
       it('does not update if configuration not found', async () => {
-        await repository.addMany(TRACKED_TXS_CONFIGS)
+        await repository.addMany(TRACKED_TXS_RECORDS)
 
         const latest = UnixTime.now()
 
         await repository.setLastSyncedTimestamp([TrackedTxId([''])], latest)
 
         const results = await repository.getAll()
-        expect(results).toEqualUnsorted([...entryToResult(TRACKED_TXS_CONFIGS)])
+        expect(results).toEqualUnsorted(TRACKED_TXS_RECORDS)
       })
     },
   )
 
   describe(TrackedTxsConfigsRepository.prototype.setUntilTimestamp.name, () => {
     it('updates last synced timestamp of given configuration', async () => {
-      const newIds = await repository.addMany(TRACKED_TXS_CONFIGS)
+      const newIds = await repository.addMany(TRACKED_TXS_RECORDS)
 
       const untilTimestamp = UnixTime.now()
       const updatedRow: TrackedTxsConfigRecord = {
-        ...toRecord(toNewRow(TRACKED_TXS_CONFIGS[0])[0]),
+        ...TRACKED_TXS_RECORDS[0],
         untilTimestamp: untilTimestamp,
       }
 
@@ -133,35 +109,35 @@ describeDatabase(TrackedTxsConfigsRepository.name, (database) => {
 
       expect(results).toEqualUnsorted([
         updatedRow,
-        ...entryToResult(TRACKED_TXS_CONFIGS.slice(1)),
+        ...TRACKED_TXS_RECORDS.slice(1),
       ])
     })
 
     it('does not update if configuration not found', async () => {
-      await repository.addMany(TRACKED_TXS_CONFIGS)
+      await repository.addMany(TRACKED_TXS_RECORDS)
 
       const untilTimestamp = UnixTime.now()
 
       await repository.setUntilTimestamp(TrackedTxId(['']), untilTimestamp)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([...entryToResult(TRACKED_TXS_CONFIGS)])
+      expect(results).toEqualUnsorted(TRACKED_TXS_RECORDS)
     })
   })
 
   describe(TrackedTxsConfigsRepository.prototype.getAll.name, () => {
     it('should return all rows', async () => {
-      await repository.addMany(TRACKED_TXS_CONFIGS)
+      await repository.addMany(TRACKED_TXS_RECORDS)
 
       const results = await repository.getAll()
 
-      expect(results).toEqualUnsorted(entryToResult(TRACKED_TXS_CONFIGS))
+      expect(results).toEqualUnsorted(TRACKED_TXS_RECORDS)
     })
   })
 
   describe(TrackedTxsConfigsRepository.prototype.deleteMany.name, () => {
     it('should delete rows', async () => {
-      const newIds = await repository.addMany(TRACKED_TXS_CONFIGS)
+      const newIds = await repository.addMany(TRACKED_TXS_RECORDS)
       const all = await repository.getAll()
 
       await repository.deleteMany(newIds.slice(1))
@@ -200,47 +176,18 @@ describeDatabase(TrackedTxsConfigsRepository.name, (database) => {
   })
 })
 
-function entryToResult(entires: TrackedTxConfigEntry[]) {
-  return entires.flatMap(toNewRow).map(toRecord)
-}
-
-function toRecord(entry: TrackedTxsConfigRow): TrackedTxsConfigRecord {
+function makeTrackedTxsConfigRecord(
+  props?: Partial<TrackedTxsConfigRecord>,
+): TrackedTxsConfigRecord {
   return {
-    id: TrackedTxId.unsafe(entry.id),
-    subtype: entry.subtype
-      ? TrackedTxsConfigSubtype.parse(entry.subtype)
-      : undefined,
-    type: TrackedTxsConfigType.parse(entry.type),
-    projectId: ProjectId(entry.project_id),
-    sinceTimestamp: UnixTime.fromDate(entry.since_timestamp),
-    untilTimestamp: entry.until_timestamp
-      ? UnixTime.fromDate(entry.until_timestamp)
-      : undefined,
-    lastSyncedTimestamp: undefined,
-    debugInfo: expect.a(String),
-  }
-}
-function makeTrackedTxsFunctionCall(
-  props?: Partial<TrackedTxFunctionCallConfig>,
-): TrackedTxFunctionCallConfig {
-  return {
-    formula: 'functionCall',
-    address: EthereumAddress.random(),
     projectId: ProjectId('random-project-id'),
-    selector: '0x1234123412',
     sinceTimestamp: START,
-    uses: [
-      {
-        id: TrackedTxId(['0x']),
-        type: 'liveness',
-        subType: 'batchSubmissions',
-      },
-      {
-        id: TrackedTxId(['0x012']),
-        type: 'liveness',
-        subType: 'stateUpdates',
-      },
-    ],
+    id: TrackedTxId(['0x']),
+    type: 'liveness',
+    subtype: 'batchSubmissions',
+    debugInfo: '',
+    lastSyncedTimestamp: undefined,
+    untilTimestamp: undefined,
     ...props,
   }
 }
