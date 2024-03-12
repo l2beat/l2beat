@@ -213,7 +213,7 @@ export const linea: Layer2 = {
   dataAvailability: makeDataAvailabilityConfig({
     type: 'On chain',
     layer: 'Ethereum (calldata)',
-    mode: 'Transactions data',
+    mode: 'Transactions data (compressed)',
   }),
   riskView: makeBridgeCompatible({
     stateValidation: {
