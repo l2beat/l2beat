@@ -1,0 +1,249 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "Broker",
+      "values": {
+        "EXP_TIME": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "onchainVaults": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PRICE_DECIMALS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SLIPPAGE_DENOMINATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Proxy",
+      "values": {
+        "defaultVaultWithdrawalLock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEPOSIT_CANCEL_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FREEZE_GRACE_PERIOD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getActionCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLastBatchId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOrderRoot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOrderTreeHeight": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRegisteredAvailabilityVerifiers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRegisteredVerifiers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getSequenceNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getUpgradeActivationDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getVaultRoot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getVaultTreeHeight": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isFrozen": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isNotFinalized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isStrictVaultBalancePolicy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAIN_GOVERNANCE_INFO_TAG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_FORCED_ACTIONS_REQS_PER_BLOCK": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_VERIFIER_COUNT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "orderRegistryAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROXY_GOVERNANCE_TAG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROXY_VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "STARKEX_MAX_DEFAULT_VAULT_LOCK": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "UNFREEZE_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "UPGRADE_DELAY_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERIFIER_REMOVAL_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getActionHashByIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getAssetInfo": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "GOVERNORS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OPERATORS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OrderRegistry",
+      "values": {
+        "hasRegisteredFact": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "identify": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GpsFactRegistryAdapter",
+      "values": {
+        "gpsContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasRegisteredFact": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "identify": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "programHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "",
+      "values": {}
+    }
+  ]
+}

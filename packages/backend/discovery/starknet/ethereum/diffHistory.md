@@ -1,3 +1,38 @@
+Generated with discovered.json: 0xeae0d0cdb66222ce999d96aa721fc58284e15e23
+
+# Diff at Mon, 11 Mar 2024 10:26:46 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@0a20664a6b5ee1585ee305022d1fb61c48648854 block: 19275345
+- current block number: 19411249
+
+## Description
+
+Update the discovery with the Starkware Proxy handler updated to understand
+version 5.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19275345 (main branch discovery), not current.
+
+```diff
+    contract STRKBridge (0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4) {
+    +++ description: None
+      upgradeability.proxyGovernance[0]:
++        "0xcA9fC2Da27ce25F35B994b152d27d480C6f62245"
+    }
+```
+
+```diff
+    contract UNIBridge (0xf76e6bF9e2df09D0f854F045A3B724074dA1236B) {
+    +++ description: None
+      upgradeability.proxyGovernance[0]:
++        "0xF689688640E88160c07C6FC5cc63039F29EDe86b"
+    }
+```
+
 Generated with discovered.json: 0x1386d87ab58bc19b1c69fbb556c97c261450bf99
 
 # Diff at Wed, 21 Feb 2024 10:10:10 GMT:

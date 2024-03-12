@@ -88,9 +88,13 @@ export const degate3: Layer2 = {
         'https://mirror.xyz/0x078a601f492043C8e7D0E15B0F8815f58b4c342f',
       ],
     },
+    activityDataSource: 'Explorer API',
     liveness: {
       explanation:
         'DeGate is a ZK rollup based on Loopring’s code base that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
+    },
+    finality: {
+      finalizationPeriod: 0,
     },
   },
   config: {
@@ -129,6 +133,7 @@ export const degate3: Layer2 = {
         },
       ],
     },
+    finality: 'coming soon',
   },
   dataAvailability: makeDataAvailabilityConfig({
     type: 'On chain',
@@ -217,7 +222,7 @@ export const degate3: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN,
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       references: [
         {
           text: 'Introduction - DeGate design doc',

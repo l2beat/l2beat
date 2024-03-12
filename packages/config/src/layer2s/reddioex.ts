@@ -19,17 +19,22 @@ import {
   getProxyGovernance,
   getSHARPVerifierContracts,
   getSHARPVerifierGovernors,
+  getSHARPVerifierUpgradeDelay,
 } from '../discovery/starkware'
 import { delayDescriptionFromString } from '../utils/delayDescription'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('reddioex')
 
-const delaySeconds = discovery.getContractUpgradeabilityParam(
+const upgradeDelaySeconds = discovery.getContractUpgradeabilityParam(
   'StarkExchange',
   'upgradeDelay',
 )
-const delay = formatSeconds(delaySeconds)
+const includingSHARPUpgradeDelaySeconds = Math.min(
+  upgradeDelaySeconds,
+  getSHARPVerifierUpgradeDelay(),
+)
+const upgradeDelay = formatSeconds(upgradeDelaySeconds)
 const verifierAddress = discovery.getAddressFromValue(
   'GpsFactRegistryAdapter',
   'gpsContract',
@@ -117,7 +122,10 @@ export const reddioex: Layer2 = {
         },
       ],
     },
-    exitWindow: RISK_VIEW.EXIT_WINDOW(delaySeconds, freezeGracePeriod),
+    exitWindow: RISK_VIEW.EXIT_WINDOW(
+      includingSHARPUpgradeDelaySeconds,
+      freezeGracePeriod,
+    ),
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(freezeGracePeriod),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP_NFT,
     destinationToken: RISK_VIEW.CANONICAL,
@@ -140,7 +148,11 @@ export const reddioex: Layer2 = {
       ),
       ...getSHARPVerifierContracts(discovery, verifierAddress),
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(delaySeconds)],
+    risks: [
+      CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(
+        includingSHARPUpgradeDelaySeconds,
+      ),
+    ],
   },
   permissions: [
     {
@@ -148,7 +160,7 @@ export const reddioex: Layer2 = {
       accounts: getProxyGovernance(discovery, 'StarkExchange'),
       description:
         'Can upgrade implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
-        delayDescriptionFromString(delay),
+        delayDescriptionFromString(upgradeDelay),
     },
     committee,
     ...getSHARPVerifierGovernors(discovery, verifierAddress),

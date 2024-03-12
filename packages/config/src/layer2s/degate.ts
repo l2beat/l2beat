@@ -190,7 +190,7 @@ export const degate: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN,
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       references: [
         {
           text: 'Introduction - DeGate design doc',

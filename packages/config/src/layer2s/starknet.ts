@@ -24,6 +24,7 @@ import {
   getProxyGovernance,
   getSHARPVerifierContracts,
   getSHARPVerifierGovernors,
+  getSHARPVerifierUpgradeDelay,
 } from '../discovery/starkware'
 import { delayDescriptionFromSeconds } from '../utils/delayDescription'
 import { getStage } from './common/stages/getStage'
@@ -109,6 +110,7 @@ const minDelay = Math.min(
   escrowWSTETHDelaySeconds,
   escrowRETHDelaySeconds,
   escrowSTRKDelaySeconds,
+  getSHARPVerifierUpgradeDelay(),
 )
 
 function formatMaxTotalBalanceString(
@@ -241,6 +243,9 @@ export const starknet: Layer2 = {
       explanation:
         'Starknet is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. Proofs are aggregated with other projects using SHARP and state updates have to refer to proved claims.',
     },
+    finality: {
+      finalizationPeriod: 0,
+    },
   },
   config: {
     associatedTokens: ['STRK'],
@@ -369,6 +374,7 @@ export const starknet: Layer2 = {
       defaultUrl: 'https://starknet-mainnet.public.blastapi.io',
       defaultCallsPerMinute: 120,
     },
+    finality: 'coming soon',
     liveness: {
       proofSubmissions: [
         {

@@ -58,7 +58,7 @@ export const zksynclite: Layer2 = {
     name: 'zkSync Lite',
     slug: 'zksync-lite',
     description:
-      'zkSync Lite (formerly zkSync) is a ZK Rollup platform from Matter Labs. It supports payments, token swaps and NFT minting.',
+      'zkSync Lite (formerly zkSync) is a ZK Rollup platform that supports payments, token swaps and NFT minting.',
     purposes: ['Payments'],
     provider: 'zkSync Lite',
     category: 'ZK Rollup',
@@ -81,6 +81,9 @@ export const zksynclite: Layer2 = {
     liveness: {
       explanation:
         'zkSync Lite is a ZK rollup that posts state diffs to the L1. Transactions within a state diff can be considered final when proven on L1 using a ZK proof, except that an operator can revert them if not executed yet.',
+    },
+    finality: {
+      finalizationPeriod: 0,
     },
   },
   config: {
@@ -123,6 +126,7 @@ export const zksynclite: Layer2 = {
         },
       ],
     },
+    finality: 'coming soon',
   },
   dataAvailability: makeDataAvailabilityConfig({
     type: 'On chain',
@@ -261,7 +265,7 @@ export const zksynclite: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN,
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       references: [
         {
           text: 'Overview - zkSync documentation',

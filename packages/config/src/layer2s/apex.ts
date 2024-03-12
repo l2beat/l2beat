@@ -24,6 +24,7 @@ import {
   getProxyGovernance,
   getSHARPVerifierContracts,
   getSHARPVerifierGovernors,
+  getSHARPVerifierUpgradeDelay,
 } from '../discovery/starkware'
 import { delayDescriptionFromString } from '../utils/delayDescription'
 import { Layer2 } from './types'
@@ -41,7 +42,15 @@ const upgradeDelaySecondsUSDT = discovery.getContractUpgradeabilityParam(
 const upgradeDelayUSDC = formatSeconds(upgradeDelaySecondsUSDC)
 const upgradeDelayUSDT = formatSeconds(upgradeDelaySecondsUSDT)
 
-const upgradeDelay = Math.min(upgradeDelaySecondsUSDC, upgradeDelaySecondsUSDT)
+const upgradeDelaySeconds = Math.min(
+  upgradeDelaySecondsUSDC,
+  upgradeDelaySecondsUSDT,
+)
+
+const includingSHARPUpgradeDelaySeconds = Math.min(
+  upgradeDelaySeconds,
+  getSHARPVerifierUpgradeDelay(),
+)
 
 const verifierAddressUSDC = discovery.getAddressFromValue(
   'FinalizableGpsFactAdapterUSDC',
@@ -177,7 +186,10 @@ export const apex: Layer2 = {
         },
       ],
     },
-    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, minFreezeGracePeriod),
+    exitWindow: RISK_VIEW.EXIT_WINDOW(
+      includingSHARPUpgradeDelaySeconds,
+      minFreezeGracePeriod,
+    ),
     sequencerFailure:
       RISK_VIEW.SEQUENCER_FORCE_VIA_L1_STARKEX_PERPETUAL(minFreezeGracePeriod),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP_AVGPRICE,
@@ -228,7 +240,11 @@ export const apex: Layer2 = {
         ? getSHARPVerifierContracts(discovery, verifierAddressUSDT)
         : []),
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(upgradeDelay)],
+    risks: [
+      CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(
+        includingSHARPUpgradeDelaySeconds,
+      ),
+    ],
   },
   permissions: [
     {

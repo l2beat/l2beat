@@ -133,6 +133,9 @@ export const polygonzkevm: Layer2 = {
         'The TVL is currently shared among all projects using the shared Polygon CDK contracts.',
       sentiment: 'warning',
     },
+    finality: {
+      finalizationPeriod: 0,
+    },
   },
   config: {
     escrows: [
@@ -245,6 +248,7 @@ export const polygonzkevm: Layer2 = {
         },
       ],
     },
+    finality: 'coming soon',
   },
   chainConfig: {
     name: 'polygonzkevm',

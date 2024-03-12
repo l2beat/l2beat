@@ -72,6 +72,9 @@ export const loopring: Layer2 = {
       explanation:
         'Loopring is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
     },
+    finality: {
+      finalizationPeriod: 0,
+    },
   },
   config: {
     associatedTokens: ['LRC'],
@@ -123,6 +126,7 @@ export const loopring: Layer2 = {
         },
       ],
     },
+    finality: 'coming soon',
   },
   dataAvailability: makeDataAvailabilityConfig({
     type: 'On chain',
@@ -210,7 +214,7 @@ export const loopring: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN,
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       references: [
         {
           text: 'Introduction - Loopring design doc',

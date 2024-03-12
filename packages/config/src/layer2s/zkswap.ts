@@ -11,6 +11,7 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { Layer2 } from './types'
@@ -95,7 +96,7 @@ export const zkswap: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN,
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       references: [
         {
           text: 'ZKSwap Introduces Practical ZK Rollups - Medium blog',

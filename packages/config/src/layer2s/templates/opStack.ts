@@ -1,5 +1,10 @@
 import { ContractParameters } from '@l2beat/discovery-types'
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -71,7 +76,7 @@ export interface OpStackConfig {
   nonTemplateEscrows: ScalingProjectEscrow[]
   nonTemplateOptimismPortalEscrowTokens?: string[]
   associatedTokens?: string[]
-  isNodeAvailable: boolean | 'UnderReview'
+  isNodeAvailable?: boolean | 'UnderReview'
   chainConfig?: ChainConfig
   upgradesAndGovernance?: string
   hasProperSecurityCouncil?: boolean
@@ -95,6 +100,14 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
   const daProvider =
     templateVars.daProvider ??
     (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
+
+  if (daProvider === undefined) {
+    assert(
+      templateVars.isNodeAvailable !== undefined,
+      'isNodeAvailable must be defined if no DA provider is defined',
+    )
+  }
+
   return {
     type: 'layer2',
     id: ProjectId(templateVars.discovery.projectName),
@@ -236,7 +249,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
       validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     }),
     stage:
-      daProvider !== undefined
+      daProvider !== undefined || templateVars.isNodeAvailable === undefined
         ? {
             stage: 'NotApplicable',
           }
@@ -456,6 +469,6 @@ function technologyDA(
   DA: DAProvider | undefined,
 ): ScalingProjectTechnologyChoice {
   return DA === undefined
-    ? TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN
+    ? TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA
     : DA.technology
 }

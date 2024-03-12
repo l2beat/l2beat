@@ -2,6 +2,26 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
+      "name": "L1StandardBridge",
+      "values": {
+        "MESSENGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OTHER_BRIDGE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "KromaPortal",
       "values": {
         "GUARDIAN": {
@@ -45,26 +65,6 @@
           "type": null
         },
         "ZK_MERKLE_TRIE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L1StandardBridge",
-      "values": {
-        "MESSENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OTHER_BRIDGE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
           "description": null,
           "severity": null,
           "type": null
@@ -187,29 +187,9 @@
       }
     },
     {
-      "name": "SecurityCouncil",
+      "name": "ZKMerkleTrie",
       "values": {
-        "COLOSSEUM": {
-          "description": "Contract used to challenge state roots and prove fraud.",
-          "severity": "HIGH",
-          "type": "STRUCTURE"
-        },
-        "GOVERNOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "quorum": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "transactionCount": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
+        "POSEIDON2": {
           "description": null,
           "severity": null,
           "type": null
@@ -282,9 +262,29 @@
       }
     },
     {
-      "name": "ZKMerkleTrie",
+      "name": "SecurityCouncil",
       "values": {
-        "POSEIDON2": {
+        "COLOSSEUM": {
+          "description": "Contract used to challenge state roots and prove fraud.",
+          "severity": "HIGH",
+          "type": "STRUCTURE"
+        },
+        "GOVERNOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "quorum": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "transactionCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
           "description": null,
           "severity": null,
           "type": null
@@ -400,6 +400,81 @@
           "type": null
         },
         "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SystemConfig",
+      "values": {
+        "gasLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minimumGasLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "overhead": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "resourceConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "scalar": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "UNSAFE_BLOCK_SIGNER_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "unsafeBlockSigner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "validatorRewardScalar": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "batcherHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "opStackDA": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sequencerInbox": {
           "description": null,
           "severity": null,
           "type": null
@@ -567,81 +642,6 @@
       }
     },
     {
-      "name": "SystemConfig",
-      "values": {
-        "gasLimit": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "minimumGasLimit": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "overhead": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "resourceConfig": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "scalar": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "UNSAFE_BLOCK_SIGNER_SLOT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "unsafeBlockSigner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "validatorRewardScalar": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "batcherHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "opStackDA": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "sequencerInbox": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "Colosseum",
       "values": {
         "BISECTION_TIMEOUT": {
@@ -701,7 +701,7 @@
         },
         "challengedRoots": {
           "description": "State roots that have been challenged by the validators. Challenges are created when, according to the validators, the roots commit to an incorrect L2 state.",
-          "severity": "LOW",
+          "severity": "MEDIUM",
           "type": null
         }
       }

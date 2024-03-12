@@ -231,6 +231,7 @@ export function orbitStackCommon(
 
 export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
   const assumedBlockTime = 12 // seconds, different from RollupUserLogic.sol#L35 which assumes 13.2 seconds
+
   const validatorAfkBlocks = templateVars.discovery.getContractValue<number>(
     'RollupProxy',
     'VALIDATOR_AFK_BLOCKS',
@@ -310,6 +311,12 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
 
 export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
   const assumedBlockTime = 12 // seconds, different from RollupUserLogic.sol#L35 which assumes 13.2 seconds
+  const challengeWindow = templateVars.discovery.getContractValue<number>(
+    'RollupProxy',
+    'confirmPeriodBlocks',
+  )
+  const challengeWindowSeconds = challengeWindow * assumedBlockTime
+
   const validatorAfkBlocks = templateVars.discovery.getContractValue<number>(
     'RollupProxy',
     'VALIDATOR_AFK_BLOCKS',
@@ -340,6 +347,10 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       ...templateVars.display,
       provider: 'Arbitrum',
       category: postsToExternalDA ? 'Optimium' : 'Optimistic Rollup',
+      dataAvailabilityMode: postsToExternalDA ? 'NotApplicable' : 'TxData',
+      finality: {
+        finalizationPeriod: challengeWindowSeconds,
+      },
     },
     stage: postsToExternalDA
       ? {
@@ -431,6 +442,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
               assessCount: subtractOne,
             }
           : undefined),
+      finality: 'coming soon',
     },
   }
 }

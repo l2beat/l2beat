@@ -16,6 +16,7 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
@@ -184,7 +185,7 @@ export const degate2: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN,
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       references: [
         {
           text: 'Introduction - DeGate design doc',
