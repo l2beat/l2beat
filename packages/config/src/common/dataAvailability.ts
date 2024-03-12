@@ -23,7 +23,10 @@ interface OffChainConfig {
     Exclude<OffChainDataAvailabilityLayer, 'DAC'>,
     OffChainDataAvailabilityFallback?,
   ]
-  bridge: OffChainDataAvailabilityBridge
+  bridge: Exclude<
+    OffChainDataAvailabilityBridge,
+    `${number}/${number} DAC Members` | `DAC Members`
+  >
   mode: ScalingProjectDataAvailabilityMode
 }
 
@@ -168,33 +171,35 @@ function getOffChainLayerSentiment(
     case 'External':
     case 'MantleDA':
     case 'FraxtalDA':
-      return 'warning'
     case 'Celestia':
-      return 'good'
+      return 'warning'
     default:
       assertUnreachable(layer)
   }
 }
 
 function getOffChainBridgeDescription(
-  bridge: OffChainDataAvailabilityBridge,
+  bridge: Exclude<
+    OffChainDataAvailabilityBridge,
+    `${number}/${number} DAC Members` | `DAC Members`
+  >,
 ): string {
   switch (bridge) {
     case 'None':
       return 'There is no bridge that can attest if the data has been made available.'
     case 'Optimistic':
       return 'There is a mechanism that allows validators to request that the Sequencer posts data on-chain via L1 contract if they find that data is unavailable.'
-    case 'DAC Members':
-      return 'There is a threshold of members that must sign and attest that the data has been made available.'
+    case '2/3 Staked Operators':
+      return 'There is a threshold of 2/3 of staked operators that must sign and attest that the data has been made available.'
     default:
-      return `There is a threshold of ${bridge} that must sign and attest that the data the data has been made available.`
+      assertUnreachable(bridge)
   }
 }
 
 function getOffChainBridgeSentiment(
   bridge: OffChainDataAvailabilityBridge,
 ): Sentiment {
-  if (bridge === 'None') {
+  if (bridge === 'None' || bridge === 'Optimistic') {
     return 'bad'
   }
 

@@ -36,6 +36,7 @@ export type OffChainDataAvailabilityBridge =
   | 'None'
   | 'Optimistic'
   | 'DAC Members'
+  | `2/3 Staked Operators`
   | `${number}/${number} DAC Members`
 
 type OffChainDataAvailability = {
