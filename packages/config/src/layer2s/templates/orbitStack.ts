@@ -347,7 +347,6 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       ...templateVars.display,
       provider: 'Arbitrum',
       category: postsToExternalDA ? 'Optimium' : 'Optimistic Rollup',
-      dataAvailabilityMode: postsToExternalDA ? 'NotApplicable' : 'TxData',
       finality: {
         finalizationPeriod: challengeWindowSeconds,
       },

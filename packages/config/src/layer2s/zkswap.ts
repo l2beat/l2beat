@@ -11,7 +11,6 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
-  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { Layer2 } from './types'

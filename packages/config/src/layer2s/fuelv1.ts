@@ -10,7 +10,6 @@ import {
   RISK_VIEW,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
-  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'

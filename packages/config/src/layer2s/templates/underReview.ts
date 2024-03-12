@@ -53,7 +53,6 @@ export function underReviewL3(templateVars: UnderReviewConfigL3): Layer3 {
     hostChain: templateVars.hostChain,
     display: {
       ...templateVars.display,
-      dataAvailabilityMode: 'NotApplicable',
     },
     config: {
       escrows: [],
