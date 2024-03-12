@@ -1,8 +1,8 @@
 {
   "name": "fraxferry",
   "chain": "ethereum",
-  "blockNumber": 19391636,
-  "configHash": "0xf8cca1b4306269e143d2e218baf32ac9fe77236c85dee943f17b8fbc1bfea146",
+  "blockNumber": 19418644,
+  "configHash": "0x7f441b213f7612c4805a3d00b1d9c6b28ef2d700af831bd0d3063c7b762201cd",
   "version": 3,
   "contracts": [
     {
@@ -13,8 +13,8 @@
       },
       "sinceTimestamp": 1602667372,
       "values": {
-        "get_deposit_count": "0x395e140000000000",
-        "get_deposit_root": "0xb759092f4ef3e4b57addb5c78fc6c43f2d306887ce9e1c923bf8c502ce9f475d"
+        "get_deposit_count": "0x0e74140000000000",
+        "get_deposit_root": "0xa93e2ea36a0dad5a74c7b028a18b03e647067b9e6b96390f1355c5a70bec859c"
       },
       "derivedName": "DepositContract"
     },
@@ -58,7 +58,7 @@
       "values": {
         "chainlink_frax_eth_decimals": 18,
         "EXTRA_PRECISION": 1000000,
-        "getFRAXPrice": [255, 255166783],
+        "getFRAXPrice": [249, 249498697],
         "nominatedOwner": "0x0000000000000000000000000000000000000000",
         "owner": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
         "PRICE_PRECISION": 1000000,
@@ -188,17 +188,25 @@
       },
       "sinceTimestamp": 1708807391,
       "values": {
-        "batches": [],
+        "batches": [
+          [
+            0,
+            0,
+            1709931875,
+            0,
+            "0x0c7f9d97924d1f653453c11ef716edad02ee213f30b662ba18e5ae70f8722012"
+          ]
+        ],
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
         "chainid": 1,
-        "executeIndex": 0,
+        "executeIndex": 1,
         "FEE_MAX": 5000000000000000,
         "FEE_MIN": 4000000000000000,
         "FEE_RATE": 4,
         "firstOfficer": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
         "MIN_WAIT_PERIOD_ADD": 3600,
         "MIN_WAIT_PERIOD_EXECUTE": 79200,
-        "noBatches": 0,
+        "noBatches": 1,
         "nominatedOwner": "0x0000000000000000000000000000000000000000",
         "noTransactions": 0,
         "owner": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
@@ -225,6 +233,24 @@
       "derivedName": "UniswapV2Factory"
     },
     {
+      "name": "FPI",
+      "address": "0x5Ca135cB8527d76e932f34B5145575F9d8cbE08E",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1648578483,
+      "values": {
+        "decimals": 18,
+        "name": "Frax Price Index",
+        "nominatedOwner": "0x0000000000000000000000000000000000000000",
+        "owner": "0x6A7efa964Cf6D9Ab3BC3c47eBdDB853A8853C502",
+        "symbol": "FPI",
+        "timelock_address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
+        "totalSupply": "84536002063488960339962052"
+      },
+      "derivedName": "FPI"
+    },
+    {
       "name": "fraxFerryBridge",
       "address": "0x5e1D94021484642863Ea8E7Cb4F0188e56B18FEE",
       "upgradeability": {
@@ -232,46 +258,16 @@
       },
       "sinceTimestamp": 1708806563,
       "values": {
-        "batches": [
-          [
-            0,
-            0,
-            1709067875,
-            0,
-            "0xeb8c94b1669fb5db400799bf46dc61149bb1d0fe630ca9bc28d23ed354d64f8b"
-          ],
-          [
-            1,
-            5,
-            1709586287,
-            0,
-            "0x5dc7fc85b73bca08d963e7d5578c31b7c0e8abe9912126d557e5b20c4905672b"
-          ],
-          [
-            6,
-            7,
-            1709673179,
-            0,
-            "0x2373b96845f0bf490f4eabb4a483627ce1694e5c85fcc94541d639046eb670a7"
-          ],
-          [
-            8,
-            8,
-            1709845715,
-            0,
-            "0x1cc67aaf02382d845867a361eda6b0c6bf7c0818d5e3130b1e9455ddb4cd20ab"
-          ]
-        ],
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
         "chainid": 1,
-        "executeIndex": 3,
+        "executeIndex": 5,
         "FEE_MAX": "100000000000000000000",
         "FEE_MIN": "5000000000000000000",
         "FEE_RATE": 10,
         "firstOfficer": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
         "MIN_WAIT_PERIOD_ADD": 3600,
         "MIN_WAIT_PERIOD_EXECUTE": 79200,
-        "noBatches": 4,
+        "noBatches": 5,
         "nominatedOwner": "0x0000000000000000000000000000000000000000",
         "noTransactions": 0,
         "owner": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
@@ -303,9 +299,34 @@
         "owner": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
         "symbol": "frxETH",
         "timelock_address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
-        "totalSupply": "299314724574280489415460"
+        "totalSupply": "299813019469793826212734"
       },
       "derivedName": "frxETH"
+    },
+    {
+      "name": "GnosisSafe",
+      "address": "0x6A7efa964Cf6D9Ab3BC3c47eBdDB853A8853C502",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "modules": []
+      },
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
+      "sinceTimestamp": 1649111477,
+      "values": {
+        "domainSeparator": "0xad8568d2acb832c93f03b3afa25e7796825a0766f7d77ead869ff72774844ea9",
+        "getChainId": 1,
+        "getOwners": [
+          "0x6933BCC3e96f1C4d2cb73Cb391d854b18Ab7A4F2",
+          "0xcbc616D595D38483e6AdC45C7E426f44bF230928",
+          "0x17e06ce6914E3969f7BD37D8b2a563890cA1c96e",
+          "0x05FB8eC3C41da95b26fCb85503DaF8B89B89A935",
+          "0x6e74053a3798e0fC9a9775F7995316b27f21c4D2"
+        ],
+        "getThreshold": 3,
+        "nonce": 482,
+        "VERSION": "1.3.0"
+      }
     },
     {
       "name": "frxETHMultisig",
@@ -348,14 +369,14 @@
         "getChainId": 1,
         "getOwners": [
           "0x13Fe84D36d7a507Bb4bdAC6dCaF13a10961fc470",
-          "0xf4E1d185666a624099298FcC42C50ba662DC7e52",
+          "0xcbc616D595D38483e6AdC45C7E426f44bF230928",
           "0x6933BCC3e96f1C4d2cb73Cb391d854b18Ab7A4F2",
           "0x05FB8eC3C41da95b26fCb85503DaF8B89B89A935",
           "0xc28339c70054bC22255A74E927a0B9e9A475F224",
           "0x6e74053a3798e0fC9a9775F7995316b27f21c4D2"
         ],
         "getThreshold": 3,
-        "nonce": 31,
+        "nonce": 33,
         "VERSION": "1.3.0"
       }
     },
@@ -414,6 +435,84 @@
       "derivedName": "FRAXStablecoin"
     },
     {
+      "name": "fpisFerryBridge",
+      "address": "0x958815f476cD07354c0BC034EE5077B20fD93003",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1708806983,
+      "values": {
+        "batches": [
+          [
+            0,
+            0,
+            1709587007,
+            0,
+            "0x791a96a33bccd7ab098c58f04f6c26876d9411cd73a3ef11259c8774ca0819fa"
+          ]
+        ],
+        "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
+        "chainid": 1,
+        "executeIndex": 1,
+        "FEE_MAX": "100000000000000000000",
+        "FEE_MIN": "5000000000000000000",
+        "FEE_RATE": 10,
+        "firstOfficer": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
+        "MIN_WAIT_PERIOD_ADD": 3600,
+        "MIN_WAIT_PERIOD_EXECUTE": 79200,
+        "noBatches": 1,
+        "nominatedOwner": "0x0000000000000000000000000000000000000000",
+        "noTransactions": 0,
+        "owner": "0x6A7efa964Cf6D9Ab3BC3c47eBdDB853A8853C502",
+        "paused": false,
+        "REDUCED_DECIMALS": 10000000000,
+        "targetChain": 252,
+        "targetToken": "0xfc00000000000000000000000000000000000004",
+        "token": "0xc2544A32872A91F4A553b404C6950e89De901fdb",
+        "transactions": []
+      },
+      "derivedName": "Fraxferry"
+    },
+    {
+      "name": "fpiFerryBridge",
+      "address": "0x9A576A3d39c589A861B46864C253288bcA428a6c",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1708806923,
+      "values": {
+        "batches": [
+          [
+            0,
+            0,
+            1709586755,
+            0,
+            "0x50236abad7c3d5a6d941d803aedc35b63f78591a962578ef19ba781e7227666d"
+          ]
+        ],
+        "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
+        "chainid": 1,
+        "executeIndex": 1,
+        "FEE_MAX": "100000000000000000000",
+        "FEE_MIN": "5000000000000000000",
+        "FEE_RATE": 10,
+        "firstOfficer": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
+        "MIN_WAIT_PERIOD_ADD": 3600,
+        "MIN_WAIT_PERIOD_EXECUTE": 79200,
+        "noBatches": 1,
+        "nominatedOwner": "0x0000000000000000000000000000000000000000",
+        "noTransactions": 0,
+        "owner": "0x6A7efa964Cf6D9Ab3BC3c47eBdDB853A8853C502",
+        "paused": false,
+        "REDUCED_DECIMALS": 10000000000,
+        "targetChain": 252,
+        "targetToken": "0xFc00000000000000000000000000000000000003",
+        "token": "0x5Ca135cB8527d76e932f34B5145575F9d8cbE08E",
+        "transactions": []
+      },
+      "derivedName": "Fraxferry"
+    },
+    {
       "name": "StakedFrax",
       "address": "0xA663B02CF0a4b149d2aD41910CB81e23e1c41c32",
       "upgradeability": {
@@ -459,12 +558,12 @@
         "lastRewardAmount": "207315000000000000000",
         "lastSync": 1709770187,
         "name": "Staked Frax Ether",
-        "pricePerShare": "1077884737867174198",
+        "pricePerShare": "1078453712800176167",
         "rewardsCycleEnd": 1710374400,
         "rewardsCycleLength": 604800,
         "symbol": "sfrxETH",
-        "totalAssets": "214167916799306589700055",
-        "totalSupply": "198692781589136961783224"
+        "totalAssets": "210414958788296054614559",
+        "totalSupply": "195108010933505205668276"
       },
       "derivedName": "sfrxETH"
     },
@@ -489,7 +588,7 @@
           "0x05FB8eC3C41da95b26fCb85503DaF8B89B89A935"
         ],
         "getThreshold": 3,
-        "nonce": 5353,
+        "nonce": 5368,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -516,6 +615,25 @@
         "withholdRatio": 980000
       },
       "derivedName": "frxETHMinter"
+    },
+    {
+      "name": "FPIS",
+      "address": "0xc2544A32872A91F4A553b404C6950e89De901fdb",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1648578483,
+      "values": {
+        "decimals": 18,
+        "FPI_TKN": "0x5Ca135cB8527d76e932f34B5145575F9d8cbE08E",
+        "minters_array": [],
+        "name": "Frax Price Index Share",
+        "nominatedOwner": "0x0000000000000000000000000000000000000000",
+        "owner": "0x6A7efa964Cf6D9Ab3BC3c47eBdDB853A8853C502",
+        "symbol": "FPIS",
+        "timelock_address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
+        "totalSupply": "99540925469484135306440000"
+      }
     },
     {
       "name": "FeeTo",
@@ -566,9 +684,10 @@
     "0xc8dE9f45601DA8C76158b8CAF3E56E8A037F2228",
     "0xcbc616D595D38483e6AdC45C7E426f44bF230928",
     "0xDf81c82A3e02330Bb03C9b31015f32e2dac470dE",
-    "0xf4E1d185666a624099298FcC42C50ba662DC7e52",
     "0xFc00000000000000000000000000000000000001",
     "0xFc00000000000000000000000000000000000002",
+    "0xFc00000000000000000000000000000000000003",
+    "0xfc00000000000000000000000000000000000004",
     "0xFC00000000000000000000000000000000000005",
     "0xfc00000000000000000000000000000000000008"
   ],
@@ -913,6 +1032,41 @@
       "function setFeeTo(address _feeTo)",
       "function setFeeToSetter(address _feeToSetter)"
     ],
+    "0x5Ca135cB8527d76e932f34B5145575F9d8cbE08E": [
+      "constructor(address _creator_address, address _timelock_address)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event MinterAdded(address minter_address)",
+      "event MinterRemoved(address minter_address)",
+      "event OwnerChanged(address oldOwner, address newOwner)",
+      "event OwnerNominated(address newOwner)",
+      "event TokenMinterBurned(address indexed from, address indexed to, uint256 amount)",
+      "event TokenMinterMinted(address indexed from, address indexed to, uint256 amount)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function acceptOwnership()",
+      "function addMinter(address minter_address)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function burn(uint256 amount)",
+      "function burnFrom(address account, uint256 amount)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function minter_burn_from(address b_address, uint256 b_amount)",
+      "function minter_mint(address m_address, uint256 m_amount)",
+      "function minters(address) view returns (bool)",
+      "function minters_array(uint256) view returns (address)",
+      "function name() view returns (string)",
+      "function nominateNewOwner(address _owner)",
+      "function nominatedOwner() view returns (address)",
+      "function owner() view returns (address)",
+      "function removeMinter(address minter_address)",
+      "function symbol() view returns (string)",
+      "function timelock_address() view returns (address)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 amount) returns (bool)",
+      "function transferFrom(address from, address to, uint256 amount) returns (bool)"
+    ],
     "0x5e1D94021484642863Ea8E7Cb4F0188e56B18FEE": [
       "constructor(address _token, uint256 _chainid, address _targetToken, uint256 _targetChain)",
       "event Cancelled(uint256 index, bool cancel)",
@@ -1019,6 +1173,9 @@
       "function transfer(address to, uint256 amount) returns (bool)",
       "function transferFrom(address from, address to, uint256 amount) returns (bool)"
     ],
+    "0x6A7efa964Cf6D9Ab3BC3c47eBdDB853A8853C502": [
+      "constructor(address _singleton)"
+    ],
     "0x8306300ffd616049FD7e4b0354a64Da835c1A81C": [
       "constructor(address _singleton)"
     ],
@@ -1124,6 +1281,138 @@
       "function transfer(address recipient, uint256 amount) returns (bool)",
       "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
       "function weth_address() view returns (address)"
+    ],
+    "0x958815f476cD07354c0BC034EE5077B20fD93003": [
+      "constructor(address _token, uint256 _chainid, address _targetToken, uint256 _targetChain)",
+      "event Cancelled(uint256 index, bool cancel)",
+      "event Depart(uint256 batchNo, uint256 start, uint256 end, bytes32 hash)",
+      "event Disembark(uint256 start, uint256 end, bytes32 hash)",
+      "event DisputeBatch(uint256 batchNo, bytes32 hash)",
+      "event Embark(address indexed sender, uint256 index, uint256 amount, uint256 amountAfterFee, uint256 timestamp)",
+      "event FeeExemptToggled(address addr, bool is_fee_exempt)",
+      "event OwnerChanged(address indexed previousOwner, address indexed newOwner)",
+      "event OwnerNominated(address indexed newOwner)",
+      "event Pause(bool paused)",
+      "event RemoveBatch(uint256 batchNo)",
+      "event SetCaptain(address indexed previousCaptain, address indexed newCaptain)",
+      "event SetCrewmember(address indexed crewmember, bool set)",
+      "event SetFee(uint256 previousFeeRate, uint256 feeRate, uint256 previousFeeMin, uint256 feeMin, uint256 previousFeeMax, uint256 feeMax)",
+      "event SetFirstOfficer(address indexed previousFirstOfficer, address indexed newFirstOfficer)",
+      "event SetMinWaitPeriods(uint256 previousMinWaitAdd, uint256 previousMinWaitExecute, uint256 minWaitAdd, uint256 minWaitExecute)",
+      "function FEE_MAX() view returns (uint256)",
+      "function FEE_MIN() view returns (uint256)",
+      "function FEE_RATE() view returns (uint256)",
+      "function MIN_WAIT_PERIOD_ADD() view returns (uint256)",
+      "function MIN_WAIT_PERIOD_EXECUTE() view returns (uint256)",
+      "function REDUCED_DECIMALS() view returns (uint256)",
+      "function acceptOwnership()",
+      "function batches(uint256) view returns (uint64 start, uint64 end, uint64 departureTime, uint64 status, bytes32 hash)",
+      "function cancelled(uint256) view returns (bool)",
+      "function captain() view returns (address)",
+      "function chainid() view returns (uint256)",
+      "function crewmembers(address) view returns (bool)",
+      "function depart(uint256 start, uint256 end, bytes32 hash)",
+      "function disembark(tuple(uint256 startTransactionNo, tuple(address user, uint64 amount, uint32 timestamp)[] transactions) batchData)",
+      "function disputeBatch(uint256 batchNo, bytes32 hash)",
+      "function embark(uint256 amount)",
+      "function embarkWithRecipient(uint256 amount, address recipient)",
+      "function embarkWithSignature(uint256 _amount, address recipient, uint256 deadline, bool approveMax, uint8 v, bytes32 r, bytes32 s)",
+      "function execute(address _to, uint256 _value, bytes _data) returns (bool, bytes)",
+      "function executeIndex() view returns (uint256)",
+      "function fee_exempt_addrs(address) view returns (bool)",
+      "function firstOfficer() view returns (address)",
+      "function getBatchAmount(uint256 start, uint256 end) view returns (uint256 totalAmount)",
+      "function getBatchData(uint256 start, uint256 end) view returns (tuple(uint256 startTransactionNo, tuple(address user, uint64 amount, uint32 timestamp)[] transactions) data)",
+      "function getNextBatch(uint256 _start, uint256 max) view returns (uint256 start, uint256 end, bytes32 hash)",
+      "function getTransactionsHash(uint256 start, uint256 end) view returns (bytes32)",
+      "function jettison(uint256 index, bool cancel)",
+      "function jettisonGroup(uint256[] indexes, bool cancel)",
+      "function noBatches() view returns (uint256)",
+      "function noTransactions() view returns (uint256)",
+      "function nominateNewOwner(address newOwner)",
+      "function nominatedOwner() view returns (address)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function removeBatches(uint256 batchNo)",
+      "function sendTokens(address receiver, uint256 amount)",
+      "function setCaptain(address newCaptain)",
+      "function setCrewmember(address crewmember, bool set)",
+      "function setFee(uint256 _FEE_RATE, uint256 _FEE_MIN, uint256 _FEE_MAX)",
+      "function setFirstOfficer(address newFirstOfficer)",
+      "function setMinWaitPeriods(uint256 _MIN_WAIT_PERIOD_ADD, uint256 _MIN_WAIT_PERIOD_EXECUTE)",
+      "function targetChain() view returns (uint256)",
+      "function targetToken() view returns (address)",
+      "function toggleFeeExemptAddr(address addr)",
+      "function token() view returns (address)",
+      "function transactions(uint256) view returns (address user, uint64 amount, uint32 timestamp)",
+      "function unPause()"
+    ],
+    "0x9A576A3d39c589A861B46864C253288bcA428a6c": [
+      "constructor(address _token, uint256 _chainid, address _targetToken, uint256 _targetChain)",
+      "event Cancelled(uint256 index, bool cancel)",
+      "event Depart(uint256 batchNo, uint256 start, uint256 end, bytes32 hash)",
+      "event Disembark(uint256 start, uint256 end, bytes32 hash)",
+      "event DisputeBatch(uint256 batchNo, bytes32 hash)",
+      "event Embark(address indexed sender, uint256 index, uint256 amount, uint256 amountAfterFee, uint256 timestamp)",
+      "event FeeExemptToggled(address addr, bool is_fee_exempt)",
+      "event OwnerChanged(address indexed previousOwner, address indexed newOwner)",
+      "event OwnerNominated(address indexed newOwner)",
+      "event Pause(bool paused)",
+      "event RemoveBatch(uint256 batchNo)",
+      "event SetCaptain(address indexed previousCaptain, address indexed newCaptain)",
+      "event SetCrewmember(address indexed crewmember, bool set)",
+      "event SetFee(uint256 previousFeeRate, uint256 feeRate, uint256 previousFeeMin, uint256 feeMin, uint256 previousFeeMax, uint256 feeMax)",
+      "event SetFirstOfficer(address indexed previousFirstOfficer, address indexed newFirstOfficer)",
+      "event SetMinWaitPeriods(uint256 previousMinWaitAdd, uint256 previousMinWaitExecute, uint256 minWaitAdd, uint256 minWaitExecute)",
+      "function FEE_MAX() view returns (uint256)",
+      "function FEE_MIN() view returns (uint256)",
+      "function FEE_RATE() view returns (uint256)",
+      "function MIN_WAIT_PERIOD_ADD() view returns (uint256)",
+      "function MIN_WAIT_PERIOD_EXECUTE() view returns (uint256)",
+      "function REDUCED_DECIMALS() view returns (uint256)",
+      "function acceptOwnership()",
+      "function batches(uint256) view returns (uint64 start, uint64 end, uint64 departureTime, uint64 status, bytes32 hash)",
+      "function cancelled(uint256) view returns (bool)",
+      "function captain() view returns (address)",
+      "function chainid() view returns (uint256)",
+      "function crewmembers(address) view returns (bool)",
+      "function depart(uint256 start, uint256 end, bytes32 hash)",
+      "function disembark(tuple(uint256 startTransactionNo, tuple(address user, uint64 amount, uint32 timestamp)[] transactions) batchData)",
+      "function disputeBatch(uint256 batchNo, bytes32 hash)",
+      "function embark(uint256 amount)",
+      "function embarkWithRecipient(uint256 amount, address recipient)",
+      "function embarkWithSignature(uint256 _amount, address recipient, uint256 deadline, bool approveMax, uint8 v, bytes32 r, bytes32 s)",
+      "function execute(address _to, uint256 _value, bytes _data) returns (bool, bytes)",
+      "function executeIndex() view returns (uint256)",
+      "function fee_exempt_addrs(address) view returns (bool)",
+      "function firstOfficer() view returns (address)",
+      "function getBatchAmount(uint256 start, uint256 end) view returns (uint256 totalAmount)",
+      "function getBatchData(uint256 start, uint256 end) view returns (tuple(uint256 startTransactionNo, tuple(address user, uint64 amount, uint32 timestamp)[] transactions) data)",
+      "function getNextBatch(uint256 _start, uint256 max) view returns (uint256 start, uint256 end, bytes32 hash)",
+      "function getTransactionsHash(uint256 start, uint256 end) view returns (bytes32)",
+      "function jettison(uint256 index, bool cancel)",
+      "function jettisonGroup(uint256[] indexes, bool cancel)",
+      "function noBatches() view returns (uint256)",
+      "function noTransactions() view returns (uint256)",
+      "function nominateNewOwner(address newOwner)",
+      "function nominatedOwner() view returns (address)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function removeBatches(uint256 batchNo)",
+      "function sendTokens(address receiver, uint256 amount)",
+      "function setCaptain(address newCaptain)",
+      "function setCrewmember(address crewmember, bool set)",
+      "function setFee(uint256 _FEE_RATE, uint256 _FEE_MIN, uint256 _FEE_MAX)",
+      "function setFirstOfficer(address newFirstOfficer)",
+      "function setMinWaitPeriods(uint256 _MIN_WAIT_PERIOD_ADD, uint256 _MIN_WAIT_PERIOD_EXECUTE)",
+      "function targetChain() view returns (uint256)",
+      "function targetToken() view returns (address)",
+      "function toggleFeeExemptAddr(address addr)",
+      "function token() view returns (address)",
+      "function transactions(uint256) view returns (address user, uint64 amount, uint32 timestamp)",
+      "function unPause()"
     ],
     "0xA663B02CF0a4b149d2aD41910CB81e23e1c41c32": [
       "constructor(address _underlying, string _name, string _symbol, uint32 _rewardsCycleLength, uint256 _maxDistributionPerSecondPerAsset, address _timelockAddress)",
@@ -1289,6 +1578,44 @@
       "function togglePauseDepositEther()",
       "function togglePauseSubmits()",
       "function withholdRatio() view returns (uint256)"
+    ],
+    "0xc2544A32872A91F4A553b404C6950e89De901fdb": [
+      "constructor(address _creator_address, address _timelock_address, address _fpi_address)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event FPIAddressSet(address addr)",
+      "event MinterAdded(address minter_address)",
+      "event MinterRemoved(address minter_address)",
+      "event OwnerChanged(address oldOwner, address newOwner)",
+      "event OwnerNominated(address newOwner)",
+      "event TokenMinterBurned(address indexed from, address indexed to, uint256 amount)",
+      "event TokenMinterMinted(address indexed from, address indexed to, uint256 amount)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function FPI_TKN() view returns (address)",
+      "function acceptOwnership()",
+      "function addMinter(address minter_address)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function burn(uint256 amount)",
+      "function burnFrom(address account, uint256 amount)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function minter_burn_from(address b_address, uint256 b_amount)",
+      "function minter_mint(address m_address, uint256 m_amount)",
+      "function minters(address) view returns (bool)",
+      "function minters_array(uint256) view returns (address)",
+      "function name() view returns (string)",
+      "function nominateNewOwner(address _owner)",
+      "function nominatedOwner() view returns (address)",
+      "function owner() view returns (address)",
+      "function removeMinter(address minter_address)",
+      "function setFPIAddress(address fpi_contract_address)",
+      "function symbol() view returns (string)",
+      "function timelock_address() view returns (address)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 amount) returns (bool)",
+      "function transferFrom(address from, address to, uint256 amount) returns (bool)"
     ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
