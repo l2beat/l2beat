@@ -65,7 +65,7 @@ export class Application {
         livenessModule?.indexer as LivenessIndexer,
       ),
       createLzOAppsModule(config, logger),
-      createTvl2Module(config, logger, clock),
+      createTvl2Module(config, logger, http, database, clock),
     ]
 
     const apiServer = new ApiServer(
