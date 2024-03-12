@@ -1,6 +1,13 @@
 import { LoggerOptions } from '@l2beat/backend-tools'
 import { DiscoveryChainConfig } from '@l2beat/discovery'
-import { ChainId, ProjectId, Token, UnixTime } from '@l2beat/shared-pure'
+import {
+  AmountConfigEntry,
+  ChainId,
+  PriceConfigEntry,
+  ProjectId,
+  Token,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
 import { Project } from '../model/Project'
@@ -21,6 +28,7 @@ export interface Config {
   readonly api: ApiConfig
   readonly health: HealthConfig
   readonly tvl: TvlConfig
+  readonly tvl2: Tvl2Config | false
   readonly trackedTxsConfig: TrackedTxsConfig | false
   readonly finality: FinalityConfig | false
   readonly activity: ActivityConfig | false
@@ -70,6 +78,11 @@ export interface TvlConfig {
   readonly coingeckoApiKey: string | undefined
   readonly ethereum: ChainTvlConfig
   readonly modules: ChainTvlConfig[]
+}
+
+export interface Tvl2Config {
+  readonly prices: PriceConfigEntry[]
+  readonly amounts: AmountConfigEntry[]
 }
 
 export interface TrackedTxsConfig {

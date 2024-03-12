@@ -1,8 +1,8 @@
 {
   "name": "opticsV1",
   "chain": "ethereum",
-  "blockNumber": 18313257,
-  "configHash": "0x55955ea8ab48368cd47cea017d52275ae2007f82982dc5b4eb71e193b9121b76",
+  "blockNumber": 19418951,
+  "configHash": "0x1ec07a075a740ea984e67b0afea6f7e23e88bdb0f3cf9c927c17dc3d2b79d529",
   "version": 3,
   "contracts": [
     {
@@ -157,7 +157,7 @@
       "implementations": ["0xFC4060e4Fd5979f848b8EDc8505d2f89D83b9E04"],
       "sinceTimestamp": 1631138785,
       "values": {
-        "committedRoot": "0x1b70c6cd00cbf99ea474273c3a3b9201096ce5d1856c0a0979e1ab38c149b7f8",
+        "committedRoot": "0x455f04b906bf82846c36124b922a420af8481164743fd23b71f5bebac57317ac",
         "homeDomainHash": "0x59173efcb1579737af2864591230a38bbbf3a97113ba8e64761852aa96c4cd34",
         "localDomain": 6648936,
         "optimisticSeconds": 10800,
@@ -239,21 +239,21 @@
       "implementations": ["0xfAc41463ef1E01546F2130F92184a053A0E3Fa14"],
       "sinceTimestamp": 1631138149,
       "values": {
-        "committedRoot": "0xa8857b590730b15ed1812f2ebffc7e7be19be5c1e52d61503e129dac49cef809",
-        "count": 2246,
+        "committedRoot": "0x3a7147efac09479034f1b7ef0041d7fac3a3fe0fe6919ecbceb2fd30255eb677",
+        "count": 2247,
         "homeDomainHash": "0xae0c02ff12852e3fb80794f3504aa3d7393b3ef3149213ffe623be2cbe67e77c",
         "localDomain": 6648936,
         "MAX_MESSAGE_BODY_BYTES": 2048,
         "owner": "0x42303634F37956687fB7ff2c6146AC842481A052",
         "queueEnd": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "queueLength": 0,
-        "root": "0xa8857b590730b15ed1812f2ebffc7e7be19be5c1e52d61503e129dac49cef809",
+        "root": "0x3a7147efac09479034f1b7ef0041d7fac3a3fe0fe6919ecbceb2fd30255eb677",
         "state": 1,
         "suggestUpdate": [
           "0x0000000000000000000000000000000000000000000000000000000000000000",
           "0x0000000000000000000000000000000000000000000000000000000000000000"
         ],
-        "tree": 2246,
+        "tree": 2247,
         "updater": "0xDB2091535eb0Ee447Ce170DDC25204FEA822dd81",
         "updaterManager": "0x2CC80EE8a3f9c85309866F4C6BDF82f6846891EC",
         "VERSION": 0

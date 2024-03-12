@@ -23,6 +23,7 @@ import {
   getProxyGovernance,
   getSHARPVerifierContracts,
   getSHARPVerifierGovernors,
+  getSHARPVerifierUpgradeDelay,
 } from '../discovery/starkware'
 import { delayDescriptionFromSeconds } from '../utils/delayDescription'
 import { getStage } from './common/stages/getStage'
@@ -108,6 +109,7 @@ const minDelay = Math.min(
   escrowWSTETHDelaySeconds,
   escrowRETHDelaySeconds,
   escrowSTRKDelaySeconds,
+  getSHARPVerifierUpgradeDelay(),
 )
 
 function formatMaxTotalBalanceString(
