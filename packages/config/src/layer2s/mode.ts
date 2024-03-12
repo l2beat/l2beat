@@ -99,8 +99,8 @@ export const mode: Layer2 = opStack({
     chainId: 34443,
     explorerUrl: 'https://explorer.mode.network',
     explorerApi: {
-      url: 'https://explorer.mode.network/api\?',
-      type: 'blockscout',
+      url: 'https://api.routescan.io/v2/network/mainnet/evm/34443/etherscan/api',
+      type: 'etherscan',
     },
     // ~ Timestamp of block number 0 on Mode
     // The first full hour timestamp that will return the block number

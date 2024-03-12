@@ -1250,11 +1250,11 @@
       "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
       "coingeckoId": "renzo-restaked-eth",
       "type": "EBV",
-      "formula": "circulatingSupply",
+      "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Connext",
         "slug": "connext"
       }
-    },
+    }
   ]
 }

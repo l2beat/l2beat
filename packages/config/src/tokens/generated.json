@@ -3819,7 +3819,7 @@
       "iconUrl": "https://assets.coingecko.com/coins/images/34753/large/eth_renzo_logo_%281%29.png?1705956747",
       "chainId": 34443,
       "type": "EBV",
-      "formula": "circulatingSupply",
+      "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Connext",
         "slug": "connext"
