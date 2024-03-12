@@ -1,127 +1,161 @@
-// import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-// import { expect } from 'earl'
-// TODO: (tracked_tx) add this later
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { expect } from 'earl'
 
-// import { LivenessConfigurationRecord } from '../../liveness/repositories/LivenessConfigurationRepository'
-// import {
-//   LivenessConfigEntry,
-//   makeLivenessTransfer,
-// } from '../../liveness/types/LivenessConfig'
-// import { getSafeHeight } from './getSafeHeight'
+import {
+  trackedTxConfigEntryToRecord,
+  TrackedTxsConfigRecord,
+} from '../repositories/TrackedTxsConfigsRepository'
+import { TrackedTxId } from '../types/TrackedTxId'
+import { TrackedTxConfigEntry } from '../types/TrackedTxsConfig'
+import { getSafeHeight } from './getSafeHeight'
 
-// const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2021-01-01'))
-// const NOW = UnixTime.fromDate(new Date('2023-01-01'))
+const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2021-01-01'))
+const NOW = UnixTime.fromDate(new Date('2023-01-01'))
 
-// describe(getSafeHeight.name, () => {
-//   it('database and toAdd are empty', () => {
-//     const databaseEntries: LivenessConfigurationRecord[] = []
-//     const toAdd: LivenessConfigEntry[] = []
+describe(getSafeHeight.name, () => {
+  it('database and toAdd are empty', () => {
+    const databaseEntries: TrackedTxsConfigRecord[] = []
+    const toAdd: TrackedTxConfigEntry[] = []
 
-//     const result = getSafeHeight(databaseEntries, toAdd, MIN_TIMESTAMP)
+    const result = getSafeHeight(
+      databaseEntries,
+      configurationsToRecords(toAdd),
+      MIN_TIMESTAMP,
+    )
 
-//     expect(result).toEqual(MIN_TIMESTAMP.toNumber())
-//   })
+    expect(result).toEqual(MIN_TIMESTAMP.toNumber())
+  })
 
-//   it('database is empty, toAdd has one entries', () => {
-//     const databaseEntries: LivenessConfigurationRecord[] = []
-//     const sinceTimestamp = MIN_TIMESTAMP.add(365, 'days')
-//     const toAdd: LivenessConfigEntry[] = [getMockConfiguration(sinceTimestamp)]
+  it('database is empty, toAdd has one entries', () => {
+    const databaseEntries: TrackedTxsConfigRecord[] = []
+    const sinceTimestamp = MIN_TIMESTAMP.add(365, 'days')
+    const toAdd: TrackedTxConfigEntry[] = [getMockConfiguration(sinceTimestamp)]
 
-//     const result = getSafeHeight(databaseEntries, toAdd, MIN_TIMESTAMP)
+    const result = getSafeHeight(
+      databaseEntries,
+      configurationsToRecords(toAdd),
+      MIN_TIMESTAMP,
+    )
 
-//     expect(result).toEqual(sinceTimestamp.toNumber())
-//   })
+    expect(result).toEqual(sinceTimestamp.toNumber())
+  })
 
-//   it('database has entries, toAdd is empty', () => {
-//     const databaseEntries: LivenessConfigurationRecord[] = [
-//       getMockRecord(MIN_TIMESTAMP, NOW),
-//     ]
-//     const toAdd: LivenessConfigEntry[] = []
+  it('database has entries, toAdd is empty', () => {
+    const databaseEntries: TrackedTxsConfigRecord[] = [
+      getMockRecord(MIN_TIMESTAMP, NOW),
+    ]
+    const toAdd: TrackedTxConfigEntry[] = []
 
-//     const result = getSafeHeight(databaseEntries, toAdd, MIN_TIMESTAMP)
+    const result = getSafeHeight(
+      databaseEntries,
+      configurationsToRecords(toAdd),
+      MIN_TIMESTAMP,
+    )
 
-//     expect(result).toEqual(NOW.toNumber())
-//   })
+    expect(result).toEqual(NOW.toNumber())
+  })
 
-//   it('database & toAdd have entries', () => {
-//     const databaseEntries: LivenessConfigurationRecord[] = [
-//       getMockRecord(MIN_TIMESTAMP, NOW),
-//     ]
-//     const sinceTimestamp = MIN_TIMESTAMP.add(365, 'days')
-//     const toAdd: LivenessConfigEntry[] = [getMockConfiguration(sinceTimestamp)]
+  it('database & toAdd have entries', () => {
+    const databaseEntries: TrackedTxsConfigRecord[] = [
+      getMockRecord(MIN_TIMESTAMP, NOW),
+    ]
+    const sinceTimestamp = MIN_TIMESTAMP.add(365, 'days')
+    const toAdd: TrackedTxConfigEntry[] = [getMockConfiguration(sinceTimestamp)]
 
-//     const result = getSafeHeight(databaseEntries, toAdd, MIN_TIMESTAMP)
+    const result = getSafeHeight(
+      databaseEntries,
+      configurationsToRecords(toAdd),
+      MIN_TIMESTAMP,
+    )
 
-//     expect(result).toEqual(sinceTimestamp.toNumber())
-//   })
+    expect(result).toEqual(sinceTimestamp.toNumber())
+  })
 
-//   it('database entries with undefined lastSyncedTimestamp use sinceTimestamp', () => {
-//     const sinceTimestamp = MIN_TIMESTAMP.add(365, 'days')
+  it('database entries with undefined lastSyncedTimestamp use sinceTimestamp', () => {
+    const sinceTimestamp = MIN_TIMESTAMP.add(365, 'days')
 
-//     const databaseEntries: LivenessConfigurationRecord[] = [
-//       getMockRecord(sinceTimestamp, undefined),
-//     ]
-//     const toAdd: LivenessConfigEntry[] = []
+    const databaseEntries: TrackedTxsConfigRecord[] = [
+      getMockRecord(sinceTimestamp, undefined),
+    ]
+    const toAdd: TrackedTxConfigEntry[] = []
 
-//     const result = getSafeHeight(databaseEntries, toAdd, MIN_TIMESTAMP)
+    const result = getSafeHeight(
+      databaseEntries,
+      configurationsToRecords(toAdd),
+      MIN_TIMESTAMP,
+    )
 
-//     expect(result).toEqual(sinceTimestamp.toNumber())
-//   })
+    expect(result).toEqual(sinceTimestamp.toNumber())
+  })
 
-//   it('earliest timestamp is older than minimum timestamp', () => {
-//     const databaseEntries: LivenessConfigurationRecord[] = [
-//       getMockRecord(MIN_TIMESTAMP, NOW),
-//     ]
-//     const sinceTimestamp = MIN_TIMESTAMP.add(-1, 'hours')
-//     const toAdd: LivenessConfigEntry[] = [getMockConfiguration(sinceTimestamp)]
+  it('earliest timestamp is older than minimum timestamp', () => {
+    const databaseEntries: TrackedTxsConfigRecord[] = [
+      getMockRecord(MIN_TIMESTAMP, NOW),
+    ]
+    const sinceTimestamp = MIN_TIMESTAMP.add(-1, 'hours')
+    const toAdd: TrackedTxConfigEntry[] = [getMockConfiguration(sinceTimestamp)]
 
-//     const result = getSafeHeight(databaseEntries, toAdd, MIN_TIMESTAMP)
+    const result = getSafeHeight(
+      databaseEntries,
+      configurationsToRecords(toAdd),
+      MIN_TIMESTAMP,
+    )
 
-//     expect(result).toEqual(MIN_TIMESTAMP.toNumber())
-//   })
+    expect(result).toEqual(MIN_TIMESTAMP.toNumber())
+  })
 
-//   it('synced archived configuration does not affect safe height', () => {
-//     const databaseEntries: LivenessConfigurationRecord[] = [
-//       {
-//         ...getMockRecord(MIN_TIMESTAMP, NOW),
-//         untilTimestamp: NOW.add(-7, 'days'),
-//         lastSyncedTimestamp: NOW.add(-7, 'days'),
-//       },
-//       {
-//         ...getMockRecord(MIN_TIMESTAMP, NOW),
-//       },
-//     ]
+  it('synced archived configuration does not affect safe height', () => {
+    const databaseEntries: TrackedTxsConfigRecord[] = [
+      {
+        ...getMockRecord(MIN_TIMESTAMP, NOW),
+        untilTimestamp: NOW.add(-7, 'days'),
+        lastSyncedTimestamp: NOW.add(-7, 'days'),
+      },
+      {
+        ...getMockRecord(MIN_TIMESTAMP, NOW),
+      },
+    ]
 
-//     const result = getSafeHeight(databaseEntries, [], MIN_TIMESTAMP)
+    const result = getSafeHeight(databaseEntries, [], MIN_TIMESTAMP)
 
-//     expect(result).toEqual(NOW.toNumber())
-//   })
-// })
+    expect(result).toEqual(NOW.toNumber())
+  })
+})
 
-// function getMockConfiguration(sinceTimestamp: UnixTime) {
-//   return makeLivenessTransfer({
-//     sinceTimestamp,
-//     // the rest of params are irrelevant to the tests
-//     projectId: ProjectId('project1'),
-//     type: 'DA',
-//     formula: 'transfer',
-//     from: EthereumAddress.random(),
-//     to: EthereumAddress.random(),
-//   })
-// }
+function getMockConfiguration(sinceTimestamp: UnixTime): TrackedTxConfigEntry {
+  return {
+    sinceTimestamp,
+    // the rest of params are irrelevant to the tests
+    projectId: ProjectId('project1'),
+    formula: 'transfer',
+    from: EthereumAddress.random(),
+    to: EthereumAddress.random(),
+    uses: [
+      {
+        type: 'liveness',
+        subType: 'batchSubmissions',
+        id: TrackedTxId.random(),
+      },
+    ],
+  }
+}
 
-// const getMockRecord = (
-//   sinceTimestamp: UnixTime,
-//   lastSyncedTimestamp: UnixTime | undefined,
-// ): LivenessConfigurationRecord => {
-//   const { id, projectId, type } = getMockConfiguration(sinceTimestamp)
-//   return {
-//     sinceTimestamp,
-//     lastSyncedTimestamp,
-//     // the rest of params are irrelevant to the tests
-//     id,
-//     projectId,
-//     type,
-//     debugInfo: '',
-//   }
-// }
+const getMockRecord = (
+  sinceTimestamp: UnixTime,
+  lastSyncedTimestamp: UnixTime | undefined,
+): TrackedTxsConfigRecord => {
+  const { projectId, uses } = getMockConfiguration(sinceTimestamp)
+  return {
+    sinceTimestamp,
+    lastSyncedTimestamp,
+    // the rest of params are irrelevant to the tests
+    id: uses[0].id,
+    projectId,
+    debugInfo: '',
+    type: uses[0].type,
+    subtype: uses[0].subType,
+  }
+}
+
+const configurationsToRecords = (configs: TrackedTxConfigEntry[]) =>
+  configs.flatMap((c) => c.uses.map((u) => trackedTxConfigEntryToRecord(c, u)))

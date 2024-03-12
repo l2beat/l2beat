@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
 import {
-  trackedTxConfigEntryToRow,
+  trackedTxConfigEntryToRecord,
   TrackedTxsConfigRecord,
 } from '../repositories/TrackedTxsConfigsRepository'
 import { TrackedTxId } from '../types/TrackedTxId'
@@ -23,7 +23,7 @@ export function diffTrackedTxConfigurations(
       const databaseEntry = databaseEntries.find((e) => e.id === entryUse.id)
 
       if (!databaseEntry) {
-        const record = trackedTxConfigEntryToRow(entry, entryUse)
+        const record = trackedTxConfigEntryToRecord(entry, entryUse)
         toAdd.push(record)
         continue
       }

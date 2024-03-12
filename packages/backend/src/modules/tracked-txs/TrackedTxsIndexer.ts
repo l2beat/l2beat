@@ -44,6 +44,7 @@ export class TrackedTxsIndexer extends ChildIndexer {
 
   override async update(from: number, to: number): Promise<number> {
     const unixFrom = new UnixTime(from)
+
     const [configurations, adjustedTo] = await this.getConfiguration(from, to)
 
     if (configurations.length === 0) {
@@ -52,7 +53,7 @@ export class TrackedTxsIndexer extends ChildIndexer {
     }
 
     const txs = await this.trackedTxsClient.getData(
-      this.configs,
+      configurations,
       unixFrom,
       adjustedTo,
     )
@@ -118,7 +119,6 @@ export class TrackedTxsIndexer extends ChildIndexer {
 
     await this.stateRepository.runInTransaction(async (trx) => {
       await this.configRepository.addMany(toAdd, trx)
-
       await this.configRepository.deleteMany(toRemove, trx)
       await this.trimConfigurations(toTrim, trx)
       await this.initializeIndexerState(safeHeight, trx)

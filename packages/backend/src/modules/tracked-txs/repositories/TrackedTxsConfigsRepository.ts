@@ -133,7 +133,7 @@ function toRecord(row: TrackedTxsConfigRow): TrackedTxsConfigRecord {
   }
 }
 
-export function trackedTxConfigEntryToRow(
+export function trackedTxConfigEntryToRecord(
   entry: TrackedTxConfigEntry,
   entryUse: TrackedTxUseWithId,
 ) {

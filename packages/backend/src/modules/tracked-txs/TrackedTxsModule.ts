@@ -6,24 +6,21 @@ import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import { Database } from '../../peripherals/database/Database'
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
 import { Clock } from '../../tools/Clock'
-import { ApplicationModule } from '../ApplicationModule'
+import { ApplicationModuleWithIndexer } from '../ApplicationModule'
 import { LivenessUpdater } from '../liveness/LivenessUpdater'
-import { LivenessRepository } from '../liveness/repositories/LivenessRepository'
 import { HourlyIndexer } from './HourlyIndexer'
 import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsClient } from './TrackedTxsClient'
-import {
-  TrackedTxsIndexer,
-  TrackedTxsIndexerUpdaters,
-} from './TrackedTxsIndexer'
+import { TrackedTxsIndexer } from './TrackedTxsIndexer'
 
 export function createTrackedTxsModule(
   config: Config,
   logger: Logger,
   database: Database,
   clock: Clock,
-): ApplicationModule | undefined {
-  if (!config.trackedTxsConfig) {
+  livenessUpdater: LivenessUpdater | undefined,
+): ApplicationModuleWithIndexer<TrackedTxsIndexer> | undefined {
+  if (!config.trackedTxsConfig || !livenessUpdater) {
     logger.info('Tracked transactions module disabled')
     return
   }
@@ -53,7 +50,9 @@ export function createTrackedTxsModule(
     .flatMap((project) => project.trackedTxsConfig?.entries)
     .filter(notUndefined)
 
-  const updaters = initializeUpdaters(config, database, logger)
+  const updaters = {
+    liveness: livenessUpdater,
+  }
 
   const trackedTxsIndexer = new TrackedTxsIndexer(
     logger,
@@ -79,19 +78,4 @@ export function createTrackedTxsModule(
     routers: [],
     indexer: trackedTxsIndexer,
   }
-}
-
-function initializeUpdaters(
-  config: Config,
-  database: Database,
-  logger: Logger,
-): TrackedTxsIndexerUpdaters {
-  const livenessRepository = new LivenessRepository(database, logger)
-  const livenessUpdater = new LivenessUpdater(livenessRepository, logger)
-
-  const updaters: TrackedTxsIndexerUpdaters = {
-    liveness: livenessUpdater,
-  }
-
-  return updaters
 }

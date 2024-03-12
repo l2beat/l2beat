@@ -4,9 +4,10 @@ import { Config } from '../../config'
 import { Database } from '../../peripherals/database/Database'
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
 import { Clock } from '../../tools/Clock'
-import { ApplicationModule } from '../ApplicationModule'
+import { ApplicationModuleWithUpdater } from '../ApplicationModule'
 import { LivenessController } from './api/LivenessController'
 import { createLivenessRouter } from './api/LivenessRouter'
+import { LivenessUpdater } from './LivenessUpdater'
 import { LivenessRepository } from './repositories/LivenessRepository'
 
 export function createLivenessModule(
@@ -14,7 +15,7 @@ export function createLivenessModule(
   logger: Logger,
   database: Database,
   clock: Clock,
-): ApplicationModule | undefined {
+): ApplicationModuleWithUpdater<LivenessUpdater> | undefined {
   if (!config.trackedTxsConfig || !config.trackedTxsConfig.uses.liveness) {
     logger.info('Liveness module disabled')
     return
@@ -22,6 +23,7 @@ export function createLivenessModule(
 
   const indexerStateRepository = new IndexerStateRepository(database, logger)
   const livenessRepository = new LivenessRepository(database, logger)
+  const livenessUpdater = new LivenessUpdater(livenessRepository, logger)
 
   const livenessController = new LivenessController(
     livenessRepository,
@@ -45,5 +47,6 @@ export function createLivenessModule(
   return {
     start,
     routers: [livenessRouter],
+    updater: livenessUpdater,
   }
 }

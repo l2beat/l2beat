@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import { assert, assertUnreachable, notUndefined } from '@l2beat/shared-pure'
-import { ChildIndexer } from '@l2beat/uif'
 import { ethers } from 'ethers'
 
 import { Config } from '../../config'
@@ -11,6 +10,7 @@ import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
 import { LivenessRepository } from '../liveness/repositories/LivenessRepository'
+import { TrackedTxsIndexer } from '../tracked-txs/TrackedTxsIndexer'
 import { LineaFinalityAnalyzer } from './analyzers/LineaFinalityAnalyzer'
 import { zkSyncEraFinalityAnalyzer } from './analyzers/zkSyncEraFinalityAnalyzer'
 import { FinalityController } from './api/FinalityController'
@@ -23,7 +23,7 @@ export function createFinalityModule(
   logger: Logger,
   database: Database,
   clock: Clock,
-  trackedTxsIndexer: ChildIndexer | undefined,
+  trackedTxsIndexer: TrackedTxsIndexer | undefined,
 ): ApplicationModule | undefined {
   if (!config.finality) {
     logger.info('Finality module disabled')

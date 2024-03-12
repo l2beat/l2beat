@@ -45,11 +45,13 @@ export class Application {
       config.clock.safeTimeOffsetSeconds,
     )
 
+    const livenessModule = createLivenessModule(config, logger, database, clock)
     const trackedTxsModule = createTrackedTxsModule(
       config,
       logger,
       database,
       clock,
+      livenessModule?.updater,
     )
 
     const modules: (ApplicationModule | undefined)[] = [
@@ -62,7 +64,7 @@ export class Application {
       createStatusModule(config, logger),
       trackedTxsModule,
       // TODO: (tracked_tx) return updater from module
-      createLivenessModule(config, logger, database, clock),
+      livenessModule,
       createFinalityModule(
         config,
         logger,
