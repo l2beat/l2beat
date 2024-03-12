@@ -1,7 +1,7 @@
-import { upcoming } from './templates/upcoming'
+import { underReviewL2 } from './templates/underReview'
 import { Layer2 } from './types'
 
-export const astarzkevm: Layer2 = upcoming({
+export const astarzkevm: Layer2 = underReviewL2({
   id: 'astarzkevm',
   display: {
     name: 'Astar zkEVM',
@@ -17,12 +17,15 @@ export const astarzkevm: Layer2 = upcoming({
       websites: ['https://astar.network/astar2'],
       apps: [],
       documentation: ['https://docs.astar.network/docs/build/zkEVM/'],
-      explorers: [],
+      explorers: ['https://astar-zkevm.explorer.startale.com/'],
       repositories: [],
       socialMedia: [
         'https://twitter.com/AstarNetwork',
-        'https://twitter.com/AstarzkEVM',
+        'https://discord.com/invite/astarnetwork',
+        'https://youtube.com/@AstarNetwork',
+        'https://t.me/PlasmOfficial',
       ],
     },
   },
+  escrows: [],
 })
