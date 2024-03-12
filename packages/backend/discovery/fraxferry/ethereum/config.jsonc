@@ -5,8 +5,8 @@
   "initialAddresses": [
     "0x5e1D94021484642863Ea8E7Cb4F0188e56B18FEE",
     "0x4A6d155df9Ec9A1BB3639e6B7B99E46Fb68D42f6",
-    "0x9A576A3d39c589A861B46864C253288bcA428a6c", 
-    "0x958815f476cD07354c0BC034EE5077B20fD93003", 
+    "0x9A576A3d39c589A861B46864C253288bcA428a6c",
+    "0x958815f476cD07354c0BC034EE5077B20fD93003",
     "0x5c5f05cF8528FFe925A2264743bFfEdbAB2b0FE3",
     "0x2b4864c2F2A2C275C6C66B90a2ae6BE9fA9cbE47"
   ],
@@ -52,7 +52,7 @@
       ]
     },
     "fraxFerryBridge": {
-      "ignoreMethods": ["cancelled","batches"], // too many values
+      "ignoreMethods": ["cancelled", "batches"], // too many values
       "ignoreInWatchMode": ["noBatches"]
     },
     "fxsFerryBridge": {
@@ -95,7 +95,7 @@
     "FiewsOracle": {
       "ignoreMethods": ["withdrawable"]
     },
-    "FraxswapFactory":{
+    "FraxswapFactory": {
       "ignoreMethods": ["allPairs"]
     },
     "sfrxETH": {
@@ -153,29 +153,57 @@
     "CPITrackerOracle": {
       "ignoreMethods": ["cpi_observations,month_names"]
     },
-    "EACAggregatorProxy":{
-      "ignoreMethods": ["proposedLatestRoundData","getAnswer","getTimestamp"]
+    "EACAggregatorProxy": {
+      "ignoreMethods": ["proposedLatestRoundData", "getAnswer", "getTimestamp"]
     },
-    "AccessControlledOffchainAggregator":{
-      "ignoreMethods": ["description", "latestAnswer","latestRound","latestRoundData","latestTimestamp","latestTransmissionDetails","getAnswer","getTimestamp"]
+    "AccessControlledOffchainAggregator": {
+      "ignoreMethods": [
+        "description",
+        "latestAnswer",
+        "latestRound",
+        "latestRoundData",
+        "latestTimestamp",
+        "latestTransmissionDetails",
+        "getAnswer",
+        "getTimestamp"
+      ]
     },
-    "BokkyPooBahsDateTimeContract":{
+    "BokkyPooBahsDateTimeContract": {
       "ignoreDiscovery": true
     },
     "FraxswapPair": {
-      "ignoreMethods": ["getTwammRewardFactor,getTwammSalesRateEnding","TWAPObservationHistory"]
+      "ignoreMethods": [
+        "getTwammRewardFactor,getTwammSalesRateEnding",
+        "TWAPObservationHistory"
+      ]
     },
-    "FraxswapPair2":{
-      "ignoreMethods": ["getTwammOrder","getTwammRewardFactor,getTwammSalesRateEnding","TWAPObservationHistory"]
+    "FraxswapPair2": {
+      "ignoreMethods": [
+        "getTwammOrder",
+        "getTwammRewardFactor,getTwammSalesRateEnding",
+        "TWAPObservationHistory"
+      ]
     },
-    "FraxswapPair3":{
-      "ignoreMethods": ["getTwammOrder","getTwammRewardFactor,getTwammSalesRateEnding","TWAPObservationHistory"]
+    "FraxswapPair3": {
+      "ignoreMethods": [
+        "getTwammOrder",
+        "getTwammRewardFactor,getTwammSalesRateEnding",
+        "TWAPObservationHistory"
+      ]
     },
-    "FraxswapPair4":{
-      "ignoreMethods": ["getTwammOrder","getTwammRewardFactor,getTwammSalesRateEnding","TWAPObservationHistory"]
+    "FraxswapPair4": {
+      "ignoreMethods": [
+        "getTwammOrder",
+        "getTwammRewardFactor,getTwammSalesRateEnding",
+        "TWAPObservationHistory"
+      ]
     },
-    "FraxswapPair5":{
-      "ignoreMethods": ["getTwammOrder","getTwammRewardFactor,getTwammSalesRateEnding","TWAPObservationHistory"]
+    "FraxswapPair5": {
+      "ignoreMethods": [
+        "getTwammOrder",
+        "getTwammRewardFactor,getTwammSalesRateEnding",
+        "TWAPObservationHistory"
+      ]
     },
     "WETH9": {
       "ignoreDiscovery": true
@@ -188,6 +216,6 @@
     },
     "USDC": {
       "ignoreDiscovery": true
-    },
+    }
   }
 }
