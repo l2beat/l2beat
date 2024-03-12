@@ -8,12 +8,13 @@ import {
 
 import {
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   makeBridgeCompatible,
+  makeDataAvailabilityConfig,
   NEW_CRYPTOGRAPHY,
   NUGGETS,
   OPERATOR,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { FORCE_TRANSACTIONS } from '../common/forceTransactions'
 import { RISK_VIEW } from '../common/riskView'
@@ -70,7 +71,6 @@ export const paradex: Layer2 = {
       'Paradex is a high-performance crypto-derivatives exchange built on a Starknet Appchain.',
     purposes: ['Exchange'],
     category: 'ZK Rollup',
-    dataAvailabilityMode: 'StateDiffs',
 
     links: {
       websites: ['https://paradex.trade/'],
@@ -149,6 +149,11 @@ export const paradex: Layer2 = {
     ],
     finality: 'coming soon',
   },
+  dataAvailability: makeDataAvailabilityConfig({
+    type: 'On chain',
+    layer: 'Ethereum (calldata)',
+    mode: 'State diffs',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
@@ -211,7 +216,7 @@ export const paradex: Layer2 = {
   technology: {
     stateCorrectness: STATE_CORRECTNESS.VALIDITY_PROOFS,
     newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
-    dataAvailability: DATA_AVAILABILITY.STARKNET_ON_CHAIN,
+    dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKNET_ON_CHAIN,
     operator: OPERATOR.CENTRALIZED_OPERATOR,
     forceTransactions: {
       ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,

@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, Sentiment } from '@l2beat/shared-pure'
 
 import {
   KnowledgeNugget,
@@ -6,9 +6,9 @@ import {
   Milestone,
   ScalingProjectConfig,
   ScalingProjectContracts,
+  ScalingProjectDataAvailability,
   ScalingProjectDisplay,
   ScalingProjectPermission,
-  Sentiment,
 } from '../../common'
 import { ChainConfig } from '../../common/ChainConfig'
 import { ScalingProjectRiskView } from '../../common/ScalingProjectRiskView'
@@ -37,6 +37,8 @@ export interface Layer2 {
   config: Layer2Config
   /** Technical chain configuration */
   chainConfig?: ChainConfig
+  /** Data availability of scaling project project */
+  dataAvailability?: ScalingProjectDataAvailability
   /** Risk view values for this layer2 */
   riskView: ScalingProjectRiskView
   /** Rollup stage */

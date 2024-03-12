@@ -2,13 +2,14 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
+  makeDataAvailabilityConfig,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
@@ -50,7 +51,7 @@ export const bobanetwork: Layer2 = {
     purposes: ['Universal'],
     provider: 'OVM',
     category: 'Optimistic Rollup',
-    dataAvailabilityMode: 'TxData',
+
     links: {
       websites: ['https://boba.network'],
       apps: [],
@@ -131,6 +132,11 @@ export const bobanetwork: Layer2 = {
     ],
     finality: 'coming soon',
   },
+  dataAvailability: makeDataAvailabilityConfig({
+    type: 'On chain',
+    layer: 'Ethereum (calldata)',
+    mode: 'Transactions data',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: {
@@ -229,7 +235,7 @@ export const bobanetwork: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
       references: [
         {
           text: 'Data Availability Batches - Paradigm Research',

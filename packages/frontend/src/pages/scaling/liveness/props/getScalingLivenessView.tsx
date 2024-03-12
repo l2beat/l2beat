@@ -48,7 +48,7 @@ function getScalingLivenessViewEntry(
     warning: project.display.warning,
     redWarning: project.display.redWarning,
     category: project.display.category,
-    dataAvailabilityMode: project.display.dataAvailabilityMode,
+    dataAvailabilityMode: project.dataAvailability?.mode,
     provider: project.display.provider,
     stage: project.stage,
     explanation: project.display.liveness?.explanation,

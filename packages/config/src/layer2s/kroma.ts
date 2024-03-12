@@ -7,12 +7,13 @@ import {
 
 import {
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
+  makeDataAvailabilityConfig,
   NUGGETS,
   OPERATOR,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { subtractOne } from '../common/assessCount'
 import { RISK_VIEW } from '../common/riskView'
@@ -75,7 +76,7 @@ export const kroma: Layer2 = {
       'Kroma aims to develop an universal ZK Rollup based on the Optimism Bedrock architecture. Currently, Kroma operates as an Optimistic Rollup with ZK fault proofs, utilizing a zkEVM based on Scroll.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
-    dataAvailabilityMode: 'TxData',
+
     provider: 'OP Stack',
     links: {
       websites: ['https://kroma.network/'],
@@ -179,6 +180,11 @@ export const kroma: Layer2 = {
       lag: 0,
     },
   },
+  dataAvailability: makeDataAvailabilityConfig({
+    type: 'On chain',
+    layer: 'Ethereum (calldata)',
+    mode: 'Transactions data',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_FP_INT_ZK,
@@ -300,7 +306,7 @@ export const kroma: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
       references: [
         {
           text: 'Derivation: Batch Submission - Kroma specs',

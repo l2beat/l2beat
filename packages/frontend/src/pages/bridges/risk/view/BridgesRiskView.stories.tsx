@@ -925,7 +925,7 @@ export const ActiveWithCanonicalBridges: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     await userEvent.click(canvas.getByText('Active projects'), { delay: 25 })
-    await userEvent.click(canvas.getByText('Include canonical bridges'))
+    await userEvent.click(canvas.getByText('Canonical bridges'))
   },
 }
 
@@ -940,6 +940,6 @@ export const ArchivedWithCanonicalBridges: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     await userEvent.click(canvas.getByText('Archived projects'), { delay: 25 })
-    await userEvent.click(canvas.getByText('Include canonical bridges'))
+    await userEvent.click(canvas.getByText('Canonical bridges'))
   },
 }

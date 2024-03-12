@@ -1,4 +1,4 @@
-import { Sentiment, WarningWithSentiment } from '@l2beat/config'
+import { Sentiment, WarningWithSentiment } from '@l2beat/shared-pure'
 
 type Risk =
   | 'sequencerFailure'
