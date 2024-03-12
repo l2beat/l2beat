@@ -1,7 +1,6 @@
 import { Layer2, ScalingProjectDataAvailabilityMode } from '@l2beat/config'
 import {
   FinalityApiResponse,
-  FinalityApiResponse,
   FinalityProjectData,
   formatSeconds,
   notUndefined,
