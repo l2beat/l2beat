@@ -1,11 +1,8 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { NUGGETS } from '../common'
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
-
-const discovery = new ProjectDiscovery('sygma')
 
 export const sygma: Bridge = {
   type: 'bridge',
@@ -16,32 +13,29 @@ export const sygma: Bridge = {
     category: 'Hybrid',
     description:
       'Sygma is a modular, open-source, cross-consensus interoperability protocol enabling asset transfers, non-fungible tokens, and cross-chain execution. With Sygma, developers can easily extend their applications across Ethereum mainnet, Base, Cronos, Polygon, Gnosis, Polkadot, Kusama, and other Substrate-based chains with active work on Bitcoin and Cosmos SDK interoperability.',
-    detailedDescription: 
-      `Sygma seeks to solve interoperability challenges via innovations in dynamic cross-chain message routing and Zero-knowledge (Spectre) and Optimistic (Zipline) co-processing capabilities. The system is designed to automatically take a user's context into account, selecting the most optimal combination of verification systems and tailoring its security path, abstracting even the most arduous cross-chain complexities.`,
+    detailedDescription: `Sygma seeks to solve interoperability challenges via innovations in dynamic cross-chain message routing and Zero-knowledge (Spectre) and Optimistic (Zipline) co-processing capabilities. The system is designed to automatically take a user's context into account, selecting the most optimal combination of verification systems and tailoring its security path, abstracting even the most arduous cross-chain complexities.`,
     links: {
       websites: [
         'https://buildwithsygma.com/',
         'https://blog.buildwithsygma.com',
       ],
-      documentation: [
-        `https://docs.buildwithsygma.com`,
-      ],
+      documentation: [`https://docs.buildwithsygma.com`],
       explorers: [
         `https://scan.buildwithsygma.com`,
-        `https://scan.test.buildwithsygma.com`
+        `https://scan.test.buildwithsygma.com`,
       ],
       repositories: ['https://github.com/sygmaprotocol'],
       socialMedia: [
         'https://discord.gg/Qdf6GyNB5J',
         'https://twitter.com/buildwithsygma',
-        `https://t.me/buildwithsygma`
+        `https://t.me/buildwithsygma`,
       ],
       apps: [
         `https://subbridge.io`,
         'https://transfer-ui.test.buildwithsygma.com/transfer',
         'https://faucet-ui-stage.buildwithsygma.com/',
         'https://validator.faucet.chainsafe.dev/upload',
-      ]
+      ],
     },
   },
   riskView: {
@@ -59,7 +53,8 @@ export const sygma: Bridge = {
     destinationToken: RISK_VIEW.CANONICAL_OR_WRAPPED,
   },
   technology: {
-    destination: [ // these are the currently supported networks on mainnet, but the main integration available is our backend integration for PHA tokens between the EVM<->Phala/Khala routes on Phala's SubBridge 
+    destination: [
+      // these are the currently supported networks on mainnet, but the main integration available is our backend integration for PHA tokens between the EVM<->Phala/Khala routes on Phala's SubBridge
       'Ethereum',
       'Phala',
       'Khala',
@@ -70,8 +65,7 @@ export const sygma: Bridge = {
     ],
     principleOfOperation: {
       name: 'Principle of operation',
-      description:
-        `Sygma currently leverages an MPC relayer network along with threshold signature schemes (TSS) to facilitate cross-chain transfers.`,
+      description: `Sygma currently leverages an MPC relayer network along with threshold signature schemes (TSS) to facilitate cross-chain transfers.`,
       references: [],
       risks: [],
     },
@@ -120,36 +114,42 @@ export const sygma: Bridge = {
   },
   contracts: {
     addresses: [
-        {
-            address: EthereumAddress('0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089'),
-            name: 'Bridge',
-            description: 'The Bridge.sol contract facilitates and manages the cross-chain transfer of assets by recording and verifying deposit and withdrawal events across different blockchain networks.',
-        },
-        {
-            address: EthereumAddress('0xC832588193cd5ED2185daDA4A531e0B26eC5B830'),
-            name: 'ERC20Handler',
-            description: 'A contract that handles ERC20 tokens, enabling their deposit, withdrawal, and management within the protocol. This contract currently stores PHA tokens.',
-        },
-        {
-            address: EthereumAddress('0x1d34808907607FA82Fa1b51F5fBA5Ff5a3Fa90cF'),
-            name: 'FeeHandlerRouter',
-            description: 'The FeeHandlerRouter contract routes fee handling for cross-chain transactions to appropriate fee handlers based on the destination domain and resource ID, while managing exemptions through a whitelist system.',
-        },
-        {
-            address: EthereumAddress('0x9f9778DA7c1D0AbE148314d6C1EA6E0A93C151C7'),
-            name: 'BasicFeeHandler', // fixed fee
-            description: 'The BasicFeeHandler contract collects and manages deposit fees for cross-chain transactions, allowing for fee adjustments and the distribution of collected fees, intended for use with the bridge and fee router contract.',
-        },
-        {
-            address: EthereumAddress('0x31282123E7bcd947e2c1Bc364d564839574fAdCD'),
-            name: 'PermissionlessGenericHandler',
-            description: 'The PermissionlessGenericHandler contract facilitates the processing of generic deposits and their execution without permissions, integrating with the bridge contract for cross-chain interactions, and is designed to handle complex data encoding for executing transactions across chains.',
-        },
-        {
-            address: EthereumAddress('0x6c5bA91642F10282b576d91922Ae6448C9d52f4E'),
-            name: 'PHA',
-            description: 'Token contract address for PHA token, which is one of Sygmas supported routes between EVM and Phala/Khala.',
-        },
+      {
+        address: EthereumAddress('0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089'),
+        name: 'Bridge',
+        description:
+          'The Bridge.sol contract facilitates and manages the cross-chain transfer of assets by recording and verifying deposit and withdrawal events across different blockchain networks.',
+      },
+      {
+        address: EthereumAddress('0xC832588193cd5ED2185daDA4A531e0B26eC5B830'),
+        name: 'ERC20Handler',
+        description:
+          'A contract that handles ERC20 tokens, enabling their deposit, withdrawal, and management within the protocol. This contract currently stores PHA tokens.',
+      },
+      {
+        address: EthereumAddress('0x1d34808907607FA82Fa1b51F5fBA5Ff5a3Fa90cF'),
+        name: 'FeeHandlerRouter',
+        description:
+          'The FeeHandlerRouter contract routes fee handling for cross-chain transactions to appropriate fee handlers based on the destination domain and resource ID, while managing exemptions through a whitelist system.',
+      },
+      {
+        address: EthereumAddress('0x9f9778DA7c1D0AbE148314d6C1EA6E0A93C151C7'),
+        name: 'BasicFeeHandler', // fixed fee
+        description:
+          'The BasicFeeHandler contract collects and manages deposit fees for cross-chain transactions, allowing for fee adjustments and the distribution of collected fees, intended for use with the bridge and fee router contract.',
+      },
+      {
+        address: EthereumAddress('0x31282123E7bcd947e2c1Bc364d564839574fAdCD'),
+        name: 'PermissionlessGenericHandler',
+        description:
+          'The PermissionlessGenericHandler contract facilitates the processing of generic deposits and their execution without permissions, integrating with the bridge contract for cross-chain interactions, and is designed to handle complex data encoding for executing transactions across chains.',
+      },
+      {
+        address: EthereumAddress('0x6c5bA91642F10282b576d91922Ae6448C9d52f4E'),
+        name: 'PHA',
+        description:
+          'Token contract address for PHA token, which is one of Sygmas supported routes between EVM and Phala/Khala.',
+      },
     ],
     risks: [],
     isIncomplete: true,
@@ -161,7 +161,7 @@ export const sygma: Bridge = {
           address: EthereumAddress(
             '0xc4d8b2F5501C765dE0C5E12550118F397B197D05',
           ),
-          type: 'MultiSig', 
+          type: 'MultiSig',
         },
       ],
       name: 'Community MultiSig', // 4/6 GnosisSafeProxy
@@ -174,48 +174,47 @@ export const sygma: Bridge = {
           address: EthereumAddress(
             '0x86a73a594f74C76a6eB8F9E728d992D03252f60f',
           ),
-          type: 'EOA', 
+          type: 'EOA',
         },
         {
           address: EthereumAddress(
             '0xC6458dedf35231F524ED9d7E0DF77A60b9E08676',
           ),
-          type: 'EOA', 
+          type: 'EOA',
         },
         {
           address: EthereumAddress(
             '0xe845B1d31CaA16Bf6c6Bf5E97a28D086bd46FD49',
           ),
-          type: 'EOA', 
+          type: 'EOA',
         },
         {
           address: EthereumAddress(
             '0xa399460Ce767b06297457178D2F9F8f144017E77',
           ),
-          type: 'EOA', 
+          type: 'EOA',
         },
         {
           address: EthereumAddress(
             '0x0c1db86328E6CFCD4f530401131Dc9a26DefA12a',
           ),
-          type: 'EOA', 
+          type: 'EOA',
         },
         {
           address: EthereumAddress(
             '0xd85b34B2Fe1eC7815B6dF659372382A8FA229677',
           ),
-          type: 'EOA', 
+          type: 'EOA',
         },
       ],
       name: 'Community MultiSig Participants',
-      description:
-        'Participants of the 4/6 Sygma community multisig.',
+      description: 'Participants of the 4/6 Sygma community multisig.',
     },
     {
       accounts: [
         {
           address: EthereumAddress(
-            '0xde79695d5cefF7c324552B3ecbe6165f77FCdF53', 
+            '0xde79695d5cefF7c324552B3ecbe6165f77FCdF53',
           ),
           type: 'MultiSig', // 3/5 GnosisSafeProxy
         },
@@ -228,38 +227,37 @@ export const sygma: Bridge = {
       accounts: [
         {
           address: EthereumAddress(
-            '0x86a73a594f74C76a6eB8F9E728d992D03252f60f', 
+            '0x86a73a594f74C76a6eB8F9E728d992D03252f60f',
           ),
-          type: 'EOA', 
+          type: 'EOA',
         },
         {
           address: EthereumAddress(
-            '0x5a288b42dC222190D8cF5014A330c978ee42A5df', 
+            '0x5a288b42dC222190D8cF5014A330c978ee42A5df',
           ),
-          type: 'EOA', 
+          type: 'EOA',
         },
         {
           address: EthereumAddress(
-            '0xe845B1d31CaA16Bf6c6Bf5E97a28D086bd46FD49', 
+            '0xe845B1d31CaA16Bf6c6Bf5E97a28D086bd46FD49',
           ),
-          type: 'EOA', 
+          type: 'EOA',
         },
         {
           address: EthereumAddress(
-            '0xacc0268a75280192897a78C706C9FBA2d2b851C4', 
+            '0xacc0268a75280192897a78C706C9FBA2d2b851C4',
           ),
-          type: 'EOA', 
+          type: 'EOA',
         },
         {
           address: EthereumAddress(
-            '0x197C57440A30cB28103ab27CB1b0dC86E5907ADA', 
+            '0x197C57440A30cB28103ab27CB1b0dC86E5907ADA',
           ),
-          type: 'EOA', 
+          type: 'EOA',
         },
       ],
       name: 'Admin MultiSig Participants',
-      description:
-        'Participants of the 3/5 Sygma admin multisig.',
+      description: 'Participants of the 3/5 Sygma admin multisig.',
     },
   ],
   knowledgeNuggets: [
@@ -274,9 +272,9 @@ export const sygma: Bridge = {
       thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
     },
     {
-        title: 'Sygma governance',
-        url: 'https://docs.buildwithsygma.com/readme/governance/govintroduction',
-        thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
-      },
+      title: 'Sygma governance',
+      url: 'https://docs.buildwithsygma.com/readme/governance/govintroduction',
+      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
+    },
   ],
 }
