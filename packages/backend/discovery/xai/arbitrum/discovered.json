@@ -312,8 +312,8 @@
         "batchPosters": ["0x7F68dba68E72a250004812fe04F1123Fca89aBa9"],
         "bridge": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
         "dacKeyset": {
-          "threshold": 2,
-          "keyCount": 5
+          "requiredSignatures": 4,
+          "membersCount": 5
         },
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,

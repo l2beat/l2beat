@@ -3,6 +3,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
   makeBridgeCompatible,
+  makeDataAvailabilityConfig,
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
 } from '../common'
@@ -26,7 +27,7 @@ export const zkswap2: Layer2 = {
     purposes: ['Payments', 'AMM'],
     provider: 'zkSync Lite',
     category: 'ZK Rollup',
-    dataAvailabilityMode: 'StateDiffs',
+
     links: {
       websites: ['https://zks.org/'],
       apps: ['https://zks.app'],
@@ -55,6 +56,11 @@ export const zkswap2: Layer2 = {
       },
     ],
   },
+  dataAvailability: makeDataAvailabilityConfig({
+    type: 'On chain',
+    layer: 'Ethereum (calldata)',
+    mode: 'State diffs',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,

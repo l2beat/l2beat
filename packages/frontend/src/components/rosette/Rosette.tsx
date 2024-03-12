@@ -1,16 +1,14 @@
 import React from 'react'
 
 import { cn } from '../../utils/cn'
-import {
-  sentimentToFillColor,
-  sentimentToTextColor,
-} from '../../utils/risks/color'
+import { sentimentToFillColor } from '../../utils/risks/color'
 import { RiskSentiments, RiskValue, RiskValues } from '../../utils/risks/types'
 import { getRiskSentiments } from '../../utils/risks/values'
 import { UpcomingBadge } from '../badge/UpcomingBadge'
 import { RoundedWarningIcon } from '../icons'
 import { Icon } from '../icons/Icon'
 import { WarningBar } from '../project/WarningBar'
+import { SentimentText } from '../table/SentimentText'
 
 export interface RosetteProps {
   risks: RiskSentiments
@@ -404,19 +402,17 @@ function OverlayBox({
         className,
       )}
     >
-      <span
-        className={cn(
-          'mb-2 flex items-center gap-1 font-medium',
-          sentimentToTextColor(risk.sentiment),
-        )}
+      <SentimentText
+        sentiment={risk.sentiment}
+        className="mb-2 flex items-center gap-1 font-medium"
       >
         {risk.value}
-      </span>
+      </SentimentText>
       {risk.warning && (
         <WarningBar
           className="mb-2"
           icon={RoundedWarningIcon}
-          text={risk.warning.text}
+          text={risk.warning.value}
           color={risk.warning.sentiment === 'bad' ? 'red' : 'yellow'}
         />
       )}
