@@ -8,7 +8,7 @@ Generated with discovered.json: 0x7e752b312976dbd0b9a0d36ec7ec6aba97d5a5ed
 
 ## Description
 
-All deposit caps for liquid staking tokens are temporarily increased to the maximum value on Feb 5th 2014.
+All deposit caps for the 12 supported liquid staking tokens are increased to the maximum value on Feb 5th 2024.
 
 ## Watched changes
 
