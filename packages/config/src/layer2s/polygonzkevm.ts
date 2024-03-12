@@ -7,15 +7,16 @@ import {
 
 import {
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
   makeBridgeCompatible,
+  makeDataAvailabilityConfig,
   NUGGETS,
   RISK_VIEW,
   SEQUENCER_NO_MECHANISM,
   STATE_CORRECTNESS,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
@@ -71,7 +72,7 @@ const exitWindowRisk = {
     trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
   )}.`,
   warning: {
-    text: 'The Security Council can remove the delay on upgrades.',
+    value: 'The Security Council can remove the delay on upgrades.',
     sentiment: 'bad',
   },
 } as const
@@ -103,7 +104,6 @@ export const polygonzkevm: Layer2 = {
       'Polygon zkEVM is a EVM-compatible ZK Rollup built by Polygon Labs.',
     purposes: ['Universal'],
     category: 'ZK Rollup',
-    dataAvailabilityMode: 'TxData',
     provider: 'Polygon',
     links: {
       websites: ['https://polygon.technology/polygon-zkevm'],
@@ -132,6 +132,9 @@ export const polygonzkevm: Layer2 = {
       content:
         'The TVL is currently shared among all projects using the shared Polygon CDK contracts.',
       sentiment: 'warning',
+    },
+    finality: {
+      finalizationPeriod: 0,
     },
   },
   config: {
@@ -245,6 +248,7 @@ export const polygonzkevm: Layer2 = {
         },
       ],
     },
+    finality: 'coming soon',
   },
   chainConfig: {
     name: 'polygonzkevm',
@@ -263,6 +267,11 @@ export const polygonzkevm: Layer2 = {
       },
     ],
   },
+  dataAvailability: makeDataAvailabilityConfig({
+    type: 'On chain',
+    layer: 'Ethereum (calldata)',
+    mode: 'Transactions data',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
@@ -359,7 +368,7 @@ export const polygonzkevm: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
       references: [
         {
           text: 'PolygonZkEVMExistentEtrog.sol - Etherscan source code, sequenceBatches function',

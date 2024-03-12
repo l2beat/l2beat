@@ -36,6 +36,11 @@ const MERKLE_STATEMENT_CONTRACT = discovery.getContractDetails(
   'Part of STARK Verifier.',
 )
 
+const upgradeDelay = discovery.getContractUpgradeabilityParam(
+  'SHARPVerifierProxy',
+  'upgradeDelay',
+)
+
 const SHARP_VERIFIER_CONTRACTS = [
   SHARP_VERIFIER_PROXY,
   SHARP_VERIFIER,
@@ -82,4 +87,8 @@ export function getSHARPVerifierGovernors(
       'SHARP Verifier Governor.',
     ),
   ]
+}
+
+export function getSHARPVerifierUpgradeDelay() {
+  return upgradeDelay
 }

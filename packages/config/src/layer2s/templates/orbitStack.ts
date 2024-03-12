@@ -3,16 +3,17 @@ import { assert, ProjectId } from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   KnowledgeNugget,
   makeBridgeCompatible,
+  makeDataAvailabilityConfig,
   Milestone,
   OPERATOR,
   RISK_VIEW,
   ScalingProjectEscrow,
   ScalingProjectPermission,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -112,14 +113,19 @@ export function orbitStackCommon(
       },
       dataAvailability: postsToExternalDA
         ? (() => {
-            const DAC = templateVars.discovery.getContractValue<
-              Record<string, number>
-            >('SequencerInbox', 'dacKeyset')
+            const DAC = templateVars.discovery.getContractValue<{
+              membersCount: number
+              requiredSignatures: number
+            }>('SequencerInbox', 'dacKeyset')
+            const { membersCount, requiredSignatures } = DAC
 
-            return DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN(DAC)
+            return TECHNOLOGY_DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN({
+              membersCount,
+              requiredSignatures,
+            })
           })()
         : {
-            ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
+            ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
             references: [
               {
                 text: 'Sequencing followed by deterministic execution - Arbitrum documentation',
@@ -225,6 +231,7 @@ export function orbitStackCommon(
 
 export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
   const assumedBlockTime = 12 // seconds, different from RollupUserLogic.sol#L35 which assumes 13.2 seconds
+
   const validatorAfkBlocks = templateVars.discovery.getContractValue<number>(
     'RollupProxy',
     'VALIDATOR_AFK_BLOCKS',
@@ -259,16 +266,20 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
       ...templateVars.display,
       provider: 'Arbitrum Orbit',
       category: postsToExternalDA ? 'Optimium' : 'Optimistic Rollup',
-      dataAvailabilityMode: 'NotApplicable',
     },
     riskView: makeBridgeCompatible({
       stateValidation: RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(nOfChallengers),
       dataAvailability: postsToExternalDA
         ? (() => {
-            const DAC = templateVars.discovery.getContractValue<
-              Record<string, number>
-            >('SequencerInbox', 'dacKeyset')
-            return RISK_VIEW.DATA_EXTERNAL_DAC(DAC)
+            const DAC = templateVars.discovery.getContractValue<{
+              membersCount: number
+              requiredSignatures: number
+            }>('SequencerInbox', 'dacKeyset')
+            const { membersCount, requiredSignatures } = DAC
+            return RISK_VIEW.DATA_EXTERNAL_DAC({
+              membersCount,
+              requiredSignatures,
+            })
           })()
         : RISK_VIEW.DATA_ON_CHAIN_L2,
       exitWindow: RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelay),
@@ -300,6 +311,12 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
 
 export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
   const assumedBlockTime = 12 // seconds, different from RollupUserLogic.sol#L35 which assumes 13.2 seconds
+  const challengeWindow = templateVars.discovery.getContractValue<number>(
+    'RollupProxy',
+    'confirmPeriodBlocks',
+  )
+  const challengeWindowSeconds = challengeWindow * assumedBlockTime
+
   const validatorAfkBlocks = templateVars.discovery.getContractValue<number>(
     'RollupProxy',
     'VALIDATOR_AFK_BLOCKS',
@@ -330,7 +347,9 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       ...templateVars.display,
       provider: 'Arbitrum',
       category: postsToExternalDA ? 'Optimium' : 'Optimistic Rollup',
-      dataAvailabilityMode: postsToExternalDA ? 'NotApplicable' : 'TxData',
+      finality: {
+        finalizationPeriod: challengeWindowSeconds,
+      },
     },
     stage: postsToExternalDA
       ? {
@@ -356,14 +375,38 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
             delayWith30DExitWindow: false,
           },
         }),
+    dataAvailability: postsToExternalDA
+      ? (() => {
+          const DAC = templateVars.discovery.getContractValue<{
+            membersCount: number
+            requiredSignatures: number
+          }>('SequencerInbox', 'dacKeyset')
+          const { membersCount, requiredSignatures } = DAC
+
+          return makeDataAvailabilityConfig({
+            type: 'Off chain (DAC)',
+            config: { membersCount, requiredSignatures },
+            mode: 'Transactions data (compressed)',
+          })
+        })()
+      : makeDataAvailabilityConfig({
+          type: 'On chain',
+          layer: 'Ethereum (calldata)',
+          mode: 'Transactions data (compressed)',
+        }),
     riskView: makeBridgeCompatible({
       stateValidation: RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(nOfChallengers),
       dataAvailability: postsToExternalDA
         ? (() => {
-            const DAC = templateVars.discovery.getContractValue<
-              Record<string, number>
-            >('SequencerInbox', 'dacKeyset')
-            return RISK_VIEW.DATA_EXTERNAL_DAC(DAC)
+            const DAC = templateVars.discovery.getContractValue<{
+              membersCount: number
+              requiredSignatures: number
+            }>('SequencerInbox', 'dacKeyset')
+            const { membersCount, requiredSignatures } = DAC
+            return RISK_VIEW.DATA_EXTERNAL_DAC({
+              membersCount,
+              requiredSignatures,
+            })
           })()
         : RISK_VIEW.DATA_ON_CHAIN_L2,
       exitWindow: RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelay),
@@ -398,6 +441,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
               assessCount: subtractOne,
             }
           : undefined),
+      finality: 'coming soon',
     },
   }
 }

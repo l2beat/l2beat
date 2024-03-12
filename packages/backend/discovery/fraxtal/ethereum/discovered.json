@@ -1,7 +1,7 @@
 {
   "name": "fraxtal",
   "chain": "ethereum",
-  "blockNumber": 19384276,
+  "blockNumber": 19412037,
   "configHash": "0x41fba32935dfefceb337209a73f2bc0220ae27f9471bc887ec450274f75d5fad",
   "version": 3,
   "contracts": [
@@ -13,8 +13,8 @@
       },
       "sinceTimestamp": 1602667372,
       "values": {
-        "get_deposit_count": "0xf74d140000000000",
-        "get_deposit_root": "0x6464d8524ee4acaa665e8dad2678ad62801931b0b8ffabcfef1c58fb08e65bba"
+        "get_deposit_count": "0x216e140000000000",
+        "get_deposit_root": "0xebc662758c18d40bff747e33df47928d93bee5422a06265021792c83a6919b4b"
       },
       "derivedName": "DepositContract"
     },
@@ -48,7 +48,7 @@
       "sinceTimestamp": 1706811599,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620588",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620903",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -94,7 +94,8 @@
         "gasLimit": 30000000,
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isSomeTxsLengthEqualToCelestiaDAExample": false
+          "isSomeTxsLengthEqualToCelestiaDAExample": false,
+          "isSequencerSendingBlobTx": false
         },
         "overhead": 188,
         "owner": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
@@ -155,7 +156,7 @@
         "L2_ORACLE": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
         "l2Oracle": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [10000000, 490798, 19384206],
+        "params": [10000000, 490798, 19411696],
         "paused": false,
         "superchainConfig": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
         "SYSTEM_CONFIG": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
@@ -183,7 +184,7 @@
         "owner": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
         "symbol": "frxETH",
         "timelock_address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
-        "totalSupply": "300704809890762390115977"
+        "totalSupply": "299772010309506685613545"
       },
       "derivedName": "frxETH"
     },
@@ -223,10 +224,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 1506600,
-        "latestOutputIndex": 836,
-        "nextBlockNumber": 1508400,
-        "nextOutputIndex": 837,
+        "latestBlockNumber": 1674000,
+        "latestOutputIndex": 929,
+        "nextBlockNumber": 1675800,
+        "nextOutputIndex": 930,
         "proposer": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
         "PROPOSER": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
         "startingBlockNumber": 0,
@@ -258,7 +259,7 @@
           "0x6e74053a3798e0fC9a9775F7995316b27f21c4D2"
         ],
         "getThreshold": 3,
-        "nonce": 897,
+        "nonce": 905,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -327,12 +328,12 @@
         "lastRewardAmount": "207315000000000000000",
         "lastSync": 1709770187,
         "name": "Staked Frax Ether",
-        "pricePerShare": "1077731531829649012",
+        "pricePerShare": "1078313291714137835",
         "rewardsCycleEnd": 1710374400,
         "rewardsCycleLength": 604800,
         "symbol": "sfrxETH",
-        "totalAssets": "215315452318882179382236",
-        "totalSupply": "199785796332175875330451"
+        "totalAssets": "210825020882227046426125",
+        "totalSupply": "195513699499233304211853"
       },
       "derivedName": "sfrxETH"
     },
@@ -357,7 +358,7 @@
           "0x05FB8eC3C41da95b26fCb85503DaF8B89B89A935"
         ],
         "getThreshold": 3,
-        "nonce": 5347,
+        "nonce": 5360,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -370,7 +371,7 @@
       },
       "sinceTimestamp": 1665022895,
       "values": {
-        "currentWithheldETH": "142680688336532742780",
+        "currentWithheldETH": "497853136345886015583",
         "DEPOSIT_SIZE": "32000000000000000000",
         "depositContract": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
         "depositEtherPaused": false,
@@ -382,7 +383,7 @@
         "sfrxETHToken": "0xac3E018457B222d93114458476f3E3416Abbe38F",
         "submitPaused": false,
         "timelock_address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
-        "withholdRatio": 920000
+        "withholdRatio": 980000
       },
       "derivedName": "frxETHMinter"
     },

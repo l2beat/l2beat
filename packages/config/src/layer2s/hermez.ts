@@ -2,7 +2,6 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
@@ -10,6 +9,7 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { Layer2 } from './types'
 
@@ -29,7 +29,7 @@ export const hermez: Layer2 = {
     purposes: ['Payments'],
     category: 'ZK Rollup',
     // TODO: This is not correct. Research it.
-    dataAvailabilityMode: 'NotApplicable',
+
     provider: 'Polygon',
     links: {
       websites: ['https://hermez.io/'],
@@ -95,7 +95,7 @@ export const hermez: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...DATA_AVAILABILITY.ON_CHAIN,
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       references: [
         {
           text: 'Data Availability - Hermez documentation',

@@ -1,15 +1,22 @@
 import { ContractParameters } from '@l2beat/discovery-types'
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   KnowledgeNugget,
   makeBridgeCompatible,
+  makeDataAvailabilityConfig,
   Milestone,
   NUGGETS,
+  OffChainDataAvailabilityFallback,
+  OffChainDataAvailabilityLayer,
   OPERATOR,
   RISK_VIEW,
   ScalingProjectContract,
@@ -18,6 +25,7 @@ import {
   ScalingProjectRiskViewEntry,
   ScalingProjectStateDerivation,
   ScalingProjectTechnologyChoice,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { subtractOne } from '../../common/assessCount'
 import { ChainConfig } from '../../common/ChainConfig'
@@ -34,11 +42,12 @@ import {
 export const CELESTIA_DA_PROVIDER: DAProvider = {
   name: 'Celestia',
   riskView: RISK_VIEW.DATA_CELESTIA(false),
-  technology: DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(false),
+  technology: TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(false),
 }
 
 export interface DAProvider {
-  name: string
+  name: Exclude<OffChainDataAvailabilityLayer, 'DAC'>
+  fallback?: OffChainDataAvailabilityFallback
   riskView: ScalingProjectRiskViewEntry
   technology: ScalingProjectTechnologyChoice
 }
@@ -67,7 +76,7 @@ export interface OpStackConfig {
   nonTemplateEscrows: ScalingProjectEscrow[]
   nonTemplateOptimismPortalEscrowTokens?: string[]
   associatedTokens?: string[]
-  isNodeAvailable: boolean | 'UnderReview'
+  isNodeAvailable?: boolean | 'UnderReview'
   chainConfig?: ChainConfig
   upgradesAndGovernance?: string
   hasProperSecurityCouncil?: boolean
@@ -84,18 +93,28 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
     'ETH',
     ...(templateVars.nonTemplateOptimismPortalEscrowTokens ?? []),
   ]
+
+  const postsToCelestia = templateVars.discovery.getContractValue<{
+    isSomeTxsLengthEqualToCelestiaDAExample: boolean
+  }>('SystemConfig', 'opStackDA').isSomeTxsLengthEqualToCelestiaDAExample
+  const daProvider =
+    templateVars.daProvider ??
+    (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
+
+  if (daProvider === undefined) {
+    assert(
+      templateVars.isNodeAvailable !== undefined,
+      'isNodeAvailable must be defined if no DA provider is defined',
+    )
+  }
+
   return {
     type: 'layer2',
     id: ProjectId(templateVars.discovery.projectName),
     display: {
       ...templateVars.display,
       provider: 'OP Stack',
-      category:
-        templateVars.daProvider !== undefined
-          ? 'Optimium'
-          : 'Optimistic Rollup',
-      dataAvailabilityMode:
-        templateVars.daProvider !== undefined ? 'NotApplicable' : 'TxData',
+      category: daProvider !== undefined ? 'Optimium' : 'Optimistic Rollup',
       warning:
         templateVars.display.warning === undefined
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
@@ -136,7 +155,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
             }
           : undefined),
       liveness:
-        templateVars.daProvider !== undefined
+        daProvider !== undefined
           ? undefined
           : {
               proofSubmissions: [],
@@ -162,16 +181,26 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
                 },
               ],
             },
-      finality:
-        templateVars.daProvider !== undefined
-          ? undefined
-          : templateVars.finality,
+      finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
     chainConfig: templateVars.chainConfig,
+    dataAvailability:
+      daProvider !== undefined
+        ? makeDataAvailabilityConfig({
+            type: 'Off chain',
+            layers: [daProvider.name, daProvider.fallback],
+            bridge: 'None',
+            mode: 'Transactions data (compressed)',
+          })
+        : makeDataAvailabilityConfig({
+            type: 'On chain',
+            layer: 'Ethereum (calldata)',
+            mode: 'Transactions data (compressed)',
+          }),
     riskView: makeBridgeCompatible({
       stateValidation: RISK_VIEW.STATE_NONE,
       dataAvailability: {
-        ...riskViewDA(templateVars.daProvider),
+        ...riskViewDA(daProvider),
         sources: [
           {
             contract: templateVars.portal.name,
@@ -220,7 +249,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
       validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
     }),
     stage:
-      templateVars.daProvider !== undefined
+      daProvider !== undefined || templateVars.isNodeAvailable === undefined
         ? {
             stage: 'NotApplicable',
           }
@@ -277,9 +306,9 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
         ],
       },
       dataAvailability: {
-        ...technologyDA(templateVars.daProvider),
+        ...technologyDA(daProvider),
         references: [
-          ...technologyDA(templateVars.daProvider).references,
+          ...technologyDA(daProvider).references,
           {
             text: 'Derivation: Batch submission - OP Mainnet specs',
             href: 'https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission',
@@ -439,5 +468,7 @@ function riskViewDA(DA: DAProvider | undefined): ScalingProjectRiskViewEntry {
 function technologyDA(
   DA: DAProvider | undefined,
 ): ScalingProjectTechnologyChoice {
-  return DA === undefined ? DATA_AVAILABILITY.ON_CHAIN : DA.technology
+  return DA === undefined
+    ? TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA
+    : DA.technology
 }

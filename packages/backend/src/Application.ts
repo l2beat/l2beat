@@ -14,6 +14,7 @@ import { createLzOAppsModule } from './modules/lz-oapps/createLzOAppsModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createStatusModule } from './modules/status/StatusModule'
 import { createTvlModule } from './modules/tvl/modules/TvlModule'
+import { createTvl2Module } from './modules/tvl2/Tvl2Module'
 import { createUpdateMonitorModule } from './modules/update-monitor/UpdateMonitorModule'
 import { Database } from './peripherals/database/Database'
 import { Clock } from './tools/Clock'
@@ -64,6 +65,7 @@ export class Application {
         livenessModule?.indexer as LivenessIndexer,
       ),
       createLzOAppsModule(config, logger),
+      createTvl2Module(config, logger, clock),
     ]
 
     const apiServer = new ApiServer(
