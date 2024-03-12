@@ -315,6 +315,18 @@
       "symbol": "FET",
       "address": "0xaea46A60368A7bD060eec7DF8CBa43b7EF41Ad85"
     },
+    { 
+      "symbol": "FPI",
+      "address": "0x5Ca135cB8527d76e932f34B5145575F9d8cbE08E"
+    },
+    {
+      "symbol": "FPIS",
+      "address": "0xc2544A32872A91F4A553b404C6950e89De901fdb"
+    },
+    {
+      "symbol": "sFRAX",
+      "address": "0xA663B02CF0a4b149d2aD41910CB81e23e1c41c32"
+    },
     {
       "symbol": "FRAX",
       "address": "0x853d955aCEf822Db058eb8505911ED77F175b99e"

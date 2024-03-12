@@ -40,21 +40,21 @@ export const fraxferry: Bridge = {
         sinceTimestamp: new UnixTime(0),
         tokens: ['sfrxETH'],
       },
-      //   {
-      //     address: EthereumAddress('0x9A576A3d39c589A861B46864C253288bcA428a6c'),
-      //     sinceTimestamp: new UnixTime(0),
-      //     tokens: ['FPI'],
-      //   },
-      //   {
-      //     address: EthereumAddress('0x958815f476cD07354c0BC034EE5077B20fD93003'),
-      //     sinceTimestamp: new UnixTime(0),
-      //     tokens: ['FPIS'],
-      //   },
-      //   {
-      //     address: EthereumAddress('0x2b4864c2F2A2C275C6C66B90a2ae6BE9fA9cbE47'),
-      //     sinceTimestamp: new UnixTime(0),
-      //     tokens: ['sFRAX'],
-      //   },
+        {
+          address: EthereumAddress('0x9A576A3d39c589A861B46864C253288bcA428a6c'),
+          sinceTimestamp: new UnixTime(0),
+          tokens: ['FPI'],
+        },
+        {
+          address: EthereumAddress('0x958815f476cD07354c0BC034EE5077B20fD93003'),
+          sinceTimestamp: new UnixTime(0),
+          tokens: ['FPIS'],
+        },
+        {
+          address: EthereumAddress('0x2b4864c2F2A2C275C6C66B90a2ae6BE9fA9cbE47'),
+          sinceTimestamp: new UnixTime(0),
+          tokens: ['sFRAX'],
+        },
     ],
   },
   riskView: {
