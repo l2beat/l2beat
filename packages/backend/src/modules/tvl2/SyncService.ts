@@ -14,6 +14,7 @@ export class SyncService {
     private readonly options: SyncServiceOptions,
   ) {}
 
+  // todo: minTimestamp per chain
   getTimestampToSync(timestamp: UnixTime): UnixTime {
     if (timestamp.lt(this.options.minTimestamp)) {
       return this.getTimestampToSync(this.options.minTimestamp)
