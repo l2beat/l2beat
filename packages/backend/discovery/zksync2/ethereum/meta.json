@@ -152,6 +152,16 @@
       }
     },
     {
+      "name": "Verifier",
+      "values": {
+        "verificationKeyHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "Governance",
       "values": {
         "minDelay": {
@@ -170,16 +180,6 @@
           "type": null
         },
         "securityCouncil": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "Verifier",
-      "values": {
-        "verificationKeyHash": {
           "description": null,
           "severity": null,
           "type": null

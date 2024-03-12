@@ -1,14 +1,28 @@
-Generated with discovered.json: 0x4615fda5dabe67d011b4b78f13c92b9e9fc57192
+Generated with discovered.json: 0xae47dc197c06eb123d220b6f285c6f66bb4e93ca
 
-# Diff at Tue, 12 Mar 2024 08:37:34 GMT:
+# Diff at Tue, 12 Mar 2024 12:09:43 GMT:
 
 - author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
 - comparing to: main@bdacb4204f519a0796aaef823774cc10a4fb2f8b block: 19275529
-- current block number: 19417849
+- current block number: 19418904
 
 ## Description
 
-Protocol version was updated from 20 to 21. This upgrade introduces logic allowing the use of EIP-4844 blobs for data availability, also keeping calldata as an option. L2 contracts where updated with batch 459581. New ValidatorTimelock allows to whitelist multiple validators (rather than only 1).
+### ZkSync
+
+Protocol version was updated from 20 to 21.
+
+#### Executor
+
+This upgrade introduces logic allowing the use of EIP-4844 blobs for data availability, also keeping calldata as an option. L2 contracts where updated with batch 459581.
+
+### ValidatorTimelock
+
+Allows to whitelist multiple validators (rather than only 1).
+
+### Verifier
+
+New keys
 
 ## Watched changes
 
@@ -69,15 +83,6 @@ Protocol version was updated from 20 to 21. This upgrade introduces logic allowi
       values.getL2DefaultAccountBytecodeHash:
 -        "0x0100055b7a8be90522251be8be1a186464d056462973502ac8a0437c85e4d2a9"
 +        "0x0100055b041eb28aff6e3a6e0f37c31fd053fc9ef142683b05e5f0aee6934066"
-      values.getL2SystemContractsUpgradeBatchNumber:
--        0
-+        459581
-      values.getL2SystemContractsUpgradeBlockNumber:
--        0
-+        459581
-      values.getL2SystemContractsUpgradeTxHash:
--        "0x0000000000000000000000000000000000000000000000000000000000000000"
-+        "0xe4c0ffb3ab0df41da0a69e00c414cd0ff886c5b1577757bfa009c584dc72bb87"
       values.getProtocolVersion:
 -        20
 +        21
