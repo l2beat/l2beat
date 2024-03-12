@@ -11,7 +11,10 @@ import { Knex } from 'knex'
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
 import { HourlyIndexer } from '../tracked-txs/HourlyIndexer'
 import { TrackedTxsClient } from '../tracked-txs/TrackedTxsClient'
-import { adjustToForBigqueryCall } from '../tracked-txs/utils'
+import {
+  adjustToForBigqueryCall,
+  findConfigurationsToSync,
+} from '../tracked-txs/utils'
 import { getSafeHeight } from '../tracked-txs/utils/getSafeHeight'
 import {
   TrackedTxsConfigRecord,
@@ -23,7 +26,6 @@ import { TrackedTxId } from './types/TrackedTxId'
 import { TrackedTxConfigEntry } from './types/TrackedTxsConfig'
 import { TxUpdaterInterface } from './types/TxUpdaterInterface'
 import { diffTrackedTxConfigurations } from './utils/diffTrackedTxConfigurations'
-import { findConfigurationsToSync } from './utils/findConfigurationsToSync'
 
 const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2023-05-01T00:00:00Z'))
 const TRX = mockObject<Knex.Transaction>({})

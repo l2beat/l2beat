@@ -64,7 +64,6 @@ export class Application {
       createDiffHistoryModule(config, logger, database),
       createStatusModule(config, logger),
       trackedTxsModule,
-      // TODO: (tracked_tx) return updater from module
       livenessModule,
       createFinalityModule(
         config,

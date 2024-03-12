@@ -10,9 +10,8 @@ import { TrackedTxsClient } from './TrackedTxsClient'
 import { TrackedTxId } from './types/TrackedTxId'
 import { TrackedTxConfigEntry } from './types/TrackedTxsConfig'
 import { TxUpdaterInterface } from './types/TxUpdaterInterface'
-import { adjustToForBigqueryCall } from './utils'
+import { adjustToForBigqueryCall, findConfigurationsToSync } from './utils'
 import { diffTrackedTxConfigurations } from './utils/diffTrackedTxConfigurations'
-import { findConfigurationsToSync } from './utils/findConfigurationsToSync'
 import { getSafeHeight } from './utils/getSafeHeight'
 
 export type TrackedTxsIndexerUpdaters = Record<
