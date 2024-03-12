@@ -8,7 +8,7 @@ Generated with discovered.json: 0x0bfa30e237d7f814492d4d1ab8191992240d15c4
 
 ## Description
 
-Kroma mainnet fork occured at block #8171899. Team is annoucning a rollback.
+Kroma mainnet fork occured at block #8171899. Team is announcing a rollback.
 
 ## Watched changes
 
