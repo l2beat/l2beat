@@ -34,20 +34,29 @@
         "description": { "type": ["string", "null"] },
         "severity": {
           "type": ["string", "null"],
-          "enum": ["LOW", "MID", "HIGH", null]
+          "enum": ["LOW", "MEDIUM", "HIGH", null]
         },
         "type": {
-          "type": ["string", "null"],
-          "enum": [
-            "STRUCTURE",
-            "L2",
-            "EXTERNAL",
-            "RISK_PARAMETER",
-            "PERMISSION",
-            null
+          "anyOf": [
+            { "$ref": "#/$defs/valueType" },
+            {
+              "type": "array",
+              "items": { "$ref": "#/$defs/valueType" }
+            }
           ]
         }
       }
+    },
+    "valueType": {
+      "type": ["string", "null"],
+      "enum": [
+        "STRUCTURE",
+        "L2",
+        "EXTERNAL",
+        "RISK_PARAMETER",
+        "PERMISSION",
+        null
+      ]
     }
   }
 }
