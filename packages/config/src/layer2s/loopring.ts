@@ -210,7 +210,7 @@ export const loopring: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...DATA_AVAILABILITY.ON_CHAIN,
+      ...DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       references: [
         {
           text: 'Introduction - Loopring design doc',

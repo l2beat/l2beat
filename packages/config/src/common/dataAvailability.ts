@@ -1,9 +1,17 @@
 import { ScalingProjectTechnologyChoice } from './ScalingProjectTechnologyChoice'
 
-const ON_CHAIN: ScalingProjectTechnologyChoice = {
+const ON_CHAIN_CALLDATA: ScalingProjectTechnologyChoice = {
   name: 'All data required for proofs is published on chain',
   description:
     'All the data that is used to construct the system state is published on chain in the form of cheap calldata. This ensures that it will always be available when needed.',
+  risks: [],
+  references: [],
+}
+
+const ON_CHAIN_BLOB_OR_CALLDATA: ScalingProjectTechnologyChoice = {
+  name: 'All data required for proofs is published on chain',
+  description:
+    'All the data that is used to construct the system state is published on chain in the form of cheap blobs or calldata. This ensures that it will be available for enough time.',
   risks: [],
   references: [],
 }
@@ -148,7 +156,8 @@ function CELESTIA_OFF_CHAIN(
 }
 
 export const DATA_AVAILABILITY = {
-  ON_CHAIN,
+  ON_CHAIN_CALLDATA,
+  ON_CHAIN_BLOB_OR_CALLDATA,
   ON_CHAIN_CANONICAL,
   STARKEX_ON_CHAIN,
   STARKNET_ON_CHAIN,

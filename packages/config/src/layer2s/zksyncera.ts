@@ -325,7 +325,7 @@ export const zksyncera: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...DATA_AVAILABILITY.ON_CHAIN,
+      ...DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
       references: [],
     },
     operator: {
