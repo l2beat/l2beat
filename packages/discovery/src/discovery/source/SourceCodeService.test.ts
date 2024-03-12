@@ -15,6 +15,7 @@ describe(SourceCodeService.name, () => {
     name: 'Foo',
     source: 'foo',
     isVerified: false,
+    solidityVersion: '0.8.0',
   }
 
   const BAR_ADDRESS = EthereumAddress.random()
@@ -23,6 +24,7 @@ describe(SourceCodeService.name, () => {
     name: 'Bar',
     source: 'bar',
     isVerified: true,
+    solidityVersion: '0.8.0',
   }
 
   const BAZ_ADDRESS = EthereumAddress.random()
@@ -31,6 +33,7 @@ describe(SourceCodeService.name, () => {
     name: 'Baz',
     source: 'baz',
     isVerified: true,
+    solidityVersion: '0.8.0',
   }
 
   it('single, unverified contract', async () => {
@@ -51,8 +54,7 @@ describe(SourceCodeService.name, () => {
         {
           name: 'Foo',
           address: FOO_ADDRESS,
-          files: processSources(FOO_ADDRESS, FOO_METADATA),
-          remappings: [],
+          source: processSources(FOO_ADDRESS, FOO_METADATA),
         },
       ],
     })
@@ -78,8 +80,7 @@ describe(SourceCodeService.name, () => {
         {
           name: 'Bar',
           address: BAR_ADDRESS,
-          files: processSources(BAR_ADDRESS, BAR_METADATA),
-          remappings: [],
+          source: processSources(BAR_ADDRESS, BAR_METADATA),
         },
       ],
     })
@@ -108,14 +109,12 @@ describe(SourceCodeService.name, () => {
         {
           name: 'Bar',
           address: BAR_ADDRESS,
-          files: processSources(BAR_ADDRESS, BAR_METADATA),
-          remappings: [],
+          source: processSources(BAR_ADDRESS, BAR_METADATA),
         },
         {
           name: 'Baz',
           address: BAZ_ADDRESS,
-          files: processSources(BAZ_ADDRESS, BAZ_METADATA),
-          remappings: [],
+          source: processSources(BAZ_ADDRESS, BAZ_METADATA),
         },
       ],
     })
@@ -143,14 +142,12 @@ describe(SourceCodeService.name, () => {
         {
           name: 'Bar',
           address: BAR_ADDRESS,
-          files: processSources(BAR_ADDRESS, BAR_METADATA),
-          remappings: [],
+          source: processSources(BAR_ADDRESS, BAR_METADATA),
         },
         {
           name: 'Foo',
           address: FOO_ADDRESS,
-          files: processSources(FOO_ADDRESS, FOO_METADATA),
-          remappings: [],
+          source: processSources(FOO_ADDRESS, FOO_METADATA),
         },
       ],
     })

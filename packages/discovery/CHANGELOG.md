@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.45.2
+
+### Patch Changes
+
+- Add a comment with the solidity version used to compile the contract to flat output
+
 ## 0.45.1
 
 ### Patch Changes

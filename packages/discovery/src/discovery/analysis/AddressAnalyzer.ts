@@ -34,7 +34,7 @@ export interface AnalyzedContract {
   values: Record<string, ContractValue>
   errors: Record<string, string>
   abis: Record<string, string[]>
-  source: PerContractSource[]
+  sourceBundles: PerContractSource[]
 }
 
 export interface AnalyzedEOA {
@@ -101,7 +101,7 @@ export class AddressAnalyzer {
         values: values ?? {},
         errors: errors ?? {},
         abis: sources.abis,
-        source: sources.sources,
+        sourceBundles: sources.sources,
       },
       relatives: getRelatives(
         results,

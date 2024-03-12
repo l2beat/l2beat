@@ -59,14 +59,20 @@ describe(AddressAnalyzer.name, () => {
           {
             name: 'Proxy1',
             address: address,
-            files: { 'Foo.sol': 'contract Test { function foo() {} }' },
-            remappings: [],
+            source: {
+              files: { 'Foo.sol': 'contract Test { function foo() {} }' },
+              remappings: [],
+              solidityVersion: '0.8.0',
+            },
           },
           {
             name: 'Impl1',
             address: implementation,
-            files: { 'Bar.sol': 'contract Test { function bar() {} }' },
-            remappings: [],
+            source: {
+              files: { 'Bar.sol': 'contract Test { function bar() {} }' },
+              remappings: [],
+              solidityVersion: '0.8.0',
+            },
           },
         ],
       }
@@ -124,7 +130,7 @@ describe(AddressAnalyzer.name, () => {
           values: { owner: owner.toString() },
           errors: {},
           abis: sources.abis,
-          source: sources.sources,
+          sourceBundles: sources.sources,
         },
         relatives: [owner, admin],
       })
@@ -147,14 +153,20 @@ describe(AddressAnalyzer.name, () => {
           {
             name: 'Test',
             address,
-            files: { 'Foo.sol': 'contract Test { function foo() {} }' },
-            remappings: [],
+            source: {
+              files: { 'Foo.sol': 'contract Test { function foo() {} }' },
+              remappings: [],
+              solidityVersion: '0.8.0',
+            },
           },
           {
             name: 'Test2',
             address: implementation,
-            files: {},
-            remappings: [],
+            source: {
+              files: {},
+              remappings: [],
+              solidityVersion: '0.8.0',
+            },
           },
         ],
       }
@@ -212,7 +224,7 @@ describe(AddressAnalyzer.name, () => {
           values: { owner: owner.toString() },
           errors: {},
           abis: sources.abis,
-          source: sources.sources,
+          sourceBundles: sources.sources,
         },
         relatives: [owner, admin],
       })
@@ -236,14 +248,20 @@ describe(AddressAnalyzer.name, () => {
           {
             name: 'Test',
             address,
-            files: { 'Foo.sol': 'contract Test { function foo() {} }' },
-            remappings: [],
+            source: {
+              files: { 'Foo.sol': 'contract Test { function foo() {} }' },
+              remappings: [],
+              solidityVersion: '0.8.0',
+            },
           },
           {
             name: 'Test',
             address,
-            files: { 'Bar.sol': 'contract Test { function bar() {} }' },
-            remappings: [],
+            source: {
+              files: { 'Bar.sol': 'contract Test { function bar() {} }' },
+              remappings: [],
+              solidityVersion: '0.8.0',
+            },
           },
         ],
       }
@@ -298,7 +316,7 @@ describe(AddressAnalyzer.name, () => {
           values: { owner: owner.toString() },
           errors: {},
           abis: sources.abis,
-          source: sources.sources,
+          sourceBundles: sources.sources,
         },
         relatives: [owner, admin],
       })

@@ -2,42 +2,37 @@ import { EthereumAddress } from '../../utils/EthereumAddress'
 import { ContractMetadata } from '../provider/DiscoveryProvider'
 import { decodeEtherscanSource } from './sourceToEntries'
 
+export interface ContractSource {
+  files: Record<string, string>
+  remappings: string[]
+  solidityVersion: string
+}
+
 export function processSources(
   address: EthereumAddress,
-  { name, source, isVerified }: Omit<ContractMetadata, 'abi'>,
-): Record<string, string> {
-  let result: Record<string, string> = {}
+  { name, source, isVerified, solidityVersion }: Omit<ContractMetadata, 'abi'>,
+): ContractSource {
+  let files: Record<string, string> = {}
+  let remappings: string[] = []
 
   if (isVerified) {
     try {
-      result = parseSource(name, source)
+      const decodedSource = decodeEtherscanSource(name, source)
+      files = Object.fromEntries(decodedSource.sources)
+      remappings = decodedSource.remappings
     } catch (e) {
       console.error(e)
       console.log(source)
     }
   }
 
-  result['meta.txt'] = createMetaTxt(address, name, isVerified)
-  return result
-}
+  files['meta.txt'] = createMetaTxt(address, name, isVerified)
 
-export function getRemappings({
-  name,
-  source,
-  isVerified,
-}: Omit<ContractMetadata, 'abi'>): string[] {
-  if (!isVerified) {
-    return []
+  return {
+    files,
+    remappings,
+    solidityVersion,
   }
-
-  return decodeEtherscanSource(name, source).remappings
-}
-
-function parseSource(name: string, source: string): Record<string, string> {
-  const decodedSource = decodeEtherscanSource(name, source)
-  const entries = decodedSource.sources
-
-  return Object.fromEntries(entries)
 }
 
 export function createMetaTxt(

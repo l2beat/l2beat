@@ -11,9 +11,10 @@ describe(processSources.name, () => {
         name: 'Test',
         source: 'test',
         isVerified: false,
+        solidityVersion: '0.8.0',
       })
 
-      expect(result).toEqual({
+      expect(result.files).toEqual({
         'meta.txt': createMetaTxt(address, 'Test', false),
       })
     })
@@ -26,9 +27,10 @@ describe(processSources.name, () => {
         name: 'Test',
         source: 'test',
         isVerified: true,
+        solidityVersion: '0.8.0',
       })
 
-      expect(result).toEqual({
+      expect(result.files).toEqual({
         'Test.sol': 'test',
         'meta.txt': createMetaTxt(address, 'Test', true),
       })
@@ -45,8 +47,9 @@ describe(processSources.name, () => {
           'Bar.sol': { content: 'bar' },
         }),
         isVerified: true,
+        solidityVersion: '0.8.0',
       })
-      expect(result).toEqual({
+      expect(result.files).toEqual({
         'Foo.sol': 'foo',
         'Bar.sol': 'bar',
         'meta.txt': createMetaTxt(address, 'Test', true),
@@ -63,8 +66,9 @@ describe(processSources.name, () => {
         name: 'Test',
         source: `{${source}}`,
         isVerified: true,
+        solidityVersion: '0.8.0',
       })
-      expect(result).toEqual({
+      expect(result.files).toEqual({
         'Foo.sol': 'foo',
         'Bar.sol': 'bar',
         'meta.txt': createMetaTxt(address, 'Test', true),
@@ -84,8 +88,9 @@ describe(processSources.name, () => {
           other: 'stuff',
         }),
         isVerified: true,
+        solidityVersion: '0.8.0',
       })
-      expect(result).toEqual({
+      expect(result.files).toEqual({
         'Foo.sol': 'foo',
         'Bar.sol': 'bar',
         'meta.txt': createMetaTxt(address, 'Test', true),
@@ -106,8 +111,9 @@ describe(processSources.name, () => {
         name: 'Test',
         source: `{${source}}`,
         isVerified: true,
+        solidityVersion: '0.8.0',
       })
-      expect(result).toEqual({
+      expect(result.files).toEqual({
         'Foo.sol': 'foo',
         'Bar.sol': 'bar',
         'meta.txt': createMetaTxt(address, 'Test', true),

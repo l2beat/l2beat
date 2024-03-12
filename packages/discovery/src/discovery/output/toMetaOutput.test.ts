@@ -17,7 +17,7 @@ const base = {
   upgradeability: { type: 'immutable' } as UpgradeabilityParameters,
   implementations: [],
   abis: {},
-  source: [],
+  sourceBundles: [],
 }
 
 const ADDRESS_A = EthereumAddress('0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa')

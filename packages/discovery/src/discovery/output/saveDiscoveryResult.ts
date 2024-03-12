@@ -95,13 +95,15 @@ async function saveSources(
       continue
     }
 
-    for (const [i, source] of contract.source.entries()) {
-      const simplified = removeSharedNesting(Object.entries(source.files))
+    for (const [i, bundle] of contract.sourceBundles.entries()) {
+      const simplified = removeSharedNesting(
+        Object.entries(bundle.source.files),
+      )
       for (const [fileName, content] of simplified) {
         const path = getSourceOutputPath(
           fileName,
           i,
-          contract.source.length,
+          contract.sourceBundles.length,
           contract.name,
           contract.address,
           sourcesPath,
@@ -129,14 +131,17 @@ async function saveFlatSources(
   await rimraf(flatSourcesPath)
 
   logger.log(`Saving flattened sources`)
-  for (const contract of results) {
+  for (const analyzedContract of results) {
     try {
-      if (contract.type === 'EOA') {
+      if (analyzedContract.type === 'EOA') {
         continue
       }
 
-      for (const [sourceIndex, source] of contract.source.entries()) {
-        const input: FileContent[] = Object.entries(source.files)
+      for (const [
+        bundleIndex,
+        bundle,
+      ] of analyzedContract.sourceBundles.entries()) {
+        const input: FileContent[] = Object.entries(bundle.source.files)
           .map(([fileName, content]) => ({
             path: fileName,
             content,
@@ -144,16 +149,18 @@ async function saveFlatSources(
           .filter((e) => e.path.endsWith('.sol'))
 
         if (input.length === 0) {
-          logger.log(`[SKIP]: ${contract.name}-${source.name} no .sol files`)
+          logger.log(
+            `[SKIP]: ${analyzedContract.name}-${bundle.name} no .sol files`,
+          )
           continue
         }
 
         const result = timed(() => {
           const parsedFileManager = ParsedFilesManager.parseFiles(
             input,
-            source.remappings,
+            bundle.source.remappings,
           )
-          const output = flattenStartingFrom(source.name, parsedFileManager)
+          const output = flattenStartingFrom(bundle.name, parsedFileManager)
 
           return output
         })
@@ -161,30 +168,41 @@ async function saveFlatSources(
         const throughput = formatThroughput(input, result.executionTime)
 
         const containingDirectory = getFlatContainingDirectoryName(
-          contract,
+          analyzedContract,
           allContractNames,
         )
 
         const fileName = getFlatSourceFileName(
-          contract,
-          sourceIndex,
-          source,
+          analyzedContract,
+          bundleIndex,
+          bundle,
           allContractNames,
         )
 
+        const flatContent = addSolidityVersionComment(
+          bundle.source.solidityVersion,
+          result.value,
+        )
         const path = posix.join(flatSourcesPath, containingDirectory, fileName)
         await mkdirp(dirname(path))
-        await writeFile(path, result.value)
+        await writeFile(path, flatContent)
 
-        logger.log(`[ OK ]: ${source.name} @ ${throughput}`)
+        logger.log(`[ OK ]: ${bundle.name} @ ${throughput}`)
       }
     } catch (e) {
-      assert(contract.type !== 'EOA', 'This should never happen')
-      const contractName = contract.derivedName ?? contract.name
+      assert(analyzedContract.type !== 'EOA', 'This should never happen')
+      const contractName = analyzedContract.derivedName ?? analyzedContract.name
 
       logger.log(`[FAIL]: ${contractName} - ${stringifyError(e)}`)
     }
   }
+}
+
+function addSolidityVersionComment(
+  solidityVersion: string,
+  flatSource: string,
+): string {
+  return `// Compiled with solc version: ${solidityVersion}\n\n${flatSource}`
 }
 
 function getFlatContainingDirectoryName(
@@ -197,7 +215,7 @@ function getFlatContainingDirectoryName(
     allContractNames.filter((n) => n === contract.name).length > 1
   const uniquenessSuffix = hasNameClash ? `-${contract.address.toString()}` : ''
 
-  const hasProxy = contract.source.length > 1
+  const hasProxy = contract.sourceBundles.length > 1
   return hasProxy ? `${contract.name}${uniquenessSuffix}` : ''
 }
 
@@ -209,7 +227,7 @@ function getFlatSourceFileName(
 ): string {
   assert(contract.type !== 'EOA', 'Invalid execution path')
 
-  const hasProxy = contract.source.length > 1
+  const hasProxy = contract.sourceBundles.length > 1
   const isProxy = hasProxy && sourceIndex === 0
 
   const hasNameClash =

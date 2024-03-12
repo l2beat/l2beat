@@ -4,14 +4,13 @@ import { EthereumAddress } from '../../utils/EthereumAddress'
 import { DiscoveryProvider } from '../provider/DiscoveryProvider'
 import { deduplicateAbi } from './deduplicateAbi'
 import { getLegacyDerivedName } from './getDerivedName'
-import { getRemappings, processSources } from './processSources'
+import { ContractSource, processSources } from './processSources'
 import { skipIgnoredFunctions } from './skipIgnoredFunctions'
 
 export interface PerContractSource {
   name: string
   address: EthereumAddress
-  files: Record<string, string>
-  remappings: string[]
+  source: ContractSource
 }
 
 export interface ContractSources {
@@ -50,8 +49,7 @@ export class SourceCodeService {
       sources.push({
         name: item.name,
         address: address,
-        files: processSources(address, item),
-        remappings: getRemappings(item),
+        source: processSources(address, item),
       })
     }
 

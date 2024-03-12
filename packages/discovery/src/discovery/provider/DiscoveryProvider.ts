@@ -17,6 +17,7 @@ export interface ContractMetadata {
   isVerified: boolean
   abi: string[]
   source: string
+  solidityVersion: string
 }
 type Topics = (string | string[] | null)[]
 
@@ -163,6 +164,7 @@ export class DiscoveryProvider {
       isVerified,
       abi: isVerified ? jsonToHumanReadableAbi(result.ABI) : [],
       source: result.SourceCode,
+      solidityVersion: result.CompilerVersion,
     }
   }
 
