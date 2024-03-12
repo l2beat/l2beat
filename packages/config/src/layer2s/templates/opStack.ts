@@ -453,5 +453,5 @@ function riskViewDA(DA: DAProvider | undefined): ScalingProjectRiskViewEntry {
 function technologyDA(
   DA: DAProvider | undefined,
 ): ScalingProjectTechnologyChoice {
-  return DA === undefined ? DATA_AVAILABILITY.ON_CHAIN : DA.technology
+  return DA === undefined ? DATA_AVAILABILITY.ON_CHAIN_CALLDATA : DA.technology
 }

@@ -40,7 +40,21 @@ function diffToHtml(): string {
       ) {
         continue
       }
+      if (diff.includes('exceeded DFT_PARSE_ERROR_LIMIT')) {
+        chalk.redBright(
+          `Error with difftastic: exceeded DFT_PARSE_ERROR_LIMIT for ${filePaths[0]}`,
+        )
+        result.push(
+          `<div class="warning">  
+            <p>Error with difftastic:</p>
+            <p><code>exceeded DFT_PARSE_ERROR_LIMIT</code></p>
+            <p>Include the following command to increase the limit:</p>
+            <p><code>export DFT_PARSE_ERROR_LIMIT=100; yarn powerdiff ...</code></p>
+          </div>`,
+        )
+      }
     }
+
     result.push(genDiffHtml(filePaths, status, diff))
   }
   result.push(HTML_END)
@@ -108,12 +122,17 @@ function genDiffHtml(
   diff: string,
 ): string {
   const result = []
-  result.push('<div class="collapsible" onclick="toggleCollapse(this)">')
+  result.push('<div class="collapsible">')
+  result.push(
+    '<button class="button" onclick="toggleCollapse(this.parentElement)">',
+  )
   result.push(
     '<span class="icon">&#9654;</span> <!-- Right-pointing triangle; rotates when expanded -->',
   )
   result.push(`(${status})`)
   result.push(filePaths[0].split('/').slice(-1)[0])
+  result.push('</button>')
+  result.push('<input type="checkbox" />')
   result.push('<pre>')
   result.push(filePaths[0])
   result.push('&#8595;') // arrow down
@@ -125,6 +144,19 @@ function genDiffHtml(
   return result.join('\n')
 }
 
+function checkDeps() {
+  try {
+    osExec('which difft')
+  } catch (error) {
+    console.log(
+      'difft is not found. Please install it using `brew install difftastic`',
+    )
+    process.exit(1)
+  }
+}
+
+checkDeps()
+
 const HTML_START = `
   <!DOCTYPE html>
   <html>
@@ -135,15 +167,45 @@ const HTML_START = `
             cursor: pointer;
             overflow: hidden;
             line-height: 1em;
-            height: 1em; /* Adjust to line height */
+            height: 2em; /* Adjust to line height + button padding */
             transition: height 0.3s ease-out;
-            margin-top: 0.5em;
+            margin-bottom: 0.5em;
         }
 
         .icon {
             display: inline-block;
             margin-right: 10px;
             transition: transform 0.3s ease-out;
+        }
+
+        .button {
+            background-color: #444;
+            color: white;
+            padding: 0.5em 1em;
+            border: none;
+            margin-bottom: 0.5em;
+            cursor: pointer;
+        }
+
+        .warning {
+            background-color: #ff000050;
+            padding: 0.5em 1em;
+            border: none;
+            margin-bottom: 0.5em;
+        }
+
+        .warning > p {
+          margin-top: 0;
+        }
+
+        .warning > p:last-child {
+          margin-bottom: 0;
+        }
+
+        code {
+            background-color: #444;
+            color: white;
+            padding: 0.2em 0.4em;
         }
 
         .expanded {

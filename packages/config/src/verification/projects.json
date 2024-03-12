@@ -116,6 +116,7 @@
   "synapse": true,
   "taiko": true,
   "ten": true,
+  "termstructure": true,
   "tradable": true,
   "wormholeV1": true,
   "x1": true,

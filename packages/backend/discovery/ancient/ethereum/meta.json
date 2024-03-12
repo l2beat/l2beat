@@ -2,36 +2,6 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "L1ERC721Bridge",
-      "values": {
-        "messenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MESSENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OTHER_BRIDGE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "otherBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "OptimismPortal",
       "values": {
         "GUARDIAN": {
@@ -60,6 +30,36 @@
           "type": null
         },
         "SYSTEM_CONFIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1ERC721Bridge",
+      "values": {
+        "messenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MESSENGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OTHER_BRIDGE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "otherBridge": {
           "description": null,
           "severity": null,
           "type": null

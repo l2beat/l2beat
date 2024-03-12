@@ -1,7 +1,7 @@
 {
   "name": "l2beat-starkware",
   "chain": "ethereum",
-  "blockNumber": 19063965,
+  "blockNumber": 19376058,
   "configHash": "0x241bdfda840313580acee44fbf45b93f45cefcefc409f5ff924031d57270726a",
   "version": 3,
   "contracts": [
@@ -92,7 +92,7 @@
           "0x955B978F3ee7818dA71fA25c676062E6BC462Fec"
         ],
         "getThreshold": 2,
-        "nonce": 3,
+        "nonce": 4,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -146,8 +146,8 @@
       "upgradeability": {
         "type": "StarkWare proxy",
         "implementation": "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
-        "callImplementation": "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
-        "upgradeDelay": 2419200,
+        "callImplementation": "0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF",
+        "upgradeDelay": 0,
         "isFinal": true,
         "proxyGovernance": [
           "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
@@ -158,8 +158,8 @@
       "sinceTimestamp": 1635077695,
       "values": {
         "CALL_PROXY_VERSION": "3.1.0",
-        "callProxyImplementation": "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
-        "getUpgradeActivationDelay": 2419200,
+        "callProxyImplementation": "0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF",
+        "getUpgradeActivationDelay": 0,
         "implementation": "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
         "isFrozen": false,
         "isNotFinalized": true,
@@ -1098,6 +1098,29 @@
       "sinceTimestamp": 1673998775
     },
     {
+      "name": "GpsStatementVerifier",
+      "address": "0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1706309663,
+      "values": {
+        "getBootloaderConfig": [
+          "382450030162484995497251732956824096484321811411123989415157331925872358847",
+          "2512868110374320373201527039528844198060791559490644211790716345994094747600"
+        ],
+        "hasRegisteredFact": true,
+        "identify": "StarkWare_GpsStatementVerifier_2023_9",
+        "PAGE_INFO_ADDRESS_OFFSET": 0,
+        "PAGE_INFO_HASH_OFFSET": 2,
+        "PAGE_INFO_SIZE": 3,
+        "PAGE_INFO_SIZE_IN_BYTES": 96,
+        "PAGE_INFO_SIZE_OFFSET": 1,
+        "referenceFactRegistry": "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
+        "referralExpirationTime": 1714344863
+      }
+    },
+    {
       "name": "CpuFrilessVerifier",
       "address": "0xe9664D230490d5A515ef7Ef30033d8075a8D0E24",
       "upgradeability": {
@@ -1370,6 +1393,23 @@
       "function initialize(bytes data)",
       "function isFrozen() pure returns (bool)",
       "function isValid(bytes32 fact) view returns (bool)"
+    ],
+    "0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF": [
+      "constructor(address bootloaderProgramContract, address memoryPageFactRegistry_, address[] cairoVerifierContracts, uint256 hashedSupportedCairoVerifiers, uint256 simpleBootloaderProgramHash, address referenceVerifier, uint256 referralDurationSeconds)",
+      "event LogMemoryPagesHashes(bytes32 programOutputFact, bytes32[] pagesHashes)",
+      "function PAGE_INFO_ADDRESS_OFFSET() view returns (uint256)",
+      "function PAGE_INFO_HASH_OFFSET() view returns (uint256)",
+      "function PAGE_INFO_SIZE() view returns (uint256)",
+      "function PAGE_INFO_SIZE_IN_BYTES() view returns (uint256)",
+      "function PAGE_INFO_SIZE_OFFSET() view returns (uint256)",
+      "function getBootloaderConfig() view returns (uint256, uint256)",
+      "function hasRegisteredFact() view returns (bool)",
+      "function identify() pure returns (string)",
+      "function isValid(bytes32 fact) view returns (bool)",
+      "function localIsValid(bytes32 fact) view returns (bool)",
+      "function referenceFactRegistry() view returns (address)",
+      "function referralExpirationTime() view returns (uint256)",
+      "function verifyProofAndRegister(uint256[] proofParams, uint256[] proof, uint256[] taskMetadata, uint256[] cairoAuxInput, uint256 cairoVerifierId)"
     ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",

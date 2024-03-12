@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xfcd2c88722f38f799b154562423b25573d6af07a
+
+# Diff at Wed, 06 Mar 2024 14:41:28 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@cea88c5f3ff85fed5d72dadc72ae50315d0808d6 block: 18983727
+- current block number: 19376792
+
+## Description
+
+Added the SHARP shared module.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18983727 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract SHARPVerifierGovernorMultisig (0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SHARPVerifierProxy (0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SHARPVerifier (0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x0cd8c4cfa2d1f43c4656c004415ecaf6cdd32409
 
 # Diff at Thu, 11 Jan 2024 12:36:15 GMT:

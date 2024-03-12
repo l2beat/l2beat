@@ -1,0 +1,600 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "SHARPVerifierProxy",
+      "values": {
+        "CALL_PROXY_VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "callProxyImplementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getUpgradeActivationDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isFrozen": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isNotFinalized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROXY_GOVERNANCE_TAG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROXY_VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "UPGRADE_DELAY_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SHARPVerifierGovernorMultisig",
+      "values": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SHARPVerifier",
+      "values": {
+        "getBootloaderConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasRegisteredFact": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "identify": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_ADDRESS_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_HASH_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_IN_BYTES": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "constructorArgs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CpuFrilessVerifier",
+      "values": {
+        "getLayoutInfo": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_ADDRESS_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_HASH_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_IN_BYTES": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "constructorArgs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CpuFrilessVerifier",
+      "values": {
+        "getLayoutInfo": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_ADDRESS_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_HASH_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_IN_BYTES": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "constructorArgs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CpuFrilessVerifier",
+      "values": {
+        "getLayoutInfo": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_ADDRESS_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_HASH_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_IN_BYTES": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "constructorArgs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CairoBootloaderProgram",
+      "values": {
+        "getCompiledProgram": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CpuFrilessVerifier",
+      "values": {
+        "getLayoutInfo": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_ADDRESS_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_HASH_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_IN_BYTES": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "constructorArgs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CpuFrilessVerifier",
+      "values": {
+        "getLayoutInfo": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_ADDRESS_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_HASH_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_IN_BYTES": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "constructorArgs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CpuFrilessVerifier",
+      "values": {
+        "getLayoutInfo": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_ADDRESS_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_HASH_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_IN_BYTES": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "constructorArgs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "MemoryPageFactRegistry",
+      "values": {
+        "hasRegisteredFact": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CpuFrilessVerifier",
+      "values": {
+        "getLayoutInfo": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_ADDRESS_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_HASH_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_IN_BYTES": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "constructorArgs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CpuFrilessVerifier",
+      "values": {
+        "getLayoutInfo": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_ADDRESS_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_HASH_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_IN_BYTES": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "constructorArgs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CpuOods",
+      "values": {}
+    },
+    {
+      "name": "CpuOods",
+      "values": {}
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "values": {}
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "values": {}
+    },
+    {
+      "name": "PedersenHashPointsXColumn",
+      "values": {}
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "values": {}
+    },
+    {
+      "name": "PoseidonPoseidonFullRoundKey1Column",
+      "values": {}
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "values": {}
+    },
+    {
+      "name": "CpuOods",
+      "values": {}
+    },
+    {
+      "name": "CpuOods",
+      "values": {}
+    },
+    {
+      "name": "PoseidonPoseidonFullRoundKey2Column",
+      "values": {}
+    },
+    {
+      "name": "PoseidonPoseidonPartialRoundKey0Column",
+      "values": {}
+    },
+    {
+      "name": "PedersenHashPointsYColumn",
+      "values": {}
+    },
+    {
+      "name": "CpuOods",
+      "values": {}
+    },
+    {
+      "name": "PoseidonPoseidonFullRoundKey0Column",
+      "values": {}
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "values": {}
+    },
+    {
+      "name": "PoseidonPoseidonPartialRoundKey1Column",
+      "values": {}
+    },
+    {
+      "name": "CpuOods",
+      "values": {}
+    },
+    {
+      "name": "FriStatementContract",
+      "values": {
+        "hasRegisteredFact": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "values": {}
+    },
+    {
+      "name": "MerkleStatementContract",
+      "values": {
+        "hasRegisteredFact": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "values": {}
+    },
+    {
+      "name": "CpuOods",
+      "values": {}
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "values": {}
+    },
+    {
+      "name": "CpuOods",
+      "values": {}
+    },
+    {
+      "name": "EcdsaPointsXColumn",
+      "values": {}
+    },
+    {
+      "name": "EcdsaPointsYColumn",
+      "values": {}
+    }
+  ]
+}

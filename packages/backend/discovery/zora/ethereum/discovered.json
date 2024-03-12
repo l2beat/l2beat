@@ -1,7 +1,7 @@
 {
   "name": "zora",
   "chain": "ethereum",
-  "blockNumber": 19176790,
+  "blockNumber": 19412025,
   "configHash": "0x919110555a37d4dedd9db279c7a635b1d09fc4fc95b923d466a467698a4f1589",
   "version": 3,
   "contracts": [
@@ -19,7 +19,7 @@
         "GUARDIAN": "0xC72aE5c7cc9a332699305E29F68Be66c73b60542",
         "L2_ORACLE": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 100000, 19176780],
+        "params": [1000000000, 100000, 19411973],
         "paused": false,
         "SYSTEM_CONFIG": "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86",
         "version": "1.6.0"
@@ -78,10 +78,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 10308780,
-        "latestOutputIndex": 5951,
-        "nextBlockNumber": 10310580,
-        "nextOutputIndex": 5952,
+        "latestBlockNumber": 11732580,
+        "latestOutputIndex": 6742,
+        "nextBlockNumber": 11734380,
+        "nextOutputIndex": 6743,
         "PROPOSER": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
         "startingBlockNumber": 0,
         "startingTimestamp": 1686693839,
@@ -105,7 +105,8 @@
         "gasLimit": 30000000,
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isSomeTxsLengthEqualToCelestiaDAExample": false
+          "isSomeTxsLengthEqualToCelestiaDAExample": false,
+          "isSequencerSendingBlobTx": false
         },
         "overhead": 188,
         "owner": "0xC72aE5c7cc9a332699305E29F68Be66c73b60542",
@@ -221,7 +222,7 @@
       "sinceTimestamp": 1686694019,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621104",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621280",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,

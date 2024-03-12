@@ -12,6 +12,7 @@ import {
 } from './features/activity'
 import { getFinalityConfigurations } from './features/finality'
 import { getChainsWithTokens, getChainTvlConfig } from './features/tvl'
+import { getTvl2Config } from './features/tvl2'
 import { getChainDiscoveryConfig } from './features/updateMonitor'
 import { getGitCommitHash } from './getGitCommitHash'
 
@@ -29,6 +30,7 @@ export function makeConfig(
     env.string('FEATURES', isLocal ? '' : '*'),
   ).append('status')
   const minBlockTimestamp = minTimestampOverride ?? getEthereumMinTimestamp()
+  const tvl2Config = getTvl2Config()
 
   return {
     name,
@@ -104,6 +106,7 @@ export function makeConfig(
         }),
       ),
     },
+    tvl2: flags.isEnabled('tvl2') && tvl2Config,
     liveness: flags.isEnabled('liveness') && {
       bigQuery: {
         clientEmail: env.string('LIVENESS_CLIENT_EMAIL'),
