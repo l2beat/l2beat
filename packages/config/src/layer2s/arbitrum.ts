@@ -578,6 +578,18 @@ export const arbitrum: Layer2 = {
       description: 'ARB token launched as a governance token for Arbitrum DAO.',
     },
     {
+      name: '1.1B ARB Token Unlock',
+      link: 'https://twitter.com/Cointelegraph/status/1767234026786750510',
+      date: '2024-03-16T00:00:00Z',
+      description: '1.1B ARB Tokens Valued at $2.3B Unlocked',
+    },
+    {
+      name: 'Arbitrum Orbits Launch',
+      link: 'https://twitter.com/arbitrum/status/1717571952599089388',
+      date: '2023-10-26T00:00:00Z',
+      description: 'Arbitrum Orbits arrive on the mainnet',
+    },
+    {
       name: 'Nitro Upgrade',
       link: 'https://medium.com/offchainlabs/arbitrum-nitro-one-small-step-for-l2-one-giant-leap-for-ethereum-bc9108047450',
       date: '2022-08-31T00:00:00Z',

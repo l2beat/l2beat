@@ -172,6 +172,24 @@ export const fuelv1: Layer2 = {
       date: '2020-12-31T00:00:00Z',
       description: 'First trustless Optimistic Rollup is live on Mainnet.',
     },
+    {
+      name: 'Fuel Beta-5 Testnet Launch',
+      link: 'https://twitter.com/fuel_network/status/1763253903976702406',
+      date: '2024-02-29T00:00:00Z',
+      description: 'Beta-5 Launches with New Features and Updates',
+    },
+    {
+      name: 'Fuel Native Bridge Launch',
+      link: 'https://twitter.com/fuel_network/status/1712484026085503291',
+      date: '2023-10-23T00:00:00Z',
+      description: 'Bridge Launch Connects Ethereum Sepolia with Fuel Beta-4 Testnet',
+    },
+    {
+      name: 'Fuel Beta-4 Testnet Launch',
+      link: 'https://twitter.com/search?q=Beta-4%20(from%3Afuel_network)&src=typed_query',
+      date: '2023-09-7T00:00:00Z',
+      description: 'Beta-4 Testnet Launches With New Features and Upgrades',
+    }
   ],
   knowledgeNuggets: [
     {
