@@ -108,12 +108,17 @@ function genDiffHtml(
   diff: string,
 ): string {
   const result = []
-  result.push('<div class="collapsible" onclick="toggleCollapse(this)">')
+  result.push('<div class="collapsible">')
+  result.push(
+    '<button class="button" onclick="toggleCollapse(this.parentElement)">',
+  )
   result.push(
     '<span class="icon">&#9654;</span> <!-- Right-pointing triangle; rotates when expanded -->',
   )
   result.push(`(${status})`)
   result.push(filePaths[0].split('/').slice(-1)[0])
+  result.push('</button>')
+  result.push('<input type="checkbox" />')
   result.push('<pre>')
   result.push(filePaths[0])
   result.push('&#8595;') // arrow down
@@ -148,7 +153,7 @@ const HTML_START = `
             cursor: pointer;
             overflow: hidden;
             line-height: 1em;
-            height: 1em; /* Adjust to line height */
+            height: 2em; /* Adjust to line height + button padding */
             transition: height 0.3s ease-out;
             margin-top: 0.5em;
         }
@@ -157,6 +162,16 @@ const HTML_START = `
             display: inline-block;
             margin-right: 10px;
             transition: transform 0.3s ease-out;
+        }
+
+        .button {
+            background-color: #444;
+            color: white;
+            padding: 0.5em 1em;
+            border: none;
+            border-radius: 0.3em;
+            margin-bottom: 0.5em;
+            cursor: pointer;
         }
 
         .expanded {
