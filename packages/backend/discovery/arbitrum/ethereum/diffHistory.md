@@ -14,7 +14,7 @@ following approved governance proposals:
 - id: 0xe4f8...: [Changes to the Constitution and the Security Council Election Process](https://www.tally.xyz/gov/arbitrum/proposal/28300903567340237987946172947371304329455149918972967618773111648600015289785) - Proposed on: Feb 7th, 2024
   - Add an additional 7 day window for contenders to add themselves before voting starts.
   - Only allow contenders to add themselves by signature, ensuring they are an EOA that can sign on all chains.
-- id: 0x0b8dc...: [AIP: ArbOS 20 “Atlas” - Arbitrum Support for Dencun + Batch Poster Improvements](https://www.tally.xyz/gov/arbitrum/proposal/46905320292877192134536823079608810426433248493109520384601548724615383601450)
+- id: 0x0b8dc...: [AIP: ArbOS 20 “Atlas” - Arbitrum Support for Dencun + Batch Poster Improvements](https://www.tally.xyz/gov/arbitrum/proposal/46905320292877192134536823079608810426433248493109520384601548724615383601450) - Proposed on: Feb 14th, 2024
   - Support posting batches of transactions as blobs to L1 Ethereum
   - Enable partial support for Dencun Execution Layer
   - Batch Poster Manager and Sequencer Inbox Finality Fix
