@@ -233,7 +233,7 @@ export const aztecconnect: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...DATA_AVAILABILITY.ON_CHAIN,
+      ...DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       references: [
         {
           text: 'RollupProcessorV2.sol#L686 - Etherscan source code',
