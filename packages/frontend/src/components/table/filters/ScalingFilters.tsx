@@ -1,20 +1,25 @@
 import { notUndefined } from '@l2beat/shared-pure'
 import uniq from 'lodash/uniq'
-import React from 'react'
+import React, { ReactElement } from 'react'
 
 import { ScalingL2SummaryViewEntry } from '../../../pages/scaling/summary/types'
 import { ScalingEntry } from '../../../pages/scaling/types'
 import { OverflowWrapper } from '../../OverflowWrapper'
-import { RichSelect } from '../../RichSelect'
+import { RichSelect, RichSelectProps } from '../../RichSelect'
 import { RollupsOnlyCheckbox } from './checkboxes/RollupsOnlyCheckbox'
 import { FiltersWrapper, generateSlugList } from './FiltersWrapper'
 
 interface Props {
+  children?: ReactElement<RichSelectProps>
   items: ScalingEntry[]
   hideRollupsOnlyCheckbox?: boolean
 }
 
-export function ScalingFilters({ items, hideRollupsOnlyCheckbox }: Props) {
+export function ScalingFilters({
+  children,
+  items,
+  hideRollupsOnlyCheckbox,
+}: Props) {
   const providers = uniq(items.map((i) => i.provider))
     .sort()
     .map((p) => ({
@@ -50,7 +55,7 @@ export function ScalingFilters({ items, hideRollupsOnlyCheckbox }: Props) {
     <OverflowWrapper>
       <FiltersWrapper>
         {!hideRollupsOnlyCheckbox && <RollupsOnlyCheckbox items={items} />}
-        <RichSelect label="Select type" id="technology-select">
+        <RichSelect label="Type" id="technology-select">
           {categories.map((category) => (
             <RichSelect.Item
               selectedLabel={category.label}
@@ -61,7 +66,7 @@ export function ScalingFilters({ items, hideRollupsOnlyCheckbox }: Props) {
             </RichSelect.Item>
           ))}
         </RichSelect>
-        <RichSelect label="Select stack" id="stack-select">
+        <RichSelect label="Stack" id="stack-select">
           {providers.map((da) => (
             <RichSelect.Item
               selectedLabel={da.label}
@@ -72,7 +77,7 @@ export function ScalingFilters({ items, hideRollupsOnlyCheckbox }: Props) {
             </RichSelect.Item>
           ))}
         </RichSelect>
-        <RichSelect label="Select stage" id="stage-select">
+        <RichSelect label="Stage" id="stage-select">
           {stages.map((stage) => (
             <RichSelect.Item
               selectedLabel={stage.label}
@@ -83,7 +88,7 @@ export function ScalingFilters({ items, hideRollupsOnlyCheckbox }: Props) {
             </RichSelect.Item>
           ))}
         </RichSelect>
-        <RichSelect label="Select purpose" id="purpose-select">
+        <RichSelect label="Purpose" id="purpose-select">
           {purposes.map((stage) => (
             <RichSelect.Item
               selectedLabel={stage.label}
@@ -94,6 +99,7 @@ export function ScalingFilters({ items, hideRollupsOnlyCheckbox }: Props) {
             </RichSelect.Item>
           ))}
         </RichSelect>
+        {children}
       </FiltersWrapper>
     </OverflowWrapper>
   )

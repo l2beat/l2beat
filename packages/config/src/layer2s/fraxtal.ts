@@ -17,7 +17,7 @@ const upgradeability = {
 
 export const fraxtal: Layer2 = opStack({
   daProvider: {
-    name: 'External',
+    name: 'FraxtalDA',
     riskView: {
       value: 'External',
       description:

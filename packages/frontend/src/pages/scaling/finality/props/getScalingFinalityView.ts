@@ -1,6 +1,5 @@
 import { Layer2, ScalingProjectDataAvailabilityMode } from '@l2beat/config'
 import {
-  assertUnreachable,
   FinalityApiResponse,
   FinalityProjectData,
   formatSeconds,
@@ -43,7 +42,7 @@ export function getScalingFinalityViewEntry(
     shortName: project.display.shortName,
     slug: project.display.slug,
     category: project.display.category,
-    dataAvailabilityMode: daModeToDisplay(project.display.dataAvailabilityMode),
+    dataAvailabilityMode: daModeToDisplay(project.dataAvailability?.mode),
     provider: project.display.provider,
     warning: project.display.warning,
     redWarning: project.display.redWarning,
@@ -101,15 +100,12 @@ function getIncludedProjects(
   )
 }
 
-function daModeToDisplay(daMode: ScalingProjectDataAvailabilityMode) {
-  switch (daMode) {
-    case 'StateDiffs':
-      return 'State diffs'
-    case 'TxData':
-      return 'Transaction data'
-    case 'NotApplicable':
-      return undefined
-    default:
-      assertUnreachable(daMode)
+function daModeToDisplay(
+  daMode: ScalingProjectDataAvailabilityMode | undefined,
+) {
+  if (!daMode) {
+    return undefined
   }
+
+  return daMode
 }

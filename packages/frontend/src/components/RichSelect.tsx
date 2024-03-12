@@ -5,7 +5,7 @@ import { ChevronDownIcon } from './icons'
 import { CloseIcon } from './icons/CloseIcon'
 import { ExpandIcon } from './icons/Expand'
 
-interface Props {
+export interface RichSelectProps {
   id: string
   label: string
   children: React.ReactNode
@@ -15,7 +15,7 @@ interface Props {
   centered?: boolean
 }
 
-export function RichSelect(props: Props) {
+export function RichSelect(props: RichSelectProps) {
   return (
     <div
       data-role="rich-select"

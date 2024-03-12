@@ -1,7 +1,7 @@
 {
   "name": "nova",
   "chain": "ethereum",
-  "blockNumber": 19132347,
+  "blockNumber": 19390070,
   "configHash": "0xa581a9684c36a7b5c5f59c51d4be28ece4e2b8c5aa461992cf14206e7593d03d",
   "version": 3,
   "contracts": [
@@ -38,15 +38,15 @@
       "implementations": ["0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9"],
       "sinceTimestamp": 1656050353,
       "values": {
-        "batchCount": 28207,
+        "batchCount": 34078,
         "batchPosters": [
           "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
           "0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc"
         ],
         "bridge": "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
         "dacKeyset": {
-          "threshold": 2,
-          "keyCount": 6
+          "requiredSignatures": 5,
+          "membersCount": 6
         },
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
@@ -54,7 +54,7 @@
         "maxTimeVariation": [5760, 12, 86400, 3600],
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "sequencerVersion": "0x88",
-        "totalDelayedMessagesRead": 269066
+        "totalDelayedMessagesRead": 276226
       },
       "derivedName": "SequencerInbox"
     },
@@ -409,11 +409,11 @@
           "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
         ],
         "allowedOutboxList": ["0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
-        "delayedMessageCount": 269068,
+        "delayedMessageCount": 276228,
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "sequencerMessageCount": 28207,
-        "sequencerReportedSubMessageCount": 44537755
+        "sequencerMessageCount": 34078,
+        "sequencerReportedSubMessageCount": 55629984
       }
     },
     {
@@ -438,7 +438,7 @@
           "0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe"
         ],
         "getThreshold": 4,
-        "nonce": 180,
+        "nonce": 184,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -648,12 +648,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 13628,
+        "firstUnresolvedNode": 14493,
         "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "isERC20Enabled": false,
         "lastStakeBlock": 17257726,
-        "latestConfirmed": 13627,
-        "latestNodeCreated": 13781,
+        "latestConfirmed": 14492,
+        "latestNodeCreated": 14645,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",

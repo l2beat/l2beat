@@ -7,7 +7,7 @@ import {
   NavbarProps,
 } from '../../../../components'
 import { About } from '../../../../components/About'
-import { FinalityHeader } from '../../../../components/header/FinalityHeader'
+import { SimplePageHeader } from '../../../../components/header/SimplePageHeader'
 import { ScalingNavigationTabs } from '../../../../components/navigation-tabs/ScalingNavigationTabs'
 import { OtherSites } from '../../../../components/other-sites/OtherSites'
 import { PageContent } from '../../../../components/PageContent'
@@ -43,7 +43,7 @@ export function ScalingFinalityPage(props: FinalityPageProps) {
           selected="finality"
         />
         <main>
-          <FinalityHeader />
+          <SimplePageHeader>Finality</SimplePageHeader>
           <FinalityWarning />
           <ScalingFinalityView {...props.finalityView} />
           <FinalityDiagramsSection

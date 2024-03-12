@@ -1,3 +1,5 @@
+import { ValueWithSentiment, WarningWithSentiment } from '@l2beat/shared-pure'
+
 export interface ScalingProjectRisk {
   /** Category of this risk */
   category: ScalingProjectRiskCategory
@@ -17,18 +19,9 @@ export type ScalingProjectRiskCategory =
   | 'MEV can be extracted if'
   | 'Withdrawals can be delayed if'
 
-export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
-
-type WarningSentiment = 'bad' | 'warning'
-export interface WarningWithSentiment {
-  text: string
-  sentiment: WarningSentiment
-}
-
-export interface ScalingProjectRiskViewEntry {
-  value: string
+export interface ScalingProjectRiskViewEntry
+  extends ValueWithSentiment<string> {
   description: string
-  sentiment: Sentiment
   warning?: WarningWithSentiment
   // second line in risk view
   secondLine?: string

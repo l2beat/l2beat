@@ -5,6 +5,7 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
+  makeDataAvailabilityConfig,
   OPERATOR,
   RISK_VIEW,
 } from '../common'
@@ -29,7 +30,6 @@ export const metis: Layer2 = {
     purposes: ['Universal'],
     provider: 'OVM',
     category: 'Optimium',
-    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://metis.io'],
       apps: [],
@@ -68,6 +68,12 @@ export const metis: Layer2 = {
       startBlock: 1,
     },
   },
+  dataAvailability: makeDataAvailabilityConfig({
+    type: 'Off chain',
+    layers: ['MEMO'],
+    bridge: 'Optimistic',
+    mode: 'Transactions data',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_MEMO,
