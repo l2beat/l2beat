@@ -180,6 +180,11 @@ export const amarok: Bridge = {
         'LineaHubConnector',
         'Contract for sending/receiving messages from mainnet to Linea via Linea AMB.',
       ),
+      discovery.getContractDetails(
+        'ModeHubConnector',
+        'Contract for sending/receiving messages from mainnet to Mode Network via Optimism AMB.',
+      )
+
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
