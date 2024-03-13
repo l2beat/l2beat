@@ -24,6 +24,7 @@ import {
   ScalingProjectPermission,
   ScalingProjectRiskViewEntry,
   ScalingProjectStateDerivation,
+  ScalingProjectTechnology,
   ScalingProjectTechnologyChoice,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
@@ -56,6 +57,7 @@ export interface OpStackConfig {
   daProvider?: DAProvider
   discovery: ProjectDiscovery
   display: Omit<Layer2Display, 'provider' | 'category' | 'dataAvailabilityMode'>
+  nonTemplateTechnology?: Partial<ScalingProjectTechnology>
   upgradeability: {
     upgradableBy: string[] | undefined
     upgradeDelay: string | undefined
@@ -285,7 +287,8 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
     stateDerivation: templateVars.stateDerivation,
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
     technology: {
-      stateCorrectness: {
+      stateCorrectness: templateVars.nonTemplateTechnology
+        ?.stateCorrectness ?? {
         name: 'Fraud proofs are in development',
         description:
           'Ultimately, OP stack chains will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the system permits invalid state roots.',
@@ -305,7 +308,8 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
           },
         ],
       },
-      dataAvailability: {
+      dataAvailability: templateVars.nonTemplateTechnology
+        ?.dataAvailability ?? {
         ...technologyDA(daProvider),
         references: [
           ...technologyDA(daProvider).references,
@@ -325,7 +329,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
           },
         ],
       },
-      operator: {
+      operator: templateVars.nonTemplateTechnology?.operator ?? {
         ...OPERATOR.CENTRALIZED_OPERATOR,
         references: [
           {
@@ -346,7 +350,8 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
           },
         ],
       },
-      forceTransactions: {
+      forceTransactions: templateVars.nonTemplateTechnology
+        ?.forceTransactions ?? {
         ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
         references: [
           {
@@ -361,7 +366,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
           },
         ],
       },
-      exitMechanisms: [
+      exitMechanisms: templateVars.nonTemplateTechnology?.exitMechanisms ?? [
         {
           ...EXITS.REGULAR(
             'optimistic',
@@ -403,7 +408,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
           ],
         },
       ],
-      smartContracts: {
+      smartContracts: templateVars.nonTemplateTechnology?.smartContracts ?? {
         name: 'EVM compatible smart contracts are supported',
         description:
           'OP stack chains are pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on L2.',
