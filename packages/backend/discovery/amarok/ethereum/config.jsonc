@@ -25,7 +25,7 @@
     "0xF1c78967584D5E0ffF66dA103b8eb06c82EC020d": "GnosisHubConnector",
     "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287": "RootChain",
     "0xE8cF9EbB1cFB137c692a0a4E470E257B9417d116": "PolygonHubConnector",
-    
+
     "0xf5a3372ed529FCD0690b6013EAaE04170ec0626b": "NewWormholeHubConnector",
     "0x5B0E1a507E786f0a7c11C972ad5F4dd254661e24": "MantleHubConnector",
     "0x23b7abe4cc664F24Eb68E80cFAdc572857799a94": "NewOptimismHubConnector",
@@ -164,7 +164,7 @@
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
     },
     "ModeHubConnector": {
-      "ignoreRelatives": ["AMB", "mirrorConnector", "stateCommitmentChain"],
+      "ignoreRelatives": ["AMB", "mirrorConnector", "OPTIMISM_PORTAL"],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
     },
     "RootChain": {

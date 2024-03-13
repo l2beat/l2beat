@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x9a831f15a7d52e73d23e995541a0404c615b9777
+Generated with discovered.json: 0x80c532bb0df328f9f211c41e5d693410343d04a8
 
-# Diff at Tue, 12 Mar 2024 17:21:31 GMT:
+# Diff at Wed, 13 Mar 2024 08:08:25 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
 - comparing to: main@800d2d30954e8bfb14ad062b9806c50997706541 block: 19317899
-- current block number: 19420450
+- current block number: 19424856
 
 ## Description
 
@@ -28,193 +28,28 @@ This connector is for the op stack L2 Mode Network and now renamed to 'ModeHubCo
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x309Fe2536d01867018D120b40e4676723C53A14C)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract L2OutputOracle (0x4317ba146D4933D889518a3e5E11Fe7a53199b04)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract ProxyAdmin (0x470d87b1dae09a454A43D1fD772A561a03276aB7)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract GnosisSafe (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract AddressManager (0x50eF494573f28Cad6B64C31b7a00Cdaa48306e15)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract SystemConfig (0x5e6432F18Bc5d497B1Ab2288a025Fbf9D69E2221)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract ModeHubConnector (0x7b2bE683266909A6a4068e743083dd40621d663E)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract OptimismPortal (0x8B34b14c7c7123459Cf3076b8Cb929BE097d0C07)
     +++ description: None
 ```
 
 ## Source code changes
 
 ```diff
-.../contracts/legacy/AddressManager.sol            |  64 +++
- .../amarok/ethereum/.code/AddressManager/meta.txt  |   2 +
- .../@openzeppelin/contracts/access/Ownable.sol     |  83 ++++
- .../@openzeppelin/contracts/utils/Context.sol      |  24 ++
- .../implementation/contracts/GnosisSafe.sol        |   0
- .../implementation/contracts/base/Executor.sol     |   0
- .../contracts/base/FallbackManager.sol             |   0
- .../implementation/contracts/base/GuardManager.sol |   0
- .../contracts/base/ModuleManager.sol               |   0
- .../implementation/contracts/base/OwnerManager.sol |   0
- .../implementation/contracts/common/Enum.sol       |   0
- .../contracts/common/EtherPaymentFallback.sol      |   0
- .../contracts/common/SecuredTokenTransfer.sol      |   0
- .../contracts/common/SelfAuthorized.sol            |   0
- .../contracts/common/SignatureDecoder.sol          |   0
- .../implementation/contracts/common/Singleton.sol  |   0
- .../contracts/common/StorageAccessible.sol         |   0
- .../contracts/external/GnosisSafeMath.sol          |   0
- .../contracts/interfaces/ISignatureValidator.sol   |   0
- .../implementation/meta.txt                        |   0
- .../proxy/GnosisSafeProxy.sol                      | 155 +++++++
- .../proxy/meta.txt                                 |   2 +
- .../implementation/contracts/GnosisSafe.sol        | 422 ++++++++++++++++++++
- .../implementation/contracts/base/Executor.sol     |  27 ++
- .../contracts/base/FallbackManager.sol             |  53 +++
- .../implementation/contracts/base/GuardManager.sol |  50 +++
- .../contracts/base/ModuleManager.sol               | 133 +++++++
- .../implementation/contracts/base/OwnerManager.sol | 149 +++++++
- .../implementation/contracts/common/Enum.sol       |   8 +
- .../contracts/common/EtherPaymentFallback.sol      |  13 +
- .../contracts/common/SecuredTokenTransfer.sol      |  35 ++
- .../contracts/common/SelfAuthorized.sol            |  16 +
- .../contracts/common/SignatureDecoder.sol          |  36 ++
- .../implementation/contracts/common/Singleton.sol  |  11 +
- .../contracts/common/StorageAccessible.sol         |  47 +++
- .../contracts/external/GnosisSafeMath.sol          |  54 +++
- .../contracts/interfaces/ISignatureValidator.sol   |  20 +
- .../implementation/meta.txt                        |   2 +
- .../proxy/GnosisSafeProxy.sol                      | 155 +++++++
- .../proxy/meta.txt                                 |   2 +
- .../implementation/contracts/GnosisSafe.sol        | 422 ++++++++++++++++++++
- .../implementation/contracts/base/Executor.sol     |  27 ++
- .../contracts/base/FallbackManager.sol             |  53 +++
- .../implementation/contracts/base/GuardManager.sol |  50 +++
- .../contracts/base/ModuleManager.sol               | 133 +++++++
- .../implementation/contracts/base/OwnerManager.sol | 149 +++++++
- .../implementation/contracts/common/Enum.sol       |   8 +
- .../contracts/common/EtherPaymentFallback.sol      |  13 +
- .../contracts/common/SecuredTokenTransfer.sol      |  35 ++
- .../contracts/common/SelfAuthorized.sol            |  16 +
- .../contracts/common/SignatureDecoder.sol          |  36 ++
- .../implementation/contracts/common/Singleton.sol  |  11 +
- .../contracts/common/StorageAccessible.sol         |  47 +++
- .../contracts/external/GnosisSafeMath.sol          |  54 +++
- .../contracts/interfaces/ISignatureValidator.sol   |  20 +
- .../implementation/meta.txt                        |   2 +
- .../proxy/Proxy.sol                                |   0
- .../proxy/meta.txt                                 |   0
- .../implementation/contracts/L1/L2OutputOracle.sol | 350 ++++++++++++++++
- .../implementation/contracts/libraries/Types.sol   |  84 ++++
- .../implementation/contracts/universal/Semver.sol  |  58 +++
- .../.code/L2OutputOracle/implementation/meta.txt   |   2 +
- .../contracts/proxy/utils/Initializable.sol        | 138 +++++++
- .../@openzeppelin/contracts/utils/Address.sol      | 222 +++++++++++
- .../@openzeppelin/contracts/utils/Strings.sol      |  75 ++++
- .../proxy/contracts/universal/Proxy.sol            | 217 ++++++++++
- .../ethereum/.code/L2OutputOracle/proxy/meta.txt   |   2 +
- .../@openzeppelin/contracts/utils/Address.sol      | 244 ++++++++++++
- .../contracts/messaging/connectors/Connector.sol   | 216 ++++++++++
- .../contracts/messaging/connectors/GasCap.sol      |  61 +++
- .../messaging/connectors/HubConnector.sol          |  44 ++
- .../messaging/connectors/optimism/BaseOptimism.sol |  28 ++
- .../connectors/optimism/OptimismHubConnector.sol   | 148 +++++++
- .../messaging/connectors/optimism/lib/Types.sol    |  84 ++++
- .../contracts/messaging/interfaces/IConnector.sol  |  64 +++
- .../messaging/interfaces/IRootManager.sol          |  22 +
- .../interfaces/ambs/optimism/IOptimismPortal.sol   |  25 ++
- .../interfaces/ambs/optimism/OptimismAmb.sol       |  28 ++
- .../contracts/shared/ProposedOwnable.sol           | 172 ++++++++
- .../shared/interfaces/IProposedOwnable.sol         |  42 ++
+.../@openzeppelin/contracts/utils/Address.sol      | 244 +++++++++++++++++++++
+ .../contracts/messaging/connectors/Connector.sol   | 216 ++++++++++++++++++
+ .../contracts/messaging/connectors/GasCap.sol      |  61 ++++++
+ .../messaging/connectors/HubConnector.sol          |  44 ++++
+ .../messaging/connectors/optimism/BaseOptimism.sol |  28 +++
+ .../connectors/optimism/OptimismHubConnector.sol   | 148 +++++++++++++
+ .../messaging/connectors/optimism/lib/Types.sol    |  84 +++++++
+ .../contracts/messaging/interfaces/IConnector.sol  |  64 ++++++
+ .../messaging/interfaces/IRootManager.sol          |  22 ++
+ .../interfaces/ambs/optimism/IOptimismPortal.sol   |  25 +++
+ .../interfaces/ambs/optimism/OptimismAmb.sol       |  28 +++
+ .../contracts/shared/ProposedOwnable.sol           | 172 +++++++++++++++
+ .../shared/interfaces/IProposedOwnable.sol         |  42 ++++
  .../ethereum/.code/ModeHubConnector/meta.txt       |   2 +
- .../implementation/contracts/L1/L2OutputOracle.sol | 290 ++++++++++++++
- .../implementation/contracts/L1/OptimismPortal.sol | 443 +++++++++++++++++++++
- .../contracts/L1/ResourceMetering.sol              | 164 ++++++++
- .../implementation/contracts/L1/SystemConfig.sol   | 243 +++++++++++
- .../contracts/libraries/Arithmetic.sol             |  38 ++
- .../implementation/contracts/libraries/Burn.sol    |  32 ++
- .../implementation/contracts/libraries/Bytes.sol   | 154 +++++++
- .../contracts/libraries/Constants.sol              |  41 ++
- .../contracts/libraries/Encoding.sol               | 136 +++++++
- .../implementation/contracts/libraries/Hashing.sol | 142 +++++++
- .../contracts/libraries/SafeCall.sol               | 147 +++++++
- .../implementation/contracts/libraries/Types.sol   |  70 ++++
- .../contracts/libraries/rlp/RLPReader.sol          | 359 +++++++++++++++++
- .../contracts/libraries/rlp/RLPWriter.sol          | 221 ++++++++++
- .../contracts/libraries/trie/MerkleTrie.sol        | 288 ++++++++++++++
- .../contracts/libraries/trie/SecureMerkleTrie.sol  |  64 +++
- .../implementation/contracts/universal/Semver.sol  |  45 +++
- .../contracts/vendor/AddressAliasHelper.sol        |  43 ++
- .../contracts/proxy/utils/Initializable.sol        | 138 +++++++
- .../contracts/utils/Address.sol                    | 222 +++++++++++
- .../contracts/utils/Strings.sol                    |  75 ++++
- .../contracts/utils/math/Math.sol                  | 226 +++++++++++
- .../contracts/utils/math/SignedMath.sol            |  43 ++
- .../contracts/access/OwnableUpgradeable.sol        |  95 +++++
- .../contracts/proxy/utils/Initializable.sol        | 138 +++++++
- .../contracts/utils/AddressUpgradeable.sol         | 195 +++++++++
- .../contracts/utils/ContextUpgradeable.sol         |  37 ++
- .../lib/solmate/src/utils/FixedPointMathLib.sol    | 366 +++++++++++++++++
- .../.code/OptimismPortal/implementation/meta.txt   |   2 +
- .../proxy/contracts/universal/Proxy.sol            | 217 ++++++++++
- .../ethereum/.code/OptimismPortal/proxy/meta.txt   |   2 +
- .../ProxyAdmin/contracts/legacy/AddressManager.sol |  64 +++
- .../contracts/legacy/L1ChugSplashProxy.sol         | 289 ++++++++++++++
- .../.code/ProxyAdmin/contracts/universal/Proxy.sol | 217 ++++++++++
- .../ProxyAdmin/contracts/universal/ProxyAdmin.sol  | 254 ++++++++++++
- .../amarok/ethereum/.code/ProxyAdmin/meta.txt      |   2 +
- .../@openzeppelin/contracts/access/Ownable.sol     |  83 ++++
- .../@openzeppelin/contracts/utils/Context.sol      |  24 ++
- .../contracts/L1/ResourceMetering.sol              | 186 +++++++++
- .../implementation/contracts/L1/SystemConfig.sol   | 297 ++++++++++++++
- .../contracts/libraries/Arithmetic.sol             |  48 +++
- .../implementation/contracts/libraries/Burn.sol    |  42 ++
- .../implementation/contracts/universal/Semver.sol  |  58 +++
- .../.code/SystemConfig/implementation/meta.txt     |   2 +
- .../contracts/proxy/utils/Initializable.sol        | 138 +++++++
- .../@openzeppelin/contracts/utils/Address.sol      | 222 +++++++++++
- .../@openzeppelin/contracts/utils/Strings.sol      |  75 ++++
- .../@openzeppelin/contracts/utils/math/Math.sol    | 226 +++++++++++
- .../contracts/utils/math/SignedMath.sol            |  43 ++
- .../access/OwnableUpgradeable.sol                  |  95 +++++
- .../proxy/utils/Initializable.sol                  | 138 +++++++
- .../utils/AddressUpgradeable.sol                   | 195 +++++++++
- .../utils/ContextUpgradeable.sol                   |  37 ++
- .../solmate/src/utils/FixedPointMathLib.sol        | 366 +++++++++++++++++
- .../proxy/contracts/universal/Proxy.sol            | 217 ++++++++++
- .../ethereum/.code/SystemConfig/proxy/meta.txt     |   2 +
- 137 files changed, 12963 insertions(+)
+ 14 files changed, 1180 insertions(+)
 ```
 
 Generated with discovered.json: 0xedbcbcd69c61aab19a00452e1a0f26ed281f8f56
