@@ -1,4 +1,9 @@
-import { assert, EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  EthereumAddress,
+  formatSeconds,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { EXITS } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -19,8 +24,10 @@ const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
   'FINALIZATION_PERIOD_SECONDS',
 )
 
-const optimismPortalImplementation = discovery.getContract('OptimismPortal').implementations?.[0]
-const l2OutputOracleImplementation = discovery.getContract('L2OutputOracle').implementations?.[0]
+const optimismPortalImplementation =
+  discovery.getContract('OptimismPortal').implementations?.[0]
+const l2OutputOracleImplementation =
+  discovery.getContract('L2OutputOracle').implementations?.[0]
 
 assert(optimismPortalImplementation, 'OptimismPortal implementation not found')
 assert(l2OutputOracleImplementation, 'L2OutputOracle implementation not found')
@@ -76,15 +83,15 @@ export const blast: Layer2 = opStack({
         references: [
           {
             text: 'OptimismPortal.sol - Etherscan source code, proveWithdrawalTransaction function',
-            href: `https://etherscan.io/address/${optimismPortalImplementation}#code`,
+            href: `https://etherscan.io/address/${optimismPortalImplementation.toString()}#code`,
           },
           {
             text: 'OptimismPortal.sol - Etherscan source code, finalizeWithdrawalTransaction function',
-            href: `https://etherscan.io/address/${optimismPortalImplementation}#code`,
+            href: `https://etherscan.io/address/${optimismPortalImplementation.toString()}#code`,
           },
           {
             text: 'L2OutputOracle.sol - Etherscan source code, PROPOSER check',
-            href: `https://etherscan.io/address/${l2OutputOracleImplementation}#code`,
+            href: `https://etherscan.io/address/${l2OutputOracleImplementation.toString()}#code`,
           },
         ],
         risks: [EXITS.RISK_REHYPOTHECATED_ASSETS, EXITS.RISK_LACK_OF_LIQUIDITY],
