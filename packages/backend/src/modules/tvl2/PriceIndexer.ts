@@ -34,6 +34,9 @@ export class PriceIndexer extends ChildIndexer {
   }
 
   override async update(_from: number, _to: number): Promise<number> {
+    // from = syncService.canBeSynced(from) ? from : syncService.getNextTimestamp(from)
+    // to = syncService.canBeSynced(to) ? to : syncService.getNextTimestamp(to)
+    // in block number updater it will be: to = syncService.canBeSynced(to) ? to : syncService.getNextTimestamp(to)
     const from = this.syncService.getTimestampToSync(new UnixTime(_from))
     const to = this.syncService.getTimestampToSync(from.add(1, 'hours'))
 
