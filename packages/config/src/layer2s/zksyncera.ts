@@ -185,7 +185,7 @@ export const zksyncera: Layer2 = {
   },
   dataAvailability: makeDataAvailabilityConfig({
     type: 'On chain',
-    layer: 'Ethereum (calldata)',
+    layer: 'Ethereum (blobs or calldata)',
     mode: 'State diffs (compressed)',
   }),
   riskView: makeBridgeCompatible({
