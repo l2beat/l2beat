@@ -1,7 +1,7 @@
-import { LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { LivenessRecordWithProjectIdAndType } from '../repositories/LivenessRepository'
+import { LivenessRecordWithProjectIdAndSubtype } from '../repositories/LivenessRepository'
 import { groupByType } from './groupByType'
 
 describe(groupByType.name, () => {
@@ -23,45 +23,45 @@ describe(groupByType.name, () => {
 })
 
 const NOW = UnixTime.now()
-const MOCK_DATA: LivenessRecordWithProjectIdAndType[] = [
+const MOCK_DATA: LivenessRecordWithProjectIdAndSubtype[] = [
   {
     projectId: ProjectId('project1'),
     timestamp: NOW.add(-1, 'hours'),
-    type: LivenessType('DA'),
+    subtype: 'batchSubmissions',
   },
   {
     projectId: ProjectId('project1'),
     timestamp: NOW.add(-1, 'hours'),
-    type: LivenessType('STATE'),
+    subtype: 'stateUpdates',
   },
   {
     projectId: ProjectId('project1'),
     timestamp: NOW.add(-2, 'hours'),
-    type: LivenessType('DA'),
+    subtype: 'batchSubmissions',
   },
   {
     projectId: ProjectId('project2'),
     timestamp: NOW.add(-3, 'hours'),
-    type: LivenessType('DA'),
+    subtype: 'batchSubmissions',
   },
   {
     projectId: ProjectId('project1'),
     timestamp: NOW.add(-3, 'hours'),
-    type: LivenessType('DA'),
+    subtype: 'batchSubmissions',
   },
   {
     projectId: ProjectId('project2'),
     timestamp: NOW.add(-3, 'hours'),
-    type: LivenessType('PROOF'),
+    subtype: 'proofSubmissions',
   },
   {
     projectId: ProjectId('project2'),
     timestamp: NOW.add(-4, 'hours'),
-    type: LivenessType('STATE'),
+    subtype: 'stateUpdates',
   },
   {
     projectId: ProjectId('project2'),
     timestamp: NOW.add(-4, 'hours'),
-    type: LivenessType('PROOF'),
+    subtype: 'proofSubmissions',
   },
 ]

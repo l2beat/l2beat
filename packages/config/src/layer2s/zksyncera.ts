@@ -128,9 +128,10 @@ export const zksyncera: Layer2 = {
       defaultCallsPerMinute: 1500,
       startBlock: 1,
     },
-    liveness: {
-      proofSubmissions: [
-        {
+    trackedTxs: [
+      {
+        uses: [{ type: 'liveness', subType: 'proofSubmissions' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x3dB52cE065f728011Ac6732222270b3F2360d919',
@@ -141,7 +142,10 @@ export const zksyncera: Layer2 = {
           sinceTimestamp: new UnixTime(1679602559),
           untilTimestamp: new UnixTime(1701718427),
         },
-        {
+      },
+      {
+        uses: [{ type: 'liveness', subType: 'proofSubmissions' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xa0425d71cB1D6fb80E65a5361a04096E0672De03',
@@ -151,10 +155,10 @@ export const zksyncera: Layer2 = {
             'function proveBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32), tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[], tuple(uint256[], uint256[]))',
           sinceTimestamp: new UnixTime(1701258299),
         },
-      ],
-      batchSubmissions: [],
-      stateUpdates: [
-        {
+      },
+      {
+        uses: [{ type: 'liveness', subType: 'stateUpdates' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x3dB52cE065f728011Ac6732222270b3F2360d919',
@@ -165,7 +169,10 @@ export const zksyncera: Layer2 = {
           sinceTimestamp: new UnixTime(1679602559),
           untilTimestamp: new UnixTime(1701719687),
         },
-        {
+      },
+      {
+        uses: [{ type: 'liveness', subType: 'stateUpdates' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xa0425d71cB1D6fb80E65a5361a04096E0672De03',
@@ -175,8 +182,8 @@ export const zksyncera: Layer2 = {
             'function executeBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[] _newBatchesData)',
           sinceTimestamp: new UnixTime(1701258299),
         },
-      ],
-    },
+      },
+    ],
     finality: {
       type: 'zkSyncEra',
       minTimestamp: new UnixTime(1708556400),

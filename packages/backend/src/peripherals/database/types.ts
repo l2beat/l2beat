@@ -150,7 +150,7 @@ declare module 'knex/types/tables' {
     timestamp: Date
     block_number: number
     tx_hash: string
-    liveness_id: string
+    tracked_tx_id: string
   }
 
   interface LivenessConfigurationRow {
@@ -169,6 +169,17 @@ declare module 'knex/types/tables' {
     minimum_time_to_inclusion: number
     maximum_time_to_inclusion: number
     average_time_to_inclusion: number
+  }
+
+  interface TrackedTxsConfigRow {
+    id: string
+    project_id: string
+    type: string
+    subtype: string | null
+    debug_info: string
+    since_timestamp: Date
+    until_timestamp: Date | null
+    last_synced_timestamp: Date | null
   }
 
   interface DiscoveryCacheRow {
@@ -217,6 +228,7 @@ declare module 'knex/types/tables' {
     indexer_state: IndexerStateRow
     tvl_cleaner: TvlCleanerRow
     finality: FinalityRow
+    tracked_txs_configs: TrackedTxsConfigRow
   }
 }
 

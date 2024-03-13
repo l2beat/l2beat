@@ -29,7 +29,7 @@ export interface Config {
   readonly health: HealthConfig
   readonly tvl: TvlConfig
   readonly tvl2: Tvl2Config | false
-  readonly liveness: LivenessConfig | false
+  readonly trackedTxsConfig: TrackedTxsConfig | false
   readonly finality: FinalityConfig | false
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
@@ -85,7 +85,7 @@ export interface Tvl2Config {
   readonly amounts: AmountConfigEntry[]
 }
 
-export interface LivenessConfig {
+export interface TrackedTxsConfig {
   readonly bigQuery: {
     readonly clientEmail: string
     readonly privateKey: string
@@ -94,6 +94,9 @@ export interface LivenessConfig {
     readonly queryWarningLimitGb: number
   }
   readonly minTimestamp: UnixTime
+  readonly uses: {
+    readonly liveness: boolean
+  }
 }
 
 export interface FinalityConfig {

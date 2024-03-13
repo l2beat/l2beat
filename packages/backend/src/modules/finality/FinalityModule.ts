@@ -9,8 +9,8 @@ import { IndexerStateRepository } from '../../peripherals/database/repositories/
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
-import { LivenessIndexer } from '../liveness/LivenessIndexer'
 import { LivenessRepository } from '../liveness/repositories/LivenessRepository'
+import { TrackedTxsIndexer } from '../tracked-txs/TrackedTxsIndexer'
 import { LineaFinalityAnalyzer } from './analyzers/LineaFinalityAnalyzer'
 import { zkSyncEraFinalityAnalyzer } from './analyzers/zkSyncEraFinalityAnalyzer'
 import { FinalityController } from './api/FinalityController'
@@ -23,15 +23,15 @@ export function createFinalityModule(
   logger: Logger,
   database: Database,
   clock: Clock,
-  livenessIndexer?: LivenessIndexer,
+  trackedTxsIndexer: TrackedTxsIndexer | undefined,
 ): ApplicationModule | undefined {
   if (!config.finality) {
     logger.info('Finality module disabled')
     return
   }
 
-  if (!livenessIndexer) {
-    logger.error('To run finality you have to run Liveness')
+  if (!trackedTxsIndexer) {
+    logger.error('To run finality you have to run tracked transactions module')
     return
   }
 
@@ -68,7 +68,7 @@ export function createFinalityModule(
     (runtimeConfiguration) =>
       new FinalityIndexer(
         logger,
-        livenessIndexer,
+        trackedTxsIndexer,
         indexerStateRepository,
         finalityRepository,
         runtimeConfiguration,

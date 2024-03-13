@@ -1,6 +1,8 @@
-import { LivenessRecordWithType } from '../repositories/LivenessRepository'
+import { assertUnreachable, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 
-export interface GroupedByType<T = LivenessRecordWithType> {
+import { LivenessRecordWithSubtype } from '../repositories/LivenessRepository'
+
+export interface GroupedByType<T = LivenessRecordWithSubtype> {
   batchSubmissions: {
     records: T[]
   }
@@ -13,7 +15,7 @@ export interface GroupedByType<T = LivenessRecordWithType> {
 }
 
 export function groupByType<
-  T extends { type: string } = LivenessRecordWithType,
+  T extends { subtype: TrackedTxsConfigSubtype } = LivenessRecordWithSubtype,
 >(records: T[]): GroupedByType<T> {
   const result: GroupedByType<T> = {
     batchSubmissions: {
@@ -27,15 +29,21 @@ export function groupByType<
     },
   }
 
-  records.forEach((record) => {
-    if (record.type === 'DA') {
-      result.batchSubmissions.records.push(record)
-    } else if (record.type === 'STATE') {
-      result.stateUpdates.records.push(record)
-    } else {
-      result.proofSubmissions.records.push(record)
+  for (const record of records) {
+    switch (record.subtype) {
+      case 'batchSubmissions':
+        result.batchSubmissions.records.push(record)
+        break
+      case 'stateUpdates':
+        result.stateUpdates.records.push(record)
+        break
+      case 'proofSubmissions':
+        result.proofSubmissions.records.push(record)
+        break
+      default:
+        assertUnreachable(record.subtype)
     }
-  })
+  }
 
   return result
 }

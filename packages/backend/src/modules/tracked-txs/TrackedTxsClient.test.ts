@@ -3,41 +3,31 @@ import { expect, mockFn, mockObject } from 'earl'
 import { readFileSync } from 'fs'
 
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
-import { LivenessClient } from './LivenessClient'
+import { TrackedTxsClient } from './TrackedTxsClient'
 import {
-  LivenessConfigEntry,
-  LivenessFunctionCall,
-  LivenessSharpSubmission,
-  LivenessTransfer,
-  makeLivenessFunctionCall,
-  makeLivenessSharpSubmissions,
-  makeLivenessTransfer,
-} from './types/LivenessConfig'
-import {
-  BigQueryFunctionCallsResult,
-  BigQueryTransfersResult,
+  BigQueryFunctionCallResult,
+  BigQueryTransferResult,
 } from './types/model'
 import {
-  getFunctionCallQuery,
-  getTransferQuery,
-  transformFunctionCallsQueryResult,
-  transformTransfersQueryResult,
-} from './utils'
+  TrackedTxConfigEntry,
+  TrackedTxFunctionCallConfig,
+  TrackedTxSharpSubmissionConfig,
+  TrackedTxTransferConfig,
+} from './types/TrackedTxsConfig'
+import { getFunctionCallQuery, getTransferQuery } from './utils/sql'
+import { transformFunctionCallsQueryResult } from './utils/transformFunctionCallsQueryResult'
+import { transformTransfersQueryResult } from './utils/transformTransfersQueryResult'
 
 const FROM = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
 const TO = UnixTime.fromDate(new Date('2022-01-01T02:00:00Z'))
 
-describe(LivenessClient.name, () => {
-  describe(LivenessClient.prototype.getLivenessData.name, () => {
+describe(TrackedTxsClient.name, () => {
+  describe(TrackedTxsClient.prototype.getData.name, () => {
     it('filters configurations and calls big query, parses results', async () => {
       const bigquery = getMockBiqQuery([TRANSFERS_RESPONSE, FUNCTIONS_RESPONSE])
-      const livenessClient = new LivenessClient(bigquery)
+      const trackedTxsClient = new TrackedTxsClient(bigquery)
 
-      const data = await livenessClient.getLivenessData(
-        CONFIGURATIONS,
-        FROM,
-        TO,
-      )
+      const data = await trackedTxsClient.getData(CONFIGURATIONS, FROM, TO)
 
       // calls both internal methods
       expect(bigquery.query).toHaveBeenCalledTimes(2)
@@ -49,23 +39,23 @@ describe(LivenessClient.name, () => {
     })
   })
 
-  describe(LivenessClient.prototype.getTransfers.name, () => {
+  describe(TrackedTxsClient.prototype.getTransfers.name, () => {
     it('does not call query when empty config', async () => {
       const bigquery = getMockBiqQuery([])
-      const livenessClient = new LivenessClient(bigquery)
+      const trackedTxsClient = new TrackedTxsClient(bigquery)
 
-      await livenessClient.getTransfers([], FROM, TO)
+      await trackedTxsClient.getTransfers([], FROM, TO)
 
       expect(bigquery.query).not.toHaveBeenCalled()
     })
   })
 
-  describe(LivenessClient.prototype.getFunctionCalls.name, () => {
+  describe(TrackedTxsClient.prototype.getFunctionCalls.name, () => {
     it('does not call query when empty config', async () => {
       const bigquery = getMockBiqQuery([])
-      const livenessClient = new LivenessClient(bigquery)
+      const trackedTxsClient = new TrackedTxsClient(bigquery)
 
-      await livenessClient.getFunctionCalls([], [], FROM, TO)
+      await trackedTxsClient.getFunctionCalls([], [], FROM, TO)
 
       expect(bigquery.query).not.toHaveBeenCalled()
     })
@@ -84,83 +74,91 @@ const sharpInput = readFileSync(inputFile, 'utf-8')
 const paradexProgramHash =
   '3258367057337572248818716706664617507069572185152472699066582725377748079373'
 
-const CONFIGURATIONS: LivenessConfigEntry[] = [
-  makeLivenessTransfer({
+const CONFIGURATIONS: TrackedTxConfigEntry[] = [
+  {
     projectId: ProjectId('project1'),
     formula: 'transfer',
     from: ADDRESS_1,
     to: ADDRESS_2,
-    type: 'DA',
     sinceTimestamp: FROM,
     untilTimestamp: FROM.add(2, 'days'),
-  }),
-  makeLivenessFunctionCall({
+    uses: [],
+  },
+  {
     projectId: ProjectId('project1'),
     formula: 'functionCall',
     address: ADDRESS_3,
     selector: '0x9aaab648',
     sinceTimestamp: FROM,
-    type: 'STATE',
-  }),
-  makeLivenessSharpSubmissions({
+    uses: [],
+  },
+  {
     projectId: ProjectId('project1'),
     formula: 'sharpSubmission',
     programHashes: [paradexProgramHash],
     sinceTimestamp: FROM,
-    type: 'STATE',
-  }),
+    address: EthereumAddress.random(),
+    selector: '0x9b3b76cc',
+    uses: [],
+  },
 ]
 
 const TRANSFERS_RESPONSE = [
   {
-    from_address: (CONFIGURATIONS[0] as LivenessTransfer).from,
-    to_address: (CONFIGURATIONS[0] as LivenessTransfer).to,
+    transaction_hash: TX_HASH,
+    from_address: (CONFIGURATIONS[0] as TrackedTxTransferConfig).from,
+    to_address: (CONFIGURATIONS[0] as TrackedTxTransferConfig).to,
     block_timestamp: toBigQueryDate(FROM),
     block_number: BLOCK,
-    transaction_hash: TX_HASH,
+    gas_price: 25,
+    receipt_gas_used: 100,
   },
 ]
-const parsedTransfers = BigQueryTransfersResult.parse(TRANSFERS_RESPONSE)
+const parsedTransfers = BigQueryTransferResult.array().parse(TRANSFERS_RESPONSE)
 const TRANSFERS_RESULT = transformTransfersQueryResult(
-  [CONFIGURATIONS[0] as LivenessTransfer],
+  [CONFIGURATIONS[0] as TrackedTxTransferConfig],
   parsedTransfers,
 )
 
 const FUNCTIONS_RESPONSE = [
   {
-    to_address: (CONFIGURATIONS[1] as LivenessFunctionCall).address,
-    input: (CONFIGURATIONS[1] as LivenessFunctionCall).selector,
+    transaction_hash: TX_HASH,
     block_number: BLOCK,
     block_timestamp: toBigQueryDate(FROM),
-    transaction_hash: TX_HASH,
+    to_address: (CONFIGURATIONS[1] as TrackedTxFunctionCallConfig).address,
+    gas_price: 1000,
+    receipt_gas_used: 200000,
+    input: (CONFIGURATIONS[1] as TrackedTxFunctionCallConfig).selector,
   },
   {
-    to_address: (CONFIGURATIONS[2] as LivenessFunctionCall).address,
-    input: sharpInput,
+    transaction_hash: TX_HASH,
     block_number: BLOCK,
     block_timestamp: toBigQueryDate(FROM),
-    transaction_hash: TX_HASH,
+    to_address: (CONFIGURATIONS[2] as TrackedTxFunctionCallConfig).address,
+    gas_price: 1500,
+    receipt_gas_used: 200000,
+    input: sharpInput,
   },
 ]
 
 const parsedFunctionCalls =
-  BigQueryFunctionCallsResult.parse(FUNCTIONS_RESPONSE)
+  BigQueryFunctionCallResult.array().parse(FUNCTIONS_RESPONSE)
 const FUNCTIONS_RESULT = transformFunctionCallsQueryResult(
-  [CONFIGURATIONS[1] as LivenessFunctionCall],
-  [CONFIGURATIONS[2] as LivenessSharpSubmission],
+  [CONFIGURATIONS[1] as TrackedTxFunctionCallConfig],
+  [CONFIGURATIONS[2] as TrackedTxSharpSubmissionConfig],
   parsedFunctionCalls,
 )
 
 const TRANSFERS_SQL = getTransferQuery(
-  [CONFIGURATIONS[0] as LivenessTransfer],
+  [CONFIGURATIONS[0] as TrackedTxTransferConfig],
   FROM,
   TO,
 )
 const FUNCTIONS_SQL = getFunctionCallQuery(
   (
     CONFIGURATIONS.slice(1) as (
-      | LivenessFunctionCall
-      | LivenessSharpSubmission
+      | TrackedTxFunctionCallConfig
+      | TrackedTxSharpSubmissionConfig
     )[]
   ).map((c) => ({
     address: c.address,

@@ -8,11 +8,11 @@ import { ApplicationModule } from './modules/ApplicationModule'
 import { createDiffHistoryModule } from './modules/diff-history/createDiffHistoryModule'
 import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createHealthModule } from './modules/health/HealthModule'
-import { LivenessIndexer } from './modules/liveness/LivenessIndexer'
 import { createLivenessModule } from './modules/liveness/LivenessModule'
 import { createLzOAppsModule } from './modules/lz-oapps/createLzOAppsModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createStatusModule } from './modules/status/StatusModule'
+import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
 import { createTvlModule } from './modules/tvl/modules/TvlModule'
 import { createTvl2Module } from './modules/tvl2/Tvl2Module'
 import { createUpdateMonitorModule } from './modules/update-monitor/UpdateMonitorModule'
@@ -47,6 +47,13 @@ export class Application {
     )
 
     const livenessModule = createLivenessModule(config, logger, database, clock)
+    const trackedTxsModule = createTrackedTxsModule(
+      config,
+      logger,
+      database,
+      clock,
+      livenessModule?.updater,
+    )
 
     const modules: (ApplicationModule | undefined)[] = [
       createHealthModule(config),
@@ -56,13 +63,14 @@ export class Application {
       createUpdateMonitorModule(config, logger, http, database, clock),
       createDiffHistoryModule(config, logger, database),
       createStatusModule(config, logger),
+      trackedTxsModule,
       livenessModule,
       createFinalityModule(
         config,
         logger,
         database,
         clock,
-        livenessModule?.indexer as LivenessIndexer,
+        trackedTxsModule?.indexer,
       ),
       createLzOAppsModule(config, logger),
       createTvl2Module(config, logger, clock),

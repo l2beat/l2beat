@@ -154,21 +154,22 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
               assessCount: subtractOne,
             }
           : undefined),
-      liveness:
+      trackedTxs:
         daProvider !== undefined
           ? undefined
-          : {
-              proofSubmissions: [],
-              batchSubmissions: [
-                {
+          : [
+              {
+                uses: [{ type: 'liveness', subType: 'batchSubmissions' }],
+                query: {
                   formula: 'transfer',
                   from: sequencerAddress,
                   to: sequencerInbox,
                   sinceTimestamp: templateVars.genesisTimestamp,
                 },
-              ],
-              stateUpdates: [
-                {
+              },
+              {
+                uses: [{ type: 'liveness', subType: 'stateUpdates' }],
+                query: {
                   formula: 'functionCall',
                   address: templateVars.l2OutputOracle.address,
                   selector: '0x9aaab648',
@@ -179,8 +180,8 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
                       templateVars.genesisTimestamp.toNumber(),
                   ),
                 },
-              ],
-            },
+              },
+            ],
       finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
     chainConfig: templateVars.chainConfig,

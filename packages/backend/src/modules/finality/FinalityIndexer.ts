@@ -4,7 +4,6 @@ import { ChildIndexer, Retries } from '@l2beat/uif'
 import { mean } from 'lodash'
 
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
-import { LivenessIndexer } from '../liveness/LivenessIndexer'
 import {
   FinalityRecord,
   FinalityRepository,
@@ -27,7 +26,7 @@ export class FinalityIndexer extends ChildIndexer {
 
   constructor(
     logger: Logger,
-    parentIndexer: LivenessIndexer,
+    parentIndexer: ChildIndexer,
     private readonly stateRepository: IndexerStateRepository,
     private readonly finalityRepository: FinalityRepository,
     private readonly configuration: FinalityConfig,

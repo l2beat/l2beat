@@ -95,15 +95,14 @@ describe('layer2s', () => {
     }
   })
 
-  describe('liveness', () => {
-    it('every project has valid signatures', () => {
+  describe('tracked transactions', () => {
+    it('every tracked transaction which is function call has valid signatures', () => {
       for (const project of layer2s) {
         it(`${project.id.toString()} : has valid signatures`, () => {
-          if (project.config.liveness) {
-            const functionCalls = [
-              ...project.config.liveness.batchSubmissions,
-              ...project.config.liveness.stateUpdates,
-            ].filter((x) => x.formula === 'functionCall') as {
+          if (project.config.trackedTxs?.length !== 0) {
+            const functionCalls = project.config.trackedTxs
+              ?.map((t) => t.query)
+              .filter((x) => x.formula === 'functionCall') as {
               selector: string
               functionSignature: string
             }[]

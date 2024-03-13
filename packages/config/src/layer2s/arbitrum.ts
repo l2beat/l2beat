@@ -189,10 +189,10 @@ export const arbitrum: Layer2 = {
       startBlock: 1,
     },
     finality: 'coming soon',
-    liveness: {
-      proofSubmissions: [],
-      batchSubmissions: [
-        {
+    trackedTxs: [
+      {
+        uses: [{ type: 'liveness', subType: 'batchSubmissions' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6',
@@ -202,7 +202,10 @@ export const arbitrum: Layer2 = {
             'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
           sinceTimestamp: new UnixTime(1661457944),
         },
-        {
+      },
+      {
+        uses: [{ type: 'liveness', subType: 'batchSubmissions' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6',
@@ -212,7 +215,10 @@ export const arbitrum: Layer2 = {
             'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder)',
           sinceTimestamp: new UnixTime(1661457944),
         },
-        {
+      },
+      {
+        uses: [{ type: 'liveness', subType: 'batchSubmissions' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6',
@@ -222,9 +228,10 @@ export const arbitrum: Layer2 = {
             'function addSequencerL2Batch(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
           sinceTimestamp: new UnixTime(1661457944),
         },
-      ],
-      stateUpdates: [
-        {
+      },
+      {
+        uses: [{ type: 'liveness', subType: 'stateUpdates' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840',
@@ -234,8 +241,8 @@ export const arbitrum: Layer2 = {
             'function updateSendRoot(bytes32 root, bytes32 l2BlockHash) external',
           sinceTimestamp: new UnixTime(1661455766),
         },
-      ],
-    },
+      },
+    ],
   },
   chainConfig: {
     name: 'arbitrum',

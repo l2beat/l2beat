@@ -1,11 +1,10 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
-import { LivenessConfigurationRecord } from '../repositories/LivenessConfigurationRepository'
-import { LivenessConfigEntry } from '../types/LivenessConfig'
+import { TrackedTxsConfigRecord } from '../repositories/TrackedTxsConfigsRepository'
 
 export function getSafeHeight(
-  databaseEntries: LivenessConfigurationRecord[],
-  toAdd: LivenessConfigEntry[],
+  databaseEntries: TrackedTxsConfigRecord[],
+  toAdd: TrackedTxsConfigRecord[],
   minTimestamp: UnixTime,
 ): number {
   if (databaseEntries.length === 0 && toAdd.length === 0) {

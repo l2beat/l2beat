@@ -1,45 +1,63 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { LivenessConfigurationRecord } from '../repositories/LivenessConfigurationRepository'
-import {
-  LivenessConfigEntry,
-  makeLivenessFunctionCall,
-  makeLivenessTransfer,
-} from '../types/LivenessConfig'
+import { TrackedTxsConfigRecord } from '../repositories/TrackedTxsConfigsRepository'
+import { TrackedTxId } from '../types/TrackedTxId'
+import { TrackedTxConfigEntry } from '../types/TrackedTxsConfig'
 import { findConfigurationsToSync } from './findConfigurationsToSync'
 
 const FROM = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
 
-const CONFIGURATIONS: LivenessConfigEntry[] = [
-  makeLivenessTransfer({
+const CONFIGURATIONS: TrackedTxConfigEntry[] = [
+  {
     projectId: ProjectId('project1'),
     formula: 'transfer',
     from: EthereumAddress.random(),
     to: EthereumAddress.random(),
-    type: 'DA',
     sinceTimestamp: FROM,
-  }),
-  makeLivenessFunctionCall({
+    uses: [
+      {
+        type: 'liveness',
+        subType: 'batchSubmissions',
+        id: TrackedTxId.random(),
+      },
+    ],
+  },
+  {
     projectId: ProjectId('project1'),
     formula: 'functionCall',
     address: EthereumAddress.random(),
     selector: '0x9aaab648',
     sinceTimestamp: FROM,
-    type: 'STATE',
-  }),
+    uses: [
+      { type: 'liveness', subType: 'stateUpdates', id: TrackedTxId.random() },
+      {
+        type: 'liveness',
+        subType: 'proofSubmissions',
+        id: TrackedTxId.random(),
+      },
+    ],
+  },
 ]
 
 describe(findConfigurationsToSync.name, () => {
   it('should return configurations that need to be synced', () => {
-    const dbEntries: LivenessConfigurationRecord[] = [
+    const dbEntries: TrackedTxsConfigRecord[] = [
       {
         ...CONFIGURATIONS[0],
+        ...CONFIGURATIONS[0].uses[0],
         lastSyncedTimestamp: FROM.add(1, 'hours'),
         debugInfo: '',
       },
       {
         ...CONFIGURATIONS[1],
+        ...CONFIGURATIONS[1].uses[0],
+        lastSyncedTimestamp: FROM.add(1, 'hours'),
+        debugInfo: '',
+      },
+      {
+        ...CONFIGURATIONS[1],
+        ...CONFIGURATIONS[1].uses[1],
         lastSyncedTimestamp: undefined,
         debugInfo: '',
       },
@@ -52,16 +70,22 @@ describe(findConfigurationsToSync.name, () => {
       FROM.add(1, 'hours'),
     )
 
-    expect(result).toEqual([CONFIGURATIONS[1]])
+    expect(result).toEqual([
+      {
+        ...CONFIGURATIONS[1],
+        uses: [CONFIGURATIONS[1].uses[1]],
+      },
+    ])
   })
 
   it('returns empty array if there is nothing to sync', () => {
-    const dbEntries: LivenessConfigurationRecord[] = CONFIGURATIONS.map(
-      (c) => ({
+    const dbEntries: TrackedTxsConfigRecord[] = CONFIGURATIONS.flatMap((c) =>
+      c.uses.map((u) => ({
         ...c,
+        ...u,
         lastSyncedTimestamp: FROM.add(1, 'hours'),
         debugInfo: '',
-      }),
+      })),
     )
 
     const result = findConfigurationsToSync(

@@ -103,10 +103,10 @@ export const bobanetwork: Layer2 = {
       defaultCallsPerMinute: 200,
       startBlock: 1,
     },
-    liveness: {
-      proofSubmissions: [],
-      batchSubmissions: [
-        {
+    trackedTxs: [
+      {
+        uses: [{ type: 'liveness', subType: 'batchSubmissions' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xfBd2541e316948B259264c02f370eD088E04c3Db',
@@ -115,9 +115,10 @@ export const bobanetwork: Layer2 = {
           functionSignature: 'function appendSequencerBatch()',
           sinceTimestamp: new UnixTime(1635386025),
         },
-      ],
-      stateUpdates: [
-        {
+      },
+      {
+        uses: [{ type: 'liveness', subType: 'stateUpdates' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xdE7355C971A5B733fe2133753Abd7e5441d441Ec',
@@ -127,8 +128,8 @@ export const bobanetwork: Layer2 = {
             'function appendStateBatch(bytes32[] _batch,uint256 _shouldStartAtElement)',
           sinceTimestamp: new UnixTime(1635386294),
         },
-      ],
-    },
+      },
+    ],
     finality: 'coming soon',
   },
   dataAvailability: makeDataAvailabilityConfig({

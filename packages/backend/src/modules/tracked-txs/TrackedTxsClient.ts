@@ -1,40 +1,40 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
-import { LivenessRecord } from './repositories/LivenessRepository'
 import {
-  LivenessConfigEntry,
-  LivenessFunctionCall,
-  LivenessSharpSubmission,
-  LivenessTransfer,
-} from './types/LivenessConfig'
-import {
-  BigQueryFunctionCallsResult,
-  BigQueryTransfersResult,
+  BigQueryFunctionCallResult,
+  BigQueryTransferResult,
+  TrackedTxFunctionCallResult,
+  TrackedTxResult,
+  TrackedTxTransferResult,
 } from './types/model'
 import {
-  getFunctionCallQuery,
-  getTransferQuery,
-  transformFunctionCallsQueryResult,
-  transformTransfersQueryResult,
-} from './utils'
+  TrackedTxConfigEntry,
+  TrackedTxFunctionCallConfig,
+  TrackedTxSharpSubmissionConfig,
+  TrackedTxTransferConfig,
+} from './types/TrackedTxsConfig'
+import { getFunctionCallQuery, getTransferQuery } from './utils/sql'
+import { transformFunctionCallsQueryResult } from './utils/transformFunctionCallsQueryResult'
+import { transformTransfersQueryResult } from './utils/transformTransfersQueryResult'
 
-export class LivenessClient {
+export class TrackedTxsClient {
   constructor(private readonly bigquery: BigQueryClient) {}
 
-  async getLivenessData(
-    configurations: LivenessConfigEntry[],
+  async getData(
+    configurations: TrackedTxConfigEntry[],
     from: UnixTime,
     to: UnixTime,
-  ): Promise<LivenessRecord[]> {
+  ): Promise<TrackedTxResult[]> {
     const transfersConfig = configurations.filter(
-      (c): c is LivenessTransfer => c.formula === 'transfer',
+      (c): c is TrackedTxTransferConfig => c.formula === 'transfer',
     )
     const functionCallsConfig = configurations.filter(
-      (c): c is LivenessFunctionCall => c.formula === 'functionCall',
+      (c): c is TrackedTxFunctionCallConfig => c.formula === 'functionCall',
     )
     const sharpSubmissionsConfig = configurations.filter(
-      (c): c is LivenessSharpSubmission => c.formula === 'sharpSubmission',
+      (c): c is TrackedTxSharpSubmissionConfig =>
+        c.formula === 'sharpSubmission',
     )
 
     const [transfers, functionCalls] = await Promise.all([
@@ -51,25 +51,25 @@ export class LivenessClient {
   }
 
   async getTransfers(
-    transfersConfig: LivenessTransfer[],
+    transfersConfig: TrackedTxTransferConfig[],
     from: UnixTime,
     to: UnixTime,
-  ): Promise<LivenessRecord[]> {
+  ): Promise<TrackedTxTransferResult[]> {
     if (transfersConfig.length === 0) return Promise.resolve([])
 
     const query = getTransferQuery(transfersConfig, from, to)
 
     const queryResult = await this.bigquery.query(query)
-    const parsedResult = BigQueryTransfersResult.parse(queryResult)
+    const parsedResult = BigQueryTransferResult.array().parse(queryResult)
     return transformTransfersQueryResult(transfersConfig, parsedResult)
   }
 
   async getFunctionCalls(
-    functionCallsConfig: LivenessFunctionCall[],
-    sharpSubmissionsConfig: LivenessSharpSubmission[],
+    functionCallsConfig: TrackedTxFunctionCallConfig[],
+    sharpSubmissionsConfig: TrackedTxSharpSubmissionConfig[],
     from: UnixTime,
     to: UnixTime,
-  ): Promise<LivenessRecord[]> {
+  ): Promise<TrackedTxFunctionCallResult[]> {
     if (functionCallsConfig.length === 0 && sharpSubmissionsConfig.length === 0)
       return Promise.resolve([])
 
@@ -83,7 +83,7 @@ export class LivenessClient {
     const queryResult = await this.bigquery.query(query)
     // function calls and sharp submissions need the same fields for the later transform logic
     // this is why we parse all the results with the same parser
-    const parsedResult = BigQueryFunctionCallsResult.parse(queryResult)
+    const parsedResult = BigQueryFunctionCallResult.array().parse(queryResult)
 
     // this will find matching configs based on different criteria for function calls and sharp submissions
     // hence this is the place where "unbatching" happens
@@ -96,8 +96,8 @@ export class LivenessClient {
 }
 
 function combineCalls(
-  functionCallsConfig: LivenessFunctionCall[],
-  sharpSubmissionsConfig: LivenessSharpSubmission[],
+  functionCallsConfig: TrackedTxFunctionCallConfig[],
+  sharpSubmissionsConfig: TrackedTxSharpSubmissionConfig[],
 ) {
   // TODO: unique
   return [

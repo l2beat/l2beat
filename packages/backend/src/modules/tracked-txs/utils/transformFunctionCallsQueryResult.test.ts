@@ -2,14 +2,15 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { readFileSync } from 'fs'
 
-import { LivenessRecord } from '../repositories/LivenessRepository'
 import {
-  LivenessFunctionCall,
-  LivenessSharpSubmission,
-  makeLivenessFunctionCall,
-  makeLivenessSharpSubmissions,
-} from '../types/LivenessConfig'
-import { BigQueryFunctionCallsResult } from '../types/model'
+  BigQueryFunctionCallResult,
+  TrackedTxFunctionCallResult,
+} from '../types/model'
+import { TrackedTxId } from '../types/TrackedTxId'
+import {
+  TrackedTxFunctionCallConfig,
+  TrackedTxSharpSubmissionConfig,
+} from '../types/TrackedTxsConfig'
 import { transformFunctionCallsQueryResult } from './transformFunctionCallsQueryResult'
 
 const ADDRESS_1 = EthereumAddress.random()
@@ -33,36 +34,56 @@ const paradexProgramHash =
 
 describe(transformFunctionCallsQueryResult.name, () => {
   it('should transform results', () => {
-    const functionCalls: LivenessFunctionCall[] = [
-      makeLivenessFunctionCall({
+    const functionCalls: TrackedTxFunctionCallConfig[] = [
+      {
         formula: 'functionCall',
         projectId: ProjectId('project1'),
         address: ADDRESS_1,
         selector: SELECTOR_1,
-        type: 'STATE',
         sinceTimestamp: SINCE_TIMESTAMP,
-      }),
-      makeLivenessFunctionCall({
+        uses: [
+          {
+            type: 'liveness',
+            subType: 'batchSubmissions',
+            id: TrackedTxId.random(),
+          },
+        ],
+      },
+      {
         formula: 'functionCall',
         projectId: ProjectId('project1'),
         address: ADDRESS_2,
         selector: SELECTOR_2,
-        type: 'DA',
         sinceTimestamp: SINCE_TIMESTAMP,
-      }),
+        uses: [
+          {
+            type: 'liveness',
+            subType: 'stateUpdates',
+            id: TrackedTxId.random(),
+          },
+        ],
+      },
     ]
 
-    const sharpSubmissions: LivenessSharpSubmission[] = [
-      makeLivenessSharpSubmissions({
+    const sharpSubmissions: TrackedTxSharpSubmissionConfig[] = [
+      {
         formula: 'sharpSubmission',
         projectId: ProjectId('project2'),
-        type: 'STATE',
         sinceTimestamp: SINCE_TIMESTAMP,
         programHashes: [paradexProgramHash],
-      }),
+        address: EthereumAddress.random(),
+        selector: '0x9b3b76cc',
+        uses: [
+          {
+            type: 'liveness',
+            subType: 'proofSubmissions',
+            id: TrackedTxId.random(),
+          },
+        ],
+      },
     ]
 
-    const queryResults: BigQueryFunctionCallsResult = [
+    const queryResults: BigQueryFunctionCallResult[] = [
       {
         transaction_hash: txHashes[0],
         block_number: block,
@@ -85,24 +106,36 @@ describe(transformFunctionCallsQueryResult.name, () => {
         to_address: sharpSubmissions[0].address,
       },
     ]
-    const expected: LivenessRecord[] = [
+    const expected: TrackedTxFunctionCallResult[] = [
       {
-        txHash: txHashes[0],
-        livenessId: functionCalls[0].id,
+        type: 'functionCall',
+        projectId: functionCalls[0].projectId,
+        use: functionCalls[0].uses[0],
+        hash: txHashes[0],
         blockNumber: block,
-        timestamp: timestamp,
+        blockTimestamp: timestamp,
+        toAddress: ADDRESS_1,
+        input: SELECTOR_1,
       },
       {
-        txHash: txHashes[1],
-        livenessId: functionCalls[1].id,
+        type: 'functionCall',
+        projectId: functionCalls[1].projectId,
+        use: functionCalls[1].uses[0],
+        hash: txHashes[1],
         blockNumber: block,
-        timestamp: timestamp,
+        blockTimestamp: timestamp,
+        toAddress: ADDRESS_2,
+        input: SELECTOR_2,
       },
       {
-        txHash: txHashes[2],
-        livenessId: sharpSubmissions[0].id,
+        type: 'functionCall',
+        projectId: sharpSubmissions[0].projectId,
+        use: sharpSubmissions[0].uses[0],
+        hash: txHashes[2],
         blockNumber: block,
-        timestamp: timestamp,
+        blockTimestamp: timestamp,
+        toAddress: sharpSubmissions[0].address,
+        input: sharpInput,
       },
     ]
     const result = transformFunctionCallsQueryResult(
@@ -115,22 +148,22 @@ describe(transformFunctionCallsQueryResult.name, () => {
   })
 
   it('throws when there is no matching configuration', () => {
-    const functionCalls: LivenessFunctionCall[] = [
-      makeLivenessFunctionCall({
+    const functionCalls: TrackedTxFunctionCallConfig[] = [
+      {
         formula: 'functionCall',
         projectId: ProjectId('project1'),
         address: ADDRESS_1,
         selector: SELECTOR_1,
-        type: 'STATE',
         sinceTimestamp: SINCE_TIMESTAMP,
-      }),
+        uses: [],
+      },
     ]
 
-    const queryResults: BigQueryFunctionCallsResult = [
+    const queryResults: BigQueryFunctionCallResult[] = [
       {
+        transaction_hash: txHashes[0],
         to_address: EthereumAddress.random(),
         input: 'random-string',
-        transaction_hash: txHashes[0],
         block_number: block,
         block_timestamp: timestamp,
       },
@@ -142,39 +175,53 @@ describe(transformFunctionCallsQueryResult.name, () => {
   })
 
   it('includes only configurations which program hashes were proven', () => {
-    const sharpSubmissions: LivenessSharpSubmission[] = [
-      makeLivenessSharpSubmissions({
+    const sharpSubmissions: TrackedTxSharpSubmissionConfig[] = [
+      {
         formula: 'sharpSubmission',
         projectId: ProjectId('project1'),
-        type: 'STATE',
         sinceTimestamp: SINCE_TIMESTAMP,
         programHashes: [paradexProgramHash],
-      }),
-      makeLivenessSharpSubmissions({
+        address: EthereumAddress.random(),
+        selector: '0x9b3b76cc',
+        uses: [
+          {
+            type: 'liveness',
+            subType: 'proofSubmissions',
+            id: TrackedTxId.random(),
+          },
+        ],
+      },
+      {
         formula: 'sharpSubmission',
         projectId: ProjectId('project2'),
-        type: 'STATE',
         sinceTimestamp: SINCE_TIMESTAMP,
         programHashes: [paradexProgramHash + 'wrong-rest-part-of-hash'],
-      }),
+        address: EthereumAddress.random(),
+        selector: 'random-selector-2',
+        uses: [],
+      },
     ]
 
-    const queryResults: BigQueryFunctionCallsResult = [
+    const queryResults: BigQueryFunctionCallResult[] = [
       {
+        transaction_hash: txHashes[0],
         to_address: sharpSubmissions[0].address,
         input: sharpInput,
-        transaction_hash: txHashes[0],
         block_number: block,
         block_timestamp: timestamp,
       },
     ]
 
-    const expected: LivenessRecord[] = [
+    const expected: TrackedTxFunctionCallResult[] = [
       {
-        txHash: txHashes[0],
-        livenessId: sharpSubmissions[0].id,
+        type: 'functionCall',
+        projectId: sharpSubmissions[0].projectId,
+        use: sharpSubmissions[0].uses[0],
+        hash: txHashes[0],
         blockNumber: block,
-        timestamp: timestamp,
+        blockTimestamp: timestamp,
+        toAddress: sharpSubmissions[0].address,
+        input: sharpInput,
       },
     ]
 

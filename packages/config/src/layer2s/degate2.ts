@@ -84,11 +84,10 @@ export const degate2: Layer2 = {
         tokens: '*',
       }),
     ],
-    liveness: {
-      proofSubmissions: [],
-      batchSubmissions: [],
-      stateUpdates: [
-        {
+    trackedTxs: [
+      {
+        uses: [{ type: 'liveness', subType: 'stateUpdates' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x2CFd271e9b4d0344Fd2Aa0cb1ffd4f6b85c0B215',
@@ -99,8 +98,8 @@ export const degate2: Layer2 = {
           sinceTimestamp: new UnixTime(1693304819),
           untilTimestamp: new UnixTime(1699766507),
         },
-      ],
-    },
+      },
+    ],
   },
   dataAvailability: makeDataAvailabilityConfig({
     type: 'On chain',
