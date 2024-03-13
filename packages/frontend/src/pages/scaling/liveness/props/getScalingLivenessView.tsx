@@ -40,7 +40,9 @@ function getScalingLivenessViewEntry(
     )
   }
 
-  const isSynced = UnixTime.now().add(-12, 'hours').lte(liveness.syncedUntil)
+  // TODO: remove this when liveness is fixed
+  // const isSynced = UnixTime.now().add(-12, 'hours').lte(liveness.syncedUntil)
+  const isSynced = true
 
   return {
     name: project.display.name,
