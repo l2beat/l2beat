@@ -82,6 +82,7 @@ export interface OpStackConfig {
   chainConfig?: ChainConfig
   upgradesAndGovernance?: string
   hasProperSecurityCouncil?: boolean
+  usesBlobs?: boolean
 }
 
 export function opStack(templateVars: OpStackConfig): Layer2 {
@@ -196,7 +197,9 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
           })
         : makeDataAvailabilityConfig({
             type: 'On chain',
-            layer: 'Ethereum (calldata)',
+            layer: templateVars.usesBlobs
+              ? 'Ethereum (blobs or calldata)'
+              : 'Ethereum (calldata)',
             mode: 'Transactions data (compressed)',
           }),
     riskView: makeBridgeCompatible({
@@ -310,9 +313,9 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
       },
       dataAvailability: templateVars.nonTemplateTechnology
         ?.dataAvailability ?? {
-        ...technologyDA(daProvider),
+        ...technologyDA(daProvider, templateVars.usesBlobs),
         references: [
-          ...technologyDA(daProvider).references,
+          ...technologyDA(daProvider, templateVars.usesBlobs).references,
           {
             text: 'Derivation: Batch submission - OP Mainnet specs',
             href: 'https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission',
@@ -472,8 +475,15 @@ function riskViewDA(DA: DAProvider | undefined): ScalingProjectRiskViewEntry {
 
 function technologyDA(
   DA: DAProvider | undefined,
+  usesBlobs: boolean | undefined,
 ): ScalingProjectTechnologyChoice {
-  return DA === undefined
-    ? TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA
-    : DA.technology
+  if (DA !== undefined) {
+    return DA.technology
+  }
+
+  if (usesBlobs) {
+    return TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA
+  }
+
+  return TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA
 }
