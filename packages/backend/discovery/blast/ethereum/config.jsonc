@@ -117,7 +117,9 @@
         "tokenBalance",
         "getProviderInfoAt",
         "totalProviderValue",
-        "totalValue"
+        "totalValue",
+        "getLastRequestId",
+        "unfinalizedRequestNumber"
       ]
     },
     //TODO: Read ProviderInfo
