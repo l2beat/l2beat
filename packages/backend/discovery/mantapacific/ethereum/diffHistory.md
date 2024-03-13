@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xc5df0df9a23f2a2bf491ad8e88b775ebdcfe35f5
+
+# Diff at Wed, 13 Mar 2024 10:01:47 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@b09f0a6b1067bd3da915ef7afd86147789cc65d3 block: 19411962
+- current block number: 19425422
+
+## Description
+
+The scalar value has been decreased, which reduces the result of the L2 fee calculation.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x895E00269A05848F3c9889EfA677D02fF7351a5D) {
+    +++ description: None
++++ description: Dynamic L2 gas overhead. Used as part of the L2 fee calculation.
++++ severity: LOW
+      values.scalar:
+-        333333
++        66666
+    }
+```
+
 Generated with discovered.json: 0x419752b52aa56fed69f8b88c8ca8cfa92d3010df
 
 # Diff at Mon, 11 Mar 2024 12:51:29 GMT:
