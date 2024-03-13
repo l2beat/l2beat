@@ -1,3 +1,246 @@
+Generated with discovered.json: 0x3ae13547b426e2661f5e8d8b9af4244b6cbc7520
+
+# Diff at Wed, 13 Mar 2024 11:44:56 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@4f6a54f5fa748334d34176673b2c233534ce2fbc block: 19282832
+- current block number: 19425934
+
+## Description
+
+Added a new rollup type: Validium.
+The rollup is owned by PolygonValidiumAdmin that itself is owned by PolygonValidiumMultisig.
+
+A trusted aggregator has been added that is an [EOA](https://etherscan.io/address/0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE).
+On 2024-02-29 [willbutton.eth](https://etherscan.io/tx/0x760fd86f9453477e23df16def04777fb6282dda9f8546e93b2f7b866467b2e49) sent some eth to that address.
+A day later it was given 5ETH by a [multisig](https://etherscan.io/address/0xc984295ad7a950fb5031154bcfc0b6267b948706) and 20ETH a week later by the same multisig.
+The account has been calling `verifyBatchesTrustedAggregator()` starting from 2024-03-04 and does so around once an hour.
+We don't have that multisig in any discovery.
+The trusted aggregator can call `verifyBatchesTrustedAggregator()`, `overridePendingState()` as well as `consolidatePendingState()` skipping all timeout restrictions.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      values.accessControl.TRUSTED_AGGREGATOR.members.1:
++        "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
+      values.rollupCount:
+-        1
++        2
+      values.rollupsData.1:
++        ["0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80","0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"]
+      values.rollupTypeCount:
+-        0
++        1
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PolygonValidiumAdmin (0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolygonValidiumEtrog (0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x6c4876Ecb5de33f76700f44d547C593065806dAC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolygonValidiumDAC (0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolygonValidiumMultisig (0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../implementation/contracts/GnosisSafe.sol        |  422 +++++
+ .../implementation/contracts/base/Executor.sol     |   27 +
+ .../contracts/base/FallbackManager.sol             |   53 +
+ .../implementation/contracts/base/GuardManager.sol |   50 +
+ .../contracts/base/ModuleManager.sol               |  133 ++
+ .../implementation/contracts/base/OwnerManager.sol |  149 ++
+ .../implementation/contracts/common/Enum.sol       |    8 +
+ .../contracts/common/EtherPaymentFallback.sol      |   13 +
+ .../contracts/common/SecuredTokenTransfer.sol      |   35 +
+ .../contracts/common/SelfAuthorized.sol            |   16 +
+ .../contracts/common/SignatureDecoder.sol          |   36 +
+ .../implementation/contracts/common/Singleton.sol  |   11 +
+ .../contracts/common/StorageAccessible.sol         |   47 +
+ .../contracts/external/GnosisSafeMath.sol          |   54 +
+ .../contracts/interfaces/ISignatureValidator.sol   |   20 +
+ .../.code/GnosisSafe/implementation/meta.txt       |    2 +
+ .../.code/GnosisSafe/proxy/GnosisSafeProxy.sol     |  155 ++
+ .../ethereum/.code/GnosisSafe/proxy/meta.txt       |    2 +
+ .../@openzeppelin/contracts/access/Ownable.sol     |   83 +
+ .../contracts/interfaces/IERC1967.sol              |   26 +
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
+ .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |   32 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  171 ++
+ .../@openzeppelin/contracts/proxy/Proxy.sol        |   86 +
+ .../contracts/proxy/beacon/BeaconProxy.sol         |   61 +
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   65 +
+ .../contracts/proxy/transparent/ProxyAdmin.sol     |   81 +
+ .../transparent/TransparentUpgradeableProxy.sol    |  193 ++
+ .../@openzeppelin/contracts/utils/Address.sol      |  244 +++
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  |   88 +
+ .../ethereum/.code/PolygonValidiumAdmin/meta.txt   |    2 +
+ .../@openzeppelin/contracts/utils/Strings.sol      |   70 +
+ .../contracts/utils/cryptography/ECDSA.sol         |  213 +++
+ .../@openzeppelin/contracts/utils/math/Math.sol    |  345 ++++
+ .../access/OwnableUpgradeable.sol                  |   95 +
+ .../proxy/utils/Initializable.sol                  |  165 ++
+ .../utils/AddressUpgradeable.sol                   |  219 +++
+ .../utils/ContextUpgradeable.sol                   |   37 +
+ .../v2/consensus/validium/PolygonDataCommittee.sol |  197 ++
+ .../v2/interfaces/IDataAvailabilityProtocol.sol    |   12 +
+ .../v2/interfaces/IPolygonDataCommitteeErrors.sol  |   40 +
+ .../PolygonValidiumDAC/implementation/meta.txt     |    2 +
+ .../@openzeppelin/contracts/access/Ownable.sol     |   83 +
+ .../contracts/interfaces/IERC1967.sol              |   26 +
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
+ .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |   32 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  171 ++
+ .../proxy/@openzeppelin/contracts/proxy/Proxy.sol  |   86 +
+ .../contracts/proxy/beacon/BeaconProxy.sol         |   61 +
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   65 +
+ .../contracts/proxy/transparent/ProxyAdmin.sol     |   81 +
+ .../transparent/TransparentUpgradeableProxy.sol    |  193 ++
+ .../@openzeppelin/contracts/utils/Address.sol      |  244 +++
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  |   88 +
+ .../.code/PolygonValidiumDAC/proxy/meta.txt        |    2 +
+ .../access/IAccessControlUpgradeable.sol           |   88 +
+ .../proxy/utils/Initializable.sol                  |  165 ++
+ .../token/ERC20/IERC20Upgradeable.sol              |   82 +
+ .../ERC20/extensions/IERC20MetadataUpgradeable.sol |   28 +
+ .../extensions/draft-IERC20PermitUpgradeable.sol   |   60 +
+ .../token/ERC20/utils/SafeERC20Upgradeable.sol     |  116 ++
+ .../utils/AddressUpgradeable.sol                   |  219 +++
+ .../utils/ContextUpgradeable.sol                   |   37 +
+ .../utils/StringsUpgradeable.sol                   |   70 +
+ .../utils/introspection/ERC165Upgradeable.sol      |   42 +
+ .../utils/introspection/IERC165Upgradeable.sol     |   25 +
+ .../utils/math/MathUpgradeable.sol                 |  345 ++++
+ .../@openzeppelin/contracts5/access/Ownable.sol    |  100 +
+ .../contracts5/interfaces/IERC1967.sol             |   24 +
+ .../contracts5/proxy/ERC1967/ERC1967Proxy.sol      |   40 +
+ .../contracts5/proxy/ERC1967/ERC1967Utils.sol      |  193 ++
+ .../@openzeppelin/contracts5/proxy/Proxy.sol       |   69 +
+ .../contracts5/proxy/beacon/IBeacon.sol            |   16 +
+ .../contracts5/proxy/transparent/ProxyAdmin.sol    |   45 +
+ .../transparent/TransparentUpgradeableProxy.sol    |  116 ++
+ .../@openzeppelin/contracts5/utils/Address.sol     |  159 ++
+ .../@openzeppelin/contracts5/utils/Context.sol     |   24 +
+ .../@openzeppelin/contracts5/utils/StorageSlot.sol |  135 ++
+ .../interfaces/IBasePolygonZkEVMGlobalExitRoot.sol |   16 +
+ .../contracts/interfaces/IPolygonZkEVMBridge.sol   |  118 ++
+ .../contracts/interfaces/IPolygonZkEVMErrors.sol   |  211 +++
+ .../contracts/interfaces/IVerifierRollup.sol       |   13 +
+ .../contracts/lib/EmergencyManager.sol             |   73 +
+ .../contracts/v2/PolygonRollupManager.sol          | 1911 ++++++++++++++++++++
+ .../v2/consensus/validium/PolygonValidiumEtrog.sol |  279 +++
+ .../consensus/zkEVM/PolygonZkEVMExistentEtrog.sol  |  134 ++
+ .../v2/interfaces/IDataAvailabilityProtocol.sol    |   12 +
+ .../contracts/v2/interfaces/IPolygonRollupBase.sol |   20 +
+ .../v2/interfaces/IPolygonRollupManager.sol        |  170 ++
+ .../contracts/v2/interfaces/IPolygonValidium.sol   |   15 +
+ .../v2/interfaces/IPolygonZkEVMBridgeV2.sol        |  166 ++
+ .../interfaces/IPolygonZkEVMGlobalExitRootV2.sol   |   10 +
+ .../v2/interfaces/IPolygonZkEVMVEtrogErrors.sol    |   46 +
+ .../contracts/v2/lib/LegacyZKEVMStateVariables.sol |  153 ++
+ .../v2/lib/PolygonAccessControlUpgradeable.sol     |  245 +++
+ .../contracts/v2/lib/PolygonConstantsBase.sol      |   14 +
+ .../contracts/v2/lib/PolygonRollupBaseEtrog.sol    |  923 ++++++++++
+ .../contracts/v2/lib/PolygonTransparentProxy.sol   |   79 +
+ .../PolygonValidiumEtrog/implementation/meta.txt   |    2 +
+ .../@openzeppelin/contracts5/access/Ownable.sol    |  100 +
+ .../contracts5/interfaces/IERC1967.sol             |   24 +
+ .../contracts5/proxy/ERC1967/ERC1967Proxy.sol      |   40 +
+ .../contracts5/proxy/ERC1967/ERC1967Utils.sol      |  193 ++
+ .../proxy/@openzeppelin/contracts5/proxy/Proxy.sol |   69 +
+ .../contracts5/proxy/beacon/IBeacon.sol            |   16 +
+ .../contracts5/proxy/transparent/ProxyAdmin.sol    |   45 +
+ .../transparent/TransparentUpgradeableProxy.sol    |  116 ++
+ .../@openzeppelin/contracts5/utils/Address.sol     |  159 ++
+ .../@openzeppelin/contracts5/utils/Context.sol     |   24 +
+ .../@openzeppelin/contracts5/utils/StorageSlot.sol |  135 ++
+ .../contracts/v2/lib/PolygonTransparentProxy.sol   |   79 +
+ .../.code/PolygonValidiumEtrog/proxy/meta.txt      |    2 +
+ .../implementation/contracts/GnosisSafe.sol        |  422 +++++
+ .../implementation/contracts/base/Executor.sol     |   27 +
+ .../contracts/base/FallbackManager.sol             |   53 +
+ .../implementation/contracts/base/GuardManager.sol |   50 +
+ .../contracts/base/ModuleManager.sol               |  133 ++
+ .../implementation/contracts/base/OwnerManager.sol |  149 ++
+ .../implementation/contracts/common/Enum.sol       |    8 +
+ .../contracts/common/EtherPaymentFallback.sol      |   13 +
+ .../contracts/common/SecuredTokenTransfer.sol      |   35 +
+ .../contracts/common/SelfAuthorized.sol            |   16 +
+ .../contracts/common/SignatureDecoder.sol          |   36 +
+ .../implementation/contracts/common/Singleton.sol  |   11 +
+ .../contracts/common/StorageAccessible.sol         |   47 +
+ .../contracts/external/GnosisSafeMath.sol          |   54 +
+ .../contracts/interfaces/ISignatureValidator.sol   |   20 +
+ .../implementation/meta.txt                        |    2 +
+ .../proxy/GnosisSafeProxy.sol                      |  155 ++
+ .../.code/PolygonValidiumMultisig/proxy/meta.txt   |    2 +
+ 134 files changed, 14055 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19282832 (main branch discovery), not current.
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      values.rollupsData.0.11:
+-        0
+      values.rollupsData.0.10:
+-        0
+      values.rollupsData.0.9:
+-        1984749
+      values.rollupsData.0.8:
+-        0
+      values.rollupsData.0.7:
+-        0
+      values.rollupsData.0.6:
+-        1991783
+      values.rollupsData.0.5:
+-        1991800
+      values.rollupsData.0.4:
+-        "0x8ad85f1e7b882d12cf6c64cf256cab8d255d6085e8109400741d82850a1d944b"
+      values.rollupsData.0.3:
+-        7
+      values.rollupsData.0.2:
+-        "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"
+      values.rollupsData.0.1:
+-        1101
++        "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"
+    }
+```
+
 Generated with discovered.json: 0xa044c3c3b7dd5811d191b9d7da48b7a243b45f1c
 
 # Diff at Thu, 22 Feb 2024 11:24:11 GMT:
