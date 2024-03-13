@@ -418,7 +418,7 @@ export const starknet: Layer2 = {
   },
   dataAvailability: makeDataAvailabilityConfig({
     type: 'On chain',
-    layer: 'Ethereum (calldata)',
+    layer: 'Ethereum (blobs or calldata)',
     mode: 'State diffs',
   }),
   riskView: makeBridgeCompatible({
