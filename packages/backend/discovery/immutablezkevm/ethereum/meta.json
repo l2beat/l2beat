@@ -105,12 +105,12 @@
           "type": null
         },
         "withdrawalDelay": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Delay in seconds of any withdrawals submitted after the withdrawal queue is activated.",
+          "severity": "MEDIUM",
+          "type": "RISK_PARAMETER"
         },
         "withdrawalQueueActivated": {
-          "description": "If true, the withdrawal queue is activated and withdrawals are delayed for a duration defined by withdrawalDelay.",
+          "description": "If true, the withdrawal queue is activated and any withdrawals are delayed for a duration defined by withdrawalDelay. It can be manually activated or automatically triggered by the FlowRate mechanism.",
           "severity": "MEDIUM",
           "type": "RISK_PARAMETER"
         }
@@ -221,6 +221,36 @@
       "values": {}
     },
     {
+      "name": "AxelarGasService",
+      "values": {
+        "contractId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "gasCollector": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "OwnerMultisig",
       "values": {
         "domainSeparator": {
@@ -249,36 +279,6 @@
           "type": null
         },
         "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "AxelarGasService",
-      "values": {
-        "contractId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "gasCollector": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "implementation": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pendingOwner": {
           "description": null,
           "severity": null,
           "type": null
