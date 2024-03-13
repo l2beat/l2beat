@@ -34,6 +34,17 @@ export class LivenessConfigurationRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getByProjectId(
+    projectId: ProjectId,
+  ): Promise<LivenessConfigurationRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('liveness_configuration').where({
+      project_id: projectId.toString(),
+    })
+
+    return rows.map(toRecord)
+  }
+
   async addMany(
     records: LivenessConfigEntry[],
     trx?: Knex.Transaction,
