@@ -29,12 +29,12 @@ describe(transformTransfersQueryResult.name, () => {
           {
             id: TrackedTxId.unsafe('0x1'),
             type: 'liveness',
-            subType: 'batchSubmissions',
+            subtype: 'batchSubmissions',
           },
           {
             id: TrackedTxId.unsafe('0x2'),
             type: 'liveness',
-            subType: 'stateUpdates',
+            subtype: 'stateUpdates',
           },
         ],
       },
@@ -48,7 +48,7 @@ describe(transformTransfersQueryResult.name, () => {
           {
             id: TrackedTxId.unsafe('0x3'),
             type: 'liveness',
-            subType: 'stateUpdates',
+            subtype: 'stateUpdates',
           },
         ],
       },
@@ -62,7 +62,7 @@ describe(transformTransfersQueryResult.name, () => {
           {
             id: TrackedTxId.unsafe('0x4'),
             type: 'liveness',
-            subType: 'proofSubmissions',
+            subtype: 'proofSubmissions',
           },
         ],
       },

@@ -44,7 +44,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         uses: [
           {
             type: 'liveness',
-            subType: 'batchSubmissions',
+            subtype: 'batchSubmissions',
             id: TrackedTxId.random(),
           },
         ],
@@ -58,7 +58,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         uses: [
           {
             type: 'liveness',
-            subType: 'stateUpdates',
+            subtype: 'stateUpdates',
             id: TrackedTxId.random(),
           },
         ],
@@ -76,7 +76,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         uses: [
           {
             type: 'liveness',
-            subType: 'proofSubmissions',
+            subtype: 'proofSubmissions',
             id: TrackedTxId.random(),
           },
         ],
@@ -186,7 +186,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         uses: [
           {
             type: 'liveness',
-            subType: 'proofSubmissions',
+            subtype: 'proofSubmissions',
             id: TrackedTxId.random(),
           },
         ],

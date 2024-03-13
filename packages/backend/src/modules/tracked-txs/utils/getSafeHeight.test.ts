@@ -133,7 +133,7 @@ function getMockConfiguration(sinceTimestamp: UnixTime): TrackedTxConfigEntry {
     uses: [
       {
         type: 'liveness',
-        subType: 'batchSubmissions',
+        subtype: 'batchSubmissions',
         id: TrackedTxId.random(),
       },
     ],
@@ -153,7 +153,7 @@ const getMockRecord = (
     projectId,
     debugInfo: '',
     type: uses[0].type,
-    subtype: uses[0].subType,
+    subtype: uses[0].subtype,
   }
 }
 

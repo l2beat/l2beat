@@ -98,7 +98,7 @@ const CONFIGURATIONS: TrackedTxConfigEntry[] = [
     uses: [
       {
         type: 'liveness',
-        subType: 'batchSubmissions',
+        subtype: 'batchSubmissions',
         id: TrackedTxId.random(),
       },
     ],
@@ -110,10 +110,10 @@ const CONFIGURATIONS: TrackedTxConfigEntry[] = [
     selector: '0x9aaab648',
     sinceTimestamp: FROM,
     uses: [
-      { type: 'liveness', subType: 'stateUpdates', id: TrackedTxId.random() },
+      { type: 'liveness', subtype: 'stateUpdates', id: TrackedTxId.random() },
       {
         type: 'liveness',
-        subType: 'proofSubmissions',
+        subtype: 'proofSubmissions',
         id: TrackedTxId.random(),
       },
     ],

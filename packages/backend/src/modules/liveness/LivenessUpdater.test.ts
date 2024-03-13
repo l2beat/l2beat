@@ -126,7 +126,7 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       hash: '',
       use: {
         type: 'liveness',
-        subType: 'batchSubmissions',
+        subtype: 'batchSubmissions',
         id: getMockRuntimeConfigurations()[0].uses[0].id,
       },
     },
@@ -135,7 +135,7 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       use: {
         id: getMockRuntimeConfigurations()[1].uses[0].id,
         type: 'liveness',
-        subType: 'stateUpdates',
+        subtype: 'stateUpdates',
       },
       blockNumber: 1,
       blockTimestamp: UnixTime.now(),
@@ -158,7 +158,7 @@ function getMockRuntimeConfigurations(): TrackedTxConfigEntry[] {
       uses: [
         {
           type: 'liveness',
-          subType: 'batchSubmissions',
+          subtype: 'batchSubmissions',
           id: TrackedTxId.random(),
         },
       ],
@@ -172,7 +172,7 @@ function getMockRuntimeConfigurations(): TrackedTxConfigEntry[] {
       uses: [
         {
           type: 'liveness',
-          subType: 'stateUpdates',
+          subtype: 'stateUpdates',
           id: TrackedTxId.random(),
         },
       ],

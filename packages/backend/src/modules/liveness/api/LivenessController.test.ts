@@ -229,7 +229,7 @@ function mockProjectConfig(
               uses: [
                 {
                   type: 'liveness',
-                  subType: 'batchSubmissions',
+                  subtype: 'batchSubmissions',
                   id: TrackedTxId.random(),
                 },
               ],
