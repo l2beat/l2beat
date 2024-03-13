@@ -6,13 +6,34 @@
   "names": {
     "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": "SHARPVerifierProxy",
     "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6": "SHARPVerifier",
-    "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": "SHARPVerifierGovernorMultisig"
+    "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": "SHARPVerifierGovernorMultisig",
+    "0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF": "GpsStatementVerifier"
   },
   "overrides": {
     "SHARPVerifier": {
       "fields": {
         "constructorArgs": {
           "type": "constructorArgs"
+        }
+      }
+    },
+    "GpsStatementVerifier": {
+      "fields": {
+        "bootloaderProgramContractAddress": {
+          "type": "storage",
+          "slot": 3,
+          "returnType": "address"
+        },
+        "memoryPageFactRegistry": {
+          "type": "storage",
+          "slot": 4,
+          "returnType": "address"
+        },
+        "cairoVerifierContractAddresses": {
+          "type": "dynamicArray",
+          "slot": 5,
+          "returnType": "address",
+          "ignoreRelative": true
         }
       }
     },

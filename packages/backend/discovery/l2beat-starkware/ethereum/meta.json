@@ -138,6 +138,41 @@
           "description": null,
           "severity": null,
           "type": null
+        },
+        "bootloaderProgramContractAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "cairoVerifierContractAddresses": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "memoryPageFactRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CairoBootloaderProgram",
+      "values": {
+        "getCompiledProgram": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "MemoryPageFactRegistry",
+      "values": {
+        "hasRegisteredFact": {
+          "description": null,
+          "severity": null,
+          "type": null
         }
       }
     },
@@ -192,79 +227,9 @@
       }
     },
     {
-      "name": "CpuFrilessVerifier",
+      "name": "CairoBootloaderProgram",
       "values": {
-        "getLayoutInfo": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PAGE_INFO_ADDRESS_OFFSET": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PAGE_INFO_HASH_OFFSET": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PAGE_INFO_SIZE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PAGE_INFO_SIZE_IN_BYTES": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PAGE_INFO_SIZE_OFFSET": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "constructorArgs": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "CpuFrilessVerifier",
-      "values": {
-        "getLayoutInfo": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PAGE_INFO_ADDRESS_OFFSET": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PAGE_INFO_HASH_OFFSET": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PAGE_INFO_SIZE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PAGE_INFO_SIZE_IN_BYTES": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PAGE_INFO_SIZE_OFFSET": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "constructorArgs": {
+        "getCompiledProgram": {
           "description": null,
           "severity": null,
           "type": null
@@ -282,16 +247,6 @@
       }
     },
     {
-      "name": "CairoBootloaderProgram",
-      "values": {
-        "getCompiledProgram": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "CpuFrilessVerifier",
       "values": {
         "getLayoutInfo": {
@@ -530,21 +485,129 @@
           "type": null
         }
       }
+    },
+    {
+      "name": "CpuFrilessVerifier",
+      "values": {
+        "getLayoutInfo": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_ADDRESS_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_HASH_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_IN_BYTES": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "constructorArgs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CpuFrilessVerifier",
+      "values": {
+        "getLayoutInfo": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_ADDRESS_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_HASH_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_IN_BYTES": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "constructorArgs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CpuOods",
+      "values": {}
+    },
+    {
+      "name": "CpuOods",
+      "values": {}
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "values": {}
+    },
+    {
+      "name": "CpuOods",
+      "values": {}
     },
     {
       "name": "PoseidonPoseidonPartialRoundKey1Column",
       "values": {}
     },
     {
-      "name": "CpuConstraintPoly",
+      "name": "PoseidonPoseidonPartialRoundKey0Column",
       "values": {}
     },
     {
-      "name": "CpuConstraintPoly",
+      "name": "PoseidonPoseidonFullRoundKey2Column",
+      "values": {}
+    },
+    {
+      "name": "PoseidonPoseidonFullRoundKey1Column",
       "values": {}
     },
     {
       "name": "PoseidonPoseidonFullRoundKey0Column",
+      "values": {}
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "values": {}
+    },
+    {
+      "name": "CpuOods",
       "values": {}
     },
     {
@@ -556,67 +619,11 @@
       "values": {}
     },
     {
-      "name": "CpuConstraintPoly",
-      "values": {}
-    },
-    {
-      "name": "CpuOods",
-      "values": {}
-    },
-    {
-      "name": "CpuOods",
-      "values": {}
-    },
-    {
-      "name": "CpuOods",
+      "name": "PedersenHashPointsYColumn",
       "values": {}
     },
     {
       "name": "PedersenHashPointsXColumn",
-      "values": {}
-    },
-    {
-      "name": "PoseidonPoseidonFullRoundKey2Column",
-      "values": {}
-    },
-    {
-      "name": "CpuOods",
-      "values": {}
-    },
-    {
-      "name": "PoseidonPoseidonFullRoundKey1Column",
-      "values": {}
-    },
-    {
-      "name": "CpuConstraintPoly",
-      "values": {}
-    },
-    {
-      "name": "CpuConstraintPoly",
-      "values": {}
-    },
-    {
-      "name": "CpuConstraintPoly",
-      "values": {}
-    },
-    {
-      "name": "CpuConstraintPoly",
-      "values": {}
-    },
-    {
-      "name": "CpuOods",
-      "values": {}
-    },
-    {
-      "name": "PoseidonPoseidonPartialRoundKey0Column",
-      "values": {}
-    },
-    {
-      "name": "CpuOods",
-      "values": {}
-    },
-    {
-      "name": "PedersenHashPointsYColumn",
       "values": {}
     },
     {
@@ -628,7 +635,35 @@
       "values": {}
     },
     {
+      "name": "CpuConstraintPoly",
+      "values": {}
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "values": {}
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "values": {}
+    },
+    {
       "name": "CpuOods",
+      "values": {}
+    },
+    {
+      "name": "CpuOods",
+      "values": {}
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "values": {}
+    },
+    {
+      "name": "CpuOods",
+      "values": {}
+    },
+    {
+      "name": "CpuConstraintPoly",
       "values": {}
     },
     {
