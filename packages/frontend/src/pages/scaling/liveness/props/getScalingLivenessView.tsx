@@ -40,6 +40,8 @@ function getScalingLivenessViewEntry(
     )
   }
 
+  const isSynced = UnixTime.now().add(-12, 'hours').lte(liveness.syncedUntil)
+
   return {
     name: project.display.name,
     shortName: project.display.shortName,
@@ -65,7 +67,7 @@ function getScalingLivenessViewEntry(
       warning: project.display.liveness?.warnings?.proofSubmissions,
     },
     anomalyEntries: getAnomalyEntries(liveness.anomalies),
-    isSynced: liveness.isSynced,
+    isSynced,
   }
 }
 
