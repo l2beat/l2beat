@@ -1,11 +1,11 @@
 import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
 
+import { EXITS } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { opStack } from './templates/opStack'
 import { Layer2 } from './types'
-import { EXITS } from '../common'
 
 const discovery = new ProjectDiscovery('blast')
 
@@ -59,33 +59,30 @@ export const blast: Layer2 = opStack({
   },
   nonTemplateTechnology: {
     exitMechanisms: [
-        {
-          ...EXITS.REGULAR_YIELDING(
-            'optimistic',
-            discovery.getContractValue<number>(
-              'L2OutputOracle',
-              'FINALIZATION_PERIOD_SECONDS',
-            ),
+      {
+        ...EXITS.REGULAR_YIELDING(
+          'optimistic',
+          discovery.getContractValue<number>(
+            'L2OutputOracle',
+            'FINALIZATION_PERIOD_SECONDS',
           ),
-          references: [
-            {
-              text: 'OptimismPortal.sol - Etherscan source code, proveWithdrawalTransaction function',
-              href: `https://etherscan.io/address/${"123"}#code`,
-            },
-            {
-              text: 'OptimismPortal.sol - Etherscan source code, finalizeWithdrawalTransaction function',
-              href: `https://etherscan.io/address/${"123"}#code`,
-            },
-            {
-              text: 'L2OutputOracle.sol - Etherscan source code, PROPOSER check',
-              href: `https://etherscan.io/address/${"123"}#code`,
-            },
-          ],
-          risks: [
-            EXITS.RISK_REHYPOTHECATED_ASSETS,
-            EXITS.RISK_LACK_OF_LIQUIDITY
-          ],
-        },
+        ),
+        references: [
+          {
+            text: 'OptimismPortal.sol - Etherscan source code, proveWithdrawalTransaction function',
+            href: `https://etherscan.io/address/${'123'}#code`,
+          },
+          {
+            text: 'OptimismPortal.sol - Etherscan source code, finalizeWithdrawalTransaction function',
+            href: `https://etherscan.io/address/${'123'}#code`,
+          },
+          {
+            text: 'L2OutputOracle.sol - Etherscan source code, PROPOSER check',
+            href: `https://etherscan.io/address/${'123'}#code`,
+          },
+        ],
+        risks: [EXITS.RISK_REHYPOTHECATED_ASSETS, EXITS.RISK_LACK_OF_LIQUIDITY],
+      },
       {
         ...EXITS.FORCED('all-withdrawals'),
         references: [
@@ -94,8 +91,8 @@ export const blast: Layer2 = opStack({
             href: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
           },
         ],
-      }
-    ]
+      },
+    ],
   },
   upgradeability,
   l1StandardBridgeEscrow: EthereumAddress(

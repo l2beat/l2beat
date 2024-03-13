@@ -287,7 +287,8 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
     stateDerivation: templateVars.stateDerivation,
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
     technology: {
-      stateCorrectness: templateVars.nonTemplateTechnology?.stateCorrectness ?? {
+      stateCorrectness: templateVars.nonTemplateTechnology
+        ?.stateCorrectness ?? {
         name: 'Fraud proofs are in development',
         description:
           'Ultimately, OP stack chains will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the system permits invalid state roots.',
@@ -307,7 +308,8 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
           },
         ],
       },
-      dataAvailability: templateVars.nonTemplateTechnology?.dataAvailability ?? {
+      dataAvailability: templateVars.nonTemplateTechnology
+        ?.dataAvailability ?? {
         ...technologyDA(daProvider),
         references: [
           ...technologyDA(daProvider).references,
@@ -348,7 +350,8 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
           },
         ],
       },
-      forceTransactions: templateVars.nonTemplateTechnology?.forceTransactions ?? {
+      forceTransactions: templateVars.nonTemplateTechnology
+        ?.forceTransactions ?? {
         ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
         references: [
           {
