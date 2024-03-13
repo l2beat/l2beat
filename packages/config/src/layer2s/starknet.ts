@@ -377,7 +377,7 @@ export const starknet: Layer2 = {
     finality: 'coming soon',
     trackedTxs: [
       {
-        uses: [{ type: 'liveness', subType: 'proofSubmissions' }],
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: new UnixTime(1636978914),
@@ -388,7 +388,7 @@ export const starknet: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subType: 'proofSubmissions' }],
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: new UnixTime(1702921247),
@@ -399,7 +399,7 @@ export const starknet: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subType: 'proofSubmissions' }],
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: new UnixTime(1704855731),
@@ -409,7 +409,7 @@ export const starknet: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subType: 'stateUpdates' }],
+        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(

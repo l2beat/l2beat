@@ -191,7 +191,7 @@ export const arbitrum: Layer2 = {
     finality: 'coming soon',
     trackedTxs: [
       {
-        uses: [{ type: 'liveness', subType: 'batchSubmissions' }],
+        uses: [{ type: 'liveness', subtype: 'batchSubmissions' }],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
@@ -204,7 +204,7 @@ export const arbitrum: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subType: 'batchSubmissions' }],
+        uses: [{ type: 'liveness', subtype: 'batchSubmissions' }],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
@@ -217,7 +217,7 @@ export const arbitrum: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subType: 'batchSubmissions' }],
+        uses: [{ type: 'liveness', subtype: 'batchSubmissions' }],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
@@ -230,7 +230,7 @@ export const arbitrum: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subType: 'stateUpdates' }],
+        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(

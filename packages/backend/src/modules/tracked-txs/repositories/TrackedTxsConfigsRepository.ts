@@ -58,7 +58,7 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
       .filter(notUndefined)
   }
 
-  // TODO: (tracked_tx) to add after adding config_hash to liveness table
+  // TODO: (tracked_txs_status) function useful for implementing tracked txs status
   // async findUnusedConfigurationsIds(): Promise<TrackedTxsConfigHash[]> {
   //   const knex = await this.knex()
   //   const rows = (await knex('tracked_txs_configs as c')
@@ -142,7 +142,7 @@ export function trackedTxConfigEntryToRecord(
     debugInfo: toDebugInfo(entry),
     projectId: entry.projectId,
     type: entryUse.type,
-    subtype: entryUse.subType,
+    subtype: entryUse.subtype,
     sinceTimestamp: entry.sinceTimestamp,
     untilTimestamp: entry.untilTimestamp,
   }

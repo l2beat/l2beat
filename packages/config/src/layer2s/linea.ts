@@ -127,7 +127,7 @@ export const linea: Layer2 = {
     },
     trackedTxs: [
       {
-        uses: [{ type: 'liveness', subType: 'batchSubmissions' }],
+        uses: [{ type: 'liveness', subtype: 'batchSubmissions' }],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
@@ -143,7 +143,7 @@ export const linea: Layer2 = {
         uses: [
           {
             type: 'liveness',
-            subType: 'stateUpdates',
+            subtype: 'stateUpdates',
           },
         ],
         query: {
@@ -162,7 +162,7 @@ export const linea: Layer2 = {
         uses: [
           {
             type: 'liveness',
-            subType: 'stateUpdates',
+            subtype: 'stateUpdates',
           },
         ],
         query: {

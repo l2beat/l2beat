@@ -109,7 +109,7 @@ export const loopring: Layer2 = {
         uses: [
           {
             type: 'liveness',
-            subType: 'stateUpdates',
+            subtype: 'stateUpdates',
           },
         ],
         query: {

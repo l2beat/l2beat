@@ -101,7 +101,7 @@ export const paradex: Layer2 = {
     ],
     trackedTxs: [
       {
-        uses: [{ type: 'liveness', subType: 'proofSubmissions' }],
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: new UnixTime(1636978914),
@@ -112,7 +112,7 @@ export const paradex: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subType: 'proofSubmissions' }],
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
           sinceTimestamp: new UnixTime(1704729971),
@@ -123,7 +123,7 @@ export const paradex: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subType: 'proofSubmissions' }],
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
         query: {
           // Updated to this program hash in tx 0x7eb527c897e8449234ad770573a2a5ba3737e6b9014600c261741bc258849639
           formula: 'sharpSubmission',
@@ -134,7 +134,7 @@ export const paradex: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subType: 'stateUpdates' }],
+        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(

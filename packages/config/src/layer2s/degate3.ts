@@ -116,7 +116,7 @@ export const degate3: Layer2 = {
         uses: [
           {
             type: 'liveness',
-            subType: 'stateUpdates',
+            subtype: 'stateUpdates',
           },
         ],
         query: {

@@ -130,7 +130,7 @@ export const zksyncera: Layer2 = {
     },
     trackedTxs: [
       {
-        uses: [{ type: 'liveness', subType: 'proofSubmissions' }],
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
@@ -144,7 +144,7 @@ export const zksyncera: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subType: 'proofSubmissions' }],
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
@@ -157,7 +157,7 @@ export const zksyncera: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subType: 'stateUpdates' }],
+        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
@@ -171,7 +171,7 @@ export const zksyncera: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subType: 'stateUpdates' }],
+        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(

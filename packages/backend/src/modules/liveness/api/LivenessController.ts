@@ -250,7 +250,7 @@ export class LivenessController {
             }
 
             return {
-              subtype: use.subType,
+              subtype: use.subtype,
               untilTimestamp: entry.untilTimestamp,
             }
           })
