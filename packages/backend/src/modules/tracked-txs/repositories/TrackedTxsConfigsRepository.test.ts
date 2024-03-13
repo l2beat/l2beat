@@ -3,6 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { describeDatabase } from '../../../test/database'
+import { LivenessRepository } from '../../liveness/repositories/LivenessRepository'
 import { TrackedTxId } from '../types/TrackedTxId'
 import {
   TrackedTxsConfigRecord,
@@ -147,28 +148,27 @@ describeDatabase(TrackedTxsConfigsRepository.name, (database) => {
       expect(results).toEqualUnsorted([all[0]])
     })
 
-    // TODO: (tracked_txs) to add after modifying liveness table
-    // it('should delete from child tables via CASCADE constraint', async () => {
-    //   const newIds = await repository.addMany(TRACKED_TXS_CONFIGS)
+    it('should delete from child tables via CASCADE constraint', async () => {
+      const newIds = await repository.addMany(TRACKED_TXS_RECORDS)
 
-    //   const childRepository = new LivenessRepository(database, Logger.SILENT)
-    //   await childRepository.deleteAll()
-    //   await childRepository.addMany([
-    //     {
-    //       timestamp: UnixTime.now(),
-    //       blockNumber: 0,
-    //       txHash: '0x',
-    //       livenessId: newIds[1],
-    //     },
-    //   ])
+      const childRepository = new LivenessRepository(database, Logger.SILENT)
+      await childRepository.deleteAll()
+      await childRepository.addMany([
+        {
+          timestamp: UnixTime.now(),
+          blockNumber: 0,
+          txHash: '0x',
+          trackedTxId: newIds[1],
+        },
+      ])
 
-    //   await repository.deleteMany(newIds.slice(1))
-    //   const results = await repository.getAll()
-    //   expect(results).toEqualUnsorted([toRecord(TRACKED_TXS_CONFIGS[0])])
+      await repository.deleteMany(newIds.slice(1))
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([TRACKED_TXS_RECORDS[0]])
 
-    //   const childResults = await childRepository.getAll()
-    //   expect(childResults).toEqualUnsorted([])
-    // })
+      const childResults = await childRepository.getAll()
+      expect(childResults).toEqualUnsorted([])
+    })
 
     it('empty array', async () => {
       await expect(repository.deleteMany([])).not.toBeRejected()
