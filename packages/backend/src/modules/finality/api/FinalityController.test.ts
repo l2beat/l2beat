@@ -1,16 +1,8 @@
 import { FinalityType } from '@l2beat/config'
-import {
-  assert,
-  Hash256,
-  LivenessType,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { assert, LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { FinalityProjectConfig } from '../../../config/features/finality'
-import { IndexerStateRepository } from '../../../peripherals/database/repositories/IndexerStateRepository'
-import { Clock } from '../../../tools/Clock'
 import {
   calculateDetailsFor,
   calculateIntervals,
@@ -26,15 +18,12 @@ import {
 import { FinalityController } from './FinalityController'
 
 describe(FinalityController.name, () => {
-  const CLOCK = getMockClock()
   describe(FinalityController.prototype.getFinality.name, () => {
     it('returns empty object if no data', async () => {
       const finalityController = new FinalityController(
         getMockLivenessRepository([]),
         getMockFinalityRepository(),
-        getMockIndexerStateRepository(CLOCK.getLastHour()),
         [],
-        CLOCK,
       )
 
       const result = await finalityController.getFinality()
@@ -74,7 +63,6 @@ describe(FinalityController.name, () => {
       const finalityController = new FinalityController(
         getMockLivenessRepository(RECORDS),
         getMockFinalityRepository([project2Result]),
-        getMockIndexerStateRepository(CLOCK.getLastHour()),
         mockProjectConfig([
           {
             projectId: ProjectId('project1'),
@@ -87,7 +75,6 @@ describe(FinalityController.name, () => {
             type: 'Linea',
           },
         ]),
-        getMockClock(),
       )
 
       const records = [...RECORDS]
@@ -112,25 +99,6 @@ describe(FinalityController.name, () => {
           },
           syncedUntil: project2Result.timestamp,
         })
-      }
-    })
-
-    it('return error when data is not fully synced', async () => {
-      const clock = getMockClock()
-
-      const outOfSyncTimestamp = CLOCK.getLastHour().add(-2, 'hours')
-      const finalityController = new FinalityController(
-        getMockLivenessRepository([]),
-        getMockFinalityRepository(),
-        getMockIndexerStateRepository(outOfSyncTimestamp),
-        mockProjectConfig([]),
-        clock,
-      )
-      const result = await finalityController.getFinality()
-
-      expect(result.type).toEqual('error')
-      if (result.type === 'error') {
-        expect(result.error).toEqual('DATA_NOT_SYNCED')
       }
     })
   })
@@ -163,9 +131,7 @@ describe(FinalityController.name, () => {
       const finalityController = new FinalityController(
         getMockLivenessRepository(RECORDS),
         getMockFinalityRepository(),
-        getMockIndexerStateRepository(CLOCK.getLastHour()),
         projects,
-        getMockClock(),
       )
 
       const records = [...RECORDS]
@@ -210,9 +176,7 @@ describe(FinalityController.name, () => {
             maximumTimeToInclusion: 6,
           },
         ]),
-        getMockIndexerStateRepository(CLOCK.getLastHour()),
         projects,
-        getMockClock(),
       )
 
       const result = await finalityController.getProjectsFinality(projects)
@@ -239,25 +203,6 @@ describe(FinalityController.name, () => {
 })
 
 const START = UnixTime.now()
-
-function getMockClock() {
-  return mockObject<Clock>({
-    getLastHour: () => UnixTime.now().toStartOf('hour').add(-1, 'hours'),
-  })
-}
-
-function getMockIndexerStateRepository(data: UnixTime) {
-  return mockObject<IndexerStateRepository>({
-    findIndexerState: async () => {
-      return {
-        id: 1,
-        configHash: Hash256.random(),
-        indexerId: 'liveness_indexer',
-        safeHeight: data.toNumber(),
-      }
-    },
-  })
-}
 
 function getMockFinalityRepository(records: FinalityRecord[] = []) {
   return mockObject<FinalityRepository>({
