@@ -53,7 +53,15 @@
     },
     "fraxFerryBridge": {
       "ignoreMethods": ["cancelled", "batches"], // too many values
-      "ignoreInWatchMode": ["noBatches"]
+      "ignoreInWatchMode": ["noBatches"],
+      "fields": {
+        "crewmembers": {
+          "type": "arrayFromOneEvent",
+          "event": "event SetCrewmember(address indexed crewmember,bool set)",
+          "valueKey": "crewmember",
+          "flagKey": "set"
+        }
+      }
     },
     "fxsFerryBridge": {
       "ignoreMethods": ["cancelled"] // too many values

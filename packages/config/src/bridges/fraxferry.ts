@@ -99,7 +99,7 @@ export const fraxferry: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'The Frax Ferry is a permissioned bridge that can be used to transfer tokens between chains. Users can transfer tokens to the bridge escrow on the origin chain, and the bridge administrator periodically posts hashes of transaction batches on the destination chains. After the challenge period is expired, the batch is considered valid, and the bridge admistrator executes the transfer of the tokens on the destination chain.',
+        'The Frax Ferry is a permissioned bridge that can be used to transfer tokens between chains. Users can transfer tokens to the bridge escrow on the origin chain, and the bridge administrator (Captain) periodically posts hashes of transaction batches on the destination chains. After the challenge period is expired, the batch is considered valid, and another permissioned account (First Officer) executes the transfer of the tokens on the destination chain.',
       references: [
         {
           text: 'Fraxferry documentation',
@@ -114,18 +114,18 @@ export const fraxferry: Bridge = {
     },
     validation: {
       name: 'Both inbound and outbound transfers are verified optimistically',
-      description: `Hashes of transaction batches on the origin chains are posted periodically on the destination chains by the Frax Maintenance Bot EOA. After the batch hash is posted on the destination chain, a challenge period begins. If no challenge is submitted within the challenge period of ${challengePeriod}, the batch is considered valid. The bridge administrator can then execute the transfer of the tokens on the destination chain. No slashing mechanism is implemented. Should a batch be disputed, the bridge is paused until it is unpaused by the bridge owner.`,
+      description: `Hashes of transaction batches on the origin chains are posted periodically on the destination chains by the Frax Maintenance Bot EOA (the Captain). After the batch hash is posted on the destination chain, a challenge period begins. If no challenge is submitted within the challenge period of ${challengePeriod}, the batch is considered valid. The authorised bridge First Officer can then execute the transfer of the tokens on the destination chain. No slashing mechanism is implemented. During a challenge period, a batch can be challenged by a permissioned set of watchdogs, the Crew Members, by sending a transaction on the destination chain. Should a batch be disputed, the bridge is paused until it is unpaused by the bridge owner.`,
       references: [
         {
-          text: 'Fraxferry - Depart transactions batch',
+          text: 'Fraxferry - Depart transactions batch function',
           href: 'https://etherscan.io/address/0x5e1D94021484642863Ea8E7Cb4F0188e56B18FEE#code#L851',
         },
         {
-          text: 'Fraxferry - Dispute Batch',
+          text: 'Fraxferry - Dispute Batch function',
           href: 'https://etherscan.io/address/0x5e1D94021484642863Ea8E7Cb4F0188e56B18FEE#code#L882',
         },
         {
-          text: 'Fraxferry - Disembark Batch',
+          text: 'Fraxferry - Disembark Batch function',
           href: 'https://etherscan.io/address/0x5e1D94021484642863Ea8E7Cb4F0188e56B18FEE#code#L858',
         },
       ],
@@ -136,11 +136,23 @@ export const fraxferry: Bridge = {
         },
         {
           category: 'Funds can be stolen if',
-          text: 'bridge administrator removes funds from the bridge escrow.',
+          text: 'bridge owner removes funds from the bridge escrow.',
           isCritical: true,
         },
       ],
     },
+    destinationToken: {
+        name: 'Destination tokens are not upgradable',
+        description:
+          'Tokens on the destination chain are not upgradable. The owner of the token contract sets permissioned Minter addresses that can mint tokens up to a max cap amount.',
+        references: [
+            {
+                text: 'Frax token - Minter mint function',
+                href: 'https://arbiscan.io/address/0x17fc002b466eec40dae837fc4be5c67993ddbd6f?a=0x5a9bef8cea603aac78a523fb245c1a9264d50706#code#L1636',
+            },
+        ],
+        risks: [], // do we need a risk for arbitrary permissioned minting / dilution risk ?
+      },
   },
   contracts: {
     addresses: [
@@ -206,9 +218,11 @@ export const fraxferry: Bridge = {
       name: 'Crew Members',
       description:
         'Addresses authorized to dispute batch transaction data on the destination chain.',
-      accounts: [
-        //   discovery.getPermissionedAccount('fraxFerryBridge', 'crewmembers'),
-      ],
+      accounts: 
+          discovery.getPermissionedAccounts(
+            'fraxFerryBridge', 
+            'crewmembers',
+        ),
     },
   ],
 }
