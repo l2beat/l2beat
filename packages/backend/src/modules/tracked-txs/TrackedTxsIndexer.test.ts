@@ -123,25 +123,21 @@ describe(TrackedTxsIndexer.name, () => {
         configs: runtimeEntries,
       })
 
-      const [configurationsToSync, adjustedTo] =
+      const [configurationsToSync, syncTo] =
         await livenessIndexer.getConfiguration(from.toNumber(), to.toNumber())
 
-      const expectedAdjustedTo = adjustToForBigqueryCall(
-        from.toNumber(),
-        to.toNumber(),
-      )
-
-      expect(adjustedTo).toEqual(expectedAdjustedTo)
-
-      const expectedConfigurationsToSync = findConfigurationsToSync(
+      const {
+        configurationsToSync: expectedConfigurationsToSync,
+        syncTo: expectedSyncTo,
+      } = findConfigurationsToSync(
         runtimeEntries,
         databaseEntries,
         from,
-        adjustedTo,
+        syncTo,
       )
 
       expect(configurationsToSync).toEqual(expectedConfigurationsToSync)
-
+      expect(syncTo).toEqual(expectedSyncTo)
       expect(configRepository.getAll).toHaveBeenCalledTimes(1)
     })
   })

@@ -10,8 +10,8 @@ export function findConfigurationsToSync(
   databaseEntries: TrackedTxsConfigRecord[],
   from: UnixTime,
   to: UnixTime,
-): TrackedTxConfigEntry[] {
-  return runtimeConfigurations
+): { configurationsToSync: TrackedTxConfigEntry[]; syncTo: UnixTime } {
+  const configs = runtimeConfigurations
     .map((config) => {
       const filteredUses = config.uses.filter((use) => {
         const dbEntry = databaseEntries.find((dbEntry) => dbEntry.id === use.id)
@@ -36,4 +36,11 @@ export function findConfigurationsToSync(
       }
     })
     .filter(notUndefined)
+
+  const untilTimestamps = configs
+    .map((c) => c.untilTimestamp?.toNumber())
+    .filter(notUndefined)
+  const syncTo = Math.min(to.toNumber(), ...untilTimestamps)
+
+  return { configurationsToSync: configs, syncTo: new UnixTime(syncTo) }
 }

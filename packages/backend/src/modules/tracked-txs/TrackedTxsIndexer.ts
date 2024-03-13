@@ -44,17 +44,17 @@ export class TrackedTxsIndexer extends ChildIndexer {
   override async update(from: number, to: number): Promise<number> {
     const unixFrom = new UnixTime(from)
 
-    const [configurations, adjustedTo] = await this.getConfiguration(from, to)
+    const [configurations, syncTo] = await this.getConfiguration(from, to)
 
     if (configurations.length === 0) {
-      this.logger.debug('Update skipped', { from, to: adjustedTo })
-      return adjustedTo.toNumber()
+      this.logger.debug('Update skipped', { from, to: syncTo })
+      return syncTo.toNumber()
     }
 
     const txs = await this.trackedTxsClient.getData(
       configurations,
       unixFrom,
-      adjustedTo,
+      syncTo,
     )
 
     await this.configRepository.runInTransaction(async (trx) => {
@@ -66,20 +66,16 @@ export class TrackedTxsIndexer extends ChildIndexer {
       const configIds = configurations.flatMap((config) =>
         config.uses.map((use) => use.id),
       )
-      await this.configRepository.setLastSyncedTimestamp(
-        configIds,
-        adjustedTo,
-        trx,
-      )
+      await this.configRepository.setLastSyncedTimestamp(configIds, syncTo, trx)
     })
 
     this.logger.info('Updated', {
       from,
-      adjustedTo: adjustedTo,
+      adjustedTo: syncTo,
       usedConfigurations: configurations.length,
       fetchedTxsCount: txs.length,
     })
-    return adjustedTo.toNumber()
+    return syncTo.toNumber()
   }
 
   async getConfiguration(
@@ -90,14 +86,14 @@ export class TrackedTxsIndexer extends ChildIndexer {
 
     const databaseEntries = await this.configRepository.getAll()
 
-    const configurationsToSync = findConfigurationsToSync(
+    const { configurationsToSync, syncTo } = findConfigurationsToSync(
       this.configs,
       databaseEntries,
       new UnixTime(from),
       adjustedTo,
     )
 
-    return [configurationsToSync, adjustedTo]
+    return [configurationsToSync, syncTo]
   }
 
   private async initialize(): Promise<void> {
