@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.45.4
+
+### Patch Changes
+
+- Add filtering to array handler
+
 ## 0.45.3
 
 ### Patch Changes

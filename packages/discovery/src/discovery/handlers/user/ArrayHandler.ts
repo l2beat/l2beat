@@ -19,6 +19,7 @@ export const ArrayHandlerDefinition = z.strictObject({
   length: z.optional(z.union([z.number().int().nonnegative(), Reference])),
   maxLength: z.optional(z.number().int().nonnegative()),
   startIndex: z.optional(z.number().int().nonnegative()),
+  filter: z.optional(z.array(z.union([z.string(), z.number()]))),
   ignoreRelative: z.optional(z.boolean()),
 })
 
@@ -73,6 +74,7 @@ export class ArrayHandler implements ClassicHandler {
       address,
       this.fragment,
       blockNumber,
+      this.definition.filter,
     )
     if (resolved.indices) {
       const results = await Promise.all(
@@ -134,9 +136,17 @@ function createCallIndex(
   address: EthereumAddress,
   fragment: utils.FunctionFragment,
   blockNumber: number,
+  filter?: (string | number)[],
 ) {
   return async (index: number) => {
-    return await callMethod(provider, address, fragment, [index], blockNumber)
+    return await callMethod(
+      provider,
+      address,
+      fragment,
+      [index],
+      blockNumber,
+      filter,
+    )
   }
 }
 
