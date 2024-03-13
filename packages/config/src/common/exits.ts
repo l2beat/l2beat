@@ -41,7 +41,7 @@ function REGULAR_YIELDING(
       : ''
   return {
     name: 'Regular exit',
-    description: `The user initiates the withdrawal by submitting a regular transaction on this chain. When the block containing that transaction is ${finalized} the funds become available for withdrawal on L1.${time} Once funds are added to the withdrawal queue, operator must ensure there is enough liquidity for withdrawals. If not, they need to reclaim tokens from Yield Providers`,
+    description: `The user initiates the withdrawal by submitting a regular transaction on this chain. When the block containing that transaction is ${finalized} the funds become available for withdrawal on L1.${time} Once funds are added to the withdrawal queue, operator must ensure there is enough liquidity for withdrawals. If not, they need to reclaim tokens from Yield Providers.`,
     risks: [],
     references: [],
   }
