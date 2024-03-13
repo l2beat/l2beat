@@ -47,10 +47,10 @@ export function createTvl2Module(
       new PriceIndexer(
         logger,
         hourlyIndexer,
-        stateRepository,
-        price,
-        pricesRepository,
         coingeckoQueryService,
+        stateRepository,
+        pricesRepository,
+        price,
         syncService,
       ),
   )

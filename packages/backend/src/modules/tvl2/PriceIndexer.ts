@@ -35,8 +35,9 @@ export class PriceIndexer extends ChildIndexer {
 
   override async update(_from: number, _to: number): Promise<number> {
     const from = this.syncService.getTimestampToSync(new UnixTime(_from))
-    const to = this.syncService.getTimestampToSync(from)
+    const to = this.syncService.getTimestampToSync(from.add(1, 'hours'))
 
+    //todo figure out the flow with tvl cleaner, should it write more to the db which will be cleaned up later?
     const prices = await this.coingeckoQueryService.getUsdPriceHistory(
       this.priceConfigEntry.coingeckoId,
       from,
@@ -87,7 +88,7 @@ export class PriceIndexer extends ChildIndexer {
     if (indexerState === undefined) {
       await this.stateRepository.add({
         indexerId: this.indexerId,
-        safeHeight: 0,
+        safeHeight: this.priceConfigEntry.sinceTimestamp.toNumber(),
         minTimestamp: this.priceConfigEntry.sinceTimestamp,
       })
       return
