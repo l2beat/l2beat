@@ -287,41 +287,6 @@
       }
     },
     {
-      "name": "BridgeOwner",
-      "values": {
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "OptimismPortal",
       "values": {
         "guardian": {
@@ -375,6 +340,41 @@
           "type": null
         },
         "yieldManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "BridgeOwner",
+      "values": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
           "description": null,
           "severity": null,
           "type": null
@@ -440,101 +440,6 @@
           "type": null
         },
         "TOKEN": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "USDYieldManager",
-      "values": {
-        "accumulatedNegativeYields": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "admin": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "blastBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getLastCheckpointId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getLastFinalizedRequestId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getLastRequestId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getLockedBalance": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "insurance": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "insuranceFeeBips": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "insuranceWithdrawalBuffer": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MAX_INSURANCE_FEE_BIPS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pendingOwner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "portal": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "sharePrice": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "TOKEN": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "unfinalizedRequestNumber": {
           "description": null,
           "severity": null,
           "type": null
@@ -617,9 +522,84 @@
       }
     },
     {
-      "name": "AddressManager",
+      "name": "USDYieldManager",
       "values": {
+        "accumulatedNegativeYields": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "admin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "blastBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLastCheckpointId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLastFinalizedRequestId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLockedBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "insurance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "insuranceFeeBips": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "insuranceWithdrawalBuffer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_INSURANCE_FEE_BIPS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "portal": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharePrice": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TOKEN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
           "description": null,
           "severity": null,
           "type": null
@@ -627,14 +607,9 @@
       }
     },
     {
-      "name": "Insurance",
+      "name": "AddressManager",
       "values": {
-        "admin": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
+        "owner": {
           "description": null,
           "severity": null,
           "type": null
@@ -670,6 +645,21 @@
           "type": null
         },
         "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Insurance",
+      "values": {
+        "admin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
           "description": null,
           "severity": null,
           "type": null
@@ -915,6 +905,16 @@
           "type": null
         },
         "batcherHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "opStackDA": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sequencerInbox": {
           "description": null,
           "severity": null,
           "type": null
