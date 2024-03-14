@@ -10,6 +10,7 @@ Generated with discovered.json: 0x3ae13547b426e2661f5e8d8b9af4244b6cbc7520
 
 Added a new rollup type: Validium.
 The rollup is owned by PolygonValidiumAdmin that itself is owned by PolygonValidiumMultisig.
+The new contract is the AstarZKEVM Validum.
 
 A trusted aggregator has been added that is an [EOA](https://etherscan.io/address/0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE).
 On 2024-02-29 [willbutton.eth](https://etherscan.io/tx/0x760fd86f9453477e23df16def04777fb6282dda9f8546e93b2f7b866467b2e49) sent some eth to that address.
