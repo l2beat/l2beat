@@ -1,0 +1,2370 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "Bridge",
+      "values": {
+        "layerZeroEndpoint": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "router": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "useLayerZeroToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "DAI Pool",
+      "values": {
+        "BP_DENOMINATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "batched": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainPaths": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "convertRate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultLPMode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultSwapMode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "deltaCredit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eqFeePool": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "feeLibrary": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainPathsLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "localDecimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lpDeltaBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mintFeeBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mintFeeBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "poolId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "protocolFeeBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "router": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharedDecimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stopSwap": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "swapDeltaBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalLiquidity": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalWeight": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Endpoint",
+      "values": {
+        "BLOCK_VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultReceiveLibraryAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultReceiveVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultSendLibrary": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultSendVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isReceivingPayload": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isSendingPayload": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Factory",
+      "values": {
+        "allPools": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "allPoolsLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultFeeLibrary": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "router": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Frax Pool",
+      "values": {
+        "BP_DENOMINATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "batched": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainPaths": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "convertRate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultLPMode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultSwapMode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "deltaCredit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eqFeePool": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "feeLibrary": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainPathsLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "localDecimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lpDeltaBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mintFeeBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mintFeeBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "poolId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "protocolFeeBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "router": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharedDecimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stopSwap": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "swapDeltaBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalLiquidity": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalWeight": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Google Cloud Oracle",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "allowlistSize": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultMultiplierBps": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "priceFeed": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "quorum": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "signerSize": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "vid": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "workerFeeLib": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "LUSD Pool",
+      "values": {
+        "BP_DENOMINATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "batched": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainPaths": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "convertRate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultLPMode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultSwapMode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "deltaCredit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eqFeePool": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "feeLibrary": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainPathsLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "localDecimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lpDeltaBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mintFeeBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mintFeeBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "poolId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "protocolFeeBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "router": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharedDecimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stopSwap": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "swapDeltaBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalLiquidity": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalWeight": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "LayerZero Multisig",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "LayerZero Relayer",
+      "values": {}
+    },
+    {
+      "name": "MAI Pool",
+      "values": {
+        "BP_DENOMINATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "batched": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainPaths": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "convertRate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultLPMode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultSwapMode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "deltaCredit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eqFeePool": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "feeLibrary": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainPathsLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "localDecimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lpDeltaBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mintFeeBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mintFeeBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "poolId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "protocolFeeBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "router": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharedDecimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stopSwap": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "swapDeltaBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalLiquidity": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalWeight": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "METIS Pool",
+      "values": {
+        "BP_DENOMINATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "batched": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainPaths": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "convertRate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultLPMode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultSwapMode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "deltaCredit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eqFeePool": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "feeLibrary": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainPathsLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "localDecimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lpDeltaBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mintFeeBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mintFeeBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "poolId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "protocolFeeBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "router": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharedDecimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stopSwap": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "swapDeltaBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalLiquidity": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalWeight": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "NonceContract",
+      "values": {
+        "endpoint": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Router",
+      "values": {
+        "bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "factory": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mintFeeOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "protocolFeeOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SG-ETH Pool",
+      "values": {
+        "BP_DENOMINATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "batched": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainPaths": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "convertRate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultLPMode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultSwapMode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "deltaCredit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eqFeePool": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "feeLibrary": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainPathsLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "localDecimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lpDeltaBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mintFeeBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mintFeeBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "poolId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "protocolFeeBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "router": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharedDecimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stopSwap": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "swapDeltaBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalLiquidity": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalWeight": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "StarGate Multisig",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "StarGateFeeLibrary7",
+      "values": {
+        "DELTA_1": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DELTA_2": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DENOMINATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EQ_REWARD_THRESHOLD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "LAMBDA_1": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "LAMBDA_2": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "LP_FEE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ONE_BPS_PRICE_CHANGE_THRESHOLD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PRICE_DEPEG_THRESHOLD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PRICE_DRIFT_THRESHOLD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PRICE_SHARED_DECIMALS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROTOCOL_FEE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROTOCOL_FEE_FOR_SAME_TOKEN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROTOCOL_SUBSIDY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "factory": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lzEndpoint": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "precrime": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "TSS Oracle",
+      "values": {}
+    },
+    {
+      "name": "TreasuryV2",
+      "values": {
+        "feeEnabled": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nativeBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "uln": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "zroEnabled": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "zroFee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "USDC Pool",
+      "values": {
+        "BP_DENOMINATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "batched": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainPaths": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "convertRate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultLPMode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultSwapMode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "deltaCredit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eqFeePool": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "feeLibrary": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainPathsLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "localDecimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lpDeltaBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mintFeeBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mintFeeBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "poolId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "protocolFeeBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "router": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharedDecimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stopSwap": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "swapDeltaBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalLiquidity": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalWeight": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "USDD Pool",
+      "values": {
+        "BP_DENOMINATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "batched": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainPaths": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "convertRate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultLPMode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultSwapMode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "deltaCredit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eqFeePool": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "feeLibrary": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainPathsLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "localDecimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lpDeltaBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mintFeeBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mintFeeBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "poolId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "protocolFeeBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "router": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharedDecimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stopSwap": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "swapDeltaBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalLiquidity": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalWeight": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "USDT Pool",
+      "values": {
+        "BP_DENOMINATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "batched": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainPaths": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "convertRate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultLPMode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultSwapMode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "deltaCredit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eqFeePool": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "feeLibrary": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainPathsLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "localDecimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lpDeltaBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mintFeeBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mintFeeBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "poolId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "protocolFeeBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "router": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharedDecimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stopSwap": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "swapDeltaBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalLiquidity": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalWeight": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "USDT Pool2",
+      "values": {
+        "BP_DENOMINATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "batched": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainPaths": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "convertRate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultLPMode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultSwapMode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "deltaCredit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eqFeePool": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "feeLibrary": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainPathsLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "localDecimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lpDeltaBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mintFeeBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mintFeeBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "poolId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "protocolFeeBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "router": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharedDecimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stopSwap": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "swapDeltaBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalLiquidity": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalWeight": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "UltraLightNodeV2",
+      "values": {
+        "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "CONFIG_TYPE_ORACLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "CONFIG_TYPE_OUTBOUND_BLOCK_CONFIRMATIONS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "CONFIG_TYPE_OUTBOUND_PROOF_TYPE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "CONFIG_TYPE_RELAYER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "endpoint": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "layerZeroToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "localChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonceContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stargateArbConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stargateOracles": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stargateRelayers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stargateScrollConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "treasuryContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "treasuryZROFees": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "VerifierFeeLib",
+      "values": {}
+    },
+    {
+      "name": "WOO Pool",
+      "values": {
+        "BP_DENOMINATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "batched": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainPaths": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "convertRate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultLPMode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultSwapMode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "deltaCredit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eqFeePool": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "feeLibrary": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainPathsLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "localDecimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lpDeltaBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mintFeeBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mintFeeBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "poolId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "protocolFeeBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "router": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharedDecimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stopSwap": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "swapDeltaBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalLiquidity": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalWeight": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "mETH Pool",
+      "values": {
+        "BP_DENOMINATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "batched": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainPaths": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "convertRate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultLPMode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultSwapMode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "deltaCredit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eqFeePool": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "feeLibrary": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainPathsLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "localDecimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lpDeltaBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mintFeeBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mintFeeBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "poolId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "protocolFeeBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "router": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharedDecimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stopSwap": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "swapDeltaBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalLiquidity": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalWeight": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "sUSD Pool",
+      "values": {
+        "BP_DENOMINATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "batched": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainPaths": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "convertRate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultLPMode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultSwapMode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "deltaCredit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eqFeePool": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "feeLibrary": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainPathsLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "localDecimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lpDeltaBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mintFeeBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mintFeeBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "poolId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "protocolFeeBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "router": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharedDecimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stopSwap": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "swapDeltaBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalLiquidity": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalWeight": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}

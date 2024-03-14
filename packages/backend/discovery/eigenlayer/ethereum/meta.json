@@ -77,16 +77,6 @@
       }
     },
     {
-      "name": "ProxyAdmin",
-      "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "PauserRegistry",
       "values": {
         "unpauser": {
@@ -97,49 +87,9 @@
       }
     },
     {
-      "name": "ankrETH-Strategy",
+      "name": "ProxyAdmin",
       "values": {
-        "explanation": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getTVLLimits": {
-          "description": "Maximum TVL of the strategy.",
-          "severity": "MEDIUM",
-          "type": "RISK_PARAMETER"
-        },
-        "maxPerDeposit": {
-          "description": "Maximum value of one deposit transaction",
-          "severity": "LOW",
-          "type": "RISK_PARAMETER"
-        },
-        "maxTotalDeposits": {
-          "description": "Same as TVL limit",
-          "severity": "MEDIUM",
-          "type": "RISK_PARAMETER"
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pauserRegistry": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "strategyManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalShares": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "underlyingToken": {
+        "owner": {
           "description": null,
           "severity": null,
           "type": null
@@ -197,61 +147,6 @@
       }
     },
     {
-      "name": "EigenPodManager",
-      "values": {
-        "beaconChainOracle": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "eigenPodBeacon": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "ethPOS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "maxPods": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "numPods": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pauserRegistry": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "slasher": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "strategyManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "EigenlayerProxiedMultisig",
       "values": {
         "domainSeparator": {
@@ -280,101 +175,6 @@
           "type": null
         },
         "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "rETH-Strategy",
-      "values": {
-        "explanation": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getTVLLimits": {
-          "description": "Maximum TVL of the strategy.",
-          "severity": "MEDIUM",
-          "type": "RISK_PARAMETER"
-        },
-        "maxPerDeposit": {
-          "description": "Maximum value of one deposit transaction",
-          "severity": "LOW",
-          "type": "RISK_PARAMETER"
-        },
-        "maxTotalDeposits": {
-          "description": "Same as TVL limit",
-          "severity": "MEDIUM",
-          "type": "RISK_PARAMETER"
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pauserRegistry": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "strategyManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalShares": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "underlyingToken": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "DelegationManager",
-      "values": {
-        "DELEGATION_TYPEHASH": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DOMAIN_SEPARATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DOMAIN_TYPEHASH": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pauserRegistry": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "slasher": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "strategyManager": {
           "description": null,
           "severity": null,
           "type": null
@@ -482,7 +282,7 @@
       }
     },
     {
-      "name": "swETH-Strategy",
+      "name": "RiverV1-Strategy",
       "values": {
         "explanation": {
           "description": null,
@@ -532,6 +332,151 @@
       }
     },
     {
+      "name": "OETH-Strategy",
+      "values": {
+        "explanation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTVLLimits": {
+          "description": "Maximum TVL of the strategy.",
+          "severity": "MEDIUM",
+          "type": "RISK_PARAMETER"
+        },
+        "maxPerDeposit": {
+          "description": "Maximum value of one deposit transaction",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        },
+        "maxTotalDeposits": {
+          "description": "Same as TVL limit",
+          "severity": "MEDIUM",
+          "type": "RISK_PARAMETER"
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "strategyManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "cbETH-Strategy",
+      "values": {
+        "explanation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTVLLimits": {
+          "description": "Maximum TVL of the strategy.",
+          "severity": "MEDIUM",
+          "type": "RISK_PARAMETER"
+        },
+        "maxPerDeposit": {
+          "description": "Maximum value of one deposit transaction",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        },
+        "maxTotalDeposits": {
+          "description": "Same as TVL limit",
+          "severity": "MEDIUM",
+          "type": "RISK_PARAMETER"
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "strategyManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "DelegationManager",
+      "values": {
+        "DELEGATION_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DOMAIN_SEPARATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DOMAIN_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "slasher": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "strategyManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "StrategyAdderMultisig",
       "values": {
         "domainSeparator": {
@@ -567,7 +512,62 @@
       }
     },
     {
-      "name": "cbETH-Strategy",
+      "name": "EigenPodManager",
+      "values": {
+        "beaconChainOracle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eigenPodBeacon": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ethPOS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxPods": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "numPods": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "slasher": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "strategyManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ETHx-Strategy",
       "values": {
         "explanation": {
           "description": null,
@@ -647,157 +647,7 @@
       }
     },
     {
-      "name": "OETH-Strategy",
-      "values": {
-        "explanation": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getTVLLimits": {
-          "description": "Maximum TVL of the strategy.",
-          "severity": "MEDIUM",
-          "type": "RISK_PARAMETER"
-        },
-        "maxPerDeposit": {
-          "description": "Maximum value of one deposit transaction",
-          "severity": "LOW",
-          "type": "RISK_PARAMETER"
-        },
-        "maxTotalDeposits": {
-          "description": "Same as TVL limit",
-          "severity": "MEDIUM",
-          "type": "RISK_PARAMETER"
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pauserRegistry": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "strategyManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalShares": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "underlyingToken": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "stETH-Strategy",
-      "values": {
-        "explanation": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getTVLLimits": {
-          "description": "Maximum TVL of the strategy.",
-          "severity": "MEDIUM",
-          "type": "RISK_PARAMETER"
-        },
-        "maxPerDeposit": {
-          "description": "Maximum value of one deposit transaction",
-          "severity": "LOW",
-          "type": "RISK_PARAMETER"
-        },
-        "maxTotalDeposits": {
-          "description": "Same as TVL limit",
-          "severity": "MEDIUM",
-          "type": "RISK_PARAMETER"
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pauserRegistry": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "strategyManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalShares": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "underlyingToken": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "RiverV1-Strategy",
-      "values": {
-        "explanation": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getTVLLimits": {
-          "description": "Maximum TVL of the strategy.",
-          "severity": "MEDIUM",
-          "type": "RISK_PARAMETER"
-        },
-        "maxPerDeposit": {
-          "description": "Maximum value of one deposit transaction",
-          "severity": "LOW",
-          "type": "RISK_PARAMETER"
-        },
-        "maxTotalDeposits": {
-          "description": "Same as TVL limit",
-          "severity": "MEDIUM",
-          "type": "RISK_PARAMETER"
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pauserRegistry": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "strategyManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalShares": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "underlyingToken": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ETHx-Strategy",
+      "name": "swETH-Strategy",
       "values": {
         "explanation": {
           "description": null,
@@ -897,6 +747,156 @@
       }
     },
     {
+      "name": "rETH-Strategy",
+      "values": {
+        "explanation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTVLLimits": {
+          "description": "Maximum TVL of the strategy.",
+          "severity": "MEDIUM",
+          "type": "RISK_PARAMETER"
+        },
+        "maxPerDeposit": {
+          "description": "Maximum value of one deposit transaction",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        },
+        "maxTotalDeposits": {
+          "description": "Same as TVL limit",
+          "severity": "MEDIUM",
+          "type": "RISK_PARAMETER"
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "strategyManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ankrETH-Strategy",
+      "values": {
+        "explanation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTVLLimits": {
+          "description": "Maximum TVL of the strategy.",
+          "severity": "MEDIUM",
+          "type": "RISK_PARAMETER"
+        },
+        "maxPerDeposit": {
+          "description": "Maximum value of one deposit transaction",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        },
+        "maxTotalDeposits": {
+          "description": "Same as TVL limit",
+          "severity": "MEDIUM",
+          "type": "RISK_PARAMETER"
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "strategyManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "stETH-Strategy",
+      "values": {
+        "explanation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTVLLimits": {
+          "description": "Maximum TVL of the strategy.",
+          "severity": "MEDIUM",
+          "type": "RISK_PARAMETER"
+        },
+        "maxPerDeposit": {
+          "description": "Maximum value of one deposit transaction",
+          "severity": "LOW",
+          "type": "RISK_PARAMETER"
+        },
+        "maxTotalDeposits": {
+          "description": "Same as TVL limit",
+          "severity": "MEDIUM",
+          "type": "RISK_PARAMETER"
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "strategyManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "DepositContract",
       "values": {
         "get_deposit_count": {
@@ -947,6 +947,21 @@
       }
     },
     {
+      "name": "UpgradeableBeacon",
+      "values": {
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "EigenlayerMultisig",
       "values": {
         "domainSeparator": {
@@ -975,21 +990,6 @@
           "type": null
         },
         "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "UpgradeableBeacon",
-      "values": {
-        "implementation": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
           "description": null,
           "severity": null,
           "type": null

@@ -2,29 +2,9 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "L1ERC721Bridge",
+      "name": "TransferAgent",
       "values": {
-        "messenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MESSENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OTHER_BRIDGE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "otherBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
+        "owner": {
           "description": null,
           "severity": null,
           "type": null
@@ -32,44 +12,54 @@
       }
     },
     {
-      "name": "OptimismMintableERC20Factory",
+      "name": "MessageBus",
       "values": {
-        "BRIDGE": {
+        "feeBase": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L1StandardBridge",
-      "values": {
-        "l2TokenBridge": {
+        "feePerByte": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "messenger": {
+        "liquidityBridge": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "MESSENGER": {
+        "owner": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "OTHER_BRIDGE": {
+        "pegBridge": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "version": {
+        "pegBridgeV2": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pegVault": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pegVaultV2": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "preExecuteMessageGasUsage": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sigsVerifier": {
           "description": null,
           "severity": null,
           "type": null
@@ -79,16 +69,6 @@
     {
       "name": "ProxyAdmin",
       "values": {
-        "addressManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isUpgrading": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "owner": {
           "description": null,
           "severity": null,
@@ -97,89 +77,19 @@
       }
     },
     {
-      "name": "L1CrossDomainMessenger",
+      "name": "PeggedTokenBridgeV2",
       "values": {
-        "MESSAGE_VERSION": {
+        "delayPeriod": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "messageNonce": {
+        "epochLength": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "MIN_GAS_CALLDATA_OVERHEAD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OTHER_MESSENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PORTAL": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RELAY_CALL_OVERHEAD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RELAY_CONSTANT_OVERHEAD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RELAY_GAS_CHECK_BUFFER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RELAY_RESERVED_GAS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "OptimismPortal",
-      "values": {
-        "GUARDIAN": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "L2_ORACLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2Sender": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "params": {
+        "owner": {
           "description": null,
           "severity": null,
           "type": null
@@ -189,12 +99,7 @@
           "severity": null,
           "type": null
         },
-        "SYSTEM_CONFIG": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
+        "sigsVerifier": {
           "description": null,
           "severity": null,
           "type": null
@@ -202,9 +107,29 @@
       }
     },
     {
-      "name": "AddressManager",
+      "name": "SimpleGovernance",
       "values": {
-        "owner": {
+        "getVoters": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_ACTIVE_PERIOD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_ACTIVE_PERIOD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nextProposalId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "THRESHOLD_DECIMAL": {
           "description": null,
           "severity": null,
           "type": null
@@ -212,34 +137,24 @@
       }
     },
     {
-      "name": "ZoraMultisig",
+      "name": "MessageBusOwner",
       "values": {
-        "domainSeparator": {
+        "getVoters": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getChainId": {
+        "MAX_ACTIVE_PERIOD": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getOwners": {
+        "MIN_ACTIVE_PERIOD": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
+        "THRESHOLD_DECIMAL": {
           "description": null,
           "severity": null,
           "type": null
@@ -247,89 +162,19 @@
       }
     },
     {
-      "name": "L2OutputOracle",
+      "name": "OriginalTokenVaultV2",
       "values": {
-        "CHALLENGER": {
+        "delayPeriod": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "FINALIZATION_PERIOD_SECONDS": {
+        "epochLength": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "L2_BLOCK_TIME": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "latestBlockNumber": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "latestOutputIndex": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nextBlockNumber": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nextOutputIndex": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PROPOSER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "startingBlockNumber": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "startingTimestamp": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "SUBMISSION_INTERVAL": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "deletedOutputs": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "SystemConfig",
-      "values": {
-        "gasLimit": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "minimumGasLimit": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "overhead": {
+        "nativeWrap": {
           "description": null,
           "severity": null,
           "type": null
@@ -339,47 +184,12 @@
           "severity": null,
           "type": null
         },
-        "resourceConfig": {
+        "paused": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "scalar": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "UNSAFE_BLOCK_SIGNER_SLOT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "unsafeBlockSigner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "batcherHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "opStackDA": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "sequencerInbox": {
+        "sigsVerifier": {
           "description": null,
           "severity": null,
           "type": null
@@ -387,34 +197,209 @@
       }
     },
     {
-      "name": "ChallengerMultisig",
+      "name": "PeggedTokenBridge",
       "values": {
-        "domainSeparator": {
+        "delayPeriod": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getChainId": {
+        "epochLength": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getOwners": {
+        "owner": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getThreshold": {
+        "paused": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "nonce": {
+        "sigsVerifier": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OriginalTokenVault",
+      "values": {
+        "delayPeriod": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "VERSION": {
+        "epochLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sigsVerifier": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governors": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pausers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Liquidity Network",
+      "values": {
+        "addseq": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delayPeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "epochLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minimalMaxSlippage": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nativeWrap": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "noticePeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "resetTime": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ssHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "triggerTime": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governors": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pausers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Sentinel",
+      "values": {
+        "numGovernors": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "numGuards": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "numPausers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "numRelaxedGuards": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "relaxed": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "relaxThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governors": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "guards": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pausersFull": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pausersPauseOnly": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SentinelProxyAdmin",
+      "values": {
+        "owner": {
           "description": null,
           "severity": null,
           "type": null

@@ -2,29 +2,34 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "L1ERC721Bridge",
+      "name": "UpgradeGatekeeper",
       "values": {
-        "messenger": {
+        "getMaster": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "MESSENGER": {
+        "mainContract": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "OTHER_BRIDGE": {
+        "noticePeriodFinishTimestamp": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "otherBridge": {
+        "upgradeStatus": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "version": {
+        "versionId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "managedContracts": {
           "description": null,
           "severity": null,
           "type": null
@@ -32,14 +37,29 @@
       }
     },
     {
-      "name": "OptimismMintableERC20Factory",
+      "name": "Governance",
       "values": {
-        "BRIDGE": {
+        "getMaster": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "version": {
+        "getTarget": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "networkGovernor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalTokens": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "validators": {
           "description": null,
           "severity": null,
           "type": null
@@ -47,29 +67,104 @@
       }
     },
     {
-      "name": "L1StandardBridge",
+      "name": "ZkSync",
       "values": {
-        "l2TokenBridge": {
+        "EMPTY_STRING_KECCAK": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "messenger": {
+        "exodusMode": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "MESSENGER": {
+        "firstPendingWithdrawalIndex": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "OTHER_BRIDGE": {
+        "firstPriorityRequestId": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "version": {
+        "getMaster": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTarget": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "numberOfPendingWithdrawals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalBlocksCommitted": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalBlocksVerified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalCommittedPriorityRequests": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalOpenPriorityRequests": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalPairTokens": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "upgradePreparationActivationTime": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "upgradePreparationActive": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "zkSyncCommitBlockAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "zkSyncExitAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pairManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "verifier": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "verifierExit": {
           "description": null,
           "severity": null,
           "type": null
@@ -77,19 +172,14 @@
       }
     },
     {
-      "name": "ProxyAdmin",
+      "name": "Verifier",
       "values": {
-        "addressManager": {
+        "getMaster": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "isUpgrading": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
+        "getTarget": {
           "description": null,
           "severity": null,
           "type": null
@@ -97,64 +187,14 @@
       }
     },
     {
-      "name": "L1CrossDomainMessenger",
+      "name": "PairManager",
       "values": {
-        "MESSAGE_VERSION": {
+        "getMaster": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "messageNonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_GAS_CALLDATA_OVERHEAD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OTHER_MESSENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PORTAL": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RELAY_CALL_OVERHEAD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RELAY_CONSTANT_OVERHEAD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RELAY_GAS_CHECK_BUFFER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RELAY_RESERVED_GAS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
+        "getTarget": {
           "description": null,
           "severity": null,
           "type": null
@@ -162,39 +202,14 @@
       }
     },
     {
-      "name": "OptimismPortal",
+      "name": "VerifierExit",
       "values": {
-        "GUARDIAN": {
+        "getMaster": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "L2_ORACLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2Sender": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "params": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "SYSTEM_CONFIG": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
+        "getTarget": {
           "description": null,
           "severity": null,
           "type": null
@@ -202,9 +217,74 @@
       }
     },
     {
-      "name": "AddressManager",
+      "name": "ZkSyncCommitBlock",
       "values": {
-        "owner": {
+        "EMPTY_STRING_KECCAK": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "exodusMode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "firstPendingWithdrawalIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "firstPriorityRequestId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "numberOfPendingWithdrawals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalBlocksCommitted": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalBlocksVerified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalCommittedPriorityRequests": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalOpenPriorityRequests": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalPairTokens": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "upgradePreparationActivationTime": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "upgradePreparationActive": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "zkSyncCommitBlockAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "zkSyncExitAddress": {
           "description": null,
           "severity": null,
           "type": null
@@ -212,214 +292,8 @@
       }
     },
     {
-      "name": "ZoraMultisig",
-      "values": {
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L2OutputOracle",
-      "values": {
-        "CHALLENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "FINALIZATION_PERIOD_SECONDS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "L2_BLOCK_TIME": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "latestBlockNumber": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "latestOutputIndex": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nextBlockNumber": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nextOutputIndex": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PROPOSER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "startingBlockNumber": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "startingTimestamp": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "SUBMISSION_INTERVAL": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "deletedOutputs": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "SystemConfig",
-      "values": {
-        "gasLimit": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "minimumGasLimit": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "overhead": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "resourceConfig": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "scalar": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "UNSAFE_BLOCK_SIGNER_SLOT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "unsafeBlockSigner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "batcherHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "opStackDA": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "sequencerInbox": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ChallengerMultisig",
-      "values": {
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
+      "name": "ZkSyncExit",
+      "values": {}
     }
   ]
 }

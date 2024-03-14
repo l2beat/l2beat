@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x5b6a6438de4bfbad65b640e38fa9463b0d82dff7
+
+# Diff at Thu, 14 Mar 2024 00:15:18 GMT:
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: main@e9ab5d808868ba1ecef1f4a9acee050bd71c3c54 block: 19411918
+- current block number: 19429627
+
+## Description
+
+Optimism uses blobs
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
+    +++ description: None
+      values.opStackDA.isSequencerSendingBlobTx:
+-        false
++        true
+      values.overhead:
+-        188
++        0
+      values.scalar:
+-        684000
++        "452312848583266388373324160190187140051835877600158453279134670530344387928"
+    }
+```
+
 Generated with discovered.json: 0xd34811c5c471b7976f33f0c576b6903f21608d61
 
 # Diff at Mon, 11 Mar 2024 12:48:08 GMT:

@@ -11,12 +11,14 @@ import { Project } from '../../../model/Project'
 import { IndexerStateRepository } from '../../../peripherals/database/repositories/IndexerStateRepository'
 import { Clock } from '../../../tools/Clock'
 import { TaskQueue } from '../../../tools/queue/TaskQueue'
+import { LivenessConfigurationRepository } from '../repositories/LivenessConfigurationRepository'
 import { LivenessRepository } from '../repositories/LivenessRepository'
 import { calculateAnomalies } from './calculateAnomalies'
 import {
   calcIntervalWithAvgsPerProject,
   LivenessRecordWithInterval,
 } from './calculateIntervalWithAverages'
+import { getLivenessSyncedUntil } from './getLivenessSyncedUntil'
 import { groupByType } from './groupByType'
 
 type LivenessResult =
@@ -59,6 +61,7 @@ export class LivenessController {
 
   constructor(
     private readonly livenessRepository: LivenessRepository,
+    private readonly livenessConfigurationRepository: LivenessConfigurationRepository,
     private readonly indexerStateRepository: IndexerStateRepository,
     private readonly projects: Project[],
     private readonly clock: Clock,
@@ -87,17 +90,6 @@ export class LivenessController {
   }
 
   async getLiveness(): Promise<LivenessResult> {
-    const requiredTimestamp = this.clock.getLastHour().add(-1, 'hours')
-    const indexerState = await this.indexerStateRepository.findIndexerState(
-      'liveness_indexer',
-    )
-    if (
-      indexerState === undefined ||
-      new UnixTime(indexerState.safeHeight).lt(requiredTimestamp)
-    ) {
-      return { type: 'error', error: 'DATA_NOT_SYNCED' }
-    }
-
     const projects: LivenessApiResponse['projects'] = {}
 
     const activeProjects = this.projects.filter((p) => !p.isArchived)
@@ -106,9 +98,15 @@ export class LivenessController {
         continue
       }
 
-      const isSynced = project.livenessConfig.entries.some(
-        (e) => !e.untilTimestamp || e.untilTimestamp.gt(UnixTime.now()),
-      )
+      const configurations =
+        await this.livenessConfigurationRepository.getByProjectId(
+          project.projectId,
+        )
+
+      const syncedUntil = getLivenessSyncedUntil(configurations)
+      if (!syncedUntil) {
+        continue
+      }
 
       const records =
         await this.livenessRepository.getWithTypeDistinctTimestamp(
@@ -131,7 +129,7 @@ export class LivenessController {
 
       projects[project.projectId.toString()] = {
         ...withAnomalies,
-        isSynced,
+        syncedUntil,
       }
     }
 
