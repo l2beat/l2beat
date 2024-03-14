@@ -52,6 +52,45 @@ describeDatabase(PricesRepository.name, (database) => {
     })
   })
 
+  describe(PricesRepository.prototype.deleteBeforeInclusive.name, () => {
+    it('deletes all records before the given timestamp', async () => {
+      const address = EthereumAddress.random()
+
+      const prices = [
+        {
+          chain: 'chain',
+          address,
+          priceUsd: 1,
+          timestamp: new UnixTime(1),
+        },
+        {
+          chain: 'chain',
+          address,
+          priceUsd: 1,
+          timestamp: new UnixTime(2),
+        },
+        {
+          chain: 'chain-2',
+          address,
+          priceUsd: 2,
+          timestamp: new UnixTime(1),
+        },
+        {
+          chain: 'chain',
+          address: EthereumAddress.random(),
+          priceUsd: 1,
+          timestamp: new UnixTime(1),
+        },
+      ]
+      await repository.addMany(prices)
+
+      await repository.deleteBeforeInclusive('chain', address, new UnixTime(1))
+
+      const results = await repository.getAll()
+      expect(results).toEqual(prices.slice(1))
+    })
+  })
+
   it(PricesRepository.prototype.deleteAll.name, async () => {
     await repository.addMany([
       {

@@ -34,6 +34,19 @@ export class PricesRepository extends BaseRepository {
     return rows.length
   }
 
+  async deleteBeforeInclusive(
+    chain: string,
+    address: EthereumAddress | 'native',
+    timestamp: UnixTime,
+  ) {
+    const knex = await this.knex()
+    return knex('prices')
+      .where('chain', chain)
+      .where('address', address === 'native' ? 'native' : address.toString())
+      .where('timestamp', '<=', timestamp.toDate())
+      .delete()
+  }
+
   async deleteAll() {
     const knex = await this.knex()
     return knex('prices').delete()
