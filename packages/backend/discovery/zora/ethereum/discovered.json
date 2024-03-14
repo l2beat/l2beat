@@ -1,7 +1,7 @@
 {
   "name": "zora",
   "chain": "ethereum",
-  "blockNumber": 19412025,
+  "blockNumber": 19431793,
   "configHash": "0x919110555a37d4dedd9db279c7a635b1d09fc4fc95b923d466a467698a4f1589",
   "version": 3,
   "contracts": [
@@ -19,7 +19,7 @@
         "GUARDIAN": "0xC72aE5c7cc9a332699305E29F68Be66c73b60542",
         "L2_ORACLE": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 100000, 19411973],
+        "params": [1000000000, 100000, 19431786],
         "paused": false,
         "SYSTEM_CONFIG": "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86",
         "version": "1.6.0"
@@ -78,10 +78,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 11732580,
-        "latestOutputIndex": 6742,
-        "nextBlockNumber": 11734380,
-        "nextOutputIndex": 6743,
+        "latestBlockNumber": 11851380,
+        "latestOutputIndex": 6808,
+        "nextBlockNumber": 11853180,
+        "nextOutputIndex": 6809,
         "PROPOSER": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
         "startingBlockNumber": 0,
         "startingTimestamp": 1686693839,
@@ -106,9 +106,9 @@
         "minimumGasLimit": 21000000,
         "opStackDA": {
           "isSomeTxsLengthEqualToCelestiaDAExample": false,
-          "isSequencerSendingBlobTx": false
+          "isSequencerSendingBlobTx": true
         },
-        "overhead": 188,
+        "overhead": 0,
         "owner": "0xC72aE5c7cc9a332699305E29F68Be66c73b60542",
         "resourceConfig": [
           20000000,
@@ -118,7 +118,7 @@
           1000000,
           "340282366920938463463374607431768211455"
         ],
-        "scalar": 684000,
+        "scalar": "452312848583266388373324160190187140051835877600158453279133793016986207220",
         "sequencerInbox": "0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
         "unsafeBlockSigner": "0x3Dc8Dfd0709C835cAd15a6A27e089FF4cF4C9228",
@@ -156,6 +156,8 @@
         "domainSeparator": "0x04d8b03931757beb3d5d2234a3218674c5274d5c0532403b2f9d22ee0cecb958",
         "getChainId": 1,
         "getOwners": [
+          "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
+          "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "0xf2989961Bf987bdD6c86CD6B845B6fACa194a8e4",
           "0xe7d71aea6FB8248d4fD4D5d5098D201674B531dB",
           "0xc08C1b8fD69A22a448fC014bEe4A700d70726dA7",
@@ -163,8 +165,8 @@
           "0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c",
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
         ],
-        "getThreshold": 4,
-        "nonce": 2,
+        "getThreshold": 2,
+        "nonce": 5,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -222,7 +224,7 @@
       "sinceTimestamp": 1686694019,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621280",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621281",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -251,6 +253,7 @@
   ],
   "eoas": [
     "0x000000000000000000000000000000000000dEaD",
+    "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
     "0x3Dc8Dfd0709C835cAd15a6A27e089FF4cF4C9228",
     "0x4200000000000000000000000000000000000007",
     "0x4200000000000000000000000000000000000010",
@@ -260,6 +263,7 @@
     "0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c",
     "0x625726c858dBF78c0125436C943Bf4b4bE9d9033",
     "0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf",
+    "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
     "0xc08C1b8fD69A22a448fC014bEe4A700d70726dA7",
     "0xD05e9Ab3B6A7F10ec1374bc352854ABA51643E81",
     "0xe7d71aea6FB8248d4fD4D5d5098D201674B531dB",
