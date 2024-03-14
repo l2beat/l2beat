@@ -90,6 +90,9 @@ describe(transformFunctionCallsQueryResult.name, () => {
         block_timestamp: timestamp,
         input: SELECTOR_1,
         to_address: ADDRESS_1,
+        gas_price: 10,
+        receipt_gas_used: 100,
+        transaction_type: 2,
       },
       {
         transaction_hash: txHashes[1],
@@ -97,6 +100,9 @@ describe(transformFunctionCallsQueryResult.name, () => {
         block_timestamp: timestamp,
         input: SELECTOR_2,
         to_address: ADDRESS_2,
+        gas_price: 20,
+        receipt_gas_used: 200,
+        transaction_type: 2,
       },
       {
         transaction_hash: txHashes[2],
@@ -104,6 +110,9 @@ describe(transformFunctionCallsQueryResult.name, () => {
         block_timestamp: timestamp,
         input: sharpInput,
         to_address: sharpSubmissions[0].address,
+        gas_price: 30,
+        receipt_gas_used: 300,
+        transaction_type: 3,
       },
     ]
     const expected: TrackedTxFunctionCallResult[] = [
@@ -116,6 +125,9 @@ describe(transformFunctionCallsQueryResult.name, () => {
         blockTimestamp: timestamp,
         toAddress: ADDRESS_1,
         input: SELECTOR_1,
+        gasPrice: 10,
+        receiptGasUsed: 100,
+        transactionType: 2,
       },
       {
         type: 'functionCall',
@@ -126,6 +138,9 @@ describe(transformFunctionCallsQueryResult.name, () => {
         blockTimestamp: timestamp,
         toAddress: ADDRESS_2,
         input: SELECTOR_2,
+        gasPrice: 20,
+        receiptGasUsed: 200,
+        transactionType: 2,
       },
       {
         type: 'functionCall',
@@ -136,6 +151,9 @@ describe(transformFunctionCallsQueryResult.name, () => {
         blockTimestamp: timestamp,
         toAddress: sharpSubmissions[0].address,
         input: sharpInput,
+        gasPrice: 30,
+        receiptGasUsed: 300,
+        transactionType: 3,
       },
     ]
     const result = transformFunctionCallsQueryResult(
@@ -166,6 +184,9 @@ describe(transformFunctionCallsQueryResult.name, () => {
         input: 'random-string',
         block_number: block,
         block_timestamp: timestamp,
+        gas_price: 10,
+        receipt_gas_used: 100,
+        transaction_type: 2,
       },
     ]
 
@@ -209,6 +230,9 @@ describe(transformFunctionCallsQueryResult.name, () => {
         input: sharpInput,
         block_number: block,
         block_timestamp: timestamp,
+        gas_price: 10,
+        receipt_gas_used: 100,
+        transaction_type: 2,
       },
     ]
 
@@ -222,6 +246,9 @@ describe(transformFunctionCallsQueryResult.name, () => {
         blockTimestamp: timestamp,
         toAddress: sharpSubmissions[0].address,
         input: sharpInput,
+        gasPrice: 10,
+        receiptGasUsed: 100,
+        transactionType: 2,
       },
     ]
 

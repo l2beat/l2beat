@@ -440,6 +440,9 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
         subtype: 'batchSubmissions',
         id: getMockRuntimeConfigurations()[0].uses[0].id,
       },
+      gasPrice: 10,
+      receiptGasUsed: 100,
+      transactionType: 2,
     },
     {
       type: 'transfer',
@@ -454,6 +457,9 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       fromAddress: EthereumAddress.random(),
       toAddress: EthereumAddress.random(),
       projectId: ProjectId('test2'),
+      gasPrice: 20,
+      receiptGasUsed: 200,
+      transactionType: 3,
     },
   ]
 }
