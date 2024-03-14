@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x5b3d71d09937e4a98ac6d793c5b6bbe022abe491
+
+# Diff at Thu, 14 Mar 2024 07:36:16 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@c79c75cb88d41e2f05e9cca5d501133eae405bbe block: 19411974
+- current block number: 19431802
+
+## Description
+
+L2 fees change: Removes overhead (static) fee completely and raises the scalar (dynamic) fee. In practice this lowers the L2 fee as it is.
+Context: BLOBS
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x5e6432F18Bc5d497B1Ab2288a025Fbf9D69E2221) {
+    +++ description: None
+      values.opStackDA.isSequencerSendingBlobTx:
+-        false
++        true
++++ description: Static L2 fee component
++++ severity: LOW
+      values.overhead:
+-        188
++        0
++++ description: Dynamic L2 fee factor
++++ severity: LOW
+      values.scalar:
+-        684000
++        "452312848583266388373324160190187140051835877600158453279133701594312344529"
+    }
+```
+
 Generated with discovered.json: 0x7583f54e5c6195c95832243781e1837e45e36883
 
 # Diff at Mon, 11 Mar 2024 12:53:12 GMT:

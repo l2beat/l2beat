@@ -350,8 +350,8 @@
           "type": null
         },
         "overhead": {
-          "description": null,
-          "severity": null,
+          "description": "Static L2 fee component",
+          "severity": "LOW",
           "type": null
         },
         "owner": {
@@ -365,8 +365,8 @@
           "type": null
         },
         "scalar": {
-          "description": null,
-          "severity": null,
+          "description": "Dynamic L2 fee factor",
+          "severity": "LOW",
           "type": null
         },
         "UNSAFE_BLOCK_SIGNER_SLOT": {
@@ -395,8 +395,8 @@
           "type": null
         },
         "opStackDA": {
-          "description": null,
-          "severity": null,
+          "description": "Details of data availability",
+          "severity": "MEDIUM",
           "type": null
         },
         "sequencerInbox": {
