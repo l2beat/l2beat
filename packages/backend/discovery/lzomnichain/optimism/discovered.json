@@ -1,7 +1,7 @@
 {
   "name": "lzomnichain",
   "chain": "optimism",
-  "blockNumber": 117060360,
+  "blockNumber": 117411953,
   "configHash": "0x4fc9448caffe991487cc984d455d01c182a007e66f9e41fa3de49928ef86e871",
   "version": 3,
   "contracts": [
@@ -1260,10 +1260,10 @@
       "unverified": true,
       "upgradeability": {
         "type": "EIP1967 proxy",
-        "implementation": "0xF51caABe877c28655Ce881F3b08482ab82255e49",
+        "implementation": "0x098c11c44e2bEE854BD8Ff61eCb2953d7FdF66a1",
         "admin": "0x3A01cfb9831E7c9A30917bd78C2A5C0243ab4b4F"
       },
-      "implementations": ["0xF51caABe877c28655Ce881F3b08482ab82255e49"],
+      "implementations": ["0x098c11c44e2bEE854BD8Ff61eCb2953d7FdF66a1"],
       "sinceTimestamp": 1687808663
     },
     {
