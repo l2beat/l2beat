@@ -1,3 +1,34 @@
+Generated with discovered.json: 0x8f966e62bd027d2c699e581a404494171a98fecc
+
+# Diff at Wed, 13 Mar 2024 12:07:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@4f6a54f5fa748334d34176673b2c233534ce2fbc block: 19376058
+- current block number: 19426040
+
+## Description
+
+This value always should've been `false`.
+If it was `true` it would mean that no upgrades can be happen in the SHARPVerifier.
+But that is not the case, there were upgrades happening while this was set to "`true`" in our discovered.json.
+The reason for this mistake is that in the StarkWare Proxy handler the wrong slot was copied for the FINALIZATION flag.
+So this is the value that is actually correct.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19376058 (main branch discovery), not current.
+
+```diff
+    contract SHARPVerifierProxy (0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60) {
+    +++ description: None
+      upgradeability.isFinal:
+-        true
++        false
+    }
+```
+
 Generated with discovered.json: 0xa365edf645a8b7c07fb86981c0293b69f7b70d1d
 
 # Diff at Wed, 06 Mar 2024 12:15:21 GMT:

@@ -1,7 +1,7 @@
 {
   "name": "base",
   "chain": "ethereum",
-  "blockNumber": 19411971,
+  "blockNumber": 19429655,
   "configHash": "0x1dcc453e8744417c99c13e7cfa6633fc489d52437e974aa34f7c05b0bc037639",
   "version": 3,
   "contracts": [
@@ -58,7 +58,7 @@
           "0x49243DcE94e0f5A1B08b9556bBEc5a84363c3839"
         ],
         "getThreshold": 3,
-        "nonce": 10,
+        "nonce": 11,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -96,7 +96,7 @@
         "GUARDIAN": "0x14536667Cd30e52C0b458BaACcB9faDA7046E056",
         "L2_ORACLE": "0x56315b90c40730925ec5485cf004d835058518A0",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 100000, 19411971],
+        "params": [1000000000, 100000, 19429653],
         "paused": false,
         "SYSTEM_CONFIG": "0x73a79Fab69143498Ed3712e519A88a918e1f4072",
         "version": "1.7.0"
@@ -127,10 +127,10 @@
         ],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 11683800,
-        "latestOutputIndex": 6490,
-        "nextBlockNumber": 11685600,
-        "nextOutputIndex": 6491,
+        "latestBlockNumber": 11791800,
+        "latestOutputIndex": 6550,
+        "nextBlockNumber": 11793600,
+        "nextOutputIndex": 6551,
         "PROPOSER": "0x642229f238fb9dE03374Be34B0eD8D9De80752c5",
         "startingBlockNumber": 0,
         "startingTimestamp": 1686789348,
@@ -187,9 +187,9 @@
         "minimumGasLimit": 21000000,
         "opStackDA": {
           "isSomeTxsLengthEqualToCelestiaDAExample": false,
-          "isSequencerSendingBlobTx": false
+          "isSequencerSendingBlobTx": true
         },
-        "overhead": 188,
+        "overhead": 0,
         "owner": "0x14536667Cd30e52C0b458BaACcB9faDA7046E056",
         "resourceConfig": [
           20000000,
@@ -199,7 +199,7 @@
           1000000,
           "340282366920938463463374607431768211455"
         ],
-        "scalar": 684000,
+        "scalar": "452312848583266388373324160190187140051835877600158453279134021569375896653",
         "sequencerInbox": "0xFf00000000000000000000000000000000008453",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
         "unsafeBlockSigner": "0xAf6E19BE0F9cE7f8afd49a1824851023A8249e8a",
@@ -244,7 +244,7 @@
       "sinceTimestamp": 1686793895,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292769900",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292770190",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -320,7 +320,7 @@
         ],
         "getThreshold": 5,
         "NAME": "Gnosis Safe",
-        "nonce": 90,
+        "nonce": 92,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"

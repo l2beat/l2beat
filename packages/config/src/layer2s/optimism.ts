@@ -251,4 +251,5 @@ export const optimism: Layer2 = opStack({
     ],
     coingeckoPlatform: 'optimistic-ethereum',
   },
+  usesBlobs: true,
 })

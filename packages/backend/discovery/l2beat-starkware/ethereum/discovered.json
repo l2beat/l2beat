@@ -1,7 +1,7 @@
 {
   "name": "l2beat-starkware",
   "chain": "ethereum",
-  "blockNumber": 19376058,
+  "blockNumber": 19426040,
   "configHash": "0x241bdfda840313580acee44fbf45b93f45cefcefc409f5ff924031d57270726a",
   "version": 3,
   "contracts": [
@@ -148,7 +148,7 @@
         "implementation": "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
         "callImplementation": "0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF",
         "upgradeDelay": 0,
-        "isFinal": true,
+        "isFinal": false,
         "proxyGovernance": [
           "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
           "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"
