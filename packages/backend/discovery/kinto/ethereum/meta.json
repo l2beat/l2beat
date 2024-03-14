@@ -57,56 +57,6 @@
       }
     },
     {
-      "name": "RollupEventInbox",
-      "values": {
-        "bridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "rollup": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "Inbox",
-      "values": {
-        "allowListEnabled": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "bridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getProxyAdmin": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "maxDataSize": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "sequencerInbox": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "Outbox",
       "values": {
         "bridge": {
@@ -157,6 +107,56 @@
       }
     },
     {
+      "name": "RollupEventInbox",
+      "values": {
+        "bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rollup": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Inbox",
+      "values": {
+        "allowListEnabled": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getProxyAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxDataSize": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sequencerInbox": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "SequencerInbox",
       "values": {
         "batchCount": {
@@ -195,6 +195,11 @@
           "type": null
         },
         "totalDelayedMessagesRead": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "batchPosters": {
           "description": null,
           "severity": null,
           "type": null
@@ -384,6 +389,11 @@
           "severity": null,
           "type": null
         },
+        "validators": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "zombieAddress": {
           "description": null,
           "severity": null,
@@ -535,11 +545,7 @@
       "values": {}
     },
     {
-      "name": "OneStepProver0",
-      "values": {}
-    },
-    {
-      "name": "OneStepProverMath",
+      "name": "OneStepProverMemory",
       "values": {}
     },
     {
@@ -547,7 +553,11 @@
       "values": {}
     },
     {
-      "name": "OneStepProverMemory",
+      "name": "OneStepProverMath",
+      "values": {}
+    },
+    {
+      "name": "OneStepProver0",
       "values": {}
     }
   ]

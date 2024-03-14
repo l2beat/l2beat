@@ -1,7 +1,7 @@
 {
   "name": "kinto",
   "chain": "ethereum",
-  "blockNumber": 19432536,
+  "blockNumber": 19432708,
   "configHash": "0xb12bc3b6281017544f423e4697a7bf6066d50186d6fe538f8f95ee4a4f289d22",
   "version": 3,
   "contracts": [
@@ -111,6 +111,7 @@
         "stakeToken": "0x0000000000000000000000000000000000000000",
         "totalWithdrawableFunds": 0,
         "VALIDATOR_AFK_BLOCKS": 45818,
+        "validators": ["0x64Cf65036a76E3827e448cadbc53D31EefDCE04a"],
         "validatorUtils": "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
         "validatorWalletCreator": "0x9CAd81628aB7D8e239F1A5B497313341578c5F71",
         "validatorWhitelistDisabled": false,
@@ -118,9 +119,6 @@
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
-      },
-      "errors": {
-        "validators": "processing response error (body=\"{\\\"id\\\":184,\\\"error\\\":{\\\"code\\\":-32001,\\\"message\\\":\\\"rpc method is not whitelisted\\\"},\\\"jsonrpc\\\":\\\"2.0\\\"}\\n\", error={\"code\":-32001}, requestBody=\"{\\\"method\\\":\\\"debug_traceTransaction\\\",\\\"params\\\":[\\\"0xd51bb4d6150d5fbaa61cf5281598b18c4efba4284aecb4420fc8d834dba357d8\\\",{\\\"tracer\\\":\\\"callTracer\\\"}],\\\"id\\\":184,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://rpc.flashbots.net\", code=SERVER_ERROR, version=web/5.7.1)"
       },
       "derivedName": "RollupProxy"
     },
@@ -319,6 +317,7 @@
       "sinceTimestamp": 1702607855,
       "values": {
         "batchCount": 1196,
+        "batchPosters": ["0xe27f3f6db6824def1738b2aACe2672aC59046a39"],
         "bridge": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
@@ -331,9 +330,6 @@
         "setIsBatchPosterCount": 1,
         "totalDelayedMessagesRead": 1270
       },
-      "errors": {
-        "batchPosters": "processing response error (body=\"{\\\"id\\\":182,\\\"error\\\":{\\\"code\\\":-32001,\\\"message\\\":\\\"rpc method is not whitelisted\\\"},\\\"jsonrpc\\\":\\\"2.0\\\"}\\n\", error={\"code\":-32001}, requestBody=\"{\\\"method\\\":\\\"debug_traceTransaction\\\",\\\"params\\\":[\\\"0xd51bb4d6150d5fbaa61cf5281598b18c4efba4284aecb4420fc8d834dba357d8\\\",{\\\"tracer\\\":\\\"callTracer\\\"}],\\\"id\\\":182,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://rpc.flashbots.net\", code=SERVER_ERROR, version=web/5.7.1)"
-      },
       "derivedName": "SequencerInbox"
     }
   ],
@@ -341,9 +337,11 @@
     "0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5",
     "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A",
     "0x356000Cec4fC967f8FC372381D983426760A0391",
+    "0x64Cf65036a76E3827e448cadbc53D31EefDCE04a",
     "0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341",
     "0x94561e98DD5E55271f91A103e4979aa6C493745E",
-    "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"
+    "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B",
+    "0xe27f3f6db6824def1738b2aACe2672aC59046a39"
   ],
   "abis": {
     "0x09824fe72BFF474d16D9c2774432E381BBD60662": [
