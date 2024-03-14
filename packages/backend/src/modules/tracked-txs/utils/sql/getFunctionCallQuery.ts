@@ -1,6 +1,7 @@
-import { Query } from '@google-cloud/bigquery'
 import { QueryParamTypes } from '@google-cloud/bigquery/build/src/bigquery'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+
+import { BigQueryClientQuery } from '../../../../peripherals/bigquery/BigQueryClient'
 
 export function getFunctionCallQuery(
   configs: {
@@ -10,7 +11,7 @@ export function getFunctionCallQuery(
   }[],
   from: UnixTime,
   to: UnixTime,
-): Query {
+): BigQueryClientQuery {
   const fullInputAddresses = configs
     .filter((c) => c.getFullInput)
     .map((c) => c.address.toLowerCase())
@@ -22,24 +23,40 @@ export function getFunctionCallQuery(
       c.address.toLowerCase(),
       c.selector.toLowerCase() + '%',
     ]),
+    from.toDate().toISOString(),
+    to.toDate().toISOString(),
   ]
 
   const query = `
     SELECT
-      block_number,
-      CASE WHEN to_address IN UNNEST(?) THEN input ELSE LEFT(input, 10) END AS input,
-      to_address,
-      block_timestamp,
-      transaction_hash
+      txs.hash,
+      traces.to_address,
+      txs.block_number,
+      txs.block_timestamp,
+      CASE
+        WHEN traces.to_address IN UNNEST(?) THEN traces.input
+      ELSE
+      LEFT(traces.input, 10)
+    END
+      AS input,
     FROM
-      bigquery-public-data.crypto_ethereum.traces
-    WHERE call_type = 'call'
-    AND status = 1
-    AND block_timestamp >= TIMESTAMP(?)
-    AND block_timestamp < TIMESTAMP(?)
-    AND (
-      ${configs.map(() => `(to_address = ? AND input LIKE ?)`).join(' OR ')}
-    )
+      bigquery-public-data.crypto_ethereum.transactions AS txs
+    JOIN
+      bigquery-public-data.crypto_ethereum.traces AS traces
+    ON
+      txs.hash = traces.transaction_hash
+      AND traces.call_type = 'call'
+      AND traces.status = 1
+      AND traces.block_timestamp >= TIMESTAMP(?)
+      AND traces.block_timestamp < TIMESTAMP(?)
+      AND (
+        ${configs
+          .map(() => `(traces.to_address = ? AND traces.input LIKE ?)`)
+          .join(' OR ')}
+      )
+    WHERE
+      txs.block_timestamp >= TIMESTAMP(?)
+      AND txs.block_timestamp < TIMESTAMP(?)
   `
 
   // @ts-expect-error BigQuery types are wrong
@@ -48,7 +65,9 @@ export function getFunctionCallQuery(
     'STRING',
     'STRING',
     ...configs.flatMap(() => ['STRING', 'STRING']),
+    'STRING',
+    `STRING`,
   ]
 
-  return { query, params, types }
+  return { query, params, types, limitInGb: 8 }
 }

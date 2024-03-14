@@ -81,7 +81,6 @@ export async function up(knex: Knex) {
   for (const config of transfersToUpdate) {
     await knex('liveness_configuration')
       .update({
-        // @ts-expect-error schema has changed
         params: JSON.stringify({
           from: config.from.toString(),
           to: config.to.toString(),
@@ -158,7 +157,6 @@ export async function down(knex: Knex) {
   for (const config of transfersToUpdate) {
     await knex('liveness_configuration')
       .update({
-        // @ts-expect-error schema has changed
         params: JSON.stringify({
           from: config.from.toString(),
           to: config.from.toString(),

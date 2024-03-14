@@ -38,8 +38,13 @@ export function findConfigurationsToSync(
     .filter(notUndefined)
 
   const untilTimestamps = configs
-    .map((c) => c.untilTimestamp?.toNumber())
+    .map((c) => {
+      if (c.untilTimestamp && !c.untilTimestamp.equals(from)) {
+        return c.untilTimestamp.toNumber()
+      }
+    })
     .filter(notUndefined)
+
   const syncTo = Math.min(to.toNumber(), ...untilTimestamps)
 
   return { configurationsToSync: configs, syncTo: new UnixTime(syncTo) }

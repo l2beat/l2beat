@@ -90,8 +90,6 @@ export interface TrackedTxsConfig {
     readonly clientEmail: string
     readonly privateKey: string
     readonly projectId: string
-    readonly queryLimitGb: number
-    readonly queryWarningLimitGb: number
   }
   readonly minTimestamp: UnixTime
   readonly uses: {

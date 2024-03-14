@@ -112,8 +112,6 @@ export function makeConfig(
         clientEmail: env.string('BIGQUERY_CLIENT_EMAIL'),
         privateKey: env.string('BIGQUERY_PRIVATE_KEY').replace(/\\n/g, '\n'),
         projectId: env.string('BIGQUERY_PROJECT_ID'),
-        queryLimitGb: env.integer('BIGQUERY_LIMIT_GB', 15),
-        queryWarningLimitGb: env.integer('BIGQUERY_WARNING_LIMIT_GB', 8),
       },
       // TODO: figure out how to set it for local development
       minTimestamp: UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),

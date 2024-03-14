@@ -23,6 +23,7 @@ interface FunctionCall {
   selector: `0x${string}`
   functionSignature: string
   sinceTimestamp: UnixTime
+  // Timestamp to sync this query until (exclusive)
   untilTimestamp?: UnixTime
 }
 
@@ -31,6 +32,7 @@ interface Transfer {
   from: EthereumAddress
   to: EthereumAddress
   sinceTimestamp: UnixTime
+  // Timestamp to sync this query until (exclusive)
   untilTimestamp?: UnixTime
 }
 
@@ -38,5 +40,6 @@ interface SharpSubmission {
   formula: 'sharpSubmission'
   programHashes: string[]
   sinceTimestamp: UnixTime
+  // Timestamp to sync this query until (exclusive)
   untilTimestamp?: UnixTime
 }

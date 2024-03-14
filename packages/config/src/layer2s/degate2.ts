@@ -96,7 +96,7 @@ export const degate2: Layer2 = {
           functionSignature:
             'function submitBlocks(bool isDataCompressed,bytes data)',
           sinceTimestamp: new UnixTime(1693304819),
-          untilTimestamp: new UnixTime(1699766507),
+          untilTimestamp: new UnixTime(1699766508),
         },
       },
     ],

@@ -19,7 +19,7 @@ export function isTimestampInRange(
     return true
   }
 
-  if (untilTimestamp.lt(from)) {
+  if (untilTimestamp.lte(from)) {
     return false
   }
 
