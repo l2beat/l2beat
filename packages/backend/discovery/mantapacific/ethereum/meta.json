@@ -127,6 +127,41 @@
       }
     },
     {
+      "name": "AdminMultisig",
+      "values": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "OptimismPortal",
       "values": {
         "GUARDIAN": {
@@ -160,41 +195,6 @@
           "type": null
         },
         "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "AdminMultisig",
-      "values": {
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
           "description": null,
           "severity": null,
           "type": null
