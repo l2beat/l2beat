@@ -20,7 +20,7 @@
       "required": ["name", "values"],
       "properties": {
         "name": { "type": "string" },
-        "review": { "$ref": "#/$defs/review" },
+        "description": { "type": ["string", "null"]},
         "values": {
           "type": "object",
           "additionalProperties": { "$ref": "#/$defs/review" }

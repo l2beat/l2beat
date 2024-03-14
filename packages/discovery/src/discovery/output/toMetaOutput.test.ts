@@ -43,6 +43,7 @@ describe(toMetaOutput.name, () => {
       contracts: [
         {
           name: 'B',
+          description: 'old description',
           values: {
             foo: { description: 'foo', severity: 'LOW', type: 'L2' },
             baz: { description: 'baz', severity: 'HIGH', type: 'PERMISSION' },
@@ -56,6 +57,7 @@ describe(toMetaOutput.name, () => {
         'https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json',
       contracts: [
         {
+          description: 'old description',
           name: 'B',
           values: {
             foo: { description: 'foo', severity: 'LOW', type: 'L2' },
@@ -73,6 +75,7 @@ describe(toMetaOutput.name, () => {
         'https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json',
       contracts: [
         {
+          description: undefined,
           name: 'B',
           values: {
             foo: { description: null, severity: null, type: null },
@@ -81,6 +84,17 @@ describe(toMetaOutput.name, () => {
         },
       ],
     })
+
+    // Assert sorted order of values
+    expect(Object.entries(result.contracts[0]?.values ?? {})).toEqual([
+      ['bar', { description: null, severity: null, type: null }],
+      ['foo', { description: null, severity: null, type: null }],
+    ])
+  })
+
+  it('sorts contracts', () => {
+    const result = toMetaOutput([CONTRACT_B, CONTRACT_A], undefined)
+    expect(result.contracts.map((c) => c.name)).toEqual(['A', 'B'])
   })
 
   it('returns a meta for a single contract without values', () => {
@@ -88,7 +102,7 @@ describe(toMetaOutput.name, () => {
     expect(result).toEqual({
       $schema:
         'https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json',
-      contracts: [{ name: 'A', values: {} }],
+      contracts: [{ name: 'A', description: undefined, values: {} }],
     })
   })
 

@@ -1,5 +1,6 @@
 import { assert } from '@l2beat/backend-tools'
 import { ContractValue } from '@l2beat/discovery-types'
+import { sortBy } from 'lodash'
 
 import { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
 import { ContractMeta, DiscoveryMeta, ValueMeta } from '../config/DiscoveryMeta'
@@ -14,7 +15,7 @@ export function toMetaOutput(
 
   return {
     ['$schema']: getSchemaPath(oldMeta),
-    contracts: contracts.map((c) =>
+    contracts: sortBy(contracts, (c) => c.name).map((c) =>
       toContractMeta(c, getOldContractMeta(c, oldMeta)),
     ),
   }
@@ -26,6 +27,7 @@ function toContractMeta(
 ): ContractMeta {
   return {
     name: contract.name,
+    description: oldContractMeta.description,
     values: toValueMeta(contract.values, oldContractMeta),
   }
 }
@@ -43,7 +45,9 @@ function toValueMeta(
   }
 
   return Object.fromEntries(
-    keys.map((key) => [key, oldContractMeta.values[key] ?? DEFAULT_REVIEW]),
+    keys
+      .sort()
+      .map((key) => [key, oldContractMeta.values[key] ?? DEFAULT_REVIEW]),
   )
 }
 
@@ -63,7 +67,10 @@ function getOldContractMeta(
     `Expected a contract, got an ${contract.type}`,
   )
 
-  const DEFAULT_CONTRACT_META = { name: contract.name, values: {} }
+  const DEFAULT_CONTRACT_META = {
+    name: contract.name,
+    values: {},
+  }
   if (!oldMeta) {
     return DEFAULT_CONTRACT_META
   }

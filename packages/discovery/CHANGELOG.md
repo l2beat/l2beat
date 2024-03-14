@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.45.5
+
+### Patch Changes
+
+- Sort the meta.json and allow for descriptions in contracts
+
 ## 0.45.4
 
 ### Patch Changes
