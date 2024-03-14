@@ -172,7 +172,7 @@ export const paradex: Layer2 = {
         {
           contract: 'Paradex',
           references: [
-            'https://etherscan.io/address/0xA964D693cd45FCBe4303524E0EFe0988cfF5ed08#code#F1#L218',
+            'https://etherscan.io/address/0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24#code',
           ],
         },
       ],
@@ -183,7 +183,7 @@ export const paradex: Layer2 = {
         {
           contract: 'Paradex',
           references: [
-            'https://etherscan.io/address/0xA964D693cd45FCBe4303524E0EFe0988cfF5ed08#code#F1#L213',
+            'https://etherscan.io/address/0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24#code',
           ],
         },
       ],
@@ -195,7 +195,7 @@ export const paradex: Layer2 = {
         {
           contract: 'Paradex',
           references: [
-            'https://etherscan.io/address/0xA964D693cd45FCBe4303524E0EFe0988cfF5ed08#code#F1#L199',
+            'https://etherscan.io/address/0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24#code#F1#L199',
           ],
         },
       ],
