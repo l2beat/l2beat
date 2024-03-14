@@ -1,7 +1,7 @@
 {
   "name": "metis",
   "chain": "ethereum",
-  "blockNumber": 18833503,
+  "blockNumber": 19431906,
   "configHash": "0xfdd4ca10ee6471a3b53b346aa1d685a50577a0ced80c2b6e2dc95b9c41668bec",
   "version": 3,
   "contracts": [
@@ -31,10 +31,10 @@
       "sinceTimestamp": 1637070395,
       "values": {
         "DEFAULT_CHAINID": 1088,
-        "getGlobalMetadata": "0x000000000000000000000000000000000000658402670000959581",
-        "getGlobalMetadataByChainId": "0x000000000000000000000000000000000000658402670000959581",
-        "length": 20441,
-        "lengthByChainId": 20441,
+        "getGlobalMetadata": "0x00000000000000000000000000000000000065f27aa70000e8243e",
+        "getGlobalMetadataByChainId": "0x00000000000000000000000000000000000065f27aa70000e8243e",
+        "length": 22918,
+        "lengthByChainId": 22918,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "StateCommitmentChain"
       },
@@ -85,6 +85,8 @@
         "domainSeparator": "0xfb4b712c4b7702310419a72c040b8486f1f9e8b0b84ae19732273a65d3a840c5",
         "getChainId": 1,
         "getOwners": [
+          "0x36B892a31b311E5e9960739A69D2dF0aa0F81A01",
+          "0x001088E383A00ff4ab36F37f7021Cb6d7B415751",
           "0x217fD54d336f710F8aee19572dBfBf0B2297ed69",
           "0xB383E1331dEE29864b68f7D84b0dC289F770d846",
           "0x7a9059F4A6e50090e4f55994d465918200AB4454",
@@ -93,7 +95,7 @@
           "0xa6D8941F935932a531A856C2e48046DA73a1098E"
         ],
         "getThreshold": 4,
-        "nonce": 7,
+        "nonce": 11,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -110,13 +112,13 @@
         "DEFAULT_CHAINID": 1088,
         "enqueueGasCost": 60000,
         "enqueueL2GasPrepaid": 1920000,
-        "getLastBlockNumber": 18833456,
-        "getLastTimestamp": 1703152370,
-        "getNextQueueIndex": 29821,
-        "getNumPendingQueueElements": 1,
-        "getQueueLength": 29822,
-        "getTotalBatches": 40164,
-        "getTotalElements": 9803906,
+        "getLastBlockNumber": 19430536,
+        "getLastTimestamp": 1710386493,
+        "getNextQueueIndex": 36282,
+        "getNumPendingQueueElements": 3,
+        "getQueueLength": 36285,
+        "getTotalBatches": 42646,
+        "getTotalElements": 15213630,
         "l2GasDiscountDivisor": 32,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "MAX_ROLLUP_TX_SIZE": 50000,
@@ -273,12 +275,12 @@
         "batches": "0x10739F09f6e62689c0aA8A1878816de9e166d6f9",
         "DEFAULT_CHAINID": 1088,
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1703150183,
-        "getLastSequencerTimestampByChainId": 1703150183,
-        "getTotalBatches": 20441,
-        "getTotalBatchesByChainId": 20441,
-        "getTotalElements": 9803137,
-        "getTotalElementsByChainId": 9803137,
+        "getLastSequencerTimestamp": 1710389927,
+        "getLastSequencerTimestampByChainId": 1710389927,
+        "getTotalBatches": 22918,
+        "getTotalBatchesByChainId": 22918,
+        "getTotalElements": 15213630,
+        "getTotalElementsByChainId": 15213630,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
       },
@@ -313,8 +315,10 @@
     }
   ],
   "eoas": [
+    "0x001088E383A00ff4ab36F37f7021Cb6d7B415751",
     "0x02058Bb1d98D88087008F2ac1273584591380e3F",
     "0x217fD54d336f710F8aee19572dBfBf0B2297ed69",
+    "0x36B892a31b311E5e9960739A69D2dF0aa0F81A01",
     "0x4200000000000000000000000000000000000007",
     "0x4200000000000000000000000000000000000010",
     "0x7a9059F4A6e50090e4f55994d465918200AB4454",

@@ -62,26 +62,6 @@
       }
     },
     {
-      "name": "L1CrossDomainMessenger",
-      "values": {
-        "libAddressManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "Metis Multisig",
       "values": {
         "domainSeparator": {
@@ -95,14 +75,14 @@
           "type": null
         },
         "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Array of the multisig signers",
+          "severity": "MEDIUM",
+          "type": "PERMISSION"
         },
         "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Multisig threshold",
+          "severity": "HIGH",
+          "type": "PERMISSION"
         },
         "nonce": {
           "description": null,
@@ -207,34 +187,19 @@
       }
     },
     {
-      "name": "MVM_DiscountOracle",
+      "name": "L1CrossDomainMessenger",
       "values": {
-        "CONFIG_OWNER_KEY": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "discount": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getDiscount": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getMinL2Gas": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "libAddressManager": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "minL2Gas": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
           "description": null,
           "severity": null,
           "type": null
@@ -245,26 +210,6 @@
       "name": "BondManager",
       "values": {
         "libAddressManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "MVM_L2ChainManagerOnL1",
-      "values": {
-        "addressmgr": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "CONFIG_OWNER_KEY": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "messenger": {
           "description": null,
           "severity": null,
           "type": null
@@ -362,34 +307,24 @@
       }
     },
     {
-      "name": "StateCommitmentChain",
+      "name": "MVM_DiscountOracle",
       "values": {
-        "batches": {
+        "CONFIG_OWNER_KEY": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "DEFAULT_CHAINID": {
+        "discount": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "FRAUD_PROOF_WINDOW": {
+        "getDiscount": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getLastSequencerTimestamp": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getTotalBatches": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getTotalElements": {
+        "getMinL2Gas": {
           "description": null,
           "severity": null,
           "type": null
@@ -399,22 +334,27 @@
           "severity": null,
           "type": null
         },
-        "SEQUENCER_PUBLISH_WINDOW": {
+        "minL2Gas": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "MVM_L2ChainManagerOnL1",
+      "values": {
+        "addressmgr": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getLastSequencerTimestampByChainId": {
+        "CONFIG_OWNER_KEY": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getTotalBatchesByChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getTotalElementsByChainId": {
+        "messenger": {
           "description": null,
           "severity": null,
           "type": null
@@ -495,6 +435,66 @@
           "type": null
         },
         "txDataSliceSize": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "StateCommitmentChain",
+      "values": {
+        "batches": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_CHAINID": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FRAUD_PROOF_WINDOW": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLastSequencerTimestamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalBatches": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalElements": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "libAddressManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SEQUENCER_PUBLISH_WINDOW": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLastSequencerTimestampByChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalBatchesByChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalElementsByChainId": {
           "description": null,
           "severity": null,
           "type": null
@@ -613,6 +613,26 @@
           "severity": null,
           "type": null
         },
+        "libAddressManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ChainStorageContainer",
+      "values": {
+        "DEFAULT_CHAINID": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "getGlobalMetadata": {
           "description": null,
           "severity": null,
@@ -639,26 +659,6 @@
           "type": null
         },
         "lengthByChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ChainStorageContainer",
-      "values": {
-        "DEFAULT_CHAINID": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "libAddressManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
           "description": null,
           "severity": null,
           "type": null
