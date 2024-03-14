@@ -15,6 +15,10 @@ export class SyncService {
     private readonly options: SyncServiceOptions,
   ) {}
 
+  shouldTimestampBeSynced(chain: string, timestamp: UnixTime) {
+    return timestamp.equals(this.getTimestampToSync(chain, timestamp, 'to'))
+  }
+
   getTimestampToSync(
     chain: string,
     timestamp: UnixTime,

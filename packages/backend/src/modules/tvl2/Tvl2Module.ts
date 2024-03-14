@@ -4,6 +4,7 @@ import {
   CoingeckoQueryService,
   HttpClient,
 } from '@l2beat/shared'
+import { UnixTime } from '@l2beat/shared-pure'
 
 import { Config } from '../../config'
 import { Database } from '../../peripherals/database/Database'
@@ -31,13 +32,28 @@ export function createTvl2Module(
   const stateRepository = new IndexerStateRepository(database, logger)
   const pricesRepository = new PricesRepository(database, logger)
 
-  const coingeckoClient = new CoingeckoClient(http, config.tvl.coingeckoApiKey)
+  const coingeckoClient = new CoingeckoClient(http, config.tvl2.coingeckoApiKey)
   const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
 
   const statusRouter = createTvl2StatusRouter(config.tvl2, clock)
   const hourlyIndexer = new HourlyIndexer(logger, clock)
+
+  const chainsMinTimestamp: Record<string, UnixTime> = {
+    ethereum: UnixTime.now().add(-7, 'days'),
+    arbitrum: UnixTime.now().add(-7, 'days'),
+    optimism: UnixTime.now().add(-7, 'days'),
+    base: UnixTime.now().add(-7, 'days'),
+    lyra: UnixTime.now().add(-7, 'days'),
+    mantapacific: UnixTime.now().add(-7, 'days'),
+    linea: UnixTime.now().add(-7, 'days'),
+    zkfair: UnixTime.now().add(-7, 'days'),
+    kroma: UnixTime.now().add(-7, 'days'),
+    aevo: UnixTime.now().add(-7, 'days'),
+    blast: UnixTime.now().add(-7, 'days'),
+  }
+
   const syncService = new SyncService(clock, {
-    minTimestamp: config.clock.minBlockTimestamp,
+    chainsMinTimestamp,
     removeHourlyAfterDays: 10,
     removeSixHourlyAfterDays: 93,
   })

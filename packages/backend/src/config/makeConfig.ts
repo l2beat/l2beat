@@ -30,7 +30,7 @@ export function makeConfig(
     env.string('FEATURES', isLocal ? '' : '*'),
   ).append('status')
   const minBlockTimestamp = minTimestampOverride ?? getEthereumMinTimestamp()
-  const tvl2Config = getTvl2Config()
+  const tvl2Config = getTvl2Config(env.optionalString('COINGECKO_API_KEY'))
 
   return {
     name,

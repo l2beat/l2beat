@@ -18,13 +18,13 @@ export class PriceIndexer extends ChildIndexer {
     private readonly coingeckoQueryService: CoingeckoQueryService,
     private readonly stateRepository: IndexerStateRepository,
     private readonly pricesRepository: PricesRepository,
-    private readonly priceConfigEntry: PriceConfigEntry,
+    private readonly token: PriceConfigEntry,
     private readonly syncService: SyncService,
   ) {
-    super(logger, [parentIndexer])
-    this.indexerId = `price_indexer_${
-      priceConfigEntry.chain
-    }_${priceConfigEntry.address.toString()}`
+    super(logger.tag(`${token.chain}-${token.address.toString()}`), [
+      parentIndexer,
+    ])
+    this.indexerId = `price_indexer_${token.chain}_${token.address.toString()}`
   }
 
   override async start(): Promise<void> {
@@ -34,31 +34,46 @@ export class PriceIndexer extends ChildIndexer {
   }
 
   override async update(_from: number, _to: number): Promise<number> {
-    // from = syncService.canBeSynced(from) ? from : syncService.getNextTimestamp(from)
-    // to = syncService.canBeSynced(to) ? to : syncService.getNextTimestamp(to)
-    // in block number updater it will be: to = syncService.canBeSynced(to) ? to : syncService.getNextTimestamp(to)
-    const from = this.syncService.getTimestampToSync(new UnixTime(_from))
-    const to = this.syncService.getTimestampToSync(from.add(1, 'hours'))
-
-    //todo figure out the flow with tvl cleaner, should it write more to the db which will be cleaned up later?
-    const prices = await this.coingeckoQueryService.getUsdPriceHistory(
-      this.priceConfigEntry.coingeckoId,
-      from,
-      to,
-      this.priceConfigEntry.address === 'native'
-        ? undefined
-        : this.priceConfigEntry.address,
+    const from = this.syncService.getTimestampToSync(
+      this.token.chain,
+      new UnixTime(_from),
+      'from',
     )
 
-    const priceRecords: PricesRecord[] = prices.map((price) => ({
-      chain: this.priceConfigEntry.chain,
-      address: this.priceConfigEntry.address,
-      timestamp: price.timestamp,
-      priceUsd: price.value,
-    }))
+    // Edge case when scheduled update is before the minimum timestamp of token/chain
+    if (from.gt(new UnixTime(_to))) {
+      return _to
+    }
+
+    const to = this.syncService.getTimestampToSync(
+      this.token.chain,
+      new UnixTime(_to),
+      'to',
+    )
+
+    assert(from.lte(to), 'Programmer error: Invalid range')
+
+    const prices = await this.coingeckoQueryService.getUsdPriceHistoryHourly(
+      this.token.coingeckoId,
+      from,
+      to,
+      this.token.address === 'native' ? undefined : this.token.address,
+    )
+
+    const priceRecords: PricesRecord[] = prices
+      // we filter out timestamps that we do not care about
+      // performance is not a big issue as we download 80 days worth of prices at once
+      .filter((p) =>
+        this.syncService.shouldTimestampBeSynced(this.token.chain, p.timestamp),
+      )
+      .map((price) => ({
+        chain: this.token.chain,
+        address: this.token.address,
+        timestamp: price.timestamp,
+        priceUsd: price.value,
+      }))
 
     await this.pricesRepository.addMany(priceRecords)
-
     return to.toNumber()
   }
 
@@ -75,8 +90,9 @@ export class PriceIndexer extends ChildIndexer {
     safeHeight: number,
     trx?: Knex.Transaction,
   ): Promise<void> {
+    // TODO: is it needed?
     assert(
-      safeHeight >= this.priceConfigEntry.sinceTimestamp.toNumber(),
+      safeHeight >= this.token.sinceTimestamp.toNumber(),
       'Cannot set height to be lower than the minimum timestamp',
     )
 
@@ -91,8 +107,8 @@ export class PriceIndexer extends ChildIndexer {
     if (indexerState === undefined) {
       await this.stateRepository.add({
         indexerId: this.indexerId,
-        safeHeight: this.priceConfigEntry.sinceTimestamp.toNumber(),
-        minTimestamp: this.priceConfigEntry.sinceTimestamp,
+        safeHeight: this.token.sinceTimestamp.toNumber(),
+        minTimestamp: this.token.sinceTimestamp,
       })
       return
     }
@@ -101,23 +117,18 @@ export class PriceIndexer extends ChildIndexer {
     // This functionality can be added in the future if needed.
     assert(
       indexerState.minTimestamp &&
-        this.priceConfigEntry.sinceTimestamp.equals(indexerState.minTimestamp),
+        this.token.sinceTimestamp.equals(indexerState.minTimestamp),
       'Minimum timestamp of this indexer cannot be updated',
     )
   }
 
-  /**
-   * WARNING: this method does not do anything
-   * 
-    In our case there is no re-org handling so we do not have to worry
-    that our data will become invalid.
-    Also there is no need to handle the case when the server is randomly shut down during update,
-    liveness configurations are storing the latest synced timestamp, so even if the server is shut down
-    without setting new safeHeight. And although the next update will run on the already processed timestamp,
-    the configuration's lastSyncedTimestamp will filter out already processed configurations
-    and the data will not be fetched again
-  **/
   override async invalidate(targetHeight: number): Promise<number> {
+    await this.pricesRepository.deleteBeforeInclusive(
+      this.token.chain,
+      this.token.address,
+      new UnixTime(targetHeight),
+    )
+
     return Promise.resolve(targetHeight)
   }
 }

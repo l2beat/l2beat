@@ -22,7 +22,8 @@ export interface QueryResultPoint {
 export class CoingeckoQueryService {
   constructor(private readonly coingeckoClient: CoingeckoClient) {}
 
-  async getUsdPriceHistory(
+
+  async getUsdPriceHistoryHourly(
     coingeckoId: CoingeckoId,
     from: UnixTime,
     to: UnixTime,
