@@ -446,7 +446,7 @@ export const starknet: Layer2 = {
         {
           contract: 'Starknet',
           references: [
-            'https://etherscan.io/address/0x16938E4b59297060484Fa56a12594d8D6F4177e8#code#F1#L218',
+            'https://etherscan.io/address/0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24#code',
           ],
         },
         // we don't have a way to test against shared modules
@@ -464,7 +464,7 @@ export const starknet: Layer2 = {
         {
           contract: 'Starknet',
           references: [
-            'https://etherscan.io/address/0x16938E4b59297060484Fa56a12594d8D6F4177e8#code#F1#L213',
+            'https://etherscan.io/address/0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24#code',
           ],
         },
       ],
@@ -476,7 +476,7 @@ export const starknet: Layer2 = {
         {
           contract: 'Starknet',
           references: [
-            'https://etherscan.io/address/0x16938E4b59297060484Fa56a12594d8D6F4177e8#code#F1#L199',
+            'https://etherscan.io/address/0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24#code',
           ],
         },
       ],
