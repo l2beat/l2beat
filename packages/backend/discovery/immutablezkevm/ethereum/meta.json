@@ -2,29 +2,149 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "L1StandardBridge",
+      "name": "Bridge",
       "values": {
-        "l2TokenBridge": {
+        "ADAPTOR_MANAGER_ROLE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "messenger": {
+        "childERC20Bridge": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "MESSENGER": {
+        "childETHToken": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "OTHER_BRIDGE": {
+        "childTokenTemplate": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "version": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEPOSIT_SIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "imxCumulativeDepositLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "initializerAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAP_TOKEN_SIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "NATIVE_ETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "NATIVE_IMX": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAUSER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rootBridgeAdaptor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rootIMXToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rootWETHToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "UNLIMITED_DEPOSIT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "UNPAUSER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VARIABLE_MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "WITHDRAW_SIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "withdrawalDelay": {
+          "description": "Delay in seconds of any withdrawals submitted after the withdrawal queue is activated.",
+          "severity": "MEDIUM",
+          "type": "RISK_PARAMETER"
+        },
+        "withdrawalQueueActivated": {
+          "description": "If true, the withdrawal queue is activated and any withdrawals are delayed for a duration defined by withdrawalDelay. It can be manually activated or automatically triggered by the FlowRate mechanism.",
+          "severity": "MEDIUM",
+          "type": "RISK_PARAMETER"
+        }
+      }
+    },
+    {
+      "name": "ChildERC20",
+      "values": {
+        "bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rootToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
           "description": null,
           "severity": null,
           "type": null
@@ -34,16 +154,6 @@
     {
       "name": "ProxyAdmin",
       "values": {
-        "addressManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isUpgrading": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "owner": {
           "description": null,
           "severity": null,
@@ -52,64 +162,54 @@
       }
     },
     {
-      "name": "L1CrossDomainMessenger",
+      "name": "RootAxelarBridgeAdaptor",
       "values": {
-        "MESSAGE_VERSION": {
+        "BRIDGE_MANAGER_ROLE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "messageNonce": {
+        "childBridgeAdaptor": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "MIN_GAS_CALLDATA_OVERHEAD": {
+        "childChainId": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": {
+        "DEFAULT_ADMIN_ROLE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": {
+        "GAS_SERVICE_MANAGER_ROLE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "OTHER_MESSENGER": {
+        "gasService": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "PORTAL": {
+        "gateway": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "RELAY_CALL_OVERHEAD": {
+        "initializerAddress": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "RELAY_CONSTANT_OVERHEAD": {
+        "rootBridge": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "RELAY_GAS_CHECK_BUFFER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RELAY_RESERVED_GAS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
+        "TARGET_MANAGER_ROLE": {
           "description": null,
           "severity": null,
           "type": null
@@ -117,17 +217,11 @@
       }
     },
     {
-      "name": "AddressManager",
-      "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
+      "name": "AxelarGatewayProxyMultisig",
+      "values": {}
     },
     {
-      "name": "AdminMultisig",
+      "name": "OwnerMultisig",
       "values": {
         "domainSeparator": {
           "description": null,
@@ -162,131 +256,21 @@
       }
     },
     {
-      "name": "OptimismPortal",
+      "name": "AxelarGasService",
       "values": {
-        "GUARDIAN": {
+        "contractId": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "L2_ORACLE": {
+        "gasCollector": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "l2Sender": {
+        "implementation": {
           "description": null,
           "severity": null,
-          "type": null
-        },
-        "params": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "SYSTEM_CONFIG": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L2OutputOracle",
-      "values": {
-        "CHALLENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "FINALIZATION_PERIOD_SECONDS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "L2_BLOCK_TIME": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "latestBlockNumber": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "latestOutputIndex": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nextBlockNumber": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nextOutputIndex": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PROPOSER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "startingBlockNumber": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "startingTimestamp": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "SUBMISSION_INTERVAL": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "deletedOutputs": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "SystemConfig",
-      "values": {
-        "gasLimit": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "minimumGasLimit": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "overhead": {
-          "description": "Fixed L2 gas overhead. Used as part of the L2 fee calculation.",
-          "severity": "LOW",
           "type": null
         },
         "owner": {
@@ -294,47 +278,22 @@
           "severity": null,
           "type": null
         },
-        "resourceConfig": {
+        "pendingOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Operators",
+      "values": {
+        "owner": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "scalar": {
-          "description": "Dynamic L2 gas overhead. Used as part of the L2 fee calculation.",
-          "severity": "LOW",
-          "type": null
-        },
-        "UNSAFE_BLOCK_SIGNER_SLOT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "unsafeBlockSigner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "batcherHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "opStackDA": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "sequencerInbox": {
+        "pendingOwner": {
           "description": null,
           "severity": null,
           "type": null
