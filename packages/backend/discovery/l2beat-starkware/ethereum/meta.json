@@ -138,6 +138,41 @@
           "description": null,
           "severity": null,
           "type": null
+        },
+        "bootloaderProgramContractAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "cairoVerifierContractAddresses": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "memoryPageFactRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GpsMemoryPageFactRegistry",
+      "values": {
+        "hasRegisteredFact": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GpsCairoBootloaderProgram",
+      "values": {
+        "getCompiledProgram": {
+          "description": null,
+          "severity": null,
+          "type": null
         }
       }
     },
@@ -192,79 +227,9 @@
       }
     },
     {
-      "name": "CpuFrilessVerifier",
+      "name": "CairoBootloaderProgram",
       "values": {
-        "getLayoutInfo": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PAGE_INFO_ADDRESS_OFFSET": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PAGE_INFO_HASH_OFFSET": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PAGE_INFO_SIZE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PAGE_INFO_SIZE_IN_BYTES": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PAGE_INFO_SIZE_OFFSET": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "constructorArgs": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "CpuFrilessVerifier",
-      "values": {
-        "getLayoutInfo": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PAGE_INFO_ADDRESS_OFFSET": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PAGE_INFO_HASH_OFFSET": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PAGE_INFO_SIZE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PAGE_INFO_SIZE_IN_BYTES": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PAGE_INFO_SIZE_OFFSET": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "constructorArgs": {
+        "getCompiledProgram": {
           "description": null,
           "severity": null,
           "type": null
@@ -282,16 +247,6 @@
       }
     },
     {
-      "name": "CairoBootloaderProgram",
-      "values": {
-        "getCompiledProgram": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "CpuFrilessVerifier",
       "values": {
         "getLayoutInfo": {
@@ -532,7 +487,87 @@
       }
     },
     {
-      "name": "PoseidonPoseidonPartialRoundKey1Column",
+      "name": "CpuFrilessVerifier",
+      "values": {
+        "getLayoutInfo": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_ADDRESS_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_HASH_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_IN_BYTES": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "constructorArgs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CpuFrilessVerifier",
+      "values": {
+        "getLayoutInfo": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_ADDRESS_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_HASH_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_IN_BYTES": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "constructorArgs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "PoseidonPoseidonFullRoundKey2Column",
       "values": {}
     },
     {
@@ -544,7 +579,35 @@
       "values": {}
     },
     {
-      "name": "PoseidonPoseidonFullRoundKey0Column",
+      "name": "CpuOods",
+      "values": {}
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "values": {}
+    },
+    {
+      "name": "CpuOods",
+      "values": {}
+    },
+    {
+      "name": "CpuOods",
+      "values": {}
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "values": {}
+    },
+    {
+      "name": "CpuOods",
+      "values": {}
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "values": {}
+    },
+    {
+      "name": "CpuOods",
       "values": {}
     },
     {
@@ -552,23 +615,11 @@
       "values": {}
     },
     {
-      "name": "CpuOods",
+      "name": "EcdsaPointsXColumn",
       "values": {}
     },
     {
-      "name": "CpuConstraintPoly",
-      "values": {}
-    },
-    {
-      "name": "CpuOods",
-      "values": {}
-    },
-    {
-      "name": "CpuOods",
-      "values": {}
-    },
-    {
-      "name": "CpuOods",
+      "name": "PedersenHashPointsYColumn",
       "values": {}
     },
     {
@@ -576,26 +627,6 @@
       "values": {}
     },
     {
-      "name": "PoseidonPoseidonFullRoundKey2Column",
-      "values": {}
-    },
-    {
-      "name": "CpuOods",
-      "values": {}
-    },
-    {
-      "name": "PoseidonPoseidonFullRoundKey1Column",
-      "values": {}
-    },
-    {
-      "name": "CpuConstraintPoly",
-      "values": {}
-    },
-    {
-      "name": "CpuConstraintPoly",
-      "values": {}
-    },
-    {
       "name": "CpuConstraintPoly",
       "values": {}
     },
@@ -605,6 +636,14 @@
     },
     {
       "name": "CpuOods",
+      "values": {}
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "values": {}
+    },
+    {
+      "name": "PoseidonPoseidonPartialRoundKey1Column",
       "values": {}
     },
     {
@@ -616,15 +655,11 @@
       "values": {}
     },
     {
-      "name": "PedersenHashPointsYColumn",
+      "name": "PoseidonPoseidonFullRoundKey1Column",
       "values": {}
     },
     {
-      "name": "EcdsaPointsXColumn",
-      "values": {}
-    },
-    {
-      "name": "CpuConstraintPoly",
+      "name": "PoseidonPoseidonFullRoundKey0Column",
       "values": {}
     },
     {
