@@ -1,8 +1,8 @@
 {
   "name": "l2beat-starkware",
   "chain": "ethereum",
-  "blockNumber": 19426483,
-  "configHash": "0xd4041be14c3830c13f174e0a0fab1328ec108384734f4def97ddd2bcdca9eabe",
+  "blockNumber": 19432182,
+  "configHash": "0x7c71d1742320aebe370662718d15ac45e1df3b2168ea7ef48eef66e529b44e16",
   "version": 3,
   "contracts": [
     {
@@ -133,7 +133,7 @@
       }
     },
     {
-      "name": "MemoryPageFactRegistry",
+      "name": "GpsMemoryPageFactRegistry",
       "address": "0x40864568f679c10aC9e72211500096a5130770fA",
       "upgradeability": {
         "type": "immutable"
@@ -141,7 +141,8 @@
       "sinceTimestamp": 1706140835,
       "values": {
         "hasRegisteredFact": true
-      }
+      },
+      "derivedName": "MemoryPageFactRegistry"
     },
     {
       "name": "CpuOods",
@@ -1040,7 +1041,7 @@
       "sinceTimestamp": 1673998775
     },
     {
-      "name": "CairoBootloaderProgram",
+      "name": "GpsCairoBootloaderProgram",
       "address": "0xb4c61d092eCf1b69F1965F9D8DE639148ea26a40",
       "upgradeability": {
         "type": "immutable"
@@ -1777,7 +1778,8 @@
           "5200109463683497984",
           "2345108766317314046"
         ]
-      }
+      },
+      "derivedName": "CairoBootloaderProgram"
     },
     {
       "name": "CpuConstraintPoly",

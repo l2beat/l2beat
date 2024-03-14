@@ -157,9 +157,9 @@
       }
     },
     {
-      "name": "CairoBootloaderProgram",
+      "name": "GpsMemoryPageFactRegistry",
       "values": {
-        "getCompiledProgram": {
+        "hasRegisteredFact": {
           "description": null,
           "severity": null,
           "type": null
@@ -167,9 +167,9 @@
       }
     },
     {
-      "name": "MemoryPageFactRegistry",
+      "name": "GpsCairoBootloaderProgram",
       "values": {
-        "hasRegisteredFact": {
+        "getCompiledProgram": {
           "description": null,
           "severity": null,
           "type": null
@@ -567,7 +567,15 @@
       }
     },
     {
-      "name": "CpuOods",
+      "name": "PoseidonPoseidonFullRoundKey2Column",
+      "values": {}
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "values": {}
+    },
+    {
+      "name": "CpuConstraintPoly",
       "values": {}
     },
     {
@@ -583,23 +591,15 @@
       "values": {}
     },
     {
-      "name": "PoseidonPoseidonPartialRoundKey1Column",
+      "name": "CpuOods",
       "values": {}
     },
     {
-      "name": "PoseidonPoseidonPartialRoundKey0Column",
+      "name": "CpuConstraintPoly",
       "values": {}
     },
     {
-      "name": "PoseidonPoseidonFullRoundKey2Column",
-      "values": {}
-    },
-    {
-      "name": "PoseidonPoseidonFullRoundKey1Column",
-      "values": {}
-    },
-    {
-      "name": "PoseidonPoseidonFullRoundKey0Column",
+      "name": "CpuOods",
       "values": {}
     },
     {
@@ -615,7 +615,7 @@
       "values": {}
     },
     {
-      "name": "CpuOods",
+      "name": "EcdsaPointsXColumn",
       "values": {}
     },
     {
@@ -627,18 +627,6 @@
       "values": {}
     },
     {
-      "name": "EcdsaPointsXColumn",
-      "values": {}
-    },
-    {
-      "name": "CpuConstraintPoly",
-      "values": {}
-    },
-    {
-      "name": "CpuConstraintPoly",
-      "values": {}
-    },
-    {
       "name": "CpuConstraintPoly",
       "values": {}
     },
@@ -651,19 +639,31 @@
       "values": {}
     },
     {
-      "name": "CpuOods",
-      "values": {}
-    },
-    {
       "name": "CpuConstraintPoly",
       "values": {}
     },
     {
+      "name": "PoseidonPoseidonPartialRoundKey1Column",
+      "values": {}
+    },
+    {
+      "name": "PoseidonPoseidonPartialRoundKey0Column",
+      "values": {}
+    },
+    {
       "name": "CpuOods",
       "values": {}
     },
     {
-      "name": "CpuConstraintPoly",
+      "name": "PoseidonPoseidonFullRoundKey1Column",
+      "values": {}
+    },
+    {
+      "name": "PoseidonPoseidonFullRoundKey0Column",
+      "values": {}
+    },
+    {
+      "name": "CpuOods",
       "values": {}
     },
     {

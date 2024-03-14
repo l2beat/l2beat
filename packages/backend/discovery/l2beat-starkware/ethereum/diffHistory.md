@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xecb77e7fe567adad63a4c5f6b991f3edcf09ca20
+Generated with discovered.json: 0xbb98743c8594276adcd76e065855646cd7c5ccea
 
-# Diff at Wed, 13 Mar 2024 13:35:20 GMT:
+# Diff at Thu, 14 Mar 2024 08:53:25 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
 - comparing to: main@0d9e81470e7f864bf251e22aca8c3ece6e6f4429 block: 19426040
-- current block number: 19426483
+- current block number: 19432182
 
 ## Description
 
@@ -30,13 +30,13 @@ discovery. Values are for block 19426040 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract MemoryPageFactRegistry (0x40864568f679c10aC9e72211500096a5130770fA)
+    contract GpsMemoryPageFactRegistry (0x40864568f679c10aC9e72211500096a5130770fA)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract CairoBootloaderProgram (0xb4c61d092eCf1b69F1965F9D8DE639148ea26a40)
+    contract GpsCairoBootloaderProgram (0xb4c61d092eCf1b69F1965F9D8DE639148ea26a40)
     +++ description: None
 ```
 
