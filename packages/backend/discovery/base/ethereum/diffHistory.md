@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x116e5f20113cf029df2c0b56c07a0f7636d14bf7
+
+# Diff at Thu, 14 Mar 2024 00:20:47 GMT:
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: main@e9ab5d808868ba1ecef1f4a9acee050bd71c3c54 block: 19411971
+- current block number: 19429655
+
+## Description
+
+Base uses blobs now.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: None
+      values.opStackDA.isSequencerSendingBlobTx:
+-        false
++        true
+      values.overhead:
+-        188
++        0
+      values.scalar:
+-        684000
++        "452312848583266388373324160190187140051835877600158453279134021569375896653"
+    }
+```
+
 Generated with discovered.json: 0x344f98dfb9a45ff46b90d16771333c22eec6f0c0
 
 # Diff at Mon, 11 Mar 2024 12:52:00 GMT:
