@@ -21,7 +21,7 @@
     "0x298aFB19A105D59E74658C4C334Ff360BadE6dd2": "METH-Strategy",
     "0x00000000219ab540356cBB839Cbe05303d7705Fa": "DepositContract",
     "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338": "EigenPodManager",
-    "0xBE1685C81aA44FF9FB319dD389addd9374383e90": "StrategyAdderMultisig",
+    "0xBE1685C81aA44FF9FB319dD389addd9374383e90": "OperationsMultisig",
     "0x369e6F597e22EaB55fFb173C6d9cD234BD699111": "EigenlayerProxiedMultisig",
     "0xFEA47018D632A77bA579846c840d5706705Dc598": "EigenlayerMultisig"
   },
@@ -149,7 +149,7 @@
     "EigenPodManager": {
       "ignoreInWatchMode": ["numPods"]
     },
-    "StrategyAdderMultisig": {
+    "OperationsMultisig": {
       "ignoreInWatchMode": ["nonce"]
     },
     "EigenlayerProxiedMultisig": {
