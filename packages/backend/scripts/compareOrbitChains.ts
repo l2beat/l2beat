@@ -12,10 +12,18 @@ const chainMapping: Record<string, string> = {
 
 function getArbOSVersion(wasmModuleRoot: string): string {
   const wasmRoots: Record<string, string> = {
-    '0xf4389b835497a910d7ba3ebfb77aa93da985634f3c052de1290360635be40c4a':
-      'v11.0',
+    '0x6b94a7fc388fd8ef3def759297828dc311761e88d8179c7ee8d3887dc554f3c3': 'v10',
+    '0xda4e3ad5e7feacb817c21c8d0220da7650fe9051ece68a3f0b1c5d38bbb27b21':
+      'v10.1',
     '0x0754e09320c381566cc0449904c377a52bd34a6b9404432e80afd573b67f7b17':
       'v10.2',
+    '0xf559b6d4fa869472dabce70fe1c15221bdda837533dfd891916836975b434dec':
+      'v10.3',
+    '0xf4389b835497a910d7ba3ebfb77aa93da985634f3c052de1290360635be40c4a':
+      'v11.0',
+    '0x68e4fe5023f792d4ef584796c84d710303a5e12ea02d6e37e2b5e9c4332507c4':
+      'v11.1',
+    '0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4': 'v20',
     '0x1024d5971f781dd930c46b5fb6fb571e6af9f31b5dc191b82e82036c207cc968':
       '?????',
     '0x965a35130f4e34b7b2339eac03b2eacc659e2dafe850d213ea6a7cdf9edfa99f':
