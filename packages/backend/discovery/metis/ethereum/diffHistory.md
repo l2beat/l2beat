@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x1702f6af26153cd2f1a70dad0a28c46f02f49de4
+Generated with discovered.json: 0xb4944b31e0a3f27a1a1f785c95fb0e29a6338e7a
 
-# Diff at Thu, 14 Mar 2024 07:57:30 GMT:
+# Diff at Thu, 14 Mar 2024 09:14:30 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
-- comparing to: main@2dc3a9d819f43d1d2a2f717406d64b063739d73b block: 18833503
-- current block number: 19431906
+- comparing to: main@af87effd99a7b745cb97368cfbb16dc82443174a block: 18833503
+- current block number: 19432288
 
 ## Description
 
@@ -21,37 +21,37 @@ Two signers are added to the multisig.
 +        "0xB961047013F974C5b6B6F8dA4402379525316550"
 +++ description: Array of the multisig signers
 +++ type: PERMISSION
-+++ severity: MEDIUM
++++ severity: LOW
       values.getOwners.5:
 -        "0xa6D8941F935932a531A856C2e48046DA73a1098E"
 +        "0x02058Bb1d98D88087008F2ac1273584591380e3F"
 +++ description: Array of the multisig signers
 +++ type: PERMISSION
-+++ severity: MEDIUM
++++ severity: LOW
       values.getOwners.4:
 -        "0xB961047013F974C5b6B6F8dA4402379525316550"
 +        "0x7a9059F4A6e50090e4f55994d465918200AB4454"
 +++ description: Array of the multisig signers
 +++ type: PERMISSION
-+++ severity: MEDIUM
++++ severity: LOW
       values.getOwners.3:
 -        "0x02058Bb1d98D88087008F2ac1273584591380e3F"
 +        "0xB383E1331dEE29864b68f7D84b0dC289F770d846"
 +++ description: Array of the multisig signers
 +++ type: PERMISSION
-+++ severity: MEDIUM
++++ severity: LOW
       values.getOwners.2:
 -        "0x7a9059F4A6e50090e4f55994d465918200AB4454"
 +        "0x217fD54d336f710F8aee19572dBfBf0B2297ed69"
 +++ description: Array of the multisig signers
 +++ type: PERMISSION
-+++ severity: MEDIUM
++++ severity: LOW
       values.getOwners.1:
 -        "0xB383E1331dEE29864b68f7D84b0dC289F770d846"
 +        "0x001088E383A00ff4ab36F37f7021Cb6d7B415751"
 +++ description: Array of the multisig signers
 +++ type: PERMISSION
-+++ severity: MEDIUM
++++ severity: LOW
       values.getOwners.0:
 -        "0x217fD54d336f710F8aee19572dBfBf0B2297ed69"
 +        "0x36B892a31b311E5e9960739A69D2dF0aa0F81A01"

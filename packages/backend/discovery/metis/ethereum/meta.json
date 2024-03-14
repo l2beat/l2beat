@@ -76,12 +76,12 @@
         },
         "getOwners": {
           "description": "Array of the multisig signers",
-          "severity": "MEDIUM",
+          "severity": "LOW",
           "type": "PERMISSION"
         },
         "getThreshold": {
           "description": "Multisig threshold",
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "type": "PERMISSION"
         },
         "nonce": {
