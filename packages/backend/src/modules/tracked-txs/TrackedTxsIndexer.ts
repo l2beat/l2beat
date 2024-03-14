@@ -42,8 +42,6 @@ export class TrackedTxsIndexer extends ChildIndexer {
   }
 
   override async update(from: number, to: number): Promise<number> {
-    const unixFrom = new UnixTime(from)
-
     const [configurations, syncTo] = await this.getConfiguration(from, to)
 
     if (configurations.length === 0) {
@@ -53,7 +51,7 @@ export class TrackedTxsIndexer extends ChildIndexer {
 
     const txs = await this.trackedTxsClient.getData(
       configurations,
-      unixFrom,
+      new UnixTime(from),
       syncTo,
     )
 

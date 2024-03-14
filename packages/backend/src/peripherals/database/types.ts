@@ -153,16 +153,6 @@ declare module 'knex/types/tables' {
     tracked_tx_id: string
   }
 
-  interface LivenessConfigurationRow {
-    id: string
-    project_id: string
-    type: string
-    since_timestamp: Date
-    until_timestamp: Date | null
-    last_synced_timestamp: Date | null
-    debug_info: string
-  }
-
   interface FinalityRow {
     project_id: string
     timestamp: Date
@@ -224,7 +214,6 @@ declare module 'knex/types/tables' {
     liveness: LivenessRow
     discovery_cache: DiscoveryCacheRow
     daily_discovery: DiscoveryHistoryRow
-    liveness_configuration: LivenessConfigurationRow
     indexer_state: IndexerStateRow
     tvl_cleaner: TvlCleanerRow
     finality: FinalityRow

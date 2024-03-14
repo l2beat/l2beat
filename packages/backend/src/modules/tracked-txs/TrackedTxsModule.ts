@@ -21,7 +21,7 @@ export function createTrackedTxsModule(
   livenessUpdater: LivenessUpdater | undefined,
 ): ApplicationModuleWithIndexer<TrackedTxsIndexer> | undefined {
   if (!config.trackedTxsConfig || !livenessUpdater) {
-    logger.info('Tracked transactions module disabled')
+    logger.info('TrackedTxsModule disabled')
     return
   }
 
