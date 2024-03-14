@@ -2,56 +2,6 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "SynthetixBridgeEscrow",
-      "values": {
-        "nominatedOwner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L1DAITokenBridge",
-      "values": {
-        "escrow": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isOpen": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l1Token": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2DAITokenBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2Token": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "messenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "StateCommitmentChain",
       "values": {
         "batches": {
@@ -165,6 +115,56 @@
           "type": null
         },
         "MIN_ROLLUP_TX_GAS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SynthetixBridgeEscrow",
+      "values": {
+        "nominatedOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1DAITokenBridge",
+      "values": {
+        "escrow": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isOpen": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1Token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2DAITokenBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2Token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messenger": {
           "description": null,
           "severity": null,
           "type": null
@@ -426,14 +426,19 @@
       "values": {}
     },
     {
-      "name": "ProxyAdmin",
+      "name": "SCCStorageContainerBatches",
       "values": {
-        "addressManager": {
+        "getGlobalMetadata": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "isUpgrading": {
+        "length": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "libAddressManager": {
           "description": null,
           "severity": null,
           "type": null
@@ -471,19 +476,14 @@
       }
     },
     {
-      "name": "CTCStorageContainerBatches",
+      "name": "ProxyAdmin",
       "values": {
-        "getGlobalMetadata": {
+        "addressManager": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "length": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "libAddressManager": {
+        "isUpgrading": {
           "description": null,
           "severity": null,
           "type": null
@@ -496,7 +496,7 @@
       }
     },
     {
-      "name": "SCCStorageContainerBatches",
+      "name": "CTCStorageContainerBatches",
       "values": {
         "getGlobalMetadata": {
           "description": null,
@@ -559,6 +559,46 @@
           "type": null
         },
         "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "FoundationMultisig_2",
+      "values": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getModules": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "NAME": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
           "description": null,
           "severity": null,
           "type": null
@@ -804,46 +844,6 @@
           "type": null
         },
         "deletedOutputs": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "FoundationMultisig_2",
-      "values": {
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getModules": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "NAME": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
           "description": null,
           "severity": null,
           "type": null
