@@ -9,7 +9,7 @@ export const astarzkevm: Layer2 = upcoming({
     description:
       "Astar zkEVM is an Ethereum Layer 2 solution that leverages Polygon's CDK and zero-knowledge cryptography to enable off-chain transactions while maintaining EVM equivalence.",
     purposes: ['Universal'],
-    category: 'ZK Rollup',
+    category: 'Validium',
     provider: 'Polygon',
     links: {
       websites: ['https://astar.network/astar2'],
