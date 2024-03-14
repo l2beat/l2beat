@@ -6,119 +6,110 @@ import { SyncService } from './SyncService'
 
 describe(SyncService.name, () => {
   describe(SyncService.prototype.getTimestampToSync.name, () => {
+    const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2023-05-01T01:01:01Z'))
+    const SIX_HOURLY_CUTOFF = 10
+    const DAILY_CUTOFF = 93
+    const OPTIONS = {
+      chainsMinTimestamp: { ethereum: MIN_TIMESTAMP },
+      removeHourlyAfterDays: SIX_HOURLY_CUTOFF,
+      removeSixHourlyAfterDays: DAILY_CUTOFF,
+    }
+    const LAST_HOUR = MIN_TIMESTAMP.add(365, 'days')
+    const CLOCK = mockObject<Clock>({
+      getLastHour: () => LAST_HOUR,
+    })
+
+    it('returns daily timestamp', () => {
+      const syncService = new SyncService(CLOCK, OPTIONS)
+
+      // hourly timestamp older than daily cutoff
+      const hourlyTimestamp = LAST_HOUR.add(-(DAILY_CUTOFF + 1), 'days').add(
+        1,
+        'hours',
+      )
+      const timestampToSync = syncService.getTimestampToSync(
+        'ethereum',
+        hourlyTimestamp,
+        'from',
+      )
+      // in this case daily should be returned
+      const expected = hourlyTimestamp.toEndOf('day')
+
+      expect(timestampToSync).toEqual(expected)
+    })
+
+    it('returns six hourly timestamp', () => {
+      const syncService = new SyncService(CLOCK, OPTIONS)
+
+      // hourly timestamp older than daily cutoff
+      const hourlyTimestamp = LAST_HOUR.add(
+        -(SIX_HOURLY_CUTOFF + 1),
+        'days',
+      ).add(1, 'hours')
+
+      const timestampToSync = syncService.getTimestampToSync(
+        'ethereum',
+        hourlyTimestamp,
+        'from',
+      )
+      // in this case sixHourly should be returned
+      const expected = hourlyTimestamp.toEndOf('six hours')
+
+      expect(timestampToSync).toEqual(expected)
+    })
+
+    it('returns hourly timestamp', () => {
+      const syncService = new SyncService(CLOCK, OPTIONS)
+
+      // hourly timestamp older than daily cutoff
+      const hourlyTimestamp = LAST_HOUR.add(-1, 'hours')
+      const timestampToSync = syncService.getTimestampToSync(
+        'ethereum',
+        hourlyTimestamp,
+        'from',
+      )
+      // in this case daily should be returned
+      const expected = LAST_HOUR.add(-1, 'hours').toEndOf('hour')
+
+      expect(timestampToSync).toEqual(expected)
+    })
+
     it('takes minTimestamp into consideration', () => {
-      const minTimestamp = UnixTime.fromDate(new Date('2023-05-01T00:00:00Z'))
+      const syncService = new SyncService(CLOCK, OPTIONS)
 
-      const options = {
-        minTimestamp,
-        removeHourlyAfterDays: 0,
-        removeSixHourlyAfterDays: 0,
-      }
-
-      const clock = mockObject<Clock>({
-        getLastHour: () => minTimestamp.add(1, 'hours'),
-      })
-
-      const syncService = new SyncService(clock, options)
-
-      const timestamp = minTimestamp.add(-1, 'days')
-      const timestampToSync = syncService.getTimestampToSync(timestamp)
-      const expected = options.minTimestamp
+      const timestamp = MIN_TIMESTAMP.add(-1, 'days')
+      const timestampToSync = syncService.getTimestampToSync(
+        'ethereum',
+        timestamp,
+        'from',
+      )
+      const expected = MIN_TIMESTAMP.toEndOf('day')
 
       expect(timestampToSync).toEqual(expected)
     })
 
-    it('minTimestamp is recursively returned to take cutoffs into consideration', () => {
-      const minTimestamp = UnixTime.fromDate(new Date('2023-05-01T01:00:00Z'))
+    it('takes boundary type into consideration', () => {
+      const syncService = new SyncService(CLOCK, OPTIONS)
 
-      const options = {
-        minTimestamp,
-        removeHourlyAfterDays: 0,
-        removeSixHourlyAfterDays: 0,
-      }
+      const timestamp = LAST_HOUR.add(-1, 'hours')
 
-      const clock = mockObject<Clock>({
-        getLastHour: () => minTimestamp.add(365, 'days'),
-      })
+      const fromTimestamp = syncService.getTimestampToSync(
+        'ethereum',
+        timestamp,
+        'from',
+      )
+      const expected = LAST_HOUR.add(-1, 'hours').toEndOf('hour')
 
-      const syncService = new SyncService(clock, options)
+      expect(fromTimestamp).toEqual(expected)
 
-      const timestamp = minTimestamp.add(-1, 'days')
-      const timestampToSync = syncService.getTimestampToSync(timestamp)
-      const expected = options.minTimestamp.toEndOf('day')
+      const toTimestamp = syncService.getTimestampToSync(
+        'ethereum',
+        timestamp,
+        'to',
+      )
+      const expected2 = LAST_HOUR.add(-1, 'hours').toStartOf('hour')
 
-      expect(timestampToSync).toEqual(expected)
-    })
-
-    it('returns daily timestamp when old enough', () => {
-      const minTimestamp = UnixTime.fromDate(new Date('2023-05-01T01:00:00Z'))
-
-      const options = {
-        minTimestamp,
-        removeHourlyAfterDays: 10,
-        removeSixHourlyAfterDays: 93,
-      }
-
-      const lastHour = minTimestamp.add(365, 'days')
-      const clock = mockObject<Clock>({
-        getLastHour: () => lastHour,
-      })
-
-      const syncService = new SyncService(clock, options)
-
-      const timestamp = lastHour.add(-180, 'days').add(1, 'hours')
-      const timestampToSync = syncService.getTimestampToSync(timestamp)
-      const expected = timestamp.toEndOf('day')
-
-      expect(timestampToSync).toEqual(expected)
-    })
-
-    it('returns six hourly timestamp when old enough', () => {
-      const minTimestamp = UnixTime.fromDate(new Date('2023-05-01T01:00:00Z'))
-
-      const options = {
-        minTimestamp,
-        removeHourlyAfterDays: 10,
-        removeSixHourlyAfterDays: 93,
-      }
-
-      const lastHour = minTimestamp.add(365, 'days')
-
-      const clock = mockObject<Clock>({
-        getLastHour: () => lastHour,
-      })
-
-      const syncService = new SyncService(clock, options)
-
-      const timestamp = lastHour.add(-90, 'days').add(3, 'hours')
-      const timestampToSync = syncService.getTimestampToSync(timestamp)
-      const expected = timestamp.toEndOf('six hours')
-
-      expect(timestampToSync).toEqual(expected)
-    })
-
-    it('returns hourly timestamp when old enough', () => {
-      const minTimestamp = UnixTime.fromDate(new Date('2023-05-01T01:00:00Z'))
-
-      const options = {
-        minTimestamp,
-        removeHourlyAfterDays: 10,
-        removeSixHourlyAfterDays: 93,
-      }
-
-      const lastHour = minTimestamp.add(365, 'days')
-
-      const clock = mockObject<Clock>({
-        getLastHour: () => lastHour,
-      })
-
-      const syncService = new SyncService(clock, options)
-
-      const timestamp = lastHour.add(-5, 'days').add(2, 'hours')
-      const timestampToSync = syncService.getTimestampToSync(timestamp)
-      const expected = timestamp
-
-      expect(timestampToSync).toEqual(expected)
+      expect(toTimestamp).toEqual(expected2)
     })
   })
 })
