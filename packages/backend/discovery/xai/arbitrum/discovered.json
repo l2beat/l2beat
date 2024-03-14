@@ -1,8 +1,8 @@
 {
   "name": "xai",
   "chain": "arbitrum",
-  "blockNumber": 189956134,
-  "configHash": "0xc8e513d7ba943cd8ebe35c68c296a5efeef3dbba9b4e258704232ac9eaf8871a",
+  "blockNumber": 190317868,
+  "configHash": "0xd9e82e81bff10176bd95cca1974482faba9e4340263e4807c031caa0e2b58d61",
   "version": 3,
   "contracts": [
     {
@@ -248,7 +248,7 @@
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
         "name": "esXai",
         "symbol": "esXAI",
-        "totalSupply": "135808952591793305923574206",
+        "totalSupply": "136955629411765142566684687",
         "xai": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66"
       },
       "derivedName": "esXai2"
@@ -271,7 +271,7 @@
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
         "name": "Xai",
         "symbol": "XAI",
-        "totalSupply": "998149231276597156248966887"
+        "totalSupply": "998765387244261176748891717"
       },
       "derivedName": "Xai"
     },
@@ -300,12 +300,12 @@
           "0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8"
         ],
         "allowedOutboxList": ["0x1E400568AD4840dbE50FB32f306B842e9ddeF726"],
-        "delayedMessageCount": 12071,
+        "delayedMessageCount": 12189,
         "nativeToken": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66",
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerInbox": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
-        "sequencerMessageCount": 6221,
-        "sequencerReportedSubMessageCount": 2518135
+        "sequencerMessageCount": 6326,
+        "sequencerReportedSubMessageCount": 2596211
       },
       "derivedName": "ERC20Bridge"
     },
@@ -352,7 +352,8 @@
       "implementations": ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"],
       "sinceTimestamp": 1704309371,
       "values": {
-        "batchCount": 6221,
+        "batchCount": 6326,
+        "batchPosters": ["0x7F68dba68E72a250004812fe04F1123Fca89aBa9"],
         "bridge": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
         "dacKeyset": {
           "requiredSignatures": 5,
@@ -367,10 +368,7 @@
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 12070
-      },
-      "errors": {
-        "batchPosters": "bad response (status=400, headers={\"date\":\"Wed, 13 Mar 2024 12:48:46 GMT\",\"content-type\":\"application/json\",\"content-length\":\"250\",\"connection\":\"close\",\"x-alchemy-trace-id\":\"eb6eea7ccf492256bcad40ca4657077e\",\"cf-cache-status\":\"DYNAMIC\",\"set-cookie\":\"_cfuvid=1sPrDDrAx1aWWpOm8WQ_cSPG22VrpyRvPOwhEekmeiM-1710334126381-0.0.1.1-604800000; path=/; domain=.g.alchemy.com; HttpOnly; Secure; SameSite=None\",\"server\":\"cloudflare\",\"cf-ray\":\"863c23e11ddb4c4a-MXP\"}, body=\"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":166,\\\"error\\\":{\\\"code\\\":-32600,\\\"message\\\":\\\"debug_traceTransaction is not available on the Free tier - upgrade to Growth, Scale, or Enterprise for access. See available methods at https://docs.alchemy.com/alchemy/documentation/apis\\\"}}\", requestBody=\"{\\\"method\\\":\\\"debug_traceTransaction\\\",\\\"params\\\":[\\\"0xcefe7ebaac7f573d70560f840c228fd589c04b9f6fbcfc85a9bf28b8d96d89e5\\\",{\\\"tracer\\\":\\\"callTracer\\\"}],\\\"id\\\":166,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://arb-mainnet.g.alchemy.com/v2/agCiGM_GhIjcwwTp0xM8oETZyXR4xhwo\", code=SERVER_ERROR, version=web/5.7.1)"
+        "totalDelayedMessagesRead": 12188
       },
       "derivedName": "SequencerInbox"
     },
@@ -429,7 +427,7 @@
       "derivedName": "L1OrbitERC20Gateway"
     },
     {
-      "name": "NodeLicense5",
+      "name": "NodeLicenseRegistry",
       "address": "0xbc14d8563b248B79689ECbc43bBa53290e0b6b66",
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -445,13 +443,6 @@
         "getApproved": [],
         "getAverageCost": [],
         "getMintTimestamp": [],
-        "getPricingTier": [
-          ["133000000000000000", 3000],
-          ["152950000000000000", 2841],
-          ["175892500000000000", 2690],
-          ["202276375000000000", 2547],
-          ["232617831000000000", 2412]
-        ],
         "getPricingTiersLength": 40,
         "maxSupply": 50000,
         "name": "Sentry Node License",
@@ -459,14 +450,10 @@
         "referralDiscountPercentage": 5,
         "referralRewardPercentage": 15,
         "symbol": "SNL",
-        "tokenByIndex": [1, 2, 3, 4, 5],
         "tokenURI": [],
-        "totalSupply": 34998
+        "totalSupply": 35001
       },
-      "errors": {
-        "getPricingTier": "Too many values. Update configuration to explore fully",
-        "tokenByIndex": "Too many values. Update configuration to explore fully"
-      }
+      "derivedName": "NodeLicense5"
     },
     {
       "name": "RollupProxy",
@@ -491,12 +478,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 1393,
+        "firstUnresolvedNode": 1419,
         "inbox": "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
         "isERC20Enabled": false,
         "lastStakeBlock": 18944658,
-        "latestConfirmed": 1392,
-        "latestNodeCreated": 1545,
+        "latestConfirmed": 1418,
+        "latestNodeCreated": 1571,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x1E400568AD4840dbE50FB32f306B842e9ddeF726",
@@ -510,6 +497,7 @@
         "stakeToken": "0x0000000000000000000000000000000000000000",
         "totalWithdrawableFunds": 0,
         "VALIDATOR_AFK_BLOCKS": 45818,
+        "validators": ["0x25EA41f0bDa921a0eBf48291961B1F10b59BC6b8"],
         "validatorUtils": "0x6c21303F5986180B1394d2C89f3e883890E2867b",
         "validatorWalletCreator": "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
         "validatorWhitelistDisabled": false,
@@ -517,9 +505,6 @@
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
-      },
-      "errors": {
-        "validators": "bad response (status=400, headers={\"date\":\"Wed, 13 Mar 2024 12:48:54 GMT\",\"content-type\":\"application/json\",\"content-length\":\"250\",\"connection\":\"close\",\"x-alchemy-trace-id\":\"1177032b049809078208523875c9fd0f\",\"cf-cache-status\":\"DYNAMIC\",\"set-cookie\":\"_cfuvid=npH4tSPuw2YkMkaNPJyR3Faka2qKLD21VdtpKt4f2TI-1710334134830-0.0.1.1-604800000; path=/; domain=.g.alchemy.com; HttpOnly; Secure; SameSite=None\",\"server\":\"cloudflare\",\"cf-ray\":\"863c2415ebfbba8f-MXP\"}, body=\"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":296,\\\"error\\\":{\\\"code\\\":-32600,\\\"message\\\":\\\"debug_traceTransaction is not available on the Free tier - upgrade to Growth, Scale, or Enterprise for access. See available methods at https://docs.alchemy.com/alchemy/documentation/apis\\\"}}\", requestBody=\"{\\\"method\\\":\\\"debug_traceTransaction\\\",\\\"params\\\":[\\\"0xcefe7ebaac7f573d70560f840c228fd589c04b9f6fbcfc85a9bf28b8d96d89e5\\\",{\\\"tracer\\\":\\\"callTracer\\\"}],\\\"id\\\":296,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://arb-mainnet.g.alchemy.com/v2/agCiGM_GhIjcwwTp0xM8oETZyXR4xhwo\", code=SERVER_ERROR, version=web/5.7.1)"
       },
       "derivedName": "RollupProxy"
     },
@@ -568,7 +553,7 @@
       }
     },
     {
-      "name": "Referee4",
+      "name": "SentryReferee",
       "address": "0xfD41041180571C5D371BEA3D9550E55653671198",
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -582,194 +567,14 @@
           "71347031963470319634703",
           "1250000000000000000000000000"
         ],
-        "challengeCounter": 2290,
+        "challengeCounter": 2316,
         "CHALLENGER_ROLE": "0xe752add323323eb13e36c71ee508dfd16d74e9e4c4fd78786ba97989e5e13818",
         "challengerPublicKey": "0x977f9fe1d570ba7e48ea76566718023b260ed56eba368ff20dca06e99e650804126663c1a5febdb065ef139a0156a9ad",
-        "challenges": [
-          [
-            false,
-            false,
-            2446,
-            "0x13fcf2d1a9819ce2085b36cdec1c81111394f825b75d8b7ca3c841ad65a7e2b2",
-            10164366,
-            "0x90414626832cbe188c85f51f183dee69bec0c7a8ee87be9fad5b499365faf28f1a52f975557327b0d69750b412735cfd0a4a8c48207d7298db2e6ae47d5ca45ae4a9e1853fb98d11bc28ee49bc679ca38efd280d14322044d23e6d7576f65b48",
-            "0x977f9fe1d570ba7e48ea76566718023b260ed56eba368ff20dca06e99e650804126663c1a5febdb065ef139a0156a9ad",
-            "0x082742561295f6e1b43c4f5d1e2d52d7FfE082f1",
-            1701816731,
-            1,
-            "30322488584474885844749",
-            "5351027397260273972602",
-            0,
-            0
-          ],
-          [
-            false,
-            false,
-            2447,
-            "0x7667b9ecccc4d81763e27b674e6c818018e7905bbd6c804a76cd374969911346",
-            10164597,
-            "0x94073b470e20b7e1963b6a6f5bf02d9b0739d38b1220209570330e1170a8a232ab213cc12d8173c9ec3d4e3af98196bc1006fe9052ff21b6e1ed90df0eec5d92a1aedf8b7b1829baee3f04d48c3711670d2efc18a8cd06f98b720321507cc4c8",
-            "0x977f9fe1d570ba7e48ea76566718023b260ed56eba368ff20dca06e99e650804126663c1a5febdb065ef139a0156a9ad",
-            "0x082742561295f6e1b43c4f5d1e2d52d7FfE082f1",
-            1701820249,
-            1,
-            "30322488584474885844749",
-            "5351027397260273972602",
-            0,
-            0
-          ],
-          [
-            false,
-            false,
-            2448,
-            "0xf9c98ad51e357ca8a30fa86c501857741e20f8532854497e7832e4ff87ee8d58",
-            10164840,
-            "0xa10370f787df01662e84d01a9b86dfe3397e2ba00e15b885ba9c2587201db72930eb21acbd9a94695b32ad8be65e873811870d34ada3ffc09f586136943722cb9f889f13b0476fef3c7ace9b8eea16b251b3ab6276836f21e72f5f289214faf2",
-            "0x977f9fe1d570ba7e48ea76566718023b260ed56eba368ff20dca06e99e650804126663c1a5febdb065ef139a0156a9ad",
-            "0x082742561295f6e1b43c4f5d1e2d52d7FfE082f1",
-            1701823952,
-            1,
-            "30322488584474885844749",
-            "5351027397260273972602",
-            0,
-            0
-          ],
-          [
-            false,
-            false,
-            2449,
-            "0x2358f8feff7f7f123290b292b92dff21cbfcd230d60db93eaa8d0bcb5280df3c",
-            10165086,
-            "0x869291942100cae8b8e91897208f4508e13bd12e76d09d5962ffbd31166975a80aac789d23cff662d49d4c9e3bdfec7715f9016ca9d12973b798530e124a15b14cfd08a28f2959801fcaa0164cadda13be02688941b060ecb2a3a99c57944033",
-            "0x977f9fe1d570ba7e48ea76566718023b260ed56eba368ff20dca06e99e650804126663c1a5febdb065ef139a0156a9ad",
-            "0x082742561295f6e1b43c4f5d1e2d52d7FfE082f1",
-            1701827654,
-            1,
-            "30322488584474885844749",
-            "5351027397260273972602",
-            0,
-            0
-          ],
-          [
-            false,
-            false,
-            2450,
-            "0x16003652c0dd56983aff64cce111a584a823fdf67dbfc98b0233465f4234a4f8",
-            10165326,
-            "0x86df21b314b3e8f4cc2363acbc141f175e6415fe9dab49a6071fcde8573c13812e59d7c3961598f96a72c0c4d5bffff60ff9d7ba042ad701264286d9bea559521de93d2c8bc351fa3103572b2f752ff2967a03e9db08cd929e97de740df91055",
-            "0x977f9fe1d570ba7e48ea76566718023b260ed56eba368ff20dca06e99e650804126663c1a5febdb065ef139a0156a9ad",
-            "0x082742561295f6e1b43c4f5d1e2d52d7FfE082f1",
-            1701831298,
-            1,
-            "30322488584474885844749",
-            "5351027397260273972602",
-            0,
-            0
-          ]
-        ],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "esXaiAddress": "0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c",
         "gasSubsidyRecipient": "0x94F4aBC83eae00b693286B6eDCa09e1D76183C97",
-        "getBoostFactor": [100, 100, 100, 100, 100],
         "getBoostFactorForKeyId": [],
-        "getChallenge": [
-          [
-            false,
-            false,
-            2446,
-            "0x13fcf2d1a9819ce2085b36cdec1c81111394f825b75d8b7ca3c841ad65a7e2b2",
-            10164366,
-            "0x90414626832cbe188c85f51f183dee69bec0c7a8ee87be9fad5b499365faf28f1a52f975557327b0d69750b412735cfd0a4a8c48207d7298db2e6ae47d5ca45ae4a9e1853fb98d11bc28ee49bc679ca38efd280d14322044d23e6d7576f65b48",
-            "0x977f9fe1d570ba7e48ea76566718023b260ed56eba368ff20dca06e99e650804126663c1a5febdb065ef139a0156a9ad",
-            "0x082742561295f6e1b43c4f5d1e2d52d7FfE082f1",
-            1701816731,
-            1,
-            "30322488584474885844749",
-            "5351027397260273972602",
-            0,
-            0
-          ],
-          [
-            false,
-            false,
-            2447,
-            "0x7667b9ecccc4d81763e27b674e6c818018e7905bbd6c804a76cd374969911346",
-            10164597,
-            "0x94073b470e20b7e1963b6a6f5bf02d9b0739d38b1220209570330e1170a8a232ab213cc12d8173c9ec3d4e3af98196bc1006fe9052ff21b6e1ed90df0eec5d92a1aedf8b7b1829baee3f04d48c3711670d2efc18a8cd06f98b720321507cc4c8",
-            "0x977f9fe1d570ba7e48ea76566718023b260ed56eba368ff20dca06e99e650804126663c1a5febdb065ef139a0156a9ad",
-            "0x082742561295f6e1b43c4f5d1e2d52d7FfE082f1",
-            1701820249,
-            1,
-            "30322488584474885844749",
-            "5351027397260273972602",
-            0,
-            0
-          ],
-          [
-            false,
-            false,
-            2448,
-            "0xf9c98ad51e357ca8a30fa86c501857741e20f8532854497e7832e4ff87ee8d58",
-            10164840,
-            "0xa10370f787df01662e84d01a9b86dfe3397e2ba00e15b885ba9c2587201db72930eb21acbd9a94695b32ad8be65e873811870d34ada3ffc09f586136943722cb9f889f13b0476fef3c7ace9b8eea16b251b3ab6276836f21e72f5f289214faf2",
-            "0x977f9fe1d570ba7e48ea76566718023b260ed56eba368ff20dca06e99e650804126663c1a5febdb065ef139a0156a9ad",
-            "0x082742561295f6e1b43c4f5d1e2d52d7FfE082f1",
-            1701823952,
-            1,
-            "30322488584474885844749",
-            "5351027397260273972602",
-            0,
-            0
-          ],
-          [
-            false,
-            false,
-            2449,
-            "0x2358f8feff7f7f123290b292b92dff21cbfcd230d60db93eaa8d0bcb5280df3c",
-            10165086,
-            "0x869291942100cae8b8e91897208f4508e13bd12e76d09d5962ffbd31166975a80aac789d23cff662d49d4c9e3bdfec7715f9016ca9d12973b798530e124a15b14cfd08a28f2959801fcaa0164cadda13be02688941b060ecb2a3a99c57944033",
-            "0x977f9fe1d570ba7e48ea76566718023b260ed56eba368ff20dca06e99e650804126663c1a5febdb065ef139a0156a9ad",
-            "0x082742561295f6e1b43c4f5d1e2d52d7FfE082f1",
-            1701827654,
-            1,
-            "30322488584474885844749",
-            "5351027397260273972602",
-            0,
-            0
-          ],
-          [
-            false,
-            false,
-            2450,
-            "0x16003652c0dd56983aff64cce111a584a823fdf67dbfc98b0233465f4234a4f8",
-            10165326,
-            "0x86df21b314b3e8f4cc2363acbc141f175e6415fe9dab49a6071fcde8573c13812e59d7c3961598f96a72c0c4d5bffff60ff9d7ba042ad701264286d9bea559521de93d2c8bc351fa3103572b2f752ff2967a03e9db08cd929e97de740df91055",
-            "0x977f9fe1d570ba7e48ea76566718023b260ed56eba368ff20dca06e99e650804126663c1a5febdb065ef139a0156a9ad",
-            "0x082742561295f6e1b43c4f5d1e2d52d7FfE082f1",
-            1701831298,
-            1,
-            "30322488584474885844749",
-            "5351027397260273972602",
-            0,
-            0
-          ]
-        ],
-        "getCombinedTotalSupply": "1135772860690773056606923781",
-        "getKycWalletAtIndex": [
-          "0xfa6AB1174B6cedAe174bEA8f2f27Dc3101d2a60A",
-          "0xE1BE51037D4c71CA249487cC09BFEC224Fc3E781",
-          "0xE22addBab5e32DcDebCC1EaE5f493f76E2d712e6",
-          "0x0CD88Eacf15Eca9a599AeA3F70155a38A73C0Df7",
-          "0xF96CA3B74b67e3D86B2782A9c0A144dac318a7DC"
-        ],
-        "getKycWalletCount": 6344,
-        "getMaxStakeAmount": [
-          0,
-          "25000000000000000000000",
-          "50000000000000000000000",
-          "75000000000000000000000",
-          "100000000000000000000000"
-        ],
+        "getKycWalletCount": 6369,
         "isCheckingAssertions": true,
         "KYC_ADMIN_ROLE": "0x811427a0fa4932aef534bba16bc34e9b7b2d7d2a79c475fca1765f6cc1faebea",
         "maxStakeAmountPerLicense": "25000000000000000000000",
@@ -785,24 +590,18 @@
         "stakingEnabled": true,
         "xaiAddress": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66"
       },
-      "errors": {
-        "challenges": "Too many values. Update configuration to explore fully",
-        "getBoostFactor": "Too many values. Update configuration to explore fully",
-        "getChallenge": "Too many values. Update configuration to explore fully",
-        "getKycWalletAtIndex": "Too many values. Update configuration to explore fully",
-        "getMaxStakeAmount": "Too many values. Update configuration to explore fully"
-      }
+      "derivedName": "Referee4"
     }
   ],
   "eoas": [
-    "0x082742561295f6e1b43c4f5d1e2d52d7FfE082f1",
     "0x08a361fE449b1371cC21b286d88F69eF6d205809",
     "0x0c71417917D24F4A6A6A55559B98c5cCEcb33F7a",
-    "0x0CD88Eacf15Eca9a599AeA3F70155a38A73C0Df7",
     "0x1f097F3f928415cD28e1B2cC6f0F3960f4fCa6fc",
+    "0x25EA41f0bDa921a0eBf48291961B1F10b59BC6b8",
     "0x2B95cdD1adD34461Fe737800c0D5A68d556B51b4",
     "0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341",
     "0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7",
+    "0x7F68dba68E72a250004812fe04F1123Fca89aBa9",
     "0x7f910C718bAF6698FBF9b56e047ECd52d157bAD6",
     "0x807daF80b03Fd3C2709FFe0AeBEED617BC0a347c",
     "0xa2E7768789921a36eCFe8c239dBd8213120fFF83",
@@ -812,11 +611,7 @@
     "0xd096e8dE90D34de758B0E0bA4a796eA2e1e272cF",
     "0xd4318D959B46d555143f56E03077028aB94D85d2",
     "0xD766Abf27CEc67393FF475f7fE969902f5D0A80A",
-    "0xE1BE51037D4c71CA249487cC09BFEC224Fc3E781",
-    "0xE22addBab5e32DcDebCC1EaE5f493f76E2d712e6",
-    "0xE529a3271f9CC84B1FE9107ab4764a8dF177782a",
-    "0xF96CA3B74b67e3D86B2782A9c0A144dac318a7DC",
-    "0xfa6AB1174B6cedAe174bEA8f2f27Dc3101d2a60A"
+    "0xE529a3271f9CC84B1FE9107ab4764a8dF177782a"
   ],
   "abis": {
     "0x000d8C5A70B8805DF02f409F2715d05B9A63E871": [

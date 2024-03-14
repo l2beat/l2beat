@@ -2,41 +2,6 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "L1ERC20Gateway",
-      "values": {
-        "cloneableProxyHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "counterpartGateway": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "inbox": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2BeaconProxyFactory": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "router": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "whitelist": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "Inbox",
       "values": {
         "allowListEnabled": {
@@ -65,6 +30,41 @@
           "type": null
         },
         "sequencerInbox": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1ERC20Gateway",
+      "values": {
+        "cloneableProxyHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "counterpartGateway": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "inbox": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2BeaconProxyFactory": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "router": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "whitelist": {
           "description": null,
           "severity": null,
           "type": null
@@ -209,6 +209,11 @@
           "severity": null,
           "type": null
         },
+        "batchPosters": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "dacKeyset": {
           "description": null,
           "severity": null,
@@ -230,21 +235,6 @@
           "type": null
         },
         "setIsBatchPosterCount": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ERC20RollupEventInbox",
-      "values": {
-        "bridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "rollup": {
           "description": null,
           "severity": null,
           "type": null
@@ -290,6 +280,21 @@
           "type": null
         },
         "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ERC20RollupEventInbox",
+      "values": {
+        "bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rollup": {
           "description": null,
           "severity": null,
           "type": null
@@ -539,6 +544,11 @@
           "severity": null,
           "type": null
         },
+        "validators": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "zombieAddress": {
           "description": null,
           "severity": null,
@@ -556,9 +566,14 @@
       "values": {}
     },
     {
-      "name": "ProxyAdmin",
+      "name": "ValidatorWalletCreator",
       "values": {
         "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "template": {
           "description": null,
           "severity": null,
           "type": null
@@ -566,29 +581,9 @@
       }
     },
     {
-      "name": "ChallengeManager",
+      "name": "ProxyAdmin",
       "values": {
-        "bridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "osp": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "resultReceiver": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "sequencerInbox": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalChallengesCreated": {
+        "owner": {
           "description": null,
           "severity": null,
           "type": null
@@ -626,14 +621,29 @@
       }
     },
     {
-      "name": "ValidatorWalletCreator",
+      "name": "ChallengeManager",
       "values": {
-        "owner": {
+        "bridge": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "template": {
+        "osp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "resultReceiver": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sequencerInbox": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalChallengesCreated": {
           "description": null,
           "severity": null,
           "type": null
@@ -691,10 +701,6 @@
       }
     },
     {
-      "name": "",
-      "values": {}
-    },
-    {
       "name": "OneStepProofEntry",
       "values": {
         "prover0": {
@@ -750,7 +756,7 @@
       }
     },
     {
-      "name": "OneStepProverMemory",
+      "name": "",
       "values": {}
     },
     {
@@ -763,6 +769,10 @@
     },
     {
       "name": "OneStepProverMath",
+      "values": {}
+    },
+    {
+      "name": "OneStepProverMemory",
       "values": {}
     }
   ]

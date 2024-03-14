@@ -1,20 +1,22 @@
-Generated with discovered.json: 0x326b3ac6e11929fa645abf4d1b9ac0bdec02c0cb
+Generated with discovered.json: 0xefc16d52c36703ef3d02cb440a76c6ef37559194
 
-# Diff at Wed, 13 Mar 2024 12:49:51 GMT:
+# Diff at Thu, 14 Mar 2024 14:56:12 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@4f6a54f5fa748334d34176673b2c233534ce2fbc block: 181262302
-- current block number: 189956134
+- current block number: 190317868
 
 ## Description
 
 - Modified the redemption function that allows esXAI to be redeemed for XAI. If the user redeems before the maximum redemption period, a percentage of the esXAI will be burned. This modification adds that half of the would-be burned esXai amount will be minted as XAI to the esXaiBurnFoundationRecipient.
 
-- Added a whitelisted address. Only whitelisted addresses are able to initiate esXAI token transfers.
+- Added a whitelisted address (the Referee address) to esXAI . Only whitelisted addresses are able to initiate esXAI token transfers.
 
-- Changed wasmModuleRoot
+- Changed wasmModuleRoot to orbOS version 11.
 
-- Added Referee4 smart contract
+- Added Referee4 smart contract. The referree contract allows to create new challenges, collects assertions from sentry nodes, and gives out rewards to participants of a challenge. This is the contract that distributes esXAI rewards for operating a sentry node.
+The role of sentry nodes is to basically verify (assert) the submitted state root after it has been submitted. There is no integrated way to flag an invalid state root, sentry nodes will have to raise the alarm by external means.
+
 
 ## Watched changes
 
@@ -54,9 +56,6 @@ Generated with discovered.json: 0x326b3ac6e11929fa645abf4d1b9ac0bdec02c0cb
       values.keySetUpdates:
 -        3
 +        4
-      errors.batchPosters:
--        "bad response (status=400, headers={\"date\":\"Wed, 13 Mar 2024 12:49:32 GMT\",\"content-type\":\"application/json\",\"content-length\":\"250\",\"connection\":\"close\",\"x-alchemy-trace-id\":\"e46ce2fdea8121e9abe954c0d85e1492\",\"cf-cache-status\":\"DYNAMIC\",\"set-cookie\":\"_cfuvid=7CZEr0Dj9UNgdFZcmsLdIbcFm5QjxOLjDyS4fp5CHOM-1710334172720-0.0.1.1-604800000; path=/; domain=.g.alchemy.com; HttpOnly; Secure; SameSite=None\",\"server\":\"cloudflare\",\"cf-ray\":\"863c2500f8df0e53-MXP\"}, body=\"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":157,\\\"error\\\":{\\\"code\\\":-32600,\\\"message\\\":\\\"debug_traceTransaction is not available on the Free tier - upgrade to Growth, Scale, or Enterprise for access. See available methods at https://docs.alchemy.com/alchemy/documentation/apis\\\"}}\", requestBody=\"{\\\"method\\\":\\\"debug_traceTransaction\\\",\\\"params\\\":[\\\"0xcefe7ebaac7f573d70560f840c228fd589c04b9f6fbcfc85a9bf28b8d96d89e5\\\",{\\\"tracer\\\":\\\"callTracer\\\"}],\\\"id\\\":157,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://arb-mainnet.g.alchemy.com/v2/agCiGM_GhIjcwwTp0xM8oETZyXR4xhwo\", code=SERVER_ERROR, version=web/5.7.1)"
-+        "bad response (status=400, headers={\"date\":\"Wed, 13 Mar 2024 12:48:46 GMT\",\"content-type\":\"application/json\",\"content-length\":\"250\",\"connection\":\"close\",\"x-alchemy-trace-id\":\"eb6eea7ccf492256bcad40ca4657077e\",\"cf-cache-status\":\"DYNAMIC\",\"set-cookie\":\"_cfuvid=1sPrDDrAx1aWWpOm8WQ_cSPG22VrpyRvPOwhEekmeiM-1710334126381-0.0.1.1-604800000; path=/; domain=.g.alchemy.com; HttpOnly; Secure; SameSite=None\",\"server\":\"cloudflare\",\"cf-ray\":\"863c23e11ddb4c4a-MXP\"}, body=\"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":166,\\\"error\\\":{\\\"code\\\":-32600,\\\"message\\\":\\\"debug_traceTransaction is not available on the Free tier - upgrade to Growth, Scale, or Enterprise for access. See available methods at https://docs.alchemy.com/alchemy/documentation/apis\\\"}}\", requestBody=\"{\\\"method\\\":\\\"debug_traceTransaction\\\",\\\"params\\\":[\\\"0xcefe7ebaac7f573d70560f840c228fd589c04b9f6fbcfc85a9bf28b8d96d89e5\\\",{\\\"tracer\\\":\\\"callTracer\\\"}],\\\"id\\\":166,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://arb-mainnet.g.alchemy.com/v2/agCiGM_GhIjcwwTp0xM8oETZyXR4xhwo\", code=SERVER_ERROR, version=web/5.7.1)"
     }
 ```
 
@@ -66,9 +65,6 @@ Generated with discovered.json: 0x326b3ac6e11929fa645abf4d1b9ac0bdec02c0cb
       values.wasmModuleRoot:
 -        "0xf4389b835497a910d7ba3ebfb77aa93da985634f3c052de1290360635be40c4a"
 +        "0x68e4fe5023f792d4ef584796c84d710303a5e12ea02d6e37e2b5e9c4332507c4"
-      errors.validators:
--        "bad response (status=400, headers={\"date\":\"Wed, 13 Mar 2024 12:49:37 GMT\",\"content-type\":\"application/json\",\"content-length\":\"250\",\"connection\":\"close\",\"x-alchemy-trace-id\":\"21f1dce7ca114e88d04c1edcc54c1581\",\"cf-cache-status\":\"DYNAMIC\",\"set-cookie\":\"_cfuvid=yy7vRxKv6TnProQLjNrf532KKGIMI0tWoDTnzkeMnPw-1710334177546-0.0.1.1-604800000; path=/; domain=.g.alchemy.com; HttpOnly; Secure; SameSite=None\",\"server\":\"cloudflare\",\"cf-ray\":\"863c2520fd6bbad6-MXP\"}, body=\"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":257,\\\"error\\\":{\\\"code\\\":-32600,\\\"message\\\":\\\"debug_traceTransaction is not available on the Free tier - upgrade to Growth, Scale, or Enterprise for access. See available methods at https://docs.alchemy.com/alchemy/documentation/apis\\\"}}\", requestBody=\"{\\\"method\\\":\\\"debug_traceTransaction\\\",\\\"params\\\":[\\\"0xcefe7ebaac7f573d70560f840c228fd589c04b9f6fbcfc85a9bf28b8d96d89e5\\\",{\\\"tracer\\\":\\\"callTracer\\\"}],\\\"id\\\":257,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://arb-mainnet.g.alchemy.com/v2/agCiGM_GhIjcwwTp0xM8oETZyXR4xhwo\", code=SERVER_ERROR, version=web/5.7.1)"
-+        "bad response (status=400, headers={\"date\":\"Wed, 13 Mar 2024 12:48:54 GMT\",\"content-type\":\"application/json\",\"content-length\":\"250\",\"connection\":\"close\",\"x-alchemy-trace-id\":\"1177032b049809078208523875c9fd0f\",\"cf-cache-status\":\"DYNAMIC\",\"set-cookie\":\"_cfuvid=npH4tSPuw2YkMkaNPJyR3Faka2qKLD21VdtpKt4f2TI-1710334134830-0.0.1.1-604800000; path=/; domain=.g.alchemy.com; HttpOnly; Secure; SameSite=None\",\"server\":\"cloudflare\",\"cf-ray\":\"863c2415ebfbba8f-MXP\"}, body=\"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":296,\\\"error\\\":{\\\"code\\\":-32600,\\\"message\\\":\\\"debug_traceTransaction is not available on the Free tier - upgrade to Growth, Scale, or Enterprise for access. See available methods at https://docs.alchemy.com/alchemy/documentation/apis\\\"}}\", requestBody=\"{\\\"method\\\":\\\"debug_traceTransaction\\\",\\\"params\\\":[\\\"0xcefe7ebaac7f573d70560f840c228fd589c04b9f6fbcfc85a9bf28b8d96d89e5\\\",{\\\"tracer\\\":\\\"callTracer\\\"}],\\\"id\\\":296,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://arb-mainnet.g.alchemy.com/v2/agCiGM_GhIjcwwTp0xM8oETZyXR4xhwo\", code=SERVER_ERROR, version=web/5.7.1)"
     }
 ```
 
@@ -86,7 +82,7 @@ Generated with discovered.json: 0x326b3ac6e11929fa645abf4d1b9ac0bdec02c0cb
 
 ```diff
 +   Status: CREATED
-    contract NodeLicense5 (0xbc14d8563b248B79689ECbc43bBa53290e0b6b66)
+    contract NodeLicenseRegistry (0xbc14d8563b248B79689ECbc43bBa53290e0b6b66)
     +++ description: None
 ```
 
@@ -98,7 +94,7 @@ Generated with discovered.json: 0x326b3ac6e11929fa645abf4d1b9ac0bdec02c0cb
 
 ```diff
 +   Status: CREATED
-    contract Referee4 (0xfD41041180571C5D371BEA3D9550E55653671198)
+    contract SentryReferee (0xfD41041180571C5D371BEA3D9550E55653671198)
     +++ description: None
 ```
 
@@ -190,7 +186,7 @@ Generated with discovered.json: 0x326b3ac6e11929fa645abf4d1b9ac0bdec02c0cb
  .../utils/math/MathUpgradeable.sol                 | 339 +++++++++
  .../utils/math/SignedMathUpgradeable.sol           |  43 ++
  .../upgrades/node-license/NodeLicense5.sol         | 465 ++++++++++++
- .../.code/NodeLicense5/implementation/meta.txt     |   2 +
+ .../NodeLicenseRegistry/implementation/meta.txt    |   2 +
  .../@openzeppelin/contracts/access/Ownable.sol     |  83 +++
  .../contracts/interfaces/IERC1967.sol              |  26 +
  .../contracts/interfaces/draft-IERC1822.sol        |  20 +
@@ -205,7 +201,7 @@ Generated with discovered.json: 0x326b3ac6e11929fa645abf4d1b9ac0bdec02c0cb
  .../@openzeppelin/contracts/utils/Address.sol      | 244 +++++++
  .../@openzeppelin/contracts/utils/Context.sol      |  24 +
  .../@openzeppelin/contracts/utils/StorageSlot.sol  |  88 +++
- .../xai/arbitrum/.code/NodeLicense5/proxy/meta.txt |   2 +
+ .../.code/NodeLicenseRegistry/proxy/meta.txt       |   2 +
  .../@openzeppelin/contracts/utils/math/Math.sol    | 339 +++++++++
  .../access/AccessControlEnumerableUpgradeable.sol  |  77 ++
  .../access/AccessControlUpgradeable.sol            | 261 +++++++
@@ -233,8 +229,8 @@ Generated with discovered.json: 0x326b3ac6e11929fa645abf4d1b9ac0bdec02c0cb
  .../utils/math/SignedMathUpgradeable.sol           |  43 ++
  .../utils/structs/EnumerableSetUpgradeable.sol     | 378 ++++++++++
  .../implementation/contracts/NodeLicense.sol       | 418 +++++++++++
- .../Referee4/implementation/contracts/Xai.sol      |  69 ++
- .../Referee4/implementation/contracts/esXai.sol    | 238 ++++++
+ .../SentryReferee/implementation/contracts/Xai.sol |  69 ++
+ .../implementation/contracts/esXai.sol             | 238 ++++++
  .../contracts/nitro-contracts/bridge/IBridge.sol   | 115 +++
  .../bridge/IDelayedMessageProvider.sol             |  15 +
  .../contracts/nitro-contracts/bridge/IInbox.sol    | 193 +++++
@@ -260,7 +256,7 @@ Generated with discovered.json: 0x326b3ac6e11929fa645abf4d1b9ac0bdec02c0cb
  .../contracts/nitro-contracts/state/ValueArray.sol |  47 ++
  .../contracts/nitro-contracts/state/ValueStack.sol |  39 +
  .../contracts/upgrades/referee/Referee4.sol        | 796 +++++++++++++++++++++
- .../.code/Referee4/implementation/meta.txt         |   2 +
+ .../.code/SentryReferee/implementation/meta.txt    |   2 +
  .../@openzeppelin/contracts/access/Ownable.sol     |  83 +++
  .../contracts/interfaces/IERC1967.sol              |  26 +
  .../contracts/interfaces/draft-IERC1822.sol        |  20 +
@@ -275,36 +271,10 @@ Generated with discovered.json: 0x326b3ac6e11929fa645abf4d1b9ac0bdec02c0cb
  .../@openzeppelin/contracts/utils/Address.sol      | 244 +++++++
  .../@openzeppelin/contracts/utils/Context.sol      |  24 +
  .../@openzeppelin/contracts/utils/StorageSlot.sol  |  88 +++
- .../xai/arbitrum/.code/Referee4/proxy/meta.txt     |   2 +
+ .../arbitrum/.code/SentryReferee/proxy/meta.txt    |   2 +
  .../contracts/upgrades/esXai/esXai2.sol            | 270 +++++++
  .../esXai/implementation/meta.txt                  |   4 +-
  173 files changed, 17737 insertions(+), 2 deletions(-)
-```
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 181262302 (main branch discovery), not current.
-
-```diff
-    contract SequencerInbox (0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1) {
-    +++ description: None
-      values.batchPosters:
--        ["0x7F68dba68E72a250004812fe04F1123Fca89aBa9"]
-      errors:
-+        {"batchPosters":"bad response (status=400, headers={\"date\":\"Wed, 13 Mar 2024 12:49:32 GMT\",\"content-type\":\"application/json\",\"content-length\":\"250\",\"connection\":\"close\",\"x-alchemy-trace-id\":\"e46ce2fdea8121e9abe954c0d85e1492\",\"cf-cache-status\":\"DYNAMIC\",\"set-cookie\":\"_cfuvid=7CZEr0Dj9UNgdFZcmsLdIbcFm5QjxOLjDyS4fp5CHOM-1710334172720-0.0.1.1-604800000; path=/; domain=.g.alchemy.com; HttpOnly; Secure; SameSite=None\",\"server\":\"cloudflare\",\"cf-ray\":\"863c2500f8df0e53-MXP\"}, body=\"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":157,\\\"error\\\":{\\\"code\\\":-32600,\\\"message\\\":\\\"debug_traceTransaction is not available on the Free tier - upgrade to Growth, Scale, or Enterprise for access. See available methods at https://docs.alchemy.com/alchemy/documentation/apis\\\"}}\", requestBody=\"{\\\"method\\\":\\\"debug_traceTransaction\\\",\\\"params\\\":[\\\"0xcefe7ebaac7f573d70560f840c228fd589c04b9f6fbcfc85a9bf28b8d96d89e5\\\",{\\\"tracer\\\":\\\"callTracer\\\"}],\\\"id\\\":157,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://arb-mainnet.g.alchemy.com/v2/agCiGM_GhIjcwwTp0xM8oETZyXR4xhwo\", code=SERVER_ERROR, version=web/5.7.1)"}
-    }
-```
-
-```diff
-    contract RollupProxy (0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336) {
-    +++ description: None
-      values.validators:
--        ["0x25EA41f0bDa921a0eBf48291961B1F10b59BC6b8"]
-      errors:
-+        {"validators":"bad response (status=400, headers={\"date\":\"Wed, 13 Mar 2024 12:49:37 GMT\",\"content-type\":\"application/json\",\"content-length\":\"250\",\"connection\":\"close\",\"x-alchemy-trace-id\":\"21f1dce7ca114e88d04c1edcc54c1581\",\"cf-cache-status\":\"DYNAMIC\",\"set-cookie\":\"_cfuvid=yy7vRxKv6TnProQLjNrf532KKGIMI0tWoDTnzkeMnPw-1710334177546-0.0.1.1-604800000; path=/; domain=.g.alchemy.com; HttpOnly; Secure; SameSite=None\",\"server\":\"cloudflare\",\"cf-ray\":\"863c2520fd6bbad6-MXP\"}, body=\"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":257,\\\"error\\\":{\\\"code\\\":-32600,\\\"message\\\":\\\"debug_traceTransaction is not available on the Free tier - upgrade to Growth, Scale, or Enterprise for access. See available methods at https://docs.alchemy.com/alchemy/documentation/apis\\\"}}\", requestBody=\"{\\\"method\\\":\\\"debug_traceTransaction\\\",\\\"params\\\":[\\\"0xcefe7ebaac7f573d70560f840c228fd589c04b9f6fbcfc85a9bf28b8d96d89e5\\\",{\\\"tracer\\\":\\\"callTracer\\\"}],\\\"id\\\":257,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://arb-mainnet.g.alchemy.com/v2/agCiGM_GhIjcwwTp0xM8oETZyXR4xhwo\", code=SERVER_ERROR, version=web/5.7.1)"}
-    }
 ```
 
 Generated with discovered.json: 0xcf1fb3429d4e6e0b7364715240da72013f3ab0de
