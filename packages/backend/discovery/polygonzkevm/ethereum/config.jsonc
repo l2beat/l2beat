@@ -23,11 +23,11 @@
     "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98": "daiBridge",
     "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904": "EscrowsAdmin",
     "0x519E42c24163192Dca44CD3fBDCEBF6be9130987": "PolygonZkEVMExistentEtrog",
-    "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80": "PolygonValidiumEtrog",
     "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6": "PolygonEcosystemToken",
-    "0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0": "PolygonValidiumDAC",
-    "0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d": "PolygonValidiumAdmin",
-    "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E": "PolygonValidiumMultisig"
+    "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80": "AstarValidiumEtrog",
+    "0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0": "AstarValidiumDAC",
+    "0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d": "AstarValidiumAdmin",
+    "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E": "AstarValidiumMultisig"
   },
   "overrides": {
     "PolygonRollupManager": {
@@ -152,8 +152,17 @@
     "PolygonZkEVMExistentEtrog": {
       "ignoreInWatchMode": ["lastAccInputHash"]
     },
-    "PolygonValidiumEtrog": {
+    "AstarValidiumEtrog": {
       "ignoreInWatchMode": ["lastAccInputHash"]
+    },
+    "AstarValidiumDAC": {
+      "fields": {
+        "members": {
+          "type": "array",
+          "method": "members",
+          "maxLength": 50
+        }
+      }
     },
     "PolygonEcosystemToken": {
       "ignoreInWatchMode": ["lastMint", "totalSupply"]

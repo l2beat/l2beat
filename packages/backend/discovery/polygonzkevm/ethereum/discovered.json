@@ -1,8 +1,8 @@
 {
   "name": "polygonzkevm",
   "chain": "ethereum",
-  "blockNumber": 19425934,
-  "configHash": "0xd294d42368e3e63637e4e5a4d8711e46a8e121c3d807629d9f98d3b4f2bacff9",
+  "blockNumber": 19433041,
+  "configHash": "0xc0c3d0c45a89fcc13d0efceae0616aaa893e0f5ac1278282ade4efc093d710dd",
   "version": 3,
   "contracts": [
     {
@@ -29,7 +29,7 @@
       "derivedName": "ProxyAdmin"
     },
     {
-      "name": "PolygonValidiumAdmin",
+      "name": "AstarValidiumAdmin",
       "address": "0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d",
       "upgradeability": {
         "type": "immutable"
@@ -49,7 +49,7 @@
       "sinceTimestamp": 1706364923
     },
     {
-      "name": "PolygonValidiumEtrog",
+      "name": "AstarValidiumEtrog",
       "address": "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -78,7 +78,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0x6ce032bbfbd1c12025f50da075e988263b8623864a7a4b851d19af086a36c1d5",
+        "lastAccInputHash": "0xc679d5f004da847ca75829c22bcd1ed71ae14ade63e5e7b72e99c29d7ffa98f4",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "Astar zkEVM",
@@ -131,7 +131,7 @@
         "gasTokenAddress": "0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
-        "getRoot": "0xfb11dbcb83337959af04d409ac405cabb5909eb3400268b4aee867640df74cfb",
+        "getRoot": "0xae3b9cb3d22fff3b95385be0c0f2c90a4d506eec4689a92414949e71e2a6cf15",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
@@ -307,10 +307,10 @@
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0x5bbe036e33f5ec881ad526b9c9001cfe970e75797070bd545a778ca9b3728fee",
+        "getRollupExitRoot": "0xa9e39414579e6d0b5f1fefabae67b9b1d6072d42900ad07d6ea9433a687e4887",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
-        "lastAggregationTimestamp": 1710329975,
+        "lastAggregationTimestamp": 1710415847,
         "lastDeactivatedEmergencyStateTimestamp": 0,
         "nondeterminsiticPendingState": [],
         "pendingStateTimeout": 432000,
@@ -327,8 +327,8 @@
           ]
         ],
         "rollupTypeCount": 1,
-        "totalSequencedBatches": 15620,
-        "totalVerifiedBatches": 15518,
+        "totalSequencedBatches": 16057,
+        "totalVerifiedBatches": 16037,
         "trustedAggregatorTimeout": 432000,
         "verifyBatchTimeTarget": 1800
       },
@@ -362,7 +362,7 @@
         "INITIALIZE_TX_CONSTANT_BYTES_EMPTY_METADATA": 31,
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
-        "lastAccInputHash": "0xd4918ec03da716176ebd982a9595494b41b4527b2852b42bc1c6dedd617f111c",
+        "lastAccInputHash": "0x9e0fd722c6fae5c4096432688187ede63ac825e00ba00822d32c3532f3533ab2",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "polygon zkEVM",
@@ -390,8 +390,8 @@
       "sinceTimestamp": 1679653151,
       "values": {
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 3546,
-        "getRoot": "0x263f4a5fea4d642b508e8605b17cac0de54811c9c0b9fee14e917d6e893a5d98",
+        "depositCount": 3685,
+        "getRoot": "0x31fa6cbd18b2dac33a73f82684b0bee61b1cef6796e3b17e88acb9630cded384",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "derivedName": "PolygonZkEVMGlobalExitRootV2"
@@ -440,7 +440,7 @@
       "derivedName": "L1Escrow"
     },
     {
-      "name": "PolygonValidiumDAC",
+      "name": "AstarValidiumDAC",
       "address": "0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0",
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -477,9 +477,6 @@
         ],
         "owner": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
         "requiredAmountOfSignatures": 3
-      },
-      "errors": {
-        "members": "Too many values. Update configuration to explore fully"
       },
       "derivedName": "PolygonDataCommittee"
     },
@@ -593,7 +590,7 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "PolygonValidiumMultisig",
+      "name": "AstarValidiumMultisig",
       "address": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
       "upgradeability": {
         "type": "gnosis safe",

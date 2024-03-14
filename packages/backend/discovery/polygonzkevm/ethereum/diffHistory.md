@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x3ae13547b426e2661f5e8d8b9af4244b6cbc7520
+Generated with discovered.json: 0xf5c29c1b6e921c17297af2fa6650362ebbbffcb5
 
-# Diff at Wed, 13 Mar 2024 11:44:56 GMT:
+# Diff at Thu, 14 Mar 2024 11:46:46 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@4f6a54f5fa748334d34176673b2c233534ce2fbc block: 19282832
-- current block number: 19425934
+- comparing to: main@24c5721630392f8b6f59093376472db03d18b2c2 block: 19282832
+- current block number: 19433041
 
 ## Description
 
@@ -26,11 +26,20 @@ The trusted aggregator can call `verifyBatchesTrustedAggregator()`, `overridePen
     +++ description: None
       values.accessControl.TRUSTED_AGGREGATOR.members.1:
 +        "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
++++ description: The number of rollups that the manager can use.
++++ type: STRUCTURE
++++ severity: LOW
       values.rollupCount:
 -        1
 +        2
++++ description: Addresses of the rollup backend as well as the rollup verifier.
++++ type: STRUCTURE
++++ severity: MEDIUM
       values.rollupsData.1:
 +        ["0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80","0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"]
++++ description: The number of unique rollup types that the manager can use.
++++ type: STRUCTURE
++++ severity: MEDIUM
       values.rollupTypeCount:
 -        0
 +        1
@@ -39,13 +48,13 @@ The trusted aggregator can call `verifyBatchesTrustedAggregator()`, `overridePen
 
 ```diff
 +   Status: CREATED
-    contract PolygonValidiumAdmin (0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d)
+    contract AstarValidiumAdmin (0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract PolygonValidiumEtrog (0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80)
+    contract AstarValidiumEtrog (0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80)
     +++ description: None
 ```
 
@@ -57,38 +66,20 @@ The trusted aggregator can call `verifyBatchesTrustedAggregator()`, `overridePen
 
 ```diff
 +   Status: CREATED
-    contract PolygonValidiumDAC (0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0)
+    contract AstarValidiumDAC (0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract PolygonValidiumMultisig (0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E)
+    contract AstarValidiumMultisig (0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E)
     +++ description: None
 ```
 
 ## Source code changes
 
 ```diff
-.../implementation/contracts/GnosisSafe.sol        |  422 +++++
- .../implementation/contracts/base/Executor.sol     |   27 +
- .../contracts/base/FallbackManager.sol             |   53 +
- .../implementation/contracts/base/GuardManager.sol |   50 +
- .../contracts/base/ModuleManager.sol               |  133 ++
- .../implementation/contracts/base/OwnerManager.sol |  149 ++
- .../implementation/contracts/common/Enum.sol       |    8 +
- .../contracts/common/EtherPaymentFallback.sol      |   13 +
- .../contracts/common/SecuredTokenTransfer.sol      |   35 +
- .../contracts/common/SelfAuthorized.sol            |   16 +
- .../contracts/common/SignatureDecoder.sol          |   36 +
- .../implementation/contracts/common/Singleton.sol  |   11 +
- .../contracts/common/StorageAccessible.sol         |   47 +
- .../contracts/external/GnosisSafeMath.sol          |   54 +
- .../contracts/interfaces/ISignatureValidator.sol   |   20 +
- .../.code/GnosisSafe/implementation/meta.txt       |    2 +
- .../.code/GnosisSafe/proxy/GnosisSafeProxy.sol     |  155 ++
- .../ethereum/.code/GnosisSafe/proxy/meta.txt       |    2 +
- .../@openzeppelin/contracts/access/Ownable.sol     |   83 +
+.../@openzeppelin/contracts/access/Ownable.sol     |   83 +
  .../contracts/interfaces/IERC1967.sol              |   26 +
  .../contracts/interfaces/draft-IERC1822.sol        |   20 +
  .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |   32 +
@@ -102,7 +93,7 @@ The trusted aggregator can call `verifyBatchesTrustedAggregator()`, `overridePen
  .../@openzeppelin/contracts/utils/Address.sol      |  244 +++
  .../@openzeppelin/contracts/utils/Context.sol      |   24 +
  .../@openzeppelin/contracts/utils/StorageSlot.sol  |   88 +
- .../ethereum/.code/PolygonValidiumAdmin/meta.txt   |    2 +
+ .../ethereum/.code/AstarValidiumAdmin/meta.txt     |    2 +
  .../@openzeppelin/contracts/utils/Strings.sol      |   70 +
  .../contracts/utils/cryptography/ECDSA.sol         |  213 +++
  .../@openzeppelin/contracts/utils/math/Math.sol    |  345 ++++
@@ -113,7 +104,7 @@ The trusted aggregator can call `verifyBatchesTrustedAggregator()`, `overridePen
  .../v2/consensus/validium/PolygonDataCommittee.sol |  197 ++
  .../v2/interfaces/IDataAvailabilityProtocol.sol    |   12 +
  .../v2/interfaces/IPolygonDataCommitteeErrors.sol  |   40 +
- .../PolygonValidiumDAC/implementation/meta.txt     |    2 +
+ .../.code/AstarValidiumDAC/implementation/meta.txt |    2 +
  .../@openzeppelin/contracts/access/Ownable.sol     |   83 +
  .../contracts/interfaces/IERC1967.sol              |   26 +
  .../contracts/interfaces/draft-IERC1822.sol        |   20 +
@@ -128,7 +119,7 @@ The trusted aggregator can call `verifyBatchesTrustedAggregator()`, `overridePen
  .../@openzeppelin/contracts/utils/Address.sol      |  244 +++
  .../@openzeppelin/contracts/utils/Context.sol      |   24 +
  .../@openzeppelin/contracts/utils/StorageSlot.sol  |   88 +
- .../.code/PolygonValidiumDAC/proxy/meta.txt        |    2 +
+ .../ethereum/.code/AstarValidiumDAC/proxy/meta.txt |    2 +
  .../access/IAccessControlUpgradeable.sol           |   88 +
  .../proxy/utils/Initializable.sol                  |  165 ++
  .../token/ERC20/IERC20Upgradeable.sol              |   82 +
@@ -172,7 +163,7 @@ The trusted aggregator can call `verifyBatchesTrustedAggregator()`, `overridePen
  .../contracts/v2/lib/PolygonConstantsBase.sol      |   14 +
  .../contracts/v2/lib/PolygonRollupBaseEtrog.sol    |  923 ++++++++++
  .../contracts/v2/lib/PolygonTransparentProxy.sol   |   79 +
- .../PolygonValidiumEtrog/implementation/meta.txt   |    2 +
+ .../AstarValidiumEtrog/implementation/meta.txt     |    2 +
  .../@openzeppelin/contracts5/access/Ownable.sol    |  100 +
  .../contracts5/interfaces/IERC1967.sol             |   24 +
  .../contracts5/proxy/ERC1967/ERC1967Proxy.sol      |   40 +
@@ -185,7 +176,7 @@ The trusted aggregator can call `verifyBatchesTrustedAggregator()`, `overridePen
  .../@openzeppelin/contracts5/utils/Context.sol     |   24 +
  .../@openzeppelin/contracts5/utils/StorageSlot.sol |  135 ++
  .../contracts/v2/lib/PolygonTransparentProxy.sol   |   79 +
- .../.code/PolygonValidiumEtrog/proxy/meta.txt      |    2 +
+ .../.code/AstarValidiumEtrog/proxy/meta.txt        |    2 +
  .../implementation/contracts/GnosisSafe.sol        |  422 +++++
  .../implementation/contracts/base/Executor.sol     |   27 +
  .../contracts/base/FallbackManager.sol             |   53 +
@@ -201,9 +192,27 @@ The trusted aggregator can call `verifyBatchesTrustedAggregator()`, `overridePen
  .../contracts/common/StorageAccessible.sol         |   47 +
  .../contracts/external/GnosisSafeMath.sol          |   54 +
  .../contracts/interfaces/ISignatureValidator.sol   |   20 +
- .../implementation/meta.txt                        |    2 +
+ .../AstarValidiumMultisig/implementation/meta.txt  |    2 +
  .../proxy/GnosisSafeProxy.sol                      |  155 ++
- .../.code/PolygonValidiumMultisig/proxy/meta.txt   |    2 +
+ .../.code/AstarValidiumMultisig/proxy/meta.txt     |    2 +
+ .../implementation/contracts/GnosisSafe.sol        |  422 +++++
+ .../implementation/contracts/base/Executor.sol     |   27 +
+ .../contracts/base/FallbackManager.sol             |   53 +
+ .../implementation/contracts/base/GuardManager.sol |   50 +
+ .../contracts/base/ModuleManager.sol               |  133 ++
+ .../implementation/contracts/base/OwnerManager.sol |  149 ++
+ .../implementation/contracts/common/Enum.sol       |    8 +
+ .../contracts/common/EtherPaymentFallback.sol      |   13 +
+ .../contracts/common/SecuredTokenTransfer.sol      |   35 +
+ .../contracts/common/SelfAuthorized.sol            |   16 +
+ .../contracts/common/SignatureDecoder.sol          |   36 +
+ .../implementation/contracts/common/Singleton.sol  |   11 +
+ .../contracts/common/StorageAccessible.sol         |   47 +
+ .../contracts/external/GnosisSafeMath.sol          |   54 +
+ .../contracts/interfaces/ISignatureValidator.sol   |   20 +
+ .../.code/GnosisSafe/implementation/meta.txt       |    2 +
+ .../.code/GnosisSafe/proxy/GnosisSafeProxy.sol     |  155 ++
+ .../ethereum/.code/GnosisSafe/proxy/meta.txt       |    2 +
  134 files changed, 14055 insertions(+)
 ```
 
@@ -216,26 +225,59 @@ discovery. Values are for block 19282832 (main branch discovery), not current.
 ```diff
     contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
     +++ description: None
++++ description: Addresses of the rollup backend as well as the rollup verifier.
++++ type: STRUCTURE
++++ severity: MEDIUM
       values.rollupsData.0.11:
 -        0
++++ description: Addresses of the rollup backend as well as the rollup verifier.
++++ type: STRUCTURE
++++ severity: MEDIUM
       values.rollupsData.0.10:
 -        0
++++ description: Addresses of the rollup backend as well as the rollup verifier.
++++ type: STRUCTURE
++++ severity: MEDIUM
       values.rollupsData.0.9:
 -        1984749
++++ description: Addresses of the rollup backend as well as the rollup verifier.
++++ type: STRUCTURE
++++ severity: MEDIUM
       values.rollupsData.0.8:
 -        0
++++ description: Addresses of the rollup backend as well as the rollup verifier.
++++ type: STRUCTURE
++++ severity: MEDIUM
       values.rollupsData.0.7:
 -        0
++++ description: Addresses of the rollup backend as well as the rollup verifier.
++++ type: STRUCTURE
++++ severity: MEDIUM
       values.rollupsData.0.6:
 -        1991783
++++ description: Addresses of the rollup backend as well as the rollup verifier.
++++ type: STRUCTURE
++++ severity: MEDIUM
       values.rollupsData.0.5:
 -        1991800
++++ description: Addresses of the rollup backend as well as the rollup verifier.
++++ type: STRUCTURE
++++ severity: MEDIUM
       values.rollupsData.0.4:
 -        "0x8ad85f1e7b882d12cf6c64cf256cab8d255d6085e8109400741d82850a1d944b"
++++ description: Addresses of the rollup backend as well as the rollup verifier.
++++ type: STRUCTURE
++++ severity: MEDIUM
       values.rollupsData.0.3:
 -        7
++++ description: Addresses of the rollup backend as well as the rollup verifier.
++++ type: STRUCTURE
++++ severity: MEDIUM
       values.rollupsData.0.2:
 -        "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"
++++ description: Addresses of the rollup backend as well as the rollup verifier.
++++ type: STRUCTURE
++++ severity: MEDIUM
       values.rollupsData.0.1:
 -        1101
 +        "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"
