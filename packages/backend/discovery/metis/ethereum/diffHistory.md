@@ -8,7 +8,7 @@ Generated with discovered.json: 0x1702f6af26153cd2f1a70dad0a28c46f02f49de4
 
 ## Description
 
-One signer of the Metis Multisig contract has been replaced.
+Two signers are added to the multisig.
 
 ## Watched changes
 
