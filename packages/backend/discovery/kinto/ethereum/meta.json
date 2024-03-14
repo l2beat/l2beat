@@ -47,6 +47,31 @@
       }
     },
     {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "RollupEventInbox",
+      "values": {
+        "bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rollup": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "Inbox",
       "values": {
         "allowListEnabled": {
@@ -75,16 +100,6 @@
           "type": null
         },
         "sequencerInbox": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ProxyAdmin",
-      "values": {
-        "owner": {
           "description": null,
           "severity": null,
           "type": null
@@ -142,14 +157,64 @@
       }
     },
     {
-      "name": "RollupEventInbox",
+      "name": "SequencerInbox",
       "values": {
+        "batchCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "bridge": {
           "description": null,
           "severity": null,
           "type": null
         },
+        "DATA_AUTHENTICATED_FLAG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "HEADER_LENGTH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxDataSize": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxTimeVariation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "rollup": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalDelayedMessagesRead": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "IS_HARDCODED_SEQUENCER_BATCH_POSTER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "keySetUpdates": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sequencerVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "setIsBatchPosterCount": {
           "description": null,
           "severity": null,
           "type": null
@@ -319,11 +384,6 @@
           "severity": null,
           "type": null
         },
-        "validators": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "zombieAddress": {
           "description": null,
           "severity": null,
@@ -337,78 +397,23 @@
       }
     },
     {
-      "name": "SequencerInbox",
+      "name": "ValidatorUtils",
+      "values": {}
+    },
+    {
+      "name": "ValidatorWalletCreator",
       "values": {
-        "batchCount": {
+        "owner": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "bridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DATA_AUTHENTICATED_FLAG": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "HEADER_LENGTH": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "maxDataSize": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "maxTimeVariation": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "rollup": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalDelayedMessagesRead": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "batchPosters": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "IS_HARDCODED_SEQUENCER_BATCH_POSTER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "keySetUpdates": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "sequencerVersion": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "setIsBatchPosterCount": {
+        "template": {
           "description": null,
           "severity": null,
           "type": null
         }
       }
-    },
-    {
-      "name": "ValidatorUtils",
-      "values": {}
     },
     {
       "name": "ChallengeManager",
@@ -434,21 +439,6 @@
           "type": null
         },
         "totalChallengesCreated": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ValidatorWalletCreator",
-      "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "template": {
           "description": null,
           "severity": null,
           "type": null
@@ -545,7 +535,7 @@
       "values": {}
     },
     {
-      "name": "OneStepProverHostIo",
+      "name": "OneStepProver0",
       "values": {}
     },
     {
@@ -553,11 +543,11 @@
       "values": {}
     },
     {
-      "name": "OneStepProverMemory",
+      "name": "OneStepProverHostIo",
       "values": {}
     },
     {
-      "name": "OneStepProver0",
+      "name": "OneStepProverMemory",
       "values": {}
     }
   ]
