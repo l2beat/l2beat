@@ -121,8 +121,16 @@ export const paradex: Layer2 = {
           // Updated to this program hash in tx 0x7eb527c897e8449234ad770573a2a5ba3737e6b9014600c261741bc258849639
           formula: 'sharpSubmission',
           sinceTimestamp: new UnixTime(1706626427),
+          untilTimestamp: new UnixTime(1710346919),
           programHashes: [
             '2479841346739966073527450029179698923866252973805981504232089731754042431018',
+          ],
+        },
+        {
+          formula: 'sharpSubmission',
+          sinceTimestamp: new UnixTime(1710346919),
+          programHashes: [
+            '109586309220455887239200613090920758778188956576212125550190099009305121410',
           ],
         },
       ],
@@ -137,6 +145,16 @@ export const paradex: Layer2 = {
           functionSignature:
             'function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)',
           sinceTimestamp: new UnixTime(1689850631),
+        },
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xF338cad020D506e8e3d9B4854986E0EcE6C23640',
+          ),
+          selector: '0xb72d42a1',
+          functionSignature:
+            'function updateStateKzgDA(uint256[] programOutput, bytes kzgProof)',
+          sinceTimestamp: new UnixTime(1710346919),
         },
       ],
     },
