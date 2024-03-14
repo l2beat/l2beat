@@ -162,7 +162,7 @@ export const paradex: Layer2 = {
   },
   dataAvailability: makeDataAvailabilityConfig({
     type: 'On chain',
-    layer: 'Ethereum (calldata)',
+    layer: 'Ethereum (blobs or calldata)',
     mode: 'State diffs',
   }),
   riskView: makeBridgeCompatible({
@@ -227,7 +227,7 @@ export const paradex: Layer2 = {
   technology: {
     stateCorrectness: STATE_CORRECTNESS.VALIDITY_PROOFS,
     newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
-    dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKNET_ON_CHAIN(),
+    dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKNET_ON_CHAIN(true),
     operator: OPERATOR.CENTRALIZED_OPERATOR,
     forceTransactions: {
       ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
