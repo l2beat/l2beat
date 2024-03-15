@@ -33,7 +33,6 @@ export class BigQueryClient {
       location: 'US',
     })
     const [rows] = await job.getQueryResults()
-    console.log(rows)
     return rows as unknown[]
   }
 }
