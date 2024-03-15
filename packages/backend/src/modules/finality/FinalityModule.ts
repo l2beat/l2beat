@@ -9,7 +9,7 @@ import { IndexerStateRepository } from '../../peripherals/database/repositories/
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
-import { LivenessRepository } from '../liveness/repositories/LivenessRepository'
+import { LivenessRepository } from '../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { TrackedTxsIndexer } from '../tracked-txs/TrackedTxsIndexer'
 import { LineaFinalityAnalyzer } from './analyzers/LineaFinalityAnalyzer'
 import { zkSyncEraFinalityAnalyzer } from './analyzers/zkSyncEraFinalityAnalyzer'

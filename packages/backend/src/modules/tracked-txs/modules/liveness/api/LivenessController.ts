@@ -8,12 +8,12 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { Project } from '../../../model/Project'
-import { IndexerStateRepository } from '../../../peripherals/database/repositories/IndexerStateRepository'
-import { Clock } from '../../../tools/Clock'
-import { TaskQueue } from '../../../tools/queue/TaskQueue'
-import { TrackedTxsConfigsRepository } from '../../tracked-txs/repositories/TrackedTxsConfigsRepository'
-import { TrackedTxsConfig } from '../../tracked-txs/types/TrackedTxsConfig'
+import { Project } from '../../../../../model/Project'
+import { IndexerStateRepository } from '../../../../../peripherals/database/repositories/IndexerStateRepository'
+import { Clock } from '../../../../../tools/Clock'
+import { TaskQueue } from '../../../../../tools/queue/TaskQueue'
+import { TrackedTxsConfigsRepository } from '../../../repositories/TrackedTxsConfigsRepository'
+import { TrackedTxsConfig } from '../../../types/TrackedTxsConfig'
 import { LivenessRepository } from '../repositories/LivenessRepository'
 import { calculateAnomalies } from './calculateAnomalies'
 import {

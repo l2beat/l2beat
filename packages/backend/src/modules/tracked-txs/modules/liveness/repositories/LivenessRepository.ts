@@ -10,9 +10,9 @@ import { LivenessRow } from 'knex/types/tables'
 import {
   BaseRepository,
   CheckConvention,
-} from '../../../peripherals/database/BaseRepository'
-import { Database } from '../../../peripherals/database/Database'
-import { TrackedTxId } from '../../tracked-txs/types/TrackedTxId'
+} from '../../../../../peripherals/database/BaseRepository'
+import { Database } from '../../../../../peripherals/database/Database'
+import { TrackedTxId } from '../../../types/TrackedTxId'
 
 export interface LivenessRecord {
   timestamp: UnixTime

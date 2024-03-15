@@ -2,9 +2,9 @@ import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { describeDatabase } from '../../../test/database'
-import { TrackedTxsConfigsRepository } from '../../tracked-txs/repositories/TrackedTxsConfigsRepository'
-import { TRACKED_TXS_RECORDS } from '../../tracked-txs/repositories/TrackedTxsConfigsRepository.test'
+import { describeDatabase } from '../../../../../test/database'
+import { TrackedTxsConfigsRepository } from '../../../repositories/TrackedTxsConfigsRepository'
+import { TRACKED_TXS_RECORDS } from '../../../repositories/TrackedTxsConfigsRepository.test'
 import { LivenessRecord, LivenessRepository } from './LivenessRepository'
 
 describeDatabase(LivenessRepository.name, (database) => {

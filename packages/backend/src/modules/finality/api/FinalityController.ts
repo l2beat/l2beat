@@ -2,7 +2,7 @@ import { FinalityApiResponse, UnixTime } from '@l2beat/shared-pure'
 import { keyBy, mapValues, partition } from 'lodash'
 
 import { FinalityProjectConfig } from '../../../config/features/finality'
-import { LivenessRepository } from '../../liveness/repositories/LivenessRepository'
+import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { FinalityRepository } from '../repositories/FinalityRepository'
 import { calcAvgsPerProject } from './calcAvgsPerProject'
 import { divideAndAddLag } from './divideAndAddLag'

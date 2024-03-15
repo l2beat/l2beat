@@ -7,11 +7,11 @@ import { FinalityProjectConfig } from '../../../config/features/finality'
 import {
   calculateDetailsFor,
   calculateIntervals,
-} from '../../liveness/api/calculateIntervalWithAverages'
+} from '../../tracked-txs/modules/liveness/api/calculateIntervalWithAverages'
 import {
   LivenessRecordWithProjectIdAndSubtype,
   LivenessRepository,
-} from '../../liveness/repositories/LivenessRepository'
+} from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import {
   FinalityRecord,
   FinalityRepository,

@@ -1,7 +1,7 @@
 import { notUndefined, UnixTime } from '@l2beat/shared-pure'
 import { partition } from 'lodash'
 
-import { TrackedTxsConfigRecord } from '../../tracked-txs/repositories/TrackedTxsConfigsRepository'
+import { TrackedTxsConfigRecord } from '../../../repositories/TrackedTxsConfigsRepository'
 
 export function getLivenessSyncedUntil(
   configurations: TrackedTxsConfigRecord[],

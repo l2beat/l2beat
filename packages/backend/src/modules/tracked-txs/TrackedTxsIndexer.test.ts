@@ -12,7 +12,7 @@ import { IndexerStateRepository } from '../../peripherals/database/repositories/
 import { HourlyIndexer } from '../tracked-txs/HourlyIndexer'
 import { TrackedTxsClient } from '../tracked-txs/TrackedTxsClient'
 import {
-  adjustToForBigqueryCall,
+  adjustRangeForBigQueryCall,
   findConfigurationsToSync,
 } from '../tracked-txs/utils'
 import { getSafeHeight } from '../tracked-txs/utils/getSafeHeight'
@@ -57,19 +57,19 @@ describe(TrackedTxsIndexer.name, () => {
         trackedTxsClient,
         updaters: mockedUpdaters,
       })
-      const [configurationsToSync, adjustedTo] =
-        await trackedTxIndexer.getConfiguration(from.toNumber(), to.toNumber())
+      const [configurationsToSync, syncTo] =
+        await trackedTxIndexer.getConfiguration(from, to)
 
       const value = await trackedTxIndexer.update(
         from.toNumber(),
         to.toNumber(),
       )
 
-      expect(value).toEqual(adjustedTo.toNumber())
+      expect(value).toEqual(syncTo.toNumber())
       expect(trackedTxsClient.getData).toHaveBeenOnlyCalledWith(
         configurationsToSync,
         from,
-        adjustedTo,
+        syncTo,
       )
       expect(livenessUpdater.update).toHaveBeenOnlyCalledWith(
         trackedTxResults,
@@ -79,7 +79,7 @@ describe(TrackedTxsIndexer.name, () => {
         configurationRepository.setLastSyncedTimestamp,
       ).toHaveBeenOnlyCalledWith(
         runtimeEntries.flatMap((r) => r.uses.map((u) => u.id)),
-        adjustedTo,
+        syncTo,
         TRX,
       )
     })
@@ -97,14 +97,17 @@ describe(TrackedTxsIndexer.name, () => {
       const trackedTxsClient = mockObject<TrackedTxsClient>({
         getData: async () => [],
       })
-      const adjustedTo = adjustToForBigqueryCall(from.toNumber(), to.toNumber())
+      const { from: _, to: unixTo } = adjustRangeForBigQueryCall(
+        from.toNumber(),
+        to.toNumber(),
+      )
 
       const value = await trackedTxsIndexer.update(
         from.toNumber(),
         to.toNumber(),
       )
 
-      expect(value).toEqual(adjustedTo.toNumber())
+      expect(value).toEqual(unixTo.toNumber())
       expect(trackedTxsClient.getData).not.toHaveBeenCalled()
     })
   })
@@ -124,12 +127,13 @@ describe(TrackedTxsIndexer.name, () => {
       })
 
       const [configurationsToSync, syncTo] =
-        await livenessIndexer.getConfiguration(from.toNumber(), to.toNumber())
+        await livenessIndexer.getConfiguration(from, to)
 
       const {
         configurationsToSync: expectedConfigurationsToSync,
         syncTo: expectedSyncTo,
       } = findConfigurationsToSync(
+        ['liveness'],
         runtimeEntries,
         databaseEntries,
         from,
@@ -358,13 +362,13 @@ function getMockTrackedTxsIndexer(params: {
       tick: async () => 1,
       subscribe: () => {},
     }),
+    updaters ?? {
+      liveness: mockObject<TxUpdaterInterface>({}),
+    },
     trackedTxsClient ?? mockObject<TrackedTxsClient>({}),
     stateRepository ?? mockObject<IndexerStateRepository>({}),
     configRepository ?? mockObject<TrackedTxsConfigsRepository>({}),
     configs ?? [],
-    updaters ?? {
-      liveness: mockObject<TxUpdaterInterface>({}),
-    },
     MIN_TIMESTAMP,
   )
 }

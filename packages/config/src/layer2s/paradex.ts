@@ -164,19 +164,6 @@ export const paradex: Layer2 = {
           address: EthereumAddress(
             '0xF338cad020D506e8e3d9B4854986E0EcE6C23640',
           ),
-          selector: '0x77552641',
-          functionSignature:
-            'function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)',
-          sinceTimestampInclusive: new UnixTime(1689850631),
-        },
-      },
-      {
-        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
-        query: {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0xF338cad020D506e8e3d9B4854986E0EcE6C23640',
-          ),
           selector: '0xb72d42a1',
           functionSignature:
             'function updateStateKzgDA(uint256[] programOutput, bytes kzgProof)',

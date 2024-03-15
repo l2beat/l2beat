@@ -1,4 +1,4 @@
-export * from './adjustToForBigqueryCall'
+export * from './adjustRangeForBigQueryCall'
 export * from './findConfigurationsToSync'
 export * from './isTimestampInRange'
 export * from './sql/index'

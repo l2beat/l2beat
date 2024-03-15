@@ -7,9 +7,12 @@ import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import { Database } from '../../peripherals/database/Database'
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
 import { Clock } from '../../tools/Clock'
-import { ApplicationModuleWithIndexer } from '../ApplicationModule'
-import { LivenessUpdater } from '../liveness/LivenessUpdater'
+import {
+  ApplicationModule,
+  ApplicationModuleWithIndexer,
+} from '../ApplicationModule'
 import { HourlyIndexer } from './HourlyIndexer'
+import { createLivenessModule } from './modules/liveness/LivenessModule'
 import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsClient } from './TrackedTxsClient'
 import { TrackedTxsIndexer } from './TrackedTxsIndexer'
@@ -19,9 +22,8 @@ export function createTrackedTxsModule(
   logger: Logger,
   database: Database,
   clock: Clock,
-  livenessUpdater: LivenessUpdater | undefined,
 ): ApplicationModuleWithIndexer<TrackedTxsIndexer> | undefined {
-  if (!config.trackedTxsConfig || !livenessUpdater) {
+  if (!config.trackedTxsConfig) {
     logger.info('TrackedTxsModule disabled')
     return
   }
@@ -49,18 +51,21 @@ export function createTrackedTxsModule(
     .flatMap((project) => project.trackedTxsConfig?.entries)
     .filter(notUndefined)
 
+  const livenessModule = createLivenessModule(config, logger, database, clock)
+  const subModules: (ApplicationModule | undefined)[] = [livenessModule]
+
   const updaters = {
-    liveness: livenessUpdater,
+    liveness: livenessModule?.updater,
   }
 
   const trackedTxsIndexer = new TrackedTxsIndexer(
     logger,
     hourlyIndexer,
+    updaters,
     trackedTxsClient,
     indexerStateRepository,
     trackedTxsConfigsRepository,
     runtimeConfigurations,
-    updaters,
     config.trackedTxsConfig.minTimestamp,
   )
 
@@ -68,13 +73,26 @@ export function createTrackedTxsModule(
     logger = logger.for('TrackedTxsModule')
     logger.info('Starting...')
 
+    const areUpdatersEmpty = Object.values(updaters).every((u) => !u)
+    const areSubmodulesEmpty = subModules.length === 0
+
+    if (areUpdatersEmpty || areSubmodulesEmpty) {
+      logger.info(
+        'Aborting TrackedTxsModule start because no updaters are defined',
+      )
+      return
+    }
+
     await hourlyIndexer.start()
+    for (const subModule of subModules) {
+      await subModule?.start?.()
+    }
     await trackedTxsIndexer.start()
   }
 
   return {
     start,
-    routers: [],
+    routers: subModules.flatMap((m) => m?.routers ?? []),
     indexer: trackedTxsIndexer,
   }
 }

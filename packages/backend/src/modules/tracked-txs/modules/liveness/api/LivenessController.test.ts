@@ -2,15 +2,15 @@ import { assert, Hash256, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { range } from 'lodash'
 
-import { Project } from '../../../model/Project'
-import { IndexerStateRepository } from '../../../peripherals/database/repositories/IndexerStateRepository'
-import { Clock } from '../../../tools/Clock'
+import { Project } from '../../../../../model/Project'
+import { IndexerStateRepository } from '../../../../../peripherals/database/repositories/IndexerStateRepository'
+import { Clock } from '../../../../../tools/Clock'
 import {
   TrackedTxsConfigRecord,
   TrackedTxsConfigsRepository,
-} from '../../tracked-txs/repositories/TrackedTxsConfigsRepository'
-import { TrackedTxId } from '../../tracked-txs/types/TrackedTxId'
-import { TrackedTxConfigEntry } from '../../tracked-txs/types/TrackedTxsConfig'
+} from '../../../repositories/TrackedTxsConfigsRepository'
+import { TrackedTxId } from '../../../types/TrackedTxId'
+import { TrackedTxConfigEntry } from '../../../types/TrackedTxsConfig'
 import {
   LivenessRecordWithProjectIdAndSubtype,
   LivenessRepository,

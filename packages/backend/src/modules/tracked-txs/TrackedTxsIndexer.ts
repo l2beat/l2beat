@@ -1,7 +1,12 @@
 import { assert, Logger } from '@l2beat/backend-tools'
-import { TrackedTxsConfigType, UnixTime } from '@l2beat/shared-pure'
+import {
+  notUndefined,
+  TrackedTxsConfigType,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
 import { Knex } from 'knex'
+import { pickBy } from 'lodash'
 
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
 import { HourlyIndexer } from './HourlyIndexer'
@@ -10,29 +15,36 @@ import { TrackedTxsClient } from './TrackedTxsClient'
 import { TrackedTxId } from './types/TrackedTxId'
 import { TrackedTxConfigEntry } from './types/TrackedTxsConfig'
 import { TxUpdaterInterface } from './types/TxUpdaterInterface'
-import { adjustToForBigqueryCall, findConfigurationsToSync } from './utils'
+import {
+  adjustRangeForBigQueryCall as adjustRangeForBigQueryCall,
+  findConfigurationsToSync,
+} from './utils'
 import { diffTrackedTxConfigurations } from './utils/diffTrackedTxConfigurations'
 import { getSafeHeight } from './utils/getSafeHeight'
 
 export type TrackedTxsIndexerUpdaters = Record<
   TrackedTxsConfigType,
-  TxUpdaterInterface
+  TxUpdaterInterface | undefined
 >
 
 export class TrackedTxsIndexer extends ChildIndexer {
   readonly indexerId = 'tracked_txs_indexer'
+  readonly updaters: {
+    [key: string]: TxUpdaterInterface
+  }
 
   constructor(
     logger: Logger,
     parentIndexer: HourlyIndexer,
+    updaters: TrackedTxsIndexerUpdaters,
     private readonly trackedTxsClient: TrackedTxsClient,
     private readonly stateRepository: IndexerStateRepository,
     private readonly configRepository: TrackedTxsConfigsRepository,
     private readonly configs: TrackedTxConfigEntry[],
-    private readonly updaters: TrackedTxsIndexerUpdaters,
     private readonly minTimestamp: UnixTime,
   ) {
     super(logger, [parentIndexer])
+    this.updaters = pickBy(updaters, notUndefined)
   }
 
   override async start(): Promise<void> {
@@ -42,23 +54,28 @@ export class TrackedTxsIndexer extends ChildIndexer {
   }
 
   override async update(from: number, to: number): Promise<number> {
-    const [configurations, syncTo] = await this.getConfiguration(from, to)
+    const { from: unixFrom, to: unixTo } = adjustRangeForBigQueryCall(from, to)
+
+    const [configurations, syncTo] = await this.getConfiguration(
+      unixFrom,
+      unixTo,
+    )
 
     if (configurations.length === 0) {
-      this.logger.debug('Update skipped', { from, to: syncTo })
+      this.logger.info('Update skipped', { from: unixFrom, to: syncTo })
       return syncTo.toNumber()
     }
 
     const txs = await this.trackedTxsClient.getData(
       configurations,
-      new UnixTime(from),
+      unixFrom,
       syncTo,
     )
 
     await this.configRepository.runInTransaction(async (trx) => {
       for (const [type, updater] of Object.entries(this.updaters)) {
         const filteredTxs = txs.filter((tx) => tx.use.type === type)
-        await updater.update(filteredTxs, trx)
+        await updater?.update(filteredTxs, trx)
       }
 
       const configIds = configurations.flatMap((config) =>
@@ -68,8 +85,8 @@ export class TrackedTxsIndexer extends ChildIndexer {
     })
 
     this.logger.info('Updated', {
-      from,
-      adjustedTo: syncTo,
+      from: unixFrom,
+      to: syncTo,
       usedConfigurations: configurations.length,
       fetchedTxsCount: txs.length,
     })
@@ -77,18 +94,18 @@ export class TrackedTxsIndexer extends ChildIndexer {
   }
 
   async getConfiguration(
-    from: number,
-    to: number,
+    from: UnixTime,
+    to: UnixTime,
   ): Promise<[TrackedTxConfigEntry[], UnixTime]> {
-    const adjustedTo = adjustToForBigqueryCall(from, to)
-
     const databaseEntries = await this.configRepository.getAll()
+    const updaterTypes = Object.keys(this.updaters)
 
     const { configurationsToSync, syncTo } = findConfigurationsToSync(
+      updaterTypes,
       this.configs,
       databaseEntries,
-      new UnixTime(from),
-      adjustedTo,
+      from,
+      to,
     )
 
     return [configurationsToSync, syncTo]
@@ -102,11 +119,13 @@ export class TrackedTxsIndexer extends ChildIndexer {
       databaseEntries,
     )
 
-    this.logger.info('Modifying tracked txs configs', {
-      added: toAdd.map((add) => add.id),
-      removed: toRemove,
-      trimmed: toTrim.map((trim) => trim.id),
-    })
+    if ([...toAdd, ...toRemove, ...toTrim].length > 0) {
+      this.logger.info('Modifying tracked txs configs', {
+        added: toAdd.map((add) => add.id),
+        removed: toRemove,
+        trimmed: toTrim.map((trim) => trim.id),
+      })
+    }
 
     const safeHeight = getSafeHeight(databaseEntries, toAdd, this.minTimestamp)
 
@@ -132,7 +151,7 @@ export class TrackedTxsIndexer extends ChildIndexer {
           trx,
         )
         for (const updater of Object.values(this.updaters)) {
-          await updater.deleteAfter(c.id, c.untilTimestampExclusive, trx)
+          await updater?.deleteAfter(c.id, c.untilTimestampExclusive, trx)
         }
       }),
     )

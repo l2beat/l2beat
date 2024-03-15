@@ -64,6 +64,7 @@ describe(findConfigurationsToSync.name, () => {
     ]
 
     const result = findConfigurationsToSync(
+      ['liveness'],
       CONFIGURATIONS,
       dbEntries,
       FROM,
@@ -129,6 +130,7 @@ describe(findConfigurationsToSync.name, () => {
     ]
 
     const result = findConfigurationsToSync(
+      ['liveness'],
       configurations,
       dbEntries,
       FROM,
@@ -152,6 +154,7 @@ describe(findConfigurationsToSync.name, () => {
     )
 
     const result = findConfigurationsToSync(
+      ['liveness'],
       CONFIGURATIONS,
       dbEntries,
       FROM,
@@ -164,8 +167,78 @@ describe(findConfigurationsToSync.name, () => {
     })
   })
 
+  it('should skip configuration uses that are not enabled', () => {
+    const configurations: TrackedTxConfigEntry[] = [
+      {
+        ...CONFIGURATIONS[0],
+        uses: [
+          //@ts-expect-error fees is not yet defined as type but needed for tests
+          ...CONFIGURATIONS[0].uses,
+          {
+            //@ts-expect-error fees is not yet defined as type but needed for tests
+            type: 'fees',
+            subtype: 'batchSubmissions',
+            id: TrackedTxId.random(),
+          },
+        ],
+      },
+      ...CONFIGURATIONS.slice(1),
+    ]
+
+    const dbEntries: TrackedTxsConfigRecord[] = [
+      {
+        ...configurations[0],
+        ...configurations[0].uses[0],
+        lastSyncedTimestamp: FROM.add(1, 'hours'),
+        debugInfo: '',
+      },
+      {
+        ...configurations[0],
+        ...configurations[0].uses[1],
+        lastSyncedTimestamp: undefined,
+        debugInfo: '',
+      },
+      {
+        ...configurations[1],
+        ...configurations[1].uses[0],
+        lastSyncedTimestamp: FROM.add(1, 'hours'),
+        debugInfo: '',
+      },
+      {
+        ...configurations[1],
+        ...configurations[1].uses[1],
+        lastSyncedTimestamp: undefined,
+        debugInfo: '',
+      },
+    ]
+
+    const result = findConfigurationsToSync(
+      ['liveness'],
+      configurations,
+      dbEntries,
+      FROM,
+      FROM.add(1, 'hours'),
+    )
+
+    expect(result).toEqual({
+      configurationsToSync: [
+        {
+          ...CONFIGURATIONS[1],
+          uses: [CONFIGURATIONS[1].uses[1]],
+        },
+      ],
+      syncTo: FROM.add(1, 'hours'),
+    })
+  })
+
   it('should return empty array if no configurations', () => {
-    const result = findConfigurationsToSync([], [], FROM, FROM.add(1, 'hours'))
+    const result = findConfigurationsToSync(
+      ['liveness'],
+      [],
+      [],
+      FROM,
+      FROM.add(1, 'hours'),
+    )
     expect(result).toEqual({
       configurationsToSync: [],
       syncTo: FROM.add(1, 'hours'),

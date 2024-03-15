@@ -6,6 +6,7 @@ import { TrackedTxConfigEntry } from '../types/TrackedTxsConfig'
 import { isTimestampInRange } from './isTimestampInRange'
 
 export function findConfigurationsToSync(
+  updaterTypes: string[],
   runtimeConfigurations: TrackedTxConfigEntry[],
   databaseEntries: TrackedTxsConfigRecord[],
   from: UnixTime,
@@ -16,6 +17,9 @@ export function findConfigurationsToSync(
       const filteredUses = config.uses.filter((use) => {
         const dbEntry = databaseEntries.find((dbEntry) => dbEntry.id === use.id)
         assert(dbEntry, 'Database entry should not be undefined here!')
+        if (!updaterTypes.includes(use.type)) {
+          return false
+        }
 
         return isTimestampInRange(
           config.sinceTimestampInclusive,

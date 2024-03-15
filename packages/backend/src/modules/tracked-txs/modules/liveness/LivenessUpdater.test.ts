@@ -3,9 +3,9 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { Knex } from 'knex'
 
-import { TrackedTxResult } from '../tracked-txs/types/model'
-import { TrackedTxId } from '../tracked-txs/types/TrackedTxId'
-import { TrackedTxConfigEntry } from '../tracked-txs/types/TrackedTxsConfig'
+import { TrackedTxResult } from '../../types/model'
+import { TrackedTxId } from '../../types/TrackedTxId'
+import { TrackedTxConfigEntry } from '../../types/TrackedTxsConfig'
 import { LivenessUpdater } from './LivenessUpdater'
 import {
   LivenessRecord,
