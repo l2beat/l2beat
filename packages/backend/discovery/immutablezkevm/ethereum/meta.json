@@ -2,24 +2,43 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
+      "name": "AxelarGasService",
+      "values": {
+        "contractId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "gasCollector": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "AxelarGatewayProxyMultisig",
+      "values": {}
+    },
+    {
       "name": "Bridge",
       "values": {
         "ADAPTOR_MANAGER_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "childERC20Bridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "childETHToken": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "childTokenTemplate": {
           "description": null,
           "severity": null,
           "type": null
@@ -30,16 +49,6 @@
           "type": null
         },
         "DEPOSIT_SIG": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "imxCumulativeDepositLimit": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "initializerAddress": {
           "description": null,
           "severity": null,
           "type": null
@@ -59,27 +68,7 @@
           "severity": null,
           "type": null
         },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "PAUSER_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "rootBridgeAdaptor": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "rootIMXToken": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "rootWETHToken": {
           "description": null,
           "severity": null,
           "type": null
@@ -100,6 +89,51 @@
           "type": null
         },
         "WITHDRAW_SIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "childERC20Bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "childETHToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "childTokenTemplate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "imxCumulativeDepositLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "initializerAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rootBridgeAdaptor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rootIMXToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rootWETHToken": {
           "description": null,
           "severity": null,
           "type": null
@@ -152,77 +186,28 @@
       }
     },
     {
-      "name": "ProxyAdmin",
+      "name": "Operators",
       "values": {
         "owner": {
           "description": null,
           "severity": null,
           "type": null
-        }
-      }
-    },
-    {
-      "name": "RootAxelarBridgeAdaptor",
-      "values": {
-        "BRIDGE_MANAGER_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
         },
-        "childBridgeAdaptor": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "childChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DEFAULT_ADMIN_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "GAS_SERVICE_MANAGER_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "gasService": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "gateway": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "initializerAddress": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "rootBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "TARGET_MANAGER_ROLE": {
+        "pendingOwner": {
           "description": null,
           "severity": null,
           "type": null
         }
       }
-    },
-    {
-      "name": "AxelarGatewayProxyMultisig",
-      "values": {}
     },
     {
       "name": "OwnerMultisig",
       "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "domainSeparator": {
           "description": null,
           "severity": null,
@@ -247,8 +232,13 @@
           "description": null,
           "severity": null,
           "type": null
-        },
-        "VERSION": {
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
           "description": null,
           "severity": null,
           "type": null
@@ -256,44 +246,54 @@
       }
     },
     {
-      "name": "AxelarGasService",
+      "name": "RootAxelarBridgeAdaptor",
       "values": {
-        "contractId": {
+        "BRIDGE_MANAGER_ROLE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "gasCollector": {
+        "DEFAULT_ADMIN_ROLE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "implementation": {
+        "GAS_SERVICE_MANAGER_ROLE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "owner": {
+        "TARGET_MANAGER_ROLE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "pendingOwner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "Operators",
-      "values": {
-        "owner": {
+        "childBridgeAdaptor": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "pendingOwner": {
+        "childChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "gasService": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "gateway": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "initializerAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rootBridge": {
           "description": null,
           "severity": null,
           "type": null
