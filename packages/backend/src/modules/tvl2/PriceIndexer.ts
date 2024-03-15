@@ -21,6 +21,7 @@ export class PriceIndexer extends ChildIndexer {
     private readonly token: PriceConfigEntry,
     private readonly syncService: SyncService,
   ) {
+    // TODO: tag with symbol instead of address
     super(logger.tag(`${token.chain}-${token.address.toString()}`), [
       parentIndexer,
     ])
@@ -29,11 +30,14 @@ export class PriceIndexer extends ChildIndexer {
 
   override async start(): Promise<void> {
     this.logger.info('Starting...')
-    await this.initializeIndexerState()
+    await this.initialize()
     await super.start()
+    this.logger.info('Started')
   }
 
   override async update(_from: number, _to: number): Promise<number> {
+    this.logger.info('Updating...')
+
     const from = this.syncService.getTimestampToSync(
       this.token.chain,
       new UnixTime(_from),
@@ -61,7 +65,7 @@ export class PriceIndexer extends ChildIndexer {
     )
 
     const priceRecords: PricesRecord[] = prices
-      // we filter out timestamps that we do not care about
+      // we filter out timestamps that would be deleted by TVL cleaner
       // performance is not a big issue as we download 80 days worth of prices at once
       .filter((p) =>
         this.syncService.shouldTimestampBeSynced(this.token.chain, p.timestamp),
@@ -74,6 +78,9 @@ export class PriceIndexer extends ChildIndexer {
       }))
 
     await this.pricesRepository.addMany(priceRecords)
+
+    this.logger.info('Updated')
+
     return to.toNumber()
   }
 
@@ -90,7 +97,6 @@ export class PriceIndexer extends ChildIndexer {
     safeHeight: number,
     trx?: Knex.Transaction,
   ): Promise<void> {
-    // TODO: is it needed?
     assert(
       safeHeight >= this.token.sinceTimestamp.toNumber(),
       'Cannot set height to be lower than the minimum timestamp',
@@ -99,7 +105,9 @@ export class PriceIndexer extends ChildIndexer {
     await this.stateRepository.setSafeHeight(this.indexerId, safeHeight, trx)
   }
 
-  async initializeIndexerState() {
+  async initialize() {
+    this.logger.info('Initializing...')
+
     const indexerState = await this.stateRepository.findIndexerState(
       this.indexerId,
     )
@@ -120,14 +128,20 @@ export class PriceIndexer extends ChildIndexer {
         this.token.sinceTimestamp.equals(indexerState.minTimestamp),
       'Minimum timestamp of this indexer cannot be updated',
     )
+
+    this.logger.info('Initialized')
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
+    this.logger.info('Invalidating...')
+
     await this.pricesRepository.deleteBeforeInclusive(
       this.token.chain,
       this.token.address,
       new UnixTime(targetHeight),
     )
+
+    this.logger.info('Invalidated')
 
     return Promise.resolve(targetHeight)
   }
