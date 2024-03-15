@@ -82,8 +82,10 @@ function getFinalityData(
   }
 }
 
-function isSynced(syncedUntil: UnixTime) {
-  return UnixTime.now().add(-1, 'days').add(-1, 'hours').lte(syncedUntil)
+function isSynced(_: UnixTime) {
+  // TODO: remove this when liveness is fixed
+  // return UnixTime.now().add(-1, 'days').add(-1, 'hours').lte(syncedUntil)
+  return true
 }
 
 function getIncludedProjects(

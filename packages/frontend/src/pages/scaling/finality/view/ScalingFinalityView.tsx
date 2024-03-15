@@ -1,9 +1,9 @@
 import React from 'react'
 
 import { getScalingRowProps } from '../../../../components/table/props/getScalingRowProps'
-import { getScalingFinalityColumnsConfig } from '../../../../components/table/props/getScalingTableColumnsConfig'
 import { TableView } from '../../../../components/table/TableView'
 import { RowConfig } from '../../../../components/table/types'
+import { getScalingFinalityColumnsConfig } from '../props/getScalingFinalityColumnsConfig'
 import { ScalingFinalityViewEntry } from '../types'
 
 export interface ScalingFinalityViewProps {
