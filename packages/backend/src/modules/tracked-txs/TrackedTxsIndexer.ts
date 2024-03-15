@@ -48,15 +48,15 @@ export class TrackedTxsIndexer extends ChildIndexer {
   }
 
   override async start(): Promise<void> {
-    this.logger.info('Starting...')
     await this.initialize()
     await super.start()
+    this.logger.info('Started')
   }
 
   override async update(from: number, to: number): Promise<number> {
     const { from: unixFrom, to: unixTo } = adjustRangeForBigQueryCall(from, to)
 
-    const [configurations, syncTo] = await this.getConfiguration(
+    const [configurations, syncTo] = await this.getConfigurationToSync(
       unixFrom,
       unixTo,
     )
@@ -93,7 +93,7 @@ export class TrackedTxsIndexer extends ChildIndexer {
     return syncTo.toNumber()
   }
 
-  async getConfiguration(
+  async getConfigurationToSync(
     from: UnixTime,
     to: UnixTime,
   ): Promise<[TrackedTxConfigEntry[], UnixTime]> {
@@ -112,7 +112,6 @@ export class TrackedTxsIndexer extends ChildIndexer {
   }
 
   private async initialize(): Promise<void> {
-    this.logger.info('Initializing...')
     const databaseEntries = await this.configRepository.getAll()
     const { toAdd, toRemove, toTrim } = diffTrackedTxConfigurations(
       this.configs,
@@ -135,6 +134,7 @@ export class TrackedTxsIndexer extends ChildIndexer {
       await this.trimConfigurations(toTrim, trx)
       await this.initializeIndexerState(safeHeight, trx)
     })
+    this.logger.info('Initialized')
   }
 
   private async trimConfigurations(
