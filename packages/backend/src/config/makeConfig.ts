@@ -119,6 +119,12 @@ export function makeConfig(
       minTimestamp: UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
       uses: {
         liveness: flags.isEnabled('tracked-txs', 'liveness'),
+        l2costs: flags.isEnabled('tracked-txs', 'l2costs') && {
+          providerUrl: env.string('L2COSTS_PROVIDER_URL'),
+          providerCallsPerMinute: env.optionalInteger(
+            'L2COSTS_PROVIDER_CALLS_PER_MINUTE',
+          ),
+        },
       },
     },
     finality: flags.isEnabled('finality') && {

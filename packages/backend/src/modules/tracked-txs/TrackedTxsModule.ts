@@ -7,6 +7,7 @@ import { Database } from '../../peripherals/database/Database'
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
 import { Clock } from '../../tools/Clock'
 import { ApplicationModuleWithIndexer } from '../ApplicationModule'
+import { L2CostsUpdater } from '../l2-costs/L2CostsUpdater'
 import { LivenessUpdater } from '../liveness/LivenessUpdater'
 import { HourlyIndexer } from './HourlyIndexer'
 import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
@@ -19,6 +20,7 @@ export function createTrackedTxsModule(
   database: Database,
   clock: Clock,
   livenessUpdater: LivenessUpdater | undefined,
+  l2CostsUpdater: L2CostsUpdater | undefined,
 ): ApplicationModuleWithIndexer<TrackedTxsIndexer> | undefined {
   if (!config.trackedTxsConfig || !livenessUpdater) {
     logger.info('Tracked transactions module disabled')
@@ -52,6 +54,7 @@ export function createTrackedTxsModule(
 
   const updaters = {
     liveness: livenessUpdater,
+    l2costs: l2CostsUpdater,
   }
 
   const trackedTxsIndexer = new TrackedTxsIndexer(

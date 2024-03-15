@@ -96,6 +96,12 @@ export interface TrackedTxsConfig {
   readonly minTimestamp: UnixTime
   readonly uses: {
     readonly liveness: boolean
+    readonly l2costs:
+      | {
+          readonly providerUrl: string
+          readonly providerCallsPerMinute?: number
+        }
+      | false
   }
 }
 
