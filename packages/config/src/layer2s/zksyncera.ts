@@ -154,6 +154,20 @@ export const zksyncera: Layer2 = {
           functionSignature:
             'function proveBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32), tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[], tuple(uint256[], uint256[]))',
           sinceTimestampInclusive: new UnixTime(1701258299),
+          untilTimestampExclusive: new UnixTime(1710165419),
+        },
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD',
+          ),
+          selector: '0x7f61885c',
+          functionSignature:
+            'function proveBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32), tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[], tuple(uint256[], uint256[]))',
+          sinceTimestampInclusive: new UnixTime(1710165419),
         },
       },
       {
@@ -181,6 +195,20 @@ export const zksyncera: Layer2 = {
           functionSignature:
             'function executeBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[] _newBatchesData)',
           sinceTimestampInclusive: new UnixTime(1701258299),
+          untilTimestampExclusive: new UnixTime(1710167255),
+        },
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD',
+          ),
+          selector: '0xc3d93e7c',
+          functionSignature:
+            'function executeBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[] _newBatchesData)',
+          sinceTimestampInclusive: new UnixTime(1710167255),
         },
       },
     ],
@@ -192,7 +220,7 @@ export const zksyncera: Layer2 = {
   },
   dataAvailability: makeDataAvailabilityConfig({
     type: 'On chain',
-    layer: 'Ethereum (calldata)',
+    layer: 'Ethereum (blobs or calldata)',
     mode: 'State diffs (compressed)',
   }),
   riskView: makeBridgeCompatible({

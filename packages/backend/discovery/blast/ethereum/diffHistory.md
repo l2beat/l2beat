@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x80373f7e73a672e63f68c4c695bb66e0bc2d4f70
+
+# Diff at Wed, 13 Mar 2024 09:32:22 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@800d2d30954e8bfb14ad062b9806c50997706541 block: 19411954
+- current block number: 19425273
+
+## Description
+
+Ignore value changes related to queued withdrawals from the USDYieldManager as any withdrawals are generally queued.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19411954 (main branch discovery), not current.
+
+```diff
+    contract USDYieldManager (0xa230285d5683C74935aD14c446e137c8c8828438) {
+    +++ description: None
+      values.getLastRequestId:
+-        3
+      values.unfinalizedRequestNumber:
+-        0
+    }
+```
+
 Generated with discovered.json: 0x15c383d1d808622bddcc23f20acc371a66bd7a71
 
 # Diff at Mon, 11 Mar 2024 12:49:39 GMT:

@@ -31,7 +31,8 @@ you are out of luck. We will fix this in the future.
                         Please read before adding tokens
 
 1. Find the token Ethereum address
-2. Run the script `yarn tokens:add <address> <category>`
+2. Add the token to `tokens.jsonc` in correct chain
+2. Run the script `yarn tokens`
 3. Commit the changes and open a PR
 
 */

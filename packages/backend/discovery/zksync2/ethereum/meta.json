@@ -85,8 +85,8 @@
           "type": null
         },
         "getProtocolVersion": {
-          "description": null,
-          "severity": null,
+          "description": "Protocol version, increments with each protocol change",
+          "severity": "MEDIUM",
           "type": null
         },
         "getTotalBatchesCommitted": {
@@ -130,8 +130,8 @@
           "type": null
         },
         "getVerifierParams": {
-          "description": null,
-          "severity": null,
+          "description": "Verifier parameters used for proving batches",
+          "severity": "LOW",
           "type": null
         },
         "isDiamondStorageFrozen": {
@@ -209,17 +209,27 @@
           "severity": null,
           "type": null
         },
-        "validator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "zkSyncContract": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getCommittedBatchTimestamp": {
+        "constructorArgs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "revertedBlocks": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "validatorsAdded": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "validatorsRemoved": {
           "description": null,
           "severity": null,
           "type": null

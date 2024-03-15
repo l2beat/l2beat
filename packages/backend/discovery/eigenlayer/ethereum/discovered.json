@@ -1,7 +1,7 @@
 {
   "name": "eigenlayer",
   "chain": "ethereum",
-  "blockNumber": 19418224,
+  "blockNumber": 19426942,
   "configHash": "0x5950844eac2ee51d4cd8993b6e3af7a5642365a128e69d84db25e10893fad00c",
   "version": 3,
   "contracts": [
@@ -13,8 +13,8 @@
       },
       "sinceTimestamp": 1602667372,
       "values": {
-        "get_deposit_count": "0xb573140000000000",
-        "get_deposit_root": "0xaf81465cd1f106d20d8b8004b019138f624fd89e7e33e28cda26462528cb6e45"
+        "get_deposit_count": "0xb67b140000000000",
+        "get_deposit_root": "0x9f55943b52e100e7d6a8d77df5bbcd3944f9607982719ff885cc0adc9511db32"
       },
       "derivedName": "DepositContract"
     },
@@ -50,7 +50,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "197939620727483439425913",
+        "totalShares": "197272189563866782123558",
         "underlyingToken": "0xf951E335afb289353dc249e82926178EaC7DEd78"
       },
       "derivedName": "StrategyBaseTVLLimits"
@@ -102,7 +102,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "64056836128719641078332",
+        "totalShares": "63714558364899453315763",
         "underlyingToken": "0xae78736Cd615f374D3085123A210448E74Fc6393"
       },
       "derivedName": "StrategyBaseTVLLimits"
@@ -128,7 +128,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "191470036791827001788743",
+        "totalShares": "188868874216867235464581",
         "underlyingToken": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa"
       },
       "derivedName": "StrategyBaseTVLLimits"
@@ -199,7 +199,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "30967854326190782976144",
+        "totalShares": "30293831955461934964106",
         "underlyingToken": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
       },
       "derivedName": "StrategyBaseTVLLimits"
@@ -282,7 +282,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "85420960889429603831684",
+        "totalShares": "85420825389429603831684",
         "underlyingToken": "0xa2E3356610840701BDf5611a53974510Ae27E2e1"
       },
       "derivedName": "StrategyBaseTVLLimits"
@@ -399,7 +399,7 @@
         "eigenPodBeacon": "0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
         "ethPOS": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
         "maxPods": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "numPods": 23783,
+        "numPods": 24036,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 30,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
@@ -429,7 +429,7 @@
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "926246424389752335137145",
+        "totalShares": "925904772868430424876774",
         "underlyingToken": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
       },
       "derivedName": "StrategyBaseTVLLimits"
@@ -542,14 +542,15 @@
         "domainSeparator": "0x34c8be0f1205a420b291c5ce97375b669d2d120e32d7aa5ea9f2497a0fbcc3e2",
         "getChainId": 1,
         "getOwners": [
-          "0xe479a0839F13117f42142AD6cE71B49a97c1c928",
+          "0xa2425B00F9A9457AEdd51d4C36d9917eA1Aa7a02",
+          "0xb7Ae34BB33da55f12797e793E01e63a17B11d108",
+          "0x27ff193A6A1574A611E21c39FDA636fA1d61ba30",
           "0x422e2F724faFE75F3635458aD7D3Ac803DCD7ff1",
           "0xeD7Ef087d1C01ecCA9a9688a44aaeDDEf4ea560E",
-          "0x7e0b47E52b567fB6717f8ACAeD3F4591759F22fF",
           "0xe7fFd467F7526abf9c8796EDeE0AD30110419127"
         ],
         "getThreshold": 3,
-        "nonce": 20,
+        "nonce": 22,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -610,6 +611,7 @@
   ],
   "eoas": [
     "0x17919FAC7024d5b770322E5Cb81607D247654116",
+    "0x27ff193A6A1574A611E21c39FDA636fA1d61ba30",
     "0x313011Ee87b12700E29B0D1136Ae3d64665F3939",
     "0x33E816008E7bc7798A73d0eaa640CC24f34d1626",
     "0x34C37613e1680efD9e203C979658e1d058b4B2BC",
@@ -617,14 +619,14 @@
     "0x65C4799061c0D1e3E87ADdB65b02E92a558F842F",
     "0x6A662c5DdCe0b76BD081b8A4ec3A4F8a671b0b1f",
     "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
-    "0x7e0b47E52b567fB6717f8ACAeD3F4591759F22fF",
     "0x80cb2DA66A3ccb6064f16B15B6ae11d8E089C6D7",
     "0x8ffCF07A59631f0578f3E84B51C48cF0dEADCd95",
     "0x97b4A6E0471A7c5906fF1Cc2a5970ed569B04815",
+    "0xa2425B00F9A9457AEdd51d4C36d9917eA1Aa7a02",
     "0xAF4D94Cd299211de542530399290877E2c85F061",
+    "0xb7Ae34BB33da55f12797e793E01e63a17B11d108",
     "0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0",
     "0xe37756BEdDC89e94A8d557fd5b95a4D2a57e9D60",
-    "0xe479a0839F13117f42142AD6cE71B49a97c1c928",
     "0xe7fFd467F7526abf9c8796EDeE0AD30110419127",
     "0xe8F09A9D42aEA0a3B393aD06F25CF512eA51707e",
     "0xeD7Ef087d1C01ecCA9a9688a44aaeDDEf4ea560E"

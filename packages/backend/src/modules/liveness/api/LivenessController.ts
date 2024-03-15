@@ -12,6 +12,7 @@ import { Project } from '../../../model/Project'
 import { IndexerStateRepository } from '../../../peripherals/database/repositories/IndexerStateRepository'
 import { Clock } from '../../../tools/Clock'
 import { TaskQueue } from '../../../tools/queue/TaskQueue'
+import { TrackedTxsConfigsRepository } from '../../tracked-txs/repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsConfig } from '../../tracked-txs/types/TrackedTxsConfig'
 import { LivenessRepository } from '../repositories/LivenessRepository'
 import { calculateAnomalies } from './calculateAnomalies'
@@ -19,6 +20,7 @@ import {
   calcIntervalWithAvgsPerProject,
   LivenessRecordWithInterval,
 } from './calculateIntervalWithAverages'
+import { getLivenessSyncedUntil } from './getLivenessSyncedUntil'
 import { groupByType } from './groupByType'
 
 type LivenessResult =
@@ -70,6 +72,7 @@ export class LivenessController {
 
   constructor(
     private readonly livenessRepository: LivenessRepository,
+    private readonly trackedTxsConfigsRepository: TrackedTxsConfigsRepository,
     private readonly indexerStateRepository: IndexerStateRepository,
     private readonly projects: Project[],
     private readonly clock: Clock,
@@ -98,17 +101,6 @@ export class LivenessController {
   }
 
   async getLiveness(): Promise<LivenessResult> {
-    const requiredTimestamp = this.clock.getLastHour().add(-1, 'hours')
-    const indexerState = await this.indexerStateRepository.findIndexerState(
-      'tracked_txs_indexer',
-    )
-    if (
-      indexerState === undefined ||
-      new UnixTime(indexerState.safeHeight).lt(requiredTimestamp)
-    ) {
-      return { type: 'error', error: 'DATA_NOT_SYNCED' }
-    }
-
     const projects: LivenessApiResponse['projects'] = {}
 
     const activeProjects = this.projects.filter((p) => !p.isArchived)
@@ -125,9 +117,13 @@ export class LivenessController {
         continue
       }
 
-      const isSynced = livenessConfig.entries.some(
-        (e) => !e.untilTimestamp || e.untilTimestamp.gt(UnixTime.now()),
-      )
+      const configurations =
+        await this.trackedTxsConfigsRepository.getByProjectId(project.projectId)
+
+      const syncedUntil = getLivenessSyncedUntil(configurations)
+      if (!syncedUntil) {
+        continue
+      }
 
       const records =
         await this.livenessRepository.getWithSubtypeDistinctTimestamp(
@@ -149,7 +145,7 @@ export class LivenessController {
 
       projects[project.projectId.toString()] = {
         ...withAnomalies,
-        isSynced,
+        syncedUntil,
       }
     }
 

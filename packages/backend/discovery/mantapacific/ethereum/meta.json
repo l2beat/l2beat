@@ -285,8 +285,8 @@
           "type": null
         },
         "overhead": {
-          "description": null,
-          "severity": null,
+          "description": "Fixed L2 gas overhead. Used as part of the L2 fee calculation.",
+          "severity": "LOW",
           "type": null
         },
         "owner": {
@@ -300,8 +300,8 @@
           "type": null
         },
         "scalar": {
-          "description": null,
-          "severity": null,
+          "description": "Dynamic L2 gas overhead. Used as part of the L2 fee calculation.",
+          "severity": "LOW",
           "type": null
         },
         "UNSAFE_BLOCK_SIGNER_SLOT": {

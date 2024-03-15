@@ -272,7 +272,7 @@ export const arbitrum: Layer2 = {
   },
   dataAvailability: makeDataAvailabilityConfig({
     type: 'On chain',
-    layer: 'Ethereum (calldata)',
+    layer: 'Ethereum (blobs or calldata)',
     mode: 'Transactions data (compressed)',
   }),
   riskView: makeBridgeCompatible({
@@ -389,7 +389,7 @@ export const arbitrum: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
       references: [
         {
           text: 'Sequencing followed by deterministic execution - Arbitrum documentation',

@@ -2,6 +2,26 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
+      "name": "LORDSBridge",
+      "values": {
+        "l1Token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2Bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "starknet": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "L1DaiGateway",
       "values": {
         "ceiling": {
@@ -40,26 +60,6 @@
           "type": null
         },
         "starkNet": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "LORDSBridge",
-      "values": {
-        "l1Token": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2Bridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "starknet": {
           "description": null,
           "severity": null,
           "type": null
@@ -152,24 +152,14 @@
       }
     },
     {
-      "name": "UNIBridge",
+      "name": "wstETHBridge",
       "values": {
-        "ENABLE_WINDOW_DURATION_SLOT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "estimateDepositFeeWei": {
           "description": null,
           "severity": null,
           "type": null
         },
         "estimateEnrollmentFeeWei": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getEnableWindowDuration": {
           "description": null,
           "severity": null,
           "type": null
@@ -199,7 +189,77 @@
           "severity": null,
           "type": null
         },
-        "MAX_UPGRADE_DELAY": {
+        "maxDeposit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxTotalBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROXY_GOVERNANCE_TAG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROXY_VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "UPGRADE_DELAY_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "manager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "WBTCBridge",
+      "values": {
+        "estimateDepositFeeWei": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "estimateEnrollmentFeeWei": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getUpgradeActivationDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "identify": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isFrozen": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isNotFinalized": {
           "description": null,
           "severity": null,
           "type": null
@@ -210,6 +270,11 @@
           "type": null
         },
         "maxTotalBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROXY_GOVERNANCE_TAG": {
           "description": null,
           "severity": null,
           "type": null
@@ -317,326 +382,6 @@
       }
     },
     {
-      "name": "FXSBridge",
-      "values": {
-        "ENABLE_WINDOW_DURATION_SLOT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "estimateDepositFeeWei": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "estimateEnrollmentFeeWei": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getUpgradeActivationDelay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "identify": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "implementation": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isFrozen": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isNotFinalized": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MAX_UPGRADE_DELAY": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "maxDeposit": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "maxTotalBalance": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PROXY_GOVERNANCE_TAG": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PROXY_VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "UPGRADE_DELAY_SLOT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "accessControl": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "manager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "USDCBridge",
-      "values": {
-        "estimateDepositFeeWei": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "estimateEnrollmentFeeWei": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getUpgradeActivationDelay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "identify": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "implementation": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isFrozen": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isNotFinalized": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "maxDeposit": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "maxTotalBalance": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PROXY_GOVERNANCE_TAG": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PROXY_VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "UPGRADE_DELAY_SLOT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "accessControl": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "manager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "sfrxETHBridge",
-      "values": {
-        "ENABLE_WINDOW_DURATION_SLOT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "estimateDepositFeeWei": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "estimateEnrollmentFeeWei": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getUpgradeActivationDelay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "identify": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "implementation": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isFrozen": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isNotFinalized": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MAX_UPGRADE_DELAY": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "maxDeposit": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "maxTotalBalance": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PROXY_GOVERNANCE_TAG": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PROXY_VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "UPGRADE_DELAY_SLOT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "accessControl": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "manager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "USDTBridge",
-      "values": {
-        "estimateDepositFeeWei": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "estimateEnrollmentFeeWei": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getUpgradeActivationDelay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "identify": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "implementation": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isFrozen": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isNotFinalized": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "maxDeposit": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "maxTotalBalance": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PROXY_GOVERNANCE_TAG": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PROXY_VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "UPGRADE_DELAY_SLOT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "accessControl": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "manager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "FRAXBridge",
       "values": {
         "ENABLE_WINDOW_DURATION_SLOT": {
@@ -644,86 +389,6 @@
           "severity": null,
           "type": null
         },
-        "estimateDepositFeeWei": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "estimateEnrollmentFeeWei": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getUpgradeActivationDelay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "identify": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "implementation": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isFrozen": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isNotFinalized": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MAX_UPGRADE_DELAY": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "maxDeposit": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "maxTotalBalance": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PROXY_GOVERNANCE_TAG": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PROXY_VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "UPGRADE_DELAY_SLOT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "accessControl": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "manager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "rETHBridge",
-      "values": {
         "estimateDepositFeeWei": {
           "description": null,
           "severity": null,
@@ -897,6 +562,256 @@
       }
     },
     {
+      "name": "rETHBridge",
+      "values": {
+        "estimateDepositFeeWei": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "estimateEnrollmentFeeWei": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getUpgradeActivationDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "identify": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isFrozen": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isNotFinalized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_UPGRADE_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxDeposit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxTotalBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROXY_GOVERNANCE_TAG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROXY_VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "UPGRADE_DELAY_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "manager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "UNIBridge",
+      "values": {
+        "ENABLE_WINDOW_DURATION_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "estimateDepositFeeWei": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "estimateEnrollmentFeeWei": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getEnableWindowDuration": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getUpgradeActivationDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "identify": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isFrozen": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isNotFinalized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_UPGRADE_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxDeposit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxTotalBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROXY_VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "UPGRADE_DELAY_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "manager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "FXSBridge",
+      "values": {
+        "ENABLE_WINDOW_DURATION_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "estimateDepositFeeWei": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "estimateEnrollmentFeeWei": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getUpgradeActivationDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "identify": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isFrozen": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isNotFinalized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_UPGRADE_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxDeposit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxTotalBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROXY_GOVERNANCE_TAG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROXY_VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "UPGRADE_DELAY_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "manager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "Starknet",
       "values": {
         "configHash": {
@@ -1007,7 +922,7 @@
       }
     },
     {
-      "name": "WBTCBridge",
+      "name": "USDTBridge",
       "values": {
         "estimateDepositFeeWei": {
           "description": null,
@@ -1082,7 +997,92 @@
       }
     },
     {
-      "name": "wstETHBridge",
+      "name": "sfrxETHBridge",
+      "values": {
+        "ENABLE_WINDOW_DURATION_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "estimateDepositFeeWei": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "estimateEnrollmentFeeWei": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getUpgradeActivationDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "identify": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isFrozen": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isNotFinalized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_UPGRADE_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxDeposit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxTotalBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROXY_GOVERNANCE_TAG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROXY_VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "UPGRADE_DELAY_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "manager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "USDCBridge",
       "values": {
         "estimateDepositFeeWei": {
           "description": null,
@@ -1161,7 +1161,52 @@
       "values": {}
     },
     {
-      "name": "BridgeMultisig",
+      "name": "TheLordsToken",
+      "values": {
+        "cap": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupplyAt": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ImplementationMultisig",
       "values": {
         "domainSeparator": {
           "description": null,
@@ -1196,7 +1241,7 @@
       }
     },
     {
-      "name": "ImplementationMultisig",
+      "name": "BridgeMultisig",
       "values": {
         "domainSeparator": {
           "description": null,
@@ -1259,51 +1304,6 @@
           "type": null
         },
         "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "TheLordsToken",
-      "values": {
-        "cap": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "decimals": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "name": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "symbol": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalSupply": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalSupplyAt": {
           "description": null,
           "severity": null,
           "type": null

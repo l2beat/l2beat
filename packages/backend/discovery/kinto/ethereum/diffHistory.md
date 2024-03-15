@@ -1,3 +1,36 @@
+Generated with discovered.json: 0x2a8f9804aa4d0e1c2654291b4dc0c829b5c12d40
+
+# Diff at Thu, 14 Mar 2024 10:39:07 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@24c5721630392f8b6f59093376472db03d18b2c2 block: 19339792
+- current block number: 19432708
+
+## Description
+
+Upgrade: Changed WASM module root hash of the RollupProxy contract.
+Context: Kinto is currently in review.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d) {
+    +++ description: None
+      values.nonce:
+-        2
++        3
+    }
+```
+
+```diff
+    contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
+    +++ description: None
+      values.wasmModuleRoot:
+-        "0x1024d5971f781dd930c46b5fb6fb571e6af9f31b5dc191b82e82036c207cc968"
++        "0xd2d42f1e7b5ea262991c3fd1fc7ed3dde4b21c28d3a7edec49f7c4fb51c03f73"
+    }
+```
+
 Generated with discovered.json: 0x6bf630000a540615c26b6e131a88c1214fde842c
 
 # Diff at Fri, 01 Mar 2024 10:41:16 GMT:

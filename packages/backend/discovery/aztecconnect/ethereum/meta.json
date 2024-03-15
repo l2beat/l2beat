@@ -1,0 +1,315 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "RollupProcessorV2",
+      "values": {
+        "allowThirdPartyContracts": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defiBridgeProxy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delayBeforeEscapeHatch": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EMERGENCY_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "escapeBlockLowerBound": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "escapeBlockUpperBound": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getAsyncDefiInteractionHashesLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getCapped": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getDataSize": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getDefiInteractionHashesLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getEscapeHatchStatus": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getImplementationVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPendingDefiInteractionHashesLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getSupportedAssetsLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getSupportedBridgesLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lastRollupTimeStamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "LISTER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OWNER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "prevDefiInteractionsHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RESUME_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rollupStateHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "verifier": {
+          "description": "Address of the ZK verifier.",
+          "severity": "LOW",
+          "type": "PERMISSION"
+        },
+        "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rollupProviders": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getSupportedAsset": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getSupportedBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Aztec Multisig",
+      "values": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Lister Multisig",
+      "values": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "DefiBridgeProxy",
+      "values": {}
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Resume Multisig",
+      "values": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Emergency Multisig",
+      "values": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Verifier28x32",
+      "description": "Verifier contract used by the RollupProcessorV2.",
+      "values": {
+        "getVerificationKeyHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}

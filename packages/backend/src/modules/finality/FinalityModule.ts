@@ -42,9 +42,7 @@ export function createFinalityModule(
   const finalityController = new FinalityController(
     livenessRepository,
     finalityRepository,
-    indexerStateRepository,
     config.finality.configurations,
-    clock,
   )
   const finalityRouter = createFinalityRouter(finalityController)
 
