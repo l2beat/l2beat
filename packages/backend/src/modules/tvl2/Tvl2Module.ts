@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import { tokenList } from '@l2beat/config'
 import {
   CoingeckoClient,
   CoingeckoQueryService,
@@ -38,6 +39,7 @@ export function createTvl2Module(
   const statusRouter = createTvl2StatusRouter(config.tvl2, clock)
   const hourlyIndexer = new HourlyIndexer(logger, clock)
 
+  // TODO: write it correctly
   const chainsMinTimestamp: Record<string, UnixTime> = {
     ethereum: UnixTime.now().add(-7, 'days'),
     arbitrum: UnixTime.now().add(-7, 'days'),
@@ -50,6 +52,7 @@ export function createTvl2Module(
     kroma: UnixTime.now().add(-7, 'days'),
     aevo: UnixTime.now().add(-7, 'days'),
     blast: UnixTime.now().add(-7, 'days'),
+    mode: UnixTime.now().add(-7, 'days'),
   }
 
   const syncService = new SyncService(clock, {
@@ -61,7 +64,12 @@ export function createTvl2Module(
   const indexers = config.tvl2.prices.map(
     (price) =>
       new PriceIndexer(
-        logger,
+        // TODO: write it correctly
+        logger.tag(
+          `${price.chain}:${
+            tokenList.find((t) => t.address === price.address)?.symbol
+          }`,
+        ),
         hourlyIndexer,
         coingeckoQueryService,
         stateRepository,

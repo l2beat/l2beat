@@ -21,10 +21,7 @@ export class PriceIndexer extends ChildIndexer {
     private readonly token: PriceConfigEntry,
     private readonly syncService: SyncService,
   ) {
-    // TODO: tag with symbol instead of address
-    super(logger.tag(`${token.chain}-${token.address.toString()}`), [
-      parentIndexer,
-    ])
+    super(logger, [parentIndexer])
     this.indexerId = `price_indexer_${token.chain}_${token.address.toString()}`
   }
 
