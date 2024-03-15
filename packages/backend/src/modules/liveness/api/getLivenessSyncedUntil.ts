@@ -1,10 +1,10 @@
 import { notUndefined, UnixTime } from '@l2beat/shared-pure'
 import { partition } from 'lodash'
 
-import { LivenessConfigurationRecord } from '../repositories/LivenessConfigurationRepository'
+import { TrackedTxsConfigRecord } from '../../tracked-txs/repositories/TrackedTxsConfigsRepository'
 
 export function getLivenessSyncedUntil(
-  configurations: LivenessConfigurationRecord[],
+  configurations: TrackedTxsConfigRecord[],
 ): UnixTime | undefined {
   if (configurations.length === 0) {
     return undefined
@@ -12,7 +12,7 @@ export function getLivenessSyncedUntil(
 
   const [configsWithoutUntil, configsWithUntil] = partition(
     configurations,
-    (c) => c.untilTimestamp === undefined,
+    (c) => c.untilTimestampExclusive === undefined,
   )
 
   const configsToUse =

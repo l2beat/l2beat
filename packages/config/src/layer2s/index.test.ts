@@ -122,12 +122,10 @@ describe('layer2s', () => {
     it('every current address is present in discovery', () => {
       for (const project of layer2s) {
         it(`${project.id.toString()} : has valid addresses`, () => {
-          if (project.config.liveness) {
-            const addresses = [
-              ...project.config.liveness.batchSubmissions,
-              ...project.config.liveness.stateUpdates,
-              ...project.config.liveness.proofSubmissions,
-            ]
+          if (project.config.trackedTxs) {
+            const queries = project.config.trackedTxs.map((t) => t.query)
+
+            const addresses = queries
               // .filter((x) => x.untilTimestamp === undefined)
               .flatMap((x) => {
                 switch (x.formula) {

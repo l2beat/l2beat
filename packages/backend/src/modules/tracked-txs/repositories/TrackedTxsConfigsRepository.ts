@@ -58,6 +58,15 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
       .filter(notUndefined)
   }
 
+  async getByProjectId(projectId: ProjectId) {
+    const knex = await this.knex()
+    const rows = await knex('tracked_txs_configs').where(
+      'project_id',
+      projectId.toString(),
+    )
+    return rows.map(toRecord)
+  }
+
   // TODO: (tracked_txs_status) function useful for implementing tracked txs status
   // async findUnusedConfigurationsIds(): Promise<TrackedTxsConfigHash[]> {
   //   const knex = await this.knex()

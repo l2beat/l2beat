@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import { LivenessConfigurationRecord } from '../repositories/LivenessConfigurationRepository'
+import { TrackedTxsConfigRecord } from '../../tracked-txs/repositories/TrackedTxsConfigsRepository'
 import { getLivenessSyncedUntil } from './getLivenessSyncedUntil'
 
 const FROM = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
@@ -14,9 +14,9 @@ describe(getLivenessSyncedUntil.name, () => {
 
   it('returns undefined if no lastSyncedTimestamp', () => {
     const result = getLivenessSyncedUntil([
-      mockObject<LivenessConfigurationRecord>({
+      mockObject<TrackedTxsConfigRecord>({
         lastSyncedTimestamp: undefined,
-        untilTimestamp: undefined,
+        untilTimestampExclusive: undefined,
       }),
     ])
 
@@ -25,17 +25,17 @@ describe(getLivenessSyncedUntil.name, () => {
 
   it('returns earliest lastSyncedTimestamp of configurations without untilTimestamp', () => {
     const result = getLivenessSyncedUntil([
-      mockObject<LivenessConfigurationRecord>({
+      mockObject<TrackedTxsConfigRecord>({
         lastSyncedTimestamp: undefined,
-        untilTimestamp: undefined,
+        untilTimestampExclusive: undefined,
       }),
-      mockObject<LivenessConfigurationRecord>({
+      mockObject<TrackedTxsConfigRecord>({
         lastSyncedTimestamp: FROM,
-        untilTimestamp: undefined,
+        untilTimestampExclusive: undefined,
       }),
-      mockObject<LivenessConfigurationRecord>({
+      mockObject<TrackedTxsConfigRecord>({
         lastSyncedTimestamp: FROM.add(2, 'hours'),
-        untilTimestamp: undefined,
+        untilTimestampExclusive: undefined,
       }),
     ])
 
@@ -44,21 +44,21 @@ describe(getLivenessSyncedUntil.name, () => {
 
   it('returns earliest lastSyncedTimestamp of configurations with untilTimestamp', () => {
     const result = getLivenessSyncedUntil([
-      mockObject<LivenessConfigurationRecord>({
+      mockObject<TrackedTxsConfigRecord>({
         lastSyncedTimestamp: undefined,
-        untilTimestamp: undefined,
+        untilTimestampExclusive: undefined,
       }),
-      mockObject<LivenessConfigurationRecord>({
+      mockObject<TrackedTxsConfigRecord>({
         lastSyncedTimestamp: FROM.add(1, 'hours'),
-        untilTimestamp: FROM.add(5, 'hours'),
+        untilTimestampExclusive: FROM.add(5, 'hours'),
       }),
-      mockObject<LivenessConfigurationRecord>({
+      mockObject<TrackedTxsConfigRecord>({
         lastSyncedTimestamp: FROM.add(2, 'hours'),
-        untilTimestamp: FROM.add(6, 'hours'),
+        untilTimestampExclusive: FROM.add(6, 'hours'),
       }),
-      mockObject<LivenessConfigurationRecord>({
+      mockObject<TrackedTxsConfigRecord>({
         lastSyncedTimestamp: FROM.add(4, 'hours'),
-        untilTimestamp: FROM.add(6, 'hours'),
+        untilTimestampExclusive: FROM.add(6, 'hours'),
       }),
     ])
 
