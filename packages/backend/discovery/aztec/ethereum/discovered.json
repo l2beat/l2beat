@@ -1,8 +1,8 @@
 {
   "name": "aztec",
   "chain": "ethereum",
-  "blockNumber": 19034126,
-  "configHash": "0xa3e7f4b0910965efa82a11de1a02868da5220f6d28007f62e17e8ed5774baeab",
+  "blockNumber": 19325744,
+  "configHash": "0xa30f085f28e94ea8915afd21158f55d644610e828a7d328ddbe1c14ae0f6251e",
   "version": 3,
   "contracts": [
     {
@@ -25,6 +25,14 @@
       "derivedName": "AztecFeeDistributor"
     },
     {
+      "name": "TurboVerifier",
+      "address": "0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1707995675
+    },
+    {
       "name": "RollupProcessor",
       "address": "0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba",
       "upgradeability": {
@@ -39,7 +47,7 @@
         "ethAssetId": 0,
         "feeDistributor": "0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734",
         "getAssetPermitSupport": [false, false, false],
-        "getEscapeHatchStatus": [false, 2434],
+        "getEscapeHatchStatus": [false, 3616],
         "getTotalDeposited": [
           "35761624133451296404343",
           "19481078867265097315675826",
@@ -51,7 +59,7 @@
           4559522
         ],
         "getTotalPendingDeposit": [
-          "75128207733427981245",
+          "75145757733427981245",
           "9030790745687623743968",
           300
         ],
@@ -81,7 +89,7 @@
           4559522
         ],
         "totalPendingDeposit": [
-          "75128207733427981245",
+          "75145757733427981245",
           "9030790745687623743968",
           300
         ],
@@ -92,20 +100,12 @@
         ],
         "txNumPubInputs": 12,
         "txPubInputLength": 384,
-        "verifier": "0xc0CFF28c45dA7d36B8cD1e3dCd6451e812CA30d1"
+        "verifier": "0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8"
       },
       "derivedName": "RollupProcessor"
     },
     {
-      "name": "AlwaysReverting",
-      "address": "0xc0CFF28c45dA7d36B8cD1e3dCd6451e812CA30d1",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1705175267
-    },
-    {
-      "name": "TurboVerifier",
+      "name": "HistoricalTurboVerifier",
       "address": "0xd3a6D9De4cbC2CC7529361941e85b1c3269CcBb1",
       "upgradeability": {
         "type": "immutable"
@@ -131,7 +131,7 @@
           "0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f"
         ],
         "getThreshold": 1,
-        "nonce": 271,
+        "nonce": 276,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -163,6 +163,9 @@
       "function setReimburseConstant(uint256 _reimburseConstant)",
       "function transferOwnership(address newOwner)",
       "function txFeeBalance(uint256 assetId) view returns (uint256)"
+    ],
+    "0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8": [
+      "function verify(bytes, uint256 rollup_size)"
     ],
     "0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba": [
       "constructor(address _verifierAddress, uint256 _escapeBlockLowerBound, uint256 _escapeBlockUpperBound, address _contractOwner)",

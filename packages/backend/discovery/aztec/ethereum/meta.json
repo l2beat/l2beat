@@ -1,0 +1,244 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "HistoricalTurboVerifier",
+      "description": "TurboVerifier with historical proofs, kept for data only.",
+      "values": {}
+    },
+    {
+      "name": "RollupProcessor",
+      "values": {
+        "dataRoot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "dataSize": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "escapeBlockLowerBound": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "escapeBlockUpperBound": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ethAssetId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "feeDistributor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getEscapeHatchStatus": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalDeposited": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalFees": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalPendingDeposit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalWithdrawn": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nextRollupId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nullRoot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "numberOfAssets": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rollupNumPubInputs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rollupPubInputLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rootRoot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "txNumPubInputs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "txPubInputLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "verifier": {
+          "description": "Address of the ZK verifier.",
+          "severity": "LOW",
+          "type": "PERMISSION"
+        },
+        "getAssetPermitSupport": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "removedRollupProviders": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rollupProviders": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalDeposited": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalFees": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalPendingDeposit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalWithdrawn": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "AlwaysReverting",
+      "values": {}
+    },
+    {
+      "name": "Aztec Multisig",
+      "values": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "AztecFeeDistributor",
+      "values": {
+        "convertConstant": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "factory": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "reimburseConstant": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rollupProcessor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "router": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "WETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "txFeeBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}
