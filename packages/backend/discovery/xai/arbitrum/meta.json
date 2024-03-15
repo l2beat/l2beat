@@ -694,8 +694,8 @@
           "type": null
         },
         "getWhitelistedAddressAtIndex": {
-          "description": null,
-          "severity": null,
+          "description": "Address allowed to initiate esXAI token transfers. Currently assigned to Referee smart contract, in case this changes, the referee contract description should be updated (and the reason investigated).",
+          "severity": "MID",
           "type": null
         }
       }
