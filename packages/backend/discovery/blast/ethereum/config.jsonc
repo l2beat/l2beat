@@ -82,7 +82,8 @@
           "type": "opStackSequencerInbox",
           "sequencerAddress": "{{ batcherHash }}"
         }
-      }
+      },
+      "ignoreInWatchMode": ["scalar"]
     },
     "LidoYieldProvider": {
       "ignoreRelatives": ["LIDO", "THIS", "WITHDRAWAL_QUEUE"],

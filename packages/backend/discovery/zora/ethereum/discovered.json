@@ -1,8 +1,8 @@
 {
   "name": "zora",
   "chain": "ethereum",
-  "blockNumber": 19431793,
-  "configHash": "0x919110555a37d4dedd9db279c7a635b1d09fc4fc95b923d466a467698a4f1589",
+  "blockNumber": 19439787,
+  "configHash": "0x962258a2cde6545c111f7fe566d44e917ddc61b05c04c8e49780416740074288",
   "version": 3,
   "contracts": [
     {
@@ -19,7 +19,7 @@
         "GUARDIAN": "0xC72aE5c7cc9a332699305E29F68Be66c73b60542",
         "L2_ORACLE": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 100000, 19431786],
+        "params": [1000000000, 100000, 19439713],
         "paused": false,
         "SYSTEM_CONFIG": "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86",
         "version": "1.6.0"
@@ -78,10 +78,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 11851380,
-        "latestOutputIndex": 6808,
-        "nextBlockNumber": 11853180,
-        "nextOutputIndex": 6809,
+        "latestBlockNumber": 11898180,
+        "latestOutputIndex": 6834,
+        "nextBlockNumber": 11899980,
+        "nextOutputIndex": 6835,
         "PROPOSER": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
         "startingBlockNumber": 0,
         "startingTimestamp": 1686693839,
@@ -118,7 +118,7 @@
           1000000,
           "340282366920938463463374607431768211455"
         ],
-        "scalar": "452312848583266388373324160190187140051835877600158453279133793016986207220",
+        "scalar": "452312848583266388373324160190187140051835877600158453279135269880145643075",
         "sequencerInbox": "0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
         "unsafeBlockSigner": "0x3Dc8Dfd0709C835cAd15a6A27e089FF4cF4C9228",
@@ -166,7 +166,7 @@
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
         ],
         "getThreshold": 2,
-        "nonce": 5,
+        "nonce": 8,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
