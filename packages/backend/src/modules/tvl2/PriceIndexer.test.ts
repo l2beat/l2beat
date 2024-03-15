@@ -20,12 +20,6 @@ describe(PriceIndexer.name, () => {
       const from = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
       const to = from.add(1, 'days')
 
-      const hourlyIndexer = mockObject<HourlyIndexer>({
-        start: async () => {},
-        tick: async () => to.toNumber(),
-        subscribe: () => {},
-      })
-
       const pricesResponse = [
         {
           value: 1,
@@ -80,7 +74,7 @@ describe(PriceIndexer.name, () => {
 
       const indexer = new PriceIndexer(
         Logger.SILENT,
-        hourlyIndexer,
+        mockObject<HourlyIndexer>({ subscribe: () => {} }),
         coingeckoQueryService,
         stateRepository,
         pricesRepository,
@@ -123,7 +117,42 @@ describe(PriceIndexer.name, () => {
       expect(newSafeHeight).toEqual(to.toNumber())
     })
 
-    // sync scheduled before minimum timestamp
+    it('sync scheduled before minimum timestamp to sync', async () => {
+      const from = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
+
+      const syncService = mockObject<SyncService>({
+        getTimestampToSync: mockFn().returns(from),
+      })
+
+      const indexer = new PriceIndexer(
+        Logger.SILENT,
+        mockObject<HourlyIndexer>({ subscribe: () => {} }),
+        mockObject<CoingeckoQueryService>({}),
+        mockObject<IndexerStateRepository>({}),
+        mockObject<PricesRepository>({}),
+        mockObject<PriceConfigEntry>({
+          chain: 'ethereum',
+          address: EthereumAddress.random(),
+        }),
+        syncService,
+      )
+
+      const fromBeforeMinTimestamp = 0
+
+      const newSafeHeight = await indexer.update(
+        fromBeforeMinTimestamp,
+        fromBeforeMinTimestamp + 1,
+      )
+
+      expect(syncService.getTimestampToSync).toHaveBeenNthCalledWith(
+        1,
+        'ethereum',
+        new UnixTime(fromBeforeMinTimestamp),
+        'from',
+      )
+
+      expect(newSafeHeight).toEqual(fromBeforeMinTimestamp + 1)
+    })
   })
   describe(PriceIndexer.prototype.initialize.name, () => {
     // if indexer state is not initialized, it should be initialized
