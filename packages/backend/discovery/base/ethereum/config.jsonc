@@ -73,7 +73,8 @@
           "type": "opStackSequencerInbox",
           "sequencerAddress": "{{ batcherHash }}"
         }
-      }
+      },
+      "ignoreInWatchMode": ["scalar"]
     },
     "OptimismMultisig": {
       "ignoreInWatchMode": ["nonce"]

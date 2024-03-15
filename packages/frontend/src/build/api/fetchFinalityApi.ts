@@ -22,16 +22,15 @@ export async function fetchFinalityApi(
 
 function getMockFinalityApiResponse(): FinalityApiResponse {
   const projects = [
-    'arbitrum',
-    'optimism',
-    'apex',
-    'aevo',
+    'zksyncera',
     'base',
-    'dydx',
-    'brine',
-    'linea',
-    'myria',
-    'scroll',
+    'optimism',
+    'honeypot',
+    'fuelv1',
+    'kroma',
+    'mode',
+    'zksync2',
+    'zora',
   ].reduce<Record<string, FinalityProjectData>>((acc, cur) => {
     acc[cur] = {
       timeToInclusion: generateMockData(),

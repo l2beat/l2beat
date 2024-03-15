@@ -45,6 +45,7 @@ export const mode: Layer2 = opStack({
       finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
     },
   },
+  associatedTokens: [],
   upgradeability,
   l1StandardBridgeEscrow: EthereumAddress(
     '0x735aDBbE72226BD52e818E7181953f42E3b0FF21',
@@ -93,4 +94,27 @@ export const mode: Layer2 = opStack({
     }),
   ],
   nonTemplateEscrows: [],
+  chainConfig: {
+    name: 'mode',
+    chainId: 34443,
+    explorerUrl: 'https://explorer.mode.network',
+    explorerApi: {
+      url: 'https://api.routescan.io/v2/network/mainnet/evm/34443/etherscan/api',
+      type: 'etherscan',
+    },
+    // ~ Timestamp of block number 0 on Mode
+    // The first full hour timestamp that will return the block number
+    // https://explorer.mode.network/block/0
+    minTimestampForTvl: UnixTime.fromDate(new Date('2023-11-16T22:46:23Z')),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 5022,
+        version: '3',
+      },
+    ],
+    coingeckoPlatform: 'mode',
+  },
+  usesBlobs: true,
 })

@@ -40,6 +40,10 @@ function getScalingLivenessViewEntry(
     )
   }
 
+  // TODO: remove this when liveness is fixed
+  // const isSynced = UnixTime.now().add(-12, 'hours').lte(liveness.syncedUntil)
+  const isSynced = true
+
   return {
     name: project.display.name,
     shortName: project.display.shortName,
@@ -48,7 +52,7 @@ function getScalingLivenessViewEntry(
     warning: project.display.warning,
     redWarning: project.display.redWarning,
     category: project.display.category,
-    dataAvailabilityMode: project.display.dataAvailabilityMode,
+    dataAvailabilityMode: project.dataAvailability?.mode,
     provider: project.display.provider,
     stage: project.stage,
     explanation: project.display.liveness?.explanation,
@@ -65,7 +69,7 @@ function getScalingLivenessViewEntry(
       warning: project.display.liveness?.warnings?.proofSubmissions,
     },
     anomalyEntries: getAnomalyEntries(liveness.anomalies),
-    isSynced: liveness.isSynced,
+    isSynced,
   }
 }
 

@@ -34,6 +34,17 @@ export class LivenessConfigurationRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getByProjectId(
+    projectId: ProjectId,
+  ): Promise<LivenessConfigurationRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('liveness_configuration').where({
+      project_id: projectId.toString(),
+    })
+
+    return rows.map(toRecord)
+  }
+
   async addMany(
     records: LivenessConfigEntry[],
     trx?: Knex.Transaction,
@@ -45,6 +56,21 @@ export class LivenessConfigurationRepository extends BaseRepository {
       .returning('id')
 
     return insertedRows.map((row) => LivenessId.unsafe(row.id))
+  }
+
+  async findLatestSyncedTimestampByProjectIdAndType(
+    projectId: ProjectId,
+    type: LivenessType,
+  ): Promise<UnixTime | undefined> {
+    const knex = await this.knex()
+    const row = await knex('liveness_configuration')
+      .max('last_synced_timestamp', { as: 'last_synced_timestamp' })
+      .where('project_id', projectId.toString())
+      .andWhere('type', type)
+      .first()
+    return row?.last_synced_timestamp
+      ? UnixTime.fromDate(row.last_synced_timestamp)
+      : undefined
   }
 
   async findUnusedConfigurationsIds(): Promise<LivenessId[]> {

@@ -17,7 +17,7 @@ const upgradeability = {
 
 export const fraxtal: Layer2 = opStack({
   daProvider: {
-    name: 'External',
+    name: 'FraxtalDA',
     riskView: {
       value: 'External',
       description:
@@ -59,7 +59,7 @@ export const fraxtal: Layer2 = opStack({
     warning:
       'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:
-      'Fraxtal is an EVM equivalent rollup utilizing the OP stack as its smart contract platform and execution environment.',
+      'Fraxtal is an EVM equivalent Optimium utilizing the OP stack as its smart contract platform and execution environment.',
     purposes: ['Universal', 'DeFi'],
     links: {
       websites: ['https://frax.com/'],

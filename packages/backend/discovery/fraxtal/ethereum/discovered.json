@@ -1,8 +1,8 @@
 {
   "name": "fraxtal",
   "chain": "ethereum",
-  "blockNumber": 19384276,
-  "configHash": "0x41fba32935dfefceb337209a73f2bc0220ae27f9471bc887ec450274f75d5fad",
+  "blockNumber": 19439733,
+  "configHash": "0xf3a2dd00d3ea1d4a63a930dfb231855522d1e95cf4e8217961513e0694177b13",
   "version": 3,
   "contracts": [
     {
@@ -13,8 +13,8 @@
       },
       "sinceTimestamp": 1602667372,
       "values": {
-        "get_deposit_count": "0xf74d140000000000",
-        "get_deposit_root": "0x6464d8524ee4acaa665e8dad2678ad62801931b0b8ffabcfef1c58fb08e65bba"
+        "get_deposit_count": "0x9194140000000000",
+        "get_deposit_root": "0xd89654a915b19ac3c1e321e7a7e7ce7fea55e12c4260c1eca3b0cfe6273db9e7"
       },
       "derivedName": "DepositContract"
     },
@@ -48,7 +48,7 @@
       "sinceTimestamp": 1706811599,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620588",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621060",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -94,7 +94,8 @@
         "gasLimit": 30000000,
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isSomeTxsLengthEqualToCelestiaDAExample": false
+          "isSomeTxsLengthEqualToCelestiaDAExample": false,
+          "isSequencerSendingBlobTx": false
         },
         "overhead": 188,
         "owner": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
@@ -106,7 +107,7 @@
           1000000,
           "340282366920938463463374607431768211455"
         ],
-        "scalar": 500000,
+        "scalar": 50000,
         "sequencerInbox": "0xfF000000000000000000000000000000000420fC",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
         "unsafeBlockSigner": "0xc88138f5c82DD1bD327708C7F1c15E44Ce7FdA0C",
@@ -155,7 +156,7 @@
         "L2_ORACLE": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
         "l2Oracle": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [10000000, 490798, 19384206],
+        "params": [10000000, 491822, 19439455],
         "paused": false,
         "superchainConfig": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
         "SYSTEM_CONFIG": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
@@ -183,7 +184,7 @@
         "owner": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
         "symbol": "frxETH",
         "timelock_address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
-        "totalSupply": "300704809890762390115977"
+        "totalSupply": "298598840117976716514780"
       },
       "derivedName": "frxETH"
     },
@@ -223,10 +224,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 1506600,
-        "latestOutputIndex": 836,
-        "nextBlockNumber": 1508400,
-        "nextOutputIndex": 837,
+        "latestBlockNumber": 1841400,
+        "latestOutputIndex": 1022,
+        "nextBlockNumber": 1843200,
+        "nextOutputIndex": 1023,
         "proposer": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
         "PROPOSER": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
         "startingBlockNumber": 0,
@@ -258,7 +259,7 @@
           "0x6e74053a3798e0fC9a9775F7995316b27f21c4D2"
         ],
         "getThreshold": 3,
-        "nonce": 897,
+        "nonce": 907,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -324,15 +325,15 @@
         "asset": "0x5E8422345238F34275888049021821E8E08CAa1f",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0xe8254029df4a5fbfcf2de75f8fcf68b1060354a363693b1507e1197cc3dcc29b",
-        "lastRewardAmount": "207315000000000000000",
-        "lastSync": 1709770187,
+        "lastRewardAmount": "178227000000000000000",
+        "lastSync": 1710379019,
         "name": "Staked Frax Ether",
-        "pricePerShare": "1077731531829649012",
-        "rewardsCycleEnd": 1710374400,
+        "pricePerShare": "1078870449150042099",
+        "rewardsCycleEnd": 1710979200,
         "rewardsCycleLength": 604800,
         "symbol": "sfrxETH",
-        "totalAssets": "215315452318882179382236",
-        "totalSupply": "199785796332175875330451"
+        "totalAssets": "207586862889897726525863",
+        "totalSupply": "192411297439316489619974"
       },
       "derivedName": "sfrxETH"
     },
@@ -357,7 +358,7 @@
           "0x05FB8eC3C41da95b26fCb85503DaF8B89B89A935"
         ],
         "getThreshold": 3,
-        "nonce": 5347,
+        "nonce": 5383,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -370,7 +371,7 @@
       },
       "sinceTimestamp": 1665022895,
       "values": {
-        "currentWithheldETH": "142680688336532742780",
+        "currentWithheldETH": "135365171172497682637",
         "DEPOSIT_SIZE": "32000000000000000000",
         "depositContract": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
         "depositEtherPaused": false,
@@ -382,7 +383,7 @@
         "sfrxETHToken": "0xac3E018457B222d93114458476f3E3416Abbe38F",
         "submitPaused": false,
         "timelock_address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
-        "withholdRatio": 920000
+        "withholdRatio": 980000
       },
       "derivedName": "frxETHMinter"
     },
@@ -404,10 +405,10 @@
           "0x6e74053a3798e0fC9a9775F7995316b27f21c4D2",
           "0x6933BCC3e96f1C4d2cb73Cb391d854b18Ab7A4F2",
           "0x17e06ce6914E3969f7BD37D8b2a563890cA1c96e",
-          "0xf4E1d185666a624099298FcC42C50ba662DC7e52"
+          "0xcbc616D595D38483e6AdC45C7E426f44bF230928"
         ],
         "getThreshold": 3,
-        "nonce": 21,
+        "nonce": 23,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -428,7 +429,6 @@
     "0xc88138f5c82DD1bD327708C7F1c15E44Ce7FdA0C",
     "0xc8dE9f45601DA8C76158b8CAF3E56E8A037F2228",
     "0xcbc616D595D38483e6AdC45C7E426f44bF230928",
-    "0xf4E1d185666a624099298FcC42C50ba662DC7e52",
     "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
     "0xfF000000000000000000000000000000000420fC"
   ],

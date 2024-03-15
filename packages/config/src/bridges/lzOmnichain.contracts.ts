@@ -36,7 +36,7 @@ const escrows: LzTokenEscrow[] = [
   {
     address: EthereumAddress('0x4fa745fccc04555f2afa8874cd23961636cdf982'),
     sinceTimestamp: new UnixTime(1657699079),
-    tokens: ['agEUR'],
+    tokens: ['EURA'],
     type: 'wrapped oft',
   },
   {

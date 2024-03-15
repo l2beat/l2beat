@@ -1,3 +1,89 @@
+Generated with discovered.json: 0x9b35815efb3ceb3b2c2040c529bff139eb5b685a
+
+# Diff at Thu, 14 Mar 2024 07:34:32 GMT:
+
+- author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
+- comparing to: main@c79c75cb88d41e2f05e9cca5d501133eae405bbe block: 19412025
+- current block number: 19431793
+
+## Description
+
+Blobs are switched on
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86) {
+    +++ description: None
+      values.opStackDA.isSequencerSendingBlobTx:
+-        false
++        true
+      values.overhead:
+-        188
++        0
+      values.scalar:
+-        684000
++        "452312848583266388373324160190187140051835877600158453279133793016986207220"
+    }
+```
+
+```diff
+    contract ZoraMultisig (0xC72aE5c7cc9a332699305E29F68Be66c73b60542) {
+    +++ description: None
+      values.getOwners[7]:
++        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
+      values.getOwners[6]:
++        "0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c"
+      values.getOwners.5:
+-        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
++        "0xD05e9Ab3B6A7F10ec1374bc352854ABA51643E81"
+      values.getOwners.4:
+-        "0x5553a23a71Bc7985c8E58Ca08072D2Fa9D1D1F4c"
++        "0xc08C1b8fD69A22a448fC014bEe4A700d70726dA7"
+      values.getOwners.3:
+-        "0xD05e9Ab3B6A7F10ec1374bc352854ABA51643E81"
++        "0xe7d71aea6FB8248d4fD4D5d5098D201674B531dB"
+      values.getOwners.2:
+-        "0xc08C1b8fD69A22a448fC014bEe4A700d70726dA7"
++        "0xf2989961Bf987bdD6c86CD6B845B6fACa194a8e4"
+      values.getOwners.1:
+-        "0xe7d71aea6FB8248d4fD4D5d5098D201674B531dB"
++        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+      values.getOwners.0:
+-        "0xf2989961Bf987bdD6c86CD6B845B6fACa194a8e4"
++        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.getThreshold:
+-        4
++        2
+    }
+```
+
+Generated with discovered.json: 0x44525c357a439c8e58fd7a9bc37a7dc22f0893d1
+
+# Diff at Mon, 11 Mar 2024 13:04:18 GMT:
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: main@64454506aee2b4b4e15b121f096369e92ec4cf20 block: 19176790
+- current block number: 19412025
+
+## Description
+
+Update OP stack DA handler
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19176790 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86) {
+    +++ description: None
+      values.opStackDA.isSequencerSendingBlobTx:
++        false
+    }
+```
+
 Generated with discovered.json: 0x62696348b2db46516d37506a92f9f7c43734aaf1
 
 # Diff at Wed, 07 Feb 2024 14:04:48 GMT:

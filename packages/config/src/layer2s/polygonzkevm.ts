@@ -7,15 +7,16 @@ import {
 
 import {
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
   makeBridgeCompatible,
+  makeDataAvailabilityConfig,
   NUGGETS,
   RISK_VIEW,
   SEQUENCER_NO_MECHANISM,
   STATE_CORRECTNESS,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
@@ -46,7 +47,7 @@ const _HALT_AGGREGATION_TIMEOUT = formatSeconds(
 )
 
 const forceBatchTimeout = discovery.getContractValue<number>(
-  'PolygonZkEVMExistentEtrog',
+  'PolygonZkEVMEtrog',
   'forceBatchTimeout',
 )
 
@@ -71,7 +72,7 @@ const exitWindowRisk = {
     trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
   )}.`,
   warning: {
-    text: 'The Security Council can remove the delay on upgrades.',
+    value: 'The Security Council can remove the delay on upgrades.',
     sentiment: 'bad',
   },
 } as const
@@ -84,7 +85,7 @@ const timelockUpgrades = {
 
 const isForcedBatchDisallowed =
   discovery.getContractValue<string>(
-    'PolygonZkEVMExistentEtrog',
+    'PolygonZkEVMEtrog',
     'forceBatchAddress',
   ) !== '0x0000000000000000000000000000000000000000'
 
@@ -103,7 +104,6 @@ export const polygonzkevm: Layer2 = {
       'Polygon zkEVM is a EVM-compatible ZK Rollup built by Polygon Labs.',
     purposes: ['Universal'],
     category: 'ZK Rollup',
-    dataAvailabilityMode: 'TxData',
     provider: 'Polygon',
     links: {
       websites: ['https://polygon.technology/polygon-zkevm'],
@@ -132,6 +132,9 @@ export const polygonzkevm: Layer2 = {
       content:
         'The TVL is currently shared among all projects using the shared Polygon CDK contracts.',
       sentiment: 'warning',
+    },
+    finality: {
+      finalizationPeriod: 0,
     },
   },
   config: {
@@ -245,6 +248,7 @@ export const polygonzkevm: Layer2 = {
         },
       ],
     },
+    finality: 'coming soon',
   },
   chainConfig: {
     name: 'polygonzkevm',
@@ -263,6 +267,11 @@ export const polygonzkevm: Layer2 = {
       },
     ],
   },
+  dataAvailability: makeDataAvailabilityConfig({
+    type: 'On chain',
+    layer: 'Ethereum (calldata)',
+    mode: 'Transactions data',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
@@ -282,7 +291,7 @@ export const polygonzkevm: Layer2 = {
         ' Unlike most ZK rollups transactions are posted instead of state diffs.',
       sources: [
         {
-          contract: 'PolygonZkEVMExistentEtrog',
+          contract: 'PolygonZkEVMEtrog',
           references: [
             'https://etherscan.io/address/0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
           ],
@@ -295,7 +304,7 @@ export const polygonzkevm: Layer2 = {
       ...SEQUENCER_NO_MECHANISM(isForcedBatchDisallowed),
       sources: [
         {
-          contract: 'PolygonZkEVMExistentEtrog',
+          contract: 'PolygonZkEVMEtrog',
           references: [
             'https://etherscan.io/address/0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
           ],
@@ -359,10 +368,10 @@ export const polygonzkevm: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
       references: [
         {
-          text: 'PolygonZkEVMExistentEtrog.sol - Etherscan source code, sequenceBatches function',
+          text: 'PolygonZkEVMEtrog.sol - Etherscan source code, sequenceBatches function',
           href: 'https://etherscan.io/address/0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
         },
       ],
@@ -381,7 +390,7 @@ export const polygonzkevm: Layer2 = {
       ],
       references: [
         {
-          text: 'PolygonZkEVMExistentEtrog.sol - Etherscan source code, onlyTrustedSequencer modifier',
+          text: 'PolygonZkEVMEtrog.sol - Etherscan source code, onlyTrustedSequencer modifier',
           href: 'https://etherscan.io/address/0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
         },
       ],
@@ -392,7 +401,7 @@ export const polygonzkevm: Layer2 = {
         'The mechanism for allowing users to submit their own transactions is currently disabled.',
       references: [
         {
-          text: 'PolygonZkEVMExistentEtrog.sol - Etherscan source code, forceBatchAddress address',
+          text: 'PolygonZkEVMEtrog.sol - Etherscan source code, forceBatchAddress address',
           href: 'https://etherscan.io/address/0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
         },
       ],
@@ -427,7 +436,7 @@ export const polygonzkevm: Layer2 = {
       name: 'Sequencer',
       accounts: [
         discovery.getPermissionedAccount(
-          'PolygonZkEVMExistentEtrog',
+          'PolygonZkEVMEtrog',
           'trustedSequencer',
         ),
       ],
@@ -454,7 +463,7 @@ export const polygonzkevm: Layer2 = {
       name: 'Forced Batcher',
       accounts: [
         discovery.getPermissionedAccount(
-          'PolygonZkEVMExistentEtrog',
+          'PolygonZkEVMEtrog',
           'forceBatchAddress',
         ),
       ],
@@ -464,7 +473,7 @@ export const polygonzkevm: Layer2 = {
   ],
   contracts: {
     addresses: [
-      discovery.getContractDetails('PolygonZkEVMExistentEtrog', {
+      discovery.getContractDetails('PolygonZkEVMEtrog', {
         description:
           'The main contract of the Polygon zkEVM rollup. Contains sequencing and forced transaction logic.',
         ...timelockUpgrades,
@@ -484,7 +493,7 @@ export const polygonzkevm: Layer2 = {
         ...timelockUpgrades,
       }),
       discovery.getContractDetails(
-        'FflonkVerifier',
+        'PolygonzkEVMVerifier',
         'An autogenerated contract that verifies ZK proofs in the PolygonRollupManager system.',
       ),
     ],

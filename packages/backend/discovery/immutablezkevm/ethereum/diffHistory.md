@@ -1,4 +1,30 @@
-Generated with discovered.json: 0x1bfd88e8a84f5b16a6ef0f7978717f4177dac648
+Generated with discovered.json: 0xcba4559c3490aac950c853627fe016a9837d784a
+
+# Diff at Fri, 15 Mar 2024 10:53:09 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@6a294996c13c1a3ad00c7c4d72e651e8fbd4fa1c block: 19431934
+- current block number: 19439872
+
+## Description
+
+Will be active for 24h for all withdrawals.
+
+## Watched changes
+
+```diff
+    contract Bridge (0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6) {
+    +++ description: None
++++ description: If true, the withdrawal queue is activated and any withdrawals are delayed for a duration defined by withdrawalDelay. It can be manually activated or automatically triggered by the FlowRate mechanism.
++++ type: RISK_PARAMETER
++++ severity: MEDIUM
+      values.withdrawalQueueActivated:
+-        false
++        true
+    }
+```
+
+Generated with discovered.json: 0x7ef088f542869071a0bbceb84a19be2a8d1c3b56
 
 # Diff at Wed, 07 Feb 2024 10:24:15 GMT:
 

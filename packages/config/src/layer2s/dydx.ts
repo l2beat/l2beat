@@ -7,15 +7,16 @@ import {
 
 import {
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
+  makeDataAvailabilityConfig,
   NEW_CRYPTOGRAPHY,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { getCommittee } from '../discovery/starkware'
@@ -81,7 +82,6 @@ export const dydx: Layer2 = {
     purposes: ['Exchange'],
     provider: 'StarkEx',
     category: 'ZK Rollup',
-    dataAvailabilityMode: 'StateDiffs',
 
     links: {
       websites: ['https://dydx.exchange/'],
@@ -113,6 +113,9 @@ export const dydx: Layer2 = {
     liveness: {
       explanation:
         'dYdX is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. The verification is done as part of the state update.',
+    },
+    finality: {
+      finalizationPeriod: 0,
     },
   },
   config: {
@@ -157,7 +160,13 @@ export const dydx: Layer2 = {
         },
       ],
     },
+    finality: 'coming soon',
   },
+  dataAvailability: makeDataAvailabilityConfig({
+    type: 'On chain',
+    layer: 'Ethereum (calldata)',
+    mode: 'State diffs',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
@@ -233,9 +242,9 @@ export const dydx: Layer2 = {
     },
     newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
     dataAvailability: {
-      ...DATA_AVAILABILITY.STARKEX_ON_CHAIN,
+      ...TECHNOLOGY_DATA_AVAILABILITY.STARKEX_ON_CHAIN,
       references: [
-        ...DATA_AVAILABILITY.STARKEX_ON_CHAIN.references,
+        ...TECHNOLOGY_DATA_AVAILABILITY.STARKEX_ON_CHAIN.references,
         {
           text: 'UpdatePerpetualState.sol#L82 - Etherscan source code, updateState function',
           href: 'https://etherscan.io/address/0xdf9c117cad37f2ed8c99e36a40317d8cc340d4a0#code#F35#L82',

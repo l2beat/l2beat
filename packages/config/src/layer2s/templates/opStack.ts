@@ -8,13 +8,15 @@ import {
 
 import {
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   KnowledgeNugget,
   makeBridgeCompatible,
+  makeDataAvailabilityConfig,
   Milestone,
   NUGGETS,
+  OffChainDataAvailabilityFallback,
+  OffChainDataAvailabilityLayer,
   OPERATOR,
   RISK_VIEW,
   ScalingProjectContract,
@@ -22,7 +24,9 @@ import {
   ScalingProjectPermission,
   ScalingProjectRiskViewEntry,
   ScalingProjectStateDerivation,
+  ScalingProjectTechnology,
   ScalingProjectTechnologyChoice,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { subtractOne } from '../../common/assessCount'
 import { ChainConfig } from '../../common/ChainConfig'
@@ -39,11 +43,12 @@ import {
 export const CELESTIA_DA_PROVIDER: DAProvider = {
   name: 'Celestia',
   riskView: RISK_VIEW.DATA_CELESTIA(false),
-  technology: DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(false),
+  technology: TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(false),
 }
 
 export interface DAProvider {
-  name: string
+  name: Exclude<OffChainDataAvailabilityLayer, 'DAC'>
+  fallback?: OffChainDataAvailabilityFallback
   riskView: ScalingProjectRiskViewEntry
   technology: ScalingProjectTechnologyChoice
 }
@@ -52,6 +57,7 @@ export interface OpStackConfig {
   daProvider?: DAProvider
   discovery: ProjectDiscovery
   display: Omit<Layer2Display, 'provider' | 'category' | 'dataAvailabilityMode'>
+  nonTemplateTechnology?: Partial<ScalingProjectTechnology>
   upgradeability: {
     upgradableBy: string[] | undefined
     upgradeDelay: string | undefined
@@ -76,6 +82,7 @@ export interface OpStackConfig {
   chainConfig?: ChainConfig
   upgradesAndGovernance?: string
   hasProperSecurityCouncil?: boolean
+  usesBlobs?: boolean
 }
 
 export function opStack(templateVars: OpStackConfig): Layer2 {
@@ -111,8 +118,6 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
       ...templateVars.display,
       provider: 'OP Stack',
       category: daProvider !== undefined ? 'Optimium' : 'Optimistic Rollup',
-      dataAvailabilityMode:
-        daProvider !== undefined ? 'NotApplicable' : 'TxData',
       warning:
         templateVars.display.warning === undefined
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
@@ -182,6 +187,21 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
       finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
     chainConfig: templateVars.chainConfig,
+    dataAvailability:
+      daProvider !== undefined
+        ? makeDataAvailabilityConfig({
+            type: 'Off chain',
+            layers: [daProvider.name, daProvider.fallback],
+            bridge: 'None',
+            mode: 'Transactions data (compressed)',
+          })
+        : makeDataAvailabilityConfig({
+            type: 'On chain',
+            layer: templateVars.usesBlobs
+              ? 'Ethereum (blobs or calldata)'
+              : 'Ethereum (calldata)',
+            mode: 'Transactions data (compressed)',
+          }),
     riskView: makeBridgeCompatible({
       stateValidation: RISK_VIEW.STATE_NONE,
       dataAvailability: {
@@ -270,7 +290,8 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
     stateDerivation: templateVars.stateDerivation,
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
     technology: {
-      stateCorrectness: {
+      stateCorrectness: templateVars.nonTemplateTechnology
+        ?.stateCorrectness ?? {
         name: 'Fraud proofs are in development',
         description:
           'Ultimately, OP stack chains will use interactive fraud proofs to enforce state correctness. This feature is currently in development and the system permits invalid state roots.',
@@ -290,10 +311,11 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
           },
         ],
       },
-      dataAvailability: {
-        ...technologyDA(daProvider),
+      dataAvailability: templateVars.nonTemplateTechnology
+        ?.dataAvailability ?? {
+        ...technologyDA(daProvider, templateVars.usesBlobs),
         references: [
-          ...technologyDA(daProvider).references,
+          ...technologyDA(daProvider, templateVars.usesBlobs).references,
           {
             text: 'Derivation: Batch submission - OP Mainnet specs',
             href: 'https://github.com/ethereum-optimism/specs/blob/main/specs/protocol/derivation.md#batch-submission',
@@ -310,7 +332,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
           },
         ],
       },
-      operator: {
+      operator: templateVars.nonTemplateTechnology?.operator ?? {
         ...OPERATOR.CENTRALIZED_OPERATOR,
         references: [
           {
@@ -331,7 +353,8 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
           },
         ],
       },
-      forceTransactions: {
+      forceTransactions: templateVars.nonTemplateTechnology
+        ?.forceTransactions ?? {
         ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
         references: [
           {
@@ -346,7 +369,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
           },
         ],
       },
-      exitMechanisms: [
+      exitMechanisms: templateVars.nonTemplateTechnology?.exitMechanisms ?? [
         {
           ...EXITS.REGULAR(
             'optimistic',
@@ -388,7 +411,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
           ],
         },
       ],
-      smartContracts: {
+      smartContracts: templateVars.nonTemplateTechnology?.smartContracts ?? {
         name: 'EVM compatible smart contracts are supported',
         description:
           'OP stack chains are pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on L2.',
@@ -452,6 +475,15 @@ function riskViewDA(DA: DAProvider | undefined): ScalingProjectRiskViewEntry {
 
 function technologyDA(
   DA: DAProvider | undefined,
+  usesBlobs: boolean | undefined,
 ): ScalingProjectTechnologyChoice {
-  return DA === undefined ? DATA_AVAILABILITY.ON_CHAIN : DA.technology
+  if (DA !== undefined) {
+    return DA.technology
+  }
+
+  if (usesBlobs) {
+    return TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA
+  }
+
+  return TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA
 }

@@ -238,7 +238,8 @@
           "type": "opStackSequencerInbox",
           "sequencerAddress": "{{ batcherHash }}"
         }
-      }
+      },
+      "ignoreInWatchMode": ["scalar"]
     },
     "wstETHEscrow": {
       "ignoreRelatives": ["l2Token", "l1Token"],

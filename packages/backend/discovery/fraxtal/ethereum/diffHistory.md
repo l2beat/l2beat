@@ -1,3 +1,66 @@
+Generated with discovered.json: 0xf3c938045c8b764ac87d63b9aab77ea89d634553
+
+# Diff at Fri, 15 Mar 2024 10:25:21 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@6a294996c13c1a3ad00c7c4d72e651e8fbd4fa1c block: 19412037
+- current block number: 19439733
+
+## Description
+
+One signer in the multisig is changed.
+
+## Watched changes
+
+```diff
+    contract FraxtalMultisig (0xe0d7755252873c4eF5788f7f45764E0e17610508) {
+    +++ description: None
++++ description: Signers of the multisig, high severity if threshold changes
++++ type: PERMISSION
++++ severity: LOW
+      values.getOwners.4:
+-        "0xf4E1d185666a624099298FcC42C50ba662DC7e52"
++        "0xcbc616D595D38483e6AdC45C7E426f44bF230928"
+    }
+```
+
+Generated with discovered.json: 0xc7d883541dcc997f1ca9944846e1b7ddd7675f47
+
+# Diff at Mon, 11 Mar 2024 13:05:47 GMT:
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: main@64454506aee2b4b4e15b121f096369e92ec4cf20 block: 19384276
+- current block number: 19412037
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract frxETHMinter (0xbAFA44EFE7901E04E39Dad13167D089C559c1138) {
+    +++ description: None
+      values.withholdRatio:
+-        920000
++        980000
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19384276 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x34a9f273cbD847d49c3De015FC26c3E66825f8b2) {
+    +++ description: None
+      values.opStackDA.isSequencerSendingBlobTx:
++        false
+    }
+```
+
 Generated with discovered.json: 0xc776573184b74c22a61dc03318859dd4c0928cea
 
 # Diff at Thu, 07 Mar 2024 15:46:08 GMT:

@@ -15,7 +15,6 @@ export function upcoming(templateVars: UpcomingConfig): Layer2 {
     id: ProjectId(templateVars.id),
     display: {
       ...templateVars.display,
-      dataAvailabilityMode: 'NotApplicable',
     },
     stage: {
       stage: 'NotApplicable',

@@ -262,7 +262,7 @@
       }
     },
     {
-      "name": "Connext Multisig",
+      "name": "Connext Multisig 2",
       "values": {
         "domainSeparator": {
           "description": null,
@@ -297,7 +297,7 @@
       }
     },
     {
-      "name": "Connext Multisig 2",
+      "name": "Connext Multisig",
       "values": {
         "domainSeparator": {
           "description": null,
@@ -334,42 +334,6 @@
     {
       "name": "UpgradeBeaconProxy",
       "values": {}
-    },
-    {
-      "name": "WatcherManager",
-      "description": "Contract maintaining a list of Watchers able to stop the bridge if fraud is detected.",
-      "values": {
-        "delay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "proposed": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "proposedTimestamp": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "renounced": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "WATCHERS": {
-          "description": "Permissioned set of actors who can pause certain bridge components and remove connectors.",
-          "severity": "LOW",
-          "type": "PERMISSION"
-        }
-      }
     },
     {
       "name": "OptimisticGovernor",
@@ -462,11 +426,46 @@
       }
     },
     {
+      "name": "WatcherManager",
+      "values": {
+        "delay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proposed": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proposedTimestamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "renounced": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "WATCHERS": {
+          "description": "Permissioned set of actors who can pause certain bridge components and remove connectors.",
+          "severity": "LOW",
+          "type": "PERMISSION"
+        }
+      }
+    },
+    {
       "name": "RootManager",
       "values": {
         "connectorsHash": {
-          "description": null,
-          "severity": null,
+          "description": "Hash of all connectors' addresses. Changes when a connector is added or removed.",
+          "severity": "LOW",
           "type": null
         },
         "delay": {
@@ -596,6 +595,66 @@
       "values": {}
     },
     {
+      "name": "OptimisticOracleV3",
+      "values": {
+        "burnedBondPercentage": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "cachedOracle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultCurrency": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultIdentifier": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultLiveness": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "finder": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "numericalTrue": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Finder",
+      "values": {
+        "isOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "GnosisHubConnector",
       "values": {
         "AMB": {
@@ -624,6 +683,251 @@
           "type": null
         },
         "MIRROR_CHAIN_ID": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIRROR_DOMAIN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mirrorConnector": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proposed": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proposedTimestamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "renounced": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ROOT_MANAGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "LineaHubConnector",
+      "values": {
+        "AMB": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DOMAIN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIRROR_DOMAIN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mirrorConnector": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proposed": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proposedTimestamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "renounced": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ROOT_MANAGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "MantleHubConnector",
+      "values": {
+        "AMB": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DOMAIN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "gasCap": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIRROR_DOMAIN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mirrorConnector": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proposed": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proposedTimestamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "renounced": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ROOT_MANAGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stateCommitmentChain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "WormholeHubConnector",
+      "values": {
+        "AMB": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DOMAIN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "gasCap": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIRROR_DOMAIN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIRROR_WORMHOLE_ID": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mirrorConnector": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proposed": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proposedTimestamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "refundAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "renounced": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ROOT_MANAGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "PolygonZkHubConnector",
+      "values": {
+        "AMB": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DOMAIN": {
           "description": null,
           "severity": null,
           "type": null
@@ -731,137 +1035,7 @@
       }
     },
     {
-      "name": "LineaHubConnector",
-      "values": {
-        "AMB": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "delay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DOMAIN": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIRROR_DOMAIN": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "mirrorConnector": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "proposed": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "proposedTimestamp": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "renounced": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "ROOT_MANAGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "PolygonHubConnector",
-      "values": {
-        "AMB": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "checkpointManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "delay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DOMAIN": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "fxChildTunnel": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "fxRoot": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIRROR_DOMAIN": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "mirrorConnector": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "proposed": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "proposedTimestamp": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "renounced": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "ROOT_MANAGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "SEND_MESSAGE_EVENT_SIG": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "WormholeHubConnector",
+      "name": "OptimismHubConnector",
       "values": {
         "AMB": {
           "description": null,
@@ -888,12 +1062,12 @@
           "severity": null,
           "type": null
         },
-        "MIRROR_WORMHOLE_ID": {
+        "mirrorConnector": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "mirrorConnector": {
+        "OPTIMISM_PORTAL": {
           "description": null,
           "severity": null,
           "type": null
@@ -909,11 +1083,6 @@
           "type": null
         },
         "proposedTimestamp": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "refundAddress": {
           "description": null,
           "severity": null,
           "type": null
@@ -1011,6 +1180,81 @@
       }
     },
     {
+      "name": "PolygonHubConnector",
+      "values": {
+        "AMB": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "checkpointManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DOMAIN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "fxChildTunnel": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "fxRoot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIRROR_DOMAIN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mirrorConnector": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proposed": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proposedTimestamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "renounced": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ROOT_MANAGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SEND_MESSAGE_EVENT_SIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "OptimismV0HubConnector",
       "values": {
         "AMB": {
@@ -1076,121 +1320,6 @@
       }
     },
     {
-      "name": "OptimisticOracleV3",
-      "values": {
-        "burnedBondPercentage": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "cachedOracle": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "defaultCurrency": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "defaultIdentifier": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "defaultLiveness": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "finder": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "numericalTrue": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "Finder",
-      "values": {
-        "isOwner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "PolygonZkHubConnector",
-      "values": {
-        "AMB": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "delay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DOMAIN": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIRROR_DOMAIN": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "mirrorConnector": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "proposed": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "proposedTimestamp": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "renounced": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "ROOT_MANAGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "NewWormholeHubConnector",
       "values": {
         "AMB": {
@@ -1244,136 +1373,6 @@
           "type": null
         },
         "refundAddress": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "renounced": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "ROOT_MANAGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "MantleHubConnector",
-      "values": {
-        "AMB": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "delay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DOMAIN": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "gasCap": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIRROR_DOMAIN": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "mirrorConnector": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "proposed": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "proposedTimestamp": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "renounced": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "ROOT_MANAGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "stateCommitmentChain": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "OptimismHubConnector",
-      "values": {
-        "AMB": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "delay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DOMAIN": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "gasCap": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIRROR_DOMAIN": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "mirrorConnector": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OPTIMISM_PORTAL": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "proposed": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "proposedTimestamp": {
           "description": null,
           "severity": null,
           "type": null

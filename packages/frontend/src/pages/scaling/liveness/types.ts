@@ -20,7 +20,7 @@ export interface ScalingLivenessViewEntry {
   shortName: string | undefined
   slug: string
   category: ScalingProjectCategory
-  dataAvailabilityMode: ScalingProjectDataAvailabilityMode
+  dataAvailabilityMode: ScalingProjectDataAvailabilityMode | undefined
   provider: Layer2Provider | undefined
   warning: string | undefined
   redWarning: string | undefined

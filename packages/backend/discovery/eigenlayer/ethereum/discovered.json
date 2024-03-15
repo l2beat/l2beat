@@ -1,8 +1,8 @@
 {
   "name": "eigenlayer",
   "chain": "ethereum",
-  "blockNumber": 19033739,
-  "configHash": "0x5950844eac2ee51d4cd8993b6e3af7a5642365a128e69d84db25e10893fad00c",
+  "blockNumber": 19433765,
+  "configHash": "0x03cc51755ac04151d404645df7af1732f2ae87d82d86b1c3862e20d11697a555",
   "version": 3,
   "contracts": [
     {
@@ -13,8 +13,8 @@
       },
       "sinceTimestamp": 1602667372,
       "values": {
-        "get_deposit_count": "0xa4f5110000000000",
-        "get_deposit_root": "0xde7770cb2b8c686932a15325527a505323a4a423202f2c34c9de6a5271314787"
+        "get_deposit_count": "0xc185140000000000",
+        "get_deposit_root": "0xb9b376259ed5d2c52d9e9891f6024c11e7feba1b0f93823f77b892e91b83d4d6"
       },
       "derivedName": "DepositContract"
     },
@@ -42,15 +42,15 @@
       "values": {
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
-          "200000000000000000000000",
-          "200000000000000000000000"
+          "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+          "115792089237316195423570985008687907853269984665640564039457584007913129639935"
         ],
-        "maxPerDeposit": "200000000000000000000000",
-        "maxTotalDeposits": "200000000000000000000000",
+        "maxPerDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalDeposits": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "113257259616687375575998",
+        "totalShares": "197034582518953830628872",
         "underlyingToken": "0xf951E335afb289353dc249e82926178EaC7DEd78"
       },
       "derivedName": "StrategyBaseTVLLimits"
@@ -68,15 +68,15 @@
       "values": {
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
-          "200000000000000000000000",
-          "200000000000000000000000"
+          "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+          "115792089237316195423570985008687907853269984665640564039457584007913129639935"
         ],
-        "maxPerDeposit": "200000000000000000000000",
-        "maxTotalDeposits": "200000000000000000000000",
+        "maxPerDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalDeposits": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "979105941052541165075",
+        "totalShares": "1359119483714316388283",
         "underlyingToken": "0xE95A203B1a91a908F9B9CE46459d101078c2c3cb"
       },
       "derivedName": "StrategyBaseTVLLimits"
@@ -94,15 +94,15 @@
       "values": {
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
-          "200000000000000000000000",
-          "200000000000000000000000"
+          "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+          "115792089237316195423570985008687907853269984665640564039457584007913129639935"
         ],
-        "maxPerDeposit": "200000000000000000000000",
-        "maxTotalDeposits": "200000000000000000000000",
+        "maxPerDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalDeposits": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "52872442591612715544042",
+        "totalShares": "62659758584732083255294",
         "underlyingToken": "0xae78736Cd615f374D3085123A210448E74Fc6393"
       },
       "derivedName": "StrategyBaseTVLLimits"
@@ -120,15 +120,15 @@
       "values": {
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
-          "200000000000000000000000",
-          "200000000000000000000000"
+          "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+          "115792089237316195423570985008687907853269984665640564039457584007913129639935"
         ],
-        "maxPerDeposit": "200000000000000000000000",
-        "maxTotalDeposits": "200000000000000000000000",
+        "maxPerDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalDeposits": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": 0,
+        "totalShares": "188742781523076238003732",
         "underlyingToken": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa"
       },
       "derivedName": "StrategyBaseTVLLimits"
@@ -151,7 +151,7 @@
           "0xFEA47018D632A77bA579846c840d5706705Dc598"
         ],
         "getThreshold": 1,
-        "nonce": 3,
+        "nonce": 4,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -191,15 +191,15 @@
       "values": {
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
-          "200000000000000000000000",
-          "200000000000000000000000"
+          "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+          "115792089237316195423570985008687907853269984665640564039457584007913129639935"
         ],
-        "maxPerDeposit": "200000000000000000000000",
-        "maxTotalDeposits": "200000000000000000000000",
+        "maxPerDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalDeposits": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "26252912763327384230595",
+        "totalShares": "30068231761823900647828",
         "underlyingToken": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
       },
       "derivedName": "StrategyBaseTVLLimits"
@@ -217,15 +217,15 @@
       "values": {
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
-          "200000000000000000000000",
-          "200000000000000000000000"
+          "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+          "115792089237316195423570985008687907853269984665640564039457584007913129639935"
         ],
-        "maxPerDeposit": "200000000000000000000000",
-        "maxTotalDeposits": "200000000000000000000000",
+        "maxPerDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalDeposits": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "15687017099930901537793",
+        "totalShares": "18446457761283173548239",
         "underlyingToken": "0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38"
       },
       "derivedName": "StrategyBaseTVLLimits"
@@ -274,15 +274,15 @@
       "values": {
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
-          "200000000000000000000000",
-          "200000000000000000000000"
+          "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+          "115792089237316195423570985008687907853269984665640564039457584007913129639935"
         ],
-        "maxPerDeposit": "200000000000000000000000",
-        "maxTotalDeposits": "200000000000000000000000",
+        "maxPerDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalDeposits": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "11713517241523208200856",
+        "totalShares": "85415798869999603831684",
         "underlyingToken": "0xa2E3356610840701BDf5611a53974510Ae27E2e1"
       },
       "derivedName": "StrategyBaseTVLLimits"
@@ -371,15 +371,15 @@
       "values": {
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
-          "200000000000000000000000",
-          "200000000000000000000000"
+          "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+          "115792089237316195423570985008687907853269984665640564039457584007913129639935"
         ],
-        "maxPerDeposit": "200000000000000000000000",
-        "maxTotalDeposits": "200000000000000000000000",
+        "maxPerDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalDeposits": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": 0,
+        "totalShares": "25920411011055869566012",
         "underlyingToken": "0xac3E018457B222d93114458476f3E3416Abbe38F"
       },
       "derivedName": "StrategyBaseTVLLimits"
@@ -399,7 +399,7 @@
         "eigenPodBeacon": "0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
         "ethPOS": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
         "maxPods": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "numPods": 6791,
+        "numPods": 25115,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 30,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
@@ -421,15 +421,15 @@
       "values": {
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
-          "200000000000000000000000",
-          "200000000000000000000000"
+          "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+          "115792089237316195423570985008687907853269984665640564039457584007913129639935"
         ],
-        "maxPerDeposit": "200000000000000000000000",
-        "maxTotalDeposits": "200000000000000000000000",
+        "maxPerDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalDeposits": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "193431203031957691534463",
+        "totalShares": "923164279432291455923101",
         "underlyingToken": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
       },
       "derivedName": "StrategyBaseTVLLimits"
@@ -447,15 +447,15 @@
       "values": {
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
-          "200000000000000000000000",
-          "200000000000000000000000"
+          "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+          "115792089237316195423570985008687907853269984665640564039457584007913129639935"
         ],
-        "maxPerDeposit": "200000000000000000000000",
-        "maxTotalDeposits": "200000000000000000000000",
+        "maxPerDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalDeposits": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "49266428158904667866204",
+        "totalShares": "103672092171928081323410",
         "underlyingToken": "0xA35b1B31Ce002FBF2058D22F30f95D405200A15b"
       },
       "derivedName": "StrategyBaseTVLLimits"
@@ -473,15 +473,15 @@
       "values": {
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
-          "200000000000000000000000",
-          "200000000000000000000000"
+          "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+          "115792089237316195423570985008687907853269984665640564039457584007913129639935"
         ],
-        "maxPerDeposit": "200000000000000000000000",
-        "maxTotalDeposits": "200000000000000000000000",
+        "maxPerDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalDeposits": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": "11296425319611844920984",
+        "totalShares": "20762699632952547186348",
         "underlyingToken": "0x856c4Efb76C1D1AE02e20CEB03A2A6a08b0b8dC3"
       },
       "derivedName": "StrategyBaseTVLLimits"
@@ -515,21 +515,21 @@
       "values": {
         "explanation": "Base Strategy implementation to inherit from for more complex implementations",
         "getTVLLimits": [
-          "200000000000000000000000",
-          "200000000000000000000000"
+          "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+          "115792089237316195423570985008687907853269984665640564039457584007913129639935"
         ],
-        "maxPerDeposit": "200000000000000000000000",
-        "maxTotalDeposits": "200000000000000000000000",
+        "maxPerDeposit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "maxTotalDeposits": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
         "strategyManager": "0x858646372CC42E1A627fcE94aa7A7033e7CF075A",
-        "totalShares": 0,
+        "totalShares": "9876426820950883061134",
         "underlyingToken": "0x8c1BEd5b9a0928467c9B1341Da1D7BD5e10b6549"
       },
       "derivedName": "StrategyBaseTVLLimits"
     },
     {
-      "name": "StrategyAdderMultisig",
+      "name": "OperationsMultisig",
       "address": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
       "upgradeability": {
         "type": "gnosis safe",
@@ -542,14 +542,15 @@
         "domainSeparator": "0x34c8be0f1205a420b291c5ce97375b669d2d120e32d7aa5ea9f2497a0fbcc3e2",
         "getChainId": 1,
         "getOwners": [
-          "0xe479a0839F13117f42142AD6cE71B49a97c1c928",
+          "0xa2425B00F9A9457AEdd51d4C36d9917eA1Aa7a02",
+          "0xb7Ae34BB33da55f12797e793E01e63a17B11d108",
+          "0x27ff193A6A1574A611E21c39FDA636fA1d61ba30",
           "0x422e2F724faFE75F3635458aD7D3Ac803DCD7ff1",
           "0xeD7Ef087d1C01ecCA9a9688a44aaeDDEf4ea560E",
-          "0x7e0b47E52b567fB6717f8ACAeD3F4591759F22fF",
           "0xe7fFd467F7526abf9c8796EDeE0AD30110419127"
         ],
         "getThreshold": 3,
-        "nonce": 18,
+        "nonce": 22,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -610,6 +611,7 @@
   ],
   "eoas": [
     "0x17919FAC7024d5b770322E5Cb81607D247654116",
+    "0x27ff193A6A1574A611E21c39FDA636fA1d61ba30",
     "0x313011Ee87b12700E29B0D1136Ae3d64665F3939",
     "0x33E816008E7bc7798A73d0eaa640CC24f34d1626",
     "0x34C37613e1680efD9e203C979658e1d058b4B2BC",
@@ -617,14 +619,14 @@
     "0x65C4799061c0D1e3E87ADdB65b02E92a558F842F",
     "0x6A662c5DdCe0b76BD081b8A4ec3A4F8a671b0b1f",
     "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
-    "0x7e0b47E52b567fB6717f8ACAeD3F4591759F22fF",
     "0x80cb2DA66A3ccb6064f16B15B6ae11d8E089C6D7",
     "0x8ffCF07A59631f0578f3E84B51C48cF0dEADCd95",
     "0x97b4A6E0471A7c5906fF1Cc2a5970ed569B04815",
+    "0xa2425B00F9A9457AEdd51d4C36d9917eA1Aa7a02",
     "0xAF4D94Cd299211de542530399290877E2c85F061",
+    "0xb7Ae34BB33da55f12797e793E01e63a17B11d108",
     "0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0",
     "0xe37756BEdDC89e94A8d557fd5b95a4D2a57e9D60",
-    "0xe479a0839F13117f42142AD6cE71B49a97c1c928",
     "0xe7fFd467F7526abf9c8796EDeE0AD30110419127",
     "0xe8F09A9D42aEA0a3B393aD06F25CF512eA51707e",
     "0xeD7Ef087d1C01ecCA9a9688a44aaeDDEf4ea560E"
