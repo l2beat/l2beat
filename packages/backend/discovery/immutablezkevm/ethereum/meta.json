@@ -2,140 +2,59 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "",
-      "values": {}
-    },
-    {
-      "name": "",
-      "values": {}
-    },
-    {
-      "name": "",
-      "values": {}
-    },
-    {
-      "name": "",
-      "values": {}
-    },
-    {
-      "name": "Endpoint",
+      "name": "Bridge",
       "values": {
-        "BLOCK_VERSION": {
+        "ADAPTOR_MANAGER_ROLE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "DEFAULT_VERSION": {
+        "childERC20Bridge": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "chainId": {
+        "childETHToken": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "defaultReceiveLibraryAddress": {
+        "childTokenTemplate": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "defaultReceiveVersion": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "defaultSendLibrary": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "defaultSendVersion": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isReceivingPayload": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isSendingPayload": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "latestVersion": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "libraryLookup": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "FPValidator",
-      "values": {
-        "getProofType": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getUtilsVersion": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "proofType": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "stargateBridgeAddress": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "stargateTokenAddress": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "utilsVersion": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "Google Cloud Oracle",
-      "values": {
         "DEFAULT_ADMIN_ROLE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "allowlistSize": {
+        "DEPOSIT_SIG": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "defaultMultiplierBps": {
+        "imxCumulativeDepositLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "initializerAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAP_TOKEN_SIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "NATIVE_ETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "NATIVE_IMX": {
           "description": null,
           "severity": null,
           "type": null
@@ -145,27 +64,87 @@
           "severity": null,
           "type": null
         },
-        "priceFeed": {
+        "PAUSER_ROLE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "quorum": {
+        "rootBridgeAdaptor": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "signerSize": {
+        "rootIMXToken": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "vid": {
+        "rootWETHToken": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "workerFeeLib": {
+        "UNLIMITED_DEPOSIT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "UNPAUSER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VARIABLE_MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "WITHDRAW_SIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "withdrawalDelay": {
+          "description": "Delay in seconds of any withdrawals submitted after the withdrawal queue is activated.",
+          "severity": "MEDIUM",
+          "type": "RISK_PARAMETER"
+        },
+        "withdrawalQueueActivated": {
+          "description": "If true, the withdrawal queue is activated and any withdrawals are delayed for a duration defined by withdrawalDelay. It can be manually activated or automatically triggered by the FlowRate mechanism.",
+          "severity": "MEDIUM",
+          "type": "RISK_PARAMETER"
+        }
+      }
+    },
+    {
+      "name": "ChildERC20",
+      "values": {
+        "bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rootToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
           "description": null,
           "severity": null,
           "type": null
@@ -173,13 +152,77 @@
       }
     },
     {
-      "name": "LayerZero Multisig",
+      "name": "ProxyAdmin",
       "values": {
-        "VERSION": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "RootAxelarBridgeAdaptor",
+      "values": {
+        "BRIDGE_MANAGER_ROLE": {
           "description": null,
           "severity": null,
           "type": null
         },
+        "childBridgeAdaptor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "childChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "GAS_SERVICE_MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "gasService": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "gateway": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "initializerAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rootBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TARGET_MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "AxelarGatewayProxyMultisig",
+      "values": {}
+    },
+    {
+      "name": "OwnerMultisig",
+      "values": {
         "domainSeparator": {
           "description": null,
           "severity": null,
@@ -204,47 +247,8 @@
           "description": null,
           "severity": null,
           "type": null
-        }
-      }
-    },
-    {
-      "name": "LayerZero Relayer",
-      "values": {}
-    },
-    {
-      "name": "MPTValidator01",
-      "values": {
-        "PACKET_SIGNATURE": {
-          "description": null,
-          "severity": null,
-          "type": null
         },
-        "getProofType": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getUtilsVersion": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "proofType": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "stargateBridgeAddress": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "stargateTokenAddress": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "utilsVersion": {
+        "VERSION": {
           "description": null,
           "severity": null,
           "type": null
@@ -252,48 +256,19 @@
       }
     },
     {
-      "name": "NonceContract",
+      "name": "AxelarGasService",
       "values": {
-        "endpoint": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ProxyAdmin",
-      "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ProxyAdmin",
-      "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "TSS Oracle",
-      "values": {}
-    },
-    {
-      "name": "TreasuryV2",
-      "values": {
-        "feeEnabled": {
+        "contractId": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "nativeBP": {
+        "gasCollector": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
           "description": null,
           "severity": null,
           "type": null
@@ -303,17 +278,7 @@
           "severity": null,
           "type": null
         },
-        "uln": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "zroEnabled": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "zroFee": {
+        "pendingOwner": {
           "description": null,
           "severity": null,
           "type": null
@@ -321,108 +286,19 @@
       }
     },
     {
-      "name": "UltraLightNodeV2",
+      "name": "Operators",
       "values": {
-        "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "CONFIG_TYPE_ORACLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "CONFIG_TYPE_OUTBOUND_BLOCK_CONFIRMATIONS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "CONFIG_TYPE_OUTBOUND_PROOF_TYPE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "CONFIG_TYPE_RELAYER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "chainAddressSizeMap": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "defaultAdapterParams": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "defaultAppConfig": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "endpoint": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "inboundProofLibrary": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "layerZeroToken": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "localChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonceContract": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "owner": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "supportedOutboundProof": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "treasuryContract": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "treasuryZROFees": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "ulnLookup": {
+        "pendingOwner": {
           "description": null,
           "severity": null,
           "type": null
         }
       }
-    },
-    {
-      "name": "VerifierFeeLib",
-      "values": {}
     }
   ]
 }

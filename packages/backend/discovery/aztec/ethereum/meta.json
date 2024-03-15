@@ -2,44 +2,79 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "L1StandardBridge",
-      "values": {
-        "l2TokenBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "messenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MESSENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OTHER_BRIDGE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
+      "name": "HistoricalTurboVerifier",
+      "description": "TurboVerifier with historical proofs, kept for data only.",
+      "values": {}
     },
     {
-      "name": "ProxyAdmin",
+      "name": "RollupProcessor",
       "values": {
-        "addressManager": {
+        "dataRoot": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "isUpgrading": {
+        "dataSize": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "escapeBlockLowerBound": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "escapeBlockUpperBound": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ethAssetId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "feeDistributor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getEscapeHatchStatus": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalDeposited": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalFees": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalPendingDeposit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalWithdrawn": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nextRollupId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nullRoot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "numberOfAssets": {
           "description": null,
           "severity": null,
           "type": null
@@ -48,78 +83,73 @@
           "description": null,
           "severity": null,
           "type": null
-        }
-      }
-    },
-    {
-      "name": "L1CrossDomainMessenger",
-      "values": {
-        "MESSAGE_VERSION": {
+        },
+        "paused": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "messageNonce": {
+        "rollupNumPubInputs": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "MIN_GAS_CALLDATA_OVERHEAD": {
+        "rollupPubInputLength": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": {
+        "rootRoot": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": {
+        "txNumPubInputs": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "OTHER_MESSENGER": {
+        "txPubInputLength": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "PORTAL": {
+        "verifier": {
+          "description": "Address of the ZK verifier.",
+          "severity": "LOW",
+          "type": "PERMISSION"
+        },
+        "getAssetPermitSupport": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "RELAY_CALL_OVERHEAD": {
+        "removedRollupProviders": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "RELAY_CONSTANT_OVERHEAD": {
+        "rollupProviders": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "RELAY_GAS_CHECK_BUFFER": {
+        "totalDeposited": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "RELAY_RESERVED_GAS": {
+        "totalFees": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "version": {
+        "totalPendingDeposit": {
           "description": null,
           "severity": null,
           "type": null
-        }
-      }
-    },
-    {
-      "name": "AddressManager",
-      "values": {
-        "owner": {
+        },
+        "totalWithdrawn": {
           "description": null,
           "severity": null,
           "type": null
@@ -127,7 +157,11 @@
       }
     },
     {
-      "name": "AdminMultisig",
+      "name": "AlwaysReverting",
+      "values": {}
+    },
+    {
+      "name": "Aztec Multisig",
       "values": {
         "domainSeparator": {
           "description": null,
@@ -162,131 +196,16 @@
       }
     },
     {
-      "name": "OptimismPortal",
+      "name": "AztecFeeDistributor",
       "values": {
-        "GUARDIAN": {
+        "convertConstant": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "L2_ORACLE": {
+        "factory": {
           "description": null,
           "severity": null,
-          "type": null
-        },
-        "l2Sender": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "params": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "SYSTEM_CONFIG": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L2OutputOracle",
-      "values": {
-        "CHALLENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "FINALIZATION_PERIOD_SECONDS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "L2_BLOCK_TIME": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "latestBlockNumber": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "latestOutputIndex": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nextBlockNumber": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nextOutputIndex": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PROPOSER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "startingBlockNumber": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "startingTimestamp": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "SUBMISSION_INTERVAL": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "deletedOutputs": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "SystemConfig",
-      "values": {
-        "gasLimit": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "minimumGasLimit": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "overhead": {
-          "description": "Fixed L2 gas overhead. Used as part of the L2 fee calculation.",
-          "severity": "LOW",
           "type": null
         },
         "owner": {
@@ -294,47 +213,27 @@
           "severity": null,
           "type": null
         },
-        "resourceConfig": {
+        "reimburseConstant": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "scalar": {
-          "description": "Dynamic L2 gas overhead. Used as part of the L2 fee calculation.",
-          "severity": "LOW",
-          "type": null
-        },
-        "UNSAFE_BLOCK_SIGNER_SLOT": {
+        "rollupProcessor": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "unsafeBlockSigner": {
+        "router": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "version": {
+        "WETH": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "batcherHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "opStackDA": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "sequencerInbox": {
+        "txFeeBalance": {
           "description": null,
           "severity": null,
           "type": null

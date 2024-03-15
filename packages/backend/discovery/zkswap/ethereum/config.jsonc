@@ -53,7 +53,9 @@
       },
       "ignoreInWatchMode": [
         "firstPendingWithdrawalIndex",
-        "numberOfPendingWithdrawals"
+        "numberOfPendingWithdrawals",
+        "totalBlocksCommitted",
+        "totalBlocksVerified"
       ]
     }
   }

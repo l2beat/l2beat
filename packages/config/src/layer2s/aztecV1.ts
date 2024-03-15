@@ -105,7 +105,7 @@ export const aztecV1: Layer2 = {
         {
           contract: 'TurboVerifier',
           references: [
-            'https://etherscan.io/address/0xd3a6D9De4cbC2CC7529361941e85b1c3269CcBb1#code#F1#L37',
+            'https://etherscan.io/address/0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8#code#F1#L37',
           ],
         },
       ],
@@ -209,7 +209,7 @@ export const aztecV1: Layer2 = {
       references: [
         {
           text: 'TurboVerifier.sol#L37 - Etherscan source code',
-          href: 'https://etherscan.io/address/0xd3a6D9De4cbC2CC7529361941e85b1c3269CcBb1#code#F1#L37',
+          href: 'https://etherscan.io/address/0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8#code#F1#L37',
         },
       ],
     },
@@ -292,14 +292,6 @@ export const aztecV1: Layer2 = {
       ),
       discovery.getContractDetails('TurboVerifier', {
         description: 'Turbo Plonk zkSNARK Verifier.',
-        upgradableBy: ['Aztec Multisig'],
-        upgradeDelay: 'No delay',
-        upgradeConsiderations:
-          'Verifier field in RollupProcessor can be changed with no delay.',
-      }),
-      discovery.getContractDetails('AlwaysReverting', {
-        description:
-          'Contract has replaced original TurboVerifier actively halting verification process.',
         upgradableBy: ['Aztec Multisig'],
         upgradeDelay: 'No delay',
         upgradeConsiderations:

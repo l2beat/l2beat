@@ -1,7 +1,7 @@
 {
   "name": "lzomnichain",
   "chain": "polygonpos",
-  "blockNumber": 54329188,
+  "blockNumber": 54650344,
   "configHash": "0x58718a37ccbc74493689cc75d57fee239a87454aec08e93b8c60cf25b015b835",
   "version": 3,
   "contracts": [
@@ -11,10 +11,10 @@
       "unverified": true,
       "upgradeability": {
         "type": "EIP1967 proxy",
-        "implementation": "0x8042425b53DC6a475cb4e62778A5E17F55f2188d",
+        "implementation": "0x7Acc1C37DA3B9117E947e80325AD18d6F8Fc6d82",
         "admin": "0x6d65a44Bd6Cfe1a8b2E816c918Dd83a6b04c8DEe"
       },
-      "implementations": ["0x8042425b53DC6a475cb4e62778A5E17F55f2188d"],
+      "implementations": ["0x7Acc1C37DA3B9117E947e80325AD18d6F8Fc6d82"],
       "sinceTimestamp": 1687809711
     },
     {

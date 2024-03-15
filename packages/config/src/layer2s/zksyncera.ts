@@ -150,6 +150,17 @@ export const zksyncera: Layer2 = {
           functionSignature:
             'function proveBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32), tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[], tuple(uint256[], uint256[]))',
           sinceTimestamp: new UnixTime(1701258299),
+          untilTimestamp: new UnixTime(1710165419),
+        },
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD',
+          ),
+          selector: '0x7f61885c',
+          functionSignature:
+            'function proveBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32), tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[], tuple(uint256[], uint256[]))',
+          sinceTimestamp: new UnixTime(1710165419),
         },
       ],
       batchSubmissions: [],
@@ -174,6 +185,17 @@ export const zksyncera: Layer2 = {
           functionSignature:
             'function executeBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[] _newBatchesData)',
           sinceTimestamp: new UnixTime(1701258299),
+          untilTimestamp: new UnixTime(1710167255),
+        },
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD',
+          ),
+          selector: '0xc3d93e7c',
+          functionSignature:
+            'function executeBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[] _newBatchesData)',
+          sinceTimestamp: new UnixTime(1710167255),
         },
       ],
     },

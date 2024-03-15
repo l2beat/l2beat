@@ -2,140 +2,99 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "",
-      "values": {}
-    },
-    {
-      "name": "",
-      "values": {}
-    },
-    {
-      "name": "",
-      "values": {}
-    },
-    {
-      "name": "",
-      "values": {}
-    },
-    {
-      "name": "Endpoint",
+      "name": "RollupProcessorV2",
       "values": {
-        "BLOCK_VERSION": {
+        "allowThirdPartyContracts": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "DEFAULT_VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "chainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "defaultReceiveLibraryAddress": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "defaultReceiveVersion": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "defaultSendLibrary": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "defaultSendVersion": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isReceivingPayload": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isSendingPayload": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "latestVersion": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "libraryLookup": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "FPValidator",
-      "values": {
-        "getProofType": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getUtilsVersion": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "proofType": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "stargateBridgeAddress": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "stargateTokenAddress": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "utilsVersion": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "Google Cloud Oracle",
-      "values": {
         "DEFAULT_ADMIN_ROLE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "allowlistSize": {
+        "defiBridgeProxy": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "defaultMultiplierBps": {
+        "delayBeforeEscapeHatch": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EMERGENCY_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "escapeBlockLowerBound": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "escapeBlockUpperBound": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getAsyncDefiInteractionHashesLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getCapped": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getDataSize": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getDefiInteractionHashesLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getEscapeHatchStatus": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getImplementationVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPendingDefiInteractionHashesLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getSupportedAssetsLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getSupportedBridgesLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lastRollupTimeStamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "LISTER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OWNER_ROLE": {
           "description": null,
           "severity": null,
           "type": null
@@ -145,27 +104,42 @@
           "severity": null,
           "type": null
         },
-        "priceFeed": {
+        "prevDefiInteractionsHash": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "quorum": {
+        "RESUME_ROLE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "signerSize": {
+        "rollupStateHash": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "vid": {
+        "verifier": {
+          "description": "Address of the ZK verifier.",
+          "severity": "LOW",
+          "type": "PERMISSION"
+        },
+        "accessControl": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "workerFeeLib": {
+        "rollupProviders": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getSupportedAsset": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getSupportedBridge": {
           "description": null,
           "severity": null,
           "type": null
@@ -173,13 +147,8 @@
       }
     },
     {
-      "name": "LayerZero Multisig",
+      "name": "Aztec Multisig",
       "values": {
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "domainSeparator": {
           "description": null,
           "severity": null,
@@ -204,62 +173,52 @@
           "description": null,
           "severity": null,
           "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
         }
       }
     },
     {
-      "name": "LayerZero Relayer",
+      "name": "Lister Multisig",
+      "values": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "DefiBridgeProxy",
       "values": {}
-    },
-    {
-      "name": "MPTValidator01",
-      "values": {
-        "PACKET_SIGNATURE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getProofType": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getUtilsVersion": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "proofType": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "stargateBridgeAddress": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "stargateTokenAddress": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "utilsVersion": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "NonceContract",
-      "values": {
-        "endpoint": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
     },
     {
       "name": "ProxyAdmin",
@@ -272,9 +231,34 @@
       }
     },
     {
-      "name": "ProxyAdmin",
+      "name": "Resume Multisig",
       "values": {
-        "owner": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
           "description": null,
           "severity": null,
           "type": null
@@ -282,38 +266,34 @@
       }
     },
     {
-      "name": "TSS Oracle",
-      "values": {}
-    },
-    {
-      "name": "TreasuryV2",
+      "name": "Emergency Multisig",
       "values": {
-        "feeEnabled": {
+        "domainSeparator": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "nativeBP": {
+        "getChainId": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "owner": {
+        "getOwners": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "uln": {
+        "getThreshold": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "zroEnabled": {
+        "nonce": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "zroFee": {
+        "VERSION": {
           "description": null,
           "severity": null,
           "type": null
@@ -321,108 +301,15 @@
       }
     },
     {
-      "name": "UltraLightNodeV2",
+      "name": "Verifier28x32",
+      "description": "Verifier contract used by the RollupProcessorV2.",
       "values": {
-        "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "CONFIG_TYPE_ORACLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "CONFIG_TYPE_OUTBOUND_BLOCK_CONFIRMATIONS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "CONFIG_TYPE_OUTBOUND_PROOF_TYPE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "CONFIG_TYPE_RELAYER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "chainAddressSizeMap": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "defaultAdapterParams": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "defaultAppConfig": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "endpoint": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "inboundProofLibrary": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "layerZeroToken": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "localChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonceContract": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "supportedOutboundProof": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "treasuryContract": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "treasuryZROFees": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "ulnLookup": {
+        "getVerificationKeyHash": {
           "description": null,
           "severity": null,
           "type": null
         }
       }
-    },
-    {
-      "name": "VerifierFeeLib",
-      "values": {}
     }
   ]
 }

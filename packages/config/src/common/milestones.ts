@@ -108,4 +108,11 @@ export const HOMEPAGE_MILESTONES: Milestone[] = [
     description:
       'zkSync Era is now permissionless and open for everyone bringing first zkEVM to mainnet.',
   },
+  {
+    name: 'EIP-4844 (Protodanksharding) is live on mainnet',
+    date: '2024-03-13T00:00:00Z',
+    link: 'https://ethereum.org/en/roadmap/danksharding/#what-is-protodanksharding',
+    description:
+      'Blobs create a new, cheap way to post data on-chain that is specialized for rollups.',
+  },
 ]
