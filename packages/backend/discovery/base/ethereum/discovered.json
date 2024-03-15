@@ -1,8 +1,8 @@
 {
   "name": "base",
   "chain": "ethereum",
-  "blockNumber": 19429655,
-  "configHash": "0x1dcc453e8744417c99c13e7cfa6633fc489d52437e974aa34f7c05b0bc037639",
+  "blockNumber": 19439852,
+  "configHash": "0x0fb2651d767e83a737c4761a595c97892ae9588262c3fdd7f546e4abbc037fa4",
   "version": 3,
   "contracts": [
     {
@@ -96,7 +96,7 @@
         "GUARDIAN": "0x14536667Cd30e52C0b458BaACcB9faDA7046E056",
         "L2_ORACLE": "0x56315b90c40730925ec5485cf004d835058518A0",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 100000, 19429653],
+        "params": [1000000000, 100000, 19439852],
         "paused": false,
         "SYSTEM_CONFIG": "0x73a79Fab69143498Ed3712e519A88a918e1f4072",
         "version": "1.7.0"
@@ -127,10 +127,10 @@
         ],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 11791800,
-        "latestOutputIndex": 6550,
-        "nextBlockNumber": 11793600,
-        "nextOutputIndex": 6551,
+        "latestBlockNumber": 11853000,
+        "latestOutputIndex": 6584,
+        "nextBlockNumber": 11854800,
+        "nextOutputIndex": 6585,
         "PROPOSER": "0x642229f238fb9dE03374Be34B0eD8D9De80752c5",
         "startingBlockNumber": 0,
         "startingTimestamp": 1686789348,
@@ -244,7 +244,7 @@
       "sinceTimestamp": 1686793895,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292770190",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292770430",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
