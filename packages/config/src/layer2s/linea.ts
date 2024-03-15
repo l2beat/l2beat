@@ -136,7 +136,7 @@ export const linea: Layer2 = {
           selector: '0x7a776315',
           functionSignature:
             'function submitData((bytes32,bytes32,bytes32,uint256,uint256,bytes32,bytes))',
-          sinceTimestamp: new UnixTime(1707813551),
+          sinceTimestamp: new UnixTime(1707831168),
         },
       },
       {
@@ -155,7 +155,7 @@ export const linea: Layer2 = {
           functionSignature:
             'function finalizeBlocks((bytes32, uint32, bytes[], bytes32[], bytes, uint16[])[] _blocksData,bytes _proof,uint256 _proofType,bytes32 _parentStateRootHash)',
           sinceTimestamp: new UnixTime(1689159923),
-          untilTimestamp: new UnixTime(1707813551),
+          untilTimestamp: new UnixTime(1707831168),
         },
       },
       {
@@ -173,7 +173,7 @@ export const linea: Layer2 = {
           selector: '0xd630280f',
           functionSignature:
             'function finalizeCompressedBlocksWithProof(bytes,uint256,(bytes32,bytes32[],bytes32,uint256,uint256,uint256,bytes32,uint256,bytes32[],uint256,bytes))',
-          sinceTimestamp: new UnixTime(1707813551),
+          sinceTimestamp: new UnixTime(1707831168),
         },
       },
     ],
@@ -186,7 +186,7 @@ export const linea: Layer2 = {
     finality: {
       type: 'Linea',
       lag: 0,
-      minTimestamp: new UnixTime(1707813551),
+      minTimestamp: new UnixTime(1707831168),
     },
   },
   chainConfig: {
