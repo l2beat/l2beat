@@ -1,3 +1,101 @@
+Generated with discovered.json: 0x9b4d7769cda4996d3d0134957a58e639e4b6f2dc
+
+# Diff at Fri, 15 Mar 2024 14:22:39 GMT:
+
+- author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
+- comparing to: main@955bf46d3045f69b7cc7dac86edbb5dae6945bc4 block: 19433041
+- current block number: 19440911
+
+## Description
+
+- Relatively small changes to `PolygonZkEVMExistentEtrog` which now is called `PolygonZkEVMEtrog`
+- New FFlonkVerifier (`0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be`) for PolygonzkEVM. The previous FFlonkVerifier is still used by Astar Validium. Because of the change there are now two RollupTypes.
+
+### PolygonZkEVMExistentEtrog
+
+Contract name has changed to `PolygonZkEVMEtrog`. The method `seqenceBatches` now takes to additional parameters: `maxSequenceTimestamp` and `initSequencedBatch`. It is an additional safety measure, the `maxSequenceTimestamp` must be inside a safety range (actual + 36 seconds). This timestamp should be equal or higher of the last block inside the sequence, otherwise this batch will be invalidated by circuit.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: Mapping of a rollup type to rollup verifier. Different types may use the same verifier. First entry is a type, second a verifier.
++++ type: STRUCTURE
++++ severity: MEDIUM
+      values.rollupsData.0.1:
+-        "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"
++        "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be"
++++ description: The number of unique rollup types that the manager can use.
++++ type: STRUCTURE
++++ severity: MEDIUM
+      values.rollupTypeCount:
+-        1
++        2
+    }
+```
+
+```diff
+    contract PolygonZkEVMEtrog (0x519E42c24163192Dca44CD3fBDCEBF6be9130987) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x79BCB82B35A335cD8A8Ec433b304a0c91f67CDE0"
++        "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"
+      implementations.0:
+-        "0x79BCB82B35A335cD8A8Ec433b304a0c91f67CDE0"
++        "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"
+      values.SET_UP_ETROG_TX:
+-        "0xdf2a8080944d5cf5032b2a844602278b01199ed191a86c93ff8080821092808000000000000000000000000000000000000000000000000000000005ca1ab1e000000000000000000000000000000000000000000000000000000005ca1ab1e01bff"
+      values.TIMESTAMP_RANGE:
++        36
+      derivedName:
+-        "PolygonZkEVMExistentEtrog"
++        "PolygonZkEVMEtrog"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PolygonzkEVMVerifier (0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../v2/consensus/zkEVM/PolygonZkEVMEtrog.sol       |   34 +
+ .../v2/interfaces/IPolygonZkEVMVEtrogErrors.sol    |   10 +
+ .../contracts/v2/lib/PolygonRollupBaseEtrog.sol    |   36 +-
+ .../PolygonZkEVMEtrog/implementation/meta.txt      |    4 +-
+ .../contracts/verifiers/FflonkVerifier.sol         | 1244 ++++++++++++++++++++
+ .../ethereum/.code/PolygonzkEVMVerifier/meta.txt   |    2 +
+ 6 files changed, 1324 insertions(+), 6 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19433041 (main branch discovery), not current.
+
+```diff
+    contract FflonkVerifier (0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8) {
+    +++ description: None
+      name:
+-        "FflonkVerifier"
++        "AstarVerifier"
+    }
+```
+
+```diff
+    contract PolygonZkEVMExistentEtrog (0x519E42c24163192Dca44CD3fBDCEBF6be9130987) {
+    +++ description: None
+      name:
+-        "PolygonZkEVMExistentEtrog"
++        "PolygonZkEVMEtrog"
+    }
+```
+
 Generated with discovered.json: 0xf5c29c1b6e921c17297af2fa6650362ebbbffcb5
 
 # Diff at Thu, 14 Mar 2024 11:46:46 GMT:
