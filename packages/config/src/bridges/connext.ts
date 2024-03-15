@@ -34,7 +34,7 @@ export const connext: Bridge = {
       {
         address: EthereumAddress('0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09'),
         sinceTimestamp: new UnixTime(1636004546),
-        tokens: ['USDC', 'USDT', 'DAI', 'WBTC'],
+        tokens: ['USDC', 'USDT', 'DAI', 'WBTC', 'ezETH'],
       },
     ],
   },
