@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x80c532bb0df328f9f211c41e5d693410343d04a8
+
+# Diff at Wed, 13 Mar 2024 08:08:25 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@800d2d30954e8bfb14ad062b9806c50997706541 block: 19317899
+- current block number: 19424856
+
+## Description
+
+New Connector 'OptimismHubConnector' added, matches the source code of existing connector in index 4 (OP Mainnet connector).
+This connector is for the op stack L2 Mode Network and now renamed to 'ModeHubConnector'.
+
+## Watched changes
+
+```diff
+    contract RootManager (0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A) {
+    +++ description: None
+      values.connectors[12]:
++        "0x7b2bE683266909A6a4068e743083dd40621d663E"
++++ description: Hash of all connectors' addresses. Changes when a connector is added or removed.
++++ severity: LOW
+      values.connectorsHash:
+-        "0x14b530936915b09786ec041c63aa2b1ec72eb6cdefd18fe41d79b92b93aa90bd"
++        "0x13d3fa9798ffd60797858bd05e95cbe3c3d7ebb6ee02922f0625e12f8bcbe51c"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ModeHubConnector (0x7b2bE683266909A6a4068e743083dd40621d663E)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../@openzeppelin/contracts/utils/Address.sol      | 244 +++++++++++++++++++++
+ .../contracts/messaging/connectors/Connector.sol   | 216 ++++++++++++++++++
+ .../contracts/messaging/connectors/GasCap.sol      |  61 ++++++
+ .../messaging/connectors/HubConnector.sol          |  44 ++++
+ .../messaging/connectors/optimism/BaseOptimism.sol |  28 +++
+ .../connectors/optimism/OptimismHubConnector.sol   | 148 +++++++++++++
+ .../messaging/connectors/optimism/lib/Types.sol    |  84 +++++++
+ .../contracts/messaging/interfaces/IConnector.sol  |  64 ++++++
+ .../messaging/interfaces/IRootManager.sol          |  22 ++
+ .../interfaces/ambs/optimism/IOptimismPortal.sol   |  25 +++
+ .../interfaces/ambs/optimism/OptimismAmb.sol       |  28 +++
+ .../contracts/shared/ProposedOwnable.sol           | 172 +++++++++++++++
+ .../shared/interfaces/IProposedOwnable.sol         |  42 ++++
+ .../ethereum/.code/ModeHubConnector/meta.txt       |   2 +
+ 14 files changed, 1180 insertions(+)
+```
+
 Generated with discovered.json: 0xedbcbcd69c61aab19a00452e1a0f26ed281f8f56
 
 # Diff at Tue, 27 Feb 2024 09:09:39 GMT:

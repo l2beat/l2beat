@@ -7,14 +7,15 @@ import {
 
 import {
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
+  makeDataAvailabilityConfig,
   NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
@@ -61,7 +62,6 @@ export const zksynclite: Layer2 = {
     purposes: ['Payments'],
     provider: 'zkSync Lite',
     category: 'ZK Rollup',
-    dataAvailabilityMode: 'StateDiffs',
 
     links: {
       websites: ['https://zksync.io/'],
@@ -128,6 +128,11 @@ export const zksynclite: Layer2 = {
     },
     finality: 'coming soon',
   },
+  dataAvailability: makeDataAvailabilityConfig({
+    type: 'On chain',
+    layer: 'Ethereum (calldata)',
+    mode: 'State diffs',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
@@ -165,7 +170,7 @@ export const zksynclite: Layer2 = {
         forcedWithdrawalDelay,
       )} to be processed.`,
       warning: {
-        text: 'The Security Council can upgrade with no delay.',
+        value: 'The Security Council can upgrade with no delay.',
         sentiment: 'bad',
       },
       sources: [
@@ -260,7 +265,7 @@ export const zksynclite: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...DATA_AVAILABILITY.ON_CHAIN,
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       references: [
         {
           text: 'Overview - zkSync documentation',

@@ -9,7 +9,7 @@
   "names": {
     "0x32400084C286CF3E17e7B677ea9583e60a000324": "zkSync",
     "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063": "L1ERC20Bridge",
-    "0xa0425d71cB1D6fb80E65a5361a04096E0672De03": "ValidatorTimelock",
+    "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD": "ValidatorTimelock",
     "0x4e4943346848c4867F81dFb37c4cA9C5715A7828": "zkSync Era Multisig"
   },
   "overrides": {
@@ -55,6 +55,23 @@
             "totalBlocksVerified",
             "totalBlocksExecuted"
           ]
+        },
+        // the 3 following allow us to get an array of validators without creating a new handler
+        // construnctorArgs._validators u validatorsAdded n validatorsRemoved
+        // where u is the union of the 2 sets and n is intersection
+        "constructorArgs": {
+          "type": "constructorArgs",
+          "nameArgs": true
+        },
+        "validatorsAdded": {
+          "type": "arrayFromOneEvent",
+          "event": "ValidatorAdded",
+          "valueKey": "_addedValidator"
+        },
+        "validatorsRemoved": {
+          "type": "arrayFromOneEvent",
+          "event": "ValidatorRemoved",
+          "valueKey": "_removedValidator"
         }
       }
     },

@@ -1,6 +1,39 @@
+Generated with discovered.json: 0x58e5e65bfca08d68390f2842b5da775add19380b
+
+# Diff at Thu, 14 Mar 2024 14:12:08 GMT
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@3ffa91064379f34a2916a1ad4e93791b752e7e9e block: 19225512
+- current block number: 19433750
+
+## Description
+
+New PriceFeed Oracle implementation has been deployed. Chain paths and liquidity data has been updated.
+
+## Watched changes
+
+```diff
+    contract  (0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0xF641db6860FD5f6643D05bD75405a2586a63a141"
++        "0x13dff8847EA170eBb8439ce732c0A14Bb49fDd92"
+      implementations.0:
+-        "0xF641db6860FD5f6643D05bD75405a2586a63a141"
++        "0x13dff8847EA170eBb8439ce732c0A14Bb49fDd92"
+    }
+```
+
+## Source code changes
+
+```diff
+.../-0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113/implementation/meta.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+
 Generated with discovered.json: 0x6aa238b93e1fb75daa84f0b1ea40a61326c2f152
 
-# Diff at Wed, 14 Feb 2024 10:08:14 GMT:
+# Diff at Wed, 14 Feb 2024 10:08:14 GMT
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
 - comparing to: main@6045526c8b7e15993de0acdd037b3ffbaa1bedda block: 18820326
@@ -63,7 +96,7 @@ A new pool for mETH is added. The Default basis point multiplier of the Google O
 
 Generated with discovered.json: 0x98cb3e3594feadbd9145ee754066d371eda0c119
 
-# Diff at Tue, 19 Dec 2023 13:36:06 GMT:
+# Diff at Tue, 19 Dec 2023 13:36:06 GMT
 
 - author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
 - comparing to: main@1e70db199340dc9df7ac0996900e54067b9d4f12
@@ -85,7 +118,7 @@ Added new config values.
     }
 ```
 
-# Diff at Thu, 23 Nov 2023 13:31:10 GMT:
+# Diff at Thu, 23 Nov 2023 13:31:10 GMT
 
 - author: Amin Latifi (<a.latifi.al@gmail.com>)
 - comparing to: main@2ff45714640abe4c50d283967078888d4af81d78
@@ -104,7 +137,7 @@ StarGateFeeLibrary7 owner was replaced: 0x1D7C6783328C145393e84fb47a7f7C548f5Ee2
     }
 ```
 
-# Diff at Fri, 17 Nov 2023 12:24:03 GMT:
+# Diff at Fri, 17 Nov 2023 12:24:03 GMT
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
 - comparing to: main@8df7aef75226275b8e56ba8d4d76ce64057b0360

@@ -7,9 +7,9 @@ export const astarzkevm: Layer2 = underReviewL2({
     name: 'Astar zkEVM',
     slug: 'astarzkevm',
     description:
-      "Astar zkEVM is an Ethereum Layer 2 solution that leverages Polygon's CDK and zero-knowledge cryptography to enable off-chain transactions while maintaining EVM equivalence.",
+      "Astar zkEVM is a Validium that leverages Polygon's CDK and zero-knowledge cryptography to enable off-chain transactions while maintaining EVM equivalence.",
     purposes: ['Universal'],
-    category: 'ZK Rollup',
+    category: 'Validium',
     provider: 'Polygon',
     headerWarning:
       'Astar zkEVM is using AggLayer, meaning it shares the TVL escrow contracts with Polygon zkEVM and other connected chains. For now, you can check its TVL [here](https://dune.com/hashed_official/astar-zkevm). We have not verified it so proceed with caution.',

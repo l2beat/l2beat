@@ -1,160 +1,273 @@
-import { ScalingProjectTechnologyChoice } from './ScalingProjectTechnologyChoice'
+import { assertUnreachable, Sentiment } from '@l2beat/shared-pure'
 
-const ON_CHAIN: ScalingProjectTechnologyChoice = {
-  name: 'All data required for proofs is published on chain',
-  description:
-    'All the data that is used to construct the system state is published on chain in the form of cheap calldata. This ensures that it will always be available when needed.',
-  risks: [],
-  references: [],
+import {
+  OffChainDataAvailabilityBridge,
+  OffChainDataAvailabilityFallback,
+  OffChainDataAvailabilityLayer,
+  OnChainDataAvailabilityLayer,
+  ScalingProjectDataAvailability,
+  ScalingProjectDataAvailabilityMode,
+} from './ScalingProjectDataAvailability'
+
+type ConfigData = OnChainConfig | OffChainConfig | OffChainDacConfig
+
+interface OnChainConfig {
+  type: 'On chain'
+  layer: OnChainDataAvailabilityLayer
+  mode: ScalingProjectDataAvailabilityMode
 }
 
-const ON_CHAIN_CANONICAL: ScalingProjectTechnologyChoice = {
-  name: 'All transaction data is recorded on chain',
-  description:
-    'All executed transactions are submitted to an on chain smart contract. The execution of the rollup is based entirely on the submitted transactions, so anyone monitoring the contract can know the correct state of the rollup chain.',
-  risks: [],
-  references: [],
+interface OffChainConfig {
+  type: 'Off chain'
+  layers: [
+    Exclude<OffChainDataAvailabilityLayer, 'DAC'>,
+    OffChainDataAvailabilityFallback?,
+  ]
+  bridge: Exclude<
+    OffChainDataAvailabilityBridge,
+    `${number}/${number} DAC Members` | `DAC Members`
+  >
+  mode: ScalingProjectDataAvailabilityMode
 }
 
-const STARKEX_ON_CHAIN: ScalingProjectTechnologyChoice = {
-  name: 'All data required for proofs is published on chain',
-  description:
-    "All the relevant data that is used to recover the balances Merkle Tree is published on-chain as calldata. This includes, in addition to the proven new state, the complete list of differences of the users' balances from the previous state.",
-  risks: [],
-  references: [
-    {
-      text: 'Data Availability Modes - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex/con_data_availability.html#data_availability_modes',
-    },
-    {
-      text: 'ZK Rollup - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex/con_data_availability.html#zk_rollup',
-    },
-  ],
+interface OffChainDacConfig {
+  type: 'Off chain (DAC)'
+  fallback?: OffChainDataAvailabilityFallback
+  config: DacConfig | undefined
+  mode: ScalingProjectDataAvailabilityMode
 }
 
-const STARKNET_ON_CHAIN: ScalingProjectTechnologyChoice = {
-  name: 'All data required to reconstruct rollup state is published on chain',
-  description:
-    "State diffs are publish on-chain as calldata on every state update. The state diffs contain information on every contact whose storage was updated, and additional information on contract deployments. From diffs full system state can be recovered. Contracts' code is not published on L1, but can be trustlessly verified if available elsewhere.",
-  risks: [],
-  references: [
-    {
-      text: 'On-Chain Data - Starknet documentation',
-      href: 'https://docs.starknet.io/documentation/architecture_and_concepts/Data_Availability/on-chain-data/',
-    },
-  ],
+export interface DacConfig {
+  membersCount: number
+  requiredSignatures: number
 }
 
-const GENERIC_OFF_CHAIN: ScalingProjectTechnologyChoice = {
-  name: 'Data is not stored on chain',
-  description:
-    'The transaction data is not recorded on the Ethereum main chain.',
-  risks: [
-    {
-      category: 'Funds can be lost if',
-      text: 'the external data becomes unavailable.',
-      isCritical: true,
-    },
-  ],
-  references: [],
-}
-
-function ANYTRUST_OFF_CHAIN(
-  DAC: Record<string, number>,
-): ScalingProjectTechnologyChoice {
-  const threshold = DAC.keyCount - DAC.threshold + 1
-  return {
-    ...GENERIC_OFF_CHAIN,
-    description: `Users transactions are not published on-chain, but rather sent to external trusted parties, also known as committee members (DAC). Members of the DAC collectively produce a Data Availability Certificate (comprising BLS signatures from a quorum) guaranteeing that the data behind the new transaction batch will be available until the expiry period elapses (currently a minimum of two weeks). This signature is not verified by L1, however external Validators will skip the batch if BLS signature is not valid resulting. This will result in a fraud proof challenge if this batch is included in a consecutive state update. It is assumed that at least one honest DAC member that signed the batch will reveal tx data to the Validators if Sequencer decides to act maliciously and withhold the data. If the Sequencer cannot gather enough signatures from the DAC, it will "fall back to rollup" mode and by posting the full data directly to the L1 chain. The current DAC threshold is ${threshold} out of ${DAC.keyCount}.`,
-    risks: [
-      ...GENERIC_OFF_CHAIN.risks,
-      {
-        category: 'Users can be censored if',
-        text: 'the committee restricts their access to the external data.',
-      },
-    ],
-    references: [
-      {
-        text: 'Inside AnyTrust - Arbitrum documentation',
-        href: 'https://developer.offchainlabs.com/inside-anytrust',
-      },
-    ],
+export function makeDataAvailabilityConfig(
+  data: ConfigData,
+): ScalingProjectDataAvailability {
+  switch (data.type) {
+    case 'On chain':
+      return makeOnChainDataAvailabilityConfig(data)
+    case 'Off chain':
+      return makeOffChainDataAvailabilityConfig(data)
+    case 'Off chain (DAC)':
+      return getOffChainDacDataAvailabilityConfig(data)
+    default:
+      assertUnreachable(data)
   }
 }
 
-const STARKEX_OFF_CHAIN: ScalingProjectTechnologyChoice = {
-  ...GENERIC_OFF_CHAIN,
-  description:
-    'The balances of the users are not published on-chain, but rather sent to external trusted parties, also known as committee members. A state update is valid and accepted on-chain only if at least a quorum of the committee members sign a state update.',
-  risks: [
-    ...GENERIC_OFF_CHAIN.risks,
-    {
-      category: 'Users can be censored if',
-      text: 'the committee restricts their access to the external data.',
+function makeOnChainDataAvailabilityConfig(
+  data: Extract<ConfigData, { type: 'On chain' }>,
+): ScalingProjectDataAvailability {
+  return {
+    type: 'On chain',
+    layer: {
+      value: data.layer,
+      description: getOnChainLayerDescription(data.layer),
+      sentiment: 'good',
     },
-  ],
-  references: [
-    {
-      text: 'Data Availability Modes - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex/con_data_availability.html#data_availability_modes',
+    bridge: {
+      value: 'Enshrined',
+      description:
+        'The validating bridge has access to all the data, as it is posted on chain.',
+      sentiment: 'good',
     },
-    {
-      text: 'Validium - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex/con_data_availability.html#validium_starkex',
-    },
-    {
-      text: 'Availability Verifiers - StarkEx documentation',
-      href: 'https://docs.starkware.co/starkex/spot/shared/contract-management.html#availability_verifiers_spot',
-    },
-  ],
-}
-const PLASMA_OFF_CHAIN: ScalingProjectTechnologyChoice = {
-  ...GENERIC_OFF_CHAIN,
-  description:
-    'The transaction data is stored on a plasma chain and is not recorded on the Ethereum main chain.',
+    mode: data.mode,
+  }
 }
 
-function CELESTIA_OFF_CHAIN(
-  isUsingBlobstream: boolean,
-): ScalingProjectTechnologyChoice {
-  const additionalDescription = isUsingBlobstream
-    ? ' The blobstream bridge is used to verify attestations from the Celestia validator set that the data is indeed available.'
-    : ' Since the Blobstream bridge is not used, availability of the data is not verified against Celestia validators, meaning that the Sequencer can single-handedly publish unavailable roots.'
-  return {
-    name: 'Data is stored on Celestia',
-    description:
-      `Transactions roots are posted onchain and the full data is posted on Celestia. ` +
-      additionalDescription,
-    risks: [
-      {
-        category: 'Funds can be lost if',
-        text: 'the sequencer posts an unavailable transaction root.',
-        isCritical: true,
-      },
-      {
-        category: 'Funds can be lost if',
-        text: 'the data is not available on the external provider.',
-        isCritical: true,
-      },
-    ],
-    references: [
-      {
-        text: 'Introducing Blobstream: streaming modular DA to Ethereum',
-        href: 'https://blog.celestia.org/introducing-blobstream/',
-      },
-    ],
+function getOnChainLayerDescription(layer: OnChainDataAvailabilityLayer) {
+  switch (layer) {
+    case 'Ethereum (blobs)':
+      return 'The data is posted to Ethereum as calldata.'
+    case 'Ethereum (blobs or calldata)':
+      return 'The data is posted to Ethereum as calldata or blobs.'
+    case 'Ethereum (calldata)':
+      return 'The data is posted to Ethereum as calldata.'
+    default:
+      assertUnreachable(layer)
   }
+}
+
+function makeOffChainDataAvailabilityConfig(
+  data: Extract<ConfigData, { type: 'Off chain' }>,
+): ScalingProjectDataAvailability {
+  return {
+    type: 'Off chain',
+    layers: {
+      values: data.layers,
+      description: getOffChainLayerDescription(data.layers),
+      sentiment: getOffChainLayerSentiment(data.layers[0]),
+    },
+    bridge: {
+      value: data.bridge,
+      description: getOffChainBridgeDescription(data.bridge),
+      sentiment: getOffChainBridgeSentiment(data.bridge),
+    },
+    mode: data.mode,
+  }
+}
+
+function getOffChainLayerDescription(
+  layers: [OffChainDataAvailabilityLayer, OffChainDataAvailabilityFallback?],
+) {
+  const [layer, fallback] = layers
+  const descriptions: string[] = []
+  switch (layer) {
+    case 'DAC':
+      descriptions.push(
+        'The data is posted off chain and a Data Availability Committee (DAC) is responsible for protecting and supplying it.',
+      )
+      break
+    case 'Celestia':
+      descriptions.push('The data is posted to Celestia.')
+      break
+    case 'MEMO':
+      descriptions.push('The data is posted to MEMO (a decentralized storage).')
+      break
+    case 'External':
+      descriptions.push('The data is posted off chain.')
+      break
+    case 'MantleDA':
+      descriptions.push(
+        'The data is posted to MantleDA (contracts are forked from EigenDA with significant modifications, most importantly removal of slashing conditions).',
+      )
+      break
+    case 'FraxtalDA':
+      descriptions.push(
+        'The data is posted to FraxtalDA which is a separate data availability module developed by the Frax Core Team. Data is posted off chain, and only hashes of blob data is published on an on chain inbox.',
+      )
+      break
+    default:
+      assertUnreachable(layer)
+  }
+
+  if (!fallback) {
+    return descriptions[0]
+  }
+
+  switch (fallback) {
+    case 'Ethereum (blobs or calldata)':
+    case 'Ethereum (blobs)':
+    case 'Ethereum (calldata)':
+      descriptions.push(
+        'In case posting is not possible for some reason, there is a fallback mechanism to Ethereum.',
+      )
+      break
+    default:
+      assertUnreachable(fallback)
+  }
+
+  return descriptions.join(' ')
+}
+
+function getOffChainLayerSentiment(
+  layer: OffChainDataAvailabilityLayer,
+): Sentiment {
+  switch (layer) {
+    case 'MEMO':
+    case 'DAC':
+    case 'External':
+    case 'MantleDA':
+    case 'FraxtalDA':
+    case 'Celestia':
+      return 'warning'
+    default:
+      assertUnreachable(layer)
+  }
+}
+
+function getOffChainBridgeDescription(
+  bridge: Exclude<
+    OffChainDataAvailabilityBridge,
+    `${number}/${number} DAC Members` | `DAC Members`
+  >,
+): string {
+  switch (bridge) {
+    case 'None':
+      return 'There is no bridge that can attest if the data has been made available.'
+    case 'Optimistic':
+      return 'There is a mechanism that allows validators to request that the Sequencer posts data on-chain via L1 contract if they find that data is unavailable.'
+    case '2/3 Staked Operators':
+      return 'There is a threshold of 2/3 of staked operators that must sign and attest that the data has been made available.'
+    default:
+      assertUnreachable(bridge)
+  }
+}
+
+function getOffChainBridgeSentiment(
+  bridge: OffChainDataAvailabilityBridge,
+): Sentiment {
+  if (bridge === 'None' || bridge === 'Optimistic') {
+    return 'bad'
+  }
+
+  return 'warning'
+}
+
+function getOffChainDacDataAvailabilityConfig(
+  data: Extract<ConfigData, { type: 'Off chain (DAC)' }>,
+): ScalingProjectDataAvailability {
+  const layers: ['DAC', OffChainDataAvailabilityFallback?] = [
+    'DAC',
+    data.fallback,
+  ]
+
+  if (!data.config) {
+    return {
+      type: 'Off chain',
+      layers: {
+        values: layers,
+        description: getOffChainLayerDescription(layers),
+        sentiment: getOffChainLayerSentiment('DAC'),
+      },
+      bridge: {
+        value: 'DAC Members',
+        sentiment: getOffChainBridgeSentiment('DAC Members'),
+        description: `There is a threshold of DAC members that must sign and attest that the data is correct and available.`,
+      },
+      mode: data.mode,
+    }
+  }
+
+  const { membersCount, requiredSignatures } = data.config
+
+  return {
+    type: 'Off chain',
+    layers: {
+      values: layers,
+      description: getOffChainLayerDescription(layers),
+      sentiment: getOffChainLayerSentiment('DAC'),
+    },
+    bridge: {
+      value: `${requiredSignatures}/${membersCount} DAC Members`,
+      sentiment: DAC_SENTIMENT(data.config),
+      description: `There is a threshold of ${requiredSignatures}/${membersCount} members that must sign and attest that the data is correct and available.`,
+    },
+    mode: data.mode,
+  }
+}
+
+function DAC_SENTIMENT(config?: {
+  membersCount: number
+  requiredSignatures: number
+}) {
+  if (!config) return 'bad'
+
+  const assumedHonestMembers =
+    config.membersCount - config.requiredSignatures + 1
+
+  if (
+    config.membersCount < 6 ||
+    assumedHonestMembers / config.membersCount > 1 / 3
+  ) {
+    return 'bad'
+  }
+
+  return 'warning'
 }
 
 export const DATA_AVAILABILITY = {
-  ON_CHAIN,
-  ON_CHAIN_CANONICAL,
-  STARKEX_ON_CHAIN,
-  STARKNET_ON_CHAIN,
-  GENERIC_OFF_CHAIN,
-  STARKEX_OFF_CHAIN,
-  ANYTRUST_OFF_CHAIN,
-  PLASMA_OFF_CHAIN,
-  CELESTIA_OFF_CHAIN,
+  DAC_SENTIMENT,
 }

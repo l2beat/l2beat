@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x9f7bb24e2eef3497ac52daf7f93931586688553f
+
+# Diff at Thu, 14 Mar 2024 07:33:30 GMT:
+
+- author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
+- comparing to: main@c79c75cb88d41e2f05e9cca5d501133eae405bbe block: 19411974
+- current block number: 19431787
+
+## Description
+
+Blobs are switched on.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x5e6432F18Bc5d497B1Ab2288a025Fbf9D69E2221) {
+    +++ description: None
+      values.opStackDA.isSequencerSendingBlobTx:
+-        false
++        true
+      values.overhead:
+-        188
++        0
+      values.scalar:
+-        684000
++        "452312848583266388373324160190187140051835877600158453279133701594312344529"
+    }
+```
+
 Generated with discovered.json: 0x7583f54e5c6195c95832243781e1837e45e36883
 
 # Diff at Mon, 11 Mar 2024 12:53:12 GMT:

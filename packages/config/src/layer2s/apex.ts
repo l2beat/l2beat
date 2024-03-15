@@ -7,15 +7,16 @@ import {
 
 import {
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
+  makeDataAvailabilityConfig,
   NEW_CRYPTOGRAPHY,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
@@ -67,7 +68,7 @@ const freezeGracePeriodUSDC = discovery.getContractValue<number>(
 )
 
 const freezeGracePeriodUSDT = discovery.getContractValue<number>(
-  'StarkExchangeUSDC',
+  'StarkExchangeUSDT',
   'FREEZE_GRACE_PERIOD',
 )
 
@@ -75,6 +76,33 @@ const minFreezeGracePeriod = Math.min(
   freezeGracePeriodUSDC,
   freezeGracePeriodUSDT,
 )
+
+const usdcCommittee = getCommittee(
+  discovery,
+  'CommitteeUSDC',
+  'Data Availability Committee for USDC StarkEx',
+)
+const usdtCommittee = getCommittee(
+  discovery,
+  'CommitteeUSDT',
+  'Data Availability Committee for USDT StarkEx',
+)
+
+const usdcDacConfig =
+  usdcCommittee.minAssumedHonestMembers / usdcCommittee.accounts.length
+const usdtDacConfig =
+  usdtCommittee.minAssumedHonestMembers / usdtCommittee.accounts.length
+
+const dacConfig =
+  usdcDacConfig < usdtDacConfig
+    ? {
+        requiredSignatures: usdcCommittee.minSigners,
+        membersCount: usdcCommittee.accounts.length,
+      }
+    : {
+        requiredSignatures: usdtCommittee.minSigners,
+        membersCount: usdtCommittee.accounts.length,
+      }
 
 export const apex: Layer2 = {
   type: 'layer2',
@@ -90,7 +118,6 @@ export const apex: Layer2 = {
     purposes: ['Exchange'],
     provider: 'StarkEx',
     category: 'Validium',
-    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://apex.exchange/'],
       apps: ['https://pro.apex.exchange/'],
@@ -123,10 +150,15 @@ export const apex: Layer2 = {
       resyncLastDays: 7,
     },
   },
+  dataAvailability: makeDataAvailabilityConfig({
+    type: 'Off chain (DAC)',
+    config: dacConfig,
+    mode: 'State diffs',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: {
-      ...RISK_VIEW.DATA_EXTERNAL_DAC(),
+      ...RISK_VIEW.DATA_EXTERNAL_DAC(dacConfig),
       sources: [
         {
           contract: 'StarkExchangeUSDC',
@@ -167,7 +199,7 @@ export const apex: Layer2 = {
   technology: {
     stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
     newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
-    dataAvailability: DATA_AVAILABILITY.STARKEX_OFF_CHAIN,
+    dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKEX_OFF_CHAIN,
     operator: OPERATOR.STARKEX_OPERATOR,
     forceTransactions:
       FORCE_TRANSACTIONS.STARKEX_PERPETUAL_WITHDRAW(minFreezeGracePeriod),
@@ -247,16 +279,8 @@ export const apex: Layer2 = {
       description:
         'Allowed to update state of the system and verify DA proofs for USDT StarkEx instance. When Operator is down the state cannot be updated.',
     },
-    getCommittee(
-      discovery,
-      'CommitteeUSDC',
-      'Data Availability Committee for USDC StarkEx',
-    ),
-    getCommittee(
-      discovery,
-      'CommitteeUSDT',
-      'Data Availability Committee for USDT StarkEx',
-    ),
+    usdcCommittee,
+    usdtCommittee,
     ...getSHARPVerifierGovernors(discovery, verifierAddressUSDC),
     ...(verifierAddressUSDT !== verifierAddressUSDC
       ? getSHARPVerifierGovernors(discovery, verifierAddressUSDT)

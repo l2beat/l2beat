@@ -584,7 +584,7 @@ Gather only people that are 18 or 21
   "event": "event WeirdEvent(address person, uint256 number)",
   "valueKey": "person",
   "flagKey": "removed",
-  "flagTrueValues: [18, 21],
+  "flagTrueValues": [18, 21]
 }
 ```
 
@@ -724,7 +724,7 @@ Creates a new field in the result with the value provioded.
 **Parameters:**
 
 - `type` - the literal: `"constructorArgs"`
-- `nameArgs` - (optional) a boolean value, by default the result is an array of arguments - false state, if set to true the array will be decoded into a dictionary with names of the arguments and their values
+- `nameArgs` - (optional, default: false) a boolean value, if true the array of arguments will be decoded into a dictionary with names of the arguments and their values
 
 **Examples:**
 
@@ -732,7 +732,8 @@ Creates a new field in the result with the value provioded.
 {
   "fields": {
     "constructorArgs": {
-      "type": "constructorArgs"
+      "type": "constructorArgs",
+      "nameArgs": true
     }
   }
 },

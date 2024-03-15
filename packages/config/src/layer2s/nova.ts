@@ -7,14 +7,15 @@ import {
 
 import {
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
+  makeDataAvailabilityConfig,
   MILESTONES,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { subtractOne } from '../common/assessCount'
 import { UPGRADE_MECHANISM } from '../common/upgradeMechanism'
@@ -50,10 +51,11 @@ const nOfChallengers = discovery.getContractValue<string[]>(
   'validators',
 ).length
 
-const DAC = discovery.getContractValue<Record<number, number>>(
-  'SequencerInbox',
-  'dacKeyset',
-)
+const DAC = discovery.getContractValue<{
+  membersCount: number
+  requiredSignatures: number
+}>('SequencerInbox', 'dacKeyset')
+const { membersCount, requiredSignatures } = DAC
 
 export const nova: Layer2 = {
   type: 'layer2',
@@ -65,7 +67,6 @@ export const nova: Layer2 = {
       'Arbitrum Nova is an AnyTrust Optimium, differing from Arbitrum One by not posting transaction data onchain.',
     purposes: ['Universal'],
     category: 'Optimium',
-    dataAvailabilityMode: 'NotApplicable',
     provider: 'Arbitrum',
     links: {
       websites: [
@@ -123,9 +124,18 @@ export const nova: Layer2 = {
       startBlock: 1,
     },
   },
+  dataAvailability: makeDataAvailabilityConfig({
+    type: 'Off chain (DAC)',
+    fallback: 'Ethereum (calldata)',
+    config: { membersCount, requiredSignatures },
+    mode: 'Transactions data (compressed)',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(nOfChallengers),
-    dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC(DAC),
+    dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC({
+      membersCount,
+      requiredSignatures,
+    }),
     exitWindow: {
       ...RISK_VIEW.EXIT_WINDOW(l2TimelockDelay, selfSequencingDelay, 0),
       sentiment: 'bad',
@@ -145,7 +155,7 @@ export const nova: Layer2 = {
         l1TimelockDelay,
       )} L1 timelock.`,
       warning: {
-        text: 'The Security Council can upgrade with no delay.',
+        value: 'The Security Council can upgrade with no delay.',
         sentiment: 'bad',
       },
     },
@@ -179,7 +189,10 @@ export const nova: Layer2 = {
         },
       ],
     },
-    dataAvailability: DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN(DAC),
+    dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN({
+      membersCount,
+      requiredSignatures,
+    }),
     operator: {
       ...OPERATOR.CENTRALIZED_SEQUENCER,
       references: [

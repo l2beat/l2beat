@@ -8,6 +8,7 @@ import {
 import {
   CONTRACTS,
   makeBridgeCompatible,
+  makeDataAvailabilityConfig,
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
 } from '../common'
@@ -39,7 +40,7 @@ export const zkspace: Layer2 = {
     purposes: ['NFT', 'AMM', 'Payments'],
     provider: 'zkSync Lite',
     category: 'ZK Rollup',
-    dataAvailabilityMode: 'StateDiffs',
+
     links: {
       websites: ['https://zks.org/'],
       apps: ['https://zks.app'],
@@ -95,6 +96,11 @@ export const zkspace: Layer2 = {
     },
     finality: 'coming soon',
   },
+  dataAvailability: makeDataAvailabilityConfig({
+    type: 'On chain',
+    layer: 'Ethereum (calldata)',
+    mode: 'State diffs',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,

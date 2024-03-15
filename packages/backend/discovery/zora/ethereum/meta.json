@@ -47,26 +47,6 @@
       }
     },
     {
-      "name": "ProxyAdmin",
-      "values": {
-        "addressManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isUpgrading": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "L1StandardBridge",
       "values": {
         "l2TokenBridge": {
@@ -90,6 +70,26 @@
           "type": null
         },
         "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "addressManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isUpgrading": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
           "description": null,
           "severity": null,
           "type": null
@@ -162,16 +162,6 @@
       }
     },
     {
-      "name": "AddressManager",
-      "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "OptimismPortal",
       "values": {
         "GUARDIAN": {
@@ -205,6 +195,16 @@
           "type": null
         },
         "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "AddressManager",
+      "values": {
+        "owner": {
           "description": null,
           "severity": null,
           "type": null

@@ -14,7 +14,7 @@ export const reddiozkvm: Layer2 = {
       'Reddio zkVM is an upcoming ZK Rollup focused on general use cases like Games and Apps, powered by Starknet Stack.',
     purposes: ['Universal', 'Gaming'],
     category: 'ZK Rollup',
-    dataAvailabilityMode: 'NotApplicable',
+
     provider: 'Starknet',
     links: {
       websites: ['https://reddio.com'],
