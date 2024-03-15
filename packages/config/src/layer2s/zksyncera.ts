@@ -1,4 +1,5 @@
 import {
+  assert,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -424,16 +425,33 @@ export const zksyncera: Layer2 = {
     dataFormat:
       'Details on data format can be found [here](https://github.com/matter-labs/zksync-era/blob/main/docs/guides/advanced/pubdata.md).',
   },
-  upgradesAndGovernance:
-    'Currently, the Matter Labs multisig (' +
-    discovery.getMultisigStats('Matter Labs Multisig') +
-    ') is able to instantly upgrade all contracts (including the diamond and its facets) and roles (including the *Governor* role). The *Governor* role that resolves to the multisig is the highest permissioned role defined in the system.\n\n*Governor:* Can access all `AdminFacet` functions and thus upgrade the diamond and the related smart contract system. Additionally inherits access to functions for the *Admin* role. Can freeze all freezable Facets (currently `ExecutorFacet`, `MailboxFacet`) and upgrade the bridges. \n\n*Validator:* Proposes batches from L2 into the `ValidatorTimelock`, from where they can be proven and finally executed (through the `ExecutorFacet` of the diamond) after a predefined delay (currently ' +
-    formatSeconds(
-      discovery.getContractValue('ValidatorTimelock', 'executionDelay'),
-    ) +
-    '). This allows for freezing the L2 chain within the delay if any suspicious activity was detected. Can be set by the *Admin* or *Governor*. \n\n*Verifier:* Verifies the zk proofs that were provided by the Validator. Can be changed by calling `ExecuteUpgrade()` on the `AdminFacet` from the *Governor* role. \n\n*Admin:* Currently **not set**. Will be able to make non-critical changes like setting the *Validator*. Will be the role of the multisig when higher permissions are restricted to the *Security Council*.\n\n*Security Council:* Currently **not set**. Will share the *Governor* role of the main diamond with the Matter Labs multisig through the Governance smart contract (see below).\n\nA `Governance` smart contract is set up as the *Governor* role of the diamond. It includes logic for planning upgrades with parameters like transparency and/or a delay. Currently the delay is optional (minimum delay = ' +
-    formatSeconds(discovery.getContractValue('Governance', 'minDelay')) +
-    ') and not used by the multisig. The optional transparency may be used in the future to hide instant emergency upgrades by the *Security Council* or delay transparent (thus auditable) governance upgrades. The `Governance` smart contract has two roles, an *owner* role and a *securityCouncil* role.',
+  upgradesAndGovernance: (() => {
+    const discoveredSecurityCouncilAddress = discovery.getContractValue<string>(
+      'Governance',
+      'securityCouncil',
+    )
+    assert(
+      discoveredSecurityCouncilAddress ===
+        '0x0000000000000000000000000000000000000000',
+      'There is a security council set up for zkSync Era. Change the governance description to reflect that.',
+    )
+    const description = `
+Currently, the Matter Labs multisig (${discovery.getMultisigStats('Matter Labs Multisig')}) is able to instantly upgrade all contracts (including the diamond and its facets) and roles (including the *Governor* role). The *Governor* role that resolves to the multisig is the highest permissioned role defined in the system.
+
+*Governor:* Can access all \`AdminFacet\` functions and thus upgrade the diamond and the related smart contract system. Additionally inherits access to functions for the *Admin* role. Can freeze all freezable Facets (currently \`ExecutorFacet\`, \`MailboxFacet\`) and upgrade the bridges. 
+
+*Validator:* Proposes batches from L2 into the \`ValidatorTimelock\`, from where they can be proven and finally executed (through the \`ExecutorFacet\` of the diamond) after a predefined delay (currently ${formatSeconds(discovery.getContractValue('ValidatorTimelock', 'executionDelay'))}). This allows for freezing the L2 chain within the delay if any suspicious activity was detected. Can be set by the *Admin* or *Governor*. 
+
+*Verifier:* Verifies the zk proofs that were provided by the Validator. Can be changed by calling \`ExecuteUpgrade()\` on the \`AdminFacet\` from the *Governor* role. 
+
+*Admin:* Currently **not set**. Will be able to make non-critical changes like setting the *Validator*. Will be the role of the multisig when higher permissions are restricted to the *Security Council*.
+
+*Security Council:* Currently **not set**. Will share the *Governor* role of the main diamond with the Matter Labs multisig through the Governance smart contract (see below).
+
+A \`Governance\` smart contract is set up as the *Governor* role of the diamond. It includes logic for planning upgrades with parameters like transparency and/or a delay. Currently the delay is optional (minimum delay = ${formatSeconds(discovery.getContractValue('Governance', 'minDelay'))}) and not used by the multisig. The optional transparency may be used in the future to hide instant emergency upgrades by the *Security Council* or delay transparent (thus auditable) governance upgrades. The \`Governance\` smart contract has two roles, an *owner* role and a *securityCouncil* role.
+`
+    return description
+  })(),
   stateValidation: {
     description:
       'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.',
