@@ -7,14 +7,15 @@ import {
 
 import {
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
+  makeDataAvailabilityConfig,
   MILESTONES,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { subtractOneAfterBlockInclusive } from '../common/assessCount'
 import { UPGRADE_MECHANISM } from '../common/upgradeMechanism'
@@ -94,13 +95,16 @@ export const arbitrum: Layer2 = {
     description: `Arbitrum One is a general-purpose Optimistic Rollup built by Offchain Labs and governed by the Arbitrum DAO.`,
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
-    dataAvailabilityMode: 'TxData',
     provider: 'Arbitrum',
     links: {
       websites: ['https://arbitrum.io/', 'https://arbitrum.foundation/'],
       apps: [],
       documentation: ['https://developer.arbitrum.io/'],
-      explorers: ['https://arbiscan.io', 'https://explorer.arbitrum.io/'],
+      explorers: [
+        'https://arbiscan.io',
+        'https://explorer.arbitrum.io/',
+        'https://arbitrum.l2scan.co/',
+      ],
       repositories: [
         'https://github.com/ArbitrumFoundation/docs',
         'https://github.com/ArbitrumFoundation/governance',
@@ -126,6 +130,7 @@ export const arbitrum: Layer2 = {
         challengeWindow * assumedBlockTime,
       )} after it has been posted.`,
     },
+    finality: { finalizationPeriod: challengeWindowSeconds },
   },
   config: {
     associatedTokens: ['ARB'],
@@ -183,6 +188,7 @@ export const arbitrum: Layer2 = {
       assessCount: subtractOneAfterBlockInclusive(22207818),
       startBlock: 1,
     },
+    finality: 'coming soon',
     liveness: {
       proofSubmissions: [],
       batchSubmissions: [
@@ -257,6 +263,11 @@ export const arbitrum: Layer2 = {
     ],
     coingeckoPlatform: 'arbitrum-one',
   },
+  dataAvailability: makeDataAvailabilityConfig({
+    type: 'On chain',
+    layer: 'Ethereum (blobs or calldata)',
+    mode: 'Transactions data (compressed)',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(nOfChallengers),
@@ -299,7 +310,7 @@ export const arbitrum: Layer2 = {
         l1TimelockDelay,
       )} L1 timelock.`,
       warning: {
-        text: 'The Security Council can upgrade with no delay.',
+        value: 'The Security Council can upgrade with no delay.',
         sentiment: 'bad',
       },
       sources: [
@@ -371,7 +382,7 @@ export const arbitrum: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
       references: [
         {
           text: 'Sequencing followed by deterministic execution - Arbitrum documentation',

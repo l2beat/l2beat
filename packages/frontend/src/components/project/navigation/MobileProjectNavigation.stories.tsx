@@ -18,7 +18,7 @@ const sections: ScalingDetailsSection[] = range(10).map(() => ({
     editLink:
       'https://github.com/l2beat/l2beat/edit/main/packages/config/src/layer2s/zksync-era.ts',
     description:
-      'zkSync Era is a general-purpose zk-rollup platform from Matter Labs aiming at implementing nearly full EVM compatibility in its zk-friendly custom virtual machine.',
+      'zkSync Era is a general-purpose zk-rollup platform aiming at implementing nearly full EVM compatibility in its zk-friendly custom virtual machine.',
     detailedDescription:
       'It implements standard Web3 API and it preserves key EVM features such as smart contract composability while introducing some new concept such as native account abstraction.',
   },

@@ -18,7 +18,7 @@
       "address": "0xEd04915c23f00A313a544955524EB7DBD823143d"
     },
     {
-      "symbol": "agEUR",
+      "symbol": "EURA",
       "address": "0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8",
       "category": "stablecoin"
     },
@@ -274,6 +274,11 @@
       "address": "0x4da0C48376C277cdBd7Fc6FdC6936DEE3e4AdF75"
     },
     {
+      "symbol": "ezETH",
+      "address": "0xbf5495efe5db9ce00f80364c8b423567e58d2110",
+      "coingeckoId": "renzo-restaked-eth"
+    },
+    {
       "symbol": "ETH",
       "category": "ether"
     },
@@ -301,6 +306,10 @@
     {
       "symbol": "FRAX",
       "address": "0x853d955aCEf822Db058eb8505911ED77F175b99e"
+    },
+    {
+      "symbol": "frxETH",
+      "address": "0x5E8422345238F34275888049021821E8E08CAa1f"
     },
     {
       "symbol": "FTM",
@@ -441,6 +450,10 @@
     {
       "symbol": "LPT",
       "address": "0x58b6A8A3302369DAEc383334672404Ee733aB239"
+    },
+    {
+      "symbol": "LQTY",
+      "address": "0x6dea81c8171d0ba574754ef6f8b412f2ed88c54d"
     },
     {
       "symbol": "LRC",
@@ -1217,6 +1230,31 @@
         "slug": "socket"
       },
       "coingeckoId": "weth"
+    }
+  ],
+  "blast": [
+    {
+      "symbol": "USDB",
+      "address": "0x4300000000000000000000000000000000000003",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Blast"
+      },
+      "coingeckoId": "usdb"
+    }
+  ],
+  "mode": [
+    {
+      "symbol": "ezETH",
+      "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+      "coingeckoId": "renzo-restaked-eth",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Connext",
+        "slug": "connext"
+      }
     }
   ]
 }

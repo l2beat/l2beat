@@ -10,7 +10,9 @@ import {
   getChainActivityConfig,
   getProjectsWithActivity,
 } from './features/activity'
+import { getFinalityConfigurations } from './features/finality'
 import { getChainsWithTokens, getChainTvlConfig } from './features/tvl'
+import { getTvl2Config } from './features/tvl2'
 import { getChainDiscoveryConfig } from './features/updateMonitor'
 import { getGitCommitHash } from './getGitCommitHash'
 
@@ -28,6 +30,7 @@ export function makeConfig(
     env.string('FEATURES', isLocal ? '' : '*'),
   ).append('status')
   const minBlockTimestamp = minTimestampOverride ?? getEthereumMinTimestamp()
+  const tvl2Config = getTvl2Config()
 
   return {
     name,
@@ -103,6 +106,7 @@ export function makeConfig(
         }),
       ),
     },
+    tvl2: flags.isEnabled('tvl2') && tvl2Config,
     liveness: flags.isEnabled('liveness') && {
       bigQuery: {
         clientEmail: env.string('LIVENESS_CLIENT_EMAIL'),
@@ -118,12 +122,12 @@ export function makeConfig(
       minTimestamp: UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
     },
     finality: flags.isEnabled('finality') && {
-      indexerEnabled: flags.isEnabled('finality', 'indexer'),
       ethereumProviderUrl: env.string('FINALITY_ETHEREUM_PROVIDER_URL'),
       ethereumProviderCallsPerMinute: env.integer(
         'FINALITY_ETHEREUM_PROVIDER_CALLS_PER_MINUTE',
         600,
       ),
+      configurations: getFinalityConfigurations(flags, env),
     },
     activity: flags.isEnabled('activity') && {
       starkexApiKey: env.string('STARKEX_API_KEY'),
@@ -135,6 +139,7 @@ export function makeConfig(
         .filter((x) => flags.isEnabled('activity', x.id.toString()))
         .map((x) => ({ id: x.id, config: getChainActivityConfig(env, x) })),
     },
+    lzOAppsEnabled: flags.isEnabled('lzOApps'),
     statusEnabled: flags.isEnabled('status'),
     updateMonitor: flags.isEnabled('updateMonitor') && {
       runOnStart: isLocal

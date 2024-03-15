@@ -1,5 +1,5 @@
 {
-  "$schema": "../../config.schema.json",
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
   "chain": "arbitrum",
   "name": "arbitrum",
   "initialAddresses": [
@@ -29,13 +29,16 @@
   },
   "overrides": {
     "L2ReverseCustomGateway": {
-      "ignoreRelatives": ["counterpartGateway"]
+      "ignoreRelatives": ["counterpartGateway"],
+      "ignoreInWatchMode": ["exitNum"]
     },
     "L2CustomGateway": {
-      "ignoreRelatives": ["counterpartGateway"]
+      "ignoreRelatives": ["counterpartGateway"],
+      "ignoreInWatchMode": ["exitNum"]
     },
     "L2ERC20Gateway": {
-      "ignoreRelatives": ["counterpartGateway"]
+      "ignoreRelatives": ["counterpartGateway"],
+      "ignoreInWatchMode": ["exitNum"]
     },
     "L2GatewayRouter": {
       "ignoreRelatives": ["counterpartGateway"]

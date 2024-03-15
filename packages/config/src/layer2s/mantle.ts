@@ -2,11 +2,12 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
+  makeDataAvailabilityConfig,
   OPERATOR,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { RISK_VIEW } from '../common/riskView'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -50,7 +51,6 @@ export const mantle: Layer2 = {
       'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     purposes: ['Universal'],
     category: 'Optimium',
-    dataAvailabilityMode: 'NotApplicable',
     provider: 'OVM',
     links: {
       websites: ['https://mantle.xyz/'],
@@ -86,6 +86,12 @@ export const mantle: Layer2 = {
       defaultCallsPerMinute: 1500,
     },
   },
+  dataAvailability: makeDataAvailabilityConfig({
+    type: 'Off chain',
+    layers: ['MantleDA'],
+    bridge: '2/3 Staked Operators',
+    mode: 'Transactions data',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: {
@@ -174,7 +180,7 @@ export const mantle: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...DATA_AVAILABILITY.GENERIC_OFF_CHAIN,
+      ...TECHNOLOGY_DATA_AVAILABILITY.GENERIC_OFF_CHAIN,
       references: [
         {
           text: 'EigenDataLayerChain.sol#L308 - Etherscan source code, confirmData function',

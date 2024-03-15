@@ -1,3 +1,51 @@
+Generated with discovered.json: 0xf601728a00dd36fda7e9e790618e91b1f1b4b7a2
+
+# Diff at Tue, 27 Feb 2024 14:09:42 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@adf489177dd1f77aeea97ae8680a742bc6aec337 block: 19226416
+- current block number: 19319390
+
+## Description
+
+Deleted two verifiers at `proofType = [6, 7]`. Both of them are identical and
+only differ in the intial setup parameters.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierFullLarge (0x2eDEa64BB8b45Fd87c05dC89286f1a60F4f4BEE0) {
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierFull (0x6312E56c17e1011dD0821558034a77BB60D06e1B) {
+    }
+```
+
+```diff
+    contract zkEVM (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+      values.verifiers.7:
+-        "0x2eDEa64BB8b45Fd87c05dC89286f1a60F4f4BEE0"
++        "0x1111111111111111111111111111111111111111"
+      values.verifiers.6:
+-        "0x6312E56c17e1011dD0821558034a77BB60D06e1B"
++        "0x1111111111111111111111111111111111111111"
+    }
+```
+
+## Source code changes
+
+```diff
+.../verifiers/PlonkVerifierFull.sol => /dev/null   | 1337 --------------------
+ .../PlonkVerifierFull/meta.txt => /dev/null        |    2 -
+ .../PlonkVerifierFullLarge.sol => /dev/null        | 1337 --------------------
+ .../PlonkVerifierFullLarge/meta.txt => /dev/null   |    2 -
+ 4 files changed, 2678 deletions(-)
+```
+
 Generated with discovered.json: 0xe1b854d9d1e0fdb4f36dc514fe720231b67a1c02
 
 # Diff at Wed, 14 Feb 2024 13:10:31 GMT:

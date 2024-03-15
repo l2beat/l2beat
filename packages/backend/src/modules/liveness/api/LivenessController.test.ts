@@ -5,11 +5,15 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 
 import { Project } from '../../../model/Project'
 import { IndexerStateRepository } from '../../../peripherals/database/repositories/IndexerStateRepository'
 import { Clock } from '../../../tools/Clock'
+import {
+  LivenessConfigurationRecord,
+  LivenessConfigurationRepository,
+} from '../repositories/LivenessConfigurationRepository'
 import {
   LivenessRecordWithProjectIdAndType,
   LivenessRepository,
@@ -43,6 +47,14 @@ describe(LivenessController.name, () => {
 
       const livenessController = new LivenessController(
         getMockLivenessRepository(RECORDS),
+        mockObject<LivenessConfigurationRepository>({
+          getByProjectId: mockFn().resolvesTo([
+            mockObject<LivenessConfigurationRecord>({
+              untilTimestamp: undefined,
+              lastSyncedTimestamp: undefined,
+            }),
+          ]),
+        }),
         getMockIndexerStateRepository(CLOCK.getLastHour()),
         mockProjectConfig(RECORDS),
         CLOCK,
@@ -74,6 +86,14 @@ describe(LivenessController.name, () => {
       )
       const livenessController = new LivenessController(
         getMockLivenessRepository(RECORDS),
+        mockObject<LivenessConfigurationRepository>({
+          getByProjectId: mockFn().resolvesTo([
+            mockObject<LivenessConfigurationRecord>({
+              untilTimestamp: undefined,
+              lastSyncedTimestamp: UnixTime.now(),
+            }),
+          ]),
+        }),
         getMockIndexerStateRepository(CLOCK.getLastHour()),
         mockProjectConfig(RECORDS),
         CLOCK,
@@ -89,6 +109,7 @@ describe(LivenessController.name, () => {
     it('returns empty object if no data', async () => {
       const livenessController = new LivenessController(
         getMockLivenessRepository([]),
+        mockObject<LivenessConfigurationRepository>(),
         getMockIndexerStateRepository(CLOCK.getLastHour()),
         [],
         CLOCK,
@@ -121,19 +142,52 @@ describe(LivenessController.name, () => {
           }
         }),
       )
+      RECORDS.push(
+        ...Array.from({ length: 30 + 60 / 2 + 30 / 3 }).map((_, i) => {
+          let daysToAdd = 0
+          if (i < 30) {
+            daysToAdd = i
+          } else if (i < 30 + 60 / 2) {
+            daysToAdd = 30 + (i - 30) * 2
+          } else {
+            daysToAdd = 30 + 60 + (i - (30 + 60 / 2)) * 3
+          }
+
+          return {
+            projectId: ProjectId('project2'),
+            timestamp: START.add(-daysToAdd, 'days'),
+            type: LivenessType('DA'),
+          }
+        }),
+      )
+      const syncedUntil = UnixTime.now()
+
       const livenessController = new LivenessController(
         getMockLivenessRepository(RECORDS),
+        mockObject<LivenessConfigurationRepository>({
+          getByProjectId: mockFn()
+            .given(ProjectId('project1'))
+            .resolvesToOnce([
+              mockObject<LivenessConfigurationRecord>({
+                untilTimestamp: undefined,
+                lastSyncedTimestamp: syncedUntil,
+              }),
+            ])
+            .resolvesTo([]),
+        }),
         getMockIndexerStateRepository(CLOCK.getLastHour()),
         mockProjectConfig(RECORDS),
         getMockClock(),
       )
 
-      const records = [...RECORDS]
-      calculateIntervals(records)
+      const project1Records = RECORDS.filter(
+        (r) => r.projectId === ProjectId('project1'),
+      )
+      calculateIntervals(project1Records)
 
-      const last30Days = calculateDetailsFor(records, '30d')
-      const last90Days = calculateDetailsFor(records, '90d')
-      const allTime = calculateDetailsFor(records, 'allTime')
+      const last30Days = calculateDetailsFor(project1Records, '30d')
+      const last90Days = calculateDetailsFor(project1Records, '90d')
+      const allTime = calculateDetailsFor(project1Records, 'allTime')
 
       assert(last30Days, 'last30Days is undefined')
       assert(last90Days, 'last90Days is undefined')
@@ -147,27 +201,10 @@ describe(LivenessController.name, () => {
 
       const result = await livenessController.getLiveness()
       if (result.type === 'success') {
-        const project1BatchSubmissions =
-          result.data.projects.project1?.batchSubmissions
-        expect(project1BatchSubmissions).toEqual(expected)
-      }
-    })
-
-    it('return error when data is not fully synced', async () => {
-      const clock = getMockClock()
-
-      const outOfSyncTimestamp = CLOCK.getLastHour().add(-2, 'hours')
-      const livenessController = new LivenessController(
-        getMockLivenessRepository([]),
-        getMockIndexerStateRepository(outOfSyncTimestamp),
-        mockProjectConfig([]),
-        clock,
-      )
-      const result = await livenessController.getLiveness()
-
-      expect(result.type).toEqual('error')
-      if (result.type === 'error') {
-        expect(result.error).toEqual('DATA_NOT_SYNCED')
+        const project1 = result.data.projects.project1
+        expect(project1?.batchSubmissions).toEqual(expected)
+        expect(project1?.syncedUntil).toEqual(syncedUntil)
+        expect(result.data.projects.project2).toEqual(undefined)
       }
     })
   })

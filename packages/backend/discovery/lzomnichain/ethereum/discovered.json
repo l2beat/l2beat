@@ -1,8 +1,8 @@
 {
   "name": "lzomnichain",
   "chain": "ethereum",
-  "blockNumber": 19063596,
-  "configHash": "0x9d93123d45c6abd2bad013a50a1f7826f27652e7c043ba0567d7f7ca2541b725",
+  "blockNumber": 19433467,
+  "configHash": "0x38c81e788a227b76cdd826ec97ae7103ead0801d018f7fce691b635b313a03d0",
   "version": 3,
   "contracts": [
     {
@@ -128,7 +128,13 @@
           "217": 20,
           "218": 20,
           "230": 20,
-          "234": 20
+          "234": 20,
+          "235": 20,
+          "238": 20,
+          "243": 20,
+          "255": 20,
+          "257": 20,
+          "260": 20
         },
         "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": 2,
         "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": 1,
@@ -350,6 +356,30 @@
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           },
           "234": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "235": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "238": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "243": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "255": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "257": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "260": {
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           }
@@ -789,13 +819,61 @@
           },
           "230": {
             "inboundProofLib": 2,
-            "inboundBlockConfirm": 5,
+            "inboundBlockConfirm": 21,
             "outboundProofType": 2,
             "outboundBlockConfirm": 15,
             "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
             "relayer": "0x902F09715B6303d4173037652FA7377e5b98089E"
           },
           "234": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0x902F09715B6303d4173037652FA7377e5b98089E"
+          },
+          "235": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0x902F09715B6303d4173037652FA7377e5b98089E"
+          },
+          "238": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0x902F09715B6303d4173037652FA7377e5b98089E"
+          },
+          "243": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0x902F09715B6303d4173037652FA7377e5b98089E"
+          },
+          "255": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0x902F09715B6303d4173037652FA7377e5b98089E"
+          },
+          "257": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 15,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0x902F09715B6303d4173037652FA7377e5b98089E"
+          },
+          "260": {
             "inboundProofLib": 2,
             "inboundBlockConfirm": 5,
             "outboundProofType": 2,
@@ -1017,6 +1095,30 @@
           "234": [
             "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
             "0x07245eEa05826F5984c7c3C8F478b04892e4df89"
+          ],
+          "235": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x07245eEa05826F5984c7c3C8F478b04892e4df89"
+          ],
+          "238": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x07245eEa05826F5984c7c3C8F478b04892e4df89"
+          ],
+          "243": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x07245eEa05826F5984c7c3C8F478b04892e4df89"
+          ],
+          "255": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x07245eEa05826F5984c7c3C8F478b04892e4df89"
+          ],
+          "257": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x07245eEa05826F5984c7c3C8F478b04892e4df89"
+          ],
+          "260": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x07245eEa05826F5984c7c3C8F478b04892e4df89"
           ]
         },
         "layerZeroToken": "0x0000000000000000000000000000000000000000",
@@ -1079,7 +1181,13 @@
           "217": [1, 2],
           "218": [1, 2],
           "230": 2,
-          "234": 2
+          "234": 2,
+          "235": 2,
+          "238": 2,
+          "243": 2,
+          "255": 2,
+          "257": 2,
+          "260": 2
         },
         "treasuryContract": "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
         "treasuryZROFees": 0,
@@ -1137,7 +1245,13 @@
           "217": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "218": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "230": "0x000000000000000000000000980205d352f198748b626f6f7c38a8a5663ec981",
-          "234": "0x000000000000000000000000980205d352f198748b626f6f7c38a8a5663ec981"
+          "234": "0x000000000000000000000000980205d352f198748b626f6f7c38a8a5663ec981",
+          "235": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "238": "0x0000000000000000000000004bb746ed0df6a8be563ff66dfc502f084779f9c9",
+          "243": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "255": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "257": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "260": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251"
         }
       },
       "derivedName": "UltraLightNodeV2"
@@ -1184,11 +1298,13 @@
         "getChainId": 1,
         "isReceivingPayload": false,
         "isSendingPayload": false,
-        "latestVersion": 3,
+        "latestVersion": 5,
         "libraryLookup": [
           "0x5B19bd330A84c049b62D5B0FC2bA120217a18C1C",
           "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2",
-          "0xbE4fB271cfB7bcbB47EA9573321c7bfe309fc220"
+          "0xbE4fB271cfB7bcbB47EA9573321c7bfe309fc220",
+          "0xD231084BfB234C107D3eE2b22F97F3346fDAF705",
+          "0x245B6e8FFE9ea5Fc301e32d16F66bD4C2123eEfC"
         ],
         "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92"
       },
@@ -1256,10 +1372,10 @@
       "unverified": true,
       "upgradeability": {
         "type": "EIP1967 proxy",
-        "implementation": "0xF641db6860FD5f6643D05bD75405a2586a63a141",
+        "implementation": "0x13dff8847EA170eBb8439ce732c0A14Bb49fDd92",
         "admin": "0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5"
       },
-      "implementations": ["0xF641db6860FD5f6643D05bD75405a2586a63a141"],
+      "implementations": ["0x13dff8847EA170eBb8439ce732c0A14Bb49fDd92"],
       "sinceTimestamp": 1687808675
     },
     {
@@ -1283,7 +1399,7 @@
           "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
         ],
         "getThreshold": 2,
-        "nonce": 60,
+        "nonce": 79,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -1298,7 +1414,7 @@
       "values": {
         "allowlistSize": 0,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "defaultMultiplierBps": 12000,
+        "defaultMultiplierBps": 12100,
         "paused": false,
         "priceFeed": "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113",
         "quorum": 2,

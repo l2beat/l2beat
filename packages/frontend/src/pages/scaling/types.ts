@@ -1,4 +1,5 @@
 import { ActivityViewEntry } from './activity/types'
+import { ScalingDataAvailabilityViewEntry } from './data-availability/types'
 import { ScalingFinalityViewEntry } from './finality/types'
 import { ScalingLivenessViewEntry } from './liveness/types'
 import { ScalingRiskViewEntry } from './risk/types'
@@ -12,3 +13,4 @@ export type ScalingEntry =
   | ScalingTvlViewEntry
   | ScalingLivenessViewEntry
   | ScalingFinalityViewEntry
+  | ScalingDataAvailabilityViewEntry

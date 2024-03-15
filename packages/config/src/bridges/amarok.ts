@@ -55,13 +55,22 @@ export const amarok: Bridge = {
       {
         address: EthereumAddress('0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6'),
         sinceTimestamp: new UnixTime(1671625595),
-        tokens: ['USDC', 'WETH'],
+        tokens: ['USDC', 'WETH', 'USDT', 'DAI', 'Metis', 'alUSD'],
       },
     ],
   },
   technology: {
     canonical: false,
-    destination: ['Gnosis', 'Optimism', 'Arbitrum', 'Polygon', 'BSC'],
+    destination: [
+      'Gnosis',
+      'Optimism',
+      'Arbitrum',
+      'Polygon',
+      'BSC',
+      'Base',
+      'Linea',
+      'Metis',
+    ],
     principleOfOperation: {
       name: 'Principle of operation',
       description: `The bridge can operate in one of two modes, Optimistic or Slow. They differ in how the messages are sent between chains. In Optimistic Mode\
@@ -170,6 +179,10 @@ export const amarok: Bridge = {
       discovery.getContractDetails(
         'LineaHubConnector',
         'Contract for sending/receiving messages from mainnet to Linea via Linea AMB.',
+      ),
+      discovery.getContractDetails(
+        'ModeHubConnector',
+        'Contract for sending/receiving messages from mainnet to Mode Network via Optimism AMB.',
       ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],

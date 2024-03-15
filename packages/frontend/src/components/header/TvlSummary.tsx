@@ -1,11 +1,19 @@
+import { Layer2TVLWarning } from '@l2beat/config'
 import React from 'react'
 
 import { unifyPercentagesAsIntegers } from '../../utils'
+import { getSentimentFillColor } from '../../utils/sentimentFillColor'
 import { formatUSD } from '../../utils/utils'
 import { UpcomingBadge } from '../badge/UpcomingBadge'
-import { CanonicalIcon, ExternalIcon, NativeIcon } from '../icons'
+import {
+  CanonicalIcon,
+  ExternalIcon,
+  NativeIcon,
+  RoundedWarningIcon,
+} from '../icons'
 import { Link } from '../Link'
 import { PercentChange } from '../PercentChange'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 
 export interface TvlStats {
   tvlChange: string
@@ -18,6 +26,7 @@ export interface TvlStats {
 export interface TvlSummaryProps {
   stats?: TvlStats
   tvlBreakdownHref?: string
+  tvlWarning?: Layer2TVLWarning
   showTvlBreakdown?: boolean
   isArchived?: boolean
   type?: 'bridge' | 'layer2' | 'layer3'
@@ -83,16 +92,40 @@ export function TvlSummary(props: TvlSummaryProps) {
         </span>
 
         {props.stats && (props.stats.tvl > 0 || props.isArchived) ? (
-          <div className="flex items-center gap-2 md:gap-1">
-            <p className="text-lg font-bold md:text-2xl md:leading-none">
-              {formatUSD(props.stats.tvl)}
-            </p>
-            {props.stats.tvl > 0 && (
-              <p className="text-xs font-bold md:text-base">
-                <PercentChange value={props.stats.tvlChange} />
+          props.tvlWarning ? (
+            <Tooltip>
+              <TooltipTrigger className="flex items-center gap-1">
+                <p className="text-lg font-bold md:text-2xl md:leading-none">
+                  {formatUSD(props.stats.tvl)}
+                </p>
+                {props.stats.tvl > 0 && (
+                  <p className="text-xs font-bold md:text-base">
+                    <PercentChange value={props.stats.tvlChange} />
+                  </p>
+                )}
+                {props.tvlWarning && (
+                  <RoundedWarningIcon
+                    className={`size-4 ${getSentimentFillColor(props.tvlWarning.sentiment)}`}
+                  />
+                )}
+              </TooltipTrigger>
+              <TooltipContent>{props.tvlWarning.content}</TooltipContent>
+            </Tooltip>
+          ) : (
+            <div className="flex items-center gap-1">
+              <p className="text-lg font-bold md:text-2xl md:leading-none">
+                {formatUSD(props.stats.tvl)}
               </p>
-            )}
-          </div>
+              {props.stats.tvl > 0 && (
+                <p className="text-xs font-bold md:text-base">
+                  <PercentChange value={props.stats.tvlChange} />
+                </p>
+              )}
+              {props.tvlWarning && (
+                <RoundedWarningIcon className="size-4 fill-yellow-700 dark:fill-yellow-300" />
+              )}
+            </div>
+          )
         ) : (
           <div className="w-auto">
             <UpcomingBadge />
@@ -154,7 +187,7 @@ export function TvlSummary(props: TvlSummaryProps) {
         </>
       ) : null}
       {props.showTvlBreakdown ? (
-        <div className="flex justify-center">
+        <div className="mt-2 flex justify-center md:mt-0">
           <Link href={props.tvlBreakdownHref} className="text-xs">
             View TVL Breakdown
           </Link>

@@ -65,7 +65,10 @@ export function layer2ToProject(layer2: Layer2): Project {
     })),
     transactionApi: layer2.config.transactionApi,
     livenessConfig: toBackendLivenessConfig(layer2.id, layer2.config.liveness),
-    finalityConfig: layer2.config.finality,
+    finalityConfig:
+      layer2.config.finality !== 'coming soon'
+        ? layer2.config.finality
+        : undefined,
   }
 }
 

@@ -1,5 +1,6 @@
 import {
   Layer2Provider,
+  Layer2TVLWarning,
   Layer3Provider,
   ScalingProjectCategory,
   ScalingProjectPurpose,
@@ -17,6 +18,7 @@ export interface ScalingSummaryViewEntryBase {
   category: ScalingProjectCategory
   warning?: string
   redWarning?: string
+  tvlWarning?: Layer2TVLWarning
   isArchived?: boolean
   isVerified?: boolean
   showProjectUnderReview?: boolean

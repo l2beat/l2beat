@@ -2,13 +2,14 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
-  DATA_AVAILABILITY,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
+  makeDataAvailabilityConfig,
   NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
@@ -56,8 +57,6 @@ export const aztecV1: Layer2 = {
       'Aztec Connect is an open source layer 2 network that aims to enable affordable, private crypto payments via zero-knowledge proofs.',
     purposes: ['Private payments'],
     category: 'ZK Rollup',
-    dataAvailabilityMode: 'StateDiffs',
-
     links: {
       websites: ['https://aztec.network/'],
       apps: ['https://old.zk.money'],
@@ -88,6 +87,11 @@ export const aztecV1: Layer2 = {
       defaultCallsPerMinute: 3_000,
     },
   },
+  dataAvailability: makeDataAvailabilityConfig({
+    type: 'On chain',
+    layer: 'Ethereum (calldata)',
+    mode: 'State diffs',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
@@ -101,7 +105,7 @@ export const aztecV1: Layer2 = {
         {
           contract: 'TurboVerifier',
           references: [
-            'https://etherscan.io/address/0xd3a6D9De4cbC2CC7529361941e85b1c3269CcBb1#code#F1#L37',
+            'https://etherscan.io/address/0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8#code#F1#L37',
           ],
         },
       ],
@@ -205,12 +209,12 @@ export const aztecV1: Layer2 = {
       references: [
         {
           text: 'TurboVerifier.sol#L37 - Etherscan source code',
-          href: 'https://etherscan.io/address/0xd3a6D9De4cbC2CC7529361941e85b1c3269CcBb1#code#F1#L37',
+          href: 'https://etherscan.io/address/0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8#code#F1#L37',
         },
       ],
     },
     dataAvailability: {
-      ...DATA_AVAILABILITY.ON_CHAIN,
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       references: [
         {
           text: 'RollupProcessor.sol#L359 - Etherscan source code',
@@ -288,14 +292,6 @@ export const aztecV1: Layer2 = {
       ),
       discovery.getContractDetails('TurboVerifier', {
         description: 'Turbo Plonk zkSNARK Verifier.',
-        upgradableBy: ['Aztec Multisig'],
-        upgradeDelay: 'No delay',
-        upgradeConsiderations:
-          'Verifier field in RollupProcessor can be changed with no delay.',
-      }),
-      discovery.getContractDetails('AlwaysReverting', {
-        description:
-          'Contract has replaced original TurboVerifier actively halting verification process.',
         upgradableBy: ['Aztec Multisig'],
         upgradeDelay: 'No delay',
         upgradeConsiderations:

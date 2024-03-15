@@ -1,3 +1,255 @@
+Generated with discovered.json: 0x7439825b1cfed9717b7d64fb67fd18dd4fad9c6b
+
+# Diff at Wed, 13 Mar 2024 11:11:36 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@569d0a5fb269e21eeb1e6c7fdb1a2848a0c6fda7 block: 19418904
+- current block number: 19425767
+
+## Description
+
+A verification parameter named recursionLeafLevelVkHash is updated suggesting a change in how the verifier should prove batches.
+Protocol version is updated from 21 to 22.
+
+## Watched changes
+
+```diff
+    contract zkSync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: None
++++ description: Protocol version, increments with each protocol change
++++ severity: MEDIUM
+      values.getProtocolVersion:
+-        21
++        22
++++ description: Verifier parameters used for proving batches
++++ severity: LOW
+      values.getVerifierParams.1:
+-        "0x062362cb3eaf1f631406cbe19bf2a2c5d0d9ea69d069309a6003addae9f387be"
++        "0x400a4b532c6f072c00d1806ef299300d4c104f4ac55bd8698ade78894fcadc0a"
+    }
+```
+
+Generated with discovered.json: 0xae47dc197c06eb123d220b6f285c6f66bb4e93ca
+
+# Diff at Tue, 12 Mar 2024 12:09:43 GMT:
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: main@bdacb4204f519a0796aaef823774cc10a4fb2f8b block: 19275529
+- current block number: 19418904
+
+## Description
+
+### ZkSync
+
+Protocol version was updated from 20 to 21.
+
+#### Executor
+
+This upgrade introduces logic allowing the use of EIP-4844 blobs for data availability, also keeping calldata as an option. L2 contracts where updated with batch 459581.
+
+### ValidatorTimelock
+
+Allows to whitelist multiple validators (rather than only 1).
+
+### Verifier
+
+New keys
+
+## Watched changes
+
+```diff
+    contract zkSync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: None
+      upgradeability.facets.3:
+-        "0x3a4ef67C6cAb51444E5d3861843F7f4a37F64F0a"
++        "0xfd3779e6214eBBd40f5F5890351298e123A46BA6"
+      upgradeability.facets.2:
+-        "0x0f58Fd6c9Ed966e09C1dFFBc8E6FF600ec65f6eB"
++        "0xA57F9FFD65fC0F5792B5e958dF42399a114EC7e7"
+      upgradeability.facets.1:
+-        "0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B"
++        "0x10113bB3a8e64f8eD67003126adC8CE74C34610c"
+      upgradeability.facets.0:
+-        "0xE6426c725cB507168369c10284390E59d91eC821"
++        "0x230214F0224C7E0485f348a79512ad00514DB1F7"
+      implementations.3:
+-        "0x3a4ef67C6cAb51444E5d3861843F7f4a37F64F0a"
++        "0xfd3779e6214eBBd40f5F5890351298e123A46BA6"
+      implementations.2:
+-        "0x0f58Fd6c9Ed966e09C1dFFBc8E6FF600ec65f6eB"
++        "0xA57F9FFD65fC0F5792B5e958dF42399a114EC7e7"
+      implementations.1:
+-        "0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B"
++        "0x10113bB3a8e64f8eD67003126adC8CE74C34610c"
+      implementations.0:
+-        "0xE6426c725cB507168369c10284390E59d91eC821"
++        "0x230214F0224C7E0485f348a79512ad00514DB1F7"
+      values.facetAddresses.3:
+-        "0x3a4ef67C6cAb51444E5d3861843F7f4a37F64F0a"
++        "0xfd3779e6214eBBd40f5F5890351298e123A46BA6"
+      values.facetAddresses.2:
+-        "0x0f58Fd6c9Ed966e09C1dFFBc8E6FF600ec65f6eB"
++        "0xA57F9FFD65fC0F5792B5e958dF42399a114EC7e7"
+      values.facetAddresses.1:
+-        "0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B"
++        "0x10113bB3a8e64f8eD67003126adC8CE74C34610c"
+      values.facetAddresses.0:
+-        "0xE6426c725cB507168369c10284390E59d91eC821"
++        "0x230214F0224C7E0485f348a79512ad00514DB1F7"
+      values.facets.3.0:
+-        "0x3a4ef67C6cAb51444E5d3861843F7f4a37F64F0a"
++        "0xfd3779e6214eBBd40f5F5890351298e123A46BA6"
+      values.facets.2.0:
+-        "0x0f58Fd6c9Ed966e09C1dFFBc8E6FF600ec65f6eB"
++        "0xA57F9FFD65fC0F5792B5e958dF42399a114EC7e7"
+      values.facets.1.0:
+-        "0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B"
++        "0x10113bB3a8e64f8eD67003126adC8CE74C34610c"
+      values.facets.0.0:
+-        "0xE6426c725cB507168369c10284390E59d91eC821"
++        "0x230214F0224C7E0485f348a79512ad00514DB1F7"
+      values.getL2BootloaderBytecodeHash:
+-        "0x010007ed0e328b940e241f7666a6303b7ffd4e3fd7e8c154d6e7556befe6cd6d"
++        "0x010007ede999d096c84553fb514d3d6ca76fbf39789dda76bfeda9f3ae06236e"
+      values.getL2DefaultAccountBytecodeHash:
+-        "0x0100055b7a8be90522251be8be1a186464d056462973502ac8a0437c85e4d2a9"
++        "0x0100055b041eb28aff6e3a6e0f37c31fd053fc9ef142683b05e5f0aee6934066"
+      values.getProtocolVersion:
+-        20
++        21
+      values.getVerifier:
+-        "0x3390051435eCB25a9610A1cF17d1BA0a228A0560"
++        "0xdd9C826196cf3510B040A8784D85aE36674c7Ed2"
+      values.validators.0:
+-        "0xa0425d71cB1D6fb80E65a5361a04096E0672De03"
++        "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Verifier (0x3390051435eCB25a9610A1cF17d1BA0a228A0560)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorTimelock (0xa0425d71cB1D6fb80E65a5361a04096E0672De03)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorTimelock (0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (0xdd9C826196cf3510B040A8784D85aE36674c7Ed2)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../zksync/ValidatorTimelock.sol                   |  57 ++++--
+ .../zksync/interfaces/IBase.sol                    |   4 +
+ .../zksync/interfaces/IExecutor.sol                |  81 +++++++-
+ .../zksync/libraries/LibMap.sol                    |   8 +-
+ .../ValidatorTimelock/meta.txt                     |   2 +-
+ .../@openzeppelin/contracts/access/Ownable.sol     |   6 +-
+ .../contracts/access/Ownable2Step.sol              |   4 +-
+ .../@openzeppelin/contracts/utils/Context.sol      |   6 +-
+ .../solpp-generated-contracts/zksync/Verifier.sol  |   8 +-
+ .../{.code@19275529 => .code}/Verifier/meta.txt    |   2 +-
+ .../solpp-generated-contracts/zksync/Config.sol    |   3 +
+ .../solpp-generated-contracts/zksync/Storage.sol   |   2 +
+ .../zkSync/implementation-1/meta.txt               |   2 +-
+ .../solpp-generated-contracts/zksync/Storage.sol   |   2 +
+ .../zkSync/implementation-2/meta.txt               |   2 +-
+ .../common/L2ContractAddresses.sol                 |  15 +-
+ .../solpp-generated-contracts/zksync/Config.sol    |   3 +
+ .../solpp-generated-contracts/zksync/Storage.sol   |   2 +
+ .../zkSync/implementation-3/meta.txt               |   2 +-
+ .../common/L2ContractAddresses.sol                 |  15 +-
+ .../solpp-generated-contracts/zksync/Config.sol    |   3 +
+ .../solpp-generated-contracts/zksync/Storage.sol   |   2 +
+ .../zksync/facets/Executor.sol                     | 214 ++++++++++++++++-----
+ .../zksync/interfaces/IExecutor.sol                |  59 +++++-
+ .../zkSync/implementation-4/meta.txt               |   2 +-
+ 25 files changed, 401 insertions(+), 105 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19275529 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock (0xa0425d71cB1D6fb80E65a5361a04096E0672De03) {
+    +++ description: None
+      values.revertedBlocks:
+-        []
+      values.getCommittedBatchTimestamp:
++        [0,0,0,0,0]
+      errors:
++        {"getCommittedBatchTimestamp":"Too many values. Update configuration to explore fully"}
+    }
+```
+
+Generated with discovered.json: 0x2a6d354fd89f8981107b3b6fa8743d24329997c7
+
+# Diff at Wed, 21 Feb 2024 10:47:09 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@9b9ae3ded14098eb8cc02dd80f4be605745e1b19 block: 19182180
+- current block number: 19275529
+
+## Description
+
+Updated the SafeERC20 library. Deprecated some methods.
+
+## Watched changes
+
+```diff
+    contract L1ERC20Bridge (0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063) {
+      upgradeability.implementation:
+-        "0x79Cc1DF74Ac2d1B0876498C9FcE32c7e34F57B43"
++        "0x810c6598CAaA08B61f6430Df5a8e120B3390d78A"
+      implementations.0:
+-        "0x79Cc1DF74Ac2d1B0876498C9FcE32c7e34F57B43"
++        "0x810c6598CAaA08B61f6430Df5a8e120B3390d78A"
+    }
+```
+
+## Source code changes
+
+```diff
+.../@openzeppelin/contracts/token/ERC20/IERC20.sol |  8 +-
+ .../token/ERC20/extensions/IERC20Permit.sol}       | 32 ++++++-
+ .../contracts/token/ERC20/utils/SafeERC20.sol      | 99 ++++++++++++++--------
+ .../@openzeppelin/contracts/utils/Address.sol      | 16 ++--
+ .../bridge/L1ERC20Bridge.sol                       | 49 ++++++-----
+ .../bridge/interfaces/IL1Bridge.sol                |  2 +
+ .../bridge/interfaces/IL1BridgeLegacy.sol          |  2 +
+ .../common/L2ContractAddresses.sol                 |  3 -
+ .../common/libraries/L2ContractHelper.sol          |  2 +-
+ .../solpp-generated-contracts/zksync/Storage.sol   | 42 +++++++--
+ .../zksync/interfaces/IAdmin.sol                   | 36 +++++++-
+ .../zksync/interfaces/IBase.sol                    |  4 +
+ .../zksync/interfaces/IExecutor.sol                | 22 +++++
+ .../zksync/interfaces/IGetters.sol                 | 47 +++++++++-
+ .../zksync/interfaces/IMailbox.sol                 | 55 +++++++++++-
+ .../zksync/interfaces/IVerifier.sol                |  8 ++
+ .../zksync/interfaces/IZkSync.sol                  | 12 ++-
+ .../zksync/libraries/Diamond.sol                   | 13 +--
+ .../zksync/libraries/PriorityQueue.sol             |  2 +-
+ .../L1ERC20Bridge/implementation/meta.txt          |  2 +-
+ 20 files changed, 357 insertions(+), 99 deletions(-)
+```
+
 Generated with discovered.json: 0x6ea4015640d399764ce2291a73b01d1fa8270153
 
 # Diff at Thu, 08 Feb 2024 08:13:36 GMT:

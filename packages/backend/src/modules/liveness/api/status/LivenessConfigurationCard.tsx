@@ -23,7 +23,10 @@ export function LivenessConfigurationCard({
       : 'warn'
 
   return (
-    <details className={`card ${type}`} style={{ maxWidth: '300px' }}>
+    <details
+      className={`card ${type}`}
+      style={{ maxWidth: '300px', height: 'min-content' }}
+    >
       <summary>
         <p style={{ fontWeight: 'bold' }}>{config.projectId.toString()}</p>
         {` - ${config.type}`}

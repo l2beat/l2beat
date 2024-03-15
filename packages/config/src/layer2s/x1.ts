@@ -15,7 +15,7 @@ export const x1: Layer2 = upcoming({
       websites: ['https://okx.com/x1'],
       apps: [],
       documentation: ['https://okx.com/x1/docs'],
-      explorers: [],
+      explorers: ['https://okx1-testnet.l2scan.co/'],
       repositories: [],
       socialMedia: ['https://twitter.com/X1_Network'],
     },
