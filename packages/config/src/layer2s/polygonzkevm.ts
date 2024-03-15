@@ -183,8 +183,8 @@ export const polygonzkevm: Layer2 = {
           selector: '0x5e9145c9',
           functionSignature:
             'function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)',
-          sinceTimestamp: new UnixTime(1679653163),
-          untilTimestamp: new UnixTime(1707822059),
+          sinceTimestampInclusive: new UnixTime(1679653163),
+          untilTimestampExclusive: new UnixTime(1707822059),
         },
       },
       {
@@ -197,7 +197,7 @@ export const polygonzkevm: Layer2 = {
           selector: '0x5e9145c9',
           functionSignature:
             'function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)',
-          sinceTimestamp: new UnixTime(1707822059),
+          sinceTimestampInclusive: new UnixTime(1707822059),
         },
       },
       {
@@ -215,8 +215,8 @@ export const polygonzkevm: Layer2 = {
           selector: '0x2b0006fa',
           functionSignature:
             'function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)',
-          sinceTimestamp: new UnixTime(1679653163),
-          untilTimestamp: new UnixTime(1707822059),
+          sinceTimestampInclusive: new UnixTime(1679653163),
+          untilTimestampExclusive: new UnixTime(1707822059),
         },
       },
       {
@@ -234,8 +234,8 @@ export const polygonzkevm: Layer2 = {
           selector: '0x621dd411',
           functionSignature:
             'function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) ',
-          sinceTimestamp: new UnixTime(1679653163),
-          untilTimestamp: new UnixTime(1707822059),
+          sinceTimestampInclusive: new UnixTime(1679653163),
+          untilTimestampExclusive: new UnixTime(1707822059),
         },
       },
       {
@@ -253,7 +253,7 @@ export const polygonzkevm: Layer2 = {
           selector: '0xa2ee10d3',
           functionSignature:
             'verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[])',
-          sinceTimestamp: new UnixTime(1707822059),
+          sinceTimestampInclusive: new UnixTime(1707822059),
         },
       },
       {
@@ -271,7 +271,7 @@ export const polygonzkevm: Layer2 = {
           selector: '0x08068a47',
           functionSignature:
             'verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[])',
-          sinceTimestamp: new UnixTime(1707822059),
+          sinceTimestampInclusive: new UnixTime(1707822059),
         },
       },
     ],

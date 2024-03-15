@@ -108,7 +108,7 @@ describe(getSafeHeight.name, () => {
     const databaseEntries: TrackedTxsConfigRecord[] = [
       {
         ...getMockRecord(MIN_TIMESTAMP, NOW),
-        untilTimestamp: NOW.add(-7, 'days'),
+        untilTimestampExclusive: NOW.add(-7, 'days'),
         lastSyncedTimestamp: NOW.add(-7, 'days'),
       },
       {
@@ -122,9 +122,11 @@ describe(getSafeHeight.name, () => {
   })
 })
 
-function getMockConfiguration(sinceTimestamp: UnixTime): TrackedTxConfigEntry {
+function getMockConfiguration(
+  sinceTimestampInclusive: UnixTime,
+): TrackedTxConfigEntry {
   return {
-    sinceTimestamp,
+    sinceTimestampInclusive,
     // the rest of params are irrelevant to the tests
     projectId: ProjectId('project1'),
     formula: 'transfer',
@@ -141,12 +143,12 @@ function getMockConfiguration(sinceTimestamp: UnixTime): TrackedTxConfigEntry {
 }
 
 const getMockRecord = (
-  sinceTimestamp: UnixTime,
+  sinceTimestampInclusive: UnixTime,
   lastSyncedTimestamp: UnixTime | undefined,
 ): TrackedTxsConfigRecord => {
-  const { projectId, uses } = getMockConfiguration(sinceTimestamp)
+  const { projectId, uses } = getMockConfiguration(sinceTimestampInclusive)
   return {
-    sinceTimestamp,
+    sinceTimestampInclusive,
     lastSyncedTimestamp,
     // the rest of params are irrelevant to the tests
     id: uses[0].id,

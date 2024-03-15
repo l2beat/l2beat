@@ -24,7 +24,7 @@ describe(transformTransfersQueryResult.name, () => {
         projectId: ProjectId('project1'),
         from: ADDRESS_1,
         to: ADDRESS_2,
-        sinceTimestamp: SINCE_TIMESTAMP,
+        sinceTimestampInclusive: SINCE_TIMESTAMP,
         uses: [
           {
             id: TrackedTxId.unsafe('0x1'),
@@ -43,7 +43,7 @@ describe(transformTransfersQueryResult.name, () => {
         projectId: ProjectId('project1'),
         from: ADDRESS_3,
         to: ADDRESS_4,
-        sinceTimestamp: SINCE_TIMESTAMP,
+        sinceTimestampInclusive: SINCE_TIMESTAMP,
         uses: [
           {
             id: TrackedTxId.unsafe('0x3'),
@@ -57,7 +57,7 @@ describe(transformTransfersQueryResult.name, () => {
         projectId: ProjectId('project2'),
         from: ADDRESS_5,
         to: ADDRESS_6,
-        sinceTimestamp: SINCE_TIMESTAMP,
+        sinceTimestampInclusive: SINCE_TIMESTAMP,
         uses: [
           {
             id: TrackedTxId.unsafe('0x4'),
@@ -153,7 +153,7 @@ describe(transformTransfersQueryResult.name, () => {
         projectId: ProjectId('project1'),
         from: ADDRESS_1,
         to: ADDRESS_2,
-        sinceTimestamp: SINCE_TIMESTAMP,
+        sinceTimestampInclusive: SINCE_TIMESTAMP,
         uses: [],
       },
     ]

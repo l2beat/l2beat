@@ -113,7 +113,7 @@ export const bobanetwork: Layer2 = {
           ),
           selector: '0xd0f89344',
           functionSignature: 'function appendSequencerBatch()',
-          sinceTimestamp: new UnixTime(1635386025),
+          sinceTimestampInclusive: new UnixTime(1635386025),
         },
       },
       {
@@ -126,7 +126,7 @@ export const bobanetwork: Layer2 = {
           selector: '0x8ca5cbb9',
           functionSignature:
             'function appendStateBatch(bytes32[] _batch,uint256 _shouldStartAtElement)',
-          sinceTimestamp: new UnixTime(1635386294),
+          sinceTimestampInclusive: new UnixTime(1635386294),
         },
       },
     ],

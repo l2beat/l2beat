@@ -158,7 +158,7 @@ export class LivenessRepository extends BaseRepository {
     const knex = await this.knex(trx)
     return knex('liveness')
       .where('tracked_tx_id', id)
-      .andWhere('timestamp', '>', after.toDate())
+      .andWhere('timestamp', '>=', after.toDate())
       .delete()
   }
 

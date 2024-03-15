@@ -25,8 +25,8 @@ export interface TrackedTxsConfigRecord {
   projectId: ProjectId
   type: TrackedTxsConfigType
   subtype?: TrackedTxsConfigSubtype
-  sinceTimestamp: UnixTime
-  untilTimestamp?: UnixTime
+  sinceTimestampInclusive: UnixTime
+  untilTimestampExclusive?: UnixTime
   lastSyncedTimestamp?: UnixTime
   debugInfo: string
 }
@@ -91,7 +91,7 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
 
     return await knex('tracked_txs_configs')
       .where({ id: trackedTxId.valueOf() })
-      .update({ until_timestamp: untilTimestamp.toDate() })
+      .update({ until_timestamp_exclusive: untilTimestamp.toDate() })
   }
 
   async deleteAll() {
@@ -111,8 +111,8 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
 }
 
 function toRecord(row: TrackedTxsConfigRow): TrackedTxsConfigRecord {
-  const untilTimestamp = row.until_timestamp
-    ? UnixTime.fromDate(row.until_timestamp)
+  const untilTimestamp = row.until_timestamp_exclusive
+    ? UnixTime.fromDate(row.until_timestamp_exclusive)
     : undefined
 
   const lastSyncedTimestamp = row.last_synced_timestamp
@@ -126,8 +126,8 @@ function toRecord(row: TrackedTxsConfigRow): TrackedTxsConfigRecord {
     subtype: row.subtype
       ? TrackedTxsConfigSubtype.parse(row.subtype)
       : undefined,
-    sinceTimestamp: UnixTime.fromDate(row.since_timestamp),
-    untilTimestamp,
+    sinceTimestampInclusive: UnixTime.fromDate(row.since_timestamp_inclusive),
+    untilTimestampExclusive: untilTimestamp,
     lastSyncedTimestamp,
     debugInfo: row.debug_info,
   }
@@ -136,15 +136,15 @@ function toRecord(row: TrackedTxsConfigRow): TrackedTxsConfigRecord {
 export function trackedTxConfigEntryToRecord(
   entry: TrackedTxConfigEntry,
   entryUse: TrackedTxUseWithId,
-) {
+): TrackedTxsConfigRecord {
   return {
     id: entryUse.id,
     debugInfo: toDebugInfo(entry),
     projectId: entry.projectId,
     type: entryUse.type,
     subtype: entryUse.subtype,
-    sinceTimestamp: entry.sinceTimestamp,
-    untilTimestamp: entry.untilTimestamp,
+    sinceTimestampInclusive: entry.sinceTimestampInclusive,
+    untilTimestampExclusive: entry.untilTimestampExclusive,
   }
 }
 
@@ -154,8 +154,8 @@ function toRow(entry: TrackedTxsConfigRecord): TrackedTxsConfigRow {
     project_id: entry.projectId.toString(),
     type: entry.type,
     subtype: entry.subtype ?? null,
-    since_timestamp: entry.sinceTimestamp.toDate(),
-    until_timestamp: entry.untilTimestamp?.toDate() ?? null,
+    since_timestamp_inclusive: entry.sinceTimestampInclusive.toDate(),
+    until_timestamp_exclusive: entry.untilTimestampExclusive?.toDate() ?? null,
     last_synced_timestamp: null,
     debug_info: entry.debugInfo,
   }

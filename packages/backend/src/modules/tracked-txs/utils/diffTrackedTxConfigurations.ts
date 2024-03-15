@@ -12,11 +12,11 @@ export function diffTrackedTxConfigurations(
   databaseEntries: TrackedTxsConfigRecord[],
 ): {
   toAdd: TrackedTxsConfigRecord[]
-  toTrim: { id: TrackedTxId; untilTimestamp: UnixTime }[]
+  toTrim: { id: TrackedTxId; untilTimestampExclusive: UnixTime }[]
   toRemove: TrackedTxId[]
 } {
   const toAdd: TrackedTxsConfigRecord[] = []
-  const toTrim: { id: TrackedTxId; untilTimestamp: UnixTime }[] = []
+  const toTrim: { id: TrackedTxId; untilTimestampExclusive: UnixTime }[] = []
 
   for (const entry of runtimeEntries) {
     for (const entryUse of entry.uses) {
@@ -29,11 +29,14 @@ export function diffTrackedTxConfigurations(
       }
 
       if (
-        entry.untilTimestamp &&
-        (!databaseEntry.untilTimestamp ||
-          entry.untilTimestamp < databaseEntry.untilTimestamp)
+        entry.untilTimestampExclusive &&
+        (!databaseEntry.untilTimestampExclusive ||
+          entry.untilTimestampExclusive < databaseEntry.untilTimestampExclusive)
       ) {
-        toTrim.push({ id: entryUse.id, untilTimestamp: entry.untilTimestamp })
+        toTrim.push({
+          id: entryUse.id,
+          untilTimestampExclusive: entry.untilTimestampExclusive,
+        })
       }
     }
   }

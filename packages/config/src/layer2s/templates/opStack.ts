@@ -164,7 +164,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
                   formula: 'transfer',
                   from: sequencerAddress,
                   to: sequencerInbox,
-                  sinceTimestamp: templateVars.genesisTimestamp,
+                  sinceTimestampInclusive: templateVars.genesisTimestamp,
                 },
               },
               {
@@ -175,7 +175,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
                   selector: '0x9aaab648',
                   functionSignature:
                     'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
-                  sinceTimestamp: new UnixTime(
+                  sinceTimestampInclusive: new UnixTime(
                     templateVars.l2OutputOracle.sinceTimestamp ??
                       templateVars.genesisTimestamp.toNumber(),
                   ),

@@ -119,7 +119,7 @@ export class TrackedTxsIndexer extends ChildIndexer {
   }
 
   private async trimConfigurations(
-    toTrim: { id: TrackedTxId; untilTimestamp: UnixTime }[],
+    toTrim: { id: TrackedTxId; untilTimestampExclusive: UnixTime }[],
     trx: Knex.Transaction,
   ) {
     // there can be a situation where untilTimestamp was set retroactively
@@ -128,11 +128,11 @@ export class TrackedTxsIndexer extends ChildIndexer {
       toTrim.map(async (c) => {
         await this.configRepository.setUntilTimestamp(
           c.id,
-          c.untilTimestamp,
+          c.untilTimestampExclusive,
           trx,
         )
         for (const updater of Object.values(this.updaters)) {
-          await updater.deleteAfter(c.id, c.untilTimestamp, trx)
+          await updater.deleteAfter(c.id, c.untilTimestampExclusive, trx)
         }
       }),
     )

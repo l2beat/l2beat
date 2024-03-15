@@ -35,7 +35,7 @@ describe(diffTrackedTxConfigurations.name, () => {
 
       const updated = {
         ...CONFIGURATIONS[1],
-        untilTimestamp: changedUntilTimestamp,
+        untilTimestampExclusive: changedUntilTimestamp,
       }
 
       const result = diffTrackedTxConfigurations(
@@ -47,7 +47,7 @@ describe(diffTrackedTxConfigurations.name, () => {
       expect(result.toTrim).toEqualUnsorted(
         configurationsToRecords([updated]).map((r) => ({
           id: r.id,
-          untilTimestamp: changedUntilTimestamp,
+          untilTimestampExclusive: changedUntilTimestamp,
         })),
       )
     })
@@ -93,8 +93,8 @@ const CONFIGURATIONS: TrackedTxConfigEntry[] = [
     formula: 'transfer',
     from: EthereumAddress.random(),
     to: EthereumAddress.random(),
-    sinceTimestamp: FROM,
-    untilTimestamp: FROM.add(2, 'days'),
+    sinceTimestampInclusive: FROM,
+    untilTimestampExclusive: FROM.add(2, 'days'),
     uses: [
       {
         type: 'liveness',
@@ -108,7 +108,7 @@ const CONFIGURATIONS: TrackedTxConfigEntry[] = [
     formula: 'functionCall',
     address: EthereumAddress.random(),
     selector: '0x9aaab648',
-    sinceTimestamp: FROM,
+    sinceTimestampInclusive: FROM,
     uses: [
       { type: 'liveness', subtype: 'stateUpdates', id: TrackedTxId.random() },
       {

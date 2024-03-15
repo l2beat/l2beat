@@ -104,8 +104,8 @@ export const paradex: Layer2 = {
         uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
-          sinceTimestamp: new UnixTime(1636978914),
-          untilTimestamp: new UnixTime(1704729971),
+          sinceTimestampInclusive: new UnixTime(1636978914),
+          untilTimestampExclusive: new UnixTime(1704729971),
           programHashes: [
             '3258367057337572248818716706664617507069572185152472699066582725377748079373',
           ],
@@ -115,8 +115,8 @@ export const paradex: Layer2 = {
         uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
-          sinceTimestamp: new UnixTime(1704729971),
-          untilTimestamp: new UnixTime(1706626427),
+          sinceTimestampInclusive: new UnixTime(1704729971),
+          untilTimestampExclusive: new UnixTime(1706626427),
           programHashes: [
             '54878256403880350656938046611252303365750679698042371543935159963667935317',
           ],
@@ -127,7 +127,7 @@ export const paradex: Layer2 = {
         query: {
           // Updated to this program hash in tx 0x7eb527c897e8449234ad770573a2a5ba3737e6b9014600c261741bc258849639
           formula: 'sharpSubmission',
-          sinceTimestamp: new UnixTime(1706626427),
+          sinceTimestampInclusive: new UnixTime(1706626427),
           programHashes: [
             '2479841346739966073527450029179698923866252973805981504232089731754042431018',
           ],
@@ -143,7 +143,7 @@ export const paradex: Layer2 = {
           selector: '0x77552641',
           functionSignature:
             'function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)',
-          sinceTimestamp: new UnixTime(1689850631),
+          sinceTimestampInclusive: new UnixTime(1689850631),
         },
       },
     ],

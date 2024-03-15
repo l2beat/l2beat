@@ -14,7 +14,7 @@ const CONFIGURATIONS: TrackedTxConfigEntry[] = [
     formula: 'transfer',
     from: EthereumAddress.random(),
     to: EthereumAddress.random(),
-    sinceTimestamp: FROM,
+    sinceTimestampInclusive: FROM,
     uses: [
       {
         type: 'liveness',
@@ -28,7 +28,7 @@ const CONFIGURATIONS: TrackedTxConfigEntry[] = [
     formula: 'functionCall',
     address: EthereumAddress.random(),
     selector: '0x9aaab648',
-    sinceTimestamp: FROM,
+    sinceTimestampInclusive: FROM,
     uses: [
       { type: 'liveness', subtype: 'stateUpdates', id: TrackedTxId.random() },
       {
@@ -89,8 +89,8 @@ describe(findConfigurationsToSync.name, () => {
         formula: 'functionCall',
         address: EthereumAddress.random(),
         selector: '0x9aaab64a',
-        sinceTimestamp: FROM,
-        untilTimestamp: FROM.add(16, 'hours'),
+        sinceTimestampInclusive: FROM,
+        untilTimestampExclusive: FROM.add(16, 'hours'),
         uses: [
           {
             type: 'liveness',

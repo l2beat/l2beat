@@ -116,11 +116,17 @@ describeDatabase(LivenessRepository.name, (database) => {
   })
 
   describe(LivenessRepository.prototype.deleteAfter.name, () => {
-    it('should delete rows inserted after certain timestamp for given configuration id', async () => {
+    it('should delete rows inserted after certain timestamp for given configuration id inclusively', async () => {
       await repository.deleteAll()
 
       const configurationId = TRACKED_TXS_RECORDS[0].id
       const records: LivenessRecord[] = [
+        {
+          timestamp: START,
+          blockNumber: 12345,
+          txHash: '0x1234567890abcdef',
+          trackedTxId: configurationId,
+        },
         {
           timestamp: START.add(1, 'hours'),
           blockNumber: 12345,
@@ -146,7 +152,7 @@ describeDatabase(LivenessRepository.name, (database) => {
 
       const result = await repository.getAll()
 
-      expect(result).toEqual([records[0], records[2]])
+      expect(result).toEqual([records[0], records[3]])
     })
   })
 

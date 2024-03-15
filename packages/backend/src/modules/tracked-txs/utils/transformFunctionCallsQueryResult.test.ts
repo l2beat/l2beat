@@ -40,7 +40,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         projectId: ProjectId('project1'),
         address: ADDRESS_1,
         selector: SELECTOR_1,
-        sinceTimestamp: SINCE_TIMESTAMP,
+        sinceTimestampInclusive: SINCE_TIMESTAMP,
         uses: [
           {
             type: 'liveness',
@@ -54,7 +54,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         projectId: ProjectId('project1'),
         address: ADDRESS_2,
         selector: SELECTOR_2,
-        sinceTimestamp: SINCE_TIMESTAMP,
+        sinceTimestampInclusive: SINCE_TIMESTAMP,
         uses: [
           {
             type: 'liveness',
@@ -69,7 +69,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       {
         formula: 'sharpSubmission',
         projectId: ProjectId('project2'),
-        sinceTimestamp: SINCE_TIMESTAMP,
+        sinceTimestampInclusive: SINCE_TIMESTAMP,
         programHashes: [paradexProgramHash],
         address: EthereumAddress.random(),
         selector: '0x9b3b76cc',
@@ -154,7 +154,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         projectId: ProjectId('project1'),
         address: ADDRESS_1,
         selector: SELECTOR_1,
-        sinceTimestamp: SINCE_TIMESTAMP,
+        sinceTimestampInclusive: SINCE_TIMESTAMP,
         uses: [],
       },
     ]
@@ -179,7 +179,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       {
         formula: 'sharpSubmission',
         projectId: ProjectId('project1'),
-        sinceTimestamp: SINCE_TIMESTAMP,
+        sinceTimestampInclusive: SINCE_TIMESTAMP,
         programHashes: [paradexProgramHash],
         address: EthereumAddress.random(),
         selector: '0x9b3b76cc',
@@ -194,7 +194,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       {
         formula: 'sharpSubmission',
         projectId: ProjectId('project2'),
-        sinceTimestamp: SINCE_TIMESTAMP,
+        sinceTimestampInclusive: SINCE_TIMESTAMP,
         programHashes: [paradexProgramHash + 'wrong-rest-part-of-hash'],
         address: EthereumAddress.random(),
         selector: 'random-selector-2',

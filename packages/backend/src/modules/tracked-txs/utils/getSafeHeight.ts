@@ -14,17 +14,17 @@ export function getSafeHeight(
   const databaseTimestamps = databaseEntries
     .filter((entry) => {
       if (
-        entry.untilTimestamp === undefined ||
+        entry.untilTimestampExclusive === undefined ||
         entry.lastSyncedTimestamp === undefined
       ) {
         return true
       }
       // Filter out archived configurations which have already been synced
-      return entry.untilTimestamp?.gt(entry.lastSyncedTimestamp)
+      return entry.untilTimestampExclusive?.gt(entry.lastSyncedTimestamp)
     })
-    .map((c) => c.lastSyncedTimestamp ?? c.sinceTimestamp)
+    .map((c) => c.lastSyncedTimestamp ?? c.sinceTimestampInclusive)
 
-  const newEntryTimestamps = toAdd.map((c) => c.sinceTimestamp)
+  const newEntryTimestamps = toAdd.map((c) => c.sinceTimestampInclusive)
 
   const earliestTimestamp = findEarliestTimestamp([
     ...databaseTimestamps,

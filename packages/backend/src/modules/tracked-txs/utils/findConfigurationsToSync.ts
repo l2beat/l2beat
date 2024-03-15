@@ -18,8 +18,8 @@ export function findConfigurationsToSync(
         assert(dbEntry, 'Database entry should not be undefined here!')
 
         return isTimestampInRange(
-          config.sinceTimestamp,
-          config.untilTimestamp,
+          config.sinceTimestampInclusive,
+          config.untilTimestampExclusive,
           dbEntry.lastSyncedTimestamp,
           from,
           to,
@@ -39,8 +39,11 @@ export function findConfigurationsToSync(
 
   const untilTimestamps = configs
     .map((c) => {
-      if (c.untilTimestamp && !c.untilTimestamp.equals(from)) {
-        return c.untilTimestamp.toNumber()
+      if (
+        c.untilTimestampExclusive &&
+        !c.untilTimestampExclusive.equals(from)
+      ) {
+        return c.untilTimestampExclusive.toNumber()
       }
     })
     .filter(notUndefined)

@@ -18,7 +18,7 @@ export const TRACKED_TXS_RECORDS: TrackedTxsConfigRecord[] = [
     type: 'liveness',
     subtype: 'batchSubmissions',
     id: TrackedTxId(['0x13']),
-    sinceTimestamp: START.add(-1, 'hours'),
+    sinceTimestampInclusive: START.add(-1, 'hours'),
     debugInfo: '',
   }),
   makeTrackedTxsConfigRecord({
@@ -102,7 +102,7 @@ describeDatabase(TrackedTxsConfigsRepository.name, (database) => {
       const untilTimestamp = UnixTime.now()
       const updatedRow: TrackedTxsConfigRecord = {
         ...TRACKED_TXS_RECORDS[0],
-        untilTimestamp: untilTimestamp,
+        untilTimestampExclusive: untilTimestamp,
       }
 
       await repository.setUntilTimestamp(newIds[0], untilTimestamp)
@@ -181,13 +181,13 @@ function makeTrackedTxsConfigRecord(
 ): TrackedTxsConfigRecord {
   return {
     projectId: ProjectId('random-project-id'),
-    sinceTimestamp: START,
+    sinceTimestampInclusive: START,
     id: TrackedTxId(['0x']),
     type: 'liveness',
     subtype: 'batchSubmissions',
     debugInfo: '',
     lastSyncedTimestamp: undefined,
-    untilTimestamp: undefined,
+    untilTimestampExclusive: undefined,
     ...props,
   }
 }

@@ -113,7 +113,7 @@ export const rhinofi: Layer2 = {
           selector: '0x538f9406',
           functionSignature:
             'function updateState(uint256[] publicInput, uint256[] applicationData)',
-          sinceTimestamp: new UnixTime(1590491810),
+          sinceTimestampInclusive: new UnixTime(1590491810),
         },
       },
     ],

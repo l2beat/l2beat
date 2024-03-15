@@ -251,7 +251,7 @@ export class LivenessController {
 
             return {
               subtype: use.subtype,
-              untilTimestamp: entry.untilTimestamp,
+              untilTimestamp: entry.untilTimestampExclusive,
             }
           })
         })

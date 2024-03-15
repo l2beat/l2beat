@@ -1,13 +1,13 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
 export function isTimestampInRange(
-  sinceTimestamp: UnixTime,
-  untilTimestamp: UnixTime | undefined,
+  sinceTimestampInclusive: UnixTime,
+  untilTimestampExclusive: UnixTime | undefined,
   lastSyncedTimestamp: UnixTime | undefined,
   from: UnixTime,
   to: UnixTime,
 ): boolean {
-  if (sinceTimestamp.gte(to)) {
+  if (sinceTimestampInclusive.gte(to)) {
     return false
   }
 
@@ -15,15 +15,15 @@ export function isTimestampInRange(
     return false
   }
 
-  if (untilTimestamp === undefined) {
+  if (untilTimestampExclusive === undefined) {
     return true
   }
 
-  if (untilTimestamp.lte(from)) {
+  if (untilTimestampExclusive.lte(from)) {
     return false
   }
 
-  if (untilTimestamp.lte(to)) {
+  if (untilTimestampExclusive.lte(to)) {
     return true
   }
 

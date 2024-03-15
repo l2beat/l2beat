@@ -148,14 +148,14 @@ describe(TrackedTxsIndexer.name, () => {
         getMockRuntimeConfigurations()[0],
         {
           ...getMockRuntimeConfigurations()[1],
-          untilTimestamp: MIN_TIMESTAMP.add(1, 'days'),
+          untilTimestampExclusive: MIN_TIMESTAMP.add(1, 'days'),
         },
       ]
 
       const databaseEntries: TrackedTxsConfigRecord[] = [
         mockObject<TrackedTxsConfigRecord>({
-          sinceTimestamp: MIN_TIMESTAMP,
-          untilTimestamp: undefined,
+          sinceTimestampInclusive: MIN_TIMESTAMP,
+          untilTimestampExclusive: undefined,
           lastSyncedTimestamp: undefined,
           type: 'liveness',
           subtype: 'batchSubmissions',
@@ -163,7 +163,7 @@ describe(TrackedTxsIndexer.name, () => {
         }),
         mockObject<TrackedTxsConfigRecord>({
           ...toRecords(runtimeEntries[1])[0],
-          untilTimestamp: undefined,
+          untilTimestampExclusive: undefined,
         }),
         // rest of the configurations would be considered "toAdd"
       ]
@@ -201,10 +201,14 @@ describe(TrackedTxsIndexer.name, () => {
       )
       expect(
         configurationRepository.setUntilTimestamp,
-      ).toHaveBeenOnlyCalledWith(toTrim[0].id, toTrim[0].untilTimestamp, TRX)
+      ).toHaveBeenOnlyCalledWith(
+        toTrim[0].id,
+        toTrim[0].untilTimestampExclusive,
+        TRX,
+      )
       expect(mockedLivenessUpdater.deleteAfter).toHaveBeenOnlyCalledWith(
         toTrim[0].id,
-        toTrim[0].untilTimestamp,
+        toTrim[0].untilTimestampExclusive,
         TRX,
       )
 
@@ -399,7 +403,7 @@ function getMockRuntimeConfigurations(): TrackedTxConfigEntry[] {
       projectId: ProjectId('test'),
       address: EthereumAddress.random(),
       selector: '0x',
-      sinceTimestamp: MIN_TIMESTAMP,
+      sinceTimestampInclusive: MIN_TIMESTAMP,
       uses: [
         {
           type: 'liveness',
@@ -413,7 +417,7 @@ function getMockRuntimeConfigurations(): TrackedTxConfigEntry[] {
       projectId: ProjectId('test2'),
       address: EthereumAddress.random(),
       selector: '0x',
-      sinceTimestamp: MIN_TIMESTAMP,
+      sinceTimestampInclusive: MIN_TIMESTAMP,
       uses: [
         {
           type: 'liveness',
@@ -467,8 +471,8 @@ function toRecords(
     projectId: entry.projectId,
     type: use.type,
     subtype: use.subtype,
-    sinceTimestamp: entry.sinceTimestamp,
-    untilTimestamp: entry.untilTimestamp,
+    sinceTimestampInclusive: entry.sinceTimestampInclusive,
+    untilTimestampExclusive: entry.untilTimestampExclusive,
     debugInfo: '',
     lastSyncedTimestamp,
   }))

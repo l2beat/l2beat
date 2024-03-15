@@ -88,7 +88,7 @@ export const zkspace: Layer2 = {
           selector: '0x6898e6fc',
           functionSignature:
             'function verifyBlocks(uint32 _blockNumberFrom, uint32 _blockNumberTo, uint256[] _recursiveInput, uint256[] _proof, uint256[] _subProofLimbs)',
-          sinceTimestamp: new UnixTime(1639569183),
+          sinceTimestampInclusive: new UnixTime(1639569183),
         },
       },
     ],

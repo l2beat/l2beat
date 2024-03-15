@@ -233,7 +233,7 @@ function mockProjectConfig(
                   id: TrackedTxId.random(),
                 },
               ],
-              untilTimestamp: UnixTime.now(),
+              untilTimestampExclusive: UnixTime.now(),
             }),
           ],
         },
