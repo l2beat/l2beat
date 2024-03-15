@@ -6,6 +6,7 @@ import { Config } from './config'
 import { createActivityModule } from './modules/activity/ActivityModule'
 import { ApplicationModule } from './modules/ApplicationModule'
 import { createDiffHistoryModule } from './modules/diff-history/createDiffHistoryModule'
+import { createDiffStateModule } from './modules/diff-state/createDiffStateModule'
 import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createHealthModule } from './modules/health/HealthModule'
 import { LivenessIndexer } from './modules/liveness/LivenessIndexer'
@@ -55,6 +56,7 @@ export class Application {
       createActivityModule(config, logger, http, database, clock),
       createUpdateMonitorModule(config, logger, http, database, clock),
       createDiffHistoryModule(config, logger, database),
+      createDiffStateModule(config, logger, database),
       createStatusModule(config, logger),
       livenessModule,
       createFinalityModule(

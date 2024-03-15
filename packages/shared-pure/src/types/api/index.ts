@@ -1,5 +1,6 @@
 export * from './ActivityApi'
 export * from './DiffHistoryApi'
+export * from './DiffStateApi'
 export * from './FinalityApi'
 export * from './LivenessApi'
 export * from './ManuallyVerifiedContrats'
