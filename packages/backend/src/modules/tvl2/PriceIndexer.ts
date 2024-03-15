@@ -97,12 +97,16 @@ export class PriceIndexer extends ChildIndexer {
     safeHeight: number,
     trx?: Knex.Transaction,
   ): Promise<void> {
-    assert(
-      safeHeight >= this.token.sinceTimestamp.toNumber(),
-      'Cannot set height to be lower than the minimum timestamp',
+    const indexerSafeHeight = Math.max(
+      safeHeight,
+      this.token.sinceTimestamp.toNumber(),
     )
 
-    await this.stateRepository.setSafeHeight(this.indexerId, safeHeight, trx)
+    await this.stateRepository.setSafeHeight(
+      this.indexerId,
+      indexerSafeHeight,
+      trx,
+    )
   }
 
   async initialize() {
