@@ -149,6 +149,11 @@
           "severity": null,
           "type": null
         },
+        "getLockedBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "insurance": {
           "description": null,
           "severity": null,
@@ -910,16 +915,6 @@
           "type": null
         },
         "blastBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getLastCheckpointId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getLastFinalizedRequestId": {
           "description": null,
           "severity": null,
           "type": null
