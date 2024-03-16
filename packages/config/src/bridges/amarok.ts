@@ -55,7 +55,7 @@ export const amarok: Bridge = {
       {
         address: EthereumAddress('0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6'),
         sinceTimestamp: new UnixTime(1671625595),
-        tokens: ['USDC', 'WETH', 'USDT', 'DAI', 'Metis', 'alUSD'],
+        tokens: ['USDC', 'WETH', 'USDT', 'DAI', 'Metis', 'alUSD', 'ezETH'],
       },
     ],
   },
