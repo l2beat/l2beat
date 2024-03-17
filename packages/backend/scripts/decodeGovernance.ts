@@ -53,7 +53,7 @@ async function main() {
     (c) => c.name === 'L1ArbitrumTimelock',
   )
   const timelock = Timelock.parse(rawTimeLock)
-  console.log(timelock)
+  // console.log(timelock)
 
   for (const tx of timelock.values.scheduledTransactions) {
     await decodeTransaction(tx, timelock)
@@ -61,45 +61,65 @@ async function main() {
 }
 
 async function decodeTransaction(tx: ScheduledTransaction, timelock: Timelock) {
+  let result: string
+  console.log(`Scheduled transaction ${tx.id}:`)
   if (tx.target === timelock.values.RETRYABLE_TICKET_MAGIC) {
-    decodeInboxCall(tx)
+    result = await decodeInboxCall(tx)
   } else {
     if (tx.target !== '0x3ffFbAdAF827559da092217e474760E2b2c3CeDd') {
       throw new Error(`Unknown tx target ${tx.target}`)
     }
-    const parsed = iface.parseTransaction({ data: tx.data })
-    // console.log(parsed.functionFragment.name)
-    // console.log(
-    //   parsed.functionFragment.inputs.map(
-    //     (i) => `${i.name}: ${parsed.args[i.name]}`,
-    //   ),
-    // )
-    const addrToCall = EthereumAddress(parsed.args['upgrade'] as string)
-    console.log(addrToCall)
-    const contractName = await discoverContractName(addrToCall)
+    result = await decodeExecuteCall('ethereum', tx.data)
+  }
+  console.log('  ' + result + '\n')
+}
 
-    const r = iface.parseTransaction({
-      data: parsed.args['upgradeCallData'] as string,
-    })
-    const result = [
-      'ETHEREUM: ',
-      contractName,
-      '.',
-      r.functionFragment.name,
-      '(',
-    ]
-    result.push(
-      r.functionFragment.inputs
-        .map((i) => `${i.name}: ${r.args[i.name]}`)
-        .join(', '),
-    )
-    result.push(')')
-    console.log(result.join('') + '\n')
+// eslint-disable-next-line @typescript-eslint/require-await
+async function decodeExecuteCall(
+  chain: string,
+  executeCalldata: string,
+): Promise<string> {
+  const parsed = iface.parseTransaction({ data: executeCalldata })
+  // console.log(parsed.functionFragment.name)
+  // console.log(
+  //   parsed.functionFragment.inputs.map(
+  //     (i) => `${i.name}: ${parsed.args[i.name]}`,
+  //   ),
+  // )
+  const addrToCall = EthereumAddress(parsed.args['upgrade'] as string)
+  const contractName = await discoverContractName(chain, addrToCall)
+  const calldata = parsed.args['upgradeCallData'] as string
+  const decodedCalldata = decodeCalldata(calldata)
+  return `[${chain}] ${contractName}.${decodedCalldata}`
+}
+
+function decodeCalldata(calldata: string): string {
+  // TODO: use ABI from discovery
+  const r = iface.parseTransaction({
+    data: calldata,
+  })
+  const result = [r.functionFragment.name, '(']
+  result.push(
+    r.functionFragment.inputs
+      .map((i) => `${i.name}: ${r.args[i.name]}`)
+      .join(', '),
+  )
+  result.push(')')
+  return result.join('')
+}
+
+function inboxToChain(inboxAddress: EthereumAddress): string {
+  switch (inboxAddress.toString()) {
+    case '0xc4448b71118c9071Bcb9734A0EAc55D18A153949':
+      return 'nova'
+    case '0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f':
+      return 'arbitrum'
+    default:
+      throw new Error(`Unknown inbox address ${inboxAddress.toString()}`)
   }
 }
 
-function decodeInboxCall(tx: ScheduledTransaction) {
-  console.log('Inbox call')
+async function decodeInboxCall(tx: ScheduledTransaction) {
   const res = ethers.utils.defaultAbiCoder.decode(
     [
       'address targetInbox',
@@ -111,12 +131,20 @@ function decodeInboxCall(tx: ScheduledTransaction) {
     ],
     tx.data,
   )
-  // console.log(res)
-  console.log('Inbox call')
+  const targetInbox = EthereumAddress(res.targetInbox as string)
+  const chain = inboxToChain(targetInbox)
+  // const l2AddrToCall = EthereumAddress(res.l2Target as string)
+  // TODO: get abi from response
+  const l2Calldata = res.l2Calldata as string
+  const decodedCalldata = await decodeExecuteCall(chain, l2Calldata)
+  return decodedCalldata
 }
 
-async function discoverContractName(address: EthereumAddress): Promise<string> {
-  const chainConfig = getChainConfig('ethereum')
+async function discoverContractName(
+  chain: string,
+  address: EthereumAddress,
+): Promise<string> {
+  const chainConfig = getChainConfig(chain)
   const logger = DiscoveryLogger.SILENT
   const http = new HttpClient()
   const etherscanClient = EtherscanLikeClient.createForDiscovery(
