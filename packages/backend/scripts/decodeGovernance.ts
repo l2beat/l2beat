@@ -55,14 +55,18 @@ async function main() {
   const timelock = Timelock.parse(rawTimeLock)
   // console.log(timelock)
 
+  let updateId: string = ''
   for (const tx of timelock.values.scheduledTransactions) {
+    if (updateId !== tx.id) {
+      updateId = tx.id
+      console.log(`\nUpdate id: ${tx.id}`)
+    }
     await decodeTransaction(tx, timelock)
   }
 }
 
 async function decodeTransaction(tx: ScheduledTransaction, timelock: Timelock) {
   let result: string
-  console.log(`Scheduled transaction ${tx.id}:`)
   if (tx.target === timelock.values.RETRYABLE_TICKET_MAGIC) {
     result = await decodeInboxCall(tx)
   } else {
@@ -71,7 +75,7 @@ async function decodeTransaction(tx: ScheduledTransaction, timelock: Timelock) {
     }
     result = await decodeExecuteCall('ethereum', tx.data)
   }
-  console.log('  ' + result + '\n')
+  console.log('  - ' + result)
 }
 
 // eslint-disable-next-line @typescript-eslint/require-await
