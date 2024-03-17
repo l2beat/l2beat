@@ -1,6 +1,19 @@
-import { ConfigReader } from '@l2beat/discovery'
+import {
+  AddressAnalyzer,
+  ConfigReader,
+  DiscoveryLogger,
+  DiscoveryProvider,
+  EtherscanLikeClient,
+  getChainConfig,
+  HandlerExecutor,
+  HttpClient,
+  MulticallClient,
+  ProxyDetector,
+  SourceCodeService,
+} from '@l2beat/discovery'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import chalk from 'chalk'
-import { ethers, utils } from 'ethers'
+import { ethers, providers, utils } from 'ethers'
 import * as z from 'zod'
 
 type ScheduledTransaction = z.infer<typeof ScheduledTransaction>
@@ -43,11 +56,11 @@ async function main() {
   console.log(timelock)
 
   for (const tx of timelock.values.scheduledTransactions) {
-    decodeTransaction(tx, timelock)
+    await decodeTransaction(tx, timelock)
   }
 }
 
-function decodeTransaction(tx: ScheduledTransaction, timelock: Timelock) {
+async function decodeTransaction(tx: ScheduledTransaction, timelock: Timelock) {
   if (tx.target === timelock.values.RETRYABLE_TICKET_MAGIC) {
     decodeInboxCall(tx)
   } else {
@@ -61,10 +74,20 @@ function decodeTransaction(tx: ScheduledTransaction, timelock: Timelock) {
     //     (i) => `${i.name}: ${parsed.args[i.name]}`,
     //   ),
     // )
+    const addrToCall = EthereumAddress(parsed.args['upgrade'] as string)
+    console.log(addrToCall)
+    const contractName = await discoverContractName(addrToCall)
+
     const r = iface.parseTransaction({
       data: parsed.args['upgradeCallData'] as string,
     })
-    const result = ['ETHEREUM: ', r.functionFragment.name, '(']
+    const result = [
+      'ETHEREUM: ',
+      contractName,
+      '.',
+      r.functionFragment.name,
+      '(',
+    ]
     result.push(
       r.functionFragment.inputs
         .map((i) => `${i.name}: ${r.args[i.name]}`)
@@ -88,5 +111,57 @@ function decodeInboxCall(tx: ScheduledTransaction) {
     ],
     tx.data,
   )
-  console.log(res)
+  // console.log(res)
+  console.log('Inbox call')
+}
+
+async function discoverContractName(address: EthereumAddress): Promise<string> {
+  const chainConfig = getChainConfig('ethereum')
+  const logger = DiscoveryLogger.SILENT
+  const http = new HttpClient()
+  const etherscanClient = EtherscanLikeClient.createForDiscovery(
+    http,
+    chainConfig.etherscanUrl,
+    chainConfig.etherscanApiKey,
+    chainConfig.etherscanUnsupported,
+  )
+  const provider = new providers.StaticJsonRpcProvider(chainConfig.rpcUrl)
+
+  const discoveryProvider = new DiscoveryProvider(
+    provider,
+    etherscanClient,
+    logger,
+    chainConfig.rpcGetLogsMaxRange,
+  )
+  const proxyDetector = new ProxyDetector(discoveryProvider, logger)
+  const sourceCodeService = new SourceCodeService(discoveryProvider)
+  const multicallClient = new MulticallClient(
+    discoveryProvider,
+    chainConfig.multicall,
+  )
+  const handlerExecutor = new HandlerExecutor(
+    discoveryProvider,
+    multicallClient,
+    logger,
+  )
+
+  const addressAnalyzer = new AddressAnalyzer(
+    discoveryProvider,
+    proxyDetector,
+    sourceCodeService,
+    handlerExecutor,
+    logger,
+  )
+
+  const blockNumber = await provider.getBlockNumber()
+
+  const { analysis } = await addressAnalyzer.analyze(
+    address,
+    undefined,
+    blockNumber,
+    logger,
+  )
+
+  const contractName = analysis.type === 'EOA' ? 'EOA' : analysis.name
+  return contractName
 }
