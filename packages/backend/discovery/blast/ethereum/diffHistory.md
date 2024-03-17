@@ -1,4 +1,32 @@
-Generated with discovered.json: 0x80373f7e73a672e63f68c4c695bb66e0bc2d4f70
+Generated with discovered.json: 0xcc0da57db3780a3761dad14cb6e4147cbdcfd583
+
+# Diff at Sat, 16 Mar 2024 06:51:20 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@3450b932efb78f57c769514b9e5b949f63bbe612 block: 19439804
+- current block number: 19445792
+
+## Description
+
+Values related to yield checkpoints and withdrawal queue are ignored.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19439804 (main branch discovery), not current.
+
+```diff
+    contract USDYieldManager (0xa230285d5683C74935aD14c446e137c8c8828438) {
+    +++ description: None
+      values.getLastCheckpointId:
+-        3
+      values.getLastFinalizedRequestId:
+-        3
+    }
+```
+
+Generated with discovered.json: 0x688972e6824f5f85d707d2b62d1dc1d8931a5172
 
 # Diff at Wed, 13 Mar 2024 09:32:22 GMT:
 

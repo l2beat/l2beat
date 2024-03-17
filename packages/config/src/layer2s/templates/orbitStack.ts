@@ -11,8 +11,10 @@ import {
   Milestone,
   OPERATOR,
   RISK_VIEW,
+  ScalingProjectContract,
   ScalingProjectEscrow,
   ScalingProjectPermission,
+  ScalingProjectTechnology,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { subtractOne } from '../../common/assessCount'
@@ -33,6 +35,8 @@ export interface OrbitStackConfigCommon {
   rollupProxy: ContractParameters
   sequencerInbox: ContractParameters
   nonTemplatePermissions?: ScalingProjectPermission[]
+  nonTemplateTechnology?: Partial<ScalingProjectTechnology>
+  nonTemplateContracts?: ScalingProjectContract[]
   rpcUrl?: string
   transactionApi?: Layer2TransactionApi
   milestones?: Milestone[]
@@ -77,11 +81,15 @@ export function orbitStackCommon(
   return {
     id: ProjectId(templateVars.discovery.projectName),
     contracts: {
-      addresses: [...templateVars.discovery.getOrbitStackContractDetails()],
+      addresses: [
+        ...templateVars.discovery.getOrbitStackContractDetails(),
+        ...(templateVars.nonTemplateContracts ?? []),
+      ],
       risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
     },
     technology: {
-      stateCorrectness: {
+      stateCorrectness: templateVars.nonTemplateTechnology
+        ?.stateCorrectness ?? {
         name: 'Fraud proofs ensure state correctness',
         description:
           'After some period of time, the published state root is assumed to be correct. For a certain time period, one of the whitelisted actors can submit a fraud proof that shows that the state was incorrect. The challenge protocol can be subject to delay attacks.',
@@ -111,36 +119,38 @@ export function orbitStackCommon(
           },
         ],
       },
-      dataAvailability: postsToExternalDA
-        ? (() => {
-            const DAC = templateVars.discovery.getContractValue<{
-              membersCount: number
-              requiredSignatures: number
-            }>('SequencerInbox', 'dacKeyset')
-            const { membersCount, requiredSignatures } = DAC
+      dataAvailability:
+        templateVars.nonTemplateTechnology?.dataAvailability ??
+        postsToExternalDA
+          ? (() => {
+              const DAC = templateVars.discovery.getContractValue<{
+                membersCount: number
+                requiredSignatures: number
+              }>('SequencerInbox', 'dacKeyset')
+              const { membersCount, requiredSignatures } = DAC
 
-            return TECHNOLOGY_DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN({
-              membersCount,
-              requiredSignatures,
-            })
-          })()
-        : {
-            ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
-            references: [
-              {
-                text: 'Sequencing followed by deterministic execution - Arbitrum documentation',
-                href: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/#sequencing-followed-by-deterministic-execution',
-              },
-              {
-                text: 'SequencerInbox.sol - Etherscan source code, addSequencerL2BatchFromOrigin function',
-                href: getCodeLink(
-                  templateVars.sequencerInbox,
-                  explorerLinkFormat,
-                ),
-              },
-            ],
-          },
-      operator: {
+              return TECHNOLOGY_DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN({
+                membersCount,
+                requiredSignatures,
+              })
+            })()
+          : {
+              ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
+              references: [
+                {
+                  text: 'Sequencing followed by deterministic execution - Arbitrum documentation',
+                  href: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/#sequencing-followed-by-deterministic-execution',
+                },
+                {
+                  text: 'SequencerInbox.sol - Etherscan source code, addSequencerL2BatchFromOrigin function',
+                  href: getCodeLink(
+                    templateVars.sequencerInbox,
+                    explorerLinkFormat,
+                  ),
+                },
+              ],
+            },
+      operator: templateVars.nonTemplateTechnology?.operator ?? {
         ...OPERATOR.CENTRALIZED_SEQUENCER,
         references: [
           {
@@ -149,7 +159,8 @@ export function orbitStackCommon(
           },
         ],
       },
-      forceTransactions: {
+      forceTransactions: templateVars.nonTemplateTechnology
+        ?.forceTransactions ?? {
         ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
         description:
           FORCE_TRANSACTIONS.CANONICAL_ORDERING.description +
@@ -166,7 +177,7 @@ export function orbitStackCommon(
           },
         ],
       },
-      exitMechanisms: [
+      exitMechanisms: templateVars.nonTemplateTechnology?.exitMechanisms ?? [
         {
           ...EXITS.REGULAR('optimistic', 'merkle proof'),
           references: [
@@ -199,7 +210,7 @@ export function orbitStackCommon(
         },
         EXITS.AUTONOMOUS,
       ],
-      smartContracts: {
+      smartContracts: templateVars.nonTemplateTechnology?.smartContracts ?? {
         name: 'EVM compatible smart contracts are supported',
         description:
           'Arbitrum One uses Nitro technology that allows running fraud proofs by executing EVM code on top of WASM.',

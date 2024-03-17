@@ -2,284 +2,99 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "AddressManager",
+      "name": "RollupProcessorV2",
       "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ChallengerMultisig",
-      "values": {
-        "VERSION": {
+        "allowThirdPartyContracts": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "domainSeparator": {
+        "DEFAULT_ADMIN_ROLE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getChainId": {
+        "defiBridgeProxy": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getOwners": {
+        "delayBeforeEscapeHatch": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getThreshold": {
+        "EMERGENCY_ROLE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L1CrossDomainMessenger",
-      "values": {
-        "MESSAGE_VERSION": {
+        "escapeBlockLowerBound": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "MIN_GAS_CALLDATA_OVERHEAD": {
+        "escapeBlockUpperBound": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": {
+        "getAsyncDefiInteractionHashesLength": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": {
+        "getCapped": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "OTHER_MESSENGER": {
+        "getDataSize": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "PORTAL": {
+        "getDefiInteractionHashesLength": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "RELAY_CALL_OVERHEAD": {
+        "getEscapeHatchStatus": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "RELAY_CONSTANT_OVERHEAD": {
+        "getImplementationVersion": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "RELAY_GAS_CHECK_BUFFER": {
+        "getPendingDefiInteractionHashesLength": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "RELAY_RESERVED_GAS": {
+        "getSupportedAssetsLength": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "messageNonce": {
+        "getSupportedBridgesLength": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L1ERC721Bridge",
-      "values": {
-        "MESSENGER": {
+        "lastRollupTimeStamp": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "OTHER_BRIDGE": {
+        "LISTER_ROLE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "messenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "otherBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L1StandardBridge",
-      "values": {
-        "MESSENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OTHER_BRIDGE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2TokenBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "messenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L2OutputOracle",
-      "values": {
-        "CHALLENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "FINALIZATION_PERIOD_SECONDS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "L2_BLOCK_TIME": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PROPOSER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "SUBMISSION_INTERVAL": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "deletedOutputs": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "latestBlockNumber": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "latestOutputIndex": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nextBlockNumber": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nextOutputIndex": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "startingBlockNumber": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "startingTimestamp": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "OptimismMintableERC20Factory",
-      "values": {
-        "BRIDGE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "OptimismPortal",
-      "values": {
-        "GUARDIAN": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "L2_ORACLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "SYSTEM_CONFIG": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2Sender": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "params": {
+        "OWNER_ROLE": {
           "description": null,
           "severity": null,
           "type": null
@@ -289,7 +104,42 @@
           "severity": null,
           "type": null
         },
-        "version": {
+        "prevDefiInteractionsHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RESUME_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rollupStateHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "verifier": {
+          "description": "Address of the ZK verifier.",
+          "severity": "LOW",
+          "type": "PERMISSION"
+        },
+        "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rollupProviders": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getSupportedAsset": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getSupportedBridge": {
           "description": null,
           "severity": null,
           "type": null
@@ -297,103 +147,8 @@
       }
     },
     {
-      "name": "ProxyAdmin",
+      "name": "Aztec Multisig",
       "values": {
-        "addressManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isUpgrading": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "SystemConfig",
-      "values": {
-        "UNSAFE_BLOCK_SIGNER_SLOT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "batcherHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "gasLimit": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "minimumGasLimit": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "opStackDA": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "overhead": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "resourceConfig": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "scalar": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "sequencerInbox": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "unsafeBlockSigner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ZoraMultisig",
-      "values": {
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "domainSeparator": {
           "description": null,
           "severity": null,
@@ -415,6 +170,141 @@
           "type": null
         },
         "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Lister Multisig",
+      "values": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "DefiBridgeProxy",
+      "values": {}
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Resume Multisig",
+      "values": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Emergency Multisig",
+      "values": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Verifier28x32",
+      "description": "Verifier contract used by the RollupProcessorV2.",
+      "values": {
+        "getVerificationKeyHash": {
           "description": null,
           "severity": null,
           "type": null
