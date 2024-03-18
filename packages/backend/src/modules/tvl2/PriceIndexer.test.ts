@@ -117,7 +117,7 @@ describe(PriceIndexer.name, () => {
       expect(newSafeHeight).toEqual(to.toNumber())
     })
 
-    it('sync scheduled before minimum timestamp to sync', async () => {
+    it('immediately return when sync scheduled before minimum timestamp', async () => {
       const from = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
 
       const syncService = mockObject<SyncService>({
@@ -168,7 +168,35 @@ describe(PriceIndexer.name, () => {
     // set safe height in DB
     // get minTimestamp if safe height is lower than minTimestamp
   })
+
   describe(PriceIndexer.prototype.invalidate.name, () => {
-    // delete records before targetHeight and returns the new safe height
+    it('deletes records before targetHeight and returns the new safe height', async () => {
+      const pricesRepository = mockObject<PricesRepository>({
+        deleteBeforeInclusive: async () => 1,
+      })
+      const token = mockObject<PriceConfigEntry>({
+        chain: 'ethereum',
+        address: EthereumAddress.random(),
+      })
+      const indexer = new PriceIndexer(
+        Logger.SILENT,
+        mockObject<HourlyIndexer>({ subscribe: () => {} }),
+        mockObject<CoingeckoQueryService>({}),
+        mockObject<IndexerStateRepository>({}),
+        pricesRepository,
+        token,
+        mockObject<SyncService>({}),
+      )
+
+      const targetHeight = 10
+      const newSafeHeight = await indexer.invalidate(targetHeight)
+
+      expect(pricesRepository.deleteBeforeInclusive).toHaveBeenCalledWith(
+        token.chain,
+        token.address,
+        new UnixTime(targetHeight),
+      )
+      expect(newSafeHeight).toEqual(targetHeight)
+    })
   })
 })
