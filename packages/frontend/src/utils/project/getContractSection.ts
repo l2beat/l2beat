@@ -10,6 +10,7 @@ import {
 import {
   assert,
   assertUnreachable,
+  DiffStateApiResponse,
   EthereumAddress,
   ManuallyVerifiedContracts,
   VerificationStatus,
@@ -28,6 +29,7 @@ export function getContractSection(
   project: Layer2 | Layer3 | Bridge,
   verificationStatus: VerificationStatus,
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
+  diffState: DiffStateApiResponse | undefined,
 ): Omit<ContractsSectionProps, 'sectionOrder'> {
   const contracts = project.contracts?.addresses.map((contract) => {
     const isUnverified = isContractUnverified(contract, verificationStatus)
@@ -80,6 +82,7 @@ export function getContractSection(
     isUnderReview: project.isUnderReview ?? project.contracts?.isUnderReview,
     verificationStatus,
     manuallyVerifiedContracts,
+    diffState: diffState?.projects[project.id.toString()],
   }
 }
 

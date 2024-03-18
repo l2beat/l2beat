@@ -1,4 +1,5 @@
 import {
+    DiffStateProjectData,
   ManuallyVerifiedContracts,
   VerificationStatus,
 } from '@l2beat/shared-pure'
@@ -24,6 +25,7 @@ export interface ContractsSectionProps {
   isUnderReview?: boolean
   verificationStatus: VerificationStatus
   manuallyVerifiedContracts: ManuallyVerifiedContracts
+  diffState?: DiffStateProjectData
 }
 
 export function ContractsSection(props: ContractsSectionProps) {

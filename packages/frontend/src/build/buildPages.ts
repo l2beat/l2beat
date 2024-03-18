@@ -3,6 +3,7 @@ import { getChainNames } from '@l2beat/config'
 import {
   ActivityApiResponse,
   DiffHistoryApiResponse,
+  DiffStateApiResponse,
   FinalityApiResponse,
   LivenessApiResponse,
   ProjectAssetsBreakdownApiResponse,
@@ -24,6 +25,7 @@ import {
 import { activitySanityCheck, tvlSanityCheck } from './api/sanityCheck'
 import { JsonHttpClient } from './caching/JsonHttpClient'
 import { getConfig } from './config'
+import { fetchDiffState } from './api/fetchDiffState'
 
 /**
  * Temporary timeout for HTTP calls due to increased size of new TVL API and flaky connection times
@@ -95,6 +97,13 @@ async function main() {
       console.timeEnd('[DIFF HISTORY]')
     }
 
+    let diffState: DiffStateApiResponse | undefined = undefined
+    if (config.features.diffState) {
+      console.time('[DIFF STATE]')
+      diffState = await fetchDiffState(config.backend, http)
+      console.timeEnd('[DIFF STATE]')
+    }
+
     createApi(config, tvlApiResponse, activityApiResponse)
 
     const supportedChains = getChainNames(config)
@@ -111,6 +120,7 @@ async function main() {
       livenessApiResponse,
       finalityApiResponse,
       diffHistory,
+      diffState
     }
 
     await renderPages(config, pagesData)
