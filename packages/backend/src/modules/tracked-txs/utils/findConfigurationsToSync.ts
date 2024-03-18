@@ -5,6 +5,36 @@ import { TrackedTxsConfigRecord } from '../repositories/TrackedTxsConfigsReposit
 import { TrackedTxConfigEntry } from '../types/TrackedTxsConfig'
 import { isTimestampInRange } from './isTimestampInRange'
 
+/* EXAMPLE
+
+Given 3 configurations:
+
+- config1: sinceTimestampInclusive: 0, untilTimestampExclusive: undefined
+- config2: sinceTimestampInclusive: 0, untilTimestampExclusive: undefined
+- config3: sinceTimestampInclusive: 0, untilTimestampExclusive: 30
+- config4: sinceTimestampInclusive: 0, untilTimestampExclusive: 60
+
+and a sync range from: 0, to: 50
+
+the result will be:
+
+- {configurationsToSync: [config1, config2, config3, config4], syncTo: 30}
+
+
+The next sync range asked by indexer should be from 30 to 50, for this one the result will be:
+
+- {configurationsToSync: [config1, config2, config4], syncTo: 50}
+
+Next range from 50 to 100 will be:
+
+- {configurationsToSync: [config1, config2, config4], syncTo: 60}
+
+Next range from 60 to 100 will be:
+
+- {configurationsToSync: [config1, config2], syncTo: 100}
+
+*/
+
 export function findConfigurationsToSync(
   updaterTypes: string[],
   runtimeConfigurations: TrackedTxConfigEntry[],
