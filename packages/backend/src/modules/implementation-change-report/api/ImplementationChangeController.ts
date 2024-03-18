@@ -1,18 +1,21 @@
 import { ConfigReader, diffDiscovery } from '@l2beat/discovery'
-import { assert, DiffStateApiResponse } from '@l2beat/shared-pure'
+import {
+  assert,
+  ImplementationChangeReportApiResponse,
+} from '@l2beat/shared-pure'
 
 import { ChainConverter } from '../../../tools/ChainConverter'
 import { UpdateMonitorRepository } from '../../update-monitor/repositories/UpdateMonitorRepository'
 
-export class DiffStateController {
+export class ImplementationChangeController {
   constructor(
     private readonly updateMonitorRepository: UpdateMonitorRepository,
     private readonly configReader: ConfigReader,
     private readonly chainConverter: ChainConverter,
   ) {}
 
-  async getDiffState(): Promise<DiffStateApiResponse> {
-    const result: DiffStateApiResponse = {
+  async getImplementationChangeReport(): Promise<ImplementationChangeReportApiResponse> {
+    const result: ImplementationChangeReportApiResponse = {
       projects: {},
     }
 

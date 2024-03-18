@@ -6,15 +6,15 @@ import { Database } from '../../peripherals/database/Database'
 import { ChainConverter } from '../../tools/ChainConverter'
 import { ApplicationModule } from '../ApplicationModule'
 import { UpdateMonitorRepository } from '../update-monitor/repositories/UpdateMonitorRepository'
-import { createDiffStateRouter } from './api/createDiffHistoryRouter'
-import { DiffStateController } from './api/DiffStateController'
+import { createImplementationChangeRouter } from './api/createImplementationChangeRouter'
+import { ImplementationChangeController } from './api/ImplementationChangeController'
 
-export function createDiffStateModule(
+export function createImplementationChangeModule(
   config: Config,
   logger: Logger,
   database: Database,
 ): ApplicationModule | undefined {
-  if (!config.diffStateEnabled) {
+  if (!config.implementationChangeReporterEnabled) {
     logger.info('DiffHistory module disabled')
     return
   }
@@ -23,13 +23,13 @@ export function createDiffStateModule(
   const configReader = new ConfigReader()
   const chainConverter = new ChainConverter(config.chains)
 
-  const controller = new DiffStateController(
+  const controller = new ImplementationChangeController(
     repository,
     configReader,
     chainConverter,
   )
 
-  const routers = [createDiffStateRouter(controller)]
+  const routers = [createImplementationChangeRouter(controller)]
 
   const start = () => {}
 

@@ -8,9 +8,9 @@ import {
   UpdateMonitorRecord,
   UpdateMonitorRepository,
 } from '../../update-monitor/repositories/UpdateMonitorRepository'
-import { DiffStateController } from './DiffStateController'
+import { ImplementationChangeController } from './ImplementationChangeController'
 
-describe(DiffStateController.name, () => {
+describe(ImplementationChangeController.name, () => {
   const CONTRACT_A = EthereumAddress.random()
   const IMPLEMENTATION_A_BEFORE = EthereumAddress.random()
   const IMPLEMENTATION_A_AFTER = EthereumAddress.random()
@@ -68,12 +68,12 @@ describe(DiffStateController.name, () => {
       { name: 'arbitrum', chainId: ChainId(42161) },
     ])
 
-    const controller = new DiffStateController(
+    const controller = new ImplementationChangeController(
       repository,
       configReader,
       chainConverter,
     )
-    const result = await controller.getDiffState()
+    const result = await controller.getImplementationChangeReport()
 
     expect(result).toEqual({
       projects: {
@@ -117,12 +117,12 @@ describe(DiffStateController.name, () => {
       { name: 'arbitrum', chainId: ChainId(42161) },
     ])
 
-    const controller = new DiffStateController(
+    const controller = new ImplementationChangeController(
       repository,
       configReader,
       chainConverter,
     )
-    const result = await controller.getDiffState()
+    const result = await controller.getImplementationChangeReport()
 
     expect(result).toEqual({
       projects: {},

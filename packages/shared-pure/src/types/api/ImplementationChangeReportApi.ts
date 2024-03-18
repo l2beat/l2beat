@@ -3,28 +3,28 @@ import z from 'zod'
 import { branded } from '../branded'
 import { EthereumAddress } from '../EthereumAddress'
 
-export const DiffStateChangeData = z.object({
+export const ImplementationChangeReportChangeData = z.object({
   containingContract: branded(z.string(), EthereumAddress),
   newImplementations: z.array(branded(z.string(), EthereumAddress)),
 })
 
-export type DiffStateChangeData = z.infer<typeof DiffStateChangeData>
+export type ImplementationChangeReportChangeData = z.infer<typeof ImplementationChangeReportChangeData>
 
-export const DiffStateProjectData = z.record(
+export const ImplementationChangeReportProjectData = z.record(
   z.string(),
-  z.array(DiffStateChangeData),
+  z.array(ImplementationChangeReportChangeData),
 )
 
-export type DiffStateProjectData = z.infer<typeof DiffStateProjectData>
+export type ImplementationChangeReportProjectData = z.infer<typeof ImplementationChangeReportProjectData>
 
-export const DiffStateApiResponse = z.object({
-  projects: z.record(z.string(), DiffStateProjectData),
+export const ImplementationChangeReportApiResponse = z.object({
+  projects: z.record(z.string(), ImplementationChangeReportProjectData),
 })
 
-export type DiffStateApiResponse = z.infer<typeof DiffStateApiResponse>
+export type ImplementationChangeReportApiResponse = z.infer<typeof ImplementationChangeReportApiResponse>
 
 /**
-const example: DiffStateApiResponse = {
+const example: ImplementationChangeReportApiResponse = {
   projects: {
     arbitrum: {
       ethereum: [

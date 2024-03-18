@@ -154,7 +154,9 @@ export function makeConfig(
     diffHistory: flags.isEnabled('diffHistory') && {
       chains: [getChainDiscoveryConfig(env, 'ethereum')],
     },
-    diffStateEnabled: flags.isEnabled('diffState'),
+    implementationChangeReporterEnabled: flags.isEnabled(
+      'implementationChangeReporter',
+    ),
     chains: chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
     tvlCleanerEnabled: flags.isEnabled('tvlCleaner'),
     flags: flags.getResolved(),
