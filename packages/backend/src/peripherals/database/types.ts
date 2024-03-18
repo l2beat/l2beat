@@ -197,6 +197,12 @@ declare module 'knex/types/tables' {
     price_usd: number
   }
 
+  interface BlockTimestampRow {
+    chain: string
+    timestamp: Date
+    block_number: number
+  }
+
   interface Tables {
     coingecko_prices: PriceRow
     block_numbers: BlockNumberRow
@@ -225,6 +231,7 @@ declare module 'knex/types/tables' {
     tvl_cleaner: TvlCleanerRow
     finality: FinalityRow
     prices: PricesRow
+    block_timestamp: BlockTimestampRow
   }
 }
 
