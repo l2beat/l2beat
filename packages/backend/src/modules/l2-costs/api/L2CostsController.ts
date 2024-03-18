@@ -66,7 +66,7 @@ interface DetailedTransactionBase {
   totalGasCostUsd: number
 }
 
-type DetailedTransaction =
+export type DetailedTransaction =
   | (DetailedTransactionBase & {
       type: 2
     })
@@ -157,7 +157,7 @@ export class L2CostsController {
   }
 
   sumDetails(transactions: DetailedTransaction[]): SumedTransactions {
-    return transactions.reduce(
+    return transactions.reduce<SumedTransactions>(
       (acc, tx) => {
         acc.totalCost += tx.totalGasCost
         acc.totalGas += tx.totalGas
@@ -170,6 +170,10 @@ export class L2CostsController {
         acc.totalComputeCostUsd += tx.computeGasCostUsd
 
         if (tx.type === 3) {
+          if (!acc.totalBlobGas) acc.totalBlobGas = 0
+          if (!acc.totalBlobCost) acc.totalBlobCost = 0
+          if (!acc.totalBlobCostUsd) acc.totalBlobCostUsd = 0
+
           acc.totalBlobGas += tx.blobGasUsed
           acc.totalBlobCost += tx.blobGasCost
           acc.totalBlobCostUsd += tx.blobGasCostUsd
@@ -182,13 +186,10 @@ export class L2CostsController {
         totalCostUsd: 0,
         totalCalldataGas: 0,
         totalComputeGas: 0,
-        totalBlobGas: 0,
         totalCalldataCost: 0,
         totalComputeCost: 0,
-        totalBlobCost: 0,
         totalCalldataCostUsd: 0,
         totalComputeCostUsd: 0,
-        totalBlobCostUsd: 0,
       },
     )
   }
