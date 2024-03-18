@@ -8,14 +8,15 @@ import { utils } from 'ethers'
 
 import {
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
   makeBridgeCompatible,
+  makeDataAvailabilityConfig,
   RISK_VIEW,
   ScalingProjectPermissionedAccount,
   STATE_CORRECTNESS,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
@@ -39,12 +40,6 @@ const upgrades = {
   upgradeDelay: 'No delay',
 }
 
-const roles = discovery.getContractValue<{
-  OPERATOR_ROLE: { members: string[] }
-  PAUSE_MANAGER_ROLE: { members: string[] }
-  VERIFIER_SETTER_ROLE: { members: string[] }
-}>('zkEVM', 'accessControl')
-
 const zodiacRoles = discovery.getContractValue<{
   roles: Record<string, Record<string, boolean>>
 }>('Roles', 'roles')
@@ -53,17 +48,6 @@ const zodiacPausers: ScalingProjectPermissionedAccount[] = Object.keys(
   zodiacRoles.roles[zodiacPauserRole].members,
 ).map((zodiacPauser) => discovery.formatPermissionedAccount(zodiacPauser))
 
-const operators: ScalingProjectPermissionedAccount[] =
-  roles.OPERATOR_ROLE.members.map((address) =>
-    discovery.formatPermissionedAccount(address),
-  )
-
-const verifierSetters: ScalingProjectPermissionedAccount[] =
-  roles.VERIFIER_SETTER_ROLE.members.map((address) =>
-    discovery.formatPermissionedAccount(address),
-  )
-
-const pausers: string[] = roles.PAUSE_MANAGER_ROLE.members
 const isPaused: boolean =
   discovery.getContractValue<boolean>('zkEVM', 'generalPause') ||
   discovery.getContractValue<boolean>('zkEVM', 'l1l2Pause') ||
@@ -96,7 +80,6 @@ export const linea: Layer2 = {
       'Linea is a ZK Rollup powered by Consensys zkEVM, designed to scale the Ethereum network.',
     purposes: ['Universal'],
     category: 'ZK Rollup',
-    dataAvailabilityMode: 'TxData',
     links: {
       websites: ['https://linea.build/'],
       apps: [],
@@ -189,6 +172,7 @@ export const linea: Layer2 = {
     finality: {
       type: 'Linea',
       lag: 0,
+      minTimestamp: new UnixTime(1707813551),
     },
   },
   chainConfig: {
@@ -212,6 +196,11 @@ export const linea: Layer2 = {
     ],
     coingeckoPlatform: 'linea',
   },
+  dataAvailability: makeDataAvailabilityConfig({
+    type: 'On chain',
+    layer: 'Ethereum (calldata)',
+    mode: 'Transactions data (compressed)',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
@@ -287,7 +276,7 @@ export const linea: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
       references: [
         {
           text: 'LineaRollup.sol - Etherscan source code, submitData() function',
@@ -342,7 +331,10 @@ export const linea: Layer2 = {
       `Module to the AdminMultisig. Allows to add additional members to the multisig via permissions to call functions specified by roles.`,
     ),
     {
-      accounts: operators,
+      accounts: discovery.getAccessControlRolePermission(
+        'zkEVM',
+        'OPERATOR_ROLE',
+      ),
       name: 'Operators',
       description:
         'The operators are allowed to prove blocks and post the corresponding transaction data.',
@@ -354,7 +346,10 @@ export const linea: Layer2 = {
         'Address allowed to pause the ERC20Bridge, the USDCBridge and the core functionalities of the project.',
     },
     {
-      accounts: verifierSetters,
+      accounts: discovery.getAccessControlRolePermission(
+        'zkEVM',
+        'VERIFIER_SETTER_ROLE',
+      ),
       name: 'Verifier Setters',
       description:
         'The verifier setters are allowed to change the verifier address.',
@@ -367,7 +362,9 @@ export const linea: Layer2 = {
           'The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.',
         ...upgradesTimelock,
         pausable: {
-          pausableBy: pausers,
+          pausableBy: discovery
+            .getAccessControlField('zkEVM', 'PAUSE_MANAGER_ROLE')
+            .members.map((a) => a.toString()),
           paused: isPaused,
         },
         references: [
@@ -380,14 +377,6 @@ export const linea: Layer2 = {
       discovery.getContractDetails(
         'Timelock',
         `Owner of the ProxyAdmin and Verifier Setter. The current delay is ${timelockDelayString}.`,
-      ),
-      discovery.getContractDetails(
-        'PlonkVerifierFull',
-        'Plonk verifier contract used by the Linea zkEVM rollup.',
-      ),
-      discovery.getContractDetails(
-        'PlonkVerifierFullLarge',
-        'Plonk verifier contract used by the Linea zkEVM rollup.',
       ),
       discovery.getContractDetails('ERC20Bridge', {
         description: 'Contract used to bridge ERC20 tokens.',

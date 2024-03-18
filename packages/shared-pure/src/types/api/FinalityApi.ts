@@ -1,5 +1,8 @@
 import z from 'zod'
 
+import { branded } from '../branded'
+import { UnixTime } from '../UnixTime'
+
 export const FinalityDataPoint = z.object({
   minimumInSeconds: z.number().positive().int().optional(),
   averageInSeconds: z.number().positive().int(),
@@ -9,6 +12,7 @@ export type FinalityDataPoint = z.infer<typeof FinalityDataPoint>
 
 export const FinalityProjectData = z.object({
   timeToInclusion: FinalityDataPoint,
+  syncedUntil: branded(z.number(), (n) => new UnixTime(n)),
 })
 export type FinalityProjectData = z.infer<typeof FinalityProjectData>
 

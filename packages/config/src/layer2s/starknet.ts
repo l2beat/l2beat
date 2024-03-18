@@ -8,22 +8,23 @@ import {
 
 import {
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
+  makeDataAvailabilityConfig,
   NEW_CRYPTOGRAPHY,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
-  ScalingProjectPermissionedAccount,
   STATE_CORRECTNESS,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
   getProxyGovernance,
   getSHARPVerifierContracts,
   getSHARPVerifierGovernors,
+  getSHARPVerifierUpgradeDelay,
 } from '../discovery/starkware'
 import { delayDescriptionFromSeconds } from '../utils/delayDescription'
 import { getStage } from './common/stages/getStage'
@@ -109,6 +110,7 @@ const minDelay = Math.min(
   escrowWSTETHDelaySeconds,
   escrowRETHDelaySeconds,
   escrowSTRKDelaySeconds,
+  getSHARPVerifierUpgradeDelay(),
 )
 
 function formatMaxTotalBalanceString(
@@ -205,15 +207,6 @@ const escrowSTRKMaxTotalBalanceString = formatMaxTotalBalanceString(
   18,
 )
 
-const strkBridgeRoles = discovery.getContractValue<{
-  GOVERNANCE_ADMIN: { members: string[] }
-}>('STRKBridge', 'accessControl')
-
-const strkGovernor: ScalingProjectPermissionedAccount[] =
-  strkBridgeRoles.GOVERNANCE_ADMIN.members.map((address) =>
-    discovery.formatPermissionedAccount(address),
-  )
-
 export const starknet: Layer2 = {
   type: 'layer2',
   id: ProjectId('starknet'),
@@ -225,7 +218,6 @@ export const starknet: Layer2 = {
       'Starknet is a general purpose ZK Rollup based on STARKs and the Cairo VM.',
     purposes: ['Universal'],
     category: 'ZK Rollup',
-    dataAvailabilityMode: 'StateDiffs',
 
     links: {
       apps: ['https://dappland.com/', 'https://starknet-ecosystem.com/'],
@@ -250,6 +242,9 @@ export const starknet: Layer2 = {
     liveness: {
       explanation:
         'Starknet is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. Proofs are aggregated with other projects using SHARP and state updates have to refer to proved claims.',
+    },
+    finality: {
+      finalizationPeriod: 0,
     },
   },
   config: {
@@ -379,6 +374,7 @@ export const starknet: Layer2 = {
       defaultUrl: 'https://starknet-mainnet.public.blastapi.io',
       defaultCallsPerMinute: 120,
     },
+    finality: 'coming soon',
     liveness: {
       proofSubmissions: [
         {
@@ -400,8 +396,16 @@ export const starknet: Layer2 = {
         {
           formula: 'sharpSubmission',
           sinceTimestamp: new UnixTime(1704855731),
+          untilTimestamp: new UnixTime(1710252995),
           programHashes: [
             '2479841346739966073527450029179698923866252973805981504232089731754042431018',
+          ],
+        },
+        {
+          formula: 'sharpSubmission',
+          sinceTimestamp: new UnixTime(1710252995),
+          programHashes: [
+            '109586309220455887239200613090920758778188956576212125550190099009305121410',
           ],
         },
       ],
@@ -417,9 +421,24 @@ export const starknet: Layer2 = {
             'function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)',
           sinceTimestamp: new UnixTime(1636978914),
         },
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
+          ),
+          selector: '0xb72d42a1',
+          functionSignature:
+            'function updateStateKzgDA(uint256[] programOutput, bytes kzgProof)',
+          sinceTimestamp: new UnixTime(1710252995),
+        },
       ],
     },
   },
+  dataAvailability: makeDataAvailabilityConfig({
+    type: 'On chain',
+    layer: 'Ethereum (blobs or calldata)',
+    mode: 'State diffs',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
@@ -427,7 +446,7 @@ export const starknet: Layer2 = {
         {
           contract: 'Starknet',
           references: [
-            'https://etherscan.io/address/0x16938E4b59297060484Fa56a12594d8D6F4177e8#code#F1#L218',
+            'https://etherscan.io/address/0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24#code',
           ],
         },
         // we don't have a way to test against shared modules
@@ -439,14 +458,13 @@ export const starknet: Layer2 = {
         // },
       ],
     },
-
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
       sources: [
         {
           contract: 'Starknet',
           references: [
-            'https://etherscan.io/address/0x16938E4b59297060484Fa56a12594d8D6F4177e8#code#F1#L213',
+            'https://etherscan.io/address/0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24#code',
           ],
         },
       ],
@@ -458,7 +476,7 @@ export const starknet: Layer2 = {
         {
           contract: 'Starknet',
           references: [
-            'https://etherscan.io/address/0x16938E4b59297060484Fa56a12594d8D6F4177e8#code#F1#L199',
+            'https://etherscan.io/address/0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24#code',
           ],
         },
       ],
@@ -503,7 +521,7 @@ export const starknet: Layer2 = {
       ],
     },
     newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
-    dataAvailability: DATA_AVAILABILITY.STARKNET_ON_CHAIN,
+    dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKNET_ON_CHAIN(true),
     operator: {
       ...OPERATOR.CENTRALIZED_OPERATOR,
       description:
@@ -668,13 +686,23 @@ export const starknet: Layer2 = {
     ),
     {
       name: 'StarkGate STRK owner',
-      accounts: strkGovernor,
+      accounts: discovery.getAccessControlRolePermission(
+        'STRKBridge',
+        'GOVERNANCE_ADMIN',
+      ),
       description:
         'Can upgrade implementation of the STRK escrow, potentially gaining access to all funds stored in the bridge. ' +
         delayDescriptionFromSeconds(escrowSTRKDelaySeconds),
     },
   ],
   milestones: [
+    {
+      name: 'Starknet Provisions',
+      link: 'https://www.starknet.io/en/content/starknet-provisions-program',
+      date: '2024-02-14T00:00:00Z',
+      description:
+        'Starknet begins allocating $STRK to early contributors and users.',
+    },
     {
       name: 'Starknet Alpha',
       link: 'https://medium.com/starkware/starknet-alpha-now-on-mainnet-4cf35efd1669',

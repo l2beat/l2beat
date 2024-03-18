@@ -7,6 +7,7 @@ import { ScalingLivenessPage } from './view/ScalingLivenessPage'
 
 export function getLivenessPage(config: Config, pagesData: LivenessPagesData) {
   const { props, wrapper } = getProps(config, pagesData)
+
   return {
     slug: '/scaling/liveness',
     page: (

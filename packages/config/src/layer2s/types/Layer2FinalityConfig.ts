@@ -1,6 +1,15 @@
-export interface Layer2FinalityConfig {
-  type: FinalityType
-  lag: number
-}
+import { UnixTime } from '@l2beat/shared-pure'
 
-export type FinalityType = 'OPStack' | 'Linea'
+export type Layer2FinalityConfig =
+  | {
+      type: 'OPStack'
+      lag: number
+    }
+  // We require the minTimestamp to be set for all types that will be processed in FinalityIndexer
+  | {
+      type: 'Linea' | 'zkSyncEra'
+      minTimestamp: UnixTime
+      lag: number
+    }
+
+export type FinalityType = Layer2FinalityConfig['type']

@@ -1,21 +1,11 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 
-import { ScalingProjectPermissionedAccount } from '../common'
 import { subtractOne } from '../common/assessCount'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { orbitStackL2 } from './templates/orbitStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('parallel')
-
-const roles = discovery.getContractValue<{
-  EXECUTOR_ROLE: { members: string[] }
-}>('UpgradeExecutor', 'accessControl')
-
-const EOAExecutor: ScalingProjectPermissionedAccount = {
-  address: EthereumAddress(roles.EXECUTOR_ROLE.members[0]),
-  type: 'EOA',
-}
 
 export const parallel: Layer2 = orbitStackL2({
   discovery,
@@ -78,11 +68,13 @@ export const parallel: Layer2 = orbitStackL2({
     ),
     {
       name: 'RollupOwner',
-      accounts: [EOAExecutor],
+      accounts: discovery.getAccessControlRolePermission(
+        'UpgradeExecutor',
+        'EXECUTOR_ROLE',
+      ),
       description: 'EOA that can execute upgrades via the UpgradeExecutor.',
     },
   ],
-
   milestones: [
     {
       name: 'Parallel Mainnet closed launch',

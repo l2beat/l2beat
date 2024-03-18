@@ -1,13 +1,13 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { Layer2 } from './types'
@@ -27,7 +27,7 @@ export const omgnetwork: Layer2 = {
       'OMG Network claims to be the leading value transfer network for ETH and ERC20 tokens. The Network scales by centralizing transaction processing and remains safe by decentralizing security.',
     purposes: ['Payments'],
     category: 'Plasma',
-    dataAvailabilityMode: 'NotApplicable',
+
     links: {
       websites: ['https://omg.network'],
       apps: [],
@@ -80,7 +80,7 @@ export const omgnetwork: Layer2 = {
       isIncomplete: true,
     },
     dataAvailability: {
-      ...DATA_AVAILABILITY.PLASMA_OFF_CHAIN,
+      ...TECHNOLOGY_DATA_AVAILABILITY.PLASMA_OFF_CHAIN,
       isIncomplete: true,
     },
     operator: {

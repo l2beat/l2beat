@@ -149,4 +149,5 @@ export const base: Layer2 = opStack({
     ],
     coingeckoPlatform: 'base',
   },
+  usesBlobs: true,
 })

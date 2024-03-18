@@ -1,5 +1,5 @@
 {
-  "$schema": "../../config.schema.json",
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
   "chain": "ethereum",
   "name": "amarok",
   "names": {
@@ -30,7 +30,8 @@
     "0x5B0E1a507E786f0a7c11C972ad5F4dd254661e24": "MantleHubConnector",
     "0x23b7abe4cc664F24Eb68E80cFAdc572857799a94": "NewOptimismHubConnector",
     "0x7ed49D0a13255802A281C08688563bd8D5f726b1": "PolygonZkHubConnector",
-    "0x9Ba7D2Ab079Bd1924859e2fECDAD1bEBe5B119Fa": "OptimismV0HubConnector"
+    "0x9Ba7D2Ab079Bd1924859e2fECDAD1bEBe5B119Fa": "OptimismV0HubConnector",
+    "0x7b2bE683266909A6a4068e743083dd40621d663E": "ModeHubConnector"
   },
   "maxDepth": 9,
   "initialAddresses": ["0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6"],
@@ -162,6 +163,10 @@
       "ignoreRelatives": ["AMB", "mirrorConnector", "stateCommitmentChain"],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
     },
+    "ModeHubConnector": {
+      "ignoreRelatives": ["AMB", "mirrorConnector", "OPTIMISM_PORTAL"],
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
+    },
     "RootChain": {
       "ignoreMethods": ["headerBlocks"]
     },
@@ -175,7 +180,8 @@
       "ignoreInWatchMode": ["nonce"]
     },
     "GovernorV2": {
-      "ignoreMethods": ["getProposal", "proposals", "getCurrentTime"]
+      "ignoreMethods": ["getProposal", "proposals", "getCurrentTime"],
+      "ignoreInWatchMode": ["numProposals"]
     },
     "ProposerV2": {
       "ignoreMethods": ["bondedProposals"],

@@ -1,10 +1,13 @@
 import {
   Layer2Provider,
   ScalingProjectCategory,
+  ScalingProjectDataAvailabilityMode,
   ScalingProjectPurpose,
   StageConfig,
 } from '@l2beat/config'
 import { FinalityApiResponse, TvlApiResponse } from '@l2beat/shared-pure'
+
+import { SyncStatus } from '../../types'
 
 export interface FinalityPagesData {
   finalityApiResponse: FinalityApiResponse
@@ -16,17 +19,22 @@ export interface ScalingFinalityViewEntry {
   shortName: string | undefined
   slug: string
   category: ScalingProjectCategory
-  dataAvailabilityMode: 'Transaction data' | 'State diffs' | undefined
+  dataAvailabilityMode: ScalingProjectDataAvailabilityMode | undefined
   provider: Layer2Provider | undefined
   warning: string | undefined
   redWarning: string | undefined
   purposes: ScalingProjectPurpose[]
   stage: StageConfig
+  data: ScalingFinalityViewEntryData | undefined
+  finalizationPeriod?: string
+}
+
+export interface ScalingFinalityViewEntryData {
   timeToInclusion: {
-    minimumInSeconds?: number
+    minimumInSeconds: number | undefined
     averageInSeconds: number
     maximumInSeconds: number
     warning?: string
   }
-  finalizationPeriod?: string
+  syncStatus: SyncStatus
 }

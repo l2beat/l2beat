@@ -8,12 +8,13 @@ import {
 
 import {
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   makeBridgeCompatible,
+  makeDataAvailabilityConfig,
   NEW_CRYPTOGRAPHY,
   NUGGETS,
   OPERATOR,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { FORCE_TRANSACTIONS } from '../common/forceTransactions'
 import { RISK_VIEW } from '../common/riskView'
@@ -70,7 +71,6 @@ export const paradex: Layer2 = {
       'Paradex is a high-performance crypto-derivatives exchange built on a Starknet Appchain.',
     purposes: ['Exchange'],
     category: 'ZK Rollup',
-    dataAvailabilityMode: 'StateDiffs',
 
     links: {
       websites: ['https://paradex.trade/'],
@@ -83,6 +83,9 @@ export const paradex: Layer2 = {
     liveness: {
       explanation:
         'Paradex is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. Proofs are aggregated with other projects using SHARP and state updates have to refer to proved claims.',
+    },
+    finality: {
+      finalizationPeriod: 0,
     },
   },
   config: {
@@ -118,8 +121,16 @@ export const paradex: Layer2 = {
           // Updated to this program hash in tx 0x7eb527c897e8449234ad770573a2a5ba3737e6b9014600c261741bc258849639
           formula: 'sharpSubmission',
           sinceTimestamp: new UnixTime(1706626427),
+          untilTimestamp: new UnixTime(1710346919),
           programHashes: [
             '2479841346739966073527450029179698923866252973805981504232089731754042431018',
+          ],
+        },
+        {
+          formula: 'sharpSubmission',
+          sinceTimestamp: new UnixTime(1710346919),
+          programHashes: [
+            '109586309220455887239200613090920758778188956576212125550190099009305121410',
           ],
         },
       ],
@@ -135,9 +146,25 @@ export const paradex: Layer2 = {
             'function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)',
           sinceTimestamp: new UnixTime(1689850631),
         },
+        {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xF338cad020D506e8e3d9B4854986E0EcE6C23640',
+          ),
+          selector: '0xb72d42a1',
+          functionSignature:
+            'function updateStateKzgDA(uint256[] programOutput, bytes kzgProof)',
+          sinceTimestamp: new UnixTime(1710346919),
+        },
       ],
     },
+    finality: 'coming soon',
   },
+  dataAvailability: makeDataAvailabilityConfig({
+    type: 'On chain',
+    layer: 'Ethereum (blobs or calldata)',
+    mode: 'State diffs',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
@@ -145,7 +172,7 @@ export const paradex: Layer2 = {
         {
           contract: 'Paradex',
           references: [
-            'https://etherscan.io/address/0xA964D693cd45FCBe4303524E0EFe0988cfF5ed08#code#F1#L218',
+            'https://etherscan.io/address/0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24#code',
           ],
         },
       ],
@@ -156,7 +183,7 @@ export const paradex: Layer2 = {
         {
           contract: 'Paradex',
           references: [
-            'https://etherscan.io/address/0xA964D693cd45FCBe4303524E0EFe0988cfF5ed08#code#F1#L213',
+            'https://etherscan.io/address/0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24#code',
           ],
         },
       ],
@@ -168,7 +195,7 @@ export const paradex: Layer2 = {
         {
           contract: 'Paradex',
           references: [
-            'https://etherscan.io/address/0xA964D693cd45FCBe4303524E0EFe0988cfF5ed08#code#F1#L199',
+            'https://etherscan.io/address/0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24#code#F1#L199',
           ],
         },
       ],
@@ -200,7 +227,7 @@ export const paradex: Layer2 = {
   technology: {
     stateCorrectness: STATE_CORRECTNESS.VALIDITY_PROOFS,
     newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
-    dataAvailability: DATA_AVAILABILITY.STARKNET_ON_CHAIN,
+    dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKNET_ON_CHAIN(true),
     operator: OPERATOR.CENTRALIZED_OPERATOR,
     forceTransactions: {
       ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,

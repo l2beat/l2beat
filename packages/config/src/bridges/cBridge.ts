@@ -168,26 +168,46 @@ export const cBridge: Bridge = {
         'MessageBus',
         'Contract providing cross-chain AMB facility. It connects with Liquidity Network and Token Bridges to processes certain types of messages.',
       ),
-      discovery.getContractDetails(
-        'Liquidity Network',
-        'Contract providing cross-chain swaps, allows user to deposit funds and withdraw them. Additionally user can add liquidity to this address to generate yield.',
-      ),
-      discovery.getContractDetails(
-        'OriginalTokenVault',
-        'Contract serving as token bridge, user can deposit funds and later withdraw them from this escrow.',
-      ),
-      discovery.getContractDetails(
-        'OriginalTokenVaultV2',
-        'Contract serving as token bridge, user can deposit funds and later withdraw them from this escrow.',
-      ),
-      discovery.getContractDetails(
-        'PeggedTokenBridge',
-        'Contract minting/burning tokens when receiving a message from Token Bridge.',
-      ),
-      discovery.getContractDetails(
-        'PeggedTokenBridgeV2',
-        'Contract minting/burning tokens when receiving a message from Token Bridge.',
-      ),
+      discovery.getContractDetails('Liquidity Network', {
+        description:
+          'Contract providing cross-chain swaps, allows user to deposit funds and withdraw them. Additionally user can add liquidity to this address to generate yield.',
+        pausable: {
+          paused: discovery.getContractValue('PeggedTokenBridge', 'paused'),
+          pausableBy: ['Full Pausers', 'Partial Pausers'],
+        },
+      }),
+      discovery.getContractDetails('OriginalTokenVault', {
+        description:
+          'Contract serving as token bridge, user can deposit funds and later withdraw them from this escrow.',
+        pausable: {
+          paused: discovery.getContractValue('PeggedTokenBridge', 'paused'),
+          pausableBy: ['Full Pausers', 'Partial Pausers'],
+        },
+      }),
+      discovery.getContractDetails('OriginalTokenVaultV2', {
+        description:
+          'Contract serving as token bridge, user can deposit funds and later withdraw them from this escrow.',
+        pausable: {
+          paused: discovery.getContractValue('PeggedTokenBridge', 'paused'),
+          pausableBy: ['Full Pausers', 'Partial Pausers'],
+        },
+      }),
+      discovery.getContractDetails('PeggedTokenBridge', {
+        description:
+          'Contract minting/burning tokens when receiving a message from Token Bridge.',
+        pausable: {
+          paused: discovery.getContractValue('PeggedTokenBridge', 'paused'),
+          pausableBy: ['Full Pausers', 'Partial Pausers'],
+        },
+      }),
+      discovery.getContractDetails('PeggedTokenBridgeV2', {
+        description:
+          'Contract minting/burning tokens when receiving a message from Token Bridge.',
+        pausable: {
+          paused: discovery.getContractValue('PeggedTokenBridge', 'paused'),
+          pausableBy: ['Full Pausers', 'Partial Pausers'],
+        },
+      }),
       discovery.getContractDetails(
         'TransferAgent',
         'Routing contract that transfers assets cross-chain using either Liquidity Network or Token Bridge.',

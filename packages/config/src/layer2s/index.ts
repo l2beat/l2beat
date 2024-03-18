@@ -22,6 +22,7 @@ import { degate3 } from './degate3'
 import { dydx } from './dydx'
 import { eclipse } from './eclipse'
 import { frame } from './frame'
+import { fraxtal } from './fraxtal'
 import { fuel } from './fuel'
 import { fuelv1 } from './fuelv1'
 import { gluon } from './gluon'
@@ -30,6 +31,7 @@ import { hermez } from './hermez'
 import { honeypot } from './honeypot'
 import { hypr } from './hypr'
 import { immutablex } from './immutablex'
+import { karak } from './karak'
 import { kinto } from './kinto'
 import { kroma } from './kroma'
 import { layer2finance } from './layer2finance'
@@ -74,6 +76,7 @@ import { stealthchain } from './stealthchain'
 import { taiko } from './taiko'
 import { tanx } from './tanx'
 import { ten } from './ten'
+import { termstructure } from './termstructure'
 import { tradable } from './tradable'
 import { Layer2 } from './types'
 import { x1 } from './x1'
@@ -115,6 +118,7 @@ export const layer2s: Layer2[] = [
   dydx,
   eclipse,
   frame,
+  fraxtal,
   fuel,
   fuelv1,
   gluon,
@@ -122,6 +126,7 @@ export const layer2s: Layer2[] = [
   hermez,
   hypr,
   immutablex,
+  karak,
   kinto,
   kroma,
   layer2finance,
@@ -166,6 +171,7 @@ export const layer2s: Layer2[] = [
   taiko,
   tanx,
   ten,
+  termstructure,
   tradable,
   x1,
   xchain,

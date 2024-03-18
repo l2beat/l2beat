@@ -1,3 +1,123 @@
+Generated with discovered.json: 0x0fbfbc6349ab32d430a883652e0ec7fc17f996ec
+
+# Diff at Thu, 14 Mar 2024 14:08:40 GMT
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@3ffa91064379f34a2916a1ad4e93791b752e7e9e block: 2716939
+- current block number: 2891838
+
+## Description
+
+New PriceFeed Oracle implementation has been deployed. Nothing that would affect protocol security has been changed.
+
+## Watched changes
+
+```diff
+    contract  (0x3c2269811836af69497E5F486A85D7316753cf62) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x4EE2F9B7cf3A68966c370F3eb2C16613d3235245"
++        "0x14751De27b194305C8f0e672921E0dd334bBe924"
+      implementations.0:
+-        "0x4EE2F9B7cf3A68966c370F3eb2C16613d3235245"
++        "0x14751De27b194305C8f0e672921E0dd334bBe924"
+    }
+```
+
+## Source code changes
+
+```diff
+.../-0x3c2269811836af69497E5F486A85D7316753cf62/implementation/meta.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+
+Generated with discovered.json: 0x2166dab4a25daf748938b343649919a73793ec5e
+
+# Diff at Wed, 06 Mar 2024 11:48:26 GMT
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: main@1a2512004b35590384683b93c95d8ec95426d2a6 block: 1773788
+- current block number: 2716939
+
+## Description
+
+Added v2 contracts to libraryLookup. Contracts are now owned by a gnosis safe multisig.
+
+## Watched changes
+
+```diff
+    contract UltraLightNodeV2 (0x38dE71124f7a447a01D67945a51eDcE9FF491251) {
+    +++ description: None
+      values.owner:
+-        "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
++        "0x5e306343ecf32B605d88c1e44f3879699ab5144D"
+    }
+```
+
+```diff
+    contract TreasuryV2 (0x980205D352F198748B626f6f7C38A8a5663Ec981) {
+    +++ description: None
+      values.owner:
+-        "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
++        "0x5e306343ecf32B605d88c1e44f3879699ab5144D"
+    }
+```
+
+```diff
+    contract Endpoint (0xb6319cC6c8c27A8F5dAF0dD3DF91EA35C4720dd7) {
+    +++ description: None
+      values.latestVersion:
+-        1
++        3
+      values.libraryLookup[2]:
++        "0x443CAa8CD23D8CC1e04B3Ce897822AEa6ad3EbDA"
+      values.libraryLookup[1]:
++        "0x119C04C4E60158fa69eCf4cdDF629D09719a7572"
+      values.owner:
+-        "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
++        "0x5e306343ecf32B605d88c1e44f3879699ab5144D"
+    }
+```
+
+```diff
+    contract VerifierNetwork (0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc) {
+    +++ description: None
+      values.defaultMultiplierBps:
+-        12000
++        12100
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LayerZero Multisig (0x5e306343ecf32B605d88c1e44f3879699ab5144D)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../implementation/contracts/GnosisSafe.sol        | 422 +++++++++++++++++++++
+ .../implementation/contracts/base/Executor.sol     |  27 ++
+ .../contracts/base/FallbackManager.sol             |  53 +++
+ .../implementation/contracts/base/GuardManager.sol |  50 +++
+ .../contracts/base/ModuleManager.sol               | 133 +++++++
+ .../implementation/contracts/base/OwnerManager.sol | 149 ++++++++
+ .../implementation/contracts/common/Enum.sol       |   8 +
+ .../contracts/common/EtherPaymentFallback.sol      |  13 +
+ .../contracts/common/SecuredTokenTransfer.sol      |  35 ++
+ .../contracts/common/SelfAuthorized.sol            |  16 +
+ .../contracts/common/SignatureDecoder.sol          |  36 ++
+ .../implementation/contracts/common/Singleton.sol  |  11 +
+ .../contracts/common/StorageAccessible.sol         |  47 +++
+ .../contracts/external/GnosisSafeMath.sol          |  54 +++
+ .../contracts/interfaces/ISignatureValidator.sol   |  20 +
+ .../LayerZero Multisig/implementation/meta.txt     |   2 +
+ .../LayerZero Multisig/proxy/GnosisSafeProxy.sol   |  44 +++
+ .../linea/.code/LayerZero Multisig/proxy/meta.txt  |   2 +
+ 18 files changed, 1122 insertions(+)
+```
+
 Generated with discovered.json: 0x8386e26452a714c1542e91e656dceae34cc3511e
 
 # Diff at Mon, 22 Jan 2024 17:09:10 GMT

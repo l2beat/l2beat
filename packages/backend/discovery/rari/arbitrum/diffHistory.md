@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x0d4fc22e6cd991c8004938b46ae155be16c8ffd8
+
+# Diff at Fri, 08 Mar 2024 11:14:21 GMT:
+
+- author: torztomasz (<tomasz.torz@l2beat.com>)
+- comparing to: main@f09f798ebd2ae57f4c76e08114d608edf0a51c7b block: 176692309
+- current block number: 188309907
+
+## Description
+
+The ArbitrumDACKeysetHandler has been changed in a way to make values more readable. No values were changed inside smart contracts, only the handler.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 176692309 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0xA436f1867adD490BF1530c636f2FB090758bB6B3) {
+    +++ description: None
+      values.dacKeyset.threshold:
+-        1
+      values.dacKeyset.keyCount:
+-        1
+      values.dacKeyset.requiredSignatures:
++        1
+      values.dacKeyset.membersCount:
++        1
+    }
+```
+
 Generated with discovered.json: 0xa08f831bc81ba1e8dad6f27521784d8cb90e1c41
 
 # Diff at Fri, 02 Feb 2024 11:06:01 GMT:

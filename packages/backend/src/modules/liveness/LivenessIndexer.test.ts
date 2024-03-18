@@ -142,8 +142,9 @@ describe(LivenessIndexer.name, () => {
       const databaseEntries: LivenessConfigurationRecord[] = [
         mockObject<LivenessConfigurationRecord>({
           id: LivenessId.random(),
-          lastSyncedTimestamp: undefined,
           sinceTimestamp: MIN_TIMESTAMP,
+          untilTimestamp: undefined,
+          lastSyncedTimestamp: undefined,
         }),
         {
           ...toRecord(runtimeEntries[1]),
@@ -189,7 +190,11 @@ describe(LivenessIndexer.name, () => {
       expect(configurationRepository.getAll).toHaveBeenCalledTimes(1)
       expect(stateRepository.runInTransaction).toHaveBeenCalledTimes(1)
 
-      const syncStatus = getSafeHeight(databaseEntries, toAdd, MIN_TIMESTAMP)
+      const syncStatus = getSafeHeight(
+        databaseEntries,
+        toAdd,
+        MIN_TIMESTAMP.add(-1, 'days'),
+      )
       expect(stateRepository.setSafeHeight).toHaveBeenOnlyCalledWith(
         livenessIndexer.indexerId,
         syncStatus,
