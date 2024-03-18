@@ -1,10 +1,8 @@
-import { assert } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 
 import { Clock } from '../../tools/Clock'
 
 interface SyncOptimizerOptions {
-  chainsMinTimestamp: Record<string, UnixTime>
   removeHourlyAfterDays: number
   removeSixHourlyAfterDays: number
 }
@@ -15,22 +13,14 @@ export class SyncOptimizer {
     private readonly options: SyncOptimizerOptions,
   ) {}
 
-  shouldTimestampBeSynced(chain: string, timestamp: UnixTime) {
-    return timestamp.equals(this.getTimestampToSync(chain, timestamp, 'to'))
+  shouldTimestampBeSynced(timestamp: UnixTime) {
+    return timestamp.equals(this.getTimestampToSync(timestamp, 'to'))
   }
 
   getTimestampToSync(
-    chain: string,
     timestamp: UnixTime,
     boundaryType: 'from' | 'to',
   ): UnixTime {
-    const minTimestamp = this.options.chainsMinTimestamp[chain]
-    assert(minTimestamp, 'Unknown chain: ' + chain)
-
-    if (timestamp.lt(minTimestamp)) {
-      timestamp = minTimestamp
-    }
-
     const lastHour = this.clock.getLastHour()
 
     const hourlyCutOff = lastHour.add(

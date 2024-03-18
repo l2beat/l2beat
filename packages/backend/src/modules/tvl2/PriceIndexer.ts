@@ -36,7 +36,6 @@ export class PriceIndexer extends ChildIndexer {
     this.logger.info('Updating...')
 
     const from = this.syncOptimizer.getTimestampToSync(
-      this.token.chain,
       new UnixTime(_from),
       'from',
     )
@@ -46,11 +45,7 @@ export class PriceIndexer extends ChildIndexer {
       return _to
     }
 
-    const to = this.syncOptimizer.getTimestampToSync(
-      this.token.chain,
-      new UnixTime(_to),
-      'to',
-    )
+    const to = this.syncOptimizer.getTimestampToSync(new UnixTime(_to), 'to')
 
     assert(from.lte(to), 'Programmer error: Invalid range')
 
@@ -64,12 +59,7 @@ export class PriceIndexer extends ChildIndexer {
     const priceRecords: PricesRecord[] = prices
       // we filter out timestamps that would be deleted by TVL cleaner
       // performance is not a big issue as we download 80 days worth of prices at once
-      .filter((p) =>
-        this.syncOptimizer.shouldTimestampBeSynced(
-          this.token.chain,
-          p.timestamp,
-        ),
-      )
+      .filter((p) => this.syncOptimizer.shouldTimestampBeSynced(p.timestamp))
       .map((price) => ({
         chain: this.token.chain,
         address: this.token.address,

@@ -87,12 +87,10 @@ describe(PriceIndexer.name, () => {
 
       expect(syncOptimizer.getTimestampToSync).toHaveBeenNthCalledWith(
         1,
-        'ethereum',
         from,
         'from',
       )
       expect(syncOptimizer.getTimestampToSync).toHaveBeenLastCalledWith(
-        'ethereum',
         to,
         'to',
       )
@@ -147,7 +145,6 @@ describe(PriceIndexer.name, () => {
 
       expect(syncOptimizer.getTimestampToSync).toHaveBeenNthCalledWith(
         1,
-        'ethereum',
         new UnixTime(fromBeforeMinTimestamp),
         'from',
       )

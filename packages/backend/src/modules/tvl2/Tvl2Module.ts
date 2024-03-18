@@ -5,7 +5,6 @@ import {
   CoingeckoQueryService,
   HttpClient,
 } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
 
 import { Config } from '../../config'
 import { Database } from '../../peripherals/database/Database'
@@ -39,24 +38,7 @@ export function createTvl2Module(
   const statusRouter = createTvl2StatusRouter(config.tvl2, clock)
   const hourlyIndexer = new HourlyIndexer(logger, clock)
 
-  // TODO: write it correctly
-  const chainsMinTimestamp: Record<string, UnixTime> = {
-    ethereum: UnixTime.now().add(-7, 'days'),
-    arbitrum: UnixTime.now().add(-7, 'days'),
-    optimism: UnixTime.now().add(-7, 'days'),
-    base: UnixTime.now().add(-7, 'days'),
-    lyra: UnixTime.now().add(-7, 'days'),
-    mantapacific: UnixTime.now().add(-7, 'days'),
-    linea: UnixTime.now().add(-7, 'days'),
-    zkfair: UnixTime.now().add(-7, 'days'),
-    kroma: UnixTime.now().add(-7, 'days'),
-    aevo: UnixTime.now().add(-7, 'days'),
-    blast: UnixTime.now().add(-7, 'days'),
-    mode: UnixTime.now().add(-7, 'days'),
-  }
-
   const syncOptimizer = new SyncOptimizer(clock, {
-    chainsMinTimestamp,
     removeHourlyAfterDays: 10,
     removeSixHourlyAfterDays: 93,
   })

@@ -10,7 +10,6 @@ describe(SyncOptimizer.name, () => {
     const SIX_HOURLY_CUTOFF = 10
     const DAILY_CUTOFF = 93
     const OPTIONS = {
-      chainsMinTimestamp: { ethereum: MIN_TIMESTAMP },
       removeHourlyAfterDays: SIX_HOURLY_CUTOFF,
       removeSixHourlyAfterDays: DAILY_CUTOFF,
     }
@@ -28,7 +27,6 @@ describe(SyncOptimizer.name, () => {
         'hours',
       )
       const timestampToSync = syncOptimizer.getTimestampToSync(
-        'ethereum',
         hourlyTimestamp,
         'from',
       )
@@ -48,7 +46,6 @@ describe(SyncOptimizer.name, () => {
       ).add(1, 'hours')
 
       const timestampToSync = syncOptimizer.getTimestampToSync(
-        'ethereum',
         hourlyTimestamp,
         'from',
       )
@@ -64,7 +61,6 @@ describe(SyncOptimizer.name, () => {
       // hourly timestamp older than daily cutoff
       const hourlyTimestamp = LAST_HOUR.add(-1, 'hours')
       const timestampToSync = syncOptimizer.getTimestampToSync(
-        'ethereum',
         hourlyTimestamp,
         'from',
       )
@@ -74,39 +70,17 @@ describe(SyncOptimizer.name, () => {
       expect(timestampToSync).toEqual(expected)
     })
 
-    it('takes minTimestamp into consideration', () => {
-      const syncOptimizer = new SyncOptimizer(CLOCK, OPTIONS)
-
-      const timestamp = MIN_TIMESTAMP.add(-1, 'days')
-      const timestampToSync = syncOptimizer.getTimestampToSync(
-        'ethereum',
-        timestamp,
-        'from',
-      )
-      const expected = MIN_TIMESTAMP.toEndOf('day')
-
-      expect(timestampToSync).toEqual(expected)
-    })
-
     it('takes boundary type into consideration', () => {
       const syncOptimizer = new SyncOptimizer(CLOCK, OPTIONS)
 
       const timestamp = LAST_HOUR.add(-1, 'hours')
 
-      const fromTimestamp = syncOptimizer.getTimestampToSync(
-        'ethereum',
-        timestamp,
-        'from',
-      )
+      const fromTimestamp = syncOptimizer.getTimestampToSync(timestamp, 'from')
       const expected = LAST_HOUR.add(-1, 'hours').toEndOf('hour')
 
       expect(fromTimestamp).toEqual(expected)
 
-      const toTimestamp = syncOptimizer.getTimestampToSync(
-        'ethereum',
-        timestamp,
-        'to',
-      )
+      const toTimestamp = syncOptimizer.getTimestampToSync(timestamp, 'to')
       const expected2 = LAST_HOUR.add(-1, 'hours').toStartOf('hour')
 
       expect(toTimestamp).toEqual(expected2)
@@ -121,21 +95,16 @@ describe(SyncOptimizer.name, () => {
     })
 
     const syncOptimizer = new SyncOptimizer(clock, {
-      chainsMinTimestamp: { ethereum: UnixTime.ZERO },
       removeHourlyAfterDays: 10,
       removeSixHourlyAfterDays: 93,
     })
     it('return true if timestamp should be synced', () => {
-      const result = syncOptimizer.shouldTimestampBeSynced(
-        'ethereum',
-        now.add(-1, 'hours'),
-      )
+      const result = syncOptimizer.shouldTimestampBeSynced(now.add(-1, 'hours'))
       expect(result).toEqual(true)
     })
 
     it('return false if timestamp should not be synced', () => {
       const result = syncOptimizer.shouldTimestampBeSynced(
-        'ethereum',
         now.add(365, 'days').add(-1, 'hours'),
       )
       expect(result).toEqual(true)
