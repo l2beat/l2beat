@@ -49,11 +49,11 @@ export class DiffStateController {
             (c) => c.address === diff.address,
           )
           assert(diffedContract, 'diffedContract is undefined')
-          const newImlementations = diffedContract.implementations ?? []
+          const newImplementations = diffedContract.implementations ?? []
 
           result.projects[project][chain].push({
             containingContract: diff.address,
-            newImlementations,
+            newImplementations,
           })
         }
       }

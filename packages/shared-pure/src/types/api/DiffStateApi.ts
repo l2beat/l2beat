@@ -5,7 +5,7 @@ import { EthereumAddress } from '../EthereumAddress'
 
 export const DiffStateChangeData = z.object({
   containingContract: branded(z.string(), EthereumAddress),
-  newImlementations: z.array(branded(z.string(), EthereumAddress)),
+  newImplementations: z.array(branded(z.string(), EthereumAddress)),
 })
 
 export type DiffStateChangeData = z.infer<typeof DiffStateChangeData>
