@@ -145,7 +145,7 @@
         },
         "withdrawalQueueActivated": {
           "description": "If true, the withdrawal queue is activated and any withdrawals are delayed for a duration defined by withdrawalDelay. It can be manually activated or automatically triggered by the FlowRate mechanism.",
-          "severity": "MEDIUM",
+          "severity": "LOW",
           "type": "RISK_PARAMETER"
         }
       }
