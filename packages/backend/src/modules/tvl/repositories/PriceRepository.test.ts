@@ -193,33 +193,21 @@ describeDatabase(PriceRepository.name, (database) => {
     })
   })
 
-  describe(PriceRepository.prototype.findByTokenClosestToTimestamp.name, () => {
-    it('returns valid price after timestamp', async () => {
+  describe(PriceRepository.prototype.findByTimestampRange.name, () => {
+    it('returns valid prices array', async () => {
       await repository.addMany(DATA)
 
-      const results = await repository.findByTokenClosestToTimestamp(
+      const results = await repository.findByTimestampRange(
+        AssetId.ETH,
         START.add(-2, 'hours'),
-        AssetId.ETH,
-      )
-      expect(results).toEqual(DATA[1])
-    })
-    it('returns valid price before timestamp', async () => {
-      await repository.addMany(DATA)
-
-      const results = await repository.findByTokenClosestToTimestamp(
         START,
-        AssetId.ETH,
       )
-      expect(results).toEqual(DATA[0])
-    })
-    it('returns valid price on timestamp', async () => {
-      await repository.addMany(DATA)
+      const expected = new Map([
+        [DATA[0].timestamp.toNumber(), DATA[0].priceUsd],
+        [DATA[1].timestamp.toNumber(), DATA[1].priceUsd],
+      ])
 
-      const results = await repository.findByTokenClosestToTimestamp(
-        START.add(-1, 'hours'),
-        AssetId.ETH,
-      )
-      expect(results).toEqual(DATA[0])
+      expect(results).toEqual(expected)
     })
   })
 })
