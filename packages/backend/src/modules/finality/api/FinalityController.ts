@@ -1,8 +1,9 @@
-import { FinalityApiResponse, UnixTime } from '@l2beat/shared-pure'
+import { FinalityApiResponse } from '@l2beat/shared-pure'
 import { keyBy, mapValues, partition } from 'lodash'
 
 import { FinalityProjectConfig } from '../../../config/features/finality'
 import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
+import { TrackedTxsConfigsRepository } from '../../tracked-txs/repositories/TrackedTxsConfigsRepository'
 import { FinalityRepository } from '../repositories/FinalityRepository'
 import { calcAvgsPerProject } from './calcAvgsPerProject'
 import { divideAndAddLag } from './divideAndAddLag'
@@ -16,6 +17,7 @@ export class FinalityController {
   constructor(
     private readonly livenessRepository: LivenessRepository,
     private readonly finalityRepository: FinalityRepository,
+    private readonly trackedTxsConfigsRepository: TrackedTxsConfigsRepository,
     private readonly projects: FinalityProjectConfig[],
   ) {}
 
@@ -64,18 +66,22 @@ export class FinalityController {
     const result: FinalityApiResponse['projects'] = {}
     await Promise.all(
       projects.map(async (project) => {
+        const syncedUntil =
+          await this.trackedTxsConfigsRepository.findLatestSyncedTimestampByProjectIdAndSubtype(
+            project.projectId,
+            'batchSubmissions',
+          )
+
+        if (!syncedUntil) return
+
         const records = await this.livenessRepository.getByProjectIdAndType(
           project.projectId,
           'batchSubmissions',
-          UnixTime.now().add(-1, 'days'),
+          syncedUntil.add(-1, 'days'),
         )
-
-        const latestRecord = records.at(0)
-        if (!latestRecord) return
 
         const intervals = calcAvgsPerProject(records)
         const projectResult = divideAndAddLag(intervals, project.lag)
-        const syncedUntil = latestRecord.timestamp
 
         if (projectResult) {
           result[project.projectId.toString()] = {

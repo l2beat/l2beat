@@ -6,9 +6,9 @@ import { RichSelect } from '../../../../components/RichSelect'
 import { generateSlugList } from '../../../../components/table/filters/FiltersWrapper'
 import { ScalingFilters } from '../../../../components/table/filters/ScalingFilters'
 import { getScalingRowProps } from '../../../../components/table/props/getScalingRowProps'
-import { getScalingDataAvailabilityColumnsConfig } from '../../../../components/table/props/getScalingTableColumnsConfig'
 import { TableView } from '../../../../components/table/TableView'
 import { RowConfig } from '../../../../components/table/types'
+import { getScalingDataAvailabilityColumnsConfig } from '../props/getScalingDataAvailabilityColumnsConfig'
 import { ScalingDataAvailabilityViewEntry } from '../types'
 
 export interface ScalingDataAvailabilityViewProps {

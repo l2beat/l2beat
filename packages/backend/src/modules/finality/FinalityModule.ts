@@ -10,6 +10,7 @@ import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
 import { LivenessRepository } from '../tracked-txs/modules/liveness/repositories/LivenessRepository'
+import { TrackedTxsConfigsRepository } from '../tracked-txs/repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsIndexer } from '../tracked-txs/TrackedTxsIndexer'
 import { LineaFinalityAnalyzer } from './analyzers/LineaFinalityAnalyzer'
 import { zkSyncEraFinalityAnalyzer } from './analyzers/zkSyncEraFinalityAnalyzer'
@@ -38,10 +39,15 @@ export function createFinalityModule(
   const indexerStateRepository = new IndexerStateRepository(database, logger)
   const livenessRepository = new LivenessRepository(database, logger)
   const finalityRepository = new FinalityRepository(database, logger)
+  const trackedTxsConfigsRepository = new TrackedTxsConfigsRepository(
+    database,
+    logger,
+  )
 
   const finalityController = new FinalityController(
     livenessRepository,
     finalityRepository,
+    trackedTxsConfigsRepository,
     config.finality.configurations,
   )
   const finalityRouter = createFinalityRouter(finalityController)

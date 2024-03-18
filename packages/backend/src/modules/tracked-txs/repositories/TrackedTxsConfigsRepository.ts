@@ -67,6 +67,21 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async findLatestSyncedTimestampByProjectIdAndSubtype(
+    projectId: ProjectId,
+    subtype: TrackedTxsConfigSubtype,
+  ): Promise<UnixTime | undefined> {
+    const knex = await this.knex()
+    const row = await knex('tracked_txs_configs')
+      .max('last_synced_timestamp', { as: 'last_synced_timestamp' })
+      .where('project_id', projectId.toString())
+      .andWhere('subtype', subtype)
+      .first()
+    return row?.last_synced_timestamp
+      ? UnixTime.fromDate(row.last_synced_timestamp)
+      : undefined
+  }
+
   // TODO: (tracked_txs_status) function useful for implementing tracked txs status
   // async findUnusedConfigurationsIds(): Promise<TrackedTxsConfigHash[]> {
   //   const knex = await this.knex()

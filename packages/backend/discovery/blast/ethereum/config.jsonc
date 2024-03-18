@@ -82,7 +82,8 @@
           "type": "opStackSequencerInbox",
           "sequencerAddress": "{{ batcherHash }}"
         }
-      }
+      },
+      "ignoreInWatchMode": ["scalar"]
     },
     "LidoYieldProvider": {
       "ignoreRelatives": ["LIDO", "THIS", "WITHDRAWAL_QUEUE"],
@@ -119,8 +120,11 @@
         "totalProviderValue",
         "totalValue",
         "getLastRequestId",
-        "unfinalizedRequestNumber"
-      ]
+        "unfinalizedRequestNumber",
+        "getLastCheckpointId",
+        "getLastFinalizedRequestId"
+      ],
+      "ignoreInWatchMode": ["getLockedBalance"]
     },
     //TODO: Read ProviderInfo
     "ETHYieldManager": {
@@ -133,9 +137,9 @@
         "getLastCheckpointId",
         "getLastFinalizedRequestId",
         "getLastRequestId",
-        "getLockedBalance",
         "unfinalizedRequestNumber"
-      ]
+      ],
+      "ignoreInWatchMode": ["getLockedBalance"]
     },
     // "WithdrawalQueueERC721": {
     //   "ignoreInWatchMode": [
