@@ -46,8 +46,12 @@ describe(TrackedTxsIndexer.name, () => {
       const livenessUpdater = mockObject<TxUpdaterInterface>({
         update: mockFn(async () => {}),
       })
+      const l2CostsUpdater = mockObject<TxUpdaterInterface>({
+        update: mockFn(async () => {}),
+      })
       const mockedUpdaters = {
         liveness: livenessUpdater,
+        l2costs: l2CostsUpdater,
         // TODO: (fees) while adding fees add a test for 2 updaters and check if it correctly filters txs
       }
 
@@ -178,6 +182,9 @@ describe(TrackedTxsIndexer.name, () => {
       const mockedLivenessUpdater = mockObject<TxUpdaterInterface>({
         deleteAfter: mockFn(async () => {}),
       })
+      const mockedL2CostsUpdater = mockObject<TxUpdaterInterface>({
+        deleteAfter: mockFn(async () => {}),
+      })
 
       const trackedTxsIndexer = getMockTrackedTxsIndexer({
         configRepository: configurationRepository,
@@ -185,6 +192,7 @@ describe(TrackedTxsIndexer.name, () => {
         configs: runtimeEntries,
         updaters: {
           liveness: mockedLivenessUpdater,
+          l2costs: mockedL2CostsUpdater,
         },
       })
 
@@ -364,6 +372,7 @@ function getMockTrackedTxsIndexer(params: {
     }),
     updaters ?? {
       liveness: mockObject<TxUpdaterInterface>({}),
+      l2costs: mockObject<TxUpdaterInterface>({}),
     },
     trackedTxsClient ?? mockObject<TrackedTxsClient>({}),
     stateRepository ?? mockObject<IndexerStateRepository>({}),
