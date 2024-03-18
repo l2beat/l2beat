@@ -41,7 +41,7 @@ describe(DiffStateController.name, () => {
       },
       readConfig: async (name: string, chain: string) => {
         return new DiscoveryConfig({
-          name: 'test',
+          name,
           chain,
           initialAddresses: [],
         })
