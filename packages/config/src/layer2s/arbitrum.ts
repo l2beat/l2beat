@@ -6,11 +6,11 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
-  makeDataAvailabilityConfig,
   MILESTONES,
   NUGGETS,
   OPERATOR,
@@ -263,9 +263,9 @@ export const arbitrum: Layer2 = {
     ],
     coingeckoPlatform: 'arbitrum-one',
   },
-  dataAvailability: makeDataAvailabilityConfig({
-    type: 'On chain',
-    layer: 'Ethereum (blobs or calldata)',
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['Ethereum (blobs or calldata)'],
+    bridge: { type: 'Enshrined' },
     mode: 'Transactions data (compressed)',
   }),
   riskView: makeBridgeCompatible({

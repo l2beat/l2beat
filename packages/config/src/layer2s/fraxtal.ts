@@ -51,6 +51,7 @@ export const fraxtal: Layer2 = opStack({
         },
       ],
     },
+    bridge: { type: 'None' },
   },
   discovery,
   display: {

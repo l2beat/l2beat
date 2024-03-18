@@ -7,11 +7,11 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
-  makeDataAvailabilityConfig,
   NEW_CRYPTOGRAPHY,
   NUGGETS,
   OPERATOR,
@@ -434,9 +434,9 @@ export const starknet: Layer2 = {
       ],
     },
   },
-  dataAvailability: makeDataAvailabilityConfig({
-    type: 'On chain',
-    layer: 'Ethereum (blobs or calldata)',
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['Ethereum (blobs or calldata)'],
+    bridge: { type: 'Enshrined' },
     mode: 'State diffs',
   }),
   riskView: makeBridgeCompatible({
