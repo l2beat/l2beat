@@ -194,9 +194,9 @@ export const polygonzkevm: Layer2 = {
           address: EthereumAddress(
             '0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
           ),
-          selector: '0x5e9145c9',
+          selector: '0xdef57e54',
           functionSignature:
-            'function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)',
+            'function sequenceBatches((bytes,bytes32,uint64,bytes32)[], uint64, uint64, address)',
           sinceTimestampInclusive: new UnixTime(1707822059),
         },
       },
@@ -250,9 +250,9 @@ export const polygonzkevm: Layer2 = {
           address: EthereumAddress(
             '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
           ),
-          selector: '0xa2ee10d3',
+          selector: '0x1489ed10',
           functionSignature:
-            'verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[])',
+            'function verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])',
           sinceTimestampInclusive: new UnixTime(1707822059),
         },
       },
@@ -268,9 +268,9 @@ export const polygonzkevm: Layer2 = {
           address: EthereumAddress(
             '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
           ),
-          selector: '0x08068a47',
+          selector: '0x87c20c01',
           functionSignature:
-            'verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[])',
+            'function verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])',
           sinceTimestampInclusive: new UnixTime(1707822059),
         },
       },
