@@ -35,7 +35,7 @@ export function createL2CostsModule(
   )
 
   const start = () => {
-    logger = logger.for('LivenessModule')
+    logger = logger.for('L2CostsModule')
     logger.info('Starting...')
   }
 
