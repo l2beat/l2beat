@@ -8,11 +8,9 @@ import { ApplicationModule } from './modules/ApplicationModule'
 import { createDiffHistoryModule } from './modules/diff-history/createDiffHistoryModule'
 import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createHealthModule } from './modules/health/HealthModule'
-import { createL2CostsModule } from './modules/l2-costs/L2CostsModule'
 import { createLzOAppsModule } from './modules/lz-oapps/createLzOAppsModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
 import { createStatusModule } from './modules/status/StatusModule'
-import { createLivenessModule } from './modules/tracked-txs/modules/liveness/LivenessModule'
 import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
 import { createTvlModule } from './modules/tvl/modules/TvlModule'
 import { createTvl2Module } from './modules/tvl2/Tvl2Module'
@@ -47,15 +45,11 @@ export class Application {
       config.clock.safeTimeOffsetSeconds,
     )
 
-    const livenessModule = createLivenessModule(config, logger, database, clock)
-    const l2costsModule = createL2CostsModule(config, logger, database)
     const trackedTxsModule = createTrackedTxsModule(
       config,
       logger,
       database,
       clock,
-      livenessModule?.updater,
-      l2costsModule?.updater,
     )
 
     const modules: (ApplicationModule | undefined)[] = [
@@ -67,8 +61,6 @@ export class Application {
       createDiffHistoryModule(config, logger, database),
       createStatusModule(config, logger),
       trackedTxsModule,
-      livenessModule,
-      l2costsModule,
       createFinalityModule(
         config,
         logger,
