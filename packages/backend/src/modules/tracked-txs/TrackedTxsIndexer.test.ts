@@ -58,7 +58,7 @@ describe(TrackedTxsIndexer.name, () => {
         updaters: mockedUpdaters,
       })
       const [configurationsToSync, syncTo] =
-        await trackedTxIndexer.getConfigurationToSync(from, to)
+        await trackedTxIndexer.getConfigurationsToSync(from, to)
 
       const value = await trackedTxIndexer.update(
         from.toNumber(),
@@ -112,7 +112,7 @@ describe(TrackedTxsIndexer.name, () => {
     })
   })
 
-  describe(TrackedTxsIndexer.prototype.getConfigurationToSync.name, () => {
+  describe(TrackedTxsIndexer.prototype.getConfigurationsToSync.name, () => {
     it('adjusts to and finds configurations to sync', async () => {
       const from = MIN_TIMESTAMP
       const to = from.add(365, 'days')
@@ -127,7 +127,7 @@ describe(TrackedTxsIndexer.name, () => {
       })
 
       const [configurationsToSync, syncTo] =
-        await livenessIndexer.getConfigurationToSync(from, to)
+        await livenessIndexer.getConfigurationsToSync(from, to)
 
       const {
         configurationsToSync: expectedConfigurationsToSync,

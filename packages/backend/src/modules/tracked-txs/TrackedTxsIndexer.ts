@@ -29,7 +29,7 @@ export type TrackedTxsIndexerUpdaters = Record<
 
 export class TrackedTxsIndexer extends ChildIndexer {
   readonly indexerId = 'tracked_txs_indexer'
-  readonly updaters: Partial<TrackedTxsIndexerUpdaters>
+  readonly enabledUpdaters: Partial<TrackedTxsIndexerUpdaters>
 
   constructor(
     logger: Logger,
@@ -42,7 +42,7 @@ export class TrackedTxsIndexer extends ChildIndexer {
     private readonly minTimestamp: UnixTime,
   ) {
     super(logger, [parentIndexer])
-    this.updaters = pickBy(updaters, notUndefined)
+    this.enabledUpdaters = pickBy(updaters, notUndefined)
   }
 
   override async start(): Promise<void> {
@@ -71,7 +71,7 @@ export class TrackedTxsIndexer extends ChildIndexer {
     )
 
     await this.configRepository.runInTransaction(async (trx) => {
-      for (const [type, updater] of Object.entries(this.updaters)) {
+      for (const [type, updater] of Object.entries(this.enabledUpdaters)) {
         const filteredTxs = txs.filter((tx) => tx.use.type === type)
         await updater?.update(filteredTxs, trx)
       }
@@ -91,15 +91,15 @@ export class TrackedTxsIndexer extends ChildIndexer {
     return syncTo.toNumber()
   }
 
-  async getConfigurationToSync(
+  async getConfigurationsToSync(
     from: UnixTime,
     to: UnixTime,
   ): Promise<[TrackedTxConfigEntry[], UnixTime]> {
     const databaseEntries = await this.configRepository.getAll()
-    const updaterTypes = Object.keys(this.updaters)
+    const enabledUpdaterTypes = Object.keys(this.enabledUpdaters)
 
     const { configurationsToSync, syncTo } = findConfigurationsToSync(
-      updaterTypes,
+      enabledUpdaterTypes,
       this.configs,
       databaseEntries,
       from,
@@ -148,7 +148,7 @@ export class TrackedTxsIndexer extends ChildIndexer {
           c.untilTimestampExclusive,
           trx,
         )
-        for (const updater of Object.values(this.updaters)) {
+        for (const updater of Object.values(this.enabledUpdaters)) {
           await updater?.deleteAfter(c.id, c.untilTimestampExclusive, trx)
         }
       }),

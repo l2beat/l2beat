@@ -36,7 +36,7 @@ Next range from 60 to 100 will be:
 */
 
 export function findConfigurationsToSync(
-  updaterTypes: string[],
+  enabledUpdaterTypes: string[],
   runtimeConfigurations: TrackedTxConfigEntry[],
   databaseEntries: TrackedTxsConfigRecord[],
   from: UnixTime,
@@ -45,7 +45,7 @@ export function findConfigurationsToSync(
   const configs = runtimeConfigurations
     .map((config) => {
       const filteredUses = config.uses.filter((use) => {
-        if (!updaterTypes.includes(use.type)) {
+        if (!enabledUpdaterTypes.includes(use.type)) {
           return false
         }
 

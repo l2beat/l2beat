@@ -73,16 +73,6 @@ export function createTrackedTxsModule(
     logger = logger.for('TrackedTxsModule')
     logger.info('Starting...')
 
-    const areUpdatersEmpty = Object.values(updaters).every((u) => !u)
-    const areSubmodulesEmpty = subModules.length === 0
-
-    if (areUpdatersEmpty || areSubmodulesEmpty) {
-      logger.info(
-        'Aborting TrackedTxsModule start because no updaters are defined',
-      )
-      return
-    }
-
     await hourlyIndexer.start()
     for (const subModule of subModules) {
       await subModule?.start?.()
