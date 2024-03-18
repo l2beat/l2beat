@@ -164,6 +164,38 @@ describe(PriceIndexer.name, () => {
   })
   describe(PriceIndexer.prototype.getSafeHeight.name, () => {
     // returns the safe height from DB
+    it('return state from DB', async () => {
+      const safeHeight = 1
+      const stateRepository = mockObject<IndexerStateRepository>({
+        findIndexerState: async () => {
+          return {
+            indexerId: 'indexer',
+            safeHeight,
+            minTimestamp: UnixTime.ZERO,
+          }
+        },
+      })
+
+      const indexer = new PriceIndexer(
+        Logger.SILENT,
+        mockObject<HourlyIndexer>({ subscribe: () => {} }),
+        mockObject<CoingeckoQueryService>({}),
+        stateRepository,
+        mockObject<PricesRepository>({}),
+        mockObject<PriceConfigEntry>({
+          chain: 'chain',
+          address: EthereumAddress.random(),
+        }),
+        mockObject<SyncService>({}),
+      )
+
+      const result = await indexer.getSafeHeight()
+
+      expect(result).toEqual(safeHeight)
+      expect(stateRepository.findIndexerState).toHaveBeenCalledWith(
+        indexer.indexerId,
+      )
+    })
   })
 
   describe(PriceIndexer.prototype.setSafeHeight.name, () => {
