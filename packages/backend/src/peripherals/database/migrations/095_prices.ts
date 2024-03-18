@@ -20,7 +20,7 @@ export async function up(knex: Knex) {
     table.dateTime('timestamp', { useTz: false }).notNullable()
     table.float('price_usd').notNullable()
 
-    table.primary(['chain', 'address', 'timestamp'])
+    table.primary(['timestamp', 'chain', 'address'])
   })
 }
 
