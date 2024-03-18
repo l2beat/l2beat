@@ -2,10 +2,10 @@ import { Logger } from '@l2beat/backend-tools'
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
-import { ViemRpcClient } from '../../peripherals/viem-rpc-client/ViemRpcClient'
-import { TrackedTxResult } from '../tracked-txs/types/model'
-import { TrackedTxId } from '../tracked-txs/types/TrackedTxId'
-import { TxUpdaterInterface } from '../tracked-txs/types/TxUpdaterInterface'
+import { ViemRpcClient } from '../../../../peripherals/viem-rpc-client/ViemRpcClient'
+import { TrackedTxResult } from '../../types/model'
+import { TrackedTxId } from '../../types/TrackedTxId'
+import { TxUpdaterInterface } from '../../types/TxUpdaterInterface'
 import {
   L2CostsRecord,
   L2CostsRepository,

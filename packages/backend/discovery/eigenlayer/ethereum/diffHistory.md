@@ -1,3 +1,114 @@
+Generated with discovered.json: 0xba1f897d9f970202dbca6c5ec09288933e54ecf9
+
+# Diff at Thu, 14 Mar 2024 14:14:07 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@3ffa91064379f34a2916a1ad4e93791b752e7e9e block: 19426942
+- current block number: 19433765
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19426942 (main branch discovery), not current.
+
+```diff
+    contract StrategyAdderMultisig (0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
+    +++ description: None
+      name:
+-        "StrategyAdderMultisig"
++        "OperationsMultisig"
+    }
+```
+
+Generated with discovered.json: 0xb0b6ecabe9b24b41963f90909c5038c5e4c06888
+
+# Diff at Wed, 13 Mar 2024 15:08:26 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@8ded78dbad1caa69ad22c20ef413872cafeb6a2f block: 19425552
+- current block number: 19426942
+
+## Description
+
+One Eigenlayer Operations Multisig signer is removed. This leaves the multisig at the 3/6 threshold, as per Eigenlayer docs.
+
+## Watched changes
+
+```diff
+    contract StrategyAdderMultisig (0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
+    +++ description: None
+      values.getOwners[6]:
+-        "0xe7fFd467F7526abf9c8796EDeE0AD30110419127"
++++ description: Array of multisig signers
++++ type: PERMISSION
++++ severity: MEDIUM
+      values.getOwners.5:
+-        "0x7e0b47E52b567fB6717f8ACAeD3F4591759F22fF"
++        "0xe7fFd467F7526abf9c8796EDeE0AD30110419127"
+    }
+```
+
+Generated with discovered.json: 0x387c23ea428e460f5385d4e061c45b5803b0e48c
+
+# Diff at Wed, 13 Mar 2024 10:28:15 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@5f8229a0d203f1ab563faeb4f951a6cc4a12068c block: 19418224
+- current block number: 19425552
+
+## Description
+
+Three new signers are added to the Eigenlayer Operations Multisig.
+Only one is actually removed so far, so the multisig is currently 3/7.
+Eigenlayer docs reference this multisig as 3/6.
+
+## Watched changes
+
+```diff
+    contract StrategyAdderMultisig (0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
+    +++ description: None
+      values.getOwners[6]:
++        "0xe7fFd467F7526abf9c8796EDeE0AD30110419127"
+      values.getOwners[5]:
++        "0x7e0b47E52b567fB6717f8ACAeD3F4591759F22fF"
++++ description: Array of multisig signers
++++ type: PERMISSION
++++ severity: MEDIUM
+      values.getOwners.4:
+-        "0xe7fFd467F7526abf9c8796EDeE0AD30110419127"
++        "0xeD7Ef087d1C01ecCA9a9688a44aaeDDEf4ea560E"
++++ description: Array of multisig signers
++++ type: PERMISSION
++++ severity: MEDIUM
+      values.getOwners.3:
+-        "0x7e0b47E52b567fB6717f8ACAeD3F4591759F22fF"
++        "0x422e2F724faFE75F3635458aD7D3Ac803DCD7ff1"
++++ description: Array of multisig signers
++++ type: PERMISSION
++++ severity: MEDIUM
+      values.getOwners.2:
+-        "0xeD7Ef087d1C01ecCA9a9688a44aaeDDEf4ea560E"
++        "0x27ff193A6A1574A611E21c39FDA636fA1d61ba30"
++++ description: Array of multisig signers
++++ type: PERMISSION
++++ severity: MEDIUM
+      values.getOwners.1:
+-        "0x422e2F724faFE75F3635458aD7D3Ac803DCD7ff1"
++        "0xb7Ae34BB33da55f12797e793E01e63a17B11d108"
++++ description: Array of multisig signers
++++ type: PERMISSION
++++ severity: MEDIUM
+      values.getOwners.0:
+-        "0xe479a0839F13117f42142AD6cE71B49a97c1c928"
++        "0xa2425B00F9A9457AEdd51d4C36d9917eA1Aa7a02"
+    }
+```
+
 Generated with discovered.json: 0x7e752b312976dbd0b9a0d36ec7ec6aba97d5a5ed
 
 # Diff at Tue, 12 Mar 2024 09:54:47 GMT:

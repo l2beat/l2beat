@@ -158,7 +158,7 @@ export const kroma: Layer2 = {
           to: EthereumAddress(
             discovery.getContractValue('SystemConfig', 'sequencerInbox'),
           ),
-          sinceTimestamp: new UnixTime(1693883663),
+          sinceTimestampInclusive: new UnixTime(1693883663),
         },
       },
       {
@@ -171,7 +171,7 @@ export const kroma: Layer2 = {
           selector: '0x5a045f78',
           functionSignature:
             'function submitL2Output(bytes32 _outputRoot,uint256 _l2BlockNumber,bytes32 _l1BlockHash,uint256 _l1BlockNumber)',
-          sinceTimestamp: new UnixTime(1693880579),
+          sinceTimestampInclusive: new UnixTime(1693880579),
         },
       },
     ],

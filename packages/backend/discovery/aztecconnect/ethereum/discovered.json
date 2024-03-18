@@ -1,7 +1,7 @@
 {
   "name": "aztecconnect",
   "chain": "ethereum",
-  "blockNumber": 18340180,
+  "blockNumber": 19326151,
   "configHash": "0x56a9a501a4be9157f0ec5870d09480d6fd32102b7cd1e9ec4719717f2420e886",
   "version": 3,
   "contracts": [
@@ -103,13 +103,13 @@
     },
     {
       "name": "Verifier28x32",
-      "address": "0x71c0Ab7dF00F00E4ec2990D4F1C8302c1D178f69",
+      "address": "0x9BDc85491BD589e8390A6AAb6982b82255ae2297",
       "upgradeability": {
         "type": "immutable"
       },
-      "sinceTimestamp": 1696247363,
+      "sinceTimestamp": 1708020335,
       "values": {
-        "getVerificationKeyHash": "0x30c540ad71c1de0ea945ef250fec744221207208b9c1a5e355ff394c0873e55c"
+        "getVerificationKeyHash": "0xd8836e9c78022c0245cd010590822e42e3a94cbbd7594c1a2dde73feedd7da0a"
       }
     },
     {
@@ -149,7 +149,7 @@
           "0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f"
         ],
         "getThreshold": 1,
-        "nonce": 270,
+        "nonce": 276,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -196,11 +196,11 @@
         "escapeBlockUpperBound": 2400,
         "getAsyncDefiInteractionHashesLength": 0,
         "getCapped": true,
-        "getDataSize": 25470976,
-        "getDefiInteractionHashesLength": 1,
-        "getEscapeHatchStatus": [false, 380],
+        "getDataSize": 26830848,
+        "getDefiInteractionHashesLength": 0,
+        "getEscapeHatchStatus": [false, 809],
         "getImplementationVersion": 2,
-        "getPendingDefiInteractionHashesLength": 1,
+        "getPendingDefiInteractionHashesLength": 0,
         "getSupportedAsset": [
           "0x6B175474E89094C44Da98b954EedeAC495271d0F",
           "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
@@ -240,18 +240,18 @@
           "0xA915B9C104F865105Caa29E122C8e558cC22bd41"
         ],
         "getSupportedBridgesLength": 18,
-        "lastRollupTimeStamp": 1697171759,
+        "lastRollupTimeStamp": 1709122547,
         "LISTER_ROLE": "0xf94103142c1baabe9ac2b5d1487bf783de9e69cfeea9a72f5c9c94afd7877b8c",
         "OWNER_ROLE": "0xb19546dff01e856fb3f010c267a7b1c60363cf8a4664e21cc89c26224620214e",
         "paused": false,
-        "prevDefiInteractionsHash": "0x2af92273d78efd009fae4e0897c43f99376179a19d59997e5146c64b12da5e90",
+        "prevDefiInteractionsHash": "0x14e0f351ade4ba10438e9b15f66ab2e6389eea5ae870d6e8b2df1418b2e6fd5b",
         "RESUME_ROLE": "0x2fc10cc8ae19568712f7a176fb4978616a610650813c9d05326c34abb62749c7",
         "rollupProviders": [
           "0xA173BDdF4953C1E8be2cA0695CFc07502Ff3B1e7",
           "0xD64791E747188b0e5061fC65b56Bf20FeE2e3321"
         ],
-        "rollupStateHash": "0xdb86e1696a16af893e15fa495f12c340002fc26fa7a149a6c3c8269992e7bf08",
-        "verifier": "0x71c0Ab7dF00F00E4ec2990D4F1C8302c1D178f69"
+        "rollupStateHash": "0x95b2f8c08618ab72054e0e500a7af4a463858c91def0a392df8cf9f550596743",
+        "verifier": "0x9BDc85491BD589e8390A6AAb6982b82255ae2297"
       },
       "derivedName": "RollupProcessorV2"
     }
@@ -287,16 +287,6 @@
     ],
     "0x68A36Aa8E309d5010ab4F9D6c5F1246b854D0b9e": [
       "constructor(address _singleton)"
-    ],
-    "0x71c0Ab7dF00F00E4ec2990D4F1C8302c1D178f69": [
-      "error EC_SCALAR_MUL_FAILURE()",
-      "error MOD_EXP_FAILURE()",
-      "error PROOF_FAILURE()",
-      "error PUBLIC_INPUTS_HASH_VERIFICATION_FAILED(uint256, uint256)",
-      "error PUBLIC_INPUT_GE_P()",
-      "error PUBLIC_INPUT_INVALID_BN128_G1_POINT()",
-      "function getVerificationKeyHash() pure returns (bytes32)",
-      "function verify(bytes, uint256 public_inputs_hash) view returns (bool)"
     ],
     "0x8430Be7B8fd28Cc58EA70A25C9c7A624F26f5D09": [
       "constructor(uint256 _escapeBlockLowerBound, uint256 _escapeBlockUpperBound)",
@@ -418,6 +408,16 @@
       "function unpause()",
       "function userPendingDeposits(uint256, address) view returns (uint256)",
       "function verifier() view returns (address)"
+    ],
+    "0x9BDc85491BD589e8390A6AAb6982b82255ae2297": [
+      "error EC_SCALAR_MUL_FAILURE()",
+      "error MOD_EXP_FAILURE()",
+      "error PROOF_FAILURE()",
+      "error PUBLIC_INPUTS_HASH_VERIFICATION_FAILED(uint256, uint256)",
+      "error PUBLIC_INPUT_GE_P()",
+      "error PUBLIC_INPUT_INVALID_BN128_G1_POINT()",
+      "function getVerificationKeyHash() pure returns (bytes32)",
+      "function verify(bytes, uint256 public_inputs_hash) view returns (bool)"
     ],
     "0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487": [
       "error ASYNC_NONZERO_OUTPUT_VALUES(uint256 outputValueA, uint256 outputValueB)",

@@ -120,7 +120,7 @@ export const loopring: Layer2 = {
           selector: '0xdcb2aa31',
           functionSignature:
             'function submitBlocksWithCallbacks(bool isDataCompressed, bytes calldata data, ((uint16,(uint16,uint16,uint16,bytes)[])[], address[])  calldata config)',
-          sinceTimestamp: new UnixTime(1616396742),
+          sinceTimestampInclusive: new UnixTime(1616396742),
         },
       },
     ],

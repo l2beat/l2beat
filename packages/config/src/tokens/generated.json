@@ -62,21 +62,6 @@
       "formula": "locked"
     },
     {
-      "id": "ageur-ageur",
-      "name": "agEUR",
-      "coingeckoId": "ageur",
-      "address": "0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8",
-      "symbol": "agEUR",
-      "decimals": 18,
-      "deploymentTimestamp": 1634982805,
-      "coingeckoListingTimestamp": 1636675200,
-      "category": "stablecoin",
-      "iconUrl": "https://assets.coingecko.com/coins/images/19479/large/agEUR.png?1696518915",
-      "chainId": 1,
-      "type": "CBV",
-      "formula": "locked"
-    },
-    {
       "id": "alusd-alchemix-usd",
       "name": "Alchemix USD",
       "coingeckoId": "alchemix-usd",
@@ -1121,6 +1106,21 @@
       "coingeckoListingTimestamp": 1636416000,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/19785/large/acatxTm8_400x400.jpg?1696519207",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "eura-eura-(previously-ageur)",
+      "name": "EURA (previously agEUR)",
+      "coingeckoId": "ageur",
+      "address": "0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8",
+      "symbol": "EURA",
+      "decimals": 18,
+      "deploymentTimestamp": 1634982805,
+      "coingeckoListingTimestamp": 1636675200,
+      "category": "stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/19479/large/agEUR.png?1696518915",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"

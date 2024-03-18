@@ -24,7 +24,7 @@ describe(transformTransfersQueryResult.name, () => {
         projectId: ProjectId('project1'),
         from: ADDRESS_1,
         to: ADDRESS_2,
-        sinceTimestamp: SINCE_TIMESTAMP,
+        sinceTimestampInclusive: SINCE_TIMESTAMP,
         uses: [
           {
             id: TrackedTxId.unsafe('0x1'),
@@ -43,7 +43,7 @@ describe(transformTransfersQueryResult.name, () => {
         projectId: ProjectId('project1'),
         from: ADDRESS_3,
         to: ADDRESS_4,
-        sinceTimestamp: SINCE_TIMESTAMP,
+        sinceTimestampInclusive: SINCE_TIMESTAMP,
         uses: [
           {
             id: TrackedTxId.unsafe('0x3'),
@@ -57,7 +57,7 @@ describe(transformTransfersQueryResult.name, () => {
         projectId: ProjectId('project2'),
         from: ADDRESS_5,
         to: ADDRESS_6,
-        sinceTimestamp: SINCE_TIMESTAMP,
+        sinceTimestampInclusive: SINCE_TIMESTAMP,
         uses: [
           {
             id: TrackedTxId.unsafe('0x4'),
@@ -79,7 +79,7 @@ describe(transformTransfersQueryResult.name, () => {
       {
         from_address: ADDRESS_1,
         to_address: ADDRESS_2,
-        transaction_hash: txHashes[0],
+        hash: txHashes[0],
         block_number: block,
         block_timestamp: RESULT_TIMESTAMP,
         gas_price: 10,
@@ -89,7 +89,7 @@ describe(transformTransfersQueryResult.name, () => {
       {
         from_address: ADDRESS_3,
         to_address: ADDRESS_4,
-        transaction_hash: txHashes[1],
+        hash: txHashes[1],
         block_number: block,
         block_timestamp: RESULT_TIMESTAMP,
         gas_price: 20,
@@ -99,7 +99,7 @@ describe(transformTransfersQueryResult.name, () => {
       {
         from_address: ADDRESS_5,
         to_address: ADDRESS_6,
-        transaction_hash: txHashes[2],
+        hash: txHashes[2],
         block_number: block,
         block_timestamp: RESULT_TIMESTAMP,
         gas_price: 30,
@@ -174,14 +174,14 @@ describe(transformTransfersQueryResult.name, () => {
         projectId: ProjectId('project1'),
         from: ADDRESS_1,
         to: ADDRESS_2,
-        sinceTimestamp: SINCE_TIMESTAMP,
+        sinceTimestampInclusive: SINCE_TIMESTAMP,
         uses: [],
       },
     ]
 
     const queryResults: BigQueryTransferResult[] = [
       {
-        transaction_hash: '',
+        hash: '',
         block_number: 1,
         block_timestamp: RESULT_TIMESTAMP,
         from_address: EthereumAddress.random(),

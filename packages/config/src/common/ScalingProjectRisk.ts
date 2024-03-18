@@ -15,6 +15,7 @@ export type ScalingProjectRiskCategory =
   | 'Funds can be stolen if'
   | 'Funds can be lost if'
   | 'Funds can be frozen if'
+  | 'Funds can lose value if'
   | 'Users can be censored if'
   | 'MEV can be extracted if'
   | 'Withdrawals can be delayed if'

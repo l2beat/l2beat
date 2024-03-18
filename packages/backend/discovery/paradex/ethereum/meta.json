@@ -2,9 +2,179 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
+      "name": "Paradex",
+      "values": {
+        "MAX_UPGRADE_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROXY_GOVERNANCE_TAG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROXY_VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "UPGRADE_DELAY_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "configHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getMaxL1MsgFee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getUpgradeActivationDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governedFinalized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governors": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "identify": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isFinalized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isFrozen": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isNotFinalized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1ToL2MessageNonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messageCancellationDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "operators": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "programHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stateBlockHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stateBlockNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stateRoot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "verifier": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ParadexImplementationGovernorMultisig",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "USDC Bridge",
       "values": {
+        "PROXY_GOVERNANCE_TAG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROXY_VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "UPGRADE_DELAY_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "getUpgradeActivationDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governors": {
           "description": null,
           "severity": null,
           "type": null
@@ -43,176 +213,6 @@
           "description": "Maximum bridge balance allowed (currentBalance + depositAmount <= maxTotalBalance)",
           "severity": "MEDIUM",
           "type": "RISK_PARAMETER"
-        },
-        "PROXY_GOVERNANCE_TAG": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PROXY_VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "UPGRADE_DELAY_SLOT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "governors": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "Paradex",
-      "values": {
-        "configHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getMaxL1MsgFee": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getUpgradeActivationDelay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "identify": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "implementation": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isFinalized": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isFrozen": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isNotFinalized": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l1ToL2MessageNonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MAX_UPGRADE_DELAY": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "messageCancellationDelay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "programHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PROXY_GOVERNANCE_TAG": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PROXY_VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "stateBlockHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "stateBlockNumber": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "stateRoot": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "UPGRADE_DELAY_SLOT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "governedFinalized": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "governors": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "operators": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "verifier": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ParadexImplementationGovernorMultisig",
-      "values": {
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
         }
       }
     }

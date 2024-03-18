@@ -3,8 +3,8 @@ import { FinalityDataPoint } from '@l2beat/shared-pure'
 import {
   calculateDetailsFor,
   calculateIntervals,
-} from '../../liveness/api/calculateIntervalWithAverages'
-import { LivenessRecordWithSubtype } from '../../liveness/repositories/LivenessRepository'
+} from '../../tracked-txs/modules/liveness/api/calculateIntervalWithAverages'
+import { LivenessRecordWithSubtype } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 
 export function calcAvgsPerProject(
   records: LivenessRecordWithSubtype[],

@@ -1,11 +1,12 @@
-import { Query } from '@google-cloud/bigquery'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+
+import { BigQueryClientQuery } from '../../../../peripherals/bigquery/BigQueryClient'
 
 export function getTransferQuery(
   transfersConfig: { from: EthereumAddress; to: EthereumAddress }[],
   from: UnixTime,
   to: UnixTime,
-): Query {
+): BigQueryClientQuery {
   const params = [
     from.toDate().toISOString(),
     to.toDate().toISOString(),
@@ -13,27 +14,36 @@ export function getTransferQuery(
       c.from.toLowerCase(),
       c.to.toLowerCase(),
     ]),
+    from.toDate().toISOString(),
+    to.toDate().toISOString(),
   ]
 
   const query = `
     SELECT
-      block_number,
-      from_address,
-      to_address,
-      block_timestamp,
-      transaction_hash
+      txs.hash,
+      traces.from_address,
+      traces.to_address,
+      txs.block_number,
+      txs.block_timestamp,
     FROM
-      bigquery-public-data.crypto_ethereum.traces
-    WHERE call_type = 'call'
-    AND status = 1
-    AND block_timestamp >= TIMESTAMP(?)
-    AND block_timestamp < TIMESTAMP(?)
-    AND (
-      ${transfersConfig
-        .map(() => `(from_address = ? AND to_address = ?)`)
-        .join(' OR ')}
-    )
+      bigquery-public-data.crypto_ethereum.transactions AS txs
+    JOIN
+      bigquery-public-data.crypto_ethereum.traces AS traces
+    ON
+      traces.status = 1
+      AND txs.hash = traces.transaction_hash
+      AND traces.call_type = 'call'
+      AND traces.block_timestamp >= TIMESTAMP(?)
+      AND traces.block_timestamp < TIMESTAMP(?)
+      AND (
+        ${transfersConfig
+          .map(() => `(traces.from_address = ? AND traces.to_address = ?)`)
+          .join(' OR ')}
+      )
+    WHERE
+      txs.block_timestamp >= TIMESTAMP(?)
+      AND txs.block_timestamp < TIMESTAMP(?)
   `
 
-  return { query, params }
+  return { query, params, limitInGb: 2 }
 }

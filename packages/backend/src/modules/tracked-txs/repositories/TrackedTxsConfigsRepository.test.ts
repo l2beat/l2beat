@@ -3,7 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { describeDatabase } from '../../../test/database'
-import { LivenessRepository } from '../../liveness/repositories/LivenessRepository'
+import { LivenessRepository } from '../modules/liveness/repositories/LivenessRepository'
 import { TrackedTxId } from '../types/TrackedTxId'
 import {
   TrackedTxsConfigRecord,
@@ -18,7 +18,7 @@ export const TRACKED_TXS_RECORDS: TrackedTxsConfigRecord[] = [
     type: 'liveness',
     subtype: 'batchSubmissions',
     id: TrackedTxId(['0x13']),
-    sinceTimestamp: START.add(-1, 'hours'),
+    sinceTimestampInclusive: START.add(-1, 'hours'),
     debugInfo: '',
   }),
   makeTrackedTxsConfigRecord({
@@ -51,6 +51,66 @@ describeDatabase(TrackedTxsConfigsRepository.name, (database) => {
       await expect(repository.addMany([])).not.toBeRejected()
     })
   })
+
+  describe(TrackedTxsConfigsRepository.prototype.getByProjectId.name, () => {
+    it('should return configs for given project id', async () => {
+      await repository.addMany(TRACKED_TXS_RECORDS)
+      const results = await repository.getByProjectId(ProjectId('project1'))
+
+      expect(results).toEqualUnsorted([TRACKED_TXS_RECORDS[0]])
+    })
+
+    it('should return empty array if no configs for given project id', async () => {
+      await repository.addMany(TRACKED_TXS_RECORDS)
+      const results = await repository.getByProjectId(ProjectId('project4'))
+
+      expect(results).toEqualUnsorted([])
+    })
+  })
+
+  describe(
+    TrackedTxsConfigsRepository.prototype
+      .findLatestSyncedTimestampByProjectIdAndSubtype.name,
+    () => {
+      it('should return latest synced timestamp for given project id and subtype', async () => {
+        await repository.addMany(TRACKED_TXS_RECORDS)
+
+        const latest = UnixTime.now()
+
+        await repository.setLastSyncedTimestamp(
+          [TRACKED_TXS_RECORDS[0].id, TRACKED_TXS_RECORDS[1].id],
+          latest,
+        )
+
+        const results =
+          await repository.findLatestSyncedTimestampByProjectIdAndSubtype(
+            ProjectId('project1'),
+            'batchSubmissions',
+          )
+
+        expect(results).toEqual(latest)
+      })
+
+      it('should return undefined if no latest synced timestamp for given project id and subtype', async () => {
+        await repository.addMany(TRACKED_TXS_RECORDS)
+
+        const firstResult =
+          await repository.findLatestSyncedTimestampByProjectIdAndSubtype(
+            ProjectId('project1'),
+            'batchSubmissions',
+          )
+
+        const secondResult =
+          await repository.findLatestSyncedTimestampByProjectIdAndSubtype(
+            ProjectId('random-project-id'),
+            'batchSubmissions',
+          )
+
+        expect(firstResult).toEqual(undefined)
+        expect(secondResult).toEqual(undefined)
+      })
+    },
+  )
 
   describe(
     TrackedTxsConfigsRepository.prototype.setLastSyncedTimestamp.name,
@@ -102,7 +162,7 @@ describeDatabase(TrackedTxsConfigsRepository.name, (database) => {
       const untilTimestamp = UnixTime.now()
       const updatedRow: TrackedTxsConfigRecord = {
         ...TRACKED_TXS_RECORDS[0],
-        untilTimestamp: untilTimestamp,
+        untilTimestampExclusive: untilTimestamp,
       }
 
       await repository.setUntilTimestamp(newIds[0], untilTimestamp)
@@ -181,13 +241,13 @@ function makeTrackedTxsConfigRecord(
 ): TrackedTxsConfigRecord {
   return {
     projectId: ProjectId('random-project-id'),
-    sinceTimestamp: START,
+    sinceTimestampInclusive: START,
     id: TrackedTxId(['0x']),
     type: 'liveness',
     subtype: 'batchSubmissions',
     debugInfo: '',
     lastSyncedTimestamp: undefined,
-    untilTimestamp: undefined,
+    untilTimestampExclusive: undefined,
     ...props,
   }
 }

@@ -1,5 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { range } from 'lodash'
 
 import { getTransferQuery } from './getTransferQuery'
 
@@ -20,22 +21,29 @@ describe(getTransferQuery.name, () => {
 
     expect(query.query).toEqual(`
     SELECT
-      block_number,
-      from_address,
-      to_address,
-      block_timestamp,
-      transaction_hash
+      txs.hash,
+      traces.from_address,
+      traces.to_address,
+      txs.block_number,
+      txs.block_timestamp,
     FROM
-      bigquery-public-data.crypto_ethereum.traces
-    WHERE call_type = 'call'
-    AND status = 1
-    AND block_timestamp >= TIMESTAMP(?)
-    AND block_timestamp < TIMESTAMP(?)
-    AND (
-      ${Array.from({ length: 2 })
-        .map(() => `(from_address = ? AND to_address = ?)`)
-        .join(' OR ')}
-    )
+      bigquery-public-data.crypto_ethereum.transactions AS txs
+    JOIN
+      bigquery-public-data.crypto_ethereum.traces AS traces
+    ON
+      traces.status = 1
+      AND txs.hash = traces.transaction_hash
+      AND traces.call_type = 'call'
+      AND traces.block_timestamp >= TIMESTAMP(?)
+      AND traces.block_timestamp < TIMESTAMP(?)
+      AND (
+        ${range(2)
+          .map(() => `(traces.from_address = ? AND traces.to_address = ?)`)
+          .join(' OR ')}
+      )
+    WHERE
+      txs.block_timestamp >= TIMESTAMP(?)
+      AND txs.block_timestamp < TIMESTAMP(?)
   `)
     expect(query.params).toEqual([
       new Date('2021-01-01Z').toISOString(),
@@ -44,6 +52,10 @@ describe(getTransferQuery.name, () => {
       ADDRESS_2.toLowerCase(),
       ADDRESS_3.toLowerCase(),
       ADDRESS_4.toLowerCase(),
+      new Date('2021-01-01Z').toISOString(),
+      new Date('2021-01-02Z').toISOString(),
     ])
+
+    expect(query.limitInGb).toEqual(2)
   })
 })

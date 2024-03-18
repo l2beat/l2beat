@@ -1,19 +1,18 @@
 import { FinalityType } from '@l2beat/config'
-import { assert, Hash256, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { range } from 'lodash'
 
 import { FinalityProjectConfig } from '../../../config/features/finality'
-import { IndexerStateRepository } from '../../../peripherals/database/repositories/IndexerStateRepository'
-import { Clock } from '../../../tools/Clock'
 import {
   calculateDetailsFor,
   calculateIntervals,
-} from '../../liveness/api/calculateIntervalWithAverages'
+} from '../../tracked-txs/modules/liveness/api/calculateIntervalWithAverages'
 import {
   LivenessRecordWithProjectIdAndSubtype,
   LivenessRepository,
-} from '../../liveness/repositories/LivenessRepository'
+} from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
+import { TrackedTxsConfigsRepository } from '../../tracked-txs/repositories/TrackedTxsConfigsRepository'
 import {
   FinalityRecord,
   FinalityRepository,
@@ -21,15 +20,13 @@ import {
 import { FinalityController } from './FinalityController'
 
 describe(FinalityController.name, () => {
-  const CLOCK = getMockClock()
   describe(FinalityController.prototype.getFinality.name, () => {
     it('returns empty object if no data', async () => {
       const finalityController = new FinalityController(
         getMockLivenessRepository([]),
-        getMockFinalityRepository(),
-        getMockIndexerStateRepository(CLOCK.getLastHour()),
+        getMockFinalityRepository([]),
+        mockObject<TrackedTxsConfigsRepository>(),
         [],
-        CLOCK,
       )
 
       const result = await finalityController.getFinality()
@@ -39,9 +36,7 @@ describe(FinalityController.name, () => {
     })
 
     it('correctly calculate avg, min and max', async () => {
-      const RECORDS: LivenessRecordWithProjectIdAndSubtype[] = []
-
-      RECORDS.push(
+      const RECORDS: LivenessRecordWithProjectIdAndSubtype[] = [
         ...range(5).map((_, i) => {
           return {
             projectId: ProjectId('project1'),
@@ -49,8 +44,6 @@ describe(FinalityController.name, () => {
             subtype: 'batchSubmissions',
           } as const
         }),
-      )
-      RECORDS.push(
         ...range(3).map((_, i) => {
           return {
             projectId: ProjectId('project1'),
@@ -58,7 +51,8 @@ describe(FinalityController.name, () => {
             subtype: 'batchSubmissions',
           } as const
         }),
-      )
+      ]
+
       const project2Result = {
         projectId: ProjectId('project2'),
         timestamp: new UnixTime(1000),
@@ -69,7 +63,11 @@ describe(FinalityController.name, () => {
       const finalityController = new FinalityController(
         getMockLivenessRepository(RECORDS),
         getMockFinalityRepository([project2Result]),
-        getMockIndexerStateRepository(CLOCK.getLastHour()),
+        mockObject<TrackedTxsConfigsRepository>({
+          findLatestSyncedTimestampByProjectIdAndSubtype: mockFn()
+            .given(ProjectId('project1'), 'batchSubmissions')
+            .resolvesToOnce(START),
+        }),
         mockProjectConfig([
           {
             projectId: ProjectId('project1'),
@@ -82,7 +80,6 @@ describe(FinalityController.name, () => {
             type: 'Linea',
           },
         ]),
-        getMockClock(),
       )
 
       const records = [...RECORDS]
@@ -109,32 +106,11 @@ describe(FinalityController.name, () => {
         })
       }
     })
-
-    it('return error when data is not fully synced', async () => {
-      const clock = getMockClock()
-
-      const outOfSyncTimestamp = CLOCK.getLastHour().add(-2, 'hours')
-      const finalityController = new FinalityController(
-        getMockLivenessRepository([]),
-        getMockFinalityRepository(),
-        getMockIndexerStateRepository(outOfSyncTimestamp),
-        mockProjectConfig([]),
-        clock,
-      )
-      const result = await finalityController.getFinality()
-
-      expect(result.type).toEqual('error')
-      if (result.type === 'error') {
-        expect(result.error).toEqual('DATA_NOT_SYNCED')
-      }
-    })
   })
 
   describe(FinalityController.prototype.getOPStackFinality.name, () => {
     it('correctly calculate avg, min and max', async () => {
-      const RECORDS: LivenessRecordWithProjectIdAndSubtype[] = []
-
-      RECORDS.push(
+      const RECORDS: LivenessRecordWithProjectIdAndSubtype[] = [
         ...range(5).map((_, i) => {
           return {
             projectId: ProjectId('project1'),
@@ -142,8 +118,6 @@ describe(FinalityController.name, () => {
             subtype: 'batchSubmissions',
           } as const
         }),
-      )
-      RECORDS.push(
         ...range(3).map((_, i) => {
           return {
             projectId: ProjectId('project1'),
@@ -151,31 +125,55 @@ describe(FinalityController.name, () => {
             subtype: 'batchSubmissions',
           } as const
         }),
-      )
+        ...range(5).map((_, i) => {
+          return {
+            projectId: ProjectId('project2'),
+            timestamp: START.add(-i, 'days'),
+            subtype: 'batchSubmissions',
+          } as const
+        }),
+        ...range(3).map((_, i) => {
+          return {
+            projectId: ProjectId('project2'),
+            timestamp: START.add(-(5 + i * 2), 'days'),
+            subtype: 'batchSubmissions',
+          } as const
+        }),
+      ]
+
       const projects = mockProjectConfig([
         { projectId: ProjectId('project1'), lag: 0, type: 'OPStack' },
       ])
       const finalityController = new FinalityController(
         getMockLivenessRepository(RECORDS),
-        getMockFinalityRepository(),
-        getMockIndexerStateRepository(CLOCK.getLastHour()),
+        getMockFinalityRepository([]),
+        mockObject<TrackedTxsConfigsRepository>({
+          findLatestSyncedTimestampByProjectIdAndSubtype: mockFn()
+            .given(ProjectId('project1'), 'batchSubmissions')
+            .resolvesToOnce(START)
+            .given(ProjectId('project2'), 'batchSubmissions')
+            .resolvesToOnce(undefined),
+        }),
         projects,
-        getMockClock(),
       )
 
-      const records = [...RECORDS]
-      calculateIntervals(records)
-      const last30Days = calculateDetailsFor(records, '30d')
+      const project1Records = RECORDS.filter(
+        (r) => r.projectId === ProjectId('project1'),
+      )
+      calculateIntervals(project1Records)
+      const project1Last30Days = calculateDetailsFor(project1Records, '30d')
 
-      assert(last30Days, 'last30Days is undefined')
+      assert(project1Last30Days, 'last30Days is undefined')
 
       const result = await finalityController.getOPStackFinality(projects)
-      expect(result.project1).toEqual({
-        timeToInclusion: {
-          averageInSeconds: last30Days.averageInSeconds / 2 + 0,
-          maximumInSeconds: last30Days.maximumInSeconds,
+      expect(result).toEqual({
+        project1: {
+          timeToInclusion: {
+            averageInSeconds: project1Last30Days.averageInSeconds / 2 + 0,
+            maximumInSeconds: project1Last30Days.maximumInSeconds,
+          },
+          syncedUntil: START,
         },
-        syncedUntil: records[0].timestamp,
       })
     })
   })
@@ -205,9 +203,8 @@ describe(FinalityController.name, () => {
             maximumTimeToInclusion: 6,
           },
         ]),
-        getMockIndexerStateRepository(CLOCK.getLastHour()),
+        mockObject<TrackedTxsConfigsRepository>(),
         projects,
-        getMockClock(),
       )
 
       const result = await finalityController.getProjectsFinality(projects)
@@ -235,26 +232,7 @@ describe(FinalityController.name, () => {
 
 const START = UnixTime.now()
 
-function getMockClock() {
-  return mockObject<Clock>({
-    getLastHour: () => UnixTime.now().toStartOf('hour').add(-1, 'hours'),
-  })
-}
-
-function getMockIndexerStateRepository(data: UnixTime) {
-  return mockObject<IndexerStateRepository>({
-    findIndexerState: async () => {
-      return {
-        id: 1,
-        configHash: Hash256.random(),
-        indexerId: 'liveness_indexer',
-        safeHeight: data.toNumber(),
-      }
-    },
-  })
-}
-
-function getMockFinalityRepository(records: FinalityRecord[] = []) {
+function getMockFinalityRepository(records: FinalityRecord[]) {
   return mockObject<FinalityRepository>({
     getLatestGroupedByProjectId: mockFn().resolvesTo(records),
     addMany() {

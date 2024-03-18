@@ -1,6 +1,39 @@
+Generated with discovered.json: 0x39d8c0dc799668e68e81e9878fa9d96d9ebabcb2
+
+# Diff at Thu, 14 Mar 2024 13:19:35 GMT
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@3ffa91064379f34a2916a1ad4e93791b752e7e9e block: 11465045
+- current block number: 11816496
+
+## Description
+
+New PriceFeed Oracle implementation has been deployed. Nothing that would affect protocol security has been changed.
+
+## Watched changes
+
+```diff
+    contract  (0x3c2269811836af69497E5F486A85D7316753cf62) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x4EE2F9B7cf3A68966c370F3eb2C16613d3235245"
++        "0xde54D17cCf5Bdb2FADA00e15D863EC395aB9b9D4"
+      implementations.0:
+-        "0x4EE2F9B7cf3A68966c370F3eb2C16613d3235245"
++        "0xde54D17cCf5Bdb2FADA00e15D863EC395aB9b9D4"
+    }
+```
+
+## Source code changes
+
+```diff
+.../-0x3c2269811836af69497E5F486A85D7316753cf62/implementation/meta.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+
 Generated with discovered.json: 0x3d97aa6355af0176a152bfab3ff224b9139e6fdd
 
-# Diff at Wed, 06 Mar 2024 10:04:16 GMT:
+# Diff at Wed, 06 Mar 2024 10:04:16 GMT
 
 - author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
 - comparing to: main@1a2512004b35590384683b93c95d8ec95426d2a6 block: 9577249

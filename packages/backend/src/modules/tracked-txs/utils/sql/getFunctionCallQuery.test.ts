@@ -1,5 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { range } from 'lodash'
 
 import { getFunctionCallQuery } from './getFunctionCallQuery'
 
@@ -25,7 +26,7 @@ const CONFIGURATIONS = [
 
 describe(getFunctionCallQuery.name, () => {
   it('returns valid SQL', () => {
-    const { query, params, types } = getFunctionCallQuery(
+    const { query, params, types, limitInGb } = getFunctionCallQuery(
       CONFIGURATIONS,
       FROM,
       TO,
@@ -33,22 +34,34 @@ describe(getFunctionCallQuery.name, () => {
 
     expect(query).toEqual(`
     SELECT
-      block_number,
-      CASE WHEN to_address IN UNNEST(?) THEN input ELSE LEFT(input, 10) END AS input,
-      to_address,
-      block_timestamp,
-      transaction_hash
+      txs.hash,
+      traces.to_address,
+      txs.block_number,
+      txs.block_timestamp,
+      CASE
+        WHEN traces.to_address IN UNNEST(?) THEN traces.input
+      ELSE
+      LEFT(traces.input, 10)
+    END
+      AS input,
     FROM
-      bigquery-public-data.crypto_ethereum.traces
-    WHERE call_type = 'call'
-    AND status = 1
-    AND block_timestamp >= TIMESTAMP(?)
-    AND block_timestamp < TIMESTAMP(?)
-    AND (
-      ${Array.from({ length: 2 })
-        .map(() => `(to_address = ? AND input LIKE ?)`)
-        .join(' OR ')}
-    )
+      bigquery-public-data.crypto_ethereum.transactions AS txs
+    JOIN
+      bigquery-public-data.crypto_ethereum.traces AS traces
+    ON
+      txs.hash = traces.transaction_hash
+      AND traces.call_type = 'call'
+      AND traces.status = 1
+      AND traces.block_timestamp >= TIMESTAMP(?)
+      AND traces.block_timestamp < TIMESTAMP(?)
+      AND (
+        ${range(2)
+          .map(() => `(traces.to_address = ? AND traces.input LIKE ?)`)
+          .join(' OR ')}
+      )
+    WHERE
+      txs.block_timestamp >= TIMESTAMP(?)
+      AND txs.block_timestamp < TIMESTAMP(?)
   `)
 
     expect(params).toEqual([
@@ -59,6 +72,8 @@ describe(getFunctionCallQuery.name, () => {
       SELECTOR_1.toLowerCase() + '%',
       ADDRESS_2.toLowerCase(),
       SELECTOR_2.toLowerCase() + '%',
+      FROM.toDate().toISOString(),
+      TO.toDate().toISOString(),
     ])
 
     // @ts-expect-error BigQuery types are wrong
@@ -70,6 +85,10 @@ describe(getFunctionCallQuery.name, () => {
       'STRING',
       'STRING',
       'STRING',
+      'STRING',
+      'STRING',
     ])
+
+    expect(limitInGb).toEqual(8)
   })
 })

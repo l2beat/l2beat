@@ -29,13 +29,16 @@
   },
   "overrides": {
     "L2ReverseCustomGateway": {
-      "ignoreRelatives": ["counterpartGateway"]
+      "ignoreRelatives": ["counterpartGateway"],
+      "ignoreInWatchMode": ["exitNum"]
     },
     "L2CustomGateway": {
-      "ignoreRelatives": ["counterpartGateway"]
+      "ignoreRelatives": ["counterpartGateway"],
+      "ignoreInWatchMode": ["exitNum"]
     },
     "L2ERC20Gateway": {
-      "ignoreRelatives": ["counterpartGateway"]
+      "ignoreRelatives": ["counterpartGateway"],
+      "ignoreInWatchMode": ["exitNum"]
     },
     "L2GatewayRouter": {
       "ignoreRelatives": ["counterpartGateway"]

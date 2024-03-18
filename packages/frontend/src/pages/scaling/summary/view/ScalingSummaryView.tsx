@@ -7,15 +7,15 @@ import { UpcomingIcon } from '../../../../components/icons/symbols/UpcomingIcon'
 import { ScalingLegend } from '../../../../components/ScalingLegend'
 import { ScalingFilters } from '../../../../components/table/filters/ScalingFilters'
 import { getScalingRowProps } from '../../../../components/table/props/getScalingRowProps'
+import { TableView } from '../../../../components/table/TableView'
+import { RowConfig } from '../../../../components/table/types'
+import { Tabs } from '../../../../components/Tabs'
 import {
   getActiveScalingSummaryColumnsConfig,
   getArchivedScalingSummaryColumnsConfig,
   getLayer3sScalingSummaryColumnsConfig,
   getUpcomingScalingSummaryColumnsConfig,
-} from '../../../../components/table/props/getScalingTableColumnsConfig'
-import { TableView } from '../../../../components/table/TableView'
-import { RowConfig } from '../../../../components/table/types'
-import { Tabs } from '../../../../components/Tabs'
+} from '../props/getScalingSummaryColumnsConfig'
 import {
   ScalingL2SummaryViewEntry,
   ScalingL3SummaryViewEntry,

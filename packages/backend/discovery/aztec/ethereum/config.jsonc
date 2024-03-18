@@ -5,13 +5,13 @@
   "initialAddresses": [
     "0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba",
     "0xFcF75295f242C4E87203Abb5d7C9BbEda90a8895",
-    "0xd3a6D9De4cbC2CC7529361941e85b1c3269CcBb1" // TurboVerifier, for historical data only
+    "0xd3a6D9De4cbC2CC7529361941e85b1c3269CcBb1"
   ],
   "names": {
     "0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba": "RollupProcessor",
     "0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734": "AztecFeeDistributor",
     "0xE298a76986336686CC3566469e3520d23D1a8aaD": "Aztec Multisig",
-    "0xd3a6D9De4cbC2CC7529361941e85b1c3269CcBb1": "TurboVerifier"
+    "0xd3a6D9De4cbC2CC7529361941e85b1c3269CcBb1": "HistoricalTurboVerifier"
   },
   "overrides": {
     "RollupProcessor": {

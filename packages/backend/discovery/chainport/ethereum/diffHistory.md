@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x6c4694a51a3ccf3920314d28aac8d48e9e63e622
+
+# Diff at Fri, 15 Mar 2024 13:13:16 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@e2d7fd753a5234b8cba1b13f16353dfafe85c087 block: 19389379
+- current block number: 19440568
+
+## Description
+
+A proposal is submitted which would change the FeeCollector, AdminFeeCollector and add a Maintainer (There are currently 6 Maintainers registered, they can at least freeze the bridges). The new maintainer has the address 0xc051b171464D77bdF47f08bC7606630F17aB0753.
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
++++ description: The amount of proposals ever created. Goes up by 1 for each proposal.
++++ severity: MEDIUM
+      values.proposalCount:
+-        50
++        51
+    }
+```
+
 Generated with discovered.json: 0x86f5a697e88e62dc3e2832bb21f5115cd2bec5e2
 
 # Diff at Fri, 08 Mar 2024 08:53:50 GMT:

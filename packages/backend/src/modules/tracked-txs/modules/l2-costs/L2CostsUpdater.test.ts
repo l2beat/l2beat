@@ -3,10 +3,10 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { Knex } from 'knex'
 
-import { ViemRpcClient } from '../../peripherals/viem-rpc-client/ViemRpcClient'
-import { TrackedTxResult } from '../tracked-txs/types/model'
-import { TrackedTxId } from '../tracked-txs/types/TrackedTxId'
-import { TrackedTxConfigEntry } from '../tracked-txs/types/TrackedTxsConfig'
+import { ViemRpcClient } from '../../../../peripherals/viem-rpc-client/ViemRpcClient'
+import { TrackedTxResult } from '../../types/model'
+import { TrackedTxId } from '../../types/TrackedTxId'
+import { TrackedTxConfigEntry } from '../../types/TrackedTxsConfig'
 import { L2CostsUpdater } from './L2CostsUpdater'
 import {
   L2CostsRecord,
@@ -190,7 +190,7 @@ function getMockRuntimeConfigurations(): TrackedTxConfigEntry[] {
       projectId: ProjectId('test'),
       address: EthereumAddress.random(),
       selector: '0x',
-      sinceTimestamp: MIN_TIMESTAMP,
+      sinceTimestampInclusive: MIN_TIMESTAMP,
       uses: [
         {
           type: 'liveness',
@@ -204,7 +204,7 @@ function getMockRuntimeConfigurations(): TrackedTxConfigEntry[] {
       projectId: ProjectId('test2'),
       address: EthereumAddress.random(),
       selector: '0x',
-      sinceTimestamp: MIN_TIMESTAMP,
+      sinceTimestampInclusive: MIN_TIMESTAMP,
       uses: [
         {
           type: 'liveness',
