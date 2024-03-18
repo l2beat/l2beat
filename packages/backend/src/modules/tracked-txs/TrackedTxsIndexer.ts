@@ -54,7 +54,7 @@ export class TrackedTxsIndexer extends ChildIndexer {
   override async update(from: number, to: number): Promise<number> {
     const { from: unixFrom, to: unixTo } = adjustRangeForBigQueryCall(from, to)
 
-    const [configurations, syncTo] = await this.getConfigurationToSync(
+    const [configurations, syncTo] = await this.getConfigurationsToSync(
       unixFrom,
       unixTo,
     )
