@@ -1,6 +1,4 @@
-import {
-  DiffStateApiResponse,
-} from '@l2beat/shared-pure'
+import { DiffStateApiResponse } from '@l2beat/shared-pure'
 
 import { JsonHttpClient } from '../caching/JsonHttpClient'
 import { Config } from '../config'
@@ -9,7 +7,7 @@ export async function fetchDiffState(
   backend: Config['backend'],
   http: JsonHttpClient,
 ): Promise<DiffStateApiResponse> {
-  if(backend.mock) {
+  if (backend.mock) {
     return getMockDiffStateApiResponse()
   }
 
@@ -20,6 +18,6 @@ export async function fetchDiffState(
 
 function getMockDiffStateApiResponse(): DiffStateApiResponse {
   return {
-    projects: {}
+    projects: {},
   }
 }

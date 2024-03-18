@@ -1,11 +1,12 @@
 import {
-    DiffStateProjectData,
+  DiffStateProjectData,
   ManuallyVerifiedContracts,
   VerificationStatus,
 } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { ContractEntry, TechnologyContract } from './ContractEntry'
+import { ContractsUpdated } from './ContractsUpdated'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
 import { ReferenceList, TechnologyReference } from './ReferenceList'
 import { RiskList, TechnologyRisk } from './RiskList'
@@ -46,6 +47,7 @@ export function ContractsSection(props: ContractsSectionProps) {
       isUnderReview={props.isUnderReview}
       includeChildrenIfUnderReview
     >
+      {props.diffState !== undefined && <ContractsUpdated />}
       {props.isIncomplete && <TechnologyIncompleteShort />}
       {props.architectureImage && (
         <figure className="mb-8 mt-4 text-center">
@@ -70,6 +72,7 @@ export function ContractsSection(props: ContractsSectionProps) {
                 <ContractEntry
                   contract={contract}
                   verificationStatus={props.verificationStatus}
+                  diffState={props.diffState}
                   manuallyVerifiedContracts={props.manuallyVerifiedContracts}
                   className="my-4"
                 />
@@ -90,6 +93,7 @@ export function ContractsSection(props: ContractsSectionProps) {
               <React.Fragment key={i}>
                 <ContractEntry
                   contract={contract}
+                  diffState={props.diffState}
                   verificationStatus={props.verificationStatus}
                   manuallyVerifiedContracts={props.manuallyVerifiedContracts}
                   className="my-4"

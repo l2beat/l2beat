@@ -1,6 +1,6 @@
 import { Layer2 } from '@l2beat/config'
 import {
-    DiffStateApiResponse,
+  DiffStateApiResponse,
   ManuallyVerifiedContracts,
   VerificationStatus,
 } from '@l2beat/shared-pure'
@@ -203,7 +203,7 @@ export function getProjectDetails(
         project,
         verificationStatus,
         manuallyVerifiedContracts,
-        diffState
+        diffState,
       ),
     })
 

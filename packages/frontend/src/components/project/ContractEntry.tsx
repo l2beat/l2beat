@@ -1,4 +1,5 @@
 import {
+  DiffStateProjectData,
   ManuallyVerifiedContracts,
   VerificationStatus,
 } from '@l2beat/shared-pure'
@@ -9,7 +10,8 @@ import { BulletIcon } from '../icons/symbols/BulletIcon'
 import { Link } from '../Link'
 import { Markdown } from '../Markdown'
 import { UnverifiedContractsWarning } from '../table/UnverifiedContractsWarning'
-import { Callout } from './Callout'
+import { UpdatedContractWarning } from '../table/UpdatedContractWarning'
+import { Callout, CalloutProps } from './Callout'
 import { EtherscanLink } from './EtherscanLink'
 import { ReferenceList, TechnologyReference } from './ReferenceList'
 
@@ -35,6 +37,7 @@ export interface TechnologyContractLinks {
 export interface ContractEntryProps {
   contract: TechnologyContract
   verificationStatus: VerificationStatus
+  diffState?: DiffStateProjectData
   manuallyVerifiedContracts: ManuallyVerifiedContracts
   className?: string
 }
@@ -43,6 +46,7 @@ export function ContractEntry({
   contract,
   verificationStatus,
   manuallyVerifiedContracts,
+  diffState,
   className,
 }: ContractEntryProps) {
   const verificationStatusForChain =
@@ -62,16 +66,38 @@ export function ContractEntry({
     .map((c) => verificationStatusForChain[c])
     .some((c) => c === false)
 
-  const color = areAddressesUnverified || areLinksUnverified ? 'red' : undefined
-  const icon =
-    areAddressesUnverified || areLinksUnverified ? (
+  const changedAddresses = (
+    diffState !== undefined ? Object.values(diffState) : []
+  ).flat()
+  const areAddressesUpdated = changedAddresses.some((ca) =>
+    addresses.includes(ca.containingContract.toString()),
+  )
+
+  let color: CalloutProps['color'] = undefined
+  if (areAddressesUpdated) {
+    color = 'yellow'
+  }
+  if (areAddressesUnverified || areLinksUnverified) {
+    color = 'red'
+  }
+
+  let icon = <BulletIcon className="h-[1em]" />
+  if (areAddressesUpdated) {
+    icon = (
+      <UpdatedContractWarning
+        tooltip="The implementation of the contract has been updated"
+        className="h-[1em]"
+      />
+    )
+  }
+  if (areAddressesUnverified || areLinksUnverified) {
+    icon = (
       <UnverifiedContractsWarning
         className="mt-[3px]"
         tooltip="Source code is not verified"
       />
-    ) : (
-      <BulletIcon className="h-[1em]" />
     )
+  }
 
   addresses.forEach((address) => {
     const manuallyVerified = manuallyVerifiedContractsForChain[address]
@@ -85,7 +111,7 @@ export function ContractEntry({
 
   return (
     <Callout
-      className={cn(color === 'red' ? 'p-4' : 'px-4', className)}
+      className={cn(color === undefined ? 'px-4' : 'p-4', className)}
       color={color}
       icon={icon}
       body={

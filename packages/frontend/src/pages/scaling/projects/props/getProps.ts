@@ -21,7 +21,7 @@ export function getProps(
     verificationStatus,
     manuallyVerifiedContracts,
     diffHistory,
-    diffState
+    diffState,
   } = pagesData
 
   const chart = getChart(project, tvlApiResponse, config, activityApiResponse)

@@ -14,6 +14,7 @@ import { renderPages } from '../pages/renderPages'
 import { createApi } from './api/createApi'
 import { fetchActivityApi } from './api/fetchActivityApi'
 import { fetchDiffHistory } from './api/fetchDiffHistory'
+import { fetchDiffState } from './api/fetchDiffState'
 import { fetchFinalityApi } from './api/fetchFinalityApi'
 import { fetchLivenessApi } from './api/fetchLivenessApi'
 import { fetchTvlApi } from './api/fetchTvlApi'
@@ -25,7 +26,6 @@ import {
 import { activitySanityCheck, tvlSanityCheck } from './api/sanityCheck'
 import { JsonHttpClient } from './caching/JsonHttpClient'
 import { getConfig } from './config'
-import { fetchDiffState } from './api/fetchDiffState'
 
 /**
  * Temporary timeout for HTTP calls due to increased size of new TVL API and flaky connection times
@@ -120,7 +120,7 @@ async function main() {
       livenessApiResponse,
       finalityApiResponse,
       diffHistory,
-      diffState
+      diffState,
     }
 
     await renderPages(config, pagesData)
