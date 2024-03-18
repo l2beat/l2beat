@@ -1,0 +1,10 @@
+{
+  "name": "zklink",
+  "chain": "linea",
+  "blockNumber": 2977936,
+  "configHash": "0x40a8c82ebbdd242257bfeed741a4253aa42cd8e74b7202593b935ba1283ec8fd",
+  "version": 3,
+  "contracts": [],
+  "eoas": ["0x01c3f51294494e350AD69B999Db6B382b3B510b9"],
+  "abis": {}
+}
