@@ -167,7 +167,7 @@ describe(findConfigurationsToSync.name, () => {
     })
   })
 
-  it('should skip configuration uses that are not enabled', () => {
+  it('should skip configurations which updater is not available', () => {
     const configurations: TrackedTxConfigEntry[] = [
       {
         ...CONFIGURATIONS[0],
