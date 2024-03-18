@@ -71,7 +71,7 @@ export const metis: Layer2 = {
   dataAvailability: makeDataAvailabilityConfig({
     type: 'Off chain',
     layers: ['MEMO'],
-    bridge: 'Optimistic',
+    bridge: { type: 'Optimistic' },
     mode: 'Transactions data',
   }),
   riskView: makeBridgeCompatible({

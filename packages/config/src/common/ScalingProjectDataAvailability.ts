@@ -18,7 +18,7 @@ export type OnChainDataAvailabilityLayer =
 type OnChainDataAvailability = {
   type: 'On chain'
   layer: ValueWithSentiment<OnChainDataAvailabilityLayer>
-  bridge: ValueWithSentiment<'Enshrined'>
+  bridge: ValueWithSentiment<{ type: 'Enshrined' }>
   mode: ScalingProjectDataAvailabilityMode
 }
 
@@ -33,11 +33,18 @@ export type OffChainDataAvailabilityLayer =
 export type OffChainDataAvailabilityFallback = OnChainDataAvailabilityLayer
 
 export type OffChainDataAvailabilityBridge =
-  | 'None'
-  | 'Optimistic'
-  | 'DAC Members'
-  | `2/3 Staked Operators`
-  | `${number}/${number} DAC Members`
+  | { type: 'None' }
+  | { type: 'Optimistic' }
+  | {
+      type: 'DAC Members'
+      threshold?: number
+      outOf?: number
+    }
+  | {
+      type: 'Staked Operators'
+      threshold: number
+      outOf: number
+    }
 
 type OffChainDataAvailability = {
   type: 'Off chain'

@@ -11,22 +11,19 @@ import {
 
 type ConfigData = OnChainConfig | OffChainConfig | OffChainDacConfig
 
-interface OnChainConfig {
+export interface OnChainConfig {
   type: 'On chain'
   layer: OnChainDataAvailabilityLayer
   mode: ScalingProjectDataAvailabilityMode
 }
 
-interface OffChainConfig {
+export interface OffChainConfig {
   type: 'Off chain'
   layers: [
     Exclude<OffChainDataAvailabilityLayer, 'DAC'>,
     OffChainDataAvailabilityFallback?,
   ]
-  bridge: Exclude<
-    OffChainDataAvailabilityBridge,
-    `${number}/${number} DAC Members` | `DAC Members`
-  >
+  bridge: Exclude<OffChainDataAvailabilityBridge, { type: 'DAC Members' }>
   mode: ScalingProjectDataAvailabilityMode
 }
 
@@ -68,7 +65,7 @@ function makeOnChainDataAvailabilityConfig(
       sentiment: 'good',
     },
     bridge: {
-      value: 'Enshrined',
+      value: { type: 'Enshrined' },
       description:
         'The validating bridge has access to all the data, as it is posted on chain.',
       sentiment: 'good',
@@ -179,18 +176,15 @@ function getOffChainLayerSentiment(
 }
 
 function getOffChainBridgeDescription(
-  bridge: Exclude<
-    OffChainDataAvailabilityBridge,
-    `${number}/${number} DAC Members` | `DAC Members`
-  >,
+  bridge: Exclude<OffChainDataAvailabilityBridge, { type: 'DAC Members' }>,
 ): string {
-  switch (bridge) {
+  switch (bridge.type) {
     case 'None':
       return 'There is no bridge that can attest if the data has been made available.'
     case 'Optimistic':
       return 'There is a mechanism that allows validators to request that the Sequencer posts data on-chain via L1 contract if they find that data is unavailable.'
-    case '2/3 Staked Operators':
-      return 'There is a threshold of 2/3 of staked operators that must sign and attest that the data has been made available.'
+    case 'Staked Operators':
+      return `There is a threshold of ${bridge.threshold}/${bridge.threshold} of staked operators that must sign and attest that the data has been made available.`
     default:
       assertUnreachable(bridge)
   }
@@ -199,7 +193,7 @@ function getOffChainBridgeDescription(
 function getOffChainBridgeSentiment(
   bridge: OffChainDataAvailabilityBridge,
 ): Sentiment {
-  if (bridge === 'None' || bridge === 'Optimistic') {
+  if (bridge.type === 'None' || bridge.type === 'Optimistic') {
     return 'bad'
   }
 
@@ -223,8 +217,8 @@ function getOffChainDacDataAvailabilityConfig(
         sentiment: getOffChainLayerSentiment('DAC'),
       },
       bridge: {
-        value: 'DAC Members',
-        sentiment: getOffChainBridgeSentiment('DAC Members'),
+        value: { type: 'DAC Members' },
+        sentiment: getOffChainBridgeSentiment({ type: 'DAC Members' }),
         description: `There is a threshold of DAC members that must sign and attest that the data is correct and available.`,
       },
       mode: data.mode,
@@ -241,7 +235,11 @@ function getOffChainDacDataAvailabilityConfig(
       sentiment: getOffChainLayerSentiment('DAC'),
     },
     bridge: {
-      value: `${requiredSignatures}/${membersCount} DAC Members`,
+      value: {
+        type: 'DAC Members',
+        threshold: requiredSignatures,
+        outOf: membersCount,
+      },
       sentiment: DAC_SENTIMENT(data.config),
       description: `There is a threshold of ${requiredSignatures}/${membersCount} members that must sign and attest that the data is correct and available.`,
     },

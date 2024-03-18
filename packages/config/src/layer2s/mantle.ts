@@ -89,7 +89,11 @@ export const mantle: Layer2 = {
   dataAvailability: makeDataAvailabilityConfig({
     type: 'Off chain',
     layers: ['MantleDA'],
-    bridge: '2/3 Staked Operators',
+    bridge: {
+      type: 'Staked Operators',
+      threshold: 2,
+      outOf: 3,
+    },
     mode: 'Transactions data',
   }),
   riskView: makeBridgeCompatible({

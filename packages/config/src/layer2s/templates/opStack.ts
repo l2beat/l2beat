@@ -15,6 +15,7 @@ import {
   makeDataAvailabilityConfig,
   Milestone,
   NUGGETS,
+  OffChainConfig,
   OffChainDataAvailabilityFallback,
   OffChainDataAvailabilityLayer,
   OPERATOR,
@@ -44,6 +45,7 @@ export const CELESTIA_DA_PROVIDER: DAProvider = {
   name: 'Celestia',
   riskView: RISK_VIEW.DATA_CELESTIA(false),
   technology: TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(false),
+  bridge: { type: 'None' },
 }
 
 export interface DAProvider {
@@ -51,6 +53,7 @@ export interface DAProvider {
   fallback?: OffChainDataAvailabilityFallback
   riskView: ScalingProjectRiskViewEntry
   technology: ScalingProjectTechnologyChoice
+  bridge: OffChainConfig['bridge']
 }
 
 export interface OpStackConfig {
@@ -192,7 +195,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
         ? makeDataAvailabilityConfig({
             type: 'Off chain',
             layers: [daProvider.name, daProvider.fallback],
-            bridge: 'None',
+            bridge: daProvider.bridge,
             mode: 'Transactions data (compressed)',
           })
         : makeDataAvailabilityConfig({
