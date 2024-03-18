@@ -1,7 +1,7 @@
 {
   "name": "amarok",
   "chain": "ethereum",
-  "blockNumber": 19424856,
+  "blockNumber": 19441852,
   "configHash": "0x3c8a5456d35cf4072e55ecbb3eb59af3cc155f13e17aa2a3e9cedd2ae07bb231",
   "version": 3,
   "contracts": [
@@ -19,7 +19,7 @@
         "disputeBlocks": 120,
         "DOMAIN": 6648936,
         "FINALIZED_HASH": "0x0000000000000000000000000000000000000000000000000000000000000001",
-        "getLastCompletedSnapshotId": 950176,
+        "getLastCompletedSnapshotId": 950291,
         "getSnapshotDuration": 1800,
         "home": "0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc",
         "lastSentBlock": 19098811,
@@ -29,7 +29,7 @@
         "MIRROR_DOMAIN": 6648936,
         "mirrorConnector": "0x0000000000000000000000000000000000000000",
         "optimisticMode": true,
-        "outboundRoot": "0xc2f3fba3cf89e4c7f8daae57748f0b54d5ea643fb4cfb88e8e8c85e57a4569b8",
+        "outboundRoot": "0xa9887ce4d134bbded6e8376c42c3d772588ce9573c7cc76296bf0b8fc34e69e7",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "PROCESS_GAS": 850000,
@@ -56,7 +56,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "118381427034735764796334563",
+        "totalSupply": "118401488601597646392367851",
         "totalSupplyAt": []
       }
     },
@@ -177,7 +177,7 @@
       "values": {
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1710317243,
+        "getCurrentTime": 1710523919,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -222,7 +222,7 @@
         "getPendingInboundRootsCount": 0,
         "getSnapshotDuration": 1800,
         "hubDomain": 6648936,
-        "lastSavedAggregateRootTimestamp": 1710314159,
+        "lastSavedAggregateRootTimestamp": 1710513947,
         "MAX_DOMAINS": 500,
         "MERKLE": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
         "minDisputeBlocks": 60,
@@ -231,7 +231,7 @@
         "paused": false,
         "pendingInboundRoots": [170, 169],
         "proposed": "0x0000000000000000000000000000000000000000",
-        "proposedAggregateRootHash": "0x0000000000000000000000000000000000000000000000000000000000000001",
+        "proposedAggregateRootHash": "0x43c097331c3c032480ded70770bea836a237522f1d9075a960ba4fb5895d2282",
         "proposedTimestamp": 0,
         "renounced": false,
         "watcherManager": "0x79e6E0242405A66B2dd8B96DEd3b2F0216Fd417d"
@@ -415,7 +415,7 @@
           "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
         ],
         "getThreshold": 2,
-        "nonce": 583,
+        "nonce": 584,
         "VERSION": "1.3.0"
       }
     },
@@ -687,7 +687,7 @@
         "LIQUIDITY_FEE_NUMERATOR": 9995,
         "lpTokenTargetAddress": "0xf7DE5aCeEeE6091d1103209C337fA00D0B4b9092",
         "maxRoutersPerTransfer": 5,
-        "nonce": 25132,
+        "nonce": 25437,
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "proposed": "0x0000000000000000000000000000000000000000",
