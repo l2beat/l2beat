@@ -91,8 +91,13 @@ async function decodeExecuteCall(
   //   ),
   // )
   const addrToCall = EthereumAddress(parsed.args['upgrade'] as string)
-  const contractName = await discoverContractName(chain, addrToCall)
   const calldata = parsed.args['upgradeCallData'] as string
+  if (chain === 'nova') {
+    // There's no API support on nova.arbiscan.io
+    return `[${chain}] address: ${addrToCall.toString()} calldata: ${calldata}`
+  }
+
+  const contractName = await discoverContractName(chain, addrToCall)
   const decodedCalldata = decodeCalldata(calldata)
   return `[${chain}] ${contractName}.${decodedCalldata}`
 }
