@@ -155,15 +155,75 @@ describe(PriceIndexer.name, () => {
       expect(newSafeHeight).toEqual(fromBeforeMinTimestamp + 1)
     })
   })
+
   describe(PriceIndexer.prototype.initialize.name, () => {
-    // if indexer state is not initialized, it should be initialized
-    // throw when there is an intent to change the minimum timestamp
+    it('initialize state when not initialized', async () => {
+      const stateRepository = mockObject<IndexerStateRepository>({
+        findIndexerState: async () => undefined,
+        add: async () => '',
+      })
+
+      const token = mockObject<PriceConfigEntry>({
+        chain: 'ethereum',
+        address: EthereumAddress.random(),
+        sinceTimestamp: UnixTime.ZERO,
+      })
+
+      const indexer = new PriceIndexer(
+        Logger.SILENT,
+        mockObject<HourlyIndexer>({ subscribe: () => {} }),
+        mockObject<CoingeckoQueryService>({}),
+        stateRepository,
+        mockObject<PricesRepository>({}),
+        token,
+        mockObject<SyncService>({}),
+      )
+
+      await indexer.initialize()
+
+      expect(stateRepository.add).toHaveBeenCalledWith({
+        indexerId: indexer.indexerId,
+        safeHeight: token.sinceTimestamp.toNumber(),
+        minTimestamp: token.sinceTimestamp,
+      })
+    })
+
+    it('throw when there is an intent to change minTimestamp', async () => {
+      const indexerState = {
+        indexerId: 'indexer',
+        safeHeight: 1,
+        minTimestamp: UnixTime.ZERO,
+      }
+
+      const stateRepository = mockObject<IndexerStateRepository>({
+        findIndexerState: async () => {
+          return indexerState
+        },
+      })
+
+      const newToken = {
+        chain: 'ethereum',
+        address: EthereumAddress.random(),
+        sinceTimestamp: indexerState.minTimestamp.add(-1, 'days'),
+      }
+
+      const indexer = new PriceIndexer(
+        Logger.SILENT,
+        mockObject<HourlyIndexer>({ subscribe: () => {} }),
+        mockObject<CoingeckoQueryService>({}),
+        stateRepository,
+        mockObject<PricesRepository>({}),
+        mockObject<PriceConfigEntry>(newToken),
+        mockObject<SyncService>({}),
+      )
+
+      await expect(() => indexer.initialize()).toBeRejectedWith(
+        'Minimum timestamp of this indexer cannot be updated',
+      )
+    })
   })
-  describe(PriceIndexer.prototype.start.name, () => {
-    // calls initialize and super.start
-  })
+
   describe(PriceIndexer.prototype.getSafeHeight.name, () => {
-    // returns the safe height from DB
     it('return state from DB', async () => {
       const safeHeight = 1
       const stateRepository = mockObject<IndexerStateRepository>({
