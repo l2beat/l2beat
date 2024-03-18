@@ -7,6 +7,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
+import { Knex } from 'knex'
 
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
 import { HourlyIndexer } from '../liveness/HourlyIndexer'
@@ -164,9 +165,40 @@ describe(PriceIndexer.name, () => {
   describe(PriceIndexer.prototype.getSafeHeight.name, () => {
     // returns the safe height from DB
   })
+
   describe(PriceIndexer.prototype.setSafeHeight.name, () => {
-    // set safe height in DB
-    // get minTimestamp if safe height is lower than minTimestamp
+    it('save minTimestamp if safeHeight is before minTimestamp', async () => {
+      const now = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
+
+      const stateRepository = mockObject<IndexerStateRepository>({
+        setSafeHeight: async () => 1,
+      })
+
+      const token = mockObject<PriceConfigEntry>({
+        chain: 'ethereum',
+        address: EthereumAddress.random(),
+        sinceTimestamp: now.add(1, 'days'),
+      })
+
+      const indexer = new PriceIndexer(
+        Logger.SILENT,
+        mockObject<HourlyIndexer>({ subscribe: () => {} }),
+        mockObject<CoingeckoQueryService>({}),
+        stateRepository,
+        mockObject<PricesRepository>({}),
+        token,
+        mockObject<SyncService>({}),
+      )
+
+      const trx = mockObject<Knex.Transaction>()
+      await indexer.setSafeHeight(now.toNumber(), trx)
+
+      expect(stateRepository.setSafeHeight).toHaveBeenCalledWith(
+        indexer.indexerId,
+        token.sinceTimestamp.toNumber(),
+        trx,
+      )
+    })
   })
 
   describe(PriceIndexer.prototype.invalidate.name, () => {
