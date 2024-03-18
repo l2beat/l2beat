@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.46.0
+
+### Minor Changes
+
+- Add sepolia support
+
 ## 0.45.5
 
 ### Patch Changes
