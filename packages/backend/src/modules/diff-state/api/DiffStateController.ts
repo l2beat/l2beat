@@ -1,9 +1,5 @@
 import { ConfigReader, diffDiscovery } from '@l2beat/discovery'
-import {
-  assert,
-  DiffStateApiResponse,
-  DiscoveryDiff,
-} from '@l2beat/shared-pure'
+import { assert, DiffStateApiResponse } from '@l2beat/shared-pure'
 
 import { ChainConverter } from '../../../tools/ChainConverter'
 import { UpdateMonitorRepository } from '../../update-monitor/repositories/UpdateMonitorRepository'
@@ -32,36 +28,33 @@ export class DiffStateController {
           chainId,
         )
 
-        let diffs: DiscoveryDiff[] = []
         const latestContracts = newDiscovery?.discovery?.contracts
-        if (latestContracts) {
-          diffs = diffDiscovery(
-            discovery.contracts,
-            newDiscovery.discovery.contracts,
-            config,
-          )
-        }
-
+        const diffs = latestContracts
+          ? diffDiscovery(discovery.contracts, latestContracts, config)
+          : []
         const implementationChanges = diffs.filter((diff) =>
           diff.diff?.some((f) => f.key && f.key.startsWith('implementation')),
         )
-        if (implementationChanges.length > 0) {
-          result.projects[project] ??= {}
 
-          for (const diff of implementationChanges) {
-            result.projects[project][chain] ??= []
-            assert(latestContracts, 'latestContracts is undefined')
-            const diffedContract = latestContracts.find(
-              (c) => c.address === diff.address,
-            )
-            assert(diffedContract, 'diffedContract is undefined')
-            const newImlementations = diffedContract.implementations ?? []
+        if (implementationChanges.length === 0) {
+          continue
+        }
 
-            result.projects[project][chain].push({
-              containingContract: diff.address,
-              newImlementations,
-            })
-          }
+        result.projects[project] ??= {}
+
+        for (const diff of implementationChanges) {
+          result.projects[project][chain] ??= []
+          assert(latestContracts, 'latestContracts is undefined')
+          const diffedContract = latestContracts.find(
+            (c) => c.address === diff.address,
+          )
+          assert(diffedContract, 'diffedContract is undefined')
+          const newImlementations = diffedContract.implementations ?? []
+
+          result.projects[project][chain].push({
+            containingContract: diff.address,
+            newImlementations,
+          })
         }
       }
     }
