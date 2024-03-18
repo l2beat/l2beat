@@ -112,4 +112,33 @@ describe(SyncService.name, () => {
       expect(toTimestamp).toEqual(expected2)
     })
   })
+
+  describe(SyncService.prototype.shouldTimestampBeSynced.name, () => {
+    const now = UnixTime.fromDate(new Date('2023-05-01T00:00:00Z'))
+
+    const clock = mockObject<Clock>({
+      getLastHour: () => now,
+    })
+
+    const syncService = new SyncService(clock, {
+      chainsMinTimestamp: { ethereum: UnixTime.ZERO },
+      removeHourlyAfterDays: 10,
+      removeSixHourlyAfterDays: 93,
+    })
+    it('return true if timestamp should be synced', () => {
+      const result = syncService.shouldTimestampBeSynced(
+        'ethereum',
+        now.add(-1, 'hours'),
+      )
+      expect(result).toEqual(true)
+    })
+
+    it('return false if timestamp should not be synced', () => {
+      const result = syncService.shouldTimestampBeSynced(
+        'ethereum',
+        now.add(365, 'days').add(-1, 'hours'),
+      )
+      expect(result).toEqual(true)
+    })
+  })
 })
