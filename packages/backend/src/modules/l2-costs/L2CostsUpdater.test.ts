@@ -190,7 +190,7 @@ function getMockRuntimeConfigurations(): TrackedTxConfigEntry[] {
       projectId: ProjectId('test'),
       address: EthereumAddress.random(),
       selector: '0x',
-      sinceTimestamp: MIN_TIMESTAMP,
+      sinceTimestampInclusive: MIN_TIMESTAMP,
       uses: [
         {
           type: 'liveness',
@@ -204,7 +204,7 @@ function getMockRuntimeConfigurations(): TrackedTxConfigEntry[] {
       projectId: ProjectId('test2'),
       address: EthereumAddress.random(),
       selector: '0x',
-      sinceTimestamp: MIN_TIMESTAMP,
+      sinceTimestampInclusive: MIN_TIMESTAMP,
       uses: [
         {
           type: 'liveness',

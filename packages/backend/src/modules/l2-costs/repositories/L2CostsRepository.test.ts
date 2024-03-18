@@ -64,7 +64,7 @@ describeDatabase(L2CostsRepository.name, (database) => {
         id: d.trackedTxId,
         projectId: ProjectId('project'),
         type: 'liveness',
-        sinceTimestamp: START,
+        sinceTimestampInclusive: START,
         debugInfo: '',
       })),
     )
@@ -178,7 +178,7 @@ describeDatabase(L2CostsRepository.name, (database) => {
           id: trackedTxId,
           projectId: ProjectId('project'),
           type: 'liveness',
-          sinceTimestamp: START,
+          sinceTimestampInclusive: START,
           debugInfo: '',
         },
       ])
