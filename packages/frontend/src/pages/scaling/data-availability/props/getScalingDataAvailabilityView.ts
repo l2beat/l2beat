@@ -1,4 +1,4 @@
-import { Layer2, ScalingProjectDataAvailability } from '@l2beat/config'
+import { Layer2 } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 
 import { orderByTvl } from '../../../../utils/orderByTvl'
@@ -38,27 +38,9 @@ function getScalingDataAvailabilityViewEntry(
     purposes: project.display.purposes,
     stage: project.stage,
     dataAvailability: {
-      layer: getDataAvailabilityLayer(project.dataAvailability),
+      layer: project.dataAvailability.layer,
       bridge: project.dataAvailability.bridge,
       mode: project.dataAvailability.mode,
     },
-  }
-}
-
-export function getDataAvailabilityLayer(da: ScalingProjectDataAvailability) {
-  if (da.type === 'On chain') {
-    return da.layer
-  }
-
-  if (!da.layers.values[1]) {
-    return {
-      ...da.layers,
-      value: da.layers.values[0],
-    }
-  }
-
-  return {
-    ...da.layers,
-    value: da.layers.values.join(' or '),
   }
 }
