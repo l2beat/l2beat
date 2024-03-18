@@ -8,6 +8,7 @@ import { beamerbridgev2 } from './beamerBridgeV2'
 import { cBridge } from './cBridge'
 import { chainport } from './chainport'
 import { connext } from './connext'
+import { davos } from './davos'
 import { debridge } from './debridge'
 import { gravity } from './gravity'
 import { harmony } from './harmony'
@@ -54,6 +55,7 @@ export const bridges: Bridge[] = [
   cBridge,
   connext,
   debridge,
+  davos,
   gravity,
   harmony,
   chainport,

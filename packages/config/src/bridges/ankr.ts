@@ -33,6 +33,14 @@ export const ankr: Bridge = {
       },
     ],
   },
+  riskView: {
+    validatedBy: {
+      value: 'Third Party',
+      description:
+        'A withdrawal requires a proof signed by an admin-defined consensus EOA.',
+      sentiment: 'bad',
+    },
+  },
   technology: {
     destination: [
       'Arbitrum',
