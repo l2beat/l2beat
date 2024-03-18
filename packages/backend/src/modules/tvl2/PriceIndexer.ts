@@ -7,7 +7,7 @@ import { Knex } from 'knex'
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
 import { HourlyIndexer } from '../liveness/HourlyIndexer'
 import { PricesRecord, PricesRepository } from './repositories/PricesRepository'
-import { SyncService } from './SyncService'
+import { SyncOptimizer } from './SyncOptimizer'
 
 export class PriceIndexer extends ChildIndexer {
   indexerId: string
@@ -19,7 +19,7 @@ export class PriceIndexer extends ChildIndexer {
     private readonly stateRepository: IndexerStateRepository,
     private readonly pricesRepository: PricesRepository,
     private readonly token: PriceConfigEntry,
-    private readonly syncService: SyncService,
+    private readonly syncOptimizer: SyncOptimizer,
   ) {
     super(logger, [parentIndexer])
     this.indexerId = `price_indexer_${token.chain}_${token.address.toString()}`
@@ -35,7 +35,7 @@ export class PriceIndexer extends ChildIndexer {
   override async update(_from: number, _to: number): Promise<number> {
     this.logger.info('Updating...')
 
-    const from = this.syncService.getTimestampToSync(
+    const from = this.syncOptimizer.getTimestampToSync(
       this.token.chain,
       new UnixTime(_from),
       'from',
@@ -46,7 +46,7 @@ export class PriceIndexer extends ChildIndexer {
       return _to
     }
 
-    const to = this.syncService.getTimestampToSync(
+    const to = this.syncOptimizer.getTimestampToSync(
       this.token.chain,
       new UnixTime(_to),
       'to',
@@ -65,7 +65,10 @@ export class PriceIndexer extends ChildIndexer {
       // we filter out timestamps that would be deleted by TVL cleaner
       // performance is not a big issue as we download 80 days worth of prices at once
       .filter((p) =>
-        this.syncService.shouldTimestampBeSynced(this.token.chain, p.timestamp),
+        this.syncOptimizer.shouldTimestampBeSynced(
+          this.token.chain,
+          p.timestamp,
+        ),
       )
       .map((price) => ({
         chain: this.token.chain,

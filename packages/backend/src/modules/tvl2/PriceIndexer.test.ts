@@ -13,7 +13,7 @@ import { IndexerStateRepository } from '../../peripherals/database/repositories/
 import { HourlyIndexer } from '../liveness/HourlyIndexer'
 import { PriceIndexer } from './PriceIndexer'
 import { PricesRepository } from './repositories/PricesRepository'
-import { SyncService } from './SyncService'
+import { SyncOptimizer } from './SyncOptimizer'
 
 describe(PriceIndexer.name, () => {
   describe(PriceIndexer.prototype.update.name, () => {
@@ -57,7 +57,7 @@ describe(PriceIndexer.name, () => {
         addMany: async () => 0,
       })
 
-      const syncService = mockObject<SyncService>({
+      const syncOptimizer = mockObject<SyncOptimizer>({
         getTimestampToSync: mockFn().returnsOnce(from).returnsOnce(to),
         shouldTimestampBeSynced: mockFn()
           .returnsOnce(true)
@@ -80,18 +80,18 @@ describe(PriceIndexer.name, () => {
         stateRepository,
         pricesRepository,
         token,
-        syncService,
+        syncOptimizer,
       )
 
       const newSafeHeight = await indexer.update(from.toNumber(), to.toNumber())
 
-      expect(syncService.getTimestampToSync).toHaveBeenNthCalledWith(
+      expect(syncOptimizer.getTimestampToSync).toHaveBeenNthCalledWith(
         1,
         'ethereum',
         from,
         'from',
       )
-      expect(syncService.getTimestampToSync).toHaveBeenLastCalledWith(
+      expect(syncOptimizer.getTimestampToSync).toHaveBeenLastCalledWith(
         'ethereum',
         to,
         'to',
@@ -121,7 +121,7 @@ describe(PriceIndexer.name, () => {
     it('immediately return when sync scheduled before minimum timestamp', async () => {
       const from = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
 
-      const syncService = mockObject<SyncService>({
+      const syncOptimizer = mockObject<SyncOptimizer>({
         getTimestampToSync: mockFn().returns(from),
       })
 
@@ -135,7 +135,7 @@ describe(PriceIndexer.name, () => {
           chain: 'ethereum',
           address: EthereumAddress.random(),
         }),
-        syncService,
+        syncOptimizer,
       )
 
       const fromBeforeMinTimestamp = 0
@@ -145,7 +145,7 @@ describe(PriceIndexer.name, () => {
         fromBeforeMinTimestamp + 1,
       )
 
-      expect(syncService.getTimestampToSync).toHaveBeenNthCalledWith(
+      expect(syncOptimizer.getTimestampToSync).toHaveBeenNthCalledWith(
         1,
         'ethereum',
         new UnixTime(fromBeforeMinTimestamp),
@@ -176,7 +176,7 @@ describe(PriceIndexer.name, () => {
         stateRepository,
         mockObject<PricesRepository>({}),
         token,
-        mockObject<SyncService>({}),
+        mockObject<SyncOptimizer>({}),
       )
 
       await indexer.initialize()
@@ -214,7 +214,7 @@ describe(PriceIndexer.name, () => {
         stateRepository,
         mockObject<PricesRepository>({}),
         mockObject<PriceConfigEntry>(newToken),
-        mockObject<SyncService>({}),
+        mockObject<SyncOptimizer>({}),
       )
 
       await expect(() => indexer.initialize()).toBeRejectedWith(
@@ -246,7 +246,7 @@ describe(PriceIndexer.name, () => {
           chain: 'chain',
           address: EthereumAddress.random(),
         }),
-        mockObject<SyncService>({}),
+        mockObject<SyncOptimizer>({}),
       )
 
       const result = await indexer.getSafeHeight()
@@ -279,7 +279,7 @@ describe(PriceIndexer.name, () => {
         stateRepository,
         mockObject<PricesRepository>({}),
         token,
-        mockObject<SyncService>({}),
+        mockObject<SyncOptimizer>({}),
       )
 
       const trx = mockObject<Knex.Transaction>()
@@ -309,7 +309,7 @@ describe(PriceIndexer.name, () => {
         mockObject<IndexerStateRepository>({}),
         pricesRepository,
         token,
-        mockObject<SyncService>({}),
+        mockObject<SyncOptimizer>({}),
       )
 
       const targetHeight = 10

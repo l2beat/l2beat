@@ -2,10 +2,10 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { Clock } from '../../tools/Clock'
-import { SyncService } from './SyncService'
+import { SyncOptimizer } from './SyncOptimizer'
 
-describe(SyncService.name, () => {
-  describe(SyncService.prototype.getTimestampToSync.name, () => {
+describe(SyncOptimizer.name, () => {
+  describe(SyncOptimizer.prototype.getTimestampToSync.name, () => {
     const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2023-05-01T01:01:01Z'))
     const SIX_HOURLY_CUTOFF = 10
     const DAILY_CUTOFF = 93
@@ -20,14 +20,14 @@ describe(SyncService.name, () => {
     })
 
     it('returns daily timestamp', () => {
-      const syncService = new SyncService(CLOCK, OPTIONS)
+      const syncOptimizer = new SyncOptimizer(CLOCK, OPTIONS)
 
       // hourly timestamp older than daily cutoff
       const hourlyTimestamp = LAST_HOUR.add(-(DAILY_CUTOFF + 1), 'days').add(
         1,
         'hours',
       )
-      const timestampToSync = syncService.getTimestampToSync(
+      const timestampToSync = syncOptimizer.getTimestampToSync(
         'ethereum',
         hourlyTimestamp,
         'from',
@@ -39,7 +39,7 @@ describe(SyncService.name, () => {
     })
 
     it('returns six hourly timestamp', () => {
-      const syncService = new SyncService(CLOCK, OPTIONS)
+      const syncOptimizer = new SyncOptimizer(CLOCK, OPTIONS)
 
       // hourly timestamp older than daily cutoff
       const hourlyTimestamp = LAST_HOUR.add(
@@ -47,7 +47,7 @@ describe(SyncService.name, () => {
         'days',
       ).add(1, 'hours')
 
-      const timestampToSync = syncService.getTimestampToSync(
+      const timestampToSync = syncOptimizer.getTimestampToSync(
         'ethereum',
         hourlyTimestamp,
         'from',
@@ -59,11 +59,11 @@ describe(SyncService.name, () => {
     })
 
     it('returns hourly timestamp', () => {
-      const syncService = new SyncService(CLOCK, OPTIONS)
+      const syncOptimizer = new SyncOptimizer(CLOCK, OPTIONS)
 
       // hourly timestamp older than daily cutoff
       const hourlyTimestamp = LAST_HOUR.add(-1, 'hours')
-      const timestampToSync = syncService.getTimestampToSync(
+      const timestampToSync = syncOptimizer.getTimestampToSync(
         'ethereum',
         hourlyTimestamp,
         'from',
@@ -75,10 +75,10 @@ describe(SyncService.name, () => {
     })
 
     it('takes minTimestamp into consideration', () => {
-      const syncService = new SyncService(CLOCK, OPTIONS)
+      const syncOptimizer = new SyncOptimizer(CLOCK, OPTIONS)
 
       const timestamp = MIN_TIMESTAMP.add(-1, 'days')
-      const timestampToSync = syncService.getTimestampToSync(
+      const timestampToSync = syncOptimizer.getTimestampToSync(
         'ethereum',
         timestamp,
         'from',
@@ -89,11 +89,11 @@ describe(SyncService.name, () => {
     })
 
     it('takes boundary type into consideration', () => {
-      const syncService = new SyncService(CLOCK, OPTIONS)
+      const syncOptimizer = new SyncOptimizer(CLOCK, OPTIONS)
 
       const timestamp = LAST_HOUR.add(-1, 'hours')
 
-      const fromTimestamp = syncService.getTimestampToSync(
+      const fromTimestamp = syncOptimizer.getTimestampToSync(
         'ethereum',
         timestamp,
         'from',
@@ -102,7 +102,7 @@ describe(SyncService.name, () => {
 
       expect(fromTimestamp).toEqual(expected)
 
-      const toTimestamp = syncService.getTimestampToSync(
+      const toTimestamp = syncOptimizer.getTimestampToSync(
         'ethereum',
         timestamp,
         'to',
@@ -113,20 +113,20 @@ describe(SyncService.name, () => {
     })
   })
 
-  describe(SyncService.prototype.shouldTimestampBeSynced.name, () => {
+  describe(SyncOptimizer.prototype.shouldTimestampBeSynced.name, () => {
     const now = UnixTime.fromDate(new Date('2023-05-01T00:00:00Z'))
 
     const clock = mockObject<Clock>({
       getLastHour: () => now,
     })
 
-    const syncService = new SyncService(clock, {
+    const syncOptimizer = new SyncOptimizer(clock, {
       chainsMinTimestamp: { ethereum: UnixTime.ZERO },
       removeHourlyAfterDays: 10,
       removeSixHourlyAfterDays: 93,
     })
     it('return true if timestamp should be synced', () => {
-      const result = syncService.shouldTimestampBeSynced(
+      const result = syncOptimizer.shouldTimestampBeSynced(
         'ethereum',
         now.add(-1, 'hours'),
       )
@@ -134,7 +134,7 @@ describe(SyncService.name, () => {
     })
 
     it('return false if timestamp should not be synced', () => {
-      const result = syncService.shouldTimestampBeSynced(
+      const result = syncOptimizer.shouldTimestampBeSynced(
         'ethereum',
         now.add(365, 'days').add(-1, 'hours'),
       )

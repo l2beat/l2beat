@@ -16,7 +16,7 @@ import { HourlyIndexer } from '../liveness/HourlyIndexer'
 import { createTvl2StatusRouter } from './api/Tvl2StatusRouter'
 import { PriceIndexer } from './PriceIndexer'
 import { PricesRepository } from './repositories/PricesRepository'
-import { SyncService } from './SyncService'
+import { SyncOptimizer } from './SyncOptimizer'
 
 export function createTvl2Module(
   config: Config,
@@ -55,7 +55,7 @@ export function createTvl2Module(
     mode: UnixTime.now().add(-7, 'days'),
   }
 
-  const syncService = new SyncService(clock, {
+  const syncOptimizer = new SyncOptimizer(clock, {
     chainsMinTimestamp,
     removeHourlyAfterDays: 10,
     removeSixHourlyAfterDays: 93,
@@ -75,7 +75,7 @@ export function createTvl2Module(
         stateRepository,
         pricesRepository,
         price,
-        syncService,
+        syncOptimizer,
       ),
   )
 

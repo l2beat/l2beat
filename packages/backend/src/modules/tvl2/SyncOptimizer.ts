@@ -3,16 +3,16 @@ import { UnixTime } from '@l2beat/shared-pure'
 
 import { Clock } from '../../tools/Clock'
 
-interface SyncServiceOptions {
+interface SyncOptimizerOptions {
   chainsMinTimestamp: Record<string, UnixTime>
   removeHourlyAfterDays: number
   removeSixHourlyAfterDays: number
 }
 
-export class SyncService {
+export class SyncOptimizer {
   constructor(
     private readonly clock: Clock,
-    private readonly options: SyncServiceOptions,
+    private readonly options: SyncOptimizerOptions,
   ) {}
 
   shouldTimestampBeSynced(chain: string, timestamp: UnixTime) {
