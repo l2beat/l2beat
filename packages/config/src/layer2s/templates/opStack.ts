@@ -7,17 +7,16 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
+  DataAvailabilityBridge,
+  DataAvailabilityLayer,
   EXITS,
   FORCE_TRANSACTIONS,
   KnowledgeNugget,
   makeBridgeCompatible,
-  makeDataAvailabilityConfig,
   Milestone,
   NUGGETS,
-  OffChainConfig,
-  OffChainDataAvailabilityFallback,
-  OffChainDataAvailabilityLayer,
   OPERATOR,
   RISK_VIEW,
   ScalingProjectContract,
@@ -49,11 +48,11 @@ export const CELESTIA_DA_PROVIDER: DAProvider = {
 }
 
 export interface DAProvider {
-  name: Exclude<OffChainDataAvailabilityLayer, 'DAC'>
-  fallback?: OffChainDataAvailabilityFallback
+  name: DataAvailabilityLayer
+  fallback?: DataAvailabilityLayer
   riskView: ScalingProjectRiskViewEntry
   technology: ScalingProjectTechnologyChoice
-  bridge: OffChainConfig['bridge']
+  bridge: DataAvailabilityBridge
 }
 
 export interface OpStackConfig {
@@ -192,17 +191,20 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
     chainConfig: templateVars.chainConfig,
     dataAvailability:
       daProvider !== undefined
-        ? makeDataAvailabilityConfig({
-            type: 'Off chain',
-            layers: [daProvider.name, daProvider.fallback],
+        ? addSentimentToDataAvailability({
+            layers: daProvider.fallback
+              ? [daProvider.name, daProvider.fallback]
+              : [daProvider.name],
             bridge: daProvider.bridge,
             mode: 'Transactions data (compressed)',
           })
-        : makeDataAvailabilityConfig({
-            type: 'On chain',
-            layer: templateVars.usesBlobs
-              ? 'Ethereum (blobs or calldata)'
-              : 'Ethereum (calldata)',
+        : addSentimentToDataAvailability({
+            layers: [
+              templateVars.usesBlobs
+                ? 'Ethereum (blobs or calldata)'
+                : 'Ethereum (calldata)',
+            ],
+            bridge: { type: 'Enshrined' },
             mode: 'Transactions data (compressed)',
           }),
     riskView: makeBridgeCompatible({

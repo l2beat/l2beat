@@ -1,28 +1,19 @@
-import { ValueWithSentiment } from '@l2beat/shared-pure'
+export interface DataAvailabilityConfig {
+  layers: DataAvailabilityLayer[]
+  bridge: DataAvailabilityBridge
+  mode: DataAvailabilityMode
+}
 
-export type ScalingProjectDataAvailabilityMode =
+export type DataAvailabilityMode =
   | 'State diffs'
   | 'State diffs (compressed)'
   | 'Transactions data'
   | 'Transactions data (compressed)'
 
-export type ScalingProjectDataAvailability =
-  | OnChainDataAvailability
-  | OffChainDataAvailability
-
-export type OnChainDataAvailabilityLayer =
+export type DataAvailabilityLayer =
   | 'Ethereum (calldata)'
   | 'Ethereum (blobs)'
   | 'Ethereum (blobs or calldata)'
-
-type OnChainDataAvailability = {
-  type: 'On chain'
-  layer: ValueWithSentiment<OnChainDataAvailabilityLayer>
-  bridge: ValueWithSentiment<{ type: 'Enshrined' }>
-  mode: ScalingProjectDataAvailabilityMode
-}
-
-export type OffChainDataAvailabilityLayer =
   | 'MEMO'
   | 'DAC'
   | 'Celestia'
@@ -30,27 +21,13 @@ export type OffChainDataAvailabilityLayer =
   | 'MantleDA'
   | 'FraxtalDA'
 
-export type OffChainDataAvailabilityFallback = OnChainDataAvailabilityLayer
-
-export type OffChainDataAvailabilityBridge =
+export type DataAvailabilityBridge =
   | { type: 'None' }
+  | { type: 'Enshrined' }
   | { type: 'Optimistic' }
-  | {
-      type: 'DAC Members'
-      threshold?: number
-      outOf?: number
-    }
+  | { type: 'DAC Members'; requiredSignatures?: number; membersCount?: number }
   | {
       type: 'Staked Operators'
-      threshold: number
-      outOf: number
+      requiredSignatures: number
+      membersCount: number
     }
-
-type OffChainDataAvailability = {
-  type: 'Off chain'
-  layers: ValueWithSentiment<
-    [OffChainDataAvailabilityLayer, OffChainDataAvailabilityFallback?]
-  >
-  bridge: ValueWithSentiment<OffChainDataAvailabilityBridge>
-  mode: ScalingProjectDataAvailabilityMode
-}

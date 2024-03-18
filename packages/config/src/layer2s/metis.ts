@@ -1,11 +1,11 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
-  makeDataAvailabilityConfig,
   OPERATOR,
   RISK_VIEW,
 } from '../common'
@@ -68,8 +68,7 @@ export const metis: Layer2 = {
       startBlock: 1,
     },
   },
-  dataAvailability: makeDataAvailabilityConfig({
-    type: 'Off chain',
+  dataAvailability: addSentimentToDataAvailability({
     layers: ['MEMO'],
     bridge: { type: 'Optimistic' },
     mode: 'Transactions data',

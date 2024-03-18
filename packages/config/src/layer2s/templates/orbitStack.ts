@@ -2,12 +2,12 @@ import { ContractParameters } from '@l2beat/discovery-types'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
   KnowledgeNugget,
   makeBridgeCompatible,
-  makeDataAvailabilityConfig,
   Milestone,
   OPERATOR,
   RISK_VIEW,
@@ -394,15 +394,15 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           }>('SequencerInbox', 'dacKeyset')
           const { membersCount, requiredSignatures } = DAC
 
-          return makeDataAvailabilityConfig({
-            type: 'Off chain (DAC)',
-            config: { membersCount, requiredSignatures },
+          return addSentimentToDataAvailability({
+            layers: ['DAC'],
+            bridge: { type: 'DAC Members', membersCount, requiredSignatures },
             mode: 'Transactions data (compressed)',
           })
         })()
-      : makeDataAvailabilityConfig({
-          type: 'On chain',
-          layer: 'Ethereum (calldata)',
+      : addSentimentToDataAvailability({
+          layers: ['Ethereum (calldata)'],
+          bridge: { type: 'Enshrined' },
           mode: 'Transactions data (compressed)',
         }),
     riskView: makeBridgeCompatible({
