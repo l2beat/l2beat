@@ -8,6 +8,7 @@ import { ApplicationModule } from './modules/ApplicationModule'
 import { createDiffHistoryModule } from './modules/diff-history/createDiffHistoryModule'
 import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createHealthModule } from './modules/health/HealthModule'
+import { createImplementationChangeModule } from './modules/implementation-change-report/createImplementationChangeModule'
 import { LivenessIndexer } from './modules/liveness/LivenessIndexer'
 import { createLivenessModule } from './modules/liveness/LivenessModule'
 import { createLzOAppsModule } from './modules/lz-oapps/createLzOAppsModule'
@@ -55,6 +56,7 @@ export class Application {
       createActivityModule(config, logger, http, database, clock),
       createUpdateMonitorModule(config, logger, http, database, clock),
       createDiffHistoryModule(config, logger, database),
+      createImplementationChangeModule(config, logger, database),
       createStatusModule(config, logger),
       livenessModule,
       createFinalityModule(
