@@ -2,9 +2,9 @@ import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { describeDatabase } from '../../../test/database'
-import { TrackedTxsConfigsRepository } from '../../tracked-txs/repositories/TrackedTxsConfigsRepository'
-import { TrackedTxId } from '../../tracked-txs/types/TrackedTxId'
+import { describeDatabase } from '../../../../../test/database'
+import { TrackedTxsConfigsRepository } from '../../../repositories/TrackedTxsConfigsRepository'
+import { TrackedTxId } from '../../../types/TrackedTxId'
 import { L2CostsRecord, L2CostsRepository } from './L2CostsRepository'
 
 describeDatabase(L2CostsRepository.name, (database) => {

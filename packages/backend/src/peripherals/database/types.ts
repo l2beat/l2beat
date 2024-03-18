@@ -1,4 +1,4 @@
-import { TransactionData } from '../../modules/l2-costs/types/TransactionData'
+import { TransactionData } from '../../modules/tracked-txs/modules/l2-costs/types/TransactionData'
 
 export {}
 

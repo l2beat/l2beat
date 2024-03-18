@@ -11,8 +11,8 @@ import {
   ApplicationModule,
   ApplicationModuleWithIndexer,
 } from '../ApplicationModule'
-import { createL2CostsModule } from '../l2-costs/L2CostsModule'
 import { HourlyIndexer } from './HourlyIndexer'
+import { createL2CostsModule } from './modules/l2-costs/L2CostsModule'
 import { createLivenessModule } from './modules/liveness/LivenessModule'
 import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsClient } from './TrackedTxsClient'

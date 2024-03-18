@@ -1,10 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
 import { createPublicClient, http } from 'viem'
 
-import { Config } from '../../config'
-import { Database } from '../../peripherals/database/Database'
-import { ViemRpcClient } from '../../peripherals/viem-rpc-client/ViemRpcClient'
-import { ApplicationModuleWithUpdater } from '../ApplicationModule'
+import { Config } from '../../../../config'
+import { Database } from '../../../../peripherals/database/Database'
+import { ViemRpcClient } from '../../../../peripherals/viem-rpc-client/ViemRpcClient'
+import { ApplicationModuleWithUpdater } from '../../../ApplicationModule'
 import { L2CostsUpdater } from './L2CostsUpdater'
 import { L2CostsRepository } from './repositories/L2CostsRepository'
 
