@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 
 import { underReviewL3 } from '../layer2s/templates/underReview'
 import { Layer3 } from './types'
@@ -10,10 +10,11 @@ export const stack: Layer3 = underReviewL3({
     name: 'Stack',
     slug: 'stack',
     description:
-      'Stack Chain is an Optimistic Rollup on Base using OP Stack technology. \
+      'Stack Chain is an Optimistic Rollup on Base using OP stack technology. \
             Stack Chain is a blockchain for bringing points onchain, allowing brands to create and own their loyalty programs.',
     category: 'Optimistic Rollup',
     purposes: ['Social', 'RWA'],
+    provider: 'OP Stack',
     links: {
       websites: ['https://stack.so/'],
       apps: ['https://bridge.stack.so'],
