@@ -8,20 +8,26 @@ export const ImplementationChangeReportChangeData = z.object({
   newImplementations: z.array(branded(z.string(), EthereumAddress)),
 })
 
-export type ImplementationChangeReportChangeData = z.infer<typeof ImplementationChangeReportChangeData>
+export type ImplementationChangeReportChangeData = z.infer<
+  typeof ImplementationChangeReportChangeData
+>
 
 export const ImplementationChangeReportProjectData = z.record(
   z.string(),
   z.array(ImplementationChangeReportChangeData),
 )
 
-export type ImplementationChangeReportProjectData = z.infer<typeof ImplementationChangeReportProjectData>
+export type ImplementationChangeReportProjectData = z.infer<
+  typeof ImplementationChangeReportProjectData
+>
 
 export const ImplementationChangeReportApiResponse = z.object({
   projects: z.record(z.string(), ImplementationChangeReportProjectData),
 })
 
-export type ImplementationChangeReportApiResponse = z.infer<typeof ImplementationChangeReportApiResponse>
+export type ImplementationChangeReportApiResponse = z.infer<
+  typeof ImplementationChangeReportApiResponse
+>
 
 /**
 const example: ImplementationChangeReportApiResponse = {
