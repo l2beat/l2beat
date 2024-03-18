@@ -24,8 +24,8 @@ export interface TrackedTxUseWithId extends Layer2TrackedTxUse {
 interface TrackedTxConfigBase {
   projectId: ProjectId
   uses: TrackedTxUseWithId[]
-  sinceTimestamp: UnixTime
-  untilTimestamp?: UnixTime
+  sinceTimestampInclusive: UnixTime
+  untilTimestampExclusive?: UnixTime
 }
 
 export interface TrackedTxFunctionCallConfig extends TrackedTxConfigBase {

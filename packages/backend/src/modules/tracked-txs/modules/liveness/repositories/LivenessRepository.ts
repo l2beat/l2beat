@@ -10,9 +10,9 @@ import { LivenessRow } from 'knex/types/tables'
 import {
   BaseRepository,
   CheckConvention,
-} from '../../../peripherals/database/BaseRepository'
-import { Database } from '../../../peripherals/database/Database'
-import { TrackedTxId } from '../../tracked-txs/types/TrackedTxId'
+} from '../../../../../peripherals/database/BaseRepository'
+import { Database } from '../../../../../peripherals/database/Database'
+import { TrackedTxId } from '../../../types/TrackedTxId'
 
 export interface LivenessRecord {
   timestamp: UnixTime
@@ -158,7 +158,7 @@ export class LivenessRepository extends BaseRepository {
     const knex = await this.knex(trx)
     return knex('liveness')
       .where('tracked_tx_id', id)
-      .andWhere('timestamp', '>', after.toDate())
+      .andWhere('timestamp', '>=', after.toDate())
       .delete()
   }
 

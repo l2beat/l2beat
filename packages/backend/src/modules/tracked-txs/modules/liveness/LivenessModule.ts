@@ -1,10 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
 
-import { Config } from '../../config'
-import { Database } from '../../peripherals/database/Database'
-import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
-import { Clock } from '../../tools/Clock'
-import { ApplicationModuleWithUpdater } from '../ApplicationModule'
+import { Config } from '../../../../config'
+import { Database } from '../../../../peripherals/database/Database'
+import { IndexerStateRepository } from '../../../../peripherals/database/repositories/IndexerStateRepository'
+import { Clock } from '../../../../tools/Clock'
+import { ApplicationModuleWithUpdater } from '../../../ApplicationModule'
+import { TrackedTxsConfigsRepository } from '../../repositories/TrackedTxsConfigsRepository'
 import { LivenessController } from './api/LivenessController'
 import { createLivenessRouter } from './api/LivenessRouter'
 import { LivenessUpdater } from './LivenessUpdater'
@@ -24,9 +25,14 @@ export function createLivenessModule(
   const indexerStateRepository = new IndexerStateRepository(database, logger)
   const livenessRepository = new LivenessRepository(database, logger)
   const livenessUpdater = new LivenessUpdater(livenessRepository, logger)
+  const trackedTxsConfigsRepository = new TrackedTxsConfigsRepository(
+    database,
+    logger,
+  )
 
   const livenessController = new LivenessController(
     livenessRepository,
+    trackedTxsConfigsRepository,
     indexerStateRepository,
     config.projects,
     clock,

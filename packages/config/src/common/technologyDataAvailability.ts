@@ -41,17 +41,21 @@ const STARKEX_ON_CHAIN: ScalingProjectTechnologyChoice = {
   ],
 }
 
-const STARKNET_ON_CHAIN: ScalingProjectTechnologyChoice = {
-  name: 'All data required to reconstruct rollup state is published on chain',
-  description:
-    "State diffs are publish on-chain as calldata on every state update. The state diffs contain information on every contact whose storage was updated, and additional information on contract deployments. From diffs full system state can be recovered. Contracts' code is not published on L1, but can be trustlessly verified if available elsewhere.",
-  risks: [],
-  references: [
-    {
-      text: 'On-Chain Data - Starknet documentation',
-      href: 'https://docs.starknet.io/documentation/architecture_and_concepts/Data_Availability/on-chain-data/',
-    },
-  ],
+const STARKNET_ON_CHAIN = (
+  usesBlobs: boolean = false,
+): ScalingProjectTechnologyChoice => {
+  const blobOr = usesBlobs ? 'blob or ' : ''
+  return {
+    name: 'All data required to reconstruct rollup state is published on chain',
+    description: `State diffs are publish on-chain as ${blobOr}calldata on every state update. The state diffs contain information on every contact whose storage was updated, and additional information on contract deployments. From diffs full system state can be recovered. Contracts' code is not published on L1, but can be trustlessly verified if available elsewhere.`,
+    risks: [],
+    references: [
+      {
+        text: 'On-Chain Data - Starknet documentation',
+        href: 'https://docs.starknet.io/documentation/architecture_and_concepts/Network_Architecture/on-chain-data/',
+      },
+    ],
+  }
 }
 
 const GENERIC_OFF_CHAIN: ScalingProjectTechnologyChoice = {

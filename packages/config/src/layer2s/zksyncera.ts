@@ -1,4 +1,5 @@
 import {
+  assert,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -31,7 +32,7 @@ const executionDelay = discovery.getContractValue<number>(
 const delay = executionDelay > 0 && formatSeconds(executionDelay)
 
 const upgrades = {
-  upgradableBy: ['zkSync Era Multisig'],
+  upgradableBy: ['Matter Labs Multisig'],
   upgradeDelay: 'No delay',
 }
 
@@ -139,8 +140,8 @@ export const zksyncera: Layer2 = {
           selector: '0x7739cbe7',
           functionSignature:
             'function proveBlocks((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32) calldata,(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[] calldata,(uint256[],uint256[]) calldata)',
-          sinceTimestamp: new UnixTime(1679602559),
-          untilTimestamp: new UnixTime(1701718427),
+          sinceTimestampInclusive: new UnixTime(1679602559),
+          untilTimestampExclusive: new UnixTime(1701718427),
         },
       },
       {
@@ -153,7 +154,21 @@ export const zksyncera: Layer2 = {
           selector: '0x7f61885c',
           functionSignature:
             'function proveBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32), tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[], tuple(uint256[], uint256[]))',
-          sinceTimestamp: new UnixTime(1701258299),
+          sinceTimestampInclusive: new UnixTime(1701258299),
+          untilTimestampExclusive: new UnixTime(1710165419),
+        },
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD',
+          ),
+          selector: '0x7f61885c',
+          functionSignature:
+            'function proveBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32), tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[], tuple(uint256[], uint256[]))',
+          sinceTimestampInclusive: new UnixTime(1710165419),
         },
       },
       {
@@ -166,8 +181,8 @@ export const zksyncera: Layer2 = {
           selector: '0xce9dcf16',
           functionSignature:
             'function executeBlocks((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[] calldata _newBlocksData)',
-          sinceTimestamp: new UnixTime(1679602559),
-          untilTimestamp: new UnixTime(1701719687),
+          sinceTimestampInclusive: new UnixTime(1679602559),
+          untilTimestampExclusive: new UnixTime(1701719687),
         },
       },
       {
@@ -180,7 +195,21 @@ export const zksyncera: Layer2 = {
           selector: '0xc3d93e7c',
           functionSignature:
             'function executeBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[] _newBatchesData)',
-          sinceTimestamp: new UnixTime(1701258299),
+          sinceTimestampInclusive: new UnixTime(1701258299),
+          untilTimestampExclusive: new UnixTime(1710167255),
+        },
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD',
+          ),
+          selector: '0xc3d93e7c',
+          functionSignature:
+            'function executeBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[] _newBatchesData)',
+          sinceTimestampInclusive: new UnixTime(1710167255),
         },
       },
     ],
@@ -192,7 +221,7 @@ export const zksyncera: Layer2 = {
   },
   dataAvailability: makeDataAvailabilityConfig({
     type: 'On chain',
-    layer: 'Ethereum (calldata)',
+    layer: 'Ethereum (blobs or calldata)',
     mode: 'State diffs (compressed)',
   }),
   riskView: makeBridgeCompatible({
@@ -409,6 +438,33 @@ export const zksyncera: Layer2 = {
     dataFormat:
       'Details on data format can be found [here](https://github.com/matter-labs/zksync-era/blob/main/docs/guides/advanced/pubdata.md).',
   },
+  upgradesAndGovernance: (() => {
+    const discoveredSecurityCouncilAddress = discovery.getContractValue<string>(
+      'Governance',
+      'securityCouncil',
+    )
+    assert(
+      discoveredSecurityCouncilAddress ===
+        '0x0000000000000000000000000000000000000000',
+      'There is a security council set up for zkSync Era. Change the governance description to reflect that.',
+    )
+    const description = `
+Currently, the Matter Labs multisig (${discovery.getMultisigStats('Matter Labs Multisig')}) is able to instantly upgrade all contracts (including the diamond and its facets) and roles (including the *Governor* role). The *Governor* role that resolves to the multisig is the highest permissioned role defined in the system.
+
+*Governor:* Can access all \`AdminFacet\` functions and thus upgrade the diamond and the related smart contract system. Additionally inherits access to functions for the *Admin* role. Can freeze all freezable Facets (currently \`ExecutorFacet\`, \`MailboxFacet\`) and upgrade the bridges. 
+
+*Validator:* Proposes batches from L2 into the \`ValidatorTimelock\`, from where they can be proven and finally executed (through the \`ExecutorFacet\` of the diamond) after a predefined delay (currently ${formatSeconds(discovery.getContractValue('ValidatorTimelock', 'executionDelay'))}). This allows for freezing the L2 chain within the delay if any suspicious activity was detected. Can be set by the *Admin* or *Governor*. 
+
+*Verifier:* Verifies the zk proofs that were provided by the Validator. Can be changed by calling \`ExecuteUpgrade()\` on the \`AdminFacet\` from the *Governor* role. 
+
+*Admin:* Currently **not set**. Will be able to make non-critical changes like setting the *Validator*. Will be the role of the multisig when higher permissions are restricted to the *Security Council*.
+
+*Security Council:* Currently **not set**. Will share the *Governor* role of the main diamond with the Matter Labs multisig through the Governance smart contract (see below).
+
+A \`Governance\` smart contract is set up as the *Governor* role of the diamond. It includes logic for planning upgrades with parameters like transparency and/or a delay. Currently the delay is optional (minimum delay = ${formatSeconds(discovery.getContractValue('Governance', 'minDelay'))}) and not used by the multisig. The optional transparency may be used in the future to hide instant emergency upgrades by the *Security Council* or delay transparent (thus auditable) governance upgrades. The \`Governance\` smart contract has two roles, an *owner* role and a *securityCouncil* role.
+`
+    return description
+  })(),
   stateValidation: {
     description:
       'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.',
@@ -432,7 +488,7 @@ export const zksyncera: Layer2 = {
   },
   permissions: [
     ...discovery.getMultisigPermission(
-      'zkSync Era Multisig',
+      'Matter Labs Multisig',
       'This MultiSig is the current Governor of zkSync Era main contract and owner of the L1EthBridge. It can upgrade zkSync Era, upgrade bridge, change rollup parameters with no delay.',
     ),
     {

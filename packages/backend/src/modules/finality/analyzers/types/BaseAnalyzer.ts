@@ -7,7 +7,7 @@ import {
 } from '@l2beat/shared-pure'
 
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
-import { LivenessRepository } from '../../../liveness/repositories/LivenessRepository'
+import { LivenessRepository } from '../../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 
 export abstract class BaseAnalyzer {
   constructor(

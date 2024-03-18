@@ -40,7 +40,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         projectId: ProjectId('project1'),
         address: ADDRESS_1,
         selector: SELECTOR_1,
-        sinceTimestamp: SINCE_TIMESTAMP,
+        sinceTimestampInclusive: SINCE_TIMESTAMP,
         uses: [
           {
             type: 'liveness',
@@ -54,7 +54,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         projectId: ProjectId('project1'),
         address: ADDRESS_2,
         selector: SELECTOR_2,
-        sinceTimestamp: SINCE_TIMESTAMP,
+        sinceTimestampInclusive: SINCE_TIMESTAMP,
         uses: [
           {
             type: 'liveness',
@@ -69,7 +69,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       {
         formula: 'sharpSubmission',
         projectId: ProjectId('project2'),
-        sinceTimestamp: SINCE_TIMESTAMP,
+        sinceTimestampInclusive: SINCE_TIMESTAMP,
         programHashes: [paradexProgramHash],
         address: EthereumAddress.random(),
         selector: '0x9b3b76cc',
@@ -85,7 +85,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
 
     const queryResults: BigQueryFunctionCallResult[] = [
       {
-        transaction_hash: txHashes[0],
+        hash: txHashes[0],
         block_number: block,
         block_timestamp: timestamp,
         input: SELECTOR_1,
@@ -95,7 +95,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         transaction_type: 2,
       },
       {
-        transaction_hash: txHashes[1],
+        hash: txHashes[1],
         block_number: block,
         block_timestamp: timestamp,
         input: SELECTOR_2,
@@ -105,7 +105,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         transaction_type: 2,
       },
       {
-        transaction_hash: txHashes[2],
+        hash: txHashes[2],
         block_number: block,
         block_timestamp: timestamp,
         input: sharpInput,
@@ -172,14 +172,14 @@ describe(transformFunctionCallsQueryResult.name, () => {
         projectId: ProjectId('project1'),
         address: ADDRESS_1,
         selector: SELECTOR_1,
-        sinceTimestamp: SINCE_TIMESTAMP,
+        sinceTimestampInclusive: SINCE_TIMESTAMP,
         uses: [],
       },
     ]
 
     const queryResults: BigQueryFunctionCallResult[] = [
       {
-        transaction_hash: txHashes[0],
+        hash: txHashes[0],
         to_address: EthereumAddress.random(),
         input: 'random-string',
         block_number: block,
@@ -200,7 +200,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       {
         formula: 'sharpSubmission',
         projectId: ProjectId('project1'),
-        sinceTimestamp: SINCE_TIMESTAMP,
+        sinceTimestampInclusive: SINCE_TIMESTAMP,
         programHashes: [paradexProgramHash],
         address: EthereumAddress.random(),
         selector: '0x9b3b76cc',
@@ -215,7 +215,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
       {
         formula: 'sharpSubmission',
         projectId: ProjectId('project2'),
-        sinceTimestamp: SINCE_TIMESTAMP,
+        sinceTimestampInclusive: SINCE_TIMESTAMP,
         programHashes: [paradexProgramHash + 'wrong-rest-part-of-hash'],
         address: EthereumAddress.random(),
         selector: 'random-selector-2',
@@ -225,7 +225,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
 
     const queryResults: BigQueryFunctionCallResult[] = [
       {
-        transaction_hash: txHashes[0],
+        hash: txHashes[0],
         to_address: sharpSubmissions[0].address,
         input: sharpInput,
         block_number: block,

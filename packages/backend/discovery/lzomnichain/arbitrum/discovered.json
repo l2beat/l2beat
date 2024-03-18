@@ -1,7 +1,7 @@
 {
   "name": "lzomnichain",
   "chain": "arbitrum",
-  "blockNumber": 187635660,
+  "blockNumber": 190294110,
   "configHash": "0x06cd600f8deaf37b56eec659f0d629230546a5a14e527a5d9e681ec67bcdb389",
   "version": 3,
   "contracts": [
@@ -1285,10 +1285,10 @@
       "unverified": true,
       "upgradeability": {
         "type": "EIP1967 proxy",
-        "implementation": "0x689b871494cdbC9062dFAFF357f5225f94A31F15",
+        "implementation": "0xbDb07dC145386e3A1Ab553CBc0dc383c06420769",
         "admin": "0xa5D625ea24F5aDecB7234Dc62767e18486ed684c"
       },
-      "implementations": ["0x689b871494cdbC9062dFAFF357f5225f94A31F15"],
+      "implementations": ["0xbDb07dC145386e3A1Ab553CBc0dc383c06420769"],
       "sinceTimestamp": 1687808654
     },
     {

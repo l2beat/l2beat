@@ -1,3 +1,4 @@
+import { BigQuery } from '@google-cloud/bigquery'
 import { Logger } from '@l2beat/backend-tools'
 import { notUndefined } from '@l2beat/shared-pure'
 
@@ -6,10 +7,13 @@ import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import { Database } from '../../peripherals/database/Database'
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
 import { Clock } from '../../tools/Clock'
-import { ApplicationModuleWithIndexer } from '../ApplicationModule'
-import { L2CostsUpdater } from '../l2-costs/L2CostsUpdater'
-import { LivenessUpdater } from '../liveness/LivenessUpdater'
+import {
+  ApplicationModule,
+  ApplicationModuleWithIndexer,
+} from '../ApplicationModule'
+import { createL2CostsModule } from '../l2-costs/L2CostsModule'
 import { HourlyIndexer } from './HourlyIndexer'
+import { createLivenessModule } from './modules/liveness/LivenessModule'
 import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsClient } from './TrackedTxsClient'
 import { TrackedTxsIndexer } from './TrackedTxsIndexer'
@@ -19,11 +23,9 @@ export function createTrackedTxsModule(
   logger: Logger,
   database: Database,
   clock: Clock,
-  livenessUpdater: LivenessUpdater | undefined,
-  l2CostsUpdater: L2CostsUpdater | undefined,
 ): ApplicationModuleWithIndexer<TrackedTxsIndexer> | undefined {
-  if (!config.trackedTxsConfig || !livenessUpdater) {
-    logger.info('Tracked transactions module disabled')
+  if (!config.trackedTxsConfig) {
+    logger.info('TrackedTxsModule disabled')
     return
   }
 
@@ -35,16 +37,14 @@ export function createTrackedTxsModule(
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
 
-  const bigQueryClient = new BigQueryClient(
-    {
-      clientEmail: config.trackedTxsConfig.bigQuery.clientEmail,
-      privateKey: config.trackedTxsConfig.bigQuery.privateKey,
-      projectId: config.trackedTxsConfig.bigQuery.projectId,
+  const bigQuery = new BigQuery({
+    credentials: {
+      client_email: config.trackedTxsConfig.bigQuery.clientEmail,
+      private_key: config.trackedTxsConfig.bigQuery.privateKey,
     },
-    config.trackedTxsConfig.bigQuery.queryLimitGb,
-    config.trackedTxsConfig.bigQuery.queryWarningLimitGb,
-    logger,
-  )
+    projectId: config.trackedTxsConfig.bigQuery.projectId,
+  })
+  const bigQueryClient = new BigQueryClient(bigQuery)
 
   const trackedTxsClient = new TrackedTxsClient(bigQueryClient)
 
@@ -52,19 +52,27 @@ export function createTrackedTxsModule(
     .flatMap((project) => project.trackedTxsConfig?.entries)
     .filter(notUndefined)
 
+  const livenessModule = createLivenessModule(config, logger, database, clock)
+  const l2costsModule = createL2CostsModule(config, logger, database)
+
+  const subModules: (ApplicationModule | undefined)[] = [
+    livenessModule,
+    l2costsModule,
+  ]
+
   const updaters = {
-    liveness: livenessUpdater,
-    l2costs: l2CostsUpdater,
+    liveness: livenessModule?.updater,
+    l2costs: l2costsModule?.updater,
   }
 
   const trackedTxsIndexer = new TrackedTxsIndexer(
     logger,
     hourlyIndexer,
+    updaters,
     trackedTxsClient,
     indexerStateRepository,
     trackedTxsConfigsRepository,
     runtimeConfigurations,
-    updaters,
     config.trackedTxsConfig.minTimestamp,
   )
 
@@ -73,12 +81,15 @@ export function createTrackedTxsModule(
     logger.info('Starting...')
 
     await hourlyIndexer.start()
+    for (const subModule of subModules) {
+      await subModule?.start?.()
+    }
     await trackedTxsIndexer.start()
   }
 
   return {
     start,
-    routers: [],
+    routers: subModules.flatMap((m) => m?.routers ?? []),
     indexer: trackedTxsIndexer,
   }
 }

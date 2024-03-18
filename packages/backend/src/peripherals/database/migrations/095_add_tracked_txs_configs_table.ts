@@ -24,8 +24,8 @@ export async function up(knex: Knex) {
     table.string('type').notNullable()
     table.string('subtype')
     table.string('debug_info').notNullable()
-    table.dateTime('since_timestamp', { useTz: false })
-    table.dateTime('until_timestamp', { useTz: false })
+    table.dateTime('since_timestamp_inclusive', { useTz: false })
+    table.dateTime('until_timestamp_exclusive', { useTz: false })
     table.dateTime('last_synced_timestamp', { useTz: false })
   })
 
@@ -58,8 +58,8 @@ export async function down(knex: Knex) {
     table.string('project_id').notNullable()
     table.string('type').notNullable()
     table.string('debug_info').notNullable()
-    table.dateTime('since_timestamp', { useTz: false }).notNullable()
-    table.dateTime('until_timestamp', { useTz: false })
+    table.dateTime('since_timestamp_inclusive', { useTz: false }).notNullable()
+    table.dateTime('until_timestamp_exclusive', { useTz: false })
     table.dateTime('last_synced_timestamp', { useTz: false })
   })
 

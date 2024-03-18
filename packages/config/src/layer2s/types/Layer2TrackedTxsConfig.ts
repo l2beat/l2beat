@@ -22,21 +22,21 @@ interface FunctionCall {
   address: EthereumAddress
   selector: `0x${string}`
   functionSignature: string
-  sinceTimestamp: UnixTime
-  untilTimestamp?: UnixTime
+  sinceTimestampInclusive: UnixTime
+  untilTimestampExclusive?: UnixTime
 }
 
 interface Transfer {
   formula: 'transfer'
   from: EthereumAddress
   to: EthereumAddress
-  sinceTimestamp: UnixTime
-  untilTimestamp?: UnixTime
+  sinceTimestampInclusive: UnixTime
+  untilTimestampExclusive?: UnixTime
 }
 
 interface SharpSubmission {
   formula: 'sharpSubmission'
   programHashes: string[]
-  sinceTimestamp: UnixTime
-  untilTimestamp?: UnixTime
+  sinceTimestampInclusive: UnixTime
+  untilTimestampExclusive?: UnixTime
 }

@@ -68,7 +68,7 @@ const freezeGracePeriodUSDC = discovery.getContractValue<number>(
 )
 
 const freezeGracePeriodUSDT = discovery.getContractValue<number>(
-  'StarkExchangeUSDC',
+  'StarkExchangeUSDT',
   'FREEZE_GRACE_PERIOD',
 )
 

@@ -80,8 +80,8 @@ const CONFIGURATIONS: TrackedTxConfigEntry[] = [
     formula: 'transfer',
     from: ADDRESS_1,
     to: ADDRESS_2,
-    sinceTimestamp: FROM,
-    untilTimestamp: FROM.add(2, 'days'),
+    sinceTimestampInclusive: FROM,
+    untilTimestampExclusive: FROM.add(2, 'days'),
     uses: [],
   },
   {
@@ -89,14 +89,14 @@ const CONFIGURATIONS: TrackedTxConfigEntry[] = [
     formula: 'functionCall',
     address: ADDRESS_3,
     selector: '0x9aaab648',
-    sinceTimestamp: FROM,
+    sinceTimestampInclusive: FROM,
     uses: [],
   },
   {
     projectId: ProjectId('project1'),
     formula: 'sharpSubmission',
     programHashes: [paradexProgramHash],
-    sinceTimestamp: FROM,
+    sinceTimestampInclusive: FROM,
     address: EthereumAddress.random(),
     selector: '0x9b3b76cc',
     uses: [],
@@ -105,7 +105,7 @@ const CONFIGURATIONS: TrackedTxConfigEntry[] = [
 
 const TRANSFERS_RESPONSE = [
   {
-    transaction_hash: TX_HASH,
+    hash: TX_HASH,
     from_address: (CONFIGURATIONS[0] as TrackedTxTransferConfig).from,
     to_address: (CONFIGURATIONS[0] as TrackedTxTransferConfig).to,
     block_timestamp: toBigQueryDate(FROM),
@@ -124,7 +124,7 @@ const TRANSFERS_RESULT = transformTransfersQueryResult(
 
 const FUNCTIONS_RESPONSE = [
   {
-    transaction_hash: TX_HASH,
+    hash: TX_HASH,
     block_number: BLOCK,
     block_timestamp: toBigQueryDate(FROM),
     to_address: (CONFIGURATIONS[1] as TrackedTxFunctionCallConfig).address,
@@ -134,7 +134,7 @@ const FUNCTIONS_RESPONSE = [
     transaction_type: 2,
   },
   {
-    transaction_hash: TX_HASH,
+    hash: TX_HASH,
     block_number: BLOCK,
     block_timestamp: toBigQueryDate(FROM),
     to_address: (CONFIGURATIONS[2] as TrackedTxFunctionCallConfig).address,

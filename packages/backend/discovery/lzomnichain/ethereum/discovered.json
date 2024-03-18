@@ -1,7 +1,7 @@
 {
   "name": "lzomnichain",
   "chain": "ethereum",
-  "blockNumber": 19375406,
+  "blockNumber": 19433467,
   "configHash": "0x38c81e788a227b76cdd826ec97ae7103ead0801d018f7fce691b635b313a03d0",
   "version": 3,
   "contracts": [
@@ -1372,10 +1372,10 @@
       "unverified": true,
       "upgradeability": {
         "type": "EIP1967 proxy",
-        "implementation": "0xF641db6860FD5f6643D05bD75405a2586a63a141",
+        "implementation": "0x13dff8847EA170eBb8439ce732c0A14Bb49fDd92",
         "admin": "0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5"
       },
-      "implementations": ["0xF641db6860FD5f6643D05bD75405a2586a63a141"],
+      "implementations": ["0x13dff8847EA170eBb8439ce732c0A14Bb49fDd92"],
       "sinceTimestamp": 1687808675
     },
     {

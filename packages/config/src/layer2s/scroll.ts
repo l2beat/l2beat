@@ -162,7 +162,7 @@ export const scroll: Layer2 = {
           selector: '0x31fa742d',
           functionSignature:
             'function finalizeBatchWithProof(bytes _batchHeader,bytes32 _prevStateRoot,bytes32 _postStateRoot,bytes32 _withdrawRoot,bytes _aggrProof)',
-          sinceTimestamp: new UnixTime(1696782323),
+          sinceTimestampInclusive: new UnixTime(1696782323),
         },
       },
       {
@@ -175,7 +175,7 @@ export const scroll: Layer2 = {
           selector: '0x1325aca0',
           functionSignature:
             'function commitBatch(uint8 _version,bytes _parentBatchHeader,bytes[] _chunks,bytes _skippedL1MessageBitmap)',
-          sinceTimestamp: new UnixTime(1696782323),
+          sinceTimestampInclusive: new UnixTime(1696782323),
         },
       },
     ],

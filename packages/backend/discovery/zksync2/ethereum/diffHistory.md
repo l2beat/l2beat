@@ -1,3 +1,61 @@
+Generated with discovered.json: 0xc0158f98e4c7abbca10d59b4d5f862a4fbf0c27c
+
+# Diff at Thu, 14 Mar 2024 16:35:37 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@3ffa91064379f34a2916a1ad4e93791b752e7e9e block: 19425767
+- current block number: 19434460
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19425767 (main branch discovery), not current.
+
+```diff
+    contract zkSync Era Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: None
+      name:
+-        "zkSync Era Multisig"
++        "Matter Labs Multisig"
+    }
+```
+
+Generated with discovered.json: 0x7439825b1cfed9717b7d64fb67fd18dd4fad9c6b
+
+# Diff at Wed, 13 Mar 2024 11:11:36 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@569d0a5fb269e21eeb1e6c7fdb1a2848a0c6fda7 block: 19418904
+- current block number: 19425767
+
+## Description
+
+A verification parameter named recursionLeafLevelVkHash is updated suggesting a change in how the verifier should prove batches.
+Protocol version is updated from 21 to 22.
+
+## Watched changes
+
+```diff
+    contract zkSync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: None
++++ description: Protocol version, increments with each protocol change
++++ severity: MEDIUM
+      values.getProtocolVersion:
+-        21
++        22
++++ description: Verifier parameters used for proving batches
++++ severity: LOW
+      values.getVerifierParams.1:
+-        "0x062362cb3eaf1f631406cbe19bf2a2c5d0d9ea69d069309a6003addae9f387be"
++        "0x400a4b532c6f072c00d1806ef299300d4c104f4ac55bd8698ade78894fcadc0a"
+    }
+```
+
 Generated with discovered.json: 0xae47dc197c06eb123d220b6f285c6f66bb4e93ca
 
 # Diff at Tue, 12 Mar 2024 12:09:43 GMT:

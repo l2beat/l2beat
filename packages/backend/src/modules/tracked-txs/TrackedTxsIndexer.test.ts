@@ -12,7 +12,7 @@ import { IndexerStateRepository } from '../../peripherals/database/repositories/
 import { HourlyIndexer } from '../tracked-txs/HourlyIndexer'
 import { TrackedTxsClient } from '../tracked-txs/TrackedTxsClient'
 import {
-  adjustToForBigqueryCall,
+  adjustRangeForBigQueryCall,
   findConfigurationsToSync,
 } from '../tracked-txs/utils'
 import { getSafeHeight } from '../tracked-txs/utils/getSafeHeight'
@@ -57,19 +57,19 @@ describe(TrackedTxsIndexer.name, () => {
         trackedTxsClient,
         updaters: mockedUpdaters,
       })
-      const [configurationsToSync, adjustedTo] =
-        await trackedTxIndexer.getConfiguration(from.toNumber(), to.toNumber())
+      const [configurationsToSync, syncTo] =
+        await trackedTxIndexer.getConfigurationsToSync(from, to)
 
       const value = await trackedTxIndexer.update(
         from.toNumber(),
         to.toNumber(),
       )
 
-      expect(value).toEqual(adjustedTo.toNumber())
+      expect(value).toEqual(syncTo.toNumber())
       expect(trackedTxsClient.getData).toHaveBeenOnlyCalledWith(
         configurationsToSync,
         from,
-        adjustedTo,
+        syncTo,
       )
       expect(livenessUpdater.update).toHaveBeenOnlyCalledWith(
         trackedTxResults,
@@ -79,7 +79,7 @@ describe(TrackedTxsIndexer.name, () => {
         configurationRepository.setLastSyncedTimestamp,
       ).toHaveBeenOnlyCalledWith(
         runtimeEntries.flatMap((r) => r.uses.map((u) => u.id)),
-        adjustedTo,
+        syncTo,
         TRX,
       )
     })
@@ -97,19 +97,22 @@ describe(TrackedTxsIndexer.name, () => {
       const trackedTxsClient = mockObject<TrackedTxsClient>({
         getData: async () => [],
       })
-      const adjustedTo = adjustToForBigqueryCall(from.toNumber(), to.toNumber())
+      const { from: _, to: unixTo } = adjustRangeForBigQueryCall(
+        from.toNumber(),
+        to.toNumber(),
+      )
 
       const value = await trackedTxsIndexer.update(
         from.toNumber(),
         to.toNumber(),
       )
 
-      expect(value).toEqual(adjustedTo.toNumber())
+      expect(value).toEqual(unixTo.toNumber())
       expect(trackedTxsClient.getData).not.toHaveBeenCalled()
     })
   })
 
-  describe(TrackedTxsIndexer.prototype.getConfiguration.name, () => {
+  describe(TrackedTxsIndexer.prototype.getConfigurationsToSync.name, () => {
     it('adjusts to and finds configurations to sync', async () => {
       const from = MIN_TIMESTAMP
       const to = from.add(365, 'days')
@@ -124,12 +127,13 @@ describe(TrackedTxsIndexer.name, () => {
       })
 
       const [configurationsToSync, syncTo] =
-        await livenessIndexer.getConfiguration(from.toNumber(), to.toNumber())
+        await livenessIndexer.getConfigurationsToSync(from, to)
 
       const {
         configurationsToSync: expectedConfigurationsToSync,
         syncTo: expectedSyncTo,
       } = findConfigurationsToSync(
+        ['liveness'],
         runtimeEntries,
         databaseEntries,
         from,
@@ -148,14 +152,14 @@ describe(TrackedTxsIndexer.name, () => {
         getMockRuntimeConfigurations()[0],
         {
           ...getMockRuntimeConfigurations()[1],
-          untilTimestamp: MIN_TIMESTAMP.add(1, 'days'),
+          untilTimestampExclusive: MIN_TIMESTAMP.add(1, 'days'),
         },
       ]
 
       const databaseEntries: TrackedTxsConfigRecord[] = [
         mockObject<TrackedTxsConfigRecord>({
-          sinceTimestamp: MIN_TIMESTAMP,
-          untilTimestamp: undefined,
+          sinceTimestampInclusive: MIN_TIMESTAMP,
+          untilTimestampExclusive: undefined,
           lastSyncedTimestamp: undefined,
           type: 'liveness',
           subtype: 'batchSubmissions',
@@ -163,7 +167,7 @@ describe(TrackedTxsIndexer.name, () => {
         }),
         mockObject<TrackedTxsConfigRecord>({
           ...toRecords(runtimeEntries[1])[0],
-          untilTimestamp: undefined,
+          untilTimestampExclusive: undefined,
         }),
         // rest of the configurations would be considered "toAdd"
       ]
@@ -201,10 +205,14 @@ describe(TrackedTxsIndexer.name, () => {
       )
       expect(
         configurationRepository.setUntilTimestamp,
-      ).toHaveBeenOnlyCalledWith(toTrim[0].id, toTrim[0].untilTimestamp, TRX)
+      ).toHaveBeenOnlyCalledWith(
+        toTrim[0].id,
+        toTrim[0].untilTimestampExclusive,
+        TRX,
+      )
       expect(mockedLivenessUpdater.deleteAfter).toHaveBeenOnlyCalledWith(
         toTrim[0].id,
-        toTrim[0].untilTimestamp,
+        toTrim[0].untilTimestampExclusive,
         TRX,
       )
 
@@ -354,13 +362,13 @@ function getMockTrackedTxsIndexer(params: {
       tick: async () => 1,
       subscribe: () => {},
     }),
+    updaters ?? {
+      liveness: mockObject<TxUpdaterInterface>({}),
+    },
     trackedTxsClient ?? mockObject<TrackedTxsClient>({}),
     stateRepository ?? mockObject<IndexerStateRepository>({}),
     configRepository ?? mockObject<TrackedTxsConfigsRepository>({}),
     configs ?? [],
-    updaters ?? {
-      liveness: mockObject<TxUpdaterInterface>({}),
-    },
     MIN_TIMESTAMP,
   )
 }
@@ -399,7 +407,7 @@ function getMockRuntimeConfigurations(): TrackedTxConfigEntry[] {
       projectId: ProjectId('test'),
       address: EthereumAddress.random(),
       selector: '0x',
-      sinceTimestamp: MIN_TIMESTAMP,
+      sinceTimestampInclusive: MIN_TIMESTAMP,
       uses: [
         {
           type: 'liveness',
@@ -413,7 +421,7 @@ function getMockRuntimeConfigurations(): TrackedTxConfigEntry[] {
       projectId: ProjectId('test2'),
       address: EthereumAddress.random(),
       selector: '0x',
-      sinceTimestamp: MIN_TIMESTAMP,
+      sinceTimestampInclusive: MIN_TIMESTAMP,
       uses: [
         {
           type: 'liveness',
@@ -473,8 +481,8 @@ function toRecords(
     projectId: entry.projectId,
     type: use.type,
     subtype: use.subtype,
-    sinceTimestamp: entry.sinceTimestamp,
-    untilTimestamp: entry.untilTimestamp,
+    sinceTimestampInclusive: entry.sinceTimestampInclusive,
+    untilTimestampExclusive: entry.untilTimestampExclusive,
     debugInfo: '',
     lastSyncedTimestamp,
   }))

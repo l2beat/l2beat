@@ -1,3 +1,108 @@
+Generated with discovered.json: 0x6cd94aaadac1762751f4e95ba2a134f51e1b436b
+
+# Diff at Tue, 12 Mar 2024 14:47:07 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@28a94a6f03cba215bffdba08f227fba4f8d9ef95 block: 132779316
+- current block number: 189651036
+
+## Description
+
+The security council is swapped for two new cohorts.
+Context: First Arbitrum security council elections in september 2023.
+
+## Watched changes
+
+```diff
+    contract SC9 (0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641) {
+    +++ description: None
+      values.getOwners.5:
+-        "0x8e6247239CBeB3Eaf9d9a691D01A67e2A9Fea3C5"
++        "0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd"
+      values.getOwners.4:
+-        "0x88910996671162953E89DdcE5C8137f9077da217"
++        "0x3Bd8e2AC65ad6f0F094BA6766cBd9484AB49eF23"
+      values.getOwners.3:
+-        "0x8688515028955734350067695939423222009623"
++        "0xb07dc9103328A51128bC6Cc1049d1137035f5E28"
+      values.getOwners.2:
+-        "0x0E5011001cF9c89b0259BC3B050785067495eBf5"
++        "0x3E286452b1C66abB08Eb5494c3894F40aB5a59AF"
+      values.getOwners.1:
+-        "0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd"
++        "0xb71ca4FFbB7b58d75Ba29891ab45e9Dc12B444Ed"
+      values.getOwners.0:
+-        "0x526C0DA9970E7331d171f86AeD28FAFB5D8A49EF"
++        "0x8F10e3413586c4a8DCfcE19D009872b19e9cd8E3"
+    }
+```
+
+```diff
+    contract SC7 (0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941) {
+    +++ description: None
+      values.getOwners.5:
+-        "0x8e6247239CBeB3Eaf9d9a691D01A67e2A9Fea3C5"
++        "0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd"
+      values.getOwners.4:
+-        "0x88910996671162953E89DdcE5C8137f9077da217"
++        "0x3Bd8e2AC65ad6f0F094BA6766cBd9484AB49eF23"
+      values.getOwners.3:
+-        "0x8688515028955734350067695939423222009623"
++        "0xb07dc9103328A51128bC6Cc1049d1137035f5E28"
+      values.getOwners.2:
+-        "0x0E5011001cF9c89b0259BC3B050785067495eBf5"
++        "0x3E286452b1C66abB08Eb5494c3894F40aB5a59AF"
+      values.getOwners.1:
+-        "0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd"
++        "0xb71ca4FFbB7b58d75Ba29891ab45e9Dc12B444Ed"
+      values.getOwners.0:
+-        "0x526C0DA9970E7331d171f86AeD28FAFB5D8A49EF"
++        "0x8F10e3413586c4a8DCfcE19D009872b19e9cd8E3"
+      values.nonce:
+-        2
++        4
+    }
+```
+
+```diff
+    contract SecurityCouncilManager (0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) {
+    +++ description: None
+      values.getBothCohorts.5:
+-        "0x8e6247239CBeB3Eaf9d9a691D01A67e2A9Fea3C5"
++        "0x8F10e3413586c4a8DCfcE19D009872b19e9cd8E3"
+      values.getBothCohorts.4:
+-        "0x88910996671162953E89DdcE5C8137f9077da217"
++        "0xb71ca4FFbB7b58d75Ba29891ab45e9Dc12B444Ed"
+      values.getBothCohorts.3:
+-        "0x8688515028955734350067695939423222009623"
++        "0x3E286452b1C66abB08Eb5494c3894F40aB5a59AF"
+      values.getBothCohorts.2:
+-        "0x0E5011001cF9c89b0259BC3B050785067495eBf5"
++        "0xb07dc9103328A51128bC6Cc1049d1137035f5E28"
+      values.getBothCohorts.0:
+-        "0x526C0DA9970E7331d171f86AeD28FAFB5D8A49EF"
++        "0x3Bd8e2AC65ad6f0F094BA6766cBd9484AB49eF23"
+      values.getFirstCohort.5:
+-        "0x8e6247239CBeB3Eaf9d9a691D01A67e2A9Fea3C5"
++        "0x8F10e3413586c4a8DCfcE19D009872b19e9cd8E3"
+      values.getFirstCohort.4:
+-        "0x88910996671162953E89DdcE5C8137f9077da217"
++        "0xb71ca4FFbB7b58d75Ba29891ab45e9Dc12B444Ed"
+      values.getFirstCohort.3:
+-        "0x8688515028955734350067695939423222009623"
++        "0x3E286452b1C66abB08Eb5494c3894F40aB5a59AF"
+      values.getFirstCohort.2:
+-        "0x0E5011001cF9c89b0259BC3B050785067495eBf5"
++        "0xb07dc9103328A51128bC6Cc1049d1137035f5E28"
+      values.getFirstCohort.0:
+-        "0x526C0DA9970E7331d171f86AeD28FAFB5D8A49EF"
++        "0x3Bd8e2AC65ad6f0F094BA6766cBd9484AB49eF23"
+      values.updateNonce:
+-        0
++        1
+    }
+```
+
 Generated with discovered.json: 0x527a540ef29193002240152e1304597d1758aa55
 
 # Diff at Wed, 20 Sep 2023 09:16:00 GMT:

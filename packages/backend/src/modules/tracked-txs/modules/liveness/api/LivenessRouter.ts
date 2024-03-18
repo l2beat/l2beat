@@ -6,8 +6,8 @@ import {
 } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
-import { withTypedContext } from '../../../api/types'
-import { Config } from '../../../config'
+import { withTypedContext } from '../../../../../api/types'
+import { Config } from '../../../../../config'
 import { LivenessController } from './LivenessController'
 
 export function createLivenessRouter(

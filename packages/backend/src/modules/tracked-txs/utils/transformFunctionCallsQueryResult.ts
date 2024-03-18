@@ -42,7 +42,7 @@ export function transformFunctionCallsQueryResult(
               type: 'functionCall',
               use,
               projectId: config.projectId,
-              hash: r.transaction_hash,
+              hash: r.hash,
               blockNumber: r.block_number,
               blockTimestamp: r.block_timestamp,
               toAddress: r.to_address,

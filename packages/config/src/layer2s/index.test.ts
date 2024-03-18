@@ -1,4 +1,5 @@
 import {
+  assertUnreachable,
   EthereumAddress,
   gatherAddressesFromUpgradeability,
   UnixTime,
@@ -112,6 +113,36 @@ describe('layer2s', () => {
               const fragment = i.fragments[0]
               const calculatedSignature = i.getSighash(fragment)
               expect(calculatedSignature).toEqual(c.selector)
+            })
+          }
+        })
+      }
+    })
+
+    it('every current address is present in discovery', () => {
+      for (const project of layer2s) {
+        it(`${project.id.toString()} : has valid addresses`, () => {
+          if (project.config.trackedTxs) {
+            const queries = project.config.trackedTxs.map((t) => t.query)
+
+            const addresses = queries
+              // .filter((x) => x.untilTimestamp === undefined)
+              .flatMap((x) => {
+                switch (x.formula) {
+                  case 'functionCall':
+                    return [x.address]
+                  case 'transfer':
+                    return []
+                  case 'sharpSubmission':
+                    return []
+                  default:
+                    assertUnreachable(x)
+                }
+              })
+
+            const discovery = new ProjectDiscovery(project.id.toString())
+            addresses.forEach((a) => {
+              discovery.getContractByAddress(a.toString())
             })
           }
         })

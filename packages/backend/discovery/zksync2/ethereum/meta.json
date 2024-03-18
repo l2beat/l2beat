@@ -2,6 +2,31 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
+      "name": "Governance",
+      "values": {
+        "minDelay": {
+          "description": "Minimum delay for scheduled upgrades",
+          "severity": "MEDIUM",
+          "type": null
+        },
+        "owner": {
+          "description": "This owner role has all permissions in absence of a security council",
+          "severity": "HIGH",
+          "type": "PERMISSION"
+        },
+        "pendingOwner": {
+          "description": "Pending owner can be set by current owner and accept or renounce ownership",
+          "severity": "HIGH",
+          "type": "PERMISSION"
+        },
+        "securityCouncil": {
+          "description": "Address of the security council, change Governance section if this differs from the null address",
+          "severity": "HIGH",
+          "type": "PERMISSION"
+        }
+      }
+    },
+    {
       "name": "L1ERC20Bridge",
       "values": {
         "l2Bridge": {
@@ -15,6 +40,102 @@
           "type": null
         },
         "l2TokenProxyBytecodeHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Matter Labs Multisig",
+      "description": "Can instantly upgrade all contracts and roles in the zksync Era contracts",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": "Signers of the multisig",
+          "severity": "LOW",
+          "type": "PERMISSION"
+        },
+        "getThreshold": {
+          "description": "Should be 4/8 per official docs",
+          "severity": "HIGH",
+          "type": "PERMISSION"
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ValidatorTimelock",
+      "values": {
+        "constructorArgs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "executionDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getName": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "revertedBlocks": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "validatorsAdded": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "validatorsRemoved": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "zkSyncContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Verifier",
+      "values": {
+        "verificationKeyHash": {
           "description": null,
           "severity": null,
           "type": null
@@ -85,8 +206,8 @@
           "type": null
         },
         "getProtocolVersion": {
-          "description": null,
-          "severity": null,
+          "description": "Protocol version, increments with each protocol change",
+          "severity": "MEDIUM",
           "type": null
         },
         "getTotalBatchesCommitted": {
@@ -130,8 +251,8 @@
           "type": null
         },
         "getVerifierParams": {
-          "description": null,
-          "severity": null,
+          "description": "Verifier parameters used for proving batches",
+          "severity": "LOW",
           "type": null
         },
         "isDiamondStorageFrozen": {
@@ -145,116 +266,6 @@
           "type": null
         },
         "validators": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "Verifier",
-      "values": {
-        "verificationKeyHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "Governance",
-      "values": {
-        "minDelay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pendingOwner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "securityCouncil": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ValidatorTimelock",
-      "values": {
-        "executionDelay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getName": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pendingOwner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "validator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "zkSyncContract": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getCommittedBatchTimestamp": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "zkSync Era Multisig",
-      "values": {
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
           "description": null,
           "severity": null,
           "type": null

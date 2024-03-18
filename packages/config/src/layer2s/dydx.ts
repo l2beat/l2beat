@@ -144,7 +144,7 @@ export const dydx: Layer2 = {
           selector: '0x9b3b76cc',
           functionSignature:
             'function verifyProofAndRegister(uint256[] proofParams, uint256[] proof, uint256[] taskMetadata, uint256[] cairoAuxInput, uint256 cairoVerifierId)',
-          sinceTimestamp: new UnixTime(1615417556),
+          sinceTimestampInclusive: new UnixTime(1615417556),
         },
       },
       {
@@ -157,7 +157,7 @@ export const dydx: Layer2 = {
           selector: '0x538f9406',
           functionSignature:
             'function updateState(uint256[] publicInput, uint256[] applicationData)',
-          sinceTimestamp: new UnixTime(1613033682),
+          sinceTimestampInclusive: new UnixTime(1613033682),
         },
       },
     ],

@@ -24,7 +24,7 @@ export function transformTransfersQueryResult(
             type: 'transfer',
             projectId: matchingConfig.projectId,
             use,
-            hash: r.transaction_hash,
+            hash: r.hash,
             blockNumber: r.block_number,
             blockTimestamp: r.block_timestamp,
             fromAddress: r.from_address,
