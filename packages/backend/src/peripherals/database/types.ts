@@ -193,6 +193,12 @@ declare module 'knex/types/tables' {
     six_hourly_cleaned_until: Date
   }
 
+  interface BlockTimestampRow {
+    chain: string
+    timestamp: Date
+    block_number: number
+  }
+
   interface Tables {
     coingecko_prices: PriceRow
     block_numbers: BlockNumberRow
@@ -221,6 +227,7 @@ declare module 'knex/types/tables' {
     finality: FinalityRow
     tracked_txs_configs: TrackedTxsConfigRow
     prices: PriceRow2
+    block_timestamp: BlockTimestampRow
   }
 }
 
