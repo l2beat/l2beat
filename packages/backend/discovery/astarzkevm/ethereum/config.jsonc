@@ -1,0 +1,56 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "chain": "ethereum",
+  "name": "astarzkevm",
+  "initialAddresses": [
+    "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe", // shared bridge
+    "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80" // astar validium etrog (not found from bridge)
+  ],
+  "names": {
+    "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe": "Bridge",
+    "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2": "PolygonRollupManager",
+    "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb": "PolygonZkEVMGlobalExitRootV2",
+    "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80": "AstarValidiumEtrog",
+    "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF": "Timelock",
+    "0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0": "PolygonDataCommittee"
+  },
+  "overrides": {
+    "Bridge": {
+      "ignoreMethods": ["claimedBitMap"],
+      "ignoreInWatchMode": [
+        "depositCount",
+        "getRoot",
+        "lastUpdatedDepositCount"
+      ]
+    },
+    "PolygonRollupManager": {
+      "ignoreInWatchMode": [
+        "getRollupExitRoot",
+        "lastAggregationTimestamp",
+        "totalSequencedBatches",
+        "totalVerifiedBatches"
+      ],
+      "fields": {
+        "_HALT_AGGREGATION_TIMEOUT": {
+          "type": "hardcoded",
+          "value": 604800
+        }
+      }
+    },
+    "PolygonZkEVMGlobalExitRootV2": {
+      "ignoreInWatchMode": [
+        "getLastGlobalExitRoot",
+        "getRoot",
+        "depositCount",
+        "lastMainnetExitRoot",
+        "lastRollupExitRoot"
+      ]
+    },
+    "PolygonDataCommittee": {
+      "ignoreMethods": ["members"]
+    },
+    "AstarValidiumEtrog": {
+      "ignoreInWatchMode": ["lastAccInputHash"]
+    }
+  }
+}
