@@ -8,11 +8,11 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { Project } from '../../../model/Project'
-import { IndexerStateRepository } from '../../../peripherals/database/repositories/IndexerStateRepository'
-import { Clock } from '../../../tools/Clock'
-import { TrackedTxsConfig } from '../../tracked-txs/types/TrackedTxsConfig'
-import { PriceRepository } from '../../tvl/repositories/PriceRepository'
+import { Project } from '../../../../../model/Project'
+import { IndexerStateRepository } from '../../../../../peripherals/database/repositories/IndexerStateRepository'
+import { Clock } from '../../../../../tools/Clock'
+import { PriceRepository } from '../../../../tvl/repositories/PriceRepository'
+import { TrackedTxsConfig } from '../../../types/TrackedTxsConfig'
 import {
   L2CostsRecord,
   L2CostsRepository,
@@ -263,13 +263,13 @@ export class L2CostsController {
       entries: trackedTxsConfig.entries
         .flatMap((entry) => {
           return entry.uses.flatMap((use) => {
-            if (use.type !== 'fees') {
+            if (use.type !== 'l2costs') {
               return
             }
 
             return {
               subtype: use.subtype,
-              untilTimestamp: entry.untilTimestamp,
+              untilTimestamp: entry.untilTimestampExclusive,
             }
           })
         })
