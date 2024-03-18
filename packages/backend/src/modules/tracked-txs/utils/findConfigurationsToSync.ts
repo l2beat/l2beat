@@ -45,11 +45,12 @@ export function findConfigurationsToSync(
   const configs = runtimeConfigurations
     .map((config) => {
       const filteredUses = config.uses.filter((use) => {
-        const dbEntry = databaseEntries.find((dbEntry) => dbEntry.id === use.id)
-        assert(dbEntry, 'Database entry should not be undefined here!')
         if (!updaterTypes.includes(use.type)) {
           return false
         }
+
+        const dbEntry = databaseEntries.find((dbEntry) => dbEntry.id === use.id)
+        assert(dbEntry, 'Database entry should not be undefined here!')
 
         return isTimestampInRange(
           config.sinceTimestampInclusive,

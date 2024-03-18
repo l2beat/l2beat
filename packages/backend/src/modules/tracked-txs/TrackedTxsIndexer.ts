@@ -29,9 +29,7 @@ export type TrackedTxsIndexerUpdaters = Record<
 
 export class TrackedTxsIndexer extends ChildIndexer {
   readonly indexerId = 'tracked_txs_indexer'
-  readonly updaters: {
-    [key: string]: TxUpdaterInterface
-  }
+  readonly updaters: Partial<TrackedTxsIndexerUpdaters>
 
   constructor(
     logger: Logger,
