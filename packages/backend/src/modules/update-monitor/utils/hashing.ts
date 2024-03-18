@@ -3,6 +3,8 @@ import { Hash160 } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 import { readFileSync, writeFileSync } from 'fs'
 
+import { fileExistsCaseSensitive } from './fsLayer'
+
 const HASH_LINE_PREFIX = 'Generated with discovered.json: '
 
 export async function getDiscoveryHash(
@@ -21,7 +23,10 @@ export async function updateDiffHistoryHash(
   projectName: string,
   chain: string,
 ) {
-  let content = readFileSync(diffHistoryPath, 'utf-8')
+  let content = ''
+  if (fileExistsCaseSensitive(diffHistoryPath)) {
+    content = readFileSync(diffHistoryPath, 'utf-8')
+  }
 
   if (content.startsWith(HASH_LINE_PREFIX)) {
     content = content.split('\n').slice(2).join('\n')
