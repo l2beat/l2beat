@@ -72,17 +72,15 @@ export const zkspace: Layer2 = {
         tokens: '*',
       }),
     ],
-    liveness: {
-      duplicateData: [
-        {
-          from: 'stateUpdates',
-          to: 'proofSubmissions',
-        },
-      ],
-      proofSubmissions: [],
-      batchSubmissions: [],
-      stateUpdates: [
-        {
+    trackedTxs: [
+      {
+        uses: [
+          {
+            type: 'liveness',
+            subtype: 'stateUpdates',
+          },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8',
@@ -90,9 +88,15 @@ export const zkspace: Layer2 = {
           selector: '0x6898e6fc',
           functionSignature:
             'function verifyBlocks(uint32 _blockNumberFrom, uint32 _blockNumberTo, uint256[] _recursiveInput, uint256[] _proof, uint256[] _subProofLimbs)',
-          sinceTimestamp: new UnixTime(1639569183),
+          sinceTimestampInclusive: new UnixTime(1639569183),
         },
-      ],
+      },
+    ],
+    liveness: {
+      duplicateData: {
+        from: 'stateUpdates',
+        to: 'proofSubmissions',
+      },
     },
     finality: 'coming soon',
   },

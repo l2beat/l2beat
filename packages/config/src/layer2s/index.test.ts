@@ -96,15 +96,14 @@ describe('layer2s', () => {
     }
   })
 
-  describe('liveness', () => {
-    it('every project has valid signatures', () => {
+  describe('tracked transactions', () => {
+    it('every tracked transaction which is function call has valid signatures', () => {
       for (const project of layer2s) {
         it(`${project.id.toString()} : has valid signatures`, () => {
-          if (project.config.liveness) {
-            const functionCalls = [
-              ...project.config.liveness.batchSubmissions,
-              ...project.config.liveness.stateUpdates,
-            ].filter((x) => x.formula === 'functionCall') as {
+          if (project.config.trackedTxs?.length !== 0) {
+            const functionCalls = project.config.trackedTxs
+              ?.map((t) => t.query)
+              .filter((x) => x.formula === 'functionCall') as {
               selector: string
               functionSignature: string
             }[]
@@ -123,12 +122,10 @@ describe('layer2s', () => {
     it('every current address is present in discovery', () => {
       for (const project of layer2s) {
         it(`${project.id.toString()} : has valid addresses`, () => {
-          if (project.config.liveness) {
-            const addresses = [
-              ...project.config.liveness.batchSubmissions,
-              ...project.config.liveness.stateUpdates,
-              ...project.config.liveness.proofSubmissions,
-            ]
+          if (project.config.trackedTxs) {
+            const queries = project.config.trackedTxs.map((t) => t.query)
+
+            const addresses = queries
               // .filter((x) => x.untilTimestamp === undefined)
               .flatMap((x) => {
                 switch (x.formula) {

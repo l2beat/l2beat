@@ -99,9 +99,10 @@ export const zksynclite: Layer2 = {
       defaultUrl: 'https://api.zksync.io/api/v0.2',
       defaultCallsPerMinute: 3_000,
     },
-    liveness: {
-      proofSubmissions: [
-        {
+    trackedTxs: [
+      {
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xaBEA9132b05A70803a4E85094fD0e1800777fBEF',
@@ -109,12 +110,12 @@ export const zksynclite: Layer2 = {
           selector: '0x83981808',
           functionSignature:
             'function proveBlocks((uint32,uint64,bytes32,uint256,bytes32,bytes32)[] calldata _committedBlocks, (uint256[],uint256[],uint256[],uint8[],uint256[16]) memory _proof)',
-          sinceTimestamp: new UnixTime(1592218707),
+          sinceTimestampInclusive: new UnixTime(1592218707),
         },
-      ],
-      batchSubmissions: [],
-      stateUpdates: [
-        {
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xaBEA9132b05A70803a4E85094fD0e1800777fBEF',
@@ -122,10 +123,10 @@ export const zksynclite: Layer2 = {
           selector: '0xb0705b42',
           functionSignature:
             'function executeBlocks(((uint32,uint64,bytes32,uint256,bytes32,bytes32),bytes[])[] calldata _blocksData)',
-          sinceTimestamp: new UnixTime(1592218707),
+          sinceTimestampInclusive: new UnixTime(1592218707),
         },
-      ],
-    },
+      },
+    ],
     finality: 'coming soon',
   },
   dataAvailability: addSentimentToDataAvailability({

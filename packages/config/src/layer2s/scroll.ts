@@ -146,16 +146,15 @@ export const scroll: Layer2 = {
       defaultCallsPerMinute: 120,
       startBlock: 1,
     },
-    liveness: {
-      duplicateData: [
-        {
-          from: 'stateUpdates',
-          to: 'proofSubmissions',
-        },
-      ],
-      proofSubmissions: [],
-      stateUpdates: [
-        {
+    trackedTxs: [
+      {
+        uses: [
+          {
+            type: 'liveness',
+            subtype: 'stateUpdates',
+          },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xa13BAF47339d63B743e7Da8741db5456DAc1E556',
@@ -163,11 +162,12 @@ export const scroll: Layer2 = {
           selector: '0x31fa742d',
           functionSignature:
             'function finalizeBatchWithProof(bytes _batchHeader,bytes32 _prevStateRoot,bytes32 _postStateRoot,bytes32 _withdrawRoot,bytes _aggrProof)',
-          sinceTimestamp: new UnixTime(1696782323),
+          sinceTimestampInclusive: new UnixTime(1696782323),
         },
-      ],
-      batchSubmissions: [
-        {
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'batchSubmissions' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xa13BAF47339d63B743e7Da8741db5456DAc1E556',
@@ -175,9 +175,15 @@ export const scroll: Layer2 = {
           selector: '0x1325aca0',
           functionSignature:
             'function commitBatch(uint8 _version,bytes _parentBatchHeader,bytes[] _chunks,bytes _skippedL1MessageBitmap)',
-          sinceTimestamp: new UnixTime(1696782323),
+          sinceTimestampInclusive: new UnixTime(1696782323),
         },
-      ],
+      },
+    ],
+    liveness: {
+      duplicateData: {
+        from: 'stateUpdates',
+        to: 'proofSubmissions',
+      },
     },
     finality: 'coming soon',
   },

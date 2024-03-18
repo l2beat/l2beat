@@ -375,43 +375,53 @@ export const starknet: Layer2 = {
       defaultCallsPerMinute: 120,
     },
     finality: 'coming soon',
-    liveness: {
-      proofSubmissions: [
-        {
+    trackedTxs: [
+      {
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        query: {
           formula: 'sharpSubmission',
-          sinceTimestamp: new UnixTime(1636978914),
-          untilTimestamp: new UnixTime(1702921247),
+          sinceTimestampInclusive: new UnixTime(1636978914),
+          untilTimestampExclusive: new UnixTime(1702921247),
           programHashes: [
             '1865367024509426979036104162713508294334262484507712987283009063059134893433',
           ],
         },
-        {
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        query: {
           formula: 'sharpSubmission',
-          sinceTimestamp: new UnixTime(1702921247),
-          untilTimestamp: new UnixTime(1704855731),
+          sinceTimestampInclusive: new UnixTime(1702921247),
+          untilTimestampExclusive: new UnixTime(1704855731),
           programHashes: [
             '54878256403880350656938046611252303365750679698042371543935159963667935317',
           ],
         },
-        {
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        query: {
           formula: 'sharpSubmission',
-          sinceTimestamp: new UnixTime(1704855731),
-          untilTimestamp: new UnixTime(1710252995),
+          sinceTimestampInclusive: new UnixTime(1704855731),
+          untilTimestampExclusive: new UnixTime(1710252995),
           programHashes: [
             '2479841346739966073527450029179698923866252973805981504232089731754042431018',
           ],
         },
-        {
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        query: {
           formula: 'sharpSubmission',
-          sinceTimestamp: new UnixTime(1710252995),
+          sinceTimestampInclusive: new UnixTime(1710252995),
           programHashes: [
             '109586309220455887239200613090920758778188956576212125550190099009305121410',
           ],
         },
-      ],
-      batchSubmissions: [],
-      stateUpdates: [
-        {
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
@@ -419,9 +429,12 @@ export const starknet: Layer2 = {
           selector: '0x77552641',
           functionSignature:
             'function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)',
-          sinceTimestamp: new UnixTime(1636978914),
+          sinceTimestampInclusive: new UnixTime(1636978914),
         },
-        {
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
@@ -429,10 +442,10 @@ export const starknet: Layer2 = {
           selector: '0xb72d42a1',
           functionSignature:
             'function updateStateKzgDA(uint256[] programOutput, bytes kzgProof)',
-          sinceTimestamp: new UnixTime(1710252995),
+          sinceTimestampInclusive: new UnixTime(1710252995),
         },
-      ],
-    },
+      },
+    ],
   },
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (blobs or calldata)'],

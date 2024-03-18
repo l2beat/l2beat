@@ -82,11 +82,10 @@ export const honeypot: Layer2 = {
         description: 'Contract storing bounty funds.',
       }),
     ],
-    liveness: {
-      proofSubmissions: [],
-      batchSubmissions: [],
-      stateUpdates: [
-        {
+    trackedTxs: [
+      {
+        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f',
@@ -94,10 +93,10 @@ export const honeypot: Layer2 = {
           selector: '0xddfdfbb0',
           functionSignature:
             'function submitClaim(bytes calldata _claimData) external onlyOwner',
-          sinceTimestamp: new UnixTime(1694467715),
+          sinceTimestampInclusive: new UnixTime(1694467715),
         },
-      ],
-    },
+      },
+    ],
   },
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (calldata)'],
