@@ -52,7 +52,6 @@ describe(TrackedTxsIndexer.name, () => {
       const mockedUpdaters = {
         liveness: livenessUpdater,
         l2costs: l2CostsUpdater,
-        // TODO: (fees) while adding fees add a test for 2 updaters and check if it correctly filters txs
       }
 
       const trackedTxIndexer = getMockTrackedTxsIndexer({
@@ -76,7 +75,11 @@ describe(TrackedTxsIndexer.name, () => {
         syncTo,
       )
       expect(livenessUpdater.update).toHaveBeenOnlyCalledWith(
-        trackedTxResults,
+        [trackedTxResults[0], trackedTxResults[1]],
+        TRX,
+      )
+      expect(l2CostsUpdater.update).toHaveBeenOnlyCalledWith(
+        [trackedTxResults[2]],
         TRX,
       )
       expect(
@@ -466,6 +469,23 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       use: {
         id: getMockRuntimeConfigurations()[1].uses[0].id,
         type: 'liveness',
+        subtype: 'stateUpdates',
+      },
+      blockNumber: 1,
+      blockTimestamp: UnixTime.now(),
+      hash: '',
+      fromAddress: EthereumAddress.random(),
+      toAddress: EthereumAddress.random(),
+      projectId: ProjectId('test2'),
+      gasPrice: 20,
+      receiptGasUsed: 200,
+      transactionType: 3,
+    },
+    {
+      type: 'transfer',
+      use: {
+        id: getMockRuntimeConfigurations()[1].uses[0].id,
+        type: 'l2costs',
         subtype: 'stateUpdates',
       },
       blockNumber: 1,
