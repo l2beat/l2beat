@@ -69,6 +69,50 @@ describeDatabase(TrackedTxsConfigsRepository.name, (database) => {
   })
 
   describe(
+    TrackedTxsConfigsRepository.prototype
+      .findLatestSyncedTimestampByProjectIdAndSubtype.name,
+    () => {
+      it('should return latest synced timestamp for given project id and subtype', async () => {
+        await repository.addMany(TRACKED_TXS_RECORDS)
+
+        const latest = UnixTime.now()
+
+        await repository.setLastSyncedTimestamp(
+          [TRACKED_TXS_RECORDS[0].id, TRACKED_TXS_RECORDS[1].id],
+          latest,
+        )
+
+        const results =
+          await repository.findLatestSyncedTimestampByProjectIdAndSubtype(
+            ProjectId('project1'),
+            'batchSubmissions',
+          )
+
+        expect(results).toEqual(latest)
+      })
+
+      it('should return undefined if no latest synced timestamp for given project id and subtype', async () => {
+        await repository.addMany(TRACKED_TXS_RECORDS)
+
+        const firstResult =
+          await repository.findLatestSyncedTimestampByProjectIdAndSubtype(
+            ProjectId('project1'),
+            'batchSubmissions',
+          )
+
+        const secondResult =
+          await repository.findLatestSyncedTimestampByProjectIdAndSubtype(
+            ProjectId('random-project-id'),
+            'batchSubmissions',
+          )
+
+        expect(firstResult).toEqual(undefined)
+        expect(secondResult).toEqual(undefined)
+      })
+    },
+  )
+
+  describe(
     TrackedTxsConfigsRepository.prototype.setLastSyncedTimestamp.name,
     () => {
       it('updates last synced timestamp of given configuration', async () => {

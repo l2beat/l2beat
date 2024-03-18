@@ -77,6 +77,7 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
       .where('project_id', projectId.toString())
       .andWhere('subtype', subtype)
       .first()
+
     return row?.last_synced_timestamp
       ? UnixTime.fromDate(row.last_synced_timestamp)
       : undefined
