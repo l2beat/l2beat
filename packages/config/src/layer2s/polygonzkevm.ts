@@ -184,7 +184,7 @@ export const polygonzkevm: Layer2 = {
           functionSignature:
             'function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)',
           sinceTimestampInclusive: new UnixTime(1679653163),
-          untilTimestampExclusive: new UnixTime(1707822059),
+          untilTimestampExclusive: new UnixTime(1707824735),
         },
       },
       {
@@ -194,10 +194,24 @@ export const polygonzkevm: Layer2 = {
           address: EthereumAddress(
             '0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
           ),
-          selector: '0x5e9145c9',
+          selector: '0xecef3f99',
           functionSignature:
-            'function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)',
-          sinceTimestampInclusive: new UnixTime(1707822059),
+            'function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, address l2Coinbase)',
+          sinceTimestampInclusive: new UnixTime(1707824735),
+          untilTimestampExclusive: new UnixTime(1710419699),
+        },
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'batchSubmissions' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
+          ),
+          selector: '0xdef57e54',
+          functionSignature:
+            'function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint64 maxSequenceTimestamp, uint64 initSequencedBatch, address l2Coinbase)',
+          sinceTimestampInclusive: new UnixTime(1710419699),
         },
       },
       {
