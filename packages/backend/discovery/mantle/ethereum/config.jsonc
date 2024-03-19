@@ -39,10 +39,13 @@
     "0x075a48633dc6845f92339741E9c96b88f1b2A86f": "PauserRegistry",
     "0x4ca725D446EcE6e3fFd3E072A6f2A6a16Ca492D0": "PauserRegistry2",
     "0x78CF48880E9e1b3ab209779c0D8A76f611e53e81": "TssStakingSlashing",
-    "0xD1328C9167e0693B689b5aa5a024379d4e437858": "Rollup",
     "0xa0d79E982bfD3C2ccD09D2E374ddC75fe328f317": "AssertionMap",
     "0x3F77D44E1789D47e076a4d5f2779a1fCAb821C2a": "VerifierEntry",
-    "0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D": "DataLayrChallengeUtils"
+    "0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D": "DataLayrChallengeUtils",
+    "0xca35F8338054739D138884685e08b39EE2217794": "ProxyAdmin",
+    "0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb": "OptimismPortal",
+    "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481": "L2OutputOracle",
+    "0x427Ea0710FA5252057F0D88274f7aeb308386cAf": "SystemConfig"
   },
   "overrides": {
     "AddressManager": {
@@ -174,9 +177,6 @@
       "ignoreMethods": ["get"],
       "ignoreInWatchMode": ["getGlobalMetadata", "length"]
     },
-    "L1CrossDomainMessenger": {
-      "ignoreMethods": ["xDomainMessageSender"]
-    },
     "DataLayrServiceManager": {
       "ignoreMethods": [
         "zeroPolynomialCommitmentMerkleRoots",
@@ -236,14 +236,6 @@
         "getTotalElements"
       ]
     },
-    "Rollup": {
-      "ignoreInWatchMode": [
-        "confirmedInboxSize",
-        "lastConfirmedAssertionID",
-        "lastCreatedAssertionID",
-        "lastResolvedAssertionID"
-      ]
-    },
     "MantleSecondStrat": {
       "ignoreMethods": [
         "sharesToUnderlying",
@@ -265,6 +257,53 @@
     },
     "Owner2Multisig": {
       "ignoreInWatchMode": ["nonce"]
+    },
+    "L1CrossDomainMessenger": {
+      "ignoreMethods": ["xDomainMessageSender"],
+      "ignoreInWatchMode": ["messageNonce"]
+    },
+    "L2OutputOracle": {
+      "ignoreMethods": [
+        "getL2OutputAfter",
+        "getL2OutputIndexAfter",
+        "getL2Output",
+        "computeL2Timestamp"
+      ],
+      "ignoreInWatchMode": [
+        "nextBlockNumber",
+        "nextOutputIndex",
+        "latestBlockNumber",
+        "latestOutputIndex"
+      ],
+      "fields": {
+        "deletedOutputs": {
+          "type": "stateFromEvent",
+          "event": "OutputsDeleted",
+          "returnParams": ["prevNextOutputIndex", "newNextOutputIndex"]
+        }
+      }
+    },
+    "OptimismPortal": {
+      "ignoreMethods": ["isOutputFinalized"],
+      "ignoreInWatchMode": ["params"]
+    },
+    "SystemConfig": {
+      "fields": {
+        // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
+        "batcherHash": {
+          "type": "call",
+          "method": "function batcherHash() view returns (address)",
+          "args": []
+        },
+        "opStackDA": {
+          "type": "opStackDA",
+          "sequencerAddress": "{{ batcherHash }}"
+        },
+        "sequencerInbox": {
+          "type": "opStackSequencerInbox",
+          "sequencerAddress": "{{ batcherHash }}"
+        }
+      }
     }
   }
 }
