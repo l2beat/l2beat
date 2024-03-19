@@ -1,4 +1,4 @@
-import { Layer2, ScalingProjectDataAvailabilityMode } from '@l2beat/config'
+import { DataAvailabilityMode, Layer2 } from '@l2beat/config'
 import {
   FinalityApiResponse,
   FinalityProjectData,
@@ -102,9 +102,7 @@ function getIncludedProjects(
   )
 }
 
-function daModeToDisplay(
-  daMode: ScalingProjectDataAvailabilityMode | undefined,
-) {
+function daModeToDisplay(daMode: DataAvailabilityMode | undefined) {
   if (!daMode) {
     return undefined
   }

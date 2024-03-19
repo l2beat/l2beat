@@ -1,10 +1,10 @@
 import { assert, Logger } from '@l2beat/backend-tools'
-import { EtherscanClient, HttpClient } from '@l2beat/shared'
+import { EtherscanClient } from '@l2beat/shared'
 import { ChainId } from '@l2beat/shared-pure'
-import { providers } from 'ethers'
 
 import { Config } from '../../../config'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
+import { Peripherals } from '../../../peripherals/Peripherals'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { Clock } from '../../../tools/Clock'
 import { CBVUpdater } from '../assets'
@@ -15,14 +15,18 @@ import {
 import { BalanceUpdater } from '../balances/BalanceUpdater'
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { PriceUpdater } from '../PriceUpdater'
-import { TvlDatabase, TvlModule } from './types'
+import { BalanceRepository } from '../repositories/BalanceRepository'
+import { BalanceStatusRepository } from '../repositories/BalanceStatusRepository'
+import { BlockNumberRepository } from '../repositories/BlockNumberRepository'
+import { ReportRepository } from '../repositories/ReportRepository'
+import { ReportStatusRepository } from '../repositories/ReportStatusRepository'
+import { TvlModule } from './types'
 
 export function createEthereumTvlModule(
-  db: TvlDatabase,
+  peripherals: Peripherals,
   priceUpdater: PriceUpdater,
   config: Config,
   logger: Logger,
-  http: HttpClient,
   clock: Clock,
 ): TvlModule | undefined {
   const tvlConfig = config.tvl.ethereum.config
@@ -35,23 +39,18 @@ export function createEthereumTvlModule(
 
   // #region peripherals
 
-  const ethereumProvider = new providers.JsonRpcProvider(tvlConfig.providerUrl)
-
   assert(tvlConfig.blockNumberProviderConfig.type === 'etherscan')
+  const etherscanClient = peripherals.getClient(EtherscanClient, {
+    url: tvlConfig.blockNumberProviderConfig.etherscanApiUrl,
+    apiKey: tvlConfig.blockNumberProviderConfig.etherscanApiKey,
+    chainId: ChainId.ETHEREUM,
+    minTimestamp: tvlConfig.minBlockTimestamp,
+  })
 
-  const etherscanClient = new EtherscanClient(
-    http,
-    tvlConfig.blockNumberProviderConfig.etherscanApiUrl,
-    tvlConfig.blockNumberProviderConfig.etherscanApiKey,
-    tvlConfig.minBlockTimestamp,
-    ChainId.ETHEREUM,
-    logger,
-  )
-  const ethereumClient = new RpcClient(
-    ethereumProvider,
-    logger,
-    tvlConfig.providerCallsPerMinute,
-  )
+  const ethereumClient = peripherals.getClient(RpcClient, {
+    url: tvlConfig.providerUrl,
+    callsPerMinute: tvlConfig.providerCallsPerMinute,
+  })
   const multicallClient = new MulticallClient(
     ethereumClient,
     tvlConfig.multicallConfig,
@@ -69,7 +68,7 @@ export function createEthereumTvlModule(
 
   const ethereumBlockNumberUpdater = new BlockNumberUpdater(
     etherscanClient,
-    db.blockNumberRepository,
+    peripherals.getRepository(BlockNumberRepository),
     clock,
     logger,
     ChainId.ETHEREUM,
@@ -79,8 +78,8 @@ export function createEthereumTvlModule(
   const balanceUpdater = new BalanceUpdater(
     balanceProvider,
     ethereumBlockNumberUpdater,
-    db.balanceRepository,
-    db.balanceStatusRepository,
+    peripherals.getRepository(BalanceRepository),
+    peripherals.getRepository(BalanceStatusRepository),
     clock,
     config.projects,
     logger,
@@ -91,8 +90,8 @@ export function createEthereumTvlModule(
   const cbvUpdater = new CBVUpdater(
     priceUpdater,
     balanceUpdater,
-    db.reportRepository,
-    db.reportStatusRepository,
+    peripherals.getRepository(ReportRepository),
+    peripherals.getRepository(ReportStatusRepository),
     clock,
     config.projects,
     logger,

@@ -10,8 +10,9 @@ import {
 
 import { bridgeToProject, layer2ToProject, Project } from '../../model/Project'
 import { ChainConverter } from '../../tools/ChainConverter'
+import { Tvl2Config } from '../Config'
 
-export function getTvl2Config() {
+export function getTvl2Config(coingeckoApiKey: string | undefined): Tvl2Config {
   const projects = layer2s
     .map(layer2ToProject)
     .concat(bridges.map(bridgeToProject))
@@ -29,6 +30,7 @@ export function getTvl2Config() {
       chainToProject,
     ),
     prices: getPricesConfig(tokenList, chainConverter),
+    coingeckoApiKey,
   }
 
   return tvl2Config

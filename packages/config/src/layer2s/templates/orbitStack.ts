@@ -2,12 +2,12 @@ import { ContractParameters } from '@l2beat/discovery-types'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
   KnowledgeNugget,
   makeBridgeCompatible,
-  makeDataAvailabilityConfig,
   Milestone,
   OPERATOR,
   RISK_VIEW,
@@ -210,23 +210,26 @@ export function orbitStackCommon(
         },
         EXITS.AUTONOMOUS,
       ],
-      smartContracts: templateVars.nonTemplateTechnology?.smartContracts ?? {
-        name: 'EVM compatible smart contracts are supported',
-        description:
-          'Arbitrum One uses Nitro technology that allows running fraud proofs by executing EVM code on top of WASM.',
-        risks: [
-          {
-            category: 'Funds can be lost if',
-            text: 'there are mistakes in the highly complex Nitro and WASM one-step prover implementation.',
-          },
-        ],
-        references: [
-          {
-            text: 'Inside Arbitrum Nitro',
-            href: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/',
-          },
-        ],
-      },
+      otherConsiderations: templateVars.nonTemplateTechnology
+        ?.otherConsiderations ?? [
+        {
+          name: 'EVM compatible smart contracts are supported',
+          description:
+            'Arbitrum One uses Nitro technology that allows running fraud proofs by executing EVM code on top of WASM.',
+          risks: [
+            {
+              category: 'Funds can be lost if',
+              text: 'there are mistakes in the highly complex Nitro and WASM one-step prover implementation.',
+            },
+          ],
+          references: [
+            {
+              text: 'Inside Arbitrum Nitro',
+              href: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/',
+            },
+          ],
+        },
+      ],
     },
     permissions: [
       ...templateVars.discovery.getOrbitStackPermissions({
@@ -394,15 +397,15 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           }>('SequencerInbox', 'dacKeyset')
           const { membersCount, requiredSignatures } = DAC
 
-          return makeDataAvailabilityConfig({
-            type: 'Off chain (DAC)',
-            config: { membersCount, requiredSignatures },
+          return addSentimentToDataAvailability({
+            layers: ['DAC'],
+            bridge: { type: 'DAC Members', membersCount, requiredSignatures },
             mode: 'Transactions data (compressed)',
           })
         })()
-      : makeDataAvailabilityConfig({
-          type: 'On chain',
-          layer: 'Ethereum (calldata)',
+      : addSentimentToDataAvailability({
+          layers: ['Ethereum (calldata)'],
+          bridge: { type: 'Enshrined' },
           mode: 'Transactions data (compressed)',
         }),
     riskView: makeBridgeCompatible({
