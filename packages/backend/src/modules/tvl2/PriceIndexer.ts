@@ -1,5 +1,8 @@
 import { assert, Logger } from '@l2beat/backend-tools'
-import { CoingeckoQueryService } from '@l2beat/shared'
+import {
+  CoingeckoQueryService,
+  MAX_DAYS_FOR_HOURLY_PRECISION,
+} from '@l2beat/shared'
 import { PriceConfigEntry, UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
 import { Knex } from 'knex'
@@ -36,7 +39,11 @@ export class PriceIndexer extends ChildIndexer {
     this.logger.info('Updating...')
 
     const from = new UnixTime(_from).toEndOf('hour')
-    const to = new UnixTime(_to).toStartOf('hour')
+    let to = new UnixTime(_to).toStartOf('hour')
+
+    if (to.gt(from.add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days'))) {
+      to = from.add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days')
+    }
 
     if (from.gt(to)) {
       return _to
@@ -52,7 +59,11 @@ export class PriceIndexer extends ChildIndexer {
 
     const priceRecords: PriceRecord[] = prices
       // we filter out timestamps that would be deleted by TVL cleaner
-      .filter((p) => this.syncOptimizer.shouldTimestampBeSynced(p.timestamp))
+      .filter(
+        (p) =>
+          this.syncOptimizer.shouldTimestampBeSynced(p.timestamp) &&
+          p.timestamp.lt(to),
+      )
       .map((price) => ({
         chain: this.token.chain,
         address: this.token.address,
@@ -63,7 +74,7 @@ export class PriceIndexer extends ChildIndexer {
     await this.priceRepository.addMany(priceRecords)
     this.logger.info('Updated')
 
-    return _to
+    return to.toNumber()
   }
 
   override async getSafeHeight(): Promise<number> {
