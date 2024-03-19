@@ -23,6 +23,13 @@ export class StarknetClient {
     }
   }
 
+  static create(
+    services: { httpClient: HttpClient },
+    options: { url: string; callsPerMinute: number | undefined },
+  ) {
+    return new StarknetClient(options.url, services.httpClient, options)
+  }
+
   async getBlockNumber() {
     const block = await this.getBlock('latest')
     return block.number

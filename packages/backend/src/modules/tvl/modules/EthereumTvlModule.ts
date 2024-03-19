@@ -1,7 +1,6 @@
 import { assert, Logger } from '@l2beat/backend-tools'
-import { EtherscanClient, HttpClient } from '@l2beat/shared'
+import { EtherscanClient } from '@l2beat/shared'
 import { ChainId } from '@l2beat/shared-pure'
-import { providers } from 'ethers'
 
 import { Config } from '../../../config'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
@@ -28,7 +27,6 @@ export function createEthereumTvlModule(
   priceUpdater: PriceUpdater,
   config: Config,
   logger: Logger,
-  http: HttpClient,
   clock: Clock,
 ): TvlModule | undefined {
   const tvlConfig = config.tvl.ethereum.config
@@ -41,24 +39,18 @@ export function createEthereumTvlModule(
 
   // #region peripherals
 
-  const ethereumProvider = new providers.JsonRpcProvider(tvlConfig.providerUrl)
-
   assert(tvlConfig.blockNumberProviderConfig.type === 'etherscan')
+  const etherscanClient = peripherals.getClient(EtherscanClient, {
+    url: tvlConfig.blockNumberProviderConfig.etherscanApiUrl,
+    apiKey: tvlConfig.blockNumberProviderConfig.etherscanApiKey,
+    chainId: ChainId.ETHEREUM,
+    minTimestamp: tvlConfig.minBlockTimestamp,
+  })
 
-  const etherscanClient = new EtherscanClient(
-    http,
-    tvlConfig.blockNumberProviderConfig.etherscanApiUrl,
-    tvlConfig.blockNumberProviderConfig.etherscanApiKey,
-    tvlConfig.minBlockTimestamp,
-    ChainId.ETHEREUM,
-    logger,
-  )
-
-  const ethereumClient = new RpcClient(
-    ethereumProvider,
-    logger,
-    tvlConfig.providerCallsPerMinute,
-  )
+  const ethereumClient = peripherals.getClient(RpcClient, {
+    url: tvlConfig.providerUrl,
+    callsPerMinute: tvlConfig.providerCallsPerMinute,
+  })
   const multicallClient = new MulticallClient(
     ethereumClient,
     tvlConfig.multicallConfig,

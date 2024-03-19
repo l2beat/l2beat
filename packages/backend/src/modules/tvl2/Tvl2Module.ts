@@ -1,10 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { tokenList } from '@l2beat/config'
-import {
-  CoingeckoClient,
-  CoingeckoQueryService,
-  HttpClient,
-} from '@l2beat/shared'
+import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
 
 import { Config } from '../../config'
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
@@ -20,7 +16,6 @@ import { SyncOptimizer } from './SyncOptimizer'
 export function createTvl2Module(
   config: Config,
   logger: Logger,
-  http: HttpClient,
   peripherals: Peripherals,
   clock: Clock,
 ): ApplicationModule | undefined {
@@ -29,10 +24,9 @@ export function createTvl2Module(
     return
   }
 
-  const stateRepository = peripherals.getRepository(IndexerStateRepository)
-  const priceRepository = peripherals.getRepository(PriceRepository)
-
-  const coingeckoClient = new CoingeckoClient(http, config.tvl2.coingeckoApiKey)
+  const coingeckoClient = peripherals.getClient(CoingeckoClient, {
+    apiKey: config.tvl2.coingeckoApiKey,
+  })
   const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
 
   const statusRouter = createTvl2StatusRouter(config.tvl2, clock)
@@ -54,8 +48,8 @@ export function createTvl2Module(
         ),
         hourlyIndexer,
         coingeckoQueryService,
-        stateRepository,
-        priceRepository,
+        peripherals.getRepository(IndexerStateRepository),
+        peripherals.getRepository(PriceRepository),
         price,
         syncOptimizer,
       ),
