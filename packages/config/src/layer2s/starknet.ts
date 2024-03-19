@@ -414,8 +414,19 @@ export const starknet: Layer2 = {
         query: {
           formula: 'sharpSubmission',
           sinceTimestampInclusive: new UnixTime(1710252995),
+          untilTimestampExclusive: new UnixTime(1710625271),
           programHashes: [
             '109586309220455887239200613090920758778188956576212125550190099009305121410',
+          ],
+        },
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestampInclusive: new UnixTime(1710625271),
+          programHashes: [
+            '3383082961563516565935611087683915026448707331436034043529592588079494402084',
           ],
         },
       },
