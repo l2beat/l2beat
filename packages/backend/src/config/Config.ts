@@ -34,6 +34,7 @@ export interface Config {
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
   readonly diffHistory: DiffHistoryConfig | false
+  readonly implementationChangeReporterEnabled: boolean
   readonly lzOAppsEnabled: boolean
   readonly statusEnabled: boolean
   readonly chains: { name: string; chainId: ChainId }[]

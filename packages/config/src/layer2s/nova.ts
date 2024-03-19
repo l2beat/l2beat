@@ -6,11 +6,11 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
-  makeDataAvailabilityConfig,
   MILESTONES,
   NUGGETS,
   OPERATOR,
@@ -124,10 +124,13 @@ export const nova: Layer2 = {
       startBlock: 1,
     },
   },
-  dataAvailability: makeDataAvailabilityConfig({
-    type: 'Off chain (DAC)',
-    fallback: 'Ethereum (calldata)',
-    config: { membersCount, requiredSignatures },
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['DAC', 'Ethereum (calldata)'],
+    bridge: {
+      type: 'DAC Members',
+      membersCount,
+      requiredSignatures,
+    },
     mode: 'Transactions data (compressed)',
   }),
   riskView: makeBridgeCompatible({

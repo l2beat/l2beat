@@ -6,11 +6,11 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
-  makeDataAvailabilityConfig,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
@@ -94,9 +94,10 @@ export const tanx: Layer2 = {
       resyncLastDays: 7,
     },
   },
-  dataAvailability: makeDataAvailabilityConfig({
-    type: 'Off chain (DAC)',
-    config: {
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['DAC'],
+    bridge: {
+      type: 'DAC Members',
       membersCount: committee.accounts.length,
       requiredSignatures: committee.minSigners,
     },

@@ -7,12 +7,12 @@ import {
 import { utils } from 'ethers'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
   makeBridgeCompatible,
-  makeDataAvailabilityConfig,
   RISK_VIEW,
   ScalingProjectPermissionedAccount,
   STATE_CORRECTNESS,
@@ -210,9 +210,9 @@ export const linea: Layer2 = {
     ],
     coingeckoPlatform: 'linea',
   },
-  dataAvailability: makeDataAvailabilityConfig({
-    type: 'On chain',
-    layer: 'Ethereum (calldata)',
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['Ethereum (calldata)'],
+    bridge: { type: 'Enshrined' },
     mode: 'Transactions data (compressed)',
   }),
   riskView: makeBridgeCompatible({

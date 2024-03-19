@@ -8,10 +8,10 @@ import {
 import { utils } from 'ethers'
 
 import {
+  addSentimentToDataAvailability,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
-  makeDataAvailabilityConfig,
   NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
@@ -139,9 +139,9 @@ export const degate3: Layer2 = {
     },
     finality: 'coming soon',
   },
-  dataAvailability: makeDataAvailabilityConfig({
-    type: 'On chain',
-    layer: 'Ethereum (calldata)',
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['Ethereum (calldata)'],
+    bridge: { type: 'Enshrined' },
     mode: 'State diffs',
   }),
   riskView: makeBridgeCompatible({

@@ -1,10 +1,10 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
-  makeDataAvailabilityConfig,
   NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
@@ -87,9 +87,9 @@ export const aztecV1: Layer2 = {
       defaultCallsPerMinute: 3_000,
     },
   },
-  dataAvailability: makeDataAvailabilityConfig({
-    type: 'On chain',
-    layer: 'Ethereum (calldata)',
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['Ethereum (calldata)'],
+    bridge: { type: 'Enshrined' },
     mode: 'State diffs',
   }),
   riskView: makeBridgeCompatible({

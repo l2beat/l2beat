@@ -1,11 +1,11 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
-  makeDataAvailabilityConfig,
   OPERATOR,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
@@ -86,10 +86,13 @@ export const mantle: Layer2 = {
       defaultCallsPerMinute: 1500,
     },
   },
-  dataAvailability: makeDataAvailabilityConfig({
-    type: 'Off chain',
+  dataAvailability: addSentimentToDataAvailability({
     layers: ['MantleDA'],
-    bridge: '2/3 Staked Operators',
+    bridge: {
+      type: 'Staked Operators',
+      requiredSignatures: 2,
+      membersCount: 3,
+    },
     mode: 'Transactions data',
   }),
   riskView: makeBridgeCompatible({
