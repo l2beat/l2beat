@@ -11,5 +11,7 @@ export type Layer2Provider =
 
 export type Layer3Provider =
   | 'Arbitrum Orbit'
-  | 'zkLink Nexus'
   | 'Cartesi Rollups'
+  | 'zkLink Nexus'
+  | 'Taiko'
+  | 'OP Stack'

@@ -6,11 +6,11 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
-  makeDataAvailabilityConfig,
   NEW_CRYPTOGRAPHY,
   NUGGETS,
   OPERATOR,
@@ -97,9 +97,10 @@ export const myria: Layer2 = {
       resyncLastDays: 7,
     },
   },
-  dataAvailability: makeDataAvailabilityConfig({
-    type: 'Off chain (DAC)',
-    config: {
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['DAC'],
+    bridge: {
+      type: 'DAC Members',
       membersCount: committee.accounts.length,
       requiredSignatures: committee.minSigners,
     },

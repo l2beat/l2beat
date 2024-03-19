@@ -149,14 +149,19 @@
           "severity": null,
           "type": null
         },
+        "getLockedBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "insurance": {
           "description": null,
           "severity": null,
           "type": null
         },
         "insuranceFeeBips": {
-          "description": null,
-          "severity": null,
+          "description": "Insurance fee taken from positive yields",
+          "severity": "MEDIUM",
           "type": null
         },
         "insuranceWithdrawalBuffer": {
@@ -914,16 +919,6 @@
           "severity": null,
           "type": null
         },
-        "getLastCheckpointId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getLastFinalizedRequestId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "getLockedBalance": {
           "description": null,
           "severity": null,
@@ -935,8 +930,8 @@
           "type": null
         },
         "insuranceFeeBips": {
-          "description": null,
-          "severity": null,
+          "description": "Insurance fee taken from positive yields",
+          "severity": "MEDIUM",
           "type": null
         },
         "insuranceWithdrawalBuffer": {

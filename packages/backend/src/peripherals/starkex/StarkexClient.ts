@@ -6,7 +6,6 @@ import { parseStarkexApiResponse } from './parseStarkexApiResponse'
 
 interface StarkexClientOpts {
   callsPerMinute?: number
-  apiUrl?: string
   timeout?: number
 }
 
@@ -30,6 +29,22 @@ export class StarkexClient {
       })
       this.call = rateLimiter.wrap(this.call.bind(this))
     }
+  }
+
+  static create(
+    services: { httpClient: HttpClient; logger: Logger },
+    options: {
+      apiKey: string
+      callsPerMinute: number | undefined
+      timeout: number | undefined
+    },
+  ) {
+    return new StarkexClient(
+      options.apiKey,
+      services.httpClient,
+      services.logger,
+      options,
+    )
   }
 
   async getDailyCount(day: number, product: string): Promise<number> {

@@ -30,7 +30,7 @@ export function makeConfig(
     env.string('FEATURES', isLocal ? '' : '*'),
   ).append('status')
   const minBlockTimestamp = minTimestampOverride ?? getEthereumMinTimestamp()
-  const tvl2Config = getTvl2Config()
+  const tvl2Config = getTvl2Config(env.optionalString('COINGECKO_API_KEY'))
 
   return {
     name,
@@ -107,19 +107,17 @@ export function makeConfig(
       ),
     },
     tvl2: flags.isEnabled('tvl2') && tvl2Config,
-    liveness: flags.isEnabled('liveness') && {
+    trackedTxsConfig: flags.isEnabled('tracked-txs') && {
       bigQuery: {
-        clientEmail: env.string('LIVENESS_CLIENT_EMAIL'),
-        privateKey: env.string('LIVENESS_PRIVATE_KEY').replace(/\\n/g, '\n'),
-        projectId: env.string('LIVENESS_PROJECT_ID'),
-        queryLimitGb: env.integer('LIVENESS_BIGQUERY_LIMIT_GB', 15),
-        queryWarningLimitGb: env.integer(
-          'LIVENESS_BIGQUERY_WARNING_LIMIT_GB',
-          8,
-        ),
+        clientEmail: env.string('BIGQUERY_CLIENT_EMAIL'),
+        privateKey: env.string('BIGQUERY_PRIVATE_KEY').replace(/\\n/g, '\n'),
+        projectId: env.string('BIGQUERY_PROJECT_ID'),
       },
       // TODO: figure out how to set it for local development
       minTimestamp: UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
+      uses: {
+        liveness: flags.isEnabled('tracked-txs', 'liveness'),
+      },
     },
     finality: flags.isEnabled('finality') && {
       ethereumProviderUrl: env.string('FINALITY_ETHEREUM_PROVIDER_URL'),
@@ -154,6 +152,9 @@ export function makeConfig(
     diffHistory: flags.isEnabled('diffHistory') && {
       chains: [getChainDiscoveryConfig(env, 'ethereum')],
     },
+    implementationChangeReporterEnabled: flags.isEnabled(
+      'implementationChangeReporter',
+    ),
     chains: chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
     tvlCleanerEnabled: flags.isEnabled('tvlCleaner'),
     flags: flags.getResolved(),
