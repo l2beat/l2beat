@@ -149,19 +149,21 @@ export const synapse: Bridge = {
     ),
     {
       name: 'Nodes (NODEGROUP_ROLE)',
-      description: 'Is an executor who can call regular bridging functions like withdrawing funds and minting SynERC20 Wrapped tokens.',
+      description:
+        'Is an executor who can call regular bridging functions like withdrawing funds and minting SynERC20 Wrapped tokens.',
       accounts: discovery.getAccessControlRolePermission(
         'SynapseBridge',
         'NODEGROUP_ROLE',
-      )
+      ),
     },
     {
       name: 'Governors (GOVERNANCE_ROLE)',
-      description: 'Can set bridging fees, pause and unpause the SynapseBridge contract.',
+      description:
+        'Can set bridging fees, pause and unpause the SynapseBridge contract.',
       accounts: discovery.getAccessControlRolePermission(
         'SynapseBridge',
         'GOVERNANCE_ROLE',
-      )
+      ),
     },
     {
       name: 'Admin (DEFAULT_ADMIN_ROLE)',
@@ -169,7 +171,7 @@ export const synapse: Bridge = {
       accounts: discovery.getAccessControlRolePermission(
         'SynapseBridge',
         'DEFAULT_ADMIN_ROLE',
-      )
-    }
+      ),
+    },
   ],
 }
