@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x599cec7b04f81bb9340b0787e83658744e7f7416
+Generated with discovered.json: 0xaff8a6ad66c53b2303b9c9c77d308de4890151ad
 
-# Diff at Tue, 19 Mar 2024 12:12:53 GMT:
+# Diff at Tue, 19 Mar 2024 12:40:39 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
 - comparing to: main@284847fdd85d7b4f5b56effe092db242cda5349d block: 19432182
-- current block number: 19468712
+- current block number: 19468852
 
 ## Description
 
@@ -122,12 +122,9 @@ discovery. Values are for block 19432182 (main branch discovery), not current.
 ```
 
 ```diff
-    contract CairoBootloaderProgram (0x5d07afFAfc8721Ef3dEe4D11A2D1484CBf6A9dDf) {
+-   Status: DELETED
+    contract CairoBootloaderProgram (0x5d07afFAfc8721Ef3dEe4D11A2D1484CBf6A9dDf)
     +++ description: None
-      name:
--        "CairoBootloaderProgram"
-+        "OldCairoBootloaderProgram"
-    }
 ```
 
 ```diff
@@ -154,6 +151,10 @@ discovery. Values are for block 19432182 (main branch discovery), not current.
       name:
 -        "SHARPVerifier"
 +        "OldSHARPVerifier"
+      values.constructorArgs:
+-        ["0x5d07afFAfc8721Ef3dEe4D11A2D1484CBf6A9dDf","0xFD14567eaf9ba941cB8c8a94eEC14831ca7fD1b4",["0x217750c27bE9147f9e358D9FF26a8224F8aCC214","0x630A97901Ac29590DF83f4A64B8D490D54caf239","0x8488e8f4e26eBa40faE229AB653d98E341cbE57B","0x9E614a417f8309575fC11b175A51599661f2Bd21","0xC879aF7D5eD80e4676C203FD300E640C297F31e3","0x78Af2BFB12Db15d35f7dE8DD77f29C299C78c590","0xe9664D230490d5A515ef7Ef30033d8075a8D0E24","0x03Fa911dfCa026D9C8Edb508851b390accF912e8"],"3178097804922730583543126053422762895998573737925004508949311089390705597156","2962621603719000361370283216422448934312521782617806945663080079725495842070"]
+      values.memoryPageFactRegistry:
++        "0xFD14567eaf9ba941cB8c8a94eEC14831ca7fD1b4"
     }
 ```
 
@@ -292,13 +293,13 @@ discovery. Values are for block 19432182 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract PoseidonPoseidonPartialRoundKey0Column (0x1Db84E79E8daEC762d6aDaa5bf358A4Ba001E975)
+    contract Fri6_PoseidonPoseidonPartialRoundKey0Column (0x1Db84E79E8daEC762d6aDaa5bf358A4Ba001E975)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract PoseidonPoseidonFullRoundKey1Column (0x1E8E41141347E01f33d84718b7f4cEFB433D5a94)
+    contract Fri1_PoseidonPoseidonFullRoundKey1Column (0x1E8E41141347E01f33d84718b7f4cEFB433D5a94)
     +++ description: None
 ```
 
@@ -310,7 +311,7 @@ discovery. Values are for block 19432182 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract PoseidonPoseidonPartialRoundKey1Column (0x20F10963eBCA608f8B24a5AEE275861B20ec868E)
+    contract Fri1_PoseidonPoseidonPartialRoundKey1Column (0x20F10963eBCA608f8B24a5AEE275861B20ec868E)
     +++ description: None
 ```
 
@@ -322,7 +323,7 @@ discovery. Values are for block 19432182 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract PoseidonPoseidonFullRoundKey2Column (0x2b159027d7F0E23D5C15b0517e33DdA838C46045)
+    contract Fri1_PoseidonPoseidonFullRoundKey2Column (0x2b159027d7F0E23D5C15b0517e33DdA838C46045)
     +++ description: None
 ```
 
@@ -376,7 +377,7 @@ discovery. Values are for block 19432182 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract PoseidonPoseidonPartialRoundKey1Column (0x62960C874379653D7BBe3644Ac653736Da2eda12)
+    contract Fri6_PoseidonPoseidonPartialRoundKey1Column (0x62960C874379653D7BBe3644Ac653736Da2eda12)
     +++ description: None
 ```
 
@@ -406,13 +407,13 @@ discovery. Values are for block 19432182 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract PoseidonPoseidonPartialRoundKey0Column (0x75D887d2437eF87EA17B93143716BECD7BBbCa0a)
+    contract Fri1_PoseidonPoseidonPartialRoundKey0Column (0x75D887d2437eF87EA17B93143716BECD7BBbCa0a)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract PoseidonPoseidonFullRoundKey0Column (0x8004e851fa3F3C66A3c80e4F7E96559f4C3E16a6)
+    contract Fri1_PoseidonPoseidonFullRoundKey0Column (0x8004e851fa3F3C66A3c80e4F7E96559f4C3E16a6)
     +++ description: None
 ```
 
@@ -442,7 +443,7 @@ discovery. Values are for block 19432182 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract PoseidonPoseidonFullRoundKey2Column (0xB5A5759Dd063899F213eB9699906B445f855660D)
+    contract Fri6_PoseidonPoseidonFullRoundKey2Column (0xB5A5759Dd063899F213eB9699906B445f855660D)
     +++ description: None
 ```
 
@@ -466,7 +467,7 @@ discovery. Values are for block 19432182 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract PoseidonPoseidonFullRoundKey1Column (0xC2969a099F22430e20bcE237F469ac6F3101Ac5f)
+    contract Fri6_PoseidonPoseidonFullRoundKey1Column (0xC2969a099F22430e20bcE237F469ac6F3101Ac5f)
     +++ description: None
 ```
 
@@ -514,7 +515,7 @@ discovery. Values are for block 19432182 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract PoseidonPoseidonFullRoundKey0Column (0xe7B835eA7e348B25aF2480272C4cA28429573293)
+    contract Fri6_PoseidonPoseidonFullRoundKey0Column (0xe7B835eA7e348B25aF2480272C4cA28429573293)
     +++ description: None
 ```
 
