@@ -1,5 +1,4 @@
 import { Logger } from '@l2beat/backend-tools'
-import { HttpClient } from '@l2beat/shared'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { Gauge } from 'prom-client'
 
@@ -30,7 +29,6 @@ import { SequenceProcessor } from './SequenceProcessor'
 export function createSequenceProcessors(
   config: Config,
   logger: Logger,
-  http: HttpClient,
   peripherals: Peripherals,
   clock: Clock,
 ): SequenceProcessor[] {

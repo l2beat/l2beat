@@ -25,7 +25,7 @@ export class BigQueryClient {
   }
 
   static create(
-    _: {},
+    _: unknown,
     options: { clientEmail: string; privateKey: string; projectId: string },
   ) {
     const bigQuery = new BigQuery({

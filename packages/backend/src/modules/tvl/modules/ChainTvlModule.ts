@@ -4,7 +4,6 @@ import {
   BlockscoutClient,
   CoingeckoQueryService,
   EtherscanClient,
-  HttpClient,
 } from '@l2beat/shared'
 import {
   capitalizeFirstLetter,
@@ -14,7 +13,6 @@ import {
   Token,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { providers } from 'ethers'
 
 import { ChainTvlConfig } from '../../../config/Config'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
@@ -42,7 +40,6 @@ export function chainTvlModule(
   peripherals: Peripherals,
   priceUpdater: PriceUpdater,
   coingeckoQueryService: CoingeckoQueryService,
-  http: HttpClient,
   clock: Clock,
   logger: Logger,
 ): TvlModule | undefined {
@@ -57,21 +54,17 @@ export function chainTvlModule(
 
   const blockNumberProvider: BlockNumberProvider =
     config.blockNumberProviderConfig.type === 'blockscout'
-      ? new BlockscoutClient(
-          http,
-          config.blockNumberProviderConfig.blockscoutApiUrl,
-          config.minBlockTimestamp,
-          config.chainId,
-          logger,
-        )
-      : new EtherscanClient(
-          http,
-          config.blockNumberProviderConfig.etherscanApiUrl,
-          config.blockNumberProviderConfig.etherscanApiKey,
-          config.minBlockTimestamp,
-          config.chainId,
-          logger,
-        )
+      ? peripherals.getClient(BlockscoutClient, {
+          url: config.blockNumberProviderConfig.blockscoutApiUrl,
+          minTimestamp: config.minBlockTimestamp,
+          chainId: config.chainId,
+        })
+      : peripherals.getClient(EtherscanClient, {
+          url: config.blockNumberProviderConfig.etherscanApiUrl,
+          apiKey: config.blockNumberProviderConfig.etherscanApiKey,
+          minTimestamp: config.minBlockTimestamp,
+          chainId: config.chainId,
+        })
 
   const ethereumClient = peripherals.getClient(RpcClient, {
     url: config.providerUrl,

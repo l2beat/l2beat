@@ -5,7 +5,6 @@ import {
   DiscoveryLogger,
   HttpClient as DiscoveryHttpClient,
 } from '@l2beat/discovery'
-import { HttpClient } from '@l2beat/shared'
 
 import { Config } from '../../config'
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'

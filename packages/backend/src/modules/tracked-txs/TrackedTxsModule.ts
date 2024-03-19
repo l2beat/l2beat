@@ -1,4 +1,3 @@
-import { BigQuery } from '@google-cloud/bigquery'
 import { Logger } from '@l2beat/backend-tools'
 import { notUndefined } from '@l2beat/shared-pure'
 
