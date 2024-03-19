@@ -9,11 +9,10 @@ export const mxc: Layer3 = underReviewL3({
   display: {
     name: 'MXC zkEVM',
     slug: 'mxc',
-    provider: 'Taiko zkEVM',
+    provider: 'Taiko',
     description:
       'The MXC zkEVM is an IoT-centric zk-rollup solution on Arbitrum based on Taiko zkEVM. It offers type-1 EVM equivalence, ensuring opcode-level compatibility with the Ethereum Virtual Machine.',
     purposes: ['Universal', 'IoT'],
-    // provider: 'taiko',
     category: 'ZK Rollup',
     links: {
       websites: ['https://mxc.org/'],
