@@ -46,7 +46,11 @@ export class L2CostsUpdater implements TxUpdaterInterface {
         t.hash as `0x${string}`,
       )
 
-      if (t.transactionType === 2) {
+      if (
+        t.transactionType === 0 ||
+        t.transactionType === 1 ||
+        t.transactionType === 2
+      ) {
         return {
           timestamp: t.blockTimestamp,
           txHash: t.hash,

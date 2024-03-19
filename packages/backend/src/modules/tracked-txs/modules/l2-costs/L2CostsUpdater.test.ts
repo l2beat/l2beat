@@ -35,7 +35,7 @@ describe(L2CostsUpdater.name, () => {
           type2Tx,
         ])
 
-        const expected: L2CostsRecord<2 | 3>[] = [
+        const expected: L2CostsRecord[] = [
           {
             txHash: type2Tx.hash,
             timestamp: type2Tx.blockTimestamp,
@@ -70,7 +70,7 @@ describe(L2CostsUpdater.name, () => {
           type3Tx,
         ])
 
-        const expected: L2CostsRecord<2 | 3>[] = [
+        const expected: L2CostsRecord[] = [
           {
             txHash: type3Tx.hash,
             timestamp: type3Tx.blockTimestamp,
@@ -105,7 +105,7 @@ describe(L2CostsUpdater.name, () => {
           transactions,
         )
 
-        const expected: L2CostsRecord<2 | 3>[] = [
+        const expected: L2CostsRecord[] = [
           {
             txHash: transactions[0].hash,
             timestamp: transactions[0].blockTimestamp,
