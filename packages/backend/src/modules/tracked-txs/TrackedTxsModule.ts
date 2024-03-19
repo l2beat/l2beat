@@ -1,4 +1,3 @@
-import { BigQuery } from '@google-cloud/bigquery'
 import { Logger } from '@l2beat/backend-tools'
 import { notUndefined } from '@l2beat/shared-pure'
 
@@ -30,14 +29,10 @@ export function createTrackedTxsModule(
 
   const hourlyIndexer = new HourlyIndexer(logger, clock)
 
-  const bigQuery = new BigQuery({
-    credentials: {
-      client_email: config.trackedTxsConfig.bigQuery.clientEmail,
-      private_key: config.trackedTxsConfig.bigQuery.privateKey,
-    },
-    projectId: config.trackedTxsConfig.bigQuery.projectId,
-  })
-  const bigQueryClient = new BigQueryClient(bigQuery)
+  const bigQueryClient = peripherals.getClient(
+    BigQueryClient,
+    config.trackedTxsConfig.bigQuery,
+  )
 
   const trackedTxsClient = new TrackedTxsClient(bigQueryClient)
 

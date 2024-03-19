@@ -18,6 +18,17 @@ export class RpcClient {
     this.provider = new RateLimitedProvider(provider, callsPerMinute)
   }
 
+  static create(
+    services: { logger: Logger },
+    options: { url: string; callsPerMinute: number | undefined },
+  ) {
+    const provider = new providers.StaticJsonRpcProvider({
+      url: options.url,
+      timeout: 15_000,
+    })
+    return new RpcClient(provider, services.logger, options.callsPerMinute)
+  }
+
   async getBlockNumber() {
     //  eth_blockNumber
     const result = await this.provider.getBlockNumber()

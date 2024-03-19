@@ -1,9 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import {
-  CoingeckoClient,
-  CoingeckoQueryService,
-  HttpClient,
-} from '@l2beat/shared'
+import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
 import { notUndefined } from '@l2beat/shared-pure'
 
 import { Config } from '../../../config'
@@ -33,7 +29,6 @@ import { TvlCleaner } from './TvlCleaner'
 export function createTvlModule(
   config: Config,
   logger: Logger,
-  http: HttpClient,
   peripherals: Peripherals,
   clock: Clock,
 ): ApplicationModule | undefined {
@@ -43,7 +38,9 @@ export function createTvlModule(
   }
   // #region peripherals
 
-  const coingeckoClient = new CoingeckoClient(http, config.tvl.coingeckoApiKey)
+  const coingeckoClient = peripherals.getClient(CoingeckoClient, {
+    apiKey: config.tvl.coingeckoApiKey,
+  })
   const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
 
   // #endregion
@@ -80,7 +77,6 @@ export function createTvlModule(
           priceUpdater,
           config,
           logger,
-          http,
           clock,
         )
       : chainTvlModule(
@@ -89,7 +85,6 @@ export function createTvlModule(
           peripherals,
           priceUpdater,
           coingeckoQueryService,
-          http,
           clock,
           logger,
         )

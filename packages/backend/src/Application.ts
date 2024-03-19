@@ -41,12 +41,12 @@ export class Application {
         maxConnectionPoolSize: config.database.connectionPoolSize.max,
       },
     )
-    const http = new HttpClient()
     const clock = new Clock(
       config.clock.minBlockTimestamp,
       config.clock.safeTimeOffsetSeconds,
     )
 
+    const http = new HttpClient()
     const peripherals = new Peripherals(database, http, logger)
 
     const trackedTxsModule = createTrackedTxsModule(
@@ -59,9 +59,9 @@ export class Application {
     const modules: (ApplicationModule | undefined)[] = [
       createHealthModule(config),
       createMetricsModule(config),
-      createTvlModule(config, logger, http, peripherals, clock),
-      createActivityModule(config, logger, http, peripherals, clock),
-      createUpdateMonitorModule(config, logger, http, peripherals, clock),
+      createTvlModule(config, logger, peripherals, clock),
+      createActivityModule(config, logger, peripherals, clock),
+      createUpdateMonitorModule(config, logger, peripherals, clock),
       createDiffHistoryModule(config, logger, peripherals),
       createImplementationChangeModule(config, logger, peripherals),
       createStatusModule(config, logger),
@@ -73,7 +73,7 @@ export class Application {
         trackedTxsModule?.indexer,
       ),
       createLzOAppsModule(config, logger),
-      createTvl2Module(config, logger, http, peripherals, clock),
+      createTvl2Module(config, logger, peripherals, clock),
     ]
 
     const apiServer = new ApiServer(

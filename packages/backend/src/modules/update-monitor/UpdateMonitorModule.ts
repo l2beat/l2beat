@@ -5,7 +5,6 @@ import {
   DiscoveryLogger,
   HttpClient as DiscoveryHttpClient,
 } from '@l2beat/discovery'
-import { HttpClient } from '@l2beat/shared'
 
 import { Config } from '../../config'
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'
@@ -25,7 +24,6 @@ import { UpdateNotifier } from './UpdateNotifier'
 export function createUpdateMonitorModule(
   config: Config,
   logger: Logger,
-  http: HttpClient,
   peripherals: Peripherals,
   clock: Clock,
 ): ApplicationModule | undefined {
@@ -42,7 +40,7 @@ export function createUpdateMonitorModule(
       : DiscoveryLogger.SERVER
 
   const discordClient = config.updateMonitor.discord
-    ? new DiscordClient(http, config.updateMonitor.discord)
+    ? peripherals.getClient(DiscordClient, config.updateMonitor.discord)
     : undefined
 
   const chainConverter = new ChainConverter(config.chains)
