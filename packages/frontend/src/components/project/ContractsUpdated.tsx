@@ -1,18 +1,22 @@
 import React from 'react'
 
 import { cn } from '../../utils/cn'
+import { ShieldIcon } from '../icons'
+import { Callout } from './Callout'
 
 export function ContractsUpdated() {
   return (
-    <div
-      className={cn(
-        'my-2 rounded-lg px-2 py-1 text-xs md:text-base',
-        'bg-blue-450/20 text-blue-700 dark:text-blue-300',
-      )}
-    >
-      <strong>Note:</strong> Contracts presented in this section have been
-      updated since the last review. The information presented may be
-      inaccurate.
-    </div>
+    <Callout
+      className={'p-4'}
+      color={'red'}
+      icon={<ShieldIcon className={cn('fill-red-700 dark:fill-red-300')} />}
+      body={
+        <div>
+          <strong>Note:</strong> Contracts presented in this section had their
+          implementaions updated since the last time our team looked at this
+          project. The information presented may be inaccurate.
+        </div>
+      }
+    />
   )
 }
