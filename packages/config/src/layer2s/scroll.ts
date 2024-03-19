@@ -6,10 +6,10 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
-  makeDataAvailabilityConfig,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
@@ -187,9 +187,9 @@ export const scroll: Layer2 = {
     },
     finality: 'coming soon',
   },
-  dataAvailability: makeDataAvailabilityConfig({
-    type: 'On chain',
-    layer: 'Ethereum (calldata)',
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['Ethereum (calldata)'],
+    bridge: { type: 'Enshrined' },
     mode: 'Transactions data',
   }),
   riskView: makeBridgeCompatible({

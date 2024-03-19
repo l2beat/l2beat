@@ -6,12 +6,12 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
   makeBridgeCompatible,
-  makeDataAvailabilityConfig,
   NUGGETS,
   RISK_VIEW,
   SEQUENCER_NO_MECHANISM,
@@ -300,9 +300,9 @@ export const polygonzkevm: Layer2 = {
       },
     ],
   },
-  dataAvailability: makeDataAvailabilityConfig({
-    type: 'On chain',
-    layer: 'Ethereum (calldata)',
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['Ethereum (calldata)'],
+    bridge: { type: 'Enshrined' },
     mode: 'Transactions data',
   }),
   riskView: makeBridgeCompatible({

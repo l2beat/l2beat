@@ -1,15 +1,15 @@
 import { underReviewL3 } from '../layer2s/templates/underReview'
 import { Layer3 } from './types'
 
-export const zklinknexus: Layer3 = underReviewL3({
-  id: 'zklinknexus',
+export const zklinknova: Layer3 = underReviewL3({
+  id: 'zklinknova',
   // TODO(Linea, zkSync Era): zkLink Nexus is a multi-chain zkRollup architecture. In addition to Linea, it currently supports zkSync Era and will support more Layer2s in the future.
   hostChain: 'Multiple',
   display: {
-    name: 'zkLink Nexus',
-    slug: 'zklinknexus',
+    name: 'zkLink Nova',
+    slug: 'zklinknova',
     description:
-      'zkLink is a multi-chain rollup infrastructure based on zero-knowledge technology.',
+      'zkLink Nova is a multi-chain rollup infrastructure based on zero-knowledge technology.',
     purposes: ['Exchange'],
     category: 'ZK Rollup',
     provider: 'zkLink Nexus',
