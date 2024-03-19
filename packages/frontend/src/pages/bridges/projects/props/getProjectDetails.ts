@@ -1,6 +1,6 @@
 import { Bridge } from '@l2beat/config'
 import {
-  DiffStateApiResponse,
+  ImplementationChangeReportApiResponse,
   ManuallyVerifiedContracts,
   VerificationStatus,
 } from '@l2beat/shared-pure'
@@ -31,7 +31,7 @@ export function getProjectDetails(
   bridge: Bridge,
   verificationStatus: VerificationStatus,
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
-  diffState: DiffStateApiResponse | undefined,
+  implementationChange: ImplementationChangeReportApiResponse | undefined,
   chart: ChartProps,
 ) {
   const { incomplete, sections: technologySections } =
@@ -119,7 +119,7 @@ export function getProjectDetails(
         bridge,
         verificationStatus,
         manuallyVerifiedContracts,
-        diffState,
+        implementationChange,
       ),
     })
 

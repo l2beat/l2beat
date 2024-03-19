@@ -10,8 +10,8 @@ import {
 import {
   assert,
   assertUnreachable,
-  DiffStateApiResponse,
   EthereumAddress,
+  ImplementationChangeReportApiResponse,
   ManuallyVerifiedContracts,
   VerificationStatus,
 } from '@l2beat/shared-pure'
@@ -29,7 +29,7 @@ export function getContractSection(
   project: Layer2 | Layer3 | Bridge,
   verificationStatus: VerificationStatus,
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
-  diffState: DiffStateApiResponse | undefined,
+  implementationChange: ImplementationChangeReportApiResponse | undefined,
 ): Omit<ContractsSectionProps, 'sectionOrder'> {
   const contracts = project.contracts?.addresses.map((contract) => {
     const isUnverified = isContractUnverified(contract, verificationStatus)
@@ -82,7 +82,7 @@ export function getContractSection(
     isUnderReview: project.isUnderReview ?? project.contracts?.isUnderReview,
     verificationStatus,
     manuallyVerifiedContracts,
-    diffState: diffState?.projects[project.id.toString()],
+    implementationChange: implementationChange?.projects[project.id.toString()],
   }
 }
 

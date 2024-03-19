@@ -25,7 +25,7 @@ export const common: Omit<Config, 'backend'> = {
     activity: true,
     tvlBreakdown: true,
     diffHistory: false,
-    diffState: false, // TODO(radomski): enable when ready
+    implementationChange: true, // TODO(radomski): enable when ready
     buildAllProjectPages: false,
     governancePage: true,
   },

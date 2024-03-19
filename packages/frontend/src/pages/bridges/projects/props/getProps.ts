@@ -19,7 +19,7 @@ export function getProps(
     tvlApiResponse,
     verificationStatus,
     manuallyVerifiedContracts,
-    diffState,
+    implementationChange,
   } = pagesData
 
   const chart = getChart(bridge, tvlApiResponse, config)
@@ -31,7 +31,7 @@ export function getProps(
         bridge,
         verificationStatus,
         manuallyVerifiedContracts,
-        diffState,
+        implementationChange,
         chart,
       ),
       footer: getFooterProps(config),

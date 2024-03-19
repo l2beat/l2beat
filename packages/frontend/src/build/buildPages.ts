@@ -3,8 +3,8 @@ import { getChainNames } from '@l2beat/config'
 import {
   ActivityApiResponse,
   DiffHistoryApiResponse,
-  DiffStateApiResponse,
   FinalityApiResponse,
+  ImplementationChangeReportApiResponse,
   LivenessApiResponse,
   ProjectAssetsBreakdownApiResponse,
 } from '@l2beat/shared-pure'
@@ -14,8 +14,8 @@ import { renderPages } from '../pages/renderPages'
 import { createApi } from './api/createApi'
 import { fetchActivityApi } from './api/fetchActivityApi'
 import { fetchDiffHistory } from './api/fetchDiffHistory'
-import { fetchDiffState } from './api/fetchDiffState'
 import { fetchFinalityApi } from './api/fetchFinalityApi'
+import { fetchImplementationChangeReport } from './api/fetchImplementationChangeReport'
 import { fetchLivenessApi } from './api/fetchLivenessApi'
 import { fetchTvlApi } from './api/fetchTvlApi'
 import { fetchTvlBreakdownApi } from './api/fetchTvlBreakdownApi'
@@ -97,11 +97,16 @@ async function main() {
       console.timeEnd('[DIFF HISTORY]')
     }
 
-    let diffState: DiffStateApiResponse | undefined = undefined
-    if (config.features.diffState) {
-      console.time('[DIFF STATE]')
-      diffState = await fetchDiffState(config.backend, http)
-      console.timeEnd('[DIFF STATE]')
+    let implementationChange:
+      | ImplementationChangeReportApiResponse
+      | undefined = undefined
+    if (config.features.implementationChange) {
+      console.time('[IMPLEMENTATION CHANGE]')
+      implementationChange = await fetchImplementationChangeReport(
+        config.backend,
+        http,
+      )
+      console.timeEnd('[IMPLEMENTATION CHANGE]')
     }
 
     createApi(config, tvlApiResponse, activityApiResponse)
@@ -120,7 +125,7 @@ async function main() {
       livenessApiResponse,
       finalityApiResponse,
       diffHistory,
-      diffState,
+      implementationChange,
     }
 
     await renderPages(config, pagesData)

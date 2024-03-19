@@ -1,5 +1,5 @@
 import {
-  DiffStateProjectData,
+  ImplementationChangeReportProjectData,
   ManuallyVerifiedContracts,
   VerificationStatus,
 } from '@l2beat/shared-pure'
@@ -37,7 +37,7 @@ export interface TechnologyContractLinks {
 export interface ContractEntryProps {
   contract: TechnologyContract
   verificationStatus: VerificationStatus
-  diffState?: DiffStateProjectData
+  implementationChange?: ImplementationChangeReportProjectData
   manuallyVerifiedContracts: ManuallyVerifiedContracts
   className?: string
 }
@@ -46,7 +46,7 @@ export function ContractEntry({
   contract,
   verificationStatus,
   manuallyVerifiedContracts,
-  diffState,
+  implementationChange,
   className,
 }: ContractEntryProps) {
   const verificationStatusForChain =
@@ -67,7 +67,9 @@ export function ContractEntry({
     .some((c) => c === false)
 
   const changedAddresses = (
-    diffState !== undefined ? Object.values(diffState) : []
+    implementationChange !== undefined
+      ? Object.values(implementationChange)
+      : []
   ).flat()
   const areAddressesUpdated = changedAddresses.some((ca) =>
     addresses.includes(ca.containingContract.toString()),
