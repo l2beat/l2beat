@@ -1,4 +1,5 @@
 import { deri } from './deri'
+import { mxc } from './mxc'
 import { popapex } from './popapex'
 import { rari } from './rari'
 import { Layer3 } from './types'
@@ -7,4 +8,4 @@ import { zklinknova } from './zklinknexus'
 
 export * from './types'
 
-export const layer3s: Layer3[] = [deri, rari, zklinknova, xai, popapex]
+export const layer3s: Layer3[] = [deri, rari, zklinknova, xai, popapex, mxc]

@@ -4,7 +4,7 @@ import { ProjectId } from '@l2beat/shared-pure'
 
 import { Config } from '../../config'
 import { ActivityConfig } from '../../config/Config'
-import { Database } from '../../peripherals/database/Database'
+import { Peripherals } from '../../peripherals/Peripherals'
 import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
 import { ActivityViewRefresher } from './ActivityViewRefresher'
@@ -18,7 +18,7 @@ export function createActivityModule(
   config: Config,
   logger: Logger,
   http: HttpClient,
-  database: Database,
+  peripherals: Peripherals,
   clock: Clock,
 ): ApplicationModule | undefined {
   if (!config.activity) {
@@ -26,19 +26,17 @@ export function createActivityModule(
     return
   }
 
-  const activityViewRepository = new ActivityViewRepository(database, logger)
-
   const processors = createSequenceProcessors(
     config,
     logger,
     http,
-    database,
+    peripherals,
     clock,
   )
 
   const viewRefresher = new ActivityViewRefresher(
     processors,
-    activityViewRepository,
+    peripherals.getRepository(ActivityViewRepository),
     clock,
     logger,
   )
@@ -51,7 +49,7 @@ export function createActivityModule(
   const activityController = new ActivityController(
     includedInApiProjectIds,
     processors,
-    activityViewRepository,
+    peripherals.getRepository(ActivityViewRepository),
     clock,
   )
   const activityV2Router = createActivityRouter(activityController, config)
