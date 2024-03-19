@@ -32,16 +32,29 @@ export function getChainDiscoveryConfig(
 
   return {
     name: chainConfig.name,
-    rpcUrl: env.string(`DISCOVERY_${ENV_NAME}_RPC_URL`),
-    rpcGetLogsMaxRange: env.optionalInteger(
+    rpcUrl: env.string([
+      `${ENV_NAME}_RPC_URL_FOR_DISCOVERY`,
+      `${ENV_NAME}_RPC_URL`,
+      // TODO: DEPRECATED - remove this fallback after envs are updated
+      `DISCOVERY_${ENV_NAME}_RPC_URL`,
+    ]),
+    rpcGetLogsMaxRange: env.optionalInteger([
+      `${ENV_NAME}_RPC_GETLOGS_MAX_RANGE_FOR_DISCOVERY`,
+      `${ENV_NAME}_RPC_GETLOGS_MAX_RANGE`,
+      // TODO: DEPRECATED - remove this fallback after envs are updated
       `DISCOVERY_${ENV_NAME}_RPC_GETLOGS_MAX_RANGE`,
-    ),
+    ]),
     multicall: getMulticall3Config(
       multicallV3.sinceBlock,
       multicallV3.address,
       multicallV3.batchSize,
     ),
-    etherscanApiKey: env.string(`DISCOVERY_${ENV_NAME}_ETHERSCAN_API_KEY`),
+    etherscanApiKey: env.string([
+      `${ENV_NAME}_ETHERSCAN_API_KEY_FOR_DISCOVERY`,
+      `${ENV_NAME}_ETHERSCAN_API_KEY`,
+      // TODO: DEPRECATED - remove this fallback after envs are updated
+      `DISCOVERY_${ENV_NAME}_ETHERSCAN_API_KEY`,
+    ]),
     etherscanUrl: chainConfig.explorerApi.url,
     etherscanUnsupported: chainConfig.explorerApi.missingFeatures,
   }
