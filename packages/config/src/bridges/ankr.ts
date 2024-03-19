@@ -29,7 +29,7 @@ export const ankr: Bridge = {
       {
         address: EthereumAddress('0xc437DF90B37C1dB6657339E31BfE54627f0e7181'),
         sinceTimestamp: new UnixTime(1646203700),
-        tokens: ['ANKR'],
+        tokens: ['ANKR', 'ankrETH', 'ankrMATIC'],
       },
     ],
   },

@@ -48,6 +48,14 @@
       "address": "0x8290333ceF9e6D528dD5618Fb97a76f268f3EDD4"
     },
     {
+      "symbol": "ankrETH",
+      "address": "0xE95A203B1a91a908F9B9CE46459d101078c2c3cb"
+    },
+    {
+      "symbol": "ankrMATIC",
+      "address": "0x26dcFbFa8Bc267b250432c01C982Eaf81cC5480C"
+    },
+    {
       "symbol": "ANT",
       "address": "0xa117000000f279D81A1D3cc75430fAA017FA5A2e"
     },
