@@ -37,6 +37,7 @@ import { kinto } from './kinto'
 import { kroma } from './kroma'
 import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
+import { lightlink } from './lightlink'
 import { linea } from './linea'
 import { lisk } from './lisk'
 import { loopring } from './loopring'
@@ -133,6 +134,7 @@ export const layer2s: Layer2[] = [
   kroma,
   layer2finance,
   layer2financezk,
+  lightlink,
   linea,
   lisk,
   loopring,
