@@ -17,7 +17,10 @@ export const kinto: Layer2 = underReviewL2({
       websites: ['https://kinto.xyz'],
       apps: [],
       documentation: ['https://docs.kinto.xyz'],
-      explorers: ['https://test-explorer.kinto.xyz/'],
+      explorers: [
+        'https://explorer.kinto.xyz/',
+        'https://searchkinto.com/',
+      ],
       repositories: ['https://github.com/kintoxyz'],
       socialMedia: [
         'https://twitter.com/kintoxyz',
@@ -30,6 +33,11 @@ export const kinto: Layer2 = underReviewL2({
     {
       address: EthereumAddress('0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB'),
       sinceTimestamp: new UnixTime(1702607855),
+      tokens: '*',
+    },
+    {
+      address: EthereumAddress('0x0f1b7bd7762662B23486320AA91F30312184f70C'),
+      sinceTimestamp: new UnixTime(1710273600),
       tokens: '*',
     },
   ],
