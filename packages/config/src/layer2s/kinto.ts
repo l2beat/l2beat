@@ -17,10 +17,7 @@ export const kinto: Layer2 = underReviewL2({
       websites: ['https://kinto.xyz'],
       apps: [],
       documentation: ['https://docs.kinto.xyz'],
-      explorers: [
-        'https://explorer.kinto.xyz/',
-        'https://searchkinto.com/',
-      ],
+      explorers: ['https://explorer.kinto.xyz/', 'https://searchkinto.com/'],
       repositories: ['https://github.com/kintoxyz'],
       socialMedia: [
         'https://twitter.com/kintoxyz',
