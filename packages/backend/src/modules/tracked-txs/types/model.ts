@@ -31,6 +31,8 @@ export const BigQueryFunctionCallResult = z.object({
   ]),
   receipt_gas_used: z.number(),
   gas_price: z.number(),
+  calldata_gas_used: z.number(),
+  data_length: z.number(),
 })
 
 export type TrackedTxFunctionCallResult = {
@@ -45,6 +47,8 @@ export type TrackedTxFunctionCallResult = {
   transactionType: 0 | 1 | 2 | 3
   receiptGasUsed: number
   gasPrice: number
+  calldataGasUsed: number
+  dataLength: number
 }
 
 export type BigQueryTransferResult = z.infer<typeof BigQueryTransferResult>
@@ -64,6 +68,8 @@ export const BigQueryTransferResult = z.object({
   ]),
   receipt_gas_used: z.number(),
   gas_price: z.number(),
+  calldata_gas_used: z.number(),
+  data_length: z.number(),
 })
 
 export type TrackedTxTransferResult = {
@@ -78,4 +84,6 @@ export type TrackedTxTransferResult = {
   transactionType: 0 | 1 | 2 | 3
   receiptGasUsed: number
   gasPrice: number
+  calldataGasUsed: number
+  dataLength: number
 }

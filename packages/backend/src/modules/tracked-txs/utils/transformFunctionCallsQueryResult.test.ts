@@ -93,6 +93,8 @@ describe(transformFunctionCallsQueryResult.name, () => {
         gas_price: 10,
         receipt_gas_used: 100,
         transaction_type: 2,
+        calldata_gas_used: 100,
+        data_length: 100,
       },
       {
         hash: txHashes[1],
@@ -103,6 +105,8 @@ describe(transformFunctionCallsQueryResult.name, () => {
         gas_price: 20,
         receipt_gas_used: 200,
         transaction_type: 2,
+        calldata_gas_used: 200,
+        data_length: 200,
       },
       {
         hash: txHashes[2],
@@ -113,6 +117,8 @@ describe(transformFunctionCallsQueryResult.name, () => {
         gas_price: 30,
         receipt_gas_used: 300,
         transaction_type: 3,
+        calldata_gas_used: 300,
+        data_length: 300,
       },
     ]
     const expected: TrackedTxFunctionCallResult[] = [
@@ -128,6 +134,8 @@ describe(transformFunctionCallsQueryResult.name, () => {
         gasPrice: 10,
         receiptGasUsed: 100,
         transactionType: 2,
+        calldataGasUsed: 100,
+        dataLength: 100,
       },
       {
         type: 'functionCall',
@@ -141,6 +149,8 @@ describe(transformFunctionCallsQueryResult.name, () => {
         gasPrice: 20,
         receiptGasUsed: 200,
         transactionType: 2,
+        calldataGasUsed: 200,
+        dataLength: 200,
       },
       {
         type: 'functionCall',
@@ -154,6 +164,8 @@ describe(transformFunctionCallsQueryResult.name, () => {
         gasPrice: 30,
         receiptGasUsed: 300,
         transactionType: 3,
+        calldataGasUsed: 300,
+        dataLength: 300,
       },
     ]
     const result = transformFunctionCallsQueryResult(
@@ -187,6 +199,8 @@ describe(transformFunctionCallsQueryResult.name, () => {
         gas_price: 10,
         receipt_gas_used: 100,
         transaction_type: 2,
+        calldata_gas_used: 100,
+        data_length: 100,
       },
     ]
 
@@ -233,6 +247,8 @@ describe(transformFunctionCallsQueryResult.name, () => {
         gas_price: 10,
         receipt_gas_used: 100,
         transaction_type: 2,
+        calldata_gas_used: 100,
+        data_length: 100,
       },
     ]
 
@@ -249,6 +265,8 @@ describe(transformFunctionCallsQueryResult.name, () => {
         gasPrice: 10,
         receiptGasUsed: 100,
         transactionType: 2,
+        calldataGasUsed: 100,
+        dataLength: 100,
       },
     ]
 

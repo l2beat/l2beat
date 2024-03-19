@@ -19,6 +19,27 @@ export function getTransferQuery(
   ]
 
   const query = `
+    CREATE TEMP FUNCTION CalculateCalldataGasUsed(hexString STRING)
+    RETURNS INT64
+    LANGUAGE js AS """
+      var binaryString = '';
+      for (var i = 2; i < hexString.length; i += 2) {
+        binaryString += String.fromCharCode(parseInt(hexString.substr(i, 2), 16));
+      }
+    
+      var nonZeroBytes = 0;
+      var zeroBytes = 0;
+      for (var i = 0; i < binaryString.length; i++) {
+        if (binaryString.charCodeAt(i) === 0) {
+          zeroBytes++;
+        } else {
+          nonZeroBytes++;
+        }
+      }
+    
+      return 16 * nonZeroBytes + 4 * zeroBytes;
+    """;
+
     SELECT
       txs.hash,
       traces.from_address,
@@ -28,6 +49,8 @@ export function getTransferQuery(
       txs.transaction_type,
       txs.receipt_gas_used,
       txs.gas_price,
+      CalculateCalldataGasUsed(txs.input) AS calldata_gas_used,
+      (LENGTH(SUBSTR(txs.input, 3)) / 2) AS data_length,
     FROM
       bigquery-public-data.crypto_ethereum.transactions AS txs
     JOIN
@@ -48,5 +71,5 @@ export function getTransferQuery(
       AND txs.block_timestamp < TIMESTAMP(?)
   `
 
-  return { query, params, limitInGb: 2 }
+  return { query, params, limitInGb: 4 }
 }

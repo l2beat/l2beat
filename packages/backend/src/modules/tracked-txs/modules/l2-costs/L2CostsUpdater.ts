@@ -10,7 +10,6 @@ import {
   L2CostsRecord,
   L2CostsRepository,
 } from './repositories/L2CostsRepository'
-import { calculateCallDataGasUsed } from './utils/calculateCallDataGasUsed'
 
 export class L2CostsUpdater implements TxUpdaterInterface {
   constructor(
@@ -41,49 +40,45 @@ export class L2CostsUpdater implements TxUpdaterInterface {
   async addDetailsTransactionsAndTransform(
     transactions: TrackedTxResult[],
   ): Promise<L2CostsRecord[]> {
-    const promises = transactions.map(async (t) => {
-      const txDetails = await this.rpcClient.getTransaction(
-        t.hash as `0x${string}`,
-      )
-
+    const promises = transactions.map(async (tx) => {
       if (
-        t.transactionType === 0 ||
-        t.transactionType === 1 ||
-        t.transactionType === 2
+        tx.transactionType === 0 ||
+        tx.transactionType === 1 ||
+        tx.transactionType === 2
       ) {
         return {
-          timestamp: t.blockTimestamp,
-          txHash: t.hash,
-          trackedTxId: t.use.id,
+          timestamp: tx.blockTimestamp,
+          txHash: tx.hash,
+          trackedTxId: tx.use.id,
           data: {
-            type: t.transactionType,
-            gasUsed: t.receiptGasUsed,
-            gasPrice: t.gasPrice,
-            calldataLength: txDetails.input.slice(2).length / 2,
-            calldataGasUsed: calculateCallDataGasUsed(txDetails.input),
+            type: tx.transactionType,
+            gasUsed: tx.receiptGasUsed,
+            gasPrice: tx.gasPrice,
+            calldataLength: tx.dataLength,
+            calldataGasUsed: tx.calldataGasUsed,
           },
         }
-      } else if (t.transactionType === 3) {
+      } else if (tx.transactionType === 3) {
         const receipt = await this.rpcClient.getTransactionReceipt(
-          t.hash as `0x${string}`,
+          tx.hash as `0x${string}`,
         )
 
         return {
-          timestamp: t.blockTimestamp,
-          txHash: t.hash,
-          trackedTxId: t.use.id,
+          timestamp: tx.blockTimestamp,
+          txHash: tx.hash,
+          trackedTxId: tx.use.id,
           data: {
-            type: t.transactionType,
-            gasUsed: t.receiptGasUsed,
-            gasPrice: t.gasPrice,
-            calldataLength: txDetails.input.slice(2).length / 2,
-            calldataGasUsed: calculateCallDataGasUsed(txDetails.input),
+            type: tx.transactionType,
+            gasUsed: tx.receiptGasUsed,
+            gasPrice: tx.gasPrice,
+            calldataLength: tx.dataLength,
+            calldataGasUsed: tx.calldataGasUsed,
             blobGasUsed: Number(receipt.blobGasUsed),
             blobGasPrice: Number(receipt.blobGasPrice),
           },
         }
       } else {
-        assertUnreachable(t.transactionType)
+        assertUnreachable(tx.transactionType)
       }
     })
     return await Promise.all(promises)
