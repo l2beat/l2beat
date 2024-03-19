@@ -8,8 +8,6 @@ const keys = [
   'dataAvailability',
   'newCryptography',
   'massExit',
-  'additionalPrivacy',
-  'smartContracts',
   'operator',
   'forceTransactions',
 ] as const

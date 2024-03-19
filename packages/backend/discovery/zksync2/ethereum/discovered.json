@@ -1,8 +1,8 @@
 {
   "name": "zksync2",
   "chain": "ethereum",
-  "blockNumber": 19425767,
-  "configHash": "0x568b8fc02c9faebafce49ae7f914598b34d02bf6c3d0d48b6665785b0feda1e0",
+  "blockNumber": 19434460,
+  "configHash": "0xbd99d349adec02a1cfbad7c97b56bfd4d5b03373fb227e6f321efa1bf9e2908f",
   "version": 3,
   "contracts": [
     {
@@ -17,7 +17,8 @@
         "owner": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "securityCouncil": "0x0000000000000000000000000000000000000000"
-      }
+      },
+      "derivedName": "Governance"
     },
     {
       "name": "zkSync",
@@ -116,7 +117,7 @@
             ["0x701f58c5", "0xc3d93e7c", "0x7f61885c", "0x97c09d34"]
           ]
         ],
-        "getFirstUnprocessedPriorityTx": 3052348,
+        "getFirstUnprocessedPriorityTx": 3053250,
         "getGovernor": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61",
         "getL2BootloaderBytecodeHash": "0x010007ede999d096c84553fb514d3d6ca76fbf39789dda76bfeda9f3ae06236e",
         "getL2DefaultAccountBytecodeHash": "0x0100055b041eb28aff6e3a6e0f37c31fd053fc9ef142683b05e5f0aee6934066",
@@ -124,16 +125,16 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingGovernor": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 772,
+        "getPriorityQueueSize": 831,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 22,
-        "getTotalBatchesCommitted": 460685,
-        "getTotalBatchesExecuted": 460146,
-        "getTotalBatchesVerified": 460665,
-        "getTotalBlocksCommitted": 460685,
-        "getTotalBlocksExecuted": 460146,
-        "getTotalBlocksVerified": 460665,
-        "getTotalPriorityTxs": 3053120,
+        "getTotalBatchesCommitted": 461690,
+        "getTotalBatchesExecuted": 460851,
+        "getTotalBatchesVerified": 461623,
+        "getTotalBlocksCommitted": 461690,
+        "getTotalBlocksExecuted": 460851,
+        "getTotalBlocksVerified": 461623,
+        "getTotalPriorityTxs": 3054081,
         "getVerifier": "0xdd9C826196cf3510B040A8784D85aE36674c7Ed2",
         "getVerifierParams": [
           "0x5a3ef282b21e12fe1f4438e5bb158fc5060b160559c5158c6389d62d9fe3d080",
@@ -142,8 +143,8 @@
         ],
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": [
-          "0x2a884960f6359d95c946e34fc77a978b66662a819f07000ae63d1d37da9cabb2",
-          1710244859,
+          "0x0ff16d9baf20bbae043fd6747fe2c953ac2cfa4642197d64e1e00199f1685c86",
+          1710352007,
           0
         ],
         "validators": ["0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD"]
@@ -151,7 +152,7 @@
       "derivedName": "DiamondProxy"
     },
     {
-      "name": "zkSync Era Multisig",
+      "name": "Matter Labs Multisig",
       "address": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
       "upgradeability": {
         "type": "gnosis safe",

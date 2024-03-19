@@ -137,6 +137,36 @@
       "formula": "locked"
     },
     {
+      "id": "ankreth-ankr-staked-eth",
+      "name": "Ankr Staked ETH",
+      "coingeckoId": "ankreth",
+      "address": "0xE95A203B1a91a908F9B9CE46459d101078c2c3cb",
+      "symbol": "ankrETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1604948706,
+      "coingeckoListingTimestamp": 1608163200,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13403/large/aETHc.png?1696513165",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "ankrmatic-ankr-staked-matic",
+      "name": "Ankr Staked MATIC",
+      "coingeckoId": "ankr-reward-earning-matic",
+      "address": "0x26dcFbFa8Bc267b250432c01C982Eaf81cC5480C",
+      "symbol": "ankrMATIC",
+      "decimals": 18,
+      "deploymentTimestamp": 1651655374,
+      "coingeckoListingTimestamp": 1654646400,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/25742/large/a-matic-c-da4ec10dc9723e695700e25dbf8c8edf.png?1696524833",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "any-anyswap",
       "name": "Anyswap",
       "coingeckoId": "anyswap",
@@ -3341,6 +3371,21 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "weeth-wrapped-eeth",
+      "name": "Wrapped eETH",
+      "coingeckoId": "wrapped-eeth",
+      "address": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+      "symbol": "weETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1689005159,
+      "coingeckoListingTimestamp": 1701648000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"

@@ -324,9 +324,9 @@
           "type": null
         },
         "transactionCount": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Increases with each Security Council action.",
+          "severity": "HIGH",
+          "type": "L2"
         },
         "version": {
           "description": null,
