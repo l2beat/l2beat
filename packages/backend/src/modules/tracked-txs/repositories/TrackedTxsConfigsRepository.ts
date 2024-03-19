@@ -95,7 +95,20 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
   //   return rows.map((row) => TrackedTxsConfigHash.unsafe(row.config_hash))
   // }
 
+
   async setLastSyncedTimestamp(
+    trackedTxId: TrackedTxId,
+    lastSyncedTimestamp: UnixTime,
+    trx?: Knex.Transaction,
+  ) {
+    const knex = await this.knex(trx)
+
+    return await knex('tracked_txs_configs')
+      .where({ id: trackedTxId.toString()})
+      .update({ last_synced_timestamp: lastSyncedTimestamp.toDate() })
+  }
+
+  async setManyLastSyncedTimestamp(
     trackedTxIds: TrackedTxId[],
     lastSyncedTimestamp: UnixTime,
     trx?: Knex.Transaction,
