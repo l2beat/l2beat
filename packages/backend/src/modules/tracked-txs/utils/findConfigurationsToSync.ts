@@ -3,7 +3,7 @@ import { notUndefined, UnixTime } from '@l2beat/shared-pure'
 
 import { TrackedTxsConfigRecord } from '../repositories/TrackedTxsConfigsRepository'
 import { TrackedTxConfigEntry } from '../types/TrackedTxsConfig'
-import { isTimestampInRange } from './isTimestampInRange'
+import { isConfigToSync } from './isConfigToSync'
 
 /* EXAMPLE
 
@@ -42,7 +42,9 @@ export function findConfigurationsToSync(
   from: UnixTime,
   to: UnixTime,
 ): { configurationsToSync: TrackedTxConfigEntry[]; syncTo: UnixTime } {
-  const configs = runtimeConfigurations
+  const allSyncTo: number[] = []
+
+  const configurationsToSync = runtimeConfigurations
     .map((config) => {
       const filteredUses = config.uses.filter((use) => {
         if (!enabledUpdaterTypes.includes(use.type)) {
@@ -51,14 +53,13 @@ export function findConfigurationsToSync(
 
         const dbEntry = databaseEntries.find((dbEntry) => dbEntry.id === use.id)
         assert(dbEntry, 'Database entry should not be undefined here!')
+        const { include, syncTo } = isConfigToSync(config, dbEntry, from, to)
 
-        return isTimestampInRange(
-          config.sinceTimestampInclusive,
-          config.untilTimestampExclusive,
-          dbEntry.lastSyncedTimestamp,
-          from,
-          to,
-        )
+        if (syncTo) {
+          allSyncTo.push(syncTo.toNumber())
+        }
+
+        return include
       })
 
       if (filteredUses.length === 0) {
@@ -72,18 +73,6 @@ export function findConfigurationsToSync(
     })
     .filter(notUndefined)
 
-  const untilTimestamps = configs
-    .map((c) => {
-      if (
-        c.untilTimestampExclusive &&
-        !c.untilTimestampExclusive.equals(from)
-      ) {
-        return c.untilTimestampExclusive.toNumber()
-      }
-    })
-    .filter(notUndefined)
-
-  const syncTo = Math.min(to.toNumber(), ...untilTimestamps)
-
-  return { configurationsToSync: configs, syncTo: new UnixTime(syncTo) }
+  const syncTo = Math.min(to.toNumber(), ...allSyncTo)
+  return { configurationsToSync, syncTo: new UnixTime(syncTo) }
 }
