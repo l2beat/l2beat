@@ -62,7 +62,7 @@ export class PriceIndexer extends ChildIndexer {
       .filter(
         (p) =>
           this.syncOptimizer.shouldTimestampBeSynced(p.timestamp) &&
-          p.timestamp.lt(to),
+          p.timestamp.gt(from),
       )
       .map((price) => ({
         chain: this.token.chain,
@@ -132,7 +132,7 @@ export class PriceIndexer extends ChildIndexer {
   override async invalidate(targetHeight: number): Promise<number> {
     this.logger.info('Invalidating...')
 
-    await this.priceRepository.deleteBeforeInclusive(
+    await this.priceRepository.deleteAfterExclusive(
       this.token.chain,
       this.token.address,
       new UnixTime(targetHeight),

@@ -242,7 +242,7 @@ describe(PriceIndexer.name, () => {
   describe(PriceIndexer.prototype.invalidate.name, () => {
     it('deletes records before targetHeight and returns the new safe height', async () => {
       const pricesRepository = mockObject<PriceRepository>({
-        deleteBeforeInclusive: async () => 1,
+        deleteAfterExclusive: async () => 1,
       })
       const token = mockObject<PriceConfigEntry>({
         chain: 'ethereum',
@@ -261,7 +261,7 @@ describe(PriceIndexer.name, () => {
       const targetHeight = 10
       const newSafeHeight = await indexer.invalidate(targetHeight)
 
-      expect(pricesRepository.deleteBeforeInclusive).toHaveBeenCalledWith(
+      expect(pricesRepository.deleteAfterExclusive).toHaveBeenCalledWith(
         token.chain,
         token.address,
         new UnixTime(targetHeight),
