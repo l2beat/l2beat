@@ -67,23 +67,10 @@ export function getTechnologyOverview(project: Layer2): TechnologyOverview {
       id: 'other-considerations',
       title: 'Other considerations',
       isUnderReview: project.isUnderReview ?? project.technology.isUnderReview,
-      items: [
-        project.technology.additionalPrivacy &&
-          makeTechnologyChoice(
-            'additional-privacy',
-            project.technology.additionalPrivacy,
-          ),
-        project.technology.smartContracts &&
-          makeTechnologyChoice(
-            'smart-contracts',
-            project.technology.smartContracts,
-          ),
-        project.technology.upgradeMechanism &&
-          makeTechnologyChoice(
-            'upgrade-mechanism',
-            project.technology.upgradeMechanism,
-          ),
-      ].filter(notUndefined),
+      items:
+        project.technology.otherConsiderations?.map((x, i) =>
+          makeTechnologyChoice(`other-considerations-${i + 1}`, x),
+        ) ?? [],
     }
 
     const filtered = [technology, operator, withdrawals, other].filter(

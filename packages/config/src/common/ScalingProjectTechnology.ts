@@ -15,12 +15,8 @@ export interface ScalingProjectTechnology {
   exitMechanisms: ScalingProjectTechnologyChoice[]
   /** What is solution to the mass exit problem */
   massExit?: ScalingProjectTechnologyChoice
-  /** What is the additional privacy offered */
-  additionalPrivacy?: ScalingProjectTechnologyChoice
-  /** What are the smart contract capabilities */
-  smartContracts?: ScalingProjectTechnologyChoice
-  /** How can the project be upgraded? */
-  upgradeMechanism?: ScalingProjectTechnologyChoice
+  /** Other considerations */
+  otherConsiderations?: ScalingProjectTechnologyChoice[]
   /** Is the technology section under review */
   isUnderReview?: boolean
 }

@@ -26,6 +26,18 @@ export class LoopringClient {
     }
   }
 
+  static create(
+    services: { httpClient: HttpClient; logger: Logger },
+    options: { url: string; callsPerMinute: number | undefined },
+  ) {
+    return new LoopringClient(
+      services.httpClient,
+      services.logger,
+      options.url,
+      options,
+    )
+  }
+
   async getFinalizedBlockNumber() {
     const block = await this.call('finalized')
     return block.blockId

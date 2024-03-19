@@ -30,7 +30,6 @@ export const mantle: Layer2 = underReviewL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  escrows: [
     {
       address: EthereumAddress('0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012'),
       sinceTimestamp: new UnixTime(1687954103),

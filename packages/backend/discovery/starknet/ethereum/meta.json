@@ -689,8 +689,8 @@
           "type": null
         },
         "programHash": {
-          "description": "The hash changes when the L2 cairo state machine logic changes.",
-          "severity": "MEDIUM",
+          "description": "The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.",
+          "severity": "HIGH",
           "type": "STRUCTURE"
         },
         "stateBlockHash": {

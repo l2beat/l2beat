@@ -338,8 +338,7 @@ describe('layer2s', () => {
           check('forceTransactions')
           check('exitMechanisms')
           check('massExit')
-          check('additionalPrivacy')
-          check('smartContracts')
+          check('otherConsiderations')
         })
       }
     })
