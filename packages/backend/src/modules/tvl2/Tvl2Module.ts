@@ -7,8 +7,8 @@ import {
 } from '@l2beat/shared'
 
 import { Config } from '../../config'
-import { Database } from '../../peripherals/database/Database'
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
+import { Peripherals } from '../../peripherals/Peripherals'
 import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
 import { HourlyIndexer } from '../tracked-txs/HourlyIndexer'
@@ -21,7 +21,7 @@ export function createTvl2Module(
   config: Config,
   logger: Logger,
   http: HttpClient,
-  database: Database,
+  peripherals: Peripherals,
   clock: Clock,
 ): ApplicationModule | undefined {
   if (!config.tvl2) {
@@ -29,8 +29,8 @@ export function createTvl2Module(
     return
   }
 
-  const stateRepository = new IndexerStateRepository(database, logger)
-  const priceRepository = new PriceRepository(database, logger)
+  const stateRepository = peripherals.getRepository(IndexerStateRepository)
+  const priceRepository = peripherals.getRepository(PriceRepository)
 
   const coingeckoClient = new CoingeckoClient(http, config.tvl2.coingeckoApiKey)
   const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
