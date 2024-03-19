@@ -3,7 +3,7 @@ import { popapex } from './popapex'
 import { rari } from './rari'
 import { Layer3 } from './types'
 import { xai } from './xai'
-import { zklinknova } from './zklinknexus'
+import { zklinknova } from './zklinknova'
 
 export * from './types'
 
