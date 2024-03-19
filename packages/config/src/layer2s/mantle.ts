@@ -245,18 +245,20 @@ export const mantle: Layer2 = {
       },
       EXITS.FORCED('forced-withdrawals'),
     ],
-    smartContracts: {
-      name: 'EVM compatible smart contracts are supported',
-      description:
-        'Mantle is EVM compatible. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on Mantle. Some opcodes behave differently.',
-      risks: [],
-      references: [
-        {
-          text: 'Solidity support - Mantle documentation',
-          href: 'https://docs.mantle.xyz/network/for-devs/solidity-support',
-        },
-      ],
-    },
+    otherConsiderations: [
+      {
+        name: 'EVM compatible smart contracts are supported',
+        description:
+          'Mantle is EVM compatible. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on Mantle. Some opcodes behave differently.',
+        risks: [],
+        references: [
+          {
+            text: 'Solidity support - Mantle documentation',
+            href: 'https://docs.mantle.xyz/network/for-devs/solidity-support',
+          },
+        ],
+      },
+    ],
   },
   contracts: {
     addresses: [
