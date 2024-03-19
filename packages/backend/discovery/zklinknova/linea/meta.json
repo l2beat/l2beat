@@ -66,6 +66,26 @@
       }
     },
     {
+      "name": "L1ERC20Bridge",
+      "values": {
+        "l2Bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2TokenBeacon": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2TokenProxyBytecodeHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "L2MessageService",
       "values": {
         "DEFAULT_ADMIN_ROLE": {

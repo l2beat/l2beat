@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xe6dc27b7aeded44a35a3e3fb76e74f9fa0f926a1
+Generated with discovered.json: 0xb523df30445188e6495c2672cb93928e61af7c5b
 
-# Diff at Mon, 18 Mar 2024 14:45:23 GMT:
+# Diff at Tue, 19 Mar 2024 10:41:29 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current block number: 2978784
+- current block number: 2996725
 
 ## Description
 
@@ -63,6 +63,12 @@ Added a `syncL2TxHash` function only callable by a validator.
 ```diff
 +   Status: CREATED
     contract zkLink (0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Bridge (0x62cE247f34dc316f93D3830e4Bf10959FCe630f8)
     +++ description: None
 ```
 

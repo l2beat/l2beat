@@ -1,8 +1,8 @@
 {
-  "name": "zklink",
+  "name": "zklinknova",
   "chain": "linea",
-  "blockNumber": 2978784,
-  "configHash": "0xb19a2db776e589f2514946f88bb11a1ebd661ec851bb24faf0ed619e78f37010",
+  "blockNumber": 2996725,
+  "configHash": "0xa064c0c5a21133f77221517c58b968e70ba01fcabd4a5e89ea2fb83eb26714b3",
   "version": 3,
   "contracts": [
     {
@@ -62,8 +62,8 @@
       "implementations": ["0x2c4F0ed41E356E289b5b479684006427Ec3589af"],
       "sinceTimestamp": 1688650665,
       "values": {
-        "currentPeriodAmountInWei": "65497942361340000000",
-        "currentPeriodEnd": 1710799497,
+        "currentPeriodAmountInWei": "1142620000000000000",
+        "currentPeriodEnd": 1710888813,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "GENERAL_PAUSE_TYPE": 1,
         "INBOX_STATUS_CLAIMED": 2,
@@ -72,11 +72,11 @@
         "L1_L2_MESSAGE_SETTER_ROLE": "0x4705265620026983c754c5288b65446d794a03174326ec6d7c0b5c7f1fd67415",
         "L1_L2_PAUSE_TYPE": 2,
         "L2_L1_PAUSE_TYPE": 3,
-        "lastAnchoredL1MessageNumber": 536905,
+        "lastAnchoredL1MessageNumber": 537407,
         "limitInWei": "15000000000000000000000",
         "MINIMUM_FEE_SETTER_ROLE": "0xcc6ce8bb749b4b07d2f635ce95747506096d0737f9abf10cc8f4a14384603ba2",
         "minimumFeeInWei": 1000000000000000,
-        "nextMessageNumber": 53953,
+        "nextMessageNumber": 53998,
         "PAUSE_MANAGER_ROLE": "0x356a809dfdea9198dd76fb76bf6d403ecf13ea675eb89e1eda2db2c4a4676a26",
         "periodInSeconds": 86400,
         "PROVING_SYSTEM_PAUSE_TYPE": 4,
@@ -234,16 +234,16 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingGovernor": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 12726,
+        "getPriorityQueueSize": 15671,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 18,
-        "getTotalBatchesCommitted": 974,
+        "getTotalBatchesCommitted": 1089,
         "getTotalBatchesExecuted": 16,
-        "getTotalBatchesVerified": 548,
-        "getTotalBlocksCommitted": 974,
+        "getTotalBatchesVerified": 551,
+        "getTotalBlocksCommitted": 1089,
         "getTotalBlocksExecuted": 16,
-        "getTotalBlocksVerified": 548,
-        "getTotalPriorityTxs": 12760,
+        "getTotalBlocksVerified": 551,
+        "getTotalPriorityTxs": 15705,
         "getVerifier": "0x902C3806A84f4e855a8746e92d7F1C9a51400458",
         "getVerifierParams": [
           "0x5a3ef282b21e12fe1f4438e5bb158fc5060b160559c5158c6389d62d9fe3d080",
@@ -263,6 +263,23 @@
         ]
       },
       "derivedName": "DiamondProxy"
+    },
+    {
+      "name": "L1ERC20Bridge",
+      "address": "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xB8017A397E7844635c5a2750d0BEB2af97506461",
+        "admin": "0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec"
+      },
+      "implementations": ["0xB8017A397E7844635c5a2750d0BEB2af97506461"],
+      "sinceTimestamp": 1709218113,
+      "values": {
+        "l2Bridge": "0x01c3f51294494e350AD69B999Db6B382b3B510b9",
+        "l2TokenBeacon": "0x45A4e87354154EB95c2896A43B65bf1148F34908",
+        "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
+      },
+      "derivedName": "L1ERC20Bridge"
     },
     {
       "name": "LineaL2Gateway",
@@ -573,6 +590,12 @@
     "0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05": [
       "constructor(uint256 _chainId, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)"
     ],
+    "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
     "0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
@@ -632,6 +655,22 @@
       "function priorityQueueFrontOperation() view returns (tuple(bytes32 canonicalTxHash, uint64 expirationTimestamp, uint192 layer2Tip))",
       "function storedBatchHash(uint256 _batchNumber) view returns (bytes32)",
       "function storedBlockHash(uint256 _batchNumber) view returns (bytes32)"
+    ],
+    "0xB8017A397E7844635c5a2750d0BEB2af97506461": [
+      "constructor(address _zkSync)",
+      "event ClaimedFailedDeposit(address indexed to, address indexed l1Token, uint256 amount)",
+      "event DepositInitiated(bytes32 indexed l2DepositTxHash, address indexed from, address indexed to, address l1Token, uint256 amount)",
+      "event WithdrawalFinalized(address indexed to, address indexed l1Token, uint256 amount)",
+      "function claimFailedDeposit(address _depositSender, address _l1Token, bytes32 _l2TxHash, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes32[] _merkleProof)",
+      "function deposit(address _l2Receiver, address _l1Token, uint256 _amount, uint256 _l2TxGasLimit, uint256 _l2TxGasPerPubdataByte) payable returns (bytes32 l2TxHash)",
+      "function deposit(address _l2Receiver, address _l1Token, uint256 _amount, uint256 _l2TxGasLimit, uint256 _l2TxGasPerPubdataByte, address _refundRecipient) payable returns (bytes32 l2TxHash)",
+      "function finalizeWithdrawal(uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes _message, bytes32[] _merkleProof)",
+      "function initialize(bytes[] _factoryDeps, address _l2TokenBeacon, address _governor, uint256 _deployBridgeImplementationFee, uint256 _deployBridgeProxyFee) payable",
+      "function isWithdrawalFinalized(uint256 l2BatchNumber, uint256 l2ToL1MessageNumber) view returns (bool isFinalized)",
+      "function l2Bridge() view returns (address)",
+      "function l2TokenAddress(address _l1Token) view returns (address)",
+      "function l2TokenBeacon() view returns (address)",
+      "function l2TokenProxyBytecodeHash() view returns (bytes32)"
     ],
     "0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca": [
       "constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)",
