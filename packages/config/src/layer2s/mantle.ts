@@ -42,9 +42,9 @@ export const mantle: Layer2 = underReviewL2({
       tokens: '*',
     },
     {
-      address: EthereumAddress('0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb'),
+      address: EthereumAddress('0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb'), // portal
       sinceTimestamp: new UnixTime(1710396767),
-      tokens: ['MNT'],
+      tokens: ['*'],
     },
   ],
 })
