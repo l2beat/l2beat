@@ -32,13 +32,8 @@ export const mantle: Layer2 = underReviewL2({
   },
   escrows: [
     {
-      address: EthereumAddress('0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB'),
-      sinceTimestamp: new UnixTime(1702607855),
-      tokens: '*',
-    },
-    {
-      address: EthereumAddress('0x0f1b7bd7762662B23486320AA91F30312184f70C'),
-      sinceTimestamp: new UnixTime(1710273600),
+      address: EthereumAddress('0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012'),
+      sinceTimestamp: new UnixTime(1687954103),
       tokens: '*',
     },
     {
