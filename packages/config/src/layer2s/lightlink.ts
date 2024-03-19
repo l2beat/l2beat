@@ -9,7 +9,7 @@ export const lightlink: Layer2 = upcoming({
     description:
       'LightLink is an Ethereum Layer 2 blockchain that lets dApps and enterprises offer users instant, gasless transactions.',
     purposes: ['Universal'],
-    category: 'Optimistic Rollup',
+    category: 'Optimium',
     links: {
       websites: ['https://lightlink.io'],
       apps: ['https://phoenix.lightlink.io/apps'],
