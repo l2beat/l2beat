@@ -119,8 +119,9 @@ export function makeConfig(
         liveness: flags.isEnabled('tracked-txs', 'liveness'),
         l2costs: flags.isEnabled('tracked-txs', 'l2costs') && {
           providerUrl: env.string('L2COSTS_PROVIDER_URL'),
-          providerCallsPerMinute: env.optionalInteger(
+          providerCallsPerMinute: env.integer(
             'L2COSTS_PROVIDER_CALLS_PER_MINUTE',
+            600,
           ),
         },
       },

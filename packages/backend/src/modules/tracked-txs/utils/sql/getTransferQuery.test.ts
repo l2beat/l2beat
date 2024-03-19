@@ -26,6 +26,9 @@ describe(getTransferQuery.name, () => {
       traces.to_address,
       txs.block_number,
       txs.block_timestamp,
+      txs.transaction_type,
+      txs.receipt_gas_used,
+      txs.gas_price,
     FROM
       bigquery-public-data.crypto_ethereum.transactions AS txs
     JOIN

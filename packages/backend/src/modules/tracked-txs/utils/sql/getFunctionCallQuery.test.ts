@@ -38,6 +38,9 @@ describe(getFunctionCallQuery.name, () => {
       traces.to_address,
       txs.block_number,
       txs.block_timestamp,
+      txs.transaction_type,
+      txs.receipt_gas_used,
+      txs.gas_price,
       CASE
         WHEN traces.to_address IN UNNEST(?) THEN traces.input
       ELSE
