@@ -85,17 +85,9 @@ describe(PriceIndexer.name, () => {
 
       const newSafeHeight = await indexer.update(from.toNumber(), to.toNumber())
 
-      expect(syncOptimizer.getTimestampToSync).toHaveBeenNthCalledWith(1, from)
-      expect(syncOptimizer.getTimestampToSync).toHaveBeenLastCalledWith(to)
-
       expect(
         coingeckoQueryService.getUsdPriceHistoryHourly,
-      ).toHaveBeenOnlyCalledWith(
-        token.coingeckoId,
-        from,
-        to,
-        token.address as EthereumAddress,
-      )
+      ).toHaveBeenOnlyCalledWith(token.coingeckoId, from, to, undefined)
 
       expect(pricesRepository.addMany).toHaveBeenCalledWith(
         [pricesResponse[0], pricesResponse[2]].map((p) => ({
@@ -107,41 +99,6 @@ describe(PriceIndexer.name, () => {
       )
 
       expect(newSafeHeight).toEqual(to.toNumber())
-    })
-
-    it('immediately return when sync scheduled before minimum timestamp', async () => {
-      const from = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
-
-      const syncOptimizer = mockObject<SyncOptimizer>({
-        getTimestampToSync: mockFn().returns(from),
-      })
-
-      const indexer = new PriceIndexer(
-        Logger.SILENT,
-        mockObject<HourlyIndexer>({ subscribe: () => {} }),
-        mockObject<CoingeckoQueryService>({}),
-        mockObject<IndexerStateRepository>({}),
-        mockObject<PriceRepository>({}),
-        mockObject<PriceConfigEntry>({
-          chain: 'ethereum',
-          address: EthereumAddress.random(),
-        }),
-        syncOptimizer,
-      )
-
-      const fromBeforeMinTimestamp = 0
-
-      const newSafeHeight = await indexer.update(
-        fromBeforeMinTimestamp,
-        fromBeforeMinTimestamp + 1,
-      )
-
-      expect(syncOptimizer.getTimestampToSync).toHaveBeenNthCalledWith(
-        1,
-        new UnixTime(fromBeforeMinTimestamp),
-      )
-
-      expect(newSafeHeight).toEqual(fromBeforeMinTimestamp + 1)
     })
   })
 
