@@ -29,6 +29,7 @@ import { gluon } from './gluon'
 import { grvt } from './grvt'
 import { hermez } from './hermez'
 import { honeypot } from './honeypot'
+import { hychain } from './hychain'
 import { hypr } from './hypr'
 import { immutablex } from './immutablex'
 import { karak } from './karak'
@@ -124,6 +125,7 @@ export const layer2s: Layer2[] = [
   gluon,
   grvt,
   hermez,
+  hychain,
   hypr,
   immutablex,
   karak,

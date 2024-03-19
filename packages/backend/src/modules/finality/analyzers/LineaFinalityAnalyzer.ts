@@ -1,4 +1,4 @@
-import { assert, LivenessType, UnixTime } from '@l2beat/shared-pure'
+import { assert, TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import { BaseAnalyzer } from './types/BaseAnalyzer'
@@ -6,8 +6,8 @@ import { BaseAnalyzer } from './types/BaseAnalyzer'
 type LineaDecoded = [[string, string, string, number, number, string, string]]
 
 export class LineaFinalityAnalyzer extends BaseAnalyzer {
-  override getLivenessType(): LivenessType {
-    return 'DA'
+  override getTrackedTxSubtype(): TrackedTxsConfigSubtype {
+    return 'batchSubmissions'
   }
 
   async getFinality(transaction: {

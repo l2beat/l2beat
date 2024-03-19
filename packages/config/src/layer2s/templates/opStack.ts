@@ -7,16 +7,16 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
+  DataAvailabilityBridge,
+  DataAvailabilityLayer,
   EXITS,
   FORCE_TRANSACTIONS,
   KnowledgeNugget,
   makeBridgeCompatible,
-  makeDataAvailabilityConfig,
   Milestone,
   NUGGETS,
-  OffChainDataAvailabilityFallback,
-  OffChainDataAvailabilityLayer,
   OPERATOR,
   RISK_VIEW,
   ScalingProjectContract,
@@ -44,13 +44,15 @@ export const CELESTIA_DA_PROVIDER: DAProvider = {
   name: 'Celestia',
   riskView: RISK_VIEW.DATA_CELESTIA(false),
   technology: TECHNOLOGY_DATA_AVAILABILITY.CELESTIA_OFF_CHAIN(false),
+  bridge: { type: 'None' },
 }
 
 export interface DAProvider {
-  name: Exclude<OffChainDataAvailabilityLayer, 'DAC'>
-  fallback?: OffChainDataAvailabilityFallback
+  name: DataAvailabilityLayer
+  fallback?: DataAvailabilityLayer
   riskView: ScalingProjectRiskViewEntry
   technology: ScalingProjectTechnologyChoice
+  bridge: DataAvailabilityBridge
 }
 
 export interface OpStackConfig {
@@ -157,49 +159,53 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
               assessCount: subtractOne,
             }
           : undefined),
-      liveness:
+      trackedTxs:
         daProvider !== undefined
           ? undefined
-          : {
-              proofSubmissions: [],
-              batchSubmissions: [
-                {
+          : [
+              {
+                uses: [{ type: 'liveness', subtype: 'batchSubmissions' }],
+                query: {
                   formula: 'transfer',
                   from: sequencerAddress,
                   to: sequencerInbox,
-                  sinceTimestamp: templateVars.genesisTimestamp,
+                  sinceTimestampInclusive: templateVars.genesisTimestamp,
                 },
-              ],
-              stateUpdates: [
-                {
+              },
+              {
+                uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
+                query: {
                   formula: 'functionCall',
                   address: templateVars.l2OutputOracle.address,
                   selector: '0x9aaab648',
                   functionSignature:
                     'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
-                  sinceTimestamp: new UnixTime(
+                  sinceTimestampInclusive: new UnixTime(
                     templateVars.l2OutputOracle.sinceTimestamp ??
                       templateVars.genesisTimestamp.toNumber(),
                   ),
                 },
-              ],
-            },
+              },
+            ],
       finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
     chainConfig: templateVars.chainConfig,
     dataAvailability:
       daProvider !== undefined
-        ? makeDataAvailabilityConfig({
-            type: 'Off chain',
-            layers: [daProvider.name, daProvider.fallback],
-            bridge: 'None',
+        ? addSentimentToDataAvailability({
+            layers: daProvider.fallback
+              ? [daProvider.name, daProvider.fallback]
+              : [daProvider.name],
+            bridge: daProvider.bridge,
             mode: 'Transactions data (compressed)',
           })
-        : makeDataAvailabilityConfig({
-            type: 'On chain',
-            layer: templateVars.usesBlobs
-              ? 'Ethereum (blobs or calldata)'
-              : 'Ethereum (calldata)',
+        : addSentimentToDataAvailability({
+            layers: [
+              templateVars.usesBlobs
+                ? 'Ethereum (blobs or calldata)'
+                : 'Ethereum (calldata)',
+            ],
+            bridge: { type: 'Enshrined' },
             mode: 'Transactions data (compressed)',
           }),
     riskView: makeBridgeCompatible({
@@ -411,18 +417,21 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
           ],
         },
       ],
-      smartContracts: templateVars.nonTemplateTechnology?.smartContracts ?? {
-        name: 'EVM compatible smart contracts are supported',
-        description:
-          'OP stack chains are pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on L2.',
-        risks: [],
-        references: [
-          {
-            text: 'Introducing EVM Equivalence',
-            href: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
-          },
-        ],
-      },
+      otherConsiderations: templateVars.nonTemplateTechnology
+        ?.otherConsiderations ?? [
+        {
+          name: 'EVM compatible smart contracts are supported',
+          description:
+            'OP stack chains are pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on L2.',
+          risks: [],
+          references: [
+            {
+              text: 'Introducing EVM Equivalence',
+              href: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
+            },
+          ],
+        },
+      ],
     },
     permissions: [
       ...templateVars.discovery.getOpStackPermissions(

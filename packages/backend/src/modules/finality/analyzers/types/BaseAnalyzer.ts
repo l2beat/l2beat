@@ -1,13 +1,13 @@
 import {
   assert,
-  LivenessType,
   notUndefined,
   ProjectId,
+  TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
 
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
-import { LivenessRepository } from '../../../liveness/repositories/LivenessRepository'
+import { LivenessRepository } from '../../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 
 export abstract class BaseAnalyzer {
   constructor(
@@ -32,7 +32,7 @@ export abstract class BaseAnalyzer {
 
           return this.livenessRepository.findTransactionWithinTimeRange(
             this.projectId,
-            this.getLivenessType(),
+            this.getTrackedTxSubtype(),
             targetTimestamp,
             lowerBound,
           )
@@ -60,7 +60,7 @@ export abstract class BaseAnalyzer {
     return (to.toNumber() - from.toNumber()) / granularity
   }
 
-  abstract getLivenessType(): LivenessType
+  abstract getTrackedTxSubtype(): TrackedTxsConfigSubtype
   abstract getFinality(transaction: {
     txHash: string
     timestamp: UnixTime

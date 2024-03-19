@@ -1,33 +1,27 @@
 import {
   Bridge,
-  DuplicateData,
   getCanonicalTokenBySymbol,
   Layer2,
   Layer2FinalityConfig,
-  Layer2Liveness,
-  Layer2LivenessConfiguration,
+  Layer2LivenessConfig,
   Layer2TransactionApi,
+  Layer2TxConfig,
   tokenList,
 } from '@l2beat/config'
 import {
   EthereumAddress,
-  LivenessType,
   ProjectId,
   Token,
   UnixTime,
 } from '@l2beat/shared-pure'
 
+import { TrackedTxId } from '../modules/tracked-txs/types/TrackedTxId'
 import {
-  LivenessConfigEntry,
-  makeLivenessFunctionCall,
-  makeLivenessSharpSubmissions,
-  makeLivenessTransfer,
-} from '../modules/liveness/types/LivenessConfig'
-
-interface LivenessConfig {
-  entries: LivenessConfigEntry[]
-  duplicateData?: DuplicateData[]
-}
+  SHARP_SUBMISSION_ADDRESS,
+  SHARP_SUBMISSION_SELECTOR,
+  TrackedTxsConfig,
+  TrackedTxUseWithId,
+} from '../modules/tracked-txs/types/TrackedTxsConfig'
 
 export interface Project {
   projectId: ProjectId
@@ -38,7 +32,8 @@ export interface Project {
   isLayer3?: boolean
   escrows: ProjectEscrow[]
   transactionApi?: Layer2TransactionApi
-  livenessConfig?: LivenessConfig
+  trackedTxsConfig?: TrackedTxsConfig
+  livenessConfig?: Layer2LivenessConfig
   finalityConfig?: Layer2FinalityConfig
 }
 
@@ -64,7 +59,11 @@ export function layer2ToProject(layer2: Layer2): Project {
           : escrow.tokens.map(getCanonicalTokenBySymbol),
     })),
     transactionApi: layer2.config.transactionApi,
-    livenessConfig: toBackendLivenessConfig(layer2.id, layer2.config.liveness),
+    trackedTxsConfig: toBackendTrackedTxsConfig(
+      layer2.id,
+      layer2.config.trackedTxs,
+    ),
+    livenessConfig: layer2.config.liveness,
     finalityConfig:
       layer2.config.finality !== 'coming soon'
         ? layer2.config.finality
@@ -88,36 +87,43 @@ export function bridgeToProject(bridge: Bridge): Project {
   }
 }
 
-function toBackendLivenessConfig(
+function toBackendTrackedTxsConfig(
   projectId: ProjectId,
-  config: Layer2Liveness | undefined,
-): LivenessConfig | undefined {
-  if (config === undefined) return
+  configs: Layer2TxConfig[] | undefined,
+): TrackedTxsConfig | undefined {
+  if (configs === undefined) return
 
-  const livenessConfig: LivenessConfig = {
-    entries: [],
-    duplicateData: config.duplicateData,
+  return {
+    entries: configs.map((config) => {
+      const query = config.query
+      if (query.formula === 'sharpSubmission') {
+        return {
+          projectId,
+          address: SHARP_SUBMISSION_ADDRESS,
+          selector: SHARP_SUBMISSION_SELECTOR,
+          uses: getTrackedTxsConfigUses(config),
+          ...query,
+        }
+      }
+
+      return {
+        projectId,
+        ...query,
+        uses: getTrackedTxsConfigUses(config),
+      }
+    }),
   }
+}
 
-  function addEntry(param: Layer2LivenessConfiguration, type: LivenessType) {
-    if (param.formula === 'functionCall') {
-      livenessConfig.entries.push(
-        makeLivenessFunctionCall({ projectId, type, ...param }),
-      )
-    } else if (param.formula === 'transfer') {
-      livenessConfig.entries.push(
-        makeLivenessTransfer({ projectId, type, ...param }),
-      )
-    } else {
-      livenessConfig.entries.push(
-        makeLivenessSharpSubmissions({ projectId, type, ...param }),
-      )
-    }
-  }
+function getTrackedTxsConfigUses(config: Layer2TxConfig): TrackedTxUseWithId[] {
+  const { untilTimestampExclusive: _, ...queryWithoutUntilTimestamp } =
+    config.query
 
-  config.stateUpdates.forEach((param) => addEntry(param, 'STATE'))
-  config.batchSubmissions.forEach((param) => addEntry(param, 'DA'))
-  config.proofSubmissions.forEach((param) => addEntry(param, 'PROOF'))
-
-  return livenessConfig
+  return config.uses.map((use) => ({
+    ...use,
+    id: TrackedTxId([
+      JSON.stringify(use),
+      JSON.stringify(queryWithoutUntilTimestamp),
+    ]),
+  }))
 }
