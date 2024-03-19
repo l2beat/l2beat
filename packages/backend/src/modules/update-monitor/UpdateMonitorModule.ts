@@ -8,8 +8,8 @@ import {
 import { HttpClient } from '@l2beat/shared'
 
 import { Config } from '../../config'
-import { Database } from '../../peripherals/database/Database'
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'
+import { Peripherals } from '../../peripherals/Peripherals'
 import { ChainConverter } from '../../tools/ChainConverter'
 import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
@@ -26,7 +26,7 @@ export function createUpdateMonitorModule(
   config: Config,
   logger: Logger,
   http: HttpClient,
-  database: Database,
+  peripherals: Peripherals,
   clock: Clock,
 ): ApplicationModule | undefined {
   if (!config.updateMonitor) {
@@ -45,20 +45,9 @@ export function createUpdateMonitorModule(
     ? new DiscordClient(http, config.updateMonitor.discord)
     : undefined
 
-  const updateNotifierRepository = new UpdateNotifierRepository(
-    database,
-    logger,
-  )
-  const updateMonitorRepository = new UpdateMonitorRepository(database, logger)
-
-  const discoveryCacheRepository = new DiscoveryCacheRepository(
-    database,
-    logger,
-  )
-
   const chainConverter = new ChainConverter(config.chains)
   const updateNotifier = new UpdateNotifier(
-    updateNotifierRepository,
+    peripherals.getRepository(UpdateNotifierRepository),
     discordClient,
     chainConverter,
     logger,
@@ -71,7 +60,7 @@ export function createUpdateMonitorModule(
     createDiscoveryRunner(
       discoveryHttpClient,
       configReader,
-      discoveryCacheRepository,
+      peripherals.getRepository(DiscoveryCacheRepository),
       discoveryLogger,
       chainConfig,
     ),
@@ -81,7 +70,7 @@ export function createUpdateMonitorModule(
     runners,
     updateNotifier,
     configReader,
-    updateMonitorRepository,
+    peripherals.getRepository(UpdateMonitorRepository),
     clock,
     chainConverter,
     logger,
@@ -90,7 +79,7 @@ export function createUpdateMonitorModule(
   )
 
   const updateMonitorController = new UpdateMonitorController(
-    updateMonitorRepository,
+    peripherals.getRepository(UpdateMonitorRepository),
     config.projects,
     configReader,
     chainConverter,

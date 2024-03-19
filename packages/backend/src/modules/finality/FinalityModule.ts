@@ -4,10 +4,9 @@ import { ethers } from 'ethers'
 
 import { Config } from '../../config'
 import { FinalityProjectConfig } from '../../config/features/finality'
-import { Database } from '../../peripherals/database/Database'
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
+import { Peripherals } from '../../peripherals/Peripherals'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
-import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
 import { LivenessRepository } from '../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { TrackedTxsConfigsRepository } from '../tracked-txs/repositories/TrackedTxsConfigsRepository'
@@ -22,8 +21,7 @@ import { FinalityRepository } from './repositories/FinalityRepository'
 export function createFinalityModule(
   config: Config,
   logger: Logger,
-  database: Database,
-  clock: Clock,
+  peripherals: Peripherals,
   trackedTxsIndexer: TrackedTxsIndexer | undefined,
 ): ApplicationModule | undefined {
   if (!config.finality) {
@@ -36,18 +34,10 @@ export function createFinalityModule(
     return
   }
 
-  const indexerStateRepository = new IndexerStateRepository(database, logger)
-  const livenessRepository = new LivenessRepository(database, logger)
-  const finalityRepository = new FinalityRepository(database, logger)
-  const trackedTxsConfigsRepository = new TrackedTxsConfigsRepository(
-    database,
-    logger,
-  )
-
   const finalityController = new FinalityController(
-    livenessRepository,
-    finalityRepository,
-    trackedTxsConfigsRepository,
+    peripherals.getRepository(LivenessRepository),
+    peripherals.getRepository(FinalityRepository),
+    peripherals.getRepository(TrackedTxsConfigsRepository),
     config.finality.configurations,
   )
   const finalityRouter = createFinalityRouter(finalityController)
@@ -63,7 +53,7 @@ export function createFinalityModule(
 
   const runtimeConfigurations = initializeConfigurations(
     ethereumRPC,
-    livenessRepository,
+    peripherals.getRepository(LivenessRepository),
     config.finality.configurations,
     logger,
   )
@@ -73,8 +63,8 @@ export function createFinalityModule(
       new FinalityIndexer(
         logger,
         trackedTxsIndexer,
-        indexerStateRepository,
-        finalityRepository,
+        peripherals.getRepository(IndexerStateRepository),
+        peripherals.getRepository(FinalityRepository),
         runtimeConfiguration,
       ),
   )

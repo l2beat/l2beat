@@ -18,21 +18,28 @@ import { providers } from 'ethers'
 
 import { ChainTvlConfig } from '../../../config/Config'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
+import { Peripherals } from '../../../peripherals/Peripherals'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { Clock } from '../../../tools/Clock'
 import { CirculatingSupplyFormulaUpdater } from '../assets/CirculatingSupplyFormulaUpdater'
 import { TotalSupplyFormulaUpdater } from '../assets/TotalSupplyFormulaUpdater'
 import { BlockNumberUpdater } from '../BlockNumberUpdater'
 import { PriceUpdater } from '../PriceUpdater'
+import { BlockNumberRepository } from '../repositories/BlockNumberRepository'
+import { CirculatingSupplyRepository } from '../repositories/CirculatingSupplyRepository'
+import { ReportRepository } from '../repositories/ReportRepository'
+import { ReportStatusRepository } from '../repositories/ReportStatusRepository'
+import { TotalSupplyRepository } from '../repositories/TotalSupplyRepository'
+import { TotalSupplyStatusRepository } from '../repositories/TotalSupplyStatusRepository'
 import { CirculatingSupplyUpdater } from '../totalSupply/CirculatingSupplyUpdater'
 import { TotalSupplyProvider } from '../totalSupply/TotalSupplyProvider'
 import { TotalSupplyUpdater } from '../totalSupply/TotalSupplyUpdater'
-import { TvlDatabase, TvlModule } from './types'
+import { TvlModule } from './types'
 
 export function chainTvlModule(
   { chain, config }: ChainTvlConfig,
   tokens: Token[],
-  db: TvlDatabase,
+  peripherals: Peripherals,
   priceUpdater: PriceUpdater,
   coingeckoQueryService: CoingeckoQueryService,
   http: HttpClient,
@@ -88,7 +95,7 @@ export function chainTvlModule(
 
   const blockNumberUpdater = new BlockNumberUpdater(
     blockNumberProvider,
-    db.blockNumberRepository,
+    peripherals.getRepository(BlockNumberRepository),
     clock,
     logger,
     config.chainId,
@@ -106,7 +113,7 @@ export function chainTvlModule(
       blockNumberUpdater,
       priceUpdater,
       config,
-      db,
+      peripherals,
       clock,
       logger,
     )
@@ -121,7 +128,7 @@ export function chainTvlModule(
       coingeckoQueryService,
       priceUpdater,
       config,
-      db,
+      peripherals,
       clock,
       logger,
     )
@@ -164,7 +171,7 @@ function initializeCirculatingSupply(
     chainId: ChainId
     minBlockTimestamp: UnixTime
   },
-  db: TvlDatabase,
+  peripherals: Peripherals,
   clock: Clock,
   logger: Logger,
 ) {
@@ -177,7 +184,7 @@ function initializeCirculatingSupply(
 
   const circulatingSupplyUpdater = new CirculatingSupplyUpdater(
     coingeckoQueryService,
-    db.circulatingSupplyRepository,
+    peripherals.getRepository(CirculatingSupplyRepository),
     clock,
     circulatingSupplyTokens,
     config.chainId,
@@ -188,8 +195,8 @@ function initializeCirculatingSupply(
   const circulatingSupplyFormulaUpdater = new CirculatingSupplyFormulaUpdater(
     priceUpdater,
     circulatingSupplyUpdater,
-    db.reportRepository,
-    db.reportStatusRepository,
+    peripherals.getRepository(ReportRepository),
+    peripherals.getRepository(ReportStatusRepository),
     config.projectId,
     config.chainId,
     clock,
@@ -210,7 +217,7 @@ function initializeTotalSupply(
     chainId: ChainId
     minBlockTimestamp: UnixTime
   },
-  db: TvlDatabase,
+  peripherals: Peripherals,
   clock: Clock,
   logger: Logger,
 ) {
@@ -224,8 +231,8 @@ function initializeTotalSupply(
   const totalSupplyUpdater = new TotalSupplyUpdater(
     totalSupplyProvider,
     blockNumberUpdater,
-    db.totalSupplyRepository,
-    db.totalSupplyStatusRepository,
+    peripherals.getRepository(TotalSupplyRepository),
+    peripherals.getRepository(TotalSupplyStatusRepository),
     clock,
     totalSupplyTokens,
     logger,
@@ -236,8 +243,8 @@ function initializeTotalSupply(
   const totalSupplyFormulaUpdater = new TotalSupplyFormulaUpdater(
     priceUpdater,
     totalSupplyUpdater,
-    db.reportRepository,
-    db.reportStatusRepository,
+    peripherals.getRepository(ReportRepository),
+    peripherals.getRepository(ReportStatusRepository),
     config.projectId,
     config.chainId,
     clock,
