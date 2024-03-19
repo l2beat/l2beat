@@ -41,8 +41,6 @@ export function createEthereumTvlModule(
 
   // #region peripherals
 
-  const ethereumProvider = new providers.JsonRpcProvider(tvlConfig.providerUrl)
-
   assert(tvlConfig.blockNumberProviderConfig.type === 'etherscan')
 
   const etherscanClient = new EtherscanClient(
@@ -54,11 +52,10 @@ export function createEthereumTvlModule(
     logger,
   )
 
-  const ethereumClient = new RpcClient(
-    ethereumProvider,
-    logger,
-    tvlConfig.providerCallsPerMinute,
-  )
+  const ethereumClient = peripherals.getClient(RpcClient, {
+    url: tvlConfig.providerUrl,
+    callsPerMinute: tvlConfig.providerCallsPerMinute,
+  })
   const multicallClient = new MulticallClient(
     ethereumClient,
     tvlConfig.multicallConfig,

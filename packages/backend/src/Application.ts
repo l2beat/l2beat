@@ -61,7 +61,7 @@ export class Application {
       createMetricsModule(config),
       createTvlModule(config, logger, http, peripherals, clock),
       createActivityModule(config, logger, http, peripherals, clock),
-      createUpdateMonitorModule(config, logger, http, peripherals, clock),
+      createUpdateMonitorModule(config, logger, peripherals, clock),
       createDiffHistoryModule(config, logger, peripherals),
       createImplementationChangeModule(config, logger, peripherals),
       createStatusModule(config, logger),

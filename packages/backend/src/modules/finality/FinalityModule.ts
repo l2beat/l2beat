@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import { assert, assertUnreachable, notUndefined } from '@l2beat/shared-pure'
-import { ethers } from 'ethers'
 
 import { Config } from '../../config'
 import { FinalityProjectConfig } from '../../config/features/finality'
@@ -42,20 +41,16 @@ export function createFinalityModule(
   )
   const finalityRouter = createFinalityRouter(finalityController)
 
-  const ethereumProvider = new ethers.providers.JsonRpcProvider(
-    config.finality.ethereumProviderUrl,
-  )
-  const ethereumRPC = new RpcClient(
-    ethereumProvider,
-    logger,
-    config.finality.ethereumProviderCallsPerMinute,
-  )
+  const ethereumClient = peripherals.getClient(RpcClient, {
+    url: config.finality.ethereumProviderUrl,
+    callsPerMinute: config.finality.ethereumProviderCallsPerMinute,
+  })
 
   const runtimeConfigurations = initializeConfigurations(
-    ethereumRPC,
+    ethereumClient,
     peripherals.getRepository(LivenessRepository),
     config.finality.configurations,
-    logger,
+    peripherals,
   )
 
   const finalityIndexers = runtimeConfigurations.map(
@@ -88,7 +83,7 @@ function initializeConfigurations(
   ethereumRPC: RpcClient,
   livenessRepository: LivenessRepository,
   configs: FinalityProjectConfig[],
-  logger: Logger,
+  peripherals: Peripherals,
 ) {
   return configs
     .map((configuration) => {
@@ -100,7 +95,7 @@ function initializeConfigurations(
               ethereumRPC,
               livenessRepository,
               configuration.projectId,
-              getL2RPC(configuration, logger),
+              getL2RPC(configuration, peripherals),
             ),
             minTimestamp: configuration.minTimestamp,
           }
@@ -123,11 +118,16 @@ function initializeConfigurations(
     .filter(notUndefined)
 }
 
-function getL2RPC(configuration: FinalityProjectConfig, logger: Logger) {
+function getL2RPC(
+  configuration: FinalityProjectConfig,
+  peripherals: Peripherals,
+) {
   assert(
     configuration.url,
     `${configuration.projectId.toString()}: L2 provider URL is not defined`,
   )
-  const L2provider = new ethers.providers.JsonRpcProvider(configuration.url)
-  return new RpcClient(L2provider, logger, configuration.callsPerMinute)
+  return peripherals.getClient(RpcClient, {
+    url: configuration.url,
+    callsPerMinute: configuration.callsPerMinute,
+  })
 }

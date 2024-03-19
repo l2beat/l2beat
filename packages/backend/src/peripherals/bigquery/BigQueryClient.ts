@@ -24,6 +24,20 @@ export class BigQueryClient {
     this.query = rateLimiter.wrap(this.query.bind(this))
   }
 
+  static create(
+    _: {},
+    options: { clientEmail: string; privateKey: string; projectId: string },
+  ) {
+    const bigQuery = new BigQuery({
+      credentials: {
+        client_email: options.clientEmail,
+        private_key: options.privateKey,
+      },
+      projectId: options.projectId,
+    })
+    return new BigQueryClient(bigQuery)
+  }
+
   async query(query: BigQueryClientQuery): Promise<unknown[]> {
     const querySpecificBytesLimit = query.limitInGb * BYTES_IN_GB
 

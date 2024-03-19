@@ -54,7 +54,6 @@ export function chainTvlModule(
   logger = logger.tag(chain)
 
   // #region peripherals
-  const provider = new providers.JsonRpcProvider(config.providerUrl)
 
   const blockNumberProvider: BlockNumberProvider =
     config.blockNumberProviderConfig.type === 'blockscout'
@@ -74,12 +73,10 @@ export function chainTvlModule(
           logger,
         )
 
-  const ethereumClient = new RpcClient(
-    provider,
-    logger,
-    config.providerCallsPerMinute,
-  )
-
+  const ethereumClient = peripherals.getClient(RpcClient, {
+    url: config.providerUrl,
+    callsPerMinute: config.providerCallsPerMinute,
+  })
   const multicallClient = new MulticallClient(
     ethereumClient,
     config.multicallConfig,
