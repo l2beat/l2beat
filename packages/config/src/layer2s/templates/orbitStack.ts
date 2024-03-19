@@ -210,23 +210,26 @@ export function orbitStackCommon(
         },
         EXITS.AUTONOMOUS,
       ],
-      smartContracts: templateVars.nonTemplateTechnology?.smartContracts ?? {
-        name: 'EVM compatible smart contracts are supported',
-        description:
-          'Arbitrum One uses Nitro technology that allows running fraud proofs by executing EVM code on top of WASM.',
-        risks: [
-          {
-            category: 'Funds can be lost if',
-            text: 'there are mistakes in the highly complex Nitro and WASM one-step prover implementation.',
-          },
-        ],
-        references: [
-          {
-            text: 'Inside Arbitrum Nitro',
-            href: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/',
-          },
-        ],
-      },
+      otherConsiderations: templateVars.nonTemplateTechnology
+        ?.otherConsiderations ?? [
+        {
+          name: 'EVM compatible smart contracts are supported',
+          description:
+            'Arbitrum One uses Nitro technology that allows running fraud proofs by executing EVM code on top of WASM.',
+          risks: [
+            {
+              category: 'Funds can be lost if',
+              text: 'there are mistakes in the highly complex Nitro and WASM one-step prover implementation.',
+            },
+          ],
+          references: [
+            {
+              text: 'Inside Arbitrum Nitro',
+              href: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/',
+            },
+          ],
+        },
+      ],
     },
     permissions: [
       ...templateVars.discovery.getOrbitStackPermissions({

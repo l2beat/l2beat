@@ -162,23 +162,25 @@ export const metis: Layer2 = {
       },
       EXITS.FORCED('forced-withdrawals'),
     ],
-    smartContracts: {
-      name: 'EVM compatible smart contracts are supported',
-      description:
-        'Metis uses the Optimistic Virtual Machine (OVM) 2.0 to execute transactions. This is similar to the EVM, but is independent from it and allows fraud proofs to be executed.',
-      risks: [
-        {
-          category: 'Funds can be lost if',
-          text: 'there are mistakes in the highly complex OVM implementation.',
-        },
-      ],
-      references: [
-        {
-          text: 'MVM repository - Metis source code',
-          href: 'https://github.com/MetisProtocol/mvm',
-        },
-      ],
-    },
+    otherConsiderations: [
+      {
+        name: 'EVM compatible smart contracts are supported',
+        description:
+          'Metis uses the Optimistic Virtual Machine (OVM) 2.0 to execute transactions. This is similar to the EVM, but is independent from it and allows fraud proofs to be executed.',
+        risks: [
+          {
+            category: 'Funds can be lost if',
+            text: 'there are mistakes in the highly complex OVM implementation.',
+          },
+        ],
+        references: [
+          {
+            text: 'MVM repository - Metis source code',
+            href: 'https://github.com/MetisProtocol/mvm',
+          },
+        ],
+      },
+    ],
   },
   permissions: [
     ...discovery.getMultisigPermission(

@@ -267,18 +267,20 @@ export const aztecV1: Layer2 = {
         ],
       },
     ],
-    additionalPrivacy: {
-      name: 'Payments are private',
-      description:
-        'Balances and identities for all tokens on the Aztec rollup are encrypted. Each transaction is encoded as a zkSNARK, protecting user data.',
-      risks: [],
-      references: [
-        {
-          text: 'Fast Privacy, Now - Aztec Medium Blog',
-          href: 'https://medium.com/aztec-protocol/aztec-zkrollup-layer-2-privacy-1978e90ee3b6#3b25',
-        },
-      ],
-    },
+    otherConsiderations: [
+      {
+        name: 'Payments are private',
+        description:
+          'Balances and identities for all tokens on the Aztec rollup are encrypted. Each transaction is encoded as a zkSNARK, protecting user data.',
+        risks: [],
+        references: [
+          {
+            text: 'Fast Privacy, Now - Aztec Medium Blog',
+            href: 'https://medium.com/aztec-protocol/aztec-zkrollup-layer-2-privacy-1978e90ee3b6#3b25',
+          },
+        ],
+      },
+    ],
   },
   contracts: {
     addresses: [
