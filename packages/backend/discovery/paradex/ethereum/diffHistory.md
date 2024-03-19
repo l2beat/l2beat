@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xe9a63c3466d15bd435ae56393488381ab80ae036
+Generated with discovered.json: 0x55dc427d90067c7f872f6e28295faff5e1cf4097
 
-# Diff at Tue, 19 Mar 2024 06:19:12 GMT:
+# Diff at Tue, 19 Mar 2024 08:27:29 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
-- comparing to: main@87a9df6317bf41ef2d063033dfc77d54521b9991 block: 19433460
-- current block number: 19466965
+- comparing to: main@38751f18e662e502e9656add6b7ab03bb7fb62f8 block: 19433460
+- current block number: 19467601
 
 ## Description
 
@@ -17,7 +17,7 @@ Program hash changed.
     +++ description: None
 +++ description: The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.
 +++ type: STRUCTURE
-+++ severity: MEDIUM
++++ severity: HIGH
       values.programHash:
 -        "109586309220455887239200613090920758778188956576212125550190099009305121410"
 +        "3383082961563516565935611087683915026448707331436034043529592588079494402084"
