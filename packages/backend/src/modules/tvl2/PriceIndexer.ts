@@ -5,7 +5,7 @@ import { ChildIndexer } from '@l2beat/uif'
 import { Knex } from 'knex'
 
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
-import { HourlyIndexer } from '../liveness/HourlyIndexer'
+import { HourlyIndexer } from '../tracked-txs/HourlyIndexer'
 import { PriceRecord, PriceRepository } from './repositories/PriceRepository'
 import { SyncOptimizer } from './SyncOptimizer'
 
