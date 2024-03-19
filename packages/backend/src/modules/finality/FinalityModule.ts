@@ -4,14 +4,13 @@ import { ethers } from 'ethers'
 
 import { Config } from '../../config'
 import { FinalityProjectConfig } from '../../config/features/finality'
-import { Database } from '../../peripherals/database/Database'
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
+import { Peripherals } from '../../peripherals/Peripherals'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
-import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
-import { LivenessIndexer } from '../liveness/LivenessIndexer'
-import { LivenessConfigurationRepository } from '../liveness/repositories/LivenessConfigurationRepository'
-import { LivenessRepository } from '../liveness/repositories/LivenessRepository'
+import { LivenessRepository } from '../tracked-txs/modules/liveness/repositories/LivenessRepository'
+import { TrackedTxsConfigsRepository } from '../tracked-txs/repositories/TrackedTxsConfigsRepository'
+import { TrackedTxsIndexer } from '../tracked-txs/TrackedTxsIndexer'
 import { LineaFinalityAnalyzer } from './analyzers/LineaFinalityAnalyzer'
 import { zkSyncEraFinalityAnalyzer } from './analyzers/zkSyncEraFinalityAnalyzer'
 import { FinalityController } from './api/FinalityController'
@@ -22,32 +21,23 @@ import { FinalityRepository } from './repositories/FinalityRepository'
 export function createFinalityModule(
   config: Config,
   logger: Logger,
-  database: Database,
-  clock: Clock,
-  livenessIndexer?: LivenessIndexer,
+  peripherals: Peripherals,
+  trackedTxsIndexer: TrackedTxsIndexer | undefined,
 ): ApplicationModule | undefined {
   if (!config.finality) {
     logger.info('Finality module disabled')
     return
   }
 
-  if (!livenessIndexer) {
-    logger.error('To run finality you have to run Liveness')
+  if (!trackedTxsIndexer) {
+    logger.error('To run finality you have to run tracked transactions module')
     return
   }
 
-  const indexerStateRepository = new IndexerStateRepository(database, logger)
-  const livenessRepository = new LivenessRepository(database, logger)
-  const finalityRepository = new FinalityRepository(database, logger)
-  const livenessConfigurationRepository = new LivenessConfigurationRepository(
-    database,
-    logger,
-  )
-
   const finalityController = new FinalityController(
-    livenessRepository,
-    finalityRepository,
-    livenessConfigurationRepository,
+    peripherals.getRepository(LivenessRepository),
+    peripherals.getRepository(FinalityRepository),
+    peripherals.getRepository(TrackedTxsConfigsRepository),
     config.finality.configurations,
   )
   const finalityRouter = createFinalityRouter(finalityController)
@@ -63,7 +53,7 @@ export function createFinalityModule(
 
   const runtimeConfigurations = initializeConfigurations(
     ethereumRPC,
-    livenessRepository,
+    peripherals.getRepository(LivenessRepository),
     config.finality.configurations,
     logger,
   )
@@ -72,9 +62,9 @@ export function createFinalityModule(
     (runtimeConfiguration) =>
       new FinalityIndexer(
         logger,
-        livenessIndexer,
-        indexerStateRepository,
-        finalityRepository,
+        trackedTxsIndexer,
+        peripherals.getRepository(IndexerStateRepository),
+        peripherals.getRepository(FinalityRepository),
         runtimeConfiguration,
       ),
   )

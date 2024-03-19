@@ -1,3 +1,38 @@
+Generated with discovered.json: 0xf0238ed10ceca3dd8e5681d6939ad2464cd124c8
+
+# Diff at Mon, 18 Mar 2024 09:11:40 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@6554807e96aa5206aec95eab7b2ae23cf107941b block: 19432590
+- current block number: 19460707
+
+## Description
+
+The programHash of Starknet OS (L2 cairo state machine) is changed, no changes on L1.
+
+## Watched changes
+
+```diff
+    contract ImplementationMultisig (0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd) {
+    +++ description: None
+      values.nonce:
+-        20
++        21
+    }
+```
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: None
++++ description: The hash changes when the L2 cairo state machine logic changes.
++++ type: STRUCTURE
++++ severity: MEDIUM
+      values.programHash:
+-        "109586309220455887239200613090920758778188956576212125550190099009305121410"
++        "3383082961563516565935611087683915026448707331436034043529592588079494402084"
+    }
+```
+
 Generated with discovered.json: 0x4335af2ffbc06336f597863bea89ad0352e95c0c
 
 # Diff at Thu, 14 Mar 2024 10:15:35 GMT:

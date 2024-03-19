@@ -8,7 +8,7 @@ import {
 import { UnixTime } from '@l2beat/shared-pure'
 
 import { Config } from '../../config'
-import { Database } from '../../peripherals/database/Database'
+import { Peripherals } from '../../peripherals/Peripherals'
 import { ChainConverter } from '../../tools/ChainConverter'
 import { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
@@ -23,7 +23,7 @@ import { createDiffHistoryRouter } from './api/DiffHistoryRouter'
 export function createDiffHistoryModule(
   config: Config,
   logger: Logger,
-  database: Database,
+  peripherals: Peripherals,
 ): ApplicationModule | undefined {
   if (!config.diffHistory) {
     logger.info('DiffHistory module disabled')
@@ -33,16 +33,6 @@ export function createDiffHistoryModule(
   const configReader = new ConfigReader()
 
   const discoveryLogger = DiscoveryLogger.SILENT
-
-  const discoveryHistoryRepository = new DiscoveryHistoryRepository(
-    database,
-    logger,
-  )
-
-  const discoveryCacheRepository = new DiscoveryCacheRepository(
-    database,
-    logger,
-  )
 
   const discoveryHttpClient = new DiscoveryHttpClient()
 
@@ -55,7 +45,7 @@ export function createDiffHistoryModule(
       const runner = createDiscoveryRunner(
         discoveryHttpClient,
         configReader,
-        discoveryCacheRepository,
+        peripherals.getRepository(DiscoveryCacheRepository),
         discoveryLogger,
         chainConfig,
       )
@@ -83,7 +73,7 @@ export function createDiffHistoryModule(
             project.name,
             'ethereum',
             configReader,
-            discoveryHistoryRepository,
+            peripherals.getRepository(DiscoveryHistoryRepository),
             new Clock(project.minTimestamp, 60 * 60),
             chainConverter,
             logger,
@@ -93,7 +83,7 @@ export function createDiffHistoryModule(
     })
 
   const controller = new DiffHistoryController(
-    discoveryHistoryRepository,
+    peripherals.getRepository(DiscoveryHistoryRepository),
     configReader,
     chainConverter,
   )

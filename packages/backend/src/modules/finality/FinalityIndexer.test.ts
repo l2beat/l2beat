@@ -1,9 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChildIndexer } from '@l2beat/uif'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
-import { LivenessIndexer } from '../liveness/LivenessIndexer'
 import { BaseAnalyzer } from './analyzers/types/BaseAnalyzer'
 import { FinalityIndexer } from './FinalityIndexer'
 import {
@@ -294,7 +294,7 @@ function getMockFinalityIndexer(params: {
 
   return new FinalityIndexer(
     Logger.SILENT,
-    mockObject<LivenessIndexer>({
+    mockObject<ChildIndexer>({
       start: async () => {},
       tick: async () => 1,
       subscribe: () => {},

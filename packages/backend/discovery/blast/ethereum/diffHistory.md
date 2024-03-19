@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xcfae335c90cdabe1d8ccbbe0768f35c7cebc867e
+
+# Diff at Tue, 19 Mar 2024 09:33:27 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@ed3dd09f83459eadf3704e0797de8bbf1ae98817 block: 19445792
+- current block number: 19467922
+
+## Description
+
+The insurance fee is disabled on ETH- and USDYieldManager. This fee was taken from positive yields.
+
+## Watched changes
+
+```diff
+    contract ETHYieldManager (0x98078db053902644191f93988341E31289E1C8FE) {
+    +++ description: None
++++ description: Insurance fee taken from positive yields
++++ severity: MEDIUM
+      values.insuranceFeeBips:
+-        1000
++        0
+    }
+```
+
+```diff
+    contract USDYieldManager (0xa230285d5683C74935aD14c446e137c8c8828438) {
+    +++ description: None
++++ description: Insurance fee taken from positive yields
++++ severity: MEDIUM
+      values.insuranceFeeBips:
+-        1000
++        0
+    }
+```
+
 Generated with discovered.json: 0xcc0da57db3780a3761dad14cb6e4147cbdcfd583
 
 # Diff at Sat, 16 Mar 2024 06:51:20 GMT:

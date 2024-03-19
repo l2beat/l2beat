@@ -85,7 +85,7 @@ function generateAnomalies() {
     ? range(anomaliesCount).map(
         () =>
           ({
-            type: Math.random() > 0.5 ? 'DA' : 'STATE',
+            type: Math.random() > 0.5 ? 'batchSubmissions' : 'stateUpdates',
             timestamp: UnixTime.now()
               .add(
                 // TODO: (liveness) should we include current day

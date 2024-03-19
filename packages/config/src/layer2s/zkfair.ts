@@ -6,12 +6,12 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
   makeBridgeCompatible,
-  makeDataAvailabilityConfig,
   RISK_VIEW,
   SEQUENCER_NO_MECHANISM,
   STATE_CORRECTNESS,
@@ -137,12 +137,9 @@ export const zkfair: Layer2 = {
     ],
     coingeckoPlatform: 'zkfair',
   },
-  dataAvailability: makeDataAvailabilityConfig({
-    type: 'Off chain (DAC)',
-    config: {
-      membersCount,
-      requiredSignatures,
-    },
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['DAC'],
+    bridge: { type: 'DAC Members', requiredSignatures, membersCount },
     mode: 'State diffs',
   }),
   riskView: makeBridgeCompatible({

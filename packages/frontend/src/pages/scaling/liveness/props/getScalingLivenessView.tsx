@@ -134,11 +134,11 @@ function typeToDisplayType(
   anomaly: NonNullable<LivenessApiProject['anomalies']>[0],
 ) {
   switch (anomaly.type) {
-    case 'DA':
+    case 'batchSubmissions':
       return 'TX DATA SUBMISSION'
-    case 'STATE':
+    case 'stateUpdates':
       return 'STATE UPDATE'
-    case 'PROOF':
+    case 'proofSubmissions':
       return 'PROOF SUBMISSION'
     default:
       assertUnreachable(anomaly.type)
