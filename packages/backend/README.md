@@ -104,19 +104,20 @@ And a set the following variables for each enabled chain:
 - `tvl` - enables tvl feature
 - `tvl.[project_id]` - enables tvl for project with given project_id
 
-### `liveness` feature
+### `tracked-txs` feature
 
-The liveness feature is configured via the following environment variables:
+The tracked-txx feature is configured via the following environment variables:
 
-- `LIVENESS_CLIENT_EMAIL` - BigQuery credentials
-- `LIVENESS_PRIVATE_KEY` - BigQuery credentials
-- `LIVENESS_PROJECT_ID` - BigQuery credentials
-- `LIVENESS_BIGQUERY_LIMIT_GB` - Optional. Defaults to 15
-- `LIVENESS_BIGQUERY_WARNING_LIMIT_GB` - Optional. Defaults to 8
+- `BIGQUERY_CLIENT_EMAIL` - BigQuery credentials
+- `BIGQUERY_PRIVATE_KEY` - BigQuery credentials
+- `BIGQUERY_PROJECT_ID` - BigQuery credentials
+- `BIGQUERY_LIMIT_GB` - Optional. Defaults to 15
+- `BIGQUERY_WARNING_LIMIT_GB` - Optional. Defaults to 8
 
 **Feature flags:**
 
-- `liveness` - enables liveness feature
+- `tracked-txs` - enables tracked txs feature
+- `tracked-txs.liveness` - enables liveness feature
 
 ### `finality` feature
 

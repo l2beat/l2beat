@@ -1,9 +1,9 @@
-import { LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
 
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
-import { LivenessRepository } from '../../liveness/repositories/LivenessRepository'
+import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { LineaFinalityAnalyzer } from './LineaFinalityAnalyzer'
 
 describe(LineaFinalityAnalyzer.name, () => {
@@ -59,7 +59,7 @@ describe(LineaFinalityAnalyzer.name, () => {
         ).toHaveBeenNthCalledWith(
           1,
           ProjectId('linea'),
-          LivenessType('DA'),
+          'batchSubmissions',
           start,
           start.add(-600, 'seconds'),
         )
@@ -69,7 +69,7 @@ describe(LineaFinalityAnalyzer.name, () => {
         ).toHaveBeenNthCalledWith(
           6,
           ProjectId('linea'),
-          LivenessType('DA'),
+          'batchSubmissions',
           start.add(-600 * 5, 'seconds'),
           start.add(-600 * 6, 'seconds'),
         )
