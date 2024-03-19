@@ -1,5 +1,11 @@
 # @l2beat/backend-tools
 
+## 0.5.2
+
+### Patch Changes
+
+- Add the ability to pass multiple env variable keys
+
 ## 0.5.1
 
 ### Patch Changes

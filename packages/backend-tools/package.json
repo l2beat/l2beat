@@ -1,7 +1,7 @@
 {
   "name": "@l2beat/backend-tools",
   "description": "Common utilities for L2BEAT projects.",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "license": "MIT",
   "repository": "https://github.com/l2beat/tools",
   "bugs": {

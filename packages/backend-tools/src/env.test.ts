@@ -20,6 +20,12 @@ describe(Env.name, () => {
       const env = new Env({})
       expect(() => env.string('TEST_A')).toThrow()
     })
+
+    it('supports array keys', () => {
+      const env = new Env({ TEST_A: 'foo', TEST_C: 'bar' })
+      expect(env.string(['TEST_B', 'TEST_A'])).toEqual('foo')
+      expect(env.string(['TEST_C', 'TEST_A'])).toEqual('bar')
+    })
   })
 
   describe(Env.prototype.integer.name, () => {
@@ -44,6 +50,12 @@ describe(Env.name, () => {
       const env = new Env({ TEST_A: 'foo' })
       expect(() => env.integer('TEST_A')).toThrow()
     })
+
+    it('supports array keys', () => {
+      const env = new Env({ TEST_A: '69', TEST_C: '-420' })
+      expect(env.integer(['TEST_B', 'TEST_A'])).toEqual(69)
+      expect(env.integer(['TEST_C', 'TEST_A'])).toEqual(-420)
+    })
   })
 
   describe(Env.prototype.boolean.name, () => {
@@ -67,6 +79,12 @@ describe(Env.name, () => {
     it('throws if variable is not a boolean', () => {
       const env = new Env({ TEST_A: '69' })
       expect(() => env.boolean('TEST_A')).toThrow()
+    })
+
+    it('supports array keys', () => {
+      const env = new Env({ TEST_A: 'true', TEST_C: 'false' })
+      expect(env.boolean(['TEST_B', 'TEST_A'])).toEqual(true)
+      expect(env.boolean(['TEST_C', 'TEST_A'])).toEqual(false)
     })
   })
 })
