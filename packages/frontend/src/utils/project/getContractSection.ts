@@ -12,6 +12,7 @@ import {
   assertUnreachable,
   EthereumAddress,
   ImplementationChangeReportApiResponse,
+  ImplementationChangeReportProjectData,
   ManuallyVerifiedContracts,
   VerificationStatus,
 } from '@l2beat/shared-pure'
@@ -33,11 +34,14 @@ export function getContractSection(
 ): Omit<ContractsSectionProps, 'sectionOrder'> {
   const contracts = project.contracts?.addresses.map((contract) => {
     const isUnverified = isContractUnverified(contract, verificationStatus)
+    const implementationChangeForProject =
+      implementationChange?.projects[project.id.toString()]
     return makeTechnologyContract(
       contract,
       project,
       isUnverified,
       verificationStatus,
+      implementationChangeForProject,
     )
   })
 
@@ -53,6 +57,7 @@ export function getContractSection(
         project,
         isUnverified,
         verificationStatus,
+        undefined,
         true,
       )
     })
@@ -82,7 +87,6 @@ export function getContractSection(
     isUnderReview: project.isUnderReview ?? project.contracts?.isUnderReview,
     verificationStatus,
     manuallyVerifiedContracts,
-    implementationChange: implementationChange?.projects[project.id.toString()],
   }
 }
 
@@ -91,6 +95,7 @@ function makeTechnologyContract(
   project: Layer2 | Layer3 | Bridge,
   isUnverified: boolean,
   verificationStatus: VerificationStatus,
+  implementationChange: ImplementationChangeReportProjectData | undefined,
   isEscrow?: boolean,
 ): TechnologyContract {
   const links: TechnologyContractLinks[] = []
@@ -362,6 +367,15 @@ function makeTechnologyContract(
     ? [item.address.toString()]
     : [...item.multipleAddresses.map((x) => x.toString())]
 
+  const changedAddresses = (
+    implementationChange !== undefined
+      ? Object.values(implementationChange)
+      : []
+  ).flat()
+  const implementationHasChanged = changedAddresses.some((ca) =>
+    addresses.includes(ca.containingContract.toString()),
+  )
+
   const result: TechnologyContract = {
     name: item.name,
     addresses,
@@ -369,6 +383,7 @@ function makeTechnologyContract(
     links,
     etherscanUrl,
     chain,
+    implementationHasChanged,
   }
 
   if (isSingleAddress(item)) {

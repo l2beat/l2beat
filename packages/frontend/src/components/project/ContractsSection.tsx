@@ -1,5 +1,4 @@
 import {
-  ImplementationChangeReportProjectData,
   ManuallyVerifiedContracts,
   VerificationStatus,
 } from '@l2beat/shared-pure'
@@ -26,7 +25,6 @@ export interface ContractsSectionProps {
   isUnderReview?: boolean
   verificationStatus: VerificationStatus
   manuallyVerifiedContracts: ManuallyVerifiedContracts
-  implementationChange?: ImplementationChangeReportProjectData
 }
 
 export function ContractsSection(props: ContractsSectionProps) {
@@ -47,7 +45,9 @@ export function ContractsSection(props: ContractsSectionProps) {
       isUnderReview={props.isUnderReview}
       includeChildrenIfUnderReview
     >
-      {props.implementationChange && <ContractsUpdated />}
+      {props.contracts.some((c) => c.implementationHasChanged) && (
+        <ContractsUpdated />
+      )}
       {props.isIncomplete && <TechnologyIncompleteShort />}
       {props.architectureImage && (
         <figure className="mb-8 mt-4 text-center">
@@ -72,7 +72,6 @@ export function ContractsSection(props: ContractsSectionProps) {
                 <ContractEntry
                   contract={contract}
                   verificationStatus={props.verificationStatus}
-                  implementationChange={props.implementationChange}
                   manuallyVerifiedContracts={props.manuallyVerifiedContracts}
                   className="my-4"
                 />
@@ -93,7 +92,6 @@ export function ContractsSection(props: ContractsSectionProps) {
               <React.Fragment key={i}>
                 <ContractEntry
                   contract={contract}
-                  implementationChange={props.implementationChange}
                   verificationStatus={props.verificationStatus}
                   manuallyVerifiedContracts={props.manuallyVerifiedContracts}
                   className="my-4"

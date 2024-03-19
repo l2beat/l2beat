@@ -1,5 +1,4 @@
 import {
-  ImplementationChangeReportProjectData,
   ManuallyVerifiedContracts,
   VerificationStatus,
 } from '@l2beat/shared-pure'
@@ -26,6 +25,7 @@ export interface TechnologyContract {
   upgradeDelay?: string
   upgradeConsiderations?: string
   references?: TechnologyReference[]
+  implementationHasChanged?: boolean
 }
 
 export interface TechnologyContractLinks {
@@ -37,7 +37,6 @@ export interface TechnologyContractLinks {
 export interface ContractEntryProps {
   contract: TechnologyContract
   verificationStatus: VerificationStatus
-  implementationChange?: ImplementationChangeReportProjectData
   manuallyVerifiedContracts: ManuallyVerifiedContracts
   className?: string
 }
@@ -46,7 +45,6 @@ export function ContractEntry({
   contract,
   verificationStatus,
   manuallyVerifiedContracts,
-  implementationChange,
   className,
 }: ContractEntryProps) {
   const verificationStatusForChain =
@@ -66,17 +64,8 @@ export function ContractEntry({
     .map((c) => verificationStatusForChain[c])
     .some((c) => c === false)
 
-  const changedAddresses = (
-    implementationChange !== undefined
-      ? Object.values(implementationChange)
-      : []
-  ).flat()
-  const areAddressesUpdated = changedAddresses.some((ca) =>
-    addresses.includes(ca.containingContract.toString()),
-  )
-
   let color: CalloutProps['color'] = undefined
-  if (areAddressesUpdated) {
+  if (contract.implementationHasChanged) {
     color = 'yellow'
   }
   if (areAddressesUnverified || areLinksUnverified) {
@@ -84,7 +73,7 @@ export function ContractEntry({
   }
 
   let icon = <BulletIcon className="h-[1em]" />
-  if (areAddressesUpdated) {
+  if (contract.implementationHasChanged) {
     icon = (
       <UpdatedContractWarning
         tooltip="The implementation of the contract has been updated"
