@@ -1,7 +1,7 @@
 import z from 'zod'
 
 import { branded } from '../branded'
-import { LivenessType } from '../LivenessType'
+import { TrackedTxsConfigSubtype } from '../TrackedTxsConfigSubtype'
 import { UnixTime } from '../UnixTime'
 
 export const LivenessDataPoint = z
@@ -16,7 +16,7 @@ export type LivenessDataPoint = z.infer<typeof LivenessDataPoint>
 export const LivenessAnomaly = z.object({
   timestamp: branded(z.number(), (n) => new UnixTime(n)),
   durationInSeconds: z.number().positive().int(),
-  type: branded(z.string(), (t) => LivenessType(t)),
+  type: TrackedTxsConfigSubtype,
 })
 export type LivenessAnomaly = z.infer<typeof LivenessAnomaly>
 

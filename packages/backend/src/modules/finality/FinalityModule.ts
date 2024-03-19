@@ -9,9 +9,9 @@ import { IndexerStateRepository } from '../../peripherals/database/repositories/
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
-import { LivenessIndexer } from '../liveness/LivenessIndexer'
-import { LivenessConfigurationRepository } from '../liveness/repositories/LivenessConfigurationRepository'
-import { LivenessRepository } from '../liveness/repositories/LivenessRepository'
+import { LivenessRepository } from '../tracked-txs/modules/liveness/repositories/LivenessRepository'
+import { TrackedTxsConfigsRepository } from '../tracked-txs/repositories/TrackedTxsConfigsRepository'
+import { TrackedTxsIndexer } from '../tracked-txs/TrackedTxsIndexer'
 import { LineaFinalityAnalyzer } from './analyzers/LineaFinalityAnalyzer'
 import { zkSyncEraFinalityAnalyzer } from './analyzers/zkSyncEraFinalityAnalyzer'
 import { FinalityController } from './api/FinalityController'
@@ -24,22 +24,22 @@ export function createFinalityModule(
   logger: Logger,
   database: Database,
   clock: Clock,
-  livenessIndexer?: LivenessIndexer,
+  trackedTxsIndexer: TrackedTxsIndexer | undefined,
 ): ApplicationModule | undefined {
   if (!config.finality) {
     logger.info('Finality module disabled')
     return
   }
 
-  if (!livenessIndexer) {
-    logger.error('To run finality you have to run Liveness')
+  if (!trackedTxsIndexer) {
+    logger.error('To run finality you have to run tracked transactions module')
     return
   }
 
   const indexerStateRepository = new IndexerStateRepository(database, logger)
   const livenessRepository = new LivenessRepository(database, logger)
   const finalityRepository = new FinalityRepository(database, logger)
-  const livenessConfigurationRepository = new LivenessConfigurationRepository(
+  const trackedTxsConfigsRepository = new TrackedTxsConfigsRepository(
     database,
     logger,
   )
@@ -47,7 +47,7 @@ export function createFinalityModule(
   const finalityController = new FinalityController(
     livenessRepository,
     finalityRepository,
-    livenessConfigurationRepository,
+    trackedTxsConfigsRepository,
     config.finality.configurations,
   )
   const finalityRouter = createFinalityRouter(finalityController)
@@ -72,7 +72,7 @@ export function createFinalityModule(
     (runtimeConfiguration) =>
       new FinalityIndexer(
         logger,
-        livenessIndexer,
+        trackedTxsIndexer,
         indexerStateRepository,
         finalityRepository,
         runtimeConfiguration,

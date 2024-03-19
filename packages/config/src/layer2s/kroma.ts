@@ -6,11 +6,11 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
-  makeDataAvailabilityConfig,
   NUGGETS,
   OPERATOR,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -147,10 +147,10 @@ export const kroma: Layer2 = {
       startBlock: 1,
       assessCount: subtractOne,
     },
-    liveness: {
-      proofSubmissions: [],
-      batchSubmissions: [
-        {
+    trackedTxs: [
+      {
+        uses: [{ type: 'liveness', subtype: 'batchSubmissions' }],
+        query: {
           formula: 'transfer',
           from: EthereumAddress(
             discovery.getContractValue('SystemConfig', 'batcherHash'),
@@ -158,11 +158,12 @@ export const kroma: Layer2 = {
           to: EthereumAddress(
             discovery.getContractValue('SystemConfig', 'sequencerInbox'),
           ),
-          sinceTimestamp: new UnixTime(1693883663),
+          sinceTimestampInclusive: new UnixTime(1693883663),
         },
-      ],
-      stateUpdates: [
-        {
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6',
@@ -170,18 +171,18 @@ export const kroma: Layer2 = {
           selector: '0x5a045f78',
           functionSignature:
             'function submitL2Output(bytes32 _outputRoot,uint256 _l2BlockNumber,bytes32 _l1BlockHash,uint256 _l1BlockNumber)',
-          sinceTimestamp: new UnixTime(1693880579),
+          sinceTimestampInclusive: new UnixTime(1693880579),
         },
-      ],
-    },
+      },
+    ],
     finality: {
       type: 'OPStack',
       lag: 0,
     },
   },
-  dataAvailability: makeDataAvailabilityConfig({
-    type: 'On chain',
-    layer: 'Ethereum (calldata)',
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['Ethereum (calldata)'],
+    bridge: { type: 'Enshrined' },
     mode: 'Transactions data',
   }),
   riskView: makeBridgeCompatible({
