@@ -46,7 +46,8 @@ export class PriceIndexer extends ChildIndexer {
       this.token.coingeckoId,
       from,
       to,
-      this.token.address === 'native' ? undefined : this.token.address,
+      // TODO: either make it multichain or remove this fallback
+      undefined,
     )
 
     const priceRecords: PriceRecord[] = prices
