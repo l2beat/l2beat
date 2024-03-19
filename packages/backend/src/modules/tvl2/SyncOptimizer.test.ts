@@ -26,10 +26,7 @@ describe(SyncOptimizer.name, () => {
         1,
         'hours',
       )
-      const timestampToSync = syncOptimizer.getTimestampToSync(
-        hourlyTimestamp,
-        'from',
-      )
+      const timestampToSync = syncOptimizer.getTimestampToSync(hourlyTimestamp)
       // in this case daily should be returned
       const expected = hourlyTimestamp.toEndOf('day')
 
@@ -45,10 +42,7 @@ describe(SyncOptimizer.name, () => {
         'days',
       ).add(1, 'hours')
 
-      const timestampToSync = syncOptimizer.getTimestampToSync(
-        hourlyTimestamp,
-        'from',
-      )
+      const timestampToSync = syncOptimizer.getTimestampToSync(hourlyTimestamp)
       // in this case sixHourly should be returned
       const expected = hourlyTimestamp.toEndOf('six hours')
 
@@ -60,30 +54,11 @@ describe(SyncOptimizer.name, () => {
 
       // hourly timestamp older than daily cutoff
       const hourlyTimestamp = LAST_HOUR.add(-1, 'hours')
-      const timestampToSync = syncOptimizer.getTimestampToSync(
-        hourlyTimestamp,
-        'from',
-      )
+      const timestampToSync = syncOptimizer.getTimestampToSync(hourlyTimestamp)
       // in this case daily should be returned
       const expected = LAST_HOUR.add(-1, 'hours').toEndOf('hour')
 
       expect(timestampToSync).toEqual(expected)
-    })
-
-    it('takes boundary type into consideration', () => {
-      const syncOptimizer = new SyncOptimizer(CLOCK, OPTIONS)
-
-      const timestamp = LAST_HOUR.add(-1, 'hours')
-
-      const fromTimestamp = syncOptimizer.getTimestampToSync(timestamp, 'from')
-      const expected = LAST_HOUR.add(-1, 'hours').toEndOf('hour')
-
-      expect(fromTimestamp).toEqual(expected)
-
-      const toTimestamp = syncOptimizer.getTimestampToSync(timestamp, 'to')
-      const expected2 = LAST_HOUR.add(-1, 'hours').toStartOf('hour')
-
-      expect(toTimestamp).toEqual(expected2)
     })
   })
 

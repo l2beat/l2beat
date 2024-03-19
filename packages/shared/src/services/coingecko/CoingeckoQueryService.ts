@@ -22,6 +22,7 @@ export interface QueryResultPoint {
 export class CoingeckoQueryService {
   constructor(private readonly coingeckoClient: CoingeckoClient) {}
 
+  /** performance is not a big issue as we download 80 days worth of prices at once */
   async getUsdPriceHistoryHourly(
     coingeckoId: CoingeckoId,
     from: UnixTime,

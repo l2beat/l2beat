@@ -14,13 +14,10 @@ export class SyncOptimizer {
   ) {}
 
   shouldTimestampBeSynced(timestamp: UnixTime) {
-    return timestamp.equals(this.getTimestampToSync(timestamp, 'to'))
+    return timestamp.equals(this.getTimestampToSync(timestamp))
   }
 
-  getTimestampToSync(
-    timestamp: UnixTime,
-    boundaryType: 'from' | 'to',
-  ): UnixTime {
+  getTimestampToSync(timestamp: UnixTime): UnixTime {
     const lastHour = this.clock.getLastHour()
 
     const hourlyCutOff = lastHour.add(
@@ -28,9 +25,7 @@ export class SyncOptimizer {
       'days',
     )
     if (timestamp.gte(hourlyCutOff)) {
-      return boundaryType === 'from'
-        ? timestamp.toEndOf('hour')
-        : timestamp.toStartOf('hour')
+      return timestamp.toEndOf('hour')
     }
 
     const sixHourlyCutOff = lastHour.add(
@@ -38,13 +33,9 @@ export class SyncOptimizer {
       'days',
     )
     if (timestamp.gte(sixHourlyCutOff)) {
-      return boundaryType === 'from'
-        ? timestamp.toEndOf('six hours')
-        : timestamp.toStartOf('six hours')
+      return timestamp.toEndOf('six hours')
     }
 
-    return boundaryType === 'from'
-      ? timestamp.toEndOf('day')
-      : timestamp.toStartOf('day')
+    return timestamp.toEndOf('day')
   }
 }

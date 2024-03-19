@@ -35,19 +35,12 @@ export class PriceIndexer extends ChildIndexer {
   override async update(_from: number, _to: number): Promise<number> {
     this.logger.info('Updating...')
 
-    const from = this.syncOptimizer.getTimestampToSync(
-      new UnixTime(_from),
-      'from',
-    )
+    const from = new UnixTime(_from).toEndOf('hour')
+    const to = new UnixTime(_to).toStartOf('hour')
 
-    // Edge case when scheduled update is before the minimum timestamp of token/chain
-    if (from.gt(new UnixTime(_to))) {
+    if (from.gt(to)) {
       return _to
     }
-
-    const to = this.syncOptimizer.getTimestampToSync(new UnixTime(_to), 'to')
-
-    assert(from.lte(to), 'Programmer error: Invalid range')
 
     const prices = await this.coingeckoQueryService.getUsdPriceHistoryHourly(
       this.token.coingeckoId,
@@ -58,7 +51,6 @@ export class PriceIndexer extends ChildIndexer {
 
     const priceRecords: PricesRecord[] = prices
       // we filter out timestamps that would be deleted by TVL cleaner
-      // performance is not a big issue as we download 80 days worth of prices at once
       .filter((p) => this.syncOptimizer.shouldTimestampBeSynced(p.timestamp))
       .map((price) => ({
         chain: this.token.chain,
@@ -68,10 +60,9 @@ export class PriceIndexer extends ChildIndexer {
       }))
 
     await this.pricesRepository.addMany(priceRecords)
-
     this.logger.info('Updated')
 
-    return to.toNumber()
+    return _to
   }
 
   override async getSafeHeight(): Promise<number> {
