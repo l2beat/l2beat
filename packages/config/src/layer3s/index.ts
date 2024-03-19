@@ -9,5 +9,12 @@ import { zklinknova } from './zklinknexus'
 
 export * from './types'
 
-
-export const layer3s: Layer3[] = [deri, rari, zklinknova, xai, popapex, mxc, stack]
+export const layer3s: Layer3[] = [
+  deri,
+  rari,
+  zklinknova,
+  xai,
+  popapex,
+  mxc,
+  stack,
+]
