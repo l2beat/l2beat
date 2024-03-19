@@ -85,12 +85,14 @@ export const layer2aWithDups: Layer2 = {
     operator: { ...OPERATOR.CENTRALIZED_SEQUENCER },
     forceTransactions: { ...FORCE_TRANSACTIONS.CANONICAL_ORDERING },
     exitMechanisms: [],
-    smartContracts: {
-      name: '',
-      description: '',
-      risks: [],
-      references: [],
-    },
+    otherConsiderations: [
+      {
+        name: '',
+        description: '',
+        risks: [],
+        references: [],
+      },
+    ],
   },
   permissions: [
     {

@@ -469,28 +469,30 @@ export const arbitrum: Layer2 = {
       },
       EXITS.AUTONOMOUS,
     ],
-    smartContracts: {
-      name: 'EVM compatible smart contracts are supported',
-      description:
-        'Arbitrum One uses Nitro technology that allows running fraud proofs by executing EVM code on top of WASM.',
-      risks: [
-        {
-          category: 'Funds can be lost if',
-          text: 'there are mistakes in the highly complex Nitro and WASM one-step prover implementation.',
-        },
-      ],
-      references: [
-        {
-          text: 'Inside Arbitrum Nitro',
-          href: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/',
-        },
-      ],
-    },
-    upgradeMechanism: UPGRADE_MECHANISM.ARBITRUM_DAO(
-      l1TimelockDelay,
-      challengeWindow * assumedBlockTime,
-      l2TimelockDelay,
-    ),
+    otherConsiderations: [
+      {
+        name: 'EVM compatible smart contracts are supported',
+        description:
+          'Arbitrum One uses Nitro technology that allows running fraud proofs by executing EVM code on top of WASM.',
+        risks: [
+          {
+            category: 'Funds can be lost if',
+            text: 'there are mistakes in the highly complex Nitro and WASM one-step prover implementation.',
+          },
+        ],
+        references: [
+          {
+            text: 'Inside Arbitrum Nitro',
+            href: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/',
+          },
+        ],
+      },
+      UPGRADE_MECHANISM.ARBITRUM_DAO(
+        l1TimelockDelay,
+        challengeWindow * assumedBlockTime,
+        l2TimelockDelay,
+      ),
+    ],
   },
   stateDerivation: {
     nodeSoftware: `The rollup node (Arbitrum Nitro) consists of three parts. The base layer is the core Geth server (with minor modifications to add hooks) that emulates the execution of EVM contracts and maintains Ethereum's state. The middle layer, ArbOS, provides additional Layer 2 functionalities such as decompressing data batches, accounting for Layer 1 gas costs, and supporting cross-chain bridge functionalities. The top layer consists of node software, primarily from Geth, that handles client connections (i.e., regular RPC node). [View Code](https://github.com/OffchainLabs/nitro/)`,

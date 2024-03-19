@@ -17,6 +17,7 @@ import { createTvlModule } from './modules/tvl/modules/TvlModule'
 import { createTvl2Module } from './modules/tvl2/Tvl2Module'
 import { createUpdateMonitorModule } from './modules/update-monitor/UpdateMonitorModule'
 import { Database } from './peripherals/database/Database'
+import { Peripherals } from './peripherals/Peripherals'
 import { Clock } from './tools/Clock'
 import { getErrorReportingMiddleware, reportError } from './tools/ErrorReporter'
 
@@ -40,38 +41,39 @@ export class Application {
         maxConnectionPoolSize: config.database.connectionPoolSize.max,
       },
     )
-    const http = new HttpClient()
     const clock = new Clock(
       config.clock.minBlockTimestamp,
       config.clock.safeTimeOffsetSeconds,
     )
 
+    const http = new HttpClient()
+    const peripherals = new Peripherals(database, http, logger)
+
     const trackedTxsModule = createTrackedTxsModule(
       config,
       logger,
-      database,
+      peripherals,
       clock,
     )
 
     const modules: (ApplicationModule | undefined)[] = [
       createHealthModule(config),
       createMetricsModule(config),
-      createTvlModule(config, logger, http, database, clock),
-      createActivityModule(config, logger, http, database, clock),
-      createUpdateMonitorModule(config, logger, http, database, clock),
-      createDiffHistoryModule(config, logger, database),
-      createImplementationChangeModule(config, logger, database),
+      createTvlModule(config, logger, peripherals, clock),
+      createActivityModule(config, logger, peripherals, clock),
+      createUpdateMonitorModule(config, logger, peripherals, clock),
+      createDiffHistoryModule(config, logger, peripherals),
+      createImplementationChangeModule(config, logger, peripherals),
       createStatusModule(config, logger),
       trackedTxsModule,
       createFinalityModule(
         config,
         logger,
-        database,
-        clock,
+        peripherals,
         trackedTxsModule?.indexer,
       ),
       createLzOAppsModule(config, logger),
-      createTvl2Module(config, logger, clock),
+      createTvl2Module(config, logger, peripherals, clock),
     ]
 
     const apiServer = new ApiServer(
