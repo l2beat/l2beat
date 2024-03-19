@@ -18,6 +18,7 @@ export const GeneratedToken = z.object({
   symbol: z.string(),
   decimals: z.number(),
   deploymentTimestamp: numberAs((n) => new UnixTime(n)),
+  // This is either coingecko listing timestamp or min timestamp of ethereum
   coingeckoListingTimestamp: numberAs((n) => new UnixTime(n)),
   /** @deprecated */
   category: z.enum(['ether', 'stablecoin', 'other']),

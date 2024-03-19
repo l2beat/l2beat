@@ -73,7 +73,7 @@ export class Application {
         trackedTxsModule?.indexer,
       ),
       createLzOAppsModule(config, logger),
-      createTvl2Module(config, logger, clock),
+      createTvl2Module(config, logger, http, peripherals, clock),
     ]
 
     const apiServer = new ApiServer(

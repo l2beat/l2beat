@@ -135,7 +135,7 @@ export class PriceUpdater {
     address?: EthereumAddress,
   ) {
     const coingeckoId = this.getCoingeckoId(assetId)
-    const prices = await this.coingeckoQueryService.getUsdPriceHistory(
+    const prices = await this.coingeckoQueryService.getUsdPriceHistoryHourly(
       coingeckoId,
       from,
       to,
