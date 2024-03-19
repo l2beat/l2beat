@@ -12,7 +12,7 @@ import { Knex } from 'knex'
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
 import { HourlyIndexer } from '../liveness/HourlyIndexer'
 import { PriceIndexer } from './PriceIndexer'
-import { PricesRepository } from './repositories/PricesRepository'
+import { PriceRepository } from './repositories/PriceRepository'
 import { SyncOptimizer } from './SyncOptimizer'
 
 describe(PriceIndexer.name, () => {
@@ -53,7 +53,7 @@ describe(PriceIndexer.name, () => {
         setSafeHeight: async () => 1,
       })
 
-      const pricesRepository = mockObject<PricesRepository>({
+      const pricesRepository = mockObject<PriceRepository>({
         addMany: async () => 0,
       })
 
@@ -85,15 +85,8 @@ describe(PriceIndexer.name, () => {
 
       const newSafeHeight = await indexer.update(from.toNumber(), to.toNumber())
 
-      expect(syncOptimizer.getTimestampToSync).toHaveBeenNthCalledWith(
-        1,
-        from,
-        'from',
-      )
-      expect(syncOptimizer.getTimestampToSync).toHaveBeenLastCalledWith(
-        to,
-        'to',
-      )
+      expect(syncOptimizer.getTimestampToSync).toHaveBeenNthCalledWith(1, from)
+      expect(syncOptimizer.getTimestampToSync).toHaveBeenLastCalledWith(to)
 
       expect(
         coingeckoQueryService.getUsdPriceHistoryHourly,
@@ -128,7 +121,7 @@ describe(PriceIndexer.name, () => {
         mockObject<HourlyIndexer>({ subscribe: () => {} }),
         mockObject<CoingeckoQueryService>({}),
         mockObject<IndexerStateRepository>({}),
-        mockObject<PricesRepository>({}),
+        mockObject<PriceRepository>({}),
         mockObject<PriceConfigEntry>({
           chain: 'ethereum',
           address: EthereumAddress.random(),
@@ -146,7 +139,6 @@ describe(PriceIndexer.name, () => {
       expect(syncOptimizer.getTimestampToSync).toHaveBeenNthCalledWith(
         1,
         new UnixTime(fromBeforeMinTimestamp),
-        'from',
       )
 
       expect(newSafeHeight).toEqual(fromBeforeMinTimestamp + 1)
@@ -171,7 +163,7 @@ describe(PriceIndexer.name, () => {
         mockObject<HourlyIndexer>({ subscribe: () => {} }),
         mockObject<CoingeckoQueryService>({}),
         stateRepository,
-        mockObject<PricesRepository>({}),
+        mockObject<PriceRepository>({}),
         token,
         mockObject<SyncOptimizer>({}),
       )
@@ -209,7 +201,7 @@ describe(PriceIndexer.name, () => {
         mockObject<HourlyIndexer>({ subscribe: () => {} }),
         mockObject<CoingeckoQueryService>({}),
         stateRepository,
-        mockObject<PricesRepository>({}),
+        mockObject<PriceRepository>({}),
         mockObject<PriceConfigEntry>(newToken),
         mockObject<SyncOptimizer>({}),
       )
@@ -238,7 +230,7 @@ describe(PriceIndexer.name, () => {
         mockObject<HourlyIndexer>({ subscribe: () => {} }),
         mockObject<CoingeckoQueryService>({}),
         stateRepository,
-        mockObject<PricesRepository>({}),
+        mockObject<PriceRepository>({}),
         mockObject<PriceConfigEntry>({
           chain: 'chain',
           address: EthereumAddress.random(),
@@ -274,7 +266,7 @@ describe(PriceIndexer.name, () => {
         mockObject<HourlyIndexer>({ subscribe: () => {} }),
         mockObject<CoingeckoQueryService>({}),
         stateRepository,
-        mockObject<PricesRepository>({}),
+        mockObject<PriceRepository>({}),
         token,
         mockObject<SyncOptimizer>({}),
       )
@@ -292,7 +284,7 @@ describe(PriceIndexer.name, () => {
 
   describe(PriceIndexer.prototype.invalidate.name, () => {
     it('deletes records before targetHeight and returns the new safe height', async () => {
-      const pricesRepository = mockObject<PricesRepository>({
+      const pricesRepository = mockObject<PriceRepository>({
         deleteBeforeInclusive: async () => 1,
       })
       const token = mockObject<PriceConfigEntry>({

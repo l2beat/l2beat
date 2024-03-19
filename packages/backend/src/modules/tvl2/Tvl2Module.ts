@@ -14,7 +14,7 @@ import { ApplicationModule } from '../ApplicationModule'
 import { HourlyIndexer } from '../liveness/HourlyIndexer'
 import { createTvl2StatusRouter } from './api/Tvl2StatusRouter'
 import { PriceIndexer } from './PriceIndexer'
-import { PricesRepository } from './repositories/PricesRepository'
+import { PriceRepository } from './repositories/PriceRepository'
 import { SyncOptimizer } from './SyncOptimizer'
 
 export function createTvl2Module(
@@ -30,7 +30,7 @@ export function createTvl2Module(
   }
 
   const stateRepository = new IndexerStateRepository(database, logger)
-  const pricesRepository = new PricesRepository(database, logger)
+  const priceRepository = new PriceRepository(database, logger)
 
   const coingeckoClient = new CoingeckoClient(http, config.tvl2.coingeckoApiKey)
   const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
@@ -55,7 +55,7 @@ export function createTvl2Module(
         hourlyIndexer,
         coingeckoQueryService,
         stateRepository,
-        pricesRepository,
+        priceRepository,
         price,
         syncOptimizer,
       ),

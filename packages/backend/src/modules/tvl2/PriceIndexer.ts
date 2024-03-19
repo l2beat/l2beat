@@ -6,7 +6,7 @@ import { Knex } from 'knex'
 
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
 import { HourlyIndexer } from '../liveness/HourlyIndexer'
-import { PricesRecord, PricesRepository } from './repositories/PricesRepository'
+import { PriceRecord, PriceRepository } from './repositories/PriceRepository'
 import { SyncOptimizer } from './SyncOptimizer'
 
 export class PriceIndexer extends ChildIndexer {
@@ -17,7 +17,7 @@ export class PriceIndexer extends ChildIndexer {
     parentIndexer: HourlyIndexer,
     private readonly coingeckoQueryService: CoingeckoQueryService,
     private readonly stateRepository: IndexerStateRepository,
-    private readonly pricesRepository: PricesRepository,
+    private readonly priceRepository: PriceRepository,
     private readonly token: PriceConfigEntry,
     private readonly syncOptimizer: SyncOptimizer,
   ) {
@@ -49,7 +49,7 @@ export class PriceIndexer extends ChildIndexer {
       this.token.address === 'native' ? undefined : this.token.address,
     )
 
-    const priceRecords: PricesRecord[] = prices
+    const priceRecords: PriceRecord[] = prices
       // we filter out timestamps that would be deleted by TVL cleaner
       .filter((p) => this.syncOptimizer.shouldTimestampBeSynced(p.timestamp))
       .map((price) => ({
@@ -59,7 +59,7 @@ export class PriceIndexer extends ChildIndexer {
         priceUsd: price.value,
       }))
 
-    await this.pricesRepository.addMany(priceRecords)
+    await this.priceRepository.addMany(priceRecords)
     this.logger.info('Updated')
 
     return _to
@@ -120,7 +120,7 @@ export class PriceIndexer extends ChildIndexer {
   override async invalidate(targetHeight: number): Promise<number> {
     this.logger.info('Invalidating...')
 
-    await this.pricesRepository.deleteBeforeInclusive(
+    await this.priceRepository.deleteBeforeInclusive(
       this.token.chain,
       this.token.address,
       new UnixTime(targetHeight),

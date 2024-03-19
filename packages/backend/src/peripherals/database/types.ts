@@ -1,5 +1,7 @@
 export {}
 
+import { PriceRow as PriceRow2 } from '../../modules/tvl2/repositories/PriceRepository'
+
 declare module 'knex/types/tables' {
   interface BlockNumberRow {
     unix_timestamp: Date
@@ -190,13 +192,6 @@ declare module 'knex/types/tables' {
     six_hourly_cleaned_until: Date
   }
 
-  interface PricesRow {
-    chain: string
-    address: string
-    timestamp: Date
-    price_usd: number
-  }
-
   interface Tables {
     coingecko_prices: PriceRow
     block_numbers: BlockNumberRow
@@ -224,7 +219,7 @@ declare module 'knex/types/tables' {
     indexer_state: IndexerStateRow
     tvl_cleaner: TvlCleanerRow
     finality: FinalityRow
-    prices: PricesRow
+    prices: PriceRow2
   }
 }
 

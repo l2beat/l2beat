@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { PricesRow } from 'knex/types/tables'
 
 import {
   BaseRepository,
@@ -8,27 +7,34 @@ import {
 } from '../../../peripherals/database/BaseRepository'
 import { Database } from '../../../peripherals/database/Database'
 
-export interface PricesRecord {
+export interface PriceRow {
+  chain: string
+  address: string
+  timestamp: Date
+  price_usd: number
+}
+
+export interface PriceRecord {
   chain: string
   address: EthereumAddress | 'native'
   timestamp: UnixTime
   priceUsd: number
 }
 
-export class PricesRepository extends BaseRepository {
+export class PriceRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
-    this.autoWrap<CheckConvention<PricesRepository>>(this)
+    this.autoWrap<CheckConvention<PriceRepository>>(this)
   }
 
-  async getAll(): Promise<PricesRecord[]> {
+  async getAll(): Promise<PriceRecord[]> {
     const knex = await this.knex()
     const rows = await knex('prices')
     return rows.map(toRecord)
   }
 
-  async addMany(prices: PricesRecord[]) {
-    const rows: PricesRow[] = prices.map(toRow)
+  async addMany(records: PriceRecord[]) {
+    const rows: PriceRow[] = records.map(toRow)
     const knex = await this.knex()
     await knex.batchInsert('prices', rows, 10_000)
     return rows.length
@@ -53,7 +59,7 @@ export class PricesRepository extends BaseRepository {
   }
 }
 
-function toRecord(row: PricesRow): PricesRecord {
+function toRecord(row: PriceRow): PriceRecord {
   return {
     chain: row.chain,
     address: row.address === 'native' ? 'native' : EthereumAddress(row.address),
@@ -62,7 +68,7 @@ function toRecord(row: PricesRow): PricesRecord {
   }
 }
 
-function toRow(record: PricesRecord): PricesRow {
+function toRow(record: PriceRecord): PriceRow {
   return {
     chain: record.chain,
     address: record.address === 'native' ? 'native' : record.address.toString(),

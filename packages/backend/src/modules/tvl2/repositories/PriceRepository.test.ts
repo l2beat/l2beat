@@ -3,16 +3,16 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { describeDatabase } from '../../../test/database'
-import { PricesRecord, PricesRepository } from './PricesRepository'
+import { PriceRecord, PriceRepository } from './PriceRepository'
 
-describeDatabase(PricesRepository.name, (database) => {
-  const repository = new PricesRepository(database, Logger.SILENT)
+describeDatabase(PriceRepository.name, (database) => {
+  const repository = new PriceRepository(database, Logger.SILENT)
 
   afterEach(async () => {
     await repository.deleteAll()
   })
 
-  describe(PricesRepository.prototype.addMany.name, () => {
+  describe(PriceRepository.prototype.addMany.name, () => {
     it('adds new rows', async () => {
       const newRows = [
         {
@@ -39,7 +39,7 @@ describeDatabase(PricesRepository.name, (database) => {
     })
 
     it('performs batch insert when more than 10k records', async () => {
-      const records: PricesRecord[] = []
+      const records: PriceRecord[] = []
       for (let i = 5; i < 15_000; i++) {
         records.push({
           chain: 'chain',
@@ -52,7 +52,7 @@ describeDatabase(PricesRepository.name, (database) => {
     })
   })
 
-  describe(PricesRepository.prototype.deleteBeforeInclusive.name, () => {
+  describe(PriceRepository.prototype.deleteBeforeInclusive.name, () => {
     it('deletes all records before the given timestamp', async () => {
       const address = EthereumAddress.random()
 
@@ -91,7 +91,7 @@ describeDatabase(PricesRepository.name, (database) => {
     })
   })
 
-  it(PricesRepository.prototype.deleteAll.name, async () => {
+  it(PriceRepository.prototype.deleteAll.name, async () => {
     await repository.addMany([
       {
         chain: 'chain',
