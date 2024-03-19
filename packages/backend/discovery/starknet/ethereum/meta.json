@@ -690,7 +690,7 @@
         },
         "programHash": {
           "description": "The hash changes when the L2 cairo state machine logic changes.",
-          "severity": "MEDIUM",
+          "severity": "HIGH",
           "type": "STRUCTURE"
         },
         "stateBlockHash": {
