@@ -292,7 +292,7 @@
         "COLOSSEUM": {
           "description": "Contract used to challenge state roots and prove fraud.",
           "severity": "HIGH",
-          "type": "STRUCTURE"
+          "type": "CODE_CHANGE"
         },
         "FINALIZATION_PERIOD_SECONDS": {
           "description": null,
@@ -357,7 +357,7 @@
         "COLOSSEUM": {
           "description": "Contract used to challenge state roots and prove fraud.",
           "severity": "HIGH",
-          "type": "STRUCTURE"
+          "type": "CODE_CHANGE"
         },
         "GOVERNOR": {
           "description": null,
