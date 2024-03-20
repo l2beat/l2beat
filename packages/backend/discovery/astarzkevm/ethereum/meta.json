@@ -2,6 +2,36 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
+      "name": "AstarValidiumDAC",
+      "values": {
+        "committeeHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getAmountOfMembers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getProcotolName": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "requiredAmountOfSignatures": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "AstarValidiumEtrog",
       "values": {
         "GLOBAL_EXIT_ROOT_MANAGER_L2": {
@@ -300,36 +330,6 @@
       "name": "Permit2",
       "values": {
         "DOMAIN_SEPARATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "PolygonDataCommittee",
-      "values": {
-        "committeeHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getAmountOfMembers": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getProcotolName": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "requiredAmountOfSignatures": {
           "description": null,
           "severity": null,
           "type": null

@@ -46,6 +46,16 @@ const _HALT_AGGREGATION_TIMEOUT = formatSeconds(
   ),
 )
 
+const membersCountDAC = discovery.getContractValue<number>(
+  'AstarValidiumDAC',
+  'getAmountOfMembers',
+)
+
+const requiredSignaturesDAC = discovery.getContractValue<number>(
+  'AstarValidiumDAC',
+  'requiredAmountOfSignatures',
+)
+
 const isForcedBatchDisallowed =
   discovery.getContractValue<string>(
     'AstarValidiumEtrog',
@@ -121,15 +131,15 @@ export const astarzkevm: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...RISK_VIEW.DATA_ON_CHAIN,
-      description:
-        RISK_VIEW.DATA_ON_CHAIN.description +
-        ' Unlike most ZK rollups transactions are posted instead of state diffs.',
+      ...RISK_VIEW.DATA_EXTERNAL_DAC({
+        membersCount: membersCountDAC,
+        requiredSignatures: requiredSignaturesDAC,
+      }),
       sources: [
         {
           contract: 'AstarValidiumEtrog',
           references: [
-            'https://etherscan.io/address/0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
+            'https://etherscan.io/address/0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30',
           ],
         },
       ],
@@ -142,7 +152,7 @@ export const astarzkevm: Layer2 = {
         {
           contract: 'AstarValidiumEtrog',
           references: [
-            'https://etherscan.io/address/0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
+            'https://etherscan.io/address/0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30',
           ],
         },
       ],
@@ -165,34 +175,9 @@ export const astarzkevm: Layer2 = {
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
-  stage: getStage(
-    {
-      stage0: {
-        callsItselfRollup: true,
-        stateRootsPostedToL1: true,
-        dataAvailabilityOnL1: true,
-        rollupNodeSourceAvailable: true,
-      },
-      stage1: {
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: null,
-        usersHave7DaysToExit: false,
-        usersCanExitWithoutCooperation: false,
-        securityCouncilProperlySetUp: [
-          false,
-          'Security Council members are not publicly known.',
-        ],
-      },
-      stage2: {
-        proofSystemOverriddenOnlyInCaseOfABug: false,
-        fraudProofSystemIsPermissionless: null,
-        delayWith30DExitWindow: false,
-      },
-    },
-    {
-      rollupNodeLink: 'https://github.com/0xPolygonHermez/zkevm-node',
-    },
-  ),
+  stage: {
+    stage: 'NotApplicable',
+  },
   technology: {
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
@@ -204,7 +189,7 @@ export const astarzkevm: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
+      ...TECHNOLOGY_DATA_AVAILABILITY.GENERIC_OFF_CHAIN,
       references: [
         {
           text: 'AstarValidiumEtrog.sol - Etherscan source code, sequenceBatches function',

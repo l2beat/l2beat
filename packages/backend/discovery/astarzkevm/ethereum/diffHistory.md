@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x27fae79059b7c7d6161b057930536cc501b0ece5
+Generated with discovered.json: 0xb72121b4a1ba7a7cd96bd15e886db232df1837db
 
-# Diff at Mon, 18 Mar 2024 18:01:18 GMT:
+# Diff at Wed, 20 Mar 2024 14:20:30 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current block number: 19463321
+- current block number: 19476466
 
 ## Description
 
@@ -67,7 +67,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract PolygonDataCommittee (0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0)
+    contract AstarValidiumDAC (0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0)
     +++ description: None
 ```
 
