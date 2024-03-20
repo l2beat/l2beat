@@ -57,6 +57,7 @@ export function makeConfig(
       ? {
           connection: env.string('LOCAL_DB_URL'),
           freshStart: env.boolean('FRESH_START', false),
+          enableQueryLogging: env.boolean('ENABLE_QUERY_LOGGING', false),
           connectionPoolSize: {
             // defaults used by knex
             min: 2,
@@ -65,6 +66,7 @@ export function makeConfig(
         }
       : {
           freshStart: false,
+          enableQueryLogging: env.boolean('ENABLE_QUERY_LOGGING', false),
           connection: {
             connectionString: env.string('DATABASE_URL'),
             ssl: { rejectUnauthorized: false },
