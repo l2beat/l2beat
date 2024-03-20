@@ -85,14 +85,14 @@
           "type": null
         },
         "policyAdmin": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Can set bridging fees, gas limits and can pause / unpause the bridge or censor individual withdrawals.",
+          "severity": "MEDIUM",
+          "type": "PERMISSION"
         },
         "required": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Threshold of the bridge governance admin multisig",
+          "severity": "HIGH",
+          "type": "PERMISSION"
         },
         "taxRate": {
           "description": null,

@@ -1,24 +1,30 @@
-Generated with discovered.json: 0xda3a6d69712d106fc9e3ec5ca926c56ba0e12300
+Generated with discovered.json: 0xc312cacf231dfed5babf4845b328e3dde9d479f2
 
-# Diff at Wed, 20 Mar 2024 08:27:47 GMT:
+# Diff at Wed, 20 Mar 2024 10:33:43 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
-- comparing to: main@c765e77f2163483a147573be06daf16620543f87 block: 19224708
-- current block number: 19474722
+- comparing to: main@0a58f72fc0c5d7145b2e613962ce55cee5c1b355 block: 19224708
+- current block number: 19475340
 
 ## Description
 
 The policyAdmin is changed from an EOA to an unverified smart contract.
-Required validators' signatures for a withdrawal are decreased from 7 to 6.
+Required validators' signatures for an upgrade or withdrawal are decreased from 7 to 6 out of 10.
 
 ## Watched changes
 
 ```diff
     contract ETH Vault (0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a) {
     +++ description: None
++++ description: Can set bridging fees, gas limits and can pause / unpause the bridge or censor individual withdrawals.
++++ type: PERMISSION
++++ severity: MEDIUM
       values.policyAdmin:
 -        "0x4C35e473D57cF4daA90BB9FE341CeDEc81124d05"
 +        "0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8"
++++ description: Threshold of the bridge governance admin multisig
++++ type: PERMISSION
++++ severity: HIGH
       values.required:
 -        7
 +        6
