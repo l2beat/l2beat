@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/backend-tools'
+import { assert, Env } from '@l2beat/backend-tools'
 import { bridges, chains, Layer2, layer2s, tokenList } from '@l2beat/config'
 import {
   AmountConfigEntry,
@@ -12,7 +12,7 @@ import { bridgeToProject, layer2ToProject, Project } from '../../model/Project'
 import { ChainConverter } from '../../tools/ChainConverter'
 import { Tvl2Config } from '../Config'
 
-export function getTvl2Config(coingeckoApiKey: string | undefined): Tvl2Config {
+export function getTvl2Config(env: Env): Tvl2Config {
   const projects = layer2s
     .map(layer2ToProject)
     .concat(bridges.map(bridgeToProject))
@@ -30,7 +30,10 @@ export function getTvl2Config(coingeckoApiKey: string | undefined): Tvl2Config {
       chainToProject,
     ),
     prices: getPricesConfig(tokenList, chainConverter),
-    coingeckoApiKey,
+    coingeckoApiKey: env.optionalString([
+      'COINGECKO_API_KEY_FOR_TVL2',
+      'COINGECKO_API_KEY',
+    ]),
   }
 
   return tvl2Config
