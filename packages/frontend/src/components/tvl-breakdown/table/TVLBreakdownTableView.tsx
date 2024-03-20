@@ -64,7 +64,7 @@ export function TVLBreakdownTableView<
                 <th
                   key={i}
                   className={cn(
-                    'w-[20%] whitespace-pre py-2 pr-2 text-sm font-medium uppercase text-gray-500 first:rounded-l first:pl-2 last:rounded-r last:pr-2 dark:text-gray-50 first:md:pl-6 last:md:pr-6',
+                    'w-1/5 whitespace-pre py-2 pr-2 text-sm font-medium uppercase text-gray-500 first:rounded-l first:pl-2 last:rounded-r last:pr-2 dark:text-gray-50 first:md:pl-6 last:md:pr-6',
                     column.headClassName,
                     column.highlight && highlightedColumnClassNames,
                   )}

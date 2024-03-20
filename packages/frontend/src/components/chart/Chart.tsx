@@ -134,7 +134,7 @@ export function Chart(props: ChartProps) {
             />
             <div
               data-role="chart-milestones"
-              className="absolute bottom-0 z-40 w-[100%] group-data-[interactivity-disabled]/chart:hidden"
+              className="absolute bottom-0 z-40 w-full group-data-[interactivity-disabled]/chart:hidden"
             />
           </div>
           <div className="flex justify-between">

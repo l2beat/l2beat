@@ -85,19 +85,27 @@ FEATURES=tvl,!tvl.arbitrum
 FEATURES=tvl,!tvl.*,tvl.ethereum
 ```
 
+### Common env variables
+
+- `COINGECKO_API_KEY` - Optional. Speeds up price collection. See https://www.coingecko.com/en/api/pricing
+
+- `<CHAIN>_RPC_URL` - RPC url for the chain, for example from Alchemy
+- `<CHAIN>_RPC_CALLS_PER_MINUTE` - Optional. Rate limits the number of calls to the RPC. Defaults to 60
+- `<CHAIN>_RPC_GETLOGS_MAX_RANGE` - Optional. Limits the range of getLogs calls
+- `<CHAIN>_ETHERSCAN_API_KEY` - Etherscan API key. Only needed if the chain uses Etherscan. Blockscout doesn't need it.
+
+You can also append the feature name to the environment variables if you'd like a specific feature to use a different endpoint. For example:
+
+```
+ETHEREUM_RPC_URL=https://example.provider/ethereum
+ETHEREUM_RPC_URL_FOR_TVL=https://another.rpc/mainnet
+```
+
 ### `tvl` feature
 
 The tvl feature is configured via the following environment variables:
 
 - `ERROR_ON_UNSYNCED_TVL` - Optional. Defaults to false
-
-- `COINGECKO_API_KEY` - Optional. Speeds up price collection. See https://www.coingecko.com/en/api/pricing
-
-And a set the following variables for each enabled chain:
-
-- `TVL_<CHAIN>_PROVIDER_URL` - RPC url for the chain, for example from Alchemy
-- `TVL_<CHAIN>_RPC_CALLS_PER_MINUTE` - Optional. Rate limits the number of calls to the RPC. Defaults to 60
-- `TVL_<CHAIN>_ETHERSCAN_API_KEY` - Etherscan API key. Only needed if the chain uses Etherscan. Blockscout doesn't need it.
 
 **Feature flags:**
 
@@ -121,9 +129,6 @@ The tracked-txx feature is configured via the following environment variables:
 
 ### `finality` feature
 
-- `FINALITY_ETHEREUM_PROVIDER_URL` - Ethereum RPC url
-- `FINALITY_ETHEREUM_PROVIDER_CALLS_PER_MINUTE` - Optional. Rate limits the number of calls to the RPC. Defaults to 600
-
 **Feature flags:**
 
 - `finality` - enables finality feature
@@ -138,11 +143,6 @@ The activity feature is configured via the following environment variables:
 - `STARKEX_API_KEY`
 - `STARKEX_CALLS_PER_MINUTE` - Optional. Rate limits the number of calls to the RPC. Defaults to 600
 - `ACTIVITY_PROJECTS_EXCLUDED_FROM_API` - Optional. Space separated list of project ids to exclude from the API.
-
-And a set the following variables for each enabled chain:
-
-- `ACTIVITY_<CHAIN>_URL` - RPC url for the chain, for example from Alchemy
-- `ACTIVITY_<CHAIN>_CALLS` - Optional. Rate limits the number of calls to the RPC
 
 **Feature flags:**
 
@@ -164,12 +164,6 @@ The updateMonitor feature is configured via the following environment variables:
 - `DISCORD_TOKEN` - Optional. Discord bot token
 - `INTERNAL_DISCORD_CHANNEL_ID` - Optional. Discord channel id for internal messages
 - `PUBLIC_DISCORD_CHANNEL_ID` - Optional. Discord channel id for public messages
-
-And a set the following variables for each enabled chain:
-
-- `DISCOVERY_<CHAIN>_RPC_URL` - RPC url for the chain, for example from Alchemy
-- `DISCOVERY_<CHAIN>_RPC_GETLOGS_MAX_RANGE` - Optional. Limits the range of getLogs calls
-- `DISCOVERY_<ENV_NAME>_ETHERSCAN_API_KEY` - Etherscan API key
 
 **Feature flags:**
 
