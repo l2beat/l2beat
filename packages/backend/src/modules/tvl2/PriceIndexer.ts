@@ -1,8 +1,5 @@
 import { assert, Logger } from '@l2beat/backend-tools'
-import {
-  CoingeckoQueryService,
-  MAX_DAYS_FOR_HOURLY_PRECISION,
-} from '@l2beat/shared'
+import { CoingeckoQueryService } from '@l2beat/shared'
 import { PriceConfigEntry, UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
 import { Knex } from 'knex'
@@ -61,8 +58,10 @@ export class PriceIndexer extends ChildIndexer {
     const to = new UnixTime(_to).toStartOf('hour')
     assert(from.lte(to), 'Programmer error: from > to')
 
-    return to.gt(from.add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days'))
-      ? from.add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days')
+    const maxDaysForOneCall = this.coingeckoQueryService.maxDaysForOneCall
+
+    return to.gt(from.add(maxDaysForOneCall, 'days'))
+      ? from.add(maxDaysForOneCall, 'days')
       : to
   }
 
