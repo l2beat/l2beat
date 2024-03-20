@@ -1,20 +1,5 @@
 import { ConfigReader } from '@l2beat/discovery'
-
-const chainMapping: Record<string, string> = {
-  optimism: 'ethereum',
-  mantapacific: 'ethereum',
-  base: 'ethereum',
-  mode: 'ethereum',
-  aevo: 'ethereum',
-  kroma: 'ethereum',
-  zora: 'ethereum',
-  lyra: 'ethereum',
-  publicgoodsnetwork: 'ethereum',
-  hypr: 'ethereum',
-  orderly: 'ethereum',
-  karak: 'ethereum',
-  blast: 'ethereum',
-}
+import { layer2s } from '@l2beat/config'
 
 void main().catch((e) => {
   console.log(e)
@@ -46,7 +31,7 @@ async function main() {
 
 function printUsage(): void {
   console.log(
-    'Usage: yarn analyse-opstack-chains --all | --findSimilar chainName',
+    'Usage: yarn analyse-opstack-chains --all | --findSimilar project-name',
   )
 }
 
@@ -73,8 +58,8 @@ function parseCliParameters(): Config {
   }
 }
 
-type OpStackChain = {
-  chain: string
+type OpStackProject = {
+  project: string
   OptimismPortal: string | undefined
   L1StandardBridge: string | undefined
   L1ERC721Bridge: string | undefined
@@ -84,11 +69,11 @@ type OpStackChain = {
 }
 
 function findMostSimilar(
-  newObj: OpStackChain,
-  list: OpStackChain[],
-): OpStackChain | null {
+  newObj: OpStackProject,
+  list: OpStackProject[],
+): OpStackProject | null {
   let maxSimilarity = 0
-  let mostSimilar: OpStackChain | null = null
+  let mostSimilar: OpStackProject | null = null
 
   for (const obj of list) {
     if (obj === newObj) {
@@ -98,7 +83,7 @@ function findMostSimilar(
 
     for (const key in newObj) {
       if (
-        newObj[key as keyof OpStackChain] === obj[key as keyof OpStackChain]
+        newObj[key as keyof OpStackProject] === obj[key as keyof OpStackProject]
       ) {
         similarity++
       }
@@ -114,13 +99,16 @@ function findMostSimilar(
 }
 
 async function analyseAllOpStackChains(
-  chainToCompare: string | null,
+  projectToCompare: string | null,
 ): Promise<void> {
   const configReader = new ConfigReader()
-  const opStackChains = [] as OpStackChain[]
-  for (const [chain, mapping] of Object.entries(chainMapping)) {
-    console.log('reading', chain)
-    const discovery = await configReader.readDiscovery(chain, mapping)
+  const opStackChains = [] as OpStackProject[]
+
+  const l2s = layer2s.filter((l2) => l2.display.provider === 'OP Stack' && !l2.isArchived && !l2.isUpcoming)
+
+  for (const l2 of l2s) {
+    console.log('reading', l2.id)
+    const discovery = await configReader.readDiscovery(l2.id.toString(), 'ethereum')
     const L2OutputOracle = discovery.contracts.find(
       (obj) => obj.name === 'L2OutputOracle',
     )
@@ -141,7 +129,7 @@ async function analyseAllOpStackChains(
     )
 
     const opStackChain = {
-      chain: chain,
+      project: l2.id.toString(),
       OptimismPortal: optimismPortal?.values?.version,
       L1StandardBridge: l1StandardBridge?.values?.version,
       L1ERC721Bridge: l1ERC721Bridge?.values?.version,
@@ -149,17 +137,17 @@ async function analyseAllOpStackChains(
       L1CrossDomainMessenger: l1CrossDomainMessenger?.values?.version,
       L2OutputOracle: L2OutputOracle?.values?.version,
     }
-    opStackChains.push(opStackChain as OpStackChain)
+    opStackChains.push(opStackChain as OpStackProject)
   }
   console.table(opStackChains)
 
-  if (chainToCompare !== undefined) {
-    console.log('comparing to', chainToCompare)
-    const chainToCompareTo = opStackChains.find(
-      (obj) => obj.chain === chainToCompare,
-    ) as OpStackChain
-    const mostSimilar = findMostSimilar(chainToCompareTo, opStackChains)
+  if (projectToCompare !== undefined) {
+    console.log('comparing to', projectToCompare)
+    const projectToCompareTo = opStackChains.find(
+      (obj) => obj.project === projectToCompare,
+    ) as OpStackProject
+    const mostSimilar = findMostSimilar(projectToCompareTo, opStackChains)
 
-    console.log(`most similar to ${chainToCompare}:`, mostSimilar)
+    console.log(`most similar to ${projectToCompare}:`, mostSimilar)
   }
 }
