@@ -195,7 +195,7 @@ export class L2CostsController {
   }
 
   async makeTransactionCalculations(
-    transactions: L2CostsRecord<2 | 3>[],
+    transactions: L2CostsRecord[],
   ): Promise<DetailedTransaction[]> {
     const ethPricesMap = await this.priceRepository.findByTimestampRange(
       AssetId.ETH,

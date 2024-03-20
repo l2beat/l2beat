@@ -105,7 +105,7 @@ describeDatabase(L2CostsRepository.name, (database) => {
         ProjectId('project-2'),
         START,
       )
-      console.log(results)
+
       expect(results).toEqualUnsorted([DATA[0]])
     })
   })
