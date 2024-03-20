@@ -141,6 +141,10 @@
       "address": "0xAE12C5930881c53715B369ceC7606B70d8EB229f"
     },
     {
+      "symbol": "cbETH",
+      "address": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
+    },
+    {
       "symbol": "cDAI",
       "address": "0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",
       "category": "stablecoin"

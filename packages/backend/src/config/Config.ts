@@ -62,6 +62,8 @@ export interface ApiConfig {
 export interface DatabaseConfig {
   readonly connection: Knex.Config['connection']
   readonly freshStart: boolean
+  readonly enableQueryLogging: boolean
+  readonly requiredMajorVersion?: number
   readonly connectionPoolSize: {
     min: number
     max: number

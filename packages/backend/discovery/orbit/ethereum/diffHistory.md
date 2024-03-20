@@ -1,3 +1,57 @@
+Generated with discovered.json: 0xc312cacf231dfed5babf4845b328e3dde9d479f2
+
+# Diff at Wed, 20 Mar 2024 10:33:43 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@0a58f72fc0c5d7145b2e613962ce55cee5c1b355 block: 19224708
+- current block number: 19475340
+
+## Description
+
+The policyAdmin is changed from an EOA to an unverified smart contract.
+Required validators' signatures for an upgrade or withdrawal are decreased from 7 to 6 out of 10.
+
+## Watched changes
+
+```diff
+    contract ETH Vault (0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a) {
+    +++ description: None
++++ description: Can set bridging fees, gas limits and can pause / unpause the bridge or censor individual withdrawals.
++++ type: PERMISSION
++++ severity: MEDIUM
+      values.policyAdmin:
+-        "0x4C35e473D57cF4daA90BB9FE341CeDEc81124d05"
++        "0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8"
++++ description: Threshold of the bridge governance admin multisig
++++ type: PERMISSION
++++ severity: HIGH
+      values.required:
+-        7
++        6
+    }
+```
+
+```diff
++   Status: CREATED
+    contract  (0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xc045b35d1cf9501B2fc95e7c489FDA96345A4D70)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../-0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8/implementation/meta.txt | 2 ++
+ .../.code/-0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8/proxy/meta.txt    | 2 ++
+ .../ethereum/.code/-0xc045b35d1cf9501B2fc95e7c489FDA96345A4D70/meta.txt | 2 ++
+ 3 files changed, 6 insertions(+)
+```
+
 Generated with discovered.json: 0x234afadbeb23f4a7f3f1b173e251e6330e692eee
 
 # Diff at Wed, 14 Feb 2024 07:26:34 GMT:

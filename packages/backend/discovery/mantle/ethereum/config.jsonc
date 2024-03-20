@@ -93,7 +93,8 @@
         "TssGroupManagerProxy": {
           "type": "call",
           "method": "getAddress",
-          "args": ["Proxy__TSS_GroupManager"]
+          "args": ["Proxy__TSS_GroupManager"],
+          "ignoreRelative": true
         },
         "TssGroupManager": {
           "type": "call",
@@ -110,7 +111,8 @@
         "TssStakingSlashingProxy": {
           "type": "call",
           "method": "getAddress",
-          "args": ["Proxy__TSS_StakingSlashing"]
+          "args": ["Proxy__TSS_StakingSlashing"],
+          "ignoreRelative": true
         },
         "L1StandardBridgeProxy": {
           "type": "call",
