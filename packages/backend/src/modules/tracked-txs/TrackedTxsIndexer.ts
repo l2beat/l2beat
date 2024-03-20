@@ -79,7 +79,11 @@ export class TrackedTxsIndexer extends ChildIndexer {
       const configIds = configurations.flatMap((config) =>
         config.uses.map((use) => use.id),
       )
-      await this.configRepository.setLastSyncedTimestamp(configIds, syncTo, trx)
+      await this.configRepository.setManyLastSyncedTimestamp(
+        configIds,
+        syncTo,
+        trx,
+      )
     })
 
     this.logger.info('Updated', {
@@ -151,6 +155,11 @@ export class TrackedTxsIndexer extends ChildIndexer {
         for (const updater of Object.values(this.enabledUpdaters)) {
           await updater?.deleteAfter(c.id, c.untilTimestampExclusive, trx)
         }
+        await this.configRepository.setLastSyncedTimestamp(
+          c.id,
+          c.untilTimestampExclusive,
+          trx,
+        )
       }),
     )
   }

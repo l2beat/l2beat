@@ -76,7 +76,7 @@ describe(TrackedTxsIndexer.name, () => {
         TRX,
       )
       expect(
-        configurationRepository.setLastSyncedTimestamp,
+        configurationRepository.setManyLastSyncedTimestamp,
       ).toHaveBeenOnlyCalledWith(
         runtimeEntries.flatMap((r) => r.uses.map((u) => u.id)),
         syncTo,
@@ -211,6 +211,13 @@ describe(TrackedTxsIndexer.name, () => {
         TRX,
       )
       expect(mockedLivenessUpdater.deleteAfter).toHaveBeenOnlyCalledWith(
+        toTrim[0].id,
+        toTrim[0].untilTimestampExclusive,
+        TRX,
+      )
+      expect(
+        configurationRepository.setLastSyncedTimestamp,
+      ).toHaveBeenOnlyCalledWith(
         toTrim[0].id,
         toTrim[0].untilTimestampExclusive,
         TRX,
@@ -379,6 +386,7 @@ function getMockConfigRepository(databaseEntries: TrackedTxsConfigRecord[]) {
     deleteMany: async () => 0,
     setUntilTimestamp: async () => 0,
     getAll: async () => databaseEntries,
+    setManyLastSyncedTimestamp: async () => 0,
     setLastSyncedTimestamp: async () => 0,
     runInTransaction: mockFn(async (fn) => fn(TRX)),
   })

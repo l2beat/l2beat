@@ -121,6 +121,10 @@ export class UnixTime {
     return this.timestamp >= other.timestamp
   }
 
+  inExclusiveRange(from: UnixTime, to: UnixTime) {
+    return this.gt(from) && this.lt(to)
+  }
+
   toNumber() {
     return this.timestamp
   }
