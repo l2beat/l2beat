@@ -6,6 +6,7 @@ import { RiskValues } from '../../utils/risks/types'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { ProjectLink } from '../icons'
 import { ArchivedBar } from '../project/ArchivedBar'
+import { ImplementationUnderReview } from '../project/ImplementationUnderReview'
 import { UnderReviewBar } from '../project/UnderReviewBar'
 import { UpcomingBar } from '../project/UpcomingBar'
 import { WarningBar } from '../project/WarningBar'
@@ -28,6 +29,7 @@ export interface HeaderProps {
   tvlWarning?: Layer2TVLWarning
   showTvlBreakdown?: boolean
   showProjectUnderReview?: boolean
+  implementationHasChanged?: boolean
   risks?: RiskValues
   links: ProjectLink[]
   type: 'bridge' | 'layer2' | 'layer3'
@@ -69,6 +71,7 @@ export function DetailsHeader(props: HeaderProps) {
                 />
               )}
               {props.title}
+              {props.implementationHasChanged && <ImplementationUnderReview />}
             </h1>
             {props.description && (
               <div className="mt-4 text-base">{props.description}</div>

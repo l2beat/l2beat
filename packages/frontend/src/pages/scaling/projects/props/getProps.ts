@@ -32,6 +32,7 @@ export function getProps(
         project,
         config,
         tvlApiResponse,
+        implementationChange,
         activityApiResponse,
         diffHistory,
       ),
