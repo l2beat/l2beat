@@ -32,6 +32,7 @@ export class CoingeckoQueryService {
     const queryResult = await this.queryHourlyPricesAndMarketCaps(
       coingeckoId,
       { from, to },
+      // TODO: either make it multichain or remove this fallback
       address,
     )
     return queryResult.prices

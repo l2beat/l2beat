@@ -38,32 +38,34 @@ export class PriceIndexer extends ChildIndexer {
   override async update(_from: number, _to: number): Promise<number> {
     this.logger.info('Updating...')
 
-    const from = new UnixTime(_from).toEndOf('hour')
-    let to = new UnixTime(_to).toStartOf('hour')
+    const from =
+      _from === 0
+        ? this.token.sinceTimestamp.toEndOf('hour')
+        : new UnixTime(_from).toEndOf('hour').add(1, 'hours')
 
-    if (to.gt(from.add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days'))) {
-      to = from.add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days')
-    }
+    const to = new UnixTime(_to).toStartOf('hour')
 
     if (from.gt(to)) {
       return _to
     }
 
-    const prices = await this.coingeckoQueryService.getUsdPriceHistoryHourly(
-      this.token.coingeckoId,
-      from,
-      to,
-      // TODO: either make it multichain or remove this fallback
-      undefined,
-    )
+    const prices = to.gt(from.add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days'))
+      ? await this.coingeckoQueryService.getUsdPriceHistoryHourly(
+          this.token.coingeckoId,
+          from,
+          from.add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days'),
+          undefined,
+        )
+      : await this.coingeckoQueryService.getUsdPriceHistoryHourly(
+          this.token.coingeckoId,
+          from,
+          to,
+          undefined,
+        )
 
     const priceRecords: PriceRecord[] = prices
       // we filter out timestamps that would be deleted by TVL cleaner
-      .filter(
-        (p) =>
-          this.syncOptimizer.shouldTimestampBeSynced(p.timestamp) &&
-          p.timestamp.gt(from),
-      )
+      .filter((p) => this.syncOptimizer.shouldTimestampBeSynced(p.timestamp))
       .map((price) => ({
         chain: this.token.chain,
         address: this.token.address,
@@ -74,7 +76,9 @@ export class PriceIndexer extends ChildIndexer {
     await this.priceRepository.addMany(priceRecords)
     this.logger.info('Updated')
 
-    return to.toNumber()
+    return to.gt(from.add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days'))
+      ? from.add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days').toNumber()
+      : _to
   }
 
   override async getSafeHeight(): Promise<number> {
@@ -112,7 +116,7 @@ export class PriceIndexer extends ChildIndexer {
     if (indexerState === undefined) {
       await this.stateRepository.add({
         indexerId: this.indexerId,
-        safeHeight: this.token.sinceTimestamp.toNumber(),
+        safeHeight: 0,
         minTimestamp: this.token.sinceTimestamp,
       })
       return
