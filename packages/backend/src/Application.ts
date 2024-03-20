@@ -32,15 +32,7 @@ export class Application {
       logger = logger.withThrottling(config.logThrottler)
     }
 
-    const database = new Database(
-      config.database.connection,
-      config.name,
-      logger,
-      {
-        minConnectionPoolSize: config.database.connectionPoolSize.min,
-        maxConnectionPoolSize: config.database.connectionPoolSize.max,
-      },
-    )
+    const database = new Database(config.database, logger, config.name)
     const clock = new Clock(
       config.clock.minBlockTimestamp,
       config.clock.safeTimeOffsetSeconds,
@@ -85,22 +77,8 @@ export class Application {
 
     this.start = async () => {
       logger.for(this).info('Starting', { features: config.flags })
-
-      await apiServer.listen()
-
-      await database.assertRequiredServerVersion()
-      if (config.database.freshStart) {
-        await database.rollbackAll()
-      }
-      await database.migrateToLatest()
-
-      if (
-        config.logger.logLevel === 'DEBUG' ||
-        config.logger.logLevel === 'TRACE'
-      ) {
-        database.enableQueryLogging()
-      }
-
+      await apiServer.start()
+      await database.start()
       for (const module of modules) {
         await module?.start?.()
       }

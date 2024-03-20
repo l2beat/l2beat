@@ -1,6 +1,7 @@
 import { getEnv, Logger } from '@l2beat/backend-tools'
 
-import { Database, DatabaseOpts } from '../peripherals/database/Database'
+import { DatabaseConfig } from '../config/Config'
+import { Database } from '../peripherals/database/Database'
 
 export function describeDatabase(
   name: string,
@@ -29,7 +30,9 @@ export function describeDatabase(
   })
 }
 
-export function getTestDatabase(opts?: DatabaseOpts): Database | undefined {
+export function getTestDatabase(
+  opts?: Partial<DatabaseConfig>,
+): Database | undefined {
   const env = getEnv()
   const connection = env.optionalString('TEST_DB_URL')
   if (!connection) {
@@ -39,9 +42,18 @@ export function getTestDatabase(opts?: DatabaseOpts): Database | undefined {
     return
   }
 
-  return new Database(connection, 'Backend/Test', Logger.SILENT, {
-    ...opts,
-    minConnectionPoolSize: 5,
-    maxConnectionPoolSize: 20,
-  })
+  return new Database(
+    {
+      connection,
+      connectionPoolSize: {
+        min: 5,
+        max: 20,
+      },
+      freshStart: false,
+      enableQueryLogging: false,
+      ...opts,
+    },
+    Logger.SILENT,
+    'Backend/Test',
+  )
 }
