@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
-import { BlockTimestampRow } from 'knex/types/tables'
 
 import {
   BaseRepository,
@@ -14,6 +13,12 @@ export interface BlockTimestampRecord {
   blockNumber: number
 }
 
+export interface BlockTimestampRow {
+  chain: string
+  timestamp: Date
+  block_number: number
+}
+
 export class BlockTimestampRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
@@ -22,14 +27,14 @@ export class BlockTimestampRepository extends BaseRepository {
 
   async getAll(): Promise<BlockTimestampRecord[]> {
     const knex = await this.knex()
-    const rows = await knex('block_timestamp')
+    const rows = await knex('block_timestamps')
     return rows.map(toRecord)
   }
 
   async add(record: BlockTimestampRecord) {
     const row: BlockTimestampRow = toRow(record)
     const knex = await this.knex()
-    await knex('block_timestamp').insert(row)
+    await knex('block_timestamps').insert(row)
 
     return `${record.chain}-${record.timestamp.toNumber()}`
   }
@@ -37,7 +42,7 @@ export class BlockTimestampRepository extends BaseRepository {
   async deleteBeforeInclusive(chain: string, timestamp: UnixTime) {
     const knex = await this.knex()
 
-    return knex('block_timestamp')
+    return knex('block_timestamps')
       .where('chain', chain)
       .where('timestamp', '<=', timestamp.toDate())
       .delete()
@@ -45,7 +50,7 @@ export class BlockTimestampRepository extends BaseRepository {
 
   async deleteAll() {
     const knex = await this.knex()
-    return knex('block_timestamp').delete()
+    return knex('block_timestamps').delete()
   }
 }
 

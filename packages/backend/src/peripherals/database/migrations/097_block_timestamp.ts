@@ -14,7 +14,7 @@ should create a new migration file that fixes the issue.
 import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
-  await knex.schema.createTable('block_timestamp', function (table) {
+  await knex.schema.createTable('block_timestamps', function (table) {
     table.string('chain').notNullable()
     table.dateTime('timestamp', { useTz: false }).notNullable()
     table.integer('block_number').notNullable()
@@ -24,5 +24,5 @@ export async function up(knex: Knex) {
 }
 
 export async function down(knex: Knex) {
-  await knex.schema.dropTable('block_timestamp')
+  await knex.schema.dropTable('block_timestamps')
 }
