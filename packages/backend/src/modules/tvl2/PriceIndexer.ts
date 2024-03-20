@@ -38,10 +38,9 @@ export class PriceIndexer extends ChildIndexer {
   override async update(_from: number, _to: number): Promise<number> {
     this.logger.info('Updating...')
 
-    const from =
-      _from === 0
-        ? this.token.sinceTimestamp.toEndOf('hour')
-        : new UnixTime(_from).toEndOf('hour').add(1, 'hours')
+    const from = this.token.sinceTimestamp.gt(new UnixTime(_from))
+      ? this.token.sinceTimestamp.toEndOf('hour')
+      : new UnixTime(_from).toEndOf('hour')
 
     const to = new UnixTime(_to).toStartOf('hour')
 
@@ -94,16 +93,7 @@ export class PriceIndexer extends ChildIndexer {
     safeHeight: number,
     trx?: Knex.Transaction,
   ): Promise<void> {
-    const indexerSafeHeight = Math.max(
-      safeHeight,
-      this.token.sinceTimestamp.toNumber(),
-    )
-
-    await this.stateRepository.setSafeHeight(
-      this.indexerId,
-      indexerSafeHeight,
-      trx,
-    )
+    await this.stateRepository.setSafeHeight(this.indexerId, safeHeight, trx)
   }
 
   async initialize() {
