@@ -31,25 +31,44 @@ describe(diffTrackedTxConfigurations.name, () => {
 
   describe('updated', () => {
     it('finds configs which untilTimestamp have changed', () => {
-      const changedUntilTimestamp = UnixTime.now()
+      const configurations = [
+        {
+          ...CONFIGURATIONS[0],
+          untilTimestampExclusive: UnixTime.now().add(-5, 'days'),
+        },
+        {
+          ...CONFIGURATIONS[1],
+          untilTimestampExclusive: UnixTime.now(),
+        },
+      ]
 
-      const updated = {
-        ...CONFIGURATIONS[1],
-        untilTimestampExclusive: changedUntilTimestamp,
-      }
+      const dbConfigs = [
+        {
+          ...DB_CONFIGURATIONS[0],
+          lastSyncedTimestamp: UnixTime.now().add(-10, 'days'),
+        },
+        ...DB_CONFIGURATIONS.slice(1, 3),
+      ]
 
-      const result = diffTrackedTxConfigurations(
-        [...CONFIGURATIONS.slice(0, 1), updated],
-        DB_CONFIGURATIONS,
-      )
-      configurationsToRecords([updated])
+      const result = diffTrackedTxConfigurations(configurations, dbConfigs)
 
-      expect(result.toTrim).toEqualUnsorted(
-        configurationsToRecords([updated]).map((r) => ({
-          id: r.id,
-          untilTimestampExclusive: changedUntilTimestamp,
-        })),
-      )
+      expect(result.toChangeUntilTimestamp).toEqualUnsorted([
+        {
+          id: configurations[0].uses[0].id,
+          untilTimestampExclusive: configurations[0].untilTimestampExclusive,
+          lastSyncedTimestamp: dbConfigs[0].lastSyncedTimestamp,
+        },
+        {
+          id: configurations[1].uses[0].id,
+          untilTimestampExclusive: configurations[1].untilTimestampExclusive,
+          lastSyncedTimestamp: dbConfigs[1].lastSyncedTimestamp,
+        },
+        {
+          id: configurations[1].uses[1].id,
+          untilTimestampExclusive: configurations[1].untilTimestampExclusive,
+          lastSyncedTimestamp: dbConfigs[2].lastSyncedTimestamp,
+        },
+      ])
     })
 
     it('no configs to update', () => {

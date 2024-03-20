@@ -7,16 +7,22 @@ import {
 import { TrackedTxId } from '../types/TrackedTxId'
 import { TrackedTxConfigEntry } from '../types/TrackedTxsConfig'
 
+export type ToChangeUntilTimestamp = {
+  id: TrackedTxId
+  untilTimestampExclusive: UnixTime
+  lastSyncedTimestamp: UnixTime | undefined
+}
+
 export function diffTrackedTxConfigurations(
   runtimeEntries: TrackedTxConfigEntry[],
   databaseEntries: TrackedTxsConfigRecord[],
 ): {
   toAdd: TrackedTxsConfigRecord[]
-  toTrim: { id: TrackedTxId; untilTimestampExclusive: UnixTime }[]
   toRemove: TrackedTxId[]
+  toChangeUntilTimestamp: ToChangeUntilTimestamp[]
 } {
   const toAdd: TrackedTxsConfigRecord[] = []
-  const toTrim: { id: TrackedTxId; untilTimestampExclusive: UnixTime }[] = []
+  const toChangeUntilTimestamp: ToChangeUntilTimestamp[] = []
 
   for (const entry of runtimeEntries) {
     for (const entryUse of entry.uses) {
@@ -31,11 +37,14 @@ export function diffTrackedTxConfigurations(
       if (
         entry.untilTimestampExclusive &&
         (!databaseEntry.untilTimestampExclusive ||
-          entry.untilTimestampExclusive < databaseEntry.untilTimestampExclusive)
+          !entry.untilTimestampExclusive.equals(
+            databaseEntry.untilTimestampExclusive,
+          ))
       ) {
-        toTrim.push({
+        toChangeUntilTimestamp.push({
           id: entryUse.id,
           untilTimestampExclusive: entry.untilTimestampExclusive,
+          lastSyncedTimestamp: databaseEntry.lastSyncedTimestamp,
         })
       }
     }
@@ -46,6 +55,5 @@ export function diffTrackedTxConfigurations(
         !runtimeEntries.find((e) => e.uses.some((u) => u.id === entry.id)),
     )
     .map((entry) => entry.id)
-
-  return { toAdd, toTrim, toRemove }
+  return { toAdd, toChangeUntilTimestamp, toRemove }
 }

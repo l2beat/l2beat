@@ -37,8 +37,8 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
     this.autoWrap<CheckConvention<TrackedTxsConfigsRepository>>(this)
   }
 
-  async getAll(): Promise<TrackedTxsConfigRecord[]> {
-    const knex = await this.knex()
+  async getAll(trx?: Knex.Transaction): Promise<TrackedTxsConfigRecord[]> {
+    const knex = await this.knex(trx)
     const rows = await knex('tracked_txs_configs')
     return rows.map(toRecord)
   }

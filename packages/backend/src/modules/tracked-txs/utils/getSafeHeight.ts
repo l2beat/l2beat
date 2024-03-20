@@ -1,41 +1,34 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { notUndefined, UnixTime } from '@l2beat/shared-pure'
 
 import { TrackedTxsConfigRecord } from '../repositories/TrackedTxsConfigsRepository'
 
 export function getSafeHeight(
   databaseEntries: TrackedTxsConfigRecord[],
-  toAdd: TrackedTxsConfigRecord[],
   minTimestamp: UnixTime,
 ): number {
-  if (databaseEntries.length === 0 && toAdd.length === 0) {
+  if (databaseEntries.length === 0) {
     return minTimestamp.toNumber()
   }
 
-  const databaseTimestamps = databaseEntries
-    .filter((entry) => {
-      if (
-        entry.untilTimestampExclusive === undefined ||
-        entry.lastSyncedTimestamp === undefined
-      ) {
-        return true
-      }
-      // Filter out archived configurations which have already been synced
-      return entry.untilTimestampExclusive?.gt(entry.lastSyncedTimestamp)
-    })
-    .map((c) => c.lastSyncedTimestamp ?? c.sinceTimestampInclusive)
+  const applicableEntries = databaseEntries.filter((e) => {
+    return (
+      e.lastSyncedTimestamp &&
+      (!e.untilTimestampExclusive ||
+        e.untilTimestampExclusive.gt(e.lastSyncedTimestamp))
+    )
+  })
 
-  const newEntryTimestamps = toAdd.map((c) => c.sinceTimestampInclusive)
+  if (applicableEntries.length === 0) {
+    return minTimestamp.toNumber()
+  }
 
-  const earliestTimestamp = findEarliestTimestamp([
-    ...databaseTimestamps,
-    ...newEntryTimestamps,
-  ])
+  const applicableLastSyncedTimestamps = applicableEntries
+    .map((e) => e.lastSyncedTimestamp?.toNumber())
+    .filter(notUndefined)
 
-  return earliestTimestamp.lt(minTimestamp)
-    ? minTimestamp.toNumber()
-    : earliestTimestamp.toNumber()
-}
+  const earliestLastSyncedTimestamp = Math.min(
+    ...applicableLastSyncedTimestamps,
+  )
 
-function findEarliestTimestamp(timestamps: UnixTime[]): UnixTime {
-  return timestamps.reduce((min, current) => (min.lt(current) ? min : current))
+  return Math.max(minTimestamp.toNumber(), earliestLastSyncedTimestamp)
 }
