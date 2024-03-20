@@ -112,21 +112,23 @@ describe(isConfigToSync.name, () => {
         ),
       ).toEqual(testCase.expected)
     })
-
-    it('throws if there is a gap between lastSyncedTimestamp and from', () => {
-      expect(() =>
-        isConfigToSync(
-          mockObject<TrackedTxConfigEntry>({
-            sinceTimestampInclusive: new UnixTime(0),
-            untilTimestampExclusive: undefined,
-          }),
-          mockObject<TrackedTxsConfigRecord>({
-            lastSyncedTimestamp: START.add(-1, 'hours'),
-          }),
-          START,
-          START.add(3, 'hours'),
-        ),
-      ).toThrow('gap between lastSyncedTimestamp and from')
-    })
   }
+
+  it('throws if there is a gap between lastSyncedTimestamp and from', () => {
+    expect(() =>
+      isConfigToSync(
+        mockObject<TrackedTxConfigEntry>({
+          sinceTimestampInclusive: new UnixTime(0),
+          untilTimestampExclusive: undefined,
+        }),
+        mockObject<TrackedTxsConfigRecord>({
+          lastSyncedTimestamp: START.add(-1, 'hours'),
+        }),
+        START,
+        START.add(3, 'hours'),
+      ),
+    ).toThrow(
+      'Programmer error: lastSyncedTimestamp should be after or equal to from',
+    )
+  })
 })

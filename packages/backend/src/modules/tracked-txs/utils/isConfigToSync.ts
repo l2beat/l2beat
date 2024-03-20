@@ -1,4 +1,3 @@
-import { assert } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 
 import { TrackedTxsConfigRecord } from '../repositories/TrackedTxsConfigsRepository'
@@ -31,10 +30,11 @@ export function isConfigToSync(
     return { include: false }
   }
 
-  assert(
-    lastSyncedTimestamp?.gte(from),
-    'Programmer error: lastSyncedTimestamp should be after from',
-  )
+  if (lastSyncedTimestamp?.lt(from)) {
+    throw new Error(
+      'Programmer error: lastSyncedTimestamp should be after or equal to from',
+    )
+  }
 
   // config synced somewhere in the range - skip config, split the range
   if (lastSyncedTimestamp?.inExclusiveRange(from, to)) {
