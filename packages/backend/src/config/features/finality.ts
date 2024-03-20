@@ -41,14 +41,10 @@ function getChainFinalityConfig(env: Env, project: Layer2) {
     url: env.optionalString([
       `${ENV_NAME}_RPC_URL_FOR_FINALITY`,
       `${ENV_NAME}_RPC_URL`,
-      // TODO: DEPRECATED - remove this fallback after envs are updated
-      `FINALITY_${ENV_NAME}_PROVIDER_URL`,
     ]),
     callsPerMinute: env.optionalInteger([
       `${ENV_NAME}_RPC_CALLS_PER_MINUTE_FOR_FINALITY`,
       `${ENV_NAME}_RPC_CALLS_PER_MINUTE`,
-      // TODO: DEPRECATED - remove this fallback after envs are updated
-      `FINALITY_${ENV_NAME}_PROVIDER_CALLS_PER_MINUTE`,
     ]),
   }
 }

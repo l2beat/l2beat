@@ -16,7 +16,7 @@ Program hash changed.
     contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
     +++ description: None
 +++ description: The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: HIGH
       values.programHash:
 -        "109586309220455887239200613090920758778188956576212125550190099009305121410"
