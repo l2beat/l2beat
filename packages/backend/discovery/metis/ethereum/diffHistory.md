@@ -1,3 +1,91 @@
+Generated with discovered.json: 0x9e075f62de4fda05f3daec06b85a96474f6d0ef5
+
+# Diff at Wed, 20 Mar 2024 14:18:46 GMT:
+
+- author: sekuba (<sekuba@users.noreply.githum.com>)
+- comparing to: main@88f881ab370a6b85fd531f2bc620891afd1f41bb block: 19432288
+- current block number: 19476458
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract Lib_AddressManager (0x918778e825747a892b17C66fe7D24C618262867d) {
+    +++ description: None
+      values._1088_MVM_Proposer:
+-        "0x9cB01d516D930EF49591a05B09e0D33E6286689D"
++        "0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040"
+      values.StateCommitmentChain:
+-        "0xf209815E595Cdf3ed0aAF9665b1772e608AB9380"
++        "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract StateCommitmentChain (0xf209815E595Cdf3ed0aAF9665b1772e608AB9380)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StateCommitmentChain (0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ICanonicalTransactionChain.sol => /dev/null    | 441 ---------------------
+ .../libraries/rlp/Lib_RLPWriter.sol => /dev/null   | 208 ----------
+ .../utils/Lib_Bytes32Utils.sol => /dev/null        |  47 ---
+ .../utils/Lib_BytesUtils.sol => /dev/null          | 127 ------
+ .../@openzeppelin/contracts/access/Ownable.sol     |   0
+ .../@openzeppelin/contracts/utils/Context.sol      |   0
+ .../contracts/L1/rollup/IChainStorageContainer.sol |  62 +--
+ .../contracts/L1/rollup/IStateCommitmentChain.sol  |  55 +--
+ .../contracts/L1/verification/IBondManager.sol     |   1 +
+ .../contracts/MVM/MVM_StateCommitmentChain.sol}    | 330 +++++----------
+ .../contracts/libraries/codec/Lib_OVMCodec.sol     |   3 -
+ .../libraries/resolver/Lib_AddressManager.sol      |   0
+ .../libraries/resolver/Lib_AddressResolver.sol     |   0
+ .../contracts/libraries/rlp/Lib_RLPReader.sol      |   0
+ .../contracts/libraries/utils/Lib_MerkleTree.sol   |   0
+ .../contracts/libraries/utils/Lib_Uint.sol         |  39 ++
+ .../StateCommitmentChain/implementation/meta.txt   |   2 +
+ .../StateCommitmentChain/meta.txt => /dev/null     |   2 -
+ .../contracts/chugsplash/L1ChugSplashProxy.sol     | 278 +++++++++++++
+ .../interfaces/iL1ChugSplashDeployer.sol           |   9 +
+ .../.code/StateCommitmentChain/proxy/meta.txt      |   2 +
+ 21 files changed, 459 insertions(+), 1147 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19432288 (main branch discovery), not current.
+
+```diff
+    contract StateCommitmentChain (0xf209815E595Cdf3ed0aAF9665b1772e608AB9380) {
+    +++ description: None
+      values.getLastSequencerTimestampByChainId:
+-        1710389927
++        [0,0,0,0,0]
+      values.getTotalBatchesByChainId:
+-        22918
++        [0,0,0,0,0]
+      values.getTotalElementsByChainId:
+-        15213630
++        [0,0,0,0,0]
+      errors:
++        {"getLastSequencerTimestampByChainId":"Too many values. Update configuration to explore fully","getTotalBatchesByChainId":"Too many values. Update configuration to explore fully","getTotalElementsByChainId":"Too many values. Update configuration to explore fully"}
+    }
+```
+
 Generated with discovered.json: 0xb4944b31e0a3f27a1a1f785c95fb0e29a6338e7a
 
 # Diff at Thu, 14 Mar 2024 09:14:30 GMT:
