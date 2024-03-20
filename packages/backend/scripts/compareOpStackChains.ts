@@ -1,5 +1,5 @@
-import { ConfigReader } from '@l2beat/discovery'
 import { layer2s } from '@l2beat/config'
+import { ConfigReader } from '@l2beat/discovery'
 
 void main().catch((e) => {
   console.log(e)
@@ -104,11 +104,17 @@ async function analyseAllOpStackChains(
   const configReader = new ConfigReader()
   const opStackChains = [] as OpStackProject[]
 
-  const l2s = layer2s.filter((l2) => l2.display.provider === 'OP Stack' && !l2.isArchived && !l2.isUpcoming)
+  const l2s = layer2s.filter(
+    (l2) =>
+      l2.display.provider === 'OP Stack' && !l2.isArchived && !l2.isUpcoming,
+  )
 
   for (const l2 of l2s) {
     console.log('reading', l2.id)
-    const discovery = await configReader.readDiscovery(l2.id.toString(), 'ethereum')
+    const discovery = await configReader.readDiscovery(
+      l2.id.toString(),
+      'ethereum',
+    )
     const L2OutputOracle = discovery.contracts.find(
       (obj) => obj.name === 'L2OutputOracle',
     )
