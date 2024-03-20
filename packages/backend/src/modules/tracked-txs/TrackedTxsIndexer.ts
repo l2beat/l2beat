@@ -87,8 +87,8 @@ export class TrackedTxsIndexer extends ChildIndexer {
     })
 
     this.logger.info('Updated', {
-      from: unixFrom.toDate().toUTCString(),
-      to: syncTo.toDate().toUTCString(),
+      from: unixFrom,
+      to: syncTo,
       usedConfigurations: configurations.length,
       fetchedTxsCount: txs.length,
     })
@@ -109,16 +109,6 @@ export class TrackedTxsIndexer extends ChildIndexer {
       from,
       to,
     )
-
-    if (!syncTo.equals(to)) {
-      this.logger.critical('Sync to is not equal to from', {
-        from: from.toDate().toUTCString(),
-        to: syncTo.toDate().toUTCString(),
-        configurationsToSync: configurationsToSync.flatMap((c) =>
-          c.uses.map((u) => u.id),
-        ),
-      })
-    }
 
     return [configurationsToSync, syncTo]
   }

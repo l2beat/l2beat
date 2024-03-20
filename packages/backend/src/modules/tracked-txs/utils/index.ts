@@ -1,6 +1,5 @@
 export * from './adjustRangeForBigQueryCall'
 export * from './findConfigurationsToSync'
-// export * from './dupa'
 export * from './isConfigToSync'
 export * from './sql/index'
 export * from './transformFunctionCallsQueryResult'
