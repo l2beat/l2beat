@@ -463,6 +463,8 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       gasPrice: 10,
       receiptGasUsed: 100,
       transactionType: 2,
+      calldataGasUsed: 10,
+      dataLength: 5,
     },
     {
       type: 'transfer',
@@ -480,6 +482,8 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       gasPrice: 20,
       receiptGasUsed: 200,
       transactionType: 3,
+      calldataGasUsed: 0,
+      dataLength: 0,
     },
     {
       type: 'transfer',
@@ -497,6 +501,8 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       gasPrice: 20,
       receiptGasUsed: 200,
       transactionType: 3,
+      calldataGasUsed: 0,
+      dataLength: 0,
     },
   ]
 }
