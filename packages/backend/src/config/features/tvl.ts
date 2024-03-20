@@ -70,15 +70,11 @@ export function getChainTvlConfig(
       providerUrl: env.string([
         `${ENV_NAME}_RPC_URL_FOR_TVL`,
         `${ENV_NAME}_RPC_URL`,
-        // TODO: DEPRECATED - remove this fallback after envs are updated
-        `TVL_${ENV_NAME}_PROVIDER_URL`,
       ]),
       providerCallsPerMinute: env.integer(
         [
           `${ENV_NAME}_RPC_CALLS_PER_MINUTE_FOR_TVL`,
           `${ENV_NAME}_RPC_CALLS_PER_MINUTE`,
-          // TODO: DEPRECATED - remove this fallback after envs are updated
-          `TVL_${ENV_NAME}_RPC_CALLS_PER_MINUTE`,
         ],
         DEFAULT_RPC_CALLS_PER_MINUTE,
       ),
@@ -89,8 +85,6 @@ export function getChainTvlConfig(
               etherscanApiKey: env.string([
                 `${ENV_NAME}_ETHERSCAN_API_KEY_FOR_TVL`,
                 `${ENV_NAME}_ETHERSCAN_API_KEY`,
-                // TODO: DEPRECATED - remove this fallback after envs are updated
-                `TVL_${ENV_NAME}_ETHERSCAN_API_KEY`,
               ]),
               etherscanApiUrl: chainConfig.explorerApi.url,
             }
