@@ -25,6 +25,7 @@ export const ankr: Bridge = {
       'Ankr Bridge allows you to transfer Ankr Liquid Staking tokens between networks where while remaining a valid stake and continuing to accumulate rewards.',
   },
   config: {
+    associatedTokens: ['ANKR'],
     escrows: [
       {
         address: EthereumAddress('0xc437DF90B37C1dB6657339E31BfE54627f0e7181'),
