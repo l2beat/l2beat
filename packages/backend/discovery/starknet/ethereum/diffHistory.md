@@ -25,7 +25,7 @@ The programHash of Starknet OS (L2 cairo state machine) is changed, no changes o
     contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
     +++ description: None
 +++ description: The hash changes when the L2 cairo state machine logic changes.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: MEDIUM
       values.programHash:
 -        "109586309220455887239200613090920758778188956576212125550190099009305121410"
