@@ -50,7 +50,7 @@
     "valueType": {
       "type": ["string", "null"],
       "enum": [
-        "STRUCTURE",
+        "CODE_CHANGE",
         "L2",
         "EXTERNAL",
         "RISK_PARAMETER",

@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 export const ValueType = z.enum([
-  'STRUCTURE',
+  'CODE_CHANGE',
   'L2',
   'EXTERNAL',
   'RISK_PARAMETER',

@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.46.2
+
+### Patch Changes
+
+- Rename STRUCTURE to CODE_CHANGE
+
 ## 0.46.1
 
 ### Patch Changes
