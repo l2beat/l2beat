@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x192fbb137203cbda301e605a6cd68bc4473be030
+
+# Diff at Wed, 20 Mar 2024 07:28:01 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@445fe8affe786a2fd91907e202a17fb37f748047 block: 19467530
+- current block number: 19474421
+
+## Description
+
+Added escrow for USDC.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19467530 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract USDCBridge (0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x1a008a7fbef09baf0ce1d2c7b0c2569920692411
 
 # Diff at Tue, 19 Mar 2024 08:14:51 GMT:
