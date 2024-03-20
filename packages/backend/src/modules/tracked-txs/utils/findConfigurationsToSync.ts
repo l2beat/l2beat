@@ -10,7 +10,7 @@ import { isConfigToSync } from './isConfigToSync'
 Given 3 configurations:
 
 - config1: sinceTimestampInclusive: 0, untilTimestampExclusive: undefined
-- config2: sinceTimestampInclusive: 0, untilTimestampExclusive: undefined
+- config2: sinceTimestampInclusive: 10, untilTimestampExclusive: undefined
 - config3: sinceTimestampInclusive: 0, untilTimestampExclusive: 30
 - config4: sinceTimestampInclusive: 0, untilTimestampExclusive: 60
 
@@ -18,10 +18,13 @@ and a sync range from: 0, to: 50
 
 the result will be:
 
+- {configurationsToSync: [config1, config3, config4], syncTo: 10}
+
+The next sync range asked by indexer should be from 10 to 30, for this one the result will be:
+
 - {configurationsToSync: [config1, config2, config3, config4], syncTo: 30}
 
-
-The next sync range asked by indexer should be from 30 to 50, for this one the result will be:
+Next range from 30 to 50 will be:
 
 - {configurationsToSync: [config1, config2, config4], syncTo: 50}
 
