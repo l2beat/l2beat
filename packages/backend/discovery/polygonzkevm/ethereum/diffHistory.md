@@ -21,13 +21,13 @@ Contract name has changed to `PolygonZkEVMEtrog`. The method `seqenceBatches` no
     contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
     +++ description: None
 +++ description: Mapping of a rollup type to rollup verifier. Different types may use the same verifier. First entry is a type, second a verifier.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: MEDIUM
       values.rollupsData.0.1:
 -        "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"
 +        "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be"
 +++ description: The number of unique rollup types that the manager can use.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: MEDIUM
       values.rollupTypeCount:
 -        1
@@ -124,18 +124,18 @@ The trusted aggregator can call `verifyBatchesTrustedAggregator()`, `overridePen
       values.accessControl.TRUSTED_AGGREGATOR.members.1:
 +        "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
 +++ description: The number of rollups that the manager can use.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: LOW
       values.rollupCount:
 -        1
 +        2
 +++ description: Addresses of the rollup backend as well as the rollup verifier.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: MEDIUM
       values.rollupsData.1:
 +        ["0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80","0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"]
 +++ description: The number of unique rollup types that the manager can use.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: MEDIUM
       values.rollupTypeCount:
 -        0
@@ -323,57 +323,57 @@ discovery. Values are for block 19282832 (main branch discovery), not current.
     contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
     +++ description: None
 +++ description: Addresses of the rollup backend as well as the rollup verifier.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: MEDIUM
       values.rollupsData.0.11:
 -        0
 +++ description: Addresses of the rollup backend as well as the rollup verifier.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: MEDIUM
       values.rollupsData.0.10:
 -        0
 +++ description: Addresses of the rollup backend as well as the rollup verifier.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: MEDIUM
       values.rollupsData.0.9:
 -        1984749
 +++ description: Addresses of the rollup backend as well as the rollup verifier.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: MEDIUM
       values.rollupsData.0.8:
 -        0
 +++ description: Addresses of the rollup backend as well as the rollup verifier.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: MEDIUM
       values.rollupsData.0.7:
 -        0
 +++ description: Addresses of the rollup backend as well as the rollup verifier.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: MEDIUM
       values.rollupsData.0.6:
 -        1991783
 +++ description: Addresses of the rollup backend as well as the rollup verifier.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: MEDIUM
       values.rollupsData.0.5:
 -        1991800
 +++ description: Addresses of the rollup backend as well as the rollup verifier.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: MEDIUM
       values.rollupsData.0.4:
 -        "0x8ad85f1e7b882d12cf6c64cf256cab8d255d6085e8109400741d82850a1d944b"
 +++ description: Addresses of the rollup backend as well as the rollup verifier.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: MEDIUM
       values.rollupsData.0.3:
 -        7
 +++ description: Addresses of the rollup backend as well as the rollup verifier.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: MEDIUM
       values.rollupsData.0.2:
 -        "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"
 +++ description: Addresses of the rollup backend as well as the rollup verifier.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: MEDIUM
       values.rollupsData.0.1:
 -        1101

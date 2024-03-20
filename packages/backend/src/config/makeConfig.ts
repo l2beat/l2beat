@@ -30,7 +30,7 @@ export function makeConfig(
     env.string('FEATURES', isLocal ? '' : '*'),
   ).append('status')
   const minBlockTimestamp = minTimestampOverride ?? getEthereumMinTimestamp()
-  const tvl2Config = getTvl2Config(env.optionalString('COINGECKO_API_KEY'))
+  const tvl2Config = getTvl2Config(env)
 
   return {
     name,
@@ -96,7 +96,10 @@ export function makeConfig(
     tvl: {
       enabled: flags.isEnabled('tvl'),
       errorOnUnsyncedTvl: env.boolean('ERROR_ON_UNSYNCED_TVL', false),
-      coingeckoApiKey: env.optionalString('COINGECKO_API_KEY'),
+      coingeckoApiKey: env.optionalString([
+        'COINGECKO_API_KEY_FOR_TVL',
+        'COINGECKO_API_KEY',
+      ]),
       ethereum: getChainTvlConfig(flags, env, 'ethereum', {
         minTimestamp: minBlockTimestamp,
       }),
@@ -120,16 +123,37 @@ export function makeConfig(
       },
     },
     finality: flags.isEnabled('finality') && {
-      ethereumProviderUrl: env.string('FINALITY_ETHEREUM_PROVIDER_URL'),
+      ethereumProviderUrl: env.string([
+        'ETHEREUM_RPC_URL_FOR_FINALITY',
+        'ETHEREUM_RPC_URL',
+        // TODO: DEPRECATED - remove this fallback after envs are updated
+        'FINALITY_ETHEREUM_PROVIDER_URL',
+      ]),
       ethereumProviderCallsPerMinute: env.integer(
-        'FINALITY_ETHEREUM_PROVIDER_CALLS_PER_MINUTE',
+        [
+          'ETHEREUM_RPC_CALLS_PER_MINUTE_FOR_FINALITY',
+          'ETHEREUM_RPC_CALLS_PER_MINUTE',
+          // TODO: DEPRECATED - remove this fallback after envs are updated
+          'FINALITY_ETHEREUM_PROVIDER_CALLS_PER_MINUTE',
+        ],
         600,
       ),
       configurations: getFinalityConfigurations(flags, env),
     },
     activity: flags.isEnabled('activity') && {
-      starkexApiKey: env.string('STARKEX_API_KEY'),
-      starkexCallsPerMinute: env.integer('STARKEX_CALLS_PER_MINUTE', 600),
+      starkexApiKey: env.string([
+        'STARKEX_API_KEY_FOR_ACTIVITY',
+        'STARKEX_API_KEY',
+      ]),
+      starkexCallsPerMinute: env.integer(
+        [
+          'STARKEX_API_CALLS_PER_MINUTE_FOR_ACTIVITY',
+          'STARKEX_API_CALLS_PER_MINUTE',
+          // TODO: DEPRECATED - remove this fallback after envs are updated
+          'STARKEX_CALLS_PER_MINUTE',
+        ],
+        600,
+      ),
       projectsExcludedFromAPI:
         env.optionalString('ACTIVITY_PROJECTS_EXCLUDED_FROM_API')?.split(' ') ??
         [],
@@ -157,6 +181,8 @@ export function makeConfig(
     ),
     chains: chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
     tvlCleanerEnabled: flags.isEnabled('tvlCleaner'),
+
+    // Must be last
     flags: flags.getResolved(),
   }
 }

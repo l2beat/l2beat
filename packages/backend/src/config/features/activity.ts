@@ -35,11 +35,21 @@ export function getChainActivityConfig(
     return {
       type: 'rpc',
       url: env.string(
-        `ACTIVITY_${ENV_NAME}_URL`,
+        [
+          `${ENV_NAME}_RPC_URL_FOR_ACTIVITY`,
+          `${ENV_NAME}_RPC_URL`,
+          // TODO: DEPRECATED - remove this fallback after envs are updated
+          `ACTIVITY_${ENV_NAME}_URL`,
+        ],
         project.transactionApi.defaultUrl,
       ),
       callsPerMinute: env.integer(
-        `ACTIVITY_${ENV_NAME}_CALLS`,
+        [
+          `${ENV_NAME}_RPC_CALLS_PER_MINUTE_FOR_ACTIVITY`,
+          `${ENV_NAME}_RPC_CALLS_PER_MINUTE`,
+          // TODO: DEPRECATED - remove this fallback after envs are updated
+          `ACTIVITY_${ENV_NAME}_CALLS`,
+        ],
         project.transactionApi.defaultCallsPerMinute ??
           DEFAULT_RPC_CALLS_PER_MINUTE,
       ),
@@ -58,11 +68,21 @@ export function getChainActivityConfig(
     return {
       type: project.transactionApi.type,
       url: env.string(
-        `ACTIVITY_${ENV_NAME}_URL`,
+        [
+          `${ENV_NAME}_API_URL_FOR_ACTIVITY`,
+          `${ENV_NAME}_API_URL`,
+          // TODO: DEPRECATED - remove this fallback after envs are updated
+          `ACTIVITY_${ENV_NAME}_URL`,
+        ],
         project.transactionApi.defaultUrl,
       ),
       callsPerMinute: env.integer(
-        `ACTIVITY_${ENV_NAME}_CALLS`,
+        [
+          `${ENV_NAME}_API_CALLS_PER_MINUTE_FOR_ACTIVITY`,
+          `${ENV_NAME}_API_CALLS_PER_MINUTE`,
+          // TODO: DEPRECATED - remove this fallback after envs are updated
+          `ACTIVITY_${ENV_NAME}_CALLS`,
+        ],
         project.transactionApi.defaultCallsPerMinute ??
           DEFAULT_RPC_CALLS_PER_MINUTE,
       ),
