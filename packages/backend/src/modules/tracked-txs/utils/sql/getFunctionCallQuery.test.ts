@@ -111,6 +111,6 @@ describe(getFunctionCallQuery.name, () => {
       'STRING',
     ])
 
-    expect(limitInGb).toEqual(8)
+    expect(limitInGb).toEqual(11)
   })
 })

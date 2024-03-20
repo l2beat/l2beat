@@ -91,5 +91,5 @@ export function getFunctionCallQuery(
     `STRING`,
   ]
 
-  return { query, params, types, limitInGb: 8 }
+  return { query, params, types, limitInGb: 11 }
 }
