@@ -83,7 +83,7 @@ describe(TrackedTxsIndexer.name, () => {
         TRX,
       )
       expect(
-        configurationRepository.setLastSyncedTimestamp,
+        configurationRepository.setManyLastSyncedTimestamp,
       ).toHaveBeenOnlyCalledWith(
         runtimeEntries.flatMap((r) => r.uses.map((u) => u.id)),
         syncTo,
@@ -222,6 +222,13 @@ describe(TrackedTxsIndexer.name, () => {
         TRX,
       )
       expect(mockedLivenessUpdater.deleteAfter).toHaveBeenOnlyCalledWith(
+        toTrim[0].id,
+        toTrim[0].untilTimestampExclusive,
+        TRX,
+      )
+      expect(
+        configurationRepository.setLastSyncedTimestamp,
+      ).toHaveBeenOnlyCalledWith(
         toTrim[0].id,
         toTrim[0].untilTimestampExclusive,
         TRX,
@@ -391,6 +398,7 @@ function getMockConfigRepository(databaseEntries: TrackedTxsConfigRecord[]) {
     deleteMany: async () => 0,
     setUntilTimestamp: async () => 0,
     getAll: async () => databaseEntries,
+    setManyLastSyncedTimestamp: async () => 0,
     setLastSyncedTimestamp: async () => 0,
     runInTransaction: mockFn(async (fn) => fn(TRX)),
   })
@@ -463,6 +471,8 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       gasPrice: 10,
       receiptGasUsed: 100,
       transactionType: 2,
+      calldataGasUsed: 10,
+      dataLength: 5,
     },
     {
       type: 'transfer',
@@ -480,6 +490,8 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       gasPrice: 20,
       receiptGasUsed: 200,
       transactionType: 3,
+      calldataGasUsed: 0,
+      dataLength: 0,
     },
     {
       type: 'transfer',
@@ -497,6 +509,8 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       gasPrice: 20,
       receiptGasUsed: 200,
       transactionType: 3,
+      calldataGasUsed: 0,
+      dataLength: 0,
     },
   ]
 }

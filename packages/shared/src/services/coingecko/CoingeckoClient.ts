@@ -33,6 +33,13 @@ export class CoingeckoClient {
     this.query = rateLimiter.wrap(this.query.bind(this))
   }
 
+  static create(
+    services: { httpClient: HttpClient },
+    options: { apiKey: string | undefined },
+  ) {
+    return new CoingeckoClient(services.httpClient, options.apiKey)
+  }
+
   async getCoinList(options?: {
     includePlatform: false
   }): Promise<CoinListEntry[]>

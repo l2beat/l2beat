@@ -9,7 +9,8 @@
   },
   "overrides": {
     "Bridge": {
-      "ignoreRelatives": ["rootWETHToken", "rootIMXToken"]
+      "ignoreRelatives": ["rootWETHToken", "rootIMXToken"],
+      "ignoreInWatchMode": ["withdrawalQueueActivated"]
     },
     "OwnerMultisig": {
       "ignoreInWatchMode": ["nonce"]

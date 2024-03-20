@@ -35,7 +35,7 @@ describe(L2CostsUpdater.name, () => {
           type2Tx,
         ])
 
-        const expected: L2CostsRecord<2 | 3>[] = [
+        const expected: L2CostsRecord[] = [
           {
             txHash: type2Tx.hash,
             timestamp: type2Tx.blockTimestamp,
@@ -70,7 +70,7 @@ describe(L2CostsUpdater.name, () => {
           type3Tx,
         ])
 
-        const expected: L2CostsRecord<2 | 3>[] = [
+        const expected: L2CostsRecord[] = [
           {
             txHash: type3Tx.hash,
             timestamp: type3Tx.blockTimestamp,
@@ -79,9 +79,9 @@ describe(L2CostsUpdater.name, () => {
               type: 3,
               gasUsed: type3Tx.receiptGasUsed,
               gasPrice: type3Tx.gasPrice,
-              //  input: 0x00aa00bbff
-              calldataLength: 5,
-              calldataGasUsed: 4 * 2 + 3 * 16,
+              //  input: 0x
+              calldataLength: 0,
+              calldataGasUsed: 0,
               blobGasPrice: 10,
               blobGasUsed: 100,
             },
@@ -105,7 +105,7 @@ describe(L2CostsUpdater.name, () => {
           transactions,
         )
 
-        const expected: L2CostsRecord<2 | 3>[] = [
+        const expected: L2CostsRecord[] = [
           {
             txHash: transactions[0].hash,
             timestamp: transactions[0].blockTimestamp,
@@ -127,9 +127,9 @@ describe(L2CostsUpdater.name, () => {
               type: 3,
               gasUsed: transactions[1].receiptGasUsed,
               gasPrice: transactions[1].gasPrice,
-              //  input: 0x00aa00bbff
-              calldataLength: 5,
-              calldataGasUsed: 4 * 2 + 3 * 16,
+              //  input: 0x
+              calldataLength: 0,
+              calldataGasUsed: 0,
               blobGasPrice: 10,
               blobGasUsed: 100,
             },
@@ -234,6 +234,8 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       receiptGasUsed: 100,
       gasPrice: 10,
       transactionType: 2,
+      dataLength: 5,
+      calldataGasUsed: 56,
     },
     {
       type: 'transfer',
@@ -251,6 +253,8 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       receiptGasUsed: 200,
       gasPrice: 20,
       transactionType: 3,
+      dataLength: 0,
+      calldataGasUsed: 0,
     },
   ]
 }

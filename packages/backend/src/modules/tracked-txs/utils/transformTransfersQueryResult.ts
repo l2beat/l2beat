@@ -32,6 +32,8 @@ export function transformTransfersQueryResult(
             transactionType: r.transaction_type,
             receiptGasUsed: r.receipt_gas_used,
             gasPrice: r.gas_price,
+            dataLength: r.data_length,
+            calldataGasUsed: r.calldata_gas_used,
           } as const),
       ),
     )

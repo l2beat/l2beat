@@ -139,6 +139,12 @@ export const kroma: Layer2 = {
         description:
           'Main entry point for users depositing ERC20 token that do not require custom gateway.',
       }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e'),
+        sinceTimestamp: new UnixTime(1700122827),
+        tokens: ['USDC'],
+        description: 'Main entry point for users depositing USDC.',
+      }),
     ],
     transactionApi: {
       type: 'rpc',
@@ -149,7 +155,10 @@ export const kroma: Layer2 = {
     },
     trackedTxs: [
       {
-        uses: [{ type: 'liveness', subtype: 'batchSubmissions' }],
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
         query: {
           formula: 'transfer',
           from: EthereumAddress(
@@ -162,7 +171,10 @@ export const kroma: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
@@ -360,18 +372,20 @@ export const kroma: Layer2 = {
       },
       EXITS.AUTONOMOUS,
     ],
-    smartContracts: {
-      name: 'EVM compatible smart contracts are supported',
-      description:
-        'OP stack chains are pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on L2.',
-      risks: [],
-      references: [
-        {
-          text: 'Introducing EVM Equivalence',
-          href: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
-        },
-      ],
-    },
+    otherConsiderations: [
+      {
+        name: 'EVM compatible smart contracts are supported',
+        description:
+          'OP stack chains are pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on L2.',
+        risks: [],
+        references: [
+          {
+            text: 'Introducing EVM Equivalence',
+            href: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
+          },
+        ],
+      },
+    ],
   },
   stateDerivation: {
     nodeSoftware:

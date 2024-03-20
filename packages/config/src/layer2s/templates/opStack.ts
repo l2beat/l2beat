@@ -164,7 +164,10 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
           ? undefined
           : [
               {
-                uses: [{ type: 'liveness', subtype: 'batchSubmissions' }],
+                uses: [
+                  { type: 'liveness', subtype: 'batchSubmissions' },
+                  { type: 'l2costs', subtype: 'batchSubmissions' },
+                ],
                 query: {
                   formula: 'transfer',
                   from: sequencerAddress,
@@ -173,7 +176,10 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
                 },
               },
               {
-                uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
+                uses: [
+                  { type: 'liveness', subtype: 'stateUpdates' },
+                  { type: 'l2costs', subtype: 'stateUpdates' },
+                ],
                 query: {
                   formula: 'functionCall',
                   address: templateVars.l2OutputOracle.address,
@@ -417,18 +423,21 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
           ],
         },
       ],
-      smartContracts: templateVars.nonTemplateTechnology?.smartContracts ?? {
-        name: 'EVM compatible smart contracts are supported',
-        description:
-          'OP stack chains are pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on L2.',
-        risks: [],
-        references: [
-          {
-            text: 'Introducing EVM Equivalence',
-            href: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
-          },
-        ],
-      },
+      otherConsiderations: templateVars.nonTemplateTechnology
+        ?.otherConsiderations ?? [
+        {
+          name: 'EVM compatible smart contracts are supported',
+          description:
+            'OP stack chains are pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on L2.',
+          risks: [],
+          references: [
+            {
+              text: 'Introducing EVM Equivalence',
+              href: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
+            },
+          ],
+        },
+      ],
     },
     permissions: [
       ...templateVars.discovery.getOpStackPermissions(

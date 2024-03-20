@@ -101,7 +101,23 @@ export const zksynclite: Layer2 = {
     },
     trackedTxs: [
       {
-        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xabea9132b05a70803a4e85094fd0e1800777fbef',
+          ),
+          selector: '0x45269298',
+          functionSignature:
+            'function commitBlocks((uint32,uint64,bytes32,uint256,bytes32,bytes32), (bytes32,bytes,uint256,tuple[],uint32,uint32)[])',
+          sinceTimestampInclusive: new UnixTime(1612885558),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
@@ -114,7 +130,10 @@ export const zksynclite: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(

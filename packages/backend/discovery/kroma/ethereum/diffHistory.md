@@ -1,3 +1,56 @@
+Generated with discovered.json: 0x192fbb137203cbda301e605a6cd68bc4473be030
+
+# Diff at Wed, 20 Mar 2024 07:28:01 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@445fe8affe786a2fd91907e202a17fb37f748047 block: 19467530
+- current block number: 19474421
+
+## Description
+
+Added escrow for USDC.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19467530 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract USDCBridge (0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x1a008a7fbef09baf0ce1d2c7b0c2569920692411
+
+# Diff at Tue, 19 Mar 2024 08:14:51 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@87a9df6317bf41ef2d063033dfc77d54521b9991 block: 19439816
+- current block number: 19467530
+
+## Description
+
+A new proposal for an L2 output root deletion was submitted and is executed. The deleted root metadata is:
+"submitter":"0xfa3a4f7e5e1238d188e6d2dc6d1a9c5fa94c3c17",
+"outputRoot":"0x9b5606d9c8fdc6517211cd2e7255c1dee0475d25515889b1d78789c346170191",
+"timestamp":"1710224711","l2BlockNumber":"8172000"
+
+## Watched changes
+
+```diff
+    contract SecurityCouncil (0x3de211088dF516da72efe68D386b561BEE256Ec4) {
+    +++ description: None
++++ description: Increases with each Security Council action.
++++ type: L2
++++ severity: HIGH
+      values.transactionCount:
+-        0
++        1
+    }
+```
+
 Generated with discovered.json: 0xffe98182ff3880cc6479d9f173c18bfb383280d6
 
 # Diff at Tue, 12 Mar 2024 10:43:25 GMT:

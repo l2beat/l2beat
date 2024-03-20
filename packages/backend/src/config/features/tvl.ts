@@ -67,16 +67,25 @@ export function getChainTvlConfig(
     config: {
       projectId,
       chainId: ChainId(chainConfig.chainId),
-      providerUrl: env.string(`TVL_${ENV_NAME}_PROVIDER_URL`),
+      providerUrl: env.string([
+        `${ENV_NAME}_RPC_URL_FOR_TVL`,
+        `${ENV_NAME}_RPC_URL`,
+      ]),
       providerCallsPerMinute: env.integer(
-        `TVL_${ENV_NAME}_RPC_CALLS_PER_MINUTE`,
+        [
+          `${ENV_NAME}_RPC_CALLS_PER_MINUTE_FOR_TVL`,
+          `${ENV_NAME}_RPC_CALLS_PER_MINUTE`,
+        ],
         DEFAULT_RPC_CALLS_PER_MINUTE,
       ),
       blockNumberProviderConfig:
         chainConfig.explorerApi.type === 'etherscan'
           ? {
               type: chainConfig.explorerApi.type,
-              etherscanApiKey: env.string(`TVL_${ENV_NAME}_ETHERSCAN_API_KEY`),
+              etherscanApiKey: env.string([
+                `${ENV_NAME}_ETHERSCAN_API_KEY_FOR_TVL`,
+                `${ENV_NAME}_ETHERSCAN_API_KEY`,
+              ]),
               etherscanApiUrl: chainConfig.explorerApi.url,
             }
           : {

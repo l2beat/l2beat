@@ -29,6 +29,7 @@ import { gluon } from './gluon'
 import { grvt } from './grvt'
 import { hermez } from './hermez'
 import { honeypot } from './honeypot'
+import { hychain } from './hychain'
 import { hypr } from './hypr'
 import { immutablex } from './immutablex'
 import { karak } from './karak'
@@ -36,6 +37,7 @@ import { kinto } from './kinto'
 import { kroma } from './kroma'
 import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
+import { lightlink } from './lightlink'
 import { linea } from './linea'
 import { lisk } from './lisk'
 import { loopring } from './loopring'
@@ -55,7 +57,6 @@ import { oev } from './oev'
 import { ola } from './ola'
 import { omgnetwork } from './omgnetwork'
 import { optimism } from './optimism'
-import { orb3 } from './orb3'
 import { orderly } from './orderly'
 import { palm } from './palm'
 import { paradex } from './paradex'
@@ -124,6 +125,7 @@ export const layer2s: Layer2[] = [
   gluon,
   grvt,
   hermez,
+  hychain,
   hypr,
   immutablex,
   karak,
@@ -131,6 +133,7 @@ export const layer2s: Layer2[] = [
   kroma,
   layer2finance,
   layer2financezk,
+  lightlink,
   linea,
   lisk,
   loopring,
@@ -150,7 +153,6 @@ export const layer2s: Layer2[] = [
   ola,
   omgnetwork,
   optimism,
-  orb3,
   orderly,
   palm,
   paradex,

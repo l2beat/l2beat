@@ -160,8 +160,8 @@
           "type": null
         },
         "insuranceFeeBips": {
-          "description": null,
-          "severity": null,
+          "description": "Insurance fee taken from positive yields",
+          "severity": "MEDIUM",
           "type": null
         },
         "insuranceWithdrawalBuffer": {
@@ -930,8 +930,8 @@
           "type": null
         },
         "insuranceFeeBips": {
-          "description": null,
-          "severity": null,
+          "description": "Insurance fee taken from positive yields",
+          "severity": "MEDIUM",
           "type": null
         },
         "insuranceWithdrawalBuffer": {

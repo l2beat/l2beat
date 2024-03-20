@@ -135,7 +135,7 @@ function addSentimentToBridge(
       return {
         value: `${bridge.requiredSignatures}/${bridge.membersCount} Staked Operators`,
         sentiment: 'warning',
-        description: `There is a threshold of ${bridge.requiredSignatures}/${bridge.requiredSignatures} of staked operators that must sign and attest that the data has been made available.`,
+        description: `There is a threshold of ${bridge.requiredSignatures}/${bridge.membersCount} of staked operators that must sign and attest that the data has been made available.`,
       }
     default:
       assertUnreachable(bridge)

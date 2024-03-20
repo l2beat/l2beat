@@ -209,6 +209,29 @@ describe(UnixTime.name, () => {
     })
   })
 
+  describe('inExclusiveRange', () => {
+    const testCases = [
+      { value: 2, from: 1, to: 3, result: true },
+
+      { value: 2, from: 2, to: 3, result: false },
+      { value: 3, from: 1, to: 3, result: false },
+
+      { value: 2, from: 3, to: 6, result: false },
+      { value: 8, from: 3, to: 6, result: false },
+    ]
+
+    for (const { value, from, to, result } of testCases) {
+      it(`${value}.inExclusiveRange(${from}, ${to}) = ${result.toString()}`, () => {
+        expect(
+          new UnixTime(value).inExclusiveRange(
+            new UnixTime(from),
+            new UnixTime(to),
+          ),
+        ).toEqual(result)
+      })
+    }
+  })
+
   describe('comparison methods', () => {
     const testCases = [
       { a: 4, method: 'lt' as const, b: 3, result: false },

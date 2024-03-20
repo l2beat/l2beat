@@ -45,7 +45,7 @@ export class ApiServer {
     this.app.use(router.allowedMethods())
   }
 
-  listen() {
+  start() {
     return new Promise<void>((resolve) => {
       this.app.listen(this.port, () => {
         this.logger.info({ message: 'Listening', port: this.port })

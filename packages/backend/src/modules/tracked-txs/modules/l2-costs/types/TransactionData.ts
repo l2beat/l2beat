@@ -1,7 +1,7 @@
 export type TransactionData = Type2TransactionData | Type3TransactionData
 
 export interface Type2TransactionData {
-  type: 2
+  type: 0 | 1 | 2
   gasUsed: number
   gasPrice: number
   calldataLength: number

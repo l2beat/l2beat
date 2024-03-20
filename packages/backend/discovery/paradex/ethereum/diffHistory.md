@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x55dc427d90067c7f872f6e28295faff5e1cf4097
+
+# Diff at Tue, 19 Mar 2024 08:27:29 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@38751f18e662e502e9656add6b7ab03bb7fb62f8 block: 19433460
+- current block number: 19467601
+
+## Description
+
+Program hash changed.
+
+## Watched changes
+
+```diff
+    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+    +++ description: None
++++ description: The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.
++++ type: CODE_CHANGE
++++ severity: HIGH
+      values.programHash:
+-        "109586309220455887239200613090920758778188956576212125550190099009305121410"
++        "3383082961563516565935611087683915026448707331436034043529592588079494402084"
+    }
+```
+
 Generated with discovered.json: 0x3ca3ccb9df16f0d2cc3faf50d40b7a4cdbc6be4b
 
 # Diff at Thu, 14 Mar 2024 13:11:57 GMT:

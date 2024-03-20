@@ -85,6 +85,8 @@ describe(transformTransfersQueryResult.name, () => {
         gas_price: 10,
         receipt_gas_used: 100,
         transaction_type: 2,
+        calldata_gas_used: 100,
+        data_length: 100,
       },
       {
         from_address: ADDRESS_3,
@@ -95,6 +97,8 @@ describe(transformTransfersQueryResult.name, () => {
         gas_price: 20,
         receipt_gas_used: 200,
         transaction_type: 2,
+        calldata_gas_used: 200,
+        data_length: 200,
       },
       {
         from_address: ADDRESS_5,
@@ -105,6 +109,8 @@ describe(transformTransfersQueryResult.name, () => {
         gas_price: 30,
         receipt_gas_used: 300,
         transaction_type: 3,
+        calldata_gas_used: 300,
+        data_length: 300,
       },
     ]
     const expected: TrackedTxTransferResult[] = [
@@ -120,6 +126,8 @@ describe(transformTransfersQueryResult.name, () => {
         transactionType: 2,
         receiptGasUsed: 100,
         gasPrice: 10,
+        calldataGasUsed: 100,
+        dataLength: 100,
       },
       {
         type: 'transfer',
@@ -133,6 +141,8 @@ describe(transformTransfersQueryResult.name, () => {
         transactionType: 2,
         receiptGasUsed: 100,
         gasPrice: 10,
+        calldataGasUsed: 100,
+        dataLength: 100,
       },
       {
         type: 'transfer',
@@ -146,6 +156,8 @@ describe(transformTransfersQueryResult.name, () => {
         transactionType: 2,
         receiptGasUsed: 200,
         gasPrice: 20,
+        calldataGasUsed: 200,
+        dataLength: 200,
       },
       {
         type: 'transfer',
@@ -159,6 +171,8 @@ describe(transformTransfersQueryResult.name, () => {
         transactionType: 3,
         receiptGasUsed: 300,
         gasPrice: 30,
+        calldataGasUsed: 300,
+        dataLength: 300,
       },
     ]
 
@@ -189,6 +203,8 @@ describe(transformTransfersQueryResult.name, () => {
         gas_price: 10,
         receipt_gas_used: 100,
         transaction_type: 2,
+        calldata_gas_used: 100,
+        data_length: 100,
       },
     ]
 
