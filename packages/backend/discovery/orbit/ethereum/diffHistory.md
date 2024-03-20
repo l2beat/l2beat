@@ -1,3 +1,51 @@
+Generated with discovered.json: 0xda3a6d69712d106fc9e3ec5ca926c56ba0e12300
+
+# Diff at Wed, 20 Mar 2024 08:27:47 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@c765e77f2163483a147573be06daf16620543f87 block: 19224708
+- current block number: 19474722
+
+## Description
+
+The policyAdmin is changed from an EOA to an unverified smart contract.
+Required validators' signatures for a withdrawal are decreased from 7 to 6.
+
+## Watched changes
+
+```diff
+    contract ETH Vault (0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a) {
+    +++ description: None
+      values.policyAdmin:
+-        "0x4C35e473D57cF4daA90BB9FE341CeDEc81124d05"
++        "0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8"
+      values.required:
+-        7
++        6
+    }
+```
+
+```diff
++   Status: CREATED
+    contract  (0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xc045b35d1cf9501B2fc95e7c489FDA96345A4D70)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../-0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8/implementation/meta.txt | 2 ++
+ .../.code/-0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8/proxy/meta.txt    | 2 ++
+ .../ethereum/.code/-0xc045b35d1cf9501B2fc95e7c489FDA96345A4D70/meta.txt | 2 ++
+ 3 files changed, 6 insertions(+)
+```
+
 Generated with discovered.json: 0x234afadbeb23f4a7f3f1b173e251e6330e692eee
 
 # Diff at Wed, 14 Feb 2024 07:26:34 GMT:

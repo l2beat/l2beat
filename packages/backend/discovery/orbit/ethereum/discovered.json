@@ -1,10 +1,22 @@
 {
   "name": "orbit",
   "chain": "ethereum",
-  "blockNumber": 19224708,
+  "blockNumber": 19474722,
   "configHash": "0x8a44fa766027d884c6145a9eec20a76a4c49c2891e39079e72ba6c69e0a4d8ba",
   "version": 3,
   "contracts": [
+    {
+      "name": "",
+      "address": "0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8",
+      "unverified": true,
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x2BeBced27D2c7ECE9C6cEa9daFD2711aDdc8a1Bc",
+        "admin": "0xc045b35d1cf9501B2fc95e7c489FDA96345A4D70"
+      },
+      "implementations": ["0x2BeBced27D2c7ECE9C6cEa9daFD2711aDdc8a1Bc"],
+      "sinceTimestamp": 1708655927
+    },
     {
       "name": "ETH Vault",
       "address": "0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a",
@@ -39,12 +51,12 @@
         "implementation": "0xC3430BC8C2C05FC6b42114BF7F82a3e2f3Ee9454",
         "isActivated": false,
         "MAX_OWNER_COUNT": 50,
-        "policyAdmin": "0x4C35e473D57cF4daA90BB9FE341CeDEc81124d05",
-        "required": 7,
+        "policyAdmin": "0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8",
+        "required": 6,
         "taxRate": 10,
         "taxReceiver": "0xE9f3604B85c9672728eEecf689cf1F0cF7Dd03F2",
         "tetherAddress": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "transactionCount": 70,
+        "transactionCount": 73,
         "usdcFarm": "0x830433dE03ABedE062660CC629e1A2c714272474",
         "usdtFarm": "0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9",
         "wbtcFarm": "0xd910f6F23889919fAd9C8cE3171dd557cE0308Da"
@@ -103,6 +115,15 @@
       "derivedName": ""
     },
     {
+      "name": "",
+      "address": "0xc045b35d1cf9501B2fc95e7c489FDA96345A4D70",
+      "unverified": true,
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1708655543
+    },
+    {
       "name": "WBTC Farm",
       "address": "0xd910f6F23889919fAd9C8cE3171dd557cE0308Da",
       "unverified": true,
@@ -137,7 +158,6 @@
     "0x35f720fd3042EC8b05b7c8C8c0B33e45d71ad5Ba",
     "0x3924Ac70075078A7713f543b72e3F8817ecEc646",
     "0x3b6590Ff12Ba188e465395E1610D8368613054B0",
-    "0x4C35e473D57cF4daA90BB9FE341CeDEc81124d05",
     "0x6013f0B3ffE1fFdcA3Fc6A8cd705b1Af048F7437",
     "0x86cec292d5d5DB6bA16722F0B01291426C4b61E2",
     "0x8c7aa8Bf53f881703e7a9672C863Eb6147e43214",
