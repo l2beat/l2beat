@@ -6,9 +6,7 @@ export function getTargetDataPoints(
   token: { sinceTimestamp: UnixTime },
   clock: Clock,
 ) {
-  const start = token.sinceTimestamp.gt(clock.getFirstHour())
-    ? token.sinceTimestamp
-    : clock.getFirstHour()
+  const start = token.sinceTimestamp
 
   const sixHourlyBoundary = clock
     ._TVL_ONLY_getSixHourlyDeletionBoundary()
