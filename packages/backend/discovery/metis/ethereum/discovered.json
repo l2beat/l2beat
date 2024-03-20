@@ -1,8 +1,8 @@
 {
   "name": "metis",
   "chain": "ethereum",
-  "blockNumber": 19432288,
-  "configHash": "0xfdd4ca10ee6471a3b53b346aa1d685a50577a0ced80c2b6e2dc95b9c41668bec",
+  "blockNumber": 19476727,
+  "configHash": "0x0e14e97016f5817c260d844cd99dae06d7ab21afd083135a09925b56dcfa3c05",
   "version": 3,
   "contracts": [
     {
@@ -31,10 +31,10 @@
       "sinceTimestamp": 1637070395,
       "values": {
         "DEFAULT_CHAINID": 1088,
-        "getGlobalMetadata": "0x00000000000000000000000000000000000065f27aa70000e8243e",
-        "getGlobalMetadataByChainId": "0x00000000000000000000000000000000000065f27aa70000e8243e",
-        "length": 22918,
-        "lengthByChainId": 22918,
+        "getGlobalMetadata": "0x00000000000000000000000000000000000065f3e3bb0000e827c2",
+        "getGlobalMetadataByChainId": "0x00000000000000000000000000000000000065f3e3bb0000e827c2",
+        "length": 22919,
+        "lengthByChainId": 22919,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "StateCommitmentChain"
       },
@@ -95,7 +95,7 @@
           "0xa6D8941F935932a531A856C2e48046DA73a1098E"
         ],
         "getThreshold": 4,
-        "nonce": 11,
+        "nonce": 12,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -112,13 +112,13 @@
         "DEFAULT_CHAINID": 1088,
         "enqueueGasCost": 60000,
         "enqueueL2GasPrepaid": 1920000,
-        "getLastBlockNumber": 19430536,
-        "getLastTimestamp": 1710386493,
-        "getNextQueueIndex": 36282,
-        "getNumPendingQueueElements": 3,
-        "getQueueLength": 36285,
-        "getTotalBatches": 42646,
-        "getTotalElements": 15213630,
+        "getLastBlockNumber": 19431495,
+        "getLastTimestamp": 1710398153,
+        "getNextQueueIndex": 36284,
+        "getNumPendingQueueElements": 251,
+        "getQueueLength": 36535,
+        "getTotalBatches": 42647,
+        "getTotalElements": 15214530,
         "l2GasDiscountDivisor": 32,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "MAX_ROLLUP_TX_SIZE": 50000,
@@ -189,7 +189,7 @@
       "sinceTimestamp": 1637047108,
       "values": {
         "_1088_MVM_FraudVerifier": "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb",
-        "_1088_MVM_Proposer": "0x9cB01d516D930EF49591a05B09e0D33E6286689D",
+        "_1088_MVM_Proposer": "0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040",
         "_1088_MVM_Sequencer": "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a",
         "_1088_MVM_Sequencer_Wrapper": "0xcDf02971871B7736874E20B8487c019D28090019",
         "BondManager": "0xf51B9C9a1c12e7E48BEC15DC358D0C1f0d7Eb3be",
@@ -203,7 +203,7 @@
         "Proxy__MVM_ChainManager": "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0",
         "Proxy__MVM_Verifier": "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb",
         "Proxy__OVM_L1StandardBridge": "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b",
-        "StateCommitmentChain": "0xf209815E595Cdf3ed0aAF9665b1772e608AB9380",
+        "StateCommitmentChain": "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6",
         "undefined_MVM_FraudVerifier": "0x5fF5316CD1C015970eEC83D34a69E504B577a5bb"
       }
     },
@@ -222,6 +222,31 @@
         "totalSupply": "10000000000000000000000000"
       },
       "derivedName": "MToken"
+    },
+    {
+      "name": "StateCommitmentChain",
+      "address": "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x6b1Cd90796Dc97C859734dDA4fF7816f703DDb48",
+        "admin": "0x001088E383A00ff4ab36F37f7021Cb6d7B415751"
+      },
+      "implementations": ["0x6b1Cd90796Dc97C859734dDA4fF7816f703DDb48"],
+      "sinceTimestamp": 1710487823,
+      "values": {
+        "batches": "0x10739F09f6e62689c0aA8A1878816de9e166d6f9",
+        "DEFAULT_CHAINID": 1088,
+        "FRAUD_PROOF_WINDOW": 604800,
+        "getLastSequencerTimestamp": 1710482363,
+        "getLastSequencerTimestampByChainId": 1710482363,
+        "getTotalBatches": 22919,
+        "getTotalBatchesByChainId": 22919,
+        "getTotalElements": 15214530,
+        "getTotalElementsByChainId": 15214530,
+        "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
+        "SEQUENCER_PUBLISH_WINDOW": 12592000
+      },
+      "derivedName": "MVM_StateCommitmentChain"
     },
     {
       "name": "ChainStorageContainer",
@@ -265,28 +290,6 @@
       }
     },
     {
-      "name": "StateCommitmentChain",
-      "address": "0xf209815E595Cdf3ed0aAF9665b1772e608AB9380",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1637071157,
-      "values": {
-        "batches": "0x10739F09f6e62689c0aA8A1878816de9e166d6f9",
-        "DEFAULT_CHAINID": 1088,
-        "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1710389927,
-        "getLastSequencerTimestampByChainId": 1710389927,
-        "getTotalBatches": 22918,
-        "getTotalBatchesByChainId": 22918,
-        "getTotalElements": 15213630,
-        "getTotalElementsByChainId": 15213630,
-        "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
-        "SEQUENCER_PUBLISH_WINDOW": 12592000
-      },
-      "derivedName": "StateCommitmentChain"
-    },
-    {
       "name": "MVM_L2ChainManagerOnL1",
       "address": "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0",
       "upgradeability": {
@@ -322,12 +325,12 @@
     "0x4200000000000000000000000000000000000007",
     "0x4200000000000000000000000000000000000010",
     "0x7a9059F4A6e50090e4f55994d465918200AB4454",
-    "0x9cB01d516D930EF49591a05B09e0D33E6286689D",
     "0xa6D8941F935932a531A856C2e48046DA73a1098E",
     "0xB383E1331dEE29864b68f7D84b0dC289F770d846",
     "0xB961047013F974C5b6B6F8dA4402379525316550",
     "0xcDf02971871B7736874E20B8487c019D28090019",
-    "0xDD6FFC7D9a4Fb420b637747edc6456340d12d377"
+    "0xDD6FFC7D9a4Fb420b637747edc6456340d12d377",
+    "0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040"
   ],
   "abis": {
     "0x081D1101855bD523bA69A9794e0217F0DB6323ff": [
@@ -505,6 +508,32 @@
       "function setOwner(address _owner)",
       "function setStorage(bytes32 _key, bytes32 _value)"
     ],
+    "0x6b1Cd90796Dc97C859734dDA4fF7816f703DDb48": [
+      "constructor(address _libAddressManager, uint256 _fraudProofWindow, uint256 _sequencerPublishWindow)",
+      "event StateBatchAppended(uint256 _chainId, uint256 indexed _batchIndex, bytes32 _batchRoot, uint256 _batchSize, uint256 _prevTotalElements, bytes _extraData)",
+      "event StateBatchDeleted(uint256 _chainId, uint256 indexed _batchIndex, bytes32 _batchRoot)",
+      "function DEFAULT_CHAINID() view returns (uint256)",
+      "function FRAUD_PROOF_WINDOW() view returns (uint256)",
+      "function SEQUENCER_PUBLISH_WINDOW() view returns (uint256)",
+      "function appendStateBatch(bytes32[] _batch, uint256 _shouldStartAtElement)",
+      "function appendStateBatchByChainId(uint256 _chainId, bytes32[] _batch, uint256 _shouldStartAtElement, string proposer)",
+      "function batches() view returns (address)",
+      "function deleteStateBatch(tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader)",
+      "function deleteStateBatchByChainId(uint256 _chainId, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader)",
+      "function getLastSequencerTimestamp() view returns (uint256 _lastSequencerTimestamp)",
+      "function getLastSequencerTimestampByChainId(uint256 _chainId) view returns (uint256 _lastSequencerTimestamp)",
+      "function getTotalBatches() view returns (uint256 _totalBatches)",
+      "function getTotalBatchesByChainId(uint256 _chainId) view returns (uint256 _totalBatches)",
+      "function getTotalElements() view returns (uint256 _totalElements)",
+      "function getTotalElementsByChainId(uint256 _chainId) view returns (uint256 _totalElements)",
+      "function insideFraudProofWindow(tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader) view returns (bool _inside)",
+      "function insideFraudProofWindowByChainId(uint256, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader) view returns (bool _inside)",
+      "function libAddressManager() view returns (address)",
+      "function resolve(string _name) view returns (address)",
+      "function setFraudProofWindow(uint256 window)",
+      "function verifyStateCommitment(bytes32 _element, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader, tuple(uint256 index, bytes32[] siblings) _proof) view returns (bool)",
+      "function verifyStateCommitmentByChainId(uint256 _chainId, bytes32 _element, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader, tuple(uint256 index, bytes32[] siblings) _proof) view returns (bool)"
+    ],
     "0x7b5AFdA01ef32d95858A22E5fc0a6821A12CDAe5": [
       "constructor()",
       "event PushConfig(uint256 chainid, bytes configs)",
@@ -625,6 +654,14 @@
       "function l2TokenBridge() view returns (address)",
       "function messenger() view returns (address)",
       "function metis() view returns (address)"
+    ],
+    "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6": [
+      "constructor(address _owner)",
+      "function getImplementation() returns (address)",
+      "function getOwner() returns (address)",
+      "function setCode(bytes _code)",
+      "function setOwner(address _owner)",
+      "function setStorage(bytes32 _key, bytes32 _value)"
     ],
     "0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57": [
       "constructor(address _libAddressManager, string _owner)",
@@ -747,32 +784,6 @@
       "function setCode(bytes _code)",
       "function setOwner(address _owner)",
       "function setStorage(bytes32 _key, bytes32 _value)"
-    ],
-    "0xf209815E595Cdf3ed0aAF9665b1772e608AB9380": [
-      "constructor(address _libAddressManager, uint256 _fraudProofWindow, uint256 _sequencerPublishWindow)",
-      "event StateBatchAppended(uint256 _chainId, uint256 indexed _batchIndex, bytes32 _batchRoot, uint256 _batchSize, uint256 _prevTotalElements, bytes _extraData)",
-      "event StateBatchDeleted(uint256 _chainId, uint256 indexed _batchIndex, bytes32 _batchRoot)",
-      "function DEFAULT_CHAINID() view returns (uint256)",
-      "function FRAUD_PROOF_WINDOW() view returns (uint256)",
-      "function SEQUENCER_PUBLISH_WINDOW() view returns (uint256)",
-      "function appendStateBatch(bytes32[] _batch, uint256 _shouldStartAtElement)",
-      "function appendStateBatchByChainId(uint256 _chainId, bytes32[] _batch, uint256 _shouldStartAtElement, string proposer)",
-      "function batches() view returns (address)",
-      "function deleteStateBatch(tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader)",
-      "function deleteStateBatchByChainId(uint256 _chainId, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader)",
-      "function getLastSequencerTimestamp() view returns (uint256 _lastSequencerTimestamp)",
-      "function getLastSequencerTimestampByChainId(uint256 _chainId) view returns (uint256 _lastSequencerTimestamp)",
-      "function getTotalBatches() view returns (uint256 _totalBatches)",
-      "function getTotalBatchesByChainId(uint256 _chainId) view returns (uint256 _totalBatches)",
-      "function getTotalElements() view returns (uint256 _totalElements)",
-      "function getTotalElementsByChainId(uint256 _chainId) view returns (uint256 _totalElements)",
-      "function insideFraudProofWindow(tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader) view returns (bool _inside)",
-      "function insideFraudProofWindowByChainId(uint256 _chainId, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader) view returns (bool _inside)",
-      "function libAddressManager() view returns (address)",
-      "function resolve(string _name) view returns (address)",
-      "function setFraudProofWindow(uint256 window)",
-      "function verifyStateCommitment(bytes32 _element, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader, tuple(uint256 index, bytes32[] siblings) _proof) view returns (bool)",
-      "function verifyStateCommitmentByChainId(uint256 _chainId, bytes32 _element, tuple(uint256 batchIndex, bytes32 batchRoot, uint256 batchSize, uint256 prevTotalElements, bytes extraData) _batchHeader, tuple(uint256 index, bytes32[] siblings) _proof) view returns (bool)"
     ],
     "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0": [
       "constructor(address _owner)",
