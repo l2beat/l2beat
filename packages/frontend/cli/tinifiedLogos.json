@@ -76,7 +76,7 @@
   "opticsv1.png": "3ba9ef66b1332e7101940129c128128c",
   "opticsv2.png": "3ba9ef66b1332e7101940129c128128c",
   "optimism.png": "2edfe69c9cf0ae6b7e31e7eb7acb65ac",
-  "orb3.png": "076131b692258df8f5a032922b48ee86",
+  "orb3.png": "52f582cfefd2176a5a7d9c63157bcd9c",
   "orbit.png": "ec0a3d11cf3e9e89450d6ffdffb07d3d",
   "orbiter.png": "beb784b78e76d1143bd6761087cec914",
   "palm.png": "be9d68d6e892762abd92a29d96719d64",
@@ -136,8 +136,12 @@
   "nil.png": "7cc926f8d028e298b12d65d1200c0040",
   "fraxtal.png": "584bff33fb6bd21c21e56193b27de54b",
   "karak.png": "db05a0abbff2c6a459f06598316fdc8e",
+  "ankr.png": "a049135e4a9a48a3b18ecdeb365411c7",
+  "davos.png": "0612f419ccdb98c12de753b5d8d63837",
+  "stack.png": "8d819ab20375b6bf5ce1fb9307979df7",
   "mxc.png": "2bb290b2ccad63b6a1362cd50b3481bd",
   "hychain.png": "9add5fea3faefcb83ef3ed7fb4a304b6",
   "zklinknova.png": "5ff7cfb31bd0cfc43acf895ff8982749",
-  "popapex.png": "aee604de4116b74a267533894db89f85"
+  "popapex.png": "aee604de4116b74a267533894db89f85",
+  "lightlink.png": "470b0e6fc156caebdd301ce772b2ac54"
 }

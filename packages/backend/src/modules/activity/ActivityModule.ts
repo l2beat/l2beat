@@ -1,5 +1,4 @@
 import { Logger } from '@l2beat/backend-tools'
-import { HttpClient } from '@l2beat/shared'
 import { ProjectId } from '@l2beat/shared-pure'
 
 import { Config } from '../../config'
@@ -17,7 +16,6 @@ import { SequenceProcessor } from './SequenceProcessor'
 export function createActivityModule(
   config: Config,
   logger: Logger,
-  http: HttpClient,
   peripherals: Peripherals,
   clock: Clock,
 ): ApplicationModule | undefined {
@@ -29,7 +27,6 @@ export function createActivityModule(
   const processors = createSequenceProcessors(
     config,
     logger,
-    http,
     peripherals,
     clock,
   )

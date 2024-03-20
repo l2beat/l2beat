@@ -1,7 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { HttpClient } from '@l2beat/shared'
 import { assert, ProjectId } from '@l2beat/shared-pure'
-import { providers } from 'ethers'
 import { Gauge } from 'prom-client'
 
 import { Config } from '../../config'
@@ -31,7 +29,6 @@ import { SequenceProcessor } from './SequenceProcessor'
 export function createSequenceProcessors(
   config: Config,
   logger: Logger,
-  http: HttpClient,
   peripherals: Peripherals,
   clock: Clock,
 ): SequenceProcessor[] {
@@ -49,9 +46,6 @@ export function createSequenceProcessors(
   const numberOfStarkexProjects =
     projects.filter((p) => p.config.type === 'starkex').length || 1
   const singleStarkexCPM = starkexCallsPerMinute / numberOfStarkexProjects
-  const starkexClient = new StarkexClient(starkexApiKey, http, logger, {
-    callsPerMinute: singleStarkexCPM,
-  })
 
   return projects
     .filter(isProjectAllowed(allowedProjectIds, logger))
@@ -60,6 +54,11 @@ export function createSequenceProcessors(
 
       switch (config.type) {
         case 'starkex': {
+          const starkexClient = peripherals.getClient(StarkexClient, {
+            apiKey: starkexApiKey,
+            callsPerMinute: singleStarkexCPM,
+            timeout: undefined,
+          })
           return new StarkexCounter(
             id,
             config.product,
@@ -75,11 +74,10 @@ export function createSequenceProcessors(
         }
 
         case 'aztec': {
-          const aztecClient = new AztecClient(
-            http,
-            config.url,
-            config.callsPerMinute,
-          )
+          const aztecClient = peripherals.getClient(AztecClient, {
+            url: config.url,
+            callsPerMinute: config.callsPerMinute,
+          })
           return new AztecCounter(
             id,
             peripherals.getRepository(SequenceProcessorRepository),
@@ -91,7 +89,8 @@ export function createSequenceProcessors(
         }
 
         case 'starknet': {
-          const starknetClient = new StarknetClient(config.url, http, {
+          const starknetClient = peripherals.getClient(StarknetClient, {
+            url: config.url,
             callsPerMinute: config.callsPerMinute,
           })
           return new StarknetCounter(
@@ -106,12 +105,10 @@ export function createSequenceProcessors(
         }
 
         case 'zksync': {
-          const zksyncClient = new ZksyncClient(
-            http,
-            taggedLogger,
-            config.url,
-            config.callsPerMinute,
-          )
+          const zksyncClient = peripherals.getClient(ZksyncClient, {
+            url: config.url,
+            callsPerMinute: config.callsPerMinute,
+          })
           return new ZksyncCounter(
             id,
             peripherals.getRepository(SequenceProcessorRepository),
@@ -123,14 +120,10 @@ export function createSequenceProcessors(
         }
 
         case 'loopring': {
-          const loopringClient = new LoopringClient(
-            http,
-            taggedLogger,
-            config.url,
-            {
-              callsPerMinute: config.callsPerMinute,
-            },
-          )
+          const loopringClient = peripherals.getClient(LoopringClient, {
+            url: config.url,
+            callsPerMinute: config.callsPerMinute,
+          })
           return new LoopringCounter(
             id,
             peripherals.getRepository(SequenceProcessorRepository),
@@ -142,14 +135,10 @@ export function createSequenceProcessors(
         }
 
         case 'degate': {
-          const degateClient = new DegateClient(
-            http,
-            taggedLogger,
-            config.url,
-            {
-              callsPerMinute: config.callsPerMinute,
-            },
-          )
+          const degateClient = peripherals.getClient(DegateClient, {
+            url: config.url,
+            callsPerMinute: config.callsPerMinute,
+          })
           return new DegateCounter(
             id,
             peripherals.getRepository(SequenceProcessorRepository),
@@ -161,16 +150,10 @@ export function createSequenceProcessors(
         }
 
         case 'rpc': {
-          const provider = new providers.StaticJsonRpcProvider({
+          const rpcClient = peripherals.getClient(RpcClient, {
             url: config.url,
-            timeout: 15_000,
+            callsPerMinute: config.callsPerMinute,
           })
-          const rpcClient = new RpcClient(
-            provider,
-            taggedLogger,
-            config.callsPerMinute,
-          )
-
           return new RpcCounter(
             id,
             peripherals.getRepository(SequenceProcessorRepository),

@@ -36,8 +36,23 @@ export class EtherscanClient implements BlockNumberProvider {
     this.call = this.rateLimiter.wrap(this.call.bind(this))
   }
 
-  getChainId(): ChainId {
-    return this.chainId
+  static create(
+    services: { httpClient: HttpClient; logger: Logger },
+    options: {
+      url: string
+      apiKey: string
+      minTimestamp: UnixTime
+      chainId: ChainId
+    },
+  ) {
+    return new EtherscanClient(
+      services.httpClient,
+      options.url,
+      options.apiKey,
+      options.minTimestamp,
+      options.chainId,
+      services.logger,
+    )
   }
 
   /**
@@ -56,6 +71,10 @@ export class EtherscanClient implements BlockNumberProvider {
       new UnixTime(0),
       chainId,
     )
+  }
+
+  getChainId(): ChainId {
+    return this.chainId
   }
 
   // Etherscan API is not stable enough to trust it to return "closest" block.

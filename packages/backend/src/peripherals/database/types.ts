@@ -1,5 +1,7 @@
 export {}
 
+import { PriceRow as PriceRow2 } from '../../modules/tvl2/repositories/PriceRepository'
+
 declare module 'knex/types/tables' {
   interface BlockNumberRow {
     unix_timestamp: Date
@@ -218,6 +220,7 @@ declare module 'knex/types/tables' {
     tvl_cleaner: TvlCleanerRow
     finality: FinalityRow
     tracked_txs_configs: TrackedTxsConfigRow
+    prices: PriceRow2
   }
 }
 
