@@ -22,15 +22,11 @@ export function getTransferQuery(
     CREATE TEMP FUNCTION CalculateCalldataGasUsed(hexString STRING)
     RETURNS INT64
     LANGUAGE js AS """
-      var binaryString = '';
-      for (var i = 2; i < hexString.length; i += 2) {
-        binaryString += String.fromCharCode(parseInt(hexString.substr(i, 2), 16));
-      }
-    
       var nonZeroBytes = 0;
       var zeroBytes = 0;
-      for (var i = 0; i < binaryString.length; i++) {
-        if (binaryString.charCodeAt(i) === 0) {
+  
+      for (var i = 2; i < hexString.length; i += 2) {
+        if(hexString.substr(i, 2)==='00') {
           zeroBytes++;
         } else {
           nonZeroBytes++;
