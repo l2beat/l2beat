@@ -1,3 +1,4 @@
+import { assert } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 
 import { TrackedTxsConfigRecord } from '../repositories/TrackedTxsConfigsRepository'
@@ -12,14 +13,17 @@ export function isConfigToSync(
   const { lastSyncedTimestamp } = databaseEntry
   const { sinceTimestampInclusive, untilTimestampExclusive } = configEntry
 
+  // config starts inside the range to sync - skip config, split the range
   if (sinceTimestampInclusive.inExclusiveRange(from, to)) {
     return { include: false, syncTo: sinceTimestampInclusive }
   }
 
+  // config starts after the range - skip config
   if (sinceTimestampInclusive.gte(to)) {
     return { include: false }
   }
 
+  // untilTimestamp set and config synced to it - skip config
   if (
     untilTimestampExclusive &&
     lastSyncedTimestamp?.equals(untilTimestampExclusive)
@@ -27,22 +31,27 @@ export function isConfigToSync(
     return { include: false }
   }
 
-  if (lastSyncedTimestamp?.lt(from)) {
-    throw new Error('gap between lastSyncedTimestamp and from')
-  }
+  assert(
+    lastSyncedTimestamp?.gte(from),
+    'Programmer error: lastSyncedTimestamp should be after from',
+  )
 
+  // config synced somewhere in the range - skip config, split the range
   if (lastSyncedTimestamp?.inExclusiveRange(from, to)) {
     return { include: false, syncTo: lastSyncedTimestamp }
   }
 
+  // config synced - skip config
   if (lastSyncedTimestamp?.gte(to)) {
     return { include: false }
   }
 
+  // config ends before the range - skip config
   if (untilTimestampExclusive?.lte(from)) {
     return { include: false }
   }
 
+  // config ends inside the range - include config, split the range
   if (untilTimestampExclusive?.inExclusiveRange(from, to)) {
     return { include: true, syncTo: untilTimestampExclusive }
   }
