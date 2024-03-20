@@ -1149,16 +1149,6 @@
     {
       "name": "ProxyAdmin",
       "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ProxyAdmin",
-      "values": {
         "addressManager": {
           "description": null,
           "severity": null,
@@ -1169,6 +1159,16 @@
           "severity": null,
           "type": null
         },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
         "owner": {
           "description": null,
           "severity": null,
@@ -1335,271 +1335,6 @@
           "type": null
         },
         "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "TssDelegation",
-      "values": {
-        "DELEGATION_TYPEHASH": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DOMAIN_SEPARATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DOMAIN_TYPEHASH": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "delegationManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "stakingSlash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "TssDelegationManager",
-      "values": {
-        "DEPOSIT_TYPEHASH": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DOMAIN_SEPARATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DOMAIN_TYPEHASH": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "REASONABLE_STAKES_UPDATE_PERIOD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "WITHDRAWAL_WAITING_PERIOD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "delegation": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "delegationSlasher": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "minStakeAmount": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "stakingSlash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "tssGroupManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "TssDelegationSlasher",
-      "values": {
-        "delegation": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "investmentManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "TssGroupManager",
-      "values": {
-        "getTssGroupInfo": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getTssGroupMembers": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getTssGroupUnJailMembers": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getTssInactiveGroupInfo": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "inActiveIsEmpty": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "stakingSlash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "TssStakingSlashing",
-      "values": {
-        "delegation": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "delegationManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "explanation": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getQuitRequestList": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getSlashingParams": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isSetParam": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "messenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "quitRequestList": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "regulatoryAccount": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "slashAmount": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalShares": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "tssDelegationContract": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "tssDelegationManagerContract": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "tssGroupContract": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "tssManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "underlyingToken": {
           "description": null,
           "severity": null,
           "type": null
