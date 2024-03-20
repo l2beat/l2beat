@@ -5,11 +5,11 @@ import {
 import React from 'react'
 
 import { cn } from '../../utils/cn'
+import { ShieldIcon } from '../icons'
 import { BulletIcon } from '../icons/symbols/BulletIcon'
 import { Link } from '../Link'
 import { Markdown } from '../Markdown'
 import { UnverifiedContractsWarning } from '../table/UnverifiedContractsWarning'
-import { UpdatedContractWarning } from '../table/UpdatedContractWarning'
 import { Callout, CalloutProps } from './Callout'
 import { EtherscanLink } from './EtherscanLink'
 import { ReferenceList, TechnologyReference } from './ReferenceList'
@@ -74,12 +74,7 @@ export function ContractEntry({
 
   let icon = <BulletIcon className="h-[1em]" />
   if (contract.implementationHasChanged) {
-    icon = (
-      <UpdatedContractWarning
-        tooltip="The implementation of the contract has been updated"
-        className="h-[1em]"
-      />
-    )
+    icon = <ShieldIcon className={cn('fill-yellow-700 dark:fill-yellow-300')} />
   }
   if (areAddressesUnverified || areLinksUnverified) {
     icon = (
@@ -105,6 +100,14 @@ export function ContractEntry({
       className={cn(color === undefined ? 'px-4' : 'p-4', className)}
       color={color}
       icon={icon}
+      message={
+        contract.implementationHasChanged && (
+          <div className="flex w-full items-center rounded bg-yellow-800/20 p-3 dark:bg-yellow-500/20">
+            There are implementation changes and part of the information might
+            be outdated.
+          </div>
+        )
+      }
       body={
         <>
           <div className="flex flex-wrap items-center gap-x-2">
