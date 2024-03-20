@@ -126,15 +126,11 @@ export function makeConfig(
       ethereumProviderUrl: env.string([
         'ETHEREUM_RPC_URL_FOR_FINALITY',
         'ETHEREUM_RPC_URL',
-        // TODO: DEPRECATED - remove this fallback after envs are updated
-        'FINALITY_ETHEREUM_PROVIDER_URL',
       ]),
       ethereumProviderCallsPerMinute: env.integer(
         [
           'ETHEREUM_RPC_CALLS_PER_MINUTE_FOR_FINALITY',
           'ETHEREUM_RPC_CALLS_PER_MINUTE',
-          // TODO: DEPRECATED - remove this fallback after envs are updated
-          'FINALITY_ETHEREUM_PROVIDER_CALLS_PER_MINUTE',
         ],
         600,
       ),
@@ -149,8 +145,6 @@ export function makeConfig(
         [
           'STARKEX_API_CALLS_PER_MINUTE_FOR_ACTIVITY',
           'STARKEX_API_CALLS_PER_MINUTE',
-          // TODO: DEPRECATED - remove this fallback after envs are updated
-          'STARKEX_CALLS_PER_MINUTE',
         ],
         600,
       ),
