@@ -20,7 +20,7 @@ export interface QueryResultPoint {
 }
 
 export class CoingeckoQueryService {
-  maxDaysForOneCall =
+  static MAX_DAYS_FOR_ONE_CALL =
     MAX_DAYS_FOR_HOURLY_PRECISION - 2 * COINGECKO_INTERPOLATION_WINDOW_DAYS
 
   constructor(private readonly coingeckoClient: CoingeckoClient) {}

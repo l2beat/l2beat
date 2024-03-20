@@ -58,7 +58,7 @@ export class PriceIndexer extends ChildIndexer {
     const to = new UnixTime(_to).toStartOf('hour')
     assert(from.lte(to), 'Programmer error: from > to')
 
-    const maxDaysForOneCall = this.coingeckoQueryService.maxDaysForOneCall
+    const maxDaysForOneCall = CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL
 
     return to.gt(from.add(maxDaysForOneCall, 'days'))
       ? from.add(maxDaysForOneCall, 'days')
