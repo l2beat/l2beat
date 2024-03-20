@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.46.1
+
+### Patch Changes
+
+- Add ArbitrumScheduledTransactionsHandler
+
 ## 0.46.0
 
 ### Minor Changes

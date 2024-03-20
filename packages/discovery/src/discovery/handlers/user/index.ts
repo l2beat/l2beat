@@ -15,6 +15,10 @@ import {
   ArbitrumDACKeysetHandlerDefinition,
 } from './ArbitrumDACKeysetHandler'
 import {
+  ArbitrumScheduledTransactionsHandler,
+  ArbitrumScheduledTransactionsHandlerDefinition,
+} from './ArbitrumScheduledTransactionsHandler'
+import {
   ArbitrumSequencerVersionDefinition,
   ArbitrumSequencerVersionHandler,
 } from './ArbitrumSequencerVersionHandler'
@@ -102,6 +106,7 @@ export const UserHandlerDefinition = z.union([
   StarkWareGovernanceHandlerDefinition,
   LayerZeroMultisigHandlerDefinition,
   ArbitrumActorsHandlerDefinition,
+  ArbitrumScheduledTransactionsHandlerDefinition,
   OpStackDAHandlerDefinition,
   OpStackSequencerInboxHandlerDefinition,
   ArbitrumSequencerVersionDefinition,
@@ -153,6 +158,8 @@ export function getUserHandler(
       return new LayerZeroMultisigHandler(field, abi, logger)
     case 'arbitrumActors':
       return new ArbitrumActorsHandler(field, definition, logger)
+    case 'arbitrumScheduledTransactions':
+      return new ArbitrumScheduledTransactionsHandler(field, abi, logger)
     case 'opStackDA':
       return new OpStackDAHandler(field, definition, logger)
     case 'opStackSequencerInbox':
