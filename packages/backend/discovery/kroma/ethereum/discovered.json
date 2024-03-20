@@ -1,8 +1,8 @@
 {
   "name": "kroma",
   "chain": "ethereum",
-  "blockNumber": 19467530,
-  "configHash": "0xc8ead44e3c4f2f20618fbcb890ce5959623b2fdafb431a9b118505431bcfe2e7",
+  "blockNumber": 19474421,
+  "configHash": "0x4d079032c596289839024cc1f784b864df0554393974b4eabf110fe8c3a1ccd8",
   "version": 3,
   "contracts": [
     {
@@ -19,10 +19,10 @@
         "COLOSSEUM": "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a",
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 8476200,
-        "latestOutputIndex": 4709,
-        "nextBlockNumber": 8478000,
-        "nextOutputIndex": 4710,
+        "latestBlockNumber": 8517600,
+        "latestOutputIndex": 4732,
+        "nextBlockNumber": 8519400,
+        "nextOutputIndex": 4733,
         "startingBlockNumber": 0,
         "startingTimestamp": 1693880387,
         "SUBMISSION_INTERVAL": 1800,
@@ -91,7 +91,7 @@
         "GUARDIAN": "0x3de211088dF516da72efe68D386b561BEE256Ec4",
         "L2_ORACLE": "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 200000, 19464240],
+        "params": [1000000000, 200000, 19473558],
         "paused": false,
         "SYSTEM_CONFIG": "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35",
         "VALIDATOR_POOL": "0xFdFF462845953D90719A78Fd12a2d103541d2103",
@@ -265,6 +265,23 @@
       "derivedName": "Colosseum"
     },
     {
+      "name": "USDCBridge",
+      "address": "0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xE4e9F3AD8A6F224c4b39854D3550AD258441AfE3",
+        "admin": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1"
+      },
+      "implementations": ["0xE4e9F3AD8A6F224c4b39854D3550AD258441AfE3"],
+      "sinceTimestamp": 1700121851,
+      "values": {
+        "MESSENGER": "0x46B8bB4C5dd27bB42807Db477af4d1a7C8A5B746",
+        "paused": false,
+        "version": "1.0.0"
+      },
+      "derivedName": "USDCBridge"
+    },
+    {
       "name": "L1StandardBridge",
       "address": "0x827962404D7104202C5aaa6b929115C8211d9596",
       "upgradeability": {
@@ -293,7 +310,7 @@
       "sinceTimestamp": 1693880663,
       "values": {
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 19467530,
+        "clock": 19474421,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": [
@@ -330,7 +347,7 @@
       "implementations": ["0x108eDc4Df0b9B04dcE9f6FFBD65Dd9895562c14C"],
       "sinceTimestamp": 1693880639,
       "values": {
-        "clock": 19467530,
+        "clock": 19474421,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "DOMAIN_SEPARATOR": "0x1630586f33defc933258f4512df143dd6bf7adb1b4d039178e748d4cac4813b8",
         "eip712Domain": [
@@ -391,7 +408,7 @@
       "values": {
         "L2_ORACLE": "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6",
         "MAX_UNBOND": 10,
-        "nextValidator": "0xC001052B0bC1Bb7b15C2d5858bf79c5ef9eAd09e",
+        "nextValidator": "0xf5e05A771df09812B35eF558349470c01c76bC6A",
         "PORTAL": "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de",
         "REQUIRED_BOND_AMOUNT": "200000000000000000",
         "ROUND_DURATION": 1800,
@@ -399,7 +416,7 @@
         "TAX_DENOMINATOR": 100,
         "TAX_NUMERATOR": 20,
         "TRUSTED_VALIDATOR": "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
-        "validatorCount": 253,
+        "validatorCount": 243,
         "validators": [
           "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
           "0x3123Df5C6166f59BaaFbbb021d1F32Baab272318",
@@ -414,11 +431,11 @@
           "0x7d06b6eA10cCb824d12FEd7c934B89866ab26C33",
           "0x3a4F65D1ACFb2A3F5AD93ef7b240bfa1079052e0",
           "0xbDeE962137373A755a71C716E01B9946B1a27686",
-          "0xA4b000E0C7483bbFAC54a004Dd587DA578B98b50",
+          "0xCfaEaC37075e75a9Ec409424f0dD467C96dF7B40",
           "0x73E1c971260B3f9740Fb6E0884b236eb35356191",
           "0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1",
           "0x5B545B2DB372158a22F53ED980E99116d1685C08",
-          "0x2779a1591b73c0E69dE57D1Ee262C3f9e3d1635f",
+          "0x8278071A9f472Fe9DAa102A3c76a70069ba6BC4b",
           "0x2333E4442E9b05a9857e9Cbf89f937b8a60C95Af",
           "0xe1b712e16Be1Eb098D0b2B846e2f547F9E292851",
           "0x84f193D262dB0B1606bb32eb63FEd6b9CBA456AB",
@@ -437,7 +454,7 @@
           "0x8E36Dad1040993820BE0885feE75a721C14EA872",
           "0x9F678265d6c69DC3036E2877b6C60499b1125DBA",
           "0xC983F676141A6784dd345D235A639B3381B4db82",
-          "0xD5dCab0bd89657322c0D1f4d98f806f98AB4808c",
+          "0xCbcFB49676e04e6F4C14673EB1C0375D07577856",
           "0x473753C30e005d65A3CBB36bD2f38fb8Cd3fE05a",
           "0x2E8a03820c77312FE1B189a78963e94553f11b6F",
           "0xEA87A83B032B3Ac8a96CAEE2A42eC516b1bAeB74",
@@ -477,7 +494,7 @@
           "0x44F6aC7Bd9a478878b3469E34ec67F137a2BA6c3",
           "0x6Ee7426e7c95BDE071eDf1C8c1c478499552f5D7",
           "0xf144838dcA9FAB4a45E68aa8a405487E80594bE4",
-          "0xdBBDF1991C64f6493Cdc202fb04eC7D5775278b9",
+          "0x35676bf7F8741C78eefcA57517d269234B757606",
           "0xC512Bb0553156fF14EA45782668583F102bEcd5D",
           "0x595663Cb2b5Ab8535227cAE975766D46184c8e88",
           "0x7c483696178e56C1ccA92F9E1BEE02C67F66bF8F",
@@ -524,7 +541,7 @@
           "0x80335e2BB7ff34369E373e6aeb0b9a2857428866",
           "0xc6cd2aE784616676C4A4171F5C5C5d8D33a45d4e",
           "0x5A76B2C70B7Bb40c84B85cCbF83102b2337b6462",
-          "0x655ae0De55d3335eD47083424ac3A4E97087d40f",
+          "0xd5095c0A328b7c738E2E0fDA4DbCe3A42D85ecD3",
           "0xC8C32E106a75819839d14dF77aEbda0A9dB1E113",
           "0xc3282C1CB349ccC79a9C51F9a02a91ccbc157DBa",
           "0xB6673B1b71cDCFf8dc31EAC976CC14ada39D122b",
@@ -540,7 +557,7 @@
           "0xa560e492FE5F3fBf0af29E9A943870298da0B757",
           "0x5B514ACc0857e9902476e2ed686148EEf041Fd93",
           "0x2B48290B911e3c7D1F49BfB2f85f156c06824976",
-          "0x191a161953D001e53B7fa5862e032fB0CBFD6C09",
+          "0x770A93Fa7Caf7582b9d6052019f85a33EeeD8F38",
           "0xfCca5b5132A7AC520eE61e41A48d187Dbd2e942b",
           "0xc5F28EEb0A954ed9595b52e94f8Ac0B386eb0b53",
           "0x9D231BD744A7965E81E219Fcdf5fb091062020AB",
@@ -562,7 +579,7 @@
           "0x57e3E33ECd1dfa2EeE45e9B05BAca0EA52C135f3",
           "0xf5e05A771df09812B35eF558349470c01c76bC6A",
           "0xb03E8EACbefE2a23F1928012E7D089bb50A43cC6",
-          "0x3b4F8253a57dBBD2452DDD6214126E19Bce343a9",
+          "0xd2261925c992ccB881F30d1206D5382358ba54c7",
           "0x7982dAd7fC9DC10356BcB9161AADB4A6310D25BB",
           "0x2a1c4EBEE3bbC1968F80b735C9Af406d68Da4Fc0",
           "0xF7b515EEFF54a247cFD3d5292AeFE38605B1237B",
@@ -570,7 +587,7 @@
           "0x9b6B9EB3f769768Ec8bE8e021fA17aeD0Dc8A2c3",
           "0x67dA73bb90fDD5901b1De9665BF645CDc5fCb684",
           "0xA187F2D8FBf7b336d166c2F2908289BeD561c75D",
-          "0x62805414dfe76c52cD9B80636E03d3C957844594",
+          "0x8E71b8194C9F5781b0099d29ca18A24272837a6f",
           "0xEd83e84735088ad913d814967E5F08F2e26Ca51B",
           "0x8f49933058f71446CE3f55B137ED47b8bf9E23EF",
           "0xc4D44D617FBfD62E9c27F337cB3Cbb291FB0a0dD",
@@ -582,7 +599,7 @@
           "0x3416e93887E8a94167A2bA1c2683146eaEd1b691",
           "0x5f12A882A44ccb837F07091eE8A30D8eB0E1ED09",
           "0x8ECF028Cd647379E580DaA6701A11154750fcd3c",
-          "0x4660cf1d89C31C07C2b405b05a1024ad44c4Aca0",
+          "0x3e442C602A7E0113B0252485E069847852E22CF6",
           "0x4FA7eE67F684088b86f3012B150E18563ad2a3da",
           "0x52A81362E4858A1B6776131B008C7dF8eB106fE5",
           "0x8F1c3626686D9BCbc1C1Cd589Ef7161B01D52b70",
@@ -630,30 +647,20 @@
           "0x7Fb00286be9C3A893D9EF89fB3269eBb057bc04b",
           "0xEfC56f2f474e689dE3A1F62656BbAe5111A22a9a",
           "0x1cCCB15378D897aeE65BDD8f92182F90e217b967",
-          "0xC001052B0bC1Bb7b15C2d5858bf79c5ef9eAd09e",
+          "0x13aA5349F28dc732097Ef429C43Fa3B84AF57ab1",
           "0xABecebdd2A398A37B4332BE2B2523D0a0d68256a",
           "0x14A63749e57A273187ac229F22249683a4F6B83b",
           "0x2C93a146e118E9dAc6Bf02d287Df038Bea4E9DCE",
           "0xB6841Eb53eB5053f14a84C9f979776973Ebae23A",
           "0x13073f1A19969D04Ea6060D8eFE6A7391C73a29D",
-          "0x8E71b8194C9F5781b0099d29ca18A24272837a6f",
+          "0x5D0dbcEBF6EB4a117e09aE4b16cc6576785A038c",
           "0x6227cAe28745989c8C5e29C5bcee1eD3D7A5cDC0",
           "0x6079195f115A428058B1F4bdd2F990e3e131eF73",
           "0x728DD39B798eB8bf3765FAfaA8F25aaeaCF2C860",
           "0xb7c941fEa57Ab47d3508D30f143E9145d2B82eD7",
           "0x0B467455E28d40Ef49B1EDD64f8657CF9B6A4358",
           "0x6973822c30b0D8759a2C0C1A0b06824Cc8E0690c",
-          "0xFb2d2BCA59dF62DFb3cE7215121ed90f6B17727B",
-          "0xCfaEaC37075e75a9Ec409424f0dD467C96dF7B40",
-          "0xCbcFB49676e04e6F4C14673EB1C0375D07577856",
-          "0x3e442C602A7E0113B0252485E069847852E22CF6",
-          "0x35676bf7F8741C78eefcA57517d269234B757606",
-          "0xd5095c0A328b7c738E2E0fDA4DbCe3A42D85ecD3",
-          "0x5D0dbcEBF6EB4a117e09aE4b16cc6576785A038c",
-          "0x770A93Fa7Caf7582b9d6052019f85a33EeeD8F38",
-          "0xd2261925c992ccB881F30d1206D5382358ba54c7",
-          "0xB98f27E0e2958f24778c3677731D892B37184ccf",
-          "0x13aA5349F28dc732097Ef429C43Fa3B84AF57ab1"
+          "0xFb2d2BCA59dF62DFb3cE7215121ed90f6B17727B"
         ],
         "VAULT_REWARD_GAS_LIMIT": 100000,
         "version": "1.0.1"
@@ -676,9 +683,9 @@
     "0x8ECF028Cd647379E580DaA6701A11154750fcd3c",
     "0x994C074BD9503e4f01CB834e2c409FA16b41E587",
     "0xbDeE962137373A755a71C716E01B9946B1a27686",
-    "0xC001052B0bC1Bb7b15C2d5858bf79c5ef9eAd09e",
     "0xe1b712e16Be1Eb098D0b2B846e2f547F9E292851",
     "0xECe4AAf6A41aa81A164363Ec6C420510617Fc998",
+    "0xf5e05A771df09812B35eF558349470c01c76bC6A",
     "0xfF00000000000000000000000000000000000255"
   ],
   "abis": {
@@ -1141,6 +1148,16 @@
       "function verifiedPublicInputs(bytes32) view returns (bool)",
       "function version() view returns (string)"
     ],
+    "0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
     "0x7E79726560B140fd6e089547bD049509F5423BFf": [
       "constructor(uint256 _hashScalar, uint256 _m56Px, uint256 _m56Py)",
       "function verify(uint256[] proof, uint256[] target_circuit_final_pair, bytes32 publicInputHash) view returns (bool)",
@@ -1229,6 +1246,21 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "0xE4e9F3AD8A6F224c4b39854D3550AD258441AfE3": [
+      "constructor(address _messenger, address _otherBridge)",
+      "event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event Paused(address account)",
+      "event Unpaused(address account)",
+      "function MESSENGER() view returns (address)",
+      "function OTHER_BRIDGE() view returns (address)",
+      "function bridgeERC20(address _localToken, address _remoteToken, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeERC20To(address _localToken, address _remoteToken, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function deposits(address, address) view returns (uint256)",
+      "function finalizeBridgeERC20(address _localToken, address _remoteToken, address _from, address _to, uint256 _amount, bytes _extraData)",
+      "function paused() view returns (bool)",
+      "function version() pure returns (string)"
     ],
     "0xFdFF462845953D90719A78Fd12a2d103541d2103": [
       "constructor(address _admin)",
