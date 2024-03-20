@@ -2,114 +2,14 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "Paradex",
+      "name": "DAI Farm",
       "values": {
-        "MAX_UPGRADE_DELAY": {
+        "getAdmin": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "PROXY_GOVERNANCE_TAG": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PROXY_VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "UPGRADE_DELAY_SLOT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "configHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getMaxL1MsgFee": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getUpgradeActivationDelay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "governedFinalized": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "governors": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "identify": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "implementation": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isFinalized": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isFrozen": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isNotFinalized": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l1ToL2MessageNonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "messageCancellationDelay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "operators": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "programHash": {
-          "description": "The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated.",
-          "severity": "HIGH",
-          "type": "CODE_CHANGE"
-        },
-        "stateBlockHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "stateBlockNumber": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "stateRoot": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "verifier": {
+        "getImplementation": {
           "description": null,
           "severity": null,
           "type": null
@@ -117,19 +17,49 @@
       }
     },
     {
-      "name": "ParadexImplementationGovernorMultisig",
+      "name": "ETH Vault",
       "values": {
-        "VERSION": {
+        "MAX_OWNER_COUNT": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "domainSeparator": {
+        "bridgingFee": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getChainId": {
+        "chain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "dai": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "daiFarm": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "depositCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "edai": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "feeGovernance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "gasLimitForBridgeReceiver": {
           "description": null,
           "severity": null,
           "type": null
@@ -139,47 +69,7 @@
           "severity": null,
           "type": null
         },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "USDC Bridge",
-      "values": {
-        "PROXY_GOVERNANCE_TAG": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PROXY_VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "UPGRADE_DELAY_SLOT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getUpgradeActivationDelay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "governors": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "identify": {
+        "getVersion": {
           "description": null,
           "severity": null,
           "type": null
@@ -189,30 +79,110 @@
           "severity": null,
           "type": null
         },
-        "isActive": {
+        "isActivated": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "isFrozen": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isNotFinalized": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "maxDeposit": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "maxTotalBalance": {
-          "description": "Maximum bridge balance allowed (currentBalance + depositAmount <= maxTotalBalance)",
+        "policyAdmin": {
+          "description": "Can set bridging fees, gas limits and can pause / unpause the bridge or censor individual withdrawals.",
           "severity": "MEDIUM",
-          "type": "RISK_PARAMETER"
+          "type": "PERMISSION"
+        },
+        "required": {
+          "description": "Threshold of the bridge governance admin multisig",
+          "severity": "HIGH",
+          "type": "PERMISSION"
+        },
+        "taxRate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "taxReceiver": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "tetherAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "transactionCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "usdcFarm": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "usdtFarm": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "wbtcFarm": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "USDC Farm",
+      "values": {
+        "getAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getImplementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "USDT Farm",
+      "values": {
+        "getAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getImplementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "WBTC Farm",
+      "values": {
+        "getAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getImplementation": {
+          "description": null,
+          "severity": null,
+          "type": null
         }
       }
     }

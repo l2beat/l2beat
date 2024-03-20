@@ -37,5 +37,20 @@ export const kinto: Layer2 = underReviewL2({
       sinceTimestamp: new UnixTime(1710273600),
       tokens: '*',
     },
+    {
+      address: EthereumAddress('0x7870D5398DB488c669B406fBE57b8d05b6A35e42'),
+      sinceTimestamp: new UnixTime(1702607855),
+      tokens: '*',
+    },
+    {
+      address: EthereumAddress('0x1A6773b61C111064F44C4C93F141793b31dF3442'),
+      sinceTimestamp: new UnixTime(1702607855),
+      tokens: '*',
+    },
+    {
+      address: EthereumAddress('0xD81019beaa5D335e6fb40DdFf8a9cef21b49821f'),
+      sinceTimestamp: new UnixTime(1702607855),
+      tokens: '*',
+    },
   ],
 })

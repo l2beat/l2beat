@@ -26,14 +26,14 @@ export class PriceIndexer extends ChildIndexer {
   }
 
   override async start(): Promise<void> {
-    this.logger.info('Starting...')
+    this.logger.debug('Starting...')
     await this.initialize()
     await super.start()
-    this.logger.info('Started')
+    this.logger.debug('Started')
   }
 
   override async update(_from: number, _to: number): Promise<number> {
-    this.logger.info('Updating...')
+    this.logger.debug('Updating...')
 
     const from = new UnixTime(_from).toEndOf('hour')
     const to = new UnixTime(_to).toStartOf('hour')
@@ -61,7 +61,7 @@ export class PriceIndexer extends ChildIndexer {
       }))
 
     await this.priceRepository.addMany(priceRecords)
-    this.logger.info('Updated')
+    this.logger.debug('Updated')
 
     return _to
   }
@@ -92,7 +92,7 @@ export class PriceIndexer extends ChildIndexer {
   }
 
   async initialize() {
-    this.logger.info('Initializing...')
+    this.logger.debug('Initializing...')
 
     const indexerState = await this.stateRepository.findIndexerState(
       this.indexerId,
@@ -115,11 +115,11 @@ export class PriceIndexer extends ChildIndexer {
       'Minimum timestamp of this indexer cannot be updated',
     )
 
-    this.logger.info('Initialized')
+    this.logger.debug('Initialized')
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
-    this.logger.info('Invalidating...')
+    this.logger.debug('Invalidating...')
 
     await this.priceRepository.deleteBeforeInclusive(
       this.token.chain,
@@ -127,7 +127,7 @@ export class PriceIndexer extends ChildIndexer {
       new UnixTime(targetHeight),
     )
 
-    this.logger.info('Invalidated')
+    this.logger.debug('Invalidated')
 
     return Promise.resolve(targetHeight)
   }

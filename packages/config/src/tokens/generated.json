@@ -3376,6 +3376,21 @@
       "formula": "locked"
     },
     {
+      "id": "weeth-wrapped-eeth",
+      "name": "Wrapped eETH",
+      "coingeckoId": "wrapped-eeth",
+      "address": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+      "symbol": "weETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1689005159,
+      "coingeckoListingTimestamp": 1701648000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "weth-wrapped-ether",
       "name": "Wrapped Ether",
       "coingeckoId": "weth",

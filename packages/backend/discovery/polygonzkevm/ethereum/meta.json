@@ -585,17 +585,17 @@
         "rollupCount": {
           "description": "The number of rollups that the manager can use.",
           "severity": "LOW",
-          "type": "STRUCTURE"
+          "type": "CODE_CHANGE"
         },
         "rollupTypeCount": {
           "description": "The number of unique rollup types that the manager can use.",
           "severity": "MEDIUM",
-          "type": "STRUCTURE"
+          "type": "CODE_CHANGE"
         },
         "rollupsData": {
           "description": "Mapping of a rollup type to rollup verifier. Different types may use the same verifier. First entry is a type, second a verifier.",
           "severity": "MEDIUM",
-          "type": "STRUCTURE"
+          "type": "CODE_CHANGE"
         },
         "totalSequencedBatches": {
           "description": null,
