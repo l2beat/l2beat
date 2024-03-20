@@ -61,7 +61,6 @@
     "rimraf": "^5.0.0",
     "source-map-support": "^0.5.21",
     "twitter-api-v2": "^1.14.0",
-    "viem": "^2.8.5",
     "zod": "^3.22.2"
   },
   "devDependencies": {
