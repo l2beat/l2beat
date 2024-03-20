@@ -77,7 +77,13 @@ describe(PriceIndexer.name, () => {
 
       expect(
         coingeckoQueryService.getUsdPriceHistoryHourly,
-      ).toHaveBeenOnlyCalledWith(token.coingeckoId, from, to, undefined)
+      ).toHaveBeenOnlyCalledWith(
+        token.coingeckoId,
+        // "from" is treated as inclusive, we already have data for it
+        from.add(1, 'hours'),
+        to,
+        undefined,
+      )
 
       expect(pricesRepository.addMany).toHaveBeenCalledWith(
         [pricesResponse[0], pricesResponse[2]].map((p) => ({
@@ -119,13 +125,17 @@ describe(PriceIndexer.name, () => {
         coingeckoQueryService.getUsdPriceHistoryHourly,
       ).toHaveBeenOnlyCalledWith(
         token.coingeckoId,
-        from,
-        from.add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days'),
+        // "from" is treated as inclusive, we already have data for it
+        from.add(1, 'hours'),
+        from.add(1, 'hours').add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days'),
         undefined,
       )
 
       expect(newSafeHeight).toEqual(
-        from.add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days').toNumber(),
+        from
+          .add(1, 'hours')
+          .add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days')
+          .toNumber(),
       )
     })
   })

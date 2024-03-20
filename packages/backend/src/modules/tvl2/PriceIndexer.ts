@@ -38,32 +38,46 @@ export class PriceIndexer extends ChildIndexer {
   override async update(_from: number, _to: number): Promise<number> {
     this.logger.info('Updating...')
 
-    const from = this.token.sinceTimestamp.gt(new UnixTime(_from))
-      ? this.token.sinceTimestamp.toEndOf('hour')
-      : new UnixTime(_from).toEndOf('hour')
+    const from = this.getAdjustedFrom(_from)
+    const to = this.getAdjustedTo(from, _to)
 
+    const prices = await this.fetchAndOptimizePrices(from, to)
+
+    await this.priceRepository.addMany(prices)
+
+    this.logger.info('Updated')
+    return to.toNumber()
+  }
+
+  private getAdjustedFrom(_from: number): UnixTime {
+    return this.token.sinceTimestamp.gt(new UnixTime(_from))
+      ? // first sync of indexer
+        this.token.sinceTimestamp.toEndOf('hour')
+      : // "from" is treated as inclusive, we already have data for it
+        new UnixTime(_from).toNext('hour')
+  }
+
+  private getAdjustedTo(from: UnixTime, _to: number): UnixTime {
     const to = new UnixTime(_to).toStartOf('hour')
+    assert(from.lte(to), 'Programmer error: from > to')
 
-    if (from.gt(to)) {
-      return _to
-    }
+    return to.gt(from.add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days'))
+      ? from.add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days')
+      : to
+  }
 
-    const prices = to.gt(from.add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days'))
-      ? await this.coingeckoQueryService.getUsdPriceHistoryHourly(
-          this.token.coingeckoId,
-          from,
-          from.add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days'),
-          undefined,
-        )
-      : await this.coingeckoQueryService.getUsdPriceHistoryHourly(
-          this.token.coingeckoId,
-          from,
-          to,
-          undefined,
-        )
+  private async fetchAndOptimizePrices(
+    from: UnixTime,
+    to: UnixTime,
+  ): Promise<PriceRecord[]> {
+    const prices = await this.coingeckoQueryService.getUsdPriceHistoryHourly(
+      this.token.coingeckoId,
+      from,
+      to,
+      undefined,
+    )
 
-    const priceRecords: PriceRecord[] = prices
-      // we filter out timestamps that would be deleted by TVL cleaner
+    return prices
       .filter((p) => this.syncOptimizer.shouldTimestampBeSynced(p.timestamp))
       .map((price) => ({
         chain: this.token.chain,
@@ -71,13 +85,6 @@ export class PriceIndexer extends ChildIndexer {
         timestamp: price.timestamp,
         priceUsd: price.value,
       }))
-
-    await this.priceRepository.addMany(priceRecords)
-    this.logger.info('Updated')
-
-    return to.gt(from.add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days'))
-      ? from.add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days').toNumber()
-      : _to
   }
 
   override async getSafeHeight(): Promise<number> {
