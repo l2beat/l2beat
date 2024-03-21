@@ -39,12 +39,12 @@ export class BlockTimestampRepository extends BaseRepository {
     return `${record.chain}-${record.timestamp.toNumber()}`
   }
 
-  async deleteBeforeInclusive(chain: string, timestamp: UnixTime) {
+  async deleteAfterExclusive(chain: string, timestamp: UnixTime) {
     const knex = await this.knex()
 
     return knex('block_timestamps')
       .where('chain', chain)
-      .where('timestamp', '<=', timestamp.toDate())
+      .where('timestamp', '>', timestamp.toDate())
       .delete()
   }
 

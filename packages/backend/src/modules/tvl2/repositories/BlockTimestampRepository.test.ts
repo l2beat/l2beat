@@ -27,36 +27,33 @@ describeDatabase(BlockTimestampRepository.name, (database) => {
     })
   })
 
-  describe(
-    BlockTimestampRepository.prototype.deleteBeforeInclusive.name,
-    () => {
-      it('deletes all records before the given timestamp', async () => {
-        const blocks = [
-          {
-            chain: 'chain',
-            timestamp: new UnixTime(1),
-            blockNumber: 1,
-          },
-          {
-            chain: 'chain',
-            timestamp: new UnixTime(2),
-            blockNumber: 2,
-          },
-          {
-            chain: 'chain-2',
-            timestamp: new UnixTime(1),
-            blockNumber: 1,
-          },
-        ]
-        await Promise.all(blocks.map((b) => repository.add(b)))
+  describe(BlockTimestampRepository.prototype.deleteAfterExclusive.name, () => {
+    it('deletes all records after the given timestamp', async () => {
+      const blocks = [
+        {
+          chain: 'chain',
+          timestamp: new UnixTime(1),
+          blockNumber: 1,
+        },
+        {
+          chain: 'chain',
+          timestamp: new UnixTime(2),
+          blockNumber: 2,
+        },
+        {
+          chain: 'chain-2',
+          timestamp: new UnixTime(1),
+          blockNumber: 1,
+        },
+      ]
+      await Promise.all(blocks.map((b) => repository.add(b)))
 
-        await repository.deleteBeforeInclusive('chain', new UnixTime(1))
+      await repository.deleteAfterExclusive('chain', new UnixTime(1))
 
-        const results = await repository.getAll()
-        expect(results).toEqualUnsorted(blocks.slice(1))
-      })
-    },
-  )
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([blocks[0], blocks[2]])
+    })
+  })
 
   it(BlockTimestampRepository.prototype.deleteAll.name, async () => {
     await repository.add({
