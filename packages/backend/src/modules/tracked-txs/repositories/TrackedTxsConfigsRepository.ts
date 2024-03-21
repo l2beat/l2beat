@@ -121,14 +121,14 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
 
   async setUntilTimestamp(
     trackedTxId: TrackedTxId,
-    untilTimestamp: UnixTime,
+    untilTimestamp: UnixTime | undefined,
     trx?: Knex.Transaction,
   ) {
     const knex = await this.knex(trx)
 
     return await knex('tracked_txs_configs')
       .where({ id: trackedTxId.valueOf() })
-      .update({ until_timestamp_exclusive: untilTimestamp.toDate() })
+      .update({ until_timestamp_exclusive: untilTimestamp?.toDate() })
   }
 
   async deleteAll() {

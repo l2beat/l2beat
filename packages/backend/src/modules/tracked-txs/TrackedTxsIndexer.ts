@@ -155,6 +155,11 @@ export class TrackedTxsIndexer extends ChildIndexer {
           return
         }
 
+        assert(
+          c.untilTimestampExclusive,
+          'untilTimestampExclusive is required for trimming',
+        )
+
         for (const updater of Object.values(this.enabledUpdaters)) {
           await updater?.deleteAfter(c.id, c.untilTimestampExclusive, trx)
         }

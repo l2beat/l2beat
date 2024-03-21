@@ -224,14 +224,14 @@ describe(TrackedTxsIndexer.name, () => {
       )
       expect(mockedLivenessUpdater.deleteAfter).toHaveBeenOnlyCalledWith(
         toChangeUntilTimestamp[1].id,
-        toChangeUntilTimestamp[1].untilTimestampExclusive,
+        toChangeUntilTimestamp[1].untilTimestampExclusive!,
         TRX,
       )
       expect(
         configurationRepository.setLastSyncedTimestamp,
       ).toHaveBeenOnlyCalledWith(
         toChangeUntilTimestamp[1].id,
-        toChangeUntilTimestamp[1].untilTimestampExclusive,
+        toChangeUntilTimestamp[1].untilTimestampExclusive!,
         TRX,
       )
 
