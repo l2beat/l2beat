@@ -126,7 +126,7 @@ describe(diffTrackedTxConfigurations.name, () => {
         {
           id: TrackedTxId(['2']),
           untilTimestampExclusive: undefined,
-          trim: true,
+          trim: false,
         },
         {
           id: TrackedTxId(['3']),

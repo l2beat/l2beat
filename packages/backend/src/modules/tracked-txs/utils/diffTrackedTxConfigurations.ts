@@ -43,8 +43,8 @@ export function diffTrackedTxConfigurations(
 
       const trim =
         databaseEntry.lastSyncedTimestamp &&
-        (!entry.untilTimestampExclusive ||
-          entry.untilTimestampExclusive < databaseEntry.lastSyncedTimestamp)
+        entry.untilTimestampExclusive &&
+        entry.untilTimestampExclusive < databaseEntry.lastSyncedTimestamp
 
       toChangeUntilTimestamp.push({
         id: entryUse.id,
