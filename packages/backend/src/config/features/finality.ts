@@ -38,9 +38,13 @@ function getChainFinalityConfig(env: Env, project: Layer2) {
   const ENV_NAME = project.id.toUpperCase().replace(/-/g, '_')
 
   return {
-    url: env.optionalString(`FINALITY_${ENV_NAME}_PROVIDER_URL`),
-    callsPerMinute: env.optionalInteger(
-      `FINALITY_${ENV_NAME}_PROVIDER_CALLS_PER_MINUTE`,
-    ),
+    url: env.optionalString([
+      `${ENV_NAME}_RPC_URL_FOR_FINALITY`,
+      `${ENV_NAME}_RPC_URL`,
+    ]),
+    callsPerMinute: env.optionalInteger([
+      `${ENV_NAME}_RPC_CALLS_PER_MINUTE_FOR_FINALITY`,
+      `${ENV_NAME}_RPC_CALLS_PER_MINUTE`,
+    ]),
   }
 }

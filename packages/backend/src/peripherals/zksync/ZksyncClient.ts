@@ -36,6 +36,18 @@ export class ZksyncClient {
     this.call = rateLimiter.wrap(this.call.bind(this))
   }
 
+  static create(
+    services: { httpClient: HttpClient; logger: Logger },
+    options: { url: string; callsPerMinute: number | undefined },
+  ) {
+    return new ZksyncClient(
+      services.httpClient,
+      services.logger,
+      options.url,
+      options.callsPerMinute,
+    )
+  }
+
   async getLatestBlock() {
     const result = await this.call('blocks/lastFinalized')
 

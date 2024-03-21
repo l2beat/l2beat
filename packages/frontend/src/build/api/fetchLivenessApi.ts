@@ -44,7 +44,7 @@ function getMockLivenessApiResponse(): LivenessApiResponse {
       ...projects,
       polygonzkevm: {
         ...projects.polygonzkevm,
-        isSynced: false,
+        syncedUntil: UnixTime.now().add(-1, 'days'),
       },
     },
   }
@@ -63,7 +63,7 @@ function generateMockData(): LivenessApiProject {
       allTime: generateDataPoint(),
     },
     anomalies: generateAnomalies(),
-    isSynced: true,
+    syncedUntil: UnixTime.now(),
   }
 }
 
@@ -85,7 +85,7 @@ function generateAnomalies() {
     ? range(anomaliesCount).map(
         () =>
           ({
-            type: Math.random() > 0.5 ? 'DA' : 'STATE',
+            type: Math.random() > 0.5 ? 'batchSubmissions' : 'stateUpdates',
             timestamp: UnixTime.now()
               .add(
                 // TODO: (liveness) should we include current day

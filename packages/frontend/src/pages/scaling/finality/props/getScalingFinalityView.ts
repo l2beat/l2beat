@@ -1,4 +1,4 @@
-import { Layer2, ScalingProjectDataAvailabilityMode } from '@l2beat/config'
+import { DataAvailabilityMode, Layer2 } from '@l2beat/config'
 import {
   FinalityApiResponse,
   FinalityProjectData,
@@ -82,8 +82,10 @@ function getFinalityData(
   }
 }
 
-function isSynced(syncedUntil: UnixTime) {
-  return UnixTime.now().add(-1, 'days').add(-1, 'hours').lte(syncedUntil)
+function isSynced(_: UnixTime) {
+  // TODO: remove this when liveness is fixed
+  // return UnixTime.now().add(-1, 'days').add(-1, 'hours').lte(syncedUntil)
+  return true
 }
 
 function getIncludedProjects(
@@ -100,9 +102,7 @@ function getIncludedProjects(
   )
 }
 
-function daModeToDisplay(
-  daMode: ScalingProjectDataAvailabilityMode | undefined,
-) {
+function daModeToDisplay(daMode: DataAvailabilityMode | undefined) {
   if (!daMode) {
     return undefined
   }

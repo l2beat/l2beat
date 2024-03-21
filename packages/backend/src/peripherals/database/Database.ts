@@ -3,6 +3,7 @@ import { assert } from '@l2beat/shared-pure'
 import KnexConstructor, { Knex } from 'knex'
 import path from 'path'
 
+import { DatabaseConfig } from '../../config/Config'
 import { configureUtc } from './configureUtc'
 import { PolyglotMigrationSource } from './PolyglotMigrationSource'
 interface VersionQueryResult {
@@ -11,18 +12,11 @@ interface VersionQueryResult {
   }[]
 }
 
-export interface DatabaseOpts {
-  requiredMajorVersion?: number
-  minConnectionPoolSize?: number
-  maxConnectionPoolSize?: number
-}
-
 const REQUIRED_MAJOR_VERSION = 14
 
 export class Database {
   private readonly knex: Knex
   private migrated = false
-  private version: string | null = null
   private onMigrationsComplete: () => void = () => {}
   private readonly migrationsComplete = new Promise<void>((resolve) => {
     this.onMigrationsComplete = resolve
@@ -30,21 +24,21 @@ export class Database {
   private readonly requiredMajorVersion: number
 
   constructor(
-    connection: Knex.Config['connection'],
-    name: string,
+    private readonly config: DatabaseConfig,
     private readonly logger: Logger,
-    readonly opts?: DatabaseOpts,
+    applicationName: string,
   ) {
     configureUtc()
+    this.logger = this.logger.for(this)
 
     const connectionWithName =
-      typeof connection === 'object'
-        ? { ...connection, application_name: name }
-        : connection
+      typeof config.connection === 'object'
+        ? { ...config.connection, application_name: applicationName }
+        : config.connection
 
-    this.logger = this.logger.for(this)
     this.requiredMajorVersion =
-      opts?.requiredMajorVersion ?? REQUIRED_MAJOR_VERSION
+      config.requiredMajorVersion ?? REQUIRED_MAJOR_VERSION
+
     this.knex = KnexConstructor({
       client: 'pg',
       connection: connectionWithName,
@@ -53,10 +47,7 @@ export class Database {
           path.join(__dirname, 'migrations'),
         ),
       },
-      pool: {
-        min: opts?.minConnectionPoolSize,
-        max: opts?.maxConnectionPoolSize,
-      },
+      pool: config.connectionPoolSize,
     })
   }
 
@@ -67,34 +58,34 @@ export class Database {
     return trx ?? this.knex
   }
 
-  getStatus() {
-    return { migrated: this.migrated, version: this.version }
+  async closeConnection() {
+    await this.knex.destroy()
+    this.logger.debug('Connection closed')
   }
 
-  skipMigrations() {
-    this.onMigrationsComplete()
-    this.migrated = true
+  async start() {
+    if (this.config.enableQueryLogging) {
+      this.enableQueryLogging()
+    }
+    await this.assertRequiredServerVersion()
+    if (this.config.freshStart) {
+      await this.rollbackAll()
+    }
+    await this.migrateToLatest()
+  }
+
+  async rollbackAll() {
+    this.migrated = false
+    await this.knex.migrate.rollback(undefined, true)
+    this.logger.info('Migrations rollback completed')
   }
 
   async migrateToLatest() {
     await this.knex.migrate.latest()
     const version = await this.knex.migrate.currentVersion()
-    this.version = version
     this.onMigrationsComplete()
     this.migrated = true
     this.logger.info('Migrations completed', { version })
-  }
-
-  async rollbackAll() {
-    this.migrated = false
-    this.version = null
-    await this.knex.migrate.rollback(undefined, true)
-    this.logger.info('Migrations rollback completed')
-  }
-
-  async closeConnection() {
-    await this.knex.destroy()
-    this.logger.debug('Connection closed')
   }
 
   async assertRequiredServerVersion(): Promise<void> {
@@ -109,10 +100,10 @@ export class Database {
     )
   }
 
-  enableQueryLogging(): void {
+  private enableQueryLogging(): void {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     this.knex.on('query', (queryCtx: { sql: string; bindings: any[] }) => {
-      this.logger.debug('SQL Query', {
+      this.logger.trace('SQL Query', {
         query: queryCtx.sql,
         vars: queryCtx.bindings,
       })

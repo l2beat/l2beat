@@ -2,9 +2,9 @@ import React from 'react'
 
 import { ScalingFilters } from '../../../../components/table/filters/ScalingFilters'
 import { getScalingRowProps } from '../../../../components/table/props/getScalingRowProps'
-import { getScalingTvlColumnsConfig } from '../../../../components/table/props/getScalingTableColumnsConfig'
 import { TableView } from '../../../../components/table/TableView'
 import { RowConfig } from '../../../../components/table/types'
+import { getScalingTvlColumnsConfig } from '../props/getScalingTvlColumnsConfig'
 import { ScalingTvlViewEntry } from '../types'
 
 export interface ScalingTvlViewProps {

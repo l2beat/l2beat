@@ -2,90 +2,6 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "MultisigVault1",
-      "values": {
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "MultisigVault2",
-      "values": {
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "Vault6",
-      "values": {}
-    },
-    {
-      "name": "ProxyAdmin",
-      "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "ChainportCongress",
       "values": {
         "getMembersRegistry": {
@@ -108,6 +24,11 @@
     {
       "name": "ChainportCongressMembersRegistry",
       "values": {
+        "allMembers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "chainportCongress": {
           "description": null,
           "severity": null,
@@ -132,13 +53,92 @@
           "description": null,
           "severity": null,
           "type": null
+        }
+      }
+    },
+    {
+      "name": "MultisigVault1",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
         },
-        "allMembers": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
           "description": null,
           "severity": null,
           "type": null
         }
       }
+    },
+    {
+      "name": "MultisigVault2",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Vault6",
+      "values": {}
     }
   ]
 }

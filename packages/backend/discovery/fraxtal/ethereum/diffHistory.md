@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x72d825e6536e5a086fbf82cfe7ea4a98878e2f88
+
+# Diff at Fri, 15 Mar 2024 10:25:21 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@6a294996c13c1a3ad00c7c4d72e651e8fbd4fa1c block: 19412037
+- current block number: 19439733
+
+## Description
+
+One signer in the multisig is changed.
+
+## Watched changes
+
+```diff
+    contract FraxtalMultisig (0xe0d7755252873c4eF5788f7f45764E0e17610508) {
+    +++ description: None
++++ description: Signers of the multisig, high severity if threshold changes
++++ type: PERMISSION
++++ severity: LOW
+      values.getOwners.4:
+-        "0xf4E1d185666a624099298FcC42C50ba662DC7e52"
++        "0xcbc616D595D38483e6AdC45C7E426f44bF230928"
+    }
+```
+
 Generated with discovered.json: 0xc7d883541dcc997f1ca9944846e1b7ddd7675f47
 
 # Diff at Mon, 11 Mar 2024 13:05:47 GMT:

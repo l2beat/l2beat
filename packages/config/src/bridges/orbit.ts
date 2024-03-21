@@ -7,6 +7,12 @@ import { Bridge } from './types'
 
 const discovery = new ProjectDiscovery('orbit')
 
+// TODO: Better non-gnosis multisig support
+const orbitMultisigThreshold = `${discovery.getContractValue<number>(
+  'ETH Vault',
+  'required',
+)} / ${discovery.getContractValue<string[]>('ETH Vault', 'getOwners').length}`
+
 export const orbit: Bridge = {
   type: 'bridge',
   id: ProjectId('orbit'),
@@ -90,8 +96,7 @@ export const orbit: Bridge = {
     ],
     principleOfOperation: {
       name: 'Principle of Operation',
-      description:
-        'Orbit Bridge is a cross-chain bridge that allows users to transfer tokens between different blockchains. Tokens are deposited on the source chain and "representation tokens" are minted on the destination chain. When a user deposits tokens to an escrow contract on Ethereum, a message is relayed to a group o validators via Orbit Hub contract on Orbit chain to a minter contract on a destination chain, where "representation tokens" are minted. Deposited tokens are not locked and can be used in DeFi by Orbit Farm. When a user deposits minted tokens on the destination chain, they are burned and a message is relayed to validators through Orbit Hub contract on Orbit chain to Ethereum vault, which releases the tokens if enough liquidity is available. Bridge contract implementation and farm contract source code are not verified on Etherscan.',
+      description: `Orbit Bridge is a cross-chain bridge that allows users to transfer tokens between different blockchains. Tokens are deposited on the source chain and "representation tokens" are minted on the destination chain. When a user deposits tokens to an escrow contract on Ethereum, a message is relayed to a group o validators via Orbit Hub contract on Orbit chain to a minter contract on a destination chain, where "representation tokens" are minted. Deposited tokens are not locked and can be used in DeFi by Orbit Farm. When a user deposits minted tokens on the destination chain, they are burned and a message is relayed to validators through Orbit Hub contract on Orbit chain to the ETH vault bridge contract, which releases the tokens if at least ${orbitMultisigThreshold} validators have signed and liquidity is available. The source code of the farm contracts is not verified on Etherscan.`,
       references: [
         {
           text: 'Bridging transactions',
@@ -152,8 +157,7 @@ export const orbit: Bridge = {
     },
     sourceUpgradeability: {
       value: 'Yes',
-      description:
-        'Contract can be upgraded by 6/9 MultiSig. Bridge proxied implementation is not verified on Etherscan.',
+      description: `Contract can be upgraded by the ${orbitMultisigThreshold} Orbit MultiSig.`,
       sentiment: 'bad',
     },
     destinationToken: {
@@ -167,7 +171,7 @@ export const orbit: Bridge = {
     addresses: [
       discovery.getContractDetails(
         'ETH Vault',
-        'Bridge contract, Proxy, Escrow, Governance. Source code of implementation is not verified on Etherscan.',
+        'Bridge contract, Proxy, Escrow, Governance.',
       ),
       discovery.getContractDetails('USDT Farm', 'USDT Compound Farm.'),
       discovery.getContractDetails('DAI Farm', 'DAI Compound Farm.'),
@@ -178,15 +182,15 @@ export const orbit: Bridge = {
   },
   permissions: [
     {
-      // TODO: Better non-gnosis multisig support
       name: 'Bridge contract Governance',
       accounts: discovery.getPermissionedAccounts('ETH Vault', 'getOwners'),
-      description: `Participants of Bridge Governance ${discovery.getContractValue<number>(
-        'ETH Vault',
-        'required',
-      )}/${
-        discovery.getContractValue<string[]>('ETH Vault', 'getOwners').length
-      } Orbit Multisig.`,
+      description: `Participants of the Bridge Governance: ${orbitMultisigThreshold} Orbit Multisig. They have admin access to the proxies' functions and can upgrade the bridge implementation without delay.`,
+    },
+    {
+      name: 'Policy Admin',
+      accounts: [discovery.getPermissionedAccount('ETH Vault', 'policyAdmin')],
+      description:
+        'Can set bridging fees, gas limits and can pause / unpause the bridge or censor individual withdrawals.',
     },
   ],
   milestones: [

@@ -6,10 +6,10 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
-  makeDataAvailabilityConfig,
   NEW_CRYPTOGRAPHY,
   NUGGETS,
   OPERATOR,
@@ -112,25 +112,24 @@ export const aztecconnect: Layer2 = {
         tokens: ['ETH', 'DAI', 'wstETH'],
       },
     ],
-    liveness: {
-      proofSubmissions: [],
-      batchSubmissions: [],
-      stateUpdates: [
-        {
+    trackedTxs: [
+      {
+        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455',
           ),
           selector: '0xf81cccbe',
           functionSignature: 'function processRollup(bytes ,bytes _signatures)',
-          sinceTimestamp: new UnixTime(1654638194),
+          sinceTimestampInclusive: new UnixTime(1654638194),
         },
-      ],
-    },
+      },
+    ],
   },
-  dataAvailability: makeDataAvailabilityConfig({
-    type: 'On chain',
-    layer: 'Ethereum (calldata)',
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['Ethereum (calldata)'],
+    bridge: { type: 'Enshrined' },
     mode: 'State diffs',
   }),
   riskView: makeBridgeCompatible({
@@ -150,7 +149,7 @@ export const aztecconnect: Layer2 = {
         {
           contract: 'Verifier28x32',
           references: [
-            'https://etherscan.io/address/0x71c0Ab7dF00F00E4ec2990D4F1C8302c1D178f69#code#F3#L150',
+            'https://etherscan.io/address/0x9BDc85491BD589e8390A6AAb6982b82255ae2297#code#F3#L150',
           ],
         },
       ],
@@ -298,18 +297,20 @@ export const aztecconnect: Layer2 = {
         ],
       },
     ],
-    additionalPrivacy: {
-      name: 'Payments are private',
-      description:
-        'Balances and identities for all tokens on the Aztec rollup are encrypted. Each transaction is encoded as a zkSNARK, protecting user data.',
-      risks: [],
-      references: [
-        {
-          text: 'Fast Privacy, Now - Aztec Medium Blog',
-          href: 'https://medium.com/aztec-protocol/aztec-zkrollup-layer-2-privacy-1978e90ee3b6#3b25',
-        },
-      ],
-    },
+    otherConsiderations: [
+      {
+        name: 'Payments are private',
+        description:
+          'Balances and identities for all tokens on the Aztec rollup are encrypted. Each transaction is encoded as a zkSNARK, protecting user data.',
+        risks: [],
+        references: [
+          {
+            text: 'Fast Privacy, Now - Aztec Medium Blog',
+            href: 'https://medium.com/aztec-protocol/aztec-zkrollup-layer-2-privacy-1978e90ee3b6#3b25',
+          },
+        ],
+      },
+    ],
   },
   contracts: {
     addresses: [

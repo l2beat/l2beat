@@ -77,7 +77,7 @@
         "plugs": {
           "description": "Array of plug contract addresses",
           "severity": "LOW",
-          "type": "STRUCTURE"
+          "type": "CODE_CHANGE"
         }
       }
     },

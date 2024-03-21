@@ -1,7 +1,7 @@
 {
   "name": "paradex",
   "chain": "ethereum",
-  "blockNumber": 19411688,
+  "blockNumber": 19467601,
   "configHash": "0x45fe09b6af4ffb8a3b90809a336dd483fcd07cdf025d2d8e927393cb46ffe5b3",
   "version": 3,
   "contracts": [
@@ -26,7 +26,7 @@
           "0x59232aC80E6d403b6381393e52f4665ECA328558"
         ],
         "getThreshold": 2,
-        "nonce": 8,
+        "nonce": 10,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -64,12 +64,15 @@
       "address": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
       "upgradeability": {
         "type": "StarkWare proxy",
-        "implementation": "0xA964D693cd45FCBe4303524E0EFe0988cfF5ed08",
+        "implementation": "0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24",
         "upgradeDelay": 0,
         "isFinal": false,
-        "proxyGovernance": ["0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f"]
+        "proxyGovernance": [
+          "0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f",
+          "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93"
+        ]
       },
-      "implementations": ["0xA964D693cd45FCBe4303524E0EFe0988cfF5ed08"],
+      "implementations": ["0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24"],
       "sinceTimestamp": 1689850631,
       "values": {
         "configHash": "2741190170141984203224468507008497105532196084369172236871397222510074358631",
@@ -80,21 +83,21 @@
           "0x8Cef438c3e363e15F9619e32D9b5D04ff777D670",
           "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93"
         ],
-        "identify": "StarkWare_Starknet_2023_6",
-        "implementation": "0xA964D693cd45FCBe4303524E0EFe0988cfF5ed08",
+        "identify": "StarkWare_Starknet_2024_8",
+        "implementation": "0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24",
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 520,
+        "l1ToL2MessageNonce": 556,
         "MAX_UPGRADE_DELAY": 15552000,
         "messageCancellationDelay": 432000,
         "operators": ["0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"],
-        "programHash": "2479841346739966073527450029179698923866252973805981504232089731754042431018",
+        "programHash": "3383082961563516565935611087683915026448707331436034043529592588079494402084",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
-        "stateBlockHash": "3273379694334203910594393777010916860894452243277741155138017413157868528879",
-        "stateBlockNumber": 46857,
-        "stateRoot": "3198334537307318251283914901900503990463689248157055768234347819588499491863",
+        "stateBlockHash": "3172980257857332234624155110930324672574581764369403540202461150389913957568",
+        "stateBlockNumber": 47693,
+        "stateRoot": "2209580834623083951182175302397655556501940779584243971950849133450063576499",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -116,40 +119,7 @@
     "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93": [
       "constructor(address _singleton)"
     ],
-    "0x6Fd62239f3A441d1898683C5a84ce3681bB42C16": [
-      "event LogBridgeActivated()",
-      "event LogDeposit(address indexed sender, uint256 amount, uint256 indexed l2Recipient, uint256 nonce, uint256 fee)",
-      "event LogDepositCancelRequest(address indexed sender, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
-      "event LogDepositReclaimed(address indexed sender, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
-      "event LogNewGovernorAccepted(address acceptedGovernor)",
-      "event LogNominatedGovernor(address nominatedGovernor)",
-      "event LogNominationCancelled()",
-      "event LogRemovedGovernor(address removedGovernor)",
-      "event LogSetL2TokenBridge(uint256 value)",
-      "event LogSetMaxDeposit(uint256 value)",
-      "event LogSetMaxTotalBalance(uint256 value)",
-      "event LogWithdrawal(address indexed recipient, uint256 amount)",
-      "function acceptGovernance()",
-      "function cancelNomination()",
-      "function deposit(uint256 amount, uint256 l2Recipient) payable",
-      "function depositCancelRequest(uint256 amount, uint256 l2Recipient, uint256 nonce)",
-      "function depositReclaim(uint256 amount, uint256 l2Recipient, uint256 nonce)",
-      "function identify() pure returns (string)",
-      "function initialize(bytes data)",
-      "function isActive() view returns (bool)",
-      "function isFrozen() view returns (bool)",
-      "function isGovernor(address user) view returns (bool)",
-      "function maxDeposit() view returns (uint256)",
-      "function maxTotalBalance() view returns (uint256)",
-      "function nominateNewGovernor(address newGovernor)",
-      "function removeGovernor(address governorForRemoval)",
-      "function setL2TokenBridge(uint256 l2TokenBridge_)",
-      "function setMaxDeposit(uint256 maxDeposit_)",
-      "function setMaxTotalBalance(uint256 maxTotalBalance_)",
-      "function withdraw(uint256 amount, address recipient)",
-      "function withdraw(uint256 amount)"
-    ],
-    "0xA964D693cd45FCBe4303524E0EFe0988cfF5ed08": [
+    "0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24": [
       "event ConfigHashChanged(address indexed changedBy, uint256 oldConfigHash, uint256 newConfigHash)",
       "event ConsumedMessageToL1(uint256 indexed fromAddress, address indexed toAddress, uint256[] payload)",
       "event ConsumedMessageToL2(address indexed fromAddress, uint256 indexed toAddress, uint256 indexed selector, uint256[] payload, uint256 nonce)",
@@ -198,7 +168,41 @@
       "function stateBlockNumber() view returns (int256)",
       "function stateRoot() view returns (uint256)",
       "function unregisterOperator(address removedOperator)",
-      "function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)"
+      "function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)",
+      "function updateStateKzgDA(uint256[] programOutput, bytes kzgProof)"
+    ],
+    "0x6Fd62239f3A441d1898683C5a84ce3681bB42C16": [
+      "event LogBridgeActivated()",
+      "event LogDeposit(address indexed sender, uint256 amount, uint256 indexed l2Recipient, uint256 nonce, uint256 fee)",
+      "event LogDepositCancelRequest(address indexed sender, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
+      "event LogDepositReclaimed(address indexed sender, uint256 amount, uint256 indexed l2Recipient, uint256 nonce)",
+      "event LogNewGovernorAccepted(address acceptedGovernor)",
+      "event LogNominatedGovernor(address nominatedGovernor)",
+      "event LogNominationCancelled()",
+      "event LogRemovedGovernor(address removedGovernor)",
+      "event LogSetL2TokenBridge(uint256 value)",
+      "event LogSetMaxDeposit(uint256 value)",
+      "event LogSetMaxTotalBalance(uint256 value)",
+      "event LogWithdrawal(address indexed recipient, uint256 amount)",
+      "function acceptGovernance()",
+      "function cancelNomination()",
+      "function deposit(uint256 amount, uint256 l2Recipient) payable",
+      "function depositCancelRequest(uint256 amount, uint256 l2Recipient, uint256 nonce)",
+      "function depositReclaim(uint256 amount, uint256 l2Recipient, uint256 nonce)",
+      "function identify() pure returns (string)",
+      "function initialize(bytes data)",
+      "function isActive() view returns (bool)",
+      "function isFrozen() view returns (bool)",
+      "function isGovernor(address user) view returns (bool)",
+      "function maxDeposit() view returns (uint256)",
+      "function maxTotalBalance() view returns (uint256)",
+      "function nominateNewGovernor(address newGovernor)",
+      "function removeGovernor(address governorForRemoval)",
+      "function setL2TokenBridge(uint256 l2TokenBridge_)",
+      "function setMaxDeposit(uint256 maxDeposit_)",
+      "function setMaxTotalBalance(uint256 maxTotalBalance_)",
+      "function withdraw(uint256 amount, address recipient)",
+      "function withdraw(uint256 amount)"
     ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",

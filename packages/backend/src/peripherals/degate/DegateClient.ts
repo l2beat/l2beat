@@ -26,6 +26,18 @@ export class DegateClient {
     }
   }
 
+  static create(
+    services: { httpClient: HttpClient; logger: Logger },
+    options: { url: string; callsPerMinute: number | undefined },
+  ): DegateClient {
+    return new DegateClient(
+      services.httpClient,
+      services.logger,
+      options.url,
+      options,
+    )
+  }
+
   async getLatestBlockNumber() {
     const block = await this.call('latest')
     return block.blockId

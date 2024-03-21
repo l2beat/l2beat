@@ -116,4 +116,5 @@ export const mode: Layer2 = opStack({
     ],
     coingeckoPlatform: 'mode',
   },
+  usesBlobs: true,
 })

@@ -7,11 +7,11 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
-  makeDataAvailabilityConfig,
   NEW_CRYPTOGRAPHY,
   NUGGETS,
   OPERATOR,
@@ -375,35 +375,64 @@ export const starknet: Layer2 = {
       defaultCallsPerMinute: 120,
     },
     finality: 'coming soon',
-    liveness: {
-      proofSubmissions: [
-        {
+    trackedTxs: [
+      {
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        query: {
           formula: 'sharpSubmission',
-          sinceTimestamp: new UnixTime(1636978914),
-          untilTimestamp: new UnixTime(1702921247),
+          sinceTimestampInclusive: new UnixTime(1636978914),
+          untilTimestampExclusive: new UnixTime(1702921247),
           programHashes: [
             '1865367024509426979036104162713508294334262484507712987283009063059134893433',
           ],
         },
-        {
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        query: {
           formula: 'sharpSubmission',
-          sinceTimestamp: new UnixTime(1702921247),
-          untilTimestamp: new UnixTime(1704855731),
+          sinceTimestampInclusive: new UnixTime(1702921247),
+          untilTimestampExclusive: new UnixTime(1704855731),
           programHashes: [
             '54878256403880350656938046611252303365750679698042371543935159963667935317',
           ],
         },
-        {
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        query: {
           formula: 'sharpSubmission',
-          sinceTimestamp: new UnixTime(1704855731),
+          sinceTimestampInclusive: new UnixTime(1704855731),
+          untilTimestampExclusive: new UnixTime(1710252995),
           programHashes: [
             '2479841346739966073527450029179698923866252973805981504232089731754042431018',
           ],
         },
-      ],
-      batchSubmissions: [],
-      stateUpdates: [
-        {
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestampInclusive: new UnixTime(1710252995),
+          untilTimestampExclusive: new UnixTime(1710625271),
+          programHashes: [
+            '109586309220455887239200613090920758778188956576212125550190099009305121410',
+          ],
+        },
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestampInclusive: new UnixTime(1710625271),
+          programHashes: [
+            '3383082961563516565935611087683915026448707331436034043529592588079494402084',
+          ],
+        },
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
@@ -411,14 +440,27 @@ export const starknet: Layer2 = {
           selector: '0x77552641',
           functionSignature:
             'function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)',
-          sinceTimestamp: new UnixTime(1636978914),
+          sinceTimestampInclusive: new UnixTime(1636978914),
         },
-      ],
-    },
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
+          ),
+          selector: '0xb72d42a1',
+          functionSignature:
+            'function updateStateKzgDA(uint256[] programOutput, bytes kzgProof)',
+          sinceTimestampInclusive: new UnixTime(1710252995),
+        },
+      },
+    ],
   },
-  dataAvailability: makeDataAvailabilityConfig({
-    type: 'On chain',
-    layer: 'Ethereum (calldata)',
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['Ethereum (blobs or calldata)'],
+    bridge: { type: 'Enshrined' },
     mode: 'State diffs',
   }),
   riskView: makeBridgeCompatible({
@@ -428,7 +470,7 @@ export const starknet: Layer2 = {
         {
           contract: 'Starknet',
           references: [
-            'https://etherscan.io/address/0x16938E4b59297060484Fa56a12594d8D6F4177e8#code#F1#L218',
+            'https://etherscan.io/address/0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24#code',
           ],
         },
         // we don't have a way to test against shared modules
@@ -440,14 +482,13 @@ export const starknet: Layer2 = {
         // },
       ],
     },
-
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
       sources: [
         {
           contract: 'Starknet',
           references: [
-            'https://etherscan.io/address/0x16938E4b59297060484Fa56a12594d8D6F4177e8#code#F1#L213',
+            'https://etherscan.io/address/0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24#code',
           ],
         },
       ],
@@ -459,7 +500,7 @@ export const starknet: Layer2 = {
         {
           contract: 'Starknet',
           references: [
-            'https://etherscan.io/address/0x16938E4b59297060484Fa56a12594d8D6F4177e8#code#F1#L199',
+            'https://etherscan.io/address/0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24#code',
           ],
         },
       ],
@@ -504,7 +545,7 @@ export const starknet: Layer2 = {
       ],
     },
     newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
-    dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKNET_ON_CHAIN,
+    dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKNET_ON_CHAIN(true),
     operator: {
       ...OPERATOR.CENTRALIZED_OPERATOR,
       description:

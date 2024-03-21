@@ -4,6 +4,7 @@ import React from 'react'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { Markdown } from '../Markdown'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
+import { RiskList } from './RiskList'
 import { ProjectSectionId } from './sectionId'
 
 export interface StateValidationSectionProps {
@@ -54,6 +55,11 @@ export function StateValidationSection(props: StateValidationSectionProps) {
 function Item(props: {
   stateValidationCategory: ScalingProjectStateValidation['categories'][number]
 }) {
+  const risks = props.stateValidationCategory.risks?.map((risk) => ({
+    text: `${risk.category} ${risk.text}`,
+    isCritical: !!risk.isCritical,
+  }))
+
   return (
     <div>
       <span className="text-lg font-bold uppercase md:text-xl">
@@ -62,6 +68,7 @@ function Item(props: {
       <Markdown className="mt-2 leading-snug text-gray-850 dark:text-gray-400 md:text-lg">
         {props.stateValidationCategory.description}
       </Markdown>
+      {risks && <RiskList risks={risks} />}
     </div>
   )
 }
