@@ -116,7 +116,7 @@ The storage handler allows you to read values directly from storage.
   - a number, e.g. `1`
   - a hex string, e.g. `"0x1234"`
   - a reference to another field, e.g. `"{{ value }}"`
-  - an array of the above values. In this case the values are hashed to produce a key corresponding to a mapping. Given a mapping of `address => boolean` at the storage location `5` to get the value for some specific address you should set the slot to: `[5, "0x6B175474E89094C44Da98b954EedeAC495271d0F"]`
+  - an array of the above values. In this case the values are hashed to produce a key corresponding to a mapping. Given a mapping of `address => boolean` at the storage location `5` to get the value for some specific address you should set the slot to: `[5, "0x6B175474E89094C44Da98b954EedeAC495271d0F"]`. Mappings with keys of `bytes4` (like `bytes4`) and `string` type are not supported since they use a different path for computing the slot. Quick solution to this problem is to precompute the slot using `cast index`.
 - `offset` - (optional) value to be added to the slot. This is useful if whatever you are accessing is a large struct and you want to get a specific field.
 - `returnType` - (optional) specifies how to interpret the resulting `bytes32` result. Possible options are `"address"`, `"bytes"` (default), `"number"`.
 - `ignoreRelative` - (optional) if set to `true`, the method's result will not be considered a relative. This is useful when the method returns a value that a contract address, but it's not a contract that should be discovered.
