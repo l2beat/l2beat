@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { SyncStatus } from '../../pages/scaling/finality/types'
+import { SyncStatus } from '../../pages/types'
 import { NotSyncedBadge } from '../badge/NotSyncedBadge'
 import { ShieldIcon, UnderReviewIcon } from '../icons'
 import { UnverifiedIcon } from '../icons/symbols/UnverifiedIcon'
@@ -17,7 +17,7 @@ export interface ProjectCellProps {
     redWarning?: string
     showProjectUnderReview?: boolean
     warning?: string
-    syncStatus?: SyncStatus
+    data?: { syncStatus?: SyncStatus }
   }
 }
 
@@ -69,10 +69,10 @@ export function ProjectNameCell({ project }: ProjectCellProps) {
           </Tooltip>
         </span>
       )}
-      {project.syncStatus?.isSynced === false && (
+      {project.data?.syncStatus?.isSynced === false && (
         <NotSyncedBadge
           className="relative top-[-3px] ml-2"
-          displaySyncedUntil={project.syncStatus.displaySyncedUntil}
+          displaySyncedUntil={project.data?.syncStatus.displaySyncedUntil}
         />
       )}
     </div>

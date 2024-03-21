@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xc7af3bfe43816304a2fe3e7ced550745d2d142d4
+
+# Diff at Wed, 06 Mar 2024 11:41:58 GMT:
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: main@1a2512004b35590384683b93c95d8ec95426d2a6 block: 9115900
+- current block number: 10513424
+
+## Description
+
+Added v2 contracts to libraryLookup
+
+## Watched changes
+
+```diff
+    contract Endpoint (0x9740FF91F1985D8d2B71494aE1A2f723bb3Ed9E4) {
+    +++ description: None
+      values.latestVersion:
+-        1
++        3
+      values.libraryLookup[2]:
++        "0x23ec43e2b8f9aE21D895eEa5a1a9c444fe301044"
+      values.libraryLookup[1]:
++        "0x8161B3B224Cd6ce37cC20BE61607C3E19eC2A8A6"
+    }
+```
+
 Generated with discovered.json: 0x1cbb4540e92edc35852de9bde14c986343fdd000
 
 # Diff at Tue, 09 Jan 2024 16:43:38 GMT:

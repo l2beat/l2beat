@@ -1,7 +1,8 @@
-import { formatSeconds, ProjectId } from '@l2beat/shared-pure'
+import { formatSeconds, ProjectId, Sentiment } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
-import { ScalingProjectRiskViewEntry, Sentiment } from './ScalingProjectRisk'
+import { DATA_AVAILABILITY } from './dataAvailability'
+import { ScalingProjectRiskViewEntry } from './ScalingProjectRisk'
 import { ScalingProjectRiskView } from './ScalingProjectRiskView'
 
 export function makeBridgeCompatible(
@@ -133,25 +134,19 @@ export const DATA_EXTERNAL_MEMO: ScalingProjectRiskViewEntry = {
   sentiment: 'bad',
 }
 
-export function DATA_EXTERNAL_DAC(
-  DAC?: Record<string, number>,
-): ScalingProjectRiskViewEntry {
+export function DATA_EXTERNAL_DAC(DAC?: {
+  membersCount: number
+  requiredSignatures: number
+}): ScalingProjectRiskViewEntry {
   const additionalString =
     DAC !== undefined
-      ? ` with a threshold of ${DAC.keyCount - DAC.threshold + 1}/${
-          DAC.keyCount
-        }`
+      ? ` with a threshold of ${DAC.requiredSignatures}/${DAC.membersCount}`
       : ``
+
   return {
     value: 'External (DAC)',
     description: `Proof construction relies fully on data that is NOT published on chain. There exists a Data Availability Committee (DAC)${additionalString} that is tasked with protecting and supplying the data.`,
-    sentiment:
-      DAC !== undefined
-        ? DAC.keyCount < 6 ||
-          (DAC.keyCount - DAC.threshold + 1) / DAC.keyCount < 1 / 3
-          ? 'bad'
-          : 'warning'
-        : 'warning',
+    sentiment: DATA_AVAILABILITY.DAC_SENTIMENT(DAC),
   }
 }
 
@@ -452,7 +447,7 @@ export function EXIT_WINDOW(
         )} to be processed.`
   return {
     value: windowText,
-    description,
+    description: description,
     sentiment,
   }
 }

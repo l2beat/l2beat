@@ -125,7 +125,7 @@ The game already has a playable prototype and each tranche is tied to specific d
 
 **Discuss with L2BEAT**
 
-We’re curious to hear the community’s thoughts on the topic of self-voting, as well as on the idea of creating standarized guidelines for elections. We’re also very interested in discussing the STEP proposal, especially with people who have a strong financial background and can advise us on things we should be wary of in order to make an informed decision.
+We’re curious to hear the community’s thoughts on the topic of self-voting, as well as on the idea of creating standardized guidelines for elections. We’re also very interested in discussing the STEP proposal, especially with people who have a strong financial background and can advise us on things we should be wary of in order to make an informed decision.
 
 In addition, we’d like to dive deeper into the concept of having a longer term strategy which can act as a north star for the DAO and the discussion started by Danielo seems like a good opportunity to do so.
 

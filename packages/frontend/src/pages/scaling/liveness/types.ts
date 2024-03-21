@@ -1,7 +1,7 @@
 import {
+  DataAvailabilityMode,
   Layer2Provider,
   ScalingProjectCategory,
-  ScalingProjectDataAvailabilityMode,
   ScalingProjectPurpose,
   StageConfig,
 } from '@l2beat/config'
@@ -20,7 +20,7 @@ export interface ScalingLivenessViewEntry {
   shortName: string | undefined
   slug: string
   category: ScalingProjectCategory
-  dataAvailabilityMode: ScalingProjectDataAvailabilityMode
+  dataAvailabilityMode: DataAvailabilityMode | undefined
   provider: Layer2Provider | undefined
   warning: string | undefined
   redWarning: string | undefined

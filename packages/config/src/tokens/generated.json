@@ -62,21 +62,6 @@
       "formula": "locked"
     },
     {
-      "id": "ageur-ageur",
-      "name": "agEUR",
-      "coingeckoId": "ageur",
-      "address": "0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8",
-      "symbol": "agEUR",
-      "decimals": 18,
-      "deploymentTimestamp": 1634982805,
-      "coingeckoListingTimestamp": 1636675200,
-      "category": "stablecoin",
-      "iconUrl": "https://assets.coingecko.com/coins/images/19479/large/agEUR.png?1696518915",
-      "chainId": 1,
-      "type": "CBV",
-      "formula": "locked"
-    },
-    {
       "id": "alusd-alchemix-usd",
       "name": "Alchemix USD",
       "coingeckoId": "alchemix-usd",
@@ -147,6 +132,36 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/4324/large/U85xTl2.png?1696504928",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "ankreth-ankr-staked-eth",
+      "name": "Ankr Staked ETH",
+      "coingeckoId": "ankreth",
+      "address": "0xE95A203B1a91a908F9B9CE46459d101078c2c3cb",
+      "symbol": "ankrETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1604948706,
+      "coingeckoListingTimestamp": 1608163200,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13403/large/aETHc.png?1696513165",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "ankrmatic-ankr-staked-matic",
+      "name": "Ankr Staked MATIC",
+      "coingeckoId": "ankr-reward-earning-matic",
+      "address": "0x26dcFbFa8Bc267b250432c01C982Eaf81cC5480C",
+      "symbol": "ankrMATIC",
+      "decimals": 18,
+      "deploymentTimestamp": 1651655374,
+      "coingeckoListingTimestamp": 1654646400,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/25742/large/a-matic-c-da4ec10dc9723e695700e25dbf8c8edf.png?1696524833",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"
@@ -627,6 +642,21 @@
       "coingeckoListingTimestamp": 1626998400,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/17117/large/logo.png?1696516677",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "cbeth-coinbase-wrapped-staked-eth",
+      "name": "Coinbase Wrapped Staked ETH",
+      "coingeckoId": "coinbase-wrapped-staked-eth",
+      "address": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
+      "symbol": "cbETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1643901537,
+      "coingeckoListingTimestamp": 1661385600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/27008/large/cbeth.png?1709186989",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"
@@ -1126,6 +1156,21 @@
       "formula": "locked"
     },
     {
+      "id": "eura-eura-(previously-ageur)",
+      "name": "EURA (previously agEUR)",
+      "coingeckoId": "ageur",
+      "address": "0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8",
+      "symbol": "EURA",
+      "decimals": 18,
+      "deploymentTimestamp": 1634982805,
+      "coingeckoListingTimestamp": 1636675200,
+      "category": "stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/19479/large/agEUR.png?1696518915",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "eurt-euro-tether",
       "name": "Euro Tether",
       "coingeckoId": "tether-eurt",
@@ -1211,6 +1256,21 @@
       "coingeckoListingTimestamp": 1608508800,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/13422/large/FRAX_icon.png?1696513182",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "frxeth-frax-ether",
+      "name": "Frax Ether",
+      "coingeckoId": "frax-ether",
+      "address": "0x5E8422345238F34275888049021821E8E08CAa1f",
+      "symbol": "frxETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1665022895,
+      "coingeckoListingTimestamp": 1669161600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/28284/large/frxETH_icon.png?1696527284",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"
@@ -2551,6 +2611,21 @@
       "formula": "locked"
     },
     {
+      "id": "ezeth-renzo-restaked-eth",
+      "name": "Renzo Restaked ETH",
+      "coingeckoId": "renzo-restaked-eth",
+      "address": "0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
+      "symbol": "ezETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1701811163,
+      "coingeckoListingTimestamp": 1706140800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/34753/large/eth_renzo_logo_%281%29.png?1705956747",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "ren-republic-token",
       "name": "Republic Token",
       "coingeckoId": "republic-protocol",
@@ -3316,6 +3391,21 @@
       "formula": "locked"
     },
     {
+      "id": "weeth-wrapped-eeth",
+      "name": "Wrapped eETH",
+      "coingeckoId": "wrapped-eeth",
+      "address": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+      "symbol": "weETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1689005159,
+      "coingeckoListingTimestamp": 1701648000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "weth-wrapped-ether",
       "name": "Wrapped Ether",
       "coingeckoId": "weth",
@@ -3777,6 +3867,25 @@
       "formula": "totalSupply"
     },
     {
+      "id": "mode:ezeth-renzo-restaked-eth",
+      "name": "Renzo Restaked ETH",
+      "coingeckoId": "renzo-restaked-eth",
+      "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+      "symbol": "ezETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1709665883,
+      "coingeckoListingTimestamp": 1706140800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/34753/large/eth_renzo_logo_%281%29.png?1705956747",
+      "chainId": 34443,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Connext",
+        "slug": "connext"
+      }
+    },
+    {
       "id": "arb-arbitrum",
       "name": "Arbitrum",
       "coingeckoId": "arbitrum",
@@ -3989,6 +4098,24 @@
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
+      }
+    },
+    {
+      "id": "blast:usdb-usdb",
+      "name": "USDB",
+      "coingeckoId": "usdb",
+      "address": "0x4300000000000000000000000000000000000003",
+      "symbol": "USDB",
+      "decimals": 18,
+      "deploymentTimestamp": 1708809815,
+      "coingeckoListingTimestamp": 1709251200,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35595/large/65c67f0ebf2f6a1bd0feb13c_usdb-icon-yellow.png?1709255427",
+      "chainId": 81457,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Blast"
       }
     }
   ]

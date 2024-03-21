@@ -46,7 +46,7 @@ export function WarningBar({
           body={
             <div className="flex items-center gap-1">
               {textElement}
-              <OutLinkIcon />
+              <OutLinkIcon className="shrink-0" />
             </div>
           }
         />

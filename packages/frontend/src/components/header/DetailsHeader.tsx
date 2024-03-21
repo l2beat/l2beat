@@ -1,3 +1,4 @@
+import { Layer2TVLWarning } from '@l2beat/config'
 import React from 'react'
 
 import { cn } from '../../utils/cn'
@@ -24,6 +25,7 @@ export interface HeaderProps {
   isUpcoming?: boolean
   isUnderReview?: boolean
   tvlBreakdownHref?: string
+  tvlWarning?: Layer2TVLWarning
   showTvlBreakdown?: boolean
   showProjectUnderReview?: boolean
   risks?: RiskValues
@@ -108,6 +110,7 @@ export function DetailsHeader(props: HeaderProps) {
               <TvlSummary
                 stats={props.stats.l2Tvl}
                 tvlBreakdownHref={props.tvlBreakdownHref}
+                tvlWarning={props.tvlWarning}
                 showTvlBreakdown={props.showTvlBreakdown}
                 isArchived={props.isArchived}
                 type={props.type}

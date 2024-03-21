@@ -1,20 +1,29 @@
-import { Logger } from '@l2beat/backend-tools'
-import { DiscoveryDiff } from '@l2beat/discovery'
+import { assert, Logger } from '@l2beat/backend-tools'
+import { DiscoveryDiff, DiscoveryMeta } from '@l2beat/discovery'
 import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { isEmpty } from 'lodash'
 
-import { Channel, DiscordClient } from '../../peripherals/discord/DiscordClient'
+import {
+  Channel,
+  DiscordClient,
+  MAX_MESSAGE_LENGTH,
+} from '../../peripherals/discord/DiscordClient'
 import { ChainConverter } from '../../tools/ChainConverter'
+import { printAsciiTable } from '../../tools/printAsciiTable'
 import { fieldThrottleDiff } from './fieldThrottleDiff'
 import { UpdateNotifierRepository } from './repositories/UpdateNotifierRepository'
-import { diffToMessages } from './utils/diffToMessages'
+import { diffToMessage } from './utils/diffToMessage'
 import { filterDiff } from './utils/filterDiff'
 import { isNineAM } from './utils/isNineAM'
 
-export interface UpdateMetadata {
-  blockNumber: number
-  chainId: ChainId
-  dependents: string[]
-  unknownContracts: EthereumAddress[]
+export interface DailyReminderChainEntry {
+  chainName: string
+  severityCounts: {
+    low: number
+    medium: number
+    high: number
+    unknown: number
+  }
 }
 
 const OCCURRENCE_LIMIT = 3
@@ -33,14 +42,18 @@ export class UpdateNotifier {
   async handleUpdate(
     name: string,
     diff: DiscoveryDiff[],
-    metadata: UpdateMetadata,
+    meta: DiscoveryMeta | undefined,
+    blockNumber: number,
+    chainId: ChainId,
+    dependents: string[],
+    unknownContracts: EthereumAddress[],
   ) {
     // TODO(radomski): Discord notifications for chains different than
     // Ethereum are for now disabled. We still want to update the database
     // with the newest discovery but we don't want to notify about changes on
     // for example Arbitrum chain since there are a lot of changes that we
     // have not yet looked at.
-    if (metadata.chainId !== ChainId.ETHEREUM) {
+    if (chainId !== ChainId.ETHEREUM) {
       return
     }
 
@@ -48,15 +61,15 @@ export class UpdateNotifier {
     await this.updateNotifierRepository.add({
       projectName: name,
       diff,
-      blockNumber: metadata.blockNumber,
-      chainId: metadata.chainId,
+      blockNumber: blockNumber,
+      chainId: chainId,
     })
 
     const timeFence = UnixTime.now().add(-HOUR_RANGE, 'hours')
     const previousRecords = await this.updateNotifierRepository.getNewerThan(
       timeFence,
       name,
-      metadata.chainId,
+      chainId,
     )
 
     const throttled = fieldThrottleDiff(previousRecords, diff, OCCURRENCE_LIMIT)
@@ -70,29 +83,35 @@ export class UpdateNotifier {
       return
     }
 
-    const messages = diffToMessages(name, throttled, {
-      dependents: metadata.dependents,
-      blockNumber: metadata.blockNumber,
-      chain: this.chainConverter.toName(metadata.chainId),
+    const message = diffToMessage(
+      name,
+      throttled,
+      meta,
+      blockNumber,
+      this.chainConverter.toName(chainId),
+      dependents,
       nonce,
-    })
-    await this.notify(messages, 'INTERNAL')
+    )
+    await this.notify(message, 'INTERNAL')
     this.logger.info('Updates detected, notification sent [INTERNAL]', {
       name,
       amount: countDiff(throttled),
       throttledCount: diff.length - throttled.length,
     })
 
-    const filteredDiff = filterDiff(throttled, metadata.unknownContracts)
+    const filteredDiff = filterDiff(throttled, unknownContracts)
     if (filteredDiff.length === 0) {
       return
     }
-    const filteredMessages = diffToMessages(name, filteredDiff, {
-      dependents: metadata.dependents,
-      blockNumber: metadata.blockNumber,
-      chain: this.chainConverter.toName(metadata.chainId),
-    })
-    await this.notify(filteredMessages, 'PUBLIC')
+    const filteredMessage = diffToMessage(
+      name,
+      filteredDiff,
+      meta,
+      blockNumber,
+      this.chainConverter.toName(chainId),
+      dependents,
+    )
+    await this.notify(filteredMessage, 'PUBLIC')
     this.logger.info('Updates detected, notification sent [PUBLIC]', {
       name,
       amount: countDiff(filteredDiff),
@@ -134,7 +153,7 @@ export class UpdateNotifier {
   }
 
   async sendDailyReminder(
-    reminders: Record<string, string[]>,
+    reminders: Record<string, DailyReminderChainEntry[]>,
     timestamp: UnixTime,
   ): Promise<void> {
     if (!isNineAM(timestamp, 'CET')) {
@@ -142,16 +161,18 @@ export class UpdateNotifier {
     }
 
     let internals = ''
-    if (Object.entries(reminders).length > 0) {
-      const maxLength = Math.max(
-        ...Object.keys(reminders).map((name) => name.length),
-      )
-      const messages = Object.entries(reminders).map(
-        ([project, chains]) =>
-          `- ${project.padEnd(maxLength, ' ')} (${chains.join(', ')})`,
-      )
+    const header = `${getDailyReminderHeader(timestamp)}\n${internals}\n`
 
-      internals = `\`\`\`\n${messages.join('\n')}\n\`\`\``
+    if (!isEmpty(reminders)) {
+      const monospaceBlockFence = '```'
+      const safetyMargin = 10
+      const maxLength = MAX_MESSAGE_LENGTH - header.length - safetyMargin
+      const table = formatRemindersAsTable(reminders)
+      internals = handleOverflow(
+        `\`\`\`\n${table}\n`,
+        maxLength,
+        monospaceBlockFence,
+      )
     } else {
       internals = ':white_check_mark: everything is up to date'
     }
@@ -159,14 +180,73 @@ export class UpdateNotifier {
     const notifyMessage = `${getDailyReminderHeader(timestamp)}\n${internals}\n`
 
     await this.notify(notifyMessage, 'INTERNAL')
-    this.logger.info('Daily reminder sent', {
-      reminders: reminders,
-    })
+    this.logger.info('Daily reminder sent', { reminders })
   }
 }
 
+function formatRemindersAsTable(
+  reminders: Record<string, DailyReminderChainEntry[]>,
+): string {
+  const headers = ['Project', 'Chain', 'High', 'Mid', 'Low', '???']
+
+  const flat = flattenReminders(reminders)
+  const sorted = flat.sort((a, b) => {
+    const {
+      low: aLow,
+      medium: aMedium,
+      high: aHigh,
+      unknown: aUnknown,
+    } = a.chainEntry.severityCounts
+    const {
+      low: bLow,
+      medium: bMedium,
+      high: bHigh,
+      unknown: bUnknown,
+    } = b.chainEntry.severityCounts
+
+    const aSum = aHigh * 1e9 + aMedium * 1e6 + aLow * 1e3 + aUnknown
+    const bSum = bHigh * 1e9 + bMedium * 1e6 + bLow * 1e3 + bUnknown
+
+    return bSum - aSum
+  })
+
+  const rows = sorted.map(({ projectName, chainEntry }) => {
+    const { chainName, severityCounts: s } = chainEntry
+    return [
+      projectName,
+      chainName,
+      s.high === 0 ? '' : s.high.toString(),
+      s.medium === 0 ? '' : s.medium.toString(),
+      s.low === 0 ? '' : s.low.toString(),
+      s.unknown === 0 ? '' : s.unknown.toString(),
+    ]
+  })
+
+  return printAsciiTable(headers, rows)
+}
+
+function flattenReminders(
+  reminders: Record<string, DailyReminderChainEntry[]>,
+): {
+  projectName: string
+  chainEntry: DailyReminderChainEntry
+}[] {
+  const entries: {
+    projectName: string
+    chainEntry: DailyReminderChainEntry
+  }[] = []
+
+  Object.entries(reminders).forEach(([key, values]) => {
+    values.forEach((chainEntry) => {
+      entries.push({ projectName: key, chainEntry })
+    })
+  })
+
+  return entries
+}
+
 function getDailyReminderHeader(timestamp: UnixTime): string {
-  return `# Daily bot report @ ${timestamp.toYYYYMMDD()}\n\n:x: Detected changes :x:`
+  return `# Daily bot report @ ${timestamp.toYYYYMMDD()}\n\n:x: Detected changes with following severities :x:`
 }
 
 function countDiff(diff: DiscoveryDiff[]): number {
@@ -180,4 +260,25 @@ function countDiff(diff: DiscoveryDiff[]): number {
     }
   }
   return count
+}
+
+function handleOverflow(
+  str: string,
+  maxLength: number,
+  userSuffix = '',
+): string {
+  const WARNING_MESSAGE = '... (message too long)'
+  assert(
+    maxLength > WARNING_MESSAGE.length + userSuffix.length,
+    'maxLength must be greater than WARNING_MESSAGE.length + userSuffix.length',
+  )
+
+  if (str.length + userSuffix.length <= maxLength) {
+    return str + userSuffix
+  }
+
+  return `${str.substring(
+    0,
+    maxLength - WARNING_MESSAGE.length - userSuffix.length,
+  )}${WARNING_MESSAGE}${userSuffix}`
 }

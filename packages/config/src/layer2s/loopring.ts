@@ -1,8 +1,8 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
@@ -10,6 +10,7 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
@@ -47,8 +48,6 @@ export const loopring: Layer2 = {
     purposes: ['NFT', 'AMM'],
     provider: 'Loopring',
     category: 'ZK Rollup',
-    dataAvailabilityMode: 'StateDiffs',
-
     links: {
       websites: ['https://loopring.org'],
       apps: ['https://loopring.io/#/trade'],
@@ -72,6 +71,9 @@ export const loopring: Layer2 = {
     liveness: {
       explanation:
         'Loopring is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
+    },
+    finality: {
+      finalizationPeriod: 0,
     },
   },
   config: {
@@ -102,17 +104,15 @@ export const loopring: Layer2 = {
       defaultUrl: 'https://api3.loopring.io/api/v3',
       defaultCallsPerMinute: 240,
     },
-    liveness: {
-      duplicateData: [
-        {
-          from: 'stateUpdates',
-          to: 'proofSubmissions',
-        },
-      ],
-      proofSubmissions: [],
-      batchSubmissions: [],
-      stateUpdates: [
-        {
+    trackedTxs: [
+      {
+        uses: [
+          {
+            type: 'liveness',
+            subtype: 'stateUpdates',
+          },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512',
@@ -120,11 +120,23 @@ export const loopring: Layer2 = {
           selector: '0xdcb2aa31',
           functionSignature:
             'function submitBlocksWithCallbacks(bool isDataCompressed, bytes calldata data, ((uint16,(uint16,uint16,uint16,bytes)[])[], address[])  calldata config)',
-          sinceTimestamp: new UnixTime(1616396742),
+          sinceTimestampInclusive: new UnixTime(1616396742),
         },
-      ],
+      },
+    ],
+    liveness: {
+      duplicateData: {
+        from: 'stateUpdates',
+        to: 'proofSubmissions',
+      },
     },
+    finality: 'coming soon',
   },
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['Ethereum (calldata)'],
+    bridge: { type: 'Enshrined' },
+    mode: 'State diffs',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -206,7 +218,7 @@ export const loopring: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...DATA_AVAILABILITY.ON_CHAIN,
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       references: [
         {
           text: 'Introduction - Loopring design doc',

@@ -8,11 +8,6 @@ export function createFinalityRouter(finalityController: FinalityController) {
   router.get('/api/finality', async (ctx) => {
     const result = await finalityController.getFinality()
 
-    if (result.type === 'error') {
-      ctx.status = 404
-      ctx.body = result.error
-      return
-    }
     ctx.body = result.data
   })
 

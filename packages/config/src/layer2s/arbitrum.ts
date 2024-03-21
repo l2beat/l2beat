@@ -6,8 +6,8 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
@@ -15,6 +15,7 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { subtractOneAfterBlockInclusive } from '../common/assessCount'
 import { UPGRADE_MECHANISM } from '../common/upgradeMechanism'
@@ -94,13 +95,16 @@ export const arbitrum: Layer2 = {
     description: `Arbitrum One is a general-purpose Optimistic Rollup built by Offchain Labs and governed by the Arbitrum DAO.`,
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
-    dataAvailabilityMode: 'TxData',
     provider: 'Arbitrum',
     links: {
       websites: ['https://arbitrum.io/', 'https://arbitrum.foundation/'],
       apps: [],
       documentation: ['https://developer.arbitrum.io/'],
-      explorers: ['https://arbiscan.io', 'https://explorer.arbitrum.io/'],
+      explorers: [
+        'https://arbiscan.io',
+        'https://explorer.arbitrum.io/',
+        'https://arbitrum.l2scan.co/',
+      ],
       repositories: [
         'https://github.com/ArbitrumFoundation/docs',
         'https://github.com/ArbitrumFoundation/governance',
@@ -126,6 +130,7 @@ export const arbitrum: Layer2 = {
         challengeWindow * assumedBlockTime,
       )} after it has been posted.`,
     },
+    finality: { finalizationPeriod: challengeWindowSeconds },
   },
   config: {
     associatedTokens: ['ARB'],
@@ -183,10 +188,11 @@ export const arbitrum: Layer2 = {
       assessCount: subtractOneAfterBlockInclusive(22207818),
       startBlock: 1,
     },
-    liveness: {
-      proofSubmissions: [],
-      batchSubmissions: [
-        {
+    finality: 'coming soon',
+    trackedTxs: [
+      {
+        uses: [{ type: 'liveness', subtype: 'batchSubmissions' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6',
@@ -194,9 +200,12 @@ export const arbitrum: Layer2 = {
           selector: '0x8f111f3c',
           functionSignature:
             'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
-          sinceTimestamp: new UnixTime(1661457944),
+          sinceTimestampInclusive: new UnixTime(1661457944),
         },
-        {
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'batchSubmissions' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6',
@@ -204,9 +213,12 @@ export const arbitrum: Layer2 = {
           selector: '0x6f12b0c9',
           functionSignature:
             'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder)',
-          sinceTimestamp: new UnixTime(1661457944),
+          sinceTimestampInclusive: new UnixTime(1661457944),
         },
-        {
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'batchSubmissions' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6',
@@ -214,11 +226,25 @@ export const arbitrum: Layer2 = {
           selector: '0xe0bc9729',
           functionSignature:
             'function addSequencerL2Batch(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
-          sinceTimestamp: new UnixTime(1661457944),
+          sinceTimestampInclusive: new UnixTime(1661457944),
         },
-      ],
-      stateUpdates: [
-        {
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'batchSubmissions' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6',
+          ),
+          selector: '0x3e5aa082',
+          functionSignature:
+            'function addSequencerL2BatchFromBlobs(uint256 sequenceNumber,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+          sinceTimestampInclusive: new UnixTime(1710427823),
+        },
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840',
@@ -226,10 +252,10 @@ export const arbitrum: Layer2 = {
           selector: '0xa04cee60',
           functionSignature:
             'function updateSendRoot(bytes32 root, bytes32 l2BlockHash) external',
-          sinceTimestamp: new UnixTime(1661455766),
+          sinceTimestampInclusive: new UnixTime(1661455766),
         },
-      ],
-    },
+      },
+    ],
   },
   chainConfig: {
     name: 'arbitrum',
@@ -257,6 +283,11 @@ export const arbitrum: Layer2 = {
     ],
     coingeckoPlatform: 'arbitrum-one',
   },
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['Ethereum (blobs or calldata)'],
+    bridge: { type: 'Enshrined' },
+    mode: 'Transactions data (compressed)',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(nOfChallengers),
@@ -299,7 +330,7 @@ export const arbitrum: Layer2 = {
         l1TimelockDelay,
       )} L1 timelock.`,
       warning: {
-        text: 'The Security Council can upgrade with no delay.',
+        value: 'The Security Council can upgrade with no delay.',
         sentiment: 'bad',
       },
       sources: [
@@ -371,7 +402,7 @@ export const arbitrum: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
       references: [
         {
           text: 'Sequencing followed by deterministic execution - Arbitrum documentation',
@@ -442,28 +473,30 @@ export const arbitrum: Layer2 = {
       },
       EXITS.AUTONOMOUS,
     ],
-    smartContracts: {
-      name: 'EVM compatible smart contracts are supported',
-      description:
-        'Arbitrum One uses Nitro technology that allows running fraud proofs by executing EVM code on top of WASM.',
-      risks: [
-        {
-          category: 'Funds can be lost if',
-          text: 'there are mistakes in the highly complex Nitro and WASM one-step prover implementation.',
-        },
-      ],
-      references: [
-        {
-          text: 'Inside Arbitrum Nitro',
-          href: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/',
-        },
-      ],
-    },
-    upgradeMechanism: UPGRADE_MECHANISM.ARBITRUM_DAO(
-      l1TimelockDelay,
-      challengeWindow * assumedBlockTime,
-      l2TimelockDelay,
-    ),
+    otherConsiderations: [
+      {
+        name: 'EVM compatible smart contracts are supported',
+        description:
+          'Arbitrum One uses Nitro technology that allows running fraud proofs by executing EVM code on top of WASM.',
+        risks: [
+          {
+            category: 'Funds can be lost if',
+            text: 'there are mistakes in the highly complex Nitro and WASM one-step prover implementation.',
+          },
+        ],
+        references: [
+          {
+            text: 'Inside Arbitrum Nitro',
+            href: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/',
+          },
+        ],
+      },
+      UPGRADE_MECHANISM.ARBITRUM_DAO(
+        l1TimelockDelay,
+        challengeWindow * assumedBlockTime,
+        l2TimelockDelay,
+      ),
+    ],
   },
   stateDerivation: {
     nodeSoftware: `The rollup node (Arbitrum Nitro) consists of three parts. The base layer is the core Geth server (with minor modifications to add hooks) that emulates the execution of EVM contracts and maintains Ethereum's state. The middle layer, ArbOS, provides additional Layer 2 functionalities such as decompressing data batches, accounting for Layer 1 gas costs, and supporting cross-chain bridge functionalities. The top layer consists of node software, primarily from Geth, that handles client connections (i.e., regular RPC node). [View Code](https://github.com/OffchainLabs/nitro/)`,

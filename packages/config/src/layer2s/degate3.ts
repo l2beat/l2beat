@@ -8,7 +8,7 @@ import {
 import { utils } from 'ethers'
 
 import {
-  DATA_AVAILABILITY,
+  addSentimentToDataAvailability,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
@@ -16,6 +16,7 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
@@ -72,7 +73,7 @@ export const degate3: Layer2 = {
     purposes: ['Exchange'],
     provider: 'Loopring',
     category: 'ZK Rollup',
-    dataAvailabilityMode: 'StateDiffs',
+
     links: {
       websites: ['https://degate.com/'],
       apps: ['https://app.degate.com/'],
@@ -87,9 +88,13 @@ export const degate3: Layer2 = {
         'https://mirror.xyz/0x078a601f492043C8e7D0E15B0F8815f58b4c342f',
       ],
     },
+    activityDataSource: 'Explorer API',
     liveness: {
       explanation:
         'DeGate is a ZK rollup based on Loopring’s code base that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
+    },
+    finality: {
+      finalizationPeriod: 0,
     },
   },
   config: {
@@ -101,17 +106,20 @@ export const degate3: Layer2 = {
         tokens: '*',
       }),
     ],
-    liveness: {
-      duplicateData: [
-        {
-          from: 'stateUpdates',
-          to: 'proofSubmissions',
-        },
-      ],
-      proofSubmissions: [],
-      batchSubmissions: [],
-      stateUpdates: [
-        {
+    transactionApi: {
+      type: 'degate',
+      defaultUrl: 'https://v1-mainnet-backend.degate.com/order-book-api',
+      defaultCallsPerMinute: 120,
+    },
+    trackedTxs: [
+      {
+        uses: [
+          {
+            type: 'liveness',
+            subtype: 'stateUpdates',
+          },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x9b93e47b7F61ad1358Bd47Cd01206708E85AE5eD',
@@ -119,11 +127,23 @@ export const degate3: Layer2 = {
           selector: '0x377bb770',
           functionSignature:
             'function submitBlocks(bool isDataCompressed,bytes data)',
-          sinceTimestamp: new UnixTime(1699747007),
+          sinceTimestampInclusive: new UnixTime(1699747007),
         },
-      ],
+      },
+    ],
+    liveness: {
+      duplicateData: {
+        from: 'stateUpdates',
+        to: 'proofSubmissions',
+      },
     },
+    finality: 'coming soon',
   },
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['Ethereum (calldata)'],
+    bridge: { type: 'Enshrined' },
+    mode: 'State diffs',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -206,7 +226,7 @@ export const degate3: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...DATA_AVAILABILITY.ON_CHAIN,
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       references: [
         {
           text: 'Introduction - DeGate design doc',

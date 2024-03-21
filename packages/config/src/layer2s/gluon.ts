@@ -2,13 +2,13 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { Layer2 } from './types'
 
@@ -27,7 +27,6 @@ export const gluon: Layer2 = {
       'LeverJ trading platform appears to be in a maintenance mode as the team moved to build NFT trading platform. Social medias associated with the project are silent since mid 2021.',
     purposes: ['Exchange'],
     category: 'Plasma',
-    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://gluon.network/', 'https://leverj.io/'],
       apps: ['https://live.leverj.io/'],
@@ -81,7 +80,7 @@ export const gluon: Layer2 = {
       isIncomplete: true,
     },
     dataAvailability: {
-      ...DATA_AVAILABILITY.PLASMA_OFF_CHAIN,
+      ...TECHNOLOGY_DATA_AVAILABILITY.PLASMA_OFF_CHAIN,
       isIncomplete: true,
     },
     operator: {

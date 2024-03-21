@@ -148,17 +148,30 @@ export const synapse: Bridge = {
       "Manages the bridge parameters and can upgrade its implementation, in case of malicious upgrade user's funds can be lost. Additionally it manages Liquidity Pool with the permissions to mint new tokens.",
     ),
     {
-      name: 'Nodes',
-      description: 'Can withdraw funds and mint SynERC20 Wrapped tokens.',
-      accounts: [
-        {
-          // TODO: add support for deeper queries SynapseBridge.accessControl.NODEGROUP_ROLE.members
-          address: EthereumAddress(
-            '0x230A1AC45690B9Ae1176389434610B9526d2f21b',
-          ),
-          type: 'EOA',
-        },
-      ],
+      name: 'Nodes (NODEGROUP_ROLE)',
+      description:
+        'Is an executor who can call regular bridging functions like withdrawing funds and minting SynERC20 Wrapped tokens.',
+      accounts: discovery.getAccessControlRolePermission(
+        'SynapseBridge',
+        'NODEGROUP_ROLE',
+      ),
+    },
+    {
+      name: 'Governors (GOVERNANCE_ROLE)',
+      description:
+        'Can set bridging fees, pause and unpause the SynapseBridge contract.',
+      accounts: discovery.getAccessControlRolePermission(
+        'SynapseBridge',
+        'GOVERNANCE_ROLE',
+      ),
+    },
+    {
+      name: 'Admin (DEFAULT_ADMIN_ROLE)',
+      description: 'Can call setWethAddress() on the SynapseBridge contract.',
+      accounts: discovery.getAccessControlRolePermission(
+        'SynapseBridge',
+        'DEFAULT_ADMIN_ROLE',
+      ),
     },
   ],
 }

@@ -6,8 +6,8 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
@@ -16,6 +16,7 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { getCommittee } from '../discovery/starkware'
@@ -81,7 +82,6 @@ export const dydx: Layer2 = {
     purposes: ['Exchange'],
     provider: 'StarkEx',
     category: 'ZK Rollup',
-    dataAvailabilityMode: 'StateDiffs',
 
     links: {
       websites: ['https://dydx.exchange/'],
@@ -114,6 +114,9 @@ export const dydx: Layer2 = {
       explanation:
         'dYdX is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. The verification is done as part of the state update.',
     },
+    finality: {
+      finalizationPeriod: 0,
+    },
   },
   config: {
     escrows: [
@@ -130,9 +133,10 @@ export const dydx: Layer2 = {
       sinceTimestamp: new UnixTime(1613033682),
       resyncLastDays: 7,
     },
-    liveness: {
-      proofSubmissions: [
-        {
+    trackedTxs: [
+      {
+        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x894c4a12548FB18EaA48cF34f9Cd874Fc08b7FC3',
@@ -140,12 +144,12 @@ export const dydx: Layer2 = {
           selector: '0x9b3b76cc',
           functionSignature:
             'function verifyProofAndRegister(uint256[] proofParams, uint256[] proof, uint256[] taskMetadata, uint256[] cairoAuxInput, uint256 cairoVerifierId)',
-          sinceTimestamp: new UnixTime(1615417556),
+          sinceTimestampInclusive: new UnixTime(1615417556),
         },
-      ],
-      batchSubmissions: [],
-      stateUpdates: [
-        {
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xD54f502e184B6B739d7D27a6410a67dc462D69c8',
@@ -153,11 +157,17 @@ export const dydx: Layer2 = {
           selector: '0x538f9406',
           functionSignature:
             'function updateState(uint256[] publicInput, uint256[] applicationData)',
-          sinceTimestamp: new UnixTime(1613033682),
+          sinceTimestampInclusive: new UnixTime(1613033682),
         },
-      ],
-    },
+      },
+    ],
+    finality: 'coming soon',
   },
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['Ethereum (calldata)'],
+    bridge: { type: 'Enshrined' },
+    mode: 'State diffs',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
@@ -233,9 +243,9 @@ export const dydx: Layer2 = {
     },
     newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
     dataAvailability: {
-      ...DATA_AVAILABILITY.STARKEX_ON_CHAIN,
+      ...TECHNOLOGY_DATA_AVAILABILITY.STARKEX_ON_CHAIN,
       references: [
-        ...DATA_AVAILABILITY.STARKEX_ON_CHAIN.references,
+        ...TECHNOLOGY_DATA_AVAILABILITY.STARKEX_ON_CHAIN.references,
         {
           text: 'UpdatePerpetualState.sol#L82 - Etherscan source code, updateState function',
           href: 'https://etherscan.io/address/0xdf9c117cad37f2ed8c99e36a40317d8cc340d4a0#code#F35#L82',

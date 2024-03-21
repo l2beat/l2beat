@@ -1,0 +1,131 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "AllowanceModule",
+      "values": {
+        "ALLOWANCE_TRANSFER_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DOMAIN_SEPARATOR_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "NAME": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Bridge Multisig",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SynapseBridge",
+      "description": "accessControl roles described in meta.json",
+      "values": {
+        "WETH_ADDRESS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accessControl": {
+          "description": "Roles: GOVERNANCE_ROLE can set fees, pause and unpause; NODEGROUP_ROLE can call bridging funtions; ADMIN_ROLE can setWethAddress()",
+          "severity": "MEDIUM",
+          "type": "PERMISSION"
+        },
+        "bridgeVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainGasAmount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "startBlockNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "TimelockController",
+      "values": {
+        "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getMinDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}

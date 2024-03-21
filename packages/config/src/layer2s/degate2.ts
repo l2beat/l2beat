@@ -7,7 +7,7 @@ import {
 import { utils } from 'ethers'
 
 import {
-  DATA_AVAILABILITY,
+  addSentimentToDataAvailability,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
@@ -15,6 +15,7 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
@@ -58,7 +59,6 @@ export const degate2: Layer2 = {
     purposes: ['Exchange'],
     provider: 'Loopring',
     category: 'ZK Rollup',
-    dataAvailabilityMode: 'StateDiffs',
 
     links: {
       websites: ['https://degate.com/'],
@@ -84,11 +84,10 @@ export const degate2: Layer2 = {
         tokens: '*',
       }),
     ],
-    liveness: {
-      proofSubmissions: [],
-      batchSubmissions: [],
-      stateUpdates: [
-        {
+    trackedTxs: [
+      {
+        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x2CFd271e9b4d0344Fd2Aa0cb1ffd4f6b85c0B215',
@@ -96,12 +95,17 @@ export const degate2: Layer2 = {
           selector: '0x377bb770',
           functionSignature:
             'function submitBlocks(bool isDataCompressed,bytes data)',
-          sinceTimestamp: new UnixTime(1693304819),
-          untilTimestamp: new UnixTime(1699766507),
+          sinceTimestampInclusive: new UnixTime(1693304819),
+          untilTimestampExclusive: new UnixTime(1699766508),
         },
-      ],
-    },
+      },
+    ],
   },
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['Ethereum (calldata)'],
+    bridge: { type: 'Enshrined' },
+    mode: 'State diffs',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -179,7 +183,7 @@ export const degate2: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...DATA_AVAILABILITY.ON_CHAIN,
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       references: [
         {
           text: 'Introduction - DeGate design doc',

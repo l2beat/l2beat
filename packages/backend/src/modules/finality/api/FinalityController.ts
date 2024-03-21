@@ -1,54 +1,32 @@
-import {
-  FinalityApiResponse,
-  LivenessType,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { FinalityApiResponse } from '@l2beat/shared-pure'
 import { keyBy, mapValues, partition } from 'lodash'
 
-import { Project } from '../../../model/Project'
-import { IndexerStateRepository } from '../../../peripherals/database/repositories/IndexerStateRepository'
-import { Clock } from '../../../tools/Clock'
-import { LivenessRepository } from '../../liveness/repositories/LivenessRepository'
+import { FinalityProjectConfig } from '../../../config/features/finality'
+import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
+import { TrackedTxsConfigsRepository } from '../../tracked-txs/repositories/TrackedTxsConfigsRepository'
 import { FinalityRepository } from '../repositories/FinalityRepository'
 import { calcAvgsPerProject } from './calcAvgsPerProject'
 import { divideAndAddLag } from './divideAndAddLag'
 
-type FinalityResult =
-  | {
-      type: 'success'
-      data: FinalityApiResponse
-    }
-  | {
-      type: 'error'
-      error: 'DATA_NOT_SYNCED'
-    }
+type FinalityResult = {
+  type: 'success'
+  data: FinalityApiResponse
+}
 
 export class FinalityController {
   constructor(
     private readonly livenessRepository: LivenessRepository,
     private readonly finalityRepository: FinalityRepository,
-    private readonly indexerStateRepository: IndexerStateRepository,
-    private readonly projects: Project[],
-    private readonly clock: Clock,
+    private readonly trackedTxsConfigsRepository: TrackedTxsConfigsRepository,
+    private readonly projects: FinalityProjectConfig[],
   ) {}
 
   async getFinality(): Promise<FinalityResult> {
-    const requiredTimestamp = this.clock.getLastHour().add(-1, 'hours')
-    const indexerState = await this.indexerStateRepository.findIndexerState(
-      'liveness_indexer',
-    )
-    if (
-      indexerState === undefined ||
-      new UnixTime(indexerState.safeHeight).lt(requiredTimestamp)
-    ) {
-      return { type: 'error', error: 'DATA_NOT_SYNCED' }
-    }
-
     const projects: FinalityApiResponse['projects'] = {}
 
     const [OPStackProjects, otherProjects] = partition(
-      this.projects.filter((p) => !p.isArchived && p.finalityConfig),
-      (p) => p.finalityConfig?.type === 'OPStack',
+      this.projects,
+      (p) => p.type === 'OPStack',
     )
     const OPStackFinality = await this.getOPStackFinality(OPStackProjects)
     Object.assign(projects, OPStackFinality)
@@ -60,7 +38,7 @@ export class FinalityController {
   }
 
   async getProjectsFinality(
-    projects: Project[],
+    projects: FinalityProjectConfig[],
   ): Promise<FinalityApiResponse['projects']> {
     const projectIds = projects.map((p) => p.projectId)
     const records = await this.finalityRepository.getLatestGroupedByProjectId(
@@ -83,29 +61,27 @@ export class FinalityController {
   }
 
   async getOPStackFinality(
-    projects: Project[],
+    projects: FinalityProjectConfig[],
   ): Promise<FinalityApiResponse['projects']> {
     const result: FinalityApiResponse['projects'] = {}
     await Promise.all(
       projects.map(async (project) => {
-        if (project.finalityConfig === undefined) {
-          return
-        }
+        const syncedUntil =
+          await this.trackedTxsConfigsRepository.findLatestSyncedTimestampByProjectIdAndSubtype(
+            project.projectId,
+            'batchSubmissions',
+          )
+
+        if (!syncedUntil) return
+
         const records = await this.livenessRepository.getByProjectIdAndType(
           project.projectId,
-          LivenessType('DA'),
-          UnixTime.now().add(-1, 'days'),
+          'batchSubmissions',
+          syncedUntil.add(-1, 'days'),
         )
-
-        const latestRecord = records.at(0)
-        if (!latestRecord) return
 
         const intervals = calcAvgsPerProject(records)
-        const projectResult = divideAndAddLag(
-          intervals,
-          project.finalityConfig.lag,
-        )
-        const syncedUntil = latestRecord.timestamp
+        const projectResult = divideAndAddLag(intervals, project.lag)
 
         if (projectResult) {
           result[project.projectId.toString()] = {

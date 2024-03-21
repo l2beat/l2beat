@@ -1,9 +1,9 @@
-import { LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
 
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
-import { LivenessRepository } from '../../liveness/repositories/LivenessRepository'
+import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { LineaFinalityAnalyzer } from './LineaFinalityAnalyzer'
 
 describe(LineaFinalityAnalyzer.name, () => {
@@ -11,22 +11,24 @@ describe(LineaFinalityAnalyzer.name, () => {
     it('correctly decode and returns correct data', async () => {
       const livenessRepository = getMockLivenessRepository()
       const provider = getMockRpcClient()
-
-      const l1Timestamp = 1705407431
+      const l2provider = getMockL2RpcClient(TIMESTAMPS1)
+      const l1Timestamp = 1708352483
 
       const calculator = new LineaFinalityAnalyzer(
         provider,
         livenessRepository,
         ProjectId('linea'),
+        l2provider,
       )
       const results = await calculator.getFinality({
         txHash: '0x121',
         timestamp: new UnixTime(l1Timestamp),
       })
 
-      expect(results).toEqualUnsorted(
-        DATA1_TIMESTAMPS.map((t) => l1Timestamp - t),
-      )
+      expect(results).toEqualUnsorted([
+        l1Timestamp - Math.min(...TIMESTAMPS1),
+        l1Timestamp - Math.max(...TIMESTAMPS1),
+      ])
     })
   })
 
@@ -36,11 +38,14 @@ describe(LineaFinalityAnalyzer.name, () => {
       it('correctly split date for a given granularity', async () => {
         const livenessRepository = getMockLivenessRepository()
         const provider = getMockRpcClient()
+        const l2provider = getMockL2RpcClient(TIMESTAMPS2)
+
         const start = UnixTime.now().toStartOf('hour')
         const calculator = new LineaFinalityAnalyzer(
           provider,
           livenessRepository,
           ProjectId('linea'),
+          l2provider,
         )
 
         await calculator.getFinalityWithGranularity(
@@ -54,7 +59,7 @@ describe(LineaFinalityAnalyzer.name, () => {
         ).toHaveBeenNthCalledWith(
           1,
           ProjectId('linea'),
-          LivenessType('STATE'),
+          'batchSubmissions',
           start,
           start.add(-600, 'seconds'),
         )
@@ -64,7 +69,7 @@ describe(LineaFinalityAnalyzer.name, () => {
         ).toHaveBeenNthCalledWith(
           6,
           ProjectId('linea'),
-          LivenessType('STATE'),
+          'batchSubmissions',
           start.add(-600 * 5, 'seconds'),
           start.add(-600 * 6, 'seconds'),
         )
@@ -77,8 +82,8 @@ describe(LineaFinalityAnalyzer.name, () => {
 
       it('correctly decode for multiple txs with one not found', async () => {
         const start = UnixTime.now().toStartOf('hour')
-        const firstL1Timestamp = 1705407431
-        const secondL1Timestamp = 1706171999
+        const firstL1Timestamp = 1708300000
+        const secondL1Timestamp = 1709300000
 
         const livenessRepository = mockObject<LivenessRepository>({
           findTransactionWithinTimeRange: mockFn()
@@ -96,27 +101,35 @@ describe(LineaFinalityAnalyzer.name, () => {
         const provider = mockObject<RpcClient>({
           getTransaction: mockFn()
             .resolvesToOnce({
-              data: getMockCallData(DATA1_TIMESTAMPS),
+              data: getMockCallData(2300000, 2300348),
             })
             .resolvesToOnce({
-              data: getMockCallData(DATA2_TIMESTAMPS),
+              data: getMockCallData(2400000, 2400100),
             }),
         })
+
+        const l2provider = getMockL2RpcClient([
+          1706143000, 1706145000, 1706144000, 1706146000,
+        ])
 
         const calculator = new LineaFinalityAnalyzer(
           provider,
           livenessRepository,
           ProjectId('linea'),
+          l2provider,
         )
         const results = await calculator.getFinalityWithGranularity(
           start.add(-1, 'hours'),
           start,
           3,
         )
+
         if (results) {
           expect(results).toEqualUnsorted([
-            ...DATA1_TIMESTAMPS.map((t) => firstL1Timestamp - t),
-            ...DATA2_TIMESTAMPS.map((t) => secondL1Timestamp - t),
+            firstL1Timestamp - 1706143000,
+            firstL1Timestamp - 1706144000,
+            secondL1Timestamp - 1706145000,
+            secondL1Timestamp - 1706146000,
           ])
         }
 
@@ -141,44 +154,41 @@ function getMockLivenessRepository() {
 function getMockRpcClient() {
   return mockObject<RpcClient>({
     getTransaction: mockFn().resolvesTo({
-      data: getMockCallData(DATA1_TIMESTAMPS),
+      data: getMockCallData(2371262, 2371336),
     }),
   })
 }
 
-const DATA1_TIMESTAMPS = [
-  1705373738, 1705373744, 1705373750, 1705373756, 1705373762, 1705373768,
-  1705373774, 1705373780, 1705373786, 1705373792, 1705373798, 1705373804,
-  1705373810,
-]
+function getMockL2RpcClient(timestamps: number[]) {
+  const getBlock = mockFn()
+  timestamps.forEach((timestamp) => {
+    getBlock.resolvesToOnce({
+      timestamp,
+    })
+  })
+  return mockObject<RpcClient>({
+    getBlock,
+  })
+}
 
-const DATA2_TIMESTAMPS = [
-  1706143081, 1706143085, 1706143089, 1706143093, 1706143097, 1706143101,
-  1706143105, 1706143109, 1706143113, 1706143117, 1706143121, 1706143125,
-  1706143129, 1706143133, 1706143137, 1706143141, 1706143145, 1706143149,
-  1706143153, 1706143157, 1706143161, 1706143165, 1706143169, 1706143173,
-  1706143177, 1706143181, 1706143185, 1706143189,
-]
+const TIMESTAMPS1 = Array.from({ length: 2 }, (_, i) => 1706143081 + i)
+const TIMESTAMPS2 = Array.from({ length: 75 * 6 }, (_, i) => 1706143081 + i)
 
-function getMockCallData(timestamps: number[]): string {
+function getMockCallData(firstBlock: number, endBlock: number): string {
   const fnSignature =
-    'finalizeBlocks((bytes32,uint32,bytes[],bytes32[],bytes,uint16[])[], bytes, uint256, bytes32)'
+    'submitData((bytes32,bytes32,bytes32,uint256,uint256,bytes32,bytes))'
   const iface = new utils.Interface([`function ${fnSignature}`])
 
-  const tuples = timestamps.map((timestamp) => [
-    utils.formatBytes32String(''),
-    timestamp,
-    [utils.randomBytes(0), utils.randomBytes(0)],
-    [utils.keccak256('0x'), utils.keccak256('0x')],
-    utils.randomBytes(0),
-    [],
-  ])
-
   const sampleData = [
-    tuples,
-    utils.randomBytes(0),
-    0,
-    utils.formatBytes32String(''),
+    [
+      utils.formatBytes32String(''),
+      utils.formatBytes32String(''),
+      utils.formatBytes32String(''),
+      firstBlock,
+      endBlock,
+      utils.formatBytes32String(''),
+      utils.randomBytes(0),
+    ],
   ]
-  return iface.encodeFunctionData('finalizeBlocks', sampleData)
+  return iface.encodeFunctionData('submitData', sampleData)
 }

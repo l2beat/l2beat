@@ -1,8 +1,8 @@
 {
   "name": "mantapacific",
   "chain": "ethereum",
-  "blockNumber": 19176785,
-  "configHash": "0xccb4cf130b037a910fb0d63482450d5d3813e797d193c99561110f2ddc88bde6",
+  "blockNumber": 19439793,
+  "configHash": "0xd57672ae4300189c4335bbbbe6955114cd57a1dd01a689db172e2d6590878057",
   "version": 3,
   "contracts": [
     {
@@ -20,10 +20,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 259200,
         "L2_BLOCK_TIME": 10,
-        "latestBlockNumber": 1308840,
-        "latestOutputIndex": 10906,
-        "nextBlockNumber": 1308960,
-        "nextOutputIndex": 10907,
+        "latestBlockNumber": 1627320,
+        "latestOutputIndex": 13560,
+        "nextBlockNumber": 1627440,
+        "nextOutputIndex": 13561,
         "PROPOSER": "0x853bDfF715eFeDc280C16241dD30A6d651f90aCa",
         "startingBlockNumber": 0,
         "startingTimestamp": 1694223959,
@@ -103,7 +103,7 @@
       "sinceTimestamp": 1694224919,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292670424",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292671527",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -132,7 +132,8 @@
         "gasLimit": 50000000,
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isSomeTxsLengthEqualToCelestiaDAExample": true
+          "isSomeTxsLengthEqualToCelestiaDAExample": true,
+          "isSequencerSendingBlobTx": false
         },
         "overhead": 1000,
         "owner": "0x4b1A788B20bb85eb19f8e9B69B8a584e7fA29fe5",
@@ -144,7 +145,7 @@
           1000000,
           "340282366920938463463374607431768211455"
         ],
-        "scalar": 333333,
+        "scalar": 6666,
         "sequencerInbox": "0xAEbA8e2307A22B6824a9a7a39f8b016C357Cd1Fe",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
         "unsafeBlockSigner": "0xfeC5478feD709F728566FA6bF4546C83106be95B",
@@ -167,7 +168,7 @@
         "GUARDIAN": "0x4b1A788B20bb85eb19f8e9B69B8a584e7fA29fe5",
         "L2_ORACLE": "0x30c789674ad3B458886BBC9abf42EEe19EA05C1D",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 490798, 19176503],
+        "params": [1000000000, 490798, 19439743],
         "paused": false,
         "SYSTEM_CONFIG": "0x895E00269A05848F3c9889EfA677D02fF7351a5D",
         "version": "1.7.2"

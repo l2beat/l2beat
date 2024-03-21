@@ -6,17 +6,17 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
   makeBridgeCompatible,
   NUGGETS,
   RISK_VIEW,
-  ScalingProjectPermissionedAccount,
   SEQUENCER_NO_MECHANISM,
   STATE_CORRECTNESS,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
@@ -47,7 +47,7 @@ const _HALT_AGGREGATION_TIMEOUT = formatSeconds(
 )
 
 const forceBatchTimeout = discovery.getContractValue<number>(
-  'PolygonZkEVMExistentEtrog',
+  'PolygonZkEVMEtrog',
   'forceBatchTimeout',
 )
 
@@ -72,7 +72,7 @@ const exitWindowRisk = {
     trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
   )}.`,
   warning: {
-    text: 'The Security Council can remove the delay on upgrades.',
+    value: 'The Security Council can remove the delay on upgrades.',
     sentiment: 'bad',
   },
 } as const
@@ -85,22 +85,13 @@ const timelockUpgrades = {
 
 const isForcedBatchDisallowed =
   discovery.getContractValue<string>(
-    'PolygonZkEVMExistentEtrog',
+    'PolygonZkEVMEtrog',
     'forceBatchAddress',
   ) !== '0x0000000000000000000000000000000000000000'
 
 const ESCROW_wstETH_ADDRESS = '0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01'
 const ESCROW_USDC_ADDRESS = '0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB'
 const ESCROW_DAI_ADDRESS = '0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98'
-
-const roles = discovery.getContractValue<{
-  TRUSTED_AGGREGATOR: { members: string[] }
-}>('PolygonRollupManager', 'accessControl')
-
-const aggregators: ScalingProjectPermissionedAccount[] =
-  roles.TRUSTED_AGGREGATOR.members.map((address) =>
-    discovery.formatPermissionedAccount(address),
-  )
 
 export const polygonzkevm: Layer2 = {
   type: 'layer2',
@@ -113,7 +104,6 @@ export const polygonzkevm: Layer2 = {
       'Polygon zkEVM is a EVM-compatible ZK Rollup built by Polygon Labs.',
     purposes: ['Universal'],
     category: 'ZK Rollup',
-    dataAvailabilityMode: 'TxData',
     provider: 'Polygon',
     links: {
       websites: ['https://polygon.technology/polygon-zkevm'],
@@ -137,6 +127,14 @@ export const polygonzkevm: Layer2 = {
     liveness: {
       explanation:
         'Polygon zkEVM is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1. State updates are a three step process: first blocks are committed to L1, then they are proved, and then it is possible to execute them.',
+    },
+    tvlWarning: {
+      content:
+        'The TVL is currently shared among all projects using the shared Polygon CDK contracts.',
+      sentiment: 'warning',
+    },
+    finality: {
+      finalizationPeriod: 0,
     },
   },
   config: {
@@ -174,16 +172,10 @@ export const polygonzkevm: Layer2 = {
       defaultCallsPerMinute: 500,
       startBlock: 1,
     },
-    liveness: {
-      duplicateData: [
-        {
-          from: 'stateUpdates',
-          to: 'proofSubmissions',
-        },
-      ],
-      proofSubmissions: [],
-      batchSubmissions: [
-        {
+    trackedTxs: [
+      {
+        uses: [{ type: 'liveness', subtype: 'batchSubmissions' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
@@ -191,10 +183,13 @@ export const polygonzkevm: Layer2 = {
           selector: '0x5e9145c9',
           functionSignature:
             'function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)',
-          sinceTimestamp: new UnixTime(1679653163),
-          untilTimestamp: new UnixTime(1707822059),
+          sinceTimestampInclusive: new UnixTime(1679653163),
+          untilTimestampExclusive: new UnixTime(1707822059),
         },
-        {
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'batchSubmissions' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
@@ -202,11 +197,17 @@ export const polygonzkevm: Layer2 = {
           selector: '0x5e9145c9',
           functionSignature:
             'function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)',
-          sinceTimestamp: new UnixTime(1707822059),
+          sinceTimestampInclusive: new UnixTime(1707822059),
         },
-      ],
-      stateUpdates: [
-        {
+      },
+      {
+        uses: [
+          {
+            type: 'liveness',
+            subtype: 'stateUpdates',
+          },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
@@ -214,10 +215,18 @@ export const polygonzkevm: Layer2 = {
           selector: '0x2b0006fa',
           functionSignature:
             'function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)',
-          sinceTimestamp: new UnixTime(1679653163),
-          untilTimestamp: new UnixTime(1707822059),
+          sinceTimestampInclusive: new UnixTime(1679653163),
+          untilTimestampExclusive: new UnixTime(1707822059),
         },
-        {
+      },
+      {
+        uses: [
+          {
+            type: 'liveness',
+            subtype: 'stateUpdates',
+          },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
@@ -225,10 +234,18 @@ export const polygonzkevm: Layer2 = {
           selector: '0x621dd411',
           functionSignature:
             'function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) ',
-          sinceTimestamp: new UnixTime(1679653163),
-          untilTimestamp: new UnixTime(1707822059),
+          sinceTimestampInclusive: new UnixTime(1679653163),
+          untilTimestampExclusive: new UnixTime(1707822059),
         },
-        {
+      },
+      {
+        uses: [
+          {
+            type: 'liveness',
+            subtype: 'stateUpdates',
+          },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
@@ -236,9 +253,17 @@ export const polygonzkevm: Layer2 = {
           selector: '0xa2ee10d3',
           functionSignature:
             'verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[])',
-          sinceTimestamp: new UnixTime(1707822059),
+          sinceTimestampInclusive: new UnixTime(1707822059),
         },
-        {
+      },
+      {
+        uses: [
+          {
+            type: 'liveness',
+            subtype: 'stateUpdates',
+          },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
@@ -246,10 +271,17 @@ export const polygonzkevm: Layer2 = {
           selector: '0x08068a47',
           functionSignature:
             'verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[])',
-          sinceTimestamp: new UnixTime(1707822059),
+          sinceTimestampInclusive: new UnixTime(1707822059),
         },
-      ],
+      },
+    ],
+    liveness: {
+      duplicateData: {
+        from: 'stateUpdates',
+        to: 'proofSubmissions',
+      },
     },
+    finality: 'coming soon',
   },
   chainConfig: {
     name: 'polygonzkevm',
@@ -268,6 +300,11 @@ export const polygonzkevm: Layer2 = {
       },
     ],
   },
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['Ethereum (calldata)'],
+    bridge: { type: 'Enshrined' },
+    mode: 'Transactions data',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
@@ -287,7 +324,7 @@ export const polygonzkevm: Layer2 = {
         ' Unlike most ZK rollups transactions are posted instead of state diffs.',
       sources: [
         {
-          contract: 'PolygonZkEVMExistentEtrog',
+          contract: 'PolygonZkEVMEtrog',
           references: [
             'https://etherscan.io/address/0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
           ],
@@ -300,7 +337,7 @@ export const polygonzkevm: Layer2 = {
       ...SEQUENCER_NO_MECHANISM(isForcedBatchDisallowed),
       sources: [
         {
-          contract: 'PolygonZkEVMExistentEtrog',
+          contract: 'PolygonZkEVMEtrog',
           references: [
             'https://etherscan.io/address/0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
           ],
@@ -364,10 +401,10 @@ export const polygonzkevm: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
       references: [
         {
-          text: 'PolygonZkEVMExistentEtrog.sol - Etherscan source code, sequenceBatches function',
+          text: 'PolygonZkEVMEtrog.sol - Etherscan source code, sequenceBatches function',
           href: 'https://etherscan.io/address/0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
         },
       ],
@@ -386,7 +423,7 @@ export const polygonzkevm: Layer2 = {
       ],
       references: [
         {
-          text: 'PolygonZkEVMExistentEtrog.sol - Etherscan source code, onlyTrustedSequencer modifier',
+          text: 'PolygonZkEVMEtrog.sol - Etherscan source code, onlyTrustedSequencer modifier',
           href: 'https://etherscan.io/address/0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
         },
       ],
@@ -397,7 +434,7 @@ export const polygonzkevm: Layer2 = {
         'The mechanism for allowing users to submit their own transactions is currently disabled.',
       references: [
         {
-          text: 'PolygonZkEVMExistentEtrog.sol - Etherscan source code, forceBatchAddress address',
+          text: 'PolygonZkEVMEtrog.sol - Etherscan source code, forceBatchAddress address',
           href: 'https://etherscan.io/address/0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
         },
       ],
@@ -419,7 +456,7 @@ export const polygonzkevm: Layer2 = {
       'Node software can be found [here](https://github.com/0xPolygonHermez/zkevm-node).',
     compressionScheme: 'No compression scheme yet.',
     genesisState:
-      'The genesis state, whose corresponding root is accessible as Batch 0 root in the `batchNumToStateRoot` method of PolygonZkEvm, is available [here](https://github.com/0xPolygonHermez/zkevm-contracts/blob/main/deployment/genesis.json).',
+      'The genesis state, whose corresponding root is accessible as Batch 0 root in the `batchNumToStateRoot` method of PolygonZkEvm, is available [here](https://github.com/0xPolygonHermez/zkevm-contracts/blob/0d0e69a6f299e273343461f6350343cf4b048269/deployment/genesis.json).',
     dataFormat:
       'The trusted sequencer batches transactions according to the specifications documented [here](https://docs.polygon.technology/zkEVM/architecture/protocol/transaction-life-cycle/transaction-batching/).',
   },
@@ -432,7 +469,7 @@ export const polygonzkevm: Layer2 = {
       name: 'Sequencer',
       accounts: [
         discovery.getPermissionedAccount(
-          'PolygonZkEVMExistentEtrog',
+          'PolygonZkEVMEtrog',
           'trustedSequencer',
         ),
       ],
@@ -441,7 +478,10 @@ export const polygonzkevm: Layer2 = {
     },
     {
       name: 'Proposer (Trusted Aggregator)',
-      accounts: aggregators,
+      accounts: discovery.getAccessControlRolePermission(
+        'PolygonRollupManager',
+        'TRUSTED_AGGREGATOR',
+      ),
       description: `The trusted proposer (called Aggregator) provides ZK proofs for all the supported systems. In case they are unavailable a mechanism for users to submit proofs on their own exists, but is behind a ${trustedAggregatorTimeoutString} delay for proving and a ${pendingStateTimeoutString} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
     },
     ...discovery.getMultisigPermission(
@@ -456,7 +496,7 @@ export const polygonzkevm: Layer2 = {
       name: 'Forced Batcher',
       accounts: [
         discovery.getPermissionedAccount(
-          'PolygonZkEVMExistentEtrog',
+          'PolygonZkEVMEtrog',
           'forceBatchAddress',
         ),
       ],
@@ -466,7 +506,7 @@ export const polygonzkevm: Layer2 = {
   ],
   contracts: {
     addresses: [
-      discovery.getContractDetails('PolygonZkEVMExistentEtrog', {
+      discovery.getContractDetails('PolygonZkEVMEtrog', {
         description:
           'The main contract of the Polygon zkEVM rollup. Contains sequencing and forced transaction logic.',
         ...timelockUpgrades,
@@ -486,7 +526,7 @@ export const polygonzkevm: Layer2 = {
         ...timelockUpgrades,
       }),
       discovery.getContractDetails(
-        'FflonkVerifier',
+        'PolygonzkEVMVerifier',
         'An autogenerated contract that verifies ZK proofs in the PolygonRollupManager system.',
       ),
     ],

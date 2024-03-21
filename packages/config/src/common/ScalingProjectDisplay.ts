@@ -1,5 +1,4 @@
 import { ScalingProjectCategory } from './ScalingProjectCategory'
-import { ScalingProjectDataAvailabilityMode } from './ScalingProjectDataAvailabilityMode'
 import { ScalingProjectLinks } from './ScalingProjectLinks'
 import { ScalingProjectPurpose } from './ScalingProjectPurpose'
 
@@ -12,8 +11,6 @@ export interface ScalingProjectDisplay {
   slug: string
   /** Name of the category the scaling project belongs to */
   category: ScalingProjectCategory
-  /** Data availability mode of scaling project project */
-  dataAvailabilityMode: ScalingProjectDataAvailabilityMode
   /** A warning displayed in the header of the project */
   headerWarning?:
     | {

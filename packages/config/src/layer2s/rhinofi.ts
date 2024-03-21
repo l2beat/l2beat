@@ -6,8 +6,8 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
@@ -16,6 +16,7 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
@@ -23,6 +24,7 @@ import {
   getProxyGovernance,
   getSHARPVerifierContracts,
   getSHARPVerifierGovernors,
+  getSHARPVerifierUpgradeDelay,
 } from '../discovery/starkware'
 import { delayDescriptionFromString } from '../utils/delayDescription'
 import { Layer2 } from './types'
@@ -31,6 +33,10 @@ const discovery = new ProjectDiscovery('deversifi')
 const upgradeDelaySeconds = discovery.getContractUpgradeabilityParam(
   'StarkExchange',
   'upgradeDelay',
+)
+const includingSHARPUpgradeDelaySeconds = Math.min(
+  upgradeDelaySeconds,
+  getSHARPVerifierUpgradeDelay(),
 )
 const upgradeDelay = formatSeconds(upgradeDelaySeconds)
 const verifierAddress = discovery.getAddressFromValue(
@@ -43,6 +49,8 @@ const freezeGracePeriod = discovery.getContractValue<number>(
   'FREEZE_GRACE_PERIOD',
 )
 
+const committee = getCommittee(discovery)
+
 export const rhinofi: Layer2 = {
   type: 'layer2',
   id: ProjectId('deversifi'),
@@ -53,7 +61,6 @@ export const rhinofi: Layer2 = {
     purposes: ['Exchange'],
     provider: 'StarkEx',
     category: 'Validium',
-    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://rhino.fi/'],
       apps: ['https://app.rhino.fi/'],
@@ -95,11 +102,10 @@ export const rhinofi: Layer2 = {
       sinceTimestamp: new UnixTime(1590491810),
       resyncLastDays: 7,
     },
-    liveness: {
-      proofSubmissions: [],
-      batchSubmissions: [],
-      stateUpdates: [
-        {
+    trackedTxs: [
+      {
+        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b',
@@ -107,15 +113,27 @@ export const rhinofi: Layer2 = {
           selector: '0x538f9406',
           functionSignature:
             'function updateState(uint256[] publicInput, uint256[] applicationData)',
-          sinceTimestamp: new UnixTime(1590491810),
+          sinceTimestampInclusive: new UnixTime(1590491810),
         },
-      ],
-    },
+      },
+    ],
   },
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['DAC'],
+    bridge: {
+      type: 'DAC Members',
+      membersCount: committee.accounts.length,
+      requiredSignatures: committee.minSigners,
+    },
+    mode: 'State diffs',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: {
-      ...RISK_VIEW.DATA_EXTERNAL_DAC(),
+      ...RISK_VIEW.DATA_EXTERNAL_DAC({
+        membersCount: committee.accounts.length,
+        requiredSignatures: committee.minSigners,
+      }),
       sources: [
         {
           contract: 'StarkExchange',
@@ -131,7 +149,10 @@ export const rhinofi: Layer2 = {
         },
       ],
     },
-    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelaySeconds, freezeGracePeriod),
+    exitWindow: RISK_VIEW.EXIT_WINDOW(
+      includingSHARPUpgradeDelaySeconds,
+      freezeGracePeriod,
+    ),
     sequencerFailure: RISK_VIEW.SEQUENCER_FORCE_VIA_L1(freezeGracePeriod),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP,
     destinationToken: RISK_VIEW.CANONICAL,
@@ -140,7 +161,7 @@ export const rhinofi: Layer2 = {
   technology: {
     stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
     newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
-    dataAvailability: DATA_AVAILABILITY.STARKEX_OFF_CHAIN,
+    dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKEX_OFF_CHAIN,
     operator: OPERATOR.STARKEX_OPERATOR,
     forceTransactions: FORCE_TRANSACTIONS.STARKEX_SPOT_WITHDRAW(),
     exitMechanisms: EXITS.STARKEX_PERPETUAL,
@@ -154,7 +175,11 @@ export const rhinofi: Layer2 = {
       ),
       ...getSHARPVerifierContracts(discovery, verifierAddress),
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(upgradeDelaySeconds)],
+    risks: [
+      CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(
+        includingSHARPUpgradeDelaySeconds,
+      ),
+    ],
   },
   permissions: [
     {
@@ -164,7 +189,7 @@ export const rhinofi: Layer2 = {
         'Can upgrade the implementation of the system, potentially gaining access to all funds stored in the bridge. ' +
         delayDescriptionFromString(upgradeDelay),
     },
-    getCommittee(discovery),
+    committee,
     ...getSHARPVerifierGovernors(discovery, verifierAddress),
     {
       name: 'Operators',

@@ -6,8 +6,8 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
-  DATA_AVAILABILITY,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
@@ -15,6 +15,7 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
@@ -88,7 +89,6 @@ export const aztecconnect: Layer2 = {
       'Aztec Connect is an open source layer 2 network that aims to enable affordable, private crypto payments via zero-knowledge proofs.',
     purposes: ['DeFi'],
     category: 'ZK Rollup',
-    dataAvailabilityMode: 'StateDiffs',
     links: {
       websites: ['https://aztec.network/'],
       apps: ['https://zk.money'],
@@ -112,22 +112,26 @@ export const aztecconnect: Layer2 = {
         tokens: ['ETH', 'DAI', 'wstETH'],
       },
     ],
-    liveness: {
-      proofSubmissions: [],
-      batchSubmissions: [],
-      stateUpdates: [
-        {
+    trackedTxs: [
+      {
+        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455',
           ),
           selector: '0xf81cccbe',
           functionSignature: 'function processRollup(bytes ,bytes _signatures)',
-          sinceTimestamp: new UnixTime(1654638194),
+          sinceTimestampInclusive: new UnixTime(1654638194),
         },
-      ],
-    },
+      },
+    ],
   },
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['Ethereum (calldata)'],
+    bridge: { type: 'Enshrined' },
+    mode: 'State diffs',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
@@ -145,7 +149,7 @@ export const aztecconnect: Layer2 = {
         {
           contract: 'Verifier28x32',
           references: [
-            'https://etherscan.io/address/0x71c0Ab7dF00F00E4ec2990D4F1C8302c1D178f69#code#F3#L150',
+            'https://etherscan.io/address/0x9BDc85491BD589e8390A6AAb6982b82255ae2297#code#F3#L150',
           ],
         },
       ],
@@ -234,7 +238,7 @@ export const aztecconnect: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...DATA_AVAILABILITY.ON_CHAIN,
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       references: [
         {
           text: 'RollupProcessorV2.sol#L686 - Etherscan source code',
@@ -293,18 +297,20 @@ export const aztecconnect: Layer2 = {
         ],
       },
     ],
-    additionalPrivacy: {
-      name: 'Payments are private',
-      description:
-        'Balances and identities for all tokens on the Aztec rollup are encrypted. Each transaction is encoded as a zkSNARK, protecting user data.',
-      risks: [],
-      references: [
-        {
-          text: 'Fast Privacy, Now - Aztec Medium Blog',
-          href: 'https://medium.com/aztec-protocol/aztec-zkrollup-layer-2-privacy-1978e90ee3b6#3b25',
-        },
-      ],
-    },
+    otherConsiderations: [
+      {
+        name: 'Payments are private',
+        description:
+          'Balances and identities for all tokens on the Aztec rollup are encrypted. Each transaction is encoded as a zkSNARK, protecting user data.',
+        risks: [],
+        references: [
+          {
+            text: 'Fast Privacy, Now - Aztec Medium Blog',
+            href: 'https://medium.com/aztec-protocol/aztec-zkrollup-layer-2-privacy-1978e90ee3b6#3b25',
+          },
+        ],
+      },
+    ],
   },
   contracts: {
     addresses: [
@@ -388,7 +394,7 @@ export const aztecconnect: Layer2 = {
     },
     {
       title: 'Understanding PLONK',
-      url: 'https://vitalik.ca/general/2019/09/22/plonk.html',
+      url: 'https://vitalik.eth.limo/general/2019/09/22/plonk.html',
       thumbnail: NUGGETS.THUMBNAILS.VITALIK_01,
     },
   ],

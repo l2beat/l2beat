@@ -1,3 +1,72 @@
+Generated with discovered.json: 0x46979596123ef327e07c0aa592f2eed6087827b9
+
+# Diff at Thu, 14 Mar 2024 13:16:53 GMT
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@3ffa91064379f34a2916a1ad4e93791b752e7e9e block: 187635660
+- current block number: 190294110
+
+## Description
+
+New PriceFeed Oracle implementation has been deployed. Nothing that would affect protocol security has been changed.
+
+## Watched changes
+
+```diff
+    contract  (0x9c8D8A224545c15024cB50C7c02cf3EA9AA1bF36) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x689b871494cdbC9062dFAFF357f5225f94A31F15"
++        "0xbDb07dC145386e3A1Ab553CBc0dc383c06420769"
+      implementations.0:
+-        "0x689b871494cdbC9062dFAFF357f5225f94A31F15"
++        "0xbDb07dC145386e3A1Ab553CBc0dc383c06420769"
+    }
+```
+
+## Source code changes
+
+```diff
+.../-0x9c8D8A224545c15024cB50C7c02cf3EA9AA1bF36/implementation/meta.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+
+Generated with discovered.json: 0x8f564e924c696de6bfcffd9cbfdd5766db55bb31
+
+# Diff at Wed, 06 Mar 2024 10:03:56 GMT
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: main@1a2512004b35590384683b93c95d8ec95426d2a6 block: 173078316
+- current block number: 187635660
+
+## Description
+
+Added v2 contracts to libraryLookup
+
+## Watched changes
+
+```diff
+    contract Endpoint (0x3c2269811836af69497E5F486A85D7316753cf62) {
+    +++ description: None
+      values.latestVersion:
+-        2
++        4
+      values.libraryLookup[3]:
++        "0xe4DD168822767C4342e54e6241f0b91DE0d3c241"
+      values.libraryLookup[2]:
++        "0x5cDc927876031B4Ef910735225c425A7Fc8efed9"
+    }
+```
+
+```diff
+    contract VerifierNetwork (0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc) {
+    +++ description: None
+      values.defaultMultiplierBps:
+-        12000
++        12100
+    }
+```
+
 Generated with discovered.json: 0xfade3659ca05af16babf43cf19c5ae0235d2db41
 
 # Diff at Mon, 22 Jan 2024 17:01:57 GMT

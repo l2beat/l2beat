@@ -1,0 +1,700 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "CairoBootloaderProgram",
+      "values": {
+        "getCompiledProgram": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "values": {}
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "values": {}
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "values": {}
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "values": {}
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "values": {}
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "values": {}
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "values": {}
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "values": {}
+    },
+    {
+      "name": "CpuFrilessVerifier1",
+      "values": {
+        "PAGE_INFO_ADDRESS_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_HASH_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_IN_BYTES": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "constructorArgs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLayoutInfo": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CpuFrilessVerifier2",
+      "values": {
+        "PAGE_INFO_ADDRESS_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_HASH_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_IN_BYTES": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "constructorArgs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLayoutInfo": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CpuFrilessVerifier3",
+      "values": {
+        "PAGE_INFO_ADDRESS_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_HASH_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_IN_BYTES": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "constructorArgs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLayoutInfo": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CpuFrilessVerifier4",
+      "values": {
+        "PAGE_INFO_ADDRESS_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_HASH_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_IN_BYTES": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "constructorArgs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLayoutInfo": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CpuFrilessVerifier5",
+      "values": {
+        "PAGE_INFO_ADDRESS_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_HASH_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_IN_BYTES": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "constructorArgs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLayoutInfo": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CpuFrilessVerifier6",
+      "values": {
+        "PAGE_INFO_ADDRESS_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_HASH_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_IN_BYTES": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "constructorArgs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLayoutInfo": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CpuFrilessVerifier7",
+      "values": {
+        "PAGE_INFO_ADDRESS_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_HASH_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_IN_BYTES": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "constructorArgs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLayoutInfo": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CpuFrilessVerifier8",
+      "values": {
+        "PAGE_INFO_ADDRESS_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_HASH_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_IN_BYTES": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "constructorArgs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLayoutInfo": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CpuOods",
+      "values": {}
+    },
+    {
+      "name": "CpuOods",
+      "values": {}
+    },
+    {
+      "name": "CpuOods",
+      "values": {}
+    },
+    {
+      "name": "CpuOods",
+      "values": {}
+    },
+    {
+      "name": "CpuOods",
+      "values": {}
+    },
+    {
+      "name": "CpuOods",
+      "values": {}
+    },
+    {
+      "name": "CpuOods",
+      "values": {}
+    },
+    {
+      "name": "CpuOods",
+      "values": {}
+    },
+    {
+      "name": "EcdsaPointsXColumn",
+      "values": {}
+    },
+    {
+      "name": "EcdsaPointsYColumn",
+      "values": {}
+    },
+    {
+      "name": "Fri1_PoseidonPoseidonFullRoundKey0Column",
+      "values": {}
+    },
+    {
+      "name": "Fri1_PoseidonPoseidonFullRoundKey1Column",
+      "values": {}
+    },
+    {
+      "name": "Fri1_PoseidonPoseidonFullRoundKey2Column",
+      "values": {}
+    },
+    {
+      "name": "Fri1_PoseidonPoseidonPartialRoundKey0Column",
+      "values": {}
+    },
+    {
+      "name": "Fri1_PoseidonPoseidonPartialRoundKey1Column",
+      "values": {}
+    },
+    {
+      "name": "Fri6_PoseidonPoseidonFullRoundKey0Column",
+      "values": {}
+    },
+    {
+      "name": "Fri6_PoseidonPoseidonFullRoundKey1Column",
+      "values": {}
+    },
+    {
+      "name": "Fri6_PoseidonPoseidonFullRoundKey2Column",
+      "values": {}
+    },
+    {
+      "name": "Fri6_PoseidonPoseidonPartialRoundKey0Column",
+      "values": {}
+    },
+    {
+      "name": "Fri6_PoseidonPoseidonPartialRoundKey1Column",
+      "values": {}
+    },
+    {
+      "name": "FriStatementContract",
+      "values": {
+        "hasRegisteredFact": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "MemoryPageFactRegistry",
+      "values": {
+        "hasRegisteredFact": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "MerkleStatementContract",
+      "values": {
+        "hasRegisteredFact": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OldMemoryPageFactRegistry",
+      "values": {
+        "hasRegisteredFact": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OldSHARPVerifier",
+      "values": {
+        "PAGE_INFO_ADDRESS_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_HASH_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_IN_BYTES": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getBootloaderConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasRegisteredFact": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "identify": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "memoryPageFactRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "PedersenHashPointsXColumn",
+      "values": {}
+    },
+    {
+      "name": "PedersenHashPointsYColumn",
+      "values": {}
+    },
+    {
+      "name": "SHARPVerifier",
+      "values": {
+        "PAGE_INFO_ADDRESS_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_HASH_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_IN_BYTES": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAGE_INFO_SIZE_OFFSET": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "bootloaderProgramContractAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "cpuFrilessVerifiers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getBootloaderConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasRegisteredFact": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "identify": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "memoryPageFactRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "referenceFactRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "referralExpirationTime": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SHARPVerifierGovernorMultisig",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SHARPVerifierProxy",
+      "values": {
+        "CALL_PROXY_VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROXY_GOVERNANCE_TAG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROXY_VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "UPGRADE_DELAY_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "callProxyImplementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getUpgradeActivationDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isFrozen": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isNotFinalized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}

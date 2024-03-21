@@ -6,8 +6,8 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
@@ -16,6 +16,7 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
@@ -23,6 +24,7 @@ import {
   getProxyGovernance,
   getSHARPVerifierContracts,
   getSHARPVerifierGovernors,
+  getSHARPVerifierUpgradeDelay,
 } from '../discovery/starkware'
 import { delayDescriptionFromString } from '../utils/delayDescription'
 import { Layer2 } from './types'
@@ -40,7 +42,15 @@ const upgradeDelaySecondsUSDT = discovery.getContractUpgradeabilityParam(
 const upgradeDelayUSDC = formatSeconds(upgradeDelaySecondsUSDC)
 const upgradeDelayUSDT = formatSeconds(upgradeDelaySecondsUSDT)
 
-const upgradeDelay = Math.min(upgradeDelaySecondsUSDC, upgradeDelaySecondsUSDT)
+const upgradeDelaySeconds = Math.min(
+  upgradeDelaySecondsUSDC,
+  upgradeDelaySecondsUSDT,
+)
+
+const includingSHARPUpgradeDelaySeconds = Math.min(
+  upgradeDelaySeconds,
+  getSHARPVerifierUpgradeDelay(),
+)
 
 const verifierAddressUSDC = discovery.getAddressFromValue(
   'FinalizableGpsFactAdapterUSDC',
@@ -58,7 +68,7 @@ const freezeGracePeriodUSDC = discovery.getContractValue<number>(
 )
 
 const freezeGracePeriodUSDT = discovery.getContractValue<number>(
-  'StarkExchangeUSDC',
+  'StarkExchangeUSDT',
   'FREEZE_GRACE_PERIOD',
 )
 
@@ -66,6 +76,33 @@ const minFreezeGracePeriod = Math.min(
   freezeGracePeriodUSDC,
   freezeGracePeriodUSDT,
 )
+
+const usdcCommittee = getCommittee(
+  discovery,
+  'CommitteeUSDC',
+  'Data Availability Committee for USDC StarkEx',
+)
+const usdtCommittee = getCommittee(
+  discovery,
+  'CommitteeUSDT',
+  'Data Availability Committee for USDT StarkEx',
+)
+
+const usdcDacConfig =
+  usdcCommittee.minAssumedHonestMembers / usdcCommittee.accounts.length
+const usdtDacConfig =
+  usdtCommittee.minAssumedHonestMembers / usdtCommittee.accounts.length
+
+const dacConfig =
+  usdcDacConfig < usdtDacConfig
+    ? {
+        requiredSignatures: usdcCommittee.minSigners,
+        membersCount: usdcCommittee.accounts.length,
+      }
+    : {
+        requiredSignatures: usdtCommittee.minSigners,
+        membersCount: usdtCommittee.accounts.length,
+      }
 
 export const apex: Layer2 = {
   type: 'layer2',
@@ -81,7 +118,6 @@ export const apex: Layer2 = {
     purposes: ['Exchange'],
     provider: 'StarkEx',
     category: 'Validium',
-    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://apex.exchange/'],
       apps: ['https://pro.apex.exchange/'],
@@ -114,10 +150,15 @@ export const apex: Layer2 = {
       resyncLastDays: 7,
     },
   },
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['DAC'],
+    bridge: { type: 'DAC Members', ...dacConfig },
+    mode: 'State diffs',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_ST,
     dataAvailability: {
-      ...RISK_VIEW.DATA_EXTERNAL_DAC(),
+      ...RISK_VIEW.DATA_EXTERNAL_DAC(dacConfig),
       sources: [
         {
           contract: 'StarkExchangeUSDC',
@@ -145,7 +186,10 @@ export const apex: Layer2 = {
         },
       ],
     },
-    exitWindow: RISK_VIEW.EXIT_WINDOW(upgradeDelay, minFreezeGracePeriod),
+    exitWindow: RISK_VIEW.EXIT_WINDOW(
+      includingSHARPUpgradeDelaySeconds,
+      minFreezeGracePeriod,
+    ),
     sequencerFailure:
       RISK_VIEW.SEQUENCER_FORCE_VIA_L1_STARKEX_PERPETUAL(minFreezeGracePeriod),
     proposerFailure: RISK_VIEW.PROPOSER_USE_ESCAPE_HATCH_MP_AVGPRICE,
@@ -155,7 +199,7 @@ export const apex: Layer2 = {
   technology: {
     stateCorrectness: STATE_CORRECTNESS.STARKEX_VALIDITY_PROOFS,
     newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
-    dataAvailability: DATA_AVAILABILITY.STARKEX_OFF_CHAIN,
+    dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKEX_OFF_CHAIN,
     operator: OPERATOR.STARKEX_OPERATOR,
     forceTransactions:
       FORCE_TRANSACTIONS.STARKEX_PERPETUAL_WITHDRAW(minFreezeGracePeriod),
@@ -196,7 +240,11 @@ export const apex: Layer2 = {
         ? getSHARPVerifierContracts(discovery, verifierAddressUSDT)
         : []),
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(upgradeDelay)],
+    risks: [
+      CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(
+        includingSHARPUpgradeDelaySeconds,
+      ),
+    ],
   },
   permissions: [
     {
@@ -231,16 +279,8 @@ export const apex: Layer2 = {
       description:
         'Allowed to update state of the system and verify DA proofs for USDT StarkEx instance. When Operator is down the state cannot be updated.',
     },
-    getCommittee(
-      discovery,
-      'CommitteeUSDC',
-      'Data Availability Committee for USDC StarkEx',
-    ),
-    getCommittee(
-      discovery,
-      'CommitteeUSDT',
-      'Data Availability Committee for USDT StarkEx',
-    ),
+    usdcCommittee,
+    usdtCommittee,
     ...getSHARPVerifierGovernors(discovery, verifierAddressUSDC),
     ...(verifierAddressUSDT !== verifierAddressUSDC
       ? getSHARPVerifierGovernors(discovery, verifierAddressUSDT)

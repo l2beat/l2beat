@@ -1,13 +1,20 @@
 import { LoggerOptions } from '@l2beat/backend-tools'
 import { DiscoveryChainConfig } from '@l2beat/discovery'
-import { ChainId, ProjectId, Token, UnixTime } from '@l2beat/shared-pure'
+import {
+  AmountConfigEntry,
+  ChainId,
+  PriceConfigEntry,
+  ProjectId,
+  Token,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
 import { Project } from '../model/Project'
 import { ActivityTransactionConfig } from '../modules/activity/ActivityTransactionConfig'
 import { MulticallConfigEntry } from '../peripherals/multicall/types'
 import { ResolvedFeatureFlag } from './FeatureFlags'
-import { FinalityIndexerConfig } from './features/finality'
+import { FinalityProjectConfig } from './features/finality'
 
 export interface Config {
   readonly name: string
@@ -21,11 +28,14 @@ export interface Config {
   readonly api: ApiConfig
   readonly health: HealthConfig
   readonly tvl: TvlConfig
-  readonly liveness: LivenessConfig | false
+  readonly tvl2: Tvl2Config | false
+  readonly trackedTxsConfig: TrackedTxsConfig | false
   readonly finality: FinalityConfig | false
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
   readonly diffHistory: DiffHistoryConfig | false
+  readonly implementationChangeReporterEnabled: boolean
+  readonly lzOAppsEnabled: boolean
   readonly statusEnabled: boolean
   readonly chains: { name: string; chainId: ChainId }[]
   readonly flags: ResolvedFeatureFlag[]
@@ -52,6 +62,8 @@ export interface ApiConfig {
 export interface DatabaseConfig {
   readonly connection: Knex.Config['connection']
   readonly freshStart: boolean
+  readonly enableQueryLogging: boolean
+  readonly requiredMajorVersion?: number
   readonly connectionPoolSize: {
     min: number
     max: number
@@ -71,21 +83,28 @@ export interface TvlConfig {
   readonly modules: ChainTvlConfig[]
 }
 
-export interface LivenessConfig {
+export interface Tvl2Config {
+  readonly prices: PriceConfigEntry[]
+  readonly amounts: AmountConfigEntry[]
+  readonly coingeckoApiKey: string | undefined
+}
+
+export interface TrackedTxsConfig {
   readonly bigQuery: {
     readonly clientEmail: string
     readonly privateKey: string
     readonly projectId: string
-    readonly queryLimitGb: number
-    readonly queryWarningLimitGb: number
   }
   readonly minTimestamp: UnixTime
+  readonly uses: {
+    readonly liveness: boolean
+  }
 }
 
 export interface FinalityConfig {
   readonly ethereumProviderUrl: string
   readonly ethereumProviderCallsPerMinute: number
-  readonly indexerConfigurations: FinalityIndexerConfig[]
+  readonly configurations: FinalityProjectConfig[]
 }
 
 export interface BlockscoutChainConfig {
