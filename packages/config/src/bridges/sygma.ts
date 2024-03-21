@@ -3,6 +3,9 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { NUGGETS } from '../common'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+
+const discovery = new ProjectDiscovery('sygma')
 
 export const sygma: Bridge = {
   type: 'bridge',
@@ -12,8 +15,9 @@ export const sygma: Bridge = {
     slug: 'sygma',
     category: 'Hybrid',
     description:
-      'Sygma is a modular, open-source, cross-consensus interoperability protocol enabling asset transfers, non-fungible tokens, and cross-chain execution. With Sygma, developers can easily extend their applications across Ethereum mainnet, Base, Cronos, Polygon, Gnosis, Polkadot, Kusama, and other Substrate-based chains with active work on Bitcoin and Cosmos SDK interoperability.',
-    detailedDescription: `Sygma seeks to solve interoperability challenges via innovations in dynamic cross-chain message routing and Zero-knowledge (Spectre) and Optimistic (Zipline) co-processing capabilities. The system is designed to automatically take a user's context into account, selecting the most optimal combination of verification systems and tailoring its security path, abstracting even the most arduous cross-chain complexities.`,
+      'Sygma is a an interoperability protocol enabling asset transfers, non-fungible tokens, and cross-chain execution. With Sygma, developers can extend their applications across Ethereum mainnet, Base, Cronos, Polygon, Gnosis, Polkadot, Kusama, and other Substrate-based chains with active work on Bitcoin and Cosmos SDK interoperability.',
+    detailedDescription: `Sygma in its current version is an interoperability protocol relying, from the Ethereum's point-of-view, on a \
+    single EOA address' signature. This address is meant to represent MPC validators.`,
     links: {
       websites: [
         'https://buildwithsygma.com/',
@@ -46,16 +50,16 @@ export const sygma: Bridge = {
       sentiment: 'neutral',
     },
     sourceUpgradeability: {
-      value: 'No',
-      description: 'Contracts are not upgradable.',
-      sentiment: 'good',
+      value: 'Yes',
+      description:
+        'Contracts are not upgradable, however they are modular and configurable via a MultiSig.',
+      sentiment: 'bad',
     },
     destinationToken: RISK_VIEW.CANONICAL_OR_WRAPPED,
   },
   technology: {
     destination: [
       // these are the currently supported networks on mainnet, but the main integration available is our backend integration for PHA tokens between the EVM<->Phala/Khala routes on Phala's SubBridge
-      'Ethereum',
       'Phala',
       'Khala',
       'Polygon',
@@ -65,14 +69,14 @@ export const sygma: Bridge = {
     ],
     principleOfOperation: {
       name: 'Principle of operation',
-      description: `Sygma currently leverages an MPC relayer network along with threshold signature schemes (TSS) to facilitate cross-chain transfers.`,
+      description: `Sygma currently leverages an MPC relayer network along with threshold signature schemes (TSS) to facilitate cross-chain transfers. From the PoV of Ethereum transfers are authorized by a single EOA address.`,
       references: [],
       risks: [],
     },
     validation: {
       name: 'Transfers are externally verified',
       description:
-        'The Sygma MPC Relayer is a set of decentralized permissioned network agents and is the entry-level into Sygma verification systems. On each deposit event or cross-chain message, the trusted relayers on the Sygma protocol perform an MPC ceremony utilizing threshold signature signing (TSS) to jointly attest to the validity of the cross-chain message prior to execution. Although entry-level, an MPC relayer architecture represents a significant increase in security versus traditional multisig bridges, ensuring that no single participant can defeat an honest majority. The current Sygma relayer network consists of a set of federated entities including Bware Labs, Phala Network, ChainSafe Systems, and Sygma Labs.',
+        'The Sygma MPC Relayer is, according to project`s information, is supposed to be a set of decentralized permissioned network agents and is the entry-level into Sygma verification systems. On each deposit event or cross-chain message, the trusted relayers on the Sygma protocol perform an MPC ceremony utilizing threshold signature signing (TSS) to jointly attest to the validity of the cross-chain message prior to execution. Although entry-level, an MPC relayer architecture represents a significant increase in security versus traditional multisig bridges, ensuring that no single participant can defeat an honest majority. The current Sygma relayer network consists of a set of federated entities including Bware Labs, Phala Network, ChainSafe Systems, and Sygma Labs. It is worth noting that this offchain setup cannot be verified on Ethereum and has to be trusted.',
       references: [],
       risks: [
         {
@@ -114,24 +118,18 @@ export const sygma: Bridge = {
   },
   contracts: {
     addresses: [
-      {
-        address: EthereumAddress('0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089'),
-        name: 'Bridge',
+      discovery.getContractDetails('Bridge', {
         description:
-          'The Bridge.sol contract facilitates and manages the cross-chain transfer of assets by recording and verifying deposit and withdrawal events across different blockchain networks.',
-      },
-      {
-        address: EthereumAddress('0xC832588193cd5ED2185daDA4A531e0B26eC5B830'),
-        name: 'ERC20Handler',
+          'The contract that facilitates and manages the cross-chain transfer of assets by recording and verifying deposit and withdrawal events across different blockchain networks. The actual handling of the deposits/withdrawals is handled by a configured Handler contracts such as for example ERC20Handler.',
+      }),
+      discovery.getContractDetails('ERC20 Bridge Handler', {
         description:
           'A contract that handles ERC20 tokens, enabling their deposit, withdrawal, and management within the protocol. This contract currently stores PHA tokens.',
-      },
-      {
-        address: EthereumAddress('0x1d34808907607FA82Fa1b51F5fBA5Ff5a3Fa90cF'),
-        name: 'FeeHandlerRouter',
+      }),
+      discovery.getContractDetails('FeeHandlerRouter', {
         description:
           'The FeeHandlerRouter contract routes fee handling for cross-chain transactions to appropriate fee handlers based on the destination domain and resource ID, while managing exemptions through a whitelist system.',
-      },
+      }),
       {
         address: EthereumAddress('0x9f9778DA7c1D0AbE148314d6C1EA6E0A93C151C7'),
         name: 'BasicFeeHandler', // fixed fee
@@ -143,12 +141,6 @@ export const sygma: Bridge = {
         name: 'PermissionlessGenericHandler',
         description:
           'The PermissionlessGenericHandler contract facilitates the processing of generic deposits and their execution without permissions, integrating with the bridge contract for cross-chain interactions, and is designed to handle complex data encoding for executing transactions across chains.',
-      },
-      {
-        address: EthereumAddress('0x6c5bA91642F10282b576d91922Ae6448C9d52f4E'),
-        name: 'PHA',
-        description:
-          'Token contract address for PHA token, which is one of Sygmas supported routes between EVM and Phala/Khala.',
       },
     ],
     risks: [],
