@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { PublicClient } from 'viem'
+import { createPublicClient, http, PublicClient } from 'viem'
 
 import { RateLimitedViemProvider } from './RateLimitedViemProvider'
 
@@ -13,6 +13,20 @@ export class ViemRpcClient {
   ) {
     this.logger = this.logger.for(this)
     this.provider = new RateLimitedViemProvider(provider, callsPerMinute)
+  }
+
+  static create(
+    services: { logger: Logger },
+    options: { url: string; callsPerMinute: number | undefined },
+  ) {
+    const publicClient = createPublicClient({
+      transport: http(options.url),
+    })
+    return new ViemRpcClient(
+      publicClient,
+      services.logger,
+      options.callsPerMinute,
+    )
   }
 
   async getTransaction(txHash: `0x${string}`) {

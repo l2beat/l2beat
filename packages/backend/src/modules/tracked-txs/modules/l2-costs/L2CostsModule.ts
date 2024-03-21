@@ -1,5 +1,4 @@
 import { Logger } from '@l2beat/backend-tools'
-import { createPublicClient, http } from 'viem'
 
 import { Config } from '../../../../config'
 import { Peripherals } from '../../../../peripherals/Peripherals'
@@ -18,18 +17,13 @@ export function createL2CostsModule(
     return
   }
 
-  const publicClient = createPublicClient({
-    transport: http(config.trackedTxsConfig.uses.l2costs.providerUrl),
-  })
-  const viemRpcClient = new ViemRpcClient(
-    publicClient,
-    logger,
-    config.trackedTxsConfig.uses.l2costs.providerCallsPerMinute,
-  )
-
   const l2CostsUpdater = new L2CostsUpdater(
     peripherals.getRepository(L2CostsRepository),
-    viemRpcClient,
+    peripherals.getClient(ViemRpcClient, {
+      url: config.trackedTxsConfig.uses.l2costs.providerUrl,
+      callsPerMinute:
+        config.trackedTxsConfig.uses.l2costs.providerCallsPerMinute,
+    }),
     logger,
   )
 
