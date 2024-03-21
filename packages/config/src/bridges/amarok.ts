@@ -61,8 +61,8 @@ export const amarok: Bridge = {
       {
         address: EthereumAddress('0xC8140dA31E6bCa19b287cC35531c2212763C2059'),
         sinceTimestamp: new UnixTime(1671625595),
-        tokens: ['ezETH']
-      }
+        tokens: ['ezETH'],
+      },
     ],
   },
   technology: {
