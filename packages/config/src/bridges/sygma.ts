@@ -1,9 +1,9 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { NUGGETS } from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
-import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 
 const discovery = new ProjectDiscovery('sygma')
 
@@ -17,7 +17,8 @@ export const sygma: Bridge = {
     description:
       'Sygma is a an interoperability protocol enabling asset transfers, non-fungible tokens, and cross-chain execution. With Sygma, developers can extend their applications across Ethereum mainnet, Base, Cronos, Polygon, Gnosis, Polkadot, Kusama, and other Substrate-based chains with active work on Bitcoin and Cosmos SDK interoperability.',
     detailedDescription: `Sygma in its current version is an interoperability protocol relying, from the Ethereum's point-of-view, on a \
-    single EOA address' signature. This address is meant to represent MPC validators.`,
+    single EOA address' signature. This address is meant to represent MPC validators. There are plans in the future to extend the protocol and \
+    add zk verifiers for block header oracle verification and optimistic routes that can be tailored to users' needs, however at the moment these capabilities are not deployed.`,
     links: {
       websites: [
         'https://buildwithsygma.com/',
@@ -47,7 +48,7 @@ export const sygma: Bridge = {
       value: 'Third party',
       description:
         '4/7 of the MPC group (the Sygma relayer network) is required to create a cross-chain message with the MPC signature.', // sygma eng team currently developing a zk methodology for block header oracle verification which we will implement on mainnet relayers soon. additionally, optimistic approach coming as well. we call this "tailored security"
-      sentiment: 'neutral',
+      sentiment: 'bad',
     },
     sourceUpgradeability: {
       value: 'Yes',
@@ -147,109 +148,27 @@ export const sygma: Bridge = {
     isIncomplete: true,
   },
   permissions: [
+    ...discovery.getMultisigPermission(
+      'Admin Multisig',
+      'The admin multisig covers a set of administrative privileges, \
+    including ability to configure handlers that contain logic for handling deposits/withdrawals for specific chains and assets.',
+    ),
+    ...discovery.getMultisigPermission(
+      'Community Multisig',
+      'This multisig has the ability to manually withdraw tokens from the bridge using adminWithdraw() method.',
+    ),
     {
       accounts: [
         {
           address: EthereumAddress(
-            '0xc4d8b2F5501C765dE0C5E12550118F397B197D05',
+            '0x695bd50CB07ffBd4098b272CE8b52B3c256ca049',
           ),
-          type: 'MultiSig',
+          type: 'EOA',
         },
       ],
-      name: 'Community MultiSig', // 4/6 GnosisSafeProxy
+      name: 'Pauser/Unpauser',
       description:
-        'This 4/6 multisig is used to manage the fee handler liquidity. This action would be required in the case of a security breach, or where a migration of fee handler is required.',
-    },
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x86a73a594f74C76a6eB8F9E728d992D03252f60f',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xC6458dedf35231F524ED9d7E0DF77A60b9E08676',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xe845B1d31CaA16Bf6c6Bf5E97a28D086bd46FD49',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xa399460Ce767b06297457178D2F9F8f144017E77',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x0c1db86328E6CFCD4f530401131Dc9a26DefA12a',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xd85b34B2Fe1eC7815B6dF659372382A8FA229677',
-          ),
-          type: 'EOA',
-        },
-      ],
-      name: 'Community MultiSig Participants',
-      description: 'Participants of the 4/6 Sygma community multisig.',
-    },
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0xde79695d5cefF7c324552B3ecbe6165f77FCdF53',
-          ),
-          type: 'MultiSig', // 3/5 GnosisSafeProxy
-        },
-      ],
-      name: 'Admin MultiSig',
-      description:
-        'The 3/5 admin multisig covers a set of super administrative privileges, such as pausing the bridge, that may be required in order to be able to reduce the impact of security incidents. As these actions may have significant financial impact, the admin governance process follows a strict off-chain preparation/review and onchain review/signing.',
-    },
-    {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0x86a73a594f74C76a6eB8F9E728d992D03252f60f',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x5a288b42dC222190D8cF5014A330c978ee42A5df',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xe845B1d31CaA16Bf6c6Bf5E97a28D086bd46FD49',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xacc0268a75280192897a78C706C9FBA2d2b851C4',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x197C57440A30cB28103ab27CB1b0dC86E5907ADA',
-          ),
-          type: 'EOA',
-        },
-      ],
-      name: 'Admin MultiSig Participants',
-      description: 'Participants of the 3/5 Sygma admin multisig.',
+        'EOA address with the permission to pause/unpause the bridge.',
     },
   ],
   knowledgeNuggets: [
