@@ -1,4 +1,5 @@
 import {
+  assertUnreachable,
   EthereumAddress,
   gatherAddressesFromUpgradeability,
   UnixTime,
@@ -95,15 +96,14 @@ describe('layer2s', () => {
     }
   })
 
-  describe('liveness', () => {
-    it('every project has valid signatures', () => {
+  describe('tracked transactions', () => {
+    it('every tracked transaction which is function call has valid signatures', () => {
       for (const project of layer2s) {
         it(`${project.id.toString()} : has valid signatures`, () => {
-          if (project.config.liveness) {
-            const functionCalls = [
-              ...project.config.liveness.batchSubmissions,
-              ...project.config.liveness.stateUpdates,
-            ].filter((x) => x.formula === 'functionCall') as {
+          if (project.config.trackedTxs?.length !== 0) {
+            const functionCalls = project.config.trackedTxs
+              ?.map((t) => t.query)
+              .filter((x) => x.formula === 'functionCall') as {
               selector: string
               functionSignature: string
             }[]
@@ -113,6 +113,36 @@ describe('layer2s', () => {
               const fragment = i.fragments[0]
               const calculatedSignature = i.getSighash(fragment)
               expect(calculatedSignature).toEqual(c.selector)
+            })
+          }
+        })
+      }
+    })
+
+    it('every current address is present in discovery', () => {
+      for (const project of layer2s) {
+        it(`${project.id.toString()} : has valid addresses`, () => {
+          if (project.config.trackedTxs) {
+            const queries = project.config.trackedTxs.map((t) => t.query)
+
+            const addresses = queries
+              // .filter((x) => x.untilTimestamp === undefined)
+              .flatMap((x) => {
+                switch (x.formula) {
+                  case 'functionCall':
+                    return [x.address]
+                  case 'transfer':
+                    return []
+                  case 'sharpSubmission':
+                    return []
+                  default:
+                    assertUnreachable(x)
+                }
+              })
+
+            const discovery = new ProjectDiscovery(project.id.toString())
+            addresses.forEach((a) => {
+              discovery.getContractByAddress(a.toString())
             })
           }
         })
@@ -308,8 +338,7 @@ describe('layer2s', () => {
           check('forceTransactions')
           check('exitMechanisms')
           check('massExit')
-          check('additionalPrivacy')
-          check('smartContracts')
+          check('otherConsiderations')
         })
       }
     })

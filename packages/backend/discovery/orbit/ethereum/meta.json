@@ -1,0 +1,190 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "DAI Farm",
+      "values": {
+        "getAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getImplementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ETH Vault",
+      "values": {
+        "MAX_OWNER_COUNT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "bridgingFee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "dai": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "daiFarm": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "depositCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "edai": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "feeGovernance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "gasLimitForBridgeReceiver": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isActivated": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "policyAdmin": {
+          "description": "Can set bridging fees, gas limits and can pause / unpause the bridge or censor individual withdrawals.",
+          "severity": "MEDIUM",
+          "type": "PERMISSION"
+        },
+        "required": {
+          "description": "Threshold of the bridge governance admin multisig",
+          "severity": "HIGH",
+          "type": "PERMISSION"
+        },
+        "taxRate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "taxReceiver": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "tetherAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "transactionCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "usdcFarm": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "usdtFarm": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "wbtcFarm": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "USDC Farm",
+      "values": {
+        "getAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getImplementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "USDT Farm",
+      "values": {
+        "getAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getImplementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "WBTC Farm",
+      "values": {
+        "getAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getImplementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}

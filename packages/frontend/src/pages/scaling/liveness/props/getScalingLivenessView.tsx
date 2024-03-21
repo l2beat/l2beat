@@ -40,6 +40,10 @@ function getScalingLivenessViewEntry(
     )
   }
 
+  // TODO: remove this when liveness is fixed
+  // const isSynced = UnixTime.now().add(-12, 'hours').lte(liveness.syncedUntil)
+  const isSynced = true
+
   return {
     name: project.display.name,
     shortName: project.display.shortName,
@@ -65,7 +69,7 @@ function getScalingLivenessViewEntry(
       warning: project.display.liveness?.warnings?.proofSubmissions,
     },
     anomalyEntries: getAnomalyEntries(liveness.anomalies),
-    isSynced: liveness.isSynced,
+    isSynced,
   }
 }
 
@@ -130,11 +134,11 @@ function typeToDisplayType(
   anomaly: NonNullable<LivenessApiProject['anomalies']>[0],
 ) {
   switch (anomaly.type) {
-    case 'DA':
+    case 'batchSubmissions':
       return 'TX DATA SUBMISSION'
-    case 'STATE':
+    case 'stateUpdates':
       return 'STATE UPDATE'
-    case 'PROOF':
+    case 'proofSubmissions':
       return 'PROOF SUBMISSION'
     default:
       assertUnreachable(anomaly.type)

@@ -18,7 +18,7 @@
       "address": "0xEd04915c23f00A313a544955524EB7DBD823143d"
     },
     {
-      "symbol": "agEUR",
+      "symbol": "EURA",
       "address": "0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8",
       "category": "stablecoin"
     },
@@ -46,6 +46,14 @@
     {
       "symbol": "ANKR",
       "address": "0x8290333ceF9e6D528dD5618Fb97a76f268f3EDD4"
+    },
+    {
+      "symbol": "ankrETH",
+      "address": "0xE95A203B1a91a908F9B9CE46459d101078c2c3cb"
+    },
+    {
+      "symbol": "ankrMATIC",
+      "address": "0x26dcFbFa8Bc267b250432c01C982Eaf81cC5480C"
     },
     {
       "symbol": "ANT",
@@ -131,6 +139,10 @@
     {
       "symbol": "C98",
       "address": "0xAE12C5930881c53715B369ceC7606B70d8EB229f"
+    },
+    {
+      "symbol": "cbETH",
+      "address": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
     },
     {
       "symbol": "cDAI",
@@ -791,6 +803,10 @@
       "address": "0xe53EC727dbDEB9E2d5456c3be40cFF031AB40A55"
     },
     {
+      "symbol": "sUSDe",
+      "address": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497"
+    },
+    {
       "symbol": "SUSHI",
       "address": "0x6B3595068778DD592e39A122f4f5a5cF09C90fE2"
     },
@@ -900,6 +916,10 @@
     {
       "symbol": "WBTC",
       "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"
+    },
+    {
+      "symbol": "weETH",
+      "address": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee"
     },
     {
       "symbol": "WETH",

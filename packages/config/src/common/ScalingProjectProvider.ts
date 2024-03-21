@@ -9,4 +9,9 @@ export type Layer2Provider =
   | 'OVM'
   | 'Starknet'
 
-export type Layer3Provider = 'Arbitrum Orbit' | 'zkLink Nexus'
+export type Layer3Provider =
+  | 'Arbitrum Orbit'
+  | 'Cartesi Rollups'
+  | 'zkLink Nexus'
+  | 'Taiko'
+  | 'OP Stack'

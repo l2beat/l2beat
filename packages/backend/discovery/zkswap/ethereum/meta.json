@@ -1,0 +1,299 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "UpgradeGatekeeper",
+      "values": {
+        "getMaster": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mainContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "noticePeriodFinishTimestamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "upgradeStatus": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "versionId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "managedContracts": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Governance",
+      "values": {
+        "getMaster": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTarget": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "networkGovernor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalTokens": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "validators": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ZkSync",
+      "values": {
+        "EMPTY_STRING_KECCAK": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "exodusMode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "firstPendingWithdrawalIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "firstPriorityRequestId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getMaster": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTarget": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "numberOfPendingWithdrawals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalBlocksCommitted": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalBlocksVerified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalCommittedPriorityRequests": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalOpenPriorityRequests": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalPairTokens": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "upgradePreparationActivationTime": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "upgradePreparationActive": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "zkSyncCommitBlockAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "zkSyncExitAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pairManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "verifier": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "verifierExit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Verifier",
+      "values": {
+        "getMaster": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTarget": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "PairManager",
+      "values": {
+        "getMaster": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTarget": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "VerifierExit",
+      "values": {
+        "getMaster": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTarget": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ZkSyncCommitBlock",
+      "values": {
+        "EMPTY_STRING_KECCAK": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "exodusMode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "firstPendingWithdrawalIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "firstPriorityRequestId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "numberOfPendingWithdrawals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalBlocksCommitted": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalBlocksVerified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalCommittedPriorityRequests": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalOpenPriorityRequests": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalPairTokens": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "upgradePreparationActivationTime": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "upgradePreparationActive": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "zkSyncCommitBlockAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "zkSyncExitAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ZkSyncExit",
+      "values": {}
+    }
+  ]
+}

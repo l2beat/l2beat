@@ -2,7 +2,7 @@ import { ScalingProjectTechnologyChoice } from './ScalingProjectTechnologyChoice
 
 export interface ScalingProjectTechnology {
   /** What state correctness mechanism is used in the project */
-  stateCorrectness: ScalingProjectTechnologyChoice
+  stateCorrectness?: ScalingProjectTechnologyChoice
   /** What is the new cryptography used in the project */
   newCryptography?: ScalingProjectTechnologyChoice
   /** What is the data availability choice for the project */
@@ -15,12 +15,8 @@ export interface ScalingProjectTechnology {
   exitMechanisms: ScalingProjectTechnologyChoice[]
   /** What is solution to the mass exit problem */
   massExit?: ScalingProjectTechnologyChoice
-  /** What is the additional privacy offered */
-  additionalPrivacy?: ScalingProjectTechnologyChoice
-  /** What are the smart contract capabilities */
-  smartContracts?: ScalingProjectTechnologyChoice
-  /** How can the project be upgraded? */
-  upgradeMechanism?: ScalingProjectTechnologyChoice
+  /** Other considerations */
+  otherConsiderations?: ScalingProjectTechnologyChoice[]
   /** Is the technology section under review */
   isUnderReview?: boolean
 }

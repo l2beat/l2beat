@@ -32,7 +32,7 @@ export function FinalityDurationCell(props: Props) {
           {!props.data.syncStatus.isSynced && (
             <>
               <span className="whitespace-pre text-balance">
-                {`Values has not been synced since\n${props.data.syncStatus.displaySyncedUntil}.`}
+                {`Values have not been synced since\n${props.data.syncStatus.displaySyncedUntil}.`}
               </span>
               <HorizontalSeparator className="my-2 dark:border-slate-600" />
             </>

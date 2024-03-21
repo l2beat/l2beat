@@ -4,115 +4,160 @@
   "name": "l2beat-starkware",
   "initialAddresses": ["0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"],
   "names": {
+    "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": "SHARPVerifierGovernorMultisig",
     "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60": "SHARPVerifierProxy",
-    "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6": "SHARPVerifier",
-    "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4": "SHARPVerifierGovernorMultisig"
+    "0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF": "SHARPVerifier",
+    "0x40864568f679c10aC9e72211500096a5130770fA": "MemoryPageFactRegistry",
+    "0xb4c61d092eCf1b69F1965F9D8DE639148ea26a40": "CairoBootloaderProgram",
+    "0x28E3aD4201ba416B23d9950503dB28a9232BE32a": "CpuFrilessVerifier1",
+    "0x5f1AbAA5d375Edb7bEd213855D44268B844CD65d": "CpuFrilessVerifier2",
+    "0x6097FC32a720D0DE369A67FecdBC91fE3C6Cc460": "CpuFrilessVerifier3",
+    "0x66F2345D003511a1A60D87E3984Bb8d12C21A970": "CpuFrilessVerifier4",
+    "0x8055948c530dbBc19cc350d53473EEe3a1e3d22B": "CpuFrilessVerifier5",
+    "0xaA2c9CDD4ceAebe9A35873B77F57FB47c3Ef11b9": "CpuFrilessVerifier6",
+    "0xbF8D127efc09ed49C65f00355A0C5a5FF57D26cc": "CpuFrilessVerifier7",
+    "0xD0fC19710c389ef4a7244656cB08db08eA9D88b4": "CpuFrilessVerifier8",
+    "0xcB799CbBd4f5F0a3b6bbd9b55F59E8b301A0286B": "EcdsaPointsXColumn",
+    "0x9e4FdD8ff1b11e8f788Af77caA4b0037c137EcC1": "EcdsaPointsYColumn",
+    "0x3d571a45D2B14FF423D2DC4A0e7a46e07D9682bB": "PedersenHashPointsXColumn",
+    "0xFD12A123ecf4326E70A4D8b2bC260ec730BBE7Fd": "PedersenHashPointsYColumn",
+    "0x20F10963eBCA608f8B24a5AEE275861B20ec868E": "Fri1_PoseidonPoseidonPartialRoundKey1Column",
+    "0x75D887d2437eF87EA17B93143716BECD7BBbCa0a": "Fri1_PoseidonPoseidonPartialRoundKey0Column",
+    "0x8004e851fa3F3C66A3c80e4F7E96559f4C3E16a6": "Fri1_PoseidonPoseidonFullRoundKey0Column",
+    "0x1E8E41141347E01f33d84718b7f4cEFB433D5a94": "Fri1_PoseidonPoseidonFullRoundKey1Column",
+    "0x2b159027d7F0E23D5C15b0517e33DdA838C46045": "Fri1_PoseidonPoseidonFullRoundKey2Column",
+    "0x1Db84E79E8daEC762d6aDaa5bf358A4Ba001E975": "Fri6_PoseidonPoseidonPartialRoundKey0Column",
+    "0x62960C874379653D7BBe3644Ac653736Da2eda12": "Fri6_PoseidonPoseidonPartialRoundKey1Column",
+    "0xe7B835eA7e348B25aF2480272C4cA28429573293": "Fri6_PoseidonPoseidonFullRoundKey0Column",
+    "0xC2969a099F22430e20bcE237F469ac6F3101Ac5f": "Fri6_PoseidonPoseidonFullRoundKey1Column",
+    "0xB5A5759Dd063899F213eB9699906B445f855660D": "Fri6_PoseidonPoseidonFullRoundKey2Column",
+    "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6": "OldSHARPVerifier",
+    "0xFD14567eaf9ba941cB8c8a94eEC14831ca7fD1b4": "OldMemoryPageFactRegistry"
   },
   "overrides": {
     "SHARPVerifier": {
       "fields": {
-        "constructorArgs": {
-          "type": "constructorArgs"
+        "bootloaderProgramContractAddress": {
+          "type": "storage",
+          "slot": 3,
+          "returnType": "address"
+        },
+        "memoryPageFactRegistry": {
+          "type": "storage",
+          "slot": 4,
+          "returnType": "address"
+        },
+        "cpuFrilessVerifiers": {
+          "type": "dynamicArray",
+          "slot": 5,
+          "returnType": "address"
         }
       }
     },
-    //PedersenHashPointsYColumn
-    "0x519DA5F74503dA351EbBED889111377d33096002": {
-      "ignoreMethods": ["compute"]
-    },
-    //PedersenHashPointsXColumn
-    "0xc4f21318937017B8aBe5fDc0D48f58dBc1d18940": {
-      "ignoreMethods": ["compute"]
-    },
-    //PoseidonPoseidonPartialRoundKey1Column
-    "0x4d0E80AB34ee2B19295F2CaC3101d03452D874b8": {
-      "ignoreMethods": ["compute"]
-    },
-    //PoseidonPoseidonPartialRoundKey0Column
-    "0x812c2AD2161D099724A99C8114c539b9e5b449cd": {
-      "ignoreMethods": ["compute"]
-    },
-    //PoseidonPoseidonFullRoundKey2Column
-    "0x4FB05b7CC348C5a72C59a3f307baf66e3CA1F835": {
-      "ignoreMethods": ["compute"]
-    },
-    //PoseidonPoseidonFullRoundKey1Column
-    "0xb4711a4614368516529d6118C97905aB4B28e267": {
-      "ignoreMethods": ["compute"]
-    },
-    //PoseidonPoseidonFullRoundKey0Column
-    "0x37070Fd8051f63E5A6D7E87026e086Cc19db1aBe": {
-      "ignoreMethods": ["compute"]
-    },
-    //EcdsaPointsYColumn
-    "0xcA59f6FD499ffF50c78Ffb420a9bcd0d273abf29": {
-      "ignoreMethods": ["compute"]
-    },
-    //EcdsaPointsXColumn
-    "0x593a71DC43e9B67FE009d7C76B6EfA925FB329B1": {
-      "ignoreMethods": ["compute"]
-    },
-    // CpuFrillessVerifier1
-    "0x03Fa911dfCa026D9C8Edb508851b390accF912e8": {
+    "CpuFrilessVerifier1": {
       "fields": {
         "constructorArgs": {
           "type": "constructorArgs"
         }
       }
     },
-    // CpuFrillessVerifier2
-    "0xe9664D230490d5A515ef7Ef30033d8075a8D0E24": {
+    "CpuFrilessVerifier2": {
       "fields": {
         "constructorArgs": {
           "type": "constructorArgs"
         }
       }
     },
-    // CpuFrillessVerifier3
-    "0x78Af2BFB12Db15d35f7dE8DD77f29C299C78c590": {
+    "CpuFrilessVerifier3": {
       "fields": {
         "constructorArgs": {
           "type": "constructorArgs"
         }
       }
     },
-    // CpuFrillessVerifier4
-    "0xC879aF7D5eD80e4676C203FD300E640C297F31e3": {
+    "CpuFrilessVerifier4": {
       "fields": {
         "constructorArgs": {
           "type": "constructorArgs"
         }
       }
     },
-    // CpuFrillessVerifier5
-    "0x9E614a417f8309575fC11b175A51599661f2Bd21": {
+    "CpuFrilessVerifier5": {
       "fields": {
         "constructorArgs": {
           "type": "constructorArgs"
         }
       }
     },
-    // CpuFrillessVerifier6
-    "0x8488e8f4e26eBa40faE229AB653d98E341cbE57B": {
+    "CpuFrilessVerifier6": {
       "fields": {
         "constructorArgs": {
           "type": "constructorArgs"
         }
       }
     },
-    // CpuFrillessVerifier7
-    "0x630A97901Ac29590DF83f4A64B8D490D54caf239": {
+    "CpuFrilessVerifier7": {
       "fields": {
         "constructorArgs": {
           "type": "constructorArgs"
         }
       }
     },
-    // CpuFrillessVerifier8
-    "0x217750c27bE9147f9e358D9FF26a8224F8aCC214": {
+    "CpuFrilessVerifier8": {
       "fields": {
         "constructorArgs": {
           "type": "constructorArgs"
+        }
+      }
+    },
+    "EcdsaPointsXColumn": {
+      "ignoreMethods": ["compute"]
+    },
+    "EcdsaPointsYColumn": {
+      "ignoreMethods": ["compute"]
+    },
+    "PedersenHashPointsXColumn": {
+      "ignoreMethods": ["compute"]
+    },
+    "PedersenHashPointsYColumn": {
+      "ignoreMethods": ["compute"]
+    },
+    "Fri1_PoseidonPoseidonPartialRoundKey1Column": {
+      "ignoreMethods": ["compute"]
+    },
+    "Fri1_PoseidonPoseidonPartialRoundKey0Column": {
+      "ignoreMethods": ["compute"]
+    },
+    "Fri1_PoseidonPoseidonFullRoundKey0Column": {
+      "ignoreMethods": ["compute"]
+    },
+    "Fri1_PoseidonPoseidonFullRoundKey1Column": {
+      "ignoreMethods": ["compute"]
+    },
+    "Fri1_PoseidonPoseidonFullRoundKey2Column": {
+      "ignoreMethods": ["compute"]
+    },
+    "Fri6_PoseidonPoseidonPartialRoundKey1Column": {
+      "ignoreMethods": ["compute"]
+    },
+    "Fri6_PoseidonPoseidonPartialRoundKey0Column": {
+      "ignoreMethods": ["compute"]
+    },
+    "Fri6_PoseidonPoseidonFullRoundKey0Column": {
+      "ignoreMethods": ["compute"]
+    },
+    "Fri6_PoseidonPoseidonFullRoundKey1Column": {
+      "ignoreMethods": ["compute"]
+    },
+    "Fri6_PoseidonPoseidonFullRoundKey2Column": {
+      "ignoreMethods": ["compute"]
+    },
+    "OldSHARPVerifier": {
+      "fields": {
+        "memoryPageFactRegistry": {
+          "type": "storage",
+          "slot": 2,
+          "returnType": "address"
         }
       }
     },

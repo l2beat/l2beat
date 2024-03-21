@@ -1,3 +1,140 @@
+Generated with discovered.json: 0xf0238ed10ceca3dd8e5681d6939ad2464cd124c8
+
+# Diff at Mon, 18 Mar 2024 09:11:40 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@6554807e96aa5206aec95eab7b2ae23cf107941b block: 19432590
+- current block number: 19460707
+
+## Description
+
+The programHash of Starknet OS (L2 cairo state machine) is changed, no changes on L1.
+
+## Watched changes
+
+```diff
+    contract ImplementationMultisig (0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd) {
+    +++ description: None
+      values.nonce:
+-        20
++        21
+    }
+```
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: None
++++ description: The hash changes when the L2 cairo state machine logic changes.
++++ type: CODE_CHANGE
++++ severity: MEDIUM
+      values.programHash:
+-        "109586309220455887239200613090920758778188956576212125550190099009305121410"
++        "3383082961563516565935611087683915026448707331436034043529592588079494402084"
+    }
+```
+
+Generated with discovered.json: 0x4335af2ffbc06336f597863bea89ad0352e95c0c
+
+# Diff at Thu, 14 Mar 2024 10:15:35 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@24c5721630392f8b6f59093376472db03d18b2c2 block: 19411249
+- current block number: 19432590
+
+## Description
+
+The main Starknet contract has been updated to support blobs. Small changes in emitted events when processing L2 to L1 messages. Some other changes to NamedStorage, in particular they added an AddressToAddress mapping.
+
+### How the DA verification works now
+
+#### CALLDATA
+
+The `updateState` function is called. The `USE_KZG_DA_OFFSET` is checked to be zero because we are not using blobs. The onchain data hash that includes the statediff is encoded into a keccak commitment and passed to the `updateStateInternal` function. This function checks in the fact registry whether the state diff was proven before (using just the commitment!) and then the state root is updated.
+
+#### BLOBS
+
+The `updateStateKzgDA` function is called and a kzg proof is passed as a param. The `USE_KZG_DA_OFFSET` is checked to be one. The `verifyKzgProof` function is called. This function only checks the first blob, implying that they will always just publish one per tx. The function takes `blobhash(0)` and verifies a point evaluation using the precompile. After this verification the point evaluation info is committed and checked against the fact registry as before. The correct usage of the precompile can be checked only if we also look into the program being proven, which we don't do at this stage. In fact, the program hash has been updated.
+
+## Watched changes
+
+```diff
+    contract ProxyMultisig (0x83C0A700114101D1283D1405E2c8f21D3F03e988) {
+    +++ description: None
+      values.getOwners[4]:
++        "0xCe958D997F4a5824D4d503A128216322C6C223a0"
+      values.getOwners.3:
+-        "0xCe958D997F4a5824D4d503A128216322C6C223a0"
++        "0x59232aC80E6d403b6381393e52f4665ECA328558"
+      values.getOwners.2:
+-        "0x59232aC80E6d403b6381393e52f4665ECA328558"
++        "0x64F4396bb0669C72858Cc50C779b48EB25F45770"
+      values.getOwners.1:
+-        "0x64F4396bb0669C72858Cc50C779b48EB25F45770"
++        "0x2871B956bC19D25961E9a7519f32D7fDaA21B403"
+      values.getOwners.0:
+-        "0x2871B956bC19D25961E9a7519f32D7fDaA21B403"
++        "0x804d60CB1ade94511f7915A2062948685Ca8C81f"
+    }
+```
+
+```diff
+    contract ImplementationMultisig (0x86fD9cA64014b465d17f1bFBBBCFBEC7ebD8b1Bd) {
+    +++ description: None
+      values.nonce:
+-        19
++        20
+    }
+```
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x16938E4b59297060484Fa56a12594d8D6F4177e8"
++        "0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24"
+      implementations.0:
+-        "0x16938E4b59297060484Fa56a12594d8D6F4177e8"
++        "0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24"
+      values.identify:
+-        "StarkWare_Starknet_2023_6"
++        "StarkWare_Starknet_2024_8"
+      values.implementation:
+-        "0x16938E4b59297060484Fa56a12594d8D6F4177e8"
++        "0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24"
+      values.programHash:
+-        "2479841346739966073527450029179698923866252973805981504232089731754042431018"
++        "109586309220455887239200613090920758778188956576212125550190099009305121410"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Starknet/implementation/meta.txt               |   2 +-
+ .../starkware/solidity/components}/Governance.sol  |   6 +-
+ .../solidity/components}/GovernedFinalizable.sol   |   8 +-
+ .../components}/OnchainDataFactTreeEncoder.sol     |  13 +-
+ .../starkware/solidity/components}/Operator.sol    |   8 +-
+ .../solidity/interfaces}/BlockDirectCall.sol       |   4 +-
+ .../solidity/interfaces}/ContractInitializer.sol   |   4 +-
+ .../solidity/interfaces}/IFactRegistry.sol         |   4 +-
+ .../starkware/solidity/interfaces}/Identity.sol    |   4 +-
+ .../starkware/solidity/interfaces}/MGovernance.sol |   4 +-
+ .../starkware/solidity/interfaces}/MOperator.sol   |   6 +-
+ .../solidity/interfaces}/ProxySupport.sol          |  12 +-
+ .../starkware/solidity/libraries}/Addresses.sol    |   4 +-
+ .../solidity/libraries/NamedStorage8.sol}          |  23 ++-
+ .../starknet/solidity}/IStarknetMessaging.sol      |  12 +-
+ .../solidity}/IStarknetMessagingEvents.sol         |   4 +-
+ .../starkware/starknet/solidity}/Output.sol        |  38 ++--
+ .../starkware/starknet/solidity}/Starknet.sol      | 219 ++++++++++++++++-----
+ .../starknet/solidity}/StarknetGovernance.sol      |   8 +-
+ .../starknet/solidity}/StarknetMessaging.sol       |  14 +-
+ .../starknet/solidity}/StarknetOperator.sol        |   8 +-
+ .../starkware/starknet/solidity}/StarknetState.sol |   6 +-
+ 22 files changed, 271 insertions(+), 140 deletions(-)
+```
+
 Generated with discovered.json: 0xeae0d0cdb66222ce999d96aa721fc58284e15e23
 
 # Diff at Mon, 11 Mar 2024 10:26:46 GMT:
