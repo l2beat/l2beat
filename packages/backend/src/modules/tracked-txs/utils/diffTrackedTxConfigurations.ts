@@ -10,7 +10,7 @@ import { TrackedTxConfigEntry } from '../types/TrackedTxsConfig'
 export type ToChangeUntilTimestamp = {
   id: TrackedTxId
   untilTimestampExclusive: UnixTime
-  lastSyncedTimestamp: UnixTime | undefined
+  trim: boolean
 }
 
 export function diffTrackedTxConfigurations(
@@ -41,10 +41,14 @@ export function diffTrackedTxConfigurations(
             databaseEntry.untilTimestampExclusive,
           ))
       ) {
+        const trim =
+          databaseEntry.lastSyncedTimestamp &&
+          entry.untilTimestampExclusive < databaseEntry.lastSyncedTimestamp
+
         toChangeUntilTimestamp.push({
           id: entryUse.id,
           untilTimestampExclusive: entry.untilTimestampExclusive,
-          lastSyncedTimestamp: databaseEntry.lastSyncedTimestamp,
+          trim: !!trim,
         })
       }
     }

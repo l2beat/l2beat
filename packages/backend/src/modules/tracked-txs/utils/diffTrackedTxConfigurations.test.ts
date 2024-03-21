@@ -31,23 +31,28 @@ describe(diffTrackedTxConfigurations.name, () => {
 
   describe('updated', () => {
     it('finds configs which untilTimestamp have changed', () => {
+      const now = UnixTime.now()
       const configurations = [
         {
           ...CONFIGURATIONS[0],
-          untilTimestampExclusive: UnixTime.now().add(-5, 'days'),
+          untilTimestampExclusive: now.add(-5, 'days'),
         },
         {
           ...CONFIGURATIONS[1],
-          untilTimestampExclusive: UnixTime.now(),
+          untilTimestampExclusive: now.add(-10, 'days'),
         },
       ]
 
       const dbConfigs = [
         {
           ...DB_CONFIGURATIONS[0],
-          lastSyncedTimestamp: UnixTime.now().add(-10, 'days'),
+          lastSyncedTimestamp: now.add(-10, 'days'),
         },
-        ...DB_CONFIGURATIONS.slice(1, 3),
+        ...DB_CONFIGURATIONS.slice(1, 3).map((c) => ({
+          ...c,
+          untilTimestampExclusive: now.add(-5, 'days'),
+          lastSyncedTimestamp: now.add(-5, 'days'),
+        })),
       ]
 
       const result = diffTrackedTxConfigurations(configurations, dbConfigs)
@@ -56,17 +61,17 @@ describe(diffTrackedTxConfigurations.name, () => {
         {
           id: configurations[0].uses[0].id,
           untilTimestampExclusive: configurations[0].untilTimestampExclusive,
-          lastSyncedTimestamp: dbConfigs[0].lastSyncedTimestamp,
+          trim: false,
         },
         {
           id: configurations[1].uses[0].id,
           untilTimestampExclusive: configurations[1].untilTimestampExclusive,
-          lastSyncedTimestamp: dbConfigs[1].lastSyncedTimestamp,
+          trim: true,
         },
         {
           id: configurations[1].uses[1].id,
           untilTimestampExclusive: configurations[1].untilTimestampExclusive,
-          lastSyncedTimestamp: dbConfigs[2].lastSyncedTimestamp,
+          trim: true,
         },
       ])
     })

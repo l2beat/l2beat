@@ -150,11 +150,8 @@ export class TrackedTxsIndexer extends ChildIndexer {
           c.untilTimestampExclusive,
           trx,
         )
-        const isTrimmed =
-          c.lastSyncedTimestamp &&
-          c.untilTimestampExclusive < c.lastSyncedTimestamp
 
-        if (!isTrimmed) {
+        if (!c.trim) {
           return
         }
 
