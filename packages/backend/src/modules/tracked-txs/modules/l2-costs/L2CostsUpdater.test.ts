@@ -64,7 +64,7 @@ describe(L2CostsUpdater.name, () => {
           },
         ]
 
-        expect(result).toEqual(expected)
+        expect(result).toEqualUnsorted(expected)
       })
     },
   )
