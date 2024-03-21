@@ -1,9 +1,4 @@
-import {
-  EthereumAddress,
-  formatSeconds,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { formatSeconds, ProjectId } from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
