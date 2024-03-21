@@ -16,9 +16,12 @@ describe(getSafeHeight.name, () => {
     expect(result).toEqual(MIN_TIMESTAMP.toNumber())
   })
 
-  it('returns minTimestamp if no applicable entries', () => {
+  it('returns minTimestamp if no applicable timestamps', () => {
     const databaseEntries: TrackedTxsConfigRecord[] = [
-      mockDatabaseEntry({ lastSyncedTimestamp: undefined }),
+      mockDatabaseEntry({
+        lastSyncedTimestamp: NOW,
+        untilTimestampExclusive: NOW,
+      }),
       mockDatabaseEntry({
         lastSyncedTimestamp: NOW.add(-5, 'hours'),
         untilTimestampExclusive: NOW.add(-5, 'hours'),
