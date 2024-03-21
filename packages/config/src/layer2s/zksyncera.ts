@@ -460,7 +460,7 @@ A \`Governance\` smart contract is set up as the *Governor* role of the diamond.
           'zkSync Era circuits are built from Boojum and are designed to replicate the behavior of the EVM. The source code can be found [here](https://github.com/matter-labs/era-zkevm_circuits/tree/main). The circuits are checked against tests that can be found [here](https://github.com/matter-labs/era-zkevm_test_harness/tree/main).',
         risks: [
           {
-            category: 'Funds can be stolen if',
+            category: 'Funds can be lost if',
             text: 'the proof system is implemented incorrectly.',
           },
         ],
