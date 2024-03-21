@@ -105,6 +105,7 @@ export const zkfair: Layer2 = {
       repositories: ['https://github.com/ZKFair'],
       socialMedia: ['https://twitter.com/ZKFCommunity'],
     },
+    activityDataSource: "Blockchain RPC"
   },
   config: {
     escrows: [
@@ -115,6 +116,11 @@ export const zkfair: Layer2 = {
       }),
     ],
     associatedTokens: ['ZKF'],
+    transactionApi: {
+      type: 'rpc',
+      defaultUrl: 'https://rpc.zkfair.io',
+      startBlock: 1,
+    },
   },
   chainConfig: {
     name: 'zkfair',
