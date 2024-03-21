@@ -130,7 +130,8 @@ export class L2CostsController {
 
       const records = await this.l2CostsRepository.getByProjectSinceTimestamp(
         project.projectId,
-        NOW.add(-90, 'days'),
+        NOW.add(-90, 'days').toStartOf('hour'),
+        NOW.toStartOf('hour'),
       )
 
       const last90d = await this.makeTransactionCalculations(records)
@@ -211,8 +212,8 @@ export class L2CostsController {
   ): Promise<DetailedTransaction[]> {
     const ethPricesMap = await this.priceRepository.findByTimestampRange(
       AssetId.ETH,
-      UnixTime.now().add(-91, 'days'),
-      UnixTime.now(),
+      NOW.add(-90, 'days').toStartOf('hour'),
+      NOW.toStartOf('hour'),
     )
 
     return transactions.map((tx) => {
