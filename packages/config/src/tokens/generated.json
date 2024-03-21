@@ -1625,7 +1625,7 @@
       "name": "iZUMi Bond USD",
       "coingeckoId": "izumi-bond-usd",
       "address": "0x0A3BB08b3a15A19b4De82F8AcFc862606FB69A2D",
-      "symbol": "IUSD",
+      "symbol": "iUSD",
       "decimals": 18,
       "deploymentTimestamp": 1650533581,
       "coingeckoListingTimestamp": 1651708800,
