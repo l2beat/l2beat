@@ -6,12 +6,12 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
   makeBridgeCompatible,
-  makeDataAvailabilityConfig,
   RISK_VIEW,
   SEQUENCER_NO_MECHANISM,
   STATE_CORRECTNESS,
@@ -105,6 +105,7 @@ export const zkfair: Layer2 = {
       repositories: ['https://github.com/ZKFair'],
       socialMedia: ['https://twitter.com/ZKFCommunity'],
     },
+    activityDataSource: 'Blockchain RPC',
   },
   config: {
     escrows: [
@@ -115,6 +116,11 @@ export const zkfair: Layer2 = {
       }),
     ],
     associatedTokens: ['ZKF'],
+    transactionApi: {
+      type: 'rpc',
+      defaultUrl: 'https://rpc.zkfair.io',
+      startBlock: 1,
+    },
   },
   chainConfig: {
     name: 'zkfair',
@@ -137,12 +143,9 @@ export const zkfair: Layer2 = {
     ],
     coingeckoPlatform: 'zkfair',
   },
-  dataAvailability: makeDataAvailabilityConfig({
-    type: 'Off chain (DAC)',
-    config: {
-      membersCount,
-      requiredSignatures,
-    },
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['DAC'],
+    bridge: { type: 'DAC Members', requiredSignatures, membersCount },
     mode: 'State diffs',
   }),
   riskView: makeBridgeCompatible({

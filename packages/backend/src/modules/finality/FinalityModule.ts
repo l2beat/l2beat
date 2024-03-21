@@ -1,16 +1,15 @@
 import { Logger } from '@l2beat/backend-tools'
 import { assert, assertUnreachable, notUndefined } from '@l2beat/shared-pure'
-import { ethers } from 'ethers'
 
 import { Config } from '../../config'
 import { FinalityProjectConfig } from '../../config/features/finality'
-import { Database } from '../../peripherals/database/Database'
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
+import { Peripherals } from '../../peripherals/Peripherals'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
-import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
-import { LivenessIndexer } from '../liveness/LivenessIndexer'
-import { LivenessRepository } from '../liveness/repositories/LivenessRepository'
+import { LivenessRepository } from '../tracked-txs/modules/liveness/repositories/LivenessRepository'
+import { TrackedTxsConfigsRepository } from '../tracked-txs/repositories/TrackedTxsConfigsRepository'
+import { TrackedTxsIndexer } from '../tracked-txs/TrackedTxsIndexer'
 import { LineaFinalityAnalyzer } from './analyzers/LineaFinalityAnalyzer'
 import { zkSyncEraFinalityAnalyzer } from './analyzers/zkSyncEraFinalityAnalyzer'
 import { FinalityController } from './api/FinalityController'
@@ -21,54 +20,46 @@ import { FinalityRepository } from './repositories/FinalityRepository'
 export function createFinalityModule(
   config: Config,
   logger: Logger,
-  database: Database,
-  clock: Clock,
-  livenessIndexer?: LivenessIndexer,
+  peripherals: Peripherals,
+  trackedTxsIndexer: TrackedTxsIndexer | undefined,
 ): ApplicationModule | undefined {
   if (!config.finality) {
     logger.info('Finality module disabled')
     return
   }
 
-  if (!livenessIndexer) {
-    logger.error('To run finality you have to run Liveness')
+  if (!trackedTxsIndexer) {
+    logger.error('To run finality you have to run tracked transactions module')
     return
   }
 
-  const indexerStateRepository = new IndexerStateRepository(database, logger)
-  const livenessRepository = new LivenessRepository(database, logger)
-  const finalityRepository = new FinalityRepository(database, logger)
-
   const finalityController = new FinalityController(
-    livenessRepository,
-    finalityRepository,
+    peripherals.getRepository(LivenessRepository),
+    peripherals.getRepository(FinalityRepository),
+    peripherals.getRepository(TrackedTxsConfigsRepository),
     config.finality.configurations,
   )
   const finalityRouter = createFinalityRouter(finalityController)
 
-  const ethereumProvider = new ethers.providers.JsonRpcProvider(
-    config.finality.ethereumProviderUrl,
-  )
-  const ethereumRPC = new RpcClient(
-    ethereumProvider,
-    logger,
-    config.finality.ethereumProviderCallsPerMinute,
-  )
+  const ethereumClient = peripherals.getClient(RpcClient, {
+    url: config.finality.ethereumProviderUrl,
+    callsPerMinute: config.finality.ethereumProviderCallsPerMinute,
+  })
 
   const runtimeConfigurations = initializeConfigurations(
-    ethereumRPC,
-    livenessRepository,
+    ethereumClient,
+    peripherals.getRepository(LivenessRepository),
     config.finality.configurations,
-    logger,
+    peripherals,
   )
 
   const finalityIndexers = runtimeConfigurations.map(
     (runtimeConfiguration) =>
       new FinalityIndexer(
         logger,
-        livenessIndexer,
-        indexerStateRepository,
-        finalityRepository,
+        trackedTxsIndexer,
+        peripherals.getRepository(IndexerStateRepository),
+        peripherals.getRepository(FinalityRepository),
         runtimeConfiguration,
       ),
   )
@@ -92,7 +83,7 @@ function initializeConfigurations(
   ethereumRPC: RpcClient,
   livenessRepository: LivenessRepository,
   configs: FinalityProjectConfig[],
-  logger: Logger,
+  peripherals: Peripherals,
 ) {
   return configs
     .map((configuration) => {
@@ -104,7 +95,7 @@ function initializeConfigurations(
               ethereumRPC,
               livenessRepository,
               configuration.projectId,
-              getL2RPC(configuration, logger),
+              getL2RPC(configuration, peripherals),
             ),
             minTimestamp: configuration.minTimestamp,
           }
@@ -127,11 +118,16 @@ function initializeConfigurations(
     .filter(notUndefined)
 }
 
-function getL2RPC(configuration: FinalityProjectConfig, logger: Logger) {
+function getL2RPC(
+  configuration: FinalityProjectConfig,
+  peripherals: Peripherals,
+) {
   assert(
     configuration.url,
     `${configuration.projectId.toString()}: L2 provider URL is not defined`,
   )
-  const L2provider = new ethers.providers.JsonRpcProvider(configuration.url)
-  return new RpcClient(L2provider, logger, configuration.callsPerMinute)
+  return peripherals.getClient(RpcClient, {
+    url: configuration.url,
+    callsPerMinute: configuration.callsPerMinute,
+  })
 }

@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x1392fd8121eb5a92ca60b50756022ed85425bc96
+
+# Diff at Fri, 15 Mar 2024 09:26:34 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@6a294996c13c1a3ad00c7c4d72e651e8fbd4fa1c block: 19325744
+- current block number: 19439442
+
+## Description
+
+One rollupProvider is added.
+
+## Watched changes
+
+```diff
+    contract RollupProcessor (0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba) {
+    +++ description: None
++++ description: Can call the ProcessRollup function
++++ type: PERMISSION
++++ severity: LOW
+      values.rollupProviders.0:
++        "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
+    }
+```
+
 Generated with discovered.json: 0xb96045455cbe881ca2725b8fa4df0c2bb7103f3b
 
 # Diff at Wed, 28 Feb 2024 11:31:18 GMT:

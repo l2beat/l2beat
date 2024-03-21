@@ -1,12 +1,42 @@
 import { assert } from '@l2beat/backend-tools'
+import { Layer2, layer2s } from '@l2beat/config'
 import chalk from 'chalk'
 import { readdir, readFile } from 'fs/promises'
 import { resolve } from 'path'
 
 import { printAsciiTable } from '../src/tools/printAsciiTable'
 
+type ShortStackKey =
+  | 'arbitrum'
+  | 'loopring'
+  | 'opstack'
+  | 'ovm'
+  | 'polygon'
+  | 'starkex'
+  | 'starknet'
+  | 'zks'
+  | 'zksync'
+
+const shortStackToFullName: Record<
+  ShortStackKey,
+  Layer2['display']['provider']
+> = {
+  arbitrum: 'Arbitrum',
+  loopring: 'Loopring',
+  opstack: 'OP Stack',
+  ovm: 'OVM',
+  polygon: 'Polygon',
+  starkex: 'StarkEx',
+  starknet: 'Starknet',
+  zks: 'ZK Stack',
+  zksync: 'zkSync Lite',
+}
+
+const allShortStacks = Object.keys(shortStackToFullName)
+
 interface Config {
-  subcommand: 'run' | 'help'
+  subcommand: 'project' | 'all' | 'help'
+  stack?: ShortStackKey
   firstProjectName?: string
   secondProjectName?: string
   forceTable?: boolean
@@ -44,8 +74,11 @@ async function main() {
     case 'help':
       printUsage()
       break
-    case 'run':
-      await compareFlatSources(config)
+    case 'project':
+      await compareTwoProjects(config)
+      break
+    case 'all':
+      await compareAllProjects(config)
       break
   }
 }
@@ -57,19 +90,46 @@ function parseCliParameters(): Config {
     return { subcommand: 'help' }
   }
 
-  const firstProjectName = args.shift()
-  const secondProjectName = args.shift()
+  const mode = args.shift()
+  if (mode === 'project') {
+    const firstProjectName = args.shift()
+    const secondProjectName = args.shift()
 
-  let forceTable = false
-  if (args.includes('--force-table')) {
-    forceTable = true
-  }
+    let forceTable = false
+    if (args.includes('--force-table')) {
+      forceTable = true
+    }
 
-  return {
-    subcommand: 'run',
-    firstProjectName,
-    secondProjectName,
-    forceTable,
+    return {
+      subcommand: 'project',
+      firstProjectName,
+      secondProjectName,
+      forceTable,
+    }
+  } else if (mode === 'all') {
+    const stack = args.shift()
+    needsToBe(
+      stack !== undefined,
+      `You need to provide a stack, choose from ${allShortStacks.join(', ')}`,
+    )
+    needsToBe(
+      stack in shortStackToFullName,
+      'Invalid stack chosen, choose from ' + allShortStacks.join(', '),
+    )
+
+    let forceTable = false
+    if (args.includes('--force-table')) {
+      forceTable = true
+    }
+
+    return {
+      subcommand: 'all',
+      forceTable,
+      stack: stack as ShortStackKey,
+    }
+  } else {
+    console.log('Invalid mode, expected "project" or "all"')
+    return { subcommand: 'help' }
   }
 }
 
@@ -79,24 +139,93 @@ function printUsage(): void {
   )
 }
 
-async function compareFlatSources(config: Config): Promise<void> {
+async function compareAllProjects(config: Config): Promise<void> {
+  const stack = config.stack
+  assert(stack !== undefined, 'stack is required')
+
+  const l2s = layer2s.filter(
+    (l2) =>
+      l2.display.provider === shortStackToFullName[stack] &&
+      !l2.isArchived &&
+      !l2.isUpcoming,
+  )
+
+  console.log(`= ${'Reading projects...'} `.padEnd(36, '='))
+  const stackProject = await Promise.all(
+    l2s.map((l2) => readProject(l2.id.toString())),
+  )
+  const projects = stackProject.filter((p) => p !== undefined) as Project[]
+
+  const matrix: Record<string, Record<string, string>> = {}
+  const mostSimilar: Record<
+    string,
+    {
+      name: string
+      similarity: number
+    }
+  > = {}
+
+  for (const p1 of projects) {
+    const c1Object: Record<string, string> = {}
+
+    for (const p2 of projects) {
+      const similarity = estimateSimilarity(
+        p1.concatenatedSource,
+        p2.concatenatedSource,
+      )
+      c1Object[p2.name] = colorMap(similarity)
+
+      if (p1.name !== p2.name) {
+        if (
+          mostSimilar[p1.name] === undefined ||
+          similarity > mostSimilar[p1.name].similarity
+        ) {
+          mostSimilar[p1.name] = {
+            name: p2.name,
+            similarity,
+          }
+        }
+      }
+    }
+
+    matrix[p1.name] = c1Object
+  }
+
+  const table = formatTable(
+    config,
+    projects.map((p) => p.name),
+    projects.map((p) => p.name),
+    matrix,
+  )
+
+  if (table) {
+    console.log(`\n= ${'Comparison matrix:'} `.padEnd(36, '='))
+    console.log(table)
+  }
+
+  console.log(`\n= ${'Most similar projects:'} `.padEnd(36, '='))
+  const longestName = Math.max(
+    ...Object.keys(mostSimilar).map((name) => name.length),
+  )
+  for (const [name, { name: similarName, similarity }] of Object.entries(
+    mostSimilar,
+  )) {
+    console.log(
+      `${name.padStart(longestName)} => ${similarName.padEnd(
+        longestName,
+      )} @ ${colorMap(similarity)}`,
+    )
+  }
+}
+
+async function compareTwoProjects(config: Config): Promise<void> {
   assert(config.firstProjectName, 'project1 is required')
   assert(config.secondProjectName, 'project2 is required')
 
-  let firstProject = undefined
-  let secondProject = undefined
-  try {
-    firstProject = await readProject(config.firstProjectName)
-    secondProject = await readProject(config.secondProjectName)
-  } catch (e) {
-    console.log(e)
-    console.log(
-      `\n${chalk.red('ERROR:')} Failed to read projects! Try to ${chalk.magenta(
-        'run discovery',
-      )} for both projects to make sure that flat sources exist.`,
-    )
-    return
-  }
+  const firstProject = await readProject(config.firstProjectName)
+  const secondProject = await readProject(config.secondProjectName)
+  assert(firstProject, `Project ${config.firstProjectName} not found`)
+  assert(secondProject, `Project ${config.secondProjectName} not found`)
 
   const matrix: Record<string, Record<string, string>> = {}
 
@@ -111,55 +240,15 @@ async function compareFlatSources(config: Config): Promise<void> {
     matrix[c1.path] = c1Object
   }
 
-  printResult(config, firstProject, secondProject, matrix)
+  printTwoProjectComparisonResult(config, firstProject, secondProject, matrix)
 }
 
-function printResult(
+function printTwoProjectComparisonResult(
   config: Config,
   firstProject: Project,
   secondProject: Project,
   matrix: Record<string, Record<string, string>>,
 ): void {
-  printTable(config, firstProject, secondProject, matrix)
-  const concatenatedSimilarity = estimateSimilarity(
-    firstProject.concatenatedSource,
-    secondProject.concatenatedSource,
-  )
-  console.log(
-    `\nEstimated similarity between two projects: ${colorMap(
-      concatenatedSimilarity,
-    )}`,
-  )
-}
-
-function printTable(
-  config: Config,
-  firstProject: Project,
-  secondProject: Project,
-  matrix: Record<string, Record<string, string>>,
-): void {
-  const terminalWidth = process.stdout.columns
-
-  const widths = [
-    computeTableWidth(firstProject),
-    computeTableWidth(secondProject),
-  ]
-  const minTableWidth = Math.min(...widths)
-
-  if (minTableWidth > terminalWidth && !config.forceTable) {
-    console.log(
-      `${chalk.yellow('WARNING')}: Table is too wide to fit in the terminal`,
-    )
-    console.log(
-      `Terminal is ${terminalWidth} characters wide, table is ${minTableWidth} characters wide`,
-    )
-    console.log(
-      `Use ${chalk.magenta('--force-table')} to print the table anyway.`,
-    )
-    return
-  }
-
-  const shouldTranspose = widths[0] < widths[1]
   const aIds = removeCommonPath(
     firstProject.sources.map((source, i) => ({
       id: `A${i}`,
@@ -173,7 +262,57 @@ function printTable(
     })),
   )
 
-  const header = ['IDs', ...(shouldTranspose ? aIds : bIds).map(({ id }) => id)]
+  const table = formatTable(
+    config,
+    aIds.map((a) => a.id),
+    bIds.map((a) => a.id),
+    matrix,
+  )
+
+  if (table) {
+    console.log(`= ${firstProject.name} `.padEnd(36, '='))
+    console.log(aIds.map((e) => `${e.id} - ${e.path}`).join('\n'))
+    console.log(`= ${secondProject.name} `.padEnd(36, '='))
+    console.log(bIds.map((e) => `${e.id} - ${e.path}`).join('\n'))
+    console.log('====================================\n')
+    console.log(table)
+  }
+
+  const concatenatedSimilarity = estimateSimilarity(
+    firstProject.concatenatedSource,
+    secondProject.concatenatedSource,
+  )
+  console.log(
+    `\nEstimated similarity between two projects: ${colorMap(
+      concatenatedSimilarity,
+    )}`,
+  )
+}
+
+function formatTable(
+  config: Config,
+  aIDs: string[],
+  bIDs: string[],
+  matrix: Record<string, Record<string, string>>,
+): string | undefined {
+  const terminalWidth = process.stdout.columns
+
+  const widths = [computeTableWidth(aIDs), computeTableWidth(bIDs)]
+  const minTableWidth = Math.min(...widths)
+
+  if (minTableWidth > terminalWidth && !config.forceTable) {
+    console.log(
+      [
+        `${chalk.yellow('WARNING')}: Table is too wide to fit in the terminal`,
+        `Terminal is ${terminalWidth} characters wide, table is ${minTableWidth} characters wide`,
+        `Use ${chalk.magenta('--force-table')} to print the table anyway.`,
+      ].join('\n'),
+    )
+    return
+  }
+
+  const shouldTranspose = widths[0] < widths[1]
+  const header = ['IDs', ...(shouldTranspose ? aIDs : bIDs)]
   let rows = Object.values(matrix).map((row) => Object.values(row))
 
   if (shouldTranspose) {
@@ -181,25 +320,23 @@ function printTable(
   }
 
   for (const [i, row] of rows.entries()) {
-    row.unshift(shouldTranspose ? bIds[i].id : aIds[i].id)
+    row.unshift(shouldTranspose ? bIDs[i] : aIDs[i])
   }
 
-  const table = printAsciiTable(header, rows)
-
-  console.log(`= ${firstProject.name} `.padEnd(36, '='))
-  console.log(aIds.map((e) => `${e.id} - ${e.path}`).join('\n'))
-  console.log(`= ${secondProject.name} `.padEnd(36, '='))
-  console.log(bIds.map((e) => `${e.id} - ${e.path}`).join('\n'))
-  console.log('====================================\n')
-  console.log(table)
+  return printAsciiTable(header, rows)
 }
 
 function transpose(input: string[][]): string[][] {
   return input[0].map((_, i) => input.map((row) => row[i]))
 }
 
-function computeTableWidth(project: Project): number {
-  return project.sources.length * 6 + 5 + project.sources.length + 2
+function computeTableWidth(headerColumns: string[]): number {
+  const overhead = 5 + headerColumns.length + 2
+  const columnWidths = headerColumns.map(
+    (column) => Math.max(column.length, 4) + 2,
+  )
+  const totalWidth = columnWidths.reduce((acc, width) => acc + width, 0)
+  return totalWidth + overhead
 }
 
 function removeCommonPath(fileIds: FileId[]): FileId[] {
@@ -223,20 +360,67 @@ function removeCommonPath(fileIds: FileId[]): FileId[] {
   }))
 }
 
-async function readProject(projectName: string): Promise<Project> {
-  const sources = await getFlatSources(projectName)
-  const concatenatedSources = sources.map((source) => source.content).join('')
-  const concatenatedSourceHashChunks =
-    buildSimilarityHashmap(concatenatedSources)
-  return {
-    name: projectName,
-    concatenatedSource: {
-      path: `virtualPath.sol`,
-      hashChunks: concatenatedSourceHashChunks,
-      content: concatenatedSources,
-    },
-    sources,
+async function readProject(projectName: string): Promise<Project | undefined> {
+  try {
+    const sources = await getFlatSources(projectName)
+    const concatenatedSources = sources.map((source) => source.content).join('')
+    const concatenatedSourceHashChunks =
+      buildSimilarityHashmap(concatenatedSources)
+    console.log(`[ OK ] Reading ${projectName}`)
+    return {
+      name: projectName,
+      concatenatedSource: {
+        path: `virtualPath.sol`,
+        hashChunks: concatenatedSourceHashChunks,
+        content: concatenatedSources,
+      },
+      sources,
+    }
+  } catch (e) {
+    console.log(
+      `[${chalk.red('FAIL')}] Reading ${projectName} - ${chalk.magenta(
+        'run discovery to generate flat files',
+      )}`,
+    )
   }
+}
+
+function removeComments(source: string): string {
+  let result = ''
+  let isInSingleLineComment = false
+  let isInMultiLineComment = false
+
+  for (let i = 0; i < source.length; i++) {
+    if (isInSingleLineComment && source[i] === '\n') {
+      isInSingleLineComment = false
+      result += source[i] // Keep newline characters
+    } else if (
+      isInMultiLineComment &&
+      source[i] === '*' &&
+      source[i + 1] === '/'
+    ) {
+      isInMultiLineComment = false
+      i++ // Skip the '/'
+    } else if (
+      !isInMultiLineComment &&
+      source[i] === '/' &&
+      source[i + 1] === '/'
+    ) {
+      isInSingleLineComment = true
+      i++ // Skip the second '/'
+    } else if (
+      !isInSingleLineComment &&
+      source[i] === '/' &&
+      source[i + 1] === '*'
+    ) {
+      isInMultiLineComment = true
+      i++ // Skip the '*'
+    } else if (!isInSingleLineComment && !isInMultiLineComment) {
+      result += source[i]
+    }
+  }
+
+  return result
 }
 
 async function getFlatSources(project: string): Promise<HashedFileContent[]> {
@@ -248,7 +432,9 @@ async function getFlatSources(project: string): Promise<HashedFileContent[]> {
 
   const contents: HashedFileContent[] = []
   for (const filePath of filePaths.filter((file) => !file.endsWith('.p.sol'))) {
-    const content = await readFile(filePath, 'utf-8')
+    const rawContent = await readFile(filePath, 'utf-8')
+    const content = removeComments(rawContent)
+
     contents.push({
       path: filePath,
       hashChunks: buildSimilarityHashmap(content),
@@ -402,5 +588,12 @@ function colorMap(value: number): string {
     return chalk.yellowBright(valueString)
   } else {
     return chalk.greenBright(valueString)
+  }
+}
+
+function needsToBe(expression: boolean, message: string): asserts expression {
+  if (!expression) {
+    console.log(`${chalk.red('ERROR')}: ${message}`)
+    process.exit(1)
   }
 }

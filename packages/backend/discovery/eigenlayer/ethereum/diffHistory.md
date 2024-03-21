@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xba1f897d9f970202dbca6c5ec09288933e54ecf9
+
+# Diff at Thu, 14 Mar 2024 14:14:07 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@3ffa91064379f34a2916a1ad4e93791b752e7e9e block: 19426942
+- current block number: 19433765
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19426942 (main branch discovery), not current.
+
+```diff
+    contract StrategyAdderMultisig (0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
+    +++ description: None
+      name:
+-        "StrategyAdderMultisig"
++        "OperationsMultisig"
+    }
+```
+
 Generated with discovered.json: 0xb0b6ecabe9b24b41963f90909c5038c5e4c06888
 
 # Diff at Wed, 13 Mar 2024 15:08:26 GMT:

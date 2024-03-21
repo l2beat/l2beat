@@ -6,7 +6,8 @@
     "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de",
     "0x827962404D7104202C5aaa6b929115C8211d9596",
     "0x46d07221dfC313afe1BF104F4bB1f185301D65B9",
-    "0xb3c415c2Aad428D5570208e1772cb68e7D06a537"
+    "0xb3c415c2Aad428D5570208e1772cb68e7D06a537",
+    "0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e"
   ],
   "names": {
     "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de": "KromaPortal",
@@ -23,7 +24,8 @@
     "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1": "Timelock",
     "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6": "KromaOperator",
     "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35": "SystemConfig",
-    "0xFd234971881a7c72965175fA8E438c97B2Dcd273": "Poseidon2"
+    "0xFd234971881a7c72965175fA8E438c97B2Dcd273": "Poseidon2",
+    "0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e": "USDCBridge"
   },
   "overrides": {
     "L2OutputOracle": {
@@ -135,7 +137,11 @@
           "type": "opStackSequencerInbox",
           "sequencerAddress": "{{ batcherHash }}"
         }
-      }
+      },
+      "ignoreInWatchMode": ["scalar"]
+    },
+    "USDCBridge": {
+      "ignoreMethods": ["OTHER_BRIDGE"]
     }
   }
 }
