@@ -1,41 +1,39 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { notUndefined, UnixTime } from '@l2beat/shared-pure'
 
 import { TrackedTxsConfigRecord } from '../repositories/TrackedTxsConfigsRepository'
 
 export function getSafeHeight(
   databaseEntries: TrackedTxsConfigRecord[],
-  toAdd: TrackedTxsConfigRecord[],
   minTimestamp: UnixTime,
 ): number {
-  if (databaseEntries.length === 0 && toAdd.length === 0) {
+  if (databaseEntries.length === 0) {
     return minTimestamp.toNumber()
   }
 
-  const databaseTimestamps = databaseEntries
-    .filter((entry) => {
-      if (
-        entry.untilTimestampExclusive === undefined ||
-        entry.lastSyncedTimestamp === undefined
-      ) {
-        return true
+  const applicableTimestamps = databaseEntries
+    .map((e) => {
+      const entryNeverSynced = !e.lastSyncedTimestamp
+      if (entryNeverSynced) {
+        return e.sinceTimestampInclusive
       }
-      // Filter out archived configurations which have already been synced
-      return entry.untilTimestampExclusive?.gt(entry.lastSyncedTimestamp)
+
+      const entrySyncedButNotToTheTop =
+        e.lastSyncedTimestamp &&
+        (!e.untilTimestampExclusive ||
+          e.untilTimestampExclusive.gt(e.lastSyncedTimestamp))
+      if (entrySyncedButNotToTheTop) {
+        return e.lastSyncedTimestamp
+      }
     })
-    .map((c) => c.lastSyncedTimestamp ?? c.sinceTimestampInclusive)
+    .filter(notUndefined)
 
-  const newEntryTimestamps = toAdd.map((c) => c.sinceTimestampInclusive)
+  if (applicableTimestamps.length === 0) {
+    return minTimestamp.toNumber()
+  }
 
-  const earliestTimestamp = findEarliestTimestamp([
-    ...databaseTimestamps,
-    ...newEntryTimestamps,
-  ])
+  const earliestTimestamp = Math.min(
+    ...applicableTimestamps.map((t) => t.toNumber()),
+  )
 
-  return earliestTimestamp.lt(minTimestamp)
-    ? minTimestamp.toNumber()
-    : earliestTimestamp.toNumber()
-}
-
-function findEarliestTimestamp(timestamps: UnixTime[]): UnixTime {
-  return timestamps.reduce((min, current) => (min.lt(current) ? min : current))
+  return Math.max(minTimestamp.toNumber(), earliestTimestamp)
 }
