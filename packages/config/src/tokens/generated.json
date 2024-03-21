@@ -1621,6 +1621,21 @@
       "formula": "locked"
     },
     {
+      "id": "iusd-izumi-bond-usd",
+      "name": "iZUMi Bond USD",
+      "coingeckoId": "izumi-bond-usd",
+      "address": "0x0A3BB08b3a15A19b4De82F8AcFc862606FB69A2D",
+      "symbol": "IUSD",
+      "decimals": 18,
+      "deploymentTimestamp": 1650533581,
+      "coingeckoListingTimestamp": 1651708800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/25388/large/iusd-logo-symbol-10k%E5%A4%A7%E5%B0%8F.png?1696524521",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "keep-keep-token",
       "name": "KEEP Token",
       "coingeckoId": "keep-network",
