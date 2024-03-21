@@ -10,15 +10,15 @@ export const bugless: Layer3 = underReviewL3({
     name: 'Bugless',
     slug: 'bugless',
     description:
-      'BugLess is a trustless bug bounty platform powered by Cartesi Rollups, designed to address the issues faced by traditional bug bounty programs.',
+      'Bugless is a trustless bug bounty platform powered by Cartesi Rollups, designed to address the issues faced by traditional bug bounty programs.',
     purposes: ['Bug bounty'],
     category: 'Optimistic Rollup',
     provider: 'Cartesi Rollups',
     links: {
       documentation: [
-        'https://github.com/crypto-bug-hunters/bug-less/blob/main/README.md',
+        'https://github.com/crypto-bug-hunters/bugless/blob/main/README.md',
       ],
-      repositories: ['https://github.com/crypto-bug-hunters/bug-less'],
+      repositories: ['https://github.com/crypto-bug-hunters/bugless'],
       socialMedia: ['https://twitter.com/BuglessProject'],
       websites: [],
       apps: [],
