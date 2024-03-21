@@ -9,7 +9,7 @@ import { TrackedTxConfigEntry } from '../types/TrackedTxsConfig'
 
 export type ToChangeUntilTimestamp = {
   id: TrackedTxId
-  untilTimestampExclusive: UnixTime
+  untilTimestampExclusive: UnixTime | undefined
   trim: boolean
 }
 
@@ -35,22 +35,22 @@ export function diffTrackedTxConfigurations(
       }
 
       if (
-        entry.untilTimestampExclusive &&
-        (!databaseEntry.untilTimestampExclusive ||
-          !entry.untilTimestampExclusive.equals(
-            databaseEntry.untilTimestampExclusive,
-          ))
+        entry.untilTimestampExclusive?.toNumber() ===
+        databaseEntry.untilTimestampExclusive?.toNumber()
       ) {
-        const trim =
-          databaseEntry.lastSyncedTimestamp &&
-          entry.untilTimestampExclusive < databaseEntry.lastSyncedTimestamp
-
-        toChangeUntilTimestamp.push({
-          id: entryUse.id,
-          untilTimestampExclusive: entry.untilTimestampExclusive,
-          trim: !!trim,
-        })
+        continue
       }
+
+      const trim =
+        databaseEntry.lastSyncedTimestamp &&
+        (!entry.untilTimestampExclusive ||
+          entry.untilTimestampExclusive < databaseEntry.lastSyncedTimestamp)
+
+      toChangeUntilTimestamp.push({
+        id: entryUse.id,
+        untilTimestampExclusive: entry.untilTimestampExclusive,
+        trim: !!trim,
+      })
     }
   }
   const toRemove = databaseEntries

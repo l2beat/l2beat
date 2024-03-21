@@ -1,9 +1,15 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { expect, mockObject } from 'earl'
 
-import { trackedTxConfigEntryToRecord } from '../repositories/TrackedTxsConfigsRepository'
+import {
+  trackedTxConfigEntryToRecord,
+  TrackedTxsConfigRecord,
+} from '../repositories/TrackedTxsConfigsRepository'
 import { TrackedTxId } from '../types/TrackedTxId'
-import { TrackedTxConfigEntry } from '../types/TrackedTxsConfig'
+import {
+  TrackedTxConfigEntry,
+  TrackedTxUseWithId,
+} from '../types/TrackedTxsConfig'
 import { diffTrackedTxConfigurations } from './diffTrackedTxConfigurations'
 
 describe(diffTrackedTxConfigurations.name, () => {
@@ -32,45 +38,104 @@ describe(diffTrackedTxConfigurations.name, () => {
   describe('updated', () => {
     it('finds configs which untilTimestamp have changed', () => {
       const now = UnixTime.now()
-      const configurations = [
-        {
-          ...CONFIGURATIONS[0],
-          untilTimestampExclusive: now.add(-5, 'days'),
-        },
-        {
-          ...CONFIGURATIONS[1],
-          untilTimestampExclusive: now.add(-10, 'days'),
-        },
+      const configs: [TrackedTxsConfigRecord, TrackedTxConfigEntry][] = [
+        // added untilTimestamp
+        [
+          mockTrackedTxsConfigRecord({
+            untilTimestampExclusive: undefined,
+            lastSyncedTimestamp: now,
+            id: TrackedTxId(['1']),
+          }),
+          mockTrackedTxConfigEntry(
+            {
+              untilTimestampExclusive: now.add(-5, 'days'),
+            },
+            [{ id: TrackedTxId(['1']) }],
+          ),
+        ],
+        // removed untilTimestamp
+        [
+          mockTrackedTxsConfigRecord({
+            untilTimestampExclusive: now.add(-5, 'days'),
+            lastSyncedTimestamp: now.add(-5, 'days'),
+            id: TrackedTxId(['2']),
+          }),
+          mockTrackedTxConfigEntry({ untilTimestampExclusive: undefined }, [
+            { id: TrackedTxId(['2']) },
+          ]),
+        ],
+        // changed to bigger untilTimestamp
+        [
+          mockTrackedTxsConfigRecord({
+            untilTimestampExclusive: now.add(-5, 'days'),
+            lastSyncedTimestamp: now.add(-5, 'days'),
+            id: TrackedTxId(['3']),
+          }),
+          mockTrackedTxConfigEntry(
+            {
+              untilTimestampExclusive: now.add(-3, 'days'),
+            },
+            [{ id: TrackedTxId(['3']) }],
+          ),
+        ],
+        // changed to smaller untilTimestamp
+        [
+          mockTrackedTxsConfigRecord({
+            untilTimestampExclusive: now.add(-3, 'days'),
+            lastSyncedTimestamp: now.add(-3, 'days'),
+            id: TrackedTxId(['4']),
+          }),
+          mockTrackedTxConfigEntry(
+            {
+              untilTimestampExclusive: now.add(-5, 'days'),
+            },
+            [{ id: TrackedTxId(['4']) }],
+          ),
+        ],
+        // not changed untilTimestamp
+        [
+          mockTrackedTxsConfigRecord({
+            untilTimestampExclusive: now.add(-3, 'days'),
+            lastSyncedTimestamp: now.add(-3, 'days'),
+            id: TrackedTxId(['5']),
+          }),
+          mockTrackedTxConfigEntry(
+            {
+              untilTimestampExclusive: now.add(-3, 'days'),
+            },
+            [{ id: TrackedTxId(['5']) }],
+          ),
+        ],
       ]
+      const databaseConfigurations = configs.map((c) => c[0])
+      const runtimeConfigurations = configs.map((c) => c[1])
 
-      const dbConfigs = [
+      const result = diffTrackedTxConfigurations(
+        runtimeConfigurations,
+        databaseConfigurations,
+      )
+
+      expect(result.toAdd).toEqual([])
+      expect(result.toRemove).toEqual([])
+      expect(result.toChangeUntilTimestamp).toEqual([
         {
-          ...DB_CONFIGURATIONS[0],
-          lastSyncedTimestamp: now.add(-10, 'days'),
-        },
-        ...DB_CONFIGURATIONS.slice(1, 3).map((c) => ({
-          ...c,
+          id: TrackedTxId(['1']),
           untilTimestampExclusive: now.add(-5, 'days'),
-          lastSyncedTimestamp: now.add(-5, 'days'),
-        })),
-      ]
-
-      const result = diffTrackedTxConfigurations(configurations, dbConfigs)
-
-      expect(result.toChangeUntilTimestamp).toEqualUnsorted([
-        {
-          id: configurations[0].uses[0].id,
-          untilTimestampExclusive: configurations[0].untilTimestampExclusive,
-          trim: false,
-        },
-        {
-          id: configurations[1].uses[0].id,
-          untilTimestampExclusive: configurations[1].untilTimestampExclusive,
           trim: true,
         },
         {
-          id: configurations[1].uses[1].id,
-          untilTimestampExclusive: configurations[1].untilTimestampExclusive,
+          id: TrackedTxId(['2']),
+          untilTimestampExclusive: undefined,
+          trim: true,
+        },
+        {
+          id: TrackedTxId(['3']),
+          untilTimestampExclusive: now.add(-3, 'days'),
+          trim: false,
+        },
+        {
+          id: TrackedTxId(['4']),
+          untilTimestampExclusive: now.add(-5, 'days'),
           trim: true,
         },
       ])
@@ -110,6 +175,20 @@ describe(diffTrackedTxConfigurations.name, () => {
 })
 
 const FROM = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
+
+function mockTrackedTxConfigEntry(
+  entry: Partial<TrackedTxConfigEntry>,
+  uses?: Partial<TrackedTxUseWithId>[],
+) {
+  return mockObject<TrackedTxConfigEntry>({
+    ...entry,
+    uses: uses?.map((u) => mockObject<TrackedTxUseWithId>(u)),
+  })
+}
+
+function mockTrackedTxsConfigRecord(record: Partial<TrackedTxsConfigRecord>) {
+  return mockObject<TrackedTxsConfigRecord>(record)
+}
 
 const CONFIGURATIONS: TrackedTxConfigEntry[] = [
   {
