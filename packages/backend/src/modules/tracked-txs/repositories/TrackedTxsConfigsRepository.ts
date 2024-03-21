@@ -128,7 +128,11 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
 
     return await knex('tracked_txs_configs')
       .where({ id: trackedTxId.valueOf() })
-      .update({ until_timestamp_exclusive: untilTimestamp?.toDate() })
+      .update({
+        until_timestamp_exclusive: untilTimestamp
+          ? untilTimestamp.toDate()
+          : null,
+      })
   }
 
   async deleteAll() {
