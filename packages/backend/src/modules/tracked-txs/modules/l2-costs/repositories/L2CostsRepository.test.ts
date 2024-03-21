@@ -73,7 +73,7 @@ describeDatabase(L2CostsRepository.name, (database) => {
   })
 
   describe(L2CostsRepository.prototype.addMany.name, () => {
-    it('only new row', async () => {
+    it('should return only new row', async () => {
       const newRow: L2CostsRecord[] = [
         {
           timestamp: START,
@@ -94,7 +94,7 @@ describeDatabase(L2CostsRepository.name, (database) => {
       expect(results).toEqualUnsorted([...DATA, ...newRow])
     })
 
-    it('empty array', async () => {
+    it('empty array not to be rejected', async () => {
       await expect(repository.addMany([])).not.toBeRejected()
     })
   })

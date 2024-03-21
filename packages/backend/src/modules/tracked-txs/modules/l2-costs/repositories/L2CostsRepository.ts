@@ -53,11 +53,15 @@ export class L2CostsRepository extends BaseRepository {
     return rows.map((r) => toRecord(r))
   }
 
-  async deleteAfter(id: TrackedTxId, after: UnixTime, trx?: Knex.Transaction) {
+  async deleteAfter(
+    id: TrackedTxId,
+    deleteAfterInclusive: UnixTime,
+    trx?: Knex.Transaction,
+  ) {
     const knex = await this.knex(trx)
     return knex('l2_costs')
       .where('tracked_tx_id', id)
-      .andWhere('timestamp', '>', after.toDate())
+      .andWhere('timestamp', '>=', deleteAfterInclusive.toDate())
       .delete()
   }
 
