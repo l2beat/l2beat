@@ -1,3 +1,44 @@
+Generated with discovered.json: 0xa561735c000067bf6baa50f29262ba681f1a87f8
+
+# Diff at Thu, 21 Mar 2024 21:03:02 GMT:
+
+- author: sekuba (<sekuba@users.noreply.githum.com>)
+- comparing to: main@173befb1ef4ba15605c92f5f89227f2ffd2af3eb block: 19481771
+- current block number: 19485578
+
+## Description
+
+Remove three signers and raise threshold. The gov multisig is now 4/6.
+
+## Watched changes
+
+```diff
+    contract GovernanceMultisig (0xCCa5De1e10c05c50C51ac551D9182cd31aca1889) {
+    +++ description: This Multisig itself is one of the two Governors, the other being an EOA, both equally permissioned to upgrade the bridge.
++++ description: Signers of the Multisig
++++ type: PERMISSION
++++ severity: LOW
+      values.getOwners.8:
+-        "0x0405107a60391Eb51821be373ff978115Ee58488"
++++ description: Signers of the Multisig
++++ type: PERMISSION
++++ severity: LOW
+      values.getOwners.7:
+-        "0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8"
++++ description: Signers of the Multisig
++++ type: PERMISSION
++++ severity: LOW
+      values.getOwners.6:
+-        "0x59232aC80E6d403b6381393e52f4665ECA328558"
++++ description: Threshold of the Multisig
++++ type: PERMISSION
++++ severity: HIGH
+      values.getThreshold:
+-        2
++        4
+    }
+```
+
 Generated with discovered.json: 0x18bf4f662d02fa88c9f4ffe7a437d3a8cb716f2a
 
 # Diff at Thu, 21 Mar 2024 08:12:23 GMT:
