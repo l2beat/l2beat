@@ -2,7 +2,7 @@
   "name": "sygma",
   "chain": "ethereum",
   "blockNumber": 19482595,
-  "configHash": "0x0be63127eec8fd8c3664e7329e42b7e8dfbaf160763c1012b64e8b6d7e2a3ca2",
+  "configHash": "0x779204900b3a33267fb6d557a95621765eafb44347d3e1db7f1368d94f7c5baa",
   "version": 3,
   "contracts": [
     {
@@ -25,6 +25,19 @@
       "derivedName": "FeeHandlerRouter"
     },
     {
+      "name": "Permissionless Generic Handler",
+      "address": "0x31282123E7bcd947e2c1Bc364d564839574fAdCD",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1697118143,
+      "values": {
+        "_bridgeAddress": "0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089",
+        "MAX_FEE": 1000000
+      },
+      "derivedName": "PermissionlessGenericHandler"
+    },
+    {
       "name": "Bridge",
       "address": "0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089",
       "upgradeability": {
@@ -36,6 +49,8 @@
         "_domainID": 1,
         "_feeHandler": "0x1d34808907607FA82Fa1b51F5fBA5Ff5a3Fa90cF",
         "_MPCAddress": "0x6731987e651675aF87442Ed2F1719EDF937B51d7",
+        "handler1": "0xC832588193cd5ED2185daDA4A531e0B26eC5B830",
+        "handler2": "0x31282123E7bcd947e2c1Bc364d564839574fAdCD",
         "paused": false
       },
       "derivedName": "Bridge"
@@ -171,6 +186,14 @@
       "function hasRole(bytes32 role, address account) view returns (bool)",
       "function renounceRole(bytes32 role, address account)",
       "function revokeRole(bytes32 role, address account)"
+    ],
+    "0x31282123E7bcd947e2c1Bc364d564839574fAdCD": [
+      "constructor(address bridgeAddress)",
+      "function MAX_FEE() view returns (uint256)",
+      "function _bridgeAddress() view returns (address)",
+      "function deposit(bytes32 resourceID, address depositor, bytes data) view returns (bytes)",
+      "function executeProposal(bytes32 resourceID, bytes data) returns (bytes)",
+      "function setResource(bytes32 resourceID, address contractAddress, bytes args)"
     ],
     "0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089": [
       "constructor(uint8 domainID, address accessControl)",

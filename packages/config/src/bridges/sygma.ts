@@ -131,18 +131,14 @@ export const sygma: Bridge = {
         description:
           'The FeeHandlerRouter contract routes fee handling for cross-chain transactions to appropriate fee handlers based on the destination domain and resource ID, while managing exemptions through a whitelist system.',
       }),
-      {
-        address: EthereumAddress('0x9f9778DA7c1D0AbE148314d6C1EA6E0A93C151C7'),
-        name: 'BasicFeeHandler', // fixed fee
+      discovery.getContractDetails('BasicFeeHandler', {
         description:
           'The BasicFeeHandler contract collects and manages deposit fees for cross-chain transactions, allowing for fee adjustments and the distribution of collected fees, intended for use with the bridge and fee router contract.',
-      },
-      {
-        address: EthereumAddress('0x31282123E7bcd947e2c1Bc364d564839574fAdCD'),
-        name: 'PermissionlessGenericHandler',
+      }),
+      discovery.getContractDetails('Permissionless Generic Handler', {
         description:
           'The PermissionlessGenericHandler contract facilitates the processing of generic deposits and their execution without permissions, integrating with the bridge contract for cross-chain interactions, and is designed to handle complex data encoding for executing transactions across chains.',
-      },
+      }),
     ],
     risks: [],
     isIncomplete: true,
