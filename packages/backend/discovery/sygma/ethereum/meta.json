@@ -1,0 +1,220 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "Bridge",
+      "values": {
+        "_accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "_domainID": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "_feeHandler": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "_MPCAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ERC20 Bridge Handler",
+      "values": {
+        "_bridgeAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultDecimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "FeeHandlerRouter",
+      "values": {
+        "_bridgeAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "AccessControlSegregator",
+      "values": {
+        "GRANT_ACCESS_SIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "role_changeAccessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "role_changeFeeHandler": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "role_endKeyGen": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "role_grantAccess": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "role_pauseTransfers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "role_refreshKey": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "role_retry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "role_setBurnable": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "role_setDepositNonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "role_setForwarder": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "role_setResource": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "role_startKeyGen": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "role_unpauseTransfers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "role_Withdraw": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Community Multisig",
+      "values": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Admin Multisig",
+      "values": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}
