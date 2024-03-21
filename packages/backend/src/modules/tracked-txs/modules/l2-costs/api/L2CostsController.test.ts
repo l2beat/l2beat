@@ -11,7 +11,11 @@ import {
   L2CostsRecord,
   L2CostsRepository,
 } from '../repositories/L2CostsRepository'
-import { DetailedTransaction, L2CostsController } from './L2CostsController'
+import {
+  DetailedTransaction,
+  L2CostsController,
+  SumedTransactions,
+} from './L2CostsController'
 
 const NOW = UnixTime.now()
 
@@ -27,36 +31,42 @@ describe(L2CostsController.name, () => {
       const expected = [
         {
           timestamp: NOW.add(-1, 'hours'),
-          calldataGasUsed: 100,
-          computeGasUsed: -21000,
-          totalGas: 100,
-          gasCost: 100,
-          calldataGasCost: 100,
-          computeGasCost: -21000,
-          totalGasCost: 100,
-          gasCostUsd: 300000,
-          totalGasCostUsd: 300000,
-          calldataGasCostUsd: 300000,
-          computeGasCostUsd: -63000000,
+          calldataGasUsed: 27284,
+          computeGasUsed: 370583,
+          overheadGasUsed: 21000 as const,
+          totalGas: 418867,
+          gasCost: 0.01682842475182969,
+          calldataGasCost: 0.0010961635577138359,
+          computeGasCost: 0.014888563982856855,
+          totalGasCost: 0.01682842475182969,
+          totalOverheadGasCost: 0.0008436972112589999,
+          gasCostUsd: 50.485274255489074,
+          totalGasCostUsd: 50.485274255489074,
+          calldataGasCostUsd: 3.288490673141508,
+          computeGasCostUsd: 44.66569194857057,
+          totalOverheadGasCostUsd: 2.5310916337769997,
           type: 2 as const,
         },
         {
           timestamp: NOW.add(-2, 'hours'),
-          calldataGasUsed: 100,
-          computeGasUsed: -21000,
-          totalGas: 200,
-          gasCost: 100,
-          calldataGasCost: 100,
-          computeGasCost: -21000,
-          totalGasCost: 200,
-          gasCostUsd: 310000,
-          totalGasCostUsd: 620000,
-          calldataGasCostUsd: 310000,
-          computeGasCostUsd: -65100000,
+          calldataGasUsed: 0,
+          computeGasUsed: 0,
+          overheadGasUsed: 21000 as const,
+          totalGas: 807432,
+          gasCost: 0.000618364191711,
+          calldataGasCost: 0,
+          computeGasCost: 0,
+          totalGasCost: 0.000618364192497432,
+          totalOverheadGasCost: 0.000618364191711,
+          gasCostUsd: 1.9169289943041,
+          totalGasCostUsd: 1.916928996742039,
+          calldataGasCostUsd: 0,
+          computeGasCostUsd: 0,
+          totalOverheadGasCostUsd: 1.9169289943041,
           type: 3 as const,
-          blobGasCost: 100,
-          blobGasUsed: 100,
-          blobGasCostUsd: 310000,
+          blobGasCost: 7.864320000000001e-13,
+          blobGasUsed: 786432,
+          blobGasCostUsd: 2.4379392e-9,
         },
       ]
       expect(results).toEqualUnsorted(expected)
@@ -68,7 +78,7 @@ describe(L2CostsController.name, () => {
       const transactions = getMockDetailedTransactions(2)
       const result = getMockL2CostsController({}).sumDetails(transactions)
 
-      const expected = {
+      const expected: SumedTransactions = {
         totalCost: 30,
         totalGas: 30,
         totalCostUsd: 30,
@@ -81,6 +91,9 @@ describe(L2CostsController.name, () => {
         totalCalldataCostUsd: 300,
         totalComputeCostUsd: 3,
         totalBlobCostUsd: 2,
+        totalOverheadGas: 42_000,
+        totalOverheadCost: 420_020,
+        totalOverheadCostUsd: 4_200_200,
       }
 
       expect(result).toEqual(expected)
@@ -90,7 +103,7 @@ describe(L2CostsController.name, () => {
       const transactions = getMockDetailedTransactions(1)
       const result = getMockL2CostsController({}).sumDetails(transactions)
 
-      const expected = {
+      const expected: SumedTransactions = {
         totalCalldataCost: 10,
         totalCalldataCostUsd: 100,
         totalCalldataGas: 1,
@@ -100,6 +113,9 @@ describe(L2CostsController.name, () => {
         totalCost: 10,
         totalCostUsd: 10,
         totalGas: 10,
+        totalOverheadGas: 21_000,
+        totalOverheadCost: 210_010,
+        totalOverheadCostUsd: 2_100_100,
       }
 
       expect(result).toEqual(expected)
@@ -145,10 +161,10 @@ function getMockL2CostRecords(): L2CostsRecord[] {
       trackedTxId: TrackedTxId.unsafe('aaa'),
       data: {
         type: 2,
-        gasUsed: 100,
-        gasPrice: 1,
-        calldataLength: 100,
-        calldataGasUsed: 100,
+        gasUsed: 418867,
+        gasPrice: 40176057679,
+        calldataLength: 2084,
+        calldataGasUsed: 27284,
       },
     },
     {
@@ -157,12 +173,12 @@ function getMockL2CostRecords(): L2CostsRecord[] {
       trackedTxId: TrackedTxId.unsafe('bbb'),
       data: {
         type: 3,
-        gasUsed: 100,
-        gasPrice: 1,
-        calldataLength: 100,
-        calldataGasUsed: 100,
+        gasUsed: 21000,
+        gasPrice: 29445913891,
         blobGasPrice: 1,
-        blobGasUsed: 100,
+        blobGasUsed: 786432,
+        calldataGasUsed: 0,
+        calldataLength: 0,
       },
     },
   ]
@@ -183,6 +199,9 @@ function getMockDetailedTransactions(amount: number): DetailedTransaction[] {
       totalGasCost: (i + 1) * 10,
       gasCostUsd: (i + 1) * 100,
       totalGasCostUsd: (i + 1) * 10,
+      overheadGasUsed: 21_000 as const,
+      totalOverheadGasCost: (21_000 + 1) * 10,
+      totalOverheadGasCostUsd: (21_000 + 1) * 100,
     }
     if (i % 2 === 0) {
       return {
