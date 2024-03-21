@@ -182,7 +182,16 @@ export const astarzkevm: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...TECHNOLOGY_DATA_AVAILABILITY.GENERIC_OFF_CHAIN,
+      name: 'Data is not stored on chain',
+      description:
+        'The transaction data is not recorded on the Ethereum main chain. Transaction data is stored off-chain and only the hashes are posted on-chain by the Sequencer, after being signed by the DAC members.',
+      risks: [
+        {
+          category: 'Funds can be lost if',
+          text: 'the external data becomes unavailable.',
+          isCritical: true,
+        },
+      ],
       references: [
         {
           text: 'AstarValidiumEtrog.sol - Etherscan source code, sequenceBatches function',
@@ -231,6 +240,15 @@ export const astarzkevm: Layer2 = {
         ],
       },
     ],
+  },
+  stateDerivation: {
+    nodeSoftware:
+      'Node software can be found [here](https://github.com/0xPolygon/cdk-validium-node).',
+    compressionScheme: 'No compression scheme yet.',
+    genesisState:
+      'The genesis state, whose corresponding root is accessible as Batch 0 root in the `getRollupBatchNumToStateRoot` method of PolygonRollupManager, is available [here](https://github.com/0xPolygon/cdk-validium-contracts/blob/main/deployment/genesis.json).',
+    dataFormat:
+      'The trusted sequencer request signatures from DAC members off-chain, and posts hashed batches with signatures to the AstarValidiumEtrog contract.',
   },
   permissions: [
     ...discovery.getMultisigPermission(
@@ -312,4 +330,12 @@ export const astarzkevm: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelayString)],
   },
+  milestones: [
+    {
+      name: 'Astar zkEVM Launch',
+      link: 'https://polygon.technology/blog/astar-zkevm-built-with-polygon-cdk-connects-to-agglayer-and-taps-unified-liquidity-with-polygon-zkevm',
+      date: '2024-03-06',
+      description: 'Astar Network launched Astar zkEVM, integrated with Polygon AggLayer.',
+    },
+  ],
 }
