@@ -341,6 +341,9 @@ const errorsCount = new Gauge({
 function countSeverities(diffs: DiscoveryDiff[], meta?: DiscoveryMeta) {
   const result = { low: 0, medium: 0, high: 0, unknown: 0 }
   if (meta === undefined) {
+    result.unknown = diffs
+      .map((d) => d.diff?.length ?? 0)
+      .reduce((a, b) => a + b, 0)
     return result
   }
 
