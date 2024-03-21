@@ -1,3 +1,81 @@
+Generated with discovered.json: 0x9c077c8bf899c1f9ec86477b7bf996418783348f
+
+# Diff at Thu, 21 Mar 2024 14:34:30 GMT:
+
+- author: sekuba (<sekuba@users.noreply.githum.com>)
+- comparing to: main@550e8c13dc36da304ad797c4c213a735d633c96b block: 19389434
+- current block number: 19483658
+
+## Description
+
+Bridging fees are raised (doubled) for the optimism switchboards.
+
+## Watched changes
+
+```diff
+    contract PolygonL1Switchboard (0x053407DFA30267f6332f3c94a9e9F704A55e62CD) {
+    +++ description: None
++++ description: Fee charged by the switchboard for processing a transaction
++++ severity: LOW
+      values.switchboardFees:
+-        2700564286365000
++        5884471559011500
++++ description: Fee charged for verifying transaction
++++ severity: LOW
+      values.verificationOverheadFees:
+-        1196689560000
++        3278655744000
+    }
+```
+
+```diff
+    contract OptimismSwitchboard2 (0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA) {
+    +++ description: None
++++ description: Fee charged by the switchboard for processing a transaction
++++ severity: LOW
+      values.switchboardFees:
+-        2251544461254000
++        5568057713790000
++++ description: Fee charged for verifying transaction
++++ severity: LOW
+      values.verificationOverheadFees:
+-        319607508000
++        340928172000
+    }
+```
+
+```diff
+    contract OptimismSwitchboard (0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287) {
+    +++ description: None
++++ description: Fee charged by the switchboard for processing a transaction
++++ severity: LOW
+      values.switchboardFees:
+-        2251544461254000
++        5568057713790000
++++ description: Fee charged for verifying transaction
++++ severity: LOW
+      values.verificationOverheadFees:
+-        44002200000
++        52013156000
+    }
+```
+
+```diff
+    contract ArbitrumL1Switchboard (0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe) {
+    +++ description: None
++++ description: Fee charged by the switchboard for processing a transaction
++++ severity: LOW
+      values.switchboardFees:
+-        2458955286249000
++        6280699596483000
++++ description: Fee charged for verifying transaction
++++ severity: LOW
+      values.verificationOverheadFees:
+-        55000000000000
++        6500000000000
+    }
+```
+
 Generated with discovered.json: 0x2f2ba4933ab604e3fea69cb0554f79110c0ea619
 
 # Diff at Fri, 08 Mar 2024 09:05:01 GMT:
