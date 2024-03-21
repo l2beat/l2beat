@@ -12,14 +12,16 @@ import { IndexerStateRepository } from '../../peripherals/database/repositories/
 import { HourlyIndexer } from './HourlyIndexer'
 import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsClient } from './TrackedTxsClient'
-import { TrackedTxId } from './types/TrackedTxId'
 import { TrackedTxConfigEntry } from './types/TrackedTxsConfig'
 import { TxUpdaterInterface } from './types/TxUpdaterInterface'
 import {
   adjustRangeForBigQueryCall as adjustRangeForBigQueryCall,
   findConfigurationsToSync,
 } from './utils'
-import { diffTrackedTxConfigurations } from './utils/diffTrackedTxConfigurations'
+import {
+  diffTrackedTxConfigurations,
+  ToChangeUntilTimestamp,
+} from './utils/diffTrackedTxConfigurations'
 import { getSafeHeight } from './utils/getSafeHeight'
 
 export type TrackedTxsIndexerUpdaters = Record<
@@ -115,43 +117,49 @@ export class TrackedTxsIndexer extends ChildIndexer {
 
   private async initialize(): Promise<void> {
     const databaseEntries = await this.configRepository.getAll()
-    const { toAdd, toRemove, toTrim } = diffTrackedTxConfigurations(
-      this.configs,
-      databaseEntries,
-    )
+    const { toAdd, toRemove, toChangeUntilTimestamp } =
+      diffTrackedTxConfigurations(this.configs, databaseEntries)
 
-    if ([...toAdd, ...toRemove, ...toTrim].length > 0) {
+    if ([...toAdd, ...toRemove, ...toChangeUntilTimestamp].length > 0) {
       this.logger.info('Modifying tracked txs configs', {
-        added: toAdd.map((add) => add.id),
-        removed: toRemove,
-        trimmed: toTrim.map((trim) => trim.id),
+        toAdd: toAdd.map((add) => add.id),
+        toRemove: toRemove,
+        toChangeUntil: toChangeUntilTimestamp.map((c) => c.id),
       })
     }
-
-    const safeHeight = getSafeHeight(databaseEntries, toAdd, this.minTimestamp)
 
     await this.stateRepository.runInTransaction(async (trx) => {
       await this.configRepository.addMany(toAdd, trx)
       await this.configRepository.deleteMany(toRemove, trx)
-      await this.trimConfigurations(toTrim, trx)
-      await this.initializeIndexerState(safeHeight, trx)
+      await this.changeConfigurationsUntilTimestamp(toChangeUntilTimestamp, trx)
+      await this.initializeIndexerState(trx)
     })
     this.logger.info('Initialized')
   }
 
-  private async trimConfigurations(
-    toTrim: { id: TrackedTxId; untilTimestampExclusive: UnixTime }[],
+  private async changeConfigurationsUntilTimestamp(
+    toChangeUntil: ToChangeUntilTimestamp[],
     trx: Knex.Transaction,
   ) {
     // there can be a situation where untilTimestamp was set retroactively
     // in this case we want to invoke deleteAfter on updaters for all the configurations that were added during this "misconfiguration" period
     await Promise.all(
-      toTrim.map(async (c) => {
+      toChangeUntil.map(async (c) => {
         await this.configRepository.setUntilTimestamp(
           c.id,
           c.untilTimestampExclusive,
           trx,
         )
+
+        if (!c.trim) {
+          return
+        }
+
+        assert(
+          c.untilTimestampExclusive,
+          'untilTimestampExclusive is required for trimming',
+        )
+
         for (const updater of Object.values(this.enabledUpdaters)) {
           await updater?.deleteAfter(c.id, c.untilTimestampExclusive, trx)
         }
@@ -164,7 +172,13 @@ export class TrackedTxsIndexer extends ChildIndexer {
     )
   }
 
-  async initializeIndexerState(safeHeight: number, trx?: Knex.Transaction) {
+  async initializeIndexerState(trx?: Knex.Transaction) {
+    const databaseEntriesAfterChanges = await this.configRepository.getAll(trx)
+    const safeHeight = getSafeHeight(
+      databaseEntriesAfterChanges,
+      this.minTimestamp,
+    )
+
     const indexerState = await this.stateRepository.findIndexerState(
       this.indexerId,
     )
