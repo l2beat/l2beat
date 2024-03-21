@@ -2,7 +2,7 @@ import { ScalingProjectTechnologyChoice } from './ScalingProjectTechnologyChoice
 
 export interface ScalingProjectTechnology {
   /** What state correctness mechanism is used in the project */
-  stateCorrectness: ScalingProjectTechnologyChoice
+  stateCorrectness?: ScalingProjectTechnologyChoice
   /** What is the new cryptography used in the project */
   newCryptography?: ScalingProjectTechnologyChoice
   /** What is the data availability choice for the project */
