@@ -9,7 +9,6 @@ import {
   RISK_VIEW,
   SEQUENCER_NO_MECHANISM,
   STATE_CORRECTNESS,
-  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { Layer2 } from './types'
@@ -335,7 +334,8 @@ export const astarzkevm: Layer2 = {
       name: 'Astar zkEVM Launch',
       link: 'https://polygon.technology/blog/astar-zkevm-built-with-polygon-cdk-connects-to-agglayer-and-taps-unified-liquidity-with-polygon-zkevm',
       date: '2024-03-06',
-      description: 'Astar Network launched Astar zkEVM, integrated with Polygon AggLayer.',
+      description:
+        'Astar Network launched Astar zkEVM, integrated with Polygon AggLayer.',
     },
   ],
 }
