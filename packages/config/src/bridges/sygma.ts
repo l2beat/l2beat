@@ -140,8 +140,13 @@ export const sygma: Bridge = {
           'The PermissionlessGenericHandler contract facilitates the processing of generic deposits and their execution without permissions, integrating with the bridge contract for cross-chain interactions, and is designed to handle complex data encoding for executing transactions across chains.',
       }),
     ],
-    risks: [],
-    isIncomplete: true,
+    risks: [
+      {
+        category: 'Funds can be stolen if',
+        text: 'Admin sets a handler that allows for mismanagement of funds.',
+        isCritical: true,
+      },
+    ],
   },
   permissions: [
     ...discovery.getMultisigPermission(

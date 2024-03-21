@@ -117,6 +117,26 @@
       }
     },
     {
+      "name": "BasicFeeHandler",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "_bridgeAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "_feeHandlerRouterAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "Bridge",
       "values": {
         "_MPCAddress": {
