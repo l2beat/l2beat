@@ -104,6 +104,7 @@ describeDatabase(L2CostsRepository.name, (database) => {
       const results = await repository.getByProjectSinceTimestamp(
         ProjectId('project-2'),
         START,
+        START.add(1, 'hours'),
       )
 
       expect(results).toEqualUnsorted([DATA[0]])
