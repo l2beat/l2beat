@@ -799,6 +799,10 @@
       "address": "0xe53EC727dbDEB9E2d5456c3be40cFF031AB40A55"
     },
     {
+      "symbol": "sUSDe",
+      "address": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497"
+    },
+    {
       "symbol": "SUSHI",
       "address": "0x6B3595068778DD592e39A122f4f5a5cF09C90fE2"
     },
