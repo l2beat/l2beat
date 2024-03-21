@@ -17,9 +17,7 @@ export const zklighter: Layer2 = upcoming({
       documentation: ['https://zk.lighter.xyz/developers'],
       explorers: [],
       repositories: [],
-      socialMedia: [
-        'https://twitter.com/lighter_xyz',
-      ],
+      socialMedia: ['https://twitter.com/lighter_xyz'],
     },
   },
 })
