@@ -16,6 +16,52 @@ import {
 const MIN_TIMESTAMP = UnixTime.now()
 
 describe(L2CostsUpdater.name, () => {
+  describe(L2CostsUpdater.prototype.update.name, () => {
+    it('skips if no transactions', async () => {
+      const repository = getMockL2CostsRepository()
+      const updater = new L2CostsUpdater(
+        repository,
+        getMockViemRpcClient(),
+        Logger.SILENT,
+      )
+      await updater.update([], TRX)
+
+      expect(repository.addMany).not.toHaveBeenCalled()
+    })
+
+    it('transforms and saves to db ', async () => {
+      const repository = getMockL2CostsRepository()
+      const updater = new L2CostsUpdater(
+        repository,
+        getMockViemRpcClient(),
+        Logger.SILENT,
+      )
+      const transactions = getMockTrackedTxResults()
+
+      const mockRecord: L2CostsRecord[] = [
+        {
+          timestamp: UnixTime.now(),
+          data: {
+            type: 2,
+            gasUsed: 100,
+            gasPrice: 10,
+            calldataLength: 5,
+            calldataGasUsed: 56,
+          },
+          trackedTxId: TrackedTxId.random(),
+          txHash: '0x123',
+        },
+      ]
+
+      updater.addDetailsTransactionsAndTransform =
+        mockFn().resolvesTo(mockRecord)
+
+      await updater.update(transactions, TRX)
+
+      expect(repository.addMany).toHaveBeenNthCalledWith(1, mockRecord, TRX)
+    })
+  })
+
   describe(
     L2CostsUpdater.prototype.addDetailsTransactionsAndTransform.name,
     () => {
