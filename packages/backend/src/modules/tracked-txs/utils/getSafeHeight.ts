@@ -10,25 +10,30 @@ export function getSafeHeight(
     return minTimestamp.toNumber()
   }
 
-  const applicableEntries = databaseEntries.filter((e) => {
-    return (
-      e.lastSyncedTimestamp &&
-      (!e.untilTimestampExclusive ||
-        e.untilTimestampExclusive.gt(e.lastSyncedTimestamp))
-    )
-  })
+  const applicableTimestamps = databaseEntries
+    .map((e) => {
+      const entryNeverSynced = !e.lastSyncedTimestamp
+      if (entryNeverSynced) {
+        return e.sinceTimestampInclusive
+      }
 
-  if (applicableEntries.length === 0) {
+      const entrySyncedButNotToTheTop =
+        e.lastSyncedTimestamp &&
+        (!e.untilTimestampExclusive ||
+          e.untilTimestampExclusive.gt(e.lastSyncedTimestamp))
+      if (entrySyncedButNotToTheTop) {
+        return e.lastSyncedTimestamp
+      }
+    })
+    .filter(notUndefined)
+
+  if (applicableTimestamps.length === 0) {
     return minTimestamp.toNumber()
   }
 
-  const applicableLastSyncedTimestamps = applicableEntries
-    .map((e) => e.lastSyncedTimestamp?.toNumber())
-    .filter(notUndefined)
-
-  const earliestLastSyncedTimestamp = Math.min(
-    ...applicableLastSyncedTimestamps,
+  const earliestTimestamp = Math.min(
+    ...applicableTimestamps.map((t) => t.toNumber()),
   )
 
-  return Math.max(minTimestamp.toNumber(), earliestLastSyncedTimestamp)
+  return Math.max(minTimestamp.toNumber(), earliestTimestamp)
 }

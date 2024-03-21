@@ -46,28 +46,47 @@ describe(getSafeHeight.name, () => {
     expect(result).toEqual(MIN_TIMESTAMP.toNumber())
   })
 
-  it('returns earliestLastSyncedTimestamp ', () => {
-    const databaseEntries: TrackedTxsConfigRecord[] = [
-      mockDatabaseEntry({
-        lastSyncedTimestamp: NOW.add(-5, 'hours'),
-        untilTimestampExclusive: NOW.add(-3, 'hours'),
-      }),
-      mockDatabaseEntry({
-        lastSyncedTimestamp: NOW.add(-10, 'hours'),
-      }),
+  it('returns earliestLastSyncedTimestamp', () => {
+    const cases = [
+      // sinceTimestampInclusive is earlier than lastSyncedTimestamp
+      {
+        entries: [
+          mockDatabaseEntry({
+            lastSyncedTimestamp: NOW.add(-5, 'hours'),
+            untilTimestampExclusive: NOW.add(-3, 'hours'),
+          }),
+          mockDatabaseEntry({
+            sinceTimestampInclusive: NOW.add(-20, 'days'),
+            lastSyncedTimestamp: undefined,
+          }),
+        ],
+        result: NOW.add(-20, 'days'),
+      },
+      // lastSyncedTimestamp is earlier than sinceTimestampInclusive
+      {
+        entries: [
+          mockDatabaseEntry({
+            lastSyncedTimestamp: NOW.add(-24, 'hours'),
+            untilTimestampExclusive: NOW.add(-21, 'hours'),
+          }),
+          mockDatabaseEntry({
+            sinceTimestampInclusive: NOW.add(-5, 'hours'),
+            lastSyncedTimestamp: undefined,
+          }),
+        ],
+        result: NOW.add(-24, 'hours'),
+      },
     ]
 
-    const result = getSafeHeight(databaseEntries, MIN_TIMESTAMP)
-
-    expect(result).toEqual(NOW.add(-10, 'hours').toNumber())
+    for (const { entries, result } of cases) {
+      const safeHeight = getSafeHeight(entries, MIN_TIMESTAMP)
+      expect(safeHeight).toEqual(result.toNumber())
+    }
   })
 })
 
 function mockDatabaseEntry(
-  entry?: Pick<
-    TrackedTxsConfigRecord,
-    'lastSyncedTimestamp' | 'untilTimestampExclusive'
-  >,
+  entry?: Partial<TrackedTxsConfigRecord>,
 ): TrackedTxsConfigRecord {
   return mockObject<TrackedTxsConfigRecord>({
     untilTimestampExclusive: undefined,
