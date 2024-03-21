@@ -17,7 +17,6 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('astarzkevm')
@@ -33,7 +32,6 @@ const trustedAggregatorTimeout = discovery.getContractValue<number>(
   'trustedAggregatorTimeout',
 )
 const trustedAggregatorTimeoutString = formatSeconds(trustedAggregatorTimeout)
-
 const pendingStateTimeout = discovery.getContractValue<number>(
   'PolygonRollupManager',
   'pendingStateTimeout',
@@ -45,22 +43,6 @@ const _HALT_AGGREGATION_TIMEOUT = formatSeconds(
     '_HALT_AGGREGATION_TIMEOUT',
   ),
 )
-
-const membersCountDAC = discovery.getContractValue<number>(
-  'AstarValidiumDAC',
-  'getAmountOfMembers',
-)
-
-const requiredSignaturesDAC = discovery.getContractValue<number>(
-  'AstarValidiumDAC',
-  'requiredAmountOfSignatures',
-)
-
-const isForcedBatchDisallowed =
-  discovery.getContractValue<string>(
-    'AstarValidiumEtrog',
-    'forceBatchAddress',
-  ) !== '0x0000000000000000000000000000000000000000'
 
 const forceBatchTimeout = discovery.getContractValue<number>(
   'AstarValidiumEtrog',
@@ -81,6 +63,28 @@ const exitWindowRisk = {
     sentiment: 'bad',
   },
 } as const
+
+const timelockUpgrades = {
+  upgradableBy: ['RollupManagerAdminMultisig'],
+  upgradeDelay: exitWindowRisk.value,
+  upgradeConsiderations: exitWindowRisk.description,
+}
+
+const membersCountDAC = discovery.getContractValue<number>(
+  'AstarValidiumDAC',
+  'getAmountOfMembers',
+)
+
+const requiredSignaturesDAC = discovery.getContractValue<number>(
+  'AstarValidiumDAC',
+  'requiredAmountOfSignatures',
+)
+
+const isForcedBatchDisallowed =
+  discovery.getContractValue<string>(
+    'AstarValidiumEtrog',
+    'forceBatchAddress',
+  ) !== '0x0000000000000000000000000000000000000000'
 
 export const astarzkevm: Layer2 = {
   type: 'layer2',
@@ -110,13 +114,7 @@ export const astarzkevm: Layer2 = {
     },
   },
   config: {
-    escrows: [
-      discovery.getEscrowDetails({
-        address: EthereumAddress('0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe'),
-        sinceTimestamp: new UnixTime(1679653127),
-        tokens: '*',
-      }),
-    ],
+    escrows: [], // the escrow is removed until shared escrows are supported
   },
   riskView: makeBridgeCompatible({
     stateValidation: {
@@ -239,14 +237,84 @@ export const astarzkevm: Layer2 = {
       },
     ],
   },
+  permissions: [
+    ...discovery.getMultisigPermission(
+      'RollupManagerAdminMultisig',
+      `Admin of the Polygon Rollup Manager contract, can set core system parameters like timeouts and aggregator as well as deactivate emergency state.`,
+    ),
+    ...discovery.getMultisigPermission(
+      'AdminMultisig',
+      `Admin of the AstarValidiumEtrog and AstarValidiumDAC contract, can set core system parameters like the trusted sequencer and enable/disable forced batches.`,
+    ),
+    {
+      name: 'Sequencer',
+      accounts: [
+        discovery.getPermissionedAccount(
+          'AstarValidiumEtrog',
+          'trustedSequencer',
+        ),
+      ],
+      description:
+        'Its sole purpose and ability is to submit transaction batches. In case they are unavailable users cannot rely on the force batch mechanism because it is currently disabled.',
+    },
+    {
+      name: 'Proposer (Trusted Aggregator)',
+      accounts: discovery.getAccessControlRolePermission(
+        'PolygonRollupManager',
+        'TRUSTED_AGGREGATOR',
+      ),
+      description: `The trusted proposer (called Aggregator) provides ZK proofs for all the supported systems. In case they are unavailable a mechanism for users to submit proofs on their own exists, but is behind a ${trustedAggregatorTimeoutString} delay for proving and a ${pendingStateTimeoutString} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
+    },
+    ...discovery.getMultisigPermission(
+      'SecurityCouncil',
+      'The Security Council is a multisig that can be used to trigger the emergency state which pauses bridge functionality, restricts advancing system state and removes the upgradeability delay.',
+    ),
+    {
+      name: 'Forced Batcher',
+      accounts: [
+        discovery.getPermissionedAccount(
+          'AstarValidiumEtrog',
+          'forceBatchAddress',
+        ),
+      ],
+      description:
+        'Sole account allowed to submit forced transactions. If this address is the zero address, anyone can submit forced transactions.',
+    },
+  ],
   contracts: {
     addresses: [
+      discovery.getContractDetails('AstarValidiumEtrog', {
+        description:
+          'The main contract of the Astar zkEVM. Contains sequenced transaction batch hashes and forced transaction logic.',
+      }),
       discovery.getContractDetails('Bridge', {
         description:
-          'The escrow contract for user funds. It is mirrored on the L2 side and can be used to transfer both ERC20 assets and arbitrary messages. To transfer funds a user initiated transaction on both sides is required.',
+          'The escrow contract for user funds. It is mirrored on the L2 side and can be used to transfer both ERC20 assets and arbitrary messages. To transfer funds a user initiated transaction on both sides is required. Please note that this is shared escrow with other Polygon AggLayer chains, and its TVL does not correspond to Astar TVL.',
       }),
+      discovery.getContractDetails('PolygonRollupManager', {
+        description: `It defines the rules of the system including core system parameters, permissioned actors as well as emergency procedures. The emergency state can be activated either by the Security Council, by proving a soundness error or by presenting a sequenced batch that has not been aggregated before a ${_HALT_AGGREGATION_TIMEOUT} timeout. This contract receives L2 state roots as well as ZK proofs.`,
+        ...timelockUpgrades,
+      }),
+      discovery.getContractDetails('GlobalExitRootV2', {
+        description:
+          'Synchronizes deposit and withdraw merkle trees across L1 and the L2s. The global root from this contract is injected into the L2 contracts.',
+        ...timelockUpgrades,
+      }),
+      discovery.getContractDetails('AstarValidiumDAC', {
+        description:
+          'Validium committeee contract that allows the admin to setup the members of the committee and stores the required amount of signatures threshold.',
+      }),
+      discovery.getContractDetails(
+        'AstarVerifier',
+        'An autogenerated contract that verifies ZK proofs in the PolygonRollupManager system.',
+      ),
     ],
-    references: [],
+    references: [
+      {
+        text: 'State injections - stateRoot and exitRoot are part of the validity proof input.',
+        href: 'https://etherscan.io/address/0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
+      },
+    ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelayString)],
   },
 }

@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xb72121b4a1ba7a7cd96bd15e886db232df1837db
+Generated with discovered.json: 0x9d882fb2ce884a4add9de979baad67a6d2a8b618
 
-# Diff at Wed, 20 Mar 2024 14:20:30 GMT:
+# Diff at Thu, 21 Mar 2024 11:41:18 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current block number: 19476466
+- current block number: 19482808
 
 ## Description
 
@@ -31,7 +31,19 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract AstarVerifier (0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract AstarValidiumEtrog (0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RollupManagerAdminMultisig (0x242daE44F5d8fb54B198D03a94dA45B5a4413e21)
     +++ description: None
 ```
 
@@ -43,7 +55,13 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract PolygonEcosystemToken (0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6)
+    contract SecurityCouncil (0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract POL (0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6)
     +++ description: None
 ```
 
@@ -55,7 +73,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract PolygonZkEVMGlobalExitRootV2 (0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb)
+    contract GlobalExitRootV2 (0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb)
     +++ description: None
 ```
 
@@ -79,6 +97,6 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E)
+    contract AdminMultisig (0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E)
     +++ description: None
 ```

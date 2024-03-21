@@ -568,8 +568,8 @@
           "type": null
         },
         "nondeterminsiticPendingState": {
-          "description": null,
-          "severity": null,
+          "description": "Non deterministic pending state has been proven, check event rollupID to see where it happened.",
+          "severity": "HIGH",
           "type": null
         },
         "pendingStateTimeout": {
