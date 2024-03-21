@@ -62,7 +62,9 @@ export class L2CostsRepository extends BaseRepository {
       .join('tracked_txs_configs as c', 'l.tracked_tx_id', 'c.id')
       .where('c.project_id', projectId)
       .andWhere('l.timestamp', '>=', since.toDate())
-      .select()
+      .andWhere('l.timestamp', '<', UnixTime.now().add(-1, 'days').toDate())
+      .distinct('l.tx_hash')
+      .select('l.timestamp', 'l.tx_hash', 'l.tracked_tx_id', 'l.data')
     return rows.map(toRecord)
   }
 

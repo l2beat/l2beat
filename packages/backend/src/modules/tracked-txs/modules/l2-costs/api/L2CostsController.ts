@@ -36,34 +36,40 @@ type L2CostsTrackedTxsConfigEntry = {
 
 const NOW = UnixTime.now()
 
-interface SumedTransactions {
+export interface SumedTransactions {
   totalCost: number
   totalGas: number
   totalCostUsd: number
   totalCalldataGas: number
   totalComputeGas: number
   totalBlobGas?: number
+  totalOverheadGas: number
   totalCalldataCost: number
   totalComputeCost: number
   totalBlobCost?: number
+  totalOverheadCost: number
   totalCalldataCostUsd: number
   totalComputeCostUsd: number
   totalBlobCostUsd?: number
+  totalOverheadCostUsd: number
 }
 
 interface DetailedTransactionBase {
   timestamp: UnixTime
   calldataGasUsed: number
   computeGasUsed: number
+  overheadGasUsed: 21000
   totalGas: number
   gasCost: number
   calldataGasCost: number
   computeGasCost: number
+  totalGasCost: number
+  totalOverheadGasCost: number
+  gasCostUsd: number
   calldataGasCostUsd: number
   computeGasCostUsd: number
-  totalGasCost: number
-  gasCostUsd: number
   totalGasCostUsd: number
+  totalOverheadGasCostUsd: number
 }
 
 export type DetailedTransaction =
@@ -168,6 +174,9 @@ export class L2CostsController {
         acc.totalComputeCost += tx.computeGasCost
         acc.totalCalldataCostUsd += tx.calldataGasCostUsd
         acc.totalComputeCostUsd += tx.computeGasCostUsd
+        acc.totalOverheadGas += tx.overheadGasUsed
+        acc.totalOverheadCost += tx.totalOverheadGasCost
+        acc.totalOverheadCostUsd += tx.totalOverheadGasCostUsd
 
         if (tx.type === 3) {
           if (!acc.totalBlobGas) acc.totalBlobGas = 0
@@ -190,6 +199,9 @@ export class L2CostsController {
         totalComputeCost: 0,
         totalCalldataCostUsd: 0,
         totalComputeCostUsd: 0,
+        totalOverheadGas: 0,
+        totalOverheadCost: 0,
+        totalOverheadCostUsd: 0,
       },
     )
   }
@@ -199,43 +211,65 @@ export class L2CostsController {
   ): Promise<DetailedTransaction[]> {
     const ethPricesMap = await this.priceRepository.findByTimestampRange(
       AssetId.ETH,
-      UnixTime.now().add(-90, 'days'),
+      UnixTime.now().add(-91, 'days'),
       UnixTime.now(),
     )
+
     return transactions.map((tx) => {
       const ethUsdPrice = ethPricesMap.get(
         tx.timestamp.toStartOf('hour').toNumber(),
       )
-      assert(ethUsdPrice, 'ETH price not found')
+      assert(
+        ethUsdPrice,
+        `[L2Costs]: ETH price not found: ${tx.timestamp
+          .toStartOf('hour')
+          .toDate()
+          .toISOString()}`,
+      )
+
+      const gasPriceGwei = parseFloat((tx.data.gasPrice * 1e-9).toFixed(9))
+      const gasPriceETH = parseFloat((gasPriceGwei * 1e-9).toFixed(18))
 
       const calldataGasUsed = tx.data.calldataGasUsed
       const computeGasUsed = tx.data.gasUsed - tx.data.calldataGasUsed - 21_000
+      const overheadGasUsed = 21_000
       const totalGas = tx.data.gasUsed
-      const gasCost = tx.data.gasUsed * tx.data.gasPrice
-      const calldataGasCost = calldataGasUsed * tx.data.gasPrice
-      const computeGasCost = computeGasUsed * tx.data.gasPrice
+      const gasCost = tx.data.gasUsed * gasPriceETH
+      const calldataGasCost = calldataGasUsed * gasPriceETH
+      const computeGasCost = computeGasUsed * gasPriceETH
       const totalGasCost = gasCost
+      const totalOverheadGasCost = overheadGasUsed * gasPriceETH
       const gasCostUsd = gasCost * ethUsdPrice
       const totalGasCostUsd = totalGasCost * ethUsdPrice
       const calldataGasCostUsd = calldataGasCost * ethUsdPrice
       const computeGasCostUsd = computeGasCost * ethUsdPrice
+      const totalOverheadGasCostUsd = totalOverheadGasCost * ethUsdPrice
 
       const detailedTransaction: DetailedTransactionBase = {
         timestamp: tx.timestamp,
         calldataGasUsed,
         computeGasUsed,
+        overheadGasUsed,
         totalGas,
         gasCost,
         calldataGasCost,
         computeGasCost,
         totalGasCost,
+        totalOverheadGasCost,
         gasCostUsd,
         totalGasCostUsd,
         calldataGasCostUsd,
         computeGasCostUsd,
+        totalOverheadGasCostUsd,
       }
       if (tx.data.type === 3) {
-        const blobGasCost = tx.data.blobGasUsed * tx.data.blobGasPrice
+        const blobGasPriceGwei = parseFloat(
+          (tx.data.blobGasPrice * 1e-9).toFixed(9),
+        )
+        const blobGasPriceETH = parseFloat(
+          (blobGasPriceGwei * 1e-9).toFixed(18),
+        )
+        const blobGasCost = tx.data.blobGasUsed * blobGasPriceETH
         const blobGasCostUsd = blobGasCost * ethUsdPrice
 
         return {
