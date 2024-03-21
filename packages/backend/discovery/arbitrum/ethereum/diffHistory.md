@@ -1,3 +1,691 @@
+Generated with discovered.json: 0xb86da900824f59e75d83d04042b810b09b1ab5ee
+
+# Diff at Wed, 20 Mar 2024 17:41:29 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@a85edd8605f2795efbd4c0600ce9438f7e6129b0 block: 19419824
+- current block number: 19477456
+
+## Description
+
+- changed futureBlocks from 12 to 64
+- changed futureSeconds from 3600 to 768
+- added a batchPosterManager multisig
+- updated wasmModuleRoot to ArbOS v20
+- redeployed OneStepProofEntry, OneStepProverHostIo, OneStepProverMath, OneStepProver0, OneStepProverMemory
+- arbitrum timelock transactions
+      - add details
+- changed ChallengeManager implementation 
+      - add details
+- changed SequencerInbox implementation
+      - add details
+
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9"
++        "0x31DA64D19Cd31A19CD09F4070366Fe2144792cf7"
+      implementations.0:
+-        "0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9"
++        "0x31DA64D19Cd31A19CD09F4070366Fe2144792cf7"
+      values.maxTimeVariation.3:
+-        3600
++        768
+      values.maxTimeVariation.1:
+-        12
++        64
+      values.batchPosterManager:
++        "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B"
+      values.BROTLI_MESSAGE_HEADER_FLAG:
++        "0x00"
+      values.DAS_MESSAGE_HEADER_FLAG:
++        "0x80"
+      values.DATA_BLOB_HEADER_FLAG:
++        "0x50"
+      values.isUsingFeeToken:
++        false
+      values.maxDataSize:
++        117964
+      values.reader4844:
++        "0xb5f6951AB2504442c3F6dD37fF1E1D1d253C5097"
+      values.TREE_DAS_MESSAGE_HEADER_FLAG:
++        "0x08"
+      values.ZERO_HEAVY_MESSAGE_HEADER_FLAG:
++        "0x20"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProofEntry (0x3E1f62AA8076000c3218493FE3e0Ae40bcB9A1DF)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProver0 (0x499A4f574f2e4F8837E242adEc86223Ef7DeEfcC)
+    +++ description: None
+```
+
+```diff
+    contract RollupProxy (0x5eF0D09d1E6204141B4d37530808eD19f60FBa35) {
+    +++ description: None
+      values.wasmModuleRoot:
+-        "0xf4389b835497a910d7ba3ebfb77aa93da985634f3c052de1290360635be40c4a"
++        "0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMemory (0xb556F3Bb0FdCFeAf81a1c393e024a69a3327B676)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverHostIo (0xb965b08A826D4C7634e0Df4c5eF5E1d1f9b5D13A)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMath (0xd315Ac3a82E8EDAA84b347F478e0F59801747970)
+    +++ description: None
+```
+
+```diff
+    contract ChallengeManager (0xe5896783a2F463446E1f624e64Aa6836BE4C6f58) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x1c78B622961f27Ccc2f9BA65E2ba5d5eB301a445"
++        "0xE129b8Aa61dF65cBDbAE4345eE3fb40168DfD566"
+      implementations.0:
+-        "0x1c78B622961f27Ccc2f9BA65E2ba5d5eB301a445"
++        "0xE129b8Aa61dF65cBDbAE4345eE3fb40168DfD566"
+      values.osp:
+-        "0x3E1f62AA8076000c3218493FE3e0Ae40bcB9A1DF"
++        "0xC6E1E6dB03c3F475bC760FE20ed93401EC5c4F7e"
+    }
+```
+
+```diff
+    contract L1ArbitrumTimelock (0xE6841D92B0C345144506576eC13ECf5103aC7f49) {
+    +++ description: None
+      values.scheduledTransactions.27:
++        {"id":"0xdda98e62c0827b0ea976efa9fa7eab4086f6ecc5aa6715e02868bb2972b12cad","decoded":{"chain":"arbitrum","contractName":"ArbOneSetAtlasMinBaseFeeAction","function":"perform","inputs":[],"address":"0x849E360a247132F961c9CBE95Ba39106c72e1268","calldata":"0xb147f40c","executor":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","inboxOnEthereum":"0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"},"raw":{"target":"0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd000000000000000000000000849e360a247132f961c9cbe95ba39106c72e126800000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}}
+      values.scheduledTransactions.26:
++        {"id":"0xdda98e62c0827b0ea976efa9fa7eab4086f6ecc5aa6715e02868bb2972b12cad","decoded":{"chain":"arbitrum","contractName":"ArbOneSetAtlasL1PricingRewardAction","function":"perform","inputs":[],"address":"0x36D0170D92F66e8949eB276C3AC4FEA64f83704d","calldata":"0xb147f40c","executor":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","inboxOnEthereum":"0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"},"raw":{"target":"0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd00000000000000000000000036d0170d92f66e8949eb276c3ac4fea64f83704d00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMath (0x221CCc45985Fdd24e33c3f19c6b7D48C02d5DCAa)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProver0 (0xA174e12Ff8C6b18B37fecA77d6d350D89379A58C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xb5f6951AB2504442c3F6dD37fF1E1D1d253C5097)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMemory (0xb602D056BD6BA78c3A320660d1a45D1cc8bbD3ED)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProofEntry (0xC6E1E6dB03c3F475bC760FE20ed93401EC5c4F7e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverHostIo (0xd7f12E7418B007Ad7A5c7ACBbF460D3Cfe92A63e)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ChallengeManager/implementation/meta.txt       |   2 +-
+ .../implementation/src/bridge/IBridge.sol          |  48 +-
+ .../src/bridge/IDelayedMessageProvider.sol         |   2 +-
+ .../implementation/src/bridge/IOwnable.sol         |   2 +-
+ .../implementation/src/bridge/ISequencerInbox.sol  | 124 ++++-
+ .../implementation/src/challenge/ChallengeLib.sol  |   2 +-
+ .../src/challenge/ChallengeManager.sol             |  19 +-
+ .../src/challenge/IChallengeManager.sol            |   4 +-
+ .../src/challenge/IChallengeResultReceiver.sol     |   2 +-
+ .../implementation/src/libraries/Constants.sol     |   8 +-
+ .../src/libraries/DelegateCallAware.sol            |   2 +-
+ .../implementation/src/libraries/Error.sol         |  60 ++-
+ .../implementation/src/libraries/IGasRefunder.sol  |  24 +-
+ .../implementation/src/osp/IOneStepProofEntry.sol  |   2 +-
+ .../implementation/src/osp/IOneStepProver.sol      |   3 +-
+ .../src/state/Deserialize.sol => /dev/null         | 302 -----------
+ .../implementation/src/state/GlobalState.sol       |   2 +-
+ .../implementation/src/state/Instructions.sol      |   2 +-
+ .../implementation/src/state/Machine.sol           |   2 +-
+ .../src/state/MerkleProof.sol => /dev/null         |  99 ----
+ .../implementation/src/state/Module.sol            |   6 +-
+ .../src/state/ModuleMemory.sol => /dev/null        |  43 --
+ .../src/state/ModuleMemoryCompact.sol              |  17 +
+ .../implementation/src/state/StackFrame.sol        |   2 +-
+ .../implementation/src/state/Value.sol             |   2 +-
+ .../implementation/src/state/ValueArray.sol        |   2 +-
+ .../implementation/src/state/ValueStack.sol        |   2 +-
+ .../implementation/contracts/GnosisSafe.sol        | 422 +++++++++++++++
+ .../implementation/contracts/base/Executor.sol     |  27 +
+ .../contracts/base/FallbackManager.sol             |  53 ++
+ .../implementation/contracts/base/GuardManager.sol |  50 ++
+ .../contracts/base/ModuleManager.sol               | 133 +++++
+ .../implementation/contracts/base/OwnerManager.sol | 149 ++++++
+ .../implementation/contracts/common/Enum.sol       |   8 +
+ .../contracts/common/EtherPaymentFallback.sol      |  13 +
+ .../contracts/common/SecuredTokenTransfer.sol      |  35 ++
+ .../contracts/common/SelfAuthorized.sol            |  16 +
+ .../contracts/common/SignatureDecoder.sol          |  36 ++
+ .../implementation/contracts/common/Singleton.sol  |  11 +
+ .../contracts/common/StorageAccessible.sol         |  47 ++
+ .../contracts/external/GnosisSafeMath.sol          |  54 ++
+ .../contracts/interfaces/ISignatureValidator.sol   |  20 +
+ .../.code/GnosisSafe/implementation/meta.txt       |   2 +
+ .../.code/GnosisSafe/proxy/GnosisSafeProxy.sol     | 155 ++++++
+ .../ethereum/.code/GnosisSafe/proxy/meta.txt       |   2 +
+ .../OneStepProofEntry/meta.txt                     |   2 +-
+ .../OneStepProofEntry/src/bridge/IBridge.sol       |  48 +-
+ .../src/bridge/IDelayedMessageProvider.sol         |   2 +-
+ .../OneStepProofEntry/src/bridge/IOwnable.sol      |   2 +-
+ .../src/bridge/ISequencerInbox.sol                 | 124 ++++-
+ .../src/libraries/IGasRefunder.sol                 |  24 +-
+ .../src/osp/IOneStepProofEntry.sol                 |   2 +-
+ .../OneStepProofEntry/src/osp/IOneStepProver.sol   |   3 +-
+ .../src/osp/OneStepProofEntry.sol                  |   2 +-
+ .../OneStepProofEntry/src/state/Deserialize.sol    |   4 +-
+ .../OneStepProofEntry/src/state/GlobalState.sol    |   2 +-
+ .../OneStepProofEntry/src/state/Instructions.sol   |   2 +-
+ .../OneStepProofEntry/src/state/Machine.sol        |   2 +-
+ .../OneStepProofEntry/src/state/MerkleProof.sol    |   2 +-
+ .../OneStepProofEntry/src/state/Module.sol         |   6 +-
+ .../src/state/ModuleMemory.sol => /dev/null        |  43 --
+ .../src/state/ModuleMemoryCompact.sol              |  17 +
+ .../OneStepProofEntry/src/state/StackFrame.sol     |   2 +-
+ .../OneStepProofEntry/src/state/Value.sol          |   2 +-
+ .../OneStepProofEntry/src/state/ValueArray.sol     |   2 +-
+ .../OneStepProofEntry/src/state/ValueStack.sol     |   2 +-
+ .../OneStepProver0/meta.txt                        |   2 +-
+ .../OneStepProver0/src/bridge/IBridge.sol          |  48 +-
+ .../src/bridge/IDelayedMessageProvider.sol         |   2 +-
+ .../OneStepProver0/src/bridge/IOwnable.sol         |   2 +-
+ .../OneStepProver0/src/bridge/ISequencerInbox.sol  | 124 ++++-
+ .../OneStepProver0/src/libraries/IGasRefunder.sol  |  24 +-
+ .../OneStepProver0/src/osp/IOneStepProver.sol      |   3 +-
+ .../OneStepProver0/src/osp/OneStepProver0.sol      |   2 +-
+ .../OneStepProver0/src/state/Deserialize.sol       |   4 +-
+ .../OneStepProver0/src/state/GlobalState.sol       |   2 +-
+ .../OneStepProver0/src/state/Instructions.sol      |   2 +-
+ .../OneStepProver0/src/state/Machine.sol           |   2 +-
+ .../OneStepProver0/src/state/MerkleProof.sol       |   2 +-
+ .../OneStepProver0/src/state/Module.sol            |   6 +-
+ .../src/state/ModuleMemory.sol => /dev/null        |  43 --
+ .../src/state/ModuleMemoryCompact.sol              |  17 +
+ .../OneStepProver0/src/state/StackFrame.sol        |   2 +-
+ .../OneStepProver0/src/state/Value.sol             |   2 +-
+ .../OneStepProver0/src/state/ValueArray.sol        |   2 +-
+ .../OneStepProver0/src/state/ValueStack.sol        |   2 +-
+ .../OneStepProverHostIo/meta.txt                   |   2 +-
+ .../OneStepProverHostIo/src/bridge/IBridge.sol     |  48 +-
+ .../src/bridge/IDelayedMessageProvider.sol         |   2 +-
+ .../OneStepProverHostIo/src/bridge/IOwnable.sol    |   2 +-
+ .../src/bridge/ISequencerInbox.sol                 | 124 ++++-
+ .../OneStepProverHostIo/src/bridge/Messages.sol    |   2 +-
+ .../src/libraries/IGasRefunder.sol                 |  24 +-
+ .../OneStepProverHostIo/src/osp/IOneStepProver.sol |   3 +-
+ .../src/osp/OneStepProverHostIo.sol                | 110 +++-
+ .../OneStepProverHostIo/src/state/Deserialize.sol  |   4 +-
+ .../OneStepProverHostIo/src/state/GlobalState.sol  |   2 +-
+ .../OneStepProverHostIo/src/state/Instructions.sol |   2 +-
+ .../OneStepProverHostIo/src/state/Machine.sol      |   2 +-
+ .../OneStepProverHostIo/src/state/MerkleProof.sol  |   2 +-
+ .../OneStepProverHostIo/src/state/Module.sol       |   6 +-
+ .../OneStepProverHostIo/src/state/ModuleMemory.sol |  11 +-
+ .../src/state/ModuleMemoryCompact.sol              |  17 +
+ .../OneStepProverHostIo/src/state/StackFrame.sol   |   2 +-
+ .../OneStepProverHostIo/src/state/Value.sol        |   2 +-
+ .../OneStepProverHostIo/src/state/ValueArray.sol   |   2 +-
+ .../OneStepProverHostIo/src/state/ValueStack.sol   |   2 +-
+ .../OneStepProverMath/meta.txt                     |   2 +-
+ .../OneStepProverMath/src/bridge/IBridge.sol       |  48 +-
+ .../src/bridge/IDelayedMessageProvider.sol         |   2 +-
+ .../OneStepProverMath/src/bridge/IOwnable.sol      |   2 +-
+ .../src/bridge/ISequencerInbox.sol                 | 124 ++++-
+ .../src/libraries/IGasRefunder.sol                 |  24 +-
+ .../OneStepProverMath/src/osp/IOneStepProver.sol   |   3 +-
+ .../src/osp/OneStepProverMath.sol                  |   2 +-
+ .../OneStepProverMath/src/state/Deserialize.sol    |   4 +-
+ .../OneStepProverMath/src/state/GlobalState.sol    |   2 +-
+ .../OneStepProverMath/src/state/Instructions.sol   |   2 +-
+ .../OneStepProverMath/src/state/Machine.sol        |   2 +-
+ .../OneStepProverMath/src/state/MerkleProof.sol    |   2 +-
+ .../OneStepProverMath/src/state/Module.sol         |   6 +-
+ .../src/state/ModuleMemory.sol => /dev/null        |  43 --
+ .../src/state/ModuleMemoryCompact.sol              |  17 +
+ .../OneStepProverMath/src/state/StackFrame.sol     |   2 +-
+ .../OneStepProverMath/src/state/Value.sol          |   2 +-
+ .../OneStepProverMath/src/state/ValueArray.sol     |   2 +-
+ .../OneStepProverMath/src/state/ValueStack.sol     |   2 +-
+ .../OneStepProverMemory/meta.txt                   |   2 +-
+ .../OneStepProverMemory/src/bridge/IBridge.sol     |  48 +-
+ .../src/bridge/IDelayedMessageProvider.sol         |   2 +-
+ .../OneStepProverMemory/src/bridge/IOwnable.sol    |   2 +-
+ .../src/bridge/ISequencerInbox.sol                 | 124 ++++-
+ .../src/libraries/IGasRefunder.sol                 |  24 +-
+ .../OneStepProverMemory/src/osp/IOneStepProver.sol |   3 +-
+ .../src/osp/OneStepProverMemory.sol                |   3 +-
+ .../OneStepProverMemory/src/state/Deserialize.sol  |   4 +-
+ .../OneStepProverMemory/src/state/GlobalState.sol  |   2 +-
+ .../OneStepProverMemory/src/state/Instructions.sol |   2 +-
+ .../OneStepProverMemory/src/state/Machine.sol      |   2 +-
+ .../OneStepProverMemory/src/state/MerkleProof.sol  |   2 +-
+ .../OneStepProverMemory/src/state/Module.sol       |   6 +-
+ .../OneStepProverMemory/src/state/ModuleMemory.sol |  11 +-
+ .../src/state/ModuleMemoryCompact.sol              |  17 +
+ .../OneStepProverMemory/src/state/StackFrame.sol   |   2 +-
+ .../OneStepProverMemory/src/state/Value.sol        |   2 +-
+ .../OneStepProverMemory/src/state/ValueArray.sol   |   2 +-
+ .../OneStepProverMemory/src/state/ValueStack.sol   |   2 +-
+ .../SequencerInbox/implementation/meta.txt         |   2 +-
+ .../implementation/src/bridge/IBridge.sol          |  41 +-
+ .../src/bridge/IDelayedMessageProvider.sol         |   2 +-
+ .../implementation/src/bridge/IERC20Bridge.sol     |  37 ++
+ .../src/bridge/IInbox.sol => /dev/null             | 193 -------
+ .../implementation/src/bridge/IInboxBase.sol       |  86 +++
+ .../implementation/src/bridge/IOutbox.sol          |  12 +-
+ .../implementation/src/bridge/IOwnable.sol         |   2 +-
+ .../implementation/src/bridge/ISequencerInbox.sol  | 117 ++++-
+ .../implementation/src/bridge/Messages.sol         |   2 +-
+ .../implementation/src/bridge/SequencerInbox.sol   | 582 ++++++++++++++++-----
+ .../implementation/src/challenge/ChallengeLib.sol  |   2 +-
+ .../src/challenge/IChallengeManager.sol            |   2 +-
+ .../src/challenge/IChallengeResultReceiver.sol     |   2 +-
+ .../src/libraries/ArbitrumChecker.sol              |  16 +
+ .../src/libraries/Constants.sol => /dev/null       |  13 -
+ .../src/libraries/DelegateCallAware.sol            |   2 +-
+ .../implementation/src/libraries/Error.sol         |  51 +-
+ .../src/libraries/GasRefundEnabled.sol             |  52 ++
+ .../implementation/src/libraries/IGasRefunder.sol  |  30 +-
+ .../implementation/src/libraries/IReader4844.sol   |  13 +
+ .../implementation/src/libraries/MessageTypes.sol  |   2 +-
+ .../implementation/src/osp/IOneStepProofEntry.sol  |   2 +-
+ .../implementation/src/osp/IOneStepProver.sol      |   3 +-
+ .../implementation/src/precompiles/ArbGasInfo.sol  | 152 ++++++
+ .../implementation/src/precompiles/ArbSys.sol      | 152 ++++++
+ .../implementation/src/rollup/IRollupCore.sol      |  19 +-
+ .../src/rollup/IRollupEventInbox.sol               |   6 +-
+ .../implementation/src/rollup/IRollupLogic.sol     | 136 +----
+ .../implementation/src/rollup/Node.sol             |  16 +-
+ .../src/rollup/RollupLib.sol => /dev/null          | 151 ------
+ .../src/state/Deserialize.sol => /dev/null         | 302 -----------
+ .../implementation/src/state/GlobalState.sol       |   2 +-
+ .../implementation/src/state/Instructions.sol      |   2 +-
+ .../implementation/src/state/Machine.sol           |   2 +-
+ .../src/state/MerkleProof.sol => /dev/null         |  99 ----
+ .../implementation/src/state/Module.sol            |   6 +-
+ .../src/state/ModuleMemory.sol => /dev/null        |  43 --
+ .../src/state/ModuleMemoryCompact.sol              |  17 +
+ .../implementation/src/state/StackFrame.sol        |   2 +-
+ .../implementation/src/state/Value.sol             |   2 +-
+ .../implementation/src/state/ValueArray.sol        |   2 +-
+ .../implementation/src/state/ValueStack.sol        |   2 +-
+ .../arbitrum/ethereum/.code/meta.txt               |   2 +
+ 191 files changed, 3654 insertions(+), 2259 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19419824 (main branch discovery), not current.
+
+```diff
+    contract L1ArbitrumTimelock (0xE6841D92B0C345144506576eC13ECf5103aC7f49) {
+    +++ description: None
+      values.scheduledTransactions.25.target:
+-        "0xa723C008e76E379c55599D2E4d93879BeaFDa79C"
+      values.scheduledTransactions.25.value:
+-        0
+      values.scheduledTransactions.25.data:
+-        "0x000000000000000000000000c4448b71118c9071bcb9734a0eac55d18a15394900000000000000000000000086a02dd71363c440b21f4c0e5b2ad01ffe1a748200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd0000000000000000000000003e313eeed58e851ca3841c6109697b9eb35c772600000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactions.25.delay:
+-        259200
+      values.scheduledTransactions.25.decoded:
++        {"chain":"nova","address":"0x3E313Eeed58E851CA3841C6109697B9eb35C7726","calldata":"0xb147f40c","executor":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482","inboxOnEthereum":"0xc4448b71118c9071Bcb9734A0EAc55D18A153949"}
+      values.scheduledTransactions.25.raw:
++        {"target":"0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x000000000000000000000000c4448b71118c9071bcb9734a0eac55d18a15394900000000000000000000000086a02dd71363c440b21f4c0e5b2ad01ffe1a748200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd0000000000000000000000003e313eeed58e851ca3841c6109697b9eb35c772600000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}
+      values.scheduledTransactions.24.target:
+-        "0xa723C008e76E379c55599D2E4d93879BeaFDa79C"
+      values.scheduledTransactions.24.value:
+-        0
+      values.scheduledTransactions.24.data:
+-        "0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd0000000000000000000000003e313eeed58e851ca3841c6109697b9eb35c772600000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactions.24.delay:
+-        259200
+      values.scheduledTransactions.24.decoded:
++        {"chain":"arbitrum","contractName":"SetArbOS20VersionAction","function":"perform","inputs":[],"address":"0x3E313Eeed58E851CA3841C6109697B9eb35C7726","calldata":"0xb147f40c","executor":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","inboxOnEthereum":"0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"}
+      values.scheduledTransactions.24.raw:
++        {"target":"0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd0000000000000000000000003e313eeed58e851ca3841c6109697b9eb35c772600000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}
+      values.scheduledTransactions.23.target:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      values.scheduledTransactions.23.value:
+-        0
+      values.scheduledTransactions.23.data:
+-        "0x1cff79cd000000000000000000000000501f30810d2b0eaec15cc3785dbb29e4a8a92a7000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c00000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactions.23.delay:
+-        259200
+      values.scheduledTransactions.23.decoded:
++        {"chain":"ethereum","contractName":"NovaSetBatchPosterManagerAction","function":"perform","inputs":[],"address":"0x501f30810D2b0EaEC15Cc3785dBB29e4a8a92a70","calldata":"0xb147f40c","executor":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      values.scheduledTransactions.23.raw:
++        {"target":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","value":0,"data":"0x1cff79cd000000000000000000000000501f30810d2b0eaec15cc3785dbb29e4a8a92a7000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c00000000000000000000000000000000000000000000000000000000","delay":259200}
+      values.scheduledTransactions.22.target:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      values.scheduledTransactions.22.value:
+-        0
+      values.scheduledTransactions.22.data:
+-        "0x1cff79cd000000000000000000000000874356173cfd6c739aeab1f5abfb5f3afb3d4d3300000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c00000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactions.22.delay:
+-        259200
+      values.scheduledTransactions.22.decoded:
++        {"chain":"ethereum","contractName":"NovaAIP4844Action","function":"perform","inputs":[],"address":"0x874356173CFd6C739aeab1F5ABfB5F3AFB3d4d33","calldata":"0xb147f40c","executor":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      values.scheduledTransactions.22.raw:
++        {"target":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","value":0,"data":"0x1cff79cd000000000000000000000000874356173cfd6c739aeab1f5abfb5f3afb3d4d3300000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c00000000000000000000000000000000000000000000000000000000","delay":259200}
+      values.scheduledTransactions.21.target:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      values.scheduledTransactions.21.value:
+-        0
+      values.scheduledTransactions.21.data:
+-        "0x1cff79cd000000000000000000000000ce0af261eb511cb41b8d0a2e31df80ba37e265ab00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c00000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactions.21.delay:
+-        259200
+      values.scheduledTransactions.21.decoded:
++        {"chain":"ethereum","contractName":"ArbOneSetBatchPosterManagerAction","function":"perform","inputs":[],"address":"0xCe0aF261EB511CB41b8D0A2e31DF80BA37e265aB","calldata":"0xb147f40c","executor":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      values.scheduledTransactions.21.raw:
++        {"target":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","value":0,"data":"0x1cff79cd000000000000000000000000ce0af261eb511cb41b8d0a2e31df80ba37e265ab00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c00000000000000000000000000000000000000000000000000000000","delay":259200}
+      values.scheduledTransactions.20.target:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      values.scheduledTransactions.20.value:
+-        0
+      values.scheduledTransactions.20.data:
+-        "0x1cff79cd00000000000000000000000076d8e97cd4514bebbc21d2044ff4a8d9ea1f0cc400000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c00000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactions.20.delay:
+-        259200
+      values.scheduledTransactions.20.decoded:
++        {"chain":"ethereum","contractName":"ArbOneAIP4844Action","function":"perform","inputs":[],"address":"0x76D8e97Cd4514bebBc21d2044fF4a8d9eA1f0CC4","calldata":"0xb147f40c","executor":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      values.scheduledTransactions.20.raw:
++        {"target":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","value":0,"data":"0x1cff79cd00000000000000000000000076d8e97cd4514bebbc21d2044ff4a8d9ea1f0cc400000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c00000000000000000000000000000000000000000000000000000000","delay":259200}
+      values.scheduledTransactions.19.target:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      values.scheduledTransactions.19.value:
+-        0
+      values.scheduledTransactions.19.data:
+-        "0x1cff79cd00000000000000000000000047a85c0a118127f3968a6a1a61e2a326517540d400000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c00000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactions.19.delay:
+-        259200
+      values.scheduledTransactions.19.decoded:
++        {"chain":"ethereum","contractName":"AIPSetSequencerInboxMaxTimeVariationNovaAction","function":"perform","inputs":[],"address":"0x47a85C0a118127F3968A6A1A61e2a326517540D4","calldata":"0xb147f40c","executor":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      values.scheduledTransactions.19.raw:
++        {"target":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","value":0,"data":"0x1cff79cd00000000000000000000000047a85c0a118127f3968a6a1a61e2a326517540d400000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c00000000000000000000000000000000000000000000000000000000","delay":259200}
+      values.scheduledTransactions.18.target:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      values.scheduledTransactions.18.value:
+-        0
+      values.scheduledTransactions.18.data:
+-        "0x1cff79cd0000000000000000000000003e313eeed58e851ca3841c6109697b9eb35c772600000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c00000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactions.18.delay:
+-        259200
+      values.scheduledTransactions.18.decoded:
++        {"chain":"ethereum","contractName":"AIPSetSequencerInboxMaxTimeVariationArbOneAction","function":"perform","inputs":[],"address":"0x3E313Eeed58E851CA3841C6109697B9eb35C7726","calldata":"0xb147f40c","executor":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      values.scheduledTransactions.18.raw:
++        {"target":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","value":0,"data":"0x1cff79cd0000000000000000000000003e313eeed58e851ca3841c6109697b9eb35c772600000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c00000000000000000000000000000000000000000000000000000000","delay":259200}
+      values.scheduledTransactions.17.target:
+-        "0xa723C008e76E379c55599D2E4d93879BeaFDa79C"
+      values.scheduledTransactions.17.value:
+-        0
+      values.scheduledTransactions.17.data:
+-        "0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd000000000000000000000000d9a2e0e5d7509f0bf1b2d33884f8c1b4d449087900000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactions.17.delay:
+-        259200
+      values.scheduledTransactions.17.decoded:
++        {"chain":"arbitrum","contractName":"NomineeGovernorV2UpgradeAction","function":"perform","inputs":[],"address":"0xd9a2e0E5d7509F0BF1B2d33884F8C1b4D4490879","calldata":"0xb147f40c","executor":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","inboxOnEthereum":"0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"}
+      values.scheduledTransactions.17.raw:
++        {"target":"0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd000000000000000000000000d9a2e0e5d7509f0bf1b2d33884f8c1b4d449087900000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}
+      values.scheduledTransactions.16.target:
+-        "0xa723C008e76E379c55599D2E4d93879BeaFDa79C"
+      values.scheduledTransactions.16.value:
+-        0
+      values.scheduledTransactions.16.data:
+-        "0x000000000000000000000000c4448b71118c9071bcb9734a0eac55d18a15394900000000000000000000000086a02dd71363c440b21f4c0e5b2ad01ffe1a748200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd0000000000000000000000005357f4d3e8f8250a77bcddd5e58886ad1358220c00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactions.16.delay:
+-        259200
+      values.scheduledTransactions.16.decoded:
++        {"chain":"nova","address":"0x5357f4D3e8f8250A77bcddd5E58886AD1358220c","calldata":"0xb147f40c","executor":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482","inboxOnEthereum":"0xc4448b71118c9071Bcb9734A0EAc55D18A153949"}
+      values.scheduledTransactions.16.raw:
++        {"target":"0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x000000000000000000000000c4448b71118c9071bcb9734a0eac55d18a15394900000000000000000000000086a02dd71363c440b21f4c0e5b2ad01ffe1a748200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd0000000000000000000000005357f4d3e8f8250a77bcddd5e58886ad1358220c00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}
+      values.scheduledTransactions.15.target:
+-        "0xa723C008e76E379c55599D2E4d93879BeaFDa79C"
+      values.scheduledTransactions.15.value:
+-        0
+      values.scheduledTransactions.15.data:
+-        "0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd000000000000000000000000f6c7dc6eae78abf2f32df899654ca425dfa9948100000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactions.15.delay:
+-        259200
+      values.scheduledTransactions.15.decoded:
++        {"chain":"arbitrum","contractName":"SetArbOS11VersionAction","function":"perform","inputs":[],"address":"0xF6c7Dc6eaE78aBF2f32df899654ca425Dfa99481","calldata":"0xb147f40c","executor":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","inboxOnEthereum":"0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"}
+      values.scheduledTransactions.15.raw:
++        {"target":"0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd000000000000000000000000f6c7dc6eae78abf2f32df899654ca425dfa9948100000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}
+      values.scheduledTransactions.14.target:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      values.scheduledTransactions.14.value:
+-        0
+      values.scheduledTransactions.14.data:
+-        "0x1cff79cd00000000000000000000000054c2c372943572ac2a8e84d502ebc13f14b6224600000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c00000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactions.14.delay:
+-        259200
+      values.scheduledTransactions.14.decoded:
++        {"chain":"ethereum","contractName":"SetNovaArbOS11ModuleRootAction","function":"perform","inputs":[],"address":"0x54c2C372943572Ac2a8E84D502ebc13F14B62246","calldata":"0xb147f40c","executor":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      values.scheduledTransactions.14.raw:
++        {"target":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","value":0,"data":"0x1cff79cd00000000000000000000000054c2c372943572ac2a8e84d502ebc13f14b6224600000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c00000000000000000000000000000000000000000000000000000000","delay":259200}
+      values.scheduledTransactions.13.target:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      values.scheduledTransactions.13.value:
+-        0
+      values.scheduledTransactions.13.data:
+-        "0x1cff79cd0000000000000000000000003b70f2da6f3b01f9a53dcbcb3e59ad3ad8bed92400000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c00000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactions.13.delay:
+-        259200
+      values.scheduledTransactions.13.decoded:
++        {"chain":"ethereum","contractName":"SetArbOneArbOS11ModuleRootAciton","function":"perform","inputs":[],"address":"0x3b70f2Da6F3b01F9a53dCBcB3e59AD3ad8bed924","calldata":"0xb147f40c","executor":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      values.scheduledTransactions.13.raw:
++        {"target":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","value":0,"data":"0x1cff79cd0000000000000000000000003b70f2da6f3b01f9a53dcbcb3e59ad3ad8bed92400000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c00000000000000000000000000000000000000000000000000000000","delay":259200}
+      values.scheduledTransactions.12.target:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      values.scheduledTransactions.12.value:
+-        0
+      values.scheduledTransactions.12.data:
+-        "0x1cff79cd000000000000000000000000def5cfe3246882bc7f65f9346a8b974ba27d3f4e00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c00000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactions.12.delay:
+-        259200
+      values.scheduledTransactions.12.decoded:
++        {"chain":"ethereum","contractName":"AddNovaKeysetAction","function":"perform","inputs":[],"address":"0xDef5CfE3246882BC7f65F9346a8b974BA27D3F4E","calldata":"0xb147f40c","executor":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      values.scheduledTransactions.12.raw:
++        {"target":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","value":0,"data":"0x1cff79cd000000000000000000000000def5cfe3246882bc7f65f9346a8b974ba27d3f4e00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c00000000000000000000000000000000000000000000000000000000","delay":259200}
+      values.scheduledTransactions.11.target:
+-        "0xa723C008e76E379c55599D2E4d93879BeaFDa79C"
+      values.scheduledTransactions.11.value:
+-        0
+      values.scheduledTransactions.11.data:
+-        "0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000002841cff79cd0000000000000000000000009bf7b8884fa381a45f8cb2525905fb36c996297a00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000204536d8944000000000000000000000000add68bcb0f66878ab9d37a447c7b9067c5dfa94100000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000003bd8e2ac65ad6f0f094ba6766cbd9484ab49ef23000000000000000000000000f8e1492255d9428c2fc20a98a1deb1215c8ffefd000000000000000000000000b07dc9103328a51128bc6cc1049d1137035f5e280000000000000000000000003e286452b1c66abb08eb5494c3894f40ab5a59af000000000000000000000000b71ca4ffbb7b58d75ba29891ab45e9dc12b444ed0000000000000000000000008f10e3413586c4a8dcfce19d009872b19e9cd8e3000000000000000000000000566a07c3c932ae6af74d77c29e5c30d8b18537100000000000000000000000005280406912eb8ec677df66c326be48f938dc2e440000000000000000000000000275b3d54a5ddbf8205a75984796efe8b7357bae0000000000000000000000005a1fd562271aac2dadb51baab7760b949d9d81df000000000000000000000000f6b6f07862a02c85628b3a9688beae07fea9c863000000000000000000000000475816ca2a31d601b4e336f5c2418a67978abf090000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactions.11.delay:
+-        259200
+      values.scheduledTransactions.11.decoded:
++        {"chain":"arbitrum","contractName":"SecurityCouncilMemberSyncAction","function":"perform","inputs":[{"name":"_securityCouncil","value":"0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941"},{"name":"_updatedMembers","value":["0x3Bd8e2AC65ad6f0F094BA6766cBd9484AB49eF23","0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd","0xb07dc9103328A51128bC6Cc1049d1137035f5E28","0x3E286452b1C66abB08Eb5494c3894F40aB5a59AF","0xb71ca4FFbB7b58d75Ba29891ab45e9Dc12B444Ed","0x8F10e3413586c4a8DCfcE19D009872b19e9cd8E3","0x566a07C3c932aE6AF74d77c29e5c30D8B1853710","0x5280406912EB8Ec677Df66C326BE48f938DC2e44","0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae","0x5A1FD562271aAC2Dadb51BAAb7760b949D9D81dF","0xf6B6F07862A02C85628B3A9688beae07fEA9C863","0x475816ca2a31D601B4e336f5c2418A67978aBf09"]},{"name":"_nonce","value":1}],"address":"0x9BF7b8884Fa381a45f8CB2525905fb36C996297a","calldata":"0x536d8944000000000000000000000000add68bcb0f66878ab9d37a447c7b9067c5dfa94100000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000003bd8e2ac65ad6f0f094ba6766cbd9484ab49ef23000000000000000000000000f8e1492255d9428c2fc20a98a1deb1215c8ffefd000000000000000000000000b07dc9103328a51128bc6cc1049d1137035f5e280000000000000000000000003e286452b1c66abb08eb5494c3894f40ab5a59af000000000000000000000000b71ca4ffbb7b58d75ba29891ab45e9dc12b444ed0000000000000000000000008f10e3413586c4a8dcfce19d009872b19e9cd8e3000000000000000000000000566a07c3c932ae6af74d77c29e5c30d8b18537100000000000000000000000005280406912eb8ec677df66c326be48f938dc2e440000000000000000000000000275b3d54a5ddbf8205a75984796efe8b7357bae0000000000000000000000005a1fd562271aac2dadb51baab7760b949d9d81df000000000000000000000000f6b6f07862a02c85628b3a9688beae07fea9c863000000000000000000000000475816ca2a31d601b4e336f5c2418a67978abf09","executor":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","inboxOnEthereum":"0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"}
+      values.scheduledTransactions.11.raw:
++        {"target":"0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000002841cff79cd0000000000000000000000009bf7b8884fa381a45f8cb2525905fb36c996297a00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000204536d8944000000000000000000000000add68bcb0f66878ab9d37a447c7b9067c5dfa94100000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000003bd8e2ac65ad6f0f094ba6766cbd9484ab49ef23000000000000000000000000f8e1492255d9428c2fc20a98a1deb1215c8ffefd000000000000000000000000b07dc9103328a51128bc6cc1049d1137035f5e280000000000000000000000003e286452b1c66abb08eb5494c3894f40ab5a59af000000000000000000000000b71ca4ffbb7b58d75ba29891ab45e9dc12b444ed0000000000000000000000008f10e3413586c4a8dcfce19d009872b19e9cd8e3000000000000000000000000566a07c3c932ae6af74d77c29e5c30d8b18537100000000000000000000000005280406912eb8ec677df66c326be48f938dc2e440000000000000000000000000275b3d54a5ddbf8205a75984796efe8b7357bae0000000000000000000000005a1fd562271aac2dadb51baab7760b949d9d81df000000000000000000000000f6b6f07862a02c85628b3a9688beae07fea9c863000000000000000000000000475816ca2a31d601b4e336f5c2418a67978abf090000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}
+      values.scheduledTransactions.10.target:
+-        "0xa723C008e76E379c55599D2E4d93879BeaFDa79C"
+      values.scheduledTransactions.10.value:
+-        0
+      values.scheduledTransactions.10.data:
+-        "0x000000000000000000000000c4448b71118c9071bcb9734a0eac55d18a15394900000000000000000000000086a02dd71363c440b21f4c0e5b2ad01ffe1a748200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000002841cff79cd0000000000000000000000009bf7b8884fa381a45f8cb2525905fb36c996297a00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000204536d8944000000000000000000000000c232ee726e3c51b86778bb4dbe61c52cc07a60f300000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000003bd8e2ac65ad6f0f094ba6766cbd9484ab49ef23000000000000000000000000f8e1492255d9428c2fc20a98a1deb1215c8ffefd000000000000000000000000b07dc9103328a51128bc6cc1049d1137035f5e280000000000000000000000003e286452b1c66abb08eb5494c3894f40ab5a59af000000000000000000000000b71ca4ffbb7b58d75ba29891ab45e9dc12b444ed0000000000000000000000008f10e3413586c4a8dcfce19d009872b19e9cd8e3000000000000000000000000566a07c3c932ae6af74d77c29e5c30d8b18537100000000000000000000000005280406912eb8ec677df66c326be48f938dc2e440000000000000000000000000275b3d54a5ddbf8205a75984796efe8b7357bae0000000000000000000000005a1fd562271aac2dadb51baab7760b949d9d81df000000000000000000000000f6b6f07862a02c85628b3a9688beae07fea9c863000000000000000000000000475816ca2a31d601b4e336f5c2418a67978abf090000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactions.10.delay:
+-        259200
+      values.scheduledTransactions.10.decoded:
++        {"chain":"nova","address":"0x9BF7b8884Fa381a45f8CB2525905fb36C996297a","calldata":"0x536d8944000000000000000000000000c232ee726e3c51b86778bb4dbe61c52cc07a60f300000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000003bd8e2ac65ad6f0f094ba6766cbd9484ab49ef23000000000000000000000000f8e1492255d9428c2fc20a98a1deb1215c8ffefd000000000000000000000000b07dc9103328a51128bc6cc1049d1137035f5e280000000000000000000000003e286452b1c66abb08eb5494c3894f40ab5a59af000000000000000000000000b71ca4ffbb7b58d75ba29891ab45e9dc12b444ed0000000000000000000000008f10e3413586c4a8dcfce19d009872b19e9cd8e3000000000000000000000000566a07c3c932ae6af74d77c29e5c30d8b18537100000000000000000000000005280406912eb8ec677df66c326be48f938dc2e440000000000000000000000000275b3d54a5ddbf8205a75984796efe8b7357bae0000000000000000000000005a1fd562271aac2dadb51baab7760b949d9d81df000000000000000000000000f6b6f07862a02c85628b3a9688beae07fea9c863000000000000000000000000475816ca2a31d601b4e336f5c2418a67978abf09","executor":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482","inboxOnEthereum":"0xc4448b71118c9071Bcb9734A0EAc55D18A153949"}
+      values.scheduledTransactions.10.raw:
++        {"target":"0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x000000000000000000000000c4448b71118c9071bcb9734a0eac55d18a15394900000000000000000000000086a02dd71363c440b21f4c0e5b2ad01ffe1a748200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000002841cff79cd0000000000000000000000009bf7b8884fa381a45f8cb2525905fb36c996297a00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000204536d8944000000000000000000000000c232ee726e3c51b86778bb4dbe61c52cc07a60f300000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000003bd8e2ac65ad6f0f094ba6766cbd9484ab49ef23000000000000000000000000f8e1492255d9428c2fc20a98a1deb1215c8ffefd000000000000000000000000b07dc9103328a51128bc6cc1049d1137035f5e280000000000000000000000003e286452b1c66abb08eb5494c3894f40ab5a59af000000000000000000000000b71ca4ffbb7b58d75ba29891ab45e9dc12b444ed0000000000000000000000008f10e3413586c4a8dcfce19d009872b19e9cd8e3000000000000000000000000566a07c3c932ae6af74d77c29e5c30d8b18537100000000000000000000000005280406912eb8ec677df66c326be48f938dc2e440000000000000000000000000275b3d54a5ddbf8205a75984796efe8b7357bae0000000000000000000000005a1fd562271aac2dadb51baab7760b949d9d81df000000000000000000000000f6b6f07862a02c85628b3a9688beae07fea9c863000000000000000000000000475816ca2a31d601b4e336f5c2418a67978abf090000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}
+      values.scheduledTransactions.9.target:
+-        "0xa723C008e76E379c55599D2E4d93879BeaFDa79C"
+      values.scheduledTransactions.9.value:
+-        0
+      values.scheduledTransactions.9.data:
+-        "0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000002841cff79cd0000000000000000000000009bf7b8884fa381a45f8cb2525905fb36c996297a00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000204536d8944000000000000000000000000423552c0f05baccac5bfa91c6dcf1dc53a0a164100000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000003bd8e2ac65ad6f0f094ba6766cbd9484ab49ef23000000000000000000000000f8e1492255d9428c2fc20a98a1deb1215c8ffefd000000000000000000000000b07dc9103328a51128bc6cc1049d1137035f5e280000000000000000000000003e286452b1c66abb08eb5494c3894f40ab5a59af000000000000000000000000b71ca4ffbb7b58d75ba29891ab45e9dc12b444ed0000000000000000000000008f10e3413586c4a8dcfce19d009872b19e9cd8e3000000000000000000000000566a07c3c932ae6af74d77c29e5c30d8b18537100000000000000000000000005280406912eb8ec677df66c326be48f938dc2e440000000000000000000000000275b3d54a5ddbf8205a75984796efe8b7357bae0000000000000000000000005a1fd562271aac2dadb51baab7760b949d9d81df000000000000000000000000f6b6f07862a02c85628b3a9688beae07fea9c863000000000000000000000000475816ca2a31d601b4e336f5c2418a67978abf090000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactions.9.delay:
+-        259200
+      values.scheduledTransactions.9.decoded:
++        {"chain":"arbitrum","contractName":"SecurityCouncilMemberSyncAction","function":"perform","inputs":[{"name":"_securityCouncil","value":"0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641"},{"name":"_updatedMembers","value":["0x3Bd8e2AC65ad6f0F094BA6766cBd9484AB49eF23","0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd","0xb07dc9103328A51128bC6Cc1049d1137035f5E28","0x3E286452b1C66abB08Eb5494c3894F40aB5a59AF","0xb71ca4FFbB7b58d75Ba29891ab45e9Dc12B444Ed","0x8F10e3413586c4a8DCfcE19D009872b19e9cd8E3","0x566a07C3c932aE6AF74d77c29e5c30D8B1853710","0x5280406912EB8Ec677Df66C326BE48f938DC2e44","0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae","0x5A1FD562271aAC2Dadb51BAAb7760b949D9D81dF","0xf6B6F07862A02C85628B3A9688beae07fEA9C863","0x475816ca2a31D601B4e336f5c2418A67978aBf09"]},{"name":"_nonce","value":1}],"address":"0x9BF7b8884Fa381a45f8CB2525905fb36C996297a","calldata":"0x536d8944000000000000000000000000423552c0f05baccac5bfa91c6dcf1dc53a0a164100000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000003bd8e2ac65ad6f0f094ba6766cbd9484ab49ef23000000000000000000000000f8e1492255d9428c2fc20a98a1deb1215c8ffefd000000000000000000000000b07dc9103328a51128bc6cc1049d1137035f5e280000000000000000000000003e286452b1c66abb08eb5494c3894f40ab5a59af000000000000000000000000b71ca4ffbb7b58d75ba29891ab45e9dc12b444ed0000000000000000000000008f10e3413586c4a8dcfce19d009872b19e9cd8e3000000000000000000000000566a07c3c932ae6af74d77c29e5c30d8b18537100000000000000000000000005280406912eb8ec677df66c326be48f938dc2e440000000000000000000000000275b3d54a5ddbf8205a75984796efe8b7357bae0000000000000000000000005a1fd562271aac2dadb51baab7760b949d9d81df000000000000000000000000f6b6f07862a02c85628b3a9688beae07fea9c863000000000000000000000000475816ca2a31d601b4e336f5c2418a67978abf09","executor":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","inboxOnEthereum":"0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"}
+      values.scheduledTransactions.9.raw:
++        {"target":"0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000002841cff79cd0000000000000000000000009bf7b8884fa381a45f8cb2525905fb36c996297a00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000204536d8944000000000000000000000000423552c0f05baccac5bfa91c6dcf1dc53a0a164100000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000003bd8e2ac65ad6f0f094ba6766cbd9484ab49ef23000000000000000000000000f8e1492255d9428c2fc20a98a1deb1215c8ffefd000000000000000000000000b07dc9103328a51128bc6cc1049d1137035f5e280000000000000000000000003e286452b1c66abb08eb5494c3894f40ab5a59af000000000000000000000000b71ca4ffbb7b58d75ba29891ab45e9dc12b444ed0000000000000000000000008f10e3413586c4a8dcfce19d009872b19e9cd8e3000000000000000000000000566a07c3c932ae6af74d77c29e5c30d8b18537100000000000000000000000005280406912eb8ec677df66c326be48f938dc2e440000000000000000000000000275b3d54a5ddbf8205a75984796efe8b7357bae0000000000000000000000005a1fd562271aac2dadb51baab7760b949d9d81df000000000000000000000000f6b6f07862a02c85628b3a9688beae07fea9c863000000000000000000000000475816ca2a31d601b4e336f5c2418a67978abf090000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}
+      values.scheduledTransactions.8.target:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      values.scheduledTransactions.8.value:
+-        0
+      values.scheduledTransactions.8.data:
+-        "0x1cff79cd0000000000000000000000009bf7b8884fa381a45f8cb2525905fb36c996297a00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000204536d8944000000000000000000000000f06e95ef589d9c38af242a8aaee8375f14023f8500000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000003bd8e2ac65ad6f0f094ba6766cbd9484ab49ef23000000000000000000000000f8e1492255d9428c2fc20a98a1deb1215c8ffefd000000000000000000000000b07dc9103328a51128bc6cc1049d1137035f5e280000000000000000000000003e286452b1c66abb08eb5494c3894f40ab5a59af000000000000000000000000b71ca4ffbb7b58d75ba29891ab45e9dc12b444ed0000000000000000000000008f10e3413586c4a8dcfce19d009872b19e9cd8e3000000000000000000000000566a07c3c932ae6af74d77c29e5c30d8b18537100000000000000000000000005280406912eb8ec677df66c326be48f938dc2e440000000000000000000000000275b3d54a5ddbf8205a75984796efe8b7357bae0000000000000000000000005a1fd562271aac2dadb51baab7760b949d9d81df000000000000000000000000f6b6f07862a02c85628b3a9688beae07fea9c863000000000000000000000000475816ca2a31d601b4e336f5c2418a67978abf0900000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactions.8.delay:
+-        259200
+      values.scheduledTransactions.8.decoded:
++        {"chain":"ethereum","contractName":"SecurityCouncilMemberSyncAction","function":"perform","inputs":[{"name":"_securityCouncil","value":"0xF06E95eF589D9c38af242a8AAee8375f14023F85"},{"name":"_updatedMembers","value":["0x3Bd8e2AC65ad6f0F094BA6766cBd9484AB49eF23","0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd","0xb07dc9103328A51128bC6Cc1049d1137035f5E28","0x3E286452b1C66abB08Eb5494c3894F40aB5a59AF","0xb71ca4FFbB7b58d75Ba29891ab45e9Dc12B444Ed","0x8F10e3413586c4a8DCfcE19D009872b19e9cd8E3","0x566a07C3c932aE6AF74d77c29e5c30D8B1853710","0x5280406912EB8Ec677Df66C326BE48f938DC2e44","0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae","0x5A1FD562271aAC2Dadb51BAAb7760b949D9D81dF","0xf6B6F07862A02C85628B3A9688beae07fEA9C863","0x475816ca2a31D601B4e336f5c2418A67978aBf09"]},{"name":"_nonce","value":1}],"address":"0x9BF7b8884Fa381a45f8CB2525905fb36C996297a","calldata":"0x536d8944000000000000000000000000f06e95ef589d9c38af242a8aaee8375f14023f8500000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000003bd8e2ac65ad6f0f094ba6766cbd9484ab49ef23000000000000000000000000f8e1492255d9428c2fc20a98a1deb1215c8ffefd000000000000000000000000b07dc9103328a51128bc6cc1049d1137035f5e280000000000000000000000003e286452b1c66abb08eb5494c3894f40ab5a59af000000000000000000000000b71ca4ffbb7b58d75ba29891ab45e9dc12b444ed0000000000000000000000008f10e3413586c4a8dcfce19d009872b19e9cd8e3000000000000000000000000566a07c3c932ae6af74d77c29e5c30d8b18537100000000000000000000000005280406912eb8ec677df66c326be48f938dc2e440000000000000000000000000275b3d54a5ddbf8205a75984796efe8b7357bae0000000000000000000000005a1fd562271aac2dadb51baab7760b949d9d81df000000000000000000000000f6b6f07862a02c85628b3a9688beae07fea9c863000000000000000000000000475816ca2a31d601b4e336f5c2418a67978abf09","executor":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      values.scheduledTransactions.8.raw:
++        {"target":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","value":0,"data":"0x1cff79cd0000000000000000000000009bf7b8884fa381a45f8cb2525905fb36c996297a00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000204536d8944000000000000000000000000f06e95ef589d9c38af242a8aaee8375f14023f8500000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000c0000000000000000000000003bd8e2ac65ad6f0f094ba6766cbd9484ab49ef23000000000000000000000000f8e1492255d9428c2fc20a98a1deb1215c8ffefd000000000000000000000000b07dc9103328a51128bc6cc1049d1137035f5e280000000000000000000000003e286452b1c66abb08eb5494c3894f40ab5a59af000000000000000000000000b71ca4ffbb7b58d75ba29891ab45e9dc12b444ed0000000000000000000000008f10e3413586c4a8dcfce19d009872b19e9cd8e3000000000000000000000000566a07c3c932ae6af74d77c29e5c30d8b18537100000000000000000000000005280406912eb8ec677df66c326be48f938dc2e440000000000000000000000000275b3d54a5ddbf8205a75984796efe8b7357bae0000000000000000000000005a1fd562271aac2dadb51baab7760b949d9d81df000000000000000000000000f6b6f07862a02c85628b3a9688beae07fea9c863000000000000000000000000475816ca2a31d601b4e336f5c2418a67978abf0900000000000000000000000000000000000000000000000000000000","delay":259200}
+      values.scheduledTransactions.7.target:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      values.scheduledTransactions.7.value:
+-        0
+      values.scheduledTransactions.7.data:
+-        "0x1cff79cd000000000000000000000000baba4daf5800b9746f58c724f05e03880850d57800000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c00000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactions.7.delay:
+-        259200
+      values.scheduledTransactions.7.decoded:
++        {"chain":"ethereum","contractName":"UpdateL1CoreTimelockAction","function":"perform","inputs":[],"address":"0xBabA4DAf5800B9746f58C724F05E03880850D578","calldata":"0xb147f40c","executor":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      values.scheduledTransactions.7.raw:
++        {"target":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","value":0,"data":"0x1cff79cd000000000000000000000000baba4daf5800b9746f58c724f05e03880850d57800000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c00000000000000000000000000000000000000000000000000000000","delay":259200}
+      values.scheduledTransactions.6.target:
+-        "0xa723C008e76E379c55599D2E4d93879BeaFDa79C"
+      values.scheduledTransactions.6.value:
+-        0
+      values.scheduledTransactions.6.data:
+-        "0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd000000000000000000000000baba4daf5800b9746f58c724f05e03880850d57800000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactions.6.delay:
+-        259200
+      values.scheduledTransactions.6.decoded:
++        {"chain":"arbitrum","contractName":"SetSweepReceiverAction","function":"perform","inputs":[],"address":"0xBabA4DAf5800B9746f58C724F05E03880850D578","calldata":"0xb147f40c","executor":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","inboxOnEthereum":"0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"}
+      values.scheduledTransactions.6.raw:
++        {"target":"0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd000000000000000000000000baba4daf5800b9746f58c724f05e03880850d57800000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}
+      values.scheduledTransactions.5.target:
+-        "0xa723C008e76E379c55599D2E4d93879BeaFDa79C"
+      values.scheduledTransactions.5.value:
+-        0
+      values.scheduledTransactions.5.data:
+-        "0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd0000000000000000000000007b1247f443359d1447cf25e73380bc9b99f2628f00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactions.5.delay:
+-        259200
+      values.scheduledTransactions.5.decoded:
++        {"chain":"arbitrum","contractName":"UpdateGasChargeAction","function":"perform","inputs":[],"address":"0x7B1247f443359d1447Cf25e73380Bc9b99F2628f","calldata":"0xb147f40c","executor":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","inboxOnEthereum":"0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"}
+      values.scheduledTransactions.5.raw:
++        {"target":"0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd0000000000000000000000007b1247f443359d1447cf25e73380bc9b99f2628f00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}
+      values.scheduledTransactions.4.target:
+-        "0xa723C008e76E379c55599D2E4d93879BeaFDa79C"
+      values.scheduledTransactions.4.value:
+-        0
+      values.scheduledTransactions.4.data:
+-        "0x000000000000000000000000c4448b71118c9071bcb9734a0eac55d18a15394900000000000000000000000086a02dd71363c440b21f4c0e5b2ad01ffe1a748200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd00000000000000000000000022ec545357162c342f643bddb2ed4c3fb6b42eb000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactions.4.delay:
+-        259200
+      values.scheduledTransactions.4.decoded:
++        {"chain":"nova","address":"0x22EC545357162C342F643bDdb2eD4c3FB6B42eb0","calldata":"0xb147f40c","executor":"0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482","inboxOnEthereum":"0xc4448b71118c9071Bcb9734A0EAc55D18A153949"}
+      values.scheduledTransactions.4.raw:
++        {"target":"0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x000000000000000000000000c4448b71118c9071bcb9734a0eac55d18a15394900000000000000000000000086a02dd71363c440b21f4c0e5b2ad01ffe1a748200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd00000000000000000000000022ec545357162c342f643bddb2ed4c3fb6b42eb000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}
+      values.scheduledTransactions.3.target:
+-        "0xa723C008e76E379c55599D2E4d93879BeaFDa79C"
+      values.scheduledTransactions.3.value:
+-        0
+      values.scheduledTransactions.3.data:
+-        "0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd0000000000000000000000001015c1ae166c4c39d18a1151b7029bac1530c9aa00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactions.3.delay:
+-        259200
+      values.scheduledTransactions.3.decoded:
++        {"chain":"arbitrum","contractName":"GovernanceChainSCMgmtActivationAction","function":"perform","inputs":[],"address":"0x1015c1Ae166C4C39D18a1151b7029bAC1530c9aa","calldata":"0xb147f40c","executor":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","inboxOnEthereum":"0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"}
+      values.scheduledTransactions.3.raw:
++        {"target":"0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd0000000000000000000000001015c1ae166c4c39d18a1151b7029bac1530c9aa00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}
+      values.scheduledTransactions.2.target:
+-        "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
+      values.scheduledTransactions.2.value:
+-        0
+      values.scheduledTransactions.2.data:
+-        "0x1cff79cd00000000000000000000000022ec545357162c342f643bddb2ed4c3fb6b42eb000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c00000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactions.2.delay:
+-        259200
+      values.scheduledTransactions.2.decoded:
++        {"chain":"ethereum","contractName":"L1SCMgmtActivationAction","function":"perform","inputs":[],"address":"0x22EC545357162C342F643bDdb2eD4c3FB6B42eb0","calldata":"0xb147f40c","executor":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"}
+      values.scheduledTransactions.2.raw:
++        {"target":"0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","value":0,"data":"0x1cff79cd00000000000000000000000022ec545357162c342f643bddb2ed4c3fb6b42eb000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c00000000000000000000000000000000000000000000000000000000","delay":259200}
+      values.scheduledTransactions.1.target:
+-        "0xa723C008e76E379c55599D2E4d93879BeaFDa79C"
+      values.scheduledTransactions.1.value:
+-        0
+      values.scheduledTransactions.1.data:
+-        "0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd00000000000000000000000085792f6bf346e3bfd3a275318add2c44a105844700000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactions.1.delay:
+-        259200
+      values.scheduledTransactions.1.decoded:
++        {"chain":"arbitrum","contractName":"AIP4Action","function":"perform","inputs":[],"address":"0x85792f6BF346e3Bfd3A275318aDd2c44A1058447","calldata":"0xb147f40c","executor":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","inboxOnEthereum":"0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"}
+      values.scheduledTransactions.1.raw:
++        {"target":"0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd00000000000000000000000085792f6bf346e3bfd3a275318add2c44a105844700000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}
+      values.scheduledTransactions.0.target:
+-        "0xa723C008e76E379c55599D2E4d93879BeaFDa79C"
+      values.scheduledTransactions.0.value:
+-        0
+      values.scheduledTransactions.0.data:
+-        "0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd0000000000000000000000006274106eedd4848371d2c09e0352d67b795ed51600000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactions.0.delay:
+-        259200
+      values.scheduledTransactions.0.decoded:
++        {"chain":"arbitrum","contractName":"AIP1Point2Action","function":"perform","inputs":[],"address":"0x6274106eedD4848371D2C09e0352d67B795ED516","calldata":"0xb147f40c","executor":"0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","inboxOnEthereum":"0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"}
+      values.scheduledTransactions.0.raw:
++        {"target":"0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd0000000000000000000000006274106eedd4848371d2c09e0352d67b795ed51600000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}
+    }
+```
+
 Generated with discovered.json: 0x36d7536b6e26bf57903930da87521158a9d1c787
 
 # Diff at Tue, 12 Mar 2024 15:15:15 GMT:
