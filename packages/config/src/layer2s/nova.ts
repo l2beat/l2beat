@@ -298,6 +298,10 @@ export const nova: Layer2 = {
         'Main entry point for the Sequencer submitting transaction batches to a Rollup.',
       ),
       discovery.getContractDetails(
+        'BatchPosterManagerMultisig',
+        'It can update whether an address is authorized to be a batch poster at the sequencer inbox. The ArbitrumProxyAdmin retains the ability to update the batch poster manager (along with any batch posters).',
+      ),
+      discovery.getContractDetails(
         'Inbox',
         'Entry point for users depositing ETH and sending L1 --> Nova messages. Deposited ETH is escrowed in a Bridge contract.',
       ),

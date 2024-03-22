@@ -8,49 +8,14 @@ Generated with discovered.json: 0x3ea08e093c4fc78a79b685a42dbbadc7258c49c0
 
 ## Description
 
-- changed futureBlocks from 12 to 64, changed futureSeconds from 3600 to 768. The futureBlocks value in the the SequencerInbox enforces a max block height that a batch can be posted relative to the current block (likewise with futureSeconds). A small value for future blocks means that a relatively small L1 reorg can cause an otherwise valid batch to revert. The increase to 64, two epochs, is in line with Ethereum’s finality guarantees. The futureSeconds value is set to correspond to the new futureBlocks value (64*12s).
+- changed futureBlocks from 12 to 64, changed futureSeconds from 3600 to 768. The futureBlocks value in the the SequencerInbox enforces a max block height that a batch can be posted relative to the current block (likewise with futureSeconds). A small value for future blocks means that a relatively small L1 reorg can cause an otherwise valid batch to revert. The increase to 64, two epochs, is in line with Ethereum’s finality guarantees. The futureSeconds value is set to correspond to the new futureBlocks value (64\*12s).
 - added a batchPosterManager multisig. It can update whether an address is authorized to be a batch poster at the sequencer inbox. The DAO still has the same ability to revoke the Sequencer role; i.e., the DAO could update the batch poster manager (along with any batch posters).
 - updated wasmModuleRoot to ArbOS v20. List of changes:
-https://forum.arbitrum.foundation/t/aip-arbos-version-20-atlas/20957
+  https://forum.arbitrum.foundation/t/aip-arbos-version-20-atlas/20957
 - redeployed OneStepProofEntry, OneStepProverHostIo, OneStepProverMath, OneStepProver0, OneStepProverMemory to be compatible with EIP-4844
-- changed ChallengeManager implementation 
-      - set the new OneStepProver for EIP-4844
-- changed SequencerInbox implementation
-      - added flag readers. The data posted has initial bytes used as certificate for certain flags, such as to show the data has used a certain merkelization strategy, or compression scheme: https://github.com/OffchainLabs/nitro/blob/69de0603abf6f900a4128cab7933df60cad54ded/arbstate/das_reader.go 
-      - removed already deprecated function 
-      - added check if sequencerInbox is deployed on an Arbitrum chain (for L3s?). If data is posted with eip4844 format, since EIP 4844 is not supported on Arbitrum chains, it will revert.
-      - set the batch poster manager multisig that can rotate batcher keys. 
-- timelock transactions:
-      - arbitrum:
-            - AIP1Point2Action.perform
-            - AIP4Action.perform
-            - GovernanceChainSCMgmtActivationAction.perform
-            - UpdateGasChargeAction.perform
-            - SetSweepReceiverAction.perform
-            - SecurityCouncilMemberSyncAction.perform
-            - SetArbOS11VersionAction.perform
-            - NomineeGovernorV2UpgradeAction.perform
-            - SetArbOS20VersionAction
-            - ArbOneSetAtlasL1PricingRewardAction
-            - ArbOneSetAtlasMinBaseFeeAction
-      - ethereum:
-            - L1SCMgmtActivationAction.perform
-            - UpdateL1CoreTimelockAction.perform
-            - SecurityCouncilMemberSyncAction.perform
-            - AddNovaKeysetAction.perform
-            - SetArbOneArbOS11ModuleRootAciton.perform
-            - SetNovaArbOS11ModuleRootAction.perform
-            - AIPSetSequencerInboxMaxTimeVariationArbOneAction
-            - AIPSetSequencerInboxMaxTimeVariationNovaAction
-            - ArbOneAIP4844Action
-            - ArbOneSetBatchPosterManagerAction
-            - NovaSetBatchPosterManagerAction
-      - nova: 
-            - NonGovernanceChainSCMgmtActivationAction.perfom
-            - SecurityCouncilMemberSyncAction
-            - SetArbOS11VersionAction
-            - NovaAIP4844Action
-            - SetArbOS20VersionAction
+- changed ChallengeManager implementation - set the new OneStepProver for EIP-4844
+- changed SequencerInbox implementation - added flag readers. The data posted has initial bytes used as certificate for certain flags, such as to show the data has used a certain merkelization strategy, or compression scheme: https://github.com/OffchainLabs/nitro/blob/69de0603abf6f900a4128cab7933df60cad54ded/arbstate/das_reader.go - removed already deprecated function - added check if sequencerInbox is deployed on an Arbitrum chain (for L3s?). If data is posted with eip4844 format, since EIP 4844 is not supported on Arbitrum chains, it will revert. - set the batch poster manager multisig that can rotate batcher keys.
+- timelock transactions: - arbitrum: - AIP1Point2Action.perform - AIP4Action.perform - GovernanceChainSCMgmtActivationAction.perform - UpdateGasChargeAction.perform - SetSweepReceiverAction.perform - SecurityCouncilMemberSyncAction.perform - SetArbOS11VersionAction.perform - NomineeGovernorV2UpgradeAction.perform - SetArbOS20VersionAction - ArbOneSetAtlasL1PricingRewardAction - ArbOneSetAtlasMinBaseFeeAction - ethereum: - L1SCMgmtActivationAction.perform - UpdateL1CoreTimelockAction.perform - SecurityCouncilMemberSyncAction.perform - AddNovaKeysetAction.perform - SetArbOneArbOS11ModuleRootAciton.perform - SetNovaArbOS11ModuleRootAction.perform - AIPSetSequencerInboxMaxTimeVariationArbOneAction - AIPSetSequencerInboxMaxTimeVariationNovaAction - ArbOneAIP4844Action - ArbOneSetBatchPosterManagerAction - NovaSetBatchPosterManagerAction - nova: - NonGovernanceChainSCMgmtActivationAction.perfom - SecurityCouncilMemberSyncAction - SetArbOS11VersionAction - NovaAIP4844Action - SetArbOS20VersionAction
 
 ## Watched changes
 
