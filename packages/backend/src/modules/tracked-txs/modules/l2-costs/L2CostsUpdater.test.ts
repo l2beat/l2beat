@@ -49,18 +49,9 @@ describe(L2CostsUpdater.name, () => {
       const transactions = getMockTrackedTxResults()
 
       const mockRecord: L2CostsRecord[] = [
-        {
-          timestamp: UnixTime.now(),
-          data: {
-            type: 2,
-            gasUsed: 100,
-            gasPrice: 10,
-            calldataLength: 5,
-            calldataGasUsed: 56,
-          },
-          trackedTxId: TrackedTxId.random(),
+        mockObject<L2CostsRecord>({
           txHash: '0x123',
-        },
+        }),
       ]
 
       updater.addDetailsTransactionsAndTransform =
@@ -125,7 +116,7 @@ describe(L2CostsUpdater.name, () => {
     },
   )
 
-  describe(L2CostsUpdater.prototype.deleteAfter.name, () => {
+  describe(L2CostsUpdater.prototype.deleteFrom.name, () => {
     it('calls repository deleteAfter', async () => {
       const repository = getMockL2CostsRepository()
       const updater = new L2CostsUpdater(
@@ -135,9 +126,9 @@ describe(L2CostsUpdater.name, () => {
       )
 
       const id = TrackedTxId.random()
-      await updater.deleteAfter(id, MIN_TIMESTAMP, TRX)
+      await updater.deleteFrom(id, MIN_TIMESTAMP, TRX)
 
-      expect(repository.deleteAfter).toHaveBeenNthCalledWith(
+      expect(repository.deleteFrom).toHaveBeenNthCalledWith(
         1,
         id,
         MIN_TIMESTAMP,
@@ -161,7 +152,7 @@ function getMockViemRpcClient() {
 
 function getMockL2CostsRepository() {
   return mockObject<L2CostsRepository>({
-    deleteAfter: async () => 0,
+    deleteFrom: async () => 0,
     runInTransaction: async (fn) => fn(TRX),
     addMany: async () => 0,
   })

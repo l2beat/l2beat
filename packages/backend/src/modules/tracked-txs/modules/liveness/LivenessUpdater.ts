@@ -28,12 +28,12 @@ export class LivenessUpdater implements TxUpdaterInterface {
     await this.livenessRepository.addMany(transformedTransactions, knexTx)
   }
 
-  async deleteAfter(
+  async deleteFrom(
     id: TrackedTxId,
     untilTimestamp: UnixTime,
     knexTrx: Knex.Transaction,
   ) {
-    await this.livenessRepository.deleteAfter(id, untilTimestamp, knexTrx)
+    await this.livenessRepository.deleteFrom(id, untilTimestamp, knexTrx)
   }
 
   transformTransactions(transactions: TrackedTxResult[]): LivenessRecord[] {

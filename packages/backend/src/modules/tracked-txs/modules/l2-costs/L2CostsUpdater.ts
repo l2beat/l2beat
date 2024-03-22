@@ -32,12 +32,12 @@ export class L2CostsUpdater implements TxUpdaterInterface {
     await this.l2CostsRepository.addMany(transformedTransactions, knexTx)
   }
 
-  async deleteAfter(
+  async deleteFrom(
     id: TrackedTxId,
     untilTimestamp: UnixTime,
     knexTrx: Knex.Transaction,
   ) {
-    await this.l2CostsRepository.deleteAfter(id, untilTimestamp, knexTrx)
+    await this.l2CostsRepository.deleteFrom(id, untilTimestamp, knexTrx)
   }
 
   async addDetailsTransactionsAndTransform(

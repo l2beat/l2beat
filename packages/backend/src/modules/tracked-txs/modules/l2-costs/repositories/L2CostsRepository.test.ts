@@ -129,7 +129,7 @@ describeDatabase(L2CostsRepository.name, (database) => {
     })
   })
 
-  describe(L2CostsRepository.prototype.deleteAfter.name, () => {
+  describe(L2CostsRepository.prototype.deleteFrom.name, () => {
     it('should delete rows inserted after certain timestamp for given configuration id', async () => {
       await repository.deleteAll()
       const trackedTxId = TrackedTxId.random()
@@ -184,7 +184,7 @@ describeDatabase(L2CostsRepository.name, (database) => {
       ])
       await repository.addMany(records)
 
-      await repository.deleteAfter(trackedTxId, START)
+      await repository.deleteFrom(trackedTxId, START)
 
       const result = await repository.getAll()
 

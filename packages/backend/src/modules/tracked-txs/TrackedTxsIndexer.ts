@@ -153,7 +153,7 @@ export class TrackedTxsIndexer extends ChildIndexer {
           trx,
         )
         for (const updater of Object.values(this.enabledUpdaters)) {
-          await updater?.deleteAfter(c.id, c.untilTimestampExclusive, trx)
+          await updater?.deleteFrom(c.id, c.untilTimestampExclusive, trx)
         }
         await this.configRepository.setLastSyncedTimestamp(
           c.id,

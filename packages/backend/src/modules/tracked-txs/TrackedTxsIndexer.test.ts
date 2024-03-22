@@ -183,10 +183,10 @@ describe(TrackedTxsIndexer.name, () => {
       const stateRepository = getMockStateRepository()
 
       const mockedLivenessUpdater = mockObject<TxUpdaterInterface>({
-        deleteAfter: mockFn(async () => {}),
+        deleteFrom: mockFn(async () => {}),
       })
       const mockedL2CostsUpdater = mockObject<TxUpdaterInterface>({
-        deleteAfter: mockFn(async () => {}),
+        deleteFrom: mockFn(async () => {}),
       })
 
       const trackedTxsIndexer = getMockTrackedTxsIndexer({
@@ -221,7 +221,7 @@ describe(TrackedTxsIndexer.name, () => {
         toTrim[0].untilTimestampExclusive,
         TRX,
       )
-      expect(mockedLivenessUpdater.deleteAfter).toHaveBeenOnlyCalledWith(
+      expect(mockedLivenessUpdater.deleteFrom).toHaveBeenOnlyCalledWith(
         toTrim[0].id,
         toTrim[0].untilTimestampExclusive,
         TRX,
