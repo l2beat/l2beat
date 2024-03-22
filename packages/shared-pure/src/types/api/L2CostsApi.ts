@@ -14,6 +14,9 @@ const L2CostsDetails = z
     totalCalldataCostUsd: z.number(),
     totalComputeCostUsd: z.number(),
     totalBlobCostUsd: z.number().optional(),
+    totalOverheadGas: z.number(),
+    totalOverheadCost: z.number(),
+    totalOverheadCostUsd: z.number(),
   })
   .or(z.undefined())
 export type L2CostsDetails = z.infer<typeof L2CostsDetails>
