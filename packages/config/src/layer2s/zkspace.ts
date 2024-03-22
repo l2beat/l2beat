@@ -79,6 +79,10 @@ export const zkspace: Layer2 = {
             type: 'liveness',
             subtype: 'stateUpdates',
           },
+          {
+            type: 'l2costs',
+            subtype: 'stateUpdates',
+          },
         ],
         query: {
           formula: 'functionCall',
