@@ -29,6 +29,12 @@ CONFIG_ALCHEMY_API_KEY=
 - `yarn check-verified-contracts` - verify whether source code of given address is verified on Etherscan
 - `yarn tokens` - update `src/tokens/generated.json` based on `src/tokens/tokens.jsonc`. `generated.jsonc` is a source of truth about each token data.
 
+### How to check PR which adds a new token?
+
+1. Restore `generated.json` to state before PR `git checkout main --src/tokens/generated.json`
+2. Run `yarn tokens`
+3. See whether git detected any changes - if not then it was added using our script
+
 ### Tests dependencies
 
 In some tests rpc calls to ethereum network are performed through Alchemy. In order to remove default mainnet url flakiness out of the equation it is possible to use a dedicated key through `CONFIG_ALCHEMY_API_KEY` environment variable (`.env` file is supported).
