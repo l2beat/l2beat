@@ -12,6 +12,7 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
+  NEW_CRYPTOGRAPHY,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
@@ -376,6 +377,9 @@ export const zksyncera: Layer2 = {
     },
   ),
   technology: {
+    newCryptography: {
+      ...NEW_CRYPTOGRAPHY.ZK_BOTH,
+    },
     dataAvailability: {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
       references: [],
