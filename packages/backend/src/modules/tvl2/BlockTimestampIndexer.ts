@@ -29,14 +29,14 @@ export class BlockTimestampIndexer extends ChildIndexer {
   }
 
   override async start(): Promise<void> {
-    this.logger.info('Starting...')
+    this.logger.debug('Starting...')
     await this.initialize()
     await super.start()
-    this.logger.info('Started')
+    this.logger.debug('Started')
   }
 
   override async update(_from: number, _to: number): Promise<number> {
-    this.logger.info('Updating...')
+    this.logger.debug('Updating...')
 
     const timestamp = this.getTimestampToSync(_from)
 
@@ -53,7 +53,7 @@ export class BlockTimestampIndexer extends ChildIndexer {
       blockNumber,
     })
 
-    this.logger.info('Updated')
+    this.logger.debug('Updated')
     return timestamp.toNumber()
   }
 
@@ -92,7 +92,7 @@ export class BlockTimestampIndexer extends ChildIndexer {
   }
 
   async initialize() {
-    this.logger.info('Initializing...')
+    this.logger.debug('Initializing...')
 
     const indexerState = await this.stateRepository.findIndexerState(
       this.indexerId,
@@ -115,18 +115,18 @@ export class BlockTimestampIndexer extends ChildIndexer {
       'Minimum timestamp of this indexer cannot be updated',
     )
 
-    this.logger.info('Initialized')
+    this.logger.debug('Initialized')
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
-    this.logger.info('Invalidating...')
+    this.logger.debug('Invalidating...')
 
     await this.blockTimestampRepository.deleteAfterExclusive(
       this.chain,
       new UnixTime(targetHeight),
     )
 
-    this.logger.info('Invalidated')
+    this.logger.debug('Invalidated')
 
     return Promise.resolve(targetHeight)
   }
