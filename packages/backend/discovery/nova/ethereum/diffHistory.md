@@ -8,7 +8,10 @@ Generated with discovered.json: 0xdab66b0648ddfea385056c8353105da61cbb132b
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+- added a batchPosterManager multisig. It can update whether an address is authorized to be a batch poster at the sequencer inbox. The DAO still has the same ability to revoke the Sequencer role; i.e., the DAO could update the batch poster manager (along with any batch posters).
+- changed SequencerInbox implementation - added flag readers. The data posted has initial bytes used as certificate for certain flags, such as to show the data has used a certain merkelization strategy, or compression scheme: https://github.com/OffchainLabs/nitro/blob/69de0603abf6f900a4128cab7933df60cad54ded/arbstate/das_reader.go
+- added check if sequencerInbox is deployed on an Arbitrum chain (for L3s?). If data is posted with eip4844 format, since EIP 4844 is not supported on Arbitrum chains, it will revert.
+- set the batch poster manager multisig that can rotate batcher keys.
 
 ## Watched changes
 
