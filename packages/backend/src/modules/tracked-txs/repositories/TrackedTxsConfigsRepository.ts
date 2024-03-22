@@ -37,8 +37,8 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
     this.autoWrap<CheckConvention<TrackedTxsConfigsRepository>>(this)
   }
 
-  async getAll(): Promise<TrackedTxsConfigRecord[]> {
-    const knex = await this.knex()
+  async getAll(trx?: Knex.Transaction): Promise<TrackedTxsConfigRecord[]> {
+    const knex = await this.knex(trx)
     const rows = await knex('tracked_txs_configs')
     return rows.map(toRecord)
   }
@@ -96,6 +96,18 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
   // }
 
   async setLastSyncedTimestamp(
+    trackedTxId: TrackedTxId,
+    lastSyncedTimestamp: UnixTime,
+    trx?: Knex.Transaction,
+  ) {
+    const knex = await this.knex(trx)
+
+    return await knex('tracked_txs_configs')
+      .where({ id: trackedTxId.toString() })
+      .update({ last_synced_timestamp: lastSyncedTimestamp.toDate() })
+  }
+
+  async setManyLastSyncedTimestamp(
     trackedTxIds: TrackedTxId[],
     lastSyncedTimestamp: UnixTime,
     trx?: Knex.Transaction,
@@ -109,14 +121,18 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
 
   async setUntilTimestamp(
     trackedTxId: TrackedTxId,
-    untilTimestamp: UnixTime,
+    untilTimestamp: UnixTime | undefined,
     trx?: Knex.Transaction,
   ) {
     const knex = await this.knex(trx)
 
     return await knex('tracked_txs_configs')
       .where({ id: trackedTxId.valueOf() })
-      .update({ until_timestamp_exclusive: untilTimestamp.toDate() })
+      .update({
+        until_timestamp_exclusive: untilTimestamp
+          ? untilTimestamp.toDate()
+          : null,
+      })
   }
 
   async deleteAll() {

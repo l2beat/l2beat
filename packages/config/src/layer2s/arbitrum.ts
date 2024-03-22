@@ -191,7 +191,10 @@ export const arbitrum: Layer2 = {
     finality: 'coming soon',
     trackedTxs: [
       {
-        uses: [{ type: 'liveness', subtype: 'batchSubmissions' }],
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
@@ -204,7 +207,10 @@ export const arbitrum: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subtype: 'batchSubmissions' }],
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
@@ -217,7 +223,10 @@ export const arbitrum: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subtype: 'batchSubmissions' }],
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
@@ -227,6 +236,19 @@ export const arbitrum: Layer2 = {
           functionSignature:
             'function addSequencerL2Batch(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
           sinceTimestampInclusive: new UnixTime(1661457944),
+        },
+      },
+      {
+        uses: [{ type: 'liveness', subtype: 'batchSubmissions' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6',
+          ),
+          selector: '0x3e5aa082',
+          functionSignature:
+            'function addSequencerL2BatchFromBlobs(uint256 sequenceNumber,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+          sinceTimestampInclusive: new UnixTime(1710427823),
         },
       },
       {

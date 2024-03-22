@@ -1,3 +1,5 @@
+import { TransactionData } from '../../modules/tracked-txs/modules/l2-costs/types/TransactionData'
+
 export {}
 
 import { BlockTimestampRow } from '../../modules/tvl2/repositories/BlockTimestampRepository'
@@ -175,6 +177,13 @@ declare module 'knex/types/tables' {
     last_synced_timestamp: Date | null
   }
 
+  interface L2CostsRow {
+    tracked_tx_id: string
+    tx_hash: string
+    timestamp: Date
+    data: TransactionData
+  }
+
   interface DiscoveryCacheRow {
     key: string
     value: string
@@ -221,6 +230,7 @@ declare module 'knex/types/tables' {
     tvl_cleaner: TvlCleanerRow
     finality: FinalityRow
     tracked_txs_configs: TrackedTxsConfigRow
+    l2_costs: L2CostsRow
     prices: PriceRow2
     block_timestamps: BlockTimestampRow
   }

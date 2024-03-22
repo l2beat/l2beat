@@ -77,7 +77,7 @@ describeDatabase(TrackedTxsConfigsRepository.name, (database) => {
 
         const latest = UnixTime.now()
 
-        await repository.setLastSyncedTimestamp(
+        await repository.setManyLastSyncedTimestamp(
           [TRACKED_TXS_RECORDS[0].id, TRACKED_TXS_RECORDS[1].id],
           latest,
         )
@@ -115,12 +115,54 @@ describeDatabase(TrackedTxsConfigsRepository.name, (database) => {
   describe(
     TrackedTxsConfigsRepository.prototype.setLastSyncedTimestamp.name,
     () => {
-      it('updates last synced timestamp of given configuration', async () => {
+      it('updates last synced timestamp of given id', async () => {
         await repository.addMany(TRACKED_TXS_RECORDS)
 
         const latest = UnixTime.now()
 
         await repository.setLastSyncedTimestamp(
+          TRACKED_TXS_RECORDS[0].id,
+          latest,
+        )
+
+        const results = await repository.getAll()
+
+        expect(results).toEqualUnsorted([
+          {
+            ...TRACKED_TXS_RECORDS[0],
+            lastSyncedTimestamp: latest,
+          },
+          {
+            ...TRACKED_TXS_RECORDS[1],
+          },
+          {
+            ...TRACKED_TXS_RECORDS[2],
+          },
+        ])
+      })
+
+      it('does not update if configuration not found', async () => {
+        await repository.addMany(TRACKED_TXS_RECORDS)
+
+        const latest = UnixTime.now()
+
+        await repository.setLastSyncedTimestamp(TrackedTxId(['']), latest)
+
+        const results = await repository.getAll()
+        expect(results).toEqualUnsorted(TRACKED_TXS_RECORDS)
+      })
+    },
+  )
+
+  describe(
+    TrackedTxsConfigsRepository.prototype.setManyLastSyncedTimestamp.name,
+    () => {
+      it('updates last synced timestamp of given configuration', async () => {
+        await repository.addMany(TRACKED_TXS_RECORDS)
+
+        const latest = UnixTime.now()
+
+        await repository.setManyLastSyncedTimestamp(
           [TRACKED_TXS_RECORDS[0].id, TRACKED_TXS_RECORDS[1].id],
           latest,
         )
@@ -147,7 +189,7 @@ describeDatabase(TrackedTxsConfigsRepository.name, (database) => {
 
         const latest = UnixTime.now()
 
-        await repository.setLastSyncedTimestamp([TrackedTxId([''])], latest)
+        await repository.setManyLastSyncedTimestamp([TrackedTxId([''])], latest)
 
         const results = await repository.getAll()
         expect(results).toEqualUnsorted(TRACKED_TXS_RECORDS)
@@ -170,6 +212,14 @@ describeDatabase(TrackedTxsConfigsRepository.name, (database) => {
 
       expect(results).toEqualUnsorted([
         updatedRow,
+        ...TRACKED_TXS_RECORDS.slice(1),
+      ])
+
+      await repository.setUntilTimestamp(newIds[0], undefined)
+      const resultsAfterSettingNull = await repository.getAll()
+
+      expect(resultsAfterSettingNull).toEqualUnsorted([
+        { ...updatedRow, untilTimestampExclusive: undefined },
         ...TRACKED_TXS_RECORDS.slice(1),
       ])
     })

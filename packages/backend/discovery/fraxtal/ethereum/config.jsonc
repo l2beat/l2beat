@@ -83,7 +83,7 @@
     },
     "frxETHMinter": {
       "ignoreMethods": ["getValidator"],
-      "ignoreInWatchMode": ["currentWithheldETH"]
+      "ignoreInWatchMode": ["currentWithheldETH", "numValidators"]
     },
     "sfrxETH": {
       "ignoreMethods": [

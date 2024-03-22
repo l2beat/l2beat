@@ -57,6 +57,7 @@ export function makeConfig(
       ? {
           connection: env.string('LOCAL_DB_URL'),
           freshStart: env.boolean('FRESH_START', false),
+          enableQueryLogging: env.boolean('ENABLE_QUERY_LOGGING', false),
           connectionPoolSize: {
             // defaults used by knex
             min: 2,
@@ -65,6 +66,7 @@ export function makeConfig(
         }
       : {
           freshStart: false,
+          enableQueryLogging: env.boolean('ENABLE_QUERY_LOGGING', false),
           connection: {
             connectionString: env.string('DATABASE_URL'),
             ssl: { rejectUnauthorized: false },
@@ -120,21 +122,30 @@ export function makeConfig(
       minTimestamp: UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
       uses: {
         liveness: flags.isEnabled('tracked-txs', 'liveness'),
+        l2costs: flags.isEnabled('tracked-txs', 'l2costs') && {
+          ethereumProviderUrl: env.string([
+            'ETHEREUM_RPC_URL_FOR_L2COSTS',
+            'ETHEREUM_RPC_URL',
+          ]),
+          ethereumProviderCallsPerMinute: env.integer(
+            [
+              'ETHEREUM_RPC_CALLS_PER_MINUTE_FOR_L2COSTS',
+              'ETHEREUM_RPC_CALLS_PER_MINUTE',
+            ],
+            600,
+          ),
+        },
       },
     },
     finality: flags.isEnabled('finality') && {
       ethereumProviderUrl: env.string([
         'ETHEREUM_RPC_URL_FOR_FINALITY',
         'ETHEREUM_RPC_URL',
-        // TODO: DEPRECATED - remove this fallback after envs are updated
-        'FINALITY_ETHEREUM_PROVIDER_URL',
       ]),
       ethereumProviderCallsPerMinute: env.integer(
         [
           'ETHEREUM_RPC_CALLS_PER_MINUTE_FOR_FINALITY',
           'ETHEREUM_RPC_CALLS_PER_MINUTE',
-          // TODO: DEPRECATED - remove this fallback after envs are updated
-          'FINALITY_ETHEREUM_PROVIDER_CALLS_PER_MINUTE',
         ],
         600,
       ),
@@ -149,8 +160,6 @@ export function makeConfig(
         [
           'STARKEX_API_CALLS_PER_MINUTE_FOR_ACTIVITY',
           'STARKEX_API_CALLS_PER_MINUTE',
-          // TODO: DEPRECATED - remove this fallback after envs are updated
-          'STARKEX_CALLS_PER_MINUTE',
         ],
         600,
       ),
