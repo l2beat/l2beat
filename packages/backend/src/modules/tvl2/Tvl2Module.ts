@@ -53,7 +53,8 @@ export function createTvl2Module(
         // TODO: write it correctly
         logger.tag(
           `${price.chain}:${
-            tokenList.find((t) => t.address === price.address)?.symbol
+            tokenList.find((t) => t.address === price.address)?.symbol ??
+            'native'
           }`,
         ),
         hourlyIndexer,

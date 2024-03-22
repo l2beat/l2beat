@@ -12,6 +12,7 @@ import {
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
   makeBridgeCompatible,
+  NEW_CRYPTOGRAPHY,
   NUGGETS,
   RISK_VIEW,
   SEQUENCER_NO_MECHANISM,
@@ -208,7 +209,10 @@ export const polygonzkevm: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subtype: 'batchSubmissions' }],
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
@@ -272,6 +276,10 @@ export const polygonzkevm: Layer2 = {
             type: 'liveness',
             subtype: 'stateUpdates',
           },
+          {
+            type: 'l2costs',
+            subtype: 'stateUpdates',
+          },
         ],
         query: {
           formula: 'functionCall',
@@ -288,6 +296,10 @@ export const polygonzkevm: Layer2 = {
         uses: [
           {
             type: 'liveness',
+            subtype: 'stateUpdates',
+          },
+          {
+            type: 'l2costs',
             subtype: 'stateUpdates',
           },
         ],
@@ -419,6 +431,15 @@ export const polygonzkevm: Layer2 = {
     },
   ),
   technology: {
+    newCryptography: {
+      ...NEW_CRYPTOGRAPHY.ZK_BOTH,
+      references: [
+        {
+          text: 'PolygonZkEVMEtrog.sol - Etherscan source code, verifyBatches function',
+          href: 'https://etherscan.io/address/0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
+        },
+      ],
+    },
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
@@ -484,7 +505,7 @@ export const polygonzkevm: Layer2 = {
       'Node software can be found [here](https://github.com/0xPolygonHermez/zkevm-node).',
     compressionScheme: 'No compression scheme yet.',
     genesisState:
-      'The genesis state, whose corresponding root is accessible as Batch 0 root in the `batchNumToStateRoot` method of PolygonZkEvm, is available [here](https://github.com/0xPolygonHermez/zkevm-contracts/blob/0d0e69a6f299e273343461f6350343cf4b048269/deployment/genesis.json).',
+      'The genesis state, whose corresponding root is accessible as Batch 0 root in the [`_legacyBatchNumToStateRoot`](https://evm.storage/eth/19489007/0x5132a183e9f3cb7c848b0aac5ae0c4f0491b7ab2/_legacyBatchNumToStateRoot#map) variable of PolygonRollupManager, is available [here](https://github.com/0xPolygonHermez/zkevm-contracts/blob/0d0e69a6f299e273343461f6350343cf4b048269/deployment/genesis.json).',
     dataFormat:
       'The trusted sequencer batches transactions according to the specifications documented [here](https://docs.polygon.technology/zkEVM/architecture/protocol/transaction-life-cycle/transaction-batching/).',
   },
