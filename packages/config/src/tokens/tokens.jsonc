@@ -423,6 +423,10 @@
       "address": "0xe28b3B32B6c345A34Ff64674606124Dd5Aceca30"
     },
     {
+      "symbol": "iUSD",
+      "address": "0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d"
+    },
+    {
       "symbol": "KCS",
       "address": "0xf34960d9d60be18cC1D5Afc1A6F012A723a28811",
       "coingeckoId": "kucoin-shares"
@@ -620,6 +624,10 @@
       "address": "0xbC396689893D065F41bc2C6EcbeE5e0085233447"
     },
     {
+      "symbol": "PHA",
+      "address": "0x6c5bA91642F10282b576d91922Ae6448C9d52f4E"
+    },
+    {
       "symbol": "PLA",
       "address": "0x3a4f40631a4f906c2BaD353Ed06De7A5D3fCb430"
     },
@@ -797,6 +805,10 @@
     {
       "symbol": "SUPER",
       "address": "0xe53EC727dbDEB9E2d5456c3be40cFF031AB40A55"
+    },
+    {
+      "symbol": "sUSDe",
+      "address": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497"
     },
     {
       "symbol": "SUSHI",

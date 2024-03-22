@@ -214,6 +214,14 @@ describeDatabase(TrackedTxsConfigsRepository.name, (database) => {
         updatedRow,
         ...TRACKED_TXS_RECORDS.slice(1),
       ])
+
+      await repository.setUntilTimestamp(newIds[0], undefined)
+      const resultsAfterSettingNull = await repository.getAll()
+
+      expect(resultsAfterSettingNull).toEqualUnsorted([
+        { ...updatedRow, untilTimestampExclusive: undefined },
+        ...TRACKED_TXS_RECORDS.slice(1),
+      ])
     })
 
     it('does not update if configuration not found', async () => {

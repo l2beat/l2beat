@@ -35,23 +35,48 @@ export class PriceIndexer extends ChildIndexer {
   override async update(_from: number, _to: number): Promise<number> {
     this.logger.debug('Updating...')
 
-    const from = new UnixTime(_from).toEndOf('hour')
+    const from = this.getAdjustedFrom(_from)
+    const to = this.getAdjustedTo(from, _to)
+
+    const prices = await this.fetchAndOptimizePrices(from, to)
+
+    await this.priceRepository.addMany(prices)
+
+    this.logger.debug('Updated')
+    return to.toNumber()
+  }
+
+  private getAdjustedFrom(_from: number): UnixTime {
+    return this.token.sinceTimestamp.gt(new UnixTime(_from))
+      ? // first sync of indexer
+        this.token.sinceTimestamp.toEndOf('hour')
+      : // "from" is treated as inclusive, we already have data for it
+        new UnixTime(_from).toNext('hour')
+  }
+
+  private getAdjustedTo(from: UnixTime, _to: number): UnixTime {
     const to = new UnixTime(_to).toStartOf('hour')
+    assert(from.lte(to), 'Programmer error: from > to')
 
-    if (from.gt(to)) {
-      return _to
-    }
+    const maxDaysForOneCall = CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL
 
+    return to.gt(from.add(maxDaysForOneCall, 'days'))
+      ? from.add(maxDaysForOneCall, 'days')
+      : to
+  }
+
+  private async fetchAndOptimizePrices(
+    from: UnixTime,
+    to: UnixTime,
+  ): Promise<PriceRecord[]> {
     const prices = await this.coingeckoQueryService.getUsdPriceHistoryHourly(
       this.token.coingeckoId,
       from,
       to,
-      // TODO: either make it multichain or remove this fallback
       undefined,
     )
 
-    const priceRecords: PriceRecord[] = prices
-      // we filter out timestamps that would be deleted by TVL cleaner
+    return prices
       .filter((p) => this.syncOptimizer.shouldTimestampBeSynced(p.timestamp))
       .map((price) => ({
         chain: this.token.chain,
@@ -59,11 +84,6 @@ export class PriceIndexer extends ChildIndexer {
         timestamp: price.timestamp,
         priceUsd: price.value,
       }))
-
-    await this.priceRepository.addMany(priceRecords)
-    this.logger.debug('Updated')
-
-    return _to
   }
 
   override async getSafeHeight(): Promise<number> {
@@ -79,16 +99,7 @@ export class PriceIndexer extends ChildIndexer {
     safeHeight: number,
     trx?: Knex.Transaction,
   ): Promise<void> {
-    const indexerSafeHeight = Math.max(
-      safeHeight,
-      this.token.sinceTimestamp.toNumber(),
-    )
-
-    await this.stateRepository.setSafeHeight(
-      this.indexerId,
-      indexerSafeHeight,
-      trx,
-    )
+    await this.stateRepository.setSafeHeight(this.indexerId, safeHeight, trx)
   }
 
   async initialize() {
@@ -101,7 +112,7 @@ export class PriceIndexer extends ChildIndexer {
     if (indexerState === undefined) {
       await this.stateRepository.add({
         indexerId: this.indexerId,
-        safeHeight: this.token.sinceTimestamp.toNumber(),
+        safeHeight: 0,
         minTimestamp: this.token.sinceTimestamp,
       })
       return
@@ -121,7 +132,7 @@ export class PriceIndexer extends ChildIndexer {
   override async invalidate(targetHeight: number): Promise<number> {
     this.logger.debug('Invalidating...')
 
-    await this.priceRepository.deleteBeforeInclusive(
+    await this.priceRepository.deleteAfterExclusive(
       this.token.chain,
       this.token.address,
       new UnixTime(targetHeight),

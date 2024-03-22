@@ -29,6 +29,11 @@ export function transformTransfersQueryResult(
             blockTimestamp: r.block_timestamp,
             fromAddress: r.from_address,
             toAddress: r.to_address,
+            transactionType: r.transaction_type,
+            receiptGasUsed: r.receipt_gas_used,
+            gasPrice: r.gas_price,
+            dataLength: r.data_length,
+            calldataGasUsed: r.calldata_gas_used,
           } as const),
       ),
     )

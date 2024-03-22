@@ -12,6 +12,7 @@ import {
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
   makeBridgeCompatible,
+  NEW_CRYPTOGRAPHY,
   NUGGETS,
   RISK_VIEW,
   SEQUENCER_NO_MECHANISM,
@@ -174,7 +175,10 @@ export const polygonzkevm: Layer2 = {
     },
     trackedTxs: [
       {
-        uses: [{ type: 'liveness', subtype: 'batchSubmissions' }],
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
@@ -184,26 +188,50 @@ export const polygonzkevm: Layer2 = {
           functionSignature:
             'function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)',
           sinceTimestampInclusive: new UnixTime(1679653163),
-          untilTimestampExclusive: new UnixTime(1707822059),
+          untilTimestampExclusive: new UnixTime(1707824735),
         },
       },
       {
-        uses: [{ type: 'liveness', subtype: 'batchSubmissions' }],
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
           ),
-          selector: '0x5e9145c9',
+          selector: '0xecef3f99',
           functionSignature:
-            'function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)',
-          sinceTimestampInclusive: new UnixTime(1707822059),
+            'function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, address l2Coinbase)',
+          sinceTimestampInclusive: new UnixTime(1707824735),
+          untilTimestampExclusive: new UnixTime(1710419699),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
+          ),
+          selector: '0xdef57e54',
+          functionSignature:
+            'function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint64 maxSequenceTimestamp, uint64 initSequencedBatch, address l2Coinbase)',
+          sinceTimestampInclusive: new UnixTime(1710419699),
         },
       },
       {
         uses: [
           {
             type: 'liveness',
+            subtype: 'stateUpdates',
+          },
+          {
+            type: 'l2costs',
             subtype: 'stateUpdates',
           },
         ],
@@ -225,6 +253,10 @@ export const polygonzkevm: Layer2 = {
             type: 'liveness',
             subtype: 'stateUpdates',
           },
+          {
+            type: 'l2costs',
+            subtype: 'stateUpdates',
+          },
         ],
         query: {
           formula: 'functionCall',
@@ -244,15 +276,19 @@ export const polygonzkevm: Layer2 = {
             type: 'liveness',
             subtype: 'stateUpdates',
           },
+          {
+            type: 'l2costs',
+            subtype: 'stateUpdates',
+          },
         ],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
           ),
-          selector: '0xa2ee10d3',
+          selector: '0x1489ed10',
           functionSignature:
-            'verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[])',
+            'function verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])',
           sinceTimestampInclusive: new UnixTime(1707822059),
         },
       },
@@ -262,15 +298,19 @@ export const polygonzkevm: Layer2 = {
             type: 'liveness',
             subtype: 'stateUpdates',
           },
+          {
+            type: 'l2costs',
+            subtype: 'stateUpdates',
+          },
         ],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
           ),
-          selector: '0x08068a47',
+          selector: '0x87c20c01',
           functionSignature:
-            'verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[])',
+            'function verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])',
           sinceTimestampInclusive: new UnixTime(1707822059),
         },
       },
@@ -391,6 +431,15 @@ export const polygonzkevm: Layer2 = {
     },
   ),
   technology: {
+    newCryptography: {
+      ...NEW_CRYPTOGRAPHY.ZK_BOTH,
+      references: [
+        {
+          text: 'PolygonZkEVMEtrog.sol - Etherscan source code, verifyBatches function',
+          href: 'https://etherscan.io/address/0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
+        },
+      ],
+    },
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
@@ -456,7 +505,7 @@ export const polygonzkevm: Layer2 = {
       'Node software can be found [here](https://github.com/0xPolygonHermez/zkevm-node).',
     compressionScheme: 'No compression scheme yet.',
     genesisState:
-      'The genesis state, whose corresponding root is accessible as Batch 0 root in the `batchNumToStateRoot` method of PolygonZkEvm, is available [here](https://github.com/0xPolygonHermez/zkevm-contracts/blob/0d0e69a6f299e273343461f6350343cf4b048269/deployment/genesis.json).',
+      'The genesis state, whose corresponding root is accessible as Batch 0 root in the [`_legacyBatchNumToStateRoot`](https://evm.storage/eth/19489007/0x5132a183e9f3cb7c848b0aac5ae0c4f0491b7ab2/_legacyBatchNumToStateRoot#map) variable of PolygonRollupManager, is available [here](https://github.com/0xPolygonHermez/zkevm-contracts/blob/0d0e69a6f299e273343461f6350343cf4b048269/deployment/genesis.json).',
     dataFormat:
       'The trusted sequencer batches transactions according to the specifications documented [here](https://docs.polygon.technology/zkEVM/architecture/protocol/transaction-life-cycle/transaction-batching/).',
   },

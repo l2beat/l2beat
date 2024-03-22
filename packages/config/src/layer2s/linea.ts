@@ -13,6 +13,7 @@ import {
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
   makeBridgeCompatible,
+  NEW_CRYPTOGRAPHY,
   RISK_VIEW,
   ScalingProjectPermissionedAccount,
   STATE_CORRECTNESS,
@@ -127,7 +128,10 @@ export const linea: Layer2 = {
     },
     trackedTxs: [
       {
-        uses: [{ type: 'liveness', subtype: 'batchSubmissions' }],
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
@@ -143,6 +147,10 @@ export const linea: Layer2 = {
         uses: [
           {
             type: 'liveness',
+            subtype: 'stateUpdates',
+          },
+          {
+            type: 'l2costs',
             subtype: 'stateUpdates',
           },
         ],
@@ -162,6 +170,10 @@ export const linea: Layer2 = {
         uses: [
           {
             type: 'liveness',
+            subtype: 'stateUpdates',
+          },
+          {
+            type: 'l2costs',
             subtype: 'stateUpdates',
           },
         ],
@@ -271,6 +283,9 @@ export const linea: Layer2 = {
     },
   }),
   technology: {
+    newCryptography: {
+      ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
+    },
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       description:

@@ -98,6 +98,12 @@ export interface TrackedTxsConfig {
   readonly minTimestamp: UnixTime
   readonly uses: {
     readonly liveness: boolean
+    readonly l2costs:
+      | {
+          readonly ethereumProviderUrl: string
+          readonly ethereumProviderCallsPerMinute?: number
+        }
+      | false
   }
 }
 

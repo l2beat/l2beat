@@ -1,5 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
-import { CoingeckoQueryService } from '@l2beat/shared'
+import {
+  CoingeckoQueryService,
+  MAX_DAYS_FOR_HOURLY_PRECISION,
+} from '@l2beat/shared'
 import {
   CoingeckoId,
   EthereumAddress,
@@ -17,6 +20,13 @@ import { SyncOptimizer } from './SyncOptimizer'
 
 describe(PriceIndexer.name, () => {
   describe(PriceIndexer.prototype.update.name, () => {
+    const token: PriceConfigEntry = {
+      chain: 'ethereum',
+      address: EthereumAddress.random(),
+      type: 'coingecko',
+      coingeckoId: CoingeckoId('dai'),
+      sinceTimestamp: UnixTime.ZERO,
+    }
     it('syncs prices in range', async () => {
       const from = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
       const to = from.add(1, 'days')
@@ -42,42 +52,22 @@ describe(PriceIndexer.name, () => {
         getUsdPriceHistoryHourly: async () => pricesResponse,
       })
 
-      const stateRepository = mockObject<IndexerStateRepository>({
-        findIndexerState: async () => {
-          return {
-            indexerId: 'indexer',
-            safeHeight: from.toNumber(),
-            minTimestamp: UnixTime.ZERO,
-          }
-        },
-        setSafeHeight: async () => 1,
-      })
-
       const pricesRepository = mockObject<PriceRepository>({
         addMany: async () => 0,
       })
 
       const syncOptimizer = mockObject<SyncOptimizer>({
-        getTimestampToSync: mockFn().returnsOnce(from).returnsOnce(to),
         shouldTimestampBeSynced: mockFn()
           .returnsOnce(true)
           .returnsOnce(false)
           .returnsOnce(true),
       })
 
-      const token: PriceConfigEntry = {
-        chain: 'ethereum',
-        address: EthereumAddress.random(),
-        type: 'coingecko',
-        coingeckoId: CoingeckoId('dai'),
-        sinceTimestamp: UnixTime.ZERO,
-      }
-
       const indexer = new PriceIndexer(
         Logger.SILENT,
         mockObject<HourlyIndexer>({ subscribe: () => {} }),
         coingeckoQueryService,
-        stateRepository,
+        mockObject<IndexerStateRepository>({}),
         pricesRepository,
         token,
         syncOptimizer,
@@ -87,7 +77,13 @@ describe(PriceIndexer.name, () => {
 
       expect(
         coingeckoQueryService.getUsdPriceHistoryHourly,
-      ).toHaveBeenOnlyCalledWith(token.coingeckoId, from, to, undefined)
+      ).toHaveBeenOnlyCalledWith(
+        token.coingeckoId,
+        // "from" is treated as inclusive, we already have data for it
+        from.add(1, 'hours'),
+        to,
+        undefined,
+      )
 
       expect(pricesRepository.addMany).toHaveBeenCalledWith(
         [pricesResponse[0], pricesResponse[2]].map((p) => ({
@@ -99,6 +95,50 @@ describe(PriceIndexer.name, () => {
       )
 
       expect(newSafeHeight).toEqual(to.toNumber())
+    })
+
+    it('splits range - takes MAX_DAYS_FOR_HOURLY_PRECISION into consideration', async () => {
+      const from = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
+      const to = from.add(MAX_DAYS_FOR_HOURLY_PRECISION + 1, 'days')
+
+      const coingeckoQueryService = mockObject<CoingeckoQueryService>({
+        getUsdPriceHistoryHourly: async () => [],
+      })
+
+      const indexer = new PriceIndexer(
+        Logger.SILENT,
+        mockObject<HourlyIndexer>({ subscribe: () => {} }),
+        coingeckoQueryService,
+        mockObject<IndexerStateRepository>({}),
+        mockObject<PriceRepository>({
+          addMany: async () => 0,
+        }),
+        token,
+        mockObject<SyncOptimizer>({
+          shouldTimestampBeSynced: mockFn().returns(true),
+        }),
+      )
+
+      const newSafeHeight = await indexer.update(from.toNumber(), to.toNumber())
+
+      expect(
+        coingeckoQueryService.getUsdPriceHistoryHourly,
+      ).toHaveBeenOnlyCalledWith(
+        token.coingeckoId,
+        // "from" is treated as inclusive, we already have data for it
+        from.add(1, 'hours'),
+        from
+          .add(1, 'hours')
+          .add(CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL, 'days'),
+        undefined,
+      )
+
+      expect(newSafeHeight).toEqual(
+        from
+          .add(1, 'hours')
+          .add(CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL, 'days')
+          .toNumber(),
+      )
     })
   })
 
@@ -112,7 +152,7 @@ describe(PriceIndexer.name, () => {
       const token = mockObject<PriceConfigEntry>({
         chain: 'ethereum',
         address: EthereumAddress.random(),
-        sinceTimestamp: UnixTime.ZERO,
+        sinceTimestamp: UnixTime.fromDate(new Date('2021-01-01T00:00:00Z')),
       })
 
       const indexer = new PriceIndexer(
@@ -129,7 +169,7 @@ describe(PriceIndexer.name, () => {
 
       expect(stateRepository.add).toHaveBeenCalledWith({
         indexerId: indexer.indexerId,
-        safeHeight: token.sinceTimestamp.toNumber(),
+        safeHeight: 0,
         minTimestamp: token.sinceTimestamp,
       })
     })
@@ -205,9 +245,7 @@ describe(PriceIndexer.name, () => {
   })
 
   describe(PriceIndexer.prototype.setSafeHeight.name, () => {
-    it('save minTimestamp if safeHeight is before minTimestamp', async () => {
-      const now = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
-
+    it('save safeHeight to DB', async () => {
       const stateRepository = mockObject<IndexerStateRepository>({
         setSafeHeight: async () => 1,
       })
@@ -215,7 +253,7 @@ describe(PriceIndexer.name, () => {
       const token = mockObject<PriceConfigEntry>({
         chain: 'ethereum',
         address: EthereumAddress.random(),
-        sinceTimestamp: now.add(1, 'days'),
+        sinceTimestamp: UnixTime.ZERO,
       })
 
       const indexer = new PriceIndexer(
@@ -228,12 +266,13 @@ describe(PriceIndexer.name, () => {
         mockObject<SyncOptimizer>({}),
       )
 
+      const safeHeight = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
       const trx = mockObject<Knex.Transaction>()
-      await indexer.setSafeHeight(now.toNumber(), trx)
+      await indexer.setSafeHeight(safeHeight.toNumber(), trx)
 
       expect(stateRepository.setSafeHeight).toHaveBeenCalledWith(
         indexer.indexerId,
-        token.sinceTimestamp.toNumber(),
+        safeHeight.toNumber(),
         trx,
       )
     })
@@ -242,7 +281,7 @@ describe(PriceIndexer.name, () => {
   describe(PriceIndexer.prototype.invalidate.name, () => {
     it('deletes records before targetHeight and returns the new safe height', async () => {
       const pricesRepository = mockObject<PriceRepository>({
-        deleteBeforeInclusive: async () => 1,
+        deleteAfterExclusive: async () => 1,
       })
       const token = mockObject<PriceConfigEntry>({
         chain: 'ethereum',
@@ -261,7 +300,7 @@ describe(PriceIndexer.name, () => {
       const targetHeight = 10
       const newSafeHeight = await indexer.invalidate(targetHeight)
 
-      expect(pricesRepository.deleteBeforeInclusive).toHaveBeenCalledWith(
+      expect(pricesRepository.deleteAfterExclusive).toHaveBeenCalledWith(
         token.chain,
         token.address,
         new UnixTime(targetHeight),

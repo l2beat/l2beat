@@ -40,7 +40,7 @@ export class PriceRepository extends BaseRepository {
     return rows.length
   }
 
-  async deleteBeforeInclusive(
+  async deleteAfterExclusive(
     chain: string,
     address: EthereumAddress | 'native',
     timestamp: UnixTime,
@@ -49,7 +49,7 @@ export class PriceRepository extends BaseRepository {
     return knex('prices')
       .where('chain', chain)
       .where('address', address === 'native' ? 'native' : address.toString())
-      .where('timestamp', '<=', timestamp.toDate())
+      .where('timestamp', '>', timestamp.toDate())
       .delete()
   }
 

@@ -10,8 +10,8 @@ export const zklinknova: Layer3 = underReviewL3({
     slug: 'zklinknova',
     description:
       'zkLink Nova is a multi-chain rollup infrastructure based on zkSync ZK Stack zero-knowledge technology.',
-    purposes: ['Exchange'],
-    category: 'ZK Rollup',
+    purposes: ['Universal'],
+    category: 'Validium',
     provider: 'zkLink Nexus',
     links: {
       websites: ['https://zk.link'],
