@@ -28,12 +28,15 @@ CONFIG_ALCHEMY_API_KEY=
 - `yarn typecheck` - check if the code satisfies the typescript compiler
 - `yarn check-verified-contracts` - verify whether source code of given address is verified on Etherscan
 - `yarn tokens` - update `src/tokens/generated.json` based on `src/tokens/tokens.jsonc`. `generated.jsonc` is a source of truth about each token data.
+- `yarn tokens:verify` - when checking a PR run it to see whether tokens were added using a script
 
 ### How to check PR which adds a new token?
 
 1. Restore `generated.json` to state before PR `git checkout main --src/tokens/generated.json`
 2. Run `yarn tokens`
 3. See whether git detected any changes - if not then it was added using our script
+
+There is a handy script for it: `yarn tokens:verify`
 
 ### Tests dependencies
 
