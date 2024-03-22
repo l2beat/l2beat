@@ -86,7 +86,10 @@ export const degate2: Layer2 = {
     ],
     trackedTxs: [
       {
-        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(

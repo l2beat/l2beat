@@ -142,7 +142,10 @@ export const zksyncera: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
@@ -189,7 +192,10 @@ export const zksyncera: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
