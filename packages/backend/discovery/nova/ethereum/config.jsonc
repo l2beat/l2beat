@@ -16,7 +16,8 @@
     "0x97f63339374fCe157Aa8Ee27830172d2AF76A786": "L1DaiGateway",
     "0xFb209827c58283535b744575e11953DCC4bEAD88": "RollupProxy",
     "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b": "SequencerInbox",
-    "0xC234E41AE2cb00311956Aa7109fC801ae8c80941": "ValidatorOwnerMultisig"
+    "0xC234E41AE2cb00311956Aa7109fC801ae8c80941": "ValidatorOwnerMultisig",
+    "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B": "BatchPosterManagerMultisig"
   },
   "overrides": {
     "ValidatorUtils": {
