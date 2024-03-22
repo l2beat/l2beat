@@ -127,14 +127,16 @@ describe(PriceIndexer.name, () => {
         token.coingeckoId,
         // "from" is treated as inclusive, we already have data for it
         from.add(1, 'hours'),
-        from.add(1, 'hours').add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days'),
+        from
+          .add(1, 'hours')
+          .add(CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL, 'days'),
         undefined,
       )
 
       expect(newSafeHeight).toEqual(
         from
           .add(1, 'hours')
-          .add(MAX_DAYS_FOR_HOURLY_PRECISION, 'days')
+          .add(CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL, 'days')
           .toNumber(),
       )
     })
