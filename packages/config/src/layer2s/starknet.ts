@@ -681,7 +681,7 @@ The Starknet core contract is upgradable by 2 appointed \`Starknet Proxy Governo
 
 Via the proxy contracts, the \`SHARP Verifier Governors\` can upgrade the GPSStatement Verifier implementation. It is important to note that the state is also maintained in the implementation contract, rather than in the proxy itself. An upgrade to the Verifier could potentially introduce code that approves fraudulent states. Currently, there is ${getSHARPVerifierUpgradeDelay() === 0 ? 'no' : 'a ' + formatSeconds(getSHARPVerifierUpgradeDelay())} delay before any upgrade takes effect.
 
-The StarkGate bridge contracts are mostly governed by a Bridge Multisig. (see Permissions section)
+The StarkGate bridge escrows are mostly governed and upgraded by a Bridge Multisig, others by different owners. (see Permissions section)
 
 At present, the StarkNet Foundation hosts voting for STRK token holders (or their delegates) regarding protocol updates to reflect community intent, however, there is no direct authority to implement the execution of these upgrades.`,
   permissions: [
