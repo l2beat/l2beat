@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { L2CostsDetails, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { range } from 'lodash'
 
@@ -6,16 +6,13 @@ import { Project } from '../../../../../model/Project'
 import { IndexerStateRepository } from '../../../../../peripherals/database/repositories/IndexerStateRepository'
 import { Clock } from '../../../../../tools/Clock'
 import { PriceRepository } from '../../../../tvl/repositories/PriceRepository'
+import { TrackedTxsConfigsRepository } from '../../../repositories/TrackedTxsConfigsRepository'
 import { TrackedTxId } from '../../../types/TrackedTxId'
 import {
   L2CostsRecord,
   L2CostsRepository,
 } from '../repositories/L2CostsRepository'
-import {
-  DetailedTransaction,
-  L2CostsController,
-  SumedTransactions,
-} from './L2CostsController'
+import { DetailedTransaction, L2CostsController } from './L2CostsController'
 
 const NOW = UnixTime.now()
 
@@ -78,7 +75,7 @@ describe(L2CostsController.name, () => {
       const transactions = getMockDetailedTransactions(2)
       const result = getMockL2CostsController({}).sumDetails(transactions)
 
-      const expected: SumedTransactions = {
+      const expected: L2CostsDetails = {
         totalCost: 30,
         totalGas: 30,
         totalCostUsd: 30,
@@ -103,7 +100,7 @@ describe(L2CostsController.name, () => {
       const transactions = getMockDetailedTransactions(1)
       const result = getMockL2CostsController({}).sumDetails(transactions)
 
-      const expected: SumedTransactions = {
+      const expected: L2CostsDetails = {
         totalCalldataCost: 10,
         totalCalldataCostUsd: 100,
         totalCalldataGas: 1,
@@ -125,12 +122,14 @@ describe(L2CostsController.name, () => {
 
 function getMockL2CostsController(params: {
   l2CostsRepository?: L2CostsRepository
+  trackedTxsConfigsRepository?: TrackedTxsConfigsRepository
   priceRepository?: PriceRepository
   indexerStateRepository?: IndexerStateRepository
   projects?: Project[]
 }) {
   const {
     l2CostsRepository,
+    trackedTxsConfigsRepository,
     priceRepository,
     indexerStateRepository,
     projects,
@@ -138,6 +137,7 @@ function getMockL2CostsController(params: {
 
   return new L2CostsController(
     l2CostsRepository ?? mockObject<L2CostsRepository>({}),
+    trackedTxsConfigsRepository ?? mockObject<TrackedTxsConfigsRepository>({}),
     priceRepository ??
       mockObject<PriceRepository>({
         findByTimestampRange: mockFn().resolvesToOnce(

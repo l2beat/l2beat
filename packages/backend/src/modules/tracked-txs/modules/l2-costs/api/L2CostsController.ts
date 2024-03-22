@@ -3,6 +3,7 @@ import {
   assert,
   AssetId,
   L2CostsApiResponse,
+  L2CostsDetails,
   notUndefined,
   TrackedTxsConfigSubtype,
   UnixTime,
@@ -12,7 +13,9 @@ import { Project } from '../../../../../model/Project'
 import { IndexerStateRepository } from '../../../../../peripherals/database/repositories/IndexerStateRepository'
 import { Clock } from '../../../../../tools/Clock'
 import { PriceRepository } from '../../../../tvl/repositories/PriceRepository'
+import { TrackedTxsConfigsRepository } from '../../../repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsConfig } from '../../../types/TrackedTxsConfig'
+import { getSyncedUntil } from '../../utils/getSyncedUntil'
 import {
   L2CostsRecord,
   L2CostsRepository,
@@ -35,24 +38,6 @@ type L2CostsTrackedTxsConfigEntry = {
 }
 
 const NOW = UnixTime.now()
-
-export interface SumedTransactions {
-  totalCost: number
-  totalGas: number
-  totalCostUsd: number
-  totalCalldataGas: number
-  totalComputeGas: number
-  totalBlobGas?: number
-  totalOverheadGas: number
-  totalCalldataCost: number
-  totalComputeCost: number
-  totalBlobCost?: number
-  totalOverheadCost: number
-  totalCalldataCostUsd: number
-  totalComputeCostUsd: number
-  totalBlobCostUsd?: number
-  totalOverheadCostUsd: number
-}
 
 interface DetailedTransactionBase {
   timestamp: UnixTime
@@ -86,6 +71,7 @@ export type DetailedTransaction =
 export class L2CostsController {
   constructor(
     private readonly l2CostsRepository: L2CostsRepository,
+    private readonly trackedTxsConfigsRepository: TrackedTxsConfigsRepository,
     private readonly priceRepository: PriceRepository,
     private readonly indexerStateRepository: IndexerStateRepository,
     private readonly projects: Project[],
@@ -124,9 +110,16 @@ export class L2CostsController {
         continue
       }
 
-      const isSynced = l2CostsConfig.entries.some(
-        (e) => !e.untilTimestamp || e.untilTimestamp.gt(NOW),
-      )
+      const configurations =
+        await this.trackedTxsConfigsRepository.getByProjectIdAndType(
+          project.projectId,
+          'l2costs',
+        )
+
+      const syncedUntil = getSyncedUntil(configurations)
+      if (!syncedUntil) {
+        continue
+      }
 
       const records = await this.l2CostsRepository.getByProjectSinceTimestamp(
         project.projectId,
@@ -152,19 +145,19 @@ export class L2CostsController {
       }
 
       projects[project.projectId.toString()] = {
-        isSynced,
-        '24h': this.sumDetails(last24h),
-        '7d': this.sumDetails(last7d),
-        '30d': this.sumDetails(last30d),
-        '90d': this.sumDetails(last90d),
+        syncedUntil,
+        last24h: this.sumDetails(last24h),
+        last7d: this.sumDetails(last7d),
+        last30d: this.sumDetails(last30d),
+        last90d: this.sumDetails(last90d),
       }
     }
 
     return { type: 'success', data: { projects } }
   }
 
-  sumDetails(transactions: DetailedTransaction[]): SumedTransactions {
-    return transactions.reduce<SumedTransactions>(
+  sumDetails(transactions: DetailedTransaction[]): L2CostsDetails {
+    return transactions.reduce<L2CostsDetails>(
       (acc, tx) => {
         acc.totalCost += tx.totalGasCost
         acc.totalGas += tx.totalGas
