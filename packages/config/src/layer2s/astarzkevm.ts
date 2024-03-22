@@ -6,6 +6,7 @@ import {
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
   makeBridgeCompatible,
+  NEW_CRYPTOGRAPHY,
   RISK_VIEW,
   SEQUENCER_NO_MECHANISM,
   STATE_CORRECTNESS,
@@ -171,6 +172,9 @@ export const astarzkevm: Layer2 = {
     stage: 'NotApplicable',
   },
   technology: {
+    newCryptography: {
+      ...NEW_CRYPTOGRAPHY.ZK_BOTH,
+    },
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
