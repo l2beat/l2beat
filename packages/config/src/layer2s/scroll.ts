@@ -10,6 +10,7 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
+  NEW_CRYPTOGRAPHY,
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
@@ -265,6 +266,9 @@ export const scroll: Layer2 = {
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
   }),
   technology: {
+    newCryptography: {
+      ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
+    },
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [

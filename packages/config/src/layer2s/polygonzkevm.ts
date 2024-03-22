@@ -12,6 +12,7 @@ import {
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
   makeBridgeCompatible,
+  NEW_CRYPTOGRAPHY,
   NUGGETS,
   RISK_VIEW,
   SEQUENCER_NO_MECHANISM,
@@ -430,6 +431,16 @@ export const polygonzkevm: Layer2 = {
     },
   ),
   technology: {
+    newCryptography: {
+      ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
+      ...NEW_CRYPTOGRAPHY.ZK_STARKS,
+      references: [
+        {
+          text: 'PolygonZkEVMEtrog.sol - Etherscan source code, verifyBatches function',
+          href: 'https://etherscan.io/address/0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
+        },
+      ],
+    },
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       references: [
