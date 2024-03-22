@@ -73,7 +73,7 @@ describeDatabase(L2CostsRepository.name, (database) => {
   })
 
   describe(L2CostsRepository.prototype.addMany.name, () => {
-    it('only new row', async () => {
+    it('should return only new row', async () => {
       const newRow: L2CostsRecord[] = [
         {
           timestamp: START,
@@ -94,7 +94,7 @@ describeDatabase(L2CostsRepository.name, (database) => {
       expect(results).toEqualUnsorted([...DATA, ...newRow])
     })
 
-    it('empty array', async () => {
+    it('empty array not to be rejected', async () => {
       await expect(repository.addMany([])).not.toBeRejected()
     })
   })
@@ -141,7 +141,7 @@ describeDatabase(L2CostsRepository.name, (database) => {
     })
   })
 
-  describe(L2CostsRepository.prototype.deleteAfter.name, () => {
+  describe(L2CostsRepository.prototype.deleteFrom.name, () => {
     it('should delete rows inserted after certain timestamp for given configuration id', async () => {
       await repository.deleteAll()
       const trackedTxId = TrackedTxId.random()
@@ -196,7 +196,7 @@ describeDatabase(L2CostsRepository.name, (database) => {
       ])
       await repository.addMany(records)
 
-      await repository.deleteAfter(trackedTxId, START)
+      await repository.deleteFrom(trackedTxId, START)
 
       const result = await repository.getAll()
 

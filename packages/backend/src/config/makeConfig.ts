@@ -123,9 +123,15 @@ export function makeConfig(
       uses: {
         liveness: flags.isEnabled('tracked-txs', 'liveness'),
         l2costs: flags.isEnabled('tracked-txs', 'l2costs') && {
-          providerUrl: env.string('L2COSTS_PROVIDER_URL'),
-          providerCallsPerMinute: env.integer(
-            'L2COSTS_PROVIDER_CALLS_PER_MINUTE',
+          ethereumProviderUrl: env.string([
+            'ETHEREUM_RPC_URL_FOR_L2COSTS',
+            'ETHEREUM_RPC_URL',
+          ]),
+          ethereumProviderCallsPerMinute: env.integer(
+            [
+              'ETHEREUM_RPC_CALLS_PER_MINUTE_FOR_L2COSTS',
+              'ETHEREUM_RPC_CALLS_PER_MINUTE',
+            ],
             600,
           ),
         },

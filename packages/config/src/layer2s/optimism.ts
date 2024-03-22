@@ -91,6 +91,18 @@ export const optimism: Layer2 = opStack({
   isNodeAvailable: true,
   hasProperSecurityCouncil: false,
   milestones: [
+    // {
+    //   name: 'Optimism Protocol Upgrade #6: Multi-Chain Prep (MCP) L1',
+    //   link: 'https://vote.optimism.io/proposals/47253113366919812831791422571513347073374828501432502648295761953879525315523',
+    //   date: 'upcoming',
+    //   description: 'Superchain enables L1 contracts to be upgraded atomically across multiple chains in a single transaction.',
+    // },
+    {
+      name: 'Network Upgrade #5: Ecotone',
+      link: 'https://vote.optimism.io/proposals/95119698597711750186734377984697814101707190887694311194110013874163880701970',
+      date: '2024-03-14T00:00:00Z',
+      description: 'Optimism adopts EIP-4844.',
+    },
     {
       name: 'Fault Proof System is live on OP Goerli',
       link: 'https://blog.oplabs.co/op-stack-fault-proof-alpha/',

@@ -7,16 +7,22 @@ import {
 import { TrackedTxId } from '../types/TrackedTxId'
 import { TrackedTxConfigEntry } from '../types/TrackedTxsConfig'
 
+export type ToChangeUntilTimestamp = {
+  id: TrackedTxId
+  untilTimestampExclusive: UnixTime | undefined
+  trim: boolean
+}
+
 export function diffTrackedTxConfigurations(
   runtimeEntries: TrackedTxConfigEntry[],
   databaseEntries: TrackedTxsConfigRecord[],
 ): {
   toAdd: TrackedTxsConfigRecord[]
-  toTrim: { id: TrackedTxId; untilTimestampExclusive: UnixTime }[]
   toRemove: TrackedTxId[]
+  toChangeUntilTimestamp: ToChangeUntilTimestamp[]
 } {
   const toAdd: TrackedTxsConfigRecord[] = []
-  const toTrim: { id: TrackedTxId; untilTimestampExclusive: UnixTime }[] = []
+  const toChangeUntilTimestamp: ToChangeUntilTimestamp[] = []
 
   for (const entry of runtimeEntries) {
     for (const entryUse of entry.uses) {
@@ -29,15 +35,22 @@ export function diffTrackedTxConfigurations(
       }
 
       if (
-        entry.untilTimestampExclusive &&
-        (!databaseEntry.untilTimestampExclusive ||
-          entry.untilTimestampExclusive < databaseEntry.untilTimestampExclusive)
+        entry.untilTimestampExclusive?.toNumber() ===
+        databaseEntry.untilTimestampExclusive?.toNumber()
       ) {
-        toTrim.push({
-          id: entryUse.id,
-          untilTimestampExclusive: entry.untilTimestampExclusive,
-        })
+        continue
       }
+
+      const trim =
+        databaseEntry.lastSyncedTimestamp &&
+        entry.untilTimestampExclusive &&
+        entry.untilTimestampExclusive < databaseEntry.lastSyncedTimestamp
+
+      toChangeUntilTimestamp.push({
+        id: entryUse.id,
+        untilTimestampExclusive: entry.untilTimestampExclusive,
+        trim: !!trim,
+      })
     }
   }
   const toRemove = databaseEntries
@@ -46,6 +59,5 @@ export function diffTrackedTxConfigurations(
         !runtimeEntries.find((e) => e.uses.some((u) => u.id === entry.id)),
     )
     .map((entry) => entry.id)
-
-  return { toAdd, toTrim, toRemove }
+  return { toAdd, toChangeUntilTimestamp, toRemove }
 }

@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
-import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
+import { partition } from 'lodash'
 
 import { ViemRpcClient } from '../../../../peripherals/viem-rpc-client/ViemRpcClient'
 import { TrackedTxResult } from '../../types/model'
@@ -16,11 +17,13 @@ export class L2CostsUpdater implements TxUpdaterInterface {
     private readonly l2CostsRepository: L2CostsRepository,
     private readonly rpcClient: ViemRpcClient,
     private readonly logger: Logger,
-  ) {}
+  ) {
+    this.logger = this.logger.for(this)
+  }
 
   async update(transactions: TrackedTxResult[], knexTx?: Knex.Transaction) {
     if (transactions.length === 0) {
-      this.logger.debug('[L2Costs]: Update skipped')
+      this.logger.info('Update skipped - no transactions to process')
       return
     }
 
@@ -29,58 +32,56 @@ export class L2CostsUpdater implements TxUpdaterInterface {
     await this.l2CostsRepository.addMany(transformedTransactions, knexTx)
   }
 
-  async deleteAfter(
+  async deleteFrom(
     id: TrackedTxId,
     untilTimestamp: UnixTime,
     knexTrx: Knex.Transaction,
   ) {
-    await this.l2CostsRepository.deleteAfter(id, untilTimestamp, knexTrx)
+    await this.l2CostsRepository.deleteFrom(id, untilTimestamp, knexTrx)
   }
 
   async addDetailsTransactionsAndTransform(
     transactions: TrackedTxResult[],
   ): Promise<L2CostsRecord[]> {
-    const promises = transactions.map(async (tx) => {
-      if (
-        tx.transactionType === 0 ||
-        tx.transactionType === 1 ||
-        tx.transactionType === 2
-      ) {
-        return {
-          timestamp: tx.blockTimestamp,
-          txHash: tx.hash,
-          trackedTxId: tx.use.id,
-          data: {
-            type: tx.transactionType,
-            gasUsed: tx.receiptGasUsed,
-            gasPrice: tx.gasPrice,
-            calldataLength: tx.dataLength,
-            calldataGasUsed: tx.calldataGasUsed,
-          },
-        }
-      } else if (tx.transactionType === 3) {
-        const receipt = await this.rpcClient.getTransactionReceipt(
-          tx.hash as `0x${string}`,
-        )
+    const [type3txs, otherTypeTxs] = partition(
+      transactions,
+      (tx) => tx.transactionType === 3,
+    )
 
-        return {
-          timestamp: tx.blockTimestamp,
-          txHash: tx.hash,
-          trackedTxId: tx.use.id,
-          data: {
-            type: tx.transactionType,
-            gasUsed: tx.receiptGasUsed,
-            gasPrice: tx.gasPrice,
-            calldataLength: tx.dataLength,
-            calldataGasUsed: tx.calldataGasUsed,
-            blobGasUsed: Number(receipt.blobGasUsed),
-            blobGasPrice: Number(receipt.blobGasPrice),
-          },
-        }
-      } else {
-        assertUnreachable(tx.transactionType)
+    const type3txsDetailsPromises = type3txs.map(async (tx) => {
+      const receipt = await this.rpcClient.getTransactionReceipt(
+        tx.hash as `0x${string}`,
+      )
+      return {
+        timestamp: tx.blockTimestamp,
+        txHash: tx.hash,
+        trackedTxId: tx.use.id,
+        data: {
+          type: 3 as const,
+          gasUsed: tx.receiptGasUsed,
+          gasPrice: tx.gasPrice,
+          calldataLength: tx.dataLength,
+          calldataGasUsed: tx.calldataGasUsed,
+          blobGasUsed: Number(receipt.blobGasUsed),
+          blobGasPrice: Number(receipt.blobGasPrice),
+        },
       }
     })
-    return await Promise.all(promises)
+    const otherTypeTxsDetails = otherTypeTxs.map((tx) => {
+      return {
+        timestamp: tx.blockTimestamp,
+        txHash: tx.hash,
+        trackedTxId: tx.use.id,
+        data: {
+          type: tx.transactionType as 0 | 1 | 2,
+          gasUsed: tx.receiptGasUsed,
+          gasPrice: tx.gasPrice,
+          calldataLength: tx.dataLength,
+          calldataGasUsed: tx.calldataGasUsed,
+        },
+      }
+    })
+    const type3txsDetails = await Promise.all(type3txsDetailsPromises)
+    return [...type3txsDetails, ...otherTypeTxsDetails]
   }
 }

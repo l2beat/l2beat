@@ -1,5 +1,4 @@
 import { Logger } from '@l2beat/backend-tools'
-import { createPublicClient, http } from 'viem'
 
 import { Config } from '../../../../config'
 import { IndexerStateRepository } from '../../../../peripherals/database/repositories/IndexerStateRepository'
@@ -24,21 +23,6 @@ export function createL2CostsModule(
     return
   }
 
-  const publicClient = createPublicClient({
-    transport: http(config.trackedTxsConfig.uses.l2costs.providerUrl),
-  })
-  const viemRpcClient = new ViemRpcClient(
-    publicClient,
-    logger,
-    config.trackedTxsConfig.uses.l2costs.providerCallsPerMinute,
-  )
-
-  const l2CostsUpdater = new L2CostsUpdater(
-    peripherals.getRepository(L2CostsRepository),
-    viemRpcClient,
-    logger,
-  )
-
   const l2CostsController = new L2CostsController(
     peripherals.getRepository(L2CostsRepository),
     peripherals.getRepository(PriceRepository),
@@ -48,6 +32,16 @@ export function createL2CostsModule(
     logger,
   )
   const l2CostsRouter = createL2CostsRouter(l2CostsController)
+
+  const l2CostsUpdater = new L2CostsUpdater(
+    peripherals.getRepository(L2CostsRepository),
+    peripherals.getClient(ViemRpcClient, {
+      url: config.trackedTxsConfig.uses.l2costs.ethereumProviderUrl,
+      callsPerMinute:
+        config.trackedTxsConfig.uses.l2costs.ethereumProviderCallsPerMinute,
+    }),
+    logger,
+  )
 
   const start = () => {
     logger = logger.for('L2CostsModule')

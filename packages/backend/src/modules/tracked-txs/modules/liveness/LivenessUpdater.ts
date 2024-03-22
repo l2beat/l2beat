@@ -14,11 +14,13 @@ export class LivenessUpdater implements TxUpdaterInterface {
   constructor(
     private readonly livenessRepository: LivenessRepository,
     private readonly logger: Logger,
-  ) {}
+  ) {
+    this.logger = this.logger.for(this)
+  }
 
   async update(transactions: TrackedTxResult[], knexTx?: Knex.Transaction) {
     if (transactions.length === 0) {
-      this.logger.debug('[Liveness]: Update skipped')
+      this.logger.info('Update skipped - no transactions to process')
       return
     }
 
@@ -26,12 +28,12 @@ export class LivenessUpdater implements TxUpdaterInterface {
     await this.livenessRepository.addMany(transformedTransactions, knexTx)
   }
 
-  async deleteAfter(
+  async deleteFrom(
     id: TrackedTxId,
     untilTimestamp: UnixTime,
     knexTrx: Knex.Transaction,
   ) {
-    await this.livenessRepository.deleteAfter(id, untilTimestamp, knexTrx)
+    await this.livenessRepository.deleteFrom(id, untilTimestamp, knexTrx)
   }
 
   transformTransactions(transactions: TrackedTxResult[]): LivenessRecord[] {

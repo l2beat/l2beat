@@ -1,8 +1,8 @@
 {
   "name": "xai",
   "chain": "arbitrum",
-  "blockNumber": 181262302,
-  "configHash": "0xc8e513d7ba943cd8ebe35c68c296a5efeef3dbba9b4e258704232ac9eaf8871a",
+  "blockNumber": 190317868,
+  "configHash": "0xd9e82e81bff10176bd95cca1974482faba9e4340263e4807c031caa0e2b58d61",
   "version": 3,
   "contracts": [
     {
@@ -101,6 +101,31 @@
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336"
       },
       "derivedName": "ERC20Outbox"
+    },
+    {
+      "name": "GnosisSafeL2",
+      "address": "0x1F941F7Fb552215af81e6bE87F59578C18783483",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "modules": []
+      },
+      "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
+      "sinceTimestamp": 1701659589,
+      "values": {
+        "domainSeparator": "0xb9943902a7d6a42b018d2e8211c6570fe96f4c54a6db1158a791eeb0aafdcbcd",
+        "getChainId": 42161,
+        "getOwners": [
+          "0x807daF80b03Fd3C2709FFe0AeBEED617BC0a347c",
+          "0xE529a3271f9CC84B1FE9107ab4764a8dF177782a",
+          "0xbBE90F6748C82623F130A4486722a436c5a72440",
+          "0x1f097F3f928415cD28e1B2cC6f0F3960f4fCa6fc",
+          "0xa2E7768789921a36eCFe8c239dBd8213120fFF83"
+        ],
+        "getThreshold": 3,
+        "nonce": 11,
+        "VERSION": "1.3.0"
+      }
     },
     {
       "name": "L1GatewayRouter",
@@ -206,23 +231,27 @@
       "address": "0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c",
       "upgradeability": {
         "type": "EIP1967 proxy",
-        "implementation": "0x8d6C063656b00E5c37CE007C0f99848D58F19d6B",
+        "implementation": "0xb38E2EDda6c31D9972Cac770f3F404CD0D7B55Df",
         "admin": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723"
       },
-      "implementations": ["0x8d6C063656b00E5c37CE007C0f99848D58F19d6B"],
+      "implementations": ["0xb38E2EDda6c31D9972Cac770f3F404CD0D7B55Df"],
       "sinceTimestamp": 1701801214,
       "values": {
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "getWhitelistCount": 0,
-        "getWhitelistedAddressAtIndex": [],
+        "esXaiBurnFoundationBasePoints": 500,
+        "esXaiBurnFoundationRecipient": "0x1F941F7Fb552215af81e6bE87F59578C18783483",
+        "getWhitelistCount": 1,
+        "getWhitelistedAddressAtIndex": [
+          "0xfD41041180571C5D371BEA3D9550E55653671198"
+        ],
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
         "name": "esXai",
         "symbol": "esXAI",
-        "totalSupply": "94239356069519325789535596",
+        "totalSupply": "136955629411765142566684687",
         "xai": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66"
       },
-      "derivedName": "esXai"
+      "derivedName": "esXai2"
     },
     {
       "name": "Xai",
@@ -242,7 +271,7 @@
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
         "name": "Xai",
         "symbol": "XAI",
-        "totalSupply": "994054488438928927022102472"
+        "totalSupply": "998765387244261176748891717"
       },
       "derivedName": "Xai"
     },
@@ -271,12 +300,12 @@
           "0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8"
         ],
         "allowedOutboxList": ["0x1E400568AD4840dbE50FB32f306B842e9ddeF726"],
-        "delayedMessageCount": 9188,
+        "delayedMessageCount": 12189,
         "nativeToken": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66",
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerInbox": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
-        "sequencerMessageCount": 3648,
-        "sequencerReportedSubMessageCount": 990548
+        "sequencerMessageCount": 6326,
+        "sequencerReportedSubMessageCount": 2596211
       },
       "derivedName": "ERC20Bridge"
     },
@@ -298,6 +327,21 @@
       "sinceTimestamp": 1700037277
     },
     {
+      "name": "GasSubsidy",
+      "address": "0x94F4aBC83eae00b693286B6eDCa09e1D76183C97",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xF208798482F0b12c8767Bc03cC0F145D18BeCe6A",
+        "admin": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723"
+      },
+      "implementations": ["0xF208798482F0b12c8767Bc03cC0F145D18BeCe6A"],
+      "sinceTimestamp": 1701801219,
+      "values": {
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "TRANSFER_ROLE": "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c"
+      }
+    },
+    {
       "name": "SequencerInbox",
       "address": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
       "upgradeability": {
@@ -308,23 +352,23 @@
       "implementations": ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"],
       "sinceTimestamp": 1704309371,
       "values": {
-        "batchCount": 3648,
+        "batchCount": 6326,
         "batchPosters": ["0x7F68dba68E72a250004812fe04F1123Fca89aBa9"],
         "bridge": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
         "dacKeyset": {
-          "requiredSignatures": 4,
-          "membersCount": 5
+          "requiredSignatures": 5,
+          "membersCount": 6
         },
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
         "IS_HARDCODED_SEQUENCER_BATCH_POSTER": false,
-        "keySetUpdates": 3,
+        "keySetUpdates": 4,
         "maxDataSize": 104857,
         "maxTimeVariation": [5760, 96, 86400, 3600],
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 9186
+        "totalDelayedMessagesRead": 12188
       },
       "derivedName": "SequencerInbox"
     },
@@ -383,6 +427,35 @@
       "derivedName": "L1OrbitERC20Gateway"
     },
     {
+      "name": "NodeLicenseRegistry",
+      "address": "0xbc14d8563b248B79689ECbc43bBa53290e0b6b66",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xfD6Bb931D2Ee134E70568ca36584c043cB278734",
+        "admin": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723"
+      },
+      "implementations": ["0xfD6Bb931D2Ee134E70568ca36584c043cB278734"],
+      "sinceTimestamp": 1701801243,
+      "values": {
+        "claimable": true,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "fundsReceiver": "0xFCF7248C495d6fd3641eE43F861c48Ebe402c878",
+        "getApproved": [],
+        "getAverageCost": [],
+        "getMintTimestamp": [],
+        "getPricingTiersLength": 40,
+        "maxSupply": 50000,
+        "name": "Sentry Node License",
+        "ownerOf": [],
+        "referralDiscountPercentage": 5,
+        "referralRewardPercentage": 15,
+        "symbol": "SNL",
+        "tokenURI": [],
+        "totalSupply": 35001
+      },
+      "derivedName": "NodeLicense5"
+    },
+    {
       "name": "RollupProxy",
       "address": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
       "upgradeability": {
@@ -405,12 +478,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 768,
+        "firstUnresolvedNode": 1419,
         "inbox": "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
         "isERC20Enabled": false,
         "lastStakeBlock": 18944658,
-        "latestConfirmed": 767,
-        "latestNodeCreated": 920,
+        "latestConfirmed": 1418,
+        "latestNodeCreated": 1571,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x1E400568AD4840dbE50FB32f306B842e9ddeF726",
@@ -428,7 +501,7 @@
         "validatorUtils": "0x6c21303F5986180B1394d2C89f3e883890E2867b",
         "validatorWalletCreator": "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
         "validatorWhitelistDisabled": false,
-        "wasmModuleRoot": "0xf4389b835497a910d7ba3ebfb77aa93da985634f3c052de1290360635be40c4a",
+        "wasmModuleRoot": "0x68e4fe5023f792d4ef584796c84d710303a5e12ea02d6e37e2b5e9c4332507c4",
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
@@ -453,23 +526,92 @@
         "type": "immutable"
       },
       "sinceTimestamp": 1700037203
+    },
+    {
+      "name": "GnosisSafeL2",
+      "address": "0xFCF7248C495d6fd3641eE43F861c48Ebe402c878",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "modules": []
+      },
+      "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
+      "sinceTimestamp": 1701577782,
+      "values": {
+        "domainSeparator": "0x0f84f5102dd9fea36a3e0099c9a4da5d3e2def631c0fe4cd8fd30ae7c261b379",
+        "getChainId": 42161,
+        "getOwners": [
+          "0x1f097F3f928415cD28e1B2cC6f0F3960f4fCa6fc",
+          "0xbBE90F6748C82623F130A4486722a436c5a72440",
+          "0xE529a3271f9CC84B1FE9107ab4764a8dF177782a",
+          "0x807daF80b03Fd3C2709FFe0AeBEED617BC0a347c",
+          "0xa2E7768789921a36eCFe8c239dBd8213120fFF83"
+        ],
+        "getThreshold": 3,
+        "nonce": 49,
+        "VERSION": "1.3.0"
+      }
+    },
+    {
+      "name": "SentryReferee",
+      "address": "0xfD41041180571C5D371BEA3D9550E55653671198",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x254954e3F6BD7443444036BeA2d8fE88fdf496c1",
+        "admin": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723"
+      },
+      "implementations": ["0x254954e3F6BD7443444036BeA2d8fE88fdf496c1"],
+      "sinceTimestamp": 1701801226,
+      "values": {
+        "calculateChallengeEmissionAndTier": [
+          "71347031963470319634703",
+          "1250000000000000000000000000"
+        ],
+        "challengeCounter": 2316,
+        "CHALLENGER_ROLE": "0xe752add323323eb13e36c71ee508dfd16d74e9e4c4fd78786ba97989e5e13818",
+        "challengerPublicKey": "0x977f9fe1d570ba7e48ea76566718023b260ed56eba368ff20dca06e99e650804126663c1a5febdb065ef139a0156a9ad",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "esXaiAddress": "0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c",
+        "gasSubsidyRecipient": "0x94F4aBC83eae00b693286B6eDCa09e1D76183C97",
+        "getBoostFactorForKeyId": [],
+        "getKycWalletCount": 6369,
+        "isCheckingAssertions": true,
+        "KYC_ADMIN_ROLE": "0x811427a0fa4932aef534bba16bc34e9b7b2d7d2a79c475fca1765f6cc1faebea",
+        "maxStakeAmountPerLicense": "25000000000000000000000",
+        "nodeLicenseAddress": "0xbc14d8563b248B79689ECbc43bBa53290e0b6b66",
+        "rollupAddress": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
+        "stakeAmountBoostFactors": [125, 150, 175, 200],
+        "stakeAmountTierThresholds": [
+          "1000000000000000000000",
+          "10000000000000000000000",
+          "100000000000000000000000",
+          "1000000000000000000000000"
+        ],
+        "stakingEnabled": true,
+        "xaiAddress": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66"
+      },
+      "derivedName": "Referee4"
     }
   ],
   "eoas": [
     "0x08a361fE449b1371cC21b286d88F69eF6d205809",
     "0x0c71417917D24F4A6A6A55559B98c5cCEcb33F7a",
+    "0x1f097F3f928415cD28e1B2cC6f0F3960f4fCa6fc",
     "0x25EA41f0bDa921a0eBf48291961B1F10b59BC6b8",
     "0x2B95cdD1adD34461Fe737800c0D5A68d556B51b4",
     "0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341",
     "0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7",
     "0x7F68dba68E72a250004812fe04F1123Fca89aBa9",
     "0x7f910C718bAF6698FBF9b56e047ECd52d157bAD6",
+    "0x807daF80b03Fd3C2709FFe0AeBEED617BC0a347c",
     "0xa2E7768789921a36eCFe8c239dBd8213120fFF83",
+    "0xbBE90F6748C82623F130A4486722a436c5a72440",
     "0xC65de812db42Bfa8bd4E0fCf6ffcad8fe3072D44",
     "0xc7185e37A4aB4Af0E77bC08249CD2590AE3E1b51",
     "0xd096e8dE90D34de758B0E0bA4a796eA2e1e272cF",
     "0xd4318D959B46d555143f56E03077028aB94D85d2",
-    "0xD766Abf27CEc67393FF475f7fE969902f5D0A80A"
+    "0xD766Abf27CEc67393FF475f7fE969902f5D0A80A",
+    "0xE529a3271f9CC84B1FE9107ab4764a8dF177782a"
   ],
   "abis": {
     "0x000d8C5A70B8805DF02f409F2715d05B9A63E871": [
@@ -685,11 +827,99 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "0x1F941F7Fb552215af81e6bE87F59578C18783483": [
+      "constructor(address _singleton)"
+    ],
     "0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "0x254954e3F6BD7443444036BeA2d8fE88fdf496c1": [
+      "event Approval(address indexed owner, address indexed operator, bool approved)",
+      "event AssertionCheckingToggled(bool newState)",
+      "event AssertionSubmitted(uint256 indexed challengeId, uint256 indexed nodeLicenseId)",
+      "event ChallengeClosed(uint256 indexed challengeNumber)",
+      "event ChallengeExpired(uint256 indexed challengeId)",
+      "event ChallengeSubmitted(uint256 indexed challengeNumber)",
+      "event ChallengerPublicKeyChanged(bytes newChallengerPublicKey)",
+      "event Initialized(uint8 version)",
+      "event InvalidSubmission(uint256 indexed challengeId, uint256 nodeLicenseId)",
+      "event KycStatusChanged(address indexed wallet, bool isKycApproved)",
+      "event NodeLicenseAddressChanged(address newNodeLicenseAddress)",
+      "event RewardsClaimed(uint256 indexed challengeId, uint256 amount)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RollupAddressChanged(address newRollupAddress)",
+      "event StakedV1(address indexed user, uint256 amount, uint256 totalStaked)",
+      "event StakingEnabled()",
+      "event UnstakeV1(address indexed user, uint256 amount, uint256 totalStaked)",
+      "event UpdateMaxStakeAmount(uint256 prevAmount, uint256 newAmount)",
+      "function CHALLENGER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function KYC_ADMIN_ROLE() view returns (bytes32)",
+      "function addKycWallet(address wallet)",
+      "function addStakingTier(uint256 newThreshold, uint256 newBoostFactor)",
+      "function calculateChallengeEmissionAndTier() view returns (uint256, uint256)",
+      "function challengeCounter() view returns (uint256)",
+      "function challengerPublicKey() view returns (bytes)",
+      "function challenges(uint256) view returns (bool openForSubmissions, bool expiredForRewarding, uint64 assertionId, bytes32 assertionStateRootOrConfirmData, uint64 assertionTimestamp, bytes challengerSignedHash, bytes activeChallengerPublicKey, address rollupUsed, uint256 createdTimestamp, uint256 totalSupplyOfNodesAtChallengeStart, uint256 rewardAmountForClaimers, uint256 amountForGasSubsidy, uint256 numberOfEligibleClaimers, uint256 amountClaimedByClaimers)",
+      "function claimReward(uint256 _nodeLicenseId, uint256 _challengeId)",
+      "function createAssertionHashAndCheckPayout(uint256 _nodeLicenseId, uint256 _challengeId, uint256 _boostFactor, bytes _confirmData, bytes _challengerSignedHash) pure returns (bool, bytes32)",
+      "function enableStaking()",
+      "function esXaiAddress() view returns (address)",
+      "function expireChallengeRewards(uint256 _challengeId)",
+      "function gasSubsidyRecipient() view returns (address)",
+      "function getBoostFactor(uint256 stakedAmount) view returns (uint256)",
+      "function getBoostFactorForKeyId(uint256 _nodeLicenseId) view returns (uint256)",
+      "function getBoostFactorForStaker(address staker) view returns (uint256)",
+      "function getChallenge(uint256 _challengeId) view returns (tuple(bool openForSubmissions, bool expiredForRewarding, uint64 assertionId, bytes32 assertionStateRootOrConfirmData, uint64 assertionTimestamp, bytes challengerSignedHash, bytes activeChallengerPublicKey, address rollupUsed, uint256 createdTimestamp, uint256 totalSupplyOfNodesAtChallengeStart, uint256 rewardAmountForClaimers, uint256 amountForGasSubsidy, uint256 numberOfEligibleClaimers, uint256 amountClaimedByClaimers))",
+      "function getCombinedTotalSupply() view returns (uint256)",
+      "function getKycWalletAtIndex(uint256 index) view returns (address)",
+      "function getKycWalletCount() view returns (uint256)",
+      "function getMaxStakeAmount(uint256 numLicenses) view returns (uint256)",
+      "function getOperatorAtIndex(address owner, uint256 index) view returns (address)",
+      "function getOperatorCount(address owner) view returns (uint256)",
+      "function getOwnerCountForOperator(address operator) view returns (uint256)",
+      "function getOwnerForOperatorAtIndex(address operator, uint256 index) view returns (address)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
+      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
+      "function getSubmissionsForChallenges(uint256[] _challengeIds, uint256 _nodeLicenseId) view returns (tuple(bool submitted, bool claimed, bool eligibleForPayout, uint256 nodeLicenseId, bytes assertionStateRootOrConfirmData)[])",
+      "function getTotalClaims(address owner) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function isApprovedForOperator(address owner, address operator) view returns (bool)",
+      "function isCheckingAssertions() view returns (bool)",
+      "function isKycApproved(address wallet) view returns (bool)",
+      "function maxStakeAmountPerLicense() view returns (uint256)",
+      "function nodeLicenseAddress() view returns (address)",
+      "function removeKycWallet(address wallet)",
+      "function removeStakingTier(uint256 index)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function rollupAddress() view returns (address)",
+      "function rollupAssertionTracker(bytes32) view returns (bool)",
+      "function setApprovalForOperator(address operator, bool approved)",
+      "function setChallengerPublicKey(bytes _challengerPublicKey)",
+      "function setNodeLicenseAddress(address _nodeLicenseAddress)",
+      "function setRollupAddress(address _rollupAddress)",
+      "function stake(uint256 amount)",
+      "function stakeAmountBoostFactors(uint256) view returns (uint256)",
+      "function stakeAmountTierThresholds(uint256) view returns (uint256)",
+      "function stakedAmounts(address) view returns (uint256)",
+      "function stakingEnabled() view returns (bool)",
+      "function submissions(uint256, uint256) view returns (bool submitted, bool claimed, bool eligibleForPayout, uint256 nodeLicenseId, bytes assertionStateRootOrConfirmData)",
+      "function submitAssertionToChallenge(uint256 _nodeLicenseId, uint256 _challengeId, bytes _confirmData)",
+      "function submitChallenge(uint64 _assertionId, uint64 _predecessorAssertionId, bytes32 _confirmData, uint64 _assertionTimestamp, bytes _challengerSignedHash)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function toggleAssertionChecking()",
+      "function unstake(uint256 amount)",
+      "function updateMaxStakePerLicense(uint256 newAmount)",
+      "function updateStakingTier(uint256 index, uint256 newThreshold, uint256 newBoostFactor)",
+      "function xaiAddress() view returns (address)"
     ],
     "0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC": [
       "error BadSequencerMessageNumber(uint256 stored, uint256 received)",
@@ -1020,55 +1250,11 @@
       "function transferExitAndCall(uint256 _exitNum, address _initialDestination, address _newDestination, bytes _newData, bytes _data)",
       "function whitelist() view returns (address)"
     ],
-    "0x8d6C063656b00E5c37CE007C0f99848D58F19d6B": [
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event Initialized(uint8 version)",
-      "event RedemptionCancelled(address indexed user, uint256 indexed index)",
-      "event RedemptionCompleted(address indexed user, uint256 indexed index)",
-      "event RedemptionStarted(address indexed user, uint256 indexed index)",
-      "event RedemptionStatusChanged(bool isActive)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "event WhitelistUpdated(address account, bool isAdded)",
-      "event XaiAddressChanged(address indexed newXaiAddress)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function MINTER_ROLE() view returns (bytes32)",
-      "function addToWhitelist(address account)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function burn(uint256 amount)",
-      "function burnFrom(address account, uint256 amount)",
-      "function cancelRedemption(uint256 index)",
-      "function changeRedemptionStatus(bool isActive)",
-      "function changeXaiAddress(address _newXai)",
-      "function completeRedemption(uint256 index)",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function getRedemptionRequest(address account, uint256 index) view returns (tuple(uint256 amount, uint256 startTime, uint256 duration, bool completed))",
-      "function getRedemptionRequestCount(address account) view returns (uint256)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function getWhitelistCount() view returns (uint256)",
-      "function getWhitelistedAddressAtIndex(uint256 index) view returns (address)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function initialize(address _xai)",
-      "function isWhitelisted(address account) view returns (bool)",
-      "function mint(address to, uint256 amount)",
-      "function name() view returns (string)",
-      "function removeFromWhitelist(address account)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function startRedemption(uint256 amount, uint256 duration)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 amount) returns (bool)",
-      "function transferFrom(address from, address to, uint256 amount) returns (bool)",
-      "function xai() view returns (address)"
+    "0x94F4aBC83eae00b693286B6eDCa09e1D76183C97": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
     ],
     "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1100,7 +1286,67 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "0xb38E2EDda6c31D9972Cac770f3F404CD0D7B55Df": [
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event FoundationBasepointsUpdated(uint256 newBasepoints)",
+      "event Initialized(uint8 version)",
+      "event RedemptionCancelled(address indexed user, uint256 indexed index)",
+      "event RedemptionCompleted(address indexed user, uint256 indexed index)",
+      "event RedemptionStarted(address indexed user, uint256 indexed index)",
+      "event RedemptionStatusChanged(bool isActive)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event WhitelistUpdated(address account, bool isAdded)",
+      "event XaiAddressChanged(address indexed newXaiAddress)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function MINTER_ROLE() view returns (bytes32)",
+      "function addToWhitelist(address account)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function burn(uint256 amount)",
+      "function burnFrom(address account, uint256 amount)",
+      "function cancelRedemption(uint256 index)",
+      "function changeRedemptionStatus(bool isActive)",
+      "function changeXaiAddress(address _newXai)",
+      "function completeRedemption(uint256 index)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function esXaiBurnFoundationBasePoints() view returns (uint256)",
+      "function esXaiBurnFoundationRecipient() view returns (address)",
+      "function getRedemptionRequest(address account, uint256 index) view returns (tuple(uint256 amount, uint256 startTime, uint256 duration, uint256 endTime, bool completed, bool cancelled, uint256[5] __gap))",
+      "function getRedemptionRequestCount(address account) view returns (uint256)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getWhitelistCount() view returns (uint256)",
+      "function getWhitelistedAddressAtIndex(uint256 index) view returns (address)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function initialize(address _esXaiBurnFoundationRecipient, uint256 _esXaiBurnFoundationBasePoints)",
+      "function isWhitelisted(address account) view returns (bool)",
+      "function mint(address to, uint256 amount)",
+      "function name() view returns (string)",
+      "function removeFromWhitelist(address account)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function startRedemption(uint256 amount, uint256 duration)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 amount) returns (bool)",
+      "function transferFrom(address from, address to, uint256 amount) returns (bool)",
+      "function updateFoundationBasepoints(uint256 number)",
+      "function xai() view returns (address)"
+    ],
     "0xb591cE747CF19cF30e11d656EB94134F523A9e77": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0xbc14d8563b248B79689ECbc43bBa53290e0b6b66": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1246,6 +1492,98 @@
       "function zombieAddress(uint256 zombieNum) view returns (address)",
       "function zombieCount() view returns (uint256)",
       "function zombieLatestStakedNode(uint256 zombieNum) view returns (uint64)"
+    ],
+    "0xF208798482F0b12c8767Bc03cC0F145D18BeCe6A": [
+      "event Initialized(uint8 version)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function TRANSFER_ROLE() view returns (bytes32)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize()",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function transferTokens(address token, address recipient, uint256 amount)"
+    ],
+    "0xFCF7248C495d6fd3641eE43F861c48Ebe402c878": [
+      "constructor(address _singleton)"
+    ],
+    "0xfD41041180571C5D371BEA3D9550E55653671198": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0xfD6Bb931D2Ee134E70568ca36584c043cB278734": [
+      "event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId)",
+      "event ApprovalForAll(address indexed owner, address indexed operator, bool approved)",
+      "event ClaimableChanged(address indexed admin, bool newClaimableState)",
+      "event FundsReceiverChanged(address indexed admin, address newFundsReceiver)",
+      "event FundsWithdrawn(address indexed admin, uint256 amount)",
+      "event Initialized(uint8 version)",
+      "event PricingTierSetOrAdded(uint256 index, uint256 price, uint256 quantity)",
+      "event PromoCodeCreated(string promoCode, address recipient)",
+      "event PromoCodeRemoved(string promoCode)",
+      "event ReferralReward(address indexed buyer, address indexed referralAddress, uint256 amount)",
+      "event ReferralRewardPercentagesChanged(uint256 referralDiscountPercentage, uint256 referralRewardPercentage)",
+      "event RefundOccurred(address indexed refundee, uint256 amount)",
+      "event RewardClaimed(address indexed claimer, uint256 amount)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event Transfer(address indexed from, address indexed to, uint256 indexed tokenId)",
+      "event WhitelistAmountRedeemed(address indexed redeemer, uint16 newAmount)",
+      "event WhitelistAmountUpdatedByAdmin(address indexed redeemer, uint16 newAmount)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function approve(address to, uint256 tokenId)",
+      "function balanceOf(address owner) view returns (uint256)",
+      "function claimReferralReward()",
+      "function claimable() view returns (bool)",
+      "function createPromoCode(string _promoCode, address _recipient)",
+      "function fundsReceiver() view returns (address)",
+      "function getApproved(uint256 tokenId) view returns (address)",
+      "function getAverageCost(uint256 _tokenId) view returns (uint256)",
+      "function getMintTimestamp(uint256 _tokenId) view returns (uint256)",
+      "function getPricingTier(uint256 _index) view returns (tuple(uint256 price, uint256 quantity))",
+      "function getPricingTiersLength() view returns (uint256)",
+      "function getPromoCode(string _promoCode) view returns (tuple(address recipient, bool active, uint256 receivedLifetime))",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function isApprovedForAll(address owner, address operator) view returns (bool)",
+      "function maxSupply() view returns (uint256)",
+      "function mint(uint256 _amount, string _promoCode) payable",
+      "function name() view returns (string)",
+      "function ownerOf(uint256 tokenId) view returns (address)",
+      "function price(uint256 _amount, string _promoCode) view returns (uint256)",
+      "function redeemFromWhitelist()",
+      "function referralDiscountPercentage() view returns (uint256)",
+      "function referralRewardPercentage() view returns (uint256)",
+      "function refundNodeLicense(uint256 _tokenId) payable",
+      "function removePromoCode(string _promoCode)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function safeTransferFrom(address from, address to, uint256 tokenId)",
+      "function safeTransferFrom(address from, address to, uint256 tokenId, bytes data)",
+      "function setApprovalForAll(address operator, bool approved)",
+      "function setClaimable(bool _claimable)",
+      "function setFundsReceiver(address _newFundsReceiver)",
+      "function setOrAddPricingTier(uint256 _index, uint256 _price, uint256 _quantity)",
+      "function setReferralPercentages(uint256 _referralDiscountPercentage, uint256 _referralRewardPercentage)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function symbol() view returns (string)",
+      "function tokenByIndex(uint256 index) view returns (uint256)",
+      "function tokenOfOwnerByIndex(address owner, uint256 index) view returns (uint256)",
+      "function tokenURI(uint256 _tokenId) view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transferFrom(address from, address to, uint256 tokenId)",
+      "function updateWhitelistAmounts(address[] _toWhitelist, uint16[] _amounts)",
+      "function whitelistAmounts(address) view returns (uint16)",
+      "function withdrawFunds()"
     ]
   }
 }

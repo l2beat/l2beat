@@ -15,7 +15,6 @@ import {
   adjustRangeForBigQueryCall,
   findConfigurationsToSync,
 } from '../tracked-txs/utils'
-import { getSafeHeight } from '../tracked-txs/utils/getSafeHeight'
 import {
   TrackedTxsConfigRecord,
   TrackedTxsConfigsRepository,
@@ -161,6 +160,10 @@ describe(TrackedTxsIndexer.name, () => {
           ...getMockRuntimeConfigurations()[1],
           untilTimestampExclusive: MIN_TIMESTAMP.add(1, 'days'),
         },
+        {
+          ...getMockRuntimeConfigurations()[2],
+          untilTimestampExclusive: MIN_TIMESTAMP.add(2, 'days'),
+        },
       ]
 
       const databaseEntries: TrackedTxsConfigRecord[] = [
@@ -176,6 +179,11 @@ describe(TrackedTxsIndexer.name, () => {
           ...toRecords(runtimeEntries[1])[0],
           untilTimestampExclusive: undefined,
         }),
+        mockObject<TrackedTxsConfigRecord>({
+          ...toRecords(runtimeEntries[2])[0],
+          lastSyncedTimestamp: MIN_TIMESTAMP.add(3, 'days'),
+          untilTimestampExclusive: MIN_TIMESTAMP.add(3, 'days'),
+        }),
         // rest of the configurations would be considered "toAdd"
       ]
 
@@ -183,7 +191,10 @@ describe(TrackedTxsIndexer.name, () => {
       const stateRepository = getMockStateRepository()
 
       const mockedLivenessUpdater = mockObject<TxUpdaterInterface>({
-        deleteAfter: mockFn(async () => {}),
+        deleteFrom: mockFn(async () => {}),
+      })
+      const mockedL2CostsUpdater = mockObject<TxUpdaterInterface>({
+        deleteFrom: mockFn(async () => {}),
       })
       const mockedL2CostsUpdater = mockObject<TxUpdaterInterface>({
         deleteAfter: mockFn(async () => {}),
@@ -201,10 +212,8 @@ describe(TrackedTxsIndexer.name, () => {
 
       await trackedTxsIndexer.start()
 
-      const { toAdd, toRemove, toTrim } = diffTrackedTxConfigurations(
-        runtimeEntries,
-        databaseEntries,
-      )
+      const { toAdd, toRemove, toChangeUntilTimestamp } =
+        diffTrackedTxConfigurations(runtimeEntries, databaseEntries)
 
       expect(configurationRepository.addMany).toHaveBeenOnlyCalledWith(
         toAdd,
@@ -214,37 +223,38 @@ describe(TrackedTxsIndexer.name, () => {
         toRemove,
         TRX,
       )
-      expect(
-        configurationRepository.setUntilTimestamp,
-      ).toHaveBeenOnlyCalledWith(
-        toTrim[0].id,
-        toTrim[0].untilTimestampExclusive,
+
+      expect(configurationRepository.setUntilTimestamp).toHaveBeenNthCalledWith(
+        1,
+        toChangeUntilTimestamp[0].id,
+        toChangeUntilTimestamp[0].untilTimestampExclusive,
         TRX,
       )
-      expect(mockedLivenessUpdater.deleteAfter).toHaveBeenOnlyCalledWith(
-        toTrim[0].id,
-        toTrim[0].untilTimestampExclusive,
+      expect(configurationRepository.setUntilTimestamp).toHaveBeenNthCalledWith(
+        2,
+        toChangeUntilTimestamp[1].id,
+        toChangeUntilTimestamp[1].untilTimestampExclusive,
+        TRX,
+      )
+      expect(mockedLivenessUpdater.deleteFrom).toHaveBeenOnlyCalledWith(
+        toChangeUntilTimestamp[1].id,
+        toChangeUntilTimestamp[1].untilTimestampExclusive!,
         TRX,
       )
       expect(
         configurationRepository.setLastSyncedTimestamp,
       ).toHaveBeenOnlyCalledWith(
-        toTrim[0].id,
-        toTrim[0].untilTimestampExclusive,
+        toChangeUntilTimestamp[1].id,
+        toChangeUntilTimestamp[1].untilTimestampExclusive!,
         TRX,
       )
 
-      expect(configurationRepository.getAll).toHaveBeenCalledTimes(1)
+      expect(configurationRepository.getAll).toHaveBeenCalledTimes(2)
       expect(stateRepository.runInTransaction).toHaveBeenCalledTimes(1)
 
-      const syncStatus = getSafeHeight(
-        databaseEntries,
-        toAdd,
-        MIN_TIMESTAMP.add(-1, 'days'),
-      )
       expect(stateRepository.setSafeHeight).toHaveBeenOnlyCalledWith(
         trackedTxsIndexer.indexerId,
-        syncStatus,
+        1682899200,
         TRX,
       )
 
@@ -446,6 +456,20 @@ function getMockRuntimeConfigurations(): TrackedTxConfigEntry[] {
         {
           type: 'liveness',
           subtype: 'stateUpdates',
+          id: TrackedTxId.random(),
+        },
+      ],
+    },
+    {
+      formula: 'functionCall',
+      projectId: ProjectId('test3'),
+      address: EthereumAddress.random(),
+      selector: '0x',
+      sinceTimestampInclusive: MIN_TIMESTAMP,
+      uses: [
+        {
+          type: 'liveness',
+          subtype: 'proofSubmissions',
           id: TrackedTxId.random(),
         },
       ],

@@ -100,8 +100,8 @@ export interface TrackedTxsConfig {
     readonly liveness: boolean
     readonly l2costs:
       | {
-          readonly providerUrl: string
-          readonly providerCallsPerMinute?: number
+          readonly ethereumProviderUrl: string
+          readonly ethereumProviderCallsPerMinute?: number
         }
       | false
   }

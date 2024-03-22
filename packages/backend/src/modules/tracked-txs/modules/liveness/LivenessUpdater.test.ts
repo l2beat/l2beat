@@ -18,17 +18,13 @@ const TRX = mockObject<Knex.Transaction>({})
 describe(LivenessUpdater.name, () => {
   describe(LivenessUpdater.prototype.update.name, () => {
     it('skips update if no transactions', async () => {
-      const logger = mockObject<Logger>({
-        debug: () => undefined,
-      })
       const livenessRepo = getMockLivenessRepository()
-      const updater = new LivenessUpdater(livenessRepo, logger)
+      const updater = new LivenessUpdater(livenessRepo, Logger.SILENT)
 
       const transactions: TrackedTxResult[] = []
 
       await updater.update(transactions, TRX)
 
-      expect(logger.debug).toHaveBeenCalled()
       expect(livenessRepo.addMany).not.toHaveBeenCalled()
     })
 
@@ -60,15 +56,15 @@ describe(LivenessUpdater.name, () => {
     })
   })
 
-  describe(LivenessUpdater.prototype.deleteAfter.name, () => {
+  describe(LivenessUpdater.prototype.deleteFrom.name, () => {
     it('calls liveness repo with correct parameters', async () => {
       const livenessRepo = getMockLivenessRepository()
       const updater = new LivenessUpdater(livenessRepo, Logger.SILENT)
 
       const id = TrackedTxId.random()
-      await updater.deleteAfter(id, MIN_TIMESTAMP, TRX)
+      await updater.deleteFrom(id, MIN_TIMESTAMP, TRX)
 
-      expect(livenessRepo.deleteAfter).toHaveBeenNthCalledWith(
+      expect(livenessRepo.deleteFrom).toHaveBeenNthCalledWith(
         1,
         id,
         MIN_TIMESTAMP,
@@ -108,7 +104,7 @@ describe(LivenessUpdater.name, () => {
 
 function getMockLivenessRepository() {
   return mockObject<LivenessRepository>({
-    deleteAfter: async () => 0,
+    deleteFrom: async () => 0,
     runInTransaction: async (fn) => fn(TRX),
     addMany: async () => 0,
   })

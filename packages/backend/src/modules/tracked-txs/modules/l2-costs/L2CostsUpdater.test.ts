@@ -16,81 +16,47 @@ import {
 const MIN_TIMESTAMP = UnixTime.now()
 
 describe(L2CostsUpdater.name, () => {
+  describe(L2CostsUpdater.prototype.update.name, () => {
+    it('skips if no transactions', async () => {
+      const repository = getMockL2CostsRepository()
+      const updater = new L2CostsUpdater(
+        repository,
+        getMockViemRpcClient(),
+        Logger.SILENT,
+      )
+
+      await updater.update([], TRX)
+
+      expect(repository.addMany).not.toHaveBeenCalled()
+    })
+
+    it('transforms and saves to db ', async () => {
+      const repository = getMockL2CostsRepository()
+      const updater = new L2CostsUpdater(
+        repository,
+        getMockViemRpcClient(),
+        Logger.SILENT,
+      )
+      const transactions = getMockTrackedTxResults()
+
+      const mockRecord: L2CostsRecord[] = [
+        mockObject<L2CostsRecord>({
+          txHash: '0x123',
+        }),
+      ]
+
+      updater.addDetailsTransactionsAndTransform =
+        mockFn().resolvesTo(mockRecord)
+
+      await updater.update(transactions, TRX)
+
+      expect(repository.addMany).toHaveBeenNthCalledWith(1, mockRecord, TRX)
+    })
+  })
+
   describe(
     L2CostsUpdater.prototype.addDetailsTransactionsAndTransform.name,
     () => {
-      it('transforms transactions and adds details for tx type 2', async () => {
-        const repository = getMockL2CostsRepository()
-        const updater = new L2CostsUpdater(
-          repository,
-          getMockViemRpcClient(),
-          Logger.SILENT,
-        )
-
-        const transactions = getMockTrackedTxResults()
-
-        const type2Tx = transactions[0]
-
-        const result = await updater.addDetailsTransactionsAndTransform([
-          type2Tx,
-        ])
-
-        const expected: L2CostsRecord[] = [
-          {
-            txHash: type2Tx.hash,
-            timestamp: type2Tx.blockTimestamp,
-            trackedTxId: type2Tx.use.id,
-            data: {
-              type: 2,
-              gasUsed: type2Tx.receiptGasUsed,
-              gasPrice: type2Tx.gasPrice,
-              //  input: 0x00aa00bbff
-              calldataLength: 5,
-              calldataGasUsed: 4 * 2 + 3 * 16,
-            },
-          },
-        ]
-
-        expect(result).toEqual(expected)
-      })
-
-      it('transforms transactions and adds details for tx type 3', async () => {
-        const repository = getMockL2CostsRepository()
-        const updater = new L2CostsUpdater(
-          repository,
-          getMockViemRpcClient(),
-          Logger.SILENT,
-        )
-
-        const transactions = getMockTrackedTxResults()
-
-        const type3Tx = transactions[1]
-
-        const result = await updater.addDetailsTransactionsAndTransform([
-          type3Tx,
-        ])
-
-        const expected: L2CostsRecord[] = [
-          {
-            txHash: type3Tx.hash,
-            timestamp: type3Tx.blockTimestamp,
-            trackedTxId: type3Tx.use.id,
-            data: {
-              type: 3,
-              gasUsed: type3Tx.receiptGasUsed,
-              gasPrice: type3Tx.gasPrice,
-              //  input: 0x
-              calldataLength: 0,
-              calldataGasUsed: 0,
-              blobGasPrice: 10,
-              blobGasUsed: 100,
-            },
-          },
-        ]
-
-        expect(result).toEqual(expected)
-      })
-
       it('transforms transactions and adds details', async () => {
         const repository = getMockL2CostsRepository()
         const updater = new L2CostsUpdater(
@@ -136,12 +102,12 @@ describe(L2CostsUpdater.name, () => {
           },
         ]
 
-        expect(result).toEqual(expected)
+        expect(result).toEqualUnsorted(expected)
       })
     },
   )
 
-  describe(L2CostsUpdater.prototype.deleteAfter.name, () => {
+  describe(L2CostsUpdater.prototype.deleteFrom.name, () => {
     it('calls repository deleteAfter', async () => {
       const repository = getMockL2CostsRepository()
       const updater = new L2CostsUpdater(
@@ -151,9 +117,9 @@ describe(L2CostsUpdater.name, () => {
       )
 
       const id = TrackedTxId.random()
-      await updater.deleteAfter(id, MIN_TIMESTAMP, TRX)
+      await updater.deleteFrom(id, MIN_TIMESTAMP, TRX)
 
-      expect(repository.deleteAfter).toHaveBeenNthCalledWith(
+      expect(repository.deleteFrom).toHaveBeenNthCalledWith(
         1,
         id,
         MIN_TIMESTAMP,
@@ -177,7 +143,7 @@ function getMockViemRpcClient() {
 
 function getMockL2CostsRepository() {
   return mockObject<L2CostsRepository>({
-    deleteAfter: async () => 0,
+    deleteFrom: async () => 0,
     runInTransaction: async (fn) => fn(TRX),
     addMany: async () => 0,
   })

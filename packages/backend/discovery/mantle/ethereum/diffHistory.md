@@ -1,3 +1,51 @@
+Generated with discovered.json: 0xc9d1fbc1a9147a6b42e379d18dc691e2e6e62438
+
+# Diff at Wed, 20 Mar 2024 16:17:11 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@88f881ab370a6b85fd531f2bc620891afd1f41bb block: 19469245
+- current block number: 19477042
+
+## Description
+
+Removed from discovery not utilized old contracts.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19469245 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract TssGroupManager (0x399ca67660B79F7aA8A7Efd5BEF9836A4c19CACF)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TssStakingSlashing (0x78CF48880E9e1b3ab209779c0D8A76f611e53e81)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TssDelegationSlasher (0x910265C29c099eAc87EF6d374b6f3bE45B516EB7)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TssDelegationManager (0xA90FCe37D274e673f3850b835F18790542b1755d)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TssDelegation (0xd4B5E3D46D202C3523C3Ad89dfe74eC272BFC96A)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x69e2aa7bef3e340dd92701d3a1b540b16e9354b4
 
 # Diff at Tue, 19 Mar 2024 14:00:41 GMT:
