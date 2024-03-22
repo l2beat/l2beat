@@ -93,6 +93,8 @@ You can find us to discuss all things Polygon during our [Polygon Office Hours](
 
 ## **Starknet**
 
+### **Starknet Emission and Tokenomics Simulator**
+
 Aleksandar [published a post](https://community.starknet.io/t/starknet-emission-and-tokenomics-simulator/113756) announcing that they developed a streamlit dashboard designed to enhance the understanding of the tokenomics behind STRK and encourage experimentation with various vesting schedules as some portions of the vesting are still not known.
 
 **Discuss with L2BEAT**
