@@ -304,7 +304,7 @@ export const arbitrum: Layer2 = {
         {
           contract: 'ChallengeManager',
           references: [
-            'https://etherscan.io/address/0x1c78B622961f27Ccc2f9BA65E2ba5d5eB301a445#code#F1#L113',
+            'https://etherscan.io/address/0xE129b8Aa61dF65cBDbAE4345eE3fb40168DfD566#code#F1#L119',
           ],
         },
       ],
@@ -315,7 +315,7 @@ export const arbitrum: Layer2 = {
         {
           contract: 'SequencerInbox',
           references: [
-            'https://etherscan.io/address/0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9#code#F1#L206',
+            'https://etherscan.io/address/0x31DA64D19Cd31A19CD09F4070366Fe2144792cf7#code#F1#L361',
           ],
         },
       ],
@@ -357,7 +357,7 @@ export const arbitrum: Layer2 = {
         {
           contract: 'SequencerInbox',
           references: [
-            'https://etherscan.io/address/0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9#code#F1#L125',
+            'https://etherscan.io/address/0x31DA64D19Cd31A19CD09F4070366Fe2144792cf7#code#F1#L290',
             'https://developer.arbitrum.io/sequencer',
           ],
         },
@@ -419,7 +419,7 @@ export const arbitrum: Layer2 = {
         },
         {
           text: 'SequencerInbox.sol#206 - Etherscan source code, addSequencerL2BatchFromOrigin function',
-          href: 'https://etherscan.io/address/0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9#code#F1#L206',
+          href: 'https://etherscan.io/address/0x31DA64D19Cd31A19CD09F4070366Fe2144792cf7#code#F1#L361',
         },
       ],
     },
@@ -441,7 +441,7 @@ export const arbitrum: Layer2 = {
       references: [
         {
           text: 'SequencerInbox.sol#L125 - Etherscan source code, forceInclusion function',
-          href: 'https://etherscan.io/address/0xD03bFe2CE83632F4E618a97299cc91B1335BB2d9#code#F1#L125',
+          href: 'https://etherscan.io/address/0x31DA64D19Cd31A19CD09F4070366Fe2144792cf7#code#F1#L290',
         },
         {
           text: 'Sequencer Isn’t Doing Its Job - Arbitrum documentation',
