@@ -7,7 +7,7 @@ Generated with discovered.json: 0x057ae635feb239a6c79214cf0179838ccbddfcfb
 
 ## Description
 
-Created a new config for the Sygma bridge. Sygma contracts do not 
+Created a new config for the Sygma bridge. Sygma contracts do not
 emit events when new handlers are added, hence it is hard to get
 all the handlers from the discovery - this will need to be fixed
 by having a more sophisticated discovery storage handler

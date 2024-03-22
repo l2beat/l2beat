@@ -143,7 +143,7 @@ export const sygma: Bridge = {
     risks: [
       {
         category: 'Funds can be stolen if',
-        text: 'Admin sets a handler that allows for mismanagement of funds.',
+        text: 'admin sets a handler that allows for mismanagement of funds.',
         isCritical: true,
       },
     ],
