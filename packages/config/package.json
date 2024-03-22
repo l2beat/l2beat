@@ -19,6 +19,7 @@
     "update-socket": "node -r esbuild-register scripts/socket",
     "check-verified-contracts": "node -r esbuild-register scripts/checkVerifiedContracts",
     "tokens": "node -r esbuild-register scripts/tokens/tokens.ts",
+    "tokens:verify": "sh scripts/tokens/verify.sh",
     "coingecko:platforms": "node -r esbuild-register scripts/getCoingeckoPlatforms.ts"
   },
   "dependencies": {
