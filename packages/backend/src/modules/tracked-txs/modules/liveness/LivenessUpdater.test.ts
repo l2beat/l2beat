@@ -19,16 +19,25 @@ describe(LivenessUpdater.name, () => {
   describe(LivenessUpdater.prototype.update.name, () => {
     it('skips update if no transactions', async () => {
       const logger = mockObject<Logger>({
+        error: () => undefined,
+        warn: () => undefined,
         debug: () => undefined,
+        info: () => undefined,
       })
+
       const livenessRepo = getMockLivenessRepository()
-      const updater = new LivenessUpdater(livenessRepo, logger)
+      const updater = new LivenessUpdater(
+        livenessRepo,
+        mockObject<Logger>({
+          for: () => logger,
+        }),
+      )
 
       const transactions: TrackedTxResult[] = []
 
       await updater.update(transactions, TRX)
 
-      expect(logger.debug).toHaveBeenCalled()
+      expect(logger.info).toHaveBeenCalled()
       expect(livenessRepo.addMany).not.toHaveBeenCalled()
     })
 

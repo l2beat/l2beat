@@ -18,14 +18,24 @@ const MIN_TIMESTAMP = UnixTime.now()
 describe(L2CostsUpdater.name, () => {
   describe(L2CostsUpdater.prototype.update.name, () => {
     it('skips if no transactions', async () => {
+      const logger = mockObject<Logger>({
+        error: () => undefined,
+        warn: () => undefined,
+        debug: () => undefined,
+        info: () => undefined,
+      })
       const repository = getMockL2CostsRepository()
       const updater = new L2CostsUpdater(
         repository,
         getMockViemRpcClient(),
-        Logger.SILENT,
+        mockObject<Logger>({
+          for: () => logger,
+        }),
       )
+
       await updater.update([], TRX)
 
+      expect(logger.info).toHaveBeenCalled()
       expect(repository.addMany).not.toHaveBeenCalled()
     })
 
