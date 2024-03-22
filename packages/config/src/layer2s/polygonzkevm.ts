@@ -432,8 +432,7 @@ export const polygonzkevm: Layer2 = {
   ),
   technology: {
     newCryptography: {
-      ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
-      ...NEW_CRYPTOGRAPHY.ZK_STARKS,
+      ...NEW_CRYPTOGRAPHY.ZK_BOTH,
       references: [
         {
           text: 'PolygonZkEVMEtrog.sol - Etherscan source code, verifyBatches function',

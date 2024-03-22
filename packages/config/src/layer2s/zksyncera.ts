@@ -378,7 +378,7 @@ export const zksyncera: Layer2 = {
   ),
   technology: {
     newCryptography: {
-      ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
+      ...NEW_CRYPTOGRAPHY.ZK_BOTH,
     },
     dataAvailability: {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
