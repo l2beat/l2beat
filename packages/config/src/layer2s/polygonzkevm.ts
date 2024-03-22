@@ -174,7 +174,10 @@ export const polygonzkevm: Layer2 = {
     },
     trackedTxs: [
       {
-        uses: [{ type: 'liveness', subtype: 'batchSubmissions' }],
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
@@ -188,7 +191,10 @@ export const polygonzkevm: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subtype: 'batchSubmissions' }],
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
@@ -220,6 +226,10 @@ export const polygonzkevm: Layer2 = {
             type: 'liveness',
             subtype: 'stateUpdates',
           },
+          {
+            type: 'l2costs',
+            subtype: 'stateUpdates',
+          },
         ],
         query: {
           formula: 'functionCall',
@@ -237,6 +247,10 @@ export const polygonzkevm: Layer2 = {
         uses: [
           {
             type: 'liveness',
+            subtype: 'stateUpdates',
+          },
+          {
+            type: 'l2costs',
             subtype: 'stateUpdates',
           },
         ],

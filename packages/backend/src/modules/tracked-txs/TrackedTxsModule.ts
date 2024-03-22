@@ -11,6 +11,7 @@ import {
   ApplicationModuleWithIndexer,
 } from '../ApplicationModule'
 import { HourlyIndexer } from './HourlyIndexer'
+import { createL2CostsModule } from './modules/l2-costs/L2CostsModule'
 import { createLivenessModule } from './modules/liveness/LivenessModule'
 import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsClient } from './TrackedTxsClient'
@@ -46,10 +47,16 @@ export function createTrackedTxsModule(
     peripherals,
     clock,
   )
-  const subModules: (ApplicationModule | undefined)[] = [livenessModule]
+  const l2costsModule = createL2CostsModule(config, logger, peripherals)
+
+  const subModules: (ApplicationModule | undefined)[] = [
+    livenessModule,
+    l2costsModule,
+  ]
 
   const updaters = {
     liveness: livenessModule?.updater,
+    l2costs: l2costsModule?.updater,
   }
 
   const trackedTxsIndexer = new TrackedTxsIndexer(
