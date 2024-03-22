@@ -164,7 +164,10 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
           ? undefined
           : [
               {
-                uses: [{ type: 'liveness', subtype: 'batchSubmissions' }],
+                uses: [
+                  { type: 'liveness', subtype: 'batchSubmissions' },
+                  { type: 'l2costs', subtype: 'batchSubmissions' },
+                ],
                 query: {
                   formula: 'transfer',
                   from: sequencerAddress,
@@ -173,7 +176,10 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
                 },
               },
               {
-                uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
+                uses: [
+                  { type: 'liveness', subtype: 'stateUpdates' },
+                  { type: 'l2costs', subtype: 'stateUpdates' },
+                ],
                 query: {
                   formula: 'functionCall',
                   address: templateVars.l2OutputOracle.address,
