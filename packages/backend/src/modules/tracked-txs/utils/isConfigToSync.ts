@@ -12,16 +12,6 @@ export function isConfigToSync(
   const { lastSyncedTimestamp } = databaseEntry
   const { sinceTimestampInclusive, untilTimestampExclusive } = configEntry
 
-  // config starts inside the range to sync - skip config, split the range
-  if (sinceTimestampInclusive.inExclusiveRange(from, to)) {
-    return { include: false, syncTo: sinceTimestampInclusive }
-  }
-
-  // config starts after the range - skip config
-  if (sinceTimestampInclusive.gte(to)) {
-    return { include: false }
-  }
-
   // untilTimestamp set and config synced to it - skip config
   if (
     untilTimestampExclusive &&
@@ -43,6 +33,16 @@ export function isConfigToSync(
 
   // config synced - skip config
   if (lastSyncedTimestamp?.gte(to)) {
+    return { include: false }
+  }
+
+  // config starts inside the range to sync - skip config, split the range
+  if (sinceTimestampInclusive.inExclusiveRange(from, to)) {
+    return { include: false, syncTo: sinceTimestampInclusive }
+  }
+
+  // config starts after the range - skip config
+  if (sinceTimestampInclusive.gte(to)) {
     return { include: false }
   }
 

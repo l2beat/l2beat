@@ -1,163 +1,99 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { UnixTime } from '@l2beat/shared-pure'
+import { expect, mockObject } from 'earl'
 
-import {
-  trackedTxConfigEntryToRecord,
-  TrackedTxsConfigRecord,
-} from '../repositories/TrackedTxsConfigsRepository'
-import { TrackedTxId } from '../types/TrackedTxId'
-import { TrackedTxConfigEntry } from '../types/TrackedTxsConfig'
+import { TrackedTxsConfigRecord } from '../repositories/TrackedTxsConfigsRepository'
 import { getSafeHeight } from './getSafeHeight'
 
 const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2021-01-01'))
 const NOW = UnixTime.fromDate(new Date('2023-01-01'))
 
 describe(getSafeHeight.name, () => {
-  it('database and toAdd are empty', () => {
+  it('returns minTimestamp if database is empty', () => {
     const databaseEntries: TrackedTxsConfigRecord[] = []
-    const toAdd: TrackedTxConfigEntry[] = []
 
-    const result = getSafeHeight(
-      databaseEntries,
-      configurationsToRecords(toAdd),
-      MIN_TIMESTAMP,
-    )
+    const result = getSafeHeight(databaseEntries, MIN_TIMESTAMP)
 
     expect(result).toEqual(MIN_TIMESTAMP.toNumber())
   })
 
-  it('database is empty, toAdd has one entries', () => {
-    const databaseEntries: TrackedTxsConfigRecord[] = []
-    const sinceTimestamp = MIN_TIMESTAMP.add(365, 'days')
-    const toAdd: TrackedTxConfigEntry[] = [getMockConfiguration(sinceTimestamp)]
-
-    const result = getSafeHeight(
-      databaseEntries,
-      configurationsToRecords(toAdd),
-      MIN_TIMESTAMP,
-    )
-
-    expect(result).toEqual(sinceTimestamp.toNumber())
-  })
-
-  it('database has entries, toAdd is empty', () => {
+  it('returns minTimestamp if no applicable timestamps', () => {
     const databaseEntries: TrackedTxsConfigRecord[] = [
-      getMockRecord(MIN_TIMESTAMP, NOW),
+      mockDatabaseEntry({
+        lastSyncedTimestamp: NOW,
+        untilTimestampExclusive: NOW,
+      }),
+      mockDatabaseEntry({
+        lastSyncedTimestamp: NOW.add(-5, 'hours'),
+        untilTimestampExclusive: NOW.add(-5, 'hours'),
+      }),
     ]
-    const toAdd: TrackedTxConfigEntry[] = []
 
-    const result = getSafeHeight(
-      databaseEntries,
-      configurationsToRecords(toAdd),
-      MIN_TIMESTAMP,
-    )
-
-    expect(result).toEqual(NOW.toNumber())
-  })
-
-  it('database & toAdd have entries', () => {
-    const databaseEntries: TrackedTxsConfigRecord[] = [
-      getMockRecord(MIN_TIMESTAMP, NOW),
-    ]
-    const sinceTimestamp = MIN_TIMESTAMP.add(365, 'days')
-    const toAdd: TrackedTxConfigEntry[] = [getMockConfiguration(sinceTimestamp)]
-
-    const result = getSafeHeight(
-      databaseEntries,
-      configurationsToRecords(toAdd),
-      MIN_TIMESTAMP,
-    )
-
-    expect(result).toEqual(sinceTimestamp.toNumber())
-  })
-
-  it('database entries with undefined lastSyncedTimestamp use sinceTimestamp', () => {
-    const sinceTimestamp = MIN_TIMESTAMP.add(365, 'days')
-
-    const databaseEntries: TrackedTxsConfigRecord[] = [
-      getMockRecord(sinceTimestamp, undefined),
-    ]
-    const toAdd: TrackedTxConfigEntry[] = []
-
-    const result = getSafeHeight(
-      databaseEntries,
-      configurationsToRecords(toAdd),
-      MIN_TIMESTAMP,
-    )
-
-    expect(result).toEqual(sinceTimestamp.toNumber())
-  })
-
-  it('earliest timestamp is older than minimum timestamp', () => {
-    const databaseEntries: TrackedTxsConfigRecord[] = [
-      getMockRecord(MIN_TIMESTAMP, NOW),
-    ]
-    const sinceTimestamp = MIN_TIMESTAMP.add(-1, 'hours')
-    const toAdd: TrackedTxConfigEntry[] = [getMockConfiguration(sinceTimestamp)]
-
-    const result = getSafeHeight(
-      databaseEntries,
-      configurationsToRecords(toAdd),
-      MIN_TIMESTAMP,
-    )
+    const result = getSafeHeight(databaseEntries, MIN_TIMESTAMP)
 
     expect(result).toEqual(MIN_TIMESTAMP.toNumber())
   })
 
-  it('synced archived configuration does not affect safe height', () => {
+  it('return minTimestamp if earliestLastSyncedTimestamp is before minTimestamp', () => {
     const databaseEntries: TrackedTxsConfigRecord[] = [
+      mockDatabaseEntry({
+        lastSyncedTimestamp: MIN_TIMESTAMP.add(-5, 'hours'),
+        untilTimestampExclusive: MIN_TIMESTAMP.add(-3, 'hours'),
+      }),
+      mockDatabaseEntry({
+        lastSyncedTimestamp: MIN_TIMESTAMP.add(-10, 'hours'),
+      }),
+    ]
+
+    const result = getSafeHeight(databaseEntries, MIN_TIMESTAMP)
+
+    expect(result).toEqual(MIN_TIMESTAMP.toNumber())
+  })
+
+  it('returns earliestLastSyncedTimestamp', () => {
+    const cases = [
+      // sinceTimestampInclusive is earlier than lastSyncedTimestamp
       {
-        ...getMockRecord(MIN_TIMESTAMP, NOW),
-        untilTimestampExclusive: NOW.add(-7, 'days'),
-        lastSyncedTimestamp: NOW.add(-7, 'days'),
+        entries: [
+          mockDatabaseEntry({
+            lastSyncedTimestamp: NOW.add(-5, 'hours'),
+            untilTimestampExclusive: NOW.add(-3, 'hours'),
+          }),
+          mockDatabaseEntry({
+            sinceTimestampInclusive: NOW.add(-20, 'days'),
+            lastSyncedTimestamp: undefined,
+          }),
+        ],
+        result: NOW.add(-20, 'days'),
       },
+      // lastSyncedTimestamp is earlier than sinceTimestampInclusive
       {
-        ...getMockRecord(MIN_TIMESTAMP, NOW),
+        entries: [
+          mockDatabaseEntry({
+            lastSyncedTimestamp: NOW.add(-24, 'hours'),
+            untilTimestampExclusive: NOW.add(-21, 'hours'),
+          }),
+          mockDatabaseEntry({
+            sinceTimestampInclusive: NOW.add(-5, 'hours'),
+            lastSyncedTimestamp: undefined,
+          }),
+        ],
+        result: NOW.add(-24, 'hours'),
       },
     ]
 
-    const result = getSafeHeight(databaseEntries, [], MIN_TIMESTAMP)
-
-    expect(result).toEqual(NOW.toNumber())
+    for (const { entries, result } of cases) {
+      const safeHeight = getSafeHeight(entries, MIN_TIMESTAMP)
+      expect(safeHeight).toEqual(result.toNumber())
+    }
   })
 })
 
-function getMockConfiguration(
-  sinceTimestampInclusive: UnixTime,
-): TrackedTxConfigEntry {
-  return {
-    sinceTimestampInclusive,
-    // the rest of params are irrelevant to the tests
-    projectId: ProjectId('project1'),
-    formula: 'transfer',
-    from: EthereumAddress.random(),
-    to: EthereumAddress.random(),
-    uses: [
-      {
-        type: 'liveness',
-        subtype: 'batchSubmissions',
-        id: TrackedTxId.random(),
-      },
-    ],
-  }
+function mockDatabaseEntry(
+  entry?: Partial<TrackedTxsConfigRecord>,
+): TrackedTxsConfigRecord {
+  return mockObject<TrackedTxsConfigRecord>({
+    untilTimestampExclusive: undefined,
+    lastSyncedTimestamp: undefined,
+    ...entry,
+  })
 }
-
-const getMockRecord = (
-  sinceTimestampInclusive: UnixTime,
-  lastSyncedTimestamp: UnixTime | undefined,
-): TrackedTxsConfigRecord => {
-  const { projectId, uses } = getMockConfiguration(sinceTimestampInclusive)
-  return {
-    sinceTimestampInclusive,
-    lastSyncedTimestamp,
-    // the rest of params are irrelevant to the tests
-    id: uses[0].id,
-    projectId,
-    debugInfo: '',
-    type: uses[0].type,
-    subtype: uses[0].subtype,
-  }
-}
-
-const configurationsToRecords = (configs: TrackedTxConfigEntry[]) =>
-  configs.flatMap((c) => c.uses.map((u) => trackedTxConfigEntryToRecord(c, u)))
