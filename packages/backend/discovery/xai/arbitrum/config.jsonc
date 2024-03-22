@@ -144,7 +144,7 @@
         "getKycWalletAtIndex",
         "getCombinedTotalSupply"
       ],
-      "ignoreInWatchMode": ["challengeCounter","getKycWalletCount"]
+      "ignoreInWatchMode": ["challengeCounter", "getKycWalletCount"]
     },
     "NodeLicenseRegistry": {
       "ignoreMethods": ["getPricingTier", "tokenByIndex"],
