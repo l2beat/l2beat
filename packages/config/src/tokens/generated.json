@@ -647,6 +647,21 @@
       "formula": "locked"
     },
     {
+      "id": "cbeth-coinbase-wrapped-staked-eth",
+      "name": "Coinbase Wrapped Staked ETH",
+      "coingeckoId": "coinbase-wrapped-staked-eth",
+      "address": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
+      "symbol": "cbETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1643901537,
+      "coingeckoListingTimestamp": 1661385600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/27008/large/cbeth.png?1709186989",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "cet-coinex-token",
       "name": "CoinEx Token",
       "coingeckoId": "coinex-token",
@@ -1601,6 +1616,21 @@
       "coingeckoListingTimestamp": 1603238400,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/12882/large/Secondary_Symbol.png?1696512670",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "iusd-izumi-bond-usd",
+      "name": "iZUMi Bond USD",
+      "coingeckoId": "izumi-bond-usd",
+      "address": "0x0A3BB08b3a15A19b4De82F8AcFc862606FB69A2D",
+      "symbol": "iUSD",
+      "decimals": 18,
+      "deploymentTimestamp": 1650533581,
+      "coingeckoListingTimestamp": 1651708800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/25388/large/iusd-logo-symbol-10k%E5%A4%A7%E5%B0%8F.png?1696524521",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"
@@ -2816,6 +2846,21 @@
       "coingeckoListingTimestamp": 1669852800,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/28285/large/sfrxETH_icon.png?1696527285",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "susde-staked-usde",
+      "name": "Staked USDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
+      "symbol": "sUSDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1699979567,
+      "coingeckoListingTimestamp": 1710979200,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33669/large/photo_2023-12-14_17-00-20.jpg?1702696035",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"

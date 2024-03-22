@@ -1,3 +1,5 @@
+import { ScalingProjectRisk } from './ScalingProjectRisk'
+
 type CategoryTitle =
   | 'ZK Circuits'
   | 'Prover Architecture'
@@ -6,6 +8,7 @@ type CategoryTitle =
 type ScalingProjectStateValidationCategory = {
   title: CategoryTitle
   description: string
+  risks?: ScalingProjectRisk[]
 }
 
 export interface ScalingProjectStateValidation {

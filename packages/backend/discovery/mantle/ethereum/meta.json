@@ -97,16 +97,6 @@
       }
     },
     {
-      "name": "AssertionMap",
-      "values": {
-        "rollupAddress": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "BLSRegistry",
       "values": {
         "NUMBER_OF_QUORUMS": {
@@ -175,16 +165,6 @@
           "type": null
         },
         "strategiesConsideredAndMultipliersLength": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "BondManager",
-      "values": {
-        "libAddressManager": {
           "description": null,
           "severity": null,
           "type": null
@@ -632,76 +612,6 @@
       }
     },
     {
-      "name": "GnosisSafe",
-      "values": {
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "GnosisSafe",
-      "values": {
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "InvestmentManager",
       "values": {
         "DEPOSIT_TYPEHASH": {
@@ -749,22 +659,77 @@
     {
       "name": "L1CrossDomainMessenger",
       "values": {
-        "getPauseOwner": {
+        "HASH_MESSAGE_BASE_GAS": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "libAddressManager": {
+        "HASH_MESSAGE_GAS_PER_BYTE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "owner": {
+        "L1_MNT_ADDRESS": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "paused": {
+        "MESSAGE_VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_GAS_CALLDATA_OVERHEAD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OTHER_MESSENGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PORTAL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RELAY_CALL_OVERHEAD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RELAY_CONSTANT_OVERHEAD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RELAY_GAS_CHECK_BUFFER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RELAY_RESERVED_GAS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messageNonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
           "description": null,
           "severity": null,
           "type": null
@@ -834,7 +799,17 @@
     {
       "name": "L1StandardBridge",
       "values": {
-        "l1MantleAddress": {
+        "L1_MNT_ADDRESS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MESSENGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OTHER_BRIDGE": {
           "description": null,
           "severity": null,
           "type": null
@@ -845,6 +820,81 @@
           "type": null
         },
         "messenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L2OutputOracle",
+      "values": {
+        "CHALLENGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FINALIZATION_PERIOD_SECONDS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L2_BLOCK_TIME": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROPOSER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SUBMISSION_INTERVAL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "deletedOutputs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestBlockNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestOutputIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nextBlockNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nextOutputIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "startingBlockNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "startingTimestamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
           "description": null,
           "severity": null,
           "type": null
@@ -945,6 +995,51 @@
       "name": "MantleTokenProxyAdmin",
       "values": {
         "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OptimismPortal",
+      "values": {
+        "GUARDIAN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L1_MNT_ADDRESS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L2_ORACLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SYSTEM_CONFIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2Sender": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "params": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
           "description": null,
           "severity": null,
           "type": null
@@ -1054,6 +1149,26 @@
     {
       "name": "ProxyAdmin",
       "values": {
+        "addressManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isUpgrading": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
         "owner": {
           "description": null,
           "severity": null,
@@ -1095,96 +1210,6 @@
           "type": null
         },
         "permissionPerson": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "Rollup",
-      "values": {
-        "assertions": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "baseStakeAmount": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "challengeCtx": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "confirmedInboxSize": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "currentRequiredStake": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "lastConfirmedAssertionID": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "lastCreatedAssertionID": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "lastResolvedAssertionID": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "libAddressManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "minimumAssertionPeriod": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "numStakers": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "operatorslist": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "stakeToken": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "stakerslist": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "verifier": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "zombies": {
           "description": null,
           "severity": null,
           "type": null
@@ -1242,24 +1267,44 @@
       }
     },
     {
-      "name": "TssDelegation",
+      "name": "SystemConfig",
       "values": {
-        "DELEGATION_TYPEHASH": {
+        "UNSAFE_BLOCK_SIGNER_SLOT": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "DOMAIN_SEPARATOR": {
+        "VERSION": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "DOMAIN_TYPEHASH": {
+        "baseFee": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "delegationManager": {
+        "batcherHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "gasLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minimumGasLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "opStackDA": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "overhead": {
           "description": null,
           "severity": null,
           "type": null
@@ -1269,292 +1314,27 @@
           "severity": null,
           "type": null
         },
-        "paused": {
+        "resourceConfig": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "stakingSlash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "TssDelegationManager",
-      "values": {
-        "DEPOSIT_TYPEHASH": {
+        "scalar": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "DOMAIN_SEPARATOR": {
+        "sequencerInbox": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "DOMAIN_TYPEHASH": {
+        "unsafeBlockSigner": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "REASONABLE_STAKES_UPDATE_PERIOD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "WITHDRAWAL_WAITING_PERIOD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "delegation": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "delegationSlasher": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "minStakeAmount": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "stakingSlash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "tssGroupManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "TssDelegationSlasher",
-      "values": {
-        "delegation": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "investmentManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "TssGroupManager",
-      "values": {
-        "getTssGroupInfo": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getTssGroupMembers": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getTssGroupUnJailMembers": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getTssInactiveGroupInfo": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "inActiveIsEmpty": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "stakingSlash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "TssStakingSlashing",
-      "values": {
-        "delegation": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "delegationManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "explanation": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getQuitRequestList": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getSlashingParams": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isSetParam": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "messenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "quitRequestList": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "regulatoryAccount": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "slashAmount": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalShares": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "tssDelegationContract": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "tssDelegationManagerContract": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "tssGroupContract": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "tssManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "underlyingToken": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "VerifierEntry",
-      "values": {
-        "blockFinalizationVerifier": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "blockInitiationVerifier": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "callOpVerifier": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "environmentalOpVerifier": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "interTxVerifier": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "invalidOpVerifier": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "memoryOpVerifier": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "stackOpVerifier": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "storageOpVerifier": {
+        "version": {
           "description": null,
           "severity": null,
           "type": null

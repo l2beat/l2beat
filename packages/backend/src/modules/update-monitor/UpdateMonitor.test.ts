@@ -193,11 +193,11 @@ describe(UpdateMonitor.name, () => {
           ['project-a']: [
             {
               chainName: 'ethereum',
-              severityCounts: { low: 0, medium: 0, high: 0, unknown: 0 },
+              severityCounts: { low: 0, medium: 0, high: 0, unknown: 2 },
             },
             {
               chainName: 'arbitrum',
-              severityCounts: { low: 0, medium: 0, high: 0, unknown: 0 },
+              severityCounts: { low: 0, medium: 0, high: 0, unknown: 2 },
             },
           ],
         },
@@ -811,11 +811,11 @@ describe(UpdateMonitor.name, () => {
         [PROJECT_A]: [
           {
             chainName: 'ethereum',
-            severityCounts: { low: 0, medium: 0, high: 0, unknown: 0 },
+            severityCounts: { low: 0, medium: 0, high: 0, unknown: 2 },
           },
           {
             chainName: 'arbitrum',
-            severityCounts: { low: 0, medium: 0, high: 0, unknown: 0 },
+            severityCounts: { low: 0, medium: 0, high: 0, unknown: 2 },
           },
         ],
       })

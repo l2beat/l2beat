@@ -62,6 +62,8 @@ export interface ApiConfig {
 export interface DatabaseConfig {
   readonly connection: Knex.Config['connection']
   readonly freshStart: boolean
+  readonly enableQueryLogging: boolean
+  readonly requiredMajorVersion?: number
   readonly connectionPoolSize: {
     min: number
     max: number
@@ -96,6 +98,12 @@ export interface TrackedTxsConfig {
   readonly minTimestamp: UnixTime
   readonly uses: {
     readonly liveness: boolean
+    readonly l2costs:
+      | {
+          readonly ethereumProviderUrl: string
+          readonly ethereumProviderCallsPerMinute?: number
+        }
+      | false
   }
 }
 
