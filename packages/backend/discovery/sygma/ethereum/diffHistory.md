@@ -1,13 +1,16 @@
-Generated with discovered.json: 0x0c4b4774e142568784bd929ed02467ae249f0281
+Generated with discovered.json: 0x057ae635feb239a6c79214cf0179838ccbddfcfb
 
-# Diff at Thu, 21 Mar 2024 10:58:30 GMT:
+# Diff at Fri, 22 Mar 2024 08:18:53 GMT:
 
 - author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
-- current block number: 19482595
+- current block number: 19488926
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Created a new config for the Sygma bridge. Sygma contracts do not 
+emit events when new handlers are added, hence it is hard to get
+all the handlers from the discovery - this will need to be fixed
+by having a more sophisticated discovery storage handler
 
 ## Initial discovery
 
@@ -19,7 +22,19 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract Permissionless Generic Handler (0x31282123E7bcd947e2c1Bc364d564839574fAdCD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract Bridge (0x4D878E8Fb90178588Cda4cf1DCcdC9a6d2757089)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BasicFeeHandler (0x9f9778DA7c1D0AbE148314d6C1EA6E0A93C151C7)
     +++ description: None
 ```
 
