@@ -2326,6 +2326,21 @@
       "formula": "locked"
     },
     {
+      "id": "phala-network",
+      "name": "Phala",
+      "coingeckoId": "pha",
+      "address": "0x6c5bA91642F10282b576d91922Ae6448C9d52f4E",
+      "symbol": "PHA",
+      "decimals": 18,
+      "deploymentTimestamp": 1588271785,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12451/standard/phala.png?1696512270",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "soul-phantasma-stake",
       "name": "Phantasma Stake",
       "coingeckoId": "phantasma",
