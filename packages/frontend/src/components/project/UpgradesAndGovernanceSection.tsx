@@ -36,7 +36,7 @@ export function UpgradesAndGovernanceSection(
           </figcaption>
         </figure>
       )}
-      <Markdown className="text-lg leading-snug text-gray-850 dark:text-gray-400">
+      <Markdown className="leading-snug text-gray-850 dark:text-gray-400 md:text-lg">
         {props.content}
       </Markdown>
     </ProjectDetailsSection>
