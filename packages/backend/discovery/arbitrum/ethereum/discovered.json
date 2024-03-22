@@ -1,8 +1,8 @@
 {
   "name": "arbitrum",
   "chain": "ethereum",
-  "blockNumber": 19477456,
-  "configHash": "0xe5caa9bd32444cb8d2f34cfb5979ef68ffa6a50c09ac8919a82916fc50893d57",
+  "blockNumber": 19488784,
+  "configHash": "0x58845971c88ed63a11f0d4e941ef033ab0419e507f3c019ed4bf585f23e94458",
   "version": 3,
   "contracts": [
     {
@@ -120,7 +120,7 @@
       "implementations": ["0x31DA64D19Cd31A19CD09F4070366Fe2144792cf7"],
       "sinceTimestamp": 1661457944,
       "values": {
-        "batchCount": 581260,
+        "batchCount": 581742,
         "batchPosterManager": "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
@@ -141,7 +141,7 @@
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 1454965,
+        "totalDelayedMessagesRead": 1456644,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -326,12 +326,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 12583,
+        "firstUnresolvedNode": 12621,
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isERC20Enabled": false,
         "lastStakeBlock": 15447818,
-        "latestConfirmed": 12582,
-        "latestNodeCreated": 12736,
+        "latestConfirmed": 12620,
+        "latestNodeCreated": 12774,
         "loserStakeEscrow": "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -490,11 +490,11 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 1454968,
+        "delayedMessageCount": 1456655,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 581260,
-        "sequencerReportedSubMessageCount": 170201467
+        "sequencerMessageCount": 581742,
+        "sequencerReportedSubMessageCount": 170747511
       },
       "derivedName": "Bridge"
     },
@@ -717,7 +717,7 @@
       "derivedName": "L1CustomGateway"
     },
     {
-      "name": "GnosisSafe",
+      "name": "BatchPosterManagerMultisig",
       "address": "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
       "upgradeability": {
         "type": "gnosis safe",
@@ -740,7 +740,8 @@
         "getThreshold": 4,
         "nonce": 0,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "L1DaiGateway",

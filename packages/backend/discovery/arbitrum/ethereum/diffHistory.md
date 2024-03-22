@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xb86da900824f59e75d83d04042b810b09b1ab5ee
+Generated with discovered.json: 0x3ea08e093c4fc78a79b685a42dbbadc7258c49c0
 
-# Diff at Wed, 20 Mar 2024 17:41:29 GMT:
+# Diff at Fri, 22 Mar 2024 07:51:09 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@a85edd8605f2795efbd4c0600ce9438f7e6129b0 block: 19419824
-- current block number: 19477456
+- comparing to: main@173befb1ef4ba15605c92f5f89227f2ffd2af3eb block: 19419824
+- current block number: 19488784
 
 ## Description
 
@@ -186,7 +186,7 @@ https://forum.arbitrum.foundation/t/aip-arbos-version-20-atlas/20957
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B)
+    contract BatchPosterManagerMultisig (0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B)
     +++ description: None
 ```
 
@@ -199,7 +199,25 @@ https://forum.arbitrum.foundation/t/aip-arbos-version-20-atlas/20957
 ## Source code changes
 
 ```diff
-.../ChallengeManager/implementation/meta.txt       |   2 +-
+.../implementation/contracts/GnosisSafe.sol        | 422 +++++++++++++++
+ .../implementation/contracts/base/Executor.sol     |  27 +
+ .../contracts/base/FallbackManager.sol             |  53 ++
+ .../implementation/contracts/base/GuardManager.sol |  50 ++
+ .../contracts/base/ModuleManager.sol               | 133 +++++
+ .../implementation/contracts/base/OwnerManager.sol | 149 ++++++
+ .../implementation/contracts/common/Enum.sol       |   8 +
+ .../contracts/common/EtherPaymentFallback.sol      |  13 +
+ .../contracts/common/SecuredTokenTransfer.sol      |  35 ++
+ .../contracts/common/SelfAuthorized.sol            |  16 +
+ .../contracts/common/SignatureDecoder.sol          |  36 ++
+ .../implementation/contracts/common/Singleton.sol  |  11 +
+ .../contracts/common/StorageAccessible.sol         |  47 ++
+ .../contracts/external/GnosisSafeMath.sol          |  54 ++
+ .../contracts/interfaces/ISignatureValidator.sol   |  20 +
+ .../implementation/meta.txt                        |   2 +
+ .../proxy/GnosisSafeProxy.sol                      | 155 ++++++
+ .../BatchPosterManagerMultisig/proxy/meta.txt      |   2 +
+ .../ChallengeManager/implementation/meta.txt       |   2 +-
  .../implementation/src/bridge/IBridge.sol          |  48 +-
  .../src/bridge/IDelayedMessageProvider.sol         |   2 +-
  .../implementation/src/bridge/IOwnable.sol         |   2 +-
@@ -226,24 +244,6 @@ https://forum.arbitrum.foundation/t/aip-arbos-version-20-atlas/20957
  .../implementation/src/state/Value.sol             |   2 +-
  .../implementation/src/state/ValueArray.sol        |   2 +-
  .../implementation/src/state/ValueStack.sol        |   2 +-
- .../implementation/contracts/GnosisSafe.sol        | 422 +++++++++++++++
- .../implementation/contracts/base/Executor.sol     |  27 +
- .../contracts/base/FallbackManager.sol             |  53 ++
- .../implementation/contracts/base/GuardManager.sol |  50 ++
- .../contracts/base/ModuleManager.sol               | 133 +++++
- .../implementation/contracts/base/OwnerManager.sol | 149 ++++++
- .../implementation/contracts/common/Enum.sol       |   8 +
- .../contracts/common/EtherPaymentFallback.sol      |  13 +
- .../contracts/common/SecuredTokenTransfer.sol      |  35 ++
- .../contracts/common/SelfAuthorized.sol            |  16 +
- .../contracts/common/SignatureDecoder.sol          |  36 ++
- .../implementation/contracts/common/Singleton.sol  |  11 +
- .../contracts/common/StorageAccessible.sol         |  47 ++
- .../contracts/external/GnosisSafeMath.sol          |  54 ++
- .../contracts/interfaces/ISignatureValidator.sol   |  20 +
- .../.code/GnosisSafe/implementation/meta.txt       |   2 +
- .../.code/GnosisSafe/proxy/GnosisSafeProxy.sol     | 155 ++++++
- .../ethereum/.code/GnosisSafe/proxy/meta.txt       |   2 +
  .../OneStepProofEntry/meta.txt                     |   2 +-
  .../OneStepProofEntry/src/bridge/IBridge.sol       |  48 +-
  .../src/bridge/IDelayedMessageProvider.sol         |   2 +-

@@ -552,6 +552,9 @@ export const arbitrum: Layer2 = {
       description:
         'Central actors allowed to submit transaction batches to L1.',
     },
+    ...discovery.getMultisigPermission(
+      'BatchPosterManagerMultisig',
+      'It can update whether an address is authorized to be a batch poster at the sequencer inbox. The ArbitrumProxyAdmin retains the ability to update the batch poster manager (along with any batch posters).'),
   ],
   contracts: {
     addresses: [
