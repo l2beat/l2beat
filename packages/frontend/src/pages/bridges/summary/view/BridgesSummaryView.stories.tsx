@@ -138,7 +138,7 @@ const meta = {
         shortName: undefined,
         slug: 'omnichain',
         warning:
-          'The security parameters of each individual token must be individually assessed, and can be changed by the developers. Omnichain tokens are are in the early stages of development, use at your own risk.',
+          'The security parameters of each individual token must be individually assessed, and can be changed by the developers. Omnichain tokens are in the early stages of development, use at your own risk.',
         isArchived: undefined,
         isVerified: false,
         tvl: {
