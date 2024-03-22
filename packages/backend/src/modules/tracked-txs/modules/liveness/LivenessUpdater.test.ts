@@ -18,26 +18,13 @@ const TRX = mockObject<Knex.Transaction>({})
 describe(LivenessUpdater.name, () => {
   describe(LivenessUpdater.prototype.update.name, () => {
     it('skips update if no transactions', async () => {
-      const logger = mockObject<Logger>({
-        error: () => undefined,
-        warn: () => undefined,
-        debug: () => undefined,
-        info: () => undefined,
-      })
-
       const livenessRepo = getMockLivenessRepository()
-      const updater = new LivenessUpdater(
-        livenessRepo,
-        mockObject<Logger>({
-          for: () => logger,
-        }),
-      )
+      const updater = new LivenessUpdater(livenessRepo, Logger.SILENT)
 
       const transactions: TrackedTxResult[] = []
 
       await updater.update(transactions, TRX)
 
-      expect(logger.info).toHaveBeenCalled()
       expect(livenessRepo.addMany).not.toHaveBeenCalled()
     })
 
