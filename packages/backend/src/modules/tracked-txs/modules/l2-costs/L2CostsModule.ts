@@ -7,6 +7,7 @@ import { ViemRpcClient } from '../../../../peripherals/viem-rpc-client/ViemRpcCl
 import { Clock } from '../../../../tools/Clock'
 import { ApplicationModuleWithUpdater } from '../../../ApplicationModule'
 import { PriceRepository } from '../../../tvl/repositories/PriceRepository'
+import { TrackedTxsConfigsRepository } from '../../repositories/TrackedTxsConfigsRepository'
 import { L2CostsController } from './api/L2CostsController'
 import { createL2CostsRouter } from './api/L2CostsRouter'
 import { L2CostsUpdater } from './L2CostsUpdater'
@@ -25,6 +26,7 @@ export function createL2CostsModule(
 
   const l2CostsController = new L2CostsController(
     peripherals.getRepository(L2CostsRepository),
+    peripherals.getRepository(TrackedTxsConfigsRepository),
     peripherals.getRepository(PriceRepository),
     peripherals.getRepository(IndexerStateRepository),
     config.projects,
