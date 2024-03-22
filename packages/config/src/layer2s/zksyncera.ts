@@ -129,6 +129,19 @@ export const zksyncera: Layer2 = {
     },
     trackedTxs: [
       {
+        uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xa0425d71cB1D6fb80E65a5361a04096E0672De03',
+          ),
+          selector: '0x701f58c5',
+          functionSignature:
+            'function commitBatches((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32), (uint64,uint64,uint64,bytes32,uint256,bytes32,bytes32,bytes32,bytes,bytes)[])',
+          sinceTimestampInclusive: new UnixTime(1701721931),
+        },
+      },
+      {
         uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
         query: {
           formula: 'functionCall',
@@ -143,7 +156,10 @@ export const zksyncera: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
@@ -157,7 +173,10 @@ export const zksyncera: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
@@ -184,7 +203,10 @@ export const zksyncera: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
@@ -198,7 +220,10 @@ export const zksyncera: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(

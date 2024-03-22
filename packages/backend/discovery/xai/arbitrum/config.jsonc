@@ -19,7 +19,9 @@
     "0x000d8C5A70B8805DF02f409F2715d05B9A63E871": "GnosisSafeAdminMember",
     "0xb591cE747CF19cF30e11d656EB94134F523A9e77": "L1ERC20Gateway",
     "0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35": "L1GatewayRouter",
-    "0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E": "ExecutorMultisig"
+    "0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E": "ExecutorMultisig",
+    "0xfD41041180571C5D371BEA3D9550E55653671198": "SentryReferee",
+    "0xbc14d8563b248B79689ECbc43bBa53290e0b6b66": "NodeLicenseRegistry"
   },
   "overrides": {
     "ChallengeManager": {
@@ -132,6 +134,21 @@
     },
     "ExecutorMultisig": {
       "ignoreMethods": ["nonce"]
+    },
+    "SentryReferee": {
+      "ignoreMethods": [
+        "challenges",
+        "getBoostFactor",
+        "getChallenge",
+        "getMaxStakeAmount",
+        "getKycWalletAtIndex",
+        "getCombinedTotalSupply"
+      ],
+      "ignoreInWatchMode": ["challengeCounter", "getKycWalletCount"]
+    },
+    "NodeLicenseRegistry": {
+      "ignoreMethods": ["getPricingTier", "tokenByIndex"],
+      "ignoreInWatchMode": ["totalSupply"]
     }
   }
 }

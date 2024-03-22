@@ -112,8 +112,12 @@ const TRANSFERS_RESPONSE = [
     block_number: BLOCK,
     gas_price: 25,
     receipt_gas_used: 100,
+    transaction_type: 2,
+    calldata_gas_used: 100,
+    data_length: 100,
   },
 ]
+
 const parsedTransfers = BigQueryTransferResult.array().parse(TRANSFERS_RESPONSE)
 const TRANSFERS_RESULT = transformTransfersQueryResult(
   [CONFIGURATIONS[0] as TrackedTxTransferConfig],
@@ -129,6 +133,9 @@ const FUNCTIONS_RESPONSE = [
     gas_price: 1000,
     receipt_gas_used: 200000,
     input: (CONFIGURATIONS[1] as TrackedTxFunctionCallConfig).selector,
+    transaction_type: 2,
+    calldata_gas_used: 100,
+    data_length: 100,
   },
   {
     hash: TX_HASH,
@@ -138,6 +145,9 @@ const FUNCTIONS_RESPONSE = [
     gas_price: 1500,
     receipt_gas_used: 200000,
     input: sharpInput,
+    transaction_type: 3,
+    calldata_gas_used: 0,
+    data_length: 0,
   },
 ]
 

@@ -28,11 +28,33 @@ export function getFunctionCallQuery(
   ]
 
   const query = `
+    CREATE TEMP FUNCTION CalculateCalldataGasUsed(hexString STRING)
+    RETURNS INT64
+    LANGUAGE js AS """
+      var nonZeroBytes = 0;
+      var zeroBytes = 0;
+
+      for (var i = 2; i < hexString.length; i += 2) {
+        if(hexString.substr(i, 2)==='00') {
+          zeroBytes++;
+        } else {
+          nonZeroBytes++;
+        }
+      }
+    
+      return 16 * nonZeroBytes + 4 * zeroBytes;
+    """;
+    
     SELECT
       txs.hash,
       traces.to_address,
       txs.block_number,
       txs.block_timestamp,
+      txs.transaction_type,
+      txs.receipt_gas_used,
+      txs.gas_price,
+      CalculateCalldataGasUsed(txs.input) AS calldata_gas_used,
+      (LENGTH(SUBSTR(txs.input, 3)) / 2) AS data_length,
       CASE
         WHEN traces.to_address IN UNNEST(?) THEN traces.input
       ELSE
@@ -69,5 +91,5 @@ export function getFunctionCallQuery(
     `STRING`,
   ]
 
-  return { query, params, types, limitInGb: 8 }
+  return { query, params, types, limitInGb: 11 }
 }
