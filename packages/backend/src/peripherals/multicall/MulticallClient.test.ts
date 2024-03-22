@@ -71,7 +71,7 @@ describe(MulticallClient.name, () => {
     )
     expect(result).toEqual([
       { success: true, data: Bytes.fromHex('0x123456') },
-      // empty result is is treated as unsuccessful!
+      // empty result is treated as unsuccessful!
       { success: false, data: Bytes.fromHex('0x') },
       { success: true, data: Bytes.fromHex('0xdeadbeef') },
     ])
@@ -113,7 +113,7 @@ describe(MulticallClient.name, () => {
     expect(result).toEqual([
       { success: true, data: Bytes.fromHex('0x12') },
       { success: true, data: Bytes.fromHex('0x0f00') },
-      // empty result is is treated as unsuccessful!
+      // empty result is treated as unsuccessful!
       { success: false, data: Bytes.fromHex('0x') },
     ])
     expect(calls).toEqual([
