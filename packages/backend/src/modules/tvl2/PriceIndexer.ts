@@ -42,7 +42,7 @@ export class PriceIndexer extends ChildIndexer {
 
     await this.priceRepository.addMany(prices)
 
-    this.logger.info('Updated')
+    this.logger.debug('Updated')
     return to.toNumber()
   }
 
@@ -84,11 +84,6 @@ export class PriceIndexer extends ChildIndexer {
         timestamp: price.timestamp,
         priceUsd: price.value,
       }))
-
-    await this.priceRepository.addMany(priceRecords)
-    this.logger.debug('Updated')
-
-    return _to
   }
 
   override async getSafeHeight(): Promise<number> {
