@@ -196,9 +196,6 @@ describe(TrackedTxsIndexer.name, () => {
       const mockedL2CostsUpdater = mockObject<TxUpdaterInterface>({
         deleteFrom: mockFn(async () => {}),
       })
-      const mockedL2CostsUpdater = mockObject<TxUpdaterInterface>({
-        deleteAfter: mockFn(async () => {}),
-      })
 
       const trackedTxsIndexer = getMockTrackedTxsIndexer({
         configRepository: configurationRepository,
