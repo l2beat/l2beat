@@ -20,9 +20,9 @@ export function createL2CostsModule(
   const l2CostsUpdater = new L2CostsUpdater(
     peripherals.getRepository(L2CostsRepository),
     peripherals.getClient(ViemRpcClient, {
-      url: config.trackedTxsConfig.uses.l2costs.providerUrl,
+      url: config.trackedTxsConfig.uses.l2costs.ethereumProviderUrl,
       callsPerMinute:
-        config.trackedTxsConfig.uses.l2costs.providerCallsPerMinute,
+        config.trackedTxsConfig.uses.l2costs.ethereumProviderCallsPerMinute,
     }),
     logger,
   )
