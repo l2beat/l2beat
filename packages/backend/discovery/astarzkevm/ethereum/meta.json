@@ -2,10 +2,6 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "",
-      "values": {}
-    },
-    {
       "name": "AdminMultisig",
       "values": {
         "VERSION": {
@@ -32,13 +28,8 @@
           "description": null,
           "severity": null,
           "type": null
-        }
-      }
-    },
-    {
-      "name": "AstarValidiumAdmin",
-      "values": {
-        "owner": {
+        },
+        "nonce": {
           "description": null,
           "severity": null,
           "type": null
@@ -59,11 +50,6 @@
           "type": null
         },
         "getProcotolName": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "members": {
           "description": null,
           "severity": null,
           "type": null
@@ -241,41 +227,6 @@
       }
     },
     {
-      "name": "AstarValidiumMultisig",
-      "values": {
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "AstarVerifier",
       "values": {}
     },
@@ -288,6 +239,11 @@
           "type": null
         },
         "WETHToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "depositCount": {
           "description": null,
           "severity": null,
           "type": null
@@ -322,42 +278,17 @@
           "severity": null,
           "type": null
         },
+        "lastUpdatedDepositCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "networkID": {
           "description": null,
           "severity": null,
           "type": null
         },
         "polygonRollupManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "EscrowsAdmin",
-      "values": {
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
           "description": null,
           "severity": null,
           "type": null
@@ -377,7 +308,22 @@
           "severity": null,
           "type": null
         },
+        "getLastGlobalExitRoot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "getRoot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lastMainnetExitRoot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lastRollupExitRoot": {
           "description": null,
           "severity": null,
           "type": null
@@ -425,17 +371,7 @@
       }
     },
     {
-      "name": "Permit2",
-      "values": {
-        "DOMAIN_SEPARATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "PolygonEcosystemToken",
+      "name": "POL",
       "values": {
         "CAP_MANAGER_ROLE": {
           "description": null,
@@ -515,6 +451,16 @@
       }
     },
     {
+      "name": "Permit2",
+      "values": {
+        "DOMAIN_SEPARATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "PolygonRollupManager",
       "values": {
         "DEFAULT_ADMIN_ROLE": {
@@ -529,15 +475,25 @@
         },
         "accessControl": {
           "description": null,
-          "severity": "MEDIUM",
-          "type": "PERMISSION"
+          "severity": null,
+          "type": null
         },
         "bridgeAddress": {
           "description": null,
           "severity": null,
           "type": null
         },
+        "calculateRewardPerBatch": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "getBatchFee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getForcedBatchFee": {
           "description": null,
           "severity": null,
           "type": null
@@ -567,9 +523,9 @@
           "severity": null,
           "type": null
         },
-        "nondeterminsiticPendingState": {
-          "description": "Non deterministic pending state has been proven, check event rollupID to see where it happened.",
-          "severity": "HIGH",
+        "multiplierBatchFee": {
+          "description": null,
+          "severity": null,
           "type": null
         },
         "pendingStateTimeout": {
@@ -583,19 +539,14 @@
           "type": null
         },
         "rollupCount": {
-          "description": "The number of rollups that the manager can use.",
-          "severity": "LOW",
-          "type": "CODE_CHANGE"
+          "description": null,
+          "severity": null,
+          "type": null
         },
         "rollupTypeCount": {
-          "description": "The number of unique rollup types that the manager can use.",
-          "severity": "MEDIUM",
-          "type": "CODE_CHANGE"
-        },
-        "rollupsData": {
-          "description": "Mapping of a rollup type to rollup verifier. Different types may use the same verifier. First entry is a type, second a verifier.",
-          "severity": "MEDIUM",
-          "type": "CODE_CHANGE"
+          "description": null,
+          "severity": null,
+          "type": null
         },
         "totalSequencedBatches": {
           "description": null,
@@ -620,154 +571,9 @@
       }
     },
     {
-      "name": "PolygonZkEVMEtrog",
+      "name": "ProxyAdmin",
       "values": {
-        "GLOBAL_EXIT_ROOT_MANAGER_L2": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "INITIALIZE_TX_BRIDGE_LIST_LEN_LEN": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "INITIALIZE_TX_BRIDGE_PARAMS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "INITIALIZE_TX_BRIDGE_PARAMS_AFTER_BRIDGE_ADDRESS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "INITIALIZE_TX_BRIDGE_PARAMS_AFTER_BRIDGE_ADDRESS_EMPTY_METADATA": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "INITIALIZE_TX_CONSTANT_BYTES": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "INITIALIZE_TX_CONSTANT_BYTES_EMPTY_METADATA": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "SET_UP_ETROG_TX": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "SIGNATURE_INITIALIZE_TX_R": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "SIGNATURE_INITIALIZE_TX_S": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "SIGNATURE_INITIALIZE_TX_V": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "admin": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "bridgeAddress": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "calculatePolPerForceBatch": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "forceBatchAddress": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "forceBatchTimeout": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "gasTokenAddress": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "gasTokenNetwork": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "globalExitRootManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "lastAccInputHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "lastForceBatch": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "lastForceBatchSequenced": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "networkName": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pendingAdmin": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pol": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "rollupManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "trustedSequencer": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "trustedSequencerURL": {
+        "owner": {
           "description": null,
           "severity": null,
           "type": null
@@ -778,6 +584,41 @@
       "name": "ProxyAdmin",
       "values": {
         "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "RollupManagerAdminMultisig",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
           "description": null,
           "severity": null,
           "type": null
@@ -828,206 +669,6 @@
           "type": null
         },
         "polygonZkEVM": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "daiBridge",
-      "values": {
-        "DEFAULT_ADMIN_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MAKER_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "beneficiary": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "dai": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "defaultAdmin": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "defaultAdminDelay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "defaultAdminDelayIncreaseWait": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "destAddress": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "destId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pendingDefaultAdmin": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pendingDefaultAdminDelay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "sdai": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalBridgedDAI": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalProtocolDAI": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "zkEvmBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "usdcBridge",
-      "values": {
-        "bridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l1USDC": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "zkMinterBurner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "zkNetworkId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "wstETHBridge",
-      "values": {
-        "DEFAULT_ADMIN_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "EMERGENCY_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "counterpartContract": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "counterpartNetwork": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "defaultAdmin": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "defaultAdminDelay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "defaultAdminDelayIncreaseWait": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "originTokenAddress": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "originTokenNetwork": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pendingDefaultAdmin": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pendingDefaultAdminDelay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "polygonZkEVMBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "wrappedTokenAddress": {
           "description": null,
           "severity": null,
           "type": null
