@@ -43,14 +43,16 @@
         "capacitor__",
         "crossDomainMessenger__",
         "remoteNativeSwitchboard"
-      ]
+      ],
+      "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"]
     },
     "OptimismSwitchboard2": {
       "ignoreRelatives": [
         "capacitor__",
         "crossDomainMessenger__",
         "remoteNativeSwitchboard"
-      ]
+      ],
+      "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"]
     },
     "PolygonL1Switchboard": {
       "ignoreRelatives": [
@@ -58,7 +60,8 @@
         "checkpointManager",
         "fxRoot",
         "remoteNativeSwitchboard"
-      ]
+      ],
+      "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"]
     },
     "ArbitrumL1Switchboard": {
       "ignoreRelatives": [
@@ -67,7 +70,8 @@
         "inbox__",
         "outbox__",
         "remoteNativeSwitchboard"
-      ]
+      ],
+      "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"]
     },
     "FastSwitchboard": {
       "fields": {
