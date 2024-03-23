@@ -53,33 +53,6 @@ const forceBatchTimeout = discovery.getContractValue<number>(
   'forceBatchTimeout',
 )
 
-const adminMultisigThresholdString =
-  discovery
-    .getContractValue<number>('AdminMultisig', 'getThreshold')
-    .toString() +
-  '/' +
-  discovery
-    .getContractValue<string[]>('AdminMultisig', 'getOwners')
-    .length.toString()
-
-const securityCouncilThresholdString =
-  discovery
-    .getContractValue<number>('SecurityCouncil', 'getThreshold')
-    .toString() +
-  '/' +
-  discovery
-    .getContractValue<string[]>('SecurityCouncil', 'getOwners')
-    .length.toString()
-
-const escrowsAdminThresholdString =
-  discovery
-    .getContractValue<number>('EscrowsAdmin', 'getThreshold')
-    .toString() +
-  '/' +
-  discovery
-    .getContractValue<string[]>('EscrowsAdmin', 'getOwners')
-    .length.toString()
-
 /*
 const bridgeEmergencyState = discovery.getContractValue<boolean>(
   'Bridge',
@@ -643,16 +616,12 @@ export const polygonzkevm: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelayString)],
   },
-  upgradesAndGovernance:
-    'All main contracts are upgradable by the `ProxyAdmin` which is controlled by the `PolygonZkEVMTimelock`. Escrow contracts are upgradable by the `EscrowsAdmin` ' +
-    escrowsAdminThresholdString +
-    ' multisig.\n\n`PolygonZkEVMTimelock` is a modified version of TimelockController that disables delay in case of emergency state in the `PolygonRollupManager`. It is operated by ' +
-    adminMultisigThresholdString +
-    ' `AdminMultisig` and has ' +
-    upgradeDelayString +
-    ' delay. Addresses of trusted sequencer and aggregator can be changed by the `AdminMultisig`.\n\n`SecurityCouncil` ' +
-    securityCouncilThresholdString +
-    ' multisig can arbitrarily enable emergency state in the system.',
+  upgradesAndGovernance: `
+All main contracts are upgradable by the ${discovery.getMultisigStats('AdminMultisig')} \`AdminMultisig\` through a timelock that owns \`ProxyAdmin\`. Addresses of trusted sequencer, aggregator and operational parameters on the \`PolygonRollupManager\` can be instantly set by the \`AdminMultisig\`. Escrow contracts are upgradable by the \`EscrowsAdmin\` ${discovery.getMultisigStats('EscrowsAdmin')} multisig.
+
+\`PolygonZkEVMTimelock\` is a modified version of TimelockController that disables delay in case of a manually enabled or triggered emergency state in the \`PolygonRollupManager\`. It otherwise has a ${upgradeDelayString} delay. 
+    
+The \`SecurityCouncil\` ${discovery.getMultisigStats('SecurityCouncil')} multisig can manually enable the emergency state in the \`PolygonRollupManager\`.`,
   milestones: [
     {
       name: 'Polygon zkEVM Etrog upgrade',
