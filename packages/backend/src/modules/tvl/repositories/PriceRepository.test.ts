@@ -21,6 +21,11 @@ describeDatabase(PriceRepository.name, (database) => {
       assetId: AssetId.ETH,
     },
     {
+      priceUsd: 3400,
+      timestamp: START.add(-5, 'hours'),
+      assetId: AssetId.ETH,
+    },
+    {
       priceUsd: 20,
       timestamp: START.add(-1, 'hours'),
       assetId: AssetId('uni-uniswap'),
@@ -96,7 +101,7 @@ describeDatabase(PriceRepository.name, (database) => {
 
     const results = await repository.getByTimestamp(timestamp)
 
-    expect(results).toEqualUnsorted([DATA[0], DATA[2]])
+    expect(results).toEqualUnsorted([DATA[0], DATA[3]])
   })
 
   it(PriceRepository.prototype.getByToken.name, async () => {
@@ -129,7 +134,7 @@ describeDatabase(PriceRepository.name, (database) => {
           [
             AssetId.ETH,
             {
-              earliest: START.add(-2, 'hours'),
+              earliest: START.add(-5, 'hours'),
               latest: START.add(-1, 'hours'),
             },
           ],
@@ -194,7 +199,7 @@ describeDatabase(PriceRepository.name, (database) => {
   })
 
   describe(PriceRepository.prototype.findByTimestampRange.name, () => {
-    it('returns valid prices array', async () => {
+    it('returns all prices within range', async () => {
       await repository.addMany(DATA)
 
       const results = await repository.findByTimestampRange(
@@ -205,6 +210,22 @@ describeDatabase(PriceRepository.name, (database) => {
       const expected = new Map([
         [DATA[0].timestamp.toNumber(), DATA[0].priceUsd],
         [DATA[1].timestamp.toNumber(), DATA[1].priceUsd],
+      ])
+
+      expect(results).toEqual(expected)
+    })
+
+    it('returns all prices within inclusive range', async () => {
+      await repository.addMany(DATA)
+
+      const results = await repository.findByTimestampRange(
+        AssetId.ETH,
+        START.add(-5, 'hours'),
+        START.add(-2, 'hours'),
+      )
+      const expected = new Map([
+        [DATA[1].timestamp.toNumber(), DATA[1].priceUsd],
+        [DATA[2].timestamp.toNumber(), DATA[2].priceUsd],
       ])
 
       expect(results).toEqual(expected)
