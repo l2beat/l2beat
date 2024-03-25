@@ -15,6 +15,7 @@ import { LineaFinalityAnalyzer } from './analyzers/LineaFinalityAnalyzer'
 import { OpStackFinalityAnalyzer } from './analyzers/opStack/OpStackFinalityAnalyzer'
 import { ScrollFinalityAnalyzer } from './analyzers/ScrollFinalityAnalyzer'
 import { zkSyncEraFinalityAnalyzer } from './analyzers/zkSyncEraFinalityAnalyzer'
+import { ZkSyncLiteFinalityAnalyzer } from './analyzers/ZkSyncLiteFinalityAnalyzer'
 import { FinalityController } from './api/FinalityController'
 import { createFinalityRouter } from './api/FinalityRouter'
 import { FinalityIndexer } from './FinalityIndexer'
@@ -144,6 +145,16 @@ function initializeConfigurations(
           return {
             projectId: configuration.projectId,
             analyzer: new ScrollFinalityAnalyzer(
+              ethereumRPC,
+              livenessRepository,
+              configuration.projectId,
+            ),
+            minTimestamp: configuration.minTimestamp,
+          }
+        case 'zkSyncLite':
+          return {
+            projectId: configuration.projectId,
+            analyzer: new ZkSyncLiteFinalityAnalyzer(
               ethereumRPC,
               livenessRepository,
               configuration.projectId,
