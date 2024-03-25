@@ -8,35 +8,35 @@ export function getTargetDataPoints(
 ) {
   const start = token.sinceTimestamp.toEndOf('hour')
 
-  const sixHourlyBoundary = clock
-    ._TVL_ONLY_getSixHourlyDeletionBoundary()
-    .gt(start)
-    ? clock._TVL_ONLY_getSixHourlyDeletionBoundary()
-    : start
+  const sixHourlyBoundary = clock._TVL_ONLY_getSixHourlyDeletionBoundary()
 
-  const hourlyBoundary = clock._TVL_ONLY_getHourlyDeletionBoundary().gt(start)
-    ? clock._TVL_ONLY_getHourlyDeletionBoundary()
-    : start
+  const hourlyBoundary = clock._TVL_ONLY_getHourlyDeletionBoundary()
 
   const end = clock.getLastHour()
 
-  const dailyDiff =
-    sixHourlyBoundary.toStartOf('day').toNumber() -
-    start.toEndOf('day').toNumber()
+  let dataPoints = 0
 
-  const dailyDataPoints = dailyDiff > 0 ? Math.floor(dailyDiff / 86400) + 1 : 0
+  if (start.lt(end)) {
+    const hourlyDiff = end.toNumber() - hourlyBoundary.toNumber()
 
-  const sixHourlyDiff =
-    hourlyBoundary.toStartOf('six hours').toNumber() -
-    sixHourlyBoundary.toEndOf('six hours').toNumber()
+    dataPoints += hourlyDiff > 0 ? Math.floor(hourlyDiff / 3600) + 1 : 0
+  }
 
-  const sixHourlyDataPoints =
-    sixHourlyDiff > 0 ? Math.floor(sixHourlyDiff / 21600) + 1 : 0
+  if (start.lt(hourlyBoundary)) {
+    const sixHourlyDiff =
+      hourlyBoundary.toStartOf('six hours').toNumber() -
+      sixHourlyBoundary.toEndOf('six hours').toNumber()
 
-  const hourlyDiff = end.toNumber() - hourlyBoundary.toEndOf('hour').toNumber()
+    dataPoints += sixHourlyDiff > 0 ? Math.floor(sixHourlyDiff / 21600) + 1 : 0
+  }
 
-  const hourlyDataPoints =
-    hourlyDiff > 0 ? Math.floor(hourlyDiff / 3600) + 1 : 0
+  if (start.lt(sixHourlyBoundary)) {
+    const dailyDiff =
+      sixHourlyBoundary.toStartOf('day').toNumber() -
+      start.toEndOf('day').toNumber()
 
-  return dailyDataPoints + sixHourlyDataPoints + hourlyDataPoints
+    dataPoints += dailyDiff > 0 ? Math.floor(dailyDiff / 86400) + 1 : 0
+  }
+
+  return dataPoints
 }
