@@ -7,7 +7,7 @@ export type Layer2FinalityConfig =
     }
   // We require the minTimestamp to be set for all types that will be processed in FinalityIndexer
   | {
-      type: 'Linea' | 'zkSyncEra'
+      type: 'Linea' | 'zkSyncEra' | 'Scroll'
       minTimestamp: UnixTime
       lag: number
     }
