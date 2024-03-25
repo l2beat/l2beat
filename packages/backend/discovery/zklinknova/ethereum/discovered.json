@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "ethereum",
   "blockNumber": 19511736,
-  "configHash": "0x402bd37b55246d71954962809248db8bf850339c3ba3b160ab594f08495a56d5",
+  "configHash": "0xfb7ba4d4c4c540c0b7fb9889977b313d88000691b58667d1c4b95d48253c1859",
   "version": 3,
   "contracts": [
     {
@@ -21,6 +21,18 @@
         "primaryChainMessageHashQueue": [11, 11]
       },
       "derivedName": "Arbitrator"
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1709295323,
+      "values": {
+        "owner": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      }
     },
     {
       "name": "zkLink",
@@ -89,6 +101,23 @@
         "ZKLINK": "0x5fD9F73286b7E8683Bab45019C94553b93e015Cf"
       },
       "derivedName": "EthereumGateway"
+    },
+    {
+      "name": "L1ERC20Bridge",
+      "address": "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xc271a8e9eB2b10FCDe1709D76de6681249669D2e",
+        "admin": "0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2"
+      },
+      "implementations": ["0xc271a8e9eB2b10FCDe1709D76de6681249669D2e"],
+      "sinceTimestamp": 1709295323,
+      "values": {
+        "l2Bridge": "0x36CaABbAbfB9C09B722d9C3697C3Cb4A93650ea7",
+        "l2TokenBeacon": "0x3b9dCbfD8Dab466A700B4d247e30D56C37d8D08d",
+        "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
+      },
+      "derivedName": "L1ERC20Bridge"
     },
     {
       "name": "GnosisSafe",
@@ -160,6 +189,17 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
     "0x5fD9F73286b7E8683Bab45019C94553b93e015Cf": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
@@ -182,6 +222,17 @@
       "error ERC1967InvalidImplementation(address implementation)",
       "error ERC1967NonPayable()",
       "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6": [
+      "constructor(address _logic, address initialOwner, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error ProxyDeniedAdminAccess()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
     ],
     "0xb3EE39F57d96C3F2A5ab3886572dDc4EA34B529a": [
@@ -220,6 +271,22 @@
       "function transferOwnership(address newOwner)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xc271a8e9eB2b10FCDe1709D76de6681249669D2e": [
+      "constructor(address _zkSync)",
+      "event ClaimedFailedDeposit(address indexed to, address indexed l1Token, uint256 amount)",
+      "event DepositInitiated(bytes32 indexed l2DepositTxHash, address indexed from, address indexed to, address l1Token, uint256 amount)",
+      "event WithdrawalFinalized(address indexed to, address indexed l1Token, uint256 amount)",
+      "function claimFailedDeposit(address _depositSender, address _l1Token, bytes32 _l2TxHash, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes32[] _merkleProof)",
+      "function deposit(address _l2Receiver, address _l1Token, uint256 _amount, uint256 _l2TxGasLimit, uint256 _l2TxGasPerPubdataByte) payable returns (bytes32 l2TxHash)",
+      "function deposit(address _l2Receiver, address _l1Token, uint256 _amount, uint256 _l2TxGasLimit, uint256 _l2TxGasPerPubdataByte, address _refundRecipient) payable returns (bytes32 l2TxHash)",
+      "function finalizeWithdrawal(uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes _message, bytes32[] _merkleProof)",
+      "function initialize(bytes[] _factoryDeps, bytes32[] _factoryDepByteCodeHashes, address _l2TokenBeacon, address _governor, uint256 _deployBridgeImplementationFee, uint256 _deployBridgeProxyFee) payable",
+      "function isWithdrawalFinalized(uint256 l2BatchNumber, uint256 l2ToL1MessageNumber) view returns (bool isFinalized)",
+      "function l2Bridge() view returns (address)",
+      "function l2TokenAddress(address _l1Token) view returns (address)",
+      "function l2TokenBeacon() view returns (address)",
+      "function l2TokenProxyBytecodeHash() view returns (bytes32)"
     ],
     "0xCC8256b3eBF21e27f04E360eED012f5752c1F5DD": [
       "constructor(bool _isEthGasToken)",

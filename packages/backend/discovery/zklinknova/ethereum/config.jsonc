@@ -2,13 +2,17 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
   "chain": "ethereum",
   "name": "zklinknova",
-  "initialAddresses": ["0x5fD9F73286b7E8683Bab45019C94553b93e015Cf"],
+  "initialAddresses": [
+    "0x5fD9F73286b7E8683Bab45019C94553b93e015Cf",
+    "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6"
+  ],
   "names": {
     "0x5fD9F73286b7E8683Bab45019C94553b93e015Cf": "zkLink",
     "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002": "Arbitrator",
     "0x803460416C2682Ac54FccF03eF77b10A12f2809b": "LineaL1Gateway",
     "0x83Bc7394738A7A084081aF22EEC0051908c0055c": "EthereumGateway",
-    "0xd19d4B5d358258f05D7B411E21A1460D11B0876F": "Linea"
+    "0xd19d4B5d358258f05D7B411E21A1460D11B0876F": "Linea",
+    "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6": "L1ERC20Bridge"
   },
   "overrides": {
     "zkLink": {
@@ -30,6 +34,9 @@
     },
     "Linea": {
       "ignoreDiscovery": true
+    },
+    "L1ERC20Bridge": {
+      "ignoreRelatives": ["l2Bridge", "l2TokenBeacon"]
     }
   }
 }

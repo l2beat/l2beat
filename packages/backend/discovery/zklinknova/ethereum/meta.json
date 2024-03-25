@@ -82,6 +82,26 @@
       }
     },
     {
+      "name": "L1ERC20Bridge",
+      "values": {
+        "l2Bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2TokenBeacon": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2TokenProxyBytecodeHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "LineaL1Gateway",
       "values": {
         "ARBITRATOR": {
@@ -95,6 +115,21 @@
           "type": null
         },
         "getRemoteGateway": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "UPGRADE_INTERFACE_VERSION": {
           "description": null,
           "severity": null,
           "type": null
