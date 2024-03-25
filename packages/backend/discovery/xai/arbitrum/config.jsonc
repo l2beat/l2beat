@@ -143,10 +143,12 @@
         "getMaxStakeAmount",
         "getKycWalletAtIndex",
         "getCombinedTotalSupply"
-      ]
+      ],
+      "ignoreInWatchMode": ["challengeCounter", "getKycWalletCount"]
     },
     "NodeLicenseRegistry": {
-      "ignoreMethods": ["getPricingTier", "tokenByIndex"]
+      "ignoreMethods": ["getPricingTier", "tokenByIndex"],
+      "ignoreInWatchMode": ["totalSupply"]
     }
   }
 }

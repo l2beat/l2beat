@@ -17,6 +17,7 @@ const discovery = new ProjectDiscovery('metis')
 const upgradeDelay = 0
 
 export const metis: Layer2 = {
+  isUnderReview: true,
   type: 'layer2',
   id: ProjectId('metis'),
   display: {
