@@ -9,24 +9,21 @@ export function handleUpdateSucceeded(
   action: UpdateSucceededAction,
 ): IndexerReducerResult {
   assertStatus(state.status, 'updating')
-  if (action.targetHeight >= state.height) {
+  if (action.newHeight >= state.height) {
     state = {
       ...state,
       status: 'idle',
-      height: action.targetHeight,
+      height: action.newHeight,
       invalidateToHeight:
         state.invalidateToHeight === state.height && !state.forceInvalidate
-          ? action.targetHeight
+          ? action.newHeight
           : state.invalidateToHeight,
     }
   } else {
     state = {
       ...state,
       status: 'idle',
-      invalidateToHeight: Math.min(
-        action.targetHeight,
-        state.invalidateToHeight,
-      ),
+      invalidateToHeight: Math.min(action.newHeight, state.invalidateToHeight),
       forceInvalidate: true,
     }
   }

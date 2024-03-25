@@ -1,5 +1,4 @@
 import { Application } from './Application'
-import { getConfig } from './Config'
 
 main().catch((e) => {
   console.error(e)
@@ -7,7 +6,6 @@ main().catch((e) => {
 })
 
 async function main(): Promise<void> {
-  const config = getConfig()
-  const application = new Application(config)
+  const application = new Application()
   await application.start()
 }

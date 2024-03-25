@@ -1,5 +1,15 @@
 # @l2beat/uif
 
+## 0.3.0
+
+### Minor Changes
+
+- Adds `MultiIndexer`
+- Changes the update method `from` parameter to be inclusive as opposed to exclusive (which was the previous behavior)
+- Renames `getSafeHeight` to `initialize`
+- Renames `BaseIndexer` to `Indexer`
+- Removes `SliceIndexer`
+
 ## 0.2.4
 
 ### Patch Changes

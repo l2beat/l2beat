@@ -2,11 +2,13 @@ import { Logger } from '@l2beat/backend-tools'
 import { install } from '@sinonjs/fake-timers'
 import { expect, mockFn } from 'earl'
 
-import { BaseIndexer, ChildIndexer, RootIndexer } from './BaseIndexer'
+import { Indexer } from './Indexer'
+import { ChildIndexer } from './indexers/ChildIndexer'
+import { RootIndexer } from './indexers/RootIndexer'
 import { IndexerAction } from './reducer/types/IndexerAction'
 import { RetryStrategy } from './Retries'
 
-describe(BaseIndexer.name, () => {
+describe(Indexer.name, () => {
   describe('correctly informs about updates', () => {
     it('first invalidate then parent update', async () => {
       const parent = new TestRootIndexer(0)
@@ -21,7 +23,7 @@ describe(BaseIndexer.name, () => {
 
       await child.finishUpdate(1)
 
-      expect(await child.getSafeHeight()).toEqual(1)
+      expect(await child.initialize()).toEqual(1)
     })
 
     it('first parent update then invalidate', async () => {
@@ -37,7 +39,7 @@ describe(BaseIndexer.name, () => {
 
       await child.finishUpdate(1)
 
-      expect(await child.getSafeHeight()).toEqual(1)
+      expect(await child.initialize()).toEqual(1)
     })
   })
 
@@ -212,6 +214,23 @@ describe(BaseIndexer.name, () => {
       clock.uninstall()
     })
   })
+
+  it('calls update with correct heights', async () => {
+    const parent = new TestRootIndexer(100)
+    const child = new TestChildIndexer([parent], 100)
+
+    await parent.start()
+    await child.start()
+    await child.finishInvalidate(100)
+
+    await parent.doTick(200)
+    await parent.finishTick(200)
+
+    expect(child.updateFrom).toEqual(101) // inclusive
+    expect(child.updateTo).toEqual(200) // inclusive
+
+    await child.finishUpdate(200)
+  })
 })
 
 export async function waitUntil(predicate: () => boolean): Promise<void> {
@@ -233,7 +252,7 @@ export class TestRootIndexer extends RootIndexer {
   ticking = false
 
   constructor(
-    private safeHeight: number,
+    private testSafeHeight: number,
     name?: string,
     retryStrategy?: { tickRetryStrategy?: RetryStrategy },
   ) {
@@ -248,7 +267,7 @@ export class TestRootIndexer extends RootIndexer {
 
   async doTick(height: number): Promise<void> {
     await waitUntil(() => this.getState().status === 'idle')
-    this.safeHeight = height
+    this.testSafeHeight = height
     const counter = this.dispatchCounter
     this.requestTick()
     await waitUntil(() => this.dispatchCounter > counter)
@@ -265,7 +284,7 @@ export class TestRootIndexer extends RootIndexer {
     await waitUntil(() => this.dispatchCounter > counter)
   }
 
-  override tick(): Promise<number> {
+  override async tick(): Promise<number> {
     this.ticking = true
 
     return new Promise<number>((resolve, reject) => {
@@ -276,11 +295,11 @@ export class TestRootIndexer extends RootIndexer {
     })
   }
 
-  override async getSafeHeight(): Promise<number> {
+  override async initialize(): Promise<number> {
     const promise = this.tick()
-    this.resolveTick(this.safeHeight)
+    this.resolveTick(this.testSafeHeight)
     await promise
-    return this.safeHeight
+    return this.testSafeHeight
   }
 }
 
@@ -322,8 +341,8 @@ class TestChildIndexer extends ChildIndexer {
   public invalidateTo = 0
 
   constructor(
-    parents: BaseIndexer[],
-    private safeHeight: number,
+    parents: Indexer[],
+    private testSafeHeight: number,
     name?: string,
     retryStrategy?: {
       invalidateRetryStrategy?: RetryStrategy
@@ -339,12 +358,12 @@ class TestChildIndexer extends ChildIndexer {
     })
   }
 
-  override getSafeHeight(): Promise<number> {
-    return Promise.resolve(this.safeHeight)
+  override initialize(): Promise<number> {
+    return Promise.resolve(this.testSafeHeight)
   }
 
   override setSafeHeight(safeHeight: number): Promise<void> {
-    this.safeHeight = safeHeight
+    this.testSafeHeight = safeHeight
     return Promise.resolve()
   }
 

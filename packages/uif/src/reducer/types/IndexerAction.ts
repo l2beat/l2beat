@@ -18,7 +18,7 @@ export interface ChildReadyAction {
 export interface UpdateSucceededAction {
   type: 'UpdateSucceeded'
   from: number
-  targetHeight: number
+  newHeight: number
 }
 
 export interface UpdateFailedAction {

@@ -11,9 +11,10 @@ export function handleTickSucceeded(
 ): IndexerReducerResult {
   assertRoot(state)
   assertStatus(state.status, 'ticking')
-  const effects: IndexerEffect[] = [
-    { type: 'SetSafeHeight', safeHeight: action.safeHeight },
-  ]
+  const effects: IndexerEffect[] =
+    action.safeHeight !== state.safeHeight
+      ? [{ type: 'SetSafeHeight', safeHeight: action.safeHeight }]
+      : []
   if (state.tickScheduled) {
     effects.push({ type: 'Tick' })
   }

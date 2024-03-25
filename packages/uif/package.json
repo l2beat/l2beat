@@ -1,7 +1,7 @@
 {
   "name": "@l2beat/uif",
   "description": "Universal Indexer Framework.",
-  "version": "0.2.4",
+  "version": "0.3.0",
   "license": "MIT",
   "repository": "https://github.com/l2beat/tools",
   "bugs": {
