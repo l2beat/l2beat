@@ -1,0 +1,205 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "Arbitrator",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "primaryChainGateway": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "primaryChainMessageHashQueue": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "EthereumGateway",
+      "values": {
+        "ARBITRATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ZKLINK": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRemoteGateway": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "LineaL1Gateway",
+      "values": {
+        "ARBITRATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MESSAGE_SERVICE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRemoteGateway": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "zkLink",
+      "values": {
+        "FORWARD_REQUEST_TYPE_HASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "IS_ETH_GAS_TOKEN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "feeParams": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "forwardFeeAllocator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "gateway": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getGateway": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getGovernor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPriorityTxMaxGasLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalBatchesExecuted": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalPriorityTxs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalBatchesExecuted": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalPriorityTxs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSyncedPriorityTxs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalValidatorForwardFee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalValidatorForwardFeeWithdrawn": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "txGasPrice": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}

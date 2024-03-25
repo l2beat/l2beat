@@ -7,7 +7,15 @@ Generated with discovered.json: 0x6028b7437fc133ff80f1ee7f785734c1bd511b0f
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+zkLink is a zkSync Era fork that supports multiple canonical bridges on multiple chains.
+
+Differences with zkSync Era:
+
+- DiamondProxy: no relevant changes
+- AdminFacet: added methods to set secondary gateways and related.
+- ExecutorFacet: added getter to know if a batch is synced. Added a check so that priority operations from secondary chains should be synced before proof verification on them.
+- GettersFacet: added getters for secondary chain related data.
+- MailboxFacet: added functions to sync requests and roots.
 
 ## Initial discovery
 
