@@ -10,8 +10,6 @@ import {
 } from '@l2beat/shared-pure'
 
 import { Project } from '../../../../../model/Project'
-import { IndexerStateRepository } from '../../../../../peripherals/database/repositories/IndexerStateRepository'
-import { Clock } from '../../../../../tools/Clock'
 import { PriceRepository } from '../../../../tvl/repositories/PriceRepository'
 import { TrackedTxsConfigsRepository } from '../../../repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsConfig } from '../../../types/TrackedTxsConfig'
@@ -21,14 +19,12 @@ import {
   L2CostsRepository,
 } from '../repositories/L2CostsRepository'
 
-type L2CostsResult =
-  | {
-      type: 'success'
-      data: L2CostsApiResponse
-    }
-  | { type: 'error'; error: 'DATA_NOT_SYNCED' }
+type L2CostsResult = {
+  type: 'success'
+  data: L2CostsApiResponse
+}
 
-type L2CostsTrackedTxsConfig = {
+export type L2CostsTrackedTxsConfig = {
   entries: L2CostsTrackedTxsConfigEntry[]
 }
 
@@ -73,27 +69,13 @@ export class L2CostsController {
     private readonly l2CostsRepository: L2CostsRepository,
     private readonly trackedTxsConfigsRepository: TrackedTxsConfigsRepository,
     private readonly priceRepository: PriceRepository,
-    private readonly indexerStateRepository: IndexerStateRepository,
     private readonly projects: Project[],
-    private readonly clock: Clock,
     private readonly logger = Logger.SILENT,
   ) {
     this.logger = this.logger.for(this)
   }
 
   async getL2Costs(): Promise<L2CostsResult> {
-    const requiredTimestamp = this.clock.getLastHour().add(-1, 'hours')
-    const indexerState = await this.indexerStateRepository.findIndexerState(
-      'tracked_txs_indexer',
-    )
-
-    if (
-      indexerState === undefined ||
-      new UnixTime(indexerState.safeHeight).lt(requiredTimestamp)
-    ) {
-      return { type: 'error', error: 'DATA_NOT_SYNCED' }
-    }
-
     const projects: L2CostsApiResponse['projects'] = {}
 
     const activeProjects = this.projects.filter((p) => !p.isArchived)

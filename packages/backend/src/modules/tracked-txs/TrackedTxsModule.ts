@@ -47,7 +47,7 @@ export function createTrackedTxsModule(
     peripherals,
     clock,
   )
-  const l2costsModule = createL2CostsModule(config, logger, peripherals, clock)
+  const l2costsModule = createL2CostsModule(config, logger, peripherals)
 
   const subModules: (ApplicationModule | undefined)[] = [
     livenessModule,

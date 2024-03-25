@@ -1,10 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
 
 import { Config } from '../../../../config'
-import { IndexerStateRepository } from '../../../../peripherals/database/repositories/IndexerStateRepository'
 import { Peripherals } from '../../../../peripherals/Peripherals'
 import { ViemRpcClient } from '../../../../peripherals/viem-rpc-client/ViemRpcClient'
-import { Clock } from '../../../../tools/Clock'
 import { ApplicationModuleWithUpdater } from '../../../ApplicationModule'
 import { PriceRepository } from '../../../tvl/repositories/PriceRepository'
 import { TrackedTxsConfigsRepository } from '../../repositories/TrackedTxsConfigsRepository'
@@ -17,7 +15,6 @@ export function createL2CostsModule(
   config: Config,
   logger: Logger,
   peripherals: Peripherals,
-  clock: Clock,
 ): ApplicationModuleWithUpdater<L2CostsUpdater> | undefined {
   if (!config.trackedTxsConfig || !config.trackedTxsConfig.uses.l2costs) {
     logger.info('L2Costs module disabled')
@@ -28,9 +25,7 @@ export function createL2CostsModule(
     peripherals.getRepository(L2CostsRepository),
     peripherals.getRepository(TrackedTxsConfigsRepository),
     peripherals.getRepository(PriceRepository),
-    peripherals.getRepository(IndexerStateRepository),
     config.projects,
-    clock,
     logger,
   )
   const l2CostsRouter = createL2CostsRouter(l2CostsController)
