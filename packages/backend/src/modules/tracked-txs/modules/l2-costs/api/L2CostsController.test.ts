@@ -25,23 +25,26 @@ describe(L2CostsController.name, () => {
         getMockL2CostRecords(),
       )
 
+      const TX1_GAS_PRICE_ETH = getGasPriceETH(41_000_000_000)
+      const TX2_GAS_PRICE_ETH = getGasPriceETH(29_000_000_000)
       const expected = [
         {
           timestamp: NOW.add(-1, 'hours'),
-          calldataGasUsed: 27284,
-          computeGasUsed: 370583,
+          calldataGasUsed: 2700,
+          computeGasUsed: 400_000 - 2700 - 21_000,
           overheadGasUsed: 21000 as const,
-          totalGas: 418867,
-          gasCost: 0.01682842475182969,
-          calldataGasCost: 0.0010961635577138359,
-          computeGasCost: 0.014888563982856855,
-          totalGasCost: 0.01682842475182969,
-          totalOverheadGasCost: 0.0008436972112589999,
-          gasCostUsd: 50.485274255489074,
-          totalGasCostUsd: 50.485274255489074,
-          calldataGasCostUsd: 3.288490673141508,
-          computeGasCostUsd: 44.66569194857057,
-          totalOverheadGasCostUsd: 2.5310916337769997,
+          totalGas: 400_000,
+          gasCost: 400_000 * TX1_GAS_PRICE_ETH,
+          calldataGasCost: 2700 * TX1_GAS_PRICE_ETH,
+          computeGasCost: (400_000 - 2700 - 21_000) * TX1_GAS_PRICE_ETH,
+          totalGasCost: 400_000 * TX1_GAS_PRICE_ETH,
+          totalOverheadGasCost: 21000 * TX1_GAS_PRICE_ETH,
+          gasCostUsd: 400_000 * TX1_GAS_PRICE_ETH * 3000,
+          totalGasCostUsd: 400_000 * TX1_GAS_PRICE_ETH * 3000,
+          calldataGasCostUsd: 2700 * TX1_GAS_PRICE_ETH * 3000,
+          computeGasCostUsd:
+            (400_000 - 2700 - 21_000) * TX1_GAS_PRICE_ETH * 3000,
+          totalOverheadGasCostUsd: 21000 * TX1_GAS_PRICE_ETH * 3000,
           type: 2 as const,
         },
         {
@@ -49,21 +52,22 @@ describe(L2CostsController.name, () => {
           calldataGasUsed: 0,
           computeGasUsed: 0,
           overheadGasUsed: 21000 as const,
-          totalGas: 807432,
-          gasCost: 0.000618364191711,
+          totalGas: 21000 + 780_000,
+          gasCost: 21000 * TX2_GAS_PRICE_ETH,
           calldataGasCost: 0,
           computeGasCost: 0,
-          totalGasCost: 0.000618364192497432,
-          totalOverheadGasCost: 0.000618364191711,
-          gasCostUsd: 1.9169289943041,
-          totalGasCostUsd: 1.916928996742039,
+          totalGasCost: 21000 * TX2_GAS_PRICE_ETH + getGasPriceETH(1) * 780_000,
+          totalOverheadGasCost: 21000 * TX2_GAS_PRICE_ETH,
+          gasCostUsd: 21000 * TX2_GAS_PRICE_ETH * 3100,
+          totalGasCostUsd:
+            (21000 * TX2_GAS_PRICE_ETH + getGasPriceETH(1) * 780_000) * 3100,
           calldataGasCostUsd: 0,
           computeGasCostUsd: 0,
-          totalOverheadGasCostUsd: 1.9169289943041,
+          totalOverheadGasCostUsd: 21000 * TX2_GAS_PRICE_ETH * 3100,
           type: 3 as const,
-          blobGasCost: 7.864320000000001e-13,
-          blobGasUsed: 786432,
-          blobGasCostUsd: 2.4379392e-9,
+          blobGasCost: getGasPriceETH(1) * 780_000,
+          blobGasUsed: 780_000,
+          blobGasCostUsd: getGasPriceETH(1) * 780_000 * 3100,
         },
       ]
       expect(results).toEqualUnsorted(expected)
@@ -161,10 +165,10 @@ function getMockL2CostRecords(): L2CostsRecord[] {
       trackedTxId: TrackedTxId.unsafe('aaa'),
       data: {
         type: 2,
-        gasUsed: 418867,
-        gasPrice: 40176057679,
-        calldataLength: 2084,
-        calldataGasUsed: 27284,
+        gasUsed: 400000,
+        gasPrice: 41000000000,
+        calldataLength: 2000,
+        calldataGasUsed: 2700,
       },
     },
     {
@@ -174,14 +178,19 @@ function getMockL2CostRecords(): L2CostsRecord[] {
       data: {
         type: 3,
         gasUsed: 21000,
-        gasPrice: 29445913891,
+        gasPrice: 29_000_000_000,
         blobGasPrice: 1,
-        blobGasUsed: 786432,
+        blobGasUsed: 780_000,
         calldataGasUsed: 0,
         calldataLength: 0,
       },
     },
   ]
+}
+
+function getGasPriceETH(gasPrice: number) {
+  const gasPriceGwei = parseFloat((gasPrice * 1e-9).toFixed(9))
+  return parseFloat((gasPriceGwei * 1e-9).toFixed(18))
 }
 
 function getMockDetailedTransactions(amount: number): DetailedTransaction[] {
