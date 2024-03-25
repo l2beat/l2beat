@@ -1,8 +1,8 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 19512153,
-  "configHash": "0xb0bff49a13787983a71083228cc51e018b4d76d79fa994e05551123d62c8f51d",
+  "blockNumber": 19512202,
+  "configHash": "0xbcb1192a88fc921e29bdf7e206db1355b669c5196f1c73bca88ca2d2da22b9a7",
   "version": 3,
   "contracts": [
     {
@@ -222,7 +222,7 @@
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "rollupCount": 2,
         "rollupTypeCount": 3,
-        "totalSequencedBatches": 24855,
+        "totalSequencedBatches": 24861,
         "totalVerifiedBatches": 24551,
         "trustedAggregatorTimeout": 432000,
         "verifyBatchTimeTarget": 1800
