@@ -171,6 +171,28 @@ export const sygma: Bridge = {
         'EOA address with the permission to pause/unpause the bridge.',
     },
   ],
+  milestones: [
+    {
+      name: 'Sygma launches on mainnet',
+      date: '2023-06-23T00:00:00.00Z',
+      link: 'https://blog.buildwithsygma.com/sygma-begins-mainnet-rollout/',
+    },
+    {
+      name: 'Phala Network integrates protocol Sygma into SubBridge',
+      date: '2023-07-05T00:00:00.00Z',
+      link: 'https://twitter.com/PhalaNetwork/status/1676604920923914240',
+    },
+    {
+      name: 'Full migration of Phala liquidity into Sygma bridge contract',
+      date: '2023-12-12T00:00:00.00Z',
+      link: 'https://twitter.com/PhalaNetwork/status/1734571542644682966',
+    },
+    {
+      name: 'Sygma announces testnet for Spectre zk verification',
+      date: '2024-01-17T00:00:00.00Z',
+      link: 'https://blog.buildwithsygma.com/spectre-a-zk-coprocessor-to-extend-sygmas-security/',
+    },
+  ],
   knowledgeNuggets: [
     {
       title: 'Architecture overview',
