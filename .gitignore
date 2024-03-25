@@ -5,3 +5,4 @@ packages/frontend/__screenshots__
 **/.DS_Store
 .idea
 .turbo
+.copilotignore
