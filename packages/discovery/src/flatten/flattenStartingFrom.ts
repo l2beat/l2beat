@@ -3,7 +3,7 @@ import { createHash } from 'crypto'
 
 import {
   ByteRange,
-  ContractFilePair,
+  DeclarationFilePair,
   ParsedFile,
   ParsedFilesManager,
 } from './ParsedFilesManager'
@@ -17,12 +17,11 @@ export function flattenStartingFrom(
   rootContractName: string,
   parsedFileManager: ParsedFilesManager,
 ): string {
-  const rootContract =
-    parsedFileManager.findContractDeclaration(rootContractName)
+  const rootContract = parsedFileManager.findDeclaration(rootContractName)
 
   let flatSource = formatSource(
     rootContract.file.content,
-    rootContract.contract.byteRange,
+    rootContract.declaration.byteRange,
   )
 
   // Depth first search
@@ -32,7 +31,7 @@ export function flattenStartingFrom(
     const entry = stack.pop()
     assert(entry !== undefined, 'Stack should not be empty')
 
-    const foundContract = parsedFileManager.tryFindContract(
+    const foundContract = parsedFileManager.tryFindDeclaration(
       entry.contractName,
       entry.file,
     )
@@ -44,7 +43,7 @@ export function flattenStartingFrom(
     }
     visited.add(uniqueContractId)
 
-    const { contract, file } = foundContract
+    const { declaration: contract, file } = foundContract
     flatSource = formatSource(file.content, contract.byteRange) + flatSource
     stack.push(...getStackEntries(foundContract))
   }
@@ -60,16 +59,16 @@ function changeLineEndingsToUnix(source: string): string {
   return source.replace(/\r\n/g, '\n')
 }
 
-function getUniqueContractId(entry: ContractFilePair): string {
+function getUniqueContractId(entry: DeclarationFilePair): string {
   const hasher = createHash('sha1')
-  const source = formatSource(entry.file.content, entry.contract.byteRange)
+  const source = formatSource(entry.file.content, entry.declaration.byteRange)
   hasher.update(source)
   return `0x${hasher.digest('hex')}`
 }
 
-function getStackEntries(pair: ContractFilePair): ContractNameFilePair[] {
-  const contractNames = pair.contract.inheritsFrom.concat(
-    pair.contract.referencedContracts,
+function getStackEntries(pair: DeclarationFilePair): ContractNameFilePair[] {
+  const contractNames = pair.declaration.inheritsFrom.concat(
+    pair.declaration.referencedDeclaration,
   )
   return contractNames.map((contractName) => ({
     contractName,

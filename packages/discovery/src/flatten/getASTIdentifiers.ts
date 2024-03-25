@@ -157,6 +157,9 @@ export function getASTIdentifiers(baseNode: AST.BaseASTNode | null): string[] {
       const args = node.arguments.flatMap((a) => parseExpression(a))
       return identifiers.concat(args)
     }
+    case 'EnumValue': {
+      return [node.name]
+    }
     case 'PragmaDirective':
     case 'ImportDirective':
     case 'EnumDefinition': {

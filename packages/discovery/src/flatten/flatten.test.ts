@@ -10,7 +10,11 @@ describe('flatten', () => {
     const CONTRACT2_SOURCE = 'contract C2 { function r3() public {} }'
     const CONTRACT3_SOURCE = 'contract C3 { function r4() public {} }'
     const CONTRACT4_SOURCE = 'contract C4 { function r4(L1.S1 arg) public {} }'
-    const LIBRARY_SOURCE = 'library L1 { struct S1 { uint256 x; } }'
+    const LIBRARY_SOURCE = [
+      'type T1 is uint256;',
+      '',
+      'library L1 { struct S1 { T1 x; } }',
+    ].join('\n')
 
     const remappings = [
       'remappedPath1=path1',

@@ -2,10 +2,10 @@ import { expect, mockFn, mockObject } from 'earl'
 
 import { flattenStartingFrom } from './flattenStartingFrom'
 import {
-  ContractDeclaration,
-  ContractFilePair,
+  DeclarationFilePair,
   ParsedFile,
   ParsedFilesManager,
+  TopLevelDeclaration,
 } from './ParsedFilesManager'
 
 describe(flattenStartingFrom.name, () => {
@@ -25,7 +25,7 @@ describe(flattenStartingFrom.name, () => {
   const ROOT_SOURCE_UNIX =
     'contract Contract1 is Contract3\n {\n function cf() public {\n Contract2.lf(); this.bcf();\n }\n }'
 
-  const LIBRARY_CONTRACT: ContractDeclaration = {
+  const LIBRARY_CONTRACT: TopLevelDeclaration = {
     name: 'Contract2',
     type: 'library',
     ast: DUMMY_AST_NODE as any,
@@ -34,10 +34,10 @@ describe(flattenStartingFrom.name, () => {
       end: LIBRARY_SOURCE.length - 1,
     },
     inheritsFrom: [],
-    referencedContracts: [],
+    referencedDeclaration: [],
   }
 
-  const BASE_CONTRACT: ContractDeclaration = {
+  const BASE_CONTRACT: TopLevelDeclaration = {
     name: 'Contract3',
     type: 'contract',
     ast: DUMMY_AST_NODE as any,
@@ -46,10 +46,10 @@ describe(flattenStartingFrom.name, () => {
       end: LIBRARY_SOURCE.length + BASE_SOURCE.length - 1,
     },
     inheritsFrom: [],
-    referencedContracts: [LIBRARY_CONTRACT.name],
+    referencedDeclaration: [LIBRARY_CONTRACT.name],
   }
 
-  const ROOT_CONTRACT: ContractDeclaration = {
+  const ROOT_CONTRACT: TopLevelDeclaration = {
     name: 'Contract1',
     type: 'contract',
     ast: DUMMY_AST_NODE as any,
@@ -58,41 +58,41 @@ describe(flattenStartingFrom.name, () => {
       end: LIBRARY_SOURCE.length + BASE_SOURCE.length + ROOT_SOURCE.length - 1,
     },
     inheritsFrom: [BASE_CONTRACT.name],
-    referencedContracts: [LIBRARY_CONTRACT.name],
+    referencedDeclaration: [LIBRARY_CONTRACT.name],
   }
 
   const ROOT_PARSED_FILE: Omit<ParsedFile, 'rootASTNode'> = {
     path: 'path',
     content: ROOT_FILE_SOURCE,
-    contractDeclarations: [ROOT_CONTRACT, LIBRARY_CONTRACT],
+    topLevelDeclarations: [ROOT_CONTRACT, LIBRARY_CONTRACT],
     importDirectives: [],
   }
 
   it('flattens the source code', () => {
     const rootContractName = 'Contract1'
     const parsedFileManager = mockObject<ParsedFilesManager>({
-      findContractDeclaration: mockFn((contractName): ContractFilePair => {
+      findDeclaration: mockFn((contractName): DeclarationFilePair => {
         expect(contractName).toEqual(rootContractName)
 
         return {
-          contract: ROOT_CONTRACT,
+          declaration: ROOT_CONTRACT,
           file: ROOT_PARSED_FILE,
-        } as ContractFilePair
+        } as DeclarationFilePair
       }),
-      tryFindContract: mockFn(
-        (contractName, file): ContractFilePair | undefined => {
+      tryFindDeclaration: mockFn(
+        (contractName, file): DeclarationFilePair | undefined => {
           expect(file).toEqual(ROOT_PARSED_FILE)
 
           if (contractName === LIBRARY_CONTRACT.name) {
             return {
-              contract: LIBRARY_CONTRACT,
+              declaration: LIBRARY_CONTRACT,
               file: ROOT_PARSED_FILE,
-            } as ContractFilePair
+            } as DeclarationFilePair
           } else if (contractName === BASE_CONTRACT.name) {
             return {
-              contract: BASE_CONTRACT,
+              declaration: BASE_CONTRACT,
               file: ROOT_PARSED_FILE,
-            } as ContractFilePair
+            } as DeclarationFilePair
           }
         },
       ),
@@ -108,15 +108,15 @@ describe(flattenStartingFrom.name, () => {
   it('throws if fails to find a contract', () => {
     const rootContractName = 'Contract1'
     const parsedFileManager = mockObject<ParsedFilesManager>({
-      findContractDeclaration: mockFn((contractName): ContractFilePair => {
+      findDeclaration: mockFn((contractName): DeclarationFilePair => {
         expect(contractName).toEqual(rootContractName)
 
         return {
-          contract: ROOT_CONTRACT,
+          declaration: ROOT_CONTRACT,
           file: ROOT_PARSED_FILE,
-        } as ContractFilePair
+        } as DeclarationFilePair
       }),
-      tryFindContract: mockFn((): ContractFilePair | undefined => {
+      tryFindDeclaration: mockFn((): DeclarationFilePair | undefined => {
         return undefined
       }),
     })

@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.46.5
+
+### Patch Changes
+
+- Extend the flattener to include other top-level declarations
+
 ## 0.46.4
 
 ### Patch Changes

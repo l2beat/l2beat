@@ -4,7 +4,7 @@ import { FileContent, ParsedFilesManager } from './ParsedFilesManager'
 
 describe(ParsedFilesManager.name, () => {
   const EMPTY_REMAPPINGS: string[] = []
-  describe(ParsedFilesManager.prototype.findContractDeclaration.name, () => {
+  describe(ParsedFilesManager.prototype.findDeclaration.name, () => {
     it('is able to find contract all declared in one file', () => {
       const files = [
         {
@@ -20,36 +20,28 @@ describe(ParsedFilesManager.name, () => {
 
       const manager = ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS)
 
-      expect(manager.findContractDeclaration('Library1').contract).toHaveSubset(
-        {
-          name: 'Library1',
-          type: 'library',
-          referencedContracts: [],
-          inheritsFrom: [],
-        },
-      )
-      expect(
-        manager.findContractDeclaration('Interface1').contract,
-      ).toHaveSubset({
+      expect(manager.findDeclaration('Library1').declaration).toHaveSubset({
+        name: 'Library1',
+        type: 'library',
+        referencedDeclaration: [],
+        inheritsFrom: [],
+      })
+      expect(manager.findDeclaration('Interface1').declaration).toHaveSubset({
         name: 'Interface1',
         type: 'interface',
-        referencedContracts: [],
+        referencedDeclaration: [],
         inheritsFrom: [],
       })
-      expect(
-        manager.findContractDeclaration('Abstract1').contract,
-      ).toHaveSubset({
+      expect(manager.findDeclaration('Abstract1').declaration).toHaveSubset({
         name: 'Abstract1',
         type: 'abstract',
-        referencedContracts: [],
+        referencedDeclaration: [],
         inheritsFrom: [],
       })
-      expect(
-        manager.findContractDeclaration('Contract1').contract,
-      ).toHaveSubset({
+      expect(manager.findDeclaration('Contract1').declaration).toHaveSubset({
         name: 'Contract1',
         type: 'contract',
-        referencedContracts: [],
+        referencedDeclaration: [],
         inheritsFrom: [],
       })
     })
@@ -58,8 +50,8 @@ describe(ParsedFilesManager.name, () => {
       const files: FileContent[] = []
       const manager = ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS)
 
-      expect(() => manager.findContractDeclaration('NonExistent')).toThrow(
-        'Failed to find file declaring contract NonExistent',
+      expect(() => manager.findDeclaration('NonExistent')).toThrow(
+        'Failed to find file declaring NonExistent',
       )
     })
 
@@ -80,11 +72,11 @@ describe(ParsedFilesManager.name, () => {
       ]
       const manager = ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS)
 
-      expect(manager.findContractDeclaration('Contract1')).toEqual({
-        contract: expect.subset({
+      expect(manager.findDeclaration('Contract1')).toEqual({
+        declaration: expect.subset({
           name: 'Contract1',
           type: 'contract',
-          referencedContracts: [],
+          referencedDeclaration: [],
           inheritsFrom: [],
         }),
         file: expect.subset({
@@ -94,7 +86,7 @@ describe(ParsedFilesManager.name, () => {
     })
   })
 
-  describe(ParsedFilesManager.prototype.tryFindContract.name, () => {
+  describe(ParsedFilesManager.prototype.tryFindDeclaration.name, () => {
     it('returns undefined if contract is not found', () => {
       const files = [
         {
@@ -104,9 +96,9 @@ describe(ParsedFilesManager.name, () => {
       ]
 
       const manager = ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS)
-      const root = manager.findContractDeclaration('R1')
+      const root = manager.findDeclaration('R1')
 
-      expect(manager.tryFindContract('NonExistent', root.file)).toEqual(
+      expect(manager.tryFindDeclaration('NonExistent', root.file)).toEqual(
         undefined,
       )
     })
@@ -138,18 +130,18 @@ describe(ParsedFilesManager.name, () => {
       ]
 
       const manager = ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS)
-      const root = manager.findContractDeclaration('R1')
+      const root = manager.findDeclaration('R1')
 
       expect(
-        manager.tryFindContract('Alias1', root.file)?.contract.name,
+        manager.tryFindDeclaration('Alias1', root.file)?.declaration.name,
       ).toEqual('S1')
-      expect(manager.tryFindContract('S2', root.file)).toEqual(undefined)
-      expect(manager.tryFindContract('A1', root.file)?.contract.name).toEqual(
-        'A1',
-      )
-      expect(manager.tryFindContract('A2', root.file)?.contract.name).toEqual(
-        'A2',
-      )
+      expect(manager.tryFindDeclaration('S2', root.file)).toEqual(undefined)
+      expect(
+        manager.tryFindDeclaration('A1', root.file)?.declaration.name,
+      ).toEqual('A1')
+      expect(
+        manager.tryFindDeclaration('A2', root.file)?.declaration.name,
+      ).toEqual('A2')
     })
 
     it('normalizes imports', () => {
@@ -179,18 +171,18 @@ describe(ParsedFilesManager.name, () => {
       ]
 
       const manager = ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS)
-      const root = manager.findContractDeclaration('R1')
+      const root = manager.findDeclaration('R1')
 
       expect(
-        manager.tryFindContract('Alias1', root.file)?.contract.name,
+        manager.tryFindDeclaration('Alias1', root.file)?.declaration.name,
       ).toEqual('S1')
-      expect(manager.tryFindContract('S2', root.file)).toEqual(undefined)
-      expect(manager.tryFindContract('A1', root.file)?.contract.name).toEqual(
-        'A1',
-      )
-      expect(manager.tryFindContract('A2', root.file)?.contract.name).toEqual(
-        'A2',
-      )
+      expect(manager.tryFindDeclaration('S2', root.file)).toEqual(undefined)
+      expect(
+        manager.tryFindDeclaration('A1', root.file)?.declaration.name,
+      ).toEqual('A1')
+      expect(
+        manager.tryFindDeclaration('A2', root.file)?.declaration.name,
+      ).toEqual('A2')
     })
   })
 
@@ -232,28 +224,15 @@ describe(ParsedFilesManager.name, () => {
 
       const manager = ParsedFilesManager.parseFiles(files, remappings)
 
-      expect(manager.findContractDeclaration('C1').file).toHaveSubset({
+      expect(manager.findDeclaration('C1').file).toHaveSubset({
         path: 'lib/openzeppelin-contracts-upgradeable/long/access/OwnableUpgradeable.sol',
       })
-      expect(manager.findContractDeclaration('C2').file).toHaveSubset({
+      expect(manager.findDeclaration('C2').file).toHaveSubset({
         path: 'lib/openzeppelin-contracts/contracts/access/NonRenounceable.sol',
       })
-      expect(manager.findContractDeclaration('C3').file).toHaveSubset({
+      expect(manager.findDeclaration('C3').file).toHaveSubset({
         path: 'lib/optimism/contracts/OptimismPortal.sol',
       })
-    })
-
-    it('throws when function is declared in top level scope', () => {
-      const files = [
-        {
-          path: 'ImportedAsAll.sol',
-          content: 'function f2() public {}',
-        },
-      ]
-
-      expect(() =>
-        ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS),
-      ).toThrow()
     })
 
     it('finds non obvious library usage', () => {
@@ -275,10 +254,45 @@ describe(ParsedFilesManager.name, () => {
       ]
 
       const manager = ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS)
-      const root = manager.findContractDeclaration('R1')
+      const root = manager.findDeclaration('R1')
 
-      expect(root.contract.referencedContracts.sort()).toEqual(
+      expect(root.declaration.referencedDeclaration.sort()).toEqual(
         ['L1', 'L2'].sort(),
+      )
+    })
+
+    it('finds non obvious top-level declaration usage', () => {
+      const files = [
+        {
+          path: 'ImportedAsAll.sol',
+          content: `
+          type T1 is uint256;
+          function f1() public {}
+          struct S1 { bytes data; }
+          library L1 { struct S1 { bytes data; } }
+          library L2 { function f1() public {} }
+          `,
+        },
+        {
+          path: 'Importing.sol',
+          content: `
+          import "./ImportedAsAll.sol";
+          contract R1 { function r1() public {
+              L1.S1 memory s;
+              L2.f1();
+              f1();
+              T1 t;
+              S1 memory s1;
+          } }
+          `,
+        },
+      ]
+
+      const manager = ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS)
+      const root = manager.findDeclaration('R1')
+
+      expect(root.declaration.referencedDeclaration.sort()).toEqual(
+        ['L1', 'L2', 'S1', 'T1', 'f1'].sort(),
       )
     })
   })
