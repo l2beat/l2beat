@@ -1,3 +1,40 @@
+Generated with discovered.json: 0x80e34d2e9f076e502c2a5f413f27f449b1570d7a
+
+# Diff at Mon, 25 Mar 2024 09:12:11 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@9bc44b13c53d42ef5e81d478df7a78975e8d4088 block: 19482808
+- current block number: 19510528
+
+## Description
+
+A bug on Polygon zkEVM was fixed, unrelated to Astar zkEVM.
+
+## Watched changes
+
+```diff
+    contract RollupManagerAdminMultisig (0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
+    +++ description: None
+      values.nonce:
+-        19
++        27
+    }
+```
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      values.accessControl.UPDATE_ROLLUP.members.1:
++        "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
+      values.lastDeactivatedEmergencyStateTimestamp:
+-        0
++        1711323791
+      values.rollupTypeCount:
+-        2
++        3
+    }
+```
+
 Generated with discovered.json: 0x9d882fb2ce884a4add9de979baad67a6d2a8b618
 
 # Diff at Thu, 21 Mar 2024 11:41:18 GMT:
