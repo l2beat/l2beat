@@ -159,21 +159,31 @@ describe(L2CostsController.name, () => {
       const result = getMockL2CostsController({}).sumDetails(transactions)
 
       const expected: L2CostsDetails = {
-        totalCost: 30,
-        totalGas: 30,
-        totalCostUsd: 30,
-        totalCalldataGas: 3,
-        totalComputeGas: 3,
-        totalBlobGas: 2,
-        totalCalldataCost: 30,
-        totalComputeCost: 3,
-        totalBlobCost: 2,
-        totalCalldataCostUsd: 300,
-        totalComputeCostUsd: 3,
-        totalBlobCostUsd: 2,
-        totalOverheadGas: 42_000,
-        totalOverheadCost: 420_020,
-        totalOverheadCostUsd: 4_200_200,
+        total: {
+          gas: 30,
+          ethCost: 30,
+          usdCost: 30,
+        },
+        calldata: {
+          gas: 3,
+          ethCost: 30,
+          usdCost: 300,
+        },
+        compute: {
+          gas: 3,
+          ethCost: 3,
+          usdCost: 3,
+        },
+        overhead: {
+          gas: 42_000,
+          ethCost: 420_020,
+          usdCost: 4_200_200,
+        },
+        blobs: {
+          gas: 2,
+          ethCost: 2,
+          usdCost: 2,
+        },
       }
 
       expect(result).toEqual(expected)
@@ -184,18 +194,26 @@ describe(L2CostsController.name, () => {
       const result = getMockL2CostsController({}).sumDetails(transactions)
 
       const expected: L2CostsDetails = {
-        totalCalldataCost: 10,
-        totalCalldataCostUsd: 100,
-        totalCalldataGas: 1,
-        totalComputeCost: 1,
-        totalComputeCostUsd: 1,
-        totalComputeGas: 1,
-        totalCost: 10,
-        totalCostUsd: 10,
-        totalGas: 10,
-        totalOverheadGas: 21_000,
-        totalOverheadCost: 210_010,
-        totalOverheadCostUsd: 2_100_100,
+        total: {
+          gas: 10,
+          ethCost: 10,
+          usdCost: 10,
+        },
+        calldata: {
+          gas: 1,
+          ethCost: 10,
+          usdCost: 100,
+        },
+        compute: {
+          gas: 1,
+          ethCost: 1,
+          usdCost: 1,
+        },
+        overhead: {
+          gas: 21_000,
+          ethCost: 210_010,
+          usdCost: 2_100_100,
+        },
       }
 
       expect(result).toEqual(expected)

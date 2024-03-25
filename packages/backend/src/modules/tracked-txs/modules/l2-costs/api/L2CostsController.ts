@@ -35,6 +35,9 @@ type L2CostsTrackedTxsConfigEntry = {
 
 const NOW = UnixTime.now()
 
+// Amount of gas required for a basic tx
+const OVERHEAD = 21_000
+
 interface DetailedTransactionBase {
   timestamp: UnixTime
   calldataGasUsed: number
@@ -53,16 +56,18 @@ interface DetailedTransactionBase {
   totalOverheadGasCostUsd: number
 }
 
+interface DetailedType2Transaction extends DetailedTransactionBase {
+  type: 2
+}
+interface DetailedType3Transaction extends DetailedTransactionBase {
+  type: 3
+  blobGasCost: number
+  blobGasUsed: number
+  blobGasCostUsd: number
+}
 export type DetailedTransaction =
-  | (DetailedTransactionBase & {
-      type: 2
-    })
-  | (DetailedTransactionBase & {
-      type: 3
-      blobGasCost: number
-      blobGasUsed: number
-      blobGasCostUsd: number
-    })
+  | DetailedType2Transaction
+  | DetailedType3Transaction
 
 export class L2CostsController {
   constructor(
@@ -141,43 +146,57 @@ export class L2CostsController {
   sumDetails(transactions: DetailedTransaction[]): L2CostsDetails {
     return transactions.reduce<L2CostsDetails>(
       (acc, tx) => {
-        acc.totalCost += tx.totalGasCost
-        acc.totalGas += tx.totalGas
-        acc.totalCostUsd += tx.totalGasCostUsd
-        acc.totalCalldataGas += tx.calldataGasUsed
-        acc.totalComputeGas += tx.computeGasUsed
-        acc.totalCalldataCost += tx.calldataGasCost
-        acc.totalComputeCost += tx.computeGasCost
-        acc.totalCalldataCostUsd += tx.calldataGasCostUsd
-        acc.totalComputeCostUsd += tx.computeGasCostUsd
-        acc.totalOverheadGas += tx.overheadGasUsed
-        acc.totalOverheadCost += tx.totalOverheadGasCost
-        acc.totalOverheadCostUsd += tx.totalOverheadGasCostUsd
+        acc.total.gas += tx.totalGas
+        acc.total.ethCost += tx.totalGasCost
+        acc.total.usdCost += tx.totalGasCostUsd
+
+        acc.calldata.gas += tx.calldataGasUsed
+        acc.calldata.ethCost += tx.calldataGasCost
+        acc.calldata.usdCost += tx.calldataGasCostUsd
+
+        acc.compute.gas += tx.computeGasUsed
+        acc.compute.ethCost += tx.computeGasCost
+        acc.compute.usdCost += tx.computeGasCostUsd
+
+        acc.overhead.gas += tx.overheadGasUsed
+        acc.overhead.ethCost += tx.totalOverheadGasCost
+        acc.overhead.usdCost += tx.totalOverheadGasCostUsd
 
         if (tx.type === 3) {
-          if (!acc.totalBlobGas) acc.totalBlobGas = 0
-          if (!acc.totalBlobCost) acc.totalBlobCost = 0
-          if (!acc.totalBlobCostUsd) acc.totalBlobCostUsd = 0
+          if (!acc.blobs)
+            acc.blobs = {
+              gas: 0,
+              ethCost: 0,
+              usdCost: 0,
+            }
 
-          acc.totalBlobGas += tx.blobGasUsed
-          acc.totalBlobCost += tx.blobGasCost
-          acc.totalBlobCostUsd += tx.blobGasCostUsd
+          acc.blobs.gas += tx.blobGasUsed
+          acc.blobs.ethCost += tx.blobGasCost
+          acc.blobs.usdCost += tx.blobGasCostUsd
         }
         return acc
       },
       {
-        totalCost: 0,
-        totalGas: 0,
-        totalCostUsd: 0,
-        totalCalldataGas: 0,
-        totalComputeGas: 0,
-        totalCalldataCost: 0,
-        totalComputeCost: 0,
-        totalCalldataCostUsd: 0,
-        totalComputeCostUsd: 0,
-        totalOverheadGas: 0,
-        totalOverheadCost: 0,
-        totalOverheadCostUsd: 0,
+        total: {
+          gas: 0,
+          ethCost: 0,
+          usdCost: 0,
+        },
+        overhead: {
+          gas: 0,
+          ethCost: 0,
+          usdCost: 0,
+        },
+        calldata: {
+          gas: 0,
+          ethCost: 0,
+          usdCost: 0,
+        },
+        compute: {
+          gas: 0,
+          ethCost: 0,
+          usdCost: 0,
+        },
       },
     )
   }
@@ -207,8 +226,9 @@ export class L2CostsController {
       const gasPriceETH = parseFloat((gasPriceGwei * 1e-9).toFixed(18))
 
       const calldataGasUsed = tx.data.calldataGasUsed
-      const computeGasUsed = tx.data.gasUsed - tx.data.calldataGasUsed - 21_000
-      const overheadGasUsed = 21_000
+      const computeGasUsed =
+        tx.data.gasUsed - tx.data.calldataGasUsed - OVERHEAD
+      const overheadGasUsed = OVERHEAD
       const totalGas = tx.data.gasUsed
       const gasCost = tx.data.gasUsed * gasPriceETH
       const calldataGasCost = calldataGasUsed * gasPriceETH

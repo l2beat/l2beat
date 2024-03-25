@@ -3,22 +3,19 @@ import z from 'zod'
 import { branded } from '../branded'
 import { UnixTime } from '../UnixTime'
 
+const L2CostsBreakdown = z.object({
+  gas: z.number(),
+  ethCost: z.number(),
+  usdCost: z.number(),
+})
+export type L2CostsBreakdown = z.infer<typeof L2CostsBreakdown>
+
 const L2CostsDetails = z.object({
-  totalCost: z.number(),
-  totalGas: z.number(),
-  totalCostUsd: z.number(),
-  totalCalldataGas: z.number(),
-  totalComputeGas: z.number(),
-  totalBlobGas: z.number().optional(),
-  totalCalldataCost: z.number(),
-  totalComputeCost: z.number(),
-  totalBlobCost: z.number().optional(),
-  totalCalldataCostUsd: z.number(),
-  totalComputeCostUsd: z.number(),
-  totalBlobCostUsd: z.number().optional(),
-  totalOverheadGas: z.number(),
-  totalOverheadCost: z.number(),
-  totalOverheadCostUsd: z.number(),
+  total: L2CostsBreakdown,
+  overhead: L2CostsBreakdown,
+  calldata: L2CostsBreakdown,
+  compute: L2CostsBreakdown,
+  blobs: L2CostsBreakdown.or(z.undefined()),
 })
 export type L2CostsDetails = z.infer<typeof L2CostsDetails>
 
@@ -27,8 +24,6 @@ export const L2CostsApiProject = z.object({
   last7d: L2CostsDetails.or(z.undefined()),
   last30d: L2CostsDetails.or(z.undefined()),
   last90d: L2CostsDetails.or(z.undefined()),
-  // daily: [L2CostsDetails],
-  // hourly: [L2CostsDetails],
   syncedUntil: branded(z.number(), (n) => new UnixTime(n)),
 })
 
