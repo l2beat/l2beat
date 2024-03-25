@@ -63,7 +63,8 @@ describe(TrackedTxsIndexer.name, () => {
         await trackedTxIndexer.getConfigurationsToSync(from, to)
 
       const value = await trackedTxIndexer.update(
-        from.toNumber(),
+        // TODO: refactor tests after uif update
+        from.toNumber() + 1,
         to.toNumber(),
       )
 
@@ -109,7 +110,8 @@ describe(TrackedTxsIndexer.name, () => {
       )
 
       const value = await trackedTxsIndexer.update(
-        from.toNumber(),
+        // TODO: refactor tests after uif update
+        from.toNumber() + 1,
         to.toNumber(),
       )
 
