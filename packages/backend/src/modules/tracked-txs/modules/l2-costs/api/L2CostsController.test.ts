@@ -1,12 +1,18 @@
-import { L2CostsDetails, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  L2CostsDetails,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { range } from 'lodash'
 
 import { Project } from '../../../../../model/Project'
-import { IndexerStateRepository } from '../../../../../peripherals/database/repositories/IndexerStateRepository'
-import { Clock } from '../../../../../tools/Clock'
 import { PriceRepository } from '../../../../tvl/repositories/PriceRepository'
-import { TrackedTxsConfigsRepository } from '../../../repositories/TrackedTxsConfigsRepository'
+import {
+  TrackedTxsConfigRecord,
+  TrackedTxsConfigsRepository,
+} from '../../../repositories/TrackedTxsConfigsRepository'
 import { TrackedTxId } from '../../../types/TrackedTxId'
 import {
   L2CostsRecord,
@@ -17,6 +23,79 @@ import { DetailedTransaction, L2CostsController } from './L2CostsController'
 const NOW = UnixTime.now()
 
 describe(L2CostsController.name, () => {
+  describe(L2CostsController.prototype.getL2Costs.name, () => {
+    it('correctly calculates l2costs', async () => {
+      const l2CostsRepository = mockObject<L2CostsRepository>({
+        getByProjectSinceTimestamp: mockFn().resolvesTo([]),
+      })
+      const controller = getMockL2CostsController({
+        projects: MOCK_PROJECTS,
+        trackedTxsConfigsRepository: mockObject<TrackedTxsConfigsRepository>({
+          getByProjectIdAndType: mockFn()
+            .given(MOCK_PROJECTS[1].projectId, 'l2costs')
+            .resolvesToOnce([
+              mockObject<TrackedTxsConfigRecord>({
+                id: TrackedTxId.unsafe('aaa'),
+                projectId: MOCK_PROJECTS[1].projectId,
+                untilTimestampExclusive: undefined,
+                lastSyncedTimestamp: new UnixTime(1000),
+              }),
+            ])
+            .given(MOCK_PROJECTS[2].projectId, 'l2costs')
+            .resolvesToOnce([
+              mockObject<TrackedTxsConfigRecord>({
+                id: TrackedTxId.unsafe('bbb'),
+                projectId: MOCK_PROJECTS[2].projectId,
+                untilTimestampExclusive: undefined,
+                lastSyncedTimestamp: new UnixTime(2000),
+              }),
+            ]),
+        }),
+        l2CostsRepository,
+      })
+
+      controller.makeTransactionCalculations = mockFn().returns([
+        mockObject<DetailedTransaction>({
+          timestamp: NOW.add(-1, 'hours'),
+        }),
+        mockObject<DetailedTransaction>({ timestamp: NOW.add(-2, 'hours') }),
+      ])
+
+      controller.sumDetails = mockFn().returns(mockObject<L2CostsDetails>({}))
+
+      const result = await controller.getL2Costs()
+
+      // filters out projects without trackedTxsConfig
+      expect(
+        l2CostsRepository.getByProjectSinceTimestamp,
+      ).toHaveBeenCalledTimes(2)
+      expect(result.type).toEqual('success')
+      expect(result.data.projects).toEqual({
+        project2: {
+          syncedUntil: new UnixTime(1000),
+          last24h: mockObject<L2CostsDetails>({}),
+          last7d: mockObject<L2CostsDetails>({}),
+          last30d: mockObject<L2CostsDetails>({}),
+          last90d: mockObject<L2CostsDetails>({}),
+        },
+        project3: {
+          syncedUntil: new UnixTime(2000),
+          last24h: mockObject<L2CostsDetails>({}),
+          last7d: mockObject<L2CostsDetails>({}),
+          last30d: mockObject<L2CostsDetails>({}),
+          last90d: mockObject<L2CostsDetails>({}),
+        },
+      })
+    })
+    it('returns empty object if no data', async () => {
+      const controller = getMockL2CostsController({})
+
+      const result = await controller.getL2Costs()
+      if (result.type === 'success') {
+        expect(result.data).toEqual({ projects: {} })
+      }
+    })
+  })
   describe(L2CostsController.prototype.makeTransactionCalculations.name, () => {
     it('calculates transaction costs', async () => {
       const controller = getMockL2CostsController({})
@@ -128,14 +207,12 @@ function getMockL2CostsController(params: {
   l2CostsRepository?: L2CostsRepository
   trackedTxsConfigsRepository?: TrackedTxsConfigsRepository
   priceRepository?: PriceRepository
-  indexerStateRepository?: IndexerStateRepository
   projects?: Project[]
 }) {
   const {
     l2CostsRepository,
     trackedTxsConfigsRepository,
     priceRepository,
-    indexerStateRepository,
     projects,
   } = params
 
@@ -151,9 +228,7 @@ function getMockL2CostsController(params: {
           ]),
         ),
       }),
-    indexerStateRepository ?? mockObject<IndexerStateRepository>({}),
     projects ?? [],
-    mockObject<Clock>({}),
   )
 }
 
@@ -187,6 +262,63 @@ function getMockL2CostRecords(): L2CostsRecord[] {
     },
   ]
 }
+
+const MOCK_PROJECTS: Project[] = [
+  mockObject<Project>({
+    projectId: ProjectId('project1'),
+    isArchived: false,
+    trackedTxsConfig: undefined,
+  }),
+  mockObject<Project>({
+    projectId: ProjectId('project2'),
+    isArchived: false,
+    trackedTxsConfig: {
+      entries: [
+        {
+          address: EthereumAddress.random(),
+          formula: 'functionCall',
+          projectId: ProjectId('project2'),
+          selector: '0x1234',
+          sinceTimestampInclusive: new UnixTime(1000),
+          uses: [
+            {
+              id: TrackedTxId.unsafe('aaa'),
+              type: 'liveness',
+              subtype: 'batchSubmissions',
+            },
+            {
+              id: TrackedTxId.unsafe('aaa'),
+              type: 'l2costs',
+              subtype: 'batchSubmissions',
+            },
+          ],
+        },
+      ],
+    },
+  }),
+  mockObject<Project>({
+    projectId: ProjectId('project3'),
+    isArchived: false,
+    trackedTxsConfig: {
+      entries: [
+        {
+          from: EthereumAddress.random(),
+          to: EthereumAddress.random(),
+          formula: 'transfer',
+          projectId: ProjectId('project3'),
+          sinceTimestampInclusive: new UnixTime(2000),
+          uses: [
+            {
+              id: TrackedTxId.unsafe('bbb'),
+              type: 'l2costs',
+              subtype: 'stateUpdates',
+            },
+          ],
+        },
+      ],
+    },
+  }),
+]
 
 function getGasPriceETH(gasPrice: number) {
   const gasPriceGwei = parseFloat((gasPrice * 1e-9).toFixed(9))
