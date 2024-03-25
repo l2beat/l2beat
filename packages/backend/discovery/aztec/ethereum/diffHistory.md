@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xfe5a836e62b3c749f591b5f32c82f9a28f1674d6
+
+# Diff at Mon, 25 Mar 2024 10:52:06 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@9bc44b13c53d42ef5e81d478df7a78975e8d4088 block: 19439442
+- current block number: 19511017
+
+## Description
+
+Rollup processors receive gas reimbursements from the AztecFeeDistributor for having called the processRollup() function. The reimburseConstant, which is a constant added to each dynamically calculated gas reimbursement is now set to 0.
+Context: Zk.money V1 (this project) is sunset for a long time now. Users can only exit by runing a local docker container that runs the rollup. They have to pay the processRollup() transaction fee but get refunded by the AztecFeeDistributor.
+
+## Watched changes
+
+```diff
+    contract AztecFeeDistributor (0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734) {
+    +++ description: None
++++ description: Tip that gets added to a gas reimbursement for processing the rollup.
++++ severity: LOW
+      values.reimburseConstant:
+-        678600
++        0
+    }
+```
+
 Generated with discovered.json: 0x1392fd8121eb5a92ca60b50756022ed85425bc96
 
 # Diff at Fri, 15 Mar 2024 09:26:34 GMT:
