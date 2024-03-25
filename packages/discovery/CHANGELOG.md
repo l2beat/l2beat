@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.46.4
+
+### Patch Changes
+
+- Fix Mantle flattener errors
+
 ## 0.46.3
 
 ### Patch Changes
