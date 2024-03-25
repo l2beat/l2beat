@@ -1,4 +1,4 @@
-import { DataAvailabilityMode, Layer2 } from '@l2beat/config'
+import { Layer2 } from '@l2beat/config'
 import {
   FinalityApiResponse,
   FinalityProjectData,
@@ -33,7 +33,7 @@ export function getScalingFinalityView(
   }
 }
 
-export function getScalingFinalityViewEntry(
+function getScalingFinalityViewEntry(
   project: Layer2,
   finalityProjectData: FinalityProjectData | undefined,
 ): ScalingFinalityViewEntry {
@@ -42,7 +42,7 @@ export function getScalingFinalityViewEntry(
     shortName: project.display.shortName,
     slug: project.display.slug,
     category: project.display.category,
-    dataAvailabilityMode: daModeToDisplay(project.dataAvailability?.mode),
+    dataAvailabilityMode: project.dataAvailability?.mode,
     provider: project.display.provider,
     warning: project.display.warning,
     redWarning: project.display.redWarning,
@@ -100,12 +100,4 @@ function getIncludedProjects(
       (p.display.category === 'ZK Rollup' ||
         p.display.category === 'Optimistic Rollup'),
   )
-}
-
-function daModeToDisplay(daMode: DataAvailabilityMode | undefined) {
-  if (!daMode) {
-    return undefined
-  }
-
-  return daMode
 }

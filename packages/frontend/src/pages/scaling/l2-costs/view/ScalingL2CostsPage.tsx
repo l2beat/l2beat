@@ -12,18 +12,12 @@ import { ScalingNavigationTabs } from '../../../../components/navigation-tabs/Sc
 import { OtherSites } from '../../../../components/other-sites/OtherSites'
 import { PageContent } from '../../../../components/PageContent'
 import {
-  FinalityDiagram,
-  FinalityDiagramsSection,
-} from './FinalityDiagramsSection'
-import { FinalityWarning } from './FinalityWarning'
-import {
-  ScalingFinalityView,
-  ScalingFinalityViewProps,
-} from './ScalingFinalityView'
+  ScalingL2CostsView,
+  ScalingL2CostsViewProps,
+} from './ScalingL2CostsView'
 
-export interface ScalingFinalityPageProps {
-  finalityView: ScalingFinalityViewProps
-  diagrams: FinalityDiagram[]
+export interface ScalingL2CostsPageProps {
+  l2CostsView: ScalingL2CostsViewProps
   navbar: NavbarProps
   footer: FooterProps
   showActivity: boolean
@@ -31,7 +25,7 @@ export interface ScalingFinalityPageProps {
   showFinality: boolean
 }
 
-export function ScalingFinalityPage(props: ScalingFinalityPageProps) {
+export function ScalingL2CostsPage(props: ScalingL2CostsPageProps) {
   return (
     <>
       <Navbar {...props.navbar} />
@@ -40,16 +34,11 @@ export function ScalingFinalityPage(props: ScalingFinalityPageProps) {
           showActivity={props.showActivity}
           showFinality={props.showFinality}
           showLiveness={props.showLiveness}
-          selected="finality"
+          selected="l2-costs"
         />
         <main>
-          <SimplePageHeader>Finality</SimplePageHeader>
-          <FinalityWarning />
-          <ScalingFinalityView {...props.finalityView} />
-          <FinalityDiagramsSection
-            className="mt-20"
-            diagrams={props.diagrams}
-          />
+          <SimplePageHeader>L2 Costs</SimplePageHeader>
+          <ScalingL2CostsView {...props.l2CostsView} />
           <OtherSites />
           <About />
         </main>

@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { Breakdown } from './breakdown/Breakdown'
 import { RoundedWarningIcon } from './icons'
 import { WarningBar } from './project/WarningBar'
 import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip/Tooltip'
@@ -16,27 +17,23 @@ export interface TokenBreakdownProps {
 }
 
 export function TokenBreakdown(props: TokenBreakdownProps) {
+  const values = [
+    {
+      value: props.associated,
+      className: 'dark:fill-rose-700 fill-rose-500',
+    },
+    {
+      value: props.ether,
+      className: 'dark:fill-green-200 fill-green-900',
+    },
+    { value: props.stable, className: 'dark:fill-teal-400 fill-teal-500' },
+    { value: props.other, className: 'fill-sky-600' },
+  ]
+
   return (
     <Tooltip>
       <TooltipTrigger className="flex items-center gap-1">
-        <svg
-          className="overflow-hidden rounded opacity-80"
-          width="100"
-          height="21"
-          viewBox="0 0 100 21"
-          fill="none"
-        >
-          {getGradientGroups(props).map((g, i) => (
-            <rect
-              key={i}
-              x={g.offset}
-              y="0"
-              width={g.size}
-              height="21"
-              className={g.className}
-            />
-          ))}
-        </svg>
+        <Breakdown values={values} className="opacity-80" />
         {props.warning && (
           <>
             {props.warningSeverity === 'warning' && (
@@ -61,46 +58,4 @@ export function TokenBreakdown(props: TokenBreakdownProps) {
       </TooltipContent>
     </Tooltip>
   )
-}
-
-const GAP_SIZE = 2
-const MIN_SIZE = 2
-
-function getGradientGroups(breakdown: TokenBreakdownProps) {
-  if (breakdown.empty) {
-    return []
-  }
-  const groups = [
-    {
-      weight: breakdown.associated,
-      className: 'dark:fill-rose-700 fill-rose-500',
-    },
-    {
-      weight: breakdown.ether,
-      className: 'dark:fill-green-200 fill-green-900',
-    },
-    { weight: breakdown.stable, className: 'dark:fill-teal-400 fill-teal-500' },
-    { weight: breakdown.other, className: 'fill-sky-600' },
-  ].filter((x) => x.weight >= 0.005)
-  const gaps = groups.length - 1
-  const sizedGroups = groups.map((g) => ({
-    ...g,
-    size: Math.max(MIN_SIZE, Math.ceil(g.weight * (100 - gaps * GAP_SIZE))),
-  }))
-  const total = sizedGroups.reduce((sum, g) => sum + g.size, 0)
-  const difference = total - (100 - gaps * GAP_SIZE)
-  let largest = sizedGroups[0]
-  for (const group of sizedGroups) {
-    if (group.size > largest.size) {
-      largest = group
-    }
-  }
-  largest.size -= difference
-  let offset = 0
-  const withOffset = sizedGroups.map((g) => {
-    const result = { ...g, offset: offset }
-    offset += g.size + GAP_SIZE
-    return result
-  })
-  return withOffset
 }

@@ -10,6 +10,8 @@ import {
 } from '@l2beat/shared-pure'
 import { ReactElement } from 'react'
 
+import { L2CostsApiResponse } from '../build/api/DELETE_THIS_FILE'
+
 export interface Page {
   slug: string
   page: ReactElement
@@ -43,4 +45,5 @@ export interface PagesData {
   livenessApiResponse: LivenessApiResponse | undefined
   finalityApiResponse: FinalityApiResponse | undefined
   diffHistory: DiffHistoryApiResponse | undefined
+  l2CostsApiResponse: L2CostsApiResponse
 }

@@ -17,6 +17,7 @@ import { getActivityPage } from './scaling/activity'
 import { getScalingDataAvailabilityPage } from './scaling/data-availability'
 import { getDiffHistoryPages } from './scaling/diff-history'
 import { getFinalityPage } from './scaling/finality'
+import { getL2CostsPage } from './scaling/l2-costs'
 import { getLivenessPage } from './scaling/liveness'
 import { getProjectPages } from './scaling/projects'
 import { getProjectTvlBreakdownPages } from './scaling/projects-tvl-breakdown'
@@ -34,6 +35,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     tvlBreakdownApiResponse,
     livenessApiResponse,
     finalityApiResponse,
+    l2CostsApiResponse,
     diffHistory,
   } = pagesData
 
@@ -101,6 +103,8 @@ export async function renderPages(config: Config, pagesData: PagesData) {
   }
 
   pages.push(getScalingDataAvailabilityPage(config, { tvlApiResponse }))
+
+  pages.push(getL2CostsPage(config, { tvlApiResponse, l2CostsApiResponse }))
 
   outputPages(pages)
 }
