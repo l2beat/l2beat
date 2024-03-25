@@ -108,9 +108,9 @@ describe(LineaFinalityAnalyzer.name, () => {
             }),
         })
 
-        const l2provider = getMockL2RpcClient([
-          1706143000, 1706145000, 1706144000, 1706146000,
-        ])
+        const blockTimestamps = [1706143000, 1706145000, 1706144000, 1706146000]
+
+        const l2provider = getMockL2RpcClient(blockTimestamps)
 
         const calculator = new LineaFinalityAnalyzer(
           provider,
@@ -126,10 +126,10 @@ describe(LineaFinalityAnalyzer.name, () => {
 
         if (results) {
           expect(results).toEqualUnsorted([
-            firstL1Timestamp - 1706143000,
-            firstL1Timestamp - 1706144000,
-            secondL1Timestamp - 1706145000,
-            secondL1Timestamp - 1706146000,
+            firstL1Timestamp - blockTimestamps[0],
+            firstL1Timestamp - blockTimestamps[1],
+            secondL1Timestamp - blockTimestamps[2],
+            secondL1Timestamp - blockTimestamps[3],
           ])
         }
 

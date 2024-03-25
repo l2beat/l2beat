@@ -21,7 +21,7 @@ export abstract class BaseAnalyzer {
     from: UnixTime,
     to: UnixTime,
     granularity: number,
-  ) {
+  ): Promise<number[] | undefined> {
     const interval = this.getInterval(from, to, granularity)
 
     const transactions = (
@@ -44,15 +44,13 @@ export abstract class BaseAnalyzer {
       return undefined
     }
 
-    const finalityDelays = (
-      await Promise.all(
-        transactions.map(async (transaction) => {
-          return this.getFinality(transaction)
-        }),
-      )
-    ).flat()
+    const finalityDelays = []
+    for (const tx of transactions) {
+      const delay = await this.getFinality(tx)
+      finalityDelays.push(delay)
+    }
 
-    return finalityDelays
+    return finalityDelays.flat()
   }
 
   private getInterval(from: UnixTime, to: UnixTime, granularity: number) {
