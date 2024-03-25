@@ -1,8 +1,8 @@
 {
   "name": "amarok",
   "chain": "ethereum",
-  "blockNumber": 19441852,
-  "configHash": "0x3c8a5456d35cf4072e55ecbb3eb59af3cc155f13e17aa2a3e9cedd2ae07bb231",
+  "blockNumber": 19482562,
+  "configHash": "0x3cb88832322381b4a53d2de540d15d80086dab13db022e760da90bc8cf077a67",
   "version": 3,
   "contracts": [
     {
@@ -19,7 +19,7 @@
         "disputeBlocks": 120,
         "DOMAIN": 6648936,
         "FINALIZED_HASH": "0x0000000000000000000000000000000000000000000000000000000000000001",
-        "getLastCompletedSnapshotId": 950291,
+        "getLastCompletedSnapshotId": 950565,
         "getSnapshotDuration": 1800,
         "home": "0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc",
         "lastSentBlock": 19098811,
@@ -29,7 +29,7 @@
         "MIRROR_DOMAIN": 6648936,
         "mirrorConnector": "0x0000000000000000000000000000000000000000",
         "optimisticMode": true,
-        "outboundRoot": "0xa9887ce4d134bbded6e8376c42c3d772588ce9573c7cc76296bf0b8fc34e69e7",
+        "outboundRoot": "0x760544b17dae38134be8cc92d4abc0a034a587fd71668f936cefa407cde0f38f",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "PROCESS_GAS": 850000,
@@ -56,7 +56,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "118401488601597646392367851",
+        "totalSupply": "118448884601031348874639100",
         "totalSupplyAt": []
       }
     },
@@ -177,7 +177,7 @@
       "values": {
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1710523919,
+        "getCurrentTime": 1711018295,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -222,7 +222,7 @@
         "getPendingInboundRootsCount": 0,
         "getSnapshotDuration": 1800,
         "hubDomain": 6648936,
-        "lastSavedAggregateRootTimestamp": 1710513947,
+        "lastSavedAggregateRootTimestamp": 1711016759,
         "MAX_DOMAINS": 500,
         "MERKLE": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
         "minDisputeBlocks": 60,
@@ -231,7 +231,7 @@
         "paused": false,
         "pendingInboundRoots": [170, 169],
         "proposed": "0x0000000000000000000000000000000000000000",
-        "proposedAggregateRootHash": "0x43c097331c3c032480ded70770bea836a237522f1d9075a960ba4fb5895d2282",
+        "proposedAggregateRootHash": "0x0000000000000000000000000000000000000000000000000000000000000001",
         "proposedTimestamp": 0,
         "renounced": false,
         "watcherManager": "0x79e6E0242405A66B2dd8B96DEd3b2F0216Fd417d"
@@ -365,6 +365,32 @@
         "ROOT_MANAGER": "0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A"
       },
       "derivedName": "OptimismHubConnector"
+    },
+    {
+      "name": "Connext Fee Multisig",
+      "address": "0x7bE978Cc84612E08f7844672B0E6A6F367FE2b6A",
+      "upgradeability": {
+        "type": "gnosis safe",
+        "masterCopy": "0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
+        "modules": []
+      },
+      "implementations": ["0x29fcB43b46531BcA003ddC8FCB67FFE91900C762"],
+      "sinceTimestamp": 1710955703,
+      "values": {
+        "domainSeparator": "0x85c145b13d4438dc49721762b9f7f4d2fd606426a963cdcb0d45810cd73b7d94",
+        "getChainId": 1,
+        "getOwners": [
+          "0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f",
+          "0xade09131C6f43fe22C2CbABb759636C43cFc181e",
+          "0x7fB1B8D2C4a8186426Fb12a4Ae483f0093ED2315",
+          "0xb71C02f99c42424257745827F1C2beBD7Fa1e936",
+          "0xD7a8070F0875915dB9b9E03bD47A0b973d19130b"
+        ],
+        "getThreshold": 1,
+        "nonce": 1,
+        "VERSION": "1.4.1"
+      },
+      "derivedName": "SafeL2"
     },
     {
       "name": "UpgradeBeaconProxy",
@@ -687,12 +713,12 @@
         "LIQUIDITY_FEE_NUMERATOR": 9995,
         "lpTokenTargetAddress": "0xf7DE5aCeEeE6091d1103209C337fA00D0B4b9092",
         "maxRoutersPerTransfer": 5,
-        "nonce": 25437,
+        "nonce": 27093,
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "proposed": "0x0000000000000000000000000000000000000000",
         "proposedTimestamp": 0,
-        "relayerFeeVault": "0xf2964cCcB7CDA9e808aaBe8DB0DDDAF7890dd378",
+        "relayerFeeVault": "0x7bE978Cc84612E08f7844672B0E6A6F367FE2b6A",
         "RELAYERS": [
           "0x75C6A865c30da54e365Cb5Def728890B3DD8BDC4",
           "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92",
@@ -736,7 +762,9 @@
           "0x5d527765252003AceE6545416F6a9C8D15ae8402",
           "0x76CF58cE587bC928fcc5aD895555fd040E06C61a",
           "0x96D38b113b1bC6a21d1137676f2f05DfcAce24e8",
-          "0xBa11aA59645a56031fedBcCF60D4f111534f2502"
+          "0xBa11aA59645a56031fedBcCF60D4f111534f2502",
+          "0x5f4E31F4F402E368743bF29954f80f7C4655EA68",
+          "0xc770eC66052fe77ff2eF9edF9558236e2D1C41Ef"
         ],
         "SEQUENCERS": ["0x4fFA5968857a6C8242E4A6Ded2418155D33e82E7"],
         "xAppConnectionManager": "0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc"
@@ -858,32 +886,6 @@
       "derivedName": "GnosisHubConnector"
     },
     {
-      "name": "Connext Multisig 2",
-      "address": "0xf2964cCcB7CDA9e808aaBe8DB0DDDAF7890dd378",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
-      },
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
-      "sinceTimestamp": 1693608707,
-      "values": {
-        "domainSeparator": "0xa721cba4d2f32af7fbfd7a202a7c61a16ec27fc0140de338b2f91560251fd997",
-        "getChainId": 1,
-        "getOwners": [
-          "0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f",
-          "0x7fB1B8D2C4a8186426Fb12a4Ae483f0093ED2315",
-          "0x3d7dF98257E5CEe5f032fd06a0aA510F89A19A2e",
-          "0x48fda6a16dEe5954bb0989b5B581d0623b48F06A",
-          "0xf8d8aF083aC452b05b0D2eb4499AD900324b5754"
-        ],
-        "getThreshold": 3,
-        "nonce": 32,
-        "VERSION": "1.3.0"
-      },
-      "derivedName": "GnosisSafe"
-    },
-    {
       "name": "NewWormholeHubConnector",
       "address": "0xf5a3372ed529FCD0690b6013EAaE04170ec0626b",
       "upgradeability": {
@@ -938,15 +940,14 @@
     "0x32D63da9F776891843C90787CEC54ADA23ABd4C2",
     "0x33b2aD85f7DbA818e719FB52095dC768E0eD93ec",
     "0x363605C0bdE9F1F5053aDA30618d95dbFc109Bf5",
-    "0x3d7dF98257E5CEe5f032fd06a0aA510F89A19A2e",
     "0x43A257c61e9Ef4750e426eC0770589509469b156",
     "0x450BCD84a040E6975a8092114A09cD37fA140873",
-    "0x48fda6a16dEe5954bb0989b5B581d0623b48F06A",
     "0x49a9E7ec76Bc8fDF658d09557305170d9F01D2fA",
     "0x4fFA5968857a6C8242E4A6Ded2418155D33e82E7",
     "0x56dD71fffD089EdAdbA8eCdaaDb94269713f8f4d",
     "0x58507fed0Cb11723dFb6848c92C59Cf0BBEB9927",
     "0x5d527765252003AceE6545416F6a9C8D15ae8402",
+    "0x5f4E31F4F402E368743bF29954f80f7C4655EA68",
     "0x6273c0965A1dB4F8A6277d490B4fD48715a42b96",
     "0x63Cda9C42db542bb91a7175E38673cFb00D402b0",
     "0x6892d4D1f73A65B03063B7d78174dC6350Fcc406",
@@ -964,12 +965,15 @@
     "0x97b9dcB1AA34fE5F12b728D9166ae353d1e7f5C4",
     "0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f",
     "0xade09131C6f43fe22C2CbABb759636C43cFc181e",
+    "0xb71C02f99c42424257745827F1C2beBD7Fa1e936",
     "0xBa11aA59645a56031fedBcCF60D4f111534f2502",
     "0xBE7BC00382a50A711D037eAeCAD799bb8805Dfa8",
     "0xC4Ae07F276768A3b74AE8c47bc108a2aF0e40eBa",
+    "0xc770eC66052fe77ff2eF9edF9558236e2D1C41Ef",
     "0xC832bB8015762B4857459551057EB61c68B93608",
     "0xc840e73B856f52E5491d6016daf5C7AE5e6beECD",
     "0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d",
+    "0xD7a8070F0875915dB9b9E03bD47A0b973d19130b",
     "0xdFa28361aC40679cC5D8EFa74c0421961397f2Eb",
     "0xe4d19c67ca0E9E3888158062De24321a0B272e73",
     "0xEca085906cb531bdf1F87eFA85c5bE46aA5C9d2c",
@@ -1289,6 +1293,55 @@
     ],
     "0x28A9e7bbed277092E2431F186E1aF898962d4E92": [
       "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
+    ],
+    "0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": [
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
     "0x324c5834cD3bD19c4991F4fC5b3a0Ff5257a692b": [
       "event DiamondCut(tuple(address facetAddress, uint8 action, bytes4[] functionSelectors)[] _diamondCut, address _init, bytes _calldata)",
@@ -1862,6 +1915,9 @@
       "function verifySender(address _expected) returns (bool)",
       "function withdrawFunds(address _to)"
     ],
+    "0x7bE978Cc84612E08f7844672B0E6A6F367FE2b6A": [
+      "constructor(address _singleton)"
+    ],
     "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694": [
       "constructor(address _upgradeBeacon, bytes _initializationCalldata) payable"
     ],
@@ -2412,9 +2468,6 @@
       "function setMirrorConnector(address _mirrorConnector)",
       "function verifySender(address _expected) returns (bool)",
       "function withdrawFunds(address _to)"
-    ],
-    "0xf2964cCcB7CDA9e808aaBe8DB0DDDAF7890dd378": [
-      "constructor(address _singleton)"
     ],
     "0xf5a3372ed529FCD0690b6013EAaE04170ec0626b": [
       "constructor(uint32 _domain, uint32 _mirrorDomain, address _amb, address _rootManager, address _mirrorConnector, uint256 _gasCap, uint16 _mirrorWormholeChainId)",

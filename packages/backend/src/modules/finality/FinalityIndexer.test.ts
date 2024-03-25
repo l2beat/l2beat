@@ -30,7 +30,8 @@ describe(FinalityIndexer.name, () => {
       const from = MIN_TIMESTAMP.toNumber()
       const to = MIN_TIMESTAMP.add(-1, 'days').toNumber()
 
-      const result = await finalityIndexer.update(from, to)
+      // TODO: refactor tests after uif update
+      const result = await finalityIndexer.update(from + 1, to)
       expect(result).toEqual(to)
       expect(mockIsConfigurationSynced).not.toHaveBeenCalled()
       expect(finalityRepository.add).not.toHaveBeenCalled()
@@ -50,7 +51,8 @@ describe(FinalityIndexer.name, () => {
       const from = MIN_TIMESTAMP.toNumber()
       const to = MIN_TIMESTAMP.add(1, 'days').toNumber()
 
-      const result = await finalityIndexer.update(from, to)
+      // TODO: refactor tests after uif update
+      const result = await finalityIndexer.update(from + 1, to)
       expect(mockIsConfigurationSynced).toHaveBeenCalledWith(
         new UnixTime(to).toStartOf('day'),
       )
@@ -73,7 +75,8 @@ describe(FinalityIndexer.name, () => {
       const from = MIN_TIMESTAMP.toNumber()
       const to = MIN_TIMESTAMP.add(1, 'days').toNumber()
 
-      const result = await finalityIndexer.update(from, to)
+      // TODO: refactor tests after uif update
+      const result = await finalityIndexer.update(from + 1, to)
       expect(finalityRepository.add).not.toHaveBeenCalled()
       expect(result).toEqual(to)
     })
@@ -92,7 +95,8 @@ describe(FinalityIndexer.name, () => {
       const from = MIN_TIMESTAMP.toNumber()
       const to = MIN_TIMESTAMP.add(1, 'days').toNumber()
 
-      await finalityIndexer.update(from, to)
+      // TODO: refactor tests after uif update
+      await finalityIndexer.update(from + 1, to)
       expect(finalityRepository.add).toHaveBeenCalledWith({
         projectId: ProjectId('project'),
         timestamp: MIN_TIMESTAMP.add(1, 'days'),

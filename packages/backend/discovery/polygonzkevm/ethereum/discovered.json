@@ -1,8 +1,8 @@
 {
   "name": "polygonzkevm",
   "chain": "ethereum",
-  "blockNumber": 19440911,
-  "configHash": "0x1738b66a85a7796e0cce60bd32ea66bf4561f0bf57e72633b5f57fb4baa645ed",
+  "blockNumber": 19510549,
+  "configHash": "0x2b13537d1bed3f98a03188e060885a7a70301e743865814e45377bae9d3e8059",
   "version": 3,
   "contracts": [
     {
@@ -15,6 +15,15 @@
       "values": {
         "DOMAIN_SEPARATOR": "0x866a5aba21966af95d6c7ab78eb2b2fc913915c28be3b9aa07cc04ff903e3f28"
       }
+    },
+    {
+      "name": "PolygonzkEVMVerifier",
+      "address": "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1711291211,
+      "derivedName": "FflonkVerifier"
     },
     {
       "name": "ProxyAdmin",
@@ -79,7 +88,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0x7e4a8fcf7eeec223428067c9fc29cf4a4cefc2c1e0659db1b520b1312aabd3dc",
+        "lastAccInputHash": "0x91be3a74468c6432cc27cc1c4a60db3d77833541435aee04a381f2f9b3840c94",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "Astar zkEVM",
@@ -132,7 +141,7 @@
         "gasTokenAddress": "0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
-        "getRoot": "0x77a0613f1958a7bc7d5d43c5c3b228f7e402a33887abfb8e7fdd355eb0c99a66",
+        "getRoot": "0xf4ca3309519f26af91ac5c56560a60b7d558e96404768bb1617dce3c06936cbb",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
@@ -230,20 +239,11 @@
         ],
         "pendingDefaultAdminDelay": [0, 0],
         "sdai": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
-        "totalBridgedDAI": "252815555626934742210448",
+        "totalBridgedDAI": "252816805626934742210448",
         "totalProtocolDAI": "1000000000000000000",
         "zkEvmBridge": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
       },
       "derivedName": "L1Escrow"
-    },
-    {
-      "name": "PolygonzkEVMVerifier",
-      "address": "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1708951559,
-      "derivedName": "FflonkVerifier"
     },
     {
       "name": "PolygonRollupManager",
@@ -279,7 +279,10 @@
           },
           "UPDATE_ROLLUP": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]
+            "members": [
+              "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
+            ]
           },
           "OBSOLETE_ROLLUP_TYPE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -316,29 +319,44 @@
         },
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0xfc4050d9918b6221d33b2407118d014ce854bee069761b392fdf2317874a6c65",
+        "getRollupExitRoot": "0x1f4d64a326d436a2b58c5d7a783b824e1ec4f17f5b049b127736c38e20a076c5",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
-        "lastAggregationTimestamp": 1710510539,
-        "lastDeactivatedEmergencyStateTimestamp": 0,
-        "nondeterminsiticPendingState": [],
+        "lastAggregationTimestamp": 1711357979,
+        "lastDeactivatedEmergencyStateTimestamp": 1711323791,
+        "nondeterministicPendingState": [],
         "pendingStateTimeout": 432000,
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "rollupCount": 2,
         "rollupsData": [
           [
             "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
-            "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be"
+            "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
           ],
           [
             "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
             "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"
           ]
         ],
-        "rollupTypeCount": 2,
-        "totalSequencedBatches": 16742,
-        "totalVerifiedBatches": 16709,
+        "rollupTypeCount": 3,
+        "rollupTypes": [
+          [
+            "0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30",
+            "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"
+          ],
+          [
+            "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
+            "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be"
+          ],
+          [
+            "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
+            "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
+          ]
+        ],
+        "totalSequencedBatches": 24576,
+        "totalVerifiedBatches": 24354,
         "trustedAggregatorTimeout": 432000,
         "verifyBatchTimeTarget": 1800
       },
@@ -372,7 +390,7 @@
         "INITIALIZE_TX_CONSTANT_BYTES_EMPTY_METADATA": 31,
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
-        "lastAccInputHash": "0x2bdb139b5fe6715fbe4ef2e65327dc5b031605af6ede500bf81cbfccc02d015f",
+        "lastAccInputHash": "0x26dffaf39c2b5f484cff8eeb4bafb6dc36de1e1f363079ce0b0d7044e8d68aba",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "polygon zkEVM",
@@ -400,8 +418,8 @@
       "sinceTimestamp": 1679653151,
       "values": {
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 3818,
-        "getRoot": "0xe7690ef3de9ec68dd8ceedfa0f81137965fcfc25a2b6a8c8dc8c2f2e42b81aa6",
+        "depositCount": 5435,
+        "getRoot": "0x9346ada04de5ed71863edc01cf4eb2d19f6119be2fcca877084719d9b00cc0a6",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "derivedName": "PolygonZkEVMGlobalExitRootV2"
@@ -702,6 +720,9 @@
       "function permitWitnessTransferFrom(tuple(tuple(address token, uint256 amount)[] permitted, uint256 nonce, uint256 deadline) permit, tuple(address to, uint256 requestedAmount)[] transferDetails, address owner, bytes32 witness, string witnessTypeString, bytes signature)",
       "function transferFrom(tuple(address from, address to, uint160 amount, address token)[] transferDetails)",
       "function transferFrom(address from, address to, uint160 amount, address token)"
+    ],
+    "0x0775e11309d75aA6b0967917fB0213C5673eDf81": [
+      "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
     ],
     "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -1166,9 +1187,6 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
-    ],
-    "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be": [
-      "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
     ],
     "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2": [
       "constructor(address _logic, address admin_, bytes _data) payable",

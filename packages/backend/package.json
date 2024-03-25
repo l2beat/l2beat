@@ -40,7 +40,7 @@
     "@l2beat/discovery-types": "^0.8.0",
     "@l2beat/shared": "*",
     "@l2beat/shared-pure": "*",
-    "@l2beat/uif": "^0.2.4",
+    "@l2beat/uif": "^0.3.0",
     "ansi-to-html": "^0.7.2",
     "basic-auth": "^2.0.1",
     "chalk": "^4.1.2",

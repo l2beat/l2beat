@@ -11,7 +11,7 @@
 
 Justine of Optimism Foundation [published a tweet](https://twitter.com/lalalavendr/status/1763703589564735560?s=20) with links to the Collective DAO archives, which is all their open-source research about the development of DAOs in the Ethereum ecosystem.
 
-The archives contain DAO design principles that will be an important piece of context for anybody who will be involved in governance design as part of the the collective’s [path to open metagovernance](https://gov.optimism.io/t/the-path-to-open-metagovernance/7728).
+The archives contain DAO design principles that will be an important piece of context for anybody who will be involved in governance design as part of the collective’s [path to open metagovernance](https://gov.optimism.io/t/the-path-to-open-metagovernance/7728).
 
 You can learn more information by listening to Justine explain on the [recording of the last joint-house community call here](https://gov.optimism.io/t/optimism-community-token-house-call-recaps-recordings-thread/6937/32).
 
