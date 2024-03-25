@@ -1,0 +1,91 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "chain": "linea",
+  "name": "zklinknova",
+  "initialAddresses": [
+    "0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05",
+    "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8"
+  ],
+  "names": {
+    "0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05": "zkLink",
+    "0x509ff56c152315EdeE91A2e0f059195519507e01": "ValidatorTimelock",
+    "0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec": "L2MessageService",
+    "0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB": "LineaL2Gateway",
+    "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8": "L1ERC20Bridge"
+  },
+  "overrides": {
+    "zkLink": {
+      "ignoreMethods": [
+        "l2LogsRootHash",
+        "storedBlockHash",
+        "storedBatchHash",
+        "getName"
+      ],
+      "ignoreInWatchMode": [
+        "getPriorityQueueSize",
+        "getTotalBlocksCommitted",
+        "getTotalBlocksExecuted",
+        "getTotalBlocksVerified",
+        "getTotalBatchesExecuted",
+        "getTotalBatchesVerified",
+        "getTotalBatchesCommitted",
+        "getTotalPriorityTxs",
+        "priorityQueueFrontOperation",
+        "getFirstUnprocessedPriorityTx"
+      ],
+      "fields": {
+        "validators": {
+          "type": "arrayFromOneEvent",
+          "event": "ValidatorStatusUpdate",
+          "valueKey": "validatorAddress",
+          "flagKey": "isActive"
+        }
+      }
+    },
+    "ValidatorTimelock": {
+      "ignoreMethods": [
+        "committedBlockTimestamp",
+        "getCommittedBatchTimestamp"
+      ],
+      "fields": {
+        "revertedBlocks": {
+          "type": "stateFromEvent",
+          "event": "BlocksRevert",
+          "returnParams": [
+            "totalBlocksCommitted",
+            "totalBlocksVerified",
+            "totalBlocksExecuted"
+          ]
+        },
+        // the 3 following allow us to get an array of validators without creating a new handler
+        // construnctorArgs._validators u validatorsAdded n validatorsRemoved
+        // where u is the union of the 2 sets and n is intersection
+        "constructorArgs": {
+          "type": "constructorArgs",
+          "nameArgs": true
+        }
+        /* TODO: add validator discovery
+          "validatorsAdded": {
+            "type": "arrayFromOneEvent",
+            "event": "ValidatorAdded",
+            "valueKey": "_addedValidator"
+          },
+          "validatorsRemoved": {
+            "type": "arrayFromOneEvent",
+            "event": "ValidatorRemoved",
+            "valueKey": "_removedValidator"
+          }
+          */
+      }
+    },
+    "L2MessageService": {
+      "ignoreMethods": ["l1RollingHashes"]
+    },
+    "LineaL2Gateway": {
+      "ignoreMethods": ["proxiableUUID"]
+    },
+    "L1ERC20Bridge": {
+      "ignoreRelatives": ["l2Bridge", "l2TokenBeacon"]
+    }
+  }
+}
