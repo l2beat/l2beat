@@ -99,15 +99,23 @@ describeDatabase(L2CostsRepository.name, (database) => {
     })
   })
 
-  describe(L2CostsRepository.prototype.getByProjectSinceTimestamp.name, () => {
+  describe(L2CostsRepository.prototype.getByProjectAndTimeRange.name, () => {
     it('should return all rows for given project id and since timestamp', async () => {
-      const results = await repository.getByProjectSinceTimestamp(
+      const results = await repository.getByProjectAndTimeRange(
         ProjectId('project-2'),
-        START,
-        START.add(1, 'hours'),
+        [START, START.add(1, 'hours')],
       )
 
       expect(results).toEqualUnsorted([DATA[0]])
+    })
+
+    it('should return all rows for given project id and since timestamp with exclusive to', async () => {
+      const results = await repository.getByProjectAndTimeRange(
+        ProjectId('project-2'),
+        [START.add(-1, 'days'), START],
+      )
+
+      expect(results).toEqualUnsorted([DATA[2]])
     })
   })
 

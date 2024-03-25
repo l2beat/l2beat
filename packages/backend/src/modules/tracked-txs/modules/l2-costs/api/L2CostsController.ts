@@ -108,10 +108,9 @@ export class L2CostsController {
         continue
       }
 
-      const records = await this.l2CostsRepository.getByProjectSinceTimestamp(
+      const records = await this.l2CostsRepository.getByProjectAndTimeRange(
         project.projectId,
-        NOW.add(-90, 'days').toStartOf('hour'),
-        NOW.toStartOf('hour'),
+        [NOW.add(-90, 'days').toStartOf('hour'), NOW.toStartOf('hour')],
       )
 
       const last90d = await this.makeTransactionCalculations(records)

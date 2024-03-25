@@ -26,7 +26,7 @@ describe(L2CostsController.name, () => {
   describe(L2CostsController.prototype.getL2Costs.name, () => {
     it('correctly calculates l2costs', async () => {
       const l2CostsRepository = mockObject<L2CostsRepository>({
-        getByProjectSinceTimestamp: mockFn().resolvesTo([]),
+        getByProjectAndTimeRange: mockFn().resolvesTo([]),
       })
       const controller = getMockL2CostsController({
         projects: MOCK_PROJECTS,
@@ -66,9 +66,9 @@ describe(L2CostsController.name, () => {
       const result = await controller.getL2Costs()
 
       // filters out projects without trackedTxsConfig
-      expect(
-        l2CostsRepository.getByProjectSinceTimestamp,
-      ).toHaveBeenCalledTimes(2)
+      expect(l2CostsRepository.getByProjectAndTimeRange).toHaveBeenCalledTimes(
+        2,
+      )
       expect(result.type).toEqual('success')
       expect(result.data.projects).toEqual({
         project2: {
