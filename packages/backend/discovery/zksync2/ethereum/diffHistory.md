@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xc0158f98e4c7abbca10d59b4d5f862a4fbf0c27c
+
+# Diff at Thu, 14 Mar 2024 16:35:37 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@3ffa91064379f34a2916a1ad4e93791b752e7e9e block: 19425767
+- current block number: 19434460
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19425767 (main branch discovery), not current.
+
+```diff
+    contract zkSync Era Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: None
+      name:
+-        "zkSync Era Multisig"
++        "Matter Labs Multisig"
+    }
+```
+
 Generated with discovered.json: 0x7439825b1cfed9717b7d64fb67fd18dd4fad9c6b
 
 # Diff at Wed, 13 Mar 2024 11:11:36 GMT:

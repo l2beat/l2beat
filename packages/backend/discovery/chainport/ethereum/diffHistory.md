@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x8db723b5dec0e6a44d1881afc2458d6f3fd6aebf
+
+# Diff at Tue, 19 Mar 2024 07:26:39 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@87a9df6317bf41ef2d063033dfc77d54521b9991 block: 19440568
+- current block number: 19467300
+
+## Description
+
+A proposal was submitted and is executed. The execution emitted the Unpaused event from two unverified contracts (0xe452aB0cA5cCBeDd7A27E66C82644Cad747bb976 and 0x442bE00c47C7B1d3A972D179dc696DEd006862b8) and was externally titled: 'Unfreeze SwapClone + StableBridgeCore'
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
++++ description: The amount of proposals ever created. Goes up by 1 for each proposal.
++++ severity: MEDIUM
+      values.proposalCount:
+-        51
++        52
+    }
+```
+
 Generated with discovered.json: 0x6c4694a51a3ccf3920314d28aac8d48e9e63e622
 
 # Diff at Fri, 15 Mar 2024 13:13:16 GMT:

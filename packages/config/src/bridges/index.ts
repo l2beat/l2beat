@@ -1,12 +1,14 @@
 import { acrossV2 } from './acrossV2'
 import { allbridge } from './allbridge'
 import { amarok } from './amarok'
+import { ankr } from './ankr'
 import { aptos } from './aptos'
 import { avalanche } from './avalanche'
 import { beamerbridgev2 } from './beamerBridgeV2'
 import { cBridge } from './cBridge'
 import { chainport } from './chainport'
 import { connext } from './connext'
+import { davos } from './davos'
 import { debridge } from './debridge'
 import { gravity } from './gravity'
 import { harmony } from './harmony'
@@ -34,6 +36,7 @@ import { skaleIMA } from './skaleIMA'
 import { socket } from './socket'
 import { sollet } from './sollet'
 import { stargate } from './stargate'
+import { sygma } from './sygma'
 import { symbiosis } from './symbiosis'
 import { synapse } from './synapse'
 import { Bridge } from './types'
@@ -46,12 +49,14 @@ export const bridges: Bridge[] = [
   acrossV2,
   allbridge,
   amarok,
+  ankr,
   avalanche,
   aptos,
   beamerbridgev2,
   cBridge,
   connext,
   debridge,
+  davos,
   gravity,
   harmony,
   chainport,
@@ -78,6 +83,7 @@ export const bridges: Bridge[] = [
   socket,
   sollet,
   stargate,
+  sygma,
   synapse,
   portal,
   wormholeV1,

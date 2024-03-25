@@ -1,5 +1,5 @@
 import { FinalityType } from '@l2beat/config'
-import { assert, LivenessType, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { range } from 'lodash'
 
@@ -7,12 +7,12 @@ import { FinalityProjectConfig } from '../../../config/features/finality'
 import {
   calculateDetailsFor,
   calculateIntervals,
-} from '../../liveness/api/calculateIntervalWithAverages'
-import { LivenessConfigurationRepository } from '../../liveness/repositories/LivenessConfigurationRepository'
+} from '../../tracked-txs/modules/liveness/api/calculateIntervalWithAverages'
 import {
-  LivenessRecordWithProjectIdAndType,
+  LivenessRecordWithProjectIdAndSubtype,
   LivenessRepository,
-} from '../../liveness/repositories/LivenessRepository'
+} from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
+import { TrackedTxsConfigsRepository } from '../../tracked-txs/repositories/TrackedTxsConfigsRepository'
 import {
   FinalityRecord,
   FinalityRepository,
@@ -25,7 +25,7 @@ describe(FinalityController.name, () => {
       const finalityController = new FinalityController(
         getMockLivenessRepository([]),
         getMockFinalityRepository([]),
-        mockObject<LivenessConfigurationRepository>(),
+        mockObject<TrackedTxsConfigsRepository>(),
         [],
       )
 
@@ -36,20 +36,20 @@ describe(FinalityController.name, () => {
     })
 
     it('correctly calculate avg, min and max', async () => {
-      const RECORDS: LivenessRecordWithProjectIdAndType[] = [
+      const RECORDS: LivenessRecordWithProjectIdAndSubtype[] = [
         ...range(5).map((_, i) => {
           return {
             projectId: ProjectId('project1'),
             timestamp: START.add(-i, 'days'),
-            type: LivenessType('DA'),
-          }
+            subtype: 'batchSubmissions',
+          } as const
         }),
         ...range(3).map((_, i) => {
           return {
             projectId: ProjectId('project1'),
             timestamp: START.add(-(5 + i * 2), 'days'),
-            type: LivenessType('DA'),
-          }
+            subtype: 'batchSubmissions',
+          } as const
         }),
       ]
 
@@ -63,9 +63,9 @@ describe(FinalityController.name, () => {
       const finalityController = new FinalityController(
         getMockLivenessRepository(RECORDS),
         getMockFinalityRepository([project2Result]),
-        mockObject<LivenessConfigurationRepository>({
-          findLatestSyncedTimestampByProjectIdAndType: mockFn()
-            .given(ProjectId('project1'), LivenessType('DA'))
+        mockObject<TrackedTxsConfigsRepository>({
+          findLatestSyncedTimestampByProjectIdAndSubtype: mockFn()
+            .given(ProjectId('project1'), 'batchSubmissions')
             .resolvesToOnce(START),
         }),
         mockProjectConfig([
@@ -110,34 +110,34 @@ describe(FinalityController.name, () => {
 
   describe(FinalityController.prototype.getOPStackFinality.name, () => {
     it('correctly calculate avg, min and max', async () => {
-      const RECORDS: LivenessRecordWithProjectIdAndType[] = [
+      const RECORDS: LivenessRecordWithProjectIdAndSubtype[] = [
         ...range(5).map((_, i) => {
           return {
             projectId: ProjectId('project1'),
             timestamp: START.add(-i, 'days'),
-            type: LivenessType('DA'),
-          }
+            subtype: 'batchSubmissions',
+          } as const
         }),
         ...range(3).map((_, i) => {
           return {
             projectId: ProjectId('project1'),
             timestamp: START.add(-(5 + i * 2), 'days'),
-            type: LivenessType('DA'),
-          }
+            subtype: 'batchSubmissions',
+          } as const
         }),
         ...range(5).map((_, i) => {
           return {
             projectId: ProjectId('project2'),
             timestamp: START.add(-i, 'days'),
-            type: LivenessType('DA'),
-          }
+            subtype: 'batchSubmissions',
+          } as const
         }),
         ...range(3).map((_, i) => {
           return {
             projectId: ProjectId('project2'),
             timestamp: START.add(-(5 + i * 2), 'days'),
-            type: LivenessType('DA'),
-          }
+            subtype: 'batchSubmissions',
+          } as const
         }),
       ]
 
@@ -147,11 +147,11 @@ describe(FinalityController.name, () => {
       const finalityController = new FinalityController(
         getMockLivenessRepository(RECORDS),
         getMockFinalityRepository([]),
-        mockObject<LivenessConfigurationRepository>({
-          findLatestSyncedTimestampByProjectIdAndType: mockFn()
-            .given(ProjectId('project1'), LivenessType('DA'))
+        mockObject<TrackedTxsConfigsRepository>({
+          findLatestSyncedTimestampByProjectIdAndSubtype: mockFn()
+            .given(ProjectId('project1'), 'batchSubmissions')
             .resolvesToOnce(START)
-            .given(ProjectId('project2'), LivenessType('DA'))
+            .given(ProjectId('project2'), 'batchSubmissions')
             .resolvesToOnce(undefined),
         }),
         projects,
@@ -203,7 +203,7 @@ describe(FinalityController.name, () => {
             maximumTimeToInclusion: 6,
           },
         ]),
-        mockObject<LivenessConfigurationRepository>(),
+        mockObject<TrackedTxsConfigsRepository>(),
         projects,
       )
 
@@ -245,7 +245,7 @@ function getMockFinalityRepository(records: FinalityRecord[]) {
 }
 
 function getMockLivenessRepository(
-  records: LivenessRecordWithProjectIdAndType[],
+  records: LivenessRecordWithProjectIdAndSubtype[],
 ) {
   return mockObject<LivenessRepository>({
     getByProjectIdAndType(projectId: ProjectId) {

@@ -20,9 +20,13 @@ export interface QueryResultPoint {
 }
 
 export class CoingeckoQueryService {
+  static MAX_DAYS_FOR_ONE_CALL =
+    MAX_DAYS_FOR_HOURLY_PRECISION - 2 * COINGECKO_INTERPOLATION_WINDOW_DAYS
+
   constructor(private readonly coingeckoClient: CoingeckoClient) {}
 
-  async getUsdPriceHistory(
+  /** performance is not a big issue as we download 80 days worth of prices at once */
+  async getUsdPriceHistoryHourly(
     coingeckoId: CoingeckoId,
     from: UnixTime,
     to: UnixTime,
@@ -31,6 +35,7 @@ export class CoingeckoQueryService {
     const queryResult = await this.queryHourlyPricesAndMarketCaps(
       coingeckoId,
       { from, to },
+      // TODO: either make it multichain or remove this fallback
       address,
     )
     return queryResult.prices

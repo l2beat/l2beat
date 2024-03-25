@@ -22,6 +22,17 @@ export class AztecClient {
     this.queryApi = rateLimiter.wrap(this.queryApi.bind(this))
   }
 
+  static create(
+    services: { httpClient: HttpClient },
+    options: { url: string; callsPerMinute: number | undefined },
+  ): AztecClient {
+    return new AztecClient(
+      services.httpClient,
+      options.url,
+      options.callsPerMinute,
+    )
+  }
+
   async getLatestBlock(): Promise<Block> {
     const data = await this.queryApi(
       '{rollups(take:10,skip:0){id mined numTxs}}',

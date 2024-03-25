@@ -7,12 +7,13 @@ import {
 import { utils } from 'ethers'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
   makeBridgeCompatible,
-  makeDataAvailabilityConfig,
+  NEW_CRYPTOGRAPHY,
   RISK_VIEW,
   ScalingProjectPermissionedAccount,
   STATE_CORRECTNESS,
@@ -125,16 +126,13 @@ export const linea: Layer2 = {
       defaultUrl: 'https://linea-mainnet.infura.io/v3',
       startBlock: 1,
     },
-    liveness: {
-      proofSubmissions: [],
-      duplicateData: [
-        {
-          from: 'stateUpdates',
-          to: 'proofSubmissions',
-        },
-      ],
-      batchSubmissions: [
-        {
+    trackedTxs: [
+      {
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xd19d4B5d358258f05D7B411E21A1460D11B0876F',
@@ -142,11 +140,21 @@ export const linea: Layer2 = {
           selector: '0x7a776315',
           functionSignature:
             'function submitData((bytes32,bytes32,bytes32,uint256,uint256,bytes32,bytes))',
-          sinceTimestamp: new UnixTime(1707813551),
+          sinceTimestampInclusive: new UnixTime(1707831168),
         },
-      ],
-      stateUpdates: [
-        {
+      },
+      {
+        uses: [
+          {
+            type: 'liveness',
+            subtype: 'stateUpdates',
+          },
+          {
+            type: 'l2costs',
+            subtype: 'stateUpdates',
+          },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xd19d4B5d358258f05D7B411E21A1460D11B0876F',
@@ -154,10 +162,22 @@ export const linea: Layer2 = {
           selector: '0x4165d6dd',
           functionSignature:
             'function finalizeBlocks((bytes32, uint32, bytes[], bytes32[], bytes, uint16[])[] _blocksData,bytes _proof,uint256 _proofType,bytes32 _parentStateRootHash)',
-          sinceTimestamp: new UnixTime(1689159923),
-          untilTimestamp: new UnixTime(1707813551),
+          sinceTimestampInclusive: new UnixTime(1689159923),
+          untilTimestampExclusive: new UnixTime(1707831168),
         },
-        {
+      },
+      {
+        uses: [
+          {
+            type: 'liveness',
+            subtype: 'stateUpdates',
+          },
+          {
+            type: 'l2costs',
+            subtype: 'stateUpdates',
+          },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xd19d4B5d358258f05D7B411E21A1460D11B0876F',
@@ -165,14 +185,20 @@ export const linea: Layer2 = {
           selector: '0xd630280f',
           functionSignature:
             'function finalizeCompressedBlocksWithProof(bytes,uint256,(bytes32,bytes32[],bytes32,uint256,uint256,uint256,bytes32,uint256,bytes32[],uint256,bytes))',
-          sinceTimestamp: new UnixTime(1707813551),
+          sinceTimestampInclusive: new UnixTime(1707831168),
         },
-      ],
+      },
+    ],
+    liveness: {
+      duplicateData: {
+        from: 'stateUpdates',
+        to: 'proofSubmissions',
+      },
     },
     finality: {
       type: 'Linea',
       lag: 0,
-      minTimestamp: new UnixTime(1707813551),
+      minTimestamp: new UnixTime(1707831168),
     },
   },
   chainConfig: {
@@ -196,9 +222,9 @@ export const linea: Layer2 = {
     ],
     coingeckoPlatform: 'linea',
   },
-  dataAvailability: makeDataAvailabilityConfig({
-    type: 'On chain',
-    layer: 'Ethereum (calldata)',
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['Ethereum (calldata)'],
+    bridge: { type: 'Enshrined' },
     mode: 'Transactions data (compressed)',
   }),
   riskView: makeBridgeCompatible({
@@ -257,6 +283,9 @@ export const linea: Layer2 = {
     },
   }),
   technology: {
+    newCryptography: {
+      ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
+    },
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,
       description:

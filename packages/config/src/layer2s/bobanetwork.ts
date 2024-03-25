@@ -1,11 +1,11 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
-  makeDataAvailabilityConfig,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
@@ -103,21 +103,28 @@ export const bobanetwork: Layer2 = {
       defaultCallsPerMinute: 200,
       startBlock: 1,
     },
-    liveness: {
-      proofSubmissions: [],
-      batchSubmissions: [
-        {
+    trackedTxs: [
+      {
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xfBd2541e316948B259264c02f370eD088E04c3Db',
           ),
           selector: '0xd0f89344',
           functionSignature: 'function appendSequencerBatch()',
-          sinceTimestamp: new UnixTime(1635386025),
+          sinceTimestampInclusive: new UnixTime(1635386025),
         },
-      ],
-      stateUpdates: [
-        {
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xdE7355C971A5B733fe2133753Abd7e5441d441Ec',
@@ -125,15 +132,15 @@ export const bobanetwork: Layer2 = {
           selector: '0x8ca5cbb9',
           functionSignature:
             'function appendStateBatch(bytes32[] _batch,uint256 _shouldStartAtElement)',
-          sinceTimestamp: new UnixTime(1635386294),
+          sinceTimestampInclusive: new UnixTime(1635386294),
         },
-      ],
-    },
+      },
+    ],
     finality: 'coming soon',
   },
-  dataAvailability: makeDataAvailabilityConfig({
-    type: 'On chain',
-    layer: 'Ethereum (calldata)',
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['Ethereum (calldata)'],
+    bridge: { type: 'Enshrined' },
     mode: 'Transactions data',
   }),
   riskView: makeBridgeCompatible({
@@ -297,18 +304,20 @@ export const bobanetwork: Layer2 = {
       },
       EXITS.FORCED('forced-withdrawals'),
     ],
-    smartContracts: {
-      name: 'EVM compatible smart contracts are supported',
-      description:
-        'Boba Network is pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on Boba Network.',
-      risks: [],
-      references: [
-        {
-          text: 'Introducing EVM Equivalence',
-          href: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
-        },
-      ],
-    },
+    otherConsiderations: [
+      {
+        name: 'EVM compatible smart contracts are supported',
+        description:
+          'Boba Network is pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on Boba Network.',
+        risks: [],
+        references: [
+          {
+            text: 'Introducing EVM Equivalence',
+            href: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
+          },
+        ],
+      },
+    ],
   },
   contracts: {
     addresses: [

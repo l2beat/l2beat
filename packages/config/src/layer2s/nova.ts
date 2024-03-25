@@ -6,11 +6,11 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
-  makeDataAvailabilityConfig,
   MILESTONES,
   NUGGETS,
   OPERATOR,
@@ -124,10 +124,13 @@ export const nova: Layer2 = {
       startBlock: 1,
     },
   },
-  dataAvailability: makeDataAvailabilityConfig({
-    type: 'Off chain (DAC)',
-    fallback: 'Ethereum (calldata)',
-    config: { membersCount, requiredSignatures },
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['DAC', 'Ethereum (calldata)'],
+    bridge: {
+      type: 'DAC Members',
+      membersCount,
+      requiredSignatures,
+    },
     mode: 'Transactions data (compressed)',
   }),
   riskView: makeBridgeCompatible({
@@ -243,28 +246,30 @@ export const nova: Layer2 = {
         ],
       },
     ],
-    smartContracts: {
-      name: 'EVM compatible smart contracts are supported',
-      description:
-        'Arbitrum Nova uses Nitro technology that allows running fraud proofs by executing EVM code on top of WASM.',
-      risks: [
-        {
-          category: 'Funds can be lost if',
-          text: 'there are mistakes in the highly complex Nitro and WASM one-step prover implementation.',
-        },
-      ],
-      references: [
-        {
-          text: 'Arbitrum Nitro Sneak Preview',
-          href: 'https://medium.com/offchainlabs/arbitrum-nitro-sneak-preview-44550d9054f5',
-        },
-      ],
-    },
-    upgradeMechanism: UPGRADE_MECHANISM.ARBITRUM_DAO(
-      l1TimelockDelay,
-      challengeWindow * assumedBlockTime,
-      l2TimelockDelay,
-    ),
+    otherConsiderations: [
+      {
+        name: 'EVM compatible smart contracts are supported',
+        description:
+          'Arbitrum Nova uses Nitro technology that allows running fraud proofs by executing EVM code on top of WASM.',
+        risks: [
+          {
+            category: 'Funds can be lost if',
+            text: 'there are mistakes in the highly complex Nitro and WASM one-step prover implementation.',
+          },
+        ],
+        references: [
+          {
+            text: 'Arbitrum Nitro Sneak Preview',
+            href: 'https://medium.com/offchainlabs/arbitrum-nitro-sneak-preview-44550d9054f5',
+          },
+        ],
+      },
+      UPGRADE_MECHANISM.ARBITRUM_DAO(
+        l1TimelockDelay,
+        challengeWindow * assumedBlockTime,
+        l2TimelockDelay,
+      ),
+    ],
   },
   contracts: {
     addresses: [
@@ -291,6 +296,10 @@ export const nova: Layer2 = {
       discovery.getContractDetails(
         'SequencerInbox',
         'Main entry point for the Sequencer submitting transaction batches to a Rollup.',
+      ),
+      discovery.getContractDetails(
+        'BatchPosterManagerMultisig',
+        'It can update whether an address is authorized to be a batch poster at the sequencer inbox. The UpgradeExecutor retains the ability to update the batch poster manager (along with any batch posters).',
       ),
       discovery.getContractDetails(
         'Inbox',

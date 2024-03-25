@@ -9,8 +9,8 @@
     "0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A": "RootManager",
     "0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78": "RelayTransit",
     "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625": "Connext Multisig",
+    "0x7bE978Cc84612E08f7844672B0E6A6F367FE2b6A": "Connext Fee Multisig",
     "0x278F956cde8D0816786A83Aea58dc7F76c13AD8e": "Connext Multisig Member",
-    "0xf2964cCcB7CDA9e808aaBe8DB0DDDAF7890dd378": "Connext Multisig 2",
     "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE": "OptimisticOracleV3",
     "0x50efaC9619225d7fB4703C5872da978849B6E7cC": "ProposerV2",
     "0x7b292034084A41B9D441B71b6E3557Edd0463fa8": "GovernorV2",
@@ -174,9 +174,6 @@
       "ignoreRelatives": ["gelato"]
     },
     "Connext Multisig": {
-      "ignoreInWatchMode": ["nonce"]
-    },
-    "Connext Multisig 2": {
       "ignoreInWatchMode": ["nonce"]
     },
     "GovernorV2": {

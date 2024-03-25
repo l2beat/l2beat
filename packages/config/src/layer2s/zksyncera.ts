@@ -1,4 +1,5 @@
 import {
+  assert,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -6,16 +7,15 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
-  makeDataAvailabilityConfig,
   NEW_CRYPTOGRAPHY,
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
-  STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -31,7 +31,7 @@ const executionDelay = discovery.getContractValue<number>(
 const delay = executionDelay > 0 && formatSeconds(executionDelay)
 
 const upgrades = {
-  upgradableBy: ['zkSync Era Multisig'],
+  upgradableBy: ['Matter Labs Multisig'],
   upgradeDelay: 'No delay',
 }
 
@@ -128,9 +128,26 @@ export const zksyncera: Layer2 = {
       defaultCallsPerMinute: 1500,
       startBlock: 1,
     },
-    liveness: {
-      proofSubmissions: [
-        {
+    trackedTxs: [
+      {
+        uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xa0425d71cB1D6fb80E65a5361a04096E0672De03',
+          ),
+          selector: '0x701f58c5',
+          functionSignature:
+            'function commitBatches((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32), (uint64,uint64,uint64,bytes32,uint256,bytes32,bytes32,bytes32,bytes,bytes)[])',
+          sinceTimestampInclusive: new UnixTime(1701721931),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x3dB52cE065f728011Ac6732222270b3F2360d919',
@@ -138,10 +155,16 @@ export const zksyncera: Layer2 = {
           selector: '0x7739cbe7',
           functionSignature:
             'function proveBlocks((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32) calldata,(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[] calldata,(uint256[],uint256[]) calldata)',
-          sinceTimestamp: new UnixTime(1679602559),
-          untilTimestamp: new UnixTime(1701718427),
+          sinceTimestampInclusive: new UnixTime(1679602559),
+          untilTimestampExclusive: new UnixTime(1701718427),
         },
-        {
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xa0425d71cB1D6fb80E65a5361a04096E0672De03',
@@ -149,10 +172,16 @@ export const zksyncera: Layer2 = {
           selector: '0x7f61885c',
           functionSignature:
             'function proveBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32), tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[], tuple(uint256[], uint256[]))',
-          sinceTimestamp: new UnixTime(1701258299),
-          untilTimestamp: new UnixTime(1710165419),
+          sinceTimestampInclusive: new UnixTime(1701258299),
+          untilTimestampExclusive: new UnixTime(1710165419),
         },
-        {
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD',
@@ -160,12 +189,15 @@ export const zksyncera: Layer2 = {
           selector: '0x7f61885c',
           functionSignature:
             'function proveBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32), tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[], tuple(uint256[], uint256[]))',
-          sinceTimestamp: new UnixTime(1710165419),
+          sinceTimestampInclusive: new UnixTime(1710165419),
         },
-      ],
-      batchSubmissions: [],
-      stateUpdates: [
-        {
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x3dB52cE065f728011Ac6732222270b3F2360d919',
@@ -173,10 +205,16 @@ export const zksyncera: Layer2 = {
           selector: '0xce9dcf16',
           functionSignature:
             'function executeBlocks((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[] calldata _newBlocksData)',
-          sinceTimestamp: new UnixTime(1679602559),
-          untilTimestamp: new UnixTime(1701719687),
+          sinceTimestampInclusive: new UnixTime(1679602559),
+          untilTimestampExclusive: new UnixTime(1701719687),
         },
-        {
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xa0425d71cB1D6fb80E65a5361a04096E0672De03',
@@ -184,10 +222,16 @@ export const zksyncera: Layer2 = {
           selector: '0xc3d93e7c',
           functionSignature:
             'function executeBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[] _newBatchesData)',
-          sinceTimestamp: new UnixTime(1701258299),
-          untilTimestamp: new UnixTime(1710167255),
+          sinceTimestampInclusive: new UnixTime(1701258299),
+          untilTimestampExclusive: new UnixTime(1710167255),
         },
-        {
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD',
@@ -195,19 +239,19 @@ export const zksyncera: Layer2 = {
           selector: '0xc3d93e7c',
           functionSignature:
             'function executeBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[] _newBatchesData)',
-          sinceTimestamp: new UnixTime(1710167255),
+          sinceTimestampInclusive: new UnixTime(1710167255),
         },
-      ],
-    },
+      },
+    ],
     finality: {
       type: 'zkSyncEra',
       minTimestamp: new UnixTime(1708556400),
       lag: 0,
     },
   },
-  dataAvailability: makeDataAvailabilityConfig({
-    type: 'On chain',
-    layer: 'Ethereum (blobs or calldata)',
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['Ethereum (blobs or calldata)'],
+    bridge: { type: 'Enshrined' },
     mode: 'State diffs (compressed)',
   }),
   riskView: makeBridgeCompatible({
@@ -333,23 +377,8 @@ export const zksyncera: Layer2 = {
     },
   ),
   technology: {
-    stateCorrectness: {
-      ...STATE_CORRECTNESS.VALIDITY_PROOFS,
-      references: [
-        {
-          text: 'Validity proofs - zkSync FAQ',
-          href: 'https://era.zksync.io/docs/dev/fundamentals/rollups.html#optimistic-rollups-versus-zk-rollups',
-        },
-      ],
-    },
     newCryptography: {
-      ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
-      references: [
-        {
-          text: "What are rollups? - Developer's documentation",
-          href: 'https://era.zksync.io/docs/dev/fundamentals/rollups.html#what-are-zk-rollups',
-        },
-      ],
+      ...NEW_CRYPTOGRAPHY.ZK_BOTH,
     },
     dataAvailability: {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
@@ -424,6 +453,33 @@ export const zksyncera: Layer2 = {
     dataFormat:
       'Details on data format can be found [here](https://github.com/matter-labs/zksync-era/blob/main/docs/guides/advanced/pubdata.md).',
   },
+  upgradesAndGovernance: (() => {
+    const discoveredSecurityCouncilAddress = discovery.getContractValue<string>(
+      'Governance',
+      'securityCouncil',
+    )
+    assert(
+      discoveredSecurityCouncilAddress ===
+        '0x0000000000000000000000000000000000000000',
+      'There is a security council set up for zkSync Era. Change the governance description to reflect that.',
+    )
+    const description = `
+Currently, the Matter Labs multisig (${discovery.getMultisigStats('Matter Labs Multisig')}) is able to instantly upgrade all contracts (including the diamond and its facets) and roles (including the *Governor* role). The *Governor* role that resolves to the multisig is the highest permissioned role defined in the system.
+
+*Governor:* Can access all \`AdminFacet\` functions and thus upgrade the diamond and the related smart contract system. Additionally inherits access to functions for the *Admin* role. Can freeze all freezable Facets (currently \`ExecutorFacet\`, \`MailboxFacet\`) and upgrade the bridges.
+
+*Validator:* Proposes batches from L2 into the \`ValidatorTimelock\`, from where they can be proven and finally executed (through the \`ExecutorFacet\` of the diamond) after a predefined delay (currently ${formatSeconds(discovery.getContractValue('ValidatorTimelock', 'executionDelay'))}). This allows for freezing the L2 chain within the delay if any suspicious activity was detected. Can be set by the *Admin* or *Governor*.
+
+*Verifier:* Verifies the zk proofs that were provided by the Validator. Can be changed by calling \`ExecuteUpgrade()\` on the \`AdminFacet\` from the *Governor* role.
+
+*Admin:* Currently **not set**. Will be able to make non-critical changes like setting the *Validator*. Will be the role of the multisig when higher permissions are restricted to the *Security Council*.
+
+*Security Council:* Currently **not set**. Will share the *Governor* role of the main diamond with the Matter Labs multisig through the Governance smart contract (see below).
+
+A \`Governance\` smart contract is set up as the *Governor* role of the diamond. It includes logic for planning upgrades with parameters like transparency and/or a delay. Currently the delay is optional (minimum delay = ${formatSeconds(discovery.getContractValue('Governance', 'minDelay'))}) and not used by the multisig. The optional transparency may be used in the future to hide instant emergency upgrades by the *Security Council* or delay transparent (thus auditable) governance upgrades. The \`Governance\` smart contract has two roles, an *owner* role and a *securityCouncil* role.
+`
+    return description
+  })(),
   stateValidation: {
     description:
       'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.',
@@ -437,6 +493,12 @@ export const zksyncera: Layer2 = {
         title: 'ZK Circuits',
         description:
           'zkSync Era circuits are built from Boojum and are designed to replicate the behavior of the EVM. The source code can be found [here](https://github.com/matter-labs/era-zkevm_circuits/tree/main). The circuits are checked against tests that can be found [here](https://github.com/matter-labs/era-zkevm_test_harness/tree/main).',
+        risks: [
+          {
+            category: 'Funds can be lost if',
+            text: 'the proof system is implemented incorrectly.',
+          },
+        ],
       },
       {
         title: 'Verification Keys Generation',
@@ -447,7 +509,7 @@ export const zksyncera: Layer2 = {
   },
   permissions: [
     ...discovery.getMultisigPermission(
-      'zkSync Era Multisig',
+      'Matter Labs Multisig',
       'This MultiSig is the current Governor of zkSync Era main contract and owner of the L1EthBridge. It can upgrade zkSync Era, upgrade bridge, change rollup parameters with no delay.',
     ),
     {

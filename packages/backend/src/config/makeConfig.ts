@@ -30,7 +30,7 @@ export function makeConfig(
     env.string('FEATURES', isLocal ? '' : '*'),
   ).append('status')
   const minBlockTimestamp = minTimestampOverride ?? getEthereumMinTimestamp()
-  const tvl2Config = getTvl2Config()
+  const tvl2Config = getTvl2Config(env)
 
   return {
     name,
@@ -57,6 +57,7 @@ export function makeConfig(
       ? {
           connection: env.string('LOCAL_DB_URL'),
           freshStart: env.boolean('FRESH_START', false),
+          enableQueryLogging: env.boolean('ENABLE_QUERY_LOGGING', false),
           connectionPoolSize: {
             // defaults used by knex
             min: 2,
@@ -65,6 +66,7 @@ export function makeConfig(
         }
       : {
           freshStart: false,
+          enableQueryLogging: env.boolean('ENABLE_QUERY_LOGGING', false),
           connection: {
             connectionString: env.string('DATABASE_URL'),
             ssl: { rejectUnauthorized: false },
@@ -96,7 +98,10 @@ export function makeConfig(
     tvl: {
       enabled: flags.isEnabled('tvl'),
       errorOnUnsyncedTvl: env.boolean('ERROR_ON_UNSYNCED_TVL', false),
-      coingeckoApiKey: env.optionalString('COINGECKO_API_KEY'),
+      coingeckoApiKey: env.optionalString([
+        'COINGECKO_API_KEY_FOR_TVL',
+        'COINGECKO_API_KEY',
+      ]),
       ethereum: getChainTvlConfig(flags, env, 'ethereum', {
         minTimestamp: minBlockTimestamp,
       }),
@@ -107,31 +112,57 @@ export function makeConfig(
       ),
     },
     tvl2: flags.isEnabled('tvl2') && tvl2Config,
-    liveness: flags.isEnabled('liveness') && {
+    trackedTxsConfig: flags.isEnabled('tracked-txs') && {
       bigQuery: {
-        clientEmail: env.string('LIVENESS_CLIENT_EMAIL'),
-        privateKey: env.string('LIVENESS_PRIVATE_KEY').replace(/\\n/g, '\n'),
-        projectId: env.string('LIVENESS_PROJECT_ID'),
-        queryLimitGb: env.integer('LIVENESS_BIGQUERY_LIMIT_GB', 15),
-        queryWarningLimitGb: env.integer(
-          'LIVENESS_BIGQUERY_WARNING_LIMIT_GB',
-          8,
-        ),
+        clientEmail: env.string('BIGQUERY_CLIENT_EMAIL'),
+        privateKey: env.string('BIGQUERY_PRIVATE_KEY').replace(/\\n/g, '\n'),
+        projectId: env.string('BIGQUERY_PROJECT_ID'),
       },
       // TODO: figure out how to set it for local development
       minTimestamp: UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
+      uses: {
+        liveness: flags.isEnabled('tracked-txs', 'liveness'),
+        l2costs: flags.isEnabled('tracked-txs', 'l2costs') && {
+          ethereumProviderUrl: env.string([
+            'ETHEREUM_RPC_URL_FOR_L2COSTS',
+            'ETHEREUM_RPC_URL',
+          ]),
+          ethereumProviderCallsPerMinute: env.integer(
+            [
+              'ETHEREUM_RPC_CALLS_PER_MINUTE_FOR_L2COSTS',
+              'ETHEREUM_RPC_CALLS_PER_MINUTE',
+            ],
+            600,
+          ),
+        },
+      },
     },
     finality: flags.isEnabled('finality') && {
-      ethereumProviderUrl: env.string('FINALITY_ETHEREUM_PROVIDER_URL'),
+      ethereumProviderUrl: env.string([
+        'ETHEREUM_RPC_URL_FOR_FINALITY',
+        'ETHEREUM_RPC_URL',
+      ]),
       ethereumProviderCallsPerMinute: env.integer(
-        'FINALITY_ETHEREUM_PROVIDER_CALLS_PER_MINUTE',
+        [
+          'ETHEREUM_RPC_CALLS_PER_MINUTE_FOR_FINALITY',
+          'ETHEREUM_RPC_CALLS_PER_MINUTE',
+        ],
         600,
       ),
       configurations: getFinalityConfigurations(flags, env),
     },
     activity: flags.isEnabled('activity') && {
-      starkexApiKey: env.string('STARKEX_API_KEY'),
-      starkexCallsPerMinute: env.integer('STARKEX_CALLS_PER_MINUTE', 600),
+      starkexApiKey: env.string([
+        'STARKEX_API_KEY_FOR_ACTIVITY',
+        'STARKEX_API_KEY',
+      ]),
+      starkexCallsPerMinute: env.integer(
+        [
+          'STARKEX_API_CALLS_PER_MINUTE_FOR_ACTIVITY',
+          'STARKEX_API_CALLS_PER_MINUTE',
+        ],
+        600,
+      ),
       projectsExcludedFromAPI:
         env.optionalString('ACTIVITY_PROJECTS_EXCLUDED_FROM_API')?.split(' ') ??
         [],
@@ -154,8 +185,13 @@ export function makeConfig(
     diffHistory: flags.isEnabled('diffHistory') && {
       chains: [getChainDiscoveryConfig(env, 'ethereum')],
     },
+    implementationChangeReporterEnabled: flags.isEnabled(
+      'implementationChangeReporter',
+    ),
     chains: chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
     tvlCleanerEnabled: flags.isEnabled('tvlCleaner'),
+
+    // Must be last
     flags: flags.getResolved(),
   }
 }

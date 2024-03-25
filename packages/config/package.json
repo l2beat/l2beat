@@ -19,14 +19,15 @@
     "update-socket": "node -r esbuild-register scripts/socket",
     "check-verified-contracts": "node -r esbuild-register scripts/checkVerifiedContracts",
     "tokens": "node -r esbuild-register scripts/tokens/tokens.ts",
+    "tokens:verify": "sh scripts/tokens/verify.sh",
     "coingecko:platforms": "node -r esbuild-register scripts/getCoingeckoPlatforms.ts"
   },
   "dependencies": {
-    "@l2beat/backend-tools": "^0.5.0",
-    "@l2beat/discovery-types": "0.8.0",
+    "@l2beat/backend-tools": "^0.5.2",
+    "@l2beat/discovery-types": "^0.8.0",
     "@l2beat/shared": "*",
     "@l2beat/shared-pure": "*",
-    "@l2beat/discovery": "0.45.5",
+    "@l2beat/discovery": "0.46.2",
     "chalk": "^4.1.2",
     "cheerio": "^1.0.0-rc.11",
     "ethers": "^5.7.2",

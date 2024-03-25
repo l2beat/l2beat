@@ -6,11 +6,11 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
-  makeDataAvailabilityConfig,
   NUGGETS,
   OPERATOR,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -139,6 +139,12 @@ export const kroma: Layer2 = {
         description:
           'Main entry point for users depositing ERC20 token that do not require custom gateway.',
       }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e'),
+        sinceTimestamp: new UnixTime(1700122827),
+        tokens: ['USDC'],
+        description: 'Main entry point for users depositing USDC.',
+      }),
     ],
     transactionApi: {
       type: 'rpc',
@@ -147,10 +153,13 @@ export const kroma: Layer2 = {
       startBlock: 1,
       assessCount: subtractOne,
     },
-    liveness: {
-      proofSubmissions: [],
-      batchSubmissions: [
-        {
+    trackedTxs: [
+      {
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
+        query: {
           formula: 'transfer',
           from: EthereumAddress(
             discovery.getContractValue('SystemConfig', 'batcherHash'),
@@ -158,11 +167,15 @@ export const kroma: Layer2 = {
           to: EthereumAddress(
             discovery.getContractValue('SystemConfig', 'sequencerInbox'),
           ),
-          sinceTimestamp: new UnixTime(1693883663),
+          sinceTimestampInclusive: new UnixTime(1693883663),
         },
-      ],
-      stateUpdates: [
-        {
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6',
@@ -170,18 +183,18 @@ export const kroma: Layer2 = {
           selector: '0x5a045f78',
           functionSignature:
             'function submitL2Output(bytes32 _outputRoot,uint256 _l2BlockNumber,bytes32 _l1BlockHash,uint256 _l1BlockNumber)',
-          sinceTimestamp: new UnixTime(1693880579),
+          sinceTimestampInclusive: new UnixTime(1693880579),
         },
-      ],
-    },
+      },
+    ],
     finality: {
       type: 'OPStack',
       lag: 0,
     },
   },
-  dataAvailability: makeDataAvailabilityConfig({
-    type: 'On chain',
-    layer: 'Ethereum (calldata)',
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['Ethereum (calldata)'],
+    bridge: { type: 'Enshrined' },
     mode: 'Transactions data',
   }),
   riskView: makeBridgeCompatible({
@@ -359,18 +372,20 @@ export const kroma: Layer2 = {
       },
       EXITS.AUTONOMOUS,
     ],
-    smartContracts: {
-      name: 'EVM compatible smart contracts are supported',
-      description:
-        'OP stack chains are pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on L2.',
-      risks: [],
-      references: [
-        {
-          text: 'Introducing EVM Equivalence',
-          href: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
-        },
-      ],
-    },
+    otherConsiderations: [
+      {
+        name: 'EVM compatible smart contracts are supported',
+        description:
+          'OP stack chains are pursuing the EVM Equivalence model. No changes to smart contracts are required regardless of the language they are written in, i.e. anything deployed on L1 can be deployed on L2.',
+        risks: [],
+        references: [
+          {
+            text: 'Introducing EVM Equivalence',
+            href: 'https://medium.com/ethereum-optimism/introducing-evm-equivalence-5c2021deb306',
+          },
+        ],
+      },
+    ],
   },
   stateDerivation: {
     nodeSoftware:

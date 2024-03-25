@@ -1,3 +1,101 @@
+Generated with discovered.json: 0x65c228f8ed1ab55cbd9a6e85bc1f2f348606c976
+
+# Diff at Mon, 25 Mar 2024 09:16:42 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@9bc44b13c53d42ef5e81d478df7a78975e8d4088 block: 19440911
+- current block number: 19510549
+
+## Description
+
+A bug stalled the chain for 13 hours and the emergency state was activated in response. A new rollup type was added to update the Polygon zkEVM verifier. The emergency state was then deactivated. We are waiting for the post-mortem.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract FflonkVerifier (0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be)
+    +++ description: None
+```
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      values.accessControl.UPDATE_ROLLUP.members.1:
++        "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
++++ description: The emergency state has been activated, meaning that the upgrade delay is now zero.
++++ type: RISK_PARAMETER
++++ severity: HIGH
+      values.emergencyStateCount:
+-        0
++        1
+      values.lastDeactivatedEmergencyStateTimestamp:
+-        0
++        1711323791
++++ description: Mapping of a rollup type to rollup verifier. Different types may use the same verifier. First entry is a type, second a verifier.
++++ type: CODE_CHANGE
++++ severity: MEDIUM
+      values.rollupsData.0.1:
+-        "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be"
++        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++++ description: The number of unique rollup types that the manager can use.
++++ type: CODE_CHANGE
++++ severity: MEDIUM
+      values.rollupTypeCount:
+-        2
++        3
+      values.rollupTypes.2:
++        ["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71","0x0775e11309d75aA6b0967917fB0213C5673eDf81"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PolygonzkEVMVerifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.code@19440911/FflonkVerifier/meta.txt => /dev/null      | 2 --
+ .../PolygonzkEVMVerifier}/contracts/verifiers/FflonkVerifier.sol      | 4 ++--
+ .../polygonzkevm/ethereum/.code/PolygonzkEVMVerifier/meta.txt         | 2 ++
+ 3 files changed, 4 insertions(+), 4 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19440911 (main branch discovery), not current.
+
+```diff
+    contract PolygonzkEVMVerifier (0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be) {
+    +++ description: None
+      name:
+-        "PolygonzkEVMVerifier"
++        "FflonkVerifier"
+    }
+```
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      values.nondeterminsiticPendingState:
+-        []
++++ description: The emergency state has been activated, meaning that the upgrade delay is now zero.
++++ type: RISK_PARAMETER
++++ severity: HIGH
+      values.emergencyStateCount:
++        0
+      values.nondeterministicPendingState:
++        []
+      values.rollupTypes:
++        [["0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30","0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"],["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71","0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be"]]
+    }
+```
+
 Generated with discovered.json: 0x9b4d7769cda4996d3d0134957a58e639e4b6f2dc
 
 # Diff at Fri, 15 Mar 2024 14:22:39 GMT:
@@ -21,13 +119,13 @@ Contract name has changed to `PolygonZkEVMEtrog`. The method `seqenceBatches` no
     contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
     +++ description: None
 +++ description: Mapping of a rollup type to rollup verifier. Different types may use the same verifier. First entry is a type, second a verifier.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: MEDIUM
       values.rollupsData.0.1:
 -        "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"
 +        "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be"
 +++ description: The number of unique rollup types that the manager can use.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: MEDIUM
       values.rollupTypeCount:
 -        1
@@ -124,18 +222,18 @@ The trusted aggregator can call `verifyBatchesTrustedAggregator()`, `overridePen
       values.accessControl.TRUSTED_AGGREGATOR.members.1:
 +        "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
 +++ description: The number of rollups that the manager can use.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: LOW
       values.rollupCount:
 -        1
 +        2
 +++ description: Addresses of the rollup backend as well as the rollup verifier.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: MEDIUM
       values.rollupsData.1:
 +        ["0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80","0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"]
 +++ description: The number of unique rollup types that the manager can use.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: MEDIUM
       values.rollupTypeCount:
 -        0
@@ -323,57 +421,57 @@ discovery. Values are for block 19282832 (main branch discovery), not current.
     contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
     +++ description: None
 +++ description: Addresses of the rollup backend as well as the rollup verifier.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: MEDIUM
       values.rollupsData.0.11:
 -        0
 +++ description: Addresses of the rollup backend as well as the rollup verifier.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: MEDIUM
       values.rollupsData.0.10:
 -        0
 +++ description: Addresses of the rollup backend as well as the rollup verifier.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: MEDIUM
       values.rollupsData.0.9:
 -        1984749
 +++ description: Addresses of the rollup backend as well as the rollup verifier.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: MEDIUM
       values.rollupsData.0.8:
 -        0
 +++ description: Addresses of the rollup backend as well as the rollup verifier.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: MEDIUM
       values.rollupsData.0.7:
 -        0
 +++ description: Addresses of the rollup backend as well as the rollup verifier.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: MEDIUM
       values.rollupsData.0.6:
 -        1991783
 +++ description: Addresses of the rollup backend as well as the rollup verifier.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: MEDIUM
       values.rollupsData.0.5:
 -        1991800
 +++ description: Addresses of the rollup backend as well as the rollup verifier.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: MEDIUM
       values.rollupsData.0.4:
 -        "0x8ad85f1e7b882d12cf6c64cf256cab8d255d6085e8109400741d82850a1d944b"
 +++ description: Addresses of the rollup backend as well as the rollup verifier.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: MEDIUM
       values.rollupsData.0.3:
 -        7
 +++ description: Addresses of the rollup backend as well as the rollup verifier.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: MEDIUM
       values.rollupsData.0.2:
 -        "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"
 +++ description: Addresses of the rollup backend as well as the rollup verifier.
-+++ type: STRUCTURE
++++ type: CODE_CHANGE
 +++ severity: MEDIUM
       values.rollupsData.0.1:
 -        1101
