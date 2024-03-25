@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.46.3
+
+### Patch Changes
+
+- Fix PolygonZKEVM flattener errors
+
 ## 0.46.2
 
 ### Patch Changes

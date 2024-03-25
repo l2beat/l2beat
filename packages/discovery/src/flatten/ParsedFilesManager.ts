@@ -220,10 +220,27 @@ export class ParsedFilesManager {
         }
 
         const isAlreadyImported = alreadyImported.includes(object.originalName)
-        const isContract = importedFile.contractDeclarations.some(
+        if (isAlreadyImported) {
+          continue
+        }
+
+        const isDeclared = importedFile.contractDeclarations.some(
           (c) => c.name === object.originalName,
         )
-        if (!isAlreadyImported && isContract) {
+        let isImported = false
+        if (!isDeclared) {
+          const recursiveResult = this.resolveFileImports(
+            importedFile,
+            remappings,
+            alreadyImportedObjects,
+          )
+
+          isImported = recursiveResult.some(
+            (id) => id.originalName === object.originalName,
+          )
+        }
+
+        if (isDeclared || isImported) {
           alreadyImported.push(object.originalName)
           result.push(object)
         }
