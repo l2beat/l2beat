@@ -85,7 +85,7 @@ function toBlockContexts(chunk: string) {
  */
 function decodeBlockContext(rawBlockContext: string) {
   const TIMESTAMP_START = 8 * 2 // 8th byte inclusive
-  const TIMESTAMP_END = 16 * 2 // 16th byte inclusive
+  const TIMESTAMP_END = 16 * 2 // 16th byte exclusive
 
   const hexTimestamp = rawBlockContext.slice(TIMESTAMP_START, TIMESTAMP_END)
 
