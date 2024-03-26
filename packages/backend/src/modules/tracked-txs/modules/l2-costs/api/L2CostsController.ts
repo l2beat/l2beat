@@ -3,8 +3,8 @@ import {
   assert,
   AssetId,
   cacheAsyncFunction,
+  L2CostsApiProject,
   L2CostsApiResponse,
-  L2CostsDetails,
   notUndefined,
   TrackedTxsConfigSubtype,
   UnixTime,
@@ -34,6 +34,8 @@ type L2CostsTrackedTxsConfigEntry = {
   subtype: TrackedTxsConfigSubtype
   untilTimestamp: UnixTime | undefined
 }
+
+export type SummedL2Costs = Omit<L2CostsApiProject, 'syncedUntil'>
 
 const NOW = UnixTime.now()
 
@@ -137,91 +139,37 @@ export class L2CostsController {
         [NOW.add(-90, 'days').toStartOf('hour'), NOW.toStartOf('hour')],
       )
 
-      const last90d = await this.makeTransactionCalculations(records)
-      const last30d: DetailedTransaction[] = []
-      const last7d: DetailedTransaction[] = []
-      const last24h: DetailedTransaction[] = []
-
-      for (const record of last90d) {
-        if (record.timestamp.gt(NOW.add(-30, 'days'))) {
-          last30d.push(record)
-        }
-        if (record.timestamp.gt(NOW.add(-7, 'days'))) {
-          last7d.push(record)
-        }
-        if (record.timestamp.gt(NOW.add(-1, 'days'))) {
-          last24h.push(record)
-        }
-      }
+      const recordsWithDetails = await this.makeTransactionCalculations(records)
+      const sums = this.sumDetails(recordsWithDetails)
 
       projects[project.projectId.toString()] = {
         syncedUntil,
-        last24h: this.sumDetails(last24h),
-        last7d: this.sumDetails(last7d),
-        last30d: this.sumDetails(last30d),
-        last90d: this.sumDetails(last90d),
+        last24h: sums.last24h,
+        last7d: sums.last7d,
+        last30d: sums.last30d,
+        last90d: sums.last90d,
       }
     }
 
     return { type: 'success', data: { projects } }
   }
 
-  sumDetails(transactions: DetailedTransaction[]): L2CostsDetails {
-    return transactions.reduce<L2CostsDetails>(
-      (acc, tx) => {
-        acc.total.gas += tx.totalGas
-        acc.total.ethCost += tx.totalGasCost
-        acc.total.usdCost += tx.totalGasCostUsd
-
-        acc.calldata.gas += tx.calldataGasUsed
-        acc.calldata.ethCost += tx.calldataGasCost
-        acc.calldata.usdCost += tx.calldataGasCostUsd
-
-        acc.compute.gas += tx.computeGasUsed
-        acc.compute.ethCost += tx.computeGasCost
-        acc.compute.usdCost += tx.computeGasCostUsd
-
-        acc.overhead.gas += tx.overheadGasUsed
-        acc.overhead.ethCost += tx.totalOverheadGasCost
-        acc.overhead.usdCost += tx.totalOverheadGasCostUsd
-
-        if (tx.type === 3) {
-          if (!acc.blobs)
-            acc.blobs = {
-              gas: 0,
-              ethCost: 0,
-              usdCost: 0,
-            }
-
-          acc.blobs.gas += tx.blobGasUsed
-          acc.blobs.ethCost += tx.blobGasCost
-          acc.blobs.usdCost += tx.blobGasCostUsd
-        }
-        return acc
-      },
-      {
-        total: {
-          gas: 0,
-          ethCost: 0,
-          usdCost: 0,
-        },
-        overhead: {
-          gas: 0,
-          ethCost: 0,
-          usdCost: 0,
-        },
-        calldata: {
-          gas: 0,
-          ethCost: 0,
-          usdCost: 0,
-        },
-        compute: {
-          gas: 0,
-          ethCost: 0,
-          usdCost: 0,
-        },
-      },
-    )
+  sumDetails(transactions: DetailedTransaction[]): SummedL2Costs {
+    return transactions.reduce<SummedL2Costs>((acc, tx) => {
+      if (tx.timestamp.gt(NOW.add(-1, 'days'))) {
+        addToAcc(acc, tx, 'last24h')
+      }
+      if (tx.timestamp.gt(NOW.add(-7, 'days'))) {
+        addToAcc(acc, tx, 'last7d')
+      }
+      if (tx.timestamp.gt(NOW.add(-30, 'days'))) {
+        addToAcc(acc, tx, 'last30d')
+      }
+      if (tx.timestamp.gt(NOW.add(-90, 'days'))) {
+        addToAcc(acc, tx, 'last90d')
+      }
+      return acc
+    }, L2COSTS_DETAILS_ACC)
   }
 
   async makeTransactionCalculations(
@@ -329,4 +277,67 @@ export class L2CostsController {
         .filter(notUndefined),
     }
   }
+}
+
+function addToAcc(
+  acc: SummedL2Costs,
+  tx: DetailedTransaction,
+  key: keyof SummedL2Costs,
+) {
+  acc[key].total.gas += tx.totalGas
+  acc[key].total.ethCost += tx.totalGasCost
+  acc[key].total.usdCost += tx.totalGasCostUsd
+
+  acc[key].calldata.gas += tx.calldataGasUsed
+  acc[key].calldata.ethCost += tx.calldataGasCost
+  acc[key].calldata.usdCost += tx.calldataGasCostUsd
+
+  acc[key].compute.gas += tx.computeGasUsed
+  acc[key].compute.ethCost += tx.computeGasCost
+  acc[key].compute.usdCost += tx.computeGasCostUsd
+
+  acc[key].overhead.gas += tx.overheadGasUsed
+  acc[key].overhead.ethCost += tx.totalOverheadGasCost
+  acc[key].overhead.usdCost += tx.totalOverheadGasCostUsd
+
+  if (tx.type === 3) {
+    acc[key].blobs.gas += tx.blobGasUsed
+    acc[key].blobs.ethCost += tx.blobGasCost
+    acc[key].blobs.usdCost += tx.blobGasCostUsd
+  }
+}
+
+const L2COSTS_DETAILS = {
+  total: {
+    gas: 0,
+    ethCost: 0,
+    usdCost: 0,
+  },
+  overhead: {
+    gas: 0,
+    ethCost: 0,
+    usdCost: 0,
+  },
+  calldata: {
+    gas: 0,
+    ethCost: 0,
+    usdCost: 0,
+  },
+  compute: {
+    gas: 0,
+    ethCost: 0,
+    usdCost: 0,
+  },
+  blobs: {
+    gas: 0,
+    ethCost: 0,
+    usdCost: 0,
+  },
+}
+
+const L2COSTS_DETAILS_ACC: SummedL2Costs = {
+  last24h: structuredClone(L2COSTS_DETAILS),
+  last7d: structuredClone(L2COSTS_DETAILS),
+  last30d: structuredClone(L2COSTS_DETAILS),
+  last90d: structuredClone(L2COSTS_DETAILS),
 }
