@@ -169,7 +169,7 @@ export class L2CostsController {
         addToAcc(acc, tx, 'last90d')
       }
       return acc
-    }, L2COSTS_DETAILS_ACC)
+    }, structuredClone(L2COSTS_DETAILS_ACC))
   }
 
   async makeTransactionCalculations(
