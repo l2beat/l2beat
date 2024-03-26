@@ -60,9 +60,9 @@ describeDatabase(L2CostsRepository.name, (database) => {
     this.timeout(10000)
     await configRepository.deleteAll()
     await configRepository.addMany(
-      DATA.map((d) => ({
+      DATA.map((d, i) => ({
         id: d.trackedTxId,
-        projectId: ProjectId('project'),
+        projectId: ProjectId(`project-${i % 2 ? 1 : 2}`),
         type: 'liveness',
         sinceTimestampInclusive: START,
         debugInfo: '',
@@ -96,6 +96,26 @@ describeDatabase(L2CostsRepository.name, (database) => {
 
     it('empty array not to be rejected', async () => {
       await expect(repository.addMany([])).not.toBeRejected()
+    })
+  })
+
+  describe(L2CostsRepository.prototype.getByProjectAndTimeRange.name, () => {
+    it('should return all rows for given project id and since timestamp', async () => {
+      const results = await repository.getByProjectAndTimeRange(
+        ProjectId('project-2'),
+        [START, START.add(1, 'hours')],
+      )
+
+      expect(results).toEqualUnsorted([DATA[0]])
+    })
+
+    it('should return all rows for given project id and since timestamp with exclusive to', async () => {
+      const results = await repository.getByProjectAndTimeRange(
+        ProjectId('project-2'),
+        [START.add(-1, 'days'), START],
+      )
+
+      expect(results).toEqualUnsorted([DATA[2]])
     })
   })
 
