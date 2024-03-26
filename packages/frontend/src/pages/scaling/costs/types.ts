@@ -33,9 +33,19 @@ export interface ScalingCostsViewEntry {
 }
 
 export type CostsData = {
-  [Timerange in keyof Omit<L2CostsApiProject, 'syncedUntil'>]: {
-    [Type in keyof L2CostsApiProject[Timerange]]: {
-      [Cost in keyof L2CostsApiProject[Timerange][Type]]: ValueWithDisplayValue
-    }
-  }
+  [Timerange in keyof Omit<L2CostsApiProject, 'syncedUntil'>]: CostsDataDetails
+}
+
+export type CostsDataDetails = {
+  total: CostsDataBreakdown
+  calldata: CostsDataBreakdown
+  blobs?: CostsDataBreakdown
+  compute: CostsDataBreakdown
+  overhead: CostsDataBreakdown
+}
+
+export type CostsDataBreakdown = {
+  ethCost: ValueWithDisplayValue
+  usdCost: ValueWithDisplayValue
+  gas: ValueWithDisplayValue
 }

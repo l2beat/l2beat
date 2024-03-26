@@ -22,7 +22,8 @@ function getMockL2CostsApiResponse(): L2CostsApiResponse {
     'zksync2',
     'zora',
   ].reduce<Record<string, L2CostsApiProject>>((acc, cur) => {
-    acc[cur] = generateMockData()
+    const withoutBlobs = cur === 'honeypot' || cur === 'kroma'
+    acc[cur] = generateMockData(withoutBlobs)
     return acc
   }, {})
 
@@ -31,17 +32,20 @@ function getMockL2CostsApiResponse(): L2CostsApiResponse {
   }
 }
 
-function generateMockData(): L2CostsApiProject {
+function generateMockData(withoutBlobs?: boolean): L2CostsApiProject {
   return {
     syncedUntil: UnixTime.now(),
-    last24h: generateMockDataDetails(10),
-    last7d: generateMockDataDetails(70),
-    last30d: generateMockDataDetails(300),
-    last90d: generateMockDataDetails(900),
+    last24h: generateMockDataDetails(2, withoutBlobs),
+    last7d: generateMockDataDetails(8, withoutBlobs),
+    last30d: generateMockDataDetails(30, withoutBlobs),
+    last90d: generateMockDataDetails(90, withoutBlobs),
   }
 }
 
-function generateMockDataDetails(base: number): L2CostsDetails {
+function generateMockDataDetails(
+  base: number,
+  withoutBlobs?: boolean,
+): L2CostsDetails {
   const calldataMultiplier = Math.random()
   const blobsMultiplier = Math.random()
   const computeMultiplier = Math.random()
@@ -63,26 +67,39 @@ function generateMockDataDetails(base: number): L2CostsDetails {
   const overheadUsdCost = round(base * usdMultiplier * overheadMultiplier)
   const overheadGas = round(base * gasMultiplier * overheadMultiplier)
 
+  const totalEthCost = round(
+    withoutBlobs
+      ? calldataEthCost + computeEthCost + overheadEthCost
+      : calldataEthCost + blobEthCost + computeEthCost + overheadEthCost,
+  )
+  const totalUsdCost = round(
+    withoutBlobs
+      ? calldataUsdCost + computeUsdCost + overheadUsdCost
+      : calldataUsdCost + blobUsdCost + computeUsdCost + overheadUsdCost,
+  )
+  const totalGas = round(
+    withoutBlobs
+      ? calldataGas + computeGas + overheadGas
+      : calldataGas + blobGas + computeGas + overheadGas,
+  )
   return {
     total: {
-      ethCost: round(
-        calldataEthCost + blobEthCost + computeEthCost + overheadEthCost,
-      ),
-      usdCost: round(
-        calldataUsdCost + blobUsdCost + computeUsdCost + overheadUsdCost,
-      ),
-      gas: round(calldataGas + blobGas + computeGas + overheadGas),
+      ethCost: totalEthCost,
+      usdCost: totalUsdCost,
+      gas: totalGas,
     },
     calldata: {
       ethCost: calldataEthCost,
       usdCost: calldataUsdCost,
       gas: calldataGas,
     },
-    blobs: {
-      ethCost: blobEthCost,
-      usdCost: blobUsdCost,
-      gas: blobGas,
-    },
+    blobs: withoutBlobs
+      ? undefined
+      : {
+          ethCost: blobEthCost,
+          usdCost: blobUsdCost,
+          gas: blobGas,
+        },
     compute: {
       ethCost: computeEthCost,
       usdCost: computeUsdCost,

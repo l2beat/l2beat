@@ -12,11 +12,13 @@ const L2CostsDetails = z.object({
     usdCost: z.number(),
     gas: z.number(),
   }),
-  blobs: z.object({
-    ethCost: z.number(),
-    usdCost: z.number(),
-    gas: z.number(),
-  }),
+  blobs: z
+    .object({
+      ethCost: z.number(),
+      usdCost: z.number(),
+      gas: z.number(),
+    })
+    .optional(),
   compute: z.object({
     ethCost: z.number(),
     usdCost: z.number(),

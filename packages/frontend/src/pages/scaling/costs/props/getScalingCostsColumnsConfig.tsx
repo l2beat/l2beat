@@ -61,10 +61,10 @@ export function getScalingCostsColumnsConfig() {
       align: 'right',
       sorting: {
         getOrderValue: (project) => ({
-          '24H': project.costs.last24h.blobs.gas.value,
-          '7D': project.costs.last7d.blobs.gas.value,
-          '30D': project.costs.last30d.blobs.gas.value,
-          '90D': project.costs.last90d.blobs.gas.value,
+          '24H': project.costs.last24h.blobs?.gas.value,
+          '7D': project.costs.last7d.blobs?.gas.value,
+          '30D': project.costs.last30d.blobs?.gas.value,
+          '90D': project.costs.last90d.blobs?.gas.value,
         }),
         defaultOrderKey: '7D',
         rule: 'numeric',

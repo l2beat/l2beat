@@ -9,7 +9,12 @@ import {
 import { formatLargeNumber } from '../../../../utils'
 import { formatCurrency } from '../../../../utils/format'
 import { orderByTvl } from '../../../../utils/orderByTvl'
-import { CostsData, CostsPagesData, ScalingCostsViewEntry } from '../types'
+import {
+  CostsData,
+  CostsDataDetails,
+  CostsPagesData,
+  ScalingCostsViewEntry,
+} from '../types'
 import { ScalingCostsViewProps } from '../view/ScalingCostsView'
 
 export function getScalingCostsView(
@@ -62,29 +67,79 @@ function getCostsData(l2CostsProjectData: L2CostsApiProject): CostsData {
   }
 }
 
-function getDataDetails(data: L2CostsDetails) {
+function getDataDetails(data: L2CostsDetails): CostsDataDetails {
   return {
-    total: getDataDetailsValues(data.total),
-    blobs: getDataDetailsValues(data.blobs),
-    calldata: getDataDetailsValues(data.calldata),
-    compute: getDataDetailsValues(data.compute),
-    overhead: getDataDetailsValues(data.overhead),
-  }
-}
-
-function getDataDetailsValues(data: L2CostsDetails[keyof L2CostsDetails]) {
-  return {
-    ethCost: {
-      displayValue: formatCurrency(data.ethCost, 'eth'),
-      value: data.ethCost,
+    total: {
+      ethCost: {
+        displayValue: formatCurrency(data.total.ethCost, 'eth'),
+        value: data.total.ethCost,
+      },
+      usdCost: {
+        displayValue: formatCurrency(data.total.usdCost, 'usd'),
+        value: data.total.usdCost,
+      },
+      gas: {
+        displayValue: formatLargeNumber(data.total.gas),
+        value: data.total.gas,
+      },
     },
-    usdCost: {
-      displayValue: formatCurrency(data.usdCost, 'usd'),
-      value: data.usdCost,
+    blobs: data.blobs
+      ? {
+          ethCost: {
+            displayValue: formatCurrency(data.blobs.ethCost, 'eth'),
+            value: data.blobs.ethCost,
+          },
+          usdCost: {
+            displayValue: formatCurrency(data.blobs.usdCost, 'usd'),
+            value: data.blobs.usdCost,
+          },
+          gas: {
+            displayValue: formatLargeNumber(data.blobs.gas),
+            value: data.blobs.gas,
+          },
+        }
+      : undefined,
+    calldata: {
+      ethCost: {
+        displayValue: formatCurrency(data.calldata.ethCost, 'eth'),
+        value: data.calldata.ethCost,
+      },
+      usdCost: {
+        displayValue: formatCurrency(data.calldata.usdCost, 'usd'),
+        value: data.calldata.usdCost,
+      },
+      gas: {
+        displayValue: formatLargeNumber(data.calldata.gas),
+        value: data.calldata.gas,
+      },
     },
-    gas: {
-      displayValue: formatLargeNumber(data.gas),
-      value: data.gas,
+    compute: {
+      ethCost: {
+        displayValue: formatCurrency(data.compute.ethCost, 'eth'),
+        value: data.compute.ethCost,
+      },
+      usdCost: {
+        displayValue: formatCurrency(data.compute.usdCost, 'usd'),
+        value: data.compute.usdCost,
+      },
+      gas: {
+        displayValue: formatLargeNumber(data.compute.gas),
+        value: data.compute.gas,
+      },
+    },
+    overhead: {
+      ethCost: {
+        displayValue: formatCurrency(data.overhead.ethCost, 'eth'),
+        value: data.overhead.ethCost,
+      },
+      usdCost: {
+        displayValue: formatCurrency(data.overhead.usdCost, 'usd'),
+        value: data.overhead.usdCost,
+      },
+      gas: {
+        displayValue: formatLargeNumber(data.overhead.gas),
+        value: data.overhead.gas,
+      },
     },
   }
 }
