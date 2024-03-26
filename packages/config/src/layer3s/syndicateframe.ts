@@ -18,14 +18,14 @@ export const syndicateframe: Layer3 = underReviewL3({
       websites: ['https://syndicate.io/blog/syndicate-frame-chain'],
       apps: [
         'https://bridge-frame.syndicate.io/',
-        'https://frame.syndicate.io/'
+        'https://frame.syndicate.io/',
       ],
       documentation: ['https://docs.syndicate.io/get-started/introduction'],
       explorers: ['https://explorer-frame.syndicate.io/'],
-      repositories: ['https://github.com/WillPapper/syndicate-farcaster-frame-starter'],
-      socialMedia: [
-        'https://warpcast.com/syndicate'
+      repositories: [
+        'https://github.com/WillPapper/syndicate-farcaster-frame-starter',
       ],
+      socialMedia: ['https://warpcast.com/syndicate'],
     },
   },
 })
