@@ -1,7 +1,7 @@
 {
   "name": "linea",
   "chain": "ethereum",
-  "blockNumber": 19518944,
+  "blockNumber": 19519696,
   "configHash": "0xd90b4d29fbd12a484abb6e9101721b3d588b5f44b8a9a7d0190f7438c8af27f1",
   "version": 3,
   "contracts": [
@@ -76,7 +76,7 @@
       "implementations": ["0x0eC393209674090368C592A591B25811e490BF36"],
       "sinceTimestamp": 1691086271,
       "values": {
-        "balance": 22442135606371,
+        "balance": 22443792920215,
         "messageService": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
         "owner": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
         "paused": false,
@@ -121,7 +121,7 @@
           "0xB4dAebe4D01f467701F95f0196fc29033c54dBcb"
         ],
         "getThreshold": 4,
-        "nonce": 40,
+        "nonce": 41,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -194,7 +194,7 @@
         "currentFinalizedShnarf": "0x1f754e350baca45c5eaa6a00280157084fa651226e9404e2969b323e34666808",
         "currentL2StoredL1MessageNumber": 546161,
         "currentL2StoredL1RollingHash": "0x5e2fbb5d157e5f5d42dcfecd11b5750e2eaad71c42f0aa315475d81223a642df",
-        "currentPeriodAmountInWei": "6369765497095816804",
+        "currentPeriodAmountInWei": "8059765497095816804",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "GENERAL_PAUSE_TYPE": 1,
         "generalPause": false,
@@ -220,7 +220,7 @@
         "systemMigrationBlock": 19219000,
         "VERIFIER_SETTER_ROLE": "0x32937fd5162e282df7e9a14a5073a2425321c7966eaf70ed6c838a1006d84c4c",
         "verifiers": [
-          "0xfB0C26A89833762b65098dD66b6Ae04b34D153be",
+          "0x1111111111111111111111111111111111111111",
           "0x8AB455030E1Ea718e445f423Bb8D993dcAd24Cc4",
           "0x0000000000000000000000000000000000000000",
           "0x1111111111111111111111111111111111111111",
@@ -353,14 +353,6 @@
       "values": {
         "owner": "0xd6B95c960779c72B8C6752119849318E5d550574"
       }
-    },
-    {
-      "name": "PlonkVerifierForDataAggregation",
-      "address": "0xfB0C26A89833762b65098dD66b6Ae04b34D153be",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1707500255
     }
   ],
   "eoas": [
@@ -857,9 +849,6 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
-    "0xfB0C26A89833762b65098dD66b6Ae04b34D153be": [
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)"
     ]
   }
 }
