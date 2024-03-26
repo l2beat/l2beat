@@ -392,14 +392,14 @@ export const fraxferry: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description:
-        'The Frax Ferry is a permissioned bridge that can be used to transfer tokens between chains. Users can transfer tokens to the bridge escrow on the origin chain, and the bridge administrator (the Captain) periodically posts hashes of transaction batches on the destination chains. After the challenge period is expired, the batch is considered valid, and another permissioned account (First Officer) executes the transfer of the tokens on the destination chain.',
+        'The Frax Ferry is a permissioned bridge that can be used to transfer tokens between chains. Users can transfer tokens to the bridge escrow on the origin chain, and the bridge administrator (the `Captain`) periodically posts hashes of transaction batches on the destination chains. After the challenge period is expired, the batch is considered valid, and another permissioned account (`First Officer`) executes the transfer of the tokens on the destination chain.',
       references: [
         {
           text: 'Fraxferry documentation',
           href: 'https://docs.frax.com/fraxferry',
         },
         {
-          text: 'Fraxferry contract',
+          text: 'Fraxferry.sol - Etherscan source code',
           href: 'https://etherscan.io/address/0x5e1D94021484642863Ea8E7Cb4F0188e56B18FEE#code#L851',
         },
       ],
@@ -425,11 +425,11 @@ export const fraxferry: Bridge = {
       risks: [
         {
           category: 'Funds can be frozen if',
-          text: 'crew member pauses the contract and owner does not unpause it.',
+          text: 'a crew member pauses the contract and owner does not unpause it.',
         },
         {
           category: 'Funds can be frozen if',
-          text: 'captain does not post the hash of the transaction batch, or first officer does not disembark to distribute the funds.',
+          text: 'the captain does not post the hash of the transaction batch, or first officer does not disembark to distribute the funds.',
         },
         {
           category: 'Funds can be stolen if',
@@ -448,7 +448,7 @@ export const fraxferry: Bridge = {
         'Tokens on the destination chain are not upgradable. The owner of the token contract sets permissioned Minter addresses that can mint new tokens up to a max cap amount.',
       references: [
         {
-          text: 'Frax token - Minter mint function',
+          text: 'Frax token - Arbiscan source code, minter_mint function',
           href: 'https://arbiscan.io/address/0x17fc002b466eec40dae837fc4be5c67993ddbd6f?a=0x5a9bef8cea603aac78a523fb245c1a9264d50706#code#L1636',
         },
       ],
@@ -636,7 +636,6 @@ export const fraxferry: Bridge = {
         description: 'sFRAX Bridge Contract (Escrow).',
       },
       // MOONBEAM
-
       {
         address: EthereumAddress('0xF1E1deA8F1053FD9C5F47f72F1f03977E17aF242'),
         name: 'FRAX Ferry Bridge (Moonbeam)',
@@ -799,7 +798,7 @@ export const fraxferry: Bridge = {
     {
       name: 'Bridge Owner',
       description:
-        'Address authorized to pause and unpause the bridge, remove posted batches, set the challenge period, and change the bridge `Captain`, `First Officer` and `Crew Members`. It is also allowed to set fees and transfer tokens from the bridge escrow.',
+        'Address authorized to pause and unpause the bridge, remove posted batches, set the challenge period, and change the bridge `Captain`, `First Officer` and `Crew Members`. It is also allowed to set fees and transfer tokens from the bridge escrow. Note that there are over 60 frax ferry bridges smart contracts, each with its own owner. Please check the owner() method of the specific escrow smart contract you are interested in.',
       accounts: [
         discovery.getPermissionedAccount('fraxFerryBridgeArbitrum', 'owner'),
       ],
@@ -807,7 +806,7 @@ export const fraxferry: Bridge = {
     {
       name: 'Captain',
       description:
-        'Address authorized to post batch transaction data from the origin chain.',
+        'Address authorized to post batch transaction data from the origin chain. Note that there are over 60 frax ferry bridges smart contracts, each with its own `Captain`. Please check the captain() method of the specific escrow smart contract you are interested in.',
       accounts: [
         discovery.getPermissionedAccount('fraxFerryBridgeArbitrum', 'captain'),
       ],
@@ -815,7 +814,7 @@ export const fraxferry: Bridge = {
     {
       name: 'First Officer',
       description:
-        'Address authorized to distribute funds on the destination chain once the challenge period has passed.',
+        'Address authorized to distribute funds on the destination chain once the challenge period has passed. Note that there are over 60 frax ferry bridges smart contracts, each with its own `firstOfficer`. Please check the firstOfficer() method of the specific escrow smart contract you are interested in.',
       accounts: [
         discovery.getPermissionedAccount(
           'fraxFerryBridgeArbitrum',
@@ -826,7 +825,7 @@ export const fraxferry: Bridge = {
     {
       name: 'Crew Members',
       description:
-        'Addresses authorized to dispute batch transaction data on the destination chain.',
+        'Addresses authorized to dispute batch transaction data on the destination chain. Note that there are over 60 frax ferry bridges smart contracts, each with its own `crew members`. Please check the crewmember() method of the specific escrow smart contract you are interested in.',
       accounts: discovery.getPermissionedAccounts(
         'fraxFerryBridgeArbitrum',
         'crewmembers',
