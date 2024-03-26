@@ -424,6 +424,14 @@ export const fraxferry: Bridge = {
       ],
       risks: [
         {
+          category: 'Funds can be frozen if',
+          text: 'crew member pauses the contract and owner does not unpause it.',
+        },
+        {
+          category: 'Funds can be frozen if',
+          text: 'captain does not post the hash of the transaction batch, or first officer does not disembark to distribute the funds.',
+        },
+        {
           category: 'Funds can be stolen if',
           text: 'incorrect hash is submitted and nobody challenges it.',
         },
