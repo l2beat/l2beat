@@ -96,15 +96,6 @@ export class BlockTimestampIndexer extends ChildIndexer {
     return indexerState.safeHeight
   }
 
-  async getSafeHeight(): Promise<number> {
-    const indexerState = await this.stateRepository.findIndexerState(
-      this.indexerId,
-    )
-    assert(indexerState, 'Indexer state should be initialized')
-
-    return indexerState?.safeHeight
-  }
-
   override async setSafeHeight(
     safeHeight: number,
     trx?: Knex.Transaction,

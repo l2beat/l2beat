@@ -125,39 +125,6 @@ describe(BlockTimestampIndexer.name, () => {
     })
   })
 
-  describe(BlockTimestampIndexer.prototype.getSafeHeight.name, () => {
-    it('return state from DB', async () => {
-      const safeHeight = 1
-      const stateRepository = mockObject<IndexerStateRepository>({
-        findIndexerState: async () => {
-          return {
-            indexerId: 'indexer',
-            safeHeight,
-            minTimestamp: UnixTime.ZERO,
-          }
-        },
-      })
-
-      const indexer = new BlockTimestampIndexer(
-        Logger.SILENT,
-        mockObject<HourlyIndexer>({ subscribe: () => {} }),
-        mockObject<BlockTimestampProvider>({}),
-        stateRepository,
-        mockObject<BlockTimestampRepository>({}),
-        'ethereum',
-        UnixTime.ZERO,
-        mockObject<SyncOptimizer>({}),
-      )
-
-      const result = await indexer.getSafeHeight()
-
-      expect(result).toEqual(safeHeight)
-      expect(stateRepository.findIndexerState).toHaveBeenCalledWith(
-        indexer.indexerId,
-      )
-    })
-  })
-
   describe(BlockTimestampIndexer.prototype.setSafeHeight.name, () => {
     it('save minTimestamp if safeHeight is before minTimestamp', async () => {
       const stateRepository = mockObject<IndexerStateRepository>({
