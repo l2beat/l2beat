@@ -38,7 +38,7 @@
           "type": "hardcoded",
           "value": 604800
         },
-        "nondeterminsiticPendingState": {
+        "nondeterministicPendingState": {
           "type": "stateFromEvent",
           "event": "ProveNonDeterministicPendingState",
           "returnParams": ["storedStateRoot", "provedStateRoot"]
@@ -59,6 +59,12 @@
             "0x141f8f32ce6198eee741f695cec728bfd32d289f1acf73621fb303581000545e": "EMERGENCY_COUNCIL",
             "0x9b6f082d8d3644ae2f24a3c32e356d6f2d9b2844d9b26164fbc82663ff285951": "EMERGENCY_COUNCIL_ADMIN"
           }
+        },
+        "emergencyStateCount": {
+          "type": "eventCount",
+          "topics": [
+            "0x2261efe5aef6fedc1fd1550b25facc9181745623049c7901287030b9ad1a5497"
+          ]
         }
       }
     },

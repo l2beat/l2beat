@@ -34,8 +34,7 @@
       "sinceTimestamp": 1679653103,
       "values": {
         "owner": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
-      },
-      "derivedName": "ProxyAdmin"
+      }
     },
     {
       "name": "AstarValidiumAdmin",
@@ -256,77 +255,14 @@
       "implementations": ["0x3b82Da772c825283d85d5d6717A77C6Ff582053b"],
       "sinceTimestamp": 1679653163,
       "values": {
-        "_HALT_AGGREGATION_TIMEOUT": 604800,
-        "accessControl": {
-          "DEFAULT_ADMIN_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]
-          },
-          "TRUSTED_AGGREGATOR": {
-            "adminRole": "TRUSTED_AGGREGATOR_ADMIN",
-            "members": [
-              "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
-              "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
-            ]
-          },
-          "ADD_ROLLUP_TYPE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]
-          },
-          "ADD_EXISTING_ROLLUP": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]
-          },
-          "UPDATE_ROLLUP": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
-            ]
-          },
-          "OBSOLETE_ROLLUP_TYPE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
-          },
-          "CREATE_ROLLUP": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
-          },
-          "STOP_EMERGENCY": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
-          },
-          "TWEAK_PARAMETERS": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
-          },
-          "TRUSTED_AGGREGATOR_ADMIN": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
-          },
-          "SET_FEE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
-          },
-          "EMERGENCY_COUNCIL": {
-            "adminRole": "EMERGENCY_COUNCIL_ADMIN",
-            "members": ["0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6"]
-          },
-          "EMERGENCY_COUNCIL_ADMIN": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6"]
-          }
-        },
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
         "getRollupExitRoot": "0x2cd9a966b5bd521ca7fb90eb3454a79b5d11a13150ba54862f1dfa076d0a2577",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "lastAggregationTimestamp": 1711545899,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
-        "nondeterministicPendingState": [],
         "pendingStateTimeout": 432000,
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "rollupCount": 2,
@@ -407,7 +343,7 @@
       "derivedName": "PolygonZkEVMEtrog"
     },
     {
-      "name": "GlobalExitRootV2",
+      "name": "PolygonZkEVMGlobalExitRootV2",
       "address": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
       "upgradeability": {
         "type": "EIP1967 proxy",
@@ -421,8 +357,7 @@
         "depositCount": 5771,
         "getRoot": "0xdfa2e60cf00f96b23f35e579832d311d661d6a3c716f28cb53c5986690ea2a7d",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
-      },
-      "derivedName": "PolygonZkEVMGlobalExitRootV2"
+      }
     },
     {
       "name": "GnosisSafe",
@@ -509,38 +444,16 @@
       "derivedName": "PolygonDataCommittee"
     },
     {
-      "name": "Timelock",
+      "name": "PolygonZkEVMTimelock",
       "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
       "upgradeability": {
         "type": "immutable"
       },
       "sinceTimestamp": 1679653187,
       "values": {
-        "accessControl": {
-          "DEFAULT_ADMIN_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": []
-          },
-          "TIMELOCK_ADMIN_ROLE": {
-            "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": [
-              "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-              "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
-            ]
-          },
-          "PROPOSER_ROLE": {
-            "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
-          },
-          "EXECUTOR_ROLE": {
-            "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
-          },
-          "CANCELLER_ROLE": {
-            "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
-          }
-        },
+        "CANCELLER_ROLE": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "getMinDelay": 864000,
         "polygonZkEVM": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
         "scheduledTransactions": [
@@ -743,27 +656,19 @@
     "0x099198353446A9E3a20672eDC1Bd461E978842c3",
     "0x127Bae6Fc751dC92111a359500ae91EB437f3dCb",
     "0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800",
-    "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE",
-    "0x21887c89368bf918346c62460e0c339113801C28",
     "0x2b3Aa0Dc0622eFb9426F5A44015aE9151Bd8224C",
     "0x33f9b8ac59814E1A0a59e5d1a6125E5E7AF58BA8",
     "0x37f0B74e0Fc72aDAAb1Fd39Ec6d779F596866aB8",
-    "0x3ab9f4b964eE665F7CDf1d65f1cEEc6196B0D622",
     "0x4324c3960c7B2567D0C13ba17493bb364c407937",
-    "0x49c15936864690bCd6af0ecaca8E874adFF30E86",
     "0x4c1665d6651ecEfa59B9B3041951608468b18891",
     "0x4DE44Aa0Ef9DB64DF3eB3465d35D73d0409d44ed",
     "0x4E83124eD15b13265240B61EC9627797CCE1032E",
-    "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
     "0x83cC8195856b0463dEd5f052021009b7985FDa2C",
     "0x8FB3cb4777EE1c2C35C48aC69a650026d18aFF08",
-    "0x9F7dfAb2222A473284205cdDF08a677726d786A0",
     "0xA0B02B28920812324f1cC3255bd8840867d3f227",
     "0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
-    "0xaF46a0ddf80DFFB49C87656625E65A37499B261D",
     "0xb771380f912E4b5F6beDdf81314C383c13F16ab5",
     "0xBDa0B27f93B2FD3f076725b89cf02e48609bC189",
-    "0xBDc235cC9d6Baa641c5ae306bc83962475A5FEFf",
     "0xc4591c41e01a7a654B5427f39Bbd1dEe5bD45D1D",
     "0xCFb77B6abb27e04cE0DB347cCCd5544f51A98CBc",
     "0xD09971D8ed6C6a5e57581e90d593ee5B94e348D4",
@@ -777,8 +682,7 @@
     "0xEc33045FA66cF43E9b5b9F332dc124dbc71c0917",
     "0xF53D1fB2EeD22Cf1E8f7E90Da7f1CAe88344065F",
     "0xF54b295a221B5d3510D03d9B16E23BA151da012A",
-    "0xf56AE6520776934127AB68438d1b4652BCe07F8f",
-    "0xFe45baf0F18c207152A807c1b05926583CFE2e4b"
+    "0xf56AE6520776934127AB68438d1b4652BCe07F8f"
   ],
   "abis": {
     "0x000000000022D473030F116dDEE9F6B43aC78BA3": [
@@ -827,67 +731,6 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
-    "0x0FeB850B183C57534b56b7d56520133C8f9BDB65": [
-      "constructor()",
-      "error AlreadyClaimed()",
-      "error AmountDoesNotMatchMsgValue()",
-      "error DestinationNetworkInvalid()",
-      "error EtherTransferFailed()",
-      "error FailedTokenWrappedDeployment()",
-      "error GasTokenNetworkMustBeZeroOnEther()",
-      "error GlobalExitRootInvalid()",
-      "error InvalidSmtProof()",
-      "error MerkleTreeFull()",
-      "error MessageFailed()",
-      "error MsgValueNotZero()",
-      "error NativeTokenIsEther()",
-      "error NoValueInMessagesOnGasTokenNetworks()",
-      "error NotValidAmount()",
-      "error NotValidOwner()",
-      "error NotValidSignature()",
-      "error NotValidSpender()",
-      "error OnlyEmergencyState()",
-      "error OnlyNotEmergencyState()",
-      "error OnlyRollupManager()",
-      "event BridgeEvent(uint8 leafType, uint32 originNetwork, address originAddress, uint32 destinationNetwork, address destinationAddress, uint256 amount, bytes metadata, uint32 depositCount)",
-      "event ClaimEvent(uint256 globalIndex, uint32 originNetwork, address originAddress, address destinationAddress, uint256 amount)",
-      "event EmergencyStateActivated()",
-      "event EmergencyStateDeactivated()",
-      "event Initialized(uint8 version)",
-      "event NewWrappedToken(uint32 originNetwork, address originTokenAddress, address wrappedTokenAddress, bytes metadata)",
-      "function BASE_INIT_BYTECODE_WRAPPED_TOKEN() view returns (bytes)",
-      "function WETHToken() view returns (address)",
-      "function activateEmergencyState()",
-      "function bridgeAsset(uint32 destinationNetwork, address destinationAddress, uint256 amount, address token, bool forceUpdateGlobalExitRoot, bytes permitData) payable",
-      "function bridgeMessage(uint32 destinationNetwork, address destinationAddress, bool forceUpdateGlobalExitRoot, bytes metadata) payable",
-      "function bridgeMessageWETH(uint32 destinationNetwork, address destinationAddress, uint256 amountWETH, bool forceUpdateGlobalExitRoot, bytes metadata)",
-      "function calculateRoot(bytes32 leafHash, bytes32[32] smtProof, uint32 index) pure returns (bytes32)",
-      "function calculateTokenWrapperAddress(uint32 originNetwork, address originTokenAddress, address token) view returns (address)",
-      "function claimAsset(bytes32[32] smtProofLocalExitRoot, bytes32[32] smtProofRollupExitRoot, uint256 globalIndex, bytes32 mainnetExitRoot, bytes32 rollupExitRoot, uint32 originNetwork, address originTokenAddress, uint32 destinationNetwork, address destinationAddress, uint256 amount, bytes metadata)",
-      "function claimMessage(bytes32[32] smtProofLocalExitRoot, bytes32[32] smtProofRollupExitRoot, uint256 globalIndex, bytes32 mainnetExitRoot, bytes32 rollupExitRoot, uint32 originNetwork, address originAddress, uint32 destinationNetwork, address destinationAddress, uint256 amount, bytes metadata)",
-      "function claimedBitMap(uint256) view returns (uint256)",
-      "function deactivateEmergencyState()",
-      "function depositCount() view returns (uint256)",
-      "function gasTokenAddress() view returns (address)",
-      "function gasTokenMetadata() view returns (bytes)",
-      "function gasTokenNetwork() view returns (uint32)",
-      "function getLeafValue(uint8 leafType, uint32 originNetwork, address originAddress, uint32 destinationNetwork, address destinationAddress, uint256 amount, bytes32 metadataHash) pure returns (bytes32)",
-      "function getRoot() view returns (bytes32)",
-      "function getTokenMetadata(address token) view returns (bytes)",
-      "function getTokenWrappedAddress(uint32 originNetwork, address originTokenAddress) view returns (address)",
-      "function globalExitRootManager() view returns (address)",
-      "function initialize(uint32 _networkID, address _gasTokenAddress, uint32 _gasTokenNetwork, address _globalExitRootManager, address _polygonRollupManager, bytes _gasTokenMetadata)",
-      "function isClaimed(uint32 leafIndex, uint32 sourceBridgeNetwork) view returns (bool)",
-      "function isEmergencyState() view returns (bool)",
-      "function lastUpdatedDepositCount() view returns (uint32)",
-      "function networkID() view returns (uint32)",
-      "function polygonRollupManager() view returns (address)",
-      "function precalculatedWrapperAddress(uint32 originNetwork, address originTokenAddress, string name, string symbol, uint8 decimals) view returns (address)",
-      "function tokenInfoToWrappedToken(bytes32) view returns (address)",
-      "function updateGlobalExitRoot()",
-      "function verifyMerkleProof(bytes32 leafHash, bytes32[32] smtProof, uint32 index, bytes32 root) pure returns (bool)",
-      "function wrappedTokenToTokenInfo(address) view returns (uint32 originNetwork, address originTokenAddress)"
     ],
     "0x18FED1E19dC564DC917D203be9d40790472D22e9": [
       "constructor()",
@@ -1077,17 +920,6 @@
       "function trustedSequencer() view returns (address)",
       "function trustedSequencerURL() view returns (string)"
     ],
-    "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
     "0x2E38cD55163137483E30580Cb468C2dFf1d85077": [
       "constructor(address _rollupManager, address _bridgeAddress)",
       "error MerkleTreeFull()",
@@ -1105,9 +937,6 @@
       "function rollupManager() view returns (address)",
       "function updateExitRoot(bytes32 newRoot)",
       "function verifyMerkleProof(bytes32 leafHash, bytes32[32] smtProof, uint32 index, bytes32 root) pure returns (bool)"
-    ],
-    "0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6": [
-      "constructor(address _singleton)"
     ],
     "0x3b82Da772c825283d85d5d6717A77C6Ff582053b": [
       "constructor(address _globalExitRootManager, address _pol, address _bridgeAddress)",

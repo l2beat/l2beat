@@ -280,61 +280,6 @@
       "values": {}
     },
     {
-      "name": "Bridge",
-      "values": {
-        "BASE_INIT_BYTECODE_WRAPPED_TOKEN": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "WETHToken": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "gasTokenAddress": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "gasTokenMetadata": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "gasTokenNetwork": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getRoot": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "globalExitRootManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isEmergencyState": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "networkID": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "polygonRollupManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "EscrowsAdmin",
       "values": {
         "VERSION": {
@@ -522,32 +467,12 @@
           "severity": null,
           "type": null
         },
-        "_HALT_AGGREGATION_TIMEOUT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "accessControl": {
-          "description": null,
-          "severity": "MEDIUM",
-          "type": "PERMISSION"
-        },
         "bridgeAddress": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "emergencyStateCount": {
-          "description": "The emergency state has been activated, meaning that the upgrade delay is now zero.",
-          "severity": "HIGH",
-          "type": "RISK_PARAMETER"
-        },
         "getBatchFee": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getRollupExitRoot": {
           "description": null,
           "severity": null,
           "type": null
@@ -562,17 +487,7 @@
           "severity": null,
           "type": null
         },
-        "lastAggregationTimestamp": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "lastDeactivatedEmergencyStateTimestamp": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nondeterministicPendingState": {
           "description": null,
           "severity": null,
           "type": null
@@ -606,16 +521,6 @@
           "description": "Mapping of a rollup type to rollup verifier. Different types may use the same verifier. First entry is a type, second a verifier.",
           "severity": "MEDIUM",
           "type": "CODE_CHANGE"
-        },
-        "totalSequencedBatches": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalVerifiedBatches": {
-          "description": null,
-          "severity": null,
-          "type": null
         },
         "trustedAggregatorTimeout": {
           "description": null,
@@ -791,7 +696,37 @@
     {
       "name": "ProxyAdmin",
       "values": {
-        "owner": {
+        "bridgeAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "depositCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLastGlobalExitRoot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRoot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lastMainnetExitRoot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lastRollupExitRoot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rollupManager": {
           "description": null,
           "severity": null,
           "type": null
@@ -799,39 +734,29 @@
       }
     },
     {
-      "name": "SecurityCouncil",
+      "name": "PolygonZkEVMTimelock",
       "values": {
-        "VERSION": {
+        "CANCELLER_ROLE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "domainSeparator": {
+        "DEFAULT_ADMIN_ROLE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getChainId": {
+        "EXECUTOR_ROLE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getOwners": {
+        "PROPOSER_ROLE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "Timelock",
-      "values": {
-        "accessControl": {
+        "TIMELOCK_ADMIN_ROLE": {
           "description": null,
           "severity": null,
           "type": null
@@ -847,6 +772,20 @@
           "type": null
         },
         "scheduledTransactions": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "PolygonzkEVMVerifier",
+      "values": {}
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
           "description": null,
           "severity": null,
           "type": null
