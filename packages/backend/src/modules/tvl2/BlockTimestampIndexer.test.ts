@@ -65,9 +65,9 @@ describe(BlockTimestampIndexer.name, () => {
   })
 
   describe(BlockTimestampIndexer.prototype.initialize.name, () => {
-    it('initialize state when not initialized', async () => {
+    it('initializes state when not initialized', async () => {
       const stateRepository = mockObject<IndexerStateRepository>({
-        findIndexerState: async () => undefined,
+        findIndexerState: mockFn().resolvesToOnce(undefined).resolvesToOnce({}),
         add: async () => '',
       })
 
@@ -87,7 +87,7 @@ describe(BlockTimestampIndexer.name, () => {
 
       expect(stateRepository.add).toHaveBeenCalledWith({
         indexerId: indexer.indexerId,
-        safeHeight: 0,
+        safeHeight: minTimestamp.toNumber() - 1,
         minTimestamp: minTimestamp,
       })
     })

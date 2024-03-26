@@ -97,7 +97,7 @@ export class BlockTimestampIndexer extends ChildIndexer {
     if (indexerState === undefined) {
       await this.stateRepository.add({
         indexerId: this.indexerId,
-        safeHeight: 0,
+        safeHeight: this.minTimestamp.toNumber() - 1,
         minTimestamp: this.minTimestamp,
       })
       return
