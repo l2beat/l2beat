@@ -9,12 +9,13 @@ type TableCellType = keyof CostsData[keyof CostsData]
 interface Props {
   data: CostsData
   type: TableCellType
+  className?: string
 }
 
 export function CostsTableCell(props: Props) {
   return (
     <div
-      className="group"
+      className={cn('group', props.className)}
       data-role="costs-table-cell"
       data-time-range="7D"
       data-unit="USD"

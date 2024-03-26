@@ -12,18 +12,18 @@ export function getScalingCostsColumnsConfig() {
       type: 'group',
       columns: [
         {
-          name: '7D Total Costs',
+          name: 'Total Cost',
           getValue: (project) => (
             <CostsTableCell data={project.data} type="total" />
           ),
           tooltip:
             'The sum of the costs for calldata, blob data, computation, and an additional 21000 gas overhead per transaction for the selected time period.',
-          align: 'right',
+          align: 'center',
         },
       ],
     },
     {
-      name: '7D Calldata Costs',
+      name: 'Calldata',
       getValue: (project) => (
         <CostsTableCell data={project.data} type="calldata" />
       ),
@@ -32,7 +32,7 @@ export function getScalingCostsColumnsConfig() {
       align: 'right',
     },
     {
-      name: '7D Blobs Costs',
+      name: 'Blobs',
       getValue: (project) => (
         <CostsTableCell data={project.data} type="blobs" />
       ),
@@ -41,12 +41,22 @@ export function getScalingCostsColumnsConfig() {
       align: 'right',
     },
     {
-      name: '7D Compute Costs',
+      name: 'Compute',
       getValue: (project) => (
         <CostsTableCell data={project.data} type="compute" />
       ),
       tooltip:
         'The sum of the costs for carrying out different operations within a transaction for the selected time period.',
+      align: 'right',
+    },
+    {
+      name: 'Overhead',
+      getValue: (project) => (
+        <CostsTableCell data={project.data} type="overhead" className="pr-4" />
+      ),
+      headClassName: '!pr-4',
+      tooltip:
+        'Hey Adi 👋 If you see this I probably forgot to ask for this tooltip.',
       align: 'right',
     },
   ]
