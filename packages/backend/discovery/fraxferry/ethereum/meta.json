@@ -2,104 +2,14 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "sfraxFerryBridge",
+      "name": "DepositContract",
       "values": {
-        "captain": {
+        "get_deposit_count": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "chainid": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "executeIndex": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "FEE_MAX": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "FEE_MIN": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "FEE_RATE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "firstOfficer": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_WAIT_PERIOD_ADD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_WAIT_PERIOD_EXECUTE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "noBatches": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nominatedOwner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "noTransactions": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "REDUCED_DECIMALS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "targetChain": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "targetToken": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "token": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "batches": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "transactions": {
+        "get_deposit_root": {
           "description": null,
           "severity": null,
           "type": null
@@ -107,549 +17,9 @@
       }
     },
     {
-      "name": "sfrxFerryBridge",
+      "name": "FPI",
       "values": {
-        "captain": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "chainid": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "executeIndex": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "FEE_MAX": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "FEE_MIN": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "FEE_RATE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "firstOfficer": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_WAIT_PERIOD_ADD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_WAIT_PERIOD_EXECUTE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "noBatches": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nominatedOwner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "noTransactions": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "REDUCED_DECIMALS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "targetChain": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "targetToken": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "token": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "batches": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "transactions": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "fpiFerryBridge",
-      "values": {
-        "captain": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "chainid": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "executeIndex": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "FEE_MAX": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "FEE_MIN": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "FEE_RATE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "firstOfficer": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_WAIT_PERIOD_ADD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_WAIT_PERIOD_EXECUTE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "noBatches": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nominatedOwner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "noTransactions": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "REDUCED_DECIMALS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "targetChain": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "targetToken": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "token": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "batches": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "transactions": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "fpisFerryBridge",
-      "values": {
-        "captain": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "chainid": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "executeIndex": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "FEE_MAX": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "FEE_MIN": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "FEE_RATE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "firstOfficer": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_WAIT_PERIOD_ADD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_WAIT_PERIOD_EXECUTE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "noBatches": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nominatedOwner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "noTransactions": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "REDUCED_DECIMALS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "targetChain": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "targetToken": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "token": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "batches": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "transactions": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "fxsFerryBridge",
-      "values": {
-        "captain": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "chainid": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "executeIndex": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "FEE_MAX": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "FEE_MIN": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "FEE_RATE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "firstOfficer": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_WAIT_PERIOD_ADD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_WAIT_PERIOD_EXECUTE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "noBatches": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nominatedOwner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "noTransactions": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "REDUCED_DECIMALS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "targetChain": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "targetToken": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "token": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "batches": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "transactions": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "fraxFerryBridge",
-      "values": {
-        "captain": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "chainid": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "executeIndex": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "FEE_MAX": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "FEE_MIN": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "FEE_RATE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "firstOfficer": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_WAIT_PERIOD_ADD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_WAIT_PERIOD_EXECUTE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "noBatches": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nominatedOwner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "noTransactions": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "REDUCED_DECIMALS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "targetChain": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "targetToken": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "token": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "crewmembers": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "transactions": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "StakedFrax",
-      "values": {
-        "asset": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "decimals": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DOMAIN_SEPARATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "maxDistributionPerSecondPerAsset": {
           "description": null,
           "severity": null,
           "type": null
@@ -659,27 +29,12 @@
           "severity": null,
           "type": null
         },
-        "pendingTimelockAddress": {
+        "nominatedOwner": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "PRECISION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "previewSyncRewards": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "REWARDS_CYCLE_LENGTH": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "rewardsCycleData": {
+        "owner": {
           "description": null,
           "severity": null,
           "type": null
@@ -689,12 +44,167 @@
           "severity": null,
           "type": null
         },
-        "timelockAddress": {
+        "timelock_address": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "UNDERLYING_PRECISION": {
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "FPIS",
+      "values": {
+        "FPI_TKN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minters_array": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nominatedOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "timelock_address": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "FRAXOracleWrapper",
+      "values": {
+        "EXTRA_PRECISION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PRICE_PRECISION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainlink_frax_eth_decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getFRAXPrice": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nominatedOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "timelock_address": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "FRAXShares",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FRAXStablecoinAdd": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FXS_DAO_min": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "genesis_supply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "oracle_address": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner_address": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "timelock_address": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "trackingVotes": {
           "description": null,
           "severity": null,
           "type": null
@@ -704,12 +214,22 @@
     {
       "name": "FRAXStablecoin",
       "values": {
-        "collateral_ratio_paused": {
+        "COLLATERAL_RATIO_PAUSER": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "COLLATERAL_RATIO_PAUSER": {
+        "DEFAULT_ADMIN_ADDRESS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "collateral_ratio_paused": {
           "description": null,
           "severity": null,
           "type": null
@@ -725,16 +245,6 @@
           "type": null
         },
         "decimals": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DEFAULT_ADMIN_ADDRESS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DEFAULT_ADMIN_ROLE": {
           "description": null,
           "severity": null,
           "type": null
@@ -769,12 +279,12 @@
           "severity": null,
           "type": null
         },
-        "global_collateral_ratio": {
+        "globalCollateralValue": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "globalCollateralValue": {
+        "global_collateral_ratio": {
           "description": null,
           "severity": null,
           "type": null
@@ -842,8 +352,53 @@
       }
     },
     {
+      "name": "FeeTo",
+      "values": {
+        "feeRecipient": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "FeeToSetter",
+      "values": {
+        "factory": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "feeTo": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "vestingEnd": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "GnosisSafe",
       "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "domainSeparator": {
           "description": null,
           "severity": null,
@@ -868,122 +423,17 @@
           "description": null,
           "severity": null,
           "type": null
-        },
+        }
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "values": {
         "VERSION": {
           "description": null,
           "severity": null,
           "type": null
-        }
-      }
-    },
-    {
-      "name": "FRAXShares",
-      "values": {
-        "decimals": {
-          "description": null,
-          "severity": null,
-          "type": null
         },
-        "DEFAULT_ADMIN_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "FRAXStablecoinAdd": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "FXS_DAO_min": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "genesis_supply": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "name": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "oracle_address": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner_address": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "symbol": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "timelock_address": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalSupply": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "trackingVotes": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "FPI",
-      "values": {
-        "decimals": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "name": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nominatedOwner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "symbol": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "timelock_address": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalSupply": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "TimelockMultisig",
-      "values": {
         "domainSeparator": {
           "description": null,
           "severity": null,
@@ -1008,67 +458,32 @@
           "description": null,
           "severity": null,
           "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
         }
       }
     },
     {
-      "name": "FPIS",
+      "name": "StakedFrax",
       "values": {
-        "decimals": {
+        "DOMAIN_SEPARATOR": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "FPI_TKN": {
+        "PRECISION": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "name": {
+        "REWARDS_CYCLE_LENGTH": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "nominatedOwner": {
+        "UNDERLYING_PRECISION": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "symbol": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "timelock_address": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalSupply": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "minters_array": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "sfrxETH",
-      "values": {
         "asset": {
           "description": null,
           "severity": null,
@@ -1079,7 +494,932 @@
           "severity": null,
           "type": null
         },
+        "maxDistributionPerSecondPerAsset": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingTimelockAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "previewSyncRewards": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rewardsCycleData": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "timelockAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Timelock",
+      "values": {
+        "GRACE_PERIOD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAXIMUM_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MINIMUM_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "admin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Timelock",
+      "values": {
+        "GRACE_PERIOD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAXIMUM_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MINIMUM_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "admin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "TimelockMultisig",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "UniswapPairOracle_USDT_WETH",
+      "values": {
+        "ALLOW_STALE_CONSULTS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "CONSULT_LENIENCY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PERIOD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "blockTimestampLast": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "canUpdate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pair": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "price0Average": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "price0CumulativeLast": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "price1Average": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "price1CumulativeLast": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token0": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token1": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "UniswapV2Factory",
+      "values": {
+        "feeTo": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "feeToSetter": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "UniswapV2Pair",
+      "values": {
         "DOMAIN_SEPARATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MINIMUM_LIQUIDITY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PERMIT_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "factory": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "kLast": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token0": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token1": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "fpiFerryBridgeArbitrum",
+      "values": {
+        "FEE_MAX": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FEE_MIN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FEE_RATE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_WAIT_PERIOD_ADD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_WAIT_PERIOD_EXECUTE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REDUCED_DECIMALS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "captain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainid": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "executeIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "firstOfficer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "noBatches": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "noTransactions": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nominatedOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "targetChain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "targetToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "fpisFerryBridgeArbitrum",
+      "values": {
+        "FEE_MAX": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FEE_MIN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FEE_RATE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_WAIT_PERIOD_ADD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_WAIT_PERIOD_EXECUTE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REDUCED_DECIMALS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "captain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainid": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "executeIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "firstOfficer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "noBatches": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "noTransactions": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nominatedOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "targetChain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "targetToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "fraxFerryBridgeArbitrum",
+      "values": {
+        "FEE_MAX": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FEE_MIN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FEE_RATE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_WAIT_PERIOD_ADD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_WAIT_PERIOD_EXECUTE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REDUCED_DECIMALS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "captain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainid": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "crewmembers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "executeIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "firstOfficer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "noBatches": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "noTransactions": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nominatedOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "targetChain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "targetToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "frxETH",
+      "values": {
+        "DOMAIN_SEPARATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minters_array": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nominatedOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "timelock_address": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "frxETHMinter",
+      "values": {
+        "DEPOSIT_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RATIO_PRECISION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "depositContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "depositEtherPaused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "frxETHToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nominatedOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "numValidators": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sfrxETHToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "submitPaused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "timelock_address": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "withholdRatio": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "frxETHMultisig",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "fxsFerryBridgeArbitrum",
+      "values": {
+        "FEE_MAX": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FEE_MIN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FEE_RATE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_WAIT_PERIOD_ADD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_WAIT_PERIOD_EXECUTE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REDUCED_DECIMALS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "captain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainid": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "executeIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "firstOfficer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "noBatches": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "noTransactions": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nominatedOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "targetChain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "targetToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "sfraxFerryBridgeArbitrum",
+      "values": {
+        "FEE_MAX": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FEE_MIN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FEE_RATE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_WAIT_PERIOD_ADD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_WAIT_PERIOD_EXECUTE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REDUCED_DECIMALS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "captain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainid": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "executeIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "firstOfficer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "noBatches": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "noTransactions": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nominatedOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "targetChain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "targetToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "sfrxETH",
+      "values": {
+        "DOMAIN_SEPARATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "asset": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
           "description": null,
           "severity": null,
           "type": null
@@ -1132,19 +1472,64 @@
       }
     },
     {
-      "name": "FRAXOracleWrapper",
+      "name": "sfrxFerryBridgeArbitrum",
       "values": {
-        "chainlink_frax_eth_decimals": {
+        "FEE_MAX": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "EXTRA_PRECISION": {
+        "FEE_MIN": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getFRAXPrice": {
+        "FEE_RATE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_WAIT_PERIOD_ADD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_WAIT_PERIOD_EXECUTE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REDUCED_DECIMALS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "captain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainid": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "executeIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "firstOfficer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "noBatches": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "noTransactions": {
           "description": null,
           "severity": null,
           "type": null
@@ -1159,462 +1544,22 @@
           "severity": null,
           "type": null
         },
-        "PRICE_PRECISION": {
+        "paused": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "timelock_address": {
+        "targetChain": {
           "description": null,
           "severity": null,
           "type": null
-        }
-      }
-    },
-    {
-      "name": "Timelock",
-      "values": {
-        "admin": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "delay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "GRACE_PERIOD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MAXIMUM_DELAY": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MINIMUM_DELAY": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pendingAdmin": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "GnosisSafe",
-      "values": {
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "UniswapPairOracle_USDT_WETH",
-      "values": {
-        "ALLOW_STALE_CONSULTS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "blockTimestampLast": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "canUpdate": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "CONSULT_LENIENCY": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pair": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PERIOD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "price0Average": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "price0CumulativeLast": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "price1Average": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "price1CumulativeLast": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "token0": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "token1": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "frxETH",
-      "values": {
-        "decimals": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DOMAIN_SEPARATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "name": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nominatedOwner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "symbol": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "timelock_address": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalSupply": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "minters_array": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "frxETHMinter",
-      "values": {
-        "DEPOSIT_SIZE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "depositContract": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "depositEtherPaused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "frxETHToken": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nominatedOwner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "numValidators": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RATIO_PRECISION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "sfrxETHToken": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "submitPaused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "timelock_address": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "withholdRatio": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "UniswapV2Pair",
-      "values": {
-        "decimals": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DOMAIN_SEPARATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "factory": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "kLast": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MINIMUM_LIQUIDITY": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "name": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PERMIT_TYPEHASH": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "symbol": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "token0": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "token1": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalSupply": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "frxETHMultisig",
-      "values": {
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "DepositContract",
-      "values": {
-        "get_deposit_count": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "get_deposit_root": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "UniswapV2Factory",
-      "values": {
-        "feeTo": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "feeToSetter": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "FeeToSetter",
-      "values": {
-        "factory": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "feeTo": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "vestingEnd": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "Timelock",
-      "values": {
-        "admin": {
-          "description": null,
-          "severity": null,
-          "type": null
         },
-        "delay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "GRACE_PERIOD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MAXIMUM_DELAY": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MINIMUM_DELAY": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pendingAdmin": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "FeeTo",
-      "values": {
-        "feeRecipient": {
+        "targetToken": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "owner": {
+        "token": {
           "description": null,
           "severity": null,
           "type": null

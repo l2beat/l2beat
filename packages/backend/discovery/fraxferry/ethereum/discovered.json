@@ -1,8 +1,8 @@
 {
   "name": "fraxferry",
   "chain": "ethereum",
-  "blockNumber": 19425601,
-  "configHash": "0x5a93bb68304a205e2c8365d2a08f1d95096bbe48282ca3308f03bca7af4204c3",
+  "blockNumber": 19517283,
+  "configHash": "0x7fb9ba698f25f469811377b9d12adadd2640d6c452fa4c864b028693bd0f3dcb",
   "version": 3,
   "contracts": [
     {
@@ -13,8 +13,8 @@
       },
       "sinceTimestamp": 1602667372,
       "values": {
-        "get_deposit_count": "0x387a140000000000",
-        "get_deposit_root": "0xe24d593096a2d6a7d9cb6bb68e22d746abfb091e69ee638a0430bc75f8d5f708"
+        "get_deposit_count": "0xb60f150000000000",
+        "get_deposit_root": "0x39c762c9595de58de3781042036d8a82600fa6ac7587d0c4532f32828444ed90"
       },
       "derivedName": "DepositContract"
     },
@@ -58,7 +58,7 @@
       "values": {
         "chainlink_frax_eth_decimals": 18,
         "EXTRA_PRECISION": 1000000,
-        "getFRAXPrice": [249, 249666546],
+        "getFRAXPrice": [275, 275069240],
         "nominatedOwner": "0x0000000000000000000000000000000000000000",
         "owner": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
         "PRICE_PRECISION": 1000000,
@@ -67,14 +67,13 @@
       "derivedName": "FRAXOracleWrapper"
     },
     {
-      "name": "sfraxFerryBridge",
+      "name": "sfraxFerryBridgeArbitrum",
       "address": "0x2b4864c2F2A2C275C6C66B90a2ae6BE9fA9cbE47",
       "upgradeability": {
         "type": "immutable"
       },
       "sinceTimestamp": 1708807463,
       "values": {
-        "batches": [],
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
         "chainid": 1,
         "executeIndex": 0,
@@ -84,7 +83,7 @@
         "firstOfficer": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
         "MIN_WAIT_PERIOD_ADD": 3600,
         "MIN_WAIT_PERIOD_EXECUTE": 79200,
-        "noBatches": 0,
+        "noBatches": 1,
         "nominatedOwner": "0x0000000000000000000000000000000000000000",
         "noTransactions": 0,
         "owner": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
@@ -92,8 +91,7 @@
         "REDUCED_DECIMALS": 10000000000,
         "targetChain": 252,
         "targetToken": "0xfc00000000000000000000000000000000000008",
-        "token": "0xA663B02CF0a4b149d2aD41910CB81e23e1c41c32",
-        "transactions": []
+        "token": "0xA663B02CF0a4b149d2aD41910CB81e23e1c41c32"
       },
       "derivedName": "Fraxferry"
     },
@@ -142,61 +140,42 @@
       }
     },
     {
-      "name": "fxsFerryBridge",
+      "name": "fxsFerryBridgeArbitrum",
       "address": "0x4A6d155df9Ec9A1BB3639e6B7B99E46Fb68D42f6",
       "upgradeability": {
         "type": "immutable"
       },
       "sinceTimestamp": 1708806863,
       "values": {
-        "batches": [
-          [
-            0,
-            0,
-            1709586515,
-            0,
-            "0x1ccf6b731c066bf262bd47a313fd04aa6b3fb701a82386479bfebd5a912d12d1"
-          ]
-        ],
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
         "chainid": 1,
-        "executeIndex": 1,
+        "executeIndex": 6,
         "FEE_MAX": "100000000000000000000",
         "FEE_MIN": "1000000000000000000",
         "FEE_RATE": 10,
         "firstOfficer": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
         "MIN_WAIT_PERIOD_ADD": 3600,
         "MIN_WAIT_PERIOD_EXECUTE": 79200,
-        "noBatches": 1,
+        "noBatches": 7,
         "nominatedOwner": "0x0000000000000000000000000000000000000000",
-        "noTransactions": 0,
+        "noTransactions": 3,
         "owner": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
         "paused": false,
         "REDUCED_DECIMALS": 10000000000,
         "targetChain": 252,
         "targetToken": "0xFc00000000000000000000000000000000000002",
-        "token": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
-        "transactions": []
+        "token": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0"
       },
       "derivedName": "Fraxferry"
     },
     {
-      "name": "sfrxFerryBridge",
+      "name": "sfrxFerryBridgeArbitrum",
       "address": "0x5c5f05cF8528FFe925A2264743bFfEdbAB2b0FE3",
       "upgradeability": {
         "type": "immutable"
       },
       "sinceTimestamp": 1708807391,
       "values": {
-        "batches": [
-          [
-            0,
-            0,
-            1709931875,
-            0,
-            "0x0c7f9d97924d1f653453c11ef716edad02ee213f30b662ba18e5ae70f8722012"
-          ]
-        ],
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
         "chainid": 1,
         "executeIndex": 1,
@@ -206,7 +185,7 @@
         "firstOfficer": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
         "MIN_WAIT_PERIOD_ADD": 3600,
         "MIN_WAIT_PERIOD_EXECUTE": 79200,
-        "noBatches": 1,
+        "noBatches": 2,
         "nominatedOwner": "0x0000000000000000000000000000000000000000",
         "noTransactions": 0,
         "owner": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
@@ -214,8 +193,7 @@
         "REDUCED_DECIMALS": 10000000000,
         "targetChain": 252,
         "targetToken": "0xFC00000000000000000000000000000000000005",
-        "token": "0xac3E018457B222d93114458476f3E3416Abbe38F",
-        "transactions": []
+        "token": "0xac3E018457B222d93114458476f3E3416Abbe38F"
       },
       "derivedName": "Fraxferry"
     },
@@ -246,12 +224,12 @@
         "owner": "0x6A7efa964Cf6D9Ab3BC3c47eBdDB853A8853C502",
         "symbol": "FPI",
         "timelock_address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
-        "totalSupply": "84536002063488960339962052"
+        "totalSupply": "84618194004907322624158217"
       },
       "derivedName": "FPI"
     },
     {
-      "name": "fraxFerryBridge",
+      "name": "fraxFerryBridgeArbitrum",
       "address": "0x5e1D94021484642863Ea8E7Cb4F0188e56B18FEE",
       "upgradeability": {
         "type": "immutable"
@@ -261,23 +239,22 @@
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
         "chainid": 1,
         "crewmembers": ["0xBB437059584e30598b3AF0154472E47E6e2a45B9"],
-        "executeIndex": 5,
+        "executeIndex": 14,
         "FEE_MAX": "100000000000000000000",
         "FEE_MIN": "5000000000000000000",
         "FEE_RATE": 10,
         "firstOfficer": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
         "MIN_WAIT_PERIOD_ADD": 3600,
         "MIN_WAIT_PERIOD_EXECUTE": 79200,
-        "noBatches": 6,
+        "noBatches": 15,
         "nominatedOwner": "0x0000000000000000000000000000000000000000",
-        "noTransactions": 0,
+        "noTransactions": 5,
         "owner": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
         "paused": false,
         "REDUCED_DECIMALS": 10000000000,
         "targetChain": 252,
         "targetToken": "0xFc00000000000000000000000000000000000001",
-        "token": "0x853d955aCEf822Db058eb8505911ED77F175b99e",
-        "transactions": []
+        "token": "0x853d955aCEf822Db058eb8505911ED77F175b99e"
       },
       "derivedName": "Fraxferry"
     },
@@ -300,7 +277,7 @@
         "owner": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
         "symbol": "frxETH",
         "timelock_address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
-        "totalSupply": "299995539669793826212734"
+        "totalSupply": "282836978323072636255204"
       },
       "derivedName": "frxETH"
     },
@@ -325,7 +302,7 @@
           "0x6e74053a3798e0fC9a9775F7995316b27f21c4D2"
         ],
         "getThreshold": 3,
-        "nonce": 482,
+        "nonce": 487,
         "VERSION": "1.3.0"
       }
     },
@@ -350,7 +327,7 @@
           "0x6e74053a3798e0fC9a9775F7995316b27f21c4D2"
         ],
         "getThreshold": 3,
-        "nonce": 905,
+        "nonce": 923,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -377,7 +354,7 @@
           "0x6e74053a3798e0fC9a9775F7995316b27f21c4D2"
         ],
         "getThreshold": 3,
-        "nonce": 33,
+        "nonce": 35,
         "VERSION": "1.3.0"
       }
     },
@@ -419,7 +396,7 @@
         "fxs_eth_oracle_address": "0x3B11DA52030420c663d263Ad4415a8A02E5f8cf8",
         "genesis_supply": "2000000000000000000000000",
         "global_collateral_ratio": 945000,
-        "globalCollateralValue": "602797954528633308808908921",
+        "globalCollateralValue": "602819497919344547397725875",
         "last_call_time": 1687208423,
         "minting_fee": 9500,
         "name": "Frax",
@@ -436,32 +413,23 @@
       "derivedName": "FRAXStablecoin"
     },
     {
-      "name": "fpisFerryBridge",
+      "name": "fpisFerryBridgeArbitrum",
       "address": "0x958815f476cD07354c0BC034EE5077B20fD93003",
       "upgradeability": {
         "type": "immutable"
       },
       "sinceTimestamp": 1708806983,
       "values": {
-        "batches": [
-          [
-            0,
-            0,
-            1709587007,
-            0,
-            "0x791a96a33bccd7ab098c58f04f6c26876d9411cd73a3ef11259c8774ca0819fa"
-          ]
-        ],
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
         "chainid": 1,
-        "executeIndex": 1,
+        "executeIndex": 2,
         "FEE_MAX": "100000000000000000000",
         "FEE_MIN": "5000000000000000000",
         "FEE_RATE": 10,
         "firstOfficer": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
         "MIN_WAIT_PERIOD_ADD": 3600,
         "MIN_WAIT_PERIOD_EXECUTE": 79200,
-        "noBatches": 1,
+        "noBatches": 3,
         "nominatedOwner": "0x0000000000000000000000000000000000000000",
         "noTransactions": 0,
         "owner": "0x6A7efa964Cf6D9Ab3BC3c47eBdDB853A8853C502",
@@ -469,28 +437,18 @@
         "REDUCED_DECIMALS": 10000000000,
         "targetChain": 252,
         "targetToken": "0xfc00000000000000000000000000000000000004",
-        "token": "0xc2544A32872A91F4A553b404C6950e89De901fdb",
-        "transactions": []
+        "token": "0xc2544A32872A91F4A553b404C6950e89De901fdb"
       },
       "derivedName": "Fraxferry"
     },
     {
-      "name": "fpiFerryBridge",
+      "name": "fpiFerryBridgeArbitrum",
       "address": "0x9A576A3d39c589A861B46864C253288bcA428a6c",
       "upgradeability": {
         "type": "immutable"
       },
       "sinceTimestamp": 1708806923,
       "values": {
-        "batches": [
-          [
-            0,
-            0,
-            1709586755,
-            0,
-            "0x50236abad7c3d5a6d941d803aedc35b63f78591a962578ef19ba781e7227666d"
-          ]
-        ],
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
         "chainid": 1,
         "executeIndex": 1,
@@ -508,8 +466,7 @@
         "REDUCED_DECIMALS": 10000000000,
         "targetChain": 252,
         "targetToken": "0xFc00000000000000000000000000000000000003",
-        "token": "0x5Ca135cB8527d76e932f34B5145575F9d8cbE08E",
-        "transactions": []
+        "token": "0x5Ca135cB8527d76e932f34B5145575F9d8cbE08E"
       },
       "derivedName": "Fraxferry"
     },
@@ -529,15 +486,15 @@
         "pendingTimelockAddress": "0x0000000000000000000000000000000000000000",
         "PRECISION": "1000000000000000000",
         "previewSyncRewards": [
-          1710374400,
-          1709770727,
-          "264824798038472543509470"
+          1711584000,
+          1710989471,
+          "288749145906825003957483"
         ],
         "REWARDS_CYCLE_LENGTH": 604800,
         "rewardsCycleData": [
-          1710374400,
-          1709770727,
-          "264824798038472543509470"
+          1711584000,
+          1710989471,
+          "288749145906825003957483"
         ],
         "symbol": "sFRAX",
         "timelockAddress": "0x831822660572bd54ebaa065C2acef662a6277D40",
@@ -556,15 +513,15 @@
         "asset": "0x5E8422345238F34275888049021821E8E08CAa1f",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0xe8254029df4a5fbfcf2de75f8fcf68b1060354a363693b1507e1197cc3dcc29b",
-        "lastRewardAmount": "207315000000000000000",
-        "lastSync": 1709770187,
+        "lastRewardAmount": "155619000000000000000",
+        "lastSync": 1710981287,
         "name": "Staked Frax Ether",
-        "pricePerShare": "1078602147509503489",
-        "rewardsCycleEnd": 1710374400,
+        "pricePerShare": "1080255087757885889",
+        "rewardsCycleEnd": 1711584000,
         "rewardsCycleLength": 604800,
         "symbol": "sfrxETH",
-        "totalAssets": "209672645567122965196750",
-        "totalSupply": "194392942802179571829757"
+        "totalAssets": "199473676013042477873838",
+        "totalSupply": "184654234239302072583883"
       },
       "derivedName": "sfrxETH"
     },
@@ -589,7 +546,7 @@
           "0x05FB8eC3C41da95b26fCb85503DaF8B89B89A935"
         ],
         "getThreshold": 3,
-        "nonce": 5373,
+        "nonce": 5402,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -607,7 +564,7 @@
         "depositEtherPaused": false,
         "frxETHToken": "0x5E8422345238F34275888049021821E8E08CAa1f",
         "nominatedOwner": "0x0000000000000000000000000000000000000000",
-        "numValidators": 211,
+        "numValidators": 210,
         "owner": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
         "RATIO_PRECISION": 1000000,
         "sfrxETHToken": "0xac3E018457B222d93114458476f3E3416Abbe38F",

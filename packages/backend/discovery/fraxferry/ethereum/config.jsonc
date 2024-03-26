@@ -11,12 +11,12 @@
     "0x2b4864c2F2A2C275C6C66B90a2ae6BE9fA9cbE47"
   ],
   "names": {
-    "0x5e1D94021484642863Ea8E7Cb4F0188e56B18FEE": "fraxFerryBridge",
-    "0x4A6d155df9Ec9A1BB3639e6B7B99E46Fb68D42f6": "fxsFerryBridge",
-    "0x9A576A3d39c589A861B46864C253288bcA428a6c": "fpiFerryBridge",
-    "0x958815f476cD07354c0BC034EE5077B20fD93003": "fpisFerryBridge",
-    "0x5c5f05cF8528FFe925A2264743bFfEdbAB2b0FE3": "sfrxFerryBridge",
-    "0x2b4864c2F2A2C275C6C66B90a2ae6BE9fA9cbE47": "sfraxFerryBridge",
+    "0x5e1D94021484642863Ea8E7Cb4F0188e56B18FEE": "fraxFerryBridgeArbitrum",
+    "0x4A6d155df9Ec9A1BB3639e6B7B99E46Fb68D42f6": "fxsFerryBridgeArbitrum",
+    "0x9A576A3d39c589A861B46864C253288bcA428a6c": "fpiFerryBridgeArbitrum",
+    "0x958815f476cD07354c0BC034EE5077B20fD93003": "fpisFerryBridgeArbitrum",
+    "0x5c5f05cF8528FFe925A2264743bFfEdbAB2b0FE3": "sfrxFerryBridgeArbitrum",
+    "0x2b4864c2F2A2C275C6C66B90a2ae6BE9fA9cbE47": "sfraxFerryBridgeArbitrum",
     "0xA663B02CF0a4b149d2aD41910CB81e23e1c41c32": "StakedFrax",
     "0x853d955aCEf822Db058eb8505911ED77F175b99e": "FRAXStablecoin",
     "0xac3E018457B222d93114458476f3E3416Abbe38F": "sfrxETH",
@@ -46,14 +46,13 @@
     "0x90503D86E120B3B309CEBf00C2CA013aB3624736": "BokkyPooBahsDateTimeContract"
   },
   "overrides": {
-    "sfraxFerryBridge": {
-      "ignoreMethods": [
-        "cancelled" // too many values
-      ]
+    "sfraxFerryBridgeArbitrum": {
+      "ignoreMethods": ["cancelled", "batches", "transactions"], // too many values
+      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"]
     },
-    "fraxFerryBridge": {
-      "ignoreMethods": ["cancelled", "batches"], // too many values
-      "ignoreInWatchMode": ["noBatches"],
+    "fraxFerryBridgeArbitrum": {
+      "ignoreMethods": ["cancelled", "batches", "transactions"], // too many values
+      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"],
       "fields": {
         "crewmembers": {
           "type": "arrayFromOneEvent",
@@ -63,17 +62,21 @@
         }
       }
     },
-    "fxsFerryBridge": {
-      "ignoreMethods": ["cancelled"] // too many values
+    "fxsFerryBridgeArbitrum": {
+      "ignoreMethods": ["cancelled", "batches", "transactions"], // too many values
+      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"]
     },
-    "sfrxFerryBridge": {
-      "ignoreMethods": ["cancelled"] // too many values
+    "sfrxFerryBridgeArbitrum": {
+      "ignoreMethods": ["cancelled", "batches", "transactions"], // too many values
+      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"]
     },
-    "fpisFerryBridge": {
-      "ignoreMethods": ["cancelled"] // too many values
+    "fpisFerryBridgeArbitrum": {
+      "ignoreMethods": ["cancelled", "batches", "transactions"], // too many values
+      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"]
     },
-    "fpiFerryBridge": {
-      "ignoreMethods": ["cancelled"] // too many values
+    "fpiFerryBridgeArbitrum": {
+      "ignoreMethods": ["cancelled", "batches", "transactions"], // too many values
+      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"]
     },
     "StakedFrax": {
       "ignoreMethods": [
