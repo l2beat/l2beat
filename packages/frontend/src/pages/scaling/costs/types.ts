@@ -29,7 +29,7 @@ export interface ScalingCostsViewEntry {
   redWarning: string | undefined
   purposes: ScalingProjectPurpose[]
   stage: StageConfig
-  data: CostsData
+  costs: CostsData
 }
 
 export type CostsData = {

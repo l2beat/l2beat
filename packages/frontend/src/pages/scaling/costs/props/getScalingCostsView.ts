@@ -48,7 +48,7 @@ function getScalingCostsViewEntry(
     redWarning: project.display.redWarning,
     purposes: project.display.purposes,
     stage: project.stage,
-    data: getCostsData(l2CostsProjectData),
+    costs: getCostsData(l2CostsProjectData),
   }
 }
 
