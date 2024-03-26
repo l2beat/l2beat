@@ -1283,6 +1283,17 @@
         "bridge": "Connext",
         "slug": "connext"
       }
+    },
+    {
+      "symbol": "STONE",
+      "address": "0x80137510979822322193FC997d400D5A6C747bf7",
+      "coingeckoId": "stakestone-ether",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Stargate",
+        "slug": "stargate"
+      }
     }
   ]
 }
