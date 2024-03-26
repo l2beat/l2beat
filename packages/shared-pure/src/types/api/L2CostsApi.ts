@@ -15,7 +15,7 @@ const L2CostsDetails = z.object({
   overhead: L2CostsBreakdown,
   calldata: L2CostsBreakdown,
   compute: L2CostsBreakdown,
-  blobs: L2CostsBreakdown,
+  blobs: L2CostsBreakdown.or(z.undefined()),
 })
 export type L2CostsDetails = z.infer<typeof L2CostsDetails>
 

@@ -309,9 +309,18 @@ function addToAcc(
   acc[key].overhead.usdCost += tx.totalOverheadGasCostUsd
 
   if (tx.type === 3) {
-    acc[key].blobs.gas += tx.blobGasUsed
-    acc[key].blobs.ethCost += tx.blobGasCost
-    acc[key].blobs.usdCost += tx.blobGasCostUsd
+    const blobs = acc[key].blobs
+    if (!blobs) {
+      acc[key].blobs = {
+        gas: tx.blobGasUsed,
+        ethCost: tx.blobGasCost,
+        usdCost: tx.blobGasCostUsd,
+      }
+      return
+    }
+    blobs.gas += tx.blobGasUsed
+    blobs.ethCost += tx.blobGasCost
+    blobs.usdCost += tx.blobGasCostUsd
   }
 }
 
@@ -336,9 +345,5 @@ const L2COSTS_DETAILS = {
     ethCost: 0,
     usdCost: 0,
   },
-  blobs: {
-    gas: 0,
-    ethCost: 0,
-    usdCost: 0,
-  },
+  blobs: undefined,
 }

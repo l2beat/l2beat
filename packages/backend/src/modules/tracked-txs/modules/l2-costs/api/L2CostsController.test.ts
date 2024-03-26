@@ -186,21 +186,21 @@ describe(L2CostsController.name, () => {
           calldata: costBreakdown(1),
           compute: costBreakdown(1),
           overhead: costBreakdown([21_000 * 1, 1, 1]),
-          blobs: costBreakdown(0),
+          blobs: undefined,
         },
         last30d: {
           total: costBreakdown(3),
           calldata: costBreakdown(3),
           compute: costBreakdown(3),
           overhead: costBreakdown([21_000 * 2, 3, 3]),
-          blobs: costBreakdown(0),
+          blobs: undefined,
         },
         last90d: {
           total: costBreakdown(3),
           calldata: costBreakdown(3),
           compute: costBreakdown(3),
           overhead: costBreakdown([21_000 * 2, 3, 3]),
-          blobs: costBreakdown(0),
+          blobs: undefined,
         },
       }
 
@@ -437,5 +437,5 @@ const EMPTY_SUM = {
   calldata: costBreakdown(0),
   compute: costBreakdown(0),
   overhead: costBreakdown(0),
-  blobs: costBreakdown(0),
+  blobs: undefined,
 }
