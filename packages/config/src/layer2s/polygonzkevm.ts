@@ -1,67 +1,34 @@
-import {
-  assert,
-  EthereumAddress,
-  formatSeconds,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
 
 import {
-  addSentimentToDataAvailability,
-  CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
-  makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
   NUGGETS,
   RISK_VIEW,
-  SEQUENCER_NO_MECHANISM,
-  STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
+import {
+  getPendingStateTimeout,
+  getTrustedAggregatorTimeout,
+  getUpgradeDelay,
+} from '../discovery/polygoncdk/getUpgradeDelay'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { getStage } from './common/stages/getStage'
+import { polygonCDKStack } from './templates/polygonCDKStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('polygonzkevm')
-const shared = new ProjectDiscovery('shared-polygon-cdk')
-
-const upgradeDelay = shared.getContractValue<number>('Timelock', 'getMinDelay')
-const upgradeDelayString = formatSeconds(upgradeDelay)
-const trustedAggregatorTimeout = shared.getContractValue<number>(
-  'PolygonRollupManager',
-  'trustedAggregatorTimeout',
-)
-const trustedAggregatorTimeoutString = formatSeconds(trustedAggregatorTimeout)
-
-const pendingStateTimeout = shared.getContractValue<number>(
-  'PolygonRollupManager',
-  'pendingStateTimeout',
-)
-const pendingStateTimeoutString = formatSeconds(pendingStateTimeout)
-const _HALT_AGGREGATION_TIMEOUT = formatSeconds(
-  shared.getContractValue<number>(
-    'PolygonRollupManager',
-    '_HALT_AGGREGATION_TIMEOUT',
-  ),
-)
 
 const forceBatchTimeout = discovery.getContractValue<number>(
   'PolygonZkEVMEtrog',
   'forceBatchTimeout',
 )
 
-/*
-const bridgeEmergencyState = discovery.getContractValue<boolean>(
-  'Bridge',
-  'isEmergencyState',
-)
-const rollupEmergencyState = discovery.getContractValue<boolean>(
-  'PolygonZkEvm',
-  'isEmergencyState',
-)
-*/
+const upgradeDelay = getUpgradeDelay()
+const upgradeDelayString = formatSeconds(upgradeDelay)
+const trustedAggregatorTimeout = getTrustedAggregatorTimeout()
+const pendingStateTimeout = getPendingStateTimeout()
 
 const exitWindowRisk = {
   ...RISK_VIEW.EXIT_WINDOW(
@@ -94,9 +61,9 @@ const ESCROW_wstETH_ADDRESS = '0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01'
 const ESCROW_USDC_ADDRESS = '0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB'
 const ESCROW_DAI_ADDRESS = '0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98'
 
-export const polygonzkevm: Layer2 = {
-  type: 'layer2',
-  id: ProjectId('polygonzkevm'),
+export const polygonzkevm: Layer2 = polygonCDKStack({
+  rollupModuleContract: discovery.getContract('PolygonZkEVMEtrog'),
+  rollupVerifierContract: discovery.getContract('PolygonzkEVMVerifier'),
   display: {
     name: 'Polygon zkEVM',
     slug: 'polygonzkevm',
@@ -104,8 +71,6 @@ export const polygonzkevm: Layer2 = {
     description:
       'Polygon zkEVM is a EVM-compatible ZK Rollup built by Polygon Labs.',
     purposes: ['Universal'],
-    category: 'ZK Rollup',
-    provider: 'Polygon',
     links: {
       websites: ['https://polygon.technology/polygon-zkevm'],
       apps: ['https://bridge.zkevm-rpc.com'],
@@ -129,199 +94,13 @@ export const polygonzkevm: Layer2 = {
       explanation:
         'Polygon zkEVM is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1. State updates are a three step process: first blocks are committed to L1, then they are proved, and then it is possible to execute them.',
     },
-    tvlWarning: {
-      content:
-        'The TVL is currently shared among all projects using the shared Polygon CDK contracts.',
-      sentiment: 'warning',
-    },
-    finality: {
-      finalizationPeriod: 0,
-    },
   },
-  config: {
-    escrows: [
-      shared.getEscrowDetails({
-        address: EthereumAddress('0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe'),
-        sinceTimestamp: new UnixTime(1679653127),
-        tokens: '*',
-      }),
-      discovery.getEscrowDetails({
-        address: EthereumAddress(ESCROW_wstETH_ADDRESS),
-        sinceTimestamp: new UnixTime(1703945135),
-        tokens: ['wstETH'],
-        description: 'Escrow for wstETH',
-        upgradableBy: ['EscrowAdmin'],
-      }),
-      discovery.getEscrowDetails({
-        address: EthereumAddress(ESCROW_USDC_ADDRESS),
-        sinceTimestamp: new UnixTime(1700125979),
-        tokens: ['USDC'],
-        description: 'Escrow for USDC',
-        upgradableBy: ['EscrowAdmin'],
-      }),
-      discovery.getEscrowDetails({
-        address: EthereumAddress(ESCROW_DAI_ADDRESS),
-        sinceTimestamp: new UnixTime(1695199499),
-        tokens: ['DAI', 'sDAI'],
-        description: 'Escrow for DAI',
-        upgradableBy: ['EscrowAdmin'],
-      }),
-    ],
-    transactionApi: {
-      type: 'rpc',
-      defaultUrl: 'https://polygon-rpc.com/zkevm',
-      defaultCallsPerMinute: 500,
-      startBlock: 1,
-    },
-    trackedTxs: [
-      {
-        uses: [
-          { type: 'liveness', subtype: 'batchSubmissions' },
-          { type: 'l2costs', subtype: 'batchSubmissions' },
-        ],
-        query: {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
-          ),
-          selector: '0x5e9145c9',
-          functionSignature:
-            'function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)',
-          sinceTimestampInclusive: new UnixTime(1679653163),
-          untilTimestampExclusive: new UnixTime(1707824735),
-        },
-      },
-      {
-        uses: [
-          { type: 'liveness', subtype: 'batchSubmissions' },
-          { type: 'l2costs', subtype: 'batchSubmissions' },
-        ],
-        query: {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
-          ),
-          selector: '0xecef3f99',
-          functionSignature:
-            'function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, address l2Coinbase)',
-          sinceTimestampInclusive: new UnixTime(1707824735),
-          untilTimestampExclusive: new UnixTime(1710419699),
-        },
-      },
-      {
-        uses: [
-          { type: 'liveness', subtype: 'batchSubmissions' },
-          { type: 'l2costs', subtype: 'batchSubmissions' },
-        ],
-        query: {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
-          ),
-          selector: '0xdef57e54',
-          functionSignature:
-            'function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint64 maxSequenceTimestamp, uint64 initSequencedBatch, address l2Coinbase)',
-          sinceTimestampInclusive: new UnixTime(1710419699),
-        },
-      },
-      {
-        uses: [
-          {
-            type: 'liveness',
-            subtype: 'stateUpdates',
-          },
-          {
-            type: 'l2costs',
-            subtype: 'stateUpdates',
-          },
-        ],
-        query: {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
-          ),
-          selector: '0x2b0006fa',
-          functionSignature:
-            'function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)',
-          sinceTimestampInclusive: new UnixTime(1679653163),
-          untilTimestampExclusive: new UnixTime(1707822059),
-        },
-      },
-      {
-        uses: [
-          {
-            type: 'liveness',
-            subtype: 'stateUpdates',
-          },
-          {
-            type: 'l2costs',
-            subtype: 'stateUpdates',
-          },
-        ],
-        query: {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
-          ),
-          selector: '0x621dd411',
-          functionSignature:
-            'function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) ',
-          sinceTimestampInclusive: new UnixTime(1679653163),
-          untilTimestampExclusive: new UnixTime(1707822059),
-        },
-      },
-      {
-        uses: [
-          {
-            type: 'liveness',
-            subtype: 'stateUpdates',
-          },
-          {
-            type: 'l2costs',
-            subtype: 'stateUpdates',
-          },
-        ],
-        query: {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
-          ),
-          selector: '0x1489ed10',
-          functionSignature:
-            'function verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])',
-          sinceTimestampInclusive: new UnixTime(1707822059),
-        },
-      },
-      {
-        uses: [
-          {
-            type: 'liveness',
-            subtype: 'stateUpdates',
-          },
-          {
-            type: 'l2costs',
-            subtype: 'stateUpdates',
-          },
-        ],
-        query: {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
-          ),
-          selector: '0x87c20c01',
-          functionSignature:
-            'function verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])',
-          sinceTimestampInclusive: new UnixTime(1707822059),
-        },
-      },
-    ],
-    liveness: {
-      duplicateData: {
-        from: 'stateUpdates',
-        to: 'proofSubmissions',
-      },
-    },
-    finality: 'coming soon',
+  discovery,
+  transactionApi: {
+    type: 'rpc',
+    defaultUrl: 'https://polygon-rpc.com/zkevm',
+    defaultCallsPerMinute: 500,
+    startBlock: 1,
   },
   chainConfig: {
     name: 'polygonzkevm',
@@ -340,111 +119,43 @@ export const polygonzkevm: Layer2 = {
       },
     ],
   },
-  dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (calldata)'],
-    bridge: { type: 'Enshrined' },
-    mode: 'Transactions data',
-  }),
-  riskView: makeBridgeCompatible({
-    stateValidation: {
-      ...RISK_VIEW.STATE_ZKP_SN,
-      sources: [
-        {
-          contract: 'PolygonRollupManager',
-          references: [
-            'https://etherscan.io/address/0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
-          ],
-        },
-      ],
-    },
-    dataAvailability: {
-      ...RISK_VIEW.DATA_ON_CHAIN,
-      description:
-        RISK_VIEW.DATA_ON_CHAIN.description +
-        ' Unlike most ZK rollups transactions are posted instead of state diffs.',
-      sources: [
-        {
-          contract: 'PolygonZkEVMEtrog',
-          references: [
-            'https://etherscan.io/address/0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
-          ],
-        },
-      ],
-    },
-    exitWindow: exitWindowRisk,
-    // this will change once the isForcedBatchDisallowed is set to false inside Polygon ZkEvm contract (if they either lower timeouts or increase the timelock delay)
-    sequencerFailure: {
-      ...SEQUENCER_NO_MECHANISM(isForcedBatchDisallowed),
-      sources: [
-        {
-          contract: 'PolygonZkEVMEtrog',
-          references: [
-            'https://etherscan.io/address/0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
-          ],
-        },
-      ],
-    },
-    proposerFailure: {
-      ...RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK,
-      description:
-        RISK_VIEW.PROPOSER_SELF_PROPOSE_ZK.description +
-        ` There is a ${trustedAggregatorTimeoutString} delay for proving and a ${pendingStateTimeoutString} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
-      sources: [
-        {
-          contract: 'PolygonRollupManager',
-          references: [
-            'https://etherscan.io/address/0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
-            'https://etherscan.io/address/0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
-          ],
-        },
-      ],
-    },
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-  }),
-  stage: getStage(
-    {
-      stage0: {
-        callsItselfRollup: true,
-        stateRootsPostedToL1: true,
-        dataAvailabilityOnL1: true,
-        rollupNodeSourceAvailable: true,
-      },
-      stage1: {
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: null,
-        usersHave7DaysToExit: false,
-        usersCanExitWithoutCooperation: false,
-        securityCouncilProperlySetUp: [
-          false,
-          'Security Council members are not publicly known.',
-        ],
-      },
-      stage2: {
-        proofSystemOverriddenOnlyInCaseOfABug: false,
-        fraudProofSystemIsPermissionless: null,
-        delayWith30DExitWindow: false,
-      },
-    },
-    {
-      rollupNodeLink: 'https://github.com/0xPolygonHermez/zkevm-node',
-    },
-  ),
-  technology: {
+  exitWindowRisk,
+  upgradeability: timelockUpgrades,
+  nonTemplatePermissions: [
+    ...discovery.getMultisigPermission(
+      'EscrowsAdmin',
+      'Escrows Admin can instantly upgrade wstETH, DAI and USDC bridges.',
+    ),
+  ],
+  nonTemplateEscrows: [
+    discovery.getEscrowDetails({
+      address: EthereumAddress(ESCROW_wstETH_ADDRESS),
+      sinceTimestamp: new UnixTime(1703945135),
+      tokens: ['wstETH'],
+      description: 'Escrow for wstETH',
+      upgradableBy: ['EscrowAdmin'],
+    }),
+    discovery.getEscrowDetails({
+      address: EthereumAddress(ESCROW_USDC_ADDRESS),
+      sinceTimestamp: new UnixTime(1700125979),
+      tokens: ['USDC'],
+      description: 'Escrow for USDC',
+      upgradableBy: ['EscrowAdmin'],
+    }),
+    discovery.getEscrowDetails({
+      address: EthereumAddress(ESCROW_DAI_ADDRESS),
+      sinceTimestamp: new UnixTime(1695199499),
+      tokens: ['DAI', 'sDAI'],
+      description: 'Escrow for DAI',
+      upgradableBy: ['EscrowAdmin'],
+    }),
+  ],
+  nonTemplateTechnology: {
     newCryptography: {
       ...NEW_CRYPTOGRAPHY.ZK_BOTH,
       references: [
         {
           text: 'PolygonZkEVMEtrog.sol - Etherscan source code, verifyBatches function',
-          href: 'https://etherscan.io/address/0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
-        },
-      ],
-    },
-    stateCorrectness: {
-      ...STATE_CORRECTNESS.VALIDITY_PROOFS,
-      references: [
-        {
-          text: 'PolygonRollupManager.sol - Etherscan source code, _verifyAndRewardBatches function',
           href: 'https://etherscan.io/address/0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
         },
       ],
@@ -500,6 +211,7 @@ export const polygonzkevm: Layer2 = {
       },
     ],
   },
+  isForcedBatchDisallowed,
   stateDerivation: {
     nodeSoftware:
       'Node software can be found [here](https://github.com/0xPolygonHermez/zkevm-node).',
@@ -509,122 +221,6 @@ export const polygonzkevm: Layer2 = {
     dataFormat:
       'The trusted sequencer batches transactions according to the specifications documented [here](https://docs.polygon.technology/zkEVM/architecture/protocol/transaction-life-cycle/transaction-batching/).',
   },
-  permissions: [
-    ...discovery.getMultisigPermission(
-      'AdminMultisig',
-      `Admin of the PolygonZkEvm rollup, can set core system parameters like timeouts, sequencer and aggregator as well as deactivate emergency state. They can also upgrade the PolygonZkEvm contracts, but are restricted by a ${formatSeconds(upgradeDelay)} delay unless rollup is put in the Emergency State.`,
-    ),
-    {
-      name: 'Sequencer',
-      accounts: [
-        discovery.getPermissionedAccount(
-          'PolygonZkEVMEtrog',
-          'trustedSequencer',
-        ),
-      ],
-      description:
-        'Its sole purpose and ability is to submit transaction batches. In case they are unavailable users cannot rely on the force batch mechanism because it is currently disabled.',
-    },
-    {
-      name: 'Proposer (Trusted Aggregator)',
-      accounts: shared.getAccessControlRolePermission(
-        'PolygonRollupManager',
-        'TRUSTED_AGGREGATOR',
-      ),
-      description: `The trusted proposer (called Aggregator) provides ZK proofs for all the supported systems. In case they are unavailable a mechanism for users to submit proofs on their own exists, but is behind a ${trustedAggregatorTimeoutString} delay for proving and a ${pendingStateTimeoutString} delay for finalizing state proven in this way. These delays can only be lowered except during the emergency state.`,
-    },
-    ...shared.getMultisigPermission(
-      'SecurityCouncil',
-      'The Security Council is a multisig that can be used to trigger the emergency state which pauses bridge functionality, restricts advancing system state and removes the upgradeability delay.',
-    ),
-    ...discovery.getMultisigPermission(
-      'EscrowsAdmin',
-      'Escrows Admin can instantly upgrade wstETH, DAI and USDC bridges.',
-    ),
-    {
-      name: 'Forced Batcher',
-      accounts: [
-        discovery.getPermissionedAccount(
-          'PolygonZkEVMEtrog',
-          'forceBatchAddress',
-        ),
-      ],
-      description:
-        'Sole account allowed to submit forced transactions. If this address is the zero address, anyone can submit forced transactions.',
-    },
-  ],
-  contracts: {
-    addresses: [
-      discovery.getContractDetails('PolygonZkEVMEtrog', {
-        description:
-          'The main contract of the Polygon zkEVM rollup. Contains sequencing and forced transaction logic.',
-        ...timelockUpgrades,
-      }),
-      discovery.getContractDetails('PolygonRollupManager', {
-        description: `It defines the rules of the system including core system parameters, permissioned actors as well as emergency procedures. The emergency state can be activated either by the Security Council, by proving a soundness error or by presenting a sequenced batch that has not been aggregated before a ${_HALT_AGGREGATION_TIMEOUT} timeout. This contract receives L2 state roots as well as ZK proofs.`,
-        ...timelockUpgrades,
-      }),
-      shared.getContractDetails('Bridge', {
-        description:
-          'The escrow contract for user funds. It is mirrored on the L2 side and can be used to transfer both ERC20 assets and arbitrary messages. To transfer funds a user initiated transaction on both sides is required.',
-        ...timelockUpgrades,
-      }),
-      shared.getContractDetails('GlobalExitRootV2', {
-        description:
-          'Synchronizes deposit and withdraw merkle trees across L1 and the L2s. The global root from this contract is injected into the L2 contracts.',
-        ...timelockUpgrades,
-      }),
-      discovery.getContractDetails(
-        'PolygonzkEVMVerifier',
-        'An autogenerated contract that verifies ZK proofs in the PolygonRollupManager system.',
-      ),
-      shared.getContractDetails(
-        'Timelock',
-        (() => {
-          const timelockAdmin = shared.getAccessControlField(
-            'Timelock',
-            'TIMELOCK_ADMIN_ROLE',
-          ).members[1]
-          const timelockProposer = shared.getAccessControlField(
-            'Timelock',
-            'PROPOSER_ROLE',
-          ).members[0]
-          const timelockExecutor = shared.getAccessControlField(
-            'Timelock',
-            'EXECUTOR_ROLE',
-          ).members[0]
-          const timelockCanceller = shared.getAccessControlField(
-            'Timelock',
-            'CANCELLER_ROLE',
-          ).members[0]
-          assert(
-            timelockAdmin === timelockProposer &&
-              timelockProposer === timelockExecutor &&
-              timelockExecutor === timelockCanceller,
-            'Timelock roles have changed, update Timelock description.',
-          )
-          return `Contract upgrades have to go through a ${upgradeDelayString} timelock unless the Emergency State is activated. It can also add rollup types that can be used to upgrade verifier contracts of existing systems. It is controlled by the AdminMultisig.`
-        })(),
-      ),
-    ],
-    references: [
-      {
-        text: 'State injections - stateRoot and exitRoot are part of the validity proof input.',
-        href: 'https://etherscan.io/address/0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
-      },
-    ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelayString)],
-  },
-  upgradesAndGovernance: `
-All main contracts and the verifier are upgradable by the ${discovery.getMultisigStats('AdminMultisig')} \`AdminMultisig\` through a timelock that owns \`ProxyAdmin\`. Addresses of trusted sequencer, aggregator and operational parameters (like fees) on the \`PolygonRollupManager\` can be instantly set by the \`AdminMultisig\`. Escrow contracts are upgradable by the \`EscrowsAdmin\` ${discovery.getMultisigStats('EscrowsAdmin')} multisig.
-
-\`PolygonZkEVMTimelock\` is a modified version of TimelockController that disables delay in case of a manually enabled or triggered emergency state in the \`PolygonRollupManager\`. It otherwise has a ${upgradeDelayString} delay. 
-
-The process to upgrade the \`PolygonRollupManager\`-implementation and / or the verifier has two steps: 1) A newRollupType-transaction is added by the \`AdminMultisig\` to the timelock, which in turn can call the \`addNewRollupType()\` function in the \`PolygonRollupManager\`. In a non-emergency state, this allows potential reviews of the new rollup type while it sits in the timelock. 2) After the delay period, the rollup implementation can be upgraded to the new rollup type by the \`AdminMultisig\` calling the \`updateRollup()\`-function in the \`PolygonRollupManager\` directly.
-
-The critical roles in the \`PolygonRollupManager\` can be changed through the timelock, while the trusted Aggregator role can be granted by the \`AdminMultisig\` directly.
-
-The ${discovery.getMultisigStats('SecurityCouncil')} \`SecurityCouncil\` multisig can manually enable the emergency state in the \`PolygonRollupManager\`.`,
   milestones: [
     {
       name: 'Polygon zkEVM Etrog upgrade',
@@ -646,4 +242,4 @@ The ${discovery.getMultisigStats('SecurityCouncil')} \`SecurityCouncil\` multisi
       thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
     },
   ],
-}
+})
