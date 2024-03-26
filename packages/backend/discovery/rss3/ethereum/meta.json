@@ -2,123 +2,8 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "L1StandardBridge",
+      "name": "AddressManager",
       "values": {
-        "l2TokenBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "messenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MESSENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OTHER_BRIDGE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "otherBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "superchainConfig": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L1ERC721Bridge",
-      "values": {
-        "messenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MESSENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OTHER_BRIDGE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "otherBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "superchainConfig": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "OptimismMintableERC20Factory",
-      "values": {
-        "bridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "BRIDGE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ProxyAdmin",
-      "values": {
-        "addressManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isUpgrading": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "owner": {
           "description": null,
           "severity": null,
@@ -127,29 +12,34 @@
       }
     },
     {
-      "name": "SuperchainConfig",
+      "name": "AdminMultisig",
       "values": {
-        "guardian": {
+        "VERSION": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "GUARDIAN_SLOT": {
+        "domainSeparator": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "paused": {
+        "getChainId": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "PAUSED_SLOT": {
+        "getOwners": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "version": {
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
           "description": null,
           "severity": null,
           "type": null
@@ -160,11 +50,6 @@
       "name": "L1CrossDomainMessenger",
       "values": {
         "MESSAGE_VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "messageNonce": {
           "description": null,
           "severity": null,
           "type": null
@@ -185,16 +70,6 @@
           "type": null
         },
         "OTHER_MESSENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "portal": {
           "description": null,
           "severity": null,
           "type": null
@@ -224,6 +99,21 @@
           "severity": null,
           "type": null
         },
+        "messageNonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "portal": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "superchainConfig": {
           "description": null,
           "severity": null,
@@ -237,79 +127,24 @@
       }
     },
     {
-      "name": "AddressManager",
+      "name": "L1ERC721Bridge",
       "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "AdminMultisig",
-      "values": {
-        "domainSeparator": {
+        "MESSENGER": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getChainId": {
+        "OTHER_BRIDGE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getOwners": {
+        "messenger": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "OptimismPortal",
-      "values": {
-        "guardian": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "GUARDIAN": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "L2_ORACLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2Oracle": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2Sender": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "params": {
+        "otherBridge": {
           "description": null,
           "severity": null,
           "type": null
@@ -324,12 +159,47 @@
           "severity": null,
           "type": null
         },
-        "SYSTEM_CONFIG": {
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1StandardBridge",
+      "values": {
+        "MESSENGER": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "systemConfig": {
+        "OTHER_BRIDGE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2TokenBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "otherBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "superchainConfig": {
           "description": null,
           "severity": null,
           "type": null
@@ -344,11 +214,6 @@
     {
       "name": "L2OutputOracle",
       "values": {
-        "challenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "CHALLENGER": {
           "description": null,
           "severity": null,
@@ -359,12 +224,32 @@
           "severity": null,
           "type": null
         },
-        "finalizationPeriodSeconds": {
+        "L2_BLOCK_TIME": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "L2_BLOCK_TIME": {
+        "PROPOSER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SUBMISSION_INTERVAL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "challenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "deletedOutputs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "finalizationPeriodSeconds": {
           "description": null,
           "severity": null,
           "type": null
@@ -399,22 +284,12 @@
           "severity": null,
           "type": null
         },
-        "PROPOSER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "startingBlockNumber": {
           "description": null,
           "severity": null,
           "type": null
         },
         "startingTimestamp": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "SUBMISSION_INTERVAL": {
           "description": null,
           "severity": null,
           "type": null
@@ -428,8 +303,133 @@
           "description": null,
           "severity": null,
           "type": null
+        }
+      }
+    },
+    {
+      "name": "OptimismMintableERC20Factory",
+      "values": {
+        "BRIDGE": {
+          "description": null,
+          "severity": null,
+          "type": null
         },
-        "deletedOutputs": {
+        "bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OptimismPortal",
+      "values": {
+        "GUARDIAN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L2_ORACLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SYSTEM_CONFIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "guardian": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2Oracle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2Sender": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "params": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "superchainConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "systemConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "addressManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isUpgrading": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SuperchainConfig",
+      "values": {
+        "GUARDIAN_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAUSED_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "guardian": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
           "description": null,
           "severity": null,
           "type": null
@@ -439,12 +439,32 @@
     {
       "name": "SystemConfig",
       "values": {
+        "UNSAFE_BLOCK_SIGNER_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "batcherHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "gasLimit": {
           "description": null,
           "severity": null,
           "type": null
         },
         "minimumGasLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "opStackDA": {
           "description": null,
           "severity": null,
           "type": null
@@ -469,7 +489,7 @@
           "severity": null,
           "type": null
         },
-        "UNSAFE_BLOCK_SIGNER_SLOT": {
+        "sequencerInbox": {
           "description": null,
           "severity": null,
           "type": null
@@ -480,26 +500,6 @@
           "type": null
         },
         "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "batcherHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "opStackDA": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "sequencerInbox": {
           "description": null,
           "severity": null,
           "type": null
