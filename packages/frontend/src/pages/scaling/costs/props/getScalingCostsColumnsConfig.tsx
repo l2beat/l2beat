@@ -60,7 +60,7 @@ export function getScalingCostsColumnsConfig() {
       ),
       headClassName: '!pr-4',
       tooltip:
-        'Hey Adi 👋 If you see this I probably forgot to ask for this tooltip.',
+        'The sum of the fixed 21000 GAS overhead per transaction for the selected time period.',
       align: 'right',
       sorting: getSorting('overhead'),
     },
