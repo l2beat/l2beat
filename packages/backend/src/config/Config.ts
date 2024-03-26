@@ -86,6 +86,7 @@ export interface TvlConfig {
 export interface Tvl2Config {
   readonly prices: PriceConfigEntry[]
   readonly amounts: AmountConfigEntry[]
+  readonly chains: ChainTvlConfig[]
   readonly coingeckoApiKey: string | undefined
 }
 
