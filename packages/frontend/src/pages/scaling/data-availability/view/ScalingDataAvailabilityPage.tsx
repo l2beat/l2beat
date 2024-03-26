@@ -31,7 +31,7 @@ export function ScalingDataAvailabilityPage(
   return (
     <>
       <Navbar {...props.navbar} />
-      <PageContent type="subpage">
+      <PageContent>
         <ScalingNavigationTabs
           showActivity={props.showActivity}
           showFinality={props.showFinality}
