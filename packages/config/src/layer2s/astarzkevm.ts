@@ -1,47 +1,9 @@
-import { formatSeconds } from '@l2beat/shared-pure'
-
 import { EXITS, NEW_CRYPTOGRAPHY, NUGGETS, RISK_VIEW } from '../common'
-import {
-  getPendingStateTimeout,
-  getTrustedAggregatorTimeout,
-  getUpgradeDelay,
-} from '../discovery/polygoncdk/getUpgradeDelay'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { polygonCDKStack } from './templates/polygonCDKStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('astarzkevm')
-
-const upgradeDelay = getUpgradeDelay()
-const upgradeDelayString = formatSeconds(upgradeDelay)
-const trustedAggregatorTimeout = getTrustedAggregatorTimeout()
-const pendingStateTimeout = getPendingStateTimeout()
-
-const forceBatchTimeout = discovery.getContractValue<number>(
-  'AstarValidiumEtrog',
-  'forceBatchTimeout',
-)
-
-const exitWindowRisk = {
-  ...RISK_VIEW.EXIT_WINDOW(
-    upgradeDelay,
-    trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
-    0,
-  ),
-  description: `Even though there is a ${upgradeDelayString} Timelock for upgrades, forced transactions are disabled. Even if they were to be enabled, user withdrawals can be censored up to ${formatSeconds(
-    trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
-  )}.`,
-  warning: {
-    value: 'The Security Council can remove the delay on upgrades.',
-    sentiment: 'bad',
-  },
-} as const
-
-const timelockUpgrades = {
-  upgradableBy: ['RollupManagerAdminMultisig'],
-  upgradeDelay: exitWindowRisk.value,
-  upgradeConsiderations: exitWindowRisk.description,
-}
 
 const membersCountDAC = discovery.getContractValue<number>(
   'AstarValidiumDAC',
@@ -125,8 +87,6 @@ export const astarzkevm: Layer2 = polygonCDKStack({
     },
   },
   discovery,
-  upgradeability: timelockUpgrades,
-  exitWindowRisk,
   isForcedBatchDisallowed,
   nonTemplateEscrows: [],
   nonTemplateTechnology: {

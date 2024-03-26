@@ -20,7 +20,6 @@ import {
   Milestone,
   RISK_VIEW,
   ScalingProjectContract,
-  ScalingProjectContractSingleAddress,
   ScalingProjectEscrow,
   ScalingProjectPermission,
   ScalingProjectRiskViewEntry,
@@ -31,16 +30,9 @@ import {
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
-import {
-  getPendingStateTimeout,
-  getTrustedAggregatorTimeout,
-  getUpgradeDelay,
-} from '../../discovery/polygoncdk/getUpgradeDelay'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getStage } from '../common/stages/getStage'
 import { Layer2, Layer2Display, Layer2TransactionApi } from '../types'
-
-const shared = new ProjectDiscovery('shared-polygon-cdk')
 
 export interface DAProvider {
   name: DataAvailabilityLayer
@@ -53,6 +45,7 @@ export interface DAProvider {
 export interface PolygonCDKStackConfig {
   daProvider?: DAProvider
   discovery: ProjectDiscovery
+  sharedDiscovery?: ProjectDiscovery
   display: Omit<Layer2Display, 'provider' | 'category' | 'dataAvailabilityMode'>
   rpcUrl?: string
   transactionApi?: Layer2TransactionApi
@@ -65,28 +58,64 @@ export interface PolygonCDKStackConfig {
   milestones: Milestone[]
   knowledgeNuggets: KnowledgeNugget[]
   isForcedBatchDisallowed: boolean
-  exitWindowRisk: ScalingProjectRiskViewEntry
-  upgradeability: Partial<ScalingProjectContractSingleAddress>
   rollupModuleContract: ContractParameters
   rollupVerifierContract: ContractParameters
 }
 
-const upgradeDelay = getUpgradeDelay()
-const upgradeDelayString = formatSeconds(upgradeDelay)
-const trustedAggregatorTimeout = getTrustedAggregatorTimeout()
-const trustedAggregatorTimeoutString = formatSeconds(trustedAggregatorTimeout)
-const pendingStateTimeout = getPendingStateTimeout()
-const pendingStateTimeoutString = formatSeconds(pendingStateTimeout)
-
-const _HALT_AGGREGATION_TIMEOUT = formatSeconds(
-  shared.getContractValue<number>(
-    'PolygonRollupManager',
-    '_HALT_AGGREGATION_TIMEOUT',
-  ),
-)
-
 export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
   const daProvider = templateVars.daProvider
+  const shared =
+    templateVars.sharedDiscovery ?? new ProjectDiscovery('shared-polygon-cdk')
+
+  const upgradeDelay = shared.getContractValue<number>(
+    'Timelock',
+    'getMinDelay',
+  )
+  const upgradeDelayString = formatSeconds(upgradeDelay)
+  const trustedAggregatorTimeout = shared.getContractValue<number>(
+    'PolygonRollupManager',
+    'trustedAggregatorTimeout',
+  )
+  const trustedAggregatorTimeoutString = formatSeconds(trustedAggregatorTimeout)
+  const pendingStateTimeout = shared.getContractValue<number>(
+    'PolygonRollupManager',
+    'pendingStateTimeout',
+  )
+  const pendingStateTimeoutString = formatSeconds(pendingStateTimeout)
+
+  const _HALT_AGGREGATION_TIMEOUT = formatSeconds(
+    shared.getContractValue<number>(
+      'PolygonRollupManager',
+      '_HALT_AGGREGATION_TIMEOUT',
+    ),
+  )
+
+  const forceBatchTimeout = templateVars.discovery.getContractValue<number>(
+    templateVars.rollupModuleContract.name,
+    'forceBatchTimeout',
+  )
+
+  const exitWindowRisk = {
+    ...RISK_VIEW.EXIT_WINDOW(
+      upgradeDelay,
+      trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
+      0,
+    ),
+    description: `Even though there is a ${upgradeDelayString} Timelock for upgrades, forced transactions are disabled. Even if they were to be enabled, user withdrawals can be censored up to ${formatSeconds(
+      trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
+    )}.`,
+    warning: {
+      value: 'The Security Council can remove the delay on upgrades.',
+      sentiment: 'bad',
+    },
+  } as const
+
+  const upgradeability = {
+    upgradableBy: ['AdminMultisig'],
+    upgradeDelay: exitWindowRisk.value,
+    upgradeConsiderations: exitWindowRisk.description,
+  }
+
   return {
     type: 'layer2',
     id: ProjectId(templateVars.discovery.projectName),
@@ -318,7 +347,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
           },
         ],
       },
-      exitWindow: templateVars.exitWindowRisk,
+      exitWindow: exitWindowRisk,
       // this will change once the isForcedBatchDisallowed is set to false inside Polygon ZkEvm contract (if they either lower timeouts or increase the timelock delay)
       sequencerFailure: {
         ...SEQUENCER_NO_MECHANISM(templateVars.isForcedBatchDisallowed),
@@ -479,17 +508,17 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
         ),
         shared.getContractDetails('PolygonRollupManager', {
           description: `It defines the rules of the system including core system parameters, permissioned actors as well as emergency procedures. The emergency state can be activated either by the Security Council, by proving a soundness error or by presenting a sequenced batch that has not been aggregated before a ${_HALT_AGGREGATION_TIMEOUT} timeout. This contract receives L2 state roots as well as ZK proofs.`,
-          ...templateVars.upgradeability,
+          ...upgradeability,
         }),
         shared.getContractDetails('Bridge', {
           description:
             'The escrow contract for user funds. It is mirrored on the L2 side and can be used to transfer both ERC20 assets and arbitrary messages. To transfer funds a user initiated transaction on both sides is required.',
-          ...templateVars.upgradeability,
+          ...upgradeability,
         }),
         shared.getContractDetails('GlobalExitRootV2', {
           description:
             'Synchronizes deposit and withdraw merkle trees across L1 and the L2s. The global root from this contract is injected into the L2 contracts.',
-          ...templateVars.upgradeability,
+          ...upgradeability,
         }),
         shared.getContractDetails(
           'Timelock',

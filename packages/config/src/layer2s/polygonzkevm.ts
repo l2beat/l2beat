@@ -1,4 +1,4 @@
-import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import {
   EXITS,
@@ -6,50 +6,13 @@ import {
   FRONTRUNNING_RISK,
   NEW_CRYPTOGRAPHY,
   NUGGETS,
-  RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
-import {
-  getPendingStateTimeout,
-  getTrustedAggregatorTimeout,
-  getUpgradeDelay,
-} from '../discovery/polygoncdk/getUpgradeDelay'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { polygonCDKStack } from './templates/polygonCDKStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('polygonzkevm')
-
-const forceBatchTimeout = discovery.getContractValue<number>(
-  'PolygonZkEVMEtrog',
-  'forceBatchTimeout',
-)
-
-const upgradeDelay = getUpgradeDelay()
-const upgradeDelayString = formatSeconds(upgradeDelay)
-const trustedAggregatorTimeout = getTrustedAggregatorTimeout()
-const pendingStateTimeout = getPendingStateTimeout()
-
-const exitWindowRisk = {
-  ...RISK_VIEW.EXIT_WINDOW(
-    upgradeDelay,
-    trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
-    0,
-  ),
-  description: `Even though there is a ${upgradeDelayString} Timelock for upgrades, forced transactions are disabled. Even if they were to be enabled, user withdrawals can be censored up to ${formatSeconds(
-    trustedAggregatorTimeout + pendingStateTimeout + forceBatchTimeout,
-  )}.`,
-  warning: {
-    value: 'The Security Council can remove the delay on upgrades.',
-    sentiment: 'bad',
-  },
-} as const
-
-const timelockUpgrades = {
-  upgradableBy: ['AdminMultisig'],
-  upgradeDelay: exitWindowRisk.value,
-  upgradeConsiderations: exitWindowRisk.description,
-}
 
 const isForcedBatchDisallowed =
   discovery.getContractValue<string>(
@@ -119,8 +82,6 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
       },
     ],
   },
-  exitWindowRisk,
-  upgradeability: timelockUpgrades,
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'EscrowsAdmin',
