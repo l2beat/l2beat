@@ -99,14 +99,8 @@ export const rss3: Layer2 = opStack({
       ...upgradeability,
     }),
   ],
-  nonTemplateEscrows: [
-    discovery.getEscrowDetails({
-      address: EthereumAddress('0x4cbab69108Aa72151EDa5A3c164eA86845f18438'),
-      name: 'RSS3 Token on Ethereum mainnet',
-      description: '',
-      tokens: ['RSS3'],
-    }),
-  ],
+  nonTemplateEscrows: [],
+  l1StandardBridgeTokens: ['RSS3'],
   isNodeAvailable: false,
   milestones: [
     {
