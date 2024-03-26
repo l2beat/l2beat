@@ -82,6 +82,7 @@ export function makeConfig(
       cache: {
         tvl: flags.isEnabled('cache', 'tvl'),
         liveness: flags.isEnabled('cache', 'liveness'),
+        l2costs: flags.isEnabled('cache', 'l2costs'),
       },
     },
     health: {

@@ -43,6 +43,10 @@ export function createL2CostsModule(
   const start = () => {
     logger = logger.for('L2CostsModule')
     logger.info('Starting...')
+
+    if (config.api.cache.l2costs) {
+      l2CostsController.start()
+    }
   }
 
   return {

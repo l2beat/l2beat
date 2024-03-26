@@ -2,6 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import {
   assert,
   AssetId,
+  cacheAsyncFunction,
   L2CostsApiResponse,
   L2CostsDetails,
   notUndefined,
@@ -10,6 +11,7 @@ import {
 } from '@l2beat/shared-pure'
 
 import { Project } from '../../../../../model/Project'
+import { TaskQueue } from '../../../../../tools/queue/TaskQueue'
 import { PriceRepository } from '../../../../tvl/repositories/PriceRepository'
 import { TrackedTxsConfigsRepository } from '../../../repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsConfig } from '../../../types/TrackedTxsConfig'
@@ -70,6 +72,9 @@ export type DetailedTransaction =
   | DetailedType3Transaction
 
 export class L2CostsController {
+  private readonly taskQueue: TaskQueue<void>
+  getCachedL2CostsApiResponse: () => Promise<L2CostsResult>
+
   constructor(
     private readonly l2CostsRepository: L2CostsRepository,
     private readonly trackedTxsConfigsRepository: TrackedTxsConfigsRepository,
@@ -78,6 +83,25 @@ export class L2CostsController {
     private readonly logger = Logger.SILENT,
   ) {
     this.logger = this.logger.for(this)
+
+    const cached = cacheAsyncFunction(() => this.getL2Costs())
+    this.getCachedL2CostsApiResponse = cached.call
+    this.taskQueue = new TaskQueue(
+      cached.refetch,
+      this.logger.for('taskQueue'),
+      { metricsId: L2CostsController.name },
+    )
+  }
+
+  start() {
+    this.taskQueue.addToFront()
+    this.logger.info('Caching: initial caching scheduled')
+
+    const tenMinutes = 10 * 60 * 1000
+    setInterval(() => {
+      this.taskQueue.addIfEmpty()
+      this.logger.info('Caching: refetch scheduled')
+    }, tenMinutes)
   }
 
   async getL2Costs(): Promise<L2CostsResult> {
