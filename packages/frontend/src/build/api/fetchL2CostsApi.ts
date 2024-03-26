@@ -52,7 +52,7 @@ function generateMockDataDetails(
   const overheadMultiplier = Math.random()
 
   const usdMultiplier = base * 3500
-  const gasMultiplier = base * 100000
+  const gasMultiplier = (base + Math.random() * base) * 100000
 
   const calldataEthCost = round(base * calldataMultiplier)
   const calldataUsdCost = round(base * usdMultiplier * calldataMultiplier)

@@ -1,8 +1,8 @@
 import React from 'react'
 
 import { getProjectWithIndexColumns } from '../../../../components/table/props/getProjectWithIndexColumns'
-import { ColumnConfig } from '../../../../components/table/types'
-import { ScalingCostsViewEntry } from '../types'
+import { ColumnConfig, SortingConfig } from '../../../../components/table/types'
+import { CostsDataDetails, ScalingCostsViewEntry } from '../types'
 import { CostsTableCell } from '../view/CostsTimeRangeCell'
 
 export function getScalingCostsColumnsConfig() {
@@ -19,16 +19,7 @@ export function getScalingCostsColumnsConfig() {
           tooltip:
             'The sum of the costs for calldata, blob data, computation, and an additional 21000 gas overhead per transaction for the selected time period.',
           align: 'center',
-          sorting: {
-            getOrderValue: (project) => ({
-              '24H': project.costs.last24h.total.gas.value,
-              '7D': project.costs.last7d.total.gas.value,
-              '30D': project.costs.last30d.total.gas.value,
-              '90D': project.costs.last90d.total.gas.value,
-            }),
-            defaultOrderKey: '7D',
-            rule: 'numeric',
-          },
+          sorting: getSorting('total'),
         },
       ],
     },
@@ -40,16 +31,7 @@ export function getScalingCostsColumnsConfig() {
       tooltip:
         'The sum of the costs for posting data as calldata on Ethereum for the selected time period.',
       align: 'right',
-      sorting: {
-        getOrderValue: (project) => ({
-          '24H': project.costs.last24h.calldata.gas.value,
-          '7D': project.costs.last7d.calldata.gas.value,
-          '30D': project.costs.last30d.calldata.gas.value,
-          '90D': project.costs.last90d.calldata.gas.value,
-        }),
-        defaultOrderKey: '7D',
-        rule: 'numeric',
-      },
+      sorting: getSorting('calldata'),
     },
     {
       name: 'Blobs',
@@ -59,16 +41,7 @@ export function getScalingCostsColumnsConfig() {
       tooltip:
         'The sum of the costs for posting data as blobs on Ethereum for the selected time period.',
       align: 'right',
-      sorting: {
-        getOrderValue: (project) => ({
-          '24H': project.costs.last24h.blobs?.gas.value,
-          '7D': project.costs.last7d.blobs?.gas.value,
-          '30D': project.costs.last30d.blobs?.gas.value,
-          '90D': project.costs.last90d.blobs?.gas.value,
-        }),
-        defaultOrderKey: '7D',
-        rule: 'numeric',
-      },
+      sorting: getSorting('blobs'),
     },
     {
       name: 'Compute',
@@ -78,16 +51,7 @@ export function getScalingCostsColumnsConfig() {
       tooltip:
         'The sum of the costs for carrying out different operations within a transaction for the selected time period.',
       align: 'right',
-      sorting: {
-        getOrderValue: (project) => ({
-          '24H': project.costs.last24h.compute.gas.value,
-          '7D': project.costs.last7d.compute.gas.value,
-          '30D': project.costs.last30d.compute.gas.value,
-          '90D': project.costs.last90d.compute.gas.value,
-        }),
-        defaultOrderKey: '7D',
-        rule: 'numeric',
-      },
+      sorting: getSorting('compute'),
     },
     {
       name: 'Overhead',
@@ -98,17 +62,31 @@ export function getScalingCostsColumnsConfig() {
       tooltip:
         'Hey Adi 👋 If you see this I probably forgot to ask for this tooltip.',
       align: 'right',
-      sorting: {
-        getOrderValue: (project) => ({
-          '24H': project.costs.last24h.overhead.gas.value,
-          '7D': project.costs.last7d.overhead.gas.value,
-          '30D': project.costs.last30d.overhead.gas.value,
-          '90D': project.costs.last90d.overhead.gas.value,
-        }),
-        defaultOrderKey: '7D',
-        rule: 'numeric',
-      },
+      sorting: getSorting('overhead'),
     },
   ]
   return columns
+}
+
+function getSorting(
+  type: keyof CostsDataDetails,
+): SortingConfig<ScalingCostsViewEntry> {
+  return {
+    getOrderValue: (project) => ({
+      '24H-GAS': project.costs.last24h[type]?.gas.value,
+      '7D-GAS': project.costs.last7d[type]?.gas.value,
+      '30D-GAS': project.costs.last30d[type]?.gas.value,
+      '90D-GAS': project.costs.last90d[type]?.gas.value,
+      '24H-ETH': project.costs.last24h[type]?.ethCost.value,
+      '7D-ETH': project.costs.last7d[type]?.ethCost.value,
+      '30D-ETH': project.costs.last30d[type]?.ethCost.value,
+      '90D-ETH': project.costs.last90d[type]?.ethCost.value,
+      '24H-USD': project.costs.last24h[type]?.usdCost.value,
+      '7D-USD': project.costs.last7d[type]?.usdCost.value,
+      '30D-USD': project.costs.last30d[type]?.usdCost.value,
+      '90D-USD': project.costs.last90d[type]?.usdCost.value,
+    }),
+    defaultOrderKey: '7D-USD',
+    rule: 'numeric',
+  }
 }

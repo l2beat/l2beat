@@ -21,22 +21,36 @@ export function configureCostsTableCells() {
     '[data-role="costs-time-range-controls"] input',
   )
 
+  let checkedUnitControl = unitControls.find((c) => c.checked)
+  let checkedTimeRangeControl = timeRangeControls.find((c) => c.checked)
+
+  function getSortingArrowsOrderKey() {
+    if (!checkedUnitControl || !checkedTimeRangeControl) {
+      throw new Error('No time range or unit control is checked')
+    }
+    return `${checkedTimeRangeControl.value}-${checkedUnitControl.value}`
+  }
+
   timeRangeControls.forEach((control) => {
     control.addEventListener('change', () => {
+      checkedTimeRangeControl = control
       tableCells.forEach((cell) =>
         cell.setAttribute('data-time-range', control.value),
       )
       SORTING_ARROWS_NAMES.forEach((name) =>
-        setSortingArrowsOrderKey(name, control.value),
+        setSortingArrowsOrderKey(name, getSortingArrowsOrderKey()),
       )
     })
   })
 
   unitControls.forEach((control) => {
     control.addEventListener('change', () => {
-      console.log(control.value)
+      checkedUnitControl = control
       tableCells.forEach((cell) =>
         cell.setAttribute('data-unit', control.value),
+      )
+      SORTING_ARROWS_NAMES.forEach((name) =>
+        setSortingArrowsOrderKey(name, getSortingArrowsOrderKey()),
       )
     })
   })
