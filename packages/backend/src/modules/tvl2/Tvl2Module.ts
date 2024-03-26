@@ -8,6 +8,7 @@ import {
 } from '@l2beat/shared'
 
 import { Config } from '../../config'
+import { Tvl2Config } from '../../config/Config'
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { Clock } from '../../tools/Clock'
@@ -46,7 +47,54 @@ export function createTvl2Module(
     removeSixHourlyAfterDays: 93,
   })
 
-  const priceIndexers = config.tvl2.prices.map(
+  const priceIndexers = getPriceIndexers(
+    config.tvl2,
+    logger,
+    hourlyIndexer,
+    coingeckoQueryService,
+    peripherals,
+    syncOptimizer,
+  )
+
+  const blockTimestampIndexers = getBlockTimestampIndexers(
+    config.tvl2,
+    peripherals,
+    logger,
+    hourlyIndexer,
+    syncOptimizer,
+  )
+
+  const indexers = [...blockTimestampIndexers, ...priceIndexers]
+
+  const statusRouter = createTvl2StatusRouter(config.tvl2, indexers, clock)
+
+  const start = async () => {
+    logger = logger.for('Tvl2Module')
+
+    await hourlyIndexer.start()
+
+    for (const indexer of indexers) {
+      await indexer.start()
+    }
+
+    logger.info('Started')
+  }
+
+  return {
+    routers: [statusRouter],
+    start,
+  }
+}
+
+function getPriceIndexers(
+  config: Tvl2Config,
+  logger: Logger,
+  hourlyIndexer: HourlyIndexer,
+  coingeckoQueryService: CoingeckoQueryService,
+  peripherals: Peripherals,
+  syncOptimizer: SyncOptimizer,
+): PriceIndexer[] {
+  return config.prices.map(
     (price) =>
       new PriceIndexer(
         // TODO: write it correctly
@@ -64,8 +112,16 @@ export function createTvl2Module(
         syncOptimizer,
       ),
   )
+}
 
-  const blockTimestampIndexers = config.tvl2.chains
+function getBlockTimestampIndexers(
+  config: Tvl2Config,
+  peripherals: Peripherals,
+  logger: Logger,
+  hourlyIndexer: HourlyIndexer,
+  syncOptimizer: SyncOptimizer,
+): BlockTimestampIndexer[] {
+  return config.chains
     .filter((c) => c.config !== undefined)
     .map((chain) => {
       assert(chain.config !== undefined, 'Chain config is required')
@@ -95,31 +151,4 @@ export function createTvl2Module(
         syncOptimizer,
       )
     })
-
-  const statusRouter = createTvl2StatusRouter(
-    config.tvl2,
-    [...blockTimestampIndexers, ...priceIndexers],
-    clock,
-  )
-
-  const start = async () => {
-    logger = logger.for('Tvl2Module')
-
-    await hourlyIndexer.start()
-
-    for (const indexer of priceIndexers) {
-      await indexer.start()
-    }
-
-    for (const indexer of blockTimestampIndexers) {
-      await indexer.start()
-    }
-
-    logger.info('Started')
-  }
-
-  return {
-    routers: [statusRouter],
-    start,
-  }
 }
