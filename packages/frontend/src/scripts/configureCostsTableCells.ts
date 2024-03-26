@@ -1,15 +1,15 @@
 import { makeQuery } from './query'
 
-export function configureL2CostsTableCells() {
+export function configureCostsTableCells() {
   const { $$ } = makeQuery(document.body)
 
-  const tableCells = $$('[data-role="l2-costs-table-cell"]')
+  const tableCells = $$('[data-role="costs-table-cell"]')
 
   const unitControls = $$<HTMLInputElement>(
-    '[data-role="l2-costs-unit-controls"] input',
+    '[data-role="costs-unit-controls"] input',
   )
   const timeRangeControls = $$<HTMLInputElement>(
-    '[data-role="l2-costs-time-range-controls"] input',
+    '[data-role="costs-time-range-controls"] input',
   )
 
   timeRangeControls.forEach((control) => {

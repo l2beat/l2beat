@@ -2,25 +2,22 @@ import React from 'react'
 
 import { RadioGroup } from '../../../../components/chart/RadioGroup'
 
-export function L2CostsTimeRangeControls() {
+export function CostsUnitControls() {
   return (
     <RadioGroup
-      role="l2-costs-time-range-controls"
-      name="l2-costs-time-range"
+      role="costs-unit-controls"
+      name="costs-unit"
       className="w-min"
       options={[
         {
-          value: '24H',
-        },
-        {
-          value: '7D',
+          value: 'USD',
           checked: true,
         },
         {
-          value: '30D',
+          value: 'ETH',
         },
         {
-          value: '90D',
+          value: 'GAS',
         },
       ]}
     />

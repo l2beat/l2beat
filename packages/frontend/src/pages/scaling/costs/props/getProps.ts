@@ -2,17 +2,17 @@ import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
 import { Wrapped } from '../../../Page'
 import { getPageMetadata } from '../../activity/props/getPageMetadata'
-import { L2CostsPagesData } from '../types'
-import { ScalingL2CostsPageProps } from '../view/ScalingL2CostsPage'
-import { getScalingL2CostsView } from './getScalingL2CostsView'
+import { CostsPagesData } from '../types'
+import { ScalingCostsPageProps } from '../view/ScalingCostsPage'
+import { getScalingCostsView } from './getScalingCostsView'
 
 export function getProps(
   config: Config,
-  pagesData: L2CostsPagesData,
-): Wrapped<ScalingL2CostsPageProps> {
+  pagesData: CostsPagesData,
+): Wrapped<ScalingCostsPageProps> {
   return {
     props: {
-      l2CostsView: getScalingL2CostsView(config.layer2s, pagesData),
+      costsView: getScalingCostsView(config.layer2s, pagesData),
       navbar: getNavbarProps(config, 'scaling'),
       footer: getFooterProps(config),
       showActivity: config.features.activity,

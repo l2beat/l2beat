@@ -1,9 +1,9 @@
 import React from 'react'
 
 import { ActivityIcon, RiskIcon, SummaryIcon, TvlIcon } from '../icons'
+import { CostsIcon } from '../icons/pages/CostsIcon'
 import { DataAvailabilityIcon } from '../icons/pages/DataAvailabilityIcon'
 import { FinalityIcon } from '../icons/pages/FinalityIcon'
-import { L2CostsIcon } from '../icons/pages/L2CostsIcon'
 import { LivenessIcon } from '../icons/pages/LivenessIcon'
 import { NavigationPage, NavigationTabs } from './NavigationTabs'
 
@@ -16,7 +16,7 @@ interface ScalingNavigationTabsProps {
     | 'liveness'
     | 'finality'
     | 'data-availability'
-    | 'l2-costs'
+    | 'costs'
   showActivity: boolean
   showFinality: boolean
   showLiveness: boolean
@@ -82,11 +82,11 @@ export function ScalingNavigationTabs(props: ScalingNavigationTabsProps) {
     })
   }
   pages.push({
-    fullTitle: 'L2 Costs',
-    shortTitle: 'L2 Costs',
-    icon: <L2CostsIcon />,
-    link: '/scaling/l2-costs',
-    selected: props.selected === 'l2-costs',
+    fullTitle: 'Costs',
+    shortTitle: 'Costs',
+    icon: <CostsIcon />,
+    link: '/scaling/costs',
+    selected: props.selected === 'costs',
   })
   return <NavigationTabs pages={pages} />
 }

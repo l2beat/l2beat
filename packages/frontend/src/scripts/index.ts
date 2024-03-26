@@ -1,11 +1,11 @@
 import { configureCharts } from './charts'
 import { configureBridgesAndCombinedOnly } from './configureBridgesAndCombinedOnly'
+import { configureCostsTableCells } from './configureCostsTableCells'
 import { configureDropdowns } from './configureDropdowns'
 import { configureEtherscanLinks } from './configureEtherscanLinks'
 import { configureExpandableContainer } from './configureExpandableContainer'
 import { configureFloatingBanner } from './configureFloatingBanner'
 import { configureHoverableDropdown } from './configureHoverableDropdown'
-import { configureL2CostsTableCells } from './configureL2CostsTableCells'
 import { configureLivenessTimeRangeControls } from './configureLivenessTimeRangeControls'
 import { configureMultipleEscrowsButton } from './configureMultipleEscrowsButton'
 import { configureOverflowWrappers } from './configureOverflowWrappers'
@@ -44,4 +44,4 @@ configureLivenessTimeRangeControls()
 configureOverflowWrappers()
 configureSorting()
 configureEtherscanLinks()
-configureL2CostsTableCells()
+configureCostsTableCells()

@@ -3,16 +3,16 @@ import React from 'react'
 import { Config } from '../../../build/config'
 import { PageWrapper } from '../../../components'
 import { getProps } from './props'
-import { L2CostsPagesData } from './types'
-import { ScalingL2CostsPage } from './view/ScalingL2CostsPage'
+import { CostsPagesData } from './types'
+import { ScalingCostsPage } from './view/ScalingCostsPage'
 
-export function getL2CostsPage(config: Config, pagesData: L2CostsPagesData) {
+export function getCostsPage(config: Config, pagesData: CostsPagesData) {
   const { props, wrapper } = getProps(config, pagesData)
   return {
-    slug: '/scaling/l2-costs',
+    slug: '/scaling/costs',
     page: (
       <PageWrapper {...wrapper}>
-        <ScalingL2CostsPage {...props} />
+        <ScalingCostsPage {...props} />
       </PageWrapper>
     ),
   }

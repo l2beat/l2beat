@@ -11,13 +11,14 @@ import {
   L2CostsApiProject,
   L2CostsApiResponse,
 } from '../../../build/api/DELETE_THIS_FILE'
+import { ValueWithDisplayValue } from '../../types'
 
-export interface L2CostsPagesData {
+export interface CostsPagesData {
   tvlApiResponse: TvlApiResponse
-  l2CostsApiResponse: L2CostsApiResponse
+  costsApiResponse: L2CostsApiResponse
 }
 
-export interface ScalingL2CostsViewEntry {
+export interface ScalingCostsViewEntry {
   name: string
   shortName: string | undefined
   slug: string
@@ -28,5 +29,15 @@ export interface ScalingL2CostsViewEntry {
   redWarning: string | undefined
   purposes: ScalingProjectPurpose[]
   stage: StageConfig
-  data: L2CostsApiProject
+  data: CostsData
+}
+
+export type CostsData = {
+  [Timerange in keyof Omit<L2CostsApiProject, 'syncedUntil'>]: {
+    [Type in keyof L2CostsApiProject[Timerange]]: {
+      [Cost in keyof L2CostsApiProject[Timerange][Type]]: Cost extends 'gas'
+        ? number
+        : ValueWithDisplayValue
+    }
+  }
 }

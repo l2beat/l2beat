@@ -21,11 +21,6 @@ export function formatCurrencyExactValue(value: number, currency: string) {
   return formatted + (decimal && `.${decimal}`)
 }
 
-export function formatCurrencyExact(value: number, currency: string) {
-  const formatted = formatCurrencyExactValue(value, currency)
-  return `${formatted} ${currency.toUpperCase()}`
-}
-
 function formatCrypto(value: number) {
   if (value < 1) {
     return value.toFixed(6)

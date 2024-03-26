@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Icon } from '../Icon'
 
-export function L2CostsIcon() {
+export function CostsIcon() {
   return (
     <Icon
       width="20"

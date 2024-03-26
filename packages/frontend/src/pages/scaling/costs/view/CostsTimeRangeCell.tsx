@@ -1,26 +1,23 @@
 import React from 'react'
 
-import {
-  L2CostsApiProject,
-  L2CostsDetails,
-} from '../../../../build/api/DELETE_THIS_FILE'
 import { CostsBreakdown } from '../../../../components/CostsBreakdown'
 import { cn } from '../../../../utils/cn'
+import { CostsData } from '../types'
 
-type TableCellType = keyof L2CostsDetails
+type TableCellType = keyof CostsData[keyof CostsData]
 
 interface Props {
-  data: L2CostsApiProject
+  data: CostsData
   type: TableCellType
 }
 
-export function L2CostsTableCell(props: Props) {
+export function CostsTableCell(props: Props) {
   return (
     <div
       className="group"
-      data-role="l2-costs-table-cell"
+      data-role="costs-table-cell"
       data-time-range="7D"
-      data-unit="ETH"
+      data-unit="USD"
     >
       <Cell
         details={props.data.last24h}
@@ -47,7 +44,7 @@ export function L2CostsTableCell(props: Props) {
 }
 
 interface CellProps {
-  details: L2CostsDetails
+  details: CostsData[keyof CostsData]
   type: TableCellType
   className?: string
 }
@@ -60,20 +57,20 @@ function Cell({ details, className, type }: CellProps) {
       <div className={cn('flex-col items-end', className)}>
         <div className="text-right text-lg font-semibold">
           <span className="hidden group-data-[unit=ETH]:inline">
-            {details[type].ethCost}
+            {details[type].ethCost.displayValue}
           </span>
           <span className="hidden group-data-[unit=USD]:inline">
-            {details[type].usdCost}
+            {details[type].usdCost.displayValue}
           </span>
           <span className="hidden group-data-[unit=GAS]:inline">
             {details[type].gas}
           </span>
         </div>
         <CostsBreakdown
-          blobs={details.blobs.ethCost}
-          calldata={details.calldata.ethCost}
-          compute={details.compute.ethCost}
-          overhead={details.overhead.ethCost}
+          blobs={details.blobs.gas}
+          calldata={details.calldata.gas}
+          compute={details.compute.gas}
+          overhead={details.overhead.gas}
         />
       </div>
     )
@@ -82,10 +79,10 @@ function Cell({ details, className, type }: CellProps) {
   return (
     <div className={className}>
       <span className="hidden group-data-[unit=ETH]:inline">
-        {details[type].ethCost}
+        {details[type].ethCost.displayValue}
       </span>
       <span className="hidden group-data-[unit=USD]:inline">
-        {details[type].usdCost}
+        {details[type].usdCost.displayValue}
       </span>
       <span className="hidden group-data-[unit=GAS]:inline">
         {details[type].gas}

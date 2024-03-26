@@ -11,13 +11,10 @@ import { SimplePageHeader } from '../../../../components/header/SimplePageHeader
 import { ScalingNavigationTabs } from '../../../../components/navigation-tabs/ScalingNavigationTabs'
 import { OtherSites } from '../../../../components/other-sites/OtherSites'
 import { PageContent } from '../../../../components/PageContent'
-import {
-  ScalingL2CostsView,
-  ScalingL2CostsViewProps,
-} from './ScalingL2CostsView'
+import { ScalingCostsView, ScalingCostsViewProps } from './ScalingCostsView'
 
-export interface ScalingL2CostsPageProps {
-  l2CostsView: ScalingL2CostsViewProps
+export interface ScalingCostsPageProps {
+  costsView: ScalingCostsViewProps
   navbar: NavbarProps
   footer: FooterProps
   showActivity: boolean
@@ -25,7 +22,7 @@ export interface ScalingL2CostsPageProps {
   showFinality: boolean
 }
 
-export function ScalingL2CostsPage(props: ScalingL2CostsPageProps) {
+export function ScalingCostsPage(props: ScalingCostsPageProps) {
   return (
     <>
       <Navbar {...props.navbar} />
@@ -34,11 +31,11 @@ export function ScalingL2CostsPage(props: ScalingL2CostsPageProps) {
           showActivity={props.showActivity}
           showFinality={props.showFinality}
           showLiveness={props.showLiveness}
-          selected="l2-costs"
+          selected="costs"
         />
         <main>
-          <SimplePageHeader>L2 Costs</SimplePageHeader>
-          <ScalingL2CostsView {...props.l2CostsView} />
+          <SimplePageHeader>Costs</SimplePageHeader>
+          <ScalingCostsView {...props.costsView} />
           <OtherSites />
           <About />
         </main>
