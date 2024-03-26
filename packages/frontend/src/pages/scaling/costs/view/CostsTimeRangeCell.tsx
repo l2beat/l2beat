@@ -62,31 +62,8 @@ function Cell({ details, className, type }: CellProps) {
 
   if (isTotal) {
     return (
-      <div className={cn('flex-col items-end', className)}>
-        <Tooltip>
-          <TooltipTrigger>
-            <div className="text-right text-lg font-semibold">
-              <span className="hidden group-data-[unit=ETH]/costs-cell:inline">
-                {details[type].ethCost.displayValue}
-              </span>
-              <span className="hidden group-data-[unit=USD]/costs-cell:inline">
-                {details[type].usdCost.displayValue}
-              </span>
-              <span className="hidden group-data-[unit=GAS]/costs-cell:inline">
-                {details[type].gas.displayValue}
-              </span>
-            </div>
-            <CostsBreakdown
-              blobs={details.blobs?.gas.value}
-              calldata={details.calldata.gas.value}
-              compute={details.compute.gas.value}
-              overhead={details.overhead.gas.value}
-            />
-          </TooltipTrigger>
-          <TooltipContent>
-            <CostsBreakdownTooltipContent details={details} type={type} />
-          </TooltipContent>
-        </Tooltip>
+      <div className={className}>
+        <CostsBreakdownTooltip details={details} type={type} />
       </div>
     )
   }
@@ -116,7 +93,68 @@ function Cell({ details, className, type }: CellProps) {
   )
 }
 
-function CostsBreakdownTooltipContent({ details }: CellProps) {
+function CostsBreakdownTooltip({ details }: CellProps) {
+  return (
+    <>
+      <Tooltip className="hidden group-data-[unit=ETH]/costs-cell:block">
+        <TooltipTrigger className="text-right">
+          <span className="text-lg font-semibold">
+            {details.total.ethCost.displayValue}
+          </span>
+          <CostsBreakdown
+            blobs={details.blobs?.ethCost.value}
+            calldata={details.calldata.ethCost.value}
+            compute={details.compute.ethCost.value}
+            overhead={details.overhead.ethCost.value}
+          />
+        </TooltipTrigger>
+        <TooltipContent>
+          <CostsBreakdownTooltipContent details={details} unit="ethCost" />
+        </TooltipContent>
+      </Tooltip>
+      <Tooltip className="hidden group-data-[unit=USD]/costs-cell:block">
+        <TooltipTrigger className="text-right">
+          <span className="text-lg font-semibold">
+            {details.total.usdCost.displayValue}
+          </span>
+          <CostsBreakdown
+            blobs={details.blobs?.usdCost.value}
+            calldata={details.calldata.usdCost.value}
+            compute={details.compute.usdCost.value}
+            overhead={details.overhead.usdCost.value}
+          />
+        </TooltipTrigger>
+        <TooltipContent>
+          <CostsBreakdownTooltipContent details={details} unit="usdCost" />
+        </TooltipContent>
+      </Tooltip>
+      <Tooltip className="hidden group-data-[unit=GAS]/costs-cell:block">
+        <TooltipTrigger className="text-right">
+          <span className="text-lg font-semibold">
+            {details.total.gas.displayValue}
+          </span>
+          <CostsBreakdown
+            blobs={details.blobs?.gas.value}
+            calldata={details.calldata.gas.value}
+            compute={details.compute.gas.value}
+            overhead={details.overhead.gas.value}
+          />
+        </TooltipTrigger>
+        <TooltipContent>
+          <CostsBreakdownTooltipContent details={details} unit="gas" />
+        </TooltipContent>
+      </Tooltip>
+    </>
+  )
+}
+
+function CostsBreakdownTooltipContent({
+  details,
+  unit,
+}: {
+  details: CostsDataDetails
+  unit: keyof CostsDataBreakdown
+}) {
   return (
     <div>
       <span className="text-xs font-medium uppercase text-gray-500 dark:text-gray-50">
@@ -126,28 +164,32 @@ function CostsBreakdownTooltipContent({ details }: CellProps) {
         <CostsBreakdownDetailRow
           label="Calldata"
           data={details.calldata}
-          percentage={details.calldata.gas.value / details.total.gas.value}
+          percentage={details.calldata[unit].value / details.total[unit].value}
           squareClassName="fill-blue-700 dark:fill-blue-400"
+          unit={unit}
         />
         {details.blobs && (
           <CostsBreakdownDetailRow
             label="Blobs"
             data={details.blobs}
-            percentage={details.blobs.gas.value / details.total.gas.value}
+            percentage={details.blobs[unit].value / details.total[unit].value}
             squareClassName="dark:fill-yellow-100 fill-orange-400"
+            unit={unit}
           />
         )}
         <CostsBreakdownDetailRow
           label="Compute"
           data={details.compute}
-          percentage={details.compute.gas.value / details.total.gas.value}
+          percentage={details.compute[unit].value / details.total[unit].value}
           squareClassName="fill-pink-100"
+          unit={unit}
         />
         <CostsBreakdownDetailRow
           label="Overhead"
           data={details.overhead}
-          percentage={details.overhead.gas.value / details.total.gas.value}
+          percentage={details.overhead[unit].value / details.total[unit].value}
           squareClassName="fill-green-500"
+          unit={unit}
         />
       </div>
     </div>
@@ -159,10 +201,12 @@ function CostsBreakdownDetailRow({
   data,
   percentage,
   squareClassName,
+  unit,
 }: {
   label: string
   data: CostsDataBreakdown
   percentage: number
+  unit: keyof CostsDataBreakdown
   squareClassName: string
 }) {
   return (
@@ -175,18 +219,12 @@ function CostsBreakdownDetailRow({
         />
         <span className="text-xs font-medium">{label}</span>
       </div>
-      <div className="inline-block text-xs font-medium">
-        <span className="hidden group-data-[unit=ETH]/costs-cell:inline">
-          {data.ethCost.displayValue}
-        </span>
-        <span>{data.usdCost.displayValue}</span>
-        <span className="hidden group-data-[unit=GAS]/costs-cell:inline">
-          {data.gas.displayValue}
-        </span>{' '}
+      <span className="text-xs font-medium">
+        {data[unit].displayValue}{' '}
         <span className="font-normal text-gray-500 dark:text-gray-50">
           ({formatPercent(percentage)})
         </span>
-      </div>
+      </span>
     </div>
   )
 }
