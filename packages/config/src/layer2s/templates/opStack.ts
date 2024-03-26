@@ -65,6 +65,7 @@ export interface OpStackConfig {
     upgradeDelay: string | undefined
   }
   l1StandardBridgeEscrow: EthereumAddress
+  l1StandardBridgeTokens?: string[]
   rpcUrl?: string
   transactionApi?: Layer2TransactionApi
   genesisTimestamp: UnixTime
@@ -141,7 +142,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
         }),
         templateVars.discovery.getEscrowDetails({
           address: templateVars.l1StandardBridgeEscrow,
-          tokens: '*',
+          tokens: templateVars.l1StandardBridgeTokens ?? '*',
           description:
             'Main entry point for users depositing ERC20 token that do not require custom gateway.',
           ...templateVars.upgradeability,

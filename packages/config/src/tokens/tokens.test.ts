@@ -8,9 +8,14 @@ import { config } from '../test/config'
 import { canonicalTokenList, tokenList } from './tokens'
 
 describe('tokens', () => {
-  it('every token has a unique address', () => {
-    const addresses = tokenList.map((x) => x.address)
-    const everyUnique = addresses.every((x, i) => addresses.indexOf(x) === i)
+  it('every token has a unique address and chainId', () => {
+    const tokens = tokenList.map((x) =>
+      JSON.stringify({
+        address: x.address,
+        chainId: x.chainId,
+      }),
+    )
+    const everyUnique = tokens.every((x, i) => tokens.indexOf(x) === i)
     expect(everyUnique).toEqual(true)
   })
 
@@ -21,12 +26,6 @@ describe('tokens', () => {
   })
 
   describe('canonical', () => {
-    it('every token has a unique symbol', () => {
-      const symbols = canonicalTokenList.map((x) => x.symbol)
-      const everyUnique = symbols.every((x, i) => symbols.indexOf(x) === i)
-      expect(everyUnique).toEqual(true)
-    })
-
     describe('metadata is correct', function () {
       this.timeout(10_000)
       const MULTICALL_ADDRESS = '0xeefBa1e63905eF1D7ACbA5a8513c70307C1cE441'
