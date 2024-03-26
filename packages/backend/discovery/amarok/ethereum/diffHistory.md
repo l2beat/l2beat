@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x00e8f6fe2ff1e801c73b28ac65367c537e9b2588
+
+# Diff at Tue, 26 Mar 2024 10:19:30 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@e6ff14fa637ed6c3a674ff43e070f1cf65f4aa1e block: 19482562
+- current block number: 19517972
+
+## Description
+
+One new router is added by the Connext Fee Multisig. Ignore Fee Multisig nonce.
+
+## Watched changes
+
+```diff
+    contract ConnextBridge (0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6) {
+    +++ description: None
+      values.ROUTERS.27:
++        "0xc82C7d826b1eD0b2A4E9A2bE72B445416f901FD1"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19482562 (main branch discovery), not current.
+
+```diff
+    contract Connext Fee Multisig (0x7bE978Cc84612E08f7844672B0E6A6F367FE2b6A) {
+    +++ description: None
+      values.nonce:
+-        1
+    }
+```
+
 Generated with discovered.json: 0x2b9a2dbfa0e1df2aabd59731d5051595c6415516
 
 # Diff at Thu, 21 Mar 2024 10:53:07 GMT:

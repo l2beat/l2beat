@@ -63,6 +63,9 @@
       "ignoreInWatchMode": ["nonce", "proposedTimestamp"],
       "ignoreRelatives": ["lpTokenTargetAddress", "RELAYERS"]
     },
+    "Connext Fee Multisig": {
+      "ignoreMethods": ["nonce"]
+    },
     "MainnetSpokeConnector": {
       "ignoreMethods": ["snapshotRoots"],
       "ignoreInWatchMode": [
