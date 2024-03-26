@@ -200,7 +200,7 @@ export const amarok: Bridge = {
     ),
     ...discovery.getMultisigPermission(
       'Connext Fee Multisig',
-      'Collects fees from the bridge.',
+      'Collects fees from the bridge. Can manage Routers through its RouterAdmin role.',
     ),
     {
       name: 'Watchers',
