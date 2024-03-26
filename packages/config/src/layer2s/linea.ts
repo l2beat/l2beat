@@ -223,7 +223,7 @@ export const linea: Layer2 = {
     coingeckoPlatform: 'linea',
   },
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (calldata)'],
+    layers: ['Ethereum (blobs or calldata)'],
     bridge: { type: 'Enshrined' },
     mode: 'Transactions data (compressed)',
   }),
@@ -305,7 +305,7 @@ export const linea: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
       references: [
         {
           text: 'LineaRollup.sol - Etherscan source code, submitData() function',
