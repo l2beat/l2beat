@@ -8,8 +8,10 @@ export function ContractsUpdated() {
   return (
     <Callout
       className={'p-4'}
-      color={'red'}
-      icon={<ShieldIcon className={cn('fill-red-700 dark:fill-red-300')} />}
+      color={'yellow'}
+      icon={
+        <ShieldIcon className={cn('fill-yellow-700 dark:fill-yellow-300')} />
+      }
       body={
         <div>
           <strong>Note:</strong> Contracts presented in this section had their
