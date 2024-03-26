@@ -64,14 +64,14 @@ function Cell({ details, className, type }: CellProps) {
             {details[type].usdCost.displayValue}
           </span>
           <span className="hidden group-data-[unit=GAS]:inline">
-            {details[type].gas}
+            {details[type].gas.displayValue}
           </span>
         </div>
         <CostsBreakdown
-          blobs={details.blobs.gas}
-          calldata={details.calldata.gas}
-          compute={details.compute.gas}
-          overhead={details.overhead.gas}
+          blobs={details.blobs.gas.value}
+          calldata={details.calldata.gas.value}
+          compute={details.compute.gas.value}
+          overhead={details.overhead.gas.value}
         />
       </div>
     )
@@ -86,7 +86,7 @@ function Cell({ details, className, type }: CellProps) {
         {details[type].usdCost.displayValue}
       </span>
       <span className="hidden group-data-[unit=GAS]:inline">
-        {details[type].gas}
+        {details[type].gas.displayValue}
       </span>
     </div>
   )

@@ -21,10 +21,10 @@ export function getScalingCostsColumnsConfig() {
           align: 'center',
           sorting: {
             getOrderValue: (project) => ({
-              '24H': project.costs.last24h.total.gas,
-              '7D': project.costs.last7d.total.gas,
-              '30D': project.costs.last30d.total.gas,
-              '90D': project.costs.last90d.total.gas,
+              '24H': project.costs.last24h.total.gas.value,
+              '7D': project.costs.last7d.total.gas.value,
+              '30D': project.costs.last30d.total.gas.value,
+              '90D': project.costs.last90d.total.gas.value,
             }),
             defaultOrderKey: '7D',
             rule: 'numeric',
@@ -42,10 +42,10 @@ export function getScalingCostsColumnsConfig() {
       align: 'right',
       sorting: {
         getOrderValue: (project) => ({
-          '24H': project.costs.last24h.calldata.gas,
-          '7D': project.costs.last7d.calldata.gas,
-          '30D': project.costs.last30d.calldata.gas,
-          '90D': project.costs.last90d.calldata.gas,
+          '24H': project.costs.last24h.calldata.gas.value,
+          '7D': project.costs.last7d.calldata.gas.value,
+          '30D': project.costs.last30d.calldata.gas.value,
+          '90D': project.costs.last90d.calldata.gas.value,
         }),
         defaultOrderKey: '7D',
         rule: 'numeric',
@@ -61,10 +61,10 @@ export function getScalingCostsColumnsConfig() {
       align: 'right',
       sorting: {
         getOrderValue: (project) => ({
-          '24H': project.costs.last24h.blobs.gas,
-          '7D': project.costs.last7d.blobs.gas,
-          '30D': project.costs.last30d.blobs.gas,
-          '90D': project.costs.last90d.blobs.gas,
+          '24H': project.costs.last24h.blobs.gas.value,
+          '7D': project.costs.last7d.blobs.gas.value,
+          '30D': project.costs.last30d.blobs.gas.value,
+          '90D': project.costs.last90d.blobs.gas.value,
         }),
         defaultOrderKey: '7D',
         rule: 'numeric',
@@ -80,10 +80,10 @@ export function getScalingCostsColumnsConfig() {
       align: 'right',
       sorting: {
         getOrderValue: (project) => ({
-          '24H': project.costs.last24h.compute.gas,
-          '7D': project.costs.last7d.compute.gas,
-          '30D': project.costs.last30d.compute.gas,
-          '90D': project.costs.last90d.compute.gas,
+          '24H': project.costs.last24h.compute.gas.value,
+          '7D': project.costs.last7d.compute.gas.value,
+          '30D': project.costs.last30d.compute.gas.value,
+          '90D': project.costs.last90d.compute.gas.value,
         }),
         defaultOrderKey: '7D',
         rule: 'numeric',
@@ -100,10 +100,10 @@ export function getScalingCostsColumnsConfig() {
       align: 'right',
       sorting: {
         getOrderValue: (project) => ({
-          '24H': project.costs.last24h.overhead.gas,
-          '7D': project.costs.last7d.overhead.gas,
-          '30D': project.costs.last30d.overhead.gas,
-          '90D': project.costs.last90d.overhead.gas,
+          '24H': project.costs.last24h.overhead.gas.value,
+          '7D': project.costs.last7d.overhead.gas.value,
+          '30D': project.costs.last30d.overhead.gas.value,
+          '90D': project.costs.last90d.overhead.gas.value,
         }),
         defaultOrderKey: '7D',
         rule: 'numeric',

@@ -6,6 +6,7 @@ import {
   L2CostsApiResponse,
   L2CostsDetails,
 } from '../../../../build/api/DELETE_THIS_FILE'
+import { formatLargeNumber } from '../../../../utils'
 import { formatCurrency } from '../../../../utils/format'
 import { orderByTvl } from '../../../../utils/orderByTvl'
 import { CostsData, CostsPagesData, ScalingCostsViewEntry } from '../types'
@@ -81,7 +82,10 @@ function getDataDetailsValues(data: L2CostsDetails[keyof L2CostsDetails]) {
       displayValue: formatCurrency(data.usdCost, 'usd'),
       value: data.usdCost,
     },
-    gas: data.gas,
+    gas: {
+      displayValue: formatLargeNumber(data.gas),
+      value: data.gas,
+    },
   }
 }
 
