@@ -65,10 +65,19 @@ describe(L2CostsController.name, () => {
 
       const result = await controller.getL2Costs()
 
-      // filters out projects without trackedTxsConfig
-      expect(l2CostsRepository.getByProjectAndTimeRange).toHaveBeenCalledTimes(
-        2,
-      )
+      expect(
+        l2CostsRepository.getByProjectAndTimeRange,
+      ).toHaveBeenNthCalledWith(1, MOCK_PROJECTS[1].projectId, [
+        NOW.add(-90, 'days').toStartOf('hour'),
+        NOW.toStartOf('hour'),
+      ])
+      expect(
+        l2CostsRepository.getByProjectAndTimeRange,
+      ).toHaveBeenNthCalledWith(2, MOCK_PROJECTS[2].projectId, [
+        NOW.add(-90, 'days').toStartOf('hour'),
+        NOW.toStartOf('hour'),
+      ])
+
       expect(result.type).toEqual('success')
       expect(result.data.projects).toEqual({
         project2: {
