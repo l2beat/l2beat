@@ -11,16 +11,20 @@ Generated with discovered.json: 0x3e3a582b8de006326abd554f74ceadb9e92f753f
 This is an implementation upgrade that adds the ability to use blobs for data submission and deprecates the ability to finalize uncompressed blocks among smaller changes.
 
 ### LineaRollup
+
 Main addition here is the submitBlobData() function and its dependencies related to kzg commitment / point evaluation.
 Compressed blocks can still be finalized without proof.
 
 ### ZkEvmV2
+
 The function for finalizing uncompressed blocks has been removed.
 
 ### new PlonkVerifierForDataAggregation
+
 The new verifier is the same as 0xfB0C26A89833762b65098dD66b6Ae04b34D153be but with 4 changed constants: VK_QL_COM_X, VK_QL_COM_Y, VK_QK_COM_X, VK_QK_COM_Y.
 
 ### Removed libraries
+
 TransactionDecoder, Rlp and codec libraries have been removed due to being related to raw transaction decoding when finalizing uncompressed blocks.
 
 ## Watched changes

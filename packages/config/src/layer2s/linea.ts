@@ -145,6 +145,22 @@ export const linea: Layer2 = {
       },
       {
         uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xd19d4B5d358258f05D7B411E21A1460D11B0876F',
+          ),
+          selector: '0x2d3c12e5',
+          functionSignature:
+            'function submitBlobData((bytes32,bytes32,bytes32,uint256,uint256,bytes32),uint256,bytes,bytes)',
+          sinceTimestampInclusive: new UnixTime(1711449400),
+        },
+      },
+      {
+        uses: [
           {
             type: 'liveness',
             subtype: 'stateUpdates',
