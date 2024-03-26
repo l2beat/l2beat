@@ -3,94 +3,73 @@
   "chain": "ethereum",
   "name": "astarzkevm",
   "initialAddresses": [
-    "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe", // shared bridge
-    "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80", // astar validium etrog (not found from bridge)
-    "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8" // astar verifier (from docs, not found from initial discovery )
+    "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
   ],
   "names": {
-    "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe": "Bridge",
     "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2": "PolygonRollupManager",
-    "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF": "Timelock",
-    "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21": "RollupManagerAdminMultisig",
-    "0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6": "SecurityCouncil",
-    "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb": "GlobalExitRootV2",
+    "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe": "Bridge",
     "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80": "AstarValidiumEtrog",
     "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8": "AstarVerifier",
     "0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0": "AstarValidiumDAC",
     "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E": "AdminMultisig",
+    "0x519E42c24163192Dca44CD3fBDCEBF6be9130987": "PolygonZkEVMEtrog",
+    "0x0775e11309d75aA6b0967917fB0213C5673eDf81": "PolygonZkEVMVerifier",
     "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6": "POL"
   },
   "overrides": {
-    "Bridge": {
-      "ignoreMethods": ["claimedBitMap"],
-      "ignoreInWatchMode": [
-        "depositCount",
-        "getRoot",
-        "lastUpdatedDepositCount"
-      ]
-    },
     "PolygonRollupManager": {
-      "ignoreInWatchMode": [
+      "ignoreMethods": [
+        "checkStateRootInsidePrime",
+        "pendingStateTransitions",
+        "batchFee",
+        "calculateRewardPerBatch",
+        "getForcedBatchFee",
+        "getLastVerifiedBatch",
+        "lastBatchSequenced",
+        "lastForceBatch",
+        "lastForceBatchSequenced",
+        "lastPendingState",
+        "lastPendingStateConsolidated",
+        "lastTimestamp",
+        "lastVerifiedBatch",
+        "multiplierBatchFee",
         "getRollupExitRoot",
         "lastAggregationTimestamp",
         "totalSequencedBatches",
         "totalVerifiedBatches"
       ],
       "fields": {
-        "_HALT_AGGREGATION_TIMEOUT": {
-          "type": "hardcoded",
-          "value": 604800
+        "rollupsData": {
+          "type": "array",
+          "method": "rollupIDToRollupData",
+          "startIndex": 1,
+          "filter": ["rollupContract", "verifier"],
+          "length": "{{ rollupCount }}"
         },
-        "accessControl": {
-          "type": "accessControl",
-          "roleNames": {
-            "0xac75d24dbb35ea80e25fab167da4dea46c1915260426570db84f184891f5f590": "ADD_ROLLUP_TYPE",
-            "0xab66e11c4f712cd06ab11bf9339b48bef39e12d4a22eeef71d2860a0c90482bd": "OBSOLETE_ROLLUP_TYPE",
-            "0xa0fab074aba36a6fa69f1a83ee86e5abfb8433966eb57efb13dc2fc2f24ddd08": "CREATE_ROLLUP",
-            "0x3dfe277d2a2c04b75fb2eb3743fa00005ae3678a20c299e65fdf4df76517f68e": "ADD_EXISTING_ROLLUP",
-            "0x66156603fe29d13f97c6f3e3dff4ef71919f9aa61c555be0182d954e94221aac": "UPDATE_ROLLUP",
-            "0x084e94f375e9d647f87f5b2ceffba1e062c70f6009fdbcf80291e803b5c9edd4": "TRUSTED_AGGREGATOR",
-            "0x73cb0569fdbea2544dae03fdb2fe10eda92a72a2e8cd2bd496e85b762505a3f0": "TRUSTED_AGGREGATOR_ADMIN",
-            "0xa5c5790f581d443ed43873ab47cfb8c5d66a6db268e58b5971bb33fc66e07db1": "TWEAK_PARAMETERS",
-            "0x8cf807f6970720f8e2c208c7c5037595982c7bd9ed93c380d09df743d0dcc3fb": "SET_FEE",
-            "0x62ba6ba2ffed8cfe316b583325ea41ac6e7ba9e5864d2bc6fabba7ac26d2f0f4": "STOP_EMERGENCY",
-            "0x141f8f32ce6198eee741f695cec728bfd32d289f1acf73621fb303581000545e": "EMERGENCY_COUNCIL",
-            "0x9b6f082d8d3644ae2f24a3c32e356d6f2d9b2844d9b26164fbc82663ff285951": "EMERGENCY_COUNCIL_ADMIN"
-          }
+        "rollupTypes": {
+          "type": "array",
+          "method": "rollupTypeMap",
+          "startIndex": 1,
+          "length": "{{ rollupTypeCount }}",
+          "filter": ["consensusImplementation", "verifier"],
+          "ignoreRelative": true
         }
       }
     },
-    "GlobalExitRootV2": {
-      "ignoreInWatchMode": [
-        "getLastGlobalExitRoot",
-        "getRoot",
-        "depositCount",
-        "lastMainnetExitRoot",
-        "lastRollupExitRoot"
-      ]
-    },
+    "Bridge": { "ignoreDiscovery": true },
     "AstarValidiumDAC": {
-      "ignoreMethods": ["members"]
+      "fields": {
+        "members": {
+          "type": "array",
+          "method": "members",
+          "maxLength": 50
+        }
+      }
     },
     "AstarValidiumEtrog": {
       "ignoreInWatchMode": ["lastAccInputHash"]
     },
-    "Timelock": {
-      "ignoreMethods": [
-        "CANCELLER_ROLE",
-        "DEFAULT_ADMIN_ROLE",
-        "EXECUTOR_ROLE",
-        "PROPOSER_ROLE",
-        "TIMELOCK_ADMIN_ROLE"
-      ],
-      "fields": {
-        "accessControl": {
-          "type": "accessControl"
-        }
-      }
-    },
-    "SecurityCouncil": {
-      "ignoreMethods": ["nonce"]
-    }
+    "PolygonZkEVMEtrog": { "ignoreDiscovery": true },
+    "PolygonZkEVMVerifier": { "ignoreDiscovery": true }
   }
 }
