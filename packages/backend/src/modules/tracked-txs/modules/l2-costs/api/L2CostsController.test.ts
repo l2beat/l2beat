@@ -1,11 +1,12 @@
 import {
   EthereumAddress,
+  L2CostsApiProject,
   L2CostsDetails,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { range } from 'lodash'
+import { isArray, range } from 'lodash'
 
 import { Project } from '../../../../../model/Project'
 import { PriceRepository } from '../../../../tvl/repositories/PriceRepository'
@@ -18,7 +19,11 @@ import {
   L2CostsRecord,
   L2CostsRepository,
 } from '../repositories/L2CostsRepository'
-import { DetailedTransaction, L2CostsController } from './L2CostsController'
+import {
+  DetailedTransaction,
+  L2CostsController,
+  SummedL2Costs,
+} from './L2CostsController'
 
 const NOW = UnixTime.now()
 
@@ -61,7 +66,14 @@ describe(L2CostsController.name, () => {
         mockObject<DetailedTransaction>({ timestamp: NOW.add(-2, 'hours') }),
       ])
 
-      controller.sumDetails = mockFn().returns(mockObject<L2CostsDetails>({}))
+      controller.sumDetails = mockFn().returns(
+        mockObject<Omit<L2CostsApiProject, 'syncedUntil'>>({
+          last24h: mockObject<L2CostsDetails>({}),
+          last7d: mockObject<L2CostsDetails>({}),
+          last30d: mockObject<L2CostsDetails>({}),
+          last90d: mockObject<L2CostsDetails>({}),
+        }),
+      )
 
       const result = await controller.getL2Costs()
 
@@ -167,61 +179,60 @@ describe(L2CostsController.name, () => {
       const transactions = getMockDetailedTransactions(2)
       const result = getMockL2CostsController({}).sumDetails(transactions)
 
-      const expected: L2CostsDetails = {
-        total: {
-          gas: 30,
-          ethCost: 30,
-          usdCost: 30,
+      const expected: SummedL2Costs = {
+        last24h: EMPTY_SUM,
+        last7d: {
+          total: costBreakdown(1),
+          calldata: costBreakdown(1),
+          compute: costBreakdown(1),
+          overhead: costBreakdown([21_000 * 1, 1, 1]),
+          blobs: costBreakdown(0),
         },
-        calldata: {
-          gas: 3,
-          ethCost: 30,
-          usdCost: 300,
+        last30d: {
+          total: costBreakdown(3),
+          calldata: costBreakdown(3),
+          compute: costBreakdown(3),
+          overhead: costBreakdown([21_000 * 2, 3, 3]),
+          blobs: costBreakdown(0),
         },
-        compute: {
-          gas: 3,
-          ethCost: 3,
-          usdCost: 3,
-        },
-        overhead: {
-          gas: 42_000,
-          ethCost: 420_020,
-          usdCost: 4_200_200,
-        },
-        blobs: {
-          gas: 2,
-          ethCost: 2,
-          usdCost: 2,
+        last90d: {
+          total: costBreakdown(3),
+          calldata: costBreakdown(3),
+          compute: costBreakdown(3),
+          overhead: costBreakdown([21_000 * 2, 3, 3]),
+          blobs: costBreakdown(0),
         },
       }
 
       expect(result).toEqual(expected)
     })
 
-    it('sums details without blobs', () => {
-      const transactions = getMockDetailedTransactions(1)
+    it('sums details with blobs', () => {
+      const transactions = getMockDetailedTransactions(2, true)
       const result = getMockL2CostsController({}).sumDetails(transactions)
 
-      const expected: L2CostsDetails = {
-        total: {
-          gas: 10,
-          ethCost: 10,
-          usdCost: 10,
+      const expected: SummedL2Costs = {
+        last24h: EMPTY_SUM,
+        last7d: {
+          total: costBreakdown(1),
+          calldata: costBreakdown(1),
+          compute: costBreakdown(1),
+          overhead: costBreakdown([21_000 * 1, 1, 1]),
+          blobs: costBreakdown(1),
         },
-        calldata: {
-          gas: 1,
-          ethCost: 10,
-          usdCost: 100,
+        last30d: {
+          total: costBreakdown(3),
+          calldata: costBreakdown(3),
+          compute: costBreakdown(3),
+          overhead: costBreakdown([21_000 * 2, 3, 3]),
+          blobs: costBreakdown(3),
         },
-        compute: {
-          gas: 1,
-          ethCost: 1,
-          usdCost: 1,
-        },
-        overhead: {
-          gas: 21_000,
-          ethCost: 210_010,
-          usdCost: 2_100_100,
+        last90d: {
+          total: costBreakdown(3),
+          calldata: costBreakdown(3),
+          compute: costBreakdown(3),
+          overhead: costBreakdown([21_000 * 2, 3, 3]),
+          blobs: costBreakdown(3),
         },
       }
 
@@ -352,38 +363,79 @@ function getGasPriceETH(gasPrice: number) {
   return parseFloat((gasPriceGwei * 1e-9).toFixed(18))
 }
 
-function getMockDetailedTransactions(amount: number): DetailedTransaction[] {
+function getMockDetailedTransactions(
+  amount: number,
+  withBlobs: boolean = false,
+): DetailedTransaction[] {
   return range(amount).map((i) => {
+    let time = 0
+    switch (i) {
+      case 0:
+        time = 1
+        break
+      case 1:
+        time = 7
+        break
+      case 2:
+        time = 30
+        break
+      case 3:
+        time = 90
+        break
+      default:
+        break
+    }
+
     const base = {
-      timestamp: NOW.add(-i, 'hours'),
+      timestamp: NOW.add(-time, 'days'),
       calldataGasUsed: i + 1,
       computeGasUsed: i + 1,
-      totalGas: (i + 1) * 10,
-      gasCost: (i + 1) * 100,
-      calldataGasCost: (i + 1) * 10,
+      totalGas: i + 1,
+      gasCost: i + 1,
+      calldataGasCost: i + 1,
       computeGasCost: i + 1,
-      calldataGasCostUsd: (i + 1) * 100,
+      calldataGasCostUsd: i + 1,
       computeGasCostUsd: i + 1,
-      totalGasCost: (i + 1) * 10,
-      gasCostUsd: (i + 1) * 100,
-      totalGasCostUsd: (i + 1) * 10,
+      totalGasCost: i + 1,
+      gasCostUsd: i + 1,
+      totalGasCostUsd: i + 1,
       overheadGasUsed: 21_000 as const,
-      totalOverheadGasCost: (21_000 + 1) * 10,
-      totalOverheadGasCostUsd: (21_000 + 1) * 100,
+      totalOverheadGasCost: i + 1,
+      totalOverheadGasCostUsd: i + 1,
+      type: 2 as const,
     }
-    if (i % 2 === 0) {
+    if (withBlobs) {
       return {
         ...base,
-        type: 2,
-      }
-    } else {
-      return {
-        ...base,
-        type: 3,
+        type: 3 as const,
         blobGasCost: i + 1,
         blobGasCostUsd: i + 1,
         blobGasUsed: i + 1,
       }
     }
+    return base
   })
+}
+
+function costBreakdown(value: number | [number, number, number]) {
+  if (isArray(value)) {
+    return {
+      gas: value[0],
+      ethCost: value[1],
+      usdCost: value[2],
+    }
+  }
+  return {
+    gas: value,
+    ethCost: value,
+    usdCost: value,
+  }
+}
+
+const EMPTY_SUM = {
+  total: costBreakdown(0),
+  calldata: costBreakdown(0),
+  compute: costBreakdown(0),
+  overhead: costBreakdown(0),
+  blobs: costBreakdown(0),
 }
