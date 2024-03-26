@@ -34,13 +34,13 @@ export class BlockTimestampIndexer extends ChildIndexer {
     this.logger.debug('Started')
   }
 
-  override async update(_from: number, _to: number): Promise<number> {
+  override async update(from: number, to: number): Promise<number> {
     this.logger.debug('Updating...')
 
-    const timestamp = this.getTimestampToSync(_from)
+    const timestamp = this.getTimestampToSync(from)
 
-    if (timestamp.gt(new UnixTime(_to))) {
-      return _to
+    if (timestamp.gt(new UnixTime(to))) {
+      return to
     }
 
     const blockNumber =
@@ -66,6 +66,36 @@ export class BlockTimestampIndexer extends ChildIndexer {
     }
   }
 
+  override async initialize(): Promise<number> {
+    this.logger.debug('Initializing...')
+
+    const indexerState = await this.stateRepository.findIndexerState(
+      this.indexerId,
+    )
+
+    if (indexerState === undefined) {
+      const safeHeight = this.minTimestamp.toNumber() - 1
+      await this.stateRepository.add({
+        indexerId: this.indexerId,
+        safeHeight,
+        minTimestamp: this.minTimestamp,
+      })
+      return safeHeight
+    }
+
+    // We prevent updating the minimum timestamp of the indexer.
+    // This functionality can be added in the future if needed.
+    assert(
+      indexerState.minTimestamp &&
+        this.minTimestamp.equals(indexerState.minTimestamp),
+      'Minimum timestamp of this indexer cannot be updated',
+    )
+
+    this.logger.debug('Initialized')
+
+    return indexerState.safeHeight
+  }
+
   async getSafeHeight(): Promise<number> {
     const indexerState = await this.stateRepository.findIndexerState(
       this.indexerId,
@@ -80,38 +110,6 @@ export class BlockTimestampIndexer extends ChildIndexer {
     trx?: Knex.Transaction,
   ): Promise<void> {
     await this.stateRepository.setSafeHeight(this.indexerId, safeHeight, trx)
-  }
-
-  override async initialize(): Promise<number> {
-    await this.doInitialize()
-    return await this.getSafeHeight()
-  }
-
-  async doInitialize() {
-    this.logger.debug('Initializing...')
-
-    const indexerState = await this.stateRepository.findIndexerState(
-      this.indexerId,
-    )
-
-    if (indexerState === undefined) {
-      await this.stateRepository.add({
-        indexerId: this.indexerId,
-        safeHeight: this.minTimestamp.toNumber() - 1,
-        minTimestamp: this.minTimestamp,
-      })
-      return
-    }
-
-    // We prevent updating the minimum timestamp of the indexer.
-    // This functionality can be added in the future if needed.
-    assert(
-      indexerState.minTimestamp &&
-        this.minTimestamp.equals(indexerState.minTimestamp),
-      'Minimum timestamp of this indexer cannot be updated',
-    )
-
-    this.logger.debug('Initialized')
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
