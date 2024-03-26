@@ -365,10 +365,6 @@
       }
     },
     {
-      "name": "FflonkVerifier",
-      "values": {}
-    },
-    {
       "name": "GlobalExitRootV2",
       "values": {
         "bridgeAddress": {
@@ -789,6 +785,10 @@
       }
     },
     {
+      "name": "PolygonzkEVMVerifier",
+      "values": {}
+    },
+    {
       "name": "ProxyAdmin",
       "values": {
         "owner": {
@@ -842,6 +842,11 @@
           "type": null
         },
         "polygonZkEVM": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "scheduledTransactions": {
           "description": null,
           "severity": null,
           "type": null
