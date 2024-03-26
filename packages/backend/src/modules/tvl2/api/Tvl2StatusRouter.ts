@@ -63,14 +63,16 @@ export function createTvl2StatusRouter(
           clock,
         ),
         byChain: Object.fromEntries(
-          chainsConfig.map((c) => [
-            c.chain,
-            getDatapoints(
-              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-              [{ sinceTimestamp: c.config!.minBlockTimestamp }],
-              clock,
-            ),
-          ]),
+          chainsConfig
+            .sort((a, b) => a.chain.localeCompare(b.chain))
+            .map((c) => [
+              c.chain,
+              getDatapoints(
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                [{ sinceTimestamp: c.config!.minBlockTimestamp }],
+                clock,
+              ),
+            ]),
         ),
       },
       indexers: Object.fromEntries(
