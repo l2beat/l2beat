@@ -30,7 +30,6 @@ export class BlockTimestampIndexer extends ChildIndexer {
 
   override async start(): Promise<void> {
     this.logger.debug('Starting...')
-    await this.initialize()
     await super.start()
     this.logger.debug('Started')
   }
@@ -67,7 +66,7 @@ export class BlockTimestampIndexer extends ChildIndexer {
     }
   }
 
-  override async getSafeHeight(): Promise<number> {
+  async getSafeHeight(): Promise<number> {
     const indexerState = await this.stateRepository.findIndexerState(
       this.indexerId,
     )
@@ -83,7 +82,12 @@ export class BlockTimestampIndexer extends ChildIndexer {
     await this.stateRepository.setSafeHeight(this.indexerId, safeHeight, trx)
   }
 
-  async initialize() {
+  override async initialize(): Promise<number> {
+    await this.doInitialize()
+    return await this.getSafeHeight()
+  }
+
+  async doInitialize() {
     this.logger.debug('Initializing...')
 
     const indexerState = await this.stateRepository.findIndexerState(
