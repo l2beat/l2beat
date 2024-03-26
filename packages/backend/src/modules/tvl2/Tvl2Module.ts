@@ -102,9 +102,9 @@ export function createTvl2Module(
 
     await hourlyIndexer.start()
 
-    // for (const indexer of priceIndexers) {
-    //   await indexer.start()
-    // }
+    for (const indexer of priceIndexers) {
+      await indexer.start()
+    }
 
     for (const indexer of blockTimestampIndexers) {
       await indexer.start()
