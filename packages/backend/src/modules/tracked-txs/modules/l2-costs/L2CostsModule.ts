@@ -28,7 +28,7 @@ export function createL2CostsModule(
     config.projects,
     logger,
   )
-  const l2CostsRouter = createL2CostsRouter(l2CostsController)
+  const l2CostsRouter = createL2CostsRouter(l2CostsController, config.api)
 
   const l2CostsUpdater = new L2CostsUpdater(
     peripherals.getRepository(L2CostsRepository),
