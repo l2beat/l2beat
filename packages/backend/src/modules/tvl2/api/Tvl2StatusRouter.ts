@@ -1,13 +1,16 @@
 import Router from '@koa/router'
-import { notUndefined, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 
 import { Tvl2Config } from '../../../config/Config'
 import { Clock } from '../../../tools/Clock'
+import { BlockTimestampIndexer } from '../BlockTimestampIndexer'
+import { PriceIndexer } from '../PriceIndexer'
 import { getTargetDataPoints } from './getTargetDataPoints'
 
 export function createTvl2StatusRouter(
   { amounts, prices, chains }: Tvl2Config,
+  indexers: (PriceIndexer | BlockTimestampIndexer)[],
   clock: Clock,
 ) {
   const router = new Router()
@@ -25,22 +28,30 @@ export function createTvl2StatusRouter(
       prices: {
         entries: prices.length,
         datapoints: getDatapoints(prices, clock),
-        byType: Object.entries(pricesByType).map(([type, entries]) => ({
-          type,
-          entries: entries.length,
-          datapoints: getDatapoints(entries, clock),
-        })),
+        byType: Object.fromEntries(
+          Object.entries(pricesByType).map(([type, entries]) => [
+            type,
+            {
+              entries: entries.length,
+              datapoints: getDatapoints(entries, clock),
+            },
+          ]),
+        ),
       },
       amounts: {
         entries: amounts.length,
         datapoints: getDatapoints(amounts, clock),
         chains: Object.keys(amountsByChain).length,
         projects: Object.keys(amountsByProject).length,
-        byType: Object.entries(amountsByType).map(([type, entries]) => ({
-          type,
-          entries: entries.length,
-          datapoints: getDatapoints(entries, clock),
-        })),
+        byType: Object.fromEntries(
+          Object.entries(amountsByType).map(([type, entries]) => [
+            type,
+            {
+              entries: entries.length,
+              datapoints: getDatapoints(entries, clock),
+            },
+          ]),
+        ),
       },
       chains: {
         chains: chainsConfig.length,
@@ -51,15 +62,20 @@ export function createTvl2StatusRouter(
           })),
           clock,
         ),
-        byChain: chainsConfig.map((c) => ({
-          chain: c.chain,
-          datapoints: getDatapoints(
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            [{ sinceTimestamp: c.config!.minBlockTimestamp }],
-            clock,
-          ),
-        })),
+        byChain: Object.fromEntries(
+          chainsConfig.map((c) => [
+            c.chain,
+            getDatapoints(
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+              [{ sinceTimestamp: c.config!.minBlockTimestamp }],
+              clock,
+            ),
+          ]),
+        ),
       },
+      indexers: Object.fromEntries(
+        indexers.map((i) => [i.indexerId, i.safeHeight]),
+      ),
     }
   })
 

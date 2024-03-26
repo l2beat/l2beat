@@ -39,7 +39,6 @@ export function createTvl2Module(
   })
   const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
 
-  const statusRouter = createTvl2StatusRouter(config.tvl2, clock)
   const hourlyIndexer = new HourlyIndexer(logger, clock)
 
   const syncOptimizer = new SyncOptimizer(clock, {
@@ -96,6 +95,12 @@ export function createTvl2Module(
         syncOptimizer,
       )
     })
+
+  const statusRouter = createTvl2StatusRouter(
+    config.tvl2,
+    [...blockTimestampIndexers, ...priceIndexers],
+    clock,
+  )
 
   const start = async () => {
     logger = logger.for('Tvl2Module')
