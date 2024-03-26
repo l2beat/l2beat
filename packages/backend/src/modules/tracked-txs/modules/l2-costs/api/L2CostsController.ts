@@ -155,21 +155,29 @@ export class L2CostsController {
   }
 
   sumDetails(transactions: DetailedTransaction[]): SummedL2Costs {
-    return transactions.reduce<SummedL2Costs>((acc, tx) => {
-      if (tx.timestamp.gt(NOW.add(-1, 'days'))) {
-        addToAcc(acc, tx, 'last24h')
-      }
-      if (tx.timestamp.gt(NOW.add(-7, 'days'))) {
-        addToAcc(acc, tx, 'last7d')
-      }
-      if (tx.timestamp.gt(NOW.add(-30, 'days'))) {
-        addToAcc(acc, tx, 'last30d')
-      }
-      if (tx.timestamp.gt(NOW.add(-90, 'days'))) {
-        addToAcc(acc, tx, 'last90d')
-      }
-      return acc
-    }, structuredClone(L2COSTS_DETAILS_ACC))
+    return transactions.reduce<SummedL2Costs>(
+      (acc, tx) => {
+        if (tx.timestamp.gt(NOW.add(-1, 'days'))) {
+          addToAcc(acc, tx, 'last24h')
+        }
+        if (tx.timestamp.gt(NOW.add(-7, 'days'))) {
+          addToAcc(acc, tx, 'last7d')
+        }
+        if (tx.timestamp.gt(NOW.add(-30, 'days'))) {
+          addToAcc(acc, tx, 'last30d')
+        }
+        if (tx.timestamp.gt(NOW.add(-90, 'days'))) {
+          addToAcc(acc, tx, 'last90d')
+        }
+        return acc
+      },
+      {
+        last24h: structuredClone(L2COSTS_DETAILS),
+        last7d: structuredClone(L2COSTS_DETAILS),
+        last30d: structuredClone(L2COSTS_DETAILS),
+        last90d: structuredClone(L2COSTS_DETAILS),
+      },
+    )
   }
 
   async makeTransactionCalculations(
@@ -333,11 +341,4 @@ const L2COSTS_DETAILS = {
     ethCost: 0,
     usdCost: 0,
   },
-}
-
-const L2COSTS_DETAILS_ACC: SummedL2Costs = {
-  last24h: structuredClone(L2COSTS_DETAILS),
-  last7d: structuredClone(L2COSTS_DETAILS),
-  last30d: structuredClone(L2COSTS_DETAILS),
-  last90d: structuredClone(L2COSTS_DETAILS),
 }
