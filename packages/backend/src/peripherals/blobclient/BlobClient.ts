@@ -1,39 +1,68 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
+import { HttpClient } from '@l2beat/shared'
 import { utils } from 'ethers'
 import { z } from 'zod'
 
-import { RpcClient } from '../rpcclient/RpcClient'
+type BlobClientOptions = {
+  callsPerMinute: number | undefined
+  timeout: number | undefined
+}
 
 export class BlobClient {
+  timeout: number
+
   constructor(
     private readonly beaconApiUrl: string,
-    private readonly rpcClient: RpcClient,
+    private readonly rpcUrl: string,
+    private readonly httpClient: HttpClient,
     private readonly logger: Logger,
+    options: BlobClientOptions,
   ) {
-    this.logger = logger.for(this)
+    this.logger = this.logger.for(this)
+    this.timeout = options.timeout ?? 10_000
     const rateLimiter = new RateLimiter({
-      // TODO: should be configurable
-      callsPerMinute: 60,
+      callsPerMinute: options.callsPerMinute ?? 60,
     })
     this.call = rateLimiter.wrap(this.call.bind(this))
+    this.callRpc = rateLimiter.wrap(this.callRpc.bind(this))
+  }
+
+  static create(
+    services: {
+      httpClient: HttpClient
+      logger: Logger
+    },
+    options: {
+      beaconApiUrl: string
+      rpcUrl: string
+      callsPerMinute: number | undefined
+      timeout: number | undefined
+    },
+  ) {
+    return new BlobClient(
+      options.beaconApiUrl,
+      options.rpcUrl,
+      services.httpClient,
+      services.logger,
+      options,
+    )
   }
 
   async getRelevantBlobs(txHash: string) {
-    const tx = await this.rpcClient.getTransaction(txHash.toString())
-    const txWithBlobs = TxWithBlobsSchema.parse(tx)
+    const tx = await this.getTransaction(txHash.toString())
 
-    const blockSidecar = await this.getBlockSidecar(txWithBlobs.blockNumber)
-    const relevantBlobs = filterOutIrrelexant(
+    const blockSidecar = await this.getBlockSidecar(tx.blockNumber)
+    const relevantBlobs = filterOutIrrelevant(
       blockSidecar,
-      txWithBlobs.blobVersionedHashes,
+      tx.blobVersionedHashes,
     )
 
-    return relevantBlobs
+    return { relevantBlobs, blockNumber: tx.blockNumber }
   }
 
   private async getBlockSidecar(blockNumber: number) {
     const blockId = await this.getBeaconBlockId(blockNumber)
-    const endpoint = `/eth/v1/beacon/blob_sidecars/${blockId}`
+    const endpoint = `eth/v1/beacon/blob_sidecars/${blockId}`
 
     const response = await this.call(endpoint)
     const parsed = BlockSidecarSchema.parse(response)
@@ -44,27 +73,78 @@ export class BlobClient {
   private async call(endpoint: string) {
     const url = `${this.beaconApiUrl}${endpoint}`
 
-    const response = await fetch(url, {
+    const response = await this.httpClient.fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         accept: 'application/json',
       },
+      timeout: this.timeout,
     })
-    const json = await response.json()
+    const json = (await response.json()) as unknown
     return json
+  }
+
+  private async getTransaction(txHash: string) {
+    const result = await this.callRpc('eth_getTransactionByHash', [txHash])
+    const parsed = TxWithBlobsSchema.parse(result)
+
+    return {
+      blockNumber: Number(parsed.blockNumber),
+      blobVersionedHashes: parsed.blobVersionedHashes,
+    }
+  }
+
+  private async getBlock(blockNumber: number) {
+    this.logger.debug('Getting block ' + blockNumber, { blockNumber })
+    const result = await this.callRpc('eth_getBlockByNumber', [
+      blockNumber.toString(),
+      false,
+    ])
+    const parsed = BlockWithParentBeaconBlockRootSchema.safeParse(result)
+
+    if (!parsed.success) {
+      this.logger.error('Error downloading block', {
+        blockNumber,
+        error: parsed.error,
+        result,
+      })
+      throw parsed.error
+    }
+
+    return parsed.data
+  }
+
+  private async callRpc(method: string, params?: (string | boolean)[]) {
+    const id = Math.floor(Math.random() * 1000)
+    const response = await this.httpClient.fetch(this.rpcUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        id,
+        method,
+        params,
+      }),
+    })
+
+    const json = (await response.json()) as unknown
+    const parsed = RpcResultSchema.parse(json)
+    return parsed.result
   }
 
   // this is very hacky, but it's the only way i know to get the beacon block id
   // if you know a better way, please fix it
   private async getBeaconBlockId(blockNumber: number) {
-    const childBlock = await this.rpcClient.getBlock(blockNumber + 1)
+    const childBlock = await this.getBlock(blockNumber + 1)
     const parsedBlock = BlockWithParentBeaconBlockRootSchema.parse(childBlock)
     return parsedBlock.parentBeaconBlockRoot
   }
 }
 
-function filterOutIrrelexant(
+function filterOutIrrelevant(
   sidecarData: BlockSidecar['data'],
   relevantBlobVersionedHashes: string[],
 ) {
@@ -90,10 +170,14 @@ const BlockSidecarSchema = z.object({
 type BlockSidecar = z.infer<typeof BlockSidecarSchema>
 
 const TxWithBlobsSchema = z.object({
-  blockNumber: z.number(),
+  blockNumber: z.string(),
   blobVersionedHashes: z.array(z.string()),
 })
 
 const BlockWithParentBeaconBlockRootSchema = z.object({
   parentBeaconBlockRoot: z.string(),
+})
+
+const RpcResultSchema = z.object({
+  result: z.unknown(),
 })
