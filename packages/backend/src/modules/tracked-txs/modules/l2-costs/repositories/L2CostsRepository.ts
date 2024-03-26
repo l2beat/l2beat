@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { L2CostsRow } from 'knex/types/tables'
 
@@ -51,6 +51,22 @@ export class L2CostsRepository extends BaseRepository {
       .orderBy('timestamp', 'desc')
       .select()
     return rows.map((r) => toRecord(r))
+  }
+
+  async getByProjectAndTimeRange(
+    projectId: ProjectId,
+    timeRange: [UnixTime, UnixTime],
+  ): Promise<L2CostsRecord[]> {
+    const [from, to] = timeRange
+    const knex = await this.knex()
+    const rows = await knex('l2_costs as l')
+      .join('tracked_txs_configs as c', 'l.tracked_tx_id', 'c.id')
+      .where('c.project_id', projectId)
+      .andWhere('l.timestamp', '>=', from.toDate())
+      .andWhere('l.timestamp', '<', to.toDate())
+      .distinct('l.tx_hash')
+      .select('l.timestamp', 'l.tx_hash', 'l.tracked_tx_id', 'l.data')
+    return rows.map(toRecord)
   }
 
   async deleteFrom(

@@ -1,19 +1,19 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import { TrackedTxsConfigRecord } from '../../../repositories/TrackedTxsConfigsRepository'
-import { getLivenessSyncedUntil } from './getLivenessSyncedUntil'
+import { TrackedTxsConfigRecord } from '../../repositories/TrackedTxsConfigsRepository'
+import { getSyncedUntil } from './getSyncedUntil'
 
 const FROM = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
 
-describe(getLivenessSyncedUntil.name, () => {
+describe(getSyncedUntil.name, () => {
   it('returns undefined if no configurations', () => {
-    const result = getLivenessSyncedUntil([])
+    const result = getSyncedUntil([])
     expect(result).toEqual(undefined)
   })
 
   it('returns undefined if no lastSyncedTimestamp', () => {
-    const result = getLivenessSyncedUntil([
+    const result = getSyncedUntil([
       mockObject<TrackedTxsConfigRecord>({
         lastSyncedTimestamp: undefined,
         untilTimestampExclusive: undefined,
@@ -24,7 +24,7 @@ describe(getLivenessSyncedUntil.name, () => {
   })
 
   it('returns earliest lastSyncedTimestamp of configurations without untilTimestamp', () => {
-    const result = getLivenessSyncedUntil([
+    const result = getSyncedUntil([
       mockObject<TrackedTxsConfigRecord>({
         lastSyncedTimestamp: undefined,
         untilTimestampExclusive: undefined,
@@ -43,7 +43,7 @@ describe(getLivenessSyncedUntil.name, () => {
   })
 
   it('returns earliest lastSyncedTimestamp of configurations with untilTimestamp', () => {
-    const result = getLivenessSyncedUntil([
+    const result = getSyncedUntil([
       mockObject<TrackedTxsConfigRecord>({
         lastSyncedTimestamp: undefined,
         untilTimestampExclusive: undefined,
