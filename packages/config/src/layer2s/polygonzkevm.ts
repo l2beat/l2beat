@@ -617,7 +617,7 @@ export const polygonzkevm: Layer2 = {
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelayString)],
   },
   upgradesAndGovernance: `
-All main contracts are upgradable by the ${discovery.getMultisigStats('AdminMultisig')} \`AdminMultisig\` through a timelock that owns \`ProxyAdmin\`. Addresses of trusted sequencer, aggregator and operational parameters on the \`PolygonRollupManager\` can be instantly set by the \`AdminMultisig\`. Escrow contracts are upgradable by the \`EscrowsAdmin\` ${discovery.getMultisigStats('EscrowsAdmin')} multisig.
+All main contracts and the verifier are upgradable by the ${discovery.getMultisigStats('AdminMultisig')} \`AdminMultisig\` through a timelock that owns \`ProxyAdmin\`. Addresses of trusted sequencer, aggregator and operational parameters on the \`PolygonRollupManager\` can be instantly set by the \`AdminMultisig\`. Escrow contracts are upgradable by the \`EscrowsAdmin\` ${discovery.getMultisigStats('EscrowsAdmin')} multisig.
 
 \`PolygonZkEVMTimelock\` is a modified version of TimelockController that disables delay in case of a manually enabled or triggered emergency state in the \`PolygonRollupManager\`. It otherwise has a ${upgradeDelayString} delay. 
     
