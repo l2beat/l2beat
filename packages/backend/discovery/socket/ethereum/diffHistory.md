@@ -1,3 +1,71 @@
+Generated with discovered.json: 0x255f035589a4edd15c65708c90afa4cdecca5909
+
+# Diff at Fri, 22 Mar 2024 07:51:07 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@022e2fdbd062a978ff7ecc702973b614915f5846 block: 19483658
+- current block number: 19488785
+
+## Description
+
+More bridging fee changes.
+
+## Watched changes
+
+```diff
+    contract PolygonL1Switchboard (0x053407DFA30267f6332f3c94a9e9F704A55e62CD) {
+    +++ description: None
++++ description: Fee charged by the switchboard for processing a transaction
++++ severity: LOW
+      values.switchboardFees:
+-        5884471559011500
++        4244501643700500
++++ description: Fee charged for verifying transaction
++++ severity: LOW
+      values.verificationOverheadFees:
+-        3278655744000
++        824668780000
+    }
+```
+
+```diff
+    contract OptimismSwitchboard2 (0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA) {
+    +++ description: None
++++ description: Fee charged by the switchboard for processing a transaction
++++ severity: LOW
+      values.switchboardFees:
+-        5568057713790000
++        4307646578800500
++++ description: Fee charged for verifying transaction
++++ severity: LOW
+      values.verificationOverheadFees:
+-        340928172000
++        359338720000
+    }
+```
+
+```diff
+    contract OptimismSwitchboard (0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287) {
+    +++ description: None
++++ description: Fee charged by the switchboard for processing a transaction
++++ severity: LOW
+      values.switchboardFees:
+-        5568057713790000
++        3270848270917500
+    }
+```
+
+```diff
+    contract ArbitrumL1Switchboard (0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe) {
+    +++ description: None
++++ description: Fee charged by the switchboard for processing a transaction
++++ severity: LOW
+      values.switchboardFees:
+-        6280699596483000
++        4386707880087000
+    }
+```
+
 Generated with discovered.json: 0x9c077c8bf899c1f9ec86477b7bf996418783348f
 
 # Diff at Thu, 21 Mar 2024 14:34:30 GMT:

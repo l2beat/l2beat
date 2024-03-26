@@ -48,12 +48,12 @@ export class TrackedTxsIndexer extends ChildIndexer {
   }
 
   override async start(): Promise<void> {
-    await this.initialize()
     await super.start()
     this.logger.info('Started')
   }
 
   override async update(from: number, to: number): Promise<number> {
+    from -= 1 // TODO: refactor logic after uif update
     const { from: unixFrom, to: unixTo } = adjustRangeForBigQueryCall(from, to)
 
     const [configurations, syncTo] = await this.getConfigurationsToSync(
@@ -115,7 +115,12 @@ export class TrackedTxsIndexer extends ChildIndexer {
     return [configurationsToSync, syncTo]
   }
 
-  private async initialize(): Promise<void> {
+  override async initialize(): Promise<number> {
+    await this.doInitialize()
+    return await this.getSafeHeight()
+  }
+
+  private async doInitialize(): Promise<void> {
     const databaseEntries = await this.configRepository.getAll()
     const { toAdd, toRemove, toChangeUntilTimestamp } =
       diffTrackedTxConfigurations(this.configs, databaseEntries)
@@ -161,7 +166,7 @@ export class TrackedTxsIndexer extends ChildIndexer {
         )
 
         for (const updater of Object.values(this.enabledUpdaters)) {
-          await updater?.deleteAfter(c.id, c.untilTimestampExclusive, trx)
+          await updater?.deleteFrom(c.id, c.untilTimestampExclusive, trx)
         }
         await this.configRepository.setLastSyncedTimestamp(
           c.id,
@@ -206,7 +211,7 @@ export class TrackedTxsIndexer extends ChildIndexer {
     await this.setSafeHeight(safeHeight, trx)
   }
 
-  override async getSafeHeight(): Promise<number> {
+  async getSafeHeight(): Promise<number> {
     const indexerState = await this.stateRepository.findIndexerState(
       this.indexerId,
     )

@@ -45,9 +45,12 @@ describe(TrackedTxsIndexer.name, () => {
       const livenessUpdater = mockObject<TxUpdaterInterface>({
         update: mockFn(async () => {}),
       })
+      const l2CostsUpdater = mockObject<TxUpdaterInterface>({
+        update: mockFn(async () => {}),
+      })
       const mockedUpdaters = {
         liveness: livenessUpdater,
-        // TODO: (fees) while adding fees add a test for 2 updaters and check if it correctly filters txs
+        l2costs: l2CostsUpdater,
       }
 
       const trackedTxIndexer = getMockTrackedTxsIndexer({
@@ -60,7 +63,8 @@ describe(TrackedTxsIndexer.name, () => {
         await trackedTxIndexer.getConfigurationsToSync(from, to)
 
       const value = await trackedTxIndexer.update(
-        from.toNumber(),
+        // TODO: refactor tests after uif update
+        from.toNumber() + 1,
         to.toNumber(),
       )
 
@@ -71,7 +75,11 @@ describe(TrackedTxsIndexer.name, () => {
         syncTo,
       )
       expect(livenessUpdater.update).toHaveBeenOnlyCalledWith(
-        trackedTxResults,
+        [trackedTxResults[0], trackedTxResults[1]],
+        TRX,
+      )
+      expect(l2CostsUpdater.update).toHaveBeenOnlyCalledWith(
+        [trackedTxResults[2]],
         TRX,
       )
       expect(
@@ -102,7 +110,8 @@ describe(TrackedTxsIndexer.name, () => {
       )
 
       const value = await trackedTxsIndexer.update(
-        from.toNumber(),
+        // TODO: refactor tests after uif update
+        from.toNumber() + 1,
         to.toNumber(),
       )
 
@@ -184,7 +193,10 @@ describe(TrackedTxsIndexer.name, () => {
       const stateRepository = getMockStateRepository()
 
       const mockedLivenessUpdater = mockObject<TxUpdaterInterface>({
-        deleteAfter: mockFn(async () => {}),
+        deleteFrom: mockFn(async () => {}),
+      })
+      const mockedL2CostsUpdater = mockObject<TxUpdaterInterface>({
+        deleteFrom: mockFn(async () => {}),
       })
 
       const trackedTxsIndexer = getMockTrackedTxsIndexer({
@@ -193,6 +205,7 @@ describe(TrackedTxsIndexer.name, () => {
         configs: runtimeEntries,
         updaters: {
           liveness: mockedLivenessUpdater,
+          l2costs: mockedL2CostsUpdater,
         },
       })
 
@@ -222,7 +235,7 @@ describe(TrackedTxsIndexer.name, () => {
         toChangeUntilTimestamp[1].untilTimestampExclusive,
         TRX,
       )
-      expect(mockedLivenessUpdater.deleteAfter).toHaveBeenOnlyCalledWith(
+      expect(mockedLivenessUpdater.deleteFrom).toHaveBeenOnlyCalledWith(
         toChangeUntilTimestamp[1].id,
         toChangeUntilTimestamp[1].untilTimestampExclusive!,
         TRX,
@@ -378,6 +391,7 @@ function getMockTrackedTxsIndexer(params: {
     }),
     updaters ?? {
       liveness: mockObject<TxUpdaterInterface>({}),
+      l2costs: mockObject<TxUpdaterInterface>({}),
     },
     trackedTxsClient ?? mockObject<TrackedTxsClient>({}),
     stateRepository ?? mockObject<IndexerStateRepository>({}),
@@ -477,6 +491,11 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
         subtype: 'batchSubmissions',
         id: getMockRuntimeConfigurations()[0].uses[0].id,
       },
+      gasPrice: 10,
+      receiptGasUsed: 100,
+      transactionType: 2,
+      calldataGasUsed: 10,
+      dataLength: 5,
     },
     {
       type: 'transfer',
@@ -491,6 +510,30 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       fromAddress: EthereumAddress.random(),
       toAddress: EthereumAddress.random(),
       projectId: ProjectId('test2'),
+      gasPrice: 20,
+      receiptGasUsed: 200,
+      transactionType: 3,
+      calldataGasUsed: 0,
+      dataLength: 0,
+    },
+    {
+      type: 'transfer',
+      use: {
+        id: getMockRuntimeConfigurations()[1].uses[0].id,
+        type: 'l2costs',
+        subtype: 'stateUpdates',
+      },
+      blockNumber: 1,
+      blockTimestamp: UnixTime.now(),
+      hash: '',
+      fromAddress: EthereumAddress.random(),
+      toAddress: EthereumAddress.random(),
+      projectId: ProjectId('test2'),
+      gasPrice: 20,
+      receiptGasUsed: 200,
+      transactionType: 3,
+      calldataGasUsed: 0,
+      dataLength: 0,
     },
   ]
 }

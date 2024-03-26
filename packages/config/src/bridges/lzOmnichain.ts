@@ -22,7 +22,7 @@ export const lzOmnichain: Bridge = {
     name: 'Omnichain (LayerZero)',
     slug: 'omnichain',
     warning:
-      'The security parameters of each individual token must be individually assessed, and can be changed by the developers. Omnichain tokens are are in the early stages of development, use at your own risk.',
+      'The security parameters of each individual token must be individually assessed, and can be changed by the developers. Omnichain tokens are in the early stages of development, use at your own risk.',
     category: 'Token Bridge',
     links: {
       websites: ['https://layerzero.network/'],

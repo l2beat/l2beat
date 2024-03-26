@@ -5,7 +5,7 @@
   "initialAddresses": ["0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"],
   "names": {
     "0x10739F09f6e62689c0aA8A1878816de9e166d6f9": "ChainStorageContainer",
-    "0xf209815E595Cdf3ed0aAF9665b1772e608AB9380": "StateCommitmentChain",
+    "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6": "StateCommitmentChain",
     "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21": "Metis Multisig",
     "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e": "MToken"
   },

@@ -58,12 +58,14 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
       .filter(notUndefined)
   }
 
-  async getByProjectId(projectId: ProjectId) {
+  async getByProjectIdAndType(
+    projectId: ProjectId,
+    type: TrackedTxsConfigType,
+  ) {
     const knex = await this.knex()
-    const rows = await knex('tracked_txs_configs').where(
-      'project_id',
-      projectId.toString(),
-    )
+    const rows = await knex('tracked_txs_configs')
+      .where('project_id', projectId.toString())
+      .andWhere('type', type)
     return rows.map(toRecord)
   }
 

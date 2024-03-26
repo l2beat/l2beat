@@ -1,3 +1,152 @@
+Generated with discovered.json: 0x00e8f6fe2ff1e801c73b28ac65367c537e9b2588
+
+# Diff at Tue, 26 Mar 2024 10:19:30 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@e6ff14fa637ed6c3a674ff43e070f1cf65f4aa1e block: 19482562
+- current block number: 19517972
+
+## Description
+
+One new router is added by the Connext Fee Multisig. Ignore Fee Multisig nonce.
+
+## Watched changes
+
+```diff
+    contract ConnextBridge (0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6) {
+    +++ description: None
+      values.ROUTERS.27:
++        "0xc82C7d826b1eD0b2A4E9A2bE72B445416f901FD1"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19482562 (main branch discovery), not current.
+
+```diff
+    contract Connext Fee Multisig (0x7bE978Cc84612E08f7844672B0E6A6F367FE2b6A) {
+    +++ description: None
+      values.nonce:
+-        1
+    }
+```
+
+Generated with discovered.json: 0x2b9a2dbfa0e1df2aabd59731d5051595c6415516
+
+# Diff at Thu, 21 Mar 2024 10:53:07 GMT:
+
+- author: sekuba (<sekuba@users.noreply.githum.com>)
+- comparing to: main@3d626df8a3d129805d6a0f5894ea1a2e437970ee block: 19441852
+- current block number: 19482562
+
+## Description
+
+Add two routers and change the relayer fee vault from the Gnosis Safe (Multisig 2) to a different one.
+The new fee vault Multisig has a 1/5 threshold (old one 3/5) and only keeps 2 of the old signers.
+
+## Watched changes
+
+```diff
+    contract ConnextBridge (0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6) {
+    +++ description: None
++++ description: This address receives the bridge fees
++++ severity: LOW
+      values.relayerFeeVault:
+-        "0xf2964cCcB7CDA9e808aaBe8DB0DDDAF7890dd378"
++        "0x7bE978Cc84612E08f7844672B0E6A6F367FE2b6A"
+      values.ROUTERS.26:
++        "0xc770eC66052fe77ff2eF9edF9558236e2D1C41Ef"
+      values.ROUTERS.25:
++        "0x5f4E31F4F402E368743bF29954f80f7C4655EA68"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xf2964cCcB7CDA9e808aaBe8DB0DDDAF7890dd378)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Connext Fee Multisig (0x7bE978Cc84612E08f7844672B0E6A6F367FE2b6A)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../implementation/contracts/Safe.sol}             | 289 +++++++++++----------
+ .../implementation/contracts/SafeL2.sol            |  74 ++++++
+ .../implementation/contracts/base/Executor.sol     |  19 +-
+ .../contracts/base/FallbackManager.sol             |  82 ++++++
+ .../implementation/contracts/base/GuardManager.sol |  79 ++++++
+ .../contracts/base/ModuleManager.sol               | 191 ++++++++++++++
+ .../implementation/contracts/base/OwnerManager.sol |  96 ++++---
+ .../implementation/contracts/common/Enum.sol       |  13 +
+ .../common/NativeCurrencyPaymentFallback.sol       |  18 ++
+ .../contracts/common/SecuredTokenTransfer.sol      |  38 +++
+ .../contracts/common/SelfAuthorized.sol            |  18 ++
+ .../contracts/common/SignatureDecoder.sol          |  36 +++
+ .../implementation/contracts/common/Singleton.sol  |  13 +
+ .../contracts/common/StorageAccessible.sol         |  14 +-
+ .../contracts/external/SafeMath.sol}               |  28 +-
+ .../contracts/interfaces/IERC165.sol               |  15 ++
+ .../contracts/interfaces/ISignatureValidator.sol   |   6 +-
+ .../Connext Fee Multisig/implementation/meta.txt   |   2 +
+ .../proxy/contracts/proxies/SafeProxy.sol          |  50 ++++
+ .../.code/Connext Fee Multisig/proxy/meta.txt      |   2 +
+ .../implementation/contracts/GnosisSafe.sol        |   0
+ .../implementation/contracts/base/Executor.sol     |   0
+ .../contracts/base/FallbackManager.sol             |   0
+ .../implementation/contracts/base/GuardManager.sol |   0
+ .../contracts/base/ModuleManager.sol               |   0
+ .../implementation/contracts/base/OwnerManager.sol |   0
+ .../implementation/contracts/common/Enum.sol       |   0
+ .../contracts/common/EtherPaymentFallback.sol      |   0
+ .../contracts/common/SecuredTokenTransfer.sol      |   0
+ .../contracts/common/SelfAuthorized.sol            |   0
+ .../contracts/common/SignatureDecoder.sol          |   0
+ .../implementation/contracts/common/Singleton.sol  |   0
+ .../contracts/common/StorageAccessible.sol         |   0
+ .../contracts/external/GnosisSafeMath.sol          |   0
+ .../contracts/interfaces/ISignatureValidator.sol   |   0
+ .../GnosisSafe}/implementation/meta.txt            |   0
+ .../GnosisSafe}/proxy/Proxy.sol                    |   0
+ .../GnosisSafe}/proxy/meta.txt                     |   0
+ .../base/FallbackManager.sol => /dev/null          |  53 ----
+ .../contracts/base/GuardManager.sol => /dev/null   |  50 ----
+ .../contracts/base/ModuleManager.sol => /dev/null  | 133 ----------
+ .../contracts/common/Enum.sol => /dev/null         |   8 -
+ .../common/EtherPaymentFallback.sol => /dev/null   |  13 -
+ .../common/SecuredTokenTransfer.sol => /dev/null   |  35 ---
+ .../common/SelfAuthorized.sol => /dev/null         |  16 --
+ .../common/SignatureDecoder.sol => /dev/null       |  36 ---
+ .../contracts/common/Singleton.sol => /dev/null    |  11 -
+ .../implementation/meta.txt => /dev/null           |   2 -
+ .../proxy/GnosisSafeProxy.sol => /dev/null         | 155 -----------
+ .../proxy/meta.txt => /dev/null                    |   2 -
+ 50 files changed, 886 insertions(+), 711 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19441852 (main branch discovery), not current.
+
+```diff
+    contract Connext Multisig 2 (0xf2964cCcB7CDA9e808aaBe8DB0DDDAF7890dd378) {
+    +++ description: None
+      name:
+-        "Connext Multisig 2"
++        "GnosisSafe"
+    }
+```
+
 Generated with discovered.json: 0xb76dcd04bed4c034b382d58f57e071221946805c
 
 # Diff at Wed, 13 Mar 2024 08:08:25 GMT:

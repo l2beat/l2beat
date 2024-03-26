@@ -28,7 +28,7 @@
     "0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0": "AstarValidiumDAC",
     "0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d": "AstarValidiumAdmin",
     "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E": "AstarValidiumMultisig",
-    "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be": "PolygonzkEVMVerifier",
+    "0x0775e11309d75aA6b0967917fB0213C5673eDf81": "PolygonzkEVMVerifier",
     "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8": "AstarVerifier"
   },
   "overrides": {
@@ -60,7 +60,7 @@
           "type": "hardcoded",
           "value": 604800
         },
-        "nondeterminsiticPendingState": {
+        "nondeterministicPendingState": {
           "type": "stateFromEvent",
           "event": "ProveNonDeterministicPendingState",
           "returnParams": ["storedStateRoot", "provedStateRoot"]
@@ -71,6 +71,14 @@
           "startIndex": 1,
           "filter": ["rollupContract", "verifier"],
           "length": "{{ rollupCount }}"
+        },
+        "rollupTypes": {
+          "type": "array",
+          "method": "rollupTypeMap",
+          "startIndex": 1,
+          "length": "{{ rollupTypeCount }}",
+          "filter": ["consensusImplementation", "verifier"],
+          "ignoreRelative": true
         },
         "accessControl": {
           "type": "accessControl",
@@ -88,6 +96,12 @@
             "0x141f8f32ce6198eee741f695cec728bfd32d289f1acf73621fb303581000545e": "EMERGENCY_COUNCIL",
             "0x9b6f082d8d3644ae2f24a3c32e356d6f2d9b2844d9b26164fbc82663ff285951": "EMERGENCY_COUNCIL_ADMIN"
           }
+        },
+        "emergencyStateCount": {
+          "type": "eventCount",
+          "topics": [
+            "0x2261efe5aef6fedc1fd1550b25facc9181745623049c7901287030b9ad1a5497"
+          ]
         }
       }
     },
@@ -102,6 +116,13 @@
       "fields": {
         "accessControl": {
           "type": "accessControl"
+        },
+        "scheduledTransactions": {
+          "type": "stateFromEvent",
+          "event": "CallScheduled",
+          "returnParams": ["id", "target", "value", "data", "delay"],
+          "onlyValue": true,
+          "ignoreRelative": true
         }
       }
     },
@@ -128,11 +149,7 @@
       "fields": {}
     },
     "wstETHBridge": {
-      "ignoreRelatives": [
-        "claimecounterpartContract",
-        "originTokenAddress",
-        "wrappedTokenAddress"
-      ],
+      "ignoreRelatives": ["originTokenAddress", "wrappedTokenAddress"],
       "ignoreMethods": ["proxiableUUID", "getStETHByWstETH", "getWstETHByStETH"]
     },
     "usdcBridge": {

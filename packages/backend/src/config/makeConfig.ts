@@ -122,6 +122,19 @@ export function makeConfig(
       minTimestamp: UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
       uses: {
         liveness: flags.isEnabled('tracked-txs', 'liveness'),
+        l2costs: flags.isEnabled('tracked-txs', 'l2costs') && {
+          ethereumProviderUrl: env.string([
+            'ETHEREUM_RPC_URL_FOR_L2COSTS',
+            'ETHEREUM_RPC_URL',
+          ]),
+          ethereumProviderCallsPerMinute: env.integer(
+            [
+              'ETHEREUM_RPC_CALLS_PER_MINUTE_FOR_L2COSTS',
+              'ETHEREUM_RPC_CALLS_PER_MINUTE',
+            ],
+            600,
+          ),
+        },
       },
     },
     finality: flags.isEnabled('finality') && {

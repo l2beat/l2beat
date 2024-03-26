@@ -14,13 +14,13 @@ import { Clock } from '../../../../../tools/Clock'
 import { TaskQueue } from '../../../../../tools/queue/TaskQueue'
 import { TrackedTxsConfigsRepository } from '../../../repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsConfig } from '../../../types/TrackedTxsConfig'
+import { getSyncedUntil } from '../../utils/getSyncedUntil'
 import { LivenessRepository } from '../repositories/LivenessRepository'
 import { calculateAnomalies } from './calculateAnomalies'
 import {
   calcIntervalWithAvgsPerProject,
   LivenessRecordWithInterval,
 } from './calculateIntervalWithAverages'
-import { getLivenessSyncedUntil } from './getLivenessSyncedUntil'
 import { groupByType } from './groupByType'
 
 type LivenessResult =
@@ -118,9 +118,12 @@ export class LivenessController {
       }
 
       const configurations =
-        await this.trackedTxsConfigsRepository.getByProjectId(project.projectId)
+        await this.trackedTxsConfigsRepository.getByProjectIdAndType(
+          project.projectId,
+          'liveness',
+        )
 
-      const syncedUntil = getLivenessSyncedUntil(configurations)
+      const syncedUntil = getSyncedUntil(configurations)
       if (!syncedUntil) {
         continue
       }

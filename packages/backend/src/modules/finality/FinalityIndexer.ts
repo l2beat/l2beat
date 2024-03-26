@@ -39,11 +39,11 @@ export class FinalityIndexer extends ChildIndexer {
 
   override async start(): Promise<void> {
     this.logger.info('Starting...')
-    await this.initialize()
     await super.start()
   }
 
   override async update(from: number, to: number): Promise<number> {
+    from -= 1 // TODO: refactor logic after uif update
     const targetTimestamp = new UnixTime(to).toStartOf('day')
 
     if (to < this.configuration.minTimestamp.toNumber()) {
@@ -112,8 +112,9 @@ export class FinalityIndexer extends ChildIndexer {
     }
   }
 
-  private async initialize() {
+  override async initialize(): Promise<number> {
     await this.initializeIndexerState()
+    return await this.getSafeHeight()
   }
 
   async initializeIndexerState() {
@@ -134,7 +135,7 @@ export class FinalityIndexer extends ChildIndexer {
     await this.setSafeHeight(safeHeight)
   }
 
-  override async getSafeHeight(): Promise<number> {
+  async getSafeHeight(): Promise<number> {
     const indexerState = await this.stateRepository.findIndexerState(
       this.indexerId,
     )

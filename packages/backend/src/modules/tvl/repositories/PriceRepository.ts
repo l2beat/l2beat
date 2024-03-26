@@ -108,6 +108,25 @@ export class PriceRepository extends BaseRepository {
       rows.map((row) => [AssetId(row.asset_id), UnixTime.fromDate(row.max)]),
     )
   }
+
+  async findByTimestampRange(
+    assetId: AssetId,
+    from: UnixTime,
+    to: UnixTime,
+  ): Promise<Map<number, number>> {
+    const knex = await this.knex()
+    const rows = await knex('coingecko_prices')
+      .where('unix_timestamp', '>=', from.toDate())
+      .andWhere('unix_timestamp', '<=', to.toDate())
+      .andWhere('asset_id', assetId.toString())
+
+    return new Map(
+      rows.map((row) => [
+        UnixTime.fromDate(row.unix_timestamp).toNumber(),
+        row.price_usd,
+      ]),
+    )
+  }
 }
 
 function toRecord(row: PriceRow): PriceRecord {

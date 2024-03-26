@@ -1,0 +1,265 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "AccessControlSegregator",
+      "values": {
+        "GRANT_ACCESS_SIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "role_Withdraw": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "role_changeAccessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "role_changeFeeHandler": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "role_endKeyGen": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "role_grantAccess": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "role_pauseTransfers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "role_refreshKey": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "role_retry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "role_setBurnable": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "role_setDepositNonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "role_setForwarder": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "role_setResource": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "role_startKeyGen": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "role_unpauseTransfers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Admin Multisig",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "BasicFeeHandler",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "_bridgeAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "_feeHandlerRouterAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Bridge",
+      "values": {
+        "_MPCAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "_accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "_domainID": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "_feeHandler": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "handler1": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "handler2": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Community Multisig",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ERC20 Bridge Handler",
+      "values": {
+        "_bridgeAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultDecimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "FeeHandlerRouter",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "_bridgeAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Permissionless Generic Handler",
+      "values": {
+        "MAX_FEE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "_bridgeAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}

@@ -537,6 +537,11 @@
           "severity": null,
           "type": null
         },
+        "emergencyStateCount": {
+          "description": "The emergency state has been activated, meaning that the upgrade delay is now zero.",
+          "severity": "HIGH",
+          "type": "RISK_PARAMETER"
+        },
         "getBatchFee": {
           "description": null,
           "severity": null,
@@ -567,7 +572,7 @@
           "severity": null,
           "type": null
         },
-        "nondeterminsiticPendingState": {
+        "nondeterministicPendingState": {
           "description": null,
           "severity": null,
           "type": null
@@ -591,6 +596,11 @@
           "description": "The number of unique rollup types that the manager can use.",
           "severity": "MEDIUM",
           "type": "CODE_CHANGE"
+        },
+        "rollupTypes": {
+          "description": null,
+          "severity": null,
+          "type": null
         },
         "rollupsData": {
           "description": "Mapping of a rollup type to rollup verifier. Different types may use the same verifier. First entry is a type, second a verifier.",
@@ -667,11 +677,6 @@
           "severity": null,
           "type": null
         },
-        "SET_UP_ETROG_TX": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "SIGNATURE_INITIALIZE_TX_R": {
           "description": null,
           "severity": null,
@@ -683,6 +688,11 @@
           "type": null
         },
         "SIGNATURE_INITIALIZE_TX_V": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TIMESTAMP_RANGE": {
           "description": null,
           "severity": null,
           "type": null
@@ -775,6 +785,10 @@
       }
     },
     {
+      "name": "PolygonzkEVMVerifier",
+      "values": {}
+    },
+    {
       "name": "ProxyAdmin",
       "values": {
         "owner": {
@@ -828,6 +842,11 @@
           "type": null
         },
         "polygonZkEVM": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "scheduledTransactions": {
           "description": null,
           "severity": null,
           "type": null

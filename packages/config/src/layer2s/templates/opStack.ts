@@ -65,6 +65,7 @@ export interface OpStackConfig {
     upgradeDelay: string | undefined
   }
   l1StandardBridgeEscrow: EthereumAddress
+  l1StandardBridgeTokens?: string[]
   rpcUrl?: string
   transactionApi?: Layer2TransactionApi
   genesisTimestamp: UnixTime
@@ -141,7 +142,7 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
         }),
         templateVars.discovery.getEscrowDetails({
           address: templateVars.l1StandardBridgeEscrow,
-          tokens: '*',
+          tokens: templateVars.l1StandardBridgeTokens ?? '*',
           description:
             'Main entry point for users depositing ERC20 token that do not require custom gateway.',
           ...templateVars.upgradeability,
@@ -164,7 +165,10 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
           ? undefined
           : [
               {
-                uses: [{ type: 'liveness', subtype: 'batchSubmissions' }],
+                uses: [
+                  { type: 'liveness', subtype: 'batchSubmissions' },
+                  { type: 'l2costs', subtype: 'batchSubmissions' },
+                ],
                 query: {
                   formula: 'transfer',
                   from: sequencerAddress,
@@ -173,7 +177,10 @@ export function opStack(templateVars: OpStackConfig): Layer2 {
                 },
               },
               {
-                uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
+                uses: [
+                  { type: 'liveness', subtype: 'stateUpdates' },
+                  { type: 'l2costs', subtype: 'stateUpdates' },
+                ],
                 query: {
                   formula: 'functionCall',
                   address: templateVars.l2OutputOracle.address,
