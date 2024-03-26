@@ -358,6 +358,11 @@
           "description": null,
           "severity": null,
           "type": null
+        },
+        "scheduledTransactions": {
+          "description": null,
+          "severity": null,
+          "type": null
         }
       }
     }

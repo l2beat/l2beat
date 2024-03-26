@@ -73,6 +73,13 @@
       "fields": {
         "accessControl": {
           "type": "accessControl"
+        },
+        "scheduledTransactions": {
+          "type": "stateFromEvent",
+          "event": "CallScheduled",
+          "returnParams": ["id", "target", "value", "data", "delay"],
+          "onlyValue": true,
+          "ignoreRelative": true
         }
       }
     },
