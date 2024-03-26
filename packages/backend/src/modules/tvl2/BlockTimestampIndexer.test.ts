@@ -28,6 +28,7 @@ describe(BlockTimestampIndexer.name, () => {
 
       const syncOptimizer = mockObject<SyncOptimizer>({
         shouldTimestampBeSynced: mockFn()
+          .returnsOnce(false) // 21:00
           .returnsOnce(false) // 22:00
           .returnsOnce(false) // 23:00
           .returnsOnce(true), // 00:00

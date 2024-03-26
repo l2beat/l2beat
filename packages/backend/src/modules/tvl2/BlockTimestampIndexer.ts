@@ -58,21 +58,13 @@ export class BlockTimestampIndexer extends ChildIndexer {
   }
 
   private getTimestampToSync(_from: number): UnixTime {
-    const nextTimestamp = this.getNextTimestamp(_from)
+    const timestamp = new UnixTime(_from).toEndOf('hour')
 
-    if (this.syncOptimizer.shouldTimestampBeSynced(nextTimestamp)) {
-      return nextTimestamp
+    if (this.syncOptimizer.shouldTimestampBeSynced(timestamp)) {
+      return timestamp
     } else {
-      return this.getTimestampToSync(nextTimestamp.toNumber())
+      return this.getTimestampToSync(timestamp.add(1, 'hours').toNumber())
     }
-  }
-
-  private getNextTimestamp(_from: number): UnixTime {
-    if (_from === 0) {
-      return this.minTimestamp.toEndOf('hour')
-    }
-
-    return new UnixTime(_from).toNext('hour')
   }
 
   override async getSafeHeight(): Promise<number> {
