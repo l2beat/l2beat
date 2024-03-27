@@ -201,7 +201,7 @@ describe('tokens', () => {
         .map((token) => token.bridgedUsing?.slug)
       const bridgesSlugs = bridges.map((bridge) => bridge.display.slug)
       const invalidSlugs = tokenSlugs.filter(
-        (slug) => !bridgesSlugs.includes(slug),
+        (slug) => !bridgesSlugs.includes(slug!),
       )
 
       expect(invalidSlugs).toHaveLength(0)
