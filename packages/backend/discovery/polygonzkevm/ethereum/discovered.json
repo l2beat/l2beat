@@ -1,7 +1,7 @@
 {
   "name": "polygonzkevm",
   "chain": "ethereum",
-  "blockNumber": 19518217,
+  "blockNumber": 19525935,
   "configHash": "0xfa26ff24b518955569a6e7bbc8733bfc6d75789245071db31363848d523500f2",
   "version": 3,
   "contracts": [
@@ -88,7 +88,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0x39b36cad3bc06fe457eca4df41db2271b02ec3a0fe0dfdfcc93e268be98b7893",
+        "lastAccInputHash": "0x5e2f2bf8f1825e129e5ea72bc70f16a00fcd9ed6e41e3503916c1d70662c1c25",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "Astar zkEVM",
@@ -141,7 +141,7 @@
         "gasTokenAddress": "0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
-        "getRoot": "0x7e87714c9e91fcd3e193430add49f35147813e24835eef7fc7d2303ac50d21ec",
+        "getRoot": "0xbfaa0144069abc8893af80930593e518a0ab68e9b643cf87661f72ea4f3d928f",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
@@ -321,10 +321,10 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0xc11d359205f01302026efe71a507a6ff2d4a9451e79b26790569f16b3c2a7c6e",
+        "getRollupExitRoot": "0x2cd9a966b5bd521ca7fb90eb3454a79b5d11a13150ba54862f1dfa076d0a2577",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
-        "lastAggregationTimestamp": 1711450379,
+        "lastAggregationTimestamp": 1711545899,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "nondeterministicPendingState": [],
         "pendingStateTimeout": 432000,
@@ -355,8 +355,8 @@
             "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
           ]
         ],
-        "totalSequencedBatches": 25746,
-        "totalVerifiedBatches": 25490,
+        "totalSequencedBatches": 27195,
+        "totalVerifiedBatches": 26774,
         "trustedAggregatorTimeout": 432000,
         "verifyBatchTimeTarget": 1800
       },
@@ -390,7 +390,7 @@
         "INITIALIZE_TX_CONSTANT_BYTES_EMPTY_METADATA": 31,
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
-        "lastAccInputHash": "0xb135ac023bf1daf5451dfafe454f4d5bab71582fdd2effe70b449d451e2b840e",
+        "lastAccInputHash": "0x933b4af161fc31c3336927a087fd30cb4c13ce53672985b2081c2f0f6486dcb5",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "polygon zkEVM",
@@ -418,8 +418,8 @@
       "sinceTimestamp": 1679653151,
       "values": {
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 5614,
-        "getRoot": "0x0f08541f3de7cef4da1a53e4f507084fb0df266819d94dd9a3ace3bcb5379c5d",
+        "depositCount": 5771,
+        "getRoot": "0xdfa2e60cf00f96b23f35e579832d311d661d6a3c716f28cb53c5986690ea2a7d",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "derivedName": "PolygonZkEVMGlobalExitRootV2"
