@@ -10,6 +10,7 @@ import {
 } from '../../../../components/tooltip/Tooltip'
 import { cn } from '../../../../utils/cn'
 import { formatPercent } from '../../../../utils/utils'
+import { ValueWithDisplayValue } from '../../../types'
 import { CostsData, CostsDataBreakdown, CostsDataDetails } from '../types'
 type TableCellType = keyof CostsDataDetails
 
@@ -81,16 +82,33 @@ function Cell({ details, className, type }: CellProps) {
   return (
     <div className={className}>
       <span className="hidden group-data-[unit=ETH]/costs-cell:inline">
-        {details[type]?.ethCost.displayValue}
+        <SmallNumberCell>{detailsData.ethCost}</SmallNumberCell>
       </span>
       <span className="hidden group-data-[unit=USD]/costs-cell:inline">
-        {details[type]?.usdCost.displayValue}
+        <SmallNumberCell>{detailsData.usdCost}</SmallNumberCell>
       </span>
       <span className="hidden group-data-[unit=GAS]/costs-cell:inline">
-        {details[type]?.gas.displayValue}
+        <SmallNumberCell>{detailsData.gas}</SmallNumberCell>
       </span>
     </div>
   )
+}
+
+function SmallNumberCell({ children }: { children: ValueWithDisplayValue }) {
+  if (children.displayValue.startsWith('~')) {
+    return (
+      <Tooltip>
+        <TooltipTrigger>{children.displayValue}</TooltipTrigger>
+        <TooltipContent>
+          <span className="text-xs font-medium">
+            {children.value.toFixed(15)}
+          </span>
+        </TooltipContent>
+      </Tooltip>
+    )
+  }
+
+  return children.displayValue
 }
 
 function CostsBreakdownTooltip({ details }: CellProps) {
