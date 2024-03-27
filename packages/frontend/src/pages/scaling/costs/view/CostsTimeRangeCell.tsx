@@ -115,10 +115,10 @@ function CostsBreakdownTooltip({ details }: CellProps) {
   return (
     <>
       <Tooltip className="hidden group-data-[unit=ETH]/costs-cell:block">
-        <TooltipTrigger className="text-right">
-          <span className="text-lg font-semibold">
+        <TooltipTrigger className="flex flex-col items-end">
+          <div className="text-lg font-semibold">
             {details.total.ethCost.displayValue}
-          </span>
+          </div>
           <CostsBreakdown
             blobs={details.blobs?.ethCost.value}
             calldata={details.calldata.ethCost.value}
@@ -131,7 +131,7 @@ function CostsBreakdownTooltip({ details }: CellProps) {
         </TooltipContent>
       </Tooltip>
       <Tooltip className="hidden group-data-[unit=USD]/costs-cell:block">
-        <TooltipTrigger className="text-right">
+        <TooltipTrigger className="flex flex-col items-end">
           <span className="text-lg font-semibold">
             {details.total.usdCost.displayValue}
           </span>
@@ -147,7 +147,7 @@ function CostsBreakdownTooltip({ details }: CellProps) {
         </TooltipContent>
       </Tooltip>
       <Tooltip className="hidden group-data-[unit=GAS]/costs-cell:block">
-        <TooltipTrigger className="text-right">
+        <TooltipTrigger className="flex flex-col items-end">
           <span className="text-lg font-semibold">
             {details.total.gas.displayValue}
           </span>
