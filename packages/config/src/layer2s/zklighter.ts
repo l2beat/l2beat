@@ -7,7 +7,7 @@ export const zklighter: Layer2 = upcoming({
     name: 'zkLighter',
     slug: 'zklighter',
     description:
-      'zkLighter is an efficient order book L2 on Ethereum - low cost, low latency, verifiable matching.',
+      'zkLighter is an efficient order book Validium on Ethereum - low cost, low latency, verifiable matching.',
     purposes: ['DeFi'],
     category: 'Validium',
     provider: 'ZK Stack',
