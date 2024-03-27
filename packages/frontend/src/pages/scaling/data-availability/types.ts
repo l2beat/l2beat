@@ -4,10 +4,15 @@ import {
   ScalingProjectPurpose,
   StageConfig,
 } from '@l2beat/config'
-import { TvlApiResponse, ValueWithSentiment } from '@l2beat/shared-pure'
+import {
+  ImplementationChangeReportApiResponse,
+  TvlApiResponse,
+  ValueWithSentiment,
+} from '@l2beat/shared-pure'
 
 export interface DataAvailabilityPagesData {
   tvlApiResponse: TvlApiResponse
+  implementationChange?: ImplementationChangeReportApiResponse
 }
 
 export interface ScalingDataAvailabilityViewEntry {
@@ -17,6 +22,7 @@ export interface ScalingDataAvailabilityViewEntry {
   category: ScalingProjectCategory
   provider: Layer2Provider | undefined
   warning: string | undefined
+  hasImplementationChanged?: boolean
   redWarning: string | undefined
   purposes: ScalingProjectPurpose[]
   stage: StageConfig

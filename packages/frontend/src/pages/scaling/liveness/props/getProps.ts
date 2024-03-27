@@ -1,4 +1,8 @@
-import { LivenessApiResponse, TvlApiResponse } from '@l2beat/shared-pure'
+import {
+  ImplementationChangeReportApiResponse,
+  LivenessApiResponse,
+  TvlApiResponse,
+} from '@l2beat/shared-pure'
 
 import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
@@ -10,6 +14,7 @@ import { getScalingLivenessView } from './getScalingLivenessView'
 export interface LivenessPagesData {
   tvlApiResponse: TvlApiResponse
   livenessApiResponse: LivenessApiResponse
+  implementationChange?: ImplementationChangeReportApiResponse
 }
 
 export function getProps(

@@ -19,6 +19,10 @@ export function getScalingRiskView(
         getScalingRiskViewEntry(
           p,
           pagesData.verificationStatus.projects[p.id.toString()],
+          Object.prototype.hasOwnProperty.call(
+            pagesData.implementationChange?.projects,
+            p.id.toString(),
+          ),
         ),
       ),
   }
@@ -27,6 +31,7 @@ export function getScalingRiskView(
 export function getScalingRiskViewEntry(
   project: Layer2,
   isVerified?: boolean,
+  hasImplementationChanged?: boolean,
 ): ScalingRiskViewEntry {
   return {
     name: project.display.name,
@@ -35,6 +40,7 @@ export function getScalingRiskViewEntry(
     provider: project.display.provider,
     purposes: project.display.purposes,
     warning: project.display.warning,
+    hasImplementationChanged,
     redWarning: project.display.redWarning,
     isArchived: project.isArchived,
     showProjectUnderReview: isAnySectionUnderReview(project),

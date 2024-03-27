@@ -2,6 +2,7 @@ import { Layer2 } from '@l2beat/config'
 import {
   ActivityApiChart,
   ActivityApiResponse,
+  ImplementationChangeReportApiResponse,
   VerificationStatus,
 } from '@l2beat/shared-pure'
 
@@ -21,12 +22,18 @@ export function getScalingActivityView(
   projects: Layer2[],
   pagesData: ActivityPagesData,
 ): ScalingActivityViewProps {
-  const { activityApiResponse, verificationStatus } = pagesData
+  const { activityApiResponse, verificationStatus, implementationChange } =
+    pagesData
 
   const included = getIncludedProjects(projects)
   const items = [
     ...included.map((x) =>
-      getScalingActivityViewEntry(x, activityApiResponse, verificationStatus),
+      getScalingActivityViewEntry(
+        x,
+        activityApiResponse,
+        verificationStatus,
+        implementationChange,
+      ),
     ),
     getEthereumActivityViewEntry(activityApiResponse),
   ]
@@ -42,9 +49,14 @@ export function getScalingActivityViewEntry(
   project: Layer2,
   activityApiResponse: ActivityApiResponse,
   verificationStatus: VerificationStatus,
+  implementationChange?: ImplementationChangeReportApiResponse,
 ): ActivityViewEntry {
   const data = activityApiResponse.projects[project.id.toString()]?.daily.data
   const isVerified = verificationStatus.projects[project.id.toString()]
+  const hasImplementationChanged = Object.prototype.hasOwnProperty.call(
+    implementationChange?.projects,
+    project.id.toString(),
+  )
 
   return {
     name: project.display.name,
@@ -55,6 +67,7 @@ export function getScalingActivityViewEntry(
     warning: project.display.warning,
     redWarning: project.display.redWarning,
     purposes: project.display.purposes,
+    hasImplementationChanged,
     isVerified,
     showProjectUnderReview: isAnySectionUnderReview(project),
     dataSource: project.display.activityDataSource,

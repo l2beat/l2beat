@@ -1,5 +1,8 @@
 import { Layer2 } from '@l2beat/config'
-import { TvlApiResponse } from '@l2beat/shared-pure'
+import {
+  ImplementationChangeReportApiResponse,
+  TvlApiResponse,
+} from '@l2beat/shared-pure'
 
 import { orderByTvl } from '../../../../utils/orderByTvl'
 import { getTokens } from '../../../../utils/project/getChart'
@@ -13,12 +16,21 @@ import { ScalingTvlViewProps } from '../view/ScalingTvlView'
 export function getScalingTvlView(
   projects: Layer2[],
   tvlApiResponse: TvlApiResponse,
+  implementationChange: ImplementationChangeReportApiResponse | undefined,
 ): ScalingTvlViewProps {
   const orderedProjects = orderByTvl(projects, tvlApiResponse)
 
   return {
     items: orderedProjects.map((project) =>
-      getScalingTvlViewEntry(tvlApiResponse, project),
+      getScalingTvlViewEntry(
+        tvlApiResponse,
+        project,
+        undefined,
+        Object.prototype.hasOwnProperty.call(
+          implementationChange?.projects,
+          project.id.toString(),
+        ),
+      ),
     ),
   }
 }
@@ -27,6 +39,7 @@ function getScalingTvlViewEntry(
   tvlApiResponse: TvlApiResponse,
   project: Layer2,
   isVerified?: boolean,
+  hasImplementationChanged?: boolean,
 ): ScalingTvlViewEntry {
   const projectData = tvlApiResponse.projects[project.id.toString()]
   const charts = projectData?.charts
@@ -39,6 +52,7 @@ function getScalingTvlViewEntry(
     category: project.display.category,
     provider: project.display.provider,
     purposes: project.display.purposes,
+    hasImplementationChanged,
     riskValues: getRiskValues(project.riskView),
     warning: project.display.warning,
     redWarning: project.display.redWarning,
