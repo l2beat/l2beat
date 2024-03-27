@@ -40,6 +40,7 @@ export class AmountRepository extends BaseRepository {
     return rows.length
   }
 
+  // POC for the architecture with joins, if it won't be needed - remove it
   async getByProjectAndTimestamp(
     projectId: ProjectId,
     timestamp: UnixTime,
