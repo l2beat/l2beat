@@ -1,21 +1,27 @@
 import { formatLargeNumber } from './formatLargeNumber'
 
 export function formatCurrency(value: number, currency: string) {
-  const num = formatLargeNumber(value)
-  const isRoundedToZero = num === '0.00' && value !== 0
-
+  let num
   let result
 
   switch (currency) {
-    case 'usd':
+    case 'usd': {
+      num = formatLargeNumber(value)
       result = `$${num}`
       break
-    case 'eth':
+    }
+    case 'eth': {
+      num = formatLargeNumber(value, 4)
       result = `Ξ${num}`
       break
-    default:
+    }
+    default: {
+      num = formatLargeNumber(value)
       result = `${num} ${currency.toUpperCase()}`
+    }
   }
+
+  const isRoundedToZero = num === '0.00' && value !== 0
 
   return isRoundedToZero ? `~${result}` : result
 }
