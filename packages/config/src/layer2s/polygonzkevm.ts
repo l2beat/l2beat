@@ -1,8 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import {
-  FORCE_TRANSACTIONS,
-  FRONTRUNNING_RISK,
   NEW_CRYPTOGRAPHY,
   NUGGETS,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -157,36 +155,6 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
       references: [
         {
           text: 'PolygonZkEVMEtrog.sol - Etherscan source code, sequenceBatches function',
-          href: 'https://etherscan.io/address/0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
-        },
-      ],
-    },
-    operator: {
-      name: 'The system has a centralized sequencer',
-      description:
-        'Only a trusted sequencer is allowed to submit transaction batches. A mechanism for users to submit their own batches is currently disabled.',
-      risks: [
-        FRONTRUNNING_RISK,
-        {
-          category: 'Funds can be frozen if',
-          text: 'the sequencer refuses to include an exit transaction.',
-          isCritical: true,
-        },
-      ],
-      references: [
-        {
-          text: 'PolygonZkEVMEtrog.sol - Etherscan source code, onlyTrustedSequencer modifier',
-          href: 'https://etherscan.io/address/0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
-        },
-      ],
-    },
-    forceTransactions: {
-      ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
-      description:
-        'The mechanism for allowing users to submit their own transactions is currently disabled.',
-      references: [
-        {
-          text: 'PolygonZkEVMEtrog.sol - Etherscan source code, forceBatchAddress address',
           href: 'https://etherscan.io/address/0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
         },
       ],

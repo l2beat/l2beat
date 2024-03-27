@@ -409,13 +409,24 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
             isCritical: true,
           },
         ],
-        references: [],
+        references: [
+          {
+            text: `${templateVars.rollupModuleContract.name}.sol - Etherscan source code, onlyTrustedSequencer modifier`,
+            href: `https://etherscan.io/address/${safeGetImplementation(templateVars.rollupModuleContract)}`,
+          },
+        ],
       },
       forceTransactions: templateVars.nonTemplateTechnology
         ?.forceTransactions ?? {
         ...FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM,
         description:
           'The mechanism for allowing users to submit their own transactions is currently disabled.',
+        references: [
+          {
+            text: `${templateVars.rollupModuleContract.name}.sol - Etherscan source code, forceBatchAddress address`,
+            href: `https://etherscan.io/address/${safeGetImplementation(templateVars.rollupModuleContract)}`,
+          },
+        ],
       },
       exitMechanisms: templateVars.nonTemplateTechnology?.exitMechanisms ?? [
         {
@@ -482,6 +493,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
           templateVars.rollupModuleContract.name,
           {
             description: `The main contract of the ${templateVars.display.name}. Contains sequenced transaction batch hashes and forced transaction logic.`,
+            ...upgradeability,
           },
         ),
         templateVars.discovery.getContractDetails(
