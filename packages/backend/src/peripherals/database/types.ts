@@ -1,4 +1,6 @@
 import { TransactionData } from '../../modules/tracked-txs/modules/l2-costs/types/TransactionData'
+import { AmountConfigurationRow } from '../../modules/tvl2/repositories/AmountConfigurationRepository'
+import { AmountRow } from '../../modules/tvl2/repositories/AmountRepository'
 
 export {}
 
@@ -233,6 +235,8 @@ declare module 'knex/types/tables' {
     l2_costs: L2CostsRow
     prices: PriceRow2
     block_timestamps: BlockTimestampRow
+    amounts: AmountRow
+    amounts_configurations: AmountConfigurationRow
   }
 }
 
