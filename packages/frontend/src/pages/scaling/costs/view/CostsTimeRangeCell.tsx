@@ -132,9 +132,9 @@ function CostsBreakdownTooltip({ details }: CellProps) {
       </Tooltip>
       <Tooltip className="hidden group-data-[unit=USD]/costs-cell:block">
         <TooltipTrigger className="flex flex-col items-end">
-          <span className="text-lg font-semibold">
+          <div className="text-lg font-semibold">
             {details.total.usdCost.displayValue}
-          </span>
+          </div>
           <CostsBreakdown
             blobs={details.blobs?.usdCost.value}
             calldata={details.calldata.usdCost.value}
@@ -148,9 +148,9 @@ function CostsBreakdownTooltip({ details }: CellProps) {
       </Tooltip>
       <Tooltip className="hidden group-data-[unit=GAS]/costs-cell:block">
         <TooltipTrigger className="flex flex-col items-end">
-          <span className="text-lg font-semibold">
+          <div className="text-lg font-semibold">
             {details.total.gas.displayValue}
-          </span>
+          </div>
           <CostsBreakdown
             blobs={details.blobs?.gas.value}
             calldata={details.calldata.gas.value}
