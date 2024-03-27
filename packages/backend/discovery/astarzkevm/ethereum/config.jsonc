@@ -2,9 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
   "chain": "ethereum",
   "name": "astarzkevm",
-  "initialAddresses": [
-    "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
-  ],
+  "initialAddresses": ["0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"],
   "names": {
     "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2": "PolygonRollupManager",
     "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe": "Bridge",
