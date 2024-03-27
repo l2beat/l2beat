@@ -1,11 +1,12 @@
 import { Layer2 } from '@l2beat/config'
-import { assert, notUndefined } from '@l2beat/shared-pure'
-
 import {
+  assert,
   L2CostsApiProject,
   L2CostsApiResponse,
   L2CostsDetails,
-} from '../../../../build/api/DELETE_THIS_FILE'
+  notUndefined,
+} from '@l2beat/shared-pure'
+
 import { formatLargeNumber } from '../../../../utils'
 import { formatCurrency } from '../../../../utils/format'
 import { orderByTvl } from '../../../../utils/orderByTvl'
@@ -59,11 +60,18 @@ function getScalingCostsViewEntry(
 }
 
 function getCostsData(l2CostsProjectData: L2CostsApiProject): CostsData {
+  const { last24h, last7d, last30d, last90d } = l2CostsProjectData
+  if (!last24h || !last7d || !last30d || !last90d) {
+    throw new Error(
+      'One of the last24h, last7d, last30d or last90d is undefined',
+    )
+  }
+
   return {
-    last24h: getDataDetails(l2CostsProjectData.last24h),
-    last7d: getDataDetails(l2CostsProjectData.last7d),
-    last30d: getDataDetails(l2CostsProjectData.last30d),
-    last90d: getDataDetails(l2CostsProjectData.last90d),
+    last24h: getDataDetails(last24h),
+    last7d: getDataDetails(last7d),
+    last30d: getDataDetails(last30d),
+    last90d: getDataDetails(last90d),
   }
 }
 

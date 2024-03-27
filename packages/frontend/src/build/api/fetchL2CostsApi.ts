@@ -1,12 +1,12 @@
-import { UnixTime } from '@l2beat/shared-pure'
-
-import { JsonHttpClient } from '../caching/JsonHttpClient'
-import { Config } from '../config'
 import {
   L2CostsApiProject,
   L2CostsApiResponse,
   L2CostsDetails,
-} from './DELETE_THIS_FILE'
+  UnixTime,
+} from '@l2beat/shared-pure'
+
+import { JsonHttpClient } from '../caching/JsonHttpClient'
+import { Config } from '../config'
 
 export async function fetchL2CostsApi(
   backend: Config['backend'],

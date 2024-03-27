@@ -5,12 +5,12 @@ import {
   ScalingProjectPurpose,
   StageConfig,
 } from '@l2beat/config'
-import { TvlApiResponse } from '@l2beat/shared-pure'
-
 import {
   L2CostsApiProject,
   L2CostsApiResponse,
-} from '../../../build/api/DELETE_THIS_FILE'
+  TvlApiResponse,
+} from '@l2beat/shared-pure'
+
 import { ValueWithDisplayValue } from '../../types'
 
 export interface CostsPagesData {
@@ -39,7 +39,7 @@ export type CostsData = {
 export type CostsDataDetails = {
   total: CostsDataBreakdown
   calldata: CostsDataBreakdown
-  blobs?: CostsDataBreakdown
+  blobs: CostsDataBreakdown | undefined
   compute: CostsDataBreakdown
   overhead: CostsDataBreakdown
 }

@@ -2,6 +2,7 @@ import {
   ActivityApiResponse,
   DiffHistoryApiResponse,
   FinalityApiResponse,
+  L2CostsApiResponse,
   LivenessApiResponse,
   ManuallyVerifiedContracts,
   ProjectAssetsBreakdownApiResponse,
@@ -9,8 +10,6 @@ import {
   VerificationStatus,
 } from '@l2beat/shared-pure'
 import { ReactElement } from 'react'
-
-import { L2CostsApiResponse } from '../build/api/DELETE_THIS_FILE'
 
 export interface Page {
   slug: string
