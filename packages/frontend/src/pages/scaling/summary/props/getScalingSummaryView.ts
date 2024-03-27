@@ -33,20 +33,14 @@ export function getScalingSummaryView(
         tvlApiResponse,
         tvl,
         verificationStatus.projects[project.id.toString()],
-        Object.prototype.hasOwnProperty.call(
-          implementationChange?.projects,
-          project.id.toString(),
-        ),
+        !!implementationChange?.projects[project.id.toString()],
       ),
     ),
     layer3s: layer3s.map((project) =>
       getScalingL3SummaryEntry(
         project,
         verificationStatus.projects[project.id.toString()],
-        Object.prototype.hasOwnProperty.call(
-          implementationChange?.projects,
-          project.id.toString(),
-        ),
+        !!implementationChange?.projects[project.id.toString()],
       ),
     ),
   }

@@ -37,10 +37,8 @@ function getScalingLivenessViewEntry(
   implementationChange?: ImplementationChangeReportApiResponse,
 ): ScalingLivenessViewEntry {
   const liveness = livenessResponse.projects[project.id.toString()]
-  const hasImplementationChanged = Object.prototype.hasOwnProperty.call(
-    implementationChange?.projects,
-    project.id.toString(),
-  )
+  const hasImplementationChanged =
+    !!implementationChange?.projects[project.id.toString()]
   if (!liveness) {
     throw new Error(
       `Liveness data not found for project ${project.display.name}`,

@@ -19,10 +19,7 @@ export function getScalingRiskView(
         getScalingRiskViewEntry(
           p,
           pagesData.verificationStatus.projects[p.id.toString()],
-          Object.prototype.hasOwnProperty.call(
-            pagesData.implementationChange?.projects,
-            p.id.toString(),
-          ),
+          !!pagesData.implementationChange?.projects[p.id.toString()],
         ),
       ),
   }

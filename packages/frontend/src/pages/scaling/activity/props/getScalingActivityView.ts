@@ -53,10 +53,8 @@ export function getScalingActivityViewEntry(
 ): ActivityViewEntry {
   const data = activityApiResponse.projects[project.id.toString()]?.daily.data
   const isVerified = verificationStatus.projects[project.id.toString()]
-  const hasImplementationChanged = Object.prototype.hasOwnProperty.call(
-    implementationChange?.projects,
-    project.id.toString(),
-  )
+  const hasImplementationChanged =
+    !!implementationChange?.projects[project.id.toString()]
 
   return {
     name: project.display.name,

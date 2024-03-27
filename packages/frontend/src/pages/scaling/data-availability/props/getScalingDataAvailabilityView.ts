@@ -21,10 +21,7 @@ export function getScalingDataAvailabilityView(
       .map((p) =>
         getScalingDataAvailabilityViewEntry(
           p,
-          Object.prototype.hasOwnProperty.call(
-            pagesData.implementationChange?.projects,
-            p.id.toString(),
-          ),
+          !!pagesData.implementationChange?.projects[p.id.toString()],
         ),
       )
       .filter(notUndefined),

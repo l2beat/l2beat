@@ -28,10 +28,7 @@ export function getScalingFinalityView(
         getScalingFinalityViewEntry(
           project,
           finalityApiResponse.projects[project.id.toString()],
-          Object.prototype.hasOwnProperty.call(
-            implementationChange?.projects,
-            project.id.toString(),
-          ),
+          !!implementationChange?.projects[project.id.toString()],
         ),
       )
       .filter(notUndefined),

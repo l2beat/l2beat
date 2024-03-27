@@ -26,10 +26,7 @@ export function getScalingTvlView(
         tvlApiResponse,
         project,
         undefined,
-        Object.prototype.hasOwnProperty.call(
-          implementationChange?.projects,
-          project.id.toString(),
-        ),
+        !!implementationChange?.projects[project.id.toString()],
       ),
     ),
   }
