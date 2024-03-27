@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
-import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+// import { Database } from '../../../peripherals/database/Database'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   BaseRepository,
@@ -11,24 +12,28 @@ export interface AmountConfigurationRow {
   id: number
   project_id: string
   indexer_id: string
-  chain: string
+  source: string
   address: string
   origin: string
   type: string
   include_in_total: boolean
   escrow_address: string | null
+  since_timestamp_inclusive: Date
+  until_timestamp_exclusive: Date | null
 }
 
 export interface AmountConfigurationRecord {
   id: number
   projectId: ProjectId
   indexerId: string
-  chain: string
+  source: string
   address: EthereumAddress | 'native'
   origin: 'canonical' | 'external' | 'native'
   type: 'totalSupply' | 'circulatingSupply' | 'escrow'
   includeInTotal: boolean
   escrowAddress?: EthereumAddress
+  sinceTimestampInclusive: UnixTime
+  untilTimestampExclusive?: UnixTime
 }
 
 export class AmountConfigurationRepository extends BaseRepository {
@@ -73,12 +78,14 @@ function toRow(
   return {
     project_id: row.projectId.toString(),
     indexer_id: row.indexerId,
-    chain: row.chain,
+    source: row.source,
     address: row.address === 'native' ? 'native' : row.address.toString(),
     origin: row.origin,
     type: row.type,
     include_in_total: row.includeInTotal,
     escrow_address: row.escrowAddress?.toString() ?? null,
+    since_timestamp_inclusive: row.sinceTimestampInclusive.toDate(),
+    until_timestamp_exclusive: row.untilTimestampExclusive?.toDate() ?? null,
   }
 }
 
@@ -87,18 +94,22 @@ function toRecord(row: AmountConfigurationRow): AmountConfigurationRecord {
     id: row.id,
     projectId: ProjectId(row.project_id),
     indexerId: row.indexer_id,
-    chain: row.chain,
+    source: row.source,
     address: row.address === 'native' ? 'native' : EthereumAddress(row.address),
+    ...(row.escrow_address
+      ? { escrowAddress: EthereumAddress(row.escrow_address) }
+      : {}),
     origin: row.origin as 'canonical' | 'external' | 'native',
     type: row.type as 'totalSupply' | 'circulatingSupply' | 'escrow',
     includeInTotal: row.include_in_total,
-  }
-
-  if (row.escrow_address) {
-    return {
-      ...r,
-      escrowAddress: EthereumAddress(row.escrow_address),
-    }
+    sinceTimestampInclusive: UnixTime.fromDate(row.since_timestamp_inclusive),
+    ...(row.until_timestamp_exclusive
+      ? {
+          untilTimestampExclusive: UnixTime.fromDate(
+            row.until_timestamp_exclusive,
+          ),
+        }
+      : {}),
   }
 
   return r

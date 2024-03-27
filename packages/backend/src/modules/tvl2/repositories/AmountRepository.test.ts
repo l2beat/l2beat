@@ -156,11 +156,12 @@ function mock(
   return {
     projectId: ProjectId('project'),
     indexerId: 'indexer',
-    chain: 'chain',
+    source: 'chain',
     address: EthereumAddress.ZERO,
     origin: 'native',
     type: 'circulatingSupply',
     includeInTotal: true,
+    sinceTimestampInclusive: UnixTime.ZERO,
     ...record,
   }
 }

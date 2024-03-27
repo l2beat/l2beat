@@ -76,8 +76,8 @@ export class AmountRepository extends BaseRepository {
       .where('indexer_id', indexerId)
 
     return await knex('amounts')
-      .where('timestamp', '>', timestamp.toDate())
       .whereIn('configuration_id', subquery)
+      .where('timestamp', '>', timestamp.toDate())
       .delete()
   }
 
@@ -123,10 +123,21 @@ function toRecordWithMetadata(
 
     projectId: ProjectId(row.project_id),
     indexerId: row.indexer_id,
-    chain: row.chain,
+    source: row.source,
     address: row.address === 'native' ? 'native' : EthereumAddress(row.address),
+    ...(row.escrow_address
+      ? { escrowAddress: EthereumAddress(row.escrow_address) }
+      : {}),
     origin: row.origin as 'canonical' | 'external' | 'native',
     type: row.type as 'totalSupply' | 'circulatingSupply' | 'escrow',
     includeInTotal: row.include_in_total,
+    sinceTimestampInclusive: UnixTime.fromDate(row.since_timestamp_inclusive),
+    ...(row.until_timestamp_exclusive
+      ? {
+          untilTimestampExclusive: UnixTime.fromDate(
+            row.until_timestamp_exclusive,
+          ),
+        }
+      : {}),
   }
 }
