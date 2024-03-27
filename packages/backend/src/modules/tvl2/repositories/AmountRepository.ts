@@ -63,6 +63,23 @@ export class AmountRepository extends BaseRepository {
     return rows.map(toRecordWithMetadata)
   }
 
+  async deleteAfterExclusiveByIndexerId(
+    indexerId: string,
+    timestamp: UnixTime,
+  ) {
+    const knex = await this.knex()
+
+    const subquery = knex
+      .select('id')
+      .from('amounts_configurations')
+      .where('indexer_id', indexerId)
+
+    return await knex('amounts')
+      .where('timestamp', '>', timestamp.toDate())
+      .whereIn('configuration_id', subquery)
+      .delete()
+  }
+
   // #region methods used only in tests
 
   async getAll(): Promise<AmountRecord[]> {

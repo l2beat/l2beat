@@ -17,11 +17,13 @@ describeDatabase(AmountRepository.name, (database) => {
   const repository = new AmountRepository(database, Logger.SILENT)
 
   let IDS: number[] = []
+  const INDEXER = 'test_indexer'
 
   beforeEach(async () => {
     IDS = await configurationRepository.addMany([
       mock({
         projectId: ProjectId.ARBITRUM,
+        indexerId: INDEXER,
       }),
       mock(),
     ])
@@ -94,12 +96,42 @@ describeDatabase(AmountRepository.name, (database) => {
 
     expect(result).toHaveLength(1)
     expect(result[0]).toEqual({
-      ...mock({ projectId: ProjectId.ARBITRUM }),
+      ...mock({ projectId: ProjectId.ARBITRUM, indexerId: INDEXER }),
       configurationId: IDS[0],
       timestamp: new UnixTime(0),
       amount: 111n,
     })
   })
+
+  it(
+    AmountRepository.prototype.deleteAfterExclusiveByIndexerId.name,
+    async () => {
+      const records = [
+        {
+          configurationId: IDS[0],
+          timestamp: new UnixTime(0),
+          amount: 111n,
+        },
+        {
+          configurationId: IDS[0],
+          timestamp: new UnixTime(1),
+          amount: 222n,
+        },
+        {
+          configurationId: IDS[1],
+          timestamp: new UnixTime(0),
+          amount: 333n,
+        },
+      ]
+      await repository.addMany(records)
+
+      await repository.deleteAfterExclusiveByIndexerId(INDEXER, new UnixTime(0))
+
+      const result = await repository.getAll()
+
+      expect(result).toEqual([records[0], records[2]])
+    },
+  )
 
   it(AmountRepository.prototype.deleteAll.name, async () => {
     await repository.addMany([
