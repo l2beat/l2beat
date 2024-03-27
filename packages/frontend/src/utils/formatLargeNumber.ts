@@ -3,11 +3,18 @@ const units = ['', 'K', 'M', 'B', 'T']
 const HAIR_SPACE = '\u200a'
 
 export function formatLargeNumber(value: number): string {
-  if (value === 0) {
+  if (value === 0 || (value < 0.01 && value > -0.01)) {
     return '0.00'
-  } else if (value < 0) {
+  }
+
+  if (value < 0) {
     return `-${formatLargeNumber(-value)}`
   }
+
+  if (value < 1) {
+    return value.toFixed(2)
+  }
+
   const str = Math.floor(value * 100).toString()
   for (const [i, unit] of units.entries()) {
     if (str.length <= 4 + i * 3) {

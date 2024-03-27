@@ -5,6 +5,11 @@ import { formatLargeNumber } from './formatLargeNumber'
 describe(formatLargeNumber.name, () => {
   const cases = [
     { value: 0, expected: '0.00' },
+    { value: 0.009, expected: '0.00', negativeExpected: '0.00' },
+    { value: 0.01, expected: '0.01' },
+    { value: 0.19, expected: '0.19' },
+    { value: 0.99, expected: '0.99' },
+    { value: 1.001, expected: '1.00' },
     { value: 1, expected: '1.00' },
     { value: 1.337, expected: '1.33' },
     { value: 1.331, expected: '1.33' },
@@ -42,13 +47,13 @@ describe(formatLargeNumber.name, () => {
   })
 
   describe('negative', () => {
-    for (const { value, expected } of cases) {
+    for (const { value, expected, negativeExpected } of cases) {
       if (value === 0) {
         continue
       }
-      it(`formats ${-value} as -${expected}`, () => {
+      it(`formats ${-value} as -${negativeExpected ?? expected}`, () => {
         const result = formatLargeNumber(-value)
-        expect(result).toEqual('-' + expected)
+        expect(result).toEqual(negativeExpected ?? '-' + expected)
       })
     }
   })
