@@ -1,3 +1,42 @@
+Generated with discovered.json: 0x475808ab9e3368af47973a7354b8d9d6416be7b1
+
+# Diff at Wed, 27 Mar 2024 07:21:47 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@d53834b65ee1cdf52eb5d460179c975873642177 block: 19467922
+- current block number: 19524156
+
+## Description
+
+Blast is manually blacklisting three addresses for deposits in this implementation change of the OptimismPortal.
+One of them is labeled 'Munchables exploiter' on etherscan.
+(0x6E8836F050A315611208A5CD7e228701563D09c5, 0xc207Fa4b17cA710BA53F06fEFF56ca9d315915B7, 0xbf9ad762DBaE603BC8FC79DFD3Fb26f2b9740E87)
+
+The only other change is that a YIELD_CONTRACT_ADDRESS is introduced to a null address in constants.sol.
+
+## Watched changes
+
+```diff
+    contract OptimismPortal (0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0xd7bfDa9B3b014b16bada89F206607a8Ac7c6FB32"
++        "0xA280aEBF81c917DbD2aA1b39f979dfECEc9e4391"
+      implementations.0:
+-        "0xd7bfDa9B3b014b16bada89F206607a8Ac7c6FB32"
++        "0xA280aEBF81c917DbD2aA1b39f979dfECEc9e4391"
+    }
+```
+
+## Source code changes
+
+```diff
+.../OptimismPortal/implementation/meta.txt                          | 2 +-
+ .../OptimismPortal/implementation/src/L1/OptimismPortal.sol         | 6 ++++++
+ .../OptimismPortal/implementation/src/libraries/Constants.sol       | 2 ++
+ 3 files changed, 9 insertions(+), 1 deletion(-)
+```
+
 Generated with discovered.json: 0xcfae335c90cdabe1d8ccbbe0768f35c7cebc867e
 
 # Diff at Tue, 19 Mar 2024 09:33:27 GMT:
