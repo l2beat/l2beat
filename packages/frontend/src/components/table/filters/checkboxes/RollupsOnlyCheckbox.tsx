@@ -1,15 +1,15 @@
 import React from 'react'
 
-import { ScalingEntry } from '../../../../pages/scaling/types'
+import { ScalingFiltersEntry } from '../../../../pages/scaling/types'
 import { Checkbox } from '../../../Checkbox'
 import { generateSlugList } from '../FiltersWrapper'
 
-export interface RollupsOnlyCheckboxProps<T extends ScalingEntry> {
+export interface RollupsOnlyCheckboxProps<T extends ScalingFiltersEntry> {
   items: T[]
   className?: string
 }
 
-export function RollupsOnlyCheckbox<T extends ScalingEntry>({
+export function RollupsOnlyCheckbox<T extends ScalingFiltersEntry>({
   className,
   items,
 }: RollupsOnlyCheckboxProps<T>) {

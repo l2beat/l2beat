@@ -16,3 +16,5 @@ export type ScalingEntry =
   | ScalingFinalityViewEntry
   | ScalingDataAvailabilityViewEntry
   | ScalingCostsViewEntry
+
+export type ScalingFiltersEntry = Exclude<ScalingEntry, ScalingCostsViewEntry>

@@ -3,7 +3,7 @@ import uniq from 'lodash/uniq'
 import React, { ReactElement } from 'react'
 
 import { ScalingL2SummaryViewEntry } from '../../../pages/scaling/summary/types'
-import { ScalingEntry } from '../../../pages/scaling/types'
+import { ScalingFiltersEntry } from '../../../pages/scaling/types'
 import { OverflowWrapper } from '../../OverflowWrapper'
 import { RichSelect, RichSelectProps } from '../../RichSelect'
 import { RollupsOnlyCheckbox } from './checkboxes/RollupsOnlyCheckbox'
@@ -11,7 +11,7 @@ import { FiltersWrapper, generateSlugList } from './FiltersWrapper'
 
 interface Props {
   children?: ReactElement<RichSelectProps>
-  items: ScalingEntry[]
+  items: ScalingFiltersEntry[]
   hideRollupsOnlyCheckbox?: boolean
 }
 
