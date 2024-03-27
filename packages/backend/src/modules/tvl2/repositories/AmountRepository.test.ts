@@ -23,7 +23,6 @@ describeDatabase(AmountRepository.name, (database) => {
   })
 
   afterEach(async () => {
-    await repository.deleteAll()
     await configurationRepository.deleteAll()
   })
 
