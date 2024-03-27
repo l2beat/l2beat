@@ -1,4 +1,4 @@
-import { EXITS, NEW_CRYPTOGRAPHY, NUGGETS, RISK_VIEW } from '../common'
+import { NEW_CRYPTOGRAPHY, RISK_VIEW } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { polygonCDKStack } from './templates/polygonCDKStack'
 import { Layer2 } from './types'
@@ -94,17 +94,6 @@ export const astarzkevm: Layer2 = polygonCDKStack({
     newCryptography: {
       ...NEW_CRYPTOGRAPHY.ZK_BOTH,
     },
-    exitMechanisms: [
-      {
-        ...EXITS.REGULAR('zk', 'merkle proof'),
-        references: [
-          {
-            text: 'PolygonZkEvmBridgeV2.sol - Etherscan source code, claimAsset function',
-            href: 'https://etherscan.io/address/0x0feb850b183c57534b56b7d56520133c8f9bdb65',
-          },
-        ],
-      },
-    ],
   },
   stateDerivation: {
     nodeSoftware:
@@ -130,11 +119,5 @@ export const astarzkevm: Layer2 = polygonCDKStack({
         'Astar Network launched Astar zkEVM, integrated with Polygon AggLayer.',
     },
   ],
-  knowledgeNuggets: [
-    {
-      title: 'State diffs vs raw tx data',
-      url: 'https://twitter.com/krzKaczor/status/1641505354600046594',
-      thumbnail: NUGGETS.THUMBNAILS.L2BEAT_03,
-    },
-  ],
+  knowledgeNuggets: [],
 })

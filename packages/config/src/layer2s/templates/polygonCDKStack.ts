@@ -331,16 +331,13 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
           {
             contract: templateVars.rollupManagerContract.name,
             references: [
-              'https://etherscan.io/address/0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
+              `https://etherscan.io/address/${safeGetImplementation(templateVars.rollupManagerContract)}`,
             ],
           },
         ],
       },
       dataAvailability: {
         ...riskViewDA(daProvider),
-        description:
-          riskViewDA(daProvider).description +
-          ' Unlike most ZK rollups transactions are posted instead of state diffs.',
         sources: [
           {
             contract: templateVars.rollupModuleContract.name,
@@ -368,8 +365,8 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
           {
             contract: templateVars.rollupManagerContract.name,
             references: [
-              'https://etherscan.io/address/0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
-              'https://etherscan.io/address/0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
+              `https://etherscan.io/address/${safeGetImplementation(templateVars.rollupManagerContract)}`,
+              `https://etherscan.io/address/${safeGetImplementation(templateVars.rollupManagerContract)}`,
             ],
           },
         ],
@@ -416,7 +413,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
         references: [
           {
             text: 'PolygonRollupManager.sol - Etherscan source code, _verifyAndRewardBatches function',
-            href: 'https://etherscan.io/address/0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
+            href: `https://etherscan.io/address/${safeGetImplementation(templateVars.rollupManagerContract)}`,
           },
         ],
       },
@@ -444,15 +441,15 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
           'The mechanism for allowing users to submit their own transactions is currently disabled.',
       },
       exitMechanisms: templateVars.nonTemplateTechnology?.exitMechanisms ?? [
-      {
-        ...EXITS.REGULAR('zk', 'merkle proof'),
-        references: [
-          {
-            text: 'PolygonZkEvmBridgeV2.sol - Etherscan source code, claimAsset function',
-            href: 'https://etherscan.io/address/0x0feb850b183c57534b56b7d56520133c8f9bdb65',
-          },
-        ],
-      },
+        {
+          ...EXITS.REGULAR('zk', 'merkle proof'),
+          references: [
+            {
+              text: 'PolygonZkEvmBridgeV2.sol - Etherscan source code, claimAsset function',
+              href: `https://etherscan.io/address/${safeGetImplementation(bridge)}`,
+            },
+          ],
+        },
       ],
     },
     stateDerivation: templateVars.stateDerivation,
@@ -563,7 +560,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       references: [
         {
           text: 'State injections - stateRoot and exitRoot are part of the validity proof input.',
-          href: 'https://etherscan.io/address/0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2',
+          href: `https://etherscan.io/address/${safeGetImplementation(templateVars.rollupManagerContract)}`,
         },
       ],
       risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelayString)],
@@ -584,7 +581,14 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
 }
 
 function riskViewDA(DA: DAProvider | undefined): ScalingProjectRiskViewEntry {
-  return DA === undefined ? RISK_VIEW.DATA_ON_CHAIN : DA.riskView
+  return DA === undefined
+    ? {
+        ...RISK_VIEW.DATA_ON_CHAIN,
+        description:
+          RISK_VIEW.DATA_ON_CHAIN.description +
+          ' Unlike most ZK rollups transactions are posted instead of state diffs.',
+      }
+    : DA.riskView
 }
 
 function technologyDA(
@@ -595,4 +599,12 @@ function technologyDA(
   }
 
   return TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA
+}
+
+function safeGetImplementation(contract: ContractParameters): string {
+  const implementation = contract.implementations?.[0]
+  if (!implementation) {
+    throw new Error(`No implementation found for ${contract.name}`)
+  }
+  return implementation.toString()
 }

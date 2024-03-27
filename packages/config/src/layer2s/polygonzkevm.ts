@@ -1,7 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import {
-  EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
   NEW_CRYPTOGRAPHY,
@@ -161,17 +160,6 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
         },
       ],
     },
-    exitMechanisms: [
-      {
-        ...EXITS.REGULAR('zk', 'merkle proof'),
-        references: [
-          {
-            text: 'PolygonZkEvmBridgeV2.sol - Etherscan source code, claimAsset function',
-            href: 'https://etherscan.io/address/0x0feb850b183c57534b56b7d56520133c8f9bdb65',
-          },
-        ],
-      },
-    ],
   },
   isForcedBatchDisallowed,
   stateDerivation: {
