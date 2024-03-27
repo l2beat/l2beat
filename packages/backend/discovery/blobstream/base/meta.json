@@ -1,0 +1,155 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "BlobstreamX",
+      "values": {
+        "DATA_COMMITMENT_MAX": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "GUARDIAN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TIMELOCK_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "frozen": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "gateway": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "headerRangeFunctionId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nextHeaderFunctionId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "state_proofNonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafeL2",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SuccinctFeeVault",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SuccinctGateway",
+      "values": {
+        "feeVault": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isCallback": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "verifiedFunctionId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "verifiedInputHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "verifiedOutput": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}
