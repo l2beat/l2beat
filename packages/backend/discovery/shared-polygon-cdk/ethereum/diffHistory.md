@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xe90b30e05f68078de32b670d16dd5fffa035e468
+Generated with discovered.json: 0xba10c72cf7e833b13b991039623f6503c48425c3
 
-# Diff at Tue, 26 Mar 2024 13:34:17 GMT:
+# Diff at Wed, 27 Mar 2024 11:36:42 GMT:
 
-- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- current block number: 19518939
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- current block number: 19525405
 
 ## Description
 

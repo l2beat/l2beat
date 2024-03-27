@@ -194,6 +194,11 @@
           "severity": null,
           "type": null
         },
+        "emergencyStateCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "getBatchFee": {
           "description": null,
           "severity": null,
@@ -224,7 +229,7 @@
           "severity": null,
           "type": null
         },
-        "nondeterminsiticPendingState": {
+        "nondeterministicPendingState": {
           "description": null,
           "severity": null,
           "type": null

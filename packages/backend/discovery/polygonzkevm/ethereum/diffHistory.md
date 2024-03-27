@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xa4e3dd6ba300e9e62460283e902252c8d03d1455
+Generated with discovered.json: 0x137ac944000215a83e537284dbab5b0a94490bd8
 
-# Diff at Tue, 26 Mar 2024 14:16:35 GMT:
+# Diff at Wed, 27 Mar 2024 11:35:36 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
 - comparing to: main@e07213c85017436a1a224233fb8e2886f76f6cf9 block: 19510549
-- current block number: 19519148
+- current block number: 19525399
 
 ## Description
 
@@ -17,19 +17,19 @@ Added fetch of scheduled transactions.
     +++ description: None
       values.depositCount:
 -        5435
-+        5639
++        5750
       values.getLastGlobalExitRoot:
 -        "0x4fdddcd1ff4e9c3c3e48db943e2ee7b6df0807312031605e4a26fbe4a6a9fbb9"
-+        "0x1c9cf2d469e604ead2758dc4f7ba8721b3c2bd69edf6b1ecbcba084b5930aadc"
++        "0xb0405243863a60c26134bf7846c6bf8eca3de4bdecede092ababbad4c4ffa9ba"
       values.getRoot:
 -        "0x9346ada04de5ed71863edc01cf4eb2d19f6119be2fcca877084719d9b00cc0a6"
-+        "0x15f6745a9b7eb04d71b84b2a26191e48389dee37527162b72af3cc772bec9617"
++        "0x39921c54e99b178ddff2703a2bb6ac7a8141bc2bd7f9baed48125aca5d1db938"
       values.lastMainnetExitRoot:
 -        "0xf4ca3309519f26af91ac5c56560a60b7d558e96404768bb1617dce3c06936cbb"
-+        "0x5136d509ed7164204e5ab82d47b807f1351009365e49967de6146721702b83f0"
++        "0xe54366f5c01244de9a81ad5f6969113e7dff18a2754a7ba45a779d65f27b73dd"
       values.lastRollupExitRoot:
 -        "0x1f4d64a326d436a2b58c5d7a783b824e1ec4f17f5b049b127736c38e20a076c5"
-+        "0xdeec81c18cb8da79578722e11d484df58a10d8f121854109aabf1031132e96d4"
++        "0x89f166097c101bd9ae2df30bdeda9cd7fec6562cee06e3f8c20620be459e622c"
     }
 ```
 
