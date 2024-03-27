@@ -193,7 +193,12 @@ export const scroll: Layer2 = {
         to: 'proofSubmissions',
       },
     },
-    finality: 'coming soon',
+    finality: {
+      lag: 0,
+      type: 'Scroll',
+      // Scroll L1 Chain Proxy deployment
+      minTimestamp: new UnixTime(1696775129),
+    },
   },
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (calldata)'],
