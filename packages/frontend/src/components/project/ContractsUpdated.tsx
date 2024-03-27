@@ -7,8 +7,8 @@ import { Callout } from './Callout'
 export function ContractsUpdated() {
   return (
     <Callout
-      className={'p-4'}
-      color={'yellow'}
+      className="p-4"
+      color="yellow"
       icon={
         <ShieldIcon className={cn('fill-yellow-700 dark:fill-yellow-300')} />
       }

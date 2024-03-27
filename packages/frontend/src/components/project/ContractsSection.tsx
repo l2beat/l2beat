@@ -46,6 +46,9 @@ export function ContractsSection(props: ContractsSectionProps) {
     props.escrows,
     (c) => c.implementationHasChanged,
   )
+  const hasContractsImplementationChanged = props.contracts.some(
+    (c) => c.implementationHasChanged,
+  )
 
   return (
     <ProjectDetailsSection
@@ -55,9 +58,7 @@ export function ContractsSection(props: ContractsSectionProps) {
       isUnderReview={props.isUnderReview}
       includeChildrenIfUnderReview
     >
-      {props.contracts.some((c) => c.implementationHasChanged) && (
-        <ContractsUpdated />
-      )}
+      {hasContractsImplementationChanged && <ContractsUpdated />}
       {props.isIncomplete && <TechnologyIncompleteShort />}
       {props.architectureImage && (
         <figure className="mb-8 mt-4 text-center">
