@@ -37,12 +37,6 @@ export class AmountConfigurationRepository extends BaseRepository {
     this.autoWrap<CheckConvention<AmountConfigurationRepository>>(this)
   }
 
-  async getAll(): Promise<AmountConfigurationRecord[]> {
-    const knex = await this.knex()
-    const rows = await knex('amounts_configurations')
-    return rows.map(toRecord)
-  }
-
   async addMany(
     records: Omit<AmountConfigurationRecord, 'id'>[],
   ): Promise<number[]> {
@@ -57,10 +51,20 @@ export class AmountConfigurationRepository extends BaseRepository {
     return inserted.map((row) => row.id)
   }
 
+  // #region methods used only in tests
+
+  async getAll(): Promise<AmountConfigurationRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('amounts_configurations')
+    return rows.map(toRecord)
+  }
+
   async deleteAll() {
     const knex = await this.knex()
     return knex('amounts_configurations').delete()
   }
+
+  // #endregion
 }
 
 function toRow(

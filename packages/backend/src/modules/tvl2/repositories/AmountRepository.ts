@@ -25,12 +25,6 @@ export class AmountRepository extends BaseRepository {
     this.autoWrap<CheckConvention<AmountRepository>>(this)
   }
 
-  async getAll(): Promise<AmountRecord[]> {
-    const knex = await this.knex()
-    const rows = await knex('amounts')
-    return rows.map(toRecord)
-  }
-
   async addMany(records: AmountRecord[]) {
     const rows: AmountRow[] = records.map(toRow)
     const knex = await this.knex()
@@ -38,10 +32,20 @@ export class AmountRepository extends BaseRepository {
     return rows.length
   }
 
+  // #region methods used only in tests
+
+  async getAll(): Promise<AmountRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('amounts')
+    return rows.map(toRecord)
+  }
+
   async deleteAll() {
     const knex = await this.knex()
     return knex('amounts').delete()
   }
+
+  // #endregion
 }
 
 function toRecord(row: AmountRow): AmountRecord {
