@@ -1,6 +1,5 @@
 import { assert } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
-import proto from 'protobufjs'
 
 const SPAN_BATCH_VERSION = 1
 
@@ -16,20 +15,19 @@ export function decodeSpanBatch(batch: Uint8Array, opts: SpanBatchDecoderOpts) {
     `Invalid batch version for span batch`,
   )
 
+  // skip version byte
   const batchData = batch.slice(1)
-  const reader = new proto.BufferReader(batchData)
+  const reader = new BufferReader(batchData)
 
   // prefix
   const relTimestamp = reader.uint32()
   const _l1OriginNum = reader.uint32()
-  const _parentCheck = batchData.slice(reader.pos, reader.pos + 20)
-  reader.skip(20)
-  const _l1OriginCheck = batchData.slice(reader.pos, reader.pos + 20)
-  reader.skip(20)
+  const _parentCheck = reader.readBytes(20)
+  const _l1OriginCheck = reader.readBytes(20)
 
   // payload
   const blockCount = reader.uint32()
-  const _originBits = readNextNBits(blockCount, batchData, reader)
+  const _originBits = reader.readBitList(blockCount)
 
   const tsxPerBlock = Array(blockCount)
     .fill(0)
@@ -44,14 +42,50 @@ export function decodeSpanBatch(batch: Uint8Array, opts: SpanBatchDecoderOpts) {
   return blocksWithTimestamps
 }
 
-function readNextNBits(
-  bitCount: number,
-  batchData: Uint8Array,
-  reader: proto.BufferReader,
-) {
-  const bytesInBitList = Math.ceil(bitCount / 8)
-  const leftPad = bytesInBitList * 8 - bitCount
-  const bits = batchData.slice(reader.pos, reader.pos + bytesInBitList)
-  reader.skip(bytesInBitList)
-  return { leftPad, bits }
+export class BufferReader {
+  public pos = 0
+
+  constructor(private readonly buffer: Uint8Array) {}
+
+  /**
+   * Read a varint as an unsigned 32-bit integer.
+   */
+  public uint32() {
+    let result = 0
+    let shift = 0
+    let byte
+    do {
+      byte = this.buffer[this.pos++]
+      result |= (byte & 0x7f) << shift
+      shift += 7
+    } while (byte & 0x80)
+    return result >>> 0
+  }
+
+  /**
+   * Skip `n` bytes.
+   */
+  public skip(n: number) {
+    this.pos += n
+  }
+
+  /**
+   * Read next `n` bytes.
+   */
+  public readBytes(n: number) {
+    const result = this.buffer.slice(this.pos, this.pos + n)
+    this.pos += n
+    return result
+  }
+
+  /**
+   * Read a spanBatch bit list: encoded as big-endian integer,
+   * left-padded with 0s to the next multiple of 8 bits.
+   */
+  public readBitList(bitCount: number) {
+    const bytesInBitList = Math.ceil(bitCount / 8)
+    const result = this.buffer.slice(this.pos, this.pos + bytesInBitList)
+    this.pos += bytesInBitList
+    return result
+  }
 }
