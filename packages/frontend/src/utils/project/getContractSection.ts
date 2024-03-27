@@ -51,13 +51,15 @@ export function getContractSection(
     .map((escrow) => {
       const isUnverified = isEscrowUnverified(escrow, verificationStatus)
       const contract = escrowToProjectContract(escrow)
+      const implementationChangeForProject =
+        implementationChange?.projects[project.id.toString()]
 
       return makeTechnologyContract(
         contract,
         project,
         isUnverified,
         verificationStatus,
-        undefined,
+        implementationChangeForProject,
         true,
       )
     })

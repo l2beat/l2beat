@@ -65,9 +65,7 @@ export function ContractEntry({
     .some((c) => c === false)
 
   let color: CalloutProps['color'] = undefined
-  if (contract.implementationHasChanged) {
-    color = 'yellow'
-  }
+
   if (areAddressesUnverified || areLinksUnverified) {
     color = 'red'
   }
@@ -100,14 +98,6 @@ export function ContractEntry({
       className={cn(color === undefined ? 'px-4' : 'p-4', className)}
       color={color}
       icon={icon}
-      message={
-        contract.implementationHasChanged && (
-          <div className="flex w-full items-center rounded bg-yellow-800/20 p-3 dark:bg-yellow-500/20">
-            There are implementation changes and part of the information might
-            be outdated.
-          </div>
-        )
-      }
       body={
         <>
           <div className="flex flex-wrap items-center gap-x-2">

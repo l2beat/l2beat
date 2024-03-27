@@ -30,6 +30,12 @@ function getMockImplementationChangeApiResponse(): ImplementationChangeReportApi
             ),
             newImplementations: [EthereumAddress.random()],
           },
+          {
+            containingContract: EthereumAddress(
+              '0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a',
+            ),
+            newImplementations: [EthereumAddress.random()],
+          },
         ],
       },
     },
