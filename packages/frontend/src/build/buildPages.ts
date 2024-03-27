@@ -96,7 +96,7 @@ async function main() {
       console.timeEnd('[DIFF HISTORY]')
     }
 
-    const l2CostsApiResponse = await fetchL2CostsApi()
+    const l2CostsApiResponse = await fetchL2CostsApi(config.backend, http)
 
     createApi(config, tvlApiResponse, activityApiResponse)
 
