@@ -1,0 +1,17 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "chain": "base",
+  "name": "blobstream",
+  "initialAddresses": ["0xa83ca7775bc2889825bcdedffa5b758cf69e8794"],
+  "names": {
+    "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794": "BlobstreamX"
+  },
+  "overrides": {
+    "BlobstreamX": {
+      "ignoreMethods": ["state_dataCommitments", "proxiableUUID"],
+      "fields": {
+        "accessControl": { "type": "accessControl" }
+      }
+    }
+  }
+}
