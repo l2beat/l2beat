@@ -2,6 +2,7 @@ import React from 'react'
 
 import { getProjectWithIndexColumns } from '../../../../components/table/props/getProjectWithIndexColumns'
 import { ColumnConfig, SortingConfig } from '../../../../components/table/types'
+import { cn } from '../../../../utils/cn'
 import { CostsDataDetails, ScalingCostsViewEntry } from '../types'
 import { CostsTableCell } from '../view/CostsTimeRangeCell'
 
@@ -28,6 +29,10 @@ export function getScalingCostsColumnsConfig() {
       getValue: (project) => (
         <CostsTableCell data={project.costs} type="calldata" />
       ),
+      headClassName: underlineClassNames(
+        'before:bg-blue-700',
+        'dark:before:bg-blue-400',
+      ),
       tooltip:
         'The sum of the costs for posting data as calldata on Ethereum for the selected time period.',
       align: 'right',
@@ -37,6 +42,10 @@ export function getScalingCostsColumnsConfig() {
       name: 'Blobs',
       getValue: (project) => (
         <CostsTableCell data={project.costs} type="blobs" />
+      ),
+      headClassName: underlineClassNames(
+        'before:bg-orange-400',
+        'dark:before:bg-yellow-100',
       ),
       tooltip:
         'The sum of the costs for posting data as blobs on Ethereum for the selected time period.',
@@ -48,6 +57,7 @@ export function getScalingCostsColumnsConfig() {
       getValue: (project) => (
         <CostsTableCell data={project.costs} type="compute" />
       ),
+      headClassName: underlineClassNames('before:bg-pink-100'),
       tooltip:
         'The sum of the costs for carrying out different operations within a transaction for the selected time period.',
       align: 'right',
@@ -58,7 +68,7 @@ export function getScalingCostsColumnsConfig() {
       getValue: (project) => (
         <CostsTableCell data={project.costs} type="overhead" className="pr-4" />
       ),
-      headClassName: '!pr-4',
+      headClassName: underlineClassNames('before:bg-green-500'),
       tooltip:
         'The sum of the fixed 21000 GAS overhead per transaction for the selected time period.',
       align: 'right',
@@ -89,4 +99,14 @@ function getSorting(
     defaultOrderKey: '7D-USD',
     rule: 'numeric',
   }
+}
+
+function underlineClassNames(...classNames: string[]) {
+  return cn(
+    'relative before:absolute',
+    'before:inset-x-3 before:h-0.5',
+    'before:bottom-px',
+    'before:rounded-t-full',
+    ...classNames,
+  )
 }
