@@ -33,7 +33,10 @@ export interface ScalingCostsViewEntry {
 }
 
 export type CostsData = {
-  [Timerange in keyof Omit<L2CostsApiProject, 'syncedUntil'>]: CostsDataDetails
+  [Timerange in keyof Omit<
+    L2CostsApiProject,
+    'syncedUntil'
+  >]-?: CostsDataDetails
 }
 
 export type CostsDataDetails = {
