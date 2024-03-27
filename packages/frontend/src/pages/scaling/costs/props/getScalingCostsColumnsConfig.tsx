@@ -68,7 +68,7 @@ export function getScalingCostsColumnsConfig() {
       getValue: (project) => (
         <CostsTableCell data={project.costs} type="overhead" className="pr-4" />
       ),
-      headClassName: underlineClassNames('before:bg-green-500'),
+      headClassName: underlineClassNames('!pr-4', 'before:bg-green-500'),
       tooltip:
         'The sum of the fixed 21000 GAS overhead per transaction for the selected time period.',
       align: 'right',
