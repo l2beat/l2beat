@@ -14,9 +14,12 @@ type channelId = string
 
 export class ChannelBank {
   // TODO: channels should be saved to the db so they're persistent
+  // https://linear.app/l2beat/issue/L2B-4596/decode-the-proper-channel-data-for-opstack
   // In the opStack spec, channels are recorded in FIFO order in a structure called the channel queue.
   // A channel is added to the channel queue the first time a frame belonging to the channel is seen.
   // Because we do not look at all the transactions from opStack chains, we ignore this FIFO assumption (could be improved)
+  // This change would require tracking all the transactions from the opStack chains, which can be a lot of data
+  // but it would allow us to reconstruct the channels in the correct order.
 
   private readonly channels = new Map<channelId, Channel>()
 

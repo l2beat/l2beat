@@ -2,9 +2,9 @@ import { assert } from '@l2beat/backend-tools'
 
 import { byteArrFromHexStr } from './utils'
 
-const BlobSize = 4096 * 32
-const MaxBlobDataSize = (4 * 31 + 3) * 1024 - 4
-const Rounds = 1024 // number of encode/decode round
+const BLOB_SIZE = 4096 * 32
+const MAX_BLOB_DATA_SIZE = (4 * 31 + 3) * 1024 - 4
+const ROUNDS = 1024 // number of encode/decode round
 
 export function getRollupData(relevantBlobs: { blob: string }[]) {
   return relevantBlobs.map(({ blob }) => blobToData(byteArrFromHexStr(blob)))
@@ -13,47 +13,68 @@ export function getRollupData(relevantBlobs: { blob: string }[]) {
 /**
  * @notice This code was written by AI as a port from go code, that's why it looks so weird.
  * @notice The original code is located at https://github.com/ethereum-optimism/optimism/blob/abfc1e1f37a89405bacd08a3bb6363250d3f68f5/op-service/eth/blob.go#L199-L281
+ *
+ *
+ * blobToData decodes the blob into raw byte data. See the details below on the encoding
+ * format.
+ *
+ * The encoding scheme is as follows:
+ * In each round we perform 7 reads of input of lengths (31,1,31,1,31,1,31) bytes respectively for
+ * a total of 127 bytes. This data is encoded into the next 4 field elements of the output by
+ * placing each of the 4x31 byte chunks into bytes [1:32] of its respective field element. The
+ * three single byte chunks (24 bits) are split into 4x6-bit chunks, each of which is written into
+ * the top most byte of its respective field element, leaving the top 2 bits of each field element
+ * empty to avoid modulus overflow.  This process is repeated for up to 1024 rounds until all data
+ * is encoded.
+ *
+ * For only the very first output field, bytes [1:5] are used to encode the version and the length
+ * of the data.
  */
 export function blobToData(blob: Uint8Array): Uint8Array {
-  assert(blob.length === BlobSize, 'Invalid blob size')
+  assert(blob.length === BLOB_SIZE, 'Invalid blob size')
 
   // decode the 3-byte big-endian length value into a 4-byte integer
   const outputLen = (blob[2] << 16) | (blob[3] << 8) | blob[4]
   assert(
-    outputLen <= MaxBlobDataSize,
+    outputLen <= MAX_BLOB_DATA_SIZE,
     `Invalid output length: got ${outputLen}`,
   )
 
   // round 0 is special cased to copy only the remaining 27 bytes of the first field element into
   // the output due to version/length encoding already occupying its first 5 bytes.
-  const output = new Uint8Array(MaxBlobDataSize)
+  const output = new Uint8Array(MAX_BLOB_DATA_SIZE)
   output.set(blob.subarray(5, 32), 0)
 
   // now process remaining 3 field elements to complete round 0
-  let opos = 28 // current position into output buffer
-  let ipos = 32 // current position into the input blob
+  let outputPosition = 28 // current position into output buffer
+  let inputPosition = 32 // current position into the input blob
 
   const encodedByte = new Uint8Array(4) // buffer for the 4 6-bit chunks
   encodedByte[0] = blob[0]
   for (let i = 1; i < 4; i++) {
     // eslint-disable-next-line no-extra-semi
-    ;[encodedByte[i], opos, ipos] = decodeFieldElement(blob, opos, ipos, output)
+    ;[encodedByte[i], outputPosition, inputPosition] = decodeFieldElement(
+      blob,
+      outputPosition,
+      inputPosition,
+      output,
+    )
   }
-  opos = reassembleBytes(opos, encodedByte, output)
+  outputPosition = reassembleBytes(outputPosition, encodedByte, output)
 
   // in each remaining round we decode 4 field elements (128 bytes) of the input into 127 bytes
   // of output
-  for (let i = 1; i < Rounds && opos < outputLen; i++) {
+  for (let i = 1; i < ROUNDS && outputPosition < outputLen; i++) {
     for (let j = 0; j < 4; j++) {
       // eslint-disable-next-line no-extra-semi
-      ;[encodedByte[j], opos, ipos] = decodeFieldElement(
+      ;[encodedByte[j], outputPosition, inputPosition] = decodeFieldElement(
         blob,
-        opos,
-        ipos,
+        outputPosition,
+        inputPosition,
         output,
       )
     }
-    opos = reassembleBytes(opos, encodedByte, output)
+    outputPosition = reassembleBytes(outputPosition, encodedByte, output)
   }
   return output.slice(0, outputLen)
 }
@@ -65,18 +86,21 @@ export function blobToData(blob: Uint8Array): Uint8Array {
  */
 function decodeFieldElement(
   blob: Uint8Array,
-  opos: number,
-  ipos: number,
+  outputPosition: number,
+  inputPosition: number,
   output: Uint8Array,
 ) {
   // two highest order bits of the first byte of each field element should always be 0
   assert(
-    (blob[ipos] & 0b1100_0000) === 0,
-    `Invalid field element: field element: ${ipos}`,
+    (blob[inputPosition] & 0b1100_0000) === 0,
+    `Invalid field element: field element: ${inputPosition}`,
   )
 
-  output.set(blob.subarray(ipos + 1, ipos + 32), opos)
-  return [blob[ipos], opos + 32, ipos + 32]
+  output.set(
+    blob.subarray(inputPosition + 1, inputPosition + 32),
+    outputPosition,
+  )
+  return [blob[inputPosition], outputPosition + 32, inputPosition + 32]
 }
 
 /**
@@ -84,11 +108,11 @@ function decodeFieldElement(
  * output, and places them in their appropriate output positions.
  */
 function reassembleBytes(
-  opos: number,
+  outputPosition: number,
   encodedByte: Uint8Array,
   output: Uint8Array,
 ) {
-  opos--
+  outputPosition--
   const x =
     (encodedByte[0] & 0b0011_1111) | ((encodedByte[1] & 0b0011_0000) << 2)
   const y =
@@ -96,8 +120,8 @@ function reassembleBytes(
   const z =
     (encodedByte[2] & 0b0011_1111) | ((encodedByte[3] & 0b0011_0000) << 2)
 
-  output[opos - 32] = z
-  output[opos - 32 * 2] = y
-  output[opos - 32 * 3] = x
-  return opos
+  output[outputPosition - 32] = z
+  output[outputPosition - 32 * 2] = y
+  output[outputPosition - 32 * 3] = x
+  return outputPosition
 }

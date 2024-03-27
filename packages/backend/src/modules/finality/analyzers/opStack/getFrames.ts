@@ -11,10 +11,11 @@ export function getFrames(rollupData: Uint8Array) {
     `Invalid version received, expected ${ENCODING_VERSION} received ${rollupData[VERSION_OFFSET]}`,
   )
 
+  // skipping the version byte
   const frames = rollupData.slice(1)
 
   // bytes32
-  const channelId = '0x' + byteArrToNum(frames.slice(0, 16)).toString(16)
+  const channelId = '0x' + byteArrToBigInt(frames.slice(0, 16)).toString(16)
   // uint16
   const frameNumber = byteArrToNum(frames.slice(16, 18))
   // uint32
@@ -43,10 +44,24 @@ export function getFrames(rollupData: Uint8Array) {
 
 function byteArrToNum(arr: Uint8Array): number {
   assert(arr.length > 0)
+  assert(arr.length <= 4, 'Byte array too long')
 
   if (arr.length === 1) {
     return arr[0]
   }
 
   return 256 * byteArrToNum(arr.slice(0, arr.length - 1)) + arr[arr.length - 1]
+}
+
+function byteArrToBigInt(arr: Uint8Array): bigint {
+  assert(arr.length > 0)
+
+  if (arr.length === 1) {
+    return BigInt(arr[0])
+  }
+
+  return (
+    256n * byteArrToBigInt(arr.slice(0, arr.length - 1)) +
+    BigInt(arr[arr.length - 1])
+  )
 }
