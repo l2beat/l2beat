@@ -48,13 +48,9 @@ function getScalingCostsViewEntry(
     name: project.display.name,
     shortName: project.display.shortName,
     slug: project.display.slug,
-    category: project.display.category,
-    dataAvailabilityMode: project.dataAvailability?.mode,
-    provider: project.display.provider,
     warning: project.display.warning,
     redWarning: project.display.redWarning,
-    purposes: project.display.purposes,
-    stage: project.stage,
+    showProjectUnderReview: !!project.isUnderReview,
     costs: getCostsData(l2CostsProjectData),
   }
 }
