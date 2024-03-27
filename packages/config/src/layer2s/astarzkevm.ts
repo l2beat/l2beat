@@ -62,6 +62,7 @@ export const astarzkevm: Layer2 = polygonCDKStack({
       ],
     },
   },
+  rollupManagerContract: discovery.getContract('PolygonRollupManager'),
   rollupModuleContract: discovery.getContract('AstarValidiumEtrog'),
   rollupVerifierContract: discovery.getContract('AstarVerifier'),
   display: {
