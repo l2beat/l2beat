@@ -2,6 +2,7 @@ import compact from 'lodash/compact'
 import React, { ReactElement } from 'react'
 
 import { ActivityIcon, RiskIcon, SummaryIcon, TvlIcon } from '../icons'
+import { CostsIcon } from '../icons/pages/CostsIcon'
 import { DataAvailabilityIcon } from '../icons/pages/DataAvailabilityIcon'
 import { FinalityIcon } from '../icons/pages/FinalityIcon'
 import { LivenessIcon } from '../icons/pages/LivenessIcon'
@@ -74,6 +75,11 @@ function getSections(props: SidebarMenuProps): Section[] {
           title: 'Activity',
           link: '/scaling/activity',
           icon: ActivityIcon,
+        },
+        {
+          title: 'Costs',
+          link: '/scaling/costs',
+          icon: CostsIcon,
         },
       ]),
     },

@@ -20,7 +20,7 @@ export function ScalingCostsView({ items }: ScalingCostsViewProps) {
 
   return (
     <section className="mt-4 flex flex-col gap-y-2 sm:mt-8">
-      <div className="flex justify-between">
+      <div className="flex flex-col gap-2 md:flex-row md:justify-between">
         <CostsUnitControls />
         <CostsTimeRangeControls />
       </div>
