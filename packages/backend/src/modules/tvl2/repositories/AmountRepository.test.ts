@@ -19,7 +19,12 @@ describeDatabase(AmountRepository.name, (database) => {
   let IDS: number[] = []
 
   beforeEach(async () => {
-    IDS = await configurationRepository.addMany([mock(), mock()])
+    IDS = await configurationRepository.addMany([
+      mock({
+        projectId: ProjectId.ARBITRUM,
+      }),
+      mock(),
+    ])
   })
 
   afterEach(async () => {
@@ -63,6 +68,39 @@ describeDatabase(AmountRepository.name, (database) => {
     })
   })
 
+  it(AmountRepository.prototype.getByProjectAndTimestamp.name, async () => {
+    await repository.addMany([
+      {
+        configurationId: IDS[0],
+        timestamp: new UnixTime(0),
+        amount: 111n,
+      },
+      {
+        configurationId: IDS[0],
+        timestamp: new UnixTime(1),
+        amount: 222n,
+      },
+      {
+        configurationId: IDS[1],
+        timestamp: new UnixTime(0),
+        amount: 333n,
+      },
+    ])
+
+    const result = await repository.getByProjectAndTimestamp(
+      ProjectId.ARBITRUM,
+      new UnixTime(0),
+    )
+
+    expect(result).toHaveLength(1)
+    expect(result[0]).toEqual({
+      ...mock({ projectId: ProjectId.ARBITRUM }),
+      configurationId: IDS[0],
+      timestamp: new UnixTime(0),
+      amount: 111n,
+    })
+  })
+
   it(AmountRepository.prototype.deleteAll.name, async () => {
     await repository.addMany([
       {
@@ -87,7 +125,7 @@ function mock(
     projectId: ProjectId('project'),
     indexerId: 'indexer',
     chain: 'chain',
-    address: EthereumAddress.random(),
+    address: EthereumAddress.ZERO,
     origin: 'native',
     type: 'circulatingSupply',
     includeInTotal: true,

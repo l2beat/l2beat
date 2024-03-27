@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { describeDatabase } from '../../../test/database'
@@ -67,7 +67,7 @@ function mock(
     projectId: ProjectId('project'),
     indexerId: 'indexer',
     chain: 'chain',
-    address: EthereumAddress.random(),
+    address: EthereumAddress.ZERO,
     origin: 'native',
     type: 'circulatingSupply',
     includeInTotal: true,

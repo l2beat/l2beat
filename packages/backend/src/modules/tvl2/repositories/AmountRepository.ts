@@ -1,11 +1,15 @@
 import { Logger } from '@l2beat/backend-tools'
-import { UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   BaseRepository,
   CheckConvention,
 } from '../../../peripherals/database/BaseRepository'
 import { Database } from '../../../peripherals/database/Database'
+import {
+  AmountConfigurationRecord,
+  AmountConfigurationRow,
+} from './AmountConfigurationRepository'
 
 export interface AmountRow {
   configuration_id: number
@@ -19,6 +23,10 @@ export interface AmountRecord {
   amount: bigint
 }
 
+export interface AmountWithMetadata
+  extends AmountRecord,
+    Omit<AmountConfigurationRecord, 'id'> {}
+
 export class AmountRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
@@ -30,6 +38,29 @@ export class AmountRepository extends BaseRepository {
     const knex = await this.knex()
     await knex.batchInsert('amounts', rows, 10_000)
     return rows.length
+  }
+
+  async getByProjectAndTimestamp(
+    projectId: ProjectId,
+    timestamp: UnixTime,
+  ): Promise<AmountRecord[]> {
+    const knex = await this.knex()
+
+    const subquery = knex
+      .select('id')
+      .from('amounts_configurations')
+      .where('project_id', projectId)
+
+    const rows = await knex
+      .select('*')
+      .from('amounts')
+      .whereIn('configuration_id', subquery)
+      .where('timestamp', timestamp.toDate())
+      .join('amounts_configurations', {
+        'amounts.configuration_id': 'amounts_configurations.id',
+      })
+
+    return rows.map(toRecordWithMetadata)
   }
 
   // #region methods used only in tests
@@ -61,5 +92,23 @@ function toRow(record: AmountRecord): AmountRow {
     configuration_id: record.configurationId,
     timestamp: record.timestamp.toDate(),
     amount: record.amount.toString(),
+  }
+}
+
+function toRecordWithMetadata(
+  row: AmountRow & AmountConfigurationRow,
+): AmountWithMetadata {
+  return {
+    configurationId: row.configuration_id,
+    timestamp: UnixTime.fromDate(row.timestamp),
+    amount: BigInt(row.amount),
+
+    projectId: ProjectId(row.project_id),
+    indexerId: row.indexer_id,
+    chain: row.chain,
+    address: row.address === 'native' ? 'native' : EthereumAddress(row.address),
+    origin: row.origin as 'canonical' | 'external' | 'native',
+    type: row.type as 'totalSupply' | 'circulatingSupply' | 'escrow',
+    includeInTotal: row.include_in_total,
   }
 }
