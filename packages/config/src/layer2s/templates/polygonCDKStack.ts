@@ -33,7 +33,12 @@ import {
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getStage } from '../common/stages/getStage'
-import { Layer2, Layer2Display, Layer2TransactionApi } from '../types'
+import {
+  Layer2,
+  Layer2Display,
+  Layer2TransactionApi,
+  Layer2TxConfig,
+} from '../types'
 
 export interface DAProvider {
   name: DataAvailabilityLayer
@@ -46,7 +51,6 @@ export interface DAProvider {
 export interface PolygonCDKStackConfig {
   daProvider?: DAProvider
   discovery: ProjectDiscovery
-  sharedDiscovery?: ProjectDiscovery
   display: Omit<Layer2Display, 'provider' | 'category' | 'dataAvailabilityMode'>
   rpcUrl?: string
   transactionApi?: Layer2TransactionApi
@@ -56,6 +60,7 @@ export interface PolygonCDKStackConfig {
   nonTemplateContracts?: ScalingProjectContract[]
   nonTemplateEscrows: ScalingProjectEscrow[]
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
+  nonTemplateTrackedTxs?: Layer2TxConfig[]
   milestones: Milestone[]
   knowledgeNuggets: KnowledgeNugget[]
   isForcedBatchDisallowed: boolean
@@ -66,8 +71,7 @@ export interface PolygonCDKStackConfig {
 
 export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
   const daProvider = templateVars.daProvider
-  const shared =
-    templateVars.sharedDiscovery ?? new ProjectDiscovery('shared-polygon-cdk')
+  const shared = new ProjectDiscovery('shared-polygon-cdk')
 
   const upgradeDelay = shared.getContractValue<number>(
     'Timelock',
@@ -118,6 +122,11 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     upgradeConsiderations: exitWindowRisk.description,
   }
 
+  assert(
+    templateVars.rollupManagerContract.address ===
+      EthereumAddress('0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2'),
+    'Polygon rollup manager address does not match with the one in the shared Polygon CDK discovery. Tracked transactions would be misconfigured, bailing.',
+  )
   const bridge = shared.getContract('Bridge')
 
   return {
@@ -159,6 +168,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
         templateVars.daProvider !== undefined
           ? undefined
           : [
+              ...(templateVars.nonTemplateTrackedTxs ?? []),
               {
                 uses: [
                   { type: 'liveness', subtype: 'batchSubmissions' },
@@ -174,39 +184,6 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
                     'function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)',
                   sinceTimestampInclusive: new UnixTime(1679653163),
                   untilTimestampExclusive: new UnixTime(1707824735),
-                },
-              },
-              {
-                uses: [
-                  { type: 'liveness', subtype: 'batchSubmissions' },
-                  { type: 'l2costs', subtype: 'batchSubmissions' },
-                ],
-                query: {
-                  formula: 'functionCall',
-                  address: EthereumAddress(
-                    '0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
-                  ),
-                  selector: '0xecef3f99',
-                  functionSignature:
-                    'function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, address l2Coinbase)',
-                  sinceTimestampInclusive: new UnixTime(1707824735),
-                  untilTimestampExclusive: new UnixTime(1710419699),
-                },
-              },
-              {
-                uses: [
-                  { type: 'liveness', subtype: 'batchSubmissions' },
-                  { type: 'l2costs', subtype: 'batchSubmissions' },
-                ],
-                query: {
-                  formula: 'functionCall',
-                  address: EthereumAddress(
-                    '0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
-                  ),
-                  selector: '0xdef57e54',
-                  functionSignature:
-                    'function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint64 maxSequenceTimestamp, uint64 initSequencedBatch, address l2Coinbase)',
-                  sinceTimestampInclusive: new UnixTime(1710419699),
                 },
               },
               {
