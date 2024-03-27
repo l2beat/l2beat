@@ -19,6 +19,7 @@ export interface ScalingDataAvailabilityViewEntry {
   name: string
   shortName: string | undefined
   slug: string
+  showProjectUnderReview?: boolean
   category: ScalingProjectCategory
   provider: Layer2Provider | undefined
   warning: string | undefined
