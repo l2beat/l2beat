@@ -24,6 +24,7 @@
     "typecheck": "tsc --noEmit",
     "find-common-contracts": "ts-node --transpile-only scripts/findCommonContracts.ts",
     "update-diff-history": "ts-node --transpile-only scripts/updateDiffHistory.ts",
+    "update-db-liveness": "bash scripts/update_db_liveness.sh",
     "powerdiff": "ts-node --transpile-only scripts/powerdiff.ts",
     "compare-orbit-chains": "ts-node --transpile-only scripts/compareOrbitChains.ts",
     "compare-opstack-chains": "ts-node --transpile-only scripts/compareOpStackChains.ts",
