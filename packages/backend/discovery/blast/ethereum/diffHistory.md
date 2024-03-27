@@ -1,16 +1,19 @@
-Generated with discovered.json: 0x475808ab9e3368af47973a7354b8d9d6416be7b1
+Generated with discovered.json: 0x646980af76b43c27a4899a626e33717e65e05689
 
-# Diff at Wed, 27 Mar 2024 07:21:47 GMT:
+# Diff at Wed, 27 Mar 2024 11:49:14 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
 - comparing to: main@d53834b65ee1cdf52eb5d460179c975873642177 block: 19467922
-- current block number: 19524156
+- current block number: 19525459
 
 ## Description
 
-Blast is manually blacklisting three addresses for deposits in this implementation change of the OptimismPortal.
+Blast is manually blacklisting three addresses from the depositTransaction() function in this implementation change of the OptimismPortal.
+
 One of them is labeled 'Munchables exploiter' on etherscan.
 (0x6E8836F050A315611208A5CD7e228701563D09c5, 0xc207Fa4b17cA710BA53F06fEFF56ca9d315915B7, 0xbf9ad762DBaE603BC8FC79DFD3Fb26f2b9740E87)
+
+depositTransaction() in the OptimismPortal would allow a user to force an L2 transation from L1 (e.g. a bridge transaction). Censoring it combined with censoring the L2 addresses from the Sequencer's side can effectiely seize the funds on L2.
 
 The only other change is that a YIELD_CONTRACT_ADDRESS is introduced to a null address in constants.sol.
 
