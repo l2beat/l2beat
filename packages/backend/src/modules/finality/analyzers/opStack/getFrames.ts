@@ -13,19 +13,18 @@ export function getFrames(rollupData: Uint8Array) {
 
   // skipping the version byte
   const frames = rollupData.slice(1)
+  const framesView = new DataView(frames.buffer)
 
-  // bytes32
-  const channelId = '0x' + byteArrToBigInt(frames.slice(0, 16)).toString(16)
-  // uint16
-  const frameNumber = byteArrToNum(frames.slice(16, 18))
-  // uint32
-  const frameDataLength = byteArrToNum(frames.slice(18, 22))
+  // bytes16
+  const channelId = getBytes16(framesView)
+  // uint16 (2 bytes)
+  const frameNumber = framesView.getUint16(16)
+  // uint32 (4 bytes)
+  const frameDataLength = framesView.getUint32(18)
   // bytes
   const frameData = frames.slice(22, 22 + frameDataLength)
   // bool
-  const isLast = !!byteArrToNum(
-    frames.slice(22 + frameDataLength, 22 + frameDataLength + 1),
-  )
+  const isLast = !!framesView.getUint8(22 + frameDataLength)
 
   // there can be multiple frames per blob, but they were never seen in the wild
   assert(
@@ -42,26 +41,11 @@ export function getFrames(rollupData: Uint8Array) {
   }
 }
 
-function byteArrToNum(arr: Uint8Array): number {
-  assert(arr.length > 0)
-  assert(arr.length <= 4, 'Byte array too long')
-
-  if (arr.length === 1) {
-    return arr[0]
-  }
-
-  return 256 * byteArrToNum(arr.slice(0, arr.length - 1)) + arr[arr.length - 1]
-}
-
-function byteArrToBigInt(arr: Uint8Array): bigint {
-  assert(arr.length > 0)
-
-  if (arr.length === 1) {
-    return BigInt(arr[0])
-  }
-
+function getBytes16(dataView: DataView, offset = 0): string {
   return (
-    256n * byteArrToBigInt(arr.slice(0, arr.length - 1)) +
-    BigInt(arr[arr.length - 1])
+    '0x' +
+    Array.from(new Uint8Array(dataView.buffer, offset, 16))
+      .map((byte) => byte.toString(16).padStart(2, '0'))
+      .join('')
   )
 }
