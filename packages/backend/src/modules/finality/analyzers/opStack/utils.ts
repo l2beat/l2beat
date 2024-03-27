@@ -12,7 +12,7 @@ export async function getBatchFromChannel(channel: Uint8Array) {
   return byteArrFromHexStr(decoded)
 }
 
-async function decompressToByteArray(compressedData: Uint8Array) {
+export async function decompressToByteArray(compressedData: Uint8Array) {
   const blob = new Blob([compressedData])
   const ds = new DecompressionStream('deflate')
   const stream = blob.stream().pipeThrough(ds)
@@ -45,11 +45,12 @@ async function decompressToByteArray(compressedData: Uint8Array) {
 
 export function byteArrFromHexStr(hexString: string) {
   const str = hexString.startsWith('0x') ? hexString.slice(2) : hexString
-  const match = str.match(/.{1,2}/g)
-
-  assert(match !== null, 'Invalid hex string')
-
-  return Uint8Array.from(match.map((byte) => parseInt(byte, 16)))
+  assert(str.length % 2 === 0, 'Invalid hex string length')
+  const arr = []
+  for (let i = 0; i < str.length; i += 2) {
+    arr.push(parseInt(str.substring(i, i + 2), 16))
+  }
+  return new Uint8Array(arr)
 }
 
 export function hexStrFromByteArr(byteArr: Uint8Array) {
