@@ -2,6 +2,78 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
       "name": "BlobstreamX",
       "values": {
         "DATA_COMMITMENT_MAX": {
@@ -114,6 +186,11 @@
     {
       "name": "SuccinctGateway",
       "values": {
+        "blobstreamVerifier": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "feeVault": {
           "description": null,
           "severity": null,
@@ -145,6 +222,11 @@
           "type": null
         },
         "verifiedOutput": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "verifiers": {
           "description": null,
           "severity": null,
           "type": null
