@@ -87,7 +87,6 @@ export function ScalingNavigationTabs(props: ScalingNavigationTabsProps) {
     icon: <CostsIcon />,
     link: '/scaling/costs',
     selected: props.selected === 'costs',
-    new: true,
   })
   return <NavigationTabs pages={pages} />
 }

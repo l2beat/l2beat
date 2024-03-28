@@ -1,38 +1,22 @@
 import React from 'react'
 
 import { getProjectWithIndexColumns } from '../../../../components/table/props/getProjectWithIndexColumns'
-import {
-  TypeCell,
-  TypeColumnTooltip,
-} from '../../../../components/table/TypeCell'
 import { ColumnConfig, SortingConfig } from '../../../../components/table/types'
 import { cn } from '../../../../utils/cn'
 import { CostsDataDetails, ScalingCostsViewEntry } from '../types'
-import { CostsTableCell } from '../view/CostsTimeRangeCell'
+import { CostsBreakdownValueCell } from '../view/CostsBreakdownValueCell'
+import { CostsTotalCell } from '../view/CostsTotalCell'
+import { CostsTxCountCell } from '../view/CostsTxCountCell'
 
 export function getScalingCostsColumnsConfig() {
   const columns: ColumnConfig<ScalingCostsViewEntry>[] = [
     ...getProjectWithIndexColumns({ indexAsDefaultSort: true }),
     {
-      name: 'Type',
-      tooltip: <TypeColumnTooltip />,
-      shortName: 'Type',
-      getValue: (project) => (
-        <TypeCell provider={project.provider}>{project.category}</TypeCell>
-      ),
-      sorting: {
-        getOrderValue: (project) => project.category,
-        rule: 'alphabetical',
-      },
-    },
-    {
       type: 'group',
       columns: [
         {
           name: 'Total Cost',
-          getValue: (project) => (
-            <CostsTableCell data={project.costs} type="total" />
-          ),
+          getValue: (project) => <CostsTotalCell data={project.costs} />,
           tooltip:
             'The sum of the costs for calldata, blob data, computation, and an additional 21,000 gas overhead per transaction for the selected time period.',
           align: 'center',
@@ -43,7 +27,7 @@ export function getScalingCostsColumnsConfig() {
     {
       name: 'Calldata',
       getValue: (project) => (
-        <CostsTableCell data={project.costs} type="calldata" />
+        <CostsBreakdownValueCell data={project.costs} type="calldata" />
       ),
       headClassName: underlineClassNames(
         'before:bg-blue-700',
@@ -57,7 +41,7 @@ export function getScalingCostsColumnsConfig() {
     {
       name: 'Blobs',
       getValue: (project) => (
-        <CostsTableCell data={project.costs} type="blobs" />
+        <CostsBreakdownValueCell data={project.costs} type="blobs" />
       ),
       headClassName: underlineClassNames(
         'before:bg-orange-400',
@@ -71,7 +55,7 @@ export function getScalingCostsColumnsConfig() {
     {
       name: 'Compute',
       getValue: (project) => (
-        <CostsTableCell data={project.costs} type="compute" />
+        <CostsBreakdownValueCell data={project.costs} type="compute" />
       ),
       headClassName: underlineClassNames('before:bg-pink-100'),
       tooltip:
@@ -82,20 +66,42 @@ export function getScalingCostsColumnsConfig() {
     {
       name: 'Overhead',
       getValue: (project) => (
-        <CostsTableCell data={project.costs} type="overhead" className="pr-4" />
+        <CostsBreakdownValueCell
+          data={project.costs}
+          type="overhead"
+          className="pr-4"
+        />
       ),
-      headClassName: underlineClassNames('!pr-4', 'before:bg-green-500'),
+      headClassName: underlineClassNames('before:bg-green-500'),
       tooltip:
         'The sum of the fixed 21,000 GAS overhead per transaction for the selected time period.',
       align: 'right',
       sorting: getSorting('overhead'),
+    },
+    {
+      name: 'Tx count',
+      getValue: (project) => (
+        <CostsTxCountCell data={project.costs} className="pr-4" />
+      ),
+      headClassName: '!pr-4',
+      align: 'right',
+      sorting: {
+        getOrderValue: (project) => ({
+          '24H': project.costs.last24h.txCount?.value,
+          '7D': project.costs.last7d.txCount?.value,
+          '30D': project.costs.last30d.txCount?.value,
+          '90D': project.costs.last90d.txCount?.value,
+        }),
+        defaultOrderKey: '7D-USD',
+        rule: 'numeric',
+      },
     },
   ]
   return columns
 }
 
 function getSorting(
-  type: keyof CostsDataDetails,
+  type: Exclude<keyof CostsDataDetails, 'txCount'>,
 ): SortingConfig<ScalingCostsViewEntry> {
   return {
     getOrderValue: (project) => ({

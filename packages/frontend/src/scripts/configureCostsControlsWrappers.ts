@@ -10,11 +10,11 @@ const SORTING_ARROWS_NAMES = [
   'overhead',
 ]
 
-export function configureCostsTableCells() {
+export function configureCostsControlsWrappers() {
   const { $$ } = makeQuery(document.body)
   const searchParams = new URLSearchParams(window.location.search)
 
-  const tableCells = $$('[data-role="costs-table-cell"]')
+  const cells = $$('[data-role="costs-controls-wrapper"]')
 
   const unitControls = $$<HTMLInputElement>(
     '[data-role="costs-unit-controls"] input',
@@ -35,17 +35,16 @@ export function configureCostsTableCells() {
 
   function onTimeRangeChange(control: HTMLInputElement) {
     checkedTimeRangeControl = control
-    tableCells.forEach((cell) =>
-      cell.setAttribute('data-time-range', control.value),
-    )
+    cells.forEach((cell) => cell.setAttribute('data-time-range', control.value))
     SORTING_ARROWS_NAMES.forEach((name) =>
       setSortingArrowsOrderKey(name, getSortingArrowsOrderKey()),
     )
+    setSortingArrowsOrderKey('tx-count', control.value)
   }
 
   function onUnitChange(control: HTMLInputElement) {
     checkedUnitControl = control
-    tableCells.forEach((cell) => cell.setAttribute('data-unit', control.value))
+    cells.forEach((cell) => cell.setAttribute('data-unit', control.value))
     SORTING_ARROWS_NAMES.forEach((name) =>
       setSortingArrowsOrderKey(name, getSortingArrowsOrderKey()),
     )

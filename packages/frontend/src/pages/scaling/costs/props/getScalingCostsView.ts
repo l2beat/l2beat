@@ -1,13 +1,14 @@
 import { Layer2 } from '@l2beat/config'
 import {
+  ActivityApiCharts,
   assert,
   L2CostsApiProject,
   L2CostsApiResponse,
-  L2CostsDetails,
   notUndefined,
 } from '@l2beat/shared-pure'
 
 import { formatLargeNumber } from '../../../../utils'
+import { getTransactionCount } from '../../../../utils/activity/getTransactionCount'
 import { formatCurrency } from '../../../../utils/format'
 import { orderByTvl } from '../../../../utils/orderByTvl'
 import {
@@ -24,25 +25,30 @@ export function getScalingCostsView(
 ): ScalingCostsViewProps {
   const {
     tvlApiResponse,
-    l2CostsApiResponse: costsApiResponse,
+    l2CostsApiResponse,
     implementationChange,
+    activityApiResponse,
   } = pagesData
 
-  const includedProjects = getIncludedProjects(projects, costsApiResponse)
+  const includedProjects = getIncludedProjects(projects, l2CostsApiResponse)
   const orderedProjects = orderByTvl(includedProjects, tvlApiResponse)
 
   return {
     items: orderedProjects
       .map((project) => {
         const l2CostsProjectData =
-          costsApiResponse.projects[project.id.toString()]
+          l2CostsApiResponse.projects[project.id.toString()]
         assert(l2CostsProjectData, 'l2CostsProjectData is undefined')
+        const activityApiProjectData =
+          activityApiResponse?.projects[project.id.toString()]
+
         const hasImplementationChanged =
           !!implementationChange?.projects[project.id.toString()]
 
         return getScalingCostsViewEntry(
           project,
           l2CostsProjectData,
+          activityApiProjectData,
           hasImplementationChanged,
         )
       })
@@ -53,6 +59,7 @@ export function getScalingCostsView(
 function getScalingCostsViewEntry(
   project: Layer2,
   l2CostsProjectData: L2CostsApiProject,
+  activityApiProjectData: ActivityApiCharts | undefined,
   hasImplementationChanged: boolean,
 ): ScalingCostsViewEntry {
   return {
@@ -67,11 +74,14 @@ function getScalingCostsViewEntry(
     provider: project.display.provider,
     purposes: project.display.purposes,
     stage: project.stage,
-    costs: getCostsData(l2CostsProjectData),
+    costs: getCostsData(l2CostsProjectData, activityApiProjectData),
   }
 }
 
-function getCostsData(l2CostsProjectData: L2CostsApiProject): CostsData {
+function getCostsData(
+  l2CostsProjectData: L2CostsApiProject,
+  activityApiProjectData: ActivityApiCharts | undefined,
+): CostsData {
   const { last24h, last7d, last30d, last90d } = l2CostsProjectData
   if (!last24h || !last7d || !last30d || !last90d) {
     throw new Error(
@@ -80,95 +90,144 @@ function getCostsData(l2CostsProjectData: L2CostsApiProject): CostsData {
   }
 
   return {
-    last24h: getDataDetails(last24h),
-    last7d: getDataDetails(last7d),
-    last30d: getDataDetails(last30d),
-    last90d: getDataDetails(last90d),
+    last24h: getDataDetails(
+      'last24h',
+      l2CostsProjectData,
+      activityApiProjectData,
+    ),
+    last7d: getDataDetails(
+      'last7d',
+      l2CostsProjectData,
+      activityApiProjectData,
+    ),
+    last30d: getDataDetails(
+      'last30d',
+      l2CostsProjectData,
+      activityApiProjectData,
+    ),
+    last90d: getDataDetails(
+      'last90d',
+      l2CostsProjectData,
+      activityApiProjectData,
+    ),
   }
 }
 
-function getDataDetails(data: L2CostsDetails): CostsDataDetails {
+function getDataDetails(
+  type: keyof Omit<L2CostsApiProject, 'syncedUntil'>,
+  data: L2CostsApiProject,
+  activityApiProjectData: ActivityApiCharts | undefined,
+): CostsDataDetails {
+  const dataRange = data[type]
+  assert(dataRange, `${type} is undefined`)
+
+  const txCount = activityApiProjectData?.daily.data
+    ? getTransactionCount(
+        activityApiProjectData?.daily.data,
+        'project',
+        typeToPeriod[type],
+      )
+    : undefined
+
   return {
     total: {
       ethCost: {
-        displayValue: formatCurrency(data.total.ethCost, 'eth'),
-        value: data.total.ethCost,
+        displayValue: formatCurrency(dataRange?.total.ethCost, 'eth'),
+        value: dataRange?.total.ethCost,
       },
       usdCost: {
-        displayValue: formatCurrency(data.total.usdCost, 'usd'),
-        value: data.total.usdCost,
+        displayValue: formatCurrency(dataRange?.total.usdCost, 'usd'),
+        value: dataRange?.total.usdCost,
       },
       gas: {
-        displayValue: formatLargeNumber(data.total.gas),
-        value: data.total.gas,
+        displayValue: formatLargeNumber(dataRange?.total.gas),
+        value: dataRange?.total.gas,
       },
     },
-    blobs: data.blobs
+    blobs: dataRange?.blobs
       ? {
           ethCost: {
-            displayValue: formatCurrency(data.blobs.ethCost, 'eth'),
-            value: data.blobs.ethCost,
+            displayValue: formatCurrency(dataRange?.blobs.ethCost, 'eth'),
+            value: dataRange?.blobs.ethCost,
           },
           usdCost: {
-            displayValue: formatCurrency(data.blobs.usdCost, 'usd'),
-            value: data.blobs.usdCost,
+            displayValue: formatCurrency(dataRange?.blobs.usdCost, 'usd'),
+            value: dataRange?.blobs.usdCost,
           },
           gas: {
-            displayValue: formatLargeNumber(data.blobs.gas),
-            value: data.blobs.gas,
+            displayValue: formatLargeNumber(dataRange?.blobs.gas),
+            value: dataRange?.blobs.gas,
           },
         }
       : undefined,
     calldata: {
       ethCost: {
-        displayValue: formatCurrency(data.calldata.ethCost, 'eth'),
-        value: data.calldata.ethCost,
+        displayValue: formatCurrency(dataRange.calldata.ethCost, 'eth'),
+        value: dataRange.calldata.ethCost,
       },
       usdCost: {
-        displayValue: formatCurrency(data.calldata.usdCost, 'usd'),
-        value: data.calldata.usdCost,
+        displayValue: formatCurrency(dataRange.calldata.usdCost, 'usd'),
+        value: dataRange.calldata.usdCost,
       },
       gas: {
-        displayValue: formatLargeNumber(data.calldata.gas),
-        value: data.calldata.gas,
+        displayValue: formatLargeNumber(dataRange.calldata.gas),
+        value: dataRange.calldata.gas,
       },
     },
     compute: {
       ethCost: {
-        displayValue: formatCurrency(data.compute.ethCost, 'eth'),
-        value: data.compute.ethCost,
+        displayValue: formatCurrency(dataRange.compute.ethCost, 'eth'),
+        value: dataRange.compute.ethCost,
       },
       usdCost: {
-        displayValue: formatCurrency(data.compute.usdCost, 'usd'),
-        value: data.compute.usdCost,
+        displayValue: formatCurrency(dataRange.compute.usdCost, 'usd'),
+        value: dataRange.compute.usdCost,
       },
       gas: {
-        displayValue: formatLargeNumber(data.compute.gas),
-        value: data.compute.gas,
+        displayValue: formatLargeNumber(dataRange.compute.gas),
+        value: dataRange.compute.gas,
       },
     },
     overhead: {
       ethCost: {
-        displayValue: formatCurrency(data.overhead.ethCost, 'eth'),
-        value: data.overhead.ethCost,
+        displayValue: formatCurrency(dataRange.overhead.ethCost, 'eth'),
+        value: dataRange.overhead.ethCost,
       },
       usdCost: {
-        displayValue: formatCurrency(data.overhead.usdCost, 'usd'),
-        value: data.overhead.usdCost,
+        displayValue: formatCurrency(dataRange.overhead.usdCost, 'usd'),
+        value: dataRange.overhead.usdCost,
       },
       gas: {
-        displayValue: formatLargeNumber(data.overhead.gas),
-        value: data.overhead.gas,
+        displayValue: formatLargeNumber(dataRange.overhead.gas),
+        value: dataRange.overhead.gas,
       },
     },
+    txCount: txCount
+      ? {
+          value: txCount,
+          displayValue: formatLargeNumber(txCount),
+        }
+      : undefined,
   }
 }
+
+const typeToPeriod = {
+  last24h: 'day',
+  last7d: 'week',
+  last30d: 'month',
+  last90d: 'three months',
+} as const
 
 function getIncludedProjects(
   projects: Layer2[],
   costsApiResponse: L2CostsApiResponse,
 ) {
   return projects.filter(
-    (p) => costsApiResponse.projects[p.id.toString()] !== undefined,
+    (p) =>
+      costsApiResponse.projects[p.id.toString()] !== undefined &&
+      !p.isArchived &&
+      !p.isUpcoming &&
+      (p.display.category === 'Optimistic Rollup' ||
+        p.display.category === 'ZK Rollup'),
   )
 }

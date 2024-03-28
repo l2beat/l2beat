@@ -1,6 +1,6 @@
 import { configureCharts } from './charts'
 import { configureBridgesAndCombinedOnly } from './configureBridgesAndCombinedOnly'
-import { configureCostsTableCells } from './configureCostsTableCells'
+import { configureCostsControlsWrappers } from './configureCostsControlsWrappers'
 import { configureDropdowns } from './configureDropdowns'
 import { configureEtherscanLinks } from './configureEtherscanLinks'
 import { configureExpandableContainer } from './configureExpandableContainer'
@@ -44,4 +44,4 @@ configureLivenessTimeRangeControls()
 configureOverflowWrappers()
 configureSorting()
 configureEtherscanLinks()
-configureCostsTableCells()
+configureCostsControlsWrappers()

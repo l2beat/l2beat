@@ -5,6 +5,7 @@ import {
   StageConfig,
 } from '@l2beat/config'
 import {
+  ActivityApiResponse,
   ImplementationChangeReportApiResponse,
   L2CostsApiProject,
   L2CostsApiResponse,
@@ -16,6 +17,7 @@ import { ValueWithDisplayValue } from '../../types'
 export interface CostsPagesData {
   tvlApiResponse: TvlApiResponse
   l2CostsApiResponse: L2CostsApiResponse
+  activityApiResponse: ActivityApiResponse | undefined
   implementationChange: ImplementationChangeReportApiResponse | undefined
 }
 
@@ -47,6 +49,7 @@ export type CostsDataDetails = {
   blobs: CostsDataBreakdown | undefined
   compute: CostsDataBreakdown
   overhead: CostsDataBreakdown
+  txCount: ValueWithDisplayValue | undefined
 }
 
 export type CostsDataBreakdown = {
