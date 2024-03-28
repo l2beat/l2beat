@@ -6,7 +6,7 @@ import { RiskValues } from '../../utils/risks/types'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { ProjectLink } from '../icons'
 import { ArchivedBar } from '../project/ArchivedBar'
-import { ImplementationUnderReview } from '../project/ImplementationUnderReview'
+import { ImplementationUnderReviewBar } from '../project/ImplementationUnderReviewBar'
 import { UnderReviewBar } from '../project/UnderReviewBar'
 import { UpcomingBar } from '../project/UpcomingBar'
 import { WarningBar } from '../project/WarningBar'
@@ -71,16 +71,14 @@ export function DetailsHeader(props: HeaderProps) {
                 />
               )}
               {props.title}
-              {props.implementationHasChanged && <ImplementationUnderReview />}
             </h1>
             {props.description && (
               <div className="mt-4 text-base">{props.description}</div>
             )}
-            {props.isArchived && <ArchivedBar className="w-full" />}
-            {props.isUpcoming && <UpcomingBar className="w-full" />}
-            {props.showProjectUnderReview && (
-              <UnderReviewBar className="w-full" />
-            )}
+            {props.isArchived && <ArchivedBar />}
+            {props.isUpcoming && <UpcomingBar />}
+            {props.showProjectUnderReview && <UnderReviewBar />}
+            {props.implementationHasChanged && <ImplementationUnderReviewBar />}
             {props.warning && (
               <WarningBar
                 text={
