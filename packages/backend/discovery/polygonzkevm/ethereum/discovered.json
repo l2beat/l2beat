@@ -1,7 +1,7 @@
 {
   "name": "polygonzkevm",
   "chain": "ethereum",
-  "blockNumber": 19525399,
+  "blockNumber": 19531807,
   "configHash": "0x678bb9db372a5e3bfa91f9b19ef1232060f713cdfeadb8bc39d590f2a53b2c27",
   "version": 3,
   "contracts": [
@@ -213,7 +213,7 @@
         "INITIALIZE_TX_CONSTANT_BYTES_EMPTY_METADATA": 31,
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
-        "lastAccInputHash": "0xd6110b74c364d75e33f119ae3ce425b13dc8fa409f5fac07e84cb20a4ceb67e6",
+        "lastAccInputHash": "0x7a1e6c0b3d5f2c5878d6a4a7ddef3e595aed0868d3942932eb8628438ce55c32",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "polygon zkEVM",
@@ -241,11 +241,11 @@
       "sinceTimestamp": 1679653151,
       "values": {
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 5750,
-        "getLastGlobalExitRoot": "0xb0405243863a60c26134bf7846c6bf8eca3de4bdecede092ababbad4c4ffa9ba",
-        "getRoot": "0x39921c54e99b178ddff2703a2bb6ac7a8141bc2bd7f9baed48125aca5d1db938",
-        "lastMainnetExitRoot": "0xe54366f5c01244de9a81ad5f6969113e7dff18a2754a7ba45a779d65f27b73dd",
-        "lastRollupExitRoot": "0x89f166097c101bd9ae2df30bdeda9cd7fec6562cee06e3f8c20620be459e622c",
+        "depositCount": 5923,
+        "getLastGlobalExitRoot": "0x6f90939012069d19a957df3609d2f7a552af245e382a3292dd9afa687b514851",
+        "getRoot": "0x66c8c51262eef3f857a619a0080a20d2496d767e1ce0203c7af2c05b17d6c3b5",
+        "lastMainnetExitRoot": "0x05ce1bc52130c726982dc3b40326dd0a86816122edd6fbb22533c405f8ef5d29",
+        "lastRollupExitRoot": "0x171db767b56d509ca70b0e208db5e3f9143a0b73003f6fd75a77c5b0df02a641",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       }
     },

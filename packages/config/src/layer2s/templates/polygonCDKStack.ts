@@ -554,16 +554,13 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
       ],
       risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelayString)],
     },
-    upgradesAndGovernance: `
-    All main contracts and the verifier are upgradable by the ${shared.getMultisigStats('AdminMultisig')} \`AdminMultisig\` through a timelock that owns \`ProxyAdmin\`. Addresses of trusted sequencer, aggregator and operational parameters (like fees) on the \`PolygonRollupManager\` can be instantly set by the \`AdminMultisig\`. Escrow contracts are upgradable by the \`EscrowsAdmin\` ${shared.getMultisigStats('EscrowsAdmin')} multisig.
-
-        \`PolygonZkEVMTimelock\` is a modified version of TimelockController that disables delay in case of a manually enabled or triggered emergency state in the \`PolygonRollupManager\`. It otherwise has a ${upgradeDelayString} delay. 
-
-        The process to upgrade the \`PolygonRollupManager\`-implementation and / or the verifier has two steps: 1) A newRollupType-transaction is added by the \`AdminMultisig\` to the timelock, which in turn can call the \`addNewRollupType()\` function in the \`PolygonRollupManager\`. In a non-emergency state, this allows potential reviews of the new rollup type while it sits in the timelock. 2) After the delay period, the rollup implementation can be upgraded to the new rollup type by the \`AdminMultisig\` calling the \`updateRollup()\`-function in the \`PolygonRollupManager\` directly.
-
-        The critical roles in the \`PolygonRollupManager\` can be changed through the timelock, while the trusted Aggregator role can be granted by the \`AdminMultisig\` directly.
-
-        The ${shared.getMultisigStats('SecurityCouncil')} \`SecurityCouncil\` multisig can manually enable the emergency state in the \`PolygonRollupManager\`.`,
+    upgradesAndGovernance: [
+      `All main contracts and the verifier are upgradable by the ${templateVars.discovery.getMultisigStats('AdminMultisig')} \`AdminMultisig\` through a timelock that owns \`ProxyAdmin\`. Addresses of trusted sequencer, aggregator and operational parameters (like fees) on the \`PolygonRollupManager\` can be instantly set by the \`AdminMultisig\`.${templateVars.nonTemplateEscrows.length > 0 ? ` Escrow contracts are upgradable by the \`EscrowsAdmin\` ${templateVars.discovery.getMultisigStats('EscrowsAdmin')} multisig.` : ''}`,
+      `\`PolygonZkEVMTimelock\` is a modified version of TimelockController that disables delay in case of a manually enabled or triggered emergency state in the \`PolygonRollupManager\`. It otherwise has a ${upgradeDelayString} delay.`,
+      `The process to upgrade the \`PolygonRollupManager\`-implementation and / or the verifier has two steps: 1) A newRollupType-transaction is added by the \`AdminMultisig\` to the timelock, which in turn can call the \`addNewRollupType()\` function in the \`PolygonRollupManager\`. In a non-emergency state, this allows potential reviews of the new rollup type while it sits in the timelock. 2) After the delay period, the rollup implementation can be upgraded to the new rollup type by the \`AdminMultisig\` calling the \`updateRollup()\`-function in the \`PolygonRollupManager\` directly.`,
+      `The critical roles in the \`PolygonRollupManager\` can be changed through the timelock, while the trusted Aggregator role can be granted by the \`AdminMultisig\` directly.`,
+      `The ${shared.getMultisigStats('SecurityCouncil')} \`SecurityCouncil\` multisig can manually enable the emergency state in the \`PolygonRollupManager\`.`,
+    ].join('\n\n'),
     milestones: templateVars.milestones,
     knowledgeNuggets: templateVars.knowledgeNuggets,
   }
