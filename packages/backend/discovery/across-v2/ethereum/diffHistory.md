@@ -1,3 +1,405 @@
+Generated with discovered.json: 0xcc9c4700506ab8fdc95a6926abf24800652ea89e
+
+# Diff at Thu, 28 Mar 2024 08:00:51 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@867de6120241d47b66bf76f83c490408eb3595b0 block: 19176658
+- current block number: 19531280
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract Ethereum_SpokePool (0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x5ab0A812327aD959dE664AEC8408Ef8c6ABe7184"
++        "0xa4D3535f33549749Fb97fA42903AC80F6fb54af6"
+      implementations.0:
+-        "0x5ab0A812327aD959dE664AEC8408Ef8c6ABe7184"
++        "0xa4D3535f33549749Fb97fA42903AC80F6fb54af6"
+      values.SLOW_FILL_MAX_TOKENS_TO_SEND:
+-        "10000000000000000000000000000000000000000"
+      values.UPDATE_DEPOSIT_DETAILS_HASH:
+-        "0x0e058f05b73c62ee68329d2c67c067aaae9a06503cc306378d144d0f0177882b"
+      values.EMPTY_RELAYER:
++        "0x0000000000000000000000000000000000000000"
+      values.EMPTY_REPAYMENT_CHAIN_ID:
++        0
+      values.fillDeadlineBuffer:
++        28800
+      values.INFINITE_FILL_DEADLINE:
++        4294967295
+      values.UPDATE_V3_DEPOSIT_DETAILS_HASH:
++        "0x152eb71524aef34d838ab76573c14b1ebfa5e385d9ab29d7cf5398daa2438bd9"
+    }
+```
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.CrossChainContracts.59144:
++        {"l2ChainId":59144,"adapter":"0x7Ea0D1882D610095A45E512B0113f79cA98a8EfE","spokePool":"0x7E63A5f1a8F0B4d0934B2f2327DAED3F6bb2ee75"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract TokenBridge (0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BridgedToken (0x36f274C1C197F277EA3C57859729398FCc8a3763)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x41fAD3Df1B07B647D120D055259E474fE8046eb5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1USDCBridge (0x504A330327A089d8364C4ab3811Ee26976d388ce)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x5B0bb17755FBa06028530682E2FD5bc373931768)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Linea_Adapter (0x7Ea0D1882D610095A45E512B0113f79cA98a8EfE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x892bb7EeD71efB060ab90140e7825d8127991DD3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeableBeacon (0x971f46a2852d11D59dbF0909e837cfd06f357DeB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MultiSend (0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LineaRollup (0xd19d4B5d358258f05D7B411E21A1460D11B0876F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimeLock (0xd6B95c960779c72B8C6752119849318E5d550574)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xF5058616517C068C7b8c7EbC69FF636Ade9066d6)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../interfaces/IERC5267Upgradeable.sol             |   28 +
+ .../proxy/utils/Initializable.sol                  |  166 +++
+ .../token/ERC20/ERC20Upgradeable.sol               |  377 +++++
+ .../token/ERC20/IERC20Upgradeable.sol              |   78 +
+ .../ERC20/extensions/ERC20PermitUpgradeable.sol    |  109 ++
+ .../ERC20/extensions/IERC20MetadataUpgradeable.sol |   28 +
+ .../ERC20/extensions/IERC20PermitUpgradeable.sol   |   60 +
+ .../utils/AddressUpgradeable.sol                   |  244 ++++
+ .../utils/ContextUpgradeable.sol                   |   37 +
+ .../utils/CountersUpgradeable.sol                  |   43 +
+ .../utils/StringsUpgradeable.sol                   |   85 ++
+ .../utils/cryptography/ECDSAUpgradeable.sol        |  217 +++
+ .../utils/cryptography/EIP712Upgradeable.sol       |  205 +++
+ .../utils/math/MathUpgradeable.sol                 |  339 +++++
+ .../utils/math/SignedMathUpgradeable.sol           |   43 +
+ .../contracts/tokenBridge/BridgedToken.sol         |   69 +
+ .../across-v2/ethereum/.code/BridgedToken/meta.txt |    2 +
+ .../contracts/Ethereum_SpokePool.sol               |   20 +-
+ .../implementation/contracts/MerkleLib.sol         |   12 +-
+ .../implementation/contracts/SpokePool.sol         | 1496 ++++++++++----------
+ .../contracts/interfaces/SpokePoolInterface.sol    |  108 +-
+ .../contracts/interfaces/V3SpokePoolInterface.sol  |  238 ++++
+ .../upgradeable/AddressLibUpgradeable.sol          |    2 +-
+ .../upgradeable/MultiCallerUpgradeable.sol         |    6 +
+ .../Ethereum_SpokePool/implementation/meta.txt     |    2 +-
+ .../implementation/contracts/GnosisSafe.sol        |  422 ++++++
+ .../implementation/contracts/base/Executor.sol     |   27 +
+ .../contracts/base/FallbackManager.sol             |   53 +
+ .../implementation/contracts/base/GuardManager.sol |   50 +
+ .../contracts/base/ModuleManager.sol               |  133 ++
+ .../implementation/contracts/base/OwnerManager.sol |  149 ++
+ .../implementation/contracts/common/Enum.sol       |    8 +
+ .../contracts/common/EtherPaymentFallback.sol      |   13 +
+ .../contracts/common/SecuredTokenTransfer.sol      |   35 +
+ .../contracts/common/SelfAuthorized.sol            |   16 +
+ .../contracts/common/SignatureDecoder.sol          |   36 +
+ .../implementation/contracts/common/Singleton.sol  |   11 +
+ .../contracts/common/StorageAccessible.sol         |   47 +
+ .../contracts/external/GnosisSafeMath.sol          |   54 +
+ .../contracts/interfaces/ISignatureValidator.sol   |   20 +
+ .../.code/GnosisSafe/implementation/meta.txt       |    2 +
+ .../.code/GnosisSafe/proxy/GnosisSafeProxy.sol     |  155 ++
+ .../ethereum/.code/GnosisSafe/proxy/meta.txt       |    2 +
+ .../@openzeppelin/contracts/token/ERC20/IERC20.sol |   82 ++
+ .../token/ERC20/extensions/draft-IERC20Permit.sol  |   60 +
+ .../contracts/token/ERC20/utils/SafeERC20.sol      |  116 ++
+ .../@openzeppelin/contracts/utils/Address.sol      |  244 ++++
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  |   88 ++
+ .../access/Ownable2StepUpgradeable.sol             |   71 +
+ .../access/OwnableUpgradeable.sol                  |   95 ++
+ .../proxy/utils/Initializable.sol                  |  165 +++
+ .../security/PausableUpgradeable.sol               |  117 ++
+ .../security/ReentrancyGuardUpgradeable.sol        |   81 ++
+ .../utils/AddressUpgradeable.sol                   |  219 +++
+ .../utils/ContextUpgradeable.sol                   |   37 +
+ .../implementation/contracts/L1USDCBridge.sol      |   83 ++
+ .../contracts/abstracts/USDCBridge.sol             |  171 +++
+ .../contracts/interfaces/IMessageService.sol       |   65 +
+ .../implementation/contracts/interfaces/IUSDC.sol  |   28 +
+ .../contracts/interfaces/IUSDCBridge.sol           |   32 +
+ .../.code/L1USDCBridge/implementation/meta.txt     |    2 +
+ .../@openzeppelin/contracts/access/Ownable.sol     |   68 +
+ .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |   32 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  189 +++
+ .../proxy/@openzeppelin/contracts/proxy/Proxy.sol  |   83 ++
+ .../contracts/proxy/beacon/BeaconProxy.sol         |   61 +
+ .../contracts/proxy/beacon/IBeacon.sol             |   15 +
+ .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   64 +
+ .../contracts/proxy/transparent/ProxyAdmin.sol     |   77 +
+ .../transparent/TransparentUpgradeableProxy.sol    |  120 ++
+ .../@openzeppelin/contracts/utils/Address.sol      |  189 +++
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  |   83 ++
+ .../.code/L1USDCBridge/proxy/contracts/import.sol  |   13 +
+ .../ethereum/.code/L1USDCBridge/proxy/meta.txt     |    2 +
+ .../contracts/utils/structs/BitMaps.sol            |   51 +
+ .../access/AccessControlUpgradeable.sol            |  261 ++++
+ .../access/IAccessControlUpgradeable.sol           |   88 ++
+ .../proxy/utils/Initializable.sol                  |  166 +++
+ .../security/ReentrancyGuardUpgradeable.sol        |   89 ++
+ .../utils/AddressUpgradeable.sol                   |  244 ++++
+ .../utils/ContextUpgradeable.sol                   |   41 +
+ .../utils/StringsUpgradeable.sol                   |   85 ++
+ .../utils/introspection/ERC165Upgradeable.sol      |   42 +
+ .../utils/introspection/IERC165Upgradeable.sol     |   25 +
+ .../utils/math/MathUpgradeable.sol                 |  339 +++++
+ .../utils/math/SignedMathUpgradeable.sol           |   43 +
+ .../implementation/contracts/LineaRollup.sol       |  554 ++++++++
+ .../implementation/contracts/ZkEvmV2.sol           |   65 +
+ .../contracts/interfaces/IGenericErrors.sol        |   14 +
+ .../contracts/interfaces/IMessageService.sol       |   95 ++
+ .../contracts/interfaces/IPauseManager.sol         |   33 +
+ .../contracts/interfaces/IRateLimiter.sol          |   65 +
+ .../contracts/interfaces/l1/IL1MessageManager.sol  |   53 +
+ .../interfaces/l1/IL1MessageManagerV1.sol          |   38 +
+ .../contracts/interfaces/l1/IL1MessageService.sol  |   54 +
+ .../contracts/interfaces/l1/ILineaRollup.sol       |  302 ++++
+ .../contracts/interfaces/l1/IPlonkVerifier.sol     |   16 +
+ .../contracts/interfaces/l1/IZkEvmV2.sol           |   46 +
+ .../implementation/contracts/lib/Utils.sol         |   18 +
+ .../messageService/l1/L1MessageManager.sol         |   99 ++
+ .../messageService/l1/L1MessageService.sol         |  163 +++
+ .../messageService/l1/v1/L1MessageManagerV1.sol    |   49 +
+ .../messageService/l1/v1/L1MessageServiceV1.sol    |  139 ++
+ .../contracts/messageService/lib/PauseManager.sol  |  119 ++
+ .../contracts/messageService/lib/RateLimiter.sol   |  118 ++
+ .../lib/SparseMerkleTreeVerifier.sol               |   47 +
+ .../.code/LineaRollup/implementation/meta.txt      |    2 +
+ .../@openzeppelin/contracts/access/Ownable.sol     |   83 ++
+ .../contracts/interfaces/IERC1967.sol              |   26 +
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
+ .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |   32 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  171 +++
+ .../proxy/@openzeppelin/contracts/proxy/Proxy.sol  |   86 ++
+ .../contracts/proxy/beacon/BeaconProxy.sol         |   61 +
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   65 +
+ .../contracts/proxy/transparent/ProxyAdmin.sol     |   81 ++
+ .../transparent/TransparentUpgradeableProxy.sol    |  193 +++
+ .../@openzeppelin/contracts/utils/Address.sol      |  244 ++++
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  |   88 ++
+ .../ethereum/.code/LineaRollup/proxy/meta.txt      |    2 +
+ .../@openzeppelin/contracts/token/ERC20/IERC20.sol |   78 +
+ .../token/ERC20/extensions/IERC20Permit.sol        |   90 ++
+ .../contracts/token/ERC20/utils/SafeERC20.sol      |  143 ++
+ .../@openzeppelin/contracts/utils/Address.sol      |  244 ++++
+ .../contracts/chain-adapters/Linea_Adapter.sol     |   85 ++
+ .../chain-adapters/interfaces/AdapterInterface.sol |   40 +
+ .../external/interfaces/LineaInterfaces.sol        |   75 +
+ .../external/interfaces/WETH9Interface.sol         |   34 +
+ .../ethereum/.code/Linea_Adapter/meta.txt          |    2 +
+ .../MultiSend/contracts/libraries/MultiSend.sol    |   66 +
+ .../across-v2/ethereum/.code/MultiSend/meta.txt    |    2 +
+ .../@openzeppelin/contracts/access/Ownable.sol     |   68 +
+ .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |   32 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  189 +++
+ .../@openzeppelin/contracts/proxy/Proxy.sol        |   83 ++
+ .../contracts/proxy/beacon/BeaconProxy.sol         |   61 +
+ .../contracts/proxy/beacon/IBeacon.sol             |   15 +
+ .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   64 +
+ .../contracts/proxy/transparent/ProxyAdmin.sol     |   77 +
+ .../transparent/TransparentUpgradeableProxy.sol    |  120 ++
+ .../@openzeppelin/contracts/utils/Address.sol      |  189 +++
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  |   83 ++
+ .../contracts/import.sol                           |   13 +
+ .../meta.txt                                       |    2 +
+ .../@openzeppelin/contracts/access/Ownable.sol     |   83 ++
+ .../contracts/interfaces/IERC1967.sol              |   26 +
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
+ .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |   32 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  171 +++
+ .../@openzeppelin/contracts/proxy/Proxy.sol        |   86 ++
+ .../contracts/proxy/beacon/BeaconProxy.sol         |   61 +
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   65 +
+ .../contracts/proxy/transparent/ProxyAdmin.sol     |   81 ++
+ .../transparent/TransparentUpgradeableProxy.sol    |  193 +++
+ .../@openzeppelin/contracts/utils/Address.sol      |  244 ++++
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  |   88 ++
+ .../meta.txt                                       |    2 +
+ .../@openzeppelin/contracts/access/Ownable.sol     |   83 ++
+ .../contracts/interfaces/IERC1967.sol              |   26 +
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
+ .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |   32 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  171 +++
+ .../@openzeppelin/contracts/proxy/Proxy.sol        |   86 ++
+ .../contracts/proxy/beacon/BeaconProxy.sol         |   61 +
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   65 +
+ .../contracts/proxy/transparent/ProxyAdmin.sol     |   81 ++
+ .../transparent/TransparentUpgradeableProxy.sol    |  193 +++
+ .../@openzeppelin/contracts/utils/Address.sol      |  244 ++++
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  |   88 ++
+ .../meta.txt                                       |    2 +
+ .../safe-contracts/contracts/common/Enum.sol       |    8 +
+ .../contracts/interfaces/IERC165.sol               |   15 +
+ .../@gnosis.pm/zodiac/contracts/core/Modifier.sol  |  134 ++
+ .../@gnosis.pm/zodiac/contracts/core/Module.sol    |  116 ++
+ .../zodiac/contracts/factory/FactoryFriendly.sol   |   10 +
+ .../zodiac/contracts/guard/BaseGuard.sol           |   38 +
+ .../zodiac/contracts/guard/Guardable.sol           |   31 +
+ .../zodiac/contracts/interfaces/IAvatar.sol        |   66 +
+ .../zodiac/contracts/interfaces/IGuard.sol         |   22 +
+ .../access/OwnableUpgradeable.sol                  |   78 +
+ .../proxy/utils/Initializable.sol                  |   46 +
+ .../utils/ContextUpgradeable.sol                   |   31 +
+ .../ethereum/.code/Roles/contracts/Permissions.sol |  984 +++++++++++++
+ .../ethereum/.code/Roles/contracts/Roles.sol       |  406 ++++++
+ .../across-v2/ethereum/.code/Roles/meta.txt        |    2 +
+ .../contracts/access/AccessControl.sol             |  248 ++++
+ .../contracts/access/IAccessControl.sol            |   88 ++
+ .../contracts/governance/TimelockController.sol    |  422 ++++++
+ .../contracts/token/ERC1155/IERC1155Receiver.sol   |   58 +
+ .../contracts/token/ERC721/IERC721Receiver.sol     |   27 +
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../@openzeppelin/contracts/utils/Strings.sol      |   85 ++
+ .../contracts/utils/introspection/ERC165.sol       |   29 +
+ .../contracts/utils/introspection/IERC165.sol      |   25 +
+ .../@openzeppelin/contracts/utils/math/Math.sol    |  339 +++++
+ .../contracts/utils/math/SignedMath.sol            |   43 +
+ .../contracts/messageService/lib/TimeLock.sol      |   18 +
+ .../across-v2/ethereum/.code/TimeLock/meta.txt     |    2 +
+ .../contracts/interfaces/IERC1967.sol              |   26 +
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  157 ++
+ .../@openzeppelin/contracts/proxy/Proxy.sol        |   86 ++
+ .../contracts/proxy/beacon/BeaconProxy.sol         |   61 +
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../@openzeppelin/contracts/utils/Address.sol      |  244 ++++
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  |  138 ++
+ .../access/Ownable2StepUpgradeable.sol             |   71 +
+ .../access/OwnableUpgradeable.sol                  |   95 ++
+ .../interfaces/IERC5267Upgradeable.sol             |   28 +
+ .../proxy/utils/Initializable.sol                  |  166 +++
+ .../security/PausableUpgradeable.sol               |  117 ++
+ .../security/ReentrancyGuardUpgradeable.sol        |   89 ++
+ .../token/ERC20/ERC20Upgradeable.sol               |  377 +++++
+ .../token/ERC20/IERC20Upgradeable.sol              |   78 +
+ .../ERC20/extensions/ERC20PermitUpgradeable.sol    |  109 ++
+ .../ERC20/extensions/IERC20MetadataUpgradeable.sol |   28 +
+ .../ERC20/extensions/IERC20PermitUpgradeable.sol   |   60 +
+ .../token/ERC20/utils/SafeERC20Upgradeable.sol     |  143 ++
+ .../utils/AddressUpgradeable.sol                   |  244 ++++
+ .../utils/ContextUpgradeable.sol                   |   37 +
+ .../utils/CountersUpgradeable.sol                  |   43 +
+ .../utils/StringsUpgradeable.sol                   |   85 ++
+ .../utils/cryptography/ECDSAUpgradeable.sol        |  217 +++
+ .../utils/cryptography/EIP712Upgradeable.sol       |  205 +++
+ .../utils/math/MathUpgradeable.sol                 |  339 +++++
+ .../utils/math/SignedMathUpgradeable.sol           |   43 +
+ .../contracts/interfaces/IMessageService.sol       |   85 ++
+ .../messageService/MessageServiceBase.sol          |   84 ++
+ .../contracts/tokenBridge/BridgedToken.sol         |   69 +
+ .../contracts/tokenBridge/TokenBridge.sol          |  498 +++++++
+ .../tokenBridge/interfaces/ITokenBridge.sol        |  116 ++
+ .../.code/TokenBridge/implementation/meta.txt      |    2 +
+ .../@openzeppelin/contracts/access/Ownable.sol     |   83 ++
+ .../contracts/interfaces/IERC1967.sol              |   26 +
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
+ .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |   32 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  171 +++
+ .../proxy/@openzeppelin/contracts/proxy/Proxy.sol  |   86 ++
+ .../contracts/proxy/beacon/BeaconProxy.sol         |   61 +
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   65 +
+ .../contracts/proxy/transparent/ProxyAdmin.sol     |   81 ++
+ .../transparent/TransparentUpgradeableProxy.sol    |  193 +++
+ .../@openzeppelin/contracts/utils/Address.sol      |  244 ++++
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  |   88 ++
+ .../ethereum/.code/TokenBridge/proxy/meta.txt      |    2 +
+ .../@openzeppelin/contracts/access/Ownable.sol     |   83 ++
+ .../contracts/interfaces/IERC1967.sol              |   26 +
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
+ .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |   32 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  171 +++
+ .../@openzeppelin/contracts/proxy/Proxy.sol        |   86 ++
+ .../contracts/proxy/beacon/BeaconProxy.sol         |   61 +
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   65 +
+ .../contracts/proxy/transparent/ProxyAdmin.sol     |   81 ++
+ .../transparent/TransparentUpgradeableProxy.sol    |  193 +++
+ .../@openzeppelin/contracts/utils/Address.sol      |  244 ++++
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  |   88 ++
+ .../ethereum/.code/UpgradeableBeacon/meta.txt      |    2 +
+ 270 files changed, 26103 insertions(+), 893 deletions(-)
+```
+
 Generated with discovered.json: 0x80d696e326cc38fa37de94d90eec00c9fd19f4c0
 
 # Diff at Wed, 07 Feb 2024 13:38:24 GMT:
