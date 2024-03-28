@@ -4,6 +4,7 @@ import {
   ActivityApiResponse,
   DiffHistoryApiResponse,
   FinalityApiResponse,
+  ImplementationChangeReportApiResponse,
   LivenessApiResponse,
   ProjectAssetsBreakdownApiResponse,
 } from '@l2beat/shared-pure'
@@ -14,6 +15,7 @@ import { createApi } from './api/createApi'
 import { fetchActivityApi } from './api/fetchActivityApi'
 import { fetchDiffHistory } from './api/fetchDiffHistory'
 import { fetchFinalityApi } from './api/fetchFinalityApi'
+import { fetchImplementationChangeReport } from './api/fetchImplementationChangeReport'
 import { fetchLivenessApi } from './api/fetchLivenessApi'
 import { fetchTvlApi } from './api/fetchTvlApi'
 import { fetchTvlBreakdownApi } from './api/fetchTvlBreakdownApi'
@@ -95,6 +97,18 @@ async function main() {
       console.timeEnd('[DIFF HISTORY]')
     }
 
+    let implementationChange:
+      | ImplementationChangeReportApiResponse
+      | undefined = undefined
+    if (config.features.implementationChange) {
+      console.time('[IMPLEMENTATION CHANGE]')
+      implementationChange = await fetchImplementationChangeReport(
+        config.backend,
+        http,
+      )
+      console.timeEnd('[IMPLEMENTATION CHANGE]')
+    }
+
     createApi(config, tvlApiResponse, activityApiResponse)
 
     const supportedChains = getChainNames(config)
@@ -111,6 +125,7 @@ async function main() {
       livenessApiResponse,
       finalityApiResponse,
       diffHistory,
+      implementationChange,
     }
 
     await renderPages(config, pagesData)
