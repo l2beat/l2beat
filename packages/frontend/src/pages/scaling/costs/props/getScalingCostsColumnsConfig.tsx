@@ -34,7 +34,7 @@ export function getScalingCostsColumnsConfig() {
             <CostsTableCell data={project.costs} type="total" />
           ),
           tooltip:
-            'The sum of the costs for calldata, blob data, computation, and an additional 21000 gas overhead per transaction for the selected time period.',
+            'The sum of the costs for calldata, blob data, computation, and an additional 21,000 gas overhead per transaction for the selected time period.',
           align: 'center',
           sorting: getSorting('total'),
         },
