@@ -65,7 +65,7 @@ function getAmountsConfig(
             address: token.address,
             chain: chainConverter.toName(token.chainId),
             sinceTimestamp: token.sinceTimestamp,
-            project,
+            projectId,
             origin: toOrigin(token.type),
             includeInTotal: true,
           })
@@ -77,7 +77,7 @@ function getAmountsConfig(
             chain: chainConverter.toName(token.chainId),
             sinceTimestamp: token.sinceTimestamp,
             coingeckoId: token.coingeckoId,
-            project,
+            projectId,
             origin: toOrigin(token.type),
             includeInTotal: true,
           })
@@ -97,7 +97,7 @@ function getAmountsConfig(
           chain: chainConverter.toName(token.chainId),
           sinceTimestamp: token.sinceTimestamp,
           escrowAddress: escrow.address,
-          project: project.projectId,
+          projectId: project.projectId,
           origin: toOrigin(token.type),
           includeInTotal: true,
         })

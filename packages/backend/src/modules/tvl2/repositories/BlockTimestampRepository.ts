@@ -42,6 +42,18 @@ export class BlockTimestampRepository extends BaseRepository {
       .delete()
   }
 
+  async findByTimestamp(
+    chain: string,
+    timestamp: UnixTime,
+  ): Promise<BlockTimestampRecord | undefined> {
+    const knex = await this.knex()
+    const row = await knex('block_timestamps')
+      .where('chain', chain)
+      .where('timestamp', timestamp.toDate())
+      .first()
+    return row ? toRecord(row) : undefined
+  }
+
   // #region methods used only in tests
 
   async getAll(): Promise<BlockTimestampRecord[]> {

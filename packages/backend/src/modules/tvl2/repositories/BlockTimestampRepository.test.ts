@@ -55,6 +55,33 @@ describeDatabase(BlockTimestampRepository.name, (database) => {
     })
   })
 
+  it(BlockTimestampRepository.prototype.findByTimestamp.name, async () => {
+    const records = [
+      {
+        chain: 'chain',
+        timestamp: new UnixTime(0),
+        blockNumber: 0,
+      },
+      {
+        chain: 'chain',
+        timestamp: new UnixTime(1),
+        blockNumber: 0,
+      },
+      {
+        chain: 'chain-1',
+        timestamp: UnixTime.ZERO,
+        blockNumber: 0,
+      },
+    ]
+    for (const r of records) {
+      await repository.add(r)
+    }
+
+    const results = await repository.findByTimestamp('chain', new UnixTime(0))
+
+    expect(results).toEqual(records[0])
+  })
+
   it(BlockTimestampRepository.prototype.deleteAll.name, async () => {
     await repository.add({
       chain: 'chain',
