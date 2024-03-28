@@ -15,7 +15,7 @@
     "0xE6f24d2C32B3109B18ed33cF08eFb490b1e09C10": "L2OutputOracle",
     "0x892CAa506c86C5101f5eC11C6f09589c9dC8A85C": "L1CrossDomainMessenger",
     "0x80e73D6BfC73c567032304C3891a06c2d9954d09": "SystemConfig",
-    "0x8AC80fa0993D95C9d6B8Cb494E561E6731038941": "AdminMultisig"
+    "0x8AC80fa0993D95C9d6B8Cb494E561E6731038941": "RSS3Multisig"
   },
   "overrides": {
     "OptimismPortal": {

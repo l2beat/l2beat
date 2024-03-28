@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xac43e7406a4fbab7aee413fd0c755f604997ea5d
+Generated with discovered.json: 0xac6d490f8a0185fa196efef820f951a5c0afdc14
 
-# Diff at Tue, 26 Mar 2024 09:43:27 GMT:
+# Diff at Thu, 28 Mar 2024 08:08:58 GMT:
 
-- author: maciekzygmunt (<maciekzygmunt@interia.pl>)
-- current block number: 19517798
+- author: Luca Donno (<donnoh99@gmail.com>)
+- current block number: 19531321
 
 ## Description
 
@@ -61,7 +61,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract AdminMultisig (0x8AC80fa0993D95C9d6B8Cb494E561E6731038941)
+    contract RSS3Multisig (0x8AC80fa0993D95C9d6B8Cb494E561E6731038941)
     +++ description: None
 ```
 

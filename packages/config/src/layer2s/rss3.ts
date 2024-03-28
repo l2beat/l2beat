@@ -89,14 +89,22 @@ export const rss3: Layer2 = opStack({
     {
       name: 'SystemConfig Owner.',
       description:
-        'Account priviliged to change System Config parameters such as Sequencer Address and gas limit.',
+        'Account privileged to change System Config parameters such as sequencer address and gas limit.',
       accounts: [discovery.getPermissionedAccount('SystemConfig', 'owner')],
     },
+    ...discovery.getMultisigPermission(
+      'RSS3Multisig',
+      'This address is the owner of the following contracts: ProxyAdmin. It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
+    ),
   ],
   nonTemplateContracts: [
     discovery.getContractDetails('L1StandardBridge', {
       description: 'The L1 Bridge to VSL.',
       ...upgradeability,
+    }),
+    discovery.getContractDetails('SuperchainConfig', {
+      description:
+        'Contract that stores the Guardian address and allows it to pause the system.',
     }),
   ],
   nonTemplateEscrows: [],
