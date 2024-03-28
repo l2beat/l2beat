@@ -112,10 +112,10 @@ export const rss3: Layer2 = opStack({
   isNodeAvailable: false,
   milestones: [
     {
-      name: 'RSS3 Mainnet Launch',
+      name: 'RSS3 Mainnet Alpha Launch',
       link: 'https://x.com/rss3_/status/1767370007275851789',
       date: '2024-03-12T00:00:00Z',
-      description: 'RSS3 Network mainnet is live.',
+      description: 'RSS3 Network Mainnet Alpha is live.',
     },
   ],
   roleOverrides: {
