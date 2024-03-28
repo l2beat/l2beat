@@ -27,14 +27,10 @@ export function DesktopTabs({ pages }: DesktopTabsProps) {
         <li
           key={i}
           className={cn(
-            'relative h-16 w-full text-[17px] font-bold',
-            i !== pages.length - 1 && 'border-r-2 border-r-transparent',
-            i !== pages.length - 1 &&
-              !page.selected &&
-              !pages[i + 1]?.selected &&
-              'border-r-gray-200 dark:border-r-gray-850',
-            pages.length >= 4 && i === 3 && 'border-r-0',
-            i >= 4 && 'border-t-2 border-t-gray-200 dark:border-t-gray-850',
+            'relative h-16 w-full border-gray-200 text-[17px] font-bold dark:border-gray-850',
+            (i + 1) % 4 !== 0 && 'border-r-2',
+            i >= 4 && 'border-t-2',
+            i === pages.length - 1 && 'border-r-0',
             page.selected && [
               'before:absolute',
               'before:z-10',
