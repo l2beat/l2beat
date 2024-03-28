@@ -8,7 +8,7 @@ Generated with discovered.json: 0x2ae913f7b36b264cfa37ecf76fd5a829940e569f
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Update discovery to include the multisig threshold.
 
 ## Config/verification related changes
 
@@ -176,7 +176,7 @@ Generated with discovered.json: 0x15c383d1d808622bddcc23f20acc371a66bd7a71
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Update discovery to include the multisig threshold.
 
 ## Watched changes
 
@@ -1104,7 +1104,7 @@ Change in BridgeOwner (multisig) owners.
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Update discovery to include the multisig threshold.
 
 ## Watched changes
 

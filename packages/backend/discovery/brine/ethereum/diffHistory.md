@@ -43,7 +43,7 @@ Generated with discovered.json: 0x0cd8c4cfa2d1f43c4656c004415ecaf6cdd32409
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Update discovery to include the multisig threshold.
 
 ## Initial discovery
 

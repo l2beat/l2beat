@@ -8,7 +8,7 @@ Generated with discovered.json: 0x3234178d91d403e54fbe5caf0f912f14a404a51e
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Update discovery to include the multisig threshold.
 
 ## Config/verification related changes
 
@@ -244,7 +244,7 @@ discovery. Values are for block 18962479 (main branch discovery), not current.
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Update discovery to include the multisig threshold.
 
 ## Initial discovery
 

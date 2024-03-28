@@ -8,7 +8,7 @@ Generated with discovered.json: 0x537893caa59f373cff2679fee537357a320870aa
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Update discovery to include the multisig threshold.
 
 ## Config/verification related changes
 
@@ -94,7 +94,7 @@ Generated with discovered.json: 0x9d882fb2ce884a4add9de979baad67a6d2a8b618
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Update discovery to include the multisig threshold.
 
 ## Initial discovery
 

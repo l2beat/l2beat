@@ -8,7 +8,7 @@ Generated with discovered.json: 0x44eb161c66f4b404ab266f476c9ef78fac1b7823
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Update discovery to include the multisig threshold.
 
 ## Config/verification related changes
 
@@ -282,7 +282,7 @@ Change in the deposit limits of the USDC Bridge contract:
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Update discovery to include the multisig threshold.
 
 ## Watched changes
 

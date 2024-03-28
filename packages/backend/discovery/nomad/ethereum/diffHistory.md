@@ -8,7 +8,7 @@ Generated with discovered.json: 0xe7a909681ebdf0f056f5a654951a79673e31a16b
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Update discovery to include the multisig threshold.
 
 ## Config/verification related changes
 
@@ -76,7 +76,7 @@ Newly created contracts are the result of rediscovering the `upgradeBeacon` addr
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Update discovery to include the multisig threshold.
 
 ## Watched changes
 

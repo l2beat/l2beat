@@ -8,7 +8,7 @@ Generated with discovered.json: 0xab2564ccd95153417c52dae00a8e78fb02f47de6
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Update discovery to include the multisig threshold.
 
 ## Config/verification related changes
 
@@ -701,7 +701,7 @@ Added Scroll. Their AccessControl extension needed a custom handler since it als
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Update discovery to include the multisig threshold.
 
 ## Watched changes
 
