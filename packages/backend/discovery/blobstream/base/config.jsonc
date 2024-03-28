@@ -4,13 +4,31 @@
   "name": "blobstream",
   "initialAddresses": ["0xa83ca7775bc2889825bcdedffa5b758cf69e8794"],
   "names": {
-    "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794": "BlobstreamX"
+    "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794": "BlobstreamX",
+    "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776": "SuccinctGateway"
   },
   "overrides": {
     "BlobstreamX": {
       "ignoreMethods": ["state_dataCommitments", "proxiableUUID"],
       "fields": {
-        "accessControl": { "type": "accessControl" }
+        "accessControl": { "type": "accessControl" },
+      }
+    },
+    "SuccinctGateway": {
+      "fields": {
+        "blobstreamVerifier" :{
+          "type": "call",
+          "method": "function verifiers(bytes32 functionId) view returns (address)",
+          "args": ["0x9a8d1715f31162da0a0c86230f29abd4d9dd33488a7397e601002defa71d716f"] // BlobstreamX.headerRangeFunctionId() - can I fetch this from the contract?
+        },
+        "verifiers":
+        {
+          "type": "arrayFromTwoEvents",
+          "addEvent": "event FunctionRegistered(bytes32 indexed functionId, address verifier, bytes32 salt, address owner)",
+          "addKey": "verifier",
+          "removeEvent": "event FunctionVerifierUpdated(bytes32 indexed functionId, address verifier)", // can it remove old + add new values to the verifiers list? 
+          "removeKey": "verifier"
+        }
       }
     }
   }
