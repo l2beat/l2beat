@@ -48,6 +48,13 @@ export function Breakdown({
   )
 }
 
+interface GradientGroup {
+  weight: number
+  className: string
+  offset: number
+  size: number
+}
+
 function getGradientGroups({
   values,
   width,
@@ -59,10 +66,18 @@ function getGradientGroups({
   width: number
   minBarWidth: number
   barGap: number
-}) {
+}): GradientGroup[] {
   const totalValue = values.reduce((sum, v) => sum + v.value, 0)
 
-  if (totalValue === 0) return []
+  if (totalValue === 0)
+    return [
+      {
+        weight: 1,
+        className: 'fill-gray-550 dark:fill-gray-650',
+        offset: 0,
+        size: width,
+      },
+    ]
 
   const groups = values
     .map((v) => ({

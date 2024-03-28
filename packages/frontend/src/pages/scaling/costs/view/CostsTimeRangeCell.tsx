@@ -173,6 +173,23 @@ function CostsBreakdownTooltipContent({
   details: CostsDataDetails
   unit: keyof CostsDataBreakdown
 }) {
+  const calldataPercentage =
+    details.total[unit].value === 0
+      ? 0
+      : details.calldata[unit].value / details.total[unit].value
+  const blobsPercentage =
+    details.total[unit].value === 0 || !details.blobs
+      ? 0
+      : details.blobs?.[unit].value / details.total[unit].value
+  const computePercentage =
+    details.total[unit].value === 0
+      ? 0
+      : details.compute[unit].value / details.total[unit].value
+  const overheadPercentage =
+    details.total[unit].value === 0
+      ? 0
+      : details.overhead[unit].value / details.total[unit].value
+
   return (
     <div>
       <span className="text-xs font-medium uppercase text-gray-500 dark:text-gray-50">
@@ -182,7 +199,7 @@ function CostsBreakdownTooltipContent({
         <CostsBreakdownDetailRow
           label="Calldata"
           data={details.calldata}
-          percentage={details.calldata[unit].value / details.total[unit].value}
+          percentage={calldataPercentage}
           squareClassName="fill-blue-700 dark:fill-blue-400"
           unit={unit}
         />
@@ -190,7 +207,7 @@ function CostsBreakdownTooltipContent({
           <CostsBreakdownDetailRow
             label="Blobs"
             data={details.blobs}
-            percentage={details.blobs[unit].value / details.total[unit].value}
+            percentage={blobsPercentage}
             squareClassName="dark:fill-yellow-100 fill-orange-400"
             unit={unit}
           />
@@ -198,14 +215,14 @@ function CostsBreakdownTooltipContent({
         <CostsBreakdownDetailRow
           label="Compute"
           data={details.compute}
-          percentage={details.compute[unit].value / details.total[unit].value}
+          percentage={computePercentage}
           squareClassName="fill-pink-100"
           unit={unit}
         />
         <CostsBreakdownDetailRow
           label="Overhead"
           data={details.overhead}
-          percentage={details.overhead[unit].value / details.total[unit].value}
+          percentage={overheadPercentage}
           squareClassName="fill-green-500"
           unit={unit}
         />
