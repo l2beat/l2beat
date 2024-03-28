@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { ActivityIcon, RiskIcon, SummaryIcon, TvlIcon } from '../icons'
+import { CostsIcon } from '../icons/pages/CostsIcon'
 import { DataAvailabilityIcon } from '../icons/pages/DataAvailabilityIcon'
 import { FinalityIcon } from '../icons/pages/FinalityIcon'
 import { LivenessIcon } from '../icons/pages/LivenessIcon'
@@ -15,6 +16,7 @@ interface ScalingNavigationTabsProps {
     | 'liveness'
     | 'finality'
     | 'data-availability'
+    | 'costs'
   showActivity: boolean
   showFinality: boolean
   showLiveness: boolean
@@ -79,5 +81,13 @@ export function ScalingNavigationTabs(props: ScalingNavigationTabsProps) {
       selected: props.selected === 'activity',
     })
   }
+  pages.push({
+    fullTitle: 'Costs',
+    shortTitle: 'Costs',
+    icon: <CostsIcon />,
+    link: '/scaling/costs',
+    selected: props.selected === 'costs',
+    new: true,
+  })
   return <NavigationTabs pages={pages} />
 }

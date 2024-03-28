@@ -3,14 +3,14 @@ import { getFooterProps, getNavbarProps } from '../../../../components'
 import { getDiagramImageOrThrow } from '../../../../utils/project/getDiagramImage'
 import { Wrapped } from '../../../Page'
 import { FinalityPagesData } from '../types'
-import { FinalityPageProps } from '../view/ScalingFinalityPage'
+import { ScalingFinalityPageProps } from '../view/ScalingFinalityPage'
 import { getPageMetadata } from './getPageMetadata'
 import { getScalingFinalityView } from './getScalingFinalityView'
 
 export function getProps(
   config: Config,
   pagesData: FinalityPagesData,
-): Wrapped<FinalityPageProps> {
+): Wrapped<ScalingFinalityPageProps> {
   return {
     props: {
       navbar: getNavbarProps(config, 'scaling'),

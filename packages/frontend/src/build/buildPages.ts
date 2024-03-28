@@ -16,6 +16,7 @@ import { fetchActivityApi } from './api/fetchActivityApi'
 import { fetchDiffHistory } from './api/fetchDiffHistory'
 import { fetchFinalityApi } from './api/fetchFinalityApi'
 import { fetchImplementationChangeReport } from './api/fetchImplementationChangeReport'
+import { fetchL2CostsApi } from './api/fetchL2CostsApi'
 import { fetchLivenessApi } from './api/fetchLivenessApi'
 import { fetchTvlApi } from './api/fetchTvlApi'
 import { fetchTvlBreakdownApi } from './api/fetchTvlBreakdownApi'
@@ -109,6 +110,8 @@ async function main() {
       console.timeEnd('[IMPLEMENTATION CHANGE]')
     }
 
+    const l2CostsApiResponse = await fetchL2CostsApi(config.backend, http)
+
     createApi(config, tvlApiResponse, activityApiResponse)
 
     const supportedChains = getChainNames(config)
@@ -124,6 +127,7 @@ async function main() {
       tvlBreakdownApiResponse,
       livenessApiResponse,
       finalityApiResponse,
+      l2CostsApiResponse,
       diffHistory,
       implementationChange,
     }

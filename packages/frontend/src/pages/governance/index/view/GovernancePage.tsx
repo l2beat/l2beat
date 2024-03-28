@@ -37,7 +37,7 @@ export function GovernancePage(props: GovernancePageProps) {
         delegatedProjects={props.delegatedProjects}
         pageContentClassName="md:px-6 lg:px-12 justify-start"
       />
-      <PageContent type="subpage" className="md:px-6 lg:px-12">
+      <PageContent className="md:px-6 lg:px-12">
         <main className="grid md:mt-20 md:gap-6 lg:grid-cols-8 lg:gap-8 [&>*:nth-child(odd)]:bg-transparent md:[&>*:nth-child(odd)]:bg-gray-100 md:[&>*:nth-child(odd)]:dark:dark:bg-zinc-900">
           <RecentPublicationsSection
             publications={props.publications}

@@ -21,6 +21,7 @@ type ScalingRowType =
   | 'liveness'
   | 'finality'
   | 'data-availability'
+  | 'costs'
 
 export function getScalingRowProps(
   entry: ScalingTableEntry,
@@ -49,6 +50,7 @@ function getHref(slug: ScalingTableEntry['slug'], type: ScalingRowType) {
     case 'liveness':
     case 'finality':
     case 'data-availability':
+    case 'costs':
       //TODO: (DA) maybe redirect to the data-availability section
       return base
     case 'tvl':
