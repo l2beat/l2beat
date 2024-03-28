@@ -86,7 +86,7 @@ export function getScalingCostsColumnsConfig() {
       ),
       headClassName: underlineClassNames('!pr-4', 'before:bg-green-500'),
       tooltip:
-        'The sum of the fixed 21000 GAS overhead per transaction for the selected time period.',
+        'The sum of the fixed 21,000 GAS overhead per transaction for the selected time period.',
       align: 'right',
       sorting: getSorting('overhead'),
     },
