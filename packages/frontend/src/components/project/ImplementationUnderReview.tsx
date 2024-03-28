@@ -15,8 +15,8 @@ export function ImplementationUnderReview({
         <UnderReviewIcon className="size-4 md:size-6" />
       </TooltipTrigger>
       <TooltipContent>
-        'There are implementation changes and part of the information might be
-        outdated.'
+        There are implementation changes and part of the information might be
+        outdated.
       </TooltipContent>
     </Tooltip>
   )

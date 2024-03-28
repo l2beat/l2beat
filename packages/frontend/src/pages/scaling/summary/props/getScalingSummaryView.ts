@@ -27,22 +27,26 @@ export function getScalingSummaryView(
   const layer3s = ordered.filter((p) => p.type === 'layer3') as Layer3[]
 
   return {
-    layer2s: layer2s.map((project) =>
-      getScalingL2SummaryEntry(
+    layer2s: layer2s.map((project) => {
+      const hasImplementationChanged =
+        !!implementationChange?.projects[project.id.toString()]
+      return getScalingL2SummaryEntry(
         project,
         tvlApiResponse,
         tvl,
         verificationStatus.projects[project.id.toString()],
-        !!implementationChange?.projects[project.id.toString()],
-      ),
-    ),
-    layer3s: layer3s.map((project) =>
-      getScalingL3SummaryEntry(
+        hasImplementationChanged,
+      )
+    }),
+    layer3s: layer3s.map((project) => {
+      const hasImplementationChanged =
+        !!implementationChange?.projects[project.id.toString()]
+      return getScalingL3SummaryEntry(
         project,
         verificationStatus.projects[project.id.toString()],
-        !!implementationChange?.projects[project.id.toString()],
-      ),
-    ),
+        hasImplementationChanged,
+      )
+    }),
   }
 }
 

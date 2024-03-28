@@ -21,14 +21,16 @@ export function getScalingTvlView(
   const orderedProjects = orderByTvl(projects, tvlApiResponse)
 
   return {
-    items: orderedProjects.map((project) =>
-      getScalingTvlViewEntry(
+    items: orderedProjects.map((project) => {
+      const hasImplementationChanged =
+        !!implementationChange?.projects[project.id.toString()]
+      return getScalingTvlViewEntry(
         tvlApiResponse,
         project,
         undefined,
-        !!implementationChange?.projects[project.id.toString()],
-      ),
-    ),
+        hasImplementationChanged,
+      )
+    }),
   }
 }
 

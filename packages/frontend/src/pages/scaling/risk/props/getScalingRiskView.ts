@@ -15,13 +15,15 @@ export function getScalingRiskView(
   return {
     items: ordered
       .filter((p) => !p.isUpcoming)
-      .map((p) =>
-        getScalingRiskViewEntry(
+      .map((p) => {
+        const hasImplementationChanged =
+          !!pagesData.implementationChange?.projects[p.id.toString()]
+        return getScalingRiskViewEntry(
           p,
           pagesData.verificationStatus.projects[p.id.toString()],
-          !!pagesData.implementationChange?.projects[p.id.toString()],
-        ),
-      ),
+          hasImplementationChanged,
+        )
+      }),
   }
 }
 

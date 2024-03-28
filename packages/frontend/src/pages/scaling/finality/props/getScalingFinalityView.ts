@@ -24,13 +24,15 @@ export function getScalingFinalityView(
 
   return {
     items: orderedProjects
-      .map((project) =>
-        getScalingFinalityViewEntry(
+      .map((project) => {
+        const hasImplementationChanged =
+          !!implementationChange?.projects[project.id.toString()]
+        return getScalingFinalityViewEntry(
           project,
           finalityApiResponse.projects[project.id.toString()],
-          !!implementationChange?.projects[project.id.toString()],
-        ),
-      )
+          hasImplementationChanged,
+        )
+      })
       .filter(notUndefined),
   }
 }

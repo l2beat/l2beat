@@ -18,12 +18,11 @@ export function getScalingDataAvailabilityView(
 
   return {
     items: orderedByTvl
-      .map((p) =>
-        getScalingDataAvailabilityViewEntry(
-          p,
-          !!pagesData.implementationChange?.projects[p.id.toString()],
-        ),
-      )
+      .map((p) => {
+        const hasImplementationChanged =
+          !!pagesData.implementationChange?.projects[p.id.toString()]
+        return getScalingDataAvailabilityViewEntry(p, hasImplementationChanged)
+      })
       .filter(notUndefined),
   }
 }
