@@ -41,7 +41,8 @@ export class AmountRepository extends BaseRepository {
   }
 
   // POC for the architecture with joins, if it won't be needed - remove it
-  async getByProjectAndTimestamp(
+  async getByIndexerProjectAndTimestamp(
+    indexerId: string,
     projectId: ProjectId,
     timestamp: UnixTime,
   ): Promise<AmountRecord[]> {
@@ -50,6 +51,7 @@ export class AmountRepository extends BaseRepository {
     const subquery = knex
       .select('id')
       .from('amounts_configurations')
+      .where('indexer_id', indexerId)
       .where('project_id', projectId)
 
     const rows = await knex
@@ -123,7 +125,7 @@ function toRecordWithMetadata(
 
     projectId: ProjectId(row.project_id),
     indexerId: row.indexer_id,
-    source: row.source,
+    chain: row.chain,
     address: row.address === 'native' ? 'native' : EthereumAddress(row.address),
     ...(row.escrow_address
       ? { escrowAddress: EthereumAddress(row.escrow_address) }

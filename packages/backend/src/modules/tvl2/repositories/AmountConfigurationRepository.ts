@@ -10,28 +10,28 @@ import { Database } from '../../../peripherals/database/Database'
 
 export interface AmountConfigurationRow {
   id: number
-  project_id: string
   indexer_id: string
-  source: string
+  project_id: string
+  chain: string
   address: string
+  escrow_address: string | null
   origin: string
   type: string
   include_in_total: boolean
-  escrow_address: string | null
   since_timestamp_inclusive: Date
   until_timestamp_exclusive: Date | null
 }
 
 export interface AmountConfigurationRecord {
   id: number
-  projectId: ProjectId
   indexerId: string
-  source: string
+  projectId: ProjectId
+  chain: string
   address: EthereumAddress | 'native'
+  escrowAddress?: EthereumAddress
   origin: 'canonical' | 'external' | 'native'
   type: 'totalSupply' | 'circulatingSupply' | 'escrow'
   includeInTotal: boolean
-  escrowAddress?: EthereumAddress
   sinceTimestampInclusive: UnixTime
   untilTimestampExclusive?: UnixTime
 }
@@ -87,14 +87,14 @@ function toRow(
   row: Omit<AmountConfigurationRecord, 'id'>,
 ): Omit<AmountConfigurationRow, 'id'> {
   return {
-    project_id: row.projectId.toString(),
     indexer_id: row.indexerId,
-    source: row.source,
+    project_id: row.projectId.toString(),
+    chain: row.chain,
     address: row.address === 'native' ? 'native' : row.address.toString(),
+    escrow_address: row.escrowAddress?.toString() ?? null,
     origin: row.origin,
     type: row.type,
     include_in_total: row.includeInTotal,
-    escrow_address: row.escrowAddress?.toString() ?? null,
     since_timestamp_inclusive: row.sinceTimestampInclusive.toDate(),
     until_timestamp_exclusive: row.untilTimestampExclusive?.toDate() ?? null,
   }
@@ -103,9 +103,9 @@ function toRow(
 function toRecord(row: AmountConfigurationRow): AmountConfigurationRecord {
   const r: Omit<AmountConfigurationRecord, 'escrowAddress'> = {
     id: row.id,
-    projectId: ProjectId(row.project_id),
     indexerId: row.indexer_id,
-    source: row.source,
+    projectId: ProjectId(row.project_id),
+    chain: row.chain,
     address: row.address === 'native' ? 'native' : EthereumAddress(row.address),
     ...(row.escrow_address
       ? { escrowAddress: EthereumAddress(row.escrow_address) }

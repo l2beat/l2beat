@@ -22,10 +22,17 @@ describeDatabase(AmountRepository.name, (database) => {
   beforeEach(async () => {
     IDS = await configurationRepository.addMany([
       mock({
-        projectId: ProjectId.ARBITRUM,
         indexerId: INDEXER,
+        projectId: ProjectId.ARBITRUM,
       }),
-      mock(),
+      mock({
+        indexerId: INDEXER,
+        projectId: ProjectId('other-project'),
+      }),
+      mock({
+        indexerId: 'other_indexer',
+        projectId: ProjectId.ARBITRUM,
+      }),
     ])
   })
 
@@ -70,38 +77,47 @@ describeDatabase(AmountRepository.name, (database) => {
     })
   })
 
-  it(AmountRepository.prototype.getByProjectAndTimestamp.name, async () => {
-    await repository.addMany([
-      {
+  it(
+    AmountRepository.prototype.getByIndexerProjectAndTimestamp.name,
+    async () => {
+      await repository.addMany([
+        {
+          configurationId: IDS[0],
+          timestamp: new UnixTime(0),
+          amount: 111n,
+        },
+        {
+          configurationId: IDS[0],
+          timestamp: new UnixTime(1),
+          amount: 222n,
+        },
+        {
+          configurationId: IDS[1],
+          timestamp: new UnixTime(0),
+          amount: 333n,
+        },
+        {
+          configurationId: IDS[2],
+          timestamp: new UnixTime(0),
+          amount: 444n,
+        },
+      ])
+
+      const result = await repository.getByIndexerProjectAndTimestamp(
+        INDEXER,
+        ProjectId.ARBITRUM,
+        new UnixTime(0),
+      )
+
+      expect(result).toHaveLength(1)
+      expect(result[0]).toEqual({
+        ...mock({ projectId: ProjectId.ARBITRUM, indexerId: INDEXER }),
         configurationId: IDS[0],
         timestamp: new UnixTime(0),
         amount: 111n,
-      },
-      {
-        configurationId: IDS[0],
-        timestamp: new UnixTime(1),
-        amount: 222n,
-      },
-      {
-        configurationId: IDS[1],
-        timestamp: new UnixTime(0),
-        amount: 333n,
-      },
-    ])
-
-    const result = await repository.getByProjectAndTimestamp(
-      ProjectId.ARBITRUM,
-      new UnixTime(0),
-    )
-
-    expect(result).toHaveLength(1)
-    expect(result[0]).toEqual({
-      ...mock({ projectId: ProjectId.ARBITRUM, indexerId: INDEXER }),
-      configurationId: IDS[0],
-      timestamp: new UnixTime(0),
-      amount: 111n,
-    })
-  })
+      })
+    },
+  )
 
   it(
     AmountRepository.prototype.deleteAfterExclusiveByIndexerId.name,
@@ -156,7 +172,7 @@ function mock(
   return {
     projectId: ProjectId('project'),
     indexerId: 'indexer',
-    source: 'chain',
+    chain: 'chain',
     address: EthereumAddress.ZERO,
     origin: 'native',
     type: 'circulatingSupply',

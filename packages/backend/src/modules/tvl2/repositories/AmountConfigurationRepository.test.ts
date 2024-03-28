@@ -85,9 +85,9 @@ function mock(
   record?: Partial<AmountConfigurationRecord>,
 ): Omit<AmountConfigurationRecord, 'id'> {
   return {
-    projectId: ProjectId('project'),
     indexerId: 'indexer',
-    source: 'chain',
+    projectId: ProjectId('project'),
+    chain: 'chain',
     address: EthereumAddress.ZERO,
     origin: 'native',
     type: 'circulatingSupply',

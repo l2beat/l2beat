@@ -16,21 +16,19 @@ import { Knex } from 'knex'
 export async function up(knex: Knex) {
   await knex.schema.createTable('amounts_configurations', function (table) {
     table.increments('id')
-    table.string('project_id').notNullable()
     table.string('indexer_id').notNullable()
-    table.string('source').notNullable()
+    table.string('project_id').notNullable()
+    table.string('chain').notNullable()
     table.string('address').notNullable()
+    table.string('escrow_address').nullable()
     table.string('origin').notNullable()
     table.string('type').notNullable()
     table.boolean('include_in_total').notNullable()
-    table.string('escrow_address').nullable()
     table.dateTime('since_timestamp_inclusive', { useTz: false }).notNullable()
     table.dateTime('until_timestamp_exclusive', { useTz: false }).nullable()
 
     table.primary(['id'])
-    table.index(['project_id'])
-    table.index(['indexer_id'])
-    table.index(['source', 'project_id', 'origin'])
+    table.index(['indexer_id', 'project_id'])
   })
 
   await knex.schema.createTable('amounts', function (table) {
