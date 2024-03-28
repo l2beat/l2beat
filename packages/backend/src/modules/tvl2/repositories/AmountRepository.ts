@@ -200,29 +200,17 @@ function toRow(record: AmountRecord): AmountRow {
 function toRecordWithMetadata(
   row: AmountRow & AmountConfigurationRow,
 ): AmountWithMetadata {
+  type OptionalId = Omit<AmountConfigurationRecord, 'id'> & {
+    id?: number
+  }
+  const configurationRecord: OptionalId = toConfigurationRecord(row)
+  delete configurationRecord.id
+
   return {
     configurationId: row.configuration_id,
     timestamp: UnixTime.fromDate(row.timestamp),
     amount: BigInt(row.amount),
-
-    projectId: ProjectId(row.project_id),
-    indexerId: row.indexer_id,
-    chain: row.chain,
-    address: row.address === 'native' ? 'native' : EthereumAddress(row.address),
-    ...(row.escrow_address
-      ? { escrowAddress: EthereumAddress(row.escrow_address) }
-      : {}),
-    origin: row.origin as 'canonical' | 'external' | 'native',
-    type: row.type as 'totalSupply' | 'circulatingSupply' | 'escrow',
-    includeInTotal: row.include_in_total,
-    sinceTimestampInclusive: UnixTime.fromDate(row.since_timestamp_inclusive),
-    ...(row.until_timestamp_inclusive
-      ? {
-          untilTimestampInclusive: UnixTime.fromDate(
-            row.until_timestamp_inclusive,
-          ),
-        }
-      : {}),
+    ...configurationRecord,
   }
 }
 
