@@ -15,8 +15,12 @@ export function getProps(
   config: Config,
   pagesData: PagesData,
 ): Wrapped<ProjectPageProps> {
-  const { tvlApiResponse, verificationStatus, manuallyVerifiedContracts } =
-    pagesData
+  const {
+    tvlApiResponse,
+    verificationStatus,
+    manuallyVerifiedContracts,
+    implementationChange,
+  } = pagesData
 
   const chart = getChart(bridge, tvlApiResponse, config)
   return {
@@ -27,6 +31,7 @@ export function getProps(
         bridge,
         verificationStatus,
         manuallyVerifiedContracts,
+        implementationChange,
         chart,
       ),
       footer: getFooterProps(config),

@@ -1,5 +1,9 @@
 import { Layer2, layer2s, Layer3 } from '@l2beat/config'
-import { TvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
+import {
+  ImplementationChangeReportApiResponse,
+  TvlApiResponse,
+  VerificationStatus,
+} from '@l2beat/shared-pure'
 
 import { orderByTvl } from '../../../../utils/orderByTvl'
 import { getProjectTvlTooltipText } from '../../../../utils/project/getProjectTvlTooltipText'
@@ -15,6 +19,7 @@ export function getScalingSummaryView(
   tvlApiResponse: TvlApiResponse,
   tvl: number,
   verificationStatus: VerificationStatus,
+  implementationChange: ImplementationChangeReportApiResponse | undefined,
 ): ScalingSummaryViewProps {
   const ordered = orderByTvl(projects, tvlApiResponse)
 
@@ -22,20 +27,26 @@ export function getScalingSummaryView(
   const layer3s = ordered.filter((p) => p.type === 'layer3') as Layer3[]
 
   return {
-    layer2s: layer2s.map((project) =>
-      getScalingL2SummaryEntry(
+    layer2s: layer2s.map((project) => {
+      const hasImplementationChanged =
+        !!implementationChange?.projects[project.id.toString()]
+      return getScalingL2SummaryEntry(
         project,
         tvlApiResponse,
         tvl,
         verificationStatus.projects[project.id.toString()],
-      ),
-    ),
-    layer3s: layer3s.map((project) =>
-      getScalingL3SummaryEntry(
+        hasImplementationChanged,
+      )
+    }),
+    layer3s: layer3s.map((project) => {
+      const hasImplementationChanged =
+        !!implementationChange?.projects[project.id.toString()]
+      return getScalingL3SummaryEntry(
         project,
         verificationStatus.projects[project.id.toString()],
-      ),
-    ),
+        hasImplementationChanged,
+      )
+    }),
   }
 }
 
@@ -44,6 +55,7 @@ function getScalingL2SummaryEntry(
   tvlApiResponse: TvlApiResponse,
   aggregateTvl: number,
   isVerified?: boolean,
+  hasImplementationChanged?: boolean,
 ): ScalingL2SummaryViewEntry {
   const associatedTokens = project.config.associatedTokens ?? []
   const apiProject = tvlApiResponse.projects[project.id.toString()]
@@ -62,6 +74,7 @@ function getScalingL2SummaryEntry(
     category: project.display.category,
     riskValues: getRiskValues(project.riskView),
     warning: project.display.warning,
+    hasImplementationChanged,
     isVerified,
     isArchived: project.isArchived,
     showProjectUnderReview: isAnySectionUnderReview(project),
@@ -101,6 +114,7 @@ function getScalingL2SummaryEntry(
 function getScalingL3SummaryEntry(
   project: Layer3,
   isVerified?: boolean,
+  hasImplementationChanged?: boolean,
 ): ScalingL3SummaryViewEntry {
   return {
     name: project.display.name,
@@ -109,6 +123,7 @@ function getScalingL3SummaryEntry(
     provider: project.display.provider,
     category: project.display.category,
     warning: project.display.warning,
+    hasImplementationChanged,
     isVerified,
     showProjectUnderReview: isAnySectionUnderReview(project),
     isUpcoming: project.isUpcoming,

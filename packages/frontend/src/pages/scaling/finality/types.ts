@@ -5,13 +5,18 @@ import {
   ScalingProjectPurpose,
   StageConfig,
 } from '@l2beat/config'
-import { FinalityApiResponse, TvlApiResponse } from '@l2beat/shared-pure'
+import {
+  FinalityApiResponse,
+  ImplementationChangeReportApiResponse,
+  TvlApiResponse,
+} from '@l2beat/shared-pure'
 
 import { SyncStatus } from '../../types'
 
 export interface FinalityPagesData {
   finalityApiResponse: FinalityApiResponse
   tvlApiResponse: TvlApiResponse
+  implementationChange?: ImplementationChangeReportApiResponse
 }
 
 export interface ScalingFinalityViewEntry {
@@ -22,6 +27,7 @@ export interface ScalingFinalityViewEntry {
   dataAvailabilityMode: DataAvailabilityMode | undefined
   provider: Layer2Provider | undefined
   warning: string | undefined
+  hasImplementationChanged?: boolean
   redWarning: string | undefined
   purposes: ScalingProjectPurpose[]
   stage: StageConfig

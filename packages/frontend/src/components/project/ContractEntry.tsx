@@ -5,11 +5,12 @@ import {
 import React from 'react'
 
 import { cn } from '../../utils/cn'
+import { ShieldIcon } from '../icons'
 import { BulletIcon } from '../icons/symbols/BulletIcon'
 import { Link } from '../Link'
 import { Markdown } from '../Markdown'
 import { UnverifiedContractsWarning } from '../table/UnverifiedContractsWarning'
-import { Callout } from './Callout'
+import { Callout, CalloutProps } from './Callout'
 import { EtherscanLink } from './EtherscanLink'
 import { ReferenceList, TechnologyReference } from './ReferenceList'
 
@@ -24,6 +25,7 @@ export interface TechnologyContract {
   upgradeDelay?: string
   upgradeConsiderations?: string
   references?: TechnologyReference[]
+  implementationHasChanged?: boolean
 }
 
 export interface TechnologyContractLinks {
@@ -62,16 +64,24 @@ export function ContractEntry({
     .map((c) => verificationStatusForChain[c])
     .some((c) => c === false)
 
-  const color = areAddressesUnverified || areLinksUnverified ? 'red' : undefined
-  const icon =
-    areAddressesUnverified || areLinksUnverified ? (
+  let color: CalloutProps['color'] = undefined
+
+  if (areAddressesUnverified || areLinksUnverified) {
+    color = 'red'
+  }
+
+  let icon = <BulletIcon className="h-[1em]" />
+  if (contract.implementationHasChanged) {
+    icon = <ShieldIcon className={cn('fill-yellow-700 dark:fill-yellow-300')} />
+  }
+  if (areAddressesUnverified || areLinksUnverified) {
+    icon = (
       <UnverifiedContractsWarning
         className="mt-[3px]"
         tooltip="Source code is not verified"
       />
-    ) : (
-      <BulletIcon className="h-[1em]" />
     )
+  }
 
   addresses.forEach((address) => {
     const manuallyVerified = manuallyVerifiedContractsForChain[address]
@@ -85,7 +95,7 @@ export function ContractEntry({
 
   return (
     <Callout
-      className={cn(color === 'red' ? 'p-4' : 'px-4', className)}
+      className={cn(color === undefined ? 'px-4' : 'p-4', className)}
       color={color}
       icon={icon}
       body={

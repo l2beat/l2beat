@@ -1,6 +1,7 @@
 import { Layer2 } from '@l2beat/config'
 import {
   assertUnreachable,
+  ImplementationChangeReportApiResponse,
   LivenessApiProject,
   LivenessApiResponse,
   UnixTime,
@@ -18,13 +19,14 @@ export function getScalingLivenessView(
   projects: Layer2[],
   pagesData: LivenessPagesData,
 ): ScalingLivenessViewProps {
-  const { tvlApiResponse, livenessApiResponse } = pagesData
+  const { tvlApiResponse, livenessApiResponse, implementationChange } =
+    pagesData
   const included = getIncludedProjects(projects, livenessApiResponse)
   const ordered = orderByTvl(included, tvlApiResponse)
 
   return {
     items: ordered.map((p) =>
-      getScalingLivenessViewEntry(p, livenessApiResponse),
+      getScalingLivenessViewEntry(p, livenessApiResponse, implementationChange),
     ),
   }
 }
@@ -32,8 +34,11 @@ export function getScalingLivenessView(
 function getScalingLivenessViewEntry(
   project: Layer2,
   livenessResponse: LivenessApiResponse,
+  implementationChange?: ImplementationChangeReportApiResponse,
 ): ScalingLivenessViewEntry {
   const liveness = livenessResponse.projects[project.id.toString()]
+  const hasImplementationChanged =
+    !!implementationChange?.projects[project.id.toString()]
   if (!liveness) {
     throw new Error(
       `Liveness data not found for project ${project.display.name}`,
@@ -51,6 +56,7 @@ function getScalingLivenessViewEntry(
     purposes: project.display.purposes,
     warning: project.display.warning,
     redWarning: project.display.redWarning,
+    hasImplementationChanged,
     category: project.display.category,
     dataAvailabilityMode: project.dataAvailability?.mode,
     provider: project.display.provider,

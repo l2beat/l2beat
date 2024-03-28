@@ -2,6 +2,7 @@ import { Layer2, ScalingProjectLinks } from '@l2beat/config'
 import {
   ActivityApiResponse,
   DiffHistoryApiResponse,
+  ImplementationChangeReportApiResponse,
   ProjectId,
   TvlApiCharts,
   TvlApiResponse,
@@ -24,10 +25,16 @@ export function getProjectHeader(
   project: Layer2,
   config: Config,
   tvlApiResponse: TvlApiResponse,
+  implementationChange: ImplementationChangeReportApiResponse | undefined,
   activityApiResponse?: ActivityApiResponse,
   diffHistory?: DiffHistoryApiResponse,
 ): ProjectHeaderProps {
   const apiProject = tvlApiResponse.projects[project.id.toString()]
+  const implementationChangeForProject =
+    implementationChange?.projects[project.id.toString()]
+  const implementationHasChanged =
+    implementationChangeForProject !== undefined &&
+    Object.values(implementationChangeForProject).length > 0
 
   const getDetailed = (chart: TvlApiCharts | undefined) => {
     const { parts, partsWeeklyChange } = getDetailedTvlWithChange(chart)
@@ -93,6 +100,7 @@ export function getProjectHeader(
     isArchived: project.isArchived,
     isUpcoming: project.isUpcoming,
     isUnderReview: project.isUnderReview,
+    implementationHasChanged: implementationHasChanged,
     showProjectUnderReview: isAnySectionUnderReview(project),
     warning: project.display.headerWarning,
   }

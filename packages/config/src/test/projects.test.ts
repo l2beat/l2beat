@@ -54,6 +54,14 @@ describe('projects', () => {
     const addresses = new Set<EthereumAddress>()
 
     for (const project of [...layer2s, ...bridges]) {
+      // NOTE(radomski): PolygonCDK projects have a shared escrow
+      if (
+        'provider' in project.display &&
+        project.display.provider === 'Polygon'
+      ) {
+        continue
+      }
+
       for (const { address } of project.config.escrows) {
         it(address.toString(), () => {
           expect(addresses.has(address)).toEqual(false)

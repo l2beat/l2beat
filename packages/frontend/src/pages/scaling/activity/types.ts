@@ -4,11 +4,16 @@ import {
   ScalingProjectPurpose,
   StageConfig,
 } from '@l2beat/config'
-import { ActivityApiResponse, VerificationStatus } from '@l2beat/shared-pure'
+import {
+  ActivityApiResponse,
+  ImplementationChangeReportApiResponse,
+  VerificationStatus,
+} from '@l2beat/shared-pure'
 
 export interface ActivityPagesData {
   activityApiResponse: ActivityApiResponse
   verificationStatus: VerificationStatus
+  implementationChange?: ImplementationChangeReportApiResponse
 }
 
 export interface ActivityViewEntry {
@@ -18,6 +23,7 @@ export interface ActivityViewEntry {
   category: ScalingProjectCategory | undefined
   provider: Layer2Provider | undefined
   warning: string | undefined
+  hasImplementationChanged?: boolean
   redWarning: string | undefined
   purposes: ScalingProjectPurpose[] | undefined
   isVerified: boolean | undefined

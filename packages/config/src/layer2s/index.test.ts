@@ -46,6 +46,9 @@ describe('layer2s', () => {
   describe('escrows', () => {
     describe('every escrow in new format resolves to discovery entry', () => {
       for (const layer2 of layer2s) {
+        // NOTE(radomski): PolygonCDK projects have a shared escrow
+        if (layer2.display.provider === 'Polygon') continue
+
         try {
           const discovery = new ProjectDiscovery(layer2.id.toString())
 

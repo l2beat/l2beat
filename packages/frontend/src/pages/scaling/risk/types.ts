@@ -5,11 +5,16 @@ import {
   ScalingProjectRiskViewEntry,
   StageConfig,
 } from '@l2beat/config'
-import { TvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
+import {
+  ImplementationChangeReportApiResponse,
+  TvlApiResponse,
+  VerificationStatus,
+} from '@l2beat/shared-pure'
 
 export interface ScalingRiskPagesData {
   verificationStatus: VerificationStatus
   tvlApiResponse: TvlApiResponse
+  implementationChange?: ImplementationChangeReportApiResponse
 }
 
 export interface ScalingRiskViewEntry {
@@ -19,6 +24,7 @@ export interface ScalingRiskViewEntry {
   category: ScalingProjectCategory
   provider?: Layer2Provider
   warning?: string
+  hasImplementationChanged?: boolean
   redWarning: string | undefined
   purposes: ScalingProjectPurpose[]
   isArchived?: boolean
