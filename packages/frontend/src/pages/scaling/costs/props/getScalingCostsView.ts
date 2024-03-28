@@ -22,7 +22,11 @@ export function getScalingCostsView(
   projects: Layer2[],
   pagesData: CostsPagesData,
 ): ScalingCostsViewProps {
-  const { tvlApiResponse, costsApiResponse } = pagesData
+  const {
+    tvlApiResponse,
+    l2CostsApiResponse: costsApiResponse,
+    implementationChange,
+  } = pagesData
 
   const includedProjects = getIncludedProjects(projects, costsApiResponse)
   const orderedProjects = orderByTvl(includedProjects, tvlApiResponse)
@@ -33,8 +37,14 @@ export function getScalingCostsView(
         const l2CostsProjectData =
           costsApiResponse.projects[project.id.toString()]
         assert(l2CostsProjectData, 'l2CostsProjectData is undefined')
+        const hasImplementationChanged =
+          !!implementationChange?.projects[project.id.toString()]
 
-        return getScalingCostsViewEntry(project, l2CostsProjectData)
+        return getScalingCostsViewEntry(
+          project,
+          l2CostsProjectData,
+          hasImplementationChanged,
+        )
       })
       .filter(notUndefined),
   }
@@ -43,14 +53,16 @@ export function getScalingCostsView(
 function getScalingCostsViewEntry(
   project: Layer2,
   l2CostsProjectData: L2CostsApiProject,
+  hasImplementationChanged: boolean,
 ): ScalingCostsViewEntry {
   return {
     name: project.display.name,
     shortName: project.display.shortName,
     slug: project.display.slug,
+    showProjectUnderReview: !!project.isUnderReview,
+    hasImplementationChanged,
     warning: project.display.warning,
     redWarning: project.display.redWarning,
-    showProjectUnderReview: !!project.isUnderReview,
     category: project.display.category,
     provider: project.display.provider,
     purposes: project.display.purposes,

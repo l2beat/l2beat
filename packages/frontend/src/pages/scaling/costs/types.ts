@@ -5,6 +5,7 @@ import {
   StageConfig,
 } from '@l2beat/config'
 import {
+  ImplementationChangeReportApiResponse,
   L2CostsApiProject,
   L2CostsApiResponse,
   TvlApiResponse,
@@ -14,7 +15,8 @@ import { ValueWithDisplayValue } from '../../types'
 
 export interface CostsPagesData {
   tvlApiResponse: TvlApiResponse
-  costsApiResponse: L2CostsApiResponse
+  l2CostsApiResponse: L2CostsApiResponse
+  implementationChange: ImplementationChangeReportApiResponse | undefined
 }
 
 export interface ScalingCostsViewEntry {
@@ -22,6 +24,7 @@ export interface ScalingCostsViewEntry {
   shortName: string | undefined
   slug: string
   showProjectUnderReview: boolean
+  hasImplementationChanged: boolean
   warning: string | undefined
   redWarning: string | undefined
   category: ScalingProjectCategory

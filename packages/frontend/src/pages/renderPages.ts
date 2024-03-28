@@ -116,7 +116,8 @@ export async function renderPages(config: Config, pagesData: PagesData) {
   pages.push(
     getCostsPage(config, {
       tvlApiResponse,
-      costsApiResponse: l2CostsApiResponse,
+      l2CostsApiResponse,
+      implementationChange,
     }),
   )
 
