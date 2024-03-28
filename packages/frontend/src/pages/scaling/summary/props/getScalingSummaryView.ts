@@ -1,7 +1,8 @@
-import { Layer2, layer2s, Layer3 } from '@l2beat/config'
+import { Layer2, layer2s, Layer3, safeGetTokenByAssetId } from '@l2beat/config'
 import {
   ImplementationChangeReportApiResponse,
   TvlApiResponse,
+  TvlApiToken,
   VerificationStatus,
 } from '@l2beat/shared-pure'
 
@@ -9,7 +10,12 @@ import { orderByTvl } from '../../../../utils/orderByTvl'
 import { getProjectTvlTooltipText } from '../../../../utils/project/getProjectTvlTooltipText'
 import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
 import { getRiskValues } from '../../../../utils/risks/values'
-import { getTvlStats, TvlStats } from '../../../../utils/tvl/getTvlStats'
+import { getTvlWarning } from '../../../../utils/tvl/getTVLBreakdown'
+import {
+  getTvlStats,
+  TvlStats,
+  unifyTokensResponse,
+} from '../../../../utils/tvl/getTvlStats'
 import { formatPercent, formatUSD } from '../../../../utils/utils'
 import { ScalingL2SummaryViewEntry, ScalingL3SummaryViewEntry } from '../types'
 import { ScalingSummaryViewProps } from '../view/ScalingSummaryView'
@@ -66,6 +72,12 @@ function getScalingL2SummaryEntry(
     stats = getTvlStats(apiProject, project.display.name, associatedTokens)
   }
 
+  const total = apiProject?.charts.hourly.data.at(-1)?.[1] ?? 0
+  const tokens = unifyTokensResponse(apiProject?.tokens)
+  const associatedRatio = getAssociatedRatio(associatedTokens, total, tokens)
+  const { warning: tvlWarningContent, warningSeverity: tvlWarningSentiment } =
+    getTvlWarning(associatedRatio, project.display.name, associatedTokens)
+
   return {
     name: project.display.name,
     shortName: project.display.shortName,
@@ -80,7 +92,15 @@ function getScalingL2SummaryEntry(
     showProjectUnderReview: isAnySectionUnderReview(project),
     isUpcoming: project.isUpcoming,
     redWarning: project.display.redWarning,
-    tvlWarning: project.display.tvlWarning,
+    tvlWarnings: [
+      tvlWarningContent
+        ? {
+            content: tvlWarningContent,
+            sentiment: tvlWarningSentiment,
+          }
+        : undefined,
+      project.display.tvlWarning,
+    ],
     tvl:
       stats && escrowsConfigured(project)
         ? {
@@ -137,4 +157,20 @@ function getScalingL3SummaryEntry(
 
 export function escrowsConfigured(project: Layer2) {
   return project.config.escrows.length > 0
+}
+
+function getAssociatedRatio(
+  associatedTokens: string[],
+  total: number,
+  tokens: TvlApiToken[],
+) {
+  let associated = 0
+
+  for (const token of tokens) {
+    const safeToken = safeGetTokenByAssetId(token.assetId)
+    if (safeToken && associatedTokens.includes(safeToken.symbol)) {
+      associated += token.usdValue
+    }
+  }
+  return total === 0 ? 0 : associated / total
 }
