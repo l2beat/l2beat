@@ -1,3 +1,61 @@
+Generated with discovered.json: 0xd3e73fddb8acc8a7591d34699a86184f8f54330d
+
+# Diff at Thu, 28 Mar 2024 13:22:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@d6dd20a306b268b851f83df5487b048c1253bb51 block: 19525935
+- current block number: 19532872
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19525935 (main branch discovery), not current.
+
+```diff
+    contract AdminMultisig (0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 3 (67%)"
+    }
+```
+
+```diff
+    contract SecurityCouncil (0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6) {
+    +++ description: None
+      upgradeability.threshold:
++        "6 of 8 (75%)"
+    }
+```
+
+```diff
+    contract GnosisSafe (0x6c4876Ecb5de33f76700f44d547C593065806dAC) {
+    +++ description: None
+      upgradeability.threshold:
++        "1 of 3 (33%)"
+    }
+```
+
+```diff
+    contract EscrowsAdmin (0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904) {
+    +++ description: None
+      upgradeability.threshold:
++        "5 of 10 (50%)"
+    }
+```
+
+```diff
+    contract AstarValidiumMultisig (0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E) {
+    +++ description: None
+      upgradeability.threshold:
++        "3 of 6 (50%)"
+    }
+```
+
 Generated with discovered.json: 0xf529407fa5a83721b1e452946ad1c73f810e6979
 
 # Diff at Tue, 26 Mar 2024 11:08:48 GMT:

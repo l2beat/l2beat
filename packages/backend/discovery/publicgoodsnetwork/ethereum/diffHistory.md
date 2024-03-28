@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x19d87e5f060c339aa824f8250afb61f9cb039413
+
+# Diff at Thu, 28 Mar 2024 10:46:34 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@dd32bb06b292cc8459fb09925454ee3a90f5c27e block: 19412045
+- current block number: 19532103
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19412045 (main branch discovery), not current.
+
+```diff
+    contract GuardianMultisig (0x39E13D1AB040F6EA58CE19998edCe01B3C365f84) {
+    +++ description: None
+      upgradeability.threshold:
++        "3 of 6 (50%)"
+    }
+```
+
+```diff
+    contract PGNMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      upgradeability.threshold:
++        "3 of 5 (60%)"
+    }
+```
+
 Generated with discovered.json: 0x5295b6a71b2ec6aa8e0b2c6b1e45e44d73aafded
 
 # Diff at Mon, 11 Mar 2024 13:08:12 GMT:

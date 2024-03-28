@@ -1,7 +1,7 @@
 {
   "name": "fraxtal",
   "chain": "ethereum",
-  "blockNumber": 19531830,
+  "blockNumber": 19532850,
   "configHash": "0xf437b56ca93bcf802c864474e702c2c24b247a9594405bd077b741b054ba3ad0",
   "version": 3,
   "contracts": [
@@ -13,8 +13,8 @@
       },
       "sinceTimestamp": 1602667372,
       "values": {
-        "get_deposit_count": "0x1b39150000000000",
-        "get_deposit_root": "0xda60878b6b25020670c888cb4a1aa1d4a1a7d3384b91212d6f96f6fd45b87783"
+        "get_deposit_count": "0xe339150000000000",
+        "get_deposit_root": "0x8efb0ece3b967ee3490fa1c800847c59f26eb38af9a52d8ce49f6a77a993b81c"
       },
       "derivedName": "DepositContract"
     },
@@ -225,10 +225,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 2401200,
-        "latestOutputIndex": 1333,
-        "nextBlockNumber": 2403000,
-        "nextOutputIndex": 1334,
+        "latestBlockNumber": 2408400,
+        "latestOutputIndex": 1337,
+        "nextBlockNumber": 2410200,
+        "nextOutputIndex": 1338,
         "proposer": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
         "PROPOSER": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
         "startingBlockNumber": 0,
@@ -245,7 +245,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "3 of 5 (60%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1665087971,
@@ -329,12 +330,12 @@
         "lastRewardAmount": "155817000000000000000",
         "lastSync": 1711586123,
         "name": "Staked Frax Ether",
-        "pricePerShare": "1080508755876790803",
+        "pricePerShare": "1080527478767489910",
         "rewardsCycleEnd": 1712188800,
         "rewardsCycleLength": 604800,
         "symbol": "sfrxETH",
-        "totalAssets": "185227832792143677971701",
-        "totalSupply": "171426498660659626411569"
+        "totalAssets": "183925114707541104019609",
+        "totalSupply": "170217896649270205591717"
       },
       "derivedName": "sfrxETH"
     },
@@ -344,7 +345,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "3 of 5 (60%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1629667690,
@@ -394,7 +396,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "3 of 5 (60%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1706811599,

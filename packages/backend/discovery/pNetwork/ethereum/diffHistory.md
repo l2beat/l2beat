@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xb07f2407341e6d1ffdce948d40d54f0bc2868442
+
+# Diff at Thu, 28 Mar 2024 10:34:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@dd32bb06b292cc8459fb09925454ee3a90f5c27e block: 19375664
+- current block number: 19532042
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19375664 (main branch discovery), not current.
+
+```diff
+    contract pNetwork Multisig (0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 4 (50%)"
+    }
+```
+
 Generated with discovered.json: 0x291bd7fd91be18fd4ed6c946a065b180ce88e00c
 
 # Diff at Wed, 21 Feb 2024 08:21:41 GMT:

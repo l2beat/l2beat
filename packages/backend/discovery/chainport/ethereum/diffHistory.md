@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xdb49aab240757275e0beb521161d624104bfdd56
+
+# Diff at Thu, 28 Mar 2024 08:48:24 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@867de6120241d47b66bf76f83c490408eb3595b0 block: 19467300
+- current block number: 19531518
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19467300 (main branch discovery), not current.
+
+```diff
+    contract MultisigVault2 (0x450aD18B4442ce2972Af2a7A12439984db4Afaf9) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 3 (67%)"
+    }
+```
+
+```diff
+    contract MultisigVault1 (0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 3 (67%)"
+    }
+```
+
 Generated with discovered.json: 0x8db723b5dec0e6a44d1881afc2458d6f3fd6aebf
 
 # Diff at Tue, 19 Mar 2024 07:26:39 GMT:

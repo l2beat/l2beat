@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x6f907ceb2548add27dea5b65fe5f000be13d222d
+
+# Diff at Thu, 28 Mar 2024 08:29:46 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@867de6120241d47b66bf76f83c490408eb3595b0 block: 19168345
+- current block number: 19531425
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19168345 (main branch discovery), not current.
+
+```diff
+    contract Aptos Multisig (0x65bb797c2B9830d891D87288F029ed8dACc19705) {
+    +++ description: None
+      upgradeability.threshold:
++        "3 of 6 (50%)"
+    }
+```
+
+```diff
+    contract LayerZero Multisig (0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 5 (40%)"
+    }
+```
+
 Generated with discovered.json: 0x695e9666aa1d660f1069614b9e84af2847034ff8
 
 # Diff at Tue, 06 Feb 2024 09:35:41 GMT:

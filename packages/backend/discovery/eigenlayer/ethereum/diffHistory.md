@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x4160c726f419fb6cd7fa8ba5138b175ccbb7b131
+
+# Diff at Thu, 28 Mar 2024 08:51:57 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@867de6120241d47b66bf76f83c490408eb3595b0 block: 19433765
+- current block number: 19531533
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19433765 (main branch discovery), not current.
+
+```diff
+    contract EigenlayerProxiedMultisig (0x369e6F597e22EaB55fFb173C6d9cD234BD699111) {
+    +++ description: None
+      upgradeability.threshold:
++        "1 of 2 (50%)"
+    }
+```
+
+```diff
+    contract OperationsMultisig (0xBE1685C81aA44FF9FB319dD389addd9374383e90) {
+    +++ description: The Operations Multisig (3/6) can execute routine upgrades, maintenance and pausing of all strategies directly. It can execute safety-critical updates with a 10-day timelock.
+      upgradeability.threshold:
++        "3 of 6 (50%)"
+    }
+```
+
+```diff
+    contract EigenlayerMultisig (0xFEA47018D632A77bA579846c840d5706705Dc598) {
+    +++ description: None
+      upgradeability.threshold:
++        "9 of 13 (69%)"
+    }
+```
+
 Generated with discovered.json: 0xba1f897d9f970202dbca6c5ec09288933e54ecf9
 
 # Diff at Thu, 14 Mar 2024 14:14:07 GMT:

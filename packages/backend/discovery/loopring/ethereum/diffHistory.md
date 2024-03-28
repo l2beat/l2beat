@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x945c280f2e0b87de6ea1bbcf044ad7c08f6a8191
+
+# Diff at Thu, 28 Mar 2024 09:16:53 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@867de6120241d47b66bf76f83c490408eb3595b0 block: 19375547
+- current block number: 19531659
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19375547 (main branch discovery), not current.
+
+```diff
+    contract ProxyOwner (0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97) {
+    +++ description: None
+      upgradeability.threshold:
++        "4 of 6 (67%)"
+    }
+```
+
 Generated with discovered.json: 0xc0a7eb588caecb5f950493f51d0428c7a218a45d
 
 # Diff at Wed, 06 Mar 2024 10:31:35 GMT:

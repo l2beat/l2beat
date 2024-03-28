@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xf376f0a8a322736823fec8734f5606909b6543b9
+
+# Diff at Thu, 28 Mar 2024 10:29:44 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@dd32bb06b292cc8459fb09925454ee3a90f5c27e block: 19425639
+- current block number: 19532020
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19425639 (main branch discovery), not current.
+
+```diff
+    contract BridgeGovernance (0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6) {
+    +++ description: None
+      upgradeability.threshold:
++        "8 of 16 (50%)"
+    }
+```
+
+```diff
+    contract GnosisSafe (0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43) {
+    +++ description: None
+      upgradeability.threshold:
++        "1 of 3 (33%)"
+    }
+```
+
 Generated with discovered.json: 0x4a5fcb93fb7311213ea7220e147822bc75feeef4
 
 # Diff at Wed, 13 Mar 2024 10:45:34 GMT:

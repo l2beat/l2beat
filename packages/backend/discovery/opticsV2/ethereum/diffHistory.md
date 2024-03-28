@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x78096fa68cd074ed0f7fca836848e97b50b48ad0
+
+# Diff at Thu, 28 Mar 2024 10:31:37 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@dd32bb06b292cc8459fb09925454ee3a90f5c27e block: 19218300
+- current block number: 19532028
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19218300 (main branch discovery), not current.
+
+```diff
+    contract RecoveryManager (0x2bB2a5A724170357cb691841F40d26A950d8C33D) {
+    +++ description: None
+      upgradeability.threshold:
++        "4 of 7 (57%)"
+    }
+```
+
 Generated with discovered.json: 0x49181e4503e9468845b1d08bde6efff7f7601e23
 
 # Diff at Fri, 13 Oct 2023 07:04:29 GMT:

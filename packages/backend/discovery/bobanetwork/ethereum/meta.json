@@ -1,0 +1,523 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "AddressManager",
+      "values": {
+        "BobaBillingContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "Boba_GasPriceOracle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "BondManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "CanonicalTransactionChain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ChainStorageContainerCTCbatches": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ChainStorageContainerSCCbatches": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L1CrossDomainMessenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L1LiquidityPool": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L1MultiMessageRelayer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L1MultiMessageRelayerFast": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L1NFTBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OVM_Proposer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OVM_Sequencer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "StateCommitmentChain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "Timelock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "BondManager",
+      "values": {
+        "libAddressManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CTCQueue",
+      "values": {
+        "getGlobalMetadata": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "length": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "libAddressManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CTCStorageContainerBatches",
+      "values": {
+        "getGlobalMetadata": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "length": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "libAddressManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CanonicalTransactionChain",
+      "values": {
+        "MAX_ROLLUP_TX_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_ROLLUP_TX_GAS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "batches": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "enqueueGasCost": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "enqueueL2GasPrepaid": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLastBlockNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLastTimestamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getNextQueueIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getNumPendingQueueElements": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getQueueLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalBatches": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalElements": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2GasDiscountDivisor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "libAddressManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxTransactionGasLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "queue": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1CrossDomainMessenger_1",
+      "values": {
+        "libAddressManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "xDomainMessageSender": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1CrossDomainMessenger_2",
+      "values": {
+        "libAddressManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "xDomainMessageSender": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1LiquidityPool",
+      "values": {
+        "L1StandardBridgeAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L2LiquidityPoolAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SAFE_GAS_STIPEND": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SETTLEMENT_L2_GAS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "currentDepositInfoHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1CrossDomainMessenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lastHashUpdateBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ownerRewardFeeRate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "priorDepositInfoHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "relayerMessenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "senderMessenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "userRewardMaxFeeRate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "userRewardMinFeeRate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1MultiMessageRelayer",
+      "values": {
+        "libAddressManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1MultiMessageRelayerFast",
+      "values": {
+        "libAddressManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1NFTBridge",
+      "values": {
+        "depositL2Gas": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2NFTBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1StandardBridge",
+      "values": {
+        "currentDepositInfoHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2TokenBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lastHashUpdateBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "priorDepositInfoHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Lib_ResolvedDelegateProxy",
+      "values": {}
+    },
+    {
+      "name": "Proxy__L1LiquidityPoolArguments",
+      "values": {}
+    },
+    {
+      "name": "SCCStorageContainerBatches",
+      "values": {
+        "getGlobalMetadata": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "length": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "libAddressManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "StateCommitmentChain",
+      "values": {
+        "FRAUD_PROOF_WINDOW": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SEQUENCER_PUBLISH_WINDOW": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "batches": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "deletedStateBatches": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLastSequencerTimestamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalBatches": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalElements": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "libAddressManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}

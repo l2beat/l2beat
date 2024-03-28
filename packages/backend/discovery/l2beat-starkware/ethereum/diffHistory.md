@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x4366062c1000c56fc03c8be7cbdda3f57e701ee1
+
+# Diff at Thu, 28 Mar 2024 09:13:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@867de6120241d47b66bf76f83c490408eb3595b0 block: 19468852
+- current block number: 19531641
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19468852 (main branch discovery), not current.
+
+```diff
+    contract SHARPVerifierGovernorMultisig (0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 3 (67%)"
+    }
+```
+
 Generated with discovered.json: 0xaff8a6ad66c53b2303b9c9c77d308de4890151ad
 
 # Diff at Tue, 19 Mar 2024 12:40:39 GMT:

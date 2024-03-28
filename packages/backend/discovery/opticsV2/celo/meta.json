@@ -1,0 +1,137 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "BeaconProxy",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domains": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governorDomain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "inRecovery": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "localDomain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "recoveryActiveAt": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "recoveryManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "recoveryTimelock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "xAppConnectionManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OpticsV2Governor",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "UpgradeBeacon",
+      "values": {}
+    },
+    {
+      "name": "UpgradeBeaconController",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "UpgradeBeaconProxy",
+      "values": {}
+    },
+    {
+      "name": "UpgradeBeaconProxy",
+      "values": {}
+    },
+    {
+      "name": "XAppConnectionManager",
+      "values": {
+        "home": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "localDomain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}

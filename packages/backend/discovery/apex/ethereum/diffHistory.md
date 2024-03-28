@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x3e398c9a07a24393eda56ca1d029dddcdaafbc5b
+
+# Diff at Thu, 28 Mar 2024 08:29:12 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@867de6120241d47b66bf76f83c490408eb3595b0 block: 18685523
+- current block number: 19531421
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18685523 (main branch discovery), not current.
+
+```diff
+    contract AggregationRouterV4Owner (0x5E89f8d81C74E311458277EA1Be3d3247c7cd7D1) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 3 (67%)"
+    }
+```
+
+```diff
+    contract PerpetualGovernanceMultisig (0xC532d2976209A56DdF4a99B844130f7c0daCa7B6) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 2 (100%)"
+    }
+```
+
 Generated with discovered.json: 0x0fa337b45cd76773ae656410f777bdb702845b4e
 
 # Diff at Thu, 30 Nov 2023 16:11:29 GMT:

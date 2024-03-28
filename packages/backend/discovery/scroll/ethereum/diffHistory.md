@@ -1,3 +1,53 @@
+Generated with discovered.json: 0xab2564ccd95153417c52dae00a8e78fb02f47de6
+
+# Diff at Thu, 28 Mar 2024 11:00:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@21187e63b9b90823a55c461c331868a470ce17eb block: 19375229
+- current block number: 19532167
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19375229 (main branch discovery), not current.
+
+```diff
+    contract ExecutorMultisig (0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f) {
+    +++ description: None
+      upgradeability.threshold:
++        "1 of 5 (20%)"
+    }
+```
+
+```diff
+    contract FeeVaultMultisig (0x8FA3b4570B4C96f8036C13b64971BA65867eEB48) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 4 (50%)"
+    }
+```
+
+```diff
+    contract EmergencyMultisig (0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 5 (40%)"
+    }
+```
+
+```diff
+    contract ScrollMultisig (0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) {
+    +++ description: None
+      upgradeability.threshold:
++        "4 of 5 (80%)"
+    }
+```
+
 Generated with discovered.json: 0xeedf768927c66f9e3e9594005bea7982654706a9
 
 # Diff at Wed, 06 Mar 2024 09:27:59 GMT:

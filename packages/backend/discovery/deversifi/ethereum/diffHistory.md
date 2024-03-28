@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x4b6fe18ad8f293504a0a33f9c42978bb3a90f0b0
+
+# Diff at Thu, 28 Mar 2024 08:50:55 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@867de6120241d47b66bf76f83c490408eb3595b0 block: 19512697
+- current block number: 19531530
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19512697 (main branch discovery), not current.
+
+```diff
+    contract GovernanceMultisig (0xCCa5De1e10c05c50C51ac551D9182cd31aca1889) {
+    +++ description: This Multisig itself is one of the two Governors, the other being an EOA, both equally permissioned to upgrade the bridge.
+      upgradeability.threshold:
++        "4 of 6 (67%)"
+    }
+```
+
 Generated with discovered.json: 0xa8a01225c5752db0370ec77705d39bcb620fa9a0
 
 # Diff at Mon, 25 Mar 2024 16:34:55 GMT:

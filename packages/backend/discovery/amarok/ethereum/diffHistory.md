@@ -1,3 +1,45 @@
+Generated with discovered.json: 0xe3a1c5468421a3a6936776e8fd06dd4be298a474
+
+# Diff at Thu, 28 Mar 2024 08:27:00 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@867de6120241d47b66bf76f83c490408eb3595b0 block: 19517972
+- current block number: 19531406
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19517972 (main branch discovery), not current.
+
+```diff
+    contract Connext Multisig (0x4d50a469fc788a3c0CdC8Fd67868877dCb246625) {
+    +++ description: None
+      upgradeability.threshold:
++        "8 of 12 (67%)"
+    }
+```
+
+```diff
+    contract Connext Fee Multisig (0x7bE978Cc84612E08f7844672B0E6A6F367FE2b6A) {
+    +++ description: None
+      upgradeability.threshold:
++        "1 of 5 (20%)"
+    }
+```
+
+```diff
+    contract GnosisSafe (0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 4 (50%)"
+    }
+```
+
 Generated with discovered.json: 0x00e8f6fe2ff1e801c73b28ac65367c537e9b2588
 
 # Diff at Tue, 26 Mar 2024 10:19:30 GMT:

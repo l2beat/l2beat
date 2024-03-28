@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x5500c3ee02c12084faa7bffc604e91a4f6f21223
+
+# Diff at Thu, 28 Mar 2024 11:45:06 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@21187e63b9b90823a55c461c331868a470ce17eb block: 11816496
+- current block number: 12418351
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 11816496 (main branch discovery), not current.
+
+```diff
+    contract LayerZero Multisig (0x28937ca4873f7289Ebea0708c4E42b24835eCfF0) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 5 (40%)"
+    }
+```
+
 Generated with discovered.json: 0x39d8c0dc799668e68e81e9878fa9d96d9ebabcb2
 
 # Diff at Thu, 14 Mar 2024 13:19:35 GMT

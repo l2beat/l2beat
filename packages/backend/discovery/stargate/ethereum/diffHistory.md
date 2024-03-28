@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x9ca8335683588aa6809b97baa8f6768924d042b9
+
+# Diff at Thu, 28 Mar 2024 11:08:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@21187e63b9b90823a55c461c331868a470ce17eb block: 19433750
+- current block number: 19532207
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19433750 (main branch discovery), not current.
+
+```diff
+    contract StarGate Multisig (0x65bb797c2B9830d891D87288F029ed8dACc19705) {
+    +++ description: None
+      upgradeability.threshold:
++        "3 of 6 (50%)"
+    }
+```
+
+```diff
+    contract LayerZero Multisig (0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 5 (40%)"
+    }
+```
+
 Generated with discovered.json: 0x58e5e65bfca08d68390f2842b5da775add19380b
 
 # Diff at Thu, 14 Mar 2024 14:12:08 GMT
