@@ -1,3 +1,90 @@
+Generated with discovered.json: 0x5949aadf76a9f7c3d3b6d962c0a2c0adde9ecff3
+
+# Diff at Thu, 28 Mar 2024 10:29:43 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@867de6120241d47b66bf76f83c490408eb3595b0 block: 19432708
+- current block number: 19532020
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract Bridger (0x0f1b7bd7762662B23486320AA91F30312184f70C) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x31a20f10c846BD3Ed41c6c05c340bFD7A57ECADA"
++        "0x989b9f407687DA3050C957CfeF5E6c18BeE7cb9F"
+      implementations.0:
+-        "0x31a20f10c846BD3Ed41c6c05c340bFD7A57ECADA"
++        "0x989b9f407687DA3050C957CfeF5E6c18BeE7cb9F"
+      derivedName:
+-        "BridgerV2"
++        "BridgerV4"
+    }
+```
+
+```diff
+    contract BridgerOwnerMultisig (0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82) {
+    +++ description: None
+      values.nonce:
+-        63
++        70
+    }
+```
+
+## Source code changes
+
+```diff
+.../Bridger/implementation/meta.txt                       |  4 ++--
+ .../Bridger/implementation/src/bridger/Bridger.sol        | 15 +++++++++------
+ 2 files changed, 11 insertions(+), 8 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19432708 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d) {
+    +++ description: None
+      name:
+-        "GnosisSafe"
++        "ExecutorMultisig"
+      values.nonce:
+-        3
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Bridger (0x0f1b7bd7762662B23486320AA91F30312184f70C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Gateway (0x7870D5398DB488c669B406fBE57b8d05b6A35e42)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1GatewayRouter (0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BridgerOwnerMultisig (0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x2a8f9804aa4d0e1c2654291b4dc0c829b5c12d40
 
 # Diff at Thu, 14 Mar 2024 10:39:07 GMT:

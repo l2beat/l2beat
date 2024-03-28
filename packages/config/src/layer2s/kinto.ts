@@ -1,21 +1,26 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { underReviewL2 } from './templates/underReview'
 import { Layer2 } from './types'
+import { subtractOne } from '../common/assessCount'
+import { addSentimentToDataAvailability } from '../common'
+import { orbitStackL2 } from './templates/orbitStack'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 
-export const kinto: Layer2 = underReviewL2({
-  id: 'kinto',
+const discovery = new ProjectDiscovery('kinto')
+
+export const kinto: Layer2 = orbitStackL2({
+  discovery,
   display: {
     name: 'Kinto',
     slug: 'kinto',
+    headerWarning: '',
     description:
-      'Kinto is the first KYCed Layer 2 capable of supporting both modern financial institutions and decentralized protocols.',
+      'Kinto is an Optimium with account abstraction and KYC enabled for all users, that supports both modern financial institutions and decentralized protocols.',
     purposes: ['DeFi'],
-    category: 'Optimistic Rollup',
-    provider: 'Arbitrum',
     links: {
       websites: ['https://kinto.xyz'],
-      apps: [],
+      apps: ['https://engen.kinto.xyz/engen-setup'],
       documentation: ['https://docs.kinto.xyz'],
       explorers: ['https://explorer.kinto.xyz/', 'https://searchkinto.com/'],
       repositories: ['https://github.com/kintoxyz'],
@@ -25,32 +30,45 @@ export const kinto: Layer2 = underReviewL2({
         'https://mirror.xyz/kintoxyz.eth',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
   },
-  escrows: [
-    {
-      address: EthereumAddress('0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB'),
-      sinceTimestamp: new UnixTime(1702607855),
+  nonTemplateEscrows: [
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0x0f1b7bd7762662b23486320aa91f30312184f70c'),
       tokens: '*',
+      description:
+        'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
+    }),
+  ],
+  bridge: discovery.getContract('Bridge'),
+  rollupProxy: discovery.getContract('RollupProxy'),
+  sequencerInbox: discovery.getContract('SequencerInbox'),
+  transactionApi: {
+    type: 'rpc',
+    defaultUrl: 'https://rpc.kinto-rpc.com',
+    assessCount: subtractOne,
+    startBlock: 1,
+  },
+  nonTemplatePermissions: [
+    ...discovery.getMultisigPermission(
+      'ExecutorMultisig',
+      'Multisig that can execute upgrades via the UpgradeExecutor.',
+    ),
+    {
+      name: 'RollupOwner',
+      accounts: discovery.getAccessControlRolePermission(
+        'UpgradeExecutor',
+        'EXECUTOR_ROLE',
+      ),
+      description: 'EOA that can execute upgrades via the UpgradeExecutor.',
     },
+  ],
+  milestones: [
     {
-      address: EthereumAddress('0x0f1b7bd7762662B23486320AA91F30312184f70C'),
-      sinceTimestamp: new UnixTime(1710273600),
-      tokens: '*',
-    },
-    {
-      address: EthereumAddress('0x7870D5398DB488c669B406fBE57b8d05b6A35e42'),
-      sinceTimestamp: new UnixTime(1702607855),
-      tokens: '*',
-    },
-    {
-      address: EthereumAddress('0x1A6773b61C111064F44C4C93F141793b31dF3442'),
-      sinceTimestamp: new UnixTime(1702607855),
-      tokens: '*',
-    },
-    {
-      address: EthereumAddress('0xD81019beaa5D335e6fb40DdFf8a9cef21b49821f'),
-      sinceTimestamp: new UnixTime(1702607855),
-      tokens: '*',
+      name: 'Parallel Mainnet closed launch',
+      link: 'https://twitter.com/ParallelFi/status/1743048283684237574',
+      date: '2024-01-05T00:00:00Z',
+      description: 'Parallel Mainnet is open for developers.',
     },
   ],
 })
