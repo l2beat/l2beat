@@ -997,6 +997,10 @@
     {
       "symbol": "ZRX",
       "address": "0xE41d2489571d322189246DaFA5ebDe1F4699F498"
+    },
+    {
+      "symbol": "RSS3",
+      "address": "0xc98D64DA73a6616c42117b582e832812e7B8D57F"
     }
   ],
   "arbitrum": [
