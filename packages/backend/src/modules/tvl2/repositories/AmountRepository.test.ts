@@ -149,6 +149,50 @@ describeDatabase(AmountRepository.name, (database) => {
       },
     )
 
+    it(
+      AmountRepository.prototype.deleteInRangeByConfigurationId.name,
+      async () => {
+        const records = [
+          {
+            configurationId: IDS[0],
+            timestamp: new UnixTime(0),
+            amount: 111n,
+          },
+          {
+            configurationId: IDS[0],
+            timestamp: new UnixTime(1),
+            amount: 222n,
+          },
+          {
+            configurationId: IDS[1],
+            timestamp: new UnixTime(1),
+            amount: 0n,
+          },
+          {
+            configurationId: IDS[0],
+            timestamp: new UnixTime(2),
+            amount: 333n,
+          },
+          {
+            configurationId: IDS[0],
+            timestamp: new UnixTime(3),
+            amount: 444n,
+          },
+        ]
+        await repository.addMany(records)
+
+        await repository.deleteInRangeByConfigurationId(
+          IDS[0],
+          new UnixTime(1),
+          new UnixTime(2),
+        )
+
+        const result = await repository.getAll()
+
+        expect(result).toEqualUnsorted([records[0], records[2], records[4]])
+      },
+    )
+
     it(AmountRepository.prototype.deleteAll.name, async () => {
       await repository.addMany([
         {
