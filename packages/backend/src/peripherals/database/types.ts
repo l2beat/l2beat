@@ -1,6 +1,8 @@
 import { TransactionData } from '../../modules/tracked-txs/modules/l2-costs/types/TransactionData'
-import { AmountConfigurationRow } from '../../modules/tvl2/repositories/AmountConfigurationRepository'
-import { AmountRow } from '../../modules/tvl2/repositories/AmountRepository'
+import {
+  AmountConfigurationRow,
+  AmountRow,
+} from '../../modules/tvl2/repositories/AmountRepository'
 
 export {}
 
