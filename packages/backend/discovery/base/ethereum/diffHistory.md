@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x4dac5e916593d79762c769662ed19937edb6f9bc
+
+# Diff at Thu, 28 Mar 2024 07:30:56 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@5dfb8d5d243e41677914078b08f80de1889c6556 block: 19439852
+- current block number: 19531133
+
+## Description
+
+The gas limit for the Base L2 is changed (50% raise).
+Context: Congestion on base, plans to raise the gas limit gradually.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: None
+      values.gasLimit:
+-        30000000
++        45000000
+    }
+```
+
 Generated with discovered.json: 0xc4322ab5b04954fb99593b31607ae478be311b36
 
 # Diff at Thu, 14 Mar 2024 00:20:47 GMT:
