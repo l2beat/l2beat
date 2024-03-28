@@ -1,6 +1,7 @@
 import compact from 'lodash/compact'
 import React, { ReactElement } from 'react'
 
+import { NewItemBadge } from '../badge/NewItemBadge'
 import { ActivityIcon, RiskIcon, SummaryIcon, TvlIcon } from '../icons'
 import { CostsIcon } from '../icons/pages/CostsIcon'
 import { DataAvailabilityIcon } from '../icons/pages/DataAvailabilityIcon'
@@ -34,6 +35,7 @@ interface SectionItem {
   title: string
   link: string
   icon: (props: { className: string }) => ReactElement
+  new?: boolean
 }
 
 function getSections(props: SidebarMenuProps): Section[] {
@@ -80,6 +82,7 @@ function getSections(props: SidebarMenuProps): Section[] {
           title: 'Costs',
           link: '/scaling/costs',
           icon: CostsIcon,
+          new: true,
         },
       ]),
     },
@@ -144,9 +147,13 @@ function Sections({ sections }: { sections: Section[] }) {
           <ul className="ml-4 flex flex-col gap-4">
             {section.items.map((item) => (
               <li key={item.title}>
-                <PlainLink href={item.link} className="flex gap-2 font-medium">
+                <PlainLink
+                  href={item.link}
+                  className="flex items-center gap-2 font-medium"
+                >
                   <item.icon className="h-auto w-4" />
                   {item.title}
+                  {item.new && <NewItemBadge />}
                 </PlainLink>
               </li>
             ))}

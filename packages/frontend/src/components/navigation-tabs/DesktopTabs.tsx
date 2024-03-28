@@ -20,6 +20,7 @@ export function DesktopTabs({ pages }: DesktopTabsProps) {
       className={cn(
         'hidden w-full items-center justify-around md:flex',
         'rounded-lg border-2 border-gray-200 dark:border-gray-850',
+        pages.length > 4 && 'md:grid md:grid-cols-4',
       )}
     >
       {pages.map((page, i) => (
@@ -32,6 +33,7 @@ export function DesktopTabs({ pages }: DesktopTabsProps) {
               !page.selected &&
               !pages[i + 1]?.selected &&
               'border-r-gray-200 dark:border-r-gray-850',
+            i >= 4 && 'border-t-2 border-t-gray-200 dark:border-t-gray-850',
             page.selected && [
               'before:absolute',
               'before:z-10',
