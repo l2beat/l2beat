@@ -27,11 +27,7 @@ describe(BlockTimestampIndexer.name, () => {
       })
 
       const syncOptimizer = mockObject<SyncOptimizer>({
-        shouldTimestampBeSynced: mockFn()
-          .returnsOnce(false) // 21:00
-          .returnsOnce(false) // 22:00
-          .returnsOnce(false) // 23:00
-          .returnsOnce(true), // 00:00
+        getTimestampToSync: mockFn().returnsOnce(from.toEndOf('day')),
       })
 
       const chain = 'ethereum'
@@ -53,6 +49,8 @@ describe(BlockTimestampIndexer.name, () => {
       expect(
         blockTimestampProvider.getBlockNumberAtOrBefore,
       ).toHaveBeenOnlyCalledWith(timestampToSync)
+
+      expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
 
       expect(blockTimestampRepository.add).toHaveBeenOnlyCalledWith({
         chain,
