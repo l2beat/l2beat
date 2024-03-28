@@ -67,6 +67,20 @@ export class AmountConfigurationRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async setUntilTimestampExclusive(
+    id: number,
+    untilTimestampExclusive: UnixTime | undefined,
+  ): Promise<void> {
+    const knex = await this.knex()
+    return await knex('amounts_configurations')
+      .where({ id })
+      .update({
+        until_timestamp_exclusive: untilTimestampExclusive
+          ? untilTimestampExclusive.toDate()
+          : null,
+      })
+  }
+
   // #region methods used only in tests
 
   async getAll(): Promise<AmountConfigurationRecord[]> {
