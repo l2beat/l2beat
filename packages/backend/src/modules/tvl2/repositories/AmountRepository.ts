@@ -108,6 +108,19 @@ export class AmountRepository extends BaseRepository {
       .delete()
   }
 
+  async deleteInRangeByConfigurationId(
+    configurationId: number,
+    from: UnixTime,
+    to: UnixTime,
+  ) {
+    const knex = await this.knex()
+    return await knex('amounts')
+      .where('configuration_id', configurationId)
+      .where('timestamp', '>=', from.toDate())
+      .where('timestamp', '<=', to.toDate())
+      .delete()
+  }
+
   // #endregion
 
   // #region configurations
