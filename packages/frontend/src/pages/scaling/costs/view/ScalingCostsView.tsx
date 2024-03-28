@@ -21,7 +21,7 @@ export function ScalingCostsView({ items }: ScalingCostsViewProps) {
 
   return (
     <section className="mt-4 flex flex-col gap-y-2 sm:mt-8">
-      <ScalingFilters items={items} />
+      <ScalingFilters items={items} hideRollupsOnlyCheckbox />
       <div className="flex flex-col gap-2 md:flex-row md:justify-between">
         <CostsUnitControls />
         <CostsTimeRangeControls />
