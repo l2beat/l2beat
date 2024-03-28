@@ -28,7 +28,9 @@ export interface EscrowEntry extends AmountConfigBase {
 interface AmountConfigBase {
   chain: string
   project: ProjectId
-  source: 'canonical' | 'external' | 'native'
+  origin: 'canonical' | 'external' | 'native'
+  type: 'totalSupply' | 'circulatingSupply' | 'escrow'
   sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
   includeInTotal: boolean
 }

@@ -66,7 +66,7 @@ function getAmountsConfig(
             chain: chainConverter.toName(token.chainId),
             sinceTimestamp: token.sinceTimestamp,
             project,
-            source: toSource(token.type),
+            origin: toOrigin(token.type),
             includeInTotal: true,
           })
           break
@@ -78,7 +78,7 @@ function getAmountsConfig(
             sinceTimestamp: token.sinceTimestamp,
             coingeckoId: token.coingeckoId,
             project,
-            source: toSource(token.type),
+            origin: toOrigin(token.type),
             includeInTotal: true,
           })
           break
@@ -98,7 +98,7 @@ function getAmountsConfig(
           sinceTimestamp: token.sinceTimestamp,
           escrowAddress: escrow.address,
           project: project.projectId,
-          source: toSource(token.type),
+          origin: toOrigin(token.type),
           includeInTotal: true,
         })
       }
@@ -159,7 +159,7 @@ function getChainToProjectMapping(
   return chainToProject
 }
 
-function toSource(
+function toOrigin(
   type: 'CBV' | 'EBV' | 'NMV',
 ): 'native' | 'canonical' | 'external' {
   switch (type) {
