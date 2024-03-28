@@ -47,7 +47,7 @@ export function Callout({
       )}
     >
       <span>{icon}</span>
-      <div className="flex w-full flex-col gap-2">
+      <div className="flex flex-col gap-2">
         {message && message}
         <div>{body}</div>
       </div>

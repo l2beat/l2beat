@@ -25,12 +25,6 @@ export class BlockTimestampRepository extends BaseRepository {
     this.autoWrap<CheckConvention<BlockTimestampRepository>>(this)
   }
 
-  async getAll(): Promise<BlockTimestampRecord[]> {
-    const knex = await this.knex()
-    const rows = await knex('block_timestamps')
-    return rows.map(toRecord)
-  }
-
   async add(record: BlockTimestampRecord) {
     const row: BlockTimestampRow = toRow(record)
     const knex = await this.knex()
@@ -48,10 +42,20 @@ export class BlockTimestampRepository extends BaseRepository {
       .delete()
   }
 
+  // #region methods used only in tests
+
+  async getAll(): Promise<BlockTimestampRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('block_timestamps')
+    return rows.map(toRecord)
+  }
+
   async deleteAll() {
     const knex = await this.knex()
     return knex('block_timestamps').delete()
   }
+
+  // #endregion
 }
 
 function toRecord(row: BlockTimestampRow): BlockTimestampRecord {
