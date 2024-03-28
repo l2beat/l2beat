@@ -1288,17 +1288,5 @@
         "slug": "connext"
       }
     }
-  ],
-  "rss3": [
-    {
-      "symbol": "RSS3",
-      "address": "0x4200000000000000000000000000000000000042",
-      "type": "CBV",
-      "formula": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "RSS3"
-      },
-      "coingeckoId": "rss3"
-    }
   ]
 }

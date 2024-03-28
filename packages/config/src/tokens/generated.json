@@ -3946,24 +3946,6 @@
       }
     },
     {
-      "id": "rss3:rss3-rss3",
-      "name": "RSS3",
-      "coingeckoId": "rss3",
-      "address": "0x4200000000000000000000000000000000000042",
-      "symbol": "RSS3",
-      "decimals": 18,
-      "deploymentTimestamp": 1709858519,
-      "coingeckoListingTimestamp": 1644796800,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/23575/large/RSS3.png?1696522783",
-      "chainId": 12553,
-      "type": "CBV",
-      "formula": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "RSS3"
-      }
-    },
-    {
       "id": "arb-arbitrum",
       "name": "Arbitrum",
       "coingeckoId": "arbitrum",
