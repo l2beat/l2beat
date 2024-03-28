@@ -71,19 +71,19 @@ describeDatabase(AmountConfigurationRepository.name, (database) => {
   })
 
   it(
-    AmountConfigurationRepository.prototype.setUntilTimestampExclusive.name,
+    AmountConfigurationRepository.prototype.setUntilTimestampInclusive.name,
     async () => {
       const oldRow = {
-        ...mock({ untilTimestampExclusive: undefined }),
+        ...mock({ untilTimestampInclusive: undefined }),
       }
       const ids = await repository.addMany([oldRow])
 
-      await repository.setUntilTimestampExclusive(ids[0], new UnixTime(1))
+      await repository.setUntilTimestampInclusive(ids[0], new UnixTime(1))
 
       const result = await repository.getAll()
 
       expect(result).toEqual([
-        { ...oldRow, id: ids[0], untilTimestampExclusive: new UnixTime(1) },
+        { ...oldRow, id: ids[0], untilTimestampInclusive: new UnixTime(1) },
       ])
     },
   )

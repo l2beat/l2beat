@@ -134,10 +134,10 @@ function toRecordWithMetadata(
     type: row.type as 'totalSupply' | 'circulatingSupply' | 'escrow',
     includeInTotal: row.include_in_total,
     sinceTimestampInclusive: UnixTime.fromDate(row.since_timestamp_inclusive),
-    ...(row.until_timestamp_exclusive
+    ...(row.until_timestamp_inclusive
       ? {
-          untilTimestampExclusive: UnixTime.fromDate(
-            row.until_timestamp_exclusive,
+          untilTimestampInclusive: UnixTime.fromDate(
+            row.until_timestamp_inclusive,
           ),
         }
       : {}),

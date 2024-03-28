@@ -19,7 +19,7 @@ export interface AmountConfigurationRow {
   type: string
   include_in_total: boolean
   since_timestamp_inclusive: Date
-  until_timestamp_exclusive: Date | null
+  until_timestamp_inclusive: Date | null
 }
 
 export interface AmountConfigurationRecord {
@@ -33,7 +33,7 @@ export interface AmountConfigurationRecord {
   type: 'totalSupply' | 'circulatingSupply' | 'escrow'
   includeInTotal: boolean
   sinceTimestampInclusive: UnixTime
-  untilTimestampExclusive?: UnixTime
+  untilTimestampInclusive?: UnixTime
 }
 
 export class AmountConfigurationRepository extends BaseRepository {
@@ -67,16 +67,16 @@ export class AmountConfigurationRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async setUntilTimestampExclusive(
+  async setUntilTimestampInclusive(
     id: number,
-    untilTimestampExclusive: UnixTime | undefined,
+    untilTimestampInclusive: UnixTime | undefined,
   ): Promise<number> {
     const knex = await this.knex()
     return await knex('amounts_configurations')
       .where({ id })
       .update({
-        until_timestamp_exclusive: untilTimestampExclusive
-          ? untilTimestampExclusive.toDate()
+        until_timestamp_inclusive: untilTimestampInclusive
+          ? untilTimestampInclusive.toDate()
           : null,
       })
   }
@@ -110,7 +110,7 @@ function toRow(
     type: row.type,
     include_in_total: row.includeInTotal,
     since_timestamp_inclusive: row.sinceTimestampInclusive.toDate(),
-    until_timestamp_exclusive: row.untilTimestampExclusive?.toDate() ?? null,
+    until_timestamp_inclusive: row.untilTimestampInclusive?.toDate() ?? null,
   }
 }
 
@@ -128,10 +128,10 @@ function toRecord(row: AmountConfigurationRow): AmountConfigurationRecord {
     type: row.type as 'totalSupply' | 'circulatingSupply' | 'escrow',
     includeInTotal: row.include_in_total,
     sinceTimestampInclusive: UnixTime.fromDate(row.since_timestamp_inclusive),
-    ...(row.until_timestamp_exclusive
+    ...(row.until_timestamp_inclusive
       ? {
-          untilTimestampExclusive: UnixTime.fromDate(
-            row.until_timestamp_exclusive,
+          untilTimestampInclusive: UnixTime.fromDate(
+            row.until_timestamp_inclusive,
           ),
         }
       : {}),
