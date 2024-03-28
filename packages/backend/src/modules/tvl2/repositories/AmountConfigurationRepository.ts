@@ -70,7 +70,7 @@ export class AmountConfigurationRepository extends BaseRepository {
   async setUntilTimestampExclusive(
     id: number,
     untilTimestampExclusive: UnixTime | undefined,
-  ): Promise<void> {
+  ): Promise<number> {
     const knex = await this.knex()
     return await knex('amounts_configurations')
       .where({ id })
