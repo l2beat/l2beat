@@ -34,11 +34,19 @@ export async function up(knex: Knex) {
   await knex.schema.createTable('amounts', function (table) {
     table.integer('configuration_id').unsigned().notNullable()
     table.dateTime('timestamp', { useTz: false }).notNullable()
-    // TODO: is 80 okay? explain the selection
+    // The selection of "80" is a conservative choice to ensure
+    // that any value that could be represented in uint256 variable in Solidity can be stored
+    // without loss of precision, given that 2^256 is approximately 10^77.
     table.decimal('amount', 80, 0).notNullable()
 
+    // Currently there is 15k configurations and 2k timestamps,
+    // configurations will grow faster than timestamps.
+    // Checking configuration_id first will eliminate more rows,
+    // significantly reducing the number of rows to check for timestamp.
     table.primary(['configuration_id', 'timestamp'])
 
+    // Foreign key will allow us to delete all amounts for a configuration
+    // using a single query.
     table
       .foreign('configuration_id')
       .references('id')
