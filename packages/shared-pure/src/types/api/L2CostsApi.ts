@@ -20,10 +20,10 @@ const L2CostsDetails = z.object({
 export type L2CostsDetails = z.infer<typeof L2CostsDetails>
 
 export const L2CostsApiProject = z.object({
-  last24h: L2CostsDetails.or(z.undefined()),
-  last7d: L2CostsDetails.or(z.undefined()),
-  last30d: L2CostsDetails.or(z.undefined()),
-  last90d: L2CostsDetails.or(z.undefined()),
+  last24h: L2CostsDetails,
+  last7d: L2CostsDetails,
+  last30d: L2CostsDetails,
+  last90d: L2CostsDetails,
   syncedUntil: branded(z.number(), (n) => new UnixTime(n)),
 })
 

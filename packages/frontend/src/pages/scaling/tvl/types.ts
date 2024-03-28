@@ -23,6 +23,7 @@ export interface ScalingTvlViewEntry {
   purposes: ScalingProjectPurpose[]
   isArchived?: boolean
   isVerified?: boolean
+  hasImplementationChanged?: boolean
   showProjectUnderReview?: boolean
   isUpcoming?: boolean
   tvl?: ValueWithDisplayValue

@@ -4,6 +4,7 @@ import {
   ActivityApiResponse,
   DiffHistoryApiResponse,
   FinalityApiResponse,
+  ImplementationChangeReportApiResponse,
   LivenessApiResponse,
   ProjectAssetsBreakdownApiResponse,
 } from '@l2beat/shared-pure'
@@ -14,6 +15,7 @@ import { createApi } from './api/createApi'
 import { fetchActivityApi } from './api/fetchActivityApi'
 import { fetchDiffHistory } from './api/fetchDiffHistory'
 import { fetchFinalityApi } from './api/fetchFinalityApi'
+import { fetchImplementationChangeReport } from './api/fetchImplementationChangeReport'
 import { fetchL2CostsApi } from './api/fetchL2CostsApi'
 import { fetchLivenessApi } from './api/fetchLivenessApi'
 import { fetchTvlApi } from './api/fetchTvlApi'
@@ -96,6 +98,18 @@ async function main() {
       console.timeEnd('[DIFF HISTORY]')
     }
 
+    let implementationChange:
+      | ImplementationChangeReportApiResponse
+      | undefined = undefined
+    if (config.features.implementationChange) {
+      console.time('[IMPLEMENTATION CHANGE]')
+      implementationChange = await fetchImplementationChangeReport(
+        config.backend,
+        http,
+      )
+      console.timeEnd('[IMPLEMENTATION CHANGE]')
+    }
+
     const l2CostsApiResponse = await fetchL2CostsApi(config.backend, http)
 
     createApi(config, tvlApiResponse, activityApiResponse)
@@ -115,6 +129,7 @@ async function main() {
       finalityApiResponse,
       l2CostsApiResponse,
       diffHistory,
+      implementationChange,
     }
 
     await renderPages(config, pagesData)

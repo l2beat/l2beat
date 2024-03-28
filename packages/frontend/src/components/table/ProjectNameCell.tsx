@@ -16,6 +16,7 @@ export interface ProjectCellProps {
     isArchived?: boolean
     redWarning?: string
     showProjectUnderReview?: boolean
+    hasImplementationChanged?: boolean
     warning?: string
     data?: { syncStatus?: SyncStatus }
   }
@@ -66,6 +67,19 @@ export function ProjectNameCell({ project }: ProjectCellProps) {
               <ShieldIcon className="relative top-px h-4 fill-yellow-700 dark:fill-yellow-300" />
             </TooltipTrigger>
             <TooltipContent>{project.warning}</TooltipContent>
+          </Tooltip>
+        </span>
+      )}
+      {project.hasImplementationChanged && (
+        <span className="pl-1.5">
+          <Tooltip className="inline-block">
+            <TooltipTrigger>
+              <UnderReviewIcon className="relative top-px size-4" />
+            </TooltipTrigger>
+            <TooltipContent>
+              There are unhandled implementation changes. The project is under
+              review and part of the information might be outdated.
+            </TooltipContent>
           </Tooltip>
         </span>
       )}
