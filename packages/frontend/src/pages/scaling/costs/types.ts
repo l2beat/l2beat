@@ -1,4 +1,10 @@
 import {
+  Layer2Provider,
+  ScalingProjectCategory,
+  ScalingProjectPurpose,
+  StageConfig,
+} from '@l2beat/config'
+import {
   L2CostsApiProject,
   L2CostsApiResponse,
   TvlApiResponse,
@@ -15,9 +21,13 @@ export interface ScalingCostsViewEntry {
   name: string
   shortName: string | undefined
   slug: string
+  showProjectUnderReview: boolean
   warning: string | undefined
   redWarning: string | undefined
-  showProjectUnderReview: boolean
+  category: ScalingProjectCategory
+  provider: Layer2Provider | undefined
+  purposes: ScalingProjectPurpose[]
+  stage: StageConfig
   costs: CostsData
 }
 

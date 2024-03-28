@@ -1,6 +1,10 @@
 import React from 'react'
 
 import { getProjectWithIndexColumns } from '../../../../components/table/props/getProjectWithIndexColumns'
+import {
+  TypeCell,
+  TypeColumnTooltip,
+} from '../../../../components/table/TypeCell'
 import { ColumnConfig, SortingConfig } from '../../../../components/table/types'
 import { cn } from '../../../../utils/cn'
 import { CostsDataDetails, ScalingCostsViewEntry } from '../types'
@@ -9,6 +13,18 @@ import { CostsTableCell } from '../view/CostsTimeRangeCell'
 export function getScalingCostsColumnsConfig() {
   const columns: ColumnConfig<ScalingCostsViewEntry>[] = [
     ...getProjectWithIndexColumns({ indexAsDefaultSort: true }),
+    {
+      name: 'Type',
+      tooltip: <TypeColumnTooltip />,
+      shortName: 'Type',
+      getValue: (project) => (
+        <TypeCell provider={project.provider}>{project.category}</TypeCell>
+      ),
+      sorting: {
+        getOrderValue: (project) => project.category,
+        rule: 'alphabetical',
+      },
+    },
     {
       type: 'group',
       columns: [

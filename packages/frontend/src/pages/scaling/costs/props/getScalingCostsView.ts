@@ -51,6 +51,10 @@ function getScalingCostsViewEntry(
     warning: project.display.warning,
     redWarning: project.display.redWarning,
     showProjectUnderReview: !!project.isUnderReview,
+    category: project.display.category,
+    provider: project.display.provider,
+    purposes: project.display.purposes,
+    stage: project.stage,
     costs: getCostsData(l2CostsProjectData),
   }
 }
