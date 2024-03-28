@@ -56,6 +56,17 @@ export class AmountConfigurationRepository extends BaseRepository {
     return inserted.map((row) => row.id)
   }
 
+  async getByIndexerId(
+    indexerId: string,
+  ): Promise<AmountConfigurationRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('amounts_configurations').where(
+      'indexer_id',
+      indexerId,
+    )
+    return rows.map(toRecord)
+  }
+
   // #region methods used only in tests
 
   async getAll(): Promise<AmountConfigurationRecord[]> {

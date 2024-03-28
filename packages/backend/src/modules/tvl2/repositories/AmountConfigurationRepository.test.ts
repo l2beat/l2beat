@@ -49,6 +49,27 @@ describeDatabase(AmountConfigurationRepository.name, (database) => {
     })
   })
 
+  it(AmountConfigurationRepository.prototype.getByIndexerId.name, async () => {
+    const newRows = [
+      {
+        ...mock({ indexerId: 'a', projectId: ProjectId('a') }),
+      },
+      {
+        ...mock({ indexerId: 'a', projectId: ProjectId('b') }),
+      },
+      {
+        ...mock({ indexerId: 'b', projectId: ProjectId('b') }),
+      },
+    ]
+    const ids = await repository.addMany(newRows)
+
+    const results = await repository.getByIndexerId('a')
+
+    expect(results).toEqualUnsorted(
+      newRows.map((r, i) => ({ id: ids[i], ...r })).slice(0, 2),
+    )
+  })
+
   it(AmountConfigurationRepository.prototype.deleteAll.name, async () => {
     await repository.addMany([mock()])
 
