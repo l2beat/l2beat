@@ -924,8 +924,8 @@
           "type": null
         },
         "gasLimit": {
-          "description": null,
-          "severity": null,
+          "description": "Gas limit for blocks on L2.",
+          "severity": "LOW",
           "type": null
         },
         "minimumGasLimit": {
