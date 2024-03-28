@@ -33,7 +33,7 @@ export function TotalCell({ project }: TotalCellProps) {
     </Badge>
   )
 
-  if (tvlWarnings?.length && project.tvl) {
+  if (tvlWarnings?.length) {
     return (
       <Tooltip>
         <TooltipTrigger className="relative flex items-center gap-1">

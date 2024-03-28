@@ -30,7 +30,8 @@
     "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27": "TimelockMultisig",
     "0xe0d7755252873c4eF5788f7f45764E0e17610508": "FraxtalMultisig",
     "0x8306300ffd616049FD7e4b0354a64Da835c1A81C": "frxETHMultisig",
-    "0x00000000219ab540356cBB839Cbe05303d7705Fa": "DepositContract"
+    "0x00000000219ab540356cBB839Cbe05303d7705Fa": "DepositContract",
+    "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4": "SuperchainConfig" // fraxtal fork of SuperchainConfig
   },
   "overrides": {
     "OptimismPortal": {
