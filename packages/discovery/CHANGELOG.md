@@ -1,5 +1,13 @@
 # @l2beat/discovery
 
+## 0.46.6
+
+### Patch Changes
+
+- Compute multisig threshold in the proxy detector
+- Updated dependencies
+  - @l2beat/discovery-types@0.8.1
+
 ## 0.46.5
 
 ### Patch Changes

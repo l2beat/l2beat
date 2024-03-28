@@ -28,6 +28,36 @@ async function getMasterCopy(
   }
 }
 
+async function getOwnersCount(
+  provider: DiscoveryProvider,
+  address: EthereumAddress,
+  blockNumber: number,
+): Promise<number | undefined> {
+  const owners = await getCallResult<string[]>(
+    provider,
+    address,
+    'function getOwners() view returns (address[])',
+    [],
+    blockNumber,
+  )
+
+  return owners?.length
+}
+
+async function getThreshold(
+  provider: DiscoveryProvider,
+  address: EthereumAddress,
+  blockNumber: number,
+): Promise<number | undefined> {
+  return await getCallResult<number>(
+    provider,
+    address,
+    'function getThreshold() view returns (uint256)',
+    [],
+    blockNumber,
+  )
+}
+
 export async function detectGnosisSafe(
   provider: DiscoveryProvider,
   address: EthereumAddress,
@@ -41,6 +71,16 @@ export async function detectGnosisSafe(
   const modules = await getModules(provider, address, blockNumber)
   assert(modules, 'Could not find modules for GnosisSafe')
 
+  const ownerCount = await getOwnersCount(provider, address, blockNumber)
+  const threshold = await getThreshold(provider, address, blockNumber)
+  assert(ownerCount !== undefined, 'Cannot retrieve owner count')
+  assert(threshold !== undefined, 'Cannot retrieve threshold')
+
+  const thresholdString = `${threshold} of ${ownerCount} (${(
+    (threshold / ownerCount) *
+    100
+  ).toFixed()}%)`
+
   return {
     implementations: [masterCopy],
     relatives: modules,
@@ -48,6 +88,7 @@ export async function detectGnosisSafe(
       type: 'gnosis safe',
       masterCopy,
       modules,
+      threshold: thresholdString,
     },
   }
 }

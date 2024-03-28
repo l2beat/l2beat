@@ -51,6 +51,7 @@ export interface GnosisSafeUpgradeability {
   type: 'gnosis safe'
   masterCopy: EthereumAddress
   modules: EthereumAddress[]
+  threshold: string
 }
 
 export interface GnosisSafeZodiacModuleUpgradeability {
