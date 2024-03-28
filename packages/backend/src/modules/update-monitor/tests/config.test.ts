@@ -29,7 +29,6 @@ describe('discovery config.jsonc', () => {
       chainConfigs
         ?.flat()
         ?.filter((c) => !c.name.startsWith('l2beat-'))
-        ?.filter((c) => !c.name.startsWith('shared-'))
         ?.filter((c) => !projectIds.includes(c.name))
         .map((c) => c.name) ?? []
 
