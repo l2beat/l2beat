@@ -81,6 +81,8 @@ export class BufferReader {
   /**
    * Read a spanBatch bit list: encoded as big-endian integer,
    * left-padded with 0s to the next multiple of 8 bits.
+   *
+   * We use this only to skip over the proper amount of bytes.
    */
   public readBitList(bitCount: number) {
     const bytesInBitList = Math.ceil(bitCount / 8)
