@@ -2,34 +2,79 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "USDCBridge",
+      "name": "AdminMultisig",
       "values": {
-        "balance": {
+        "VERSION": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "messageService": {
+        "domainSeparator": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "owner": {
+        "getChainId": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "paused": {
+        "getOwners": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "pendingOwner": {
+        "getThreshold": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "remoteUSDCBridge": {
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "BridgedToken",
+      "values": {
+        "DOMAIN_SEPARATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "_decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eip712Domain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
           "description": null,
           "severity": null,
           "type": null
@@ -82,251 +127,7 @@
       }
     },
     {
-      "name": "zkEVM",
-      "values": {
-        "currentL2StoredL1MessageNumber": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "currentL2StoredL1RollingHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "currentPeriodAmountInWei": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DEFAULT_ADMIN_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "GENERAL_PAUSE_TYPE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "INBOX_STATUS_RECEIVED": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "INBOX_STATUS_UNKNOWN": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "L1_L2_PAUSE_TYPE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "L2_L1_PAUSE_TYPE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "limitInWei": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OPERATOR_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OUTBOX_STATUS_RECEIVED": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OUTBOX_STATUS_SENT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OUTBOX_STATUS_UNKNOWN": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PAUSE_MANAGER_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "periodInSeconds": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PROVING_SYSTEM_PAUSE_TYPE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RATE_LIMIT_SETTER_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "sender": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "systemMigrationBlock": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERIFIER_SETTER_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "accessControl": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "generalPause": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l1l2Pause": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2l1Pause": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "provenCompressedBlocksWithoutProof": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "provenNonCompressedBlocksWithoutProof": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "verifiers": {
-          "description": "Mapping of proof type to ZK Plonk Verifier contract",
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "PlonkVerifierForDataAggregation",
-      "values": {}
-    },
-    {
-      "name": "Timelock",
-      "values": {
-        "CANCELLER_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DEFAULT_ADMIN_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "EXECUTOR_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getMinDelay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PROPOSER_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "TIMELOCK_ADMIN_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "accessControl": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ProxyAdmin",
-      "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "AdminMultisig",
-      "values": {
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "ERC20BridgeProxyAdmin",
-      "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "USDCBridgeProxyAdmin",
       "values": {
         "owner": {
           "description": null,
@@ -351,52 +152,17 @@
       }
     },
     {
-      "name": "PlonkVerifierFullLarge",
+      "name": "MultiSend",
       "values": {}
     },
     {
-      "name": "PlonkVerifierFull",
+      "name": "PlonkVerifierForDataAggregation",
       "values": {}
     },
     {
-      "name": "BridgedToken",
+      "name": "ProxyAdmin",
       "values": {
-        "_decimals": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "bridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "decimals": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DOMAIN_SEPARATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "eip712Domain": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "name": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "symbol": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalSupply": {
+        "owner": {
           "description": null,
           "severity": null,
           "type": null
@@ -431,12 +197,12 @@
           "severity": null,
           "type": null
         },
-        "target": {
+        "roles": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "roles": {
+        "target": {
           "description": null,
           "severity": null,
           "type": null
@@ -444,8 +210,234 @@
       }
     },
     {
-      "name": "MultiSend",
-      "values": {}
+      "name": "Timelock",
+      "values": {
+        "CANCELLER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EXECUTOR_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROPOSER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TIMELOCK_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getMinDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "USDCBridge",
+      "values": {
+        "balance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messageService": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "remoteUSDCBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "USDCBridgeProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "zkEVM",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "GENERAL_PAUSE_TYPE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "INBOX_STATUS_RECEIVED": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "INBOX_STATUS_UNKNOWN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L1_L2_PAUSE_TYPE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L2_L1_PAUSE_TYPE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OPERATOR_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OUTBOX_STATUS_RECEIVED": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OUTBOX_STATUS_SENT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OUTBOX_STATUS_UNKNOWN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAUSE_MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROVING_SYSTEM_PAUSE_TYPE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RATE_LIMIT_SETTER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERIFIER_SETTER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "currentL2StoredL1MessageNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "currentL2StoredL1RollingHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "currentPeriodAmountInWei": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "generalPause": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1l2Pause": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2l1Pause": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "limitInWei": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "periodInSeconds": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "provenCompressedBlocksWithoutProof": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "provenNonCompressedBlocksWithoutProof": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sender": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "systemMigrationBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "verifiers": {
+          "description": "Mapping of proof type to ZK Plonk Verifier contract",
+          "severity": null,
+          "type": null
+        }
+      }
     }
   ]
 }
