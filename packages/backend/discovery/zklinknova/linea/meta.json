@@ -1,0 +1,463 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "GnosisSafeL2",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Governance",
+      "values": {
+        "minDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "securityCouncil": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1ERC20Bridge",
+      "values": {
+        "l2Bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2TokenBeacon": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2TokenProxyBytecodeHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L2MessageService",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "GENERAL_PAUSE_TYPE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "INBOX_STATUS_CLAIMED": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "INBOX_STATUS_RECEIVED": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "INBOX_STATUS_UNKNOWN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L1_L2_MESSAGE_SETTER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L1_L2_PAUSE_TYPE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L2_L1_PAUSE_TYPE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MINIMUM_FEE_SETTER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAUSE_MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROVING_SYSTEM_PAUSE_TYPE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RATE_LIMIT_SETTER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "currentPeriodAmountInWei": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "currentPeriodEnd": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lastAnchoredL1MessageNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "limitInWei": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minimumFeeInWei": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nextMessageNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "periodInSeconds": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sender": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "LineaL2Gateway",
+      "values": {
+        "MESSAGE_SERVICE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ZKLINK": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRemoteGateway": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "TimeLock",
+      "values": {
+        "CANCELLER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EXECUTOR_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROPOSER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TIMELOCK_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getMinDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ValidatorTimelock",
+      "values": {
+        "constructorArgs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "executionDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getName": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "revertedBlocks": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "validator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "zkSyncContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Verifier",
+      "values": {
+        "verificationKeyHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Verifier",
+      "values": {}
+    },
+    {
+      "name": "zkLink",
+      "values": {
+        "FORWARD_REQUEST_TYPE_HASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "facetAddresses": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "facets": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getFirstUnprocessedPriorityTx": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getGateway": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getGovernor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getL2BootloaderBytecodeHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getL2DefaultAccountBytecodeHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getL2SystemContractsUpgradeBatchNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getL2SystemContractsUpgradeBlockNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getL2SystemContractsUpgradeTxHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPendingGovernor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPriorityQueueSize": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPriorityTxMaxGasLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getProtocolVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalBatchesCommitted": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalBatchesExecuted": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalBatchesVerified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalBlocksCommitted": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalBlocksExecuted": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalBlocksVerified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalPriorityTxs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getVerifier": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getVerifierParams": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isDiamondStorageFrozen": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "priorityQueueFrontOperation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "validators": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}

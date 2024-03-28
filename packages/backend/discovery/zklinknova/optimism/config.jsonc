@@ -1,0 +1,13 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "chain": "optimism",
+  "name": "zklinknova",
+  "initialAddresses": [
+    "0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b",
+    "0x5Bd51296423A9079b931414C1De65e7057326EaA"
+  ],
+  "names": {
+    "0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b": "zkLink",
+    "0x5Bd51296423A9079b931414C1De65e7057326EaA": "L1ERC20Bridge"
+  }
+}
