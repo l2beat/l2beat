@@ -76,7 +76,11 @@ export const optimism: Layer2 = opStack({
   },
   genesisTimestamp: new UnixTime(1686074603),
   finality: {
-    type: 'OPStack',
+    type: 'OPStack-blob',
+    // timestamp of the first blob tx
+    minTimestamp: new UnixTime(1710375155),
+    l2BlockTimeSeconds: 2,
+    genesisTimestamp: new UnixTime(1686068903),
     lag: 0,
   },
   l2OutputOracle: discovery.getContract('L2OutputOracle'),

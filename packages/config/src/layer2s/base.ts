@@ -68,7 +68,10 @@ export const base: Layer2 = opStack({
   ),
   rpcUrl: 'https://developer-access-mainnet.base.org',
   finality: {
-    type: 'OPStack',
+    type: 'OPStack-blob',
+    minTimestamp: new UnixTime(1710375515),
+    genesisTimestamp: new UnixTime(1686789347),
+    l2BlockTimeSeconds: 2,
     lag: 0,
   },
   genesisTimestamp: new UnixTime(1686796655),
