@@ -33,6 +33,7 @@ export function DesktopTabs({ pages }: DesktopTabsProps) {
               !page.selected &&
               !pages[i + 1]?.selected &&
               'border-r-gray-200 dark:border-r-gray-850',
+            pages.length >= 4 && i === 3 && 'border-r-0',
             i >= 4 && 'border-t-2 border-t-gray-200 dark:border-t-gray-850',
             page.selected && [
               'before:absolute',
