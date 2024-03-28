@@ -8,10 +8,41 @@ import { LineaFinalityAnalyzer } from './LineaFinalityAnalyzer'
 
 describe(LineaFinalityAnalyzer.name, () => {
   describe(LineaFinalityAnalyzer.prototype.getFinality.name, () => {
-    it('correctly decode and returns correct data', async () => {
-      const livenessRepository = getMockLivenessRepository()
-      const provider = getMockRpcClient()
-      const l2provider = getMockL2RpcClient(TIMESTAMPS1)
+    it('correctly decode and returns correct data for calldata example', async () => {
+      const livenessRepository = mockLivenessRepository()
+      const provider = mockObject<RpcClient>({
+        getTransaction: mockFn().resolvesTo({
+          data: mockCallData(2371262, 2371336),
+        }),
+      })
+      const l2provider = mockL2RpcClient(TIMESTAMPS1)
+      const l1Timestamp = 1708352483
+
+      const calculator = new LineaFinalityAnalyzer(
+        provider,
+        livenessRepository,
+        ProjectId('linea'),
+        l2provider,
+      )
+      const results = await calculator.getFinality({
+        txHash: '0x121',
+        timestamp: new UnixTime(l1Timestamp),
+      })
+
+      expect(results).toEqualUnsorted([
+        l1Timestamp - Math.min(...TIMESTAMPS1),
+        l1Timestamp - Math.max(...TIMESTAMPS1),
+      ])
+    })
+
+    it('correctly decode and returns correct data for blob example', async () => {
+      const livenessRepository = mockLivenessRepository()
+      const provider = mockObject<RpcClient>({
+        getTransaction: mockFn().resolvesTo({
+          data: mockBlobCalldata(2371262, 2371336),
+        }),
+      })
+      const l2provider = mockL2RpcClient(TIMESTAMPS1)
       const l1Timestamp = 1708352483
 
       const calculator = new LineaFinalityAnalyzer(
@@ -36,9 +67,9 @@ describe(LineaFinalityAnalyzer.name, () => {
     LineaFinalityAnalyzer.prototype.getFinalityWithGranularity.name,
     () => {
       it('correctly split date for a given granularity', async () => {
-        const livenessRepository = getMockLivenessRepository()
-        const provider = getMockRpcClient()
-        const l2provider = getMockL2RpcClient(TIMESTAMPS2)
+        const livenessRepository = mockLivenessRepository()
+        const provider = mockRpcClient()
+        const l2provider = mockL2RpcClient(TIMESTAMPS2)
 
         const start = UnixTime.now().toStartOf('hour')
         const calculator = new LineaFinalityAnalyzer(
@@ -101,16 +132,16 @@ describe(LineaFinalityAnalyzer.name, () => {
         const provider = mockObject<RpcClient>({
           getTransaction: mockFn()
             .resolvesToOnce({
-              data: getMockCallData(2300000, 2300348),
+              data: mockCallData(2300000, 2300348),
             })
             .resolvesToOnce({
-              data: getMockCallData(2400000, 2400100),
+              data: mockCallData(2400000, 2400100),
             }),
         })
 
         const blockTimestamps = [1706143000, 1706145000, 1706144000, 1706146000]
 
-        const l2provider = getMockL2RpcClient(blockTimestamps)
+        const l2provider = mockL2RpcClient(blockTimestamps)
 
         const calculator = new LineaFinalityAnalyzer(
           provider,
@@ -142,7 +173,7 @@ describe(LineaFinalityAnalyzer.name, () => {
   )
 })
 
-function getMockLivenessRepository() {
+function mockLivenessRepository() {
   return mockObject<LivenessRepository>({
     findTransactionWithinTimeRange: mockFn().resolvesTo({
       txHash: '0x121',
@@ -151,15 +182,15 @@ function getMockLivenessRepository() {
   })
 }
 
-function getMockRpcClient() {
+function mockRpcClient() {
   return mockObject<RpcClient>({
     getTransaction: mockFn().resolvesTo({
-      data: getMockCallData(2371262, 2371336),
+      data: mockCallData(2371262, 2371336),
     }),
   })
 }
 
-function getMockL2RpcClient(timestamps: number[]) {
+function mockL2RpcClient(timestamps: number[]) {
   const getBlock = mockFn()
   timestamps.forEach((timestamp) => {
     getBlock.resolvesToOnce({
@@ -174,7 +205,7 @@ function getMockL2RpcClient(timestamps: number[]) {
 const TIMESTAMPS1 = Array.from({ length: 2 }, (_, i) => 1706143081 + i)
 const TIMESTAMPS2 = Array.from({ length: 75 * 6 }, (_, i) => 1706143081 + i)
 
-function getMockCallData(firstBlock: number, endBlock: number): string {
+function mockCallData(firstBlock: number, endBlock: number): string {
   const fnSignature =
     'submitData((bytes32,bytes32,bytes32,uint256,uint256,bytes32,bytes))'
   const iface = new utils.Interface([`function ${fnSignature}`])
@@ -191,4 +222,27 @@ function getMockCallData(firstBlock: number, endBlock: number): string {
     ],
   ]
   return iface.encodeFunctionData('submitData', sampleData)
+}
+
+function mockBlobCalldata(firstBlock: number, endBlock: number): string {
+  const fn =
+    'function submitBlobData(tuple(bytes32 parentStateRootHash, bytes32 dataParentHash, bytes32 finalStateRootHash, uint256 firstBlockInData, uint256 finalBlockInData, bytes32 snarkHash) _submissionData, uint256 _dataEvaluationClaim, bytes _kzgCommitment, bytes _kzgProof)'
+  const iface = new utils.Interface([fn])
+
+  const randomNumber = Math.floor(Math.random() * 100_000_000)
+
+  const sampleData = [
+    [
+      utils.formatBytes32String(''),
+      utils.formatBytes32String(''),
+      utils.formatBytes32String(''),
+      firstBlock,
+      endBlock,
+      utils.formatBytes32String(''),
+    ],
+    randomNumber,
+    utils.randomBytes(40),
+    utils.randomBytes(40),
+  ]
+  return iface.encodeFunctionData('submitBlobData', sampleData)
 }

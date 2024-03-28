@@ -155,8 +155,10 @@ export const linea: Layer2 = {
           ),
           selector: '0x2d3c12e5',
           functionSignature:
-            'function submitBlobData((bytes32,bytes32,bytes32,uint256,uint256,bytes32),uint256,bytes,bytes)',
-          sinceTimestampInclusive: new UnixTime(1711449400),
+            'function submitBlobData(tuple(bytes32,bytes32,bytes32,uint256,uint256,bytes32),uint256,bytes,bytes)',
+          // first tx with blobs
+          // https://etherscan.io/tx/0x4d03b7e1950256de257ff95b52fac047faeb11600c5975abe7e0ccbc7be7ecfb
+          sinceTimestampInclusive: new UnixTime(1711449407),
         },
       },
       {
@@ -225,9 +227,7 @@ export const linea: Layer2 = {
       url: 'https://api.lineascan.build/api',
       type: 'etherscan',
     },
-    // ~ Timestamp of block number 0 on Linea
-    // https://lineascan.build/block/0
-    minTimestampForTvl: UnixTime.fromDate(new Date('2023-07-06T14:00:00Z')),
+    minTimestampForTvl: UnixTime.fromDate(new Date('2023-07-19T14:00:00Z')),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),

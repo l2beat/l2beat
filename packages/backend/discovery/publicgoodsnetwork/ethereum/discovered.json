@@ -1,7 +1,7 @@
 {
   "name": "publicgoodsnetwork",
   "chain": "ethereum",
-  "blockNumber": 19412045,
+  "blockNumber": 19532103,
   "configHash": "0xaae231d73be04d9be6bba9574df81c607bddee1ae38150032dde357a964954a3",
   "version": 3,
   "contracts": [
@@ -23,7 +23,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "3 of 6 (50%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1689022727,
@@ -50,7 +51,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "3 of 5 (60%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1680797639,
@@ -65,7 +67,7 @@
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
         ],
         "getThreshold": 3,
-        "nonce": 15,
+        "nonce": 20,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -149,10 +151,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 10526400,
-        "latestOutputIndex": 5847,
-        "nextBlockNumber": 10528200,
-        "nextOutputIndex": 5848,
+        "latestBlockNumber": 11255400,
+        "latestOutputIndex": 6252,
+        "nextBlockNumber": 11257200,
+        "nextOutputIndex": 6253,
         "PROPOSER": "0x69968Ce0E92d9c101BAd81de55EFbcb69603cFe3",
         "startingBlockNumber": 0,
         "startingTimestamp": 1689106727,

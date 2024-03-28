@@ -2,68 +2,8 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "ReplicaBeaconProxy",
-      "values": {
-        "committedRoot": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "homeDomainHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "localDomain": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "optimisticSeconds": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PROCESS_GAS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "remoteDomain": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RESERVE_GAS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "state": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "updater": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "BridgeRouterBeaconProxy",
       "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "PRE_FILL_FEE_DENOMINATOR": {
           "description": null,
           "severity": null,
@@ -79,6 +19,11 @@
           "severity": null,
           "type": null
         },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "xAppConnectionManager": {
           "description": null,
           "severity": null,
@@ -87,42 +32,38 @@
       }
     },
     {
-      "name": "ReplicaUpgradeBeacon",
-      "values": {}
-    },
-    {
       "name": "BridgeUpgradeBeacon",
       "values": {}
     },
     {
-      "name": "UpgradeBeaconController",
+      "name": "GnosisSafe",
       "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "XAppConnectionManager",
-      "values": {
-        "home": {
+        "VERSION": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "localDomain": {
+        "domainSeparator": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "owner": {
+        "getChainId": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "watchers": {
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
           "description": null,
           "severity": null,
           "type": null
@@ -132,6 +73,16 @@
     {
       "name": "GovernanceRouterBeaconProxy",
       "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domains": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "governor": {
           "description": null,
           "severity": null,
@@ -167,17 +118,7 @@
           "severity": null,
           "type": null
         },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "xAppConnectionManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "domains": {
           "description": null,
           "severity": null,
           "type": null
@@ -191,6 +132,11 @@
     {
       "name": "Governor",
       "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "domainSeparator": {
           "description": null,
           "severity": null,
@@ -212,46 +158,6 @@
           "type": null
         },
         "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "RecoveryManager",
-      "values": {
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
           "description": null,
           "severity": null,
           "type": null
@@ -261,6 +167,16 @@
     {
       "name": "HomeBeaconProxy",
       "values": {
+        "MAX_MESSAGE_BODY_BYTES": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "committedRoot": {
           "description": null,
           "severity": null,
@@ -277,11 +193,6 @@
           "type": null
         },
         "localDomain": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MAX_MESSAGE_BODY_BYTES": {
           "description": null,
           "severity": null,
           "type": null
@@ -330,11 +241,6 @@
           "description": null,
           "severity": null,
           "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
         }
       }
     },
@@ -343,8 +249,13 @@
       "values": {}
     },
     {
-      "name": "GnosisSafe",
+      "name": "RecoveryManager",
       "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "domainSeparator": {
           "description": null,
           "severity": null,
@@ -369,13 +280,67 @@
           "description": null,
           "severity": null,
           "type": null
+        }
+      }
+    },
+    {
+      "name": "ReplicaBeaconProxy",
+      "values": {
+        "PROCESS_GAS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RESERVE_GAS": {
+          "description": null,
+          "severity": null,
+          "type": null
         },
         "VERSION": {
           "description": null,
           "severity": null,
           "type": null
+        },
+        "committedRoot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "homeDomainHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "localDomain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "optimisticSeconds": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "remoteDomain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "state": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "updater": {
+          "description": null,
+          "severity": null,
+          "type": null
         }
       }
+    },
+    {
+      "name": "ReplicaUpgradeBeacon",
+      "values": {}
     },
     {
       "name": "UpdaterManager",
@@ -386,6 +351,41 @@
           "type": null
         },
         "updater": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "UpgradeBeaconController",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "XAppConnectionManager",
+      "values": {
+        "home": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "localDomain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "watchers": {
           "description": null,
           "severity": null,
           "type": null

@@ -27,12 +27,6 @@ export class PriceRepository extends BaseRepository {
     this.autoWrap<CheckConvention<PriceRepository>>(this)
   }
 
-  async getAll(): Promise<PriceRecord[]> {
-    const knex = await this.knex()
-    const rows = await knex('prices')
-    return rows.map(toRecord)
-  }
-
   async addMany(records: PriceRecord[]) {
     const rows: PriceRow[] = records.map(toRow)
     const knex = await this.knex()
@@ -53,10 +47,20 @@ export class PriceRepository extends BaseRepository {
       .delete()
   }
 
+  // #region methods used only in tests
+
+  async getAll(): Promise<PriceRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('prices')
+    return rows.map(toRecord)
+  }
+
   async deleteAll() {
     const knex = await this.knex()
     return knex('prices').delete()
   }
+
+  // #endregion
 }
 
 function toRecord(row: PriceRow): PriceRecord {

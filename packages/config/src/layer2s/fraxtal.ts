@@ -128,6 +128,9 @@ export const fraxtal: Layer2 = opStack({
     discovery.getContractDetails('Timelock', {
       description: `Allows for time-delayed execution of transactions in the FrxETH smart contract, such as adding and removing whitelisted minters. Delay is set to ${timelockDelay}.`,
     }),
+    discovery.getContractDetails('SuperchainConfig', {
+      description: `Upgradable contract that manages the PAUSED_SLOT, a boolean value indicating whether the Superchain is paused, and GUARDIAN_SLOT, the address of the guardian which can pause and unpause the system. The address of the guardian can only be modified by the ProxyAdmin by upgrading the SuperchainConfig contract. This contract is a fork of Optimism's superchainConfig contract and may not be utilized by other chains.`,
+    }),
   ],
   nonTemplateEscrows: [],
   nonTemplateOptimismPortalEscrowTokens: ['frxETH'],

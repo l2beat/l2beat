@@ -1,7 +1,7 @@
 {
   "name": "lzomnichain",
   "chain": "linea",
-  "blockNumber": 2891838,
+  "blockNumber": 3199002,
   "configHash": "0x7aca1400a06d9aafbeecbdccbd4e8d79933cdf12a95d7f306ac05e0ece3b6059",
   "version": 3,
   "contracts": [
@@ -643,7 +643,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x179548Da4C1709b947a965bbBBba76Cb68003ef4",
-        "modules": []
+        "modules": [],
+        "threshold": "2 of 5 (40%)"
       },
       "implementations": ["0x179548Da4C1709b947a965bbBBba76Cb68003ef4"],
       "sinceTimestamp": 1691909044,
@@ -658,7 +659,7 @@
           "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
         ],
         "getThreshold": 2,
-        "nonce": 7,
+        "nonce": 9,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

@@ -1,7 +1,7 @@
 {
   "name": "opticsV2",
   "chain": "celo",
-  "blockNumber": 21838858,
+  "blockNumber": 24791025,
   "configHash": "0xc45aafc3097c83c24c68a6693ab3890e124dae53f2abe2d96a9898cb07900e34",
   "version": 3,
   "contracts": [
@@ -11,7 +11,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x69f4D1788e39c87893C980c06EdF4b7f686e2938",
-        "modules": []
+        "modules": [],
+        "threshold": "4 of 7 (57%)"
       },
       "implementations": ["0x69f4D1788e39c87893C980c06EdF4b7f686e2938"],
       "values": {

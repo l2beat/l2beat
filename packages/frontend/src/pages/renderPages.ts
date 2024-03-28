@@ -35,6 +35,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     livenessApiResponse,
     finalityApiResponse,
     diffHistory,
+    implementationChange,
   } = pagesData
 
   pages.push(getRiskPage(config, pagesData))
@@ -57,6 +58,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
       getActivityPage(config, {
         activityApiResponse,
         verificationStatus,
+        implementationChange,
       }),
     )
   }
@@ -77,6 +79,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
       getLivenessPage(config, {
         livenessApiResponse,
         tvlApiResponse,
+        implementationChange,
       }),
     )
   }
@@ -86,6 +89,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
       getFinalityPage(config, {
         finalityApiResponse,
         tvlApiResponse,
+        implementationChange,
       }),
     )
   }
@@ -100,7 +104,12 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     pages.push(...getGovernancePublicationPages(config))
   }
 
-  pages.push(getScalingDataAvailabilityPage(config, { tvlApiResponse }))
+  pages.push(
+    getScalingDataAvailabilityPage(config, {
+      tvlApiResponse,
+      implementationChange,
+    }),
+  )
 
   outputPages(pages)
 }

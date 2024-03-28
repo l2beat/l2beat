@@ -1,0 +1,359 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "Bridge",
+      "values": {
+        "admin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "bridgeFee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "feeAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "gasTokenAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "gasTokenDecimalDiffFactor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "gasTokenMetadata": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "globalExitRootManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isEmergencyState": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "networkID": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "polygonZkEVMaddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "BridgeAdminMultiSig",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CDKValidium",
+      "values": {
+        "_HALT_AGGREGATION_TIMEOUT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "admin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "bridgeAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainID": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "dataCommitteeAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "forceBatchTimeout": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "forkID": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "globalExitRootManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isEmergencyState": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isForcedBatchDisallowed": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "matic": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "networkName": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nondeterminsiticPendingState": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingStateTimeout": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rollupVerifier": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "trustedAggregator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "trustedAggregatorTimeout": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "trustedSequencer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "trustedSequencerURL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "verifyBatchTimeTarget": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "DataAvailabilityCommittee",
+      "values": {
+        "committeeHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getAmountOfMembers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "members": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "requiredAmountOfSignatures": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "FflonkVerifier",
+      "values": {}
+    },
+    {
+      "name": "GlobalExitRoot",
+      "values": {
+        "bridgeAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rollupAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Timelock",
+      "values": {
+        "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "cdkValidium": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getMinDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ZkFairAdmin",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ZkFairOwner",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}

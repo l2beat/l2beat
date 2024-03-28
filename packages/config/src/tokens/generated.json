@@ -2731,6 +2731,21 @@
       "formula": "locked"
     },
     {
+      "id": "rss3-rss3",
+      "name": "RSS3",
+      "coingeckoId": "rss3",
+      "address": "0xc98D64DA73a6616c42117b582e832812e7B8D57F",
+      "symbol": "RSS3",
+      "decimals": 18,
+      "deploymentTimestamp": 1644216741,
+      "coingeckoListingTimestamp": 1644796800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/23575/large/RSS3.png?1696522783",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "sand-sand",
       "name": "SAND",
       "coingeckoId": "the-sandbox",
@@ -3928,6 +3943,25 @@
       "bridgedUsing": {
         "bridge": "Connext",
         "slug": "connext"
+      }
+    },
+    {
+      "id": "mode:stone-stakestone-ether",
+      "name": "StakeStone Ether",
+      "coingeckoId": "stakestone-ether",
+      "address": "0x80137510979822322193FC997d400D5A6C747bf7",
+      "symbol": "STONE",
+      "decimals": 18,
+      "deploymentTimestamp": 1709806095,
+      "coingeckoListingTimestamp": 1700611200,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33103/large/200_200.png?1702602672",
+      "chainId": 34443,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Stargate",
+        "slug": "stargate"
       }
     },
     {

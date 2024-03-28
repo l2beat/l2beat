@@ -56,6 +56,7 @@ export interface ApiConfig {
   readonly cache: {
     readonly tvl: boolean
     readonly liveness: boolean
+    readonly l2costs: boolean
   }
 }
 
@@ -86,6 +87,7 @@ export interface TvlConfig {
 export interface Tvl2Config {
   readonly prices: PriceConfigEntry[]
   readonly amounts: AmountConfigEntry[]
+  readonly chains: ChainTvlConfig[]
   readonly coingeckoApiKey: string | undefined
 }
 

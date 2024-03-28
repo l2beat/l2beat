@@ -204,6 +204,13 @@ export const blast: Layer2 = opStack({
       date: '2024-02-29T00:00:00Z',
       description: 'Blast Network is live on mainnet.',
     },
+    {
+      name: 'Blast upgrades to censor exploiter',
+      link: 'https://x.com/miszke_eth/status/1772946372309737970',
+      date: '2024-03-26T00:00:00Z',
+      description:
+        'The Munchables exploiter is prohibited from forcing transactions.',
+    },
   ],
   roleOverrides: {
     batcherHash: 'Sequencer',

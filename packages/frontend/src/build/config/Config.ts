@@ -18,6 +18,7 @@ export interface Config {
     banner: boolean
     tvlBreakdown: boolean
     diffHistory: boolean
+    implementationChange: boolean
     gitcoinOption: boolean
     hiringBadge: boolean
     buildAllProjectPages: boolean
@@ -25,6 +26,7 @@ export interface Config {
   }
   backend: {
     apiUrl: string
+    updateMonitorApiUrl: string
     mock?: boolean
     skipCache: boolean
   }
