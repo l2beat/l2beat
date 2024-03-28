@@ -96,6 +96,6 @@ function getTvlWarning(
     }
   }
   const warningSeverity: 'bad' | 'warning' =
-    breakdown.associated > 0.9 ? 'bad' : 'warning'
+    breakdown.associated > 0.8 ? 'bad' : 'warning'
   return { warning, warningSeverity }
 }
