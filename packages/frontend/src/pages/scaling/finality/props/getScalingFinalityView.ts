@@ -16,19 +16,23 @@ export function getScalingFinalityView(
   projects: Layer2[],
   pagesData: FinalityPagesData,
 ): ScalingFinalityViewProps {
-  const { finalityApiResponse, tvlApiResponse } = pagesData
+  const { finalityApiResponse, tvlApiResponse, implementationChange } =
+    pagesData
 
   const includedProjects = getIncludedProjects(projects, finalityApiResponse)
   const orderedProjects = orderByTvl(includedProjects, tvlApiResponse)
 
   return {
     items: orderedProjects
-      .map((project) =>
-        getScalingFinalityViewEntry(
+      .map((project) => {
+        const hasImplementationChanged =
+          !!implementationChange?.projects[project.id.toString()]
+        return getScalingFinalityViewEntry(
           project,
           finalityApiResponse.projects[project.id.toString()],
-        ),
-      )
+          hasImplementationChanged,
+        )
+      })
       .filter(notUndefined),
   }
 }
@@ -36,6 +40,7 @@ export function getScalingFinalityView(
 export function getScalingFinalityViewEntry(
   project: Layer2,
   finalityProjectData: FinalityProjectData | undefined,
+  hasImplementationChanged?: boolean,
 ): ScalingFinalityViewEntry {
   return {
     name: project.display.name,
@@ -46,6 +51,7 @@ export function getScalingFinalityViewEntry(
     provider: project.display.provider,
     warning: project.display.warning,
     redWarning: project.display.redWarning,
+    hasImplementationChanged,
     purposes: project.display.purposes,
     stage: project.stage,
     data: getFinalityData(finalityProjectData, project),

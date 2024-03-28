@@ -7,7 +7,7 @@ export function ArchivedBar({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        'flex justify-center py-2.5',
+        'flex w-full justify-center py-2.5',
         'rounded-lg bg-gray-200 dark:bg-zinc-700',
         className,
       )}

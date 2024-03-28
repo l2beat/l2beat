@@ -22,6 +22,7 @@ export interface ScalingSummaryViewEntryBase {
   isArchived?: boolean
   isVerified?: boolean
   showProjectUnderReview?: boolean
+  hasImplementationChanged?: boolean
   isUpcoming?: boolean
   purposes: ScalingProjectPurpose[]
 }

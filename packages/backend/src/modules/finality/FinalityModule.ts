@@ -13,6 +13,7 @@ import { TrackedTxsConfigsRepository } from '../tracked-txs/repositories/Tracked
 import { TrackedTxsIndexer } from '../tracked-txs/TrackedTxsIndexer'
 import { LineaFinalityAnalyzer } from './analyzers/LineaFinalityAnalyzer'
 import { OpStackFinalityAnalyzer } from './analyzers/opStack'
+import { ScrollFinalityAnalyzer } from './analyzers/ScrollFinalityAnalyzer'
 import { zkSyncEraFinalityAnalyzer } from './analyzers/zkSyncEraFinalityAnalyzer'
 import { FinalityController } from './api/FinalityController'
 import { createFinalityRouter } from './api/FinalityRouter'
@@ -135,6 +136,16 @@ function initializeConfigurations(
                 l2BlockTimeSeconds: configuration.l2BlockTimeSeconds,
                 genesisTimestamp: configuration.genesisTimestamp,
               },
+            ),
+            minTimestamp: configuration.minTimestamp,
+          }
+        case 'Scroll':
+          return {
+            projectId: configuration.projectId,
+            analyzer: new ScrollFinalityAnalyzer(
+              ethereumRPC,
+              livenessRepository,
+              configuration.projectId,
             ),
             minTimestamp: configuration.minTimestamp,
           }

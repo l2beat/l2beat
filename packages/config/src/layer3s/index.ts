@@ -5,6 +5,7 @@ import { orb3 } from './orb3'
 import { popapex } from './popapex'
 import { rari } from './rari'
 import { stack } from './stack'
+import { syndicateframe } from './syndicateframe'
 import { Layer3 } from './types'
 import { xai } from './xai'
 import { zklinknova } from './zklinknexus'
@@ -19,6 +20,7 @@ export const layer3s: Layer3[] = [
   xai,
   orb3,
   popapex,
+  syndicateframe,
   mxc,
   stack,
 ]

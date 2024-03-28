@@ -11,7 +11,7 @@ export function getProps(
   config: Config,
   pagesData: PagesData,
 ): Wrapped<SummaryPageProps> {
-  const { tvlApiResponse, verificationStatus } = pagesData
+  const { tvlApiResponse, verificationStatus, implementationChange } = pagesData
 
   const charts = tvlApiResponse.layers2s
   const { tvl } = getTvlWithChange(charts)
@@ -24,6 +24,7 @@ export function getProps(
         tvlApiResponse,
         tvl,
         verificationStatus,
+        implementationChange,
       ),
       footer: getFooterProps(config),
       showActivity: config.features.activity,

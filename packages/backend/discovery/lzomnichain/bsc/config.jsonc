@@ -96,6 +96,18 @@
           "multipleInGroup": true
         }
       }
+    },
+    /* Ignoring, it causes stargate and related pools to be discovered bumping amount of contracts from 32 to ~200 */
+    // RelayerV2Radar
+    "0xde19274c009A22921E3966a1Ec868cEba40A5DaC": {
+      "ignoreRelatives": ["uln"]
+    },
+    // UltraLightNodeV2Radar
+    "0xF487E8D03CDa77Ce9a66B35220D6cBB95d4C2877": {
+      "ignoreRelatives": ["dappRadar"]
+    },
+    "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182": {
+      "ignoreRelatives": ["stargateBridgeAddr", "stargateComposer"]
     }
   }
 }
