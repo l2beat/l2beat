@@ -1,7 +1,7 @@
 {
   "name": "opticsV2",
   "chain": "ethereum",
-  "blockNumber": 19218300,
+  "blockNumber": 19532028,
   "configHash": "0xe157522d43f4ca1c5f335691ec7b3ff49ccec0283bbd10d9288721c6e93301bc",
   "version": 3,
   "contracts": [
@@ -26,7 +26,7 @@
       "implementations": ["0x8F6b6aDB49cDCa3b9F6947F61a1201242C3d827F"],
       "sinceTimestamp": 1637962173,
       "values": {
-        "committedRoot": "0x437c0f0ea1cf83c04f4c2f1d0db9d204172a5036eb91abdb861135b35136b9e1",
+        "committedRoot": "0xba011cb3ea518ba08a5636100b94371d8088aa494ee57ffbb3115da10b21232a",
         "homeDomainHash": "0x6b881beed7c8ffb30baea620e40be2b61ea2706b341014fb812bc7ff2f75fca1",
         "localDomain": 6648936,
         "optimisticSeconds": 1800,
@@ -46,7 +46,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "4 of 7 (57%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1637291734,

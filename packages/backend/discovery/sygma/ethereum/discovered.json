@@ -1,7 +1,7 @@
 {
   "name": "sygma",
   "chain": "ethereum",
-  "blockNumber": 19488926,
+  "blockNumber": 19532229,
   "configHash": "0xb887ebad3adb9b7b1696a712ffa3870c58e4b5c16c2f17e038fdf7d88a9cbb6e",
   "version": 3,
   "contracts": [
@@ -74,7 +74,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "4 of 6 (67%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1680813119,
@@ -114,7 +115,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "3 of 5 (60%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1686579155,

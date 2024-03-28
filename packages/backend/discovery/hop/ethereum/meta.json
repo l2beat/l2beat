@@ -1,0 +1,520 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "DAI Bridge",
+      "values": {
+        "CHALLENGE_AMOUNT_DIVISOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TIME_SLOT_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "challengePeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "challengeResolutionPeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1CanonicalToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minTransferRootBondDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ETH Bridge",
+      "values": {
+        "CHALLENGE_AMOUNT_DIVISOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TIME_SLOT_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "challengePeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "challengeResolutionPeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minTransferRootBondDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "HOP Bridge",
+      "values": {
+        "CHALLENGE_AMOUNT_DIVISOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TIME_SLOT_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "challengePeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "challengeResolutionPeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1CanonicalToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "migrator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minTransferRootBondDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Hop Governor",
+      "values": {
+        "BALLOT_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "COUNTING_MODE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proposalThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "quorumDenominator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "quorumNumerator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "state": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "timelock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "votingDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "votingPeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Hop Multisig",
+      "values": {
+        "NAME": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getModules": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "MATIC Bridge",
+      "values": {
+        "CHALLENGE_AMOUNT_DIVISOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TIME_SLOT_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "challengePeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "challengeResolutionPeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1CanonicalToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minTransferRootBondDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SNX Bridge",
+      "values": {
+        "CHALLENGE_AMOUNT_DIVISOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TIME_SLOT_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "challengePeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "challengeResolutionPeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1CanonicalToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minTransferRootBondDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Timelock",
+      "values": {
+        "GRACE_PERIOD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAXIMUM_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MINIMUM_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "admin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Timelock Controller",
+      "values": {
+        "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getMinDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "USDC Bridge",
+      "values": {
+        "CHALLENGE_AMOUNT_DIVISOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TIME_SLOT_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "challengePeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "challengeResolutionPeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1CanonicalToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minTransferRootBondDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "USDT Bridge",
+      "values": {
+        "CHALLENGE_AMOUNT_DIVISOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TIME_SLOT_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "challengePeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "challengeResolutionPeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1CanonicalToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minTransferRootBondDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "WBTC Bridge",
+      "values": {
+        "CHALLENGE_AMOUNT_DIVISOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TIME_SLOT_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "challengePeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "challengeResolutionPeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1CanonicalToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minTransferRootBondDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}

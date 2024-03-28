@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x2ae913f7b36b264cfa37ecf76fd5a829940e569f
+
+# Diff at Thu, 28 Mar 2024 08:36:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@867de6120241d47b66bf76f83c490408eb3595b0 block: 19525946
+- current block number: 19531453
+
+## Description
+
+Update discovery to include the multisig threshold.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19525946 (main branch discovery), not current.
+
+```diff
+    contract BlastMultisig (0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05) {
+    +++ description: None
+      upgradeability.threshold:
++        "3 of 5 (60%)"
+    }
+```
+
+```diff
+    contract BridgeOwner (0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C) {
+    +++ description: None
+      upgradeability.threshold:
++        "3 of 5 (60%)"
+    }
+```
+
 Generated with discovered.json: 0x5808f9f020c28c1148c03cf988791bbb5ca41f06
 
 # Diff at Wed, 27 Mar 2024 13:29:26 GMT:
@@ -142,7 +176,7 @@ Generated with discovered.json: 0x15c383d1d808622bddcc23f20acc371a66bd7a71
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Update discovery to include the multisig threshold.
 
 ## Watched changes
 
@@ -1070,7 +1104,7 @@ Change in BridgeOwner (multisig) owners.
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Update discovery to include the multisig threshold.
 
 ## Watched changes
 

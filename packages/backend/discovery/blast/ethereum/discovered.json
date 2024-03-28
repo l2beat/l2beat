@@ -1,7 +1,7 @@
 {
   "name": "blast",
   "chain": "ethereum",
-  "blockNumber": 19525946,
+  "blockNumber": 19531453,
   "configHash": "0xc8e567fdb4ff3b4dfdb9f41ef3dd893da63161158f61baad14c0e7a7528d7da1",
   "version": 3,
   "contracts": [
@@ -39,7 +39,7 @@
         "L2_ORACLE": "0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76",
         "l2Oracle": "0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 510798, 19525938],
+        "params": [1000000000, 400000, 19531452],
         "paused": false,
         "SYSTEM_CONFIG": "0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9",
         "systemConfig": "0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9",
@@ -109,7 +109,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "3 of 5 (60%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1708813211,
@@ -194,7 +195,7 @@
       "sinceTimestamp": 1708812983,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292674649",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292675364",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -231,10 +232,10 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "PSM": "0x89B78CfA322F6C5dE0aBcEecab66Aee45393cC5A",
         "staker": "0x9eDFc192fC4d29b8f2b18f484211161b6Fc8063E",
-        "totalETHBalance": "8151864579477648883953",
-        "totalETHShares": "8050721456311793600223",
-        "totalUSDBalanceNoUpdate": "2443979060567160340590361",
-        "totalUSDShares": "2392836713648011983232973",
+        "totalETHBalance": "8024944711673529292905",
+        "totalETHShares": "7925376329071179383606",
+        "totalUSDBalanceNoUpdate": "2407867123854268641511539",
+        "totalUSDShares": "2356761532841123505057718",
         "USDC": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "USDT": "0xdAC17F958D2ee523a2206206994597C13D831ec7"
       },
@@ -246,7 +247,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "3 of 5 (60%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1700012495,
@@ -320,10 +322,10 @@
         "finalizationPeriodSeconds": 1036800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 1366200,
-        "latestOutputIndex": 758,
-        "nextBlockNumber": 1368000,
-        "nextOutputIndex": 759,
+        "latestBlockNumber": 1400400,
+        "latestOutputIndex": 777,
+        "nextBlockNumber": 1402200,
+        "nextOutputIndex": 778,
         "proposer": "0x082b616Ec99167B2FEdee053F07db6795D4dA821",
         "PROPOSER": "0x082b616Ec99167B2FEdee053F07db6795D4dA821",
         "startingBlockNumber": 0,
@@ -348,7 +350,7 @@
         "accumulatedNegativeYields": 0,
         "admin": "0xF0218c491421B5830cbf96804CD9680b56ef70BD",
         "blastBridge": "0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115",
-        "getLockedBalance": "11594224555251618674385",
+        "getLockedBalance": "10646123206973530271590",
         "insurance": "0xcFF70D7F37b1EBeE89c08E485f08ACAB5f6ff873",
         "insuranceFeeBips": 0,
         "insuranceWithdrawalBuffer": 10,
@@ -376,7 +378,7 @@
         "accumulatedNegativeYields": 0,
         "admin": "0xF0218c491421B5830cbf96804CD9680b56ef70BD",
         "blastBridge": "0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115",
-        "getLockedBalance": "188355384754255210000000",
+        "getLockedBalance": "61689145300000000000000",
         "insurance": "0xBbE2cd60BD30Ef2aaceFD74C3199282ee35fBBa6",
         "insuranceFeeBips": 0,
         "insuranceWithdrawalBuffer": 0,

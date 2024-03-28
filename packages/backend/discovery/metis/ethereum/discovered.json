@@ -1,7 +1,7 @@
 {
   "name": "metis",
   "chain": "ethereum",
-  "blockNumber": 19489325,
+  "blockNumber": 19531985,
   "configHash": "0x0e14e97016f5817c260d844cd99dae06d7ab21afd083135a09925b56dcfa3c05",
   "version": 3,
   "contracts": [
@@ -31,10 +31,10 @@
       "sinceTimestamp": 1637070395,
       "values": {
         "DEFAULT_CHAINID": 1088,
-        "getGlobalMetadata": "0x00000000000000000000000000000000000065fce79f0000edebee",
-        "getGlobalMetadataByChainId": "0x00000000000000000000000000000000000065fce79f0000edebee",
-        "length": 23027,
-        "lengthByChainId": 23027,
+        "getGlobalMetadata": "0x000000000000000000000000000000000000660543770000f2cdee",
+        "getGlobalMetadataByChainId": "0x000000000000000000000000000000000000660543770000f2cdee",
+        "length": 23123,
+        "lengthByChainId": 23123,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "StateCommitmentChain"
       },
@@ -77,7 +77,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "4 of 8 (50%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1636927409,
@@ -115,8 +116,8 @@
         "getLastBlockNumber": 19431495,
         "getLastTimestamp": 1710398153,
         "getNextQueueIndex": 36284,
-        "getNumPendingQueueElements": 283,
-        "getQueueLength": 36567,
+        "getNumPendingQueueElements": 458,
+        "getQueueLength": 36742,
         "getTotalBatches": 42647,
         "getTotalElements": 15214530,
         "l2GasDiscountDivisor": 32,
@@ -237,12 +238,12 @@
         "batches": "0x10739F09f6e62689c0aA8A1878816de9e166d6f9",
         "DEFAULT_CHAINID": 1088,
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1711073183,
-        "getLastSequencerTimestampByChainId": 1711073183,
-        "getTotalBatches": 23027,
-        "getTotalBatchesByChainId": 23027,
-        "getTotalElements": 15592430,
-        "getTotalElementsByChainId": 15592430,
+        "getLastSequencerTimestamp": 1711620983,
+        "getLastSequencerTimestampByChainId": 1711620983,
+        "getTotalBatches": 23123,
+        "getTotalBatchesByChainId": 23123,
+        "getTotalElements": 15912430,
+        "getTotalElementsByChainId": 15912430,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
       },

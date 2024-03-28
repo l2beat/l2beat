@@ -1,7 +1,7 @@
 {
   "name": "hop",
   "chain": "ethereum",
-  "blockNumber": 16154924,
+  "blockNumber": 19531595,
   "configHash": "0xbf31afcbbe4efbebdaec2f4ef0eba1b74088986f609e90c48394f25ad5685404",
   "version": 3,
   "contracts": [
@@ -11,7 +11,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
-        "modules": []
+        "modules": [],
+        "threshold": "2 of 3 (67%)"
       },
       "implementations": ["0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"],
       "sinceTimestamp": 1625076853,
@@ -25,7 +26,7 @@
         ],
         "getThreshold": 2,
         "NAME": "Gnosis Safe",
-        "nonce": 436,
+        "nonce": 592,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
