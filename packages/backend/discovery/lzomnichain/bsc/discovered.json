@@ -1,7 +1,7 @@
 {
   "name": "lzomnichain",
   "chain": "bsc",
-  "blockNumber": 37334769,
+  "blockNumber": 37363085,
   "configHash": "0x31a90e21170b899e7187928b99964de81a8cfb8e4f190116b88262b5ca80976f",
   "version": 3,
   "contracts": [
@@ -1290,7 +1290,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
-        "modules": []
+        "modules": [],
+        "threshold": "2 of 6 (33%)"
       },
       "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
       "sinceTimestamp": 1648073735,

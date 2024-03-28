@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xadd891853ce401c7c6922180bfbe88b70be25f7b
+
+# Diff at Thu, 28 Mar 2024 11:38:52 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@21187e63b9b90823a55c461c331868a470ce17eb block: 2891838
+- current block number: 3199002
+
+## Description
+
+Update discovery to include the multisig threshold.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 2891838 (main branch discovery), not current.
+
+```diff
+    contract LayerZero Multisig (0x5e306343ecf32B605d88c1e44f3879699ab5144D) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 5 (40%)"
+    }
+```
+
 Generated with discovered.json: 0x0fbfbc6349ab32d430a883652e0ec7fc17f996ec
 
 # Diff at Thu, 14 Mar 2024 14:08:40 GMT

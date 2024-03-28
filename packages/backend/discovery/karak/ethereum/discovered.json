@@ -1,7 +1,7 @@
 {
   "name": "karak",
   "chain": "ethereum",
-  "blockNumber": 19411993,
+  "blockNumber": 19531626,
   "configHash": "0x9adbf6e08596a75fded910b072724ebabdb16e69b58a373908a7739e61163a80",
   "version": 3,
   "contracts": [
@@ -23,10 +23,10 @@
         "finalizationPeriodSeconds": 259200,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 3376800,
-        "latestOutputIndex": 468,
-        "nextBlockNumber": 3384000,
-        "nextOutputIndex": 469,
+        "latestBlockNumber": 4104000,
+        "latestOutputIndex": 569,
+        "nextBlockNumber": 4111200,
+        "nextOutputIndex": 570,
         "proposer": "0x4179f43f3b994e97090557363b09F403138a729e",
         "PROPOSER": "0x4179f43f3b994e97090557363b09F403138a729e",
         "startingBlockNumber": 0,
@@ -56,7 +56,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "3 of 5 (60%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1702960199,
@@ -159,7 +160,7 @@
       "sinceTimestamp": 1703048687,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292625968",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292631180",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -210,7 +211,7 @@
         "L2_ORACLE": "0x0a23342520Aa8Ca963c4201801F4D3E95e731637",
         "l2Oracle": "0x0a23342520Aa8Ca963c4201801F4D3E95e731637",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 490798, 19411991],
+        "params": [1000000000, 490798, 19531574],
         "paused": false,
         "SYSTEM_CONFIG": "0x622333688CC1878C7ff4205c89bDe051798788A7",
         "systemConfig": "0x622333688CC1878C7ff4205c89bDe051798788A7",

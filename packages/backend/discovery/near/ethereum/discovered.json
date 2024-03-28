@@ -1,7 +1,7 @@
 {
   "name": "near",
   "chain": "ethereum",
-  "blockNumber": 19233286,
+  "blockNumber": 19531990,
   "configHash": "0xd38ab6535bef2823166e2161419db849ad4c92dfc605738466766980f35f3aed",
   "version": 3,
   "contracts": [
@@ -41,7 +41,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "3 of 5 (60%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1640737843,
@@ -70,9 +71,9 @@
       "sinceTimestamp": 1664198555,
       "values": {
         "admin": "0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1",
-        "bridgeState": [112863470, "1707991797581889620", 1708006331, 100],
+        "bridgeState": [115627101, "1711614850017316941", 1711629647, 100],
         "initialized": true,
-        "lastValidAt": 1708006331,
+        "lastValidAt": 1711629647,
         "lockDuration": 14400,
         "lockEthAmount": "5000000000000000000",
         "paused": 0,

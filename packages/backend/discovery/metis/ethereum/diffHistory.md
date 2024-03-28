@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x61dd6c8c90be3d312520dbd91d547e88fa6b5daf
+
+# Diff at Thu, 28 Mar 2024 10:22:25 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@dd32bb06b292cc8459fb09925454ee3a90f5c27e block: 19489325
+- current block number: 19531985
+
+## Description
+
+Update discovery to include the multisig threshold.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19489325 (main branch discovery), not current.
+
+```diff
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      upgradeability.threshold:
++        "4 of 8 (50%)"
+    }
+```
+
 Generated with discovered.json: 0x32ada392a2476f61c6a679a370ed6032290b3273
 
 # Diff at Fri, 22 Mar 2024 09:39:12 GMT:

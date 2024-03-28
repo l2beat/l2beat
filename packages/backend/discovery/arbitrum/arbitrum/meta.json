@@ -2,339 +2,14 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "L2ReverseCustomGateway",
+      "name": "BeaconProxyFactory",
       "values": {
-        "counterpartGateway": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "exitNum": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "router": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L2GatewayRouter",
-      "values": {
-        "counterpartGateway": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "defaultGateway": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "router": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "FixedDelegateErc20Wallet",
-      "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L2CustomGateway",
-      "values": {
-        "counterpartGateway": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "exitNum": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "router": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L2CoreTimelock",
-      "values": {
-        "CANCELLER_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DEFAULT_ADMIN_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "EXECUTOR_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getMinDelay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PROPOSER_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "TIMELOCK_ADMIN_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "accessControl": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "TreasuryGovernor",
-      "values": {
-        "BALLOT_TYPEHASH": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "COUNTING_MODE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "EXCLUDE_ADDRESS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "EXTENDED_BALLOT_TYPEHASH": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "lateQuorumVoteExtension": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "name": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "proposalThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "quorumDenominator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "quorumNumerator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "timelock": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "token": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "votingDelay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "votingPeriod": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "state": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ProxyAdmin",
-      "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ProxyAdmin",
-      "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L2ArbitrumToken",
-      "values": {
-        "decimals": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DOMAIN_SEPARATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l1Address": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MIN_MINT_INTERVAL": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MINT_CAP_DENOMINATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MINT_CAP_NUMERATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "name": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nextMint": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "symbol": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalSupply": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "SC7",
-      "values": {
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L2ERC20Gateway",
-      "values": {
-        "beaconProxyFactory": {
+        "beacon": {
           "description": null,
           "severity": null,
           "type": null
         },
         "cloneableProxyHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "counterpartGateway": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "exitNum": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "router": {
           "description": null,
           "severity": null,
           "type": null
@@ -394,6 +69,11 @@
           "severity": null,
           "type": null
         },
+        "state": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "timelock": {
           "description": null,
           "severity": null,
@@ -418,8 +98,203 @@
           "description": null,
           "severity": null,
           "type": null
+        }
+      }
+    },
+    {
+      "name": "FixedDelegateErc20Wallet",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L2ArbitrumToken",
+      "values": {
+        "DOMAIN_SEPARATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
         },
-        "state": {
+        "MINT_CAP_DENOMINATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MINT_CAP_NUMERATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_MINT_INTERVAL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1Address": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nextMint": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L2CoreTimelock",
+      "values": {
+        "CANCELLER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EXECUTOR_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROPOSER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TIMELOCK_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getMinDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L2CustomGateway",
+      "values": {
+        "counterpartGateway": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "exitNum": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "router": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L2ERC20Gateway",
+      "values": {
+        "beaconProxyFactory": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "cloneableProxyHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "counterpartGateway": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "exitNum": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "router": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L2GatewayRouter",
+      "values": {
+        "counterpartGateway": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultGateway": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "router": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L2ReverseCustomGateway",
+      "values": {
+        "counterpartGateway": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "exitNum": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "router": {
           "description": null,
           "severity": null,
           "type": null
@@ -444,11 +319,6 @@
           "severity": null,
           "type": null
         },
-        "getMinDelay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "PROPOSER_ROLE": {
           "description": null,
           "severity": null,
@@ -463,6 +333,101 @@
           "description": null,
           "severity": null,
           "type": null
+        },
+        "getMinDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SC7",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SC9",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
         }
       }
     },
@@ -474,32 +439,7 @@
           "severity": null,
           "type": null
         },
-        "cohortSize": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "DEFAULT_ADMIN_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getBothCohorts": {
-          "description": "All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)",
-          "severity": "MEDIUM",
-          "type": null
-        },
-        "getFirstCohort": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getSecondCohort": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2CoreGovTimelock": {
           "description": null,
           "severity": null,
           "type": null
@@ -534,7 +474,37 @@
           "severity": null,
           "type": null
         },
+        "cohortSize": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getBothCohorts": {
+          "description": "All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)",
+          "severity": "MEDIUM",
+          "type": null
+        },
+        "getFirstCohort": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getSecondCohort": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2CoreGovTimelock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "router": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "securityCouncils": {
           "description": null,
           "severity": null,
           "type": null
@@ -548,8 +518,188 @@
           "description": null,
           "severity": null,
           "type": null
+        }
+      }
+    },
+    {
+      "name": "SecurityCouncilMemberSyncAction",
+      "values": {
+        "SENTINEL_OWNERS": {
+          "description": null,
+          "severity": null,
+          "type": null
         },
-        "securityCouncils": {
+        "actionContractId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "store": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "StandardArbERC20",
+      "values": {
+        "DOMAIN_SEPARATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isMaster": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1Address": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2Gateway": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "TreasuryGovernor",
+      "values": {
+        "BALLOT_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "COUNTING_MODE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EXCLUDE_ADDRESS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EXTENDED_BALLOT_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lateQuorumVoteExtension": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proposalThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "quorumDenominator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "quorumNumerator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "state": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "timelock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "votingDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "votingPeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "UpgradeExecRouteBuilder",
+      "values": {
+        "DEFAULT_GOV_ACTION_CALLDATA": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_PREDECESSOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_VALUE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RETRYABLE_TICKET_MAGIC": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1TimelockAddr": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1TimelockMinDelay": {
           "description": null,
           "severity": null,
           "type": null
@@ -582,111 +732,6 @@
       }
     },
     {
-      "name": "BeaconProxyFactory",
-      "values": {
-        "beacon": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "cloneableProxyHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "SecurityCouncilMemberSyncAction",
-      "values": {
-        "actionContractId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "SENTINEL_OWNERS": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "store": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "UpgradeExecRouteBuilder",
-      "values": {
-        "DEFAULT_GOV_ACTION_CALLDATA": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DEFAULT_PREDECESSOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DEFAULT_VALUE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l1TimelockAddr": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l1TimelockMinDelay": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "RETRYABLE_TICKET_MAGIC": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "SC9",
-      "values": {
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "UpgradeableBeacon",
       "values": {
         "implementation": {
@@ -695,51 +740,6 @@
           "type": null
         },
         "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "StandardArbERC20",
-      "values": {
-        "decimals": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DOMAIN_SEPARATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isMaster": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l1Address": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2Gateway": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "name": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "symbol": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalSupply": {
           "description": null,
           "severity": null,
           "type": null

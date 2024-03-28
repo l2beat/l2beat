@@ -1,7 +1,7 @@
 {
   "name": "sorare",
   "chain": "ethereum",
-  "blockNumber": 17412704,
+  "blockNumber": 19532199,
   "configHash": "0xd7e9ba5f9afb09b0a7c2b79d1326e716b0fb15a3ead88bd1136424837109448f",
   "version": 3,
   "contracts": [
@@ -60,7 +60,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "2 of 3 (67%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1678893035,
@@ -113,8 +114,8 @@
         "DEPOSIT_CANCEL_DELAY": 172800,
         "FREEZE_GRACE_PERIOD": 604800,
         "getGlobalConfigCode": 1,
-        "getLastBatchId": 8372,
-        "getOrderRoot": "341206017474472502674023085681026487661325027526880483468525310409630058417",
+        "getLastBatchId": 12791,
+        "getOrderRoot": "141489167953618039227240658685035485240171660282183362698105777071621342691",
         "getOrderTreeHeight": 251,
         "getRegisteredAvailabilityVerifiers": [
           "0x879cD57975d596004863D30c59d579ef78BBbe32"
@@ -124,10 +125,10 @@
         ],
         "getRollupTreeHeight": 31,
         "getRollupVaultRoot": "207095555137602068174310225607660532858489993604082708018689543482077973596",
-        "getSequenceNumber": 8252,
+        "getSequenceNumber": 12671,
         "getUpgradeActivationDelay": 1209600,
         "getValidiumTreeHeight": 31,
-        "getValidiumVaultRoot": "931049140785450802966353819391675855867620637346249965504103009093249992158",
+        "getValidiumVaultRoot": "3543849084576763251175124230230851449321969398819341330174278753850503372940",
         "implementation": "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
         "isFrozen": false,
         "isNotFinalized": true,

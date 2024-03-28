@@ -2,6 +2,30 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "",
+      "values": {}
+    },
+    {
       "name": "Endpoint",
       "values": {
         "BLOCK_VERSION": {
@@ -9,12 +33,12 @@
           "severity": null,
           "type": null
         },
-        "chainId": {
+        "DEFAULT_VERSION": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "DEFAULT_VERSION": {
+        "chainId": {
           "description": null,
           "severity": null,
           "type": null
@@ -59,12 +83,32 @@
           "severity": null,
           "type": null
         },
-        "owner": {
+        "libraryLookup": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "libraryLookup": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
           "description": null,
           "severity": null,
           "type": null
@@ -104,7 +148,27 @@
           "severity": null,
           "type": null
         },
+        "chainAddressSizeMap": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultAdapterParams": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultAppConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "endpoint": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "inboundProofLibrary": {
           "description": null,
           "severity": null,
           "type": null
@@ -129,6 +193,11 @@
           "severity": null,
           "type": null
         },
+        "supportedOutboundProof": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "treasuryContract": {
           "description": null,
           "severity": null,
@@ -139,76 +208,7 @@
           "severity": null,
           "type": null
         },
-        "chainAddressSizeMap": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "defaultAdapterParams": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "defaultAppConfig": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "inboundProofLibrary": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "supportedOutboundProof": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "ulnLookup": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "",
-      "values": {}
-    },
-    {
-      "name": "",
-      "values": {}
-    },
-    {
-      "name": "",
-      "values": {}
-    },
-    {
-      "name": "",
-      "values": {}
-    },
-    {
-      "name": "",
-      "values": {}
-    },
-    {
-      "name": "",
-      "values": {}
-    },
-    {
-      "name": "ProxyAdmin",
-      "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ProxyAdmin",
-      "values": {
-        "owner": {
           "description": null,
           "severity": null,
           "type": null

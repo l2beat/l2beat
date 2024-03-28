@@ -1,7 +1,7 @@
 {
   "name": "deversifi",
   "chain": "ethereum",
-  "blockNumber": 19512697,
+  "blockNumber": 19531530,
   "configHash": "0x39749206ac0db43403f2640bed50d943aa67053425f3d071cb5631ec668fe616",
   "version": 3,
   "contracts": [
@@ -93,8 +93,8 @@
         "DEPOSIT_CANCEL_DELAY": 172800,
         "FREEZE_GRACE_PERIOD": 604800,
         "getGlobalConfigCode": 1,
-        "getLastBatchId": 5951,
-        "getOrderRoot": "1549605430445528199814318332790537152206865157075338229312660271729281619359",
+        "getLastBatchId": 5988,
+        "getOrderRoot": "2800966195181113203862263614905461769654313788769296749188972887659618583353",
         "getOrderTreeHeight": 251,
         "getRegisteredAvailabilityVerifiers": [
           "0x28780349A33eEE56bb92241bAAB8095449e24306"
@@ -104,9 +104,9 @@
         ],
         "getRollupTreeHeight": 31,
         "getRollupVaultRoot": "207095555137602068174310225607660532858489993604082708018689543482077973596",
-        "getSequenceNumber": 5926,
+        "getSequenceNumber": 5963,
         "getValidiumTreeHeight": 31,
-        "getValidiumVaultRoot": "511716329260112527425661220262373272391343627318063571824186716847679579115",
+        "getValidiumVaultRoot": "2792765645474964689232783993535048572078041291612276456027180776853900333145",
         "implementation": "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
         "isFrozen": false,
         "isNotFinalized": true,
@@ -131,7 +131,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "4 of 6 (67%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1683214307,
