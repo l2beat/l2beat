@@ -20,7 +20,7 @@ const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
 export const rss3: Layer2 = opStack({
   discovery,
   display: {
-    name: 'RSS3',
+    name: 'RSS3 Value Sublayer',
     slug: 'rss3',
     description:
       'The RSS3 Value Sublayer (VSL) as part of the RSS3 Network, is an Ethereum Layer2 built with OP Stack and Celestia DA, handling the value and ownership of AI and Open Information.',
