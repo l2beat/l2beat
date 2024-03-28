@@ -25,6 +25,7 @@ export async function up(knex: Knex) {
     table.string('type').notNullable()
     table.boolean('include_in_total').notNullable()
     table.dateTime('since_timestamp_inclusive', { useTz: false }).notNullable()
+    // TODO: should it be exclusive? maybe if both were inclusive it would be more readable?
     table.dateTime('until_timestamp_exclusive', { useTz: false }).nullable()
 
     table.primary(['id'])
