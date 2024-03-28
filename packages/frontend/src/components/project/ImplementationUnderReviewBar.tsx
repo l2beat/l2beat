@@ -3,11 +3,15 @@ import React from 'react'
 import { cn } from '../../utils/cn'
 import { UnderReviewIcon } from '../icons'
 
-export function UnderReviewBar({ className }: { className?: string }) {
+export function ImplementationUnderReviewBar({
+  className,
+}: {
+  className?: string
+}) {
   return (
     <div
       className={cn(
-        'flex w-full justify-center py-2.5 md:px-0',
+        'flex w-full justify-center px-2 py-2.5',
         'rounded-lg bg-yellow-700/20',
         className,
       )}
@@ -16,8 +20,9 @@ export function UnderReviewBar({ className }: { className?: string }) {
         <span className="flex items-center">
           <UnderReviewIcon />
         </span>
-        <span className="ml-2 text-base font-medium">
-          This project is under review.
+        <span className="ml-2 text-pretty text-base font-medium">
+          There are implementation changes and part of the information might be
+          outdated.
         </span>
       </span>
     </div>

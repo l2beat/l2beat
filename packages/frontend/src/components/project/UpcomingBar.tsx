@@ -7,7 +7,7 @@ export function UpcomingBar({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        'flex justify-center py-2.5 md:px-0',
+        'flex w-full justify-center py-2.5 md:px-0',
         'rounded-lg bg-purple-100 text-white dark:bg-purple-100',
         className,
       )}
