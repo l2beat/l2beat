@@ -75,8 +75,11 @@ function getScalingL2SummaryEntry(
   const total = apiProject?.charts.hourly.data.at(-1)?.[1] ?? 0
   const tokens = unifyTokensResponse(apiProject?.tokens)
   const associatedRatio = getAssociatedRatio(associatedTokens, total, tokens)
-  const { warning: tvlWarningContent, warningSeverity: tvlWarningSentiment } =
-    getTvlWarning(associatedRatio, project.display.name, associatedTokens)
+  const { warning, warningSeverity } = getTvlWarning(
+    associatedRatio,
+    project.display.name,
+    associatedTokens,
+  )
 
   return {
     name: project.display.name,
@@ -93,10 +96,10 @@ function getScalingL2SummaryEntry(
     isUpcoming: project.isUpcoming,
     redWarning: project.display.redWarning,
     tvlWarnings: [
-      tvlWarningContent
+      warning && warningSeverity === 'bad'
         ? {
-            content: tvlWarningContent,
-            sentiment: tvlWarningSentiment,
+            content: warning,
+            sentiment: warningSeverity,
           }
         : undefined,
       project.display.tvlWarning,
