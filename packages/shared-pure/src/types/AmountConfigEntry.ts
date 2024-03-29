@@ -30,7 +30,7 @@ interface AmountConfigBase {
   projectId: ProjectId
   origin: 'canonical' | 'external' | 'native'
   type: 'totalSupply' | 'circulatingSupply' | 'escrow'
-  sinceTimestamp: UnixTime
-  untilTimestamp?: UnixTime
+  sinceTimestampInclusive: UnixTime
+  untilTimestampInclusive?: UnixTime
   includeInTotal: boolean
 }

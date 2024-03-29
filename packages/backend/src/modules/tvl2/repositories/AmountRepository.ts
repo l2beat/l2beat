@@ -125,9 +125,14 @@ export class AmountRepository extends BaseRepository {
 
   // #region configurations
 
-  async addManyConfigurations(
-    records: Omit<AmountConfigurationRecord, 'id'>[],
+  async addOrUpdateManyConfigurations(
+    records: (
+      | Omit<AmountConfigurationRecord, 'id'>
+      | AmountConfigurationRecord
+    )[],
   ): Promise<number[]> {
+    // TODO: split what to add what to update
+    // or do it in the indexer
     const rows: Omit<AmountConfigurationRow, 'id'>[] =
       records.map(toConfigurationRow)
 
@@ -140,7 +145,7 @@ export class AmountRepository extends BaseRepository {
     return inserted.map((row) => row.id)
   }
 
-  async getConfigurationByIndexerId(
+  async getConfigurationsByIndexerId(
     indexerId: string,
   ): Promise<AmountConfigurationRecord[]> {
     const knex = await this.knex()

@@ -1,7 +1,11 @@
 import { assert, Logger } from '@l2beat/backend-tools'
-import { AmountConfigEntry, UnixTime } from '@l2beat/shared-pure'
 import {
-  Configuration,
+  AmountConfigEntry,
+  EscrowEntry,
+  TotalSupplyEntry,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import {
   MultiIndexer,
   RemovalConfiguration,
   SavedConfiguration,
@@ -18,7 +22,7 @@ import {
 import { BlockTimestampRepository } from './repositories/BlockTimestampRepository'
 import { SyncOptimizer } from './SyncOptimizer'
 
-export class ChainIndexer extends MultiIndexer<AmountConfigEntry> {
+export class ChainIndexer extends MultiIndexer<TotalSupplyEntry | EscrowEntry> {
   indexerId: string
 
   constructor(
@@ -31,10 +35,66 @@ export class ChainIndexer extends MultiIndexer<AmountConfigEntry> {
     private readonly chain: string,
     private readonly minTimestamp: UnixTime,
     private readonly syncOptimizer: SyncOptimizer,
-    private readonly amountConfigurations: Configuration<AmountConfigEntry>[],
+    private readonly amountConfigurations: (TotalSupplyEntry | EscrowEntry)[],
   ) {
-    super(logger, [parentIndexer], amountConfigurations)
+    super(logger, [parentIndexer])
     this.indexerId = `chain_indexer_${chain}`
+  }
+
+  override async getInitialConfigurations() {
+    await this.amountRepository.addOrUpdateManyConfigurations(
+      this.amountConfigurations.map((c) => ({
+        ...c,
+        indexerId: this.indexerId,
+      })),
+    )
+
+    const configurations =
+      await this.amountRepository.getConfigurationsByIndexerId(this.indexerId)
+
+    return configurations.map((c) => {
+      switch (c.type) {
+        case 'totalSupply':
+          assert(c.address !== 'native', 'Native total supply is not supported')
+          return {
+            id: c.id.toString(),
+            properties: {
+              chain: c.chain,
+              projectId: c.projectId,
+              origin: c.origin,
+              type: c.type,
+              sinceTimestampInclusive: c.sinceTimestampInclusive,
+              untilTimestampInclusive: c.untilTimestampInclusive,
+              includeInTotal: c.includeInTotal,
+              address: c.address,
+            },
+            minHeight: c.sinceTimestampInclusive.toNumber(),
+            maxHeight: c.untilTimestampInclusive?.toNumber() ?? null,
+          }
+        case 'escrow':
+          assert(c.escrowAddress, 'Escrow address should be defined')
+          return {
+            id: c.id.toString(),
+            properties: {
+              chain: c.chain,
+              projectId: c.projectId,
+              origin: c.origin,
+              type: c.type,
+              sinceTimestampInclusive: c.sinceTimestampInclusive,
+              untilTimestampInclusive: c.untilTimestampInclusive,
+              includeInTotal: c.includeInTotal,
+              address: c.address,
+              escrowAddress: c.escrowAddress,
+            },
+            minHeight: c.sinceTimestampInclusive.toNumber(),
+            maxHeight: c.untilTimestampInclusive?.toNumber() ?? null,
+          }
+        case 'circulatingSupply':
+          throw new Error(
+            'Programmer error: There should not be circulating supply configurations for this type of indexer',
+          )
+      }
+    })
   }
 
   override async start(): Promise<void> {
@@ -139,7 +199,7 @@ export class ChainIndexer extends MultiIndexer<AmountConfigEntry> {
         : undefined,
     }))
 
-    await this.amountRepository.addManyConfigurations(records)
+    await this.amountRepository.addOrUpdateManyConfigurations(records)
 
     this.logger.debug('Configurations saved')
   }
