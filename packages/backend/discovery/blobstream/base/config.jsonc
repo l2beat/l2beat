@@ -16,7 +16,7 @@
     },
     "SuccinctGateway": {
       "fields": {
-        "blobstreamVerifier": {
+        "headerRangeVerifier": {
           "type": "call",
           "method": "verifiers",
           "args": [
@@ -24,12 +24,13 @@
           ] // BlobstreamX.headerRangeFunctionId() - we cannot get it from the contract,
           // but there's a test :)
         },
-        "verifiers": {
-          "type": "arrayFromTwoEvents",
-          "addEvent": "event FunctionRegistered(bytes32 indexed functionId, address verifier, bytes32 salt, address owner)",
-          "addKey": "verifier",
-          "removeEvent": "event FunctionVerifierUpdated(bytes32 indexed functionId, address verifier)", // can it remove old + add new values to the verifiers list?
-          "removeKey": "verifier"
+        "nextHeaderVerifier": {
+          "type": "call",
+          "method": "verifiers",
+          "args": [
+            "0x9a02adc08852bb853c3f988e9d67e6bfb45439fd299051b2abe4df154e49e98e"
+          ] // BlobstreamX.nextHeaderFunctionId() - we cannot get it from the contract,
+          // but there's a test :)
         }
       }
     }

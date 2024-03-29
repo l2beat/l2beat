@@ -10,70 +10,6 @@
       "values": {}
     },
     {
-      "name": "",
-      "values": {}
-    },
-    {
-      "name": "",
-      "values": {}
-    },
-    {
-      "name": "",
-      "values": {}
-    },
-    {
-      "name": "",
-      "values": {}
-    },
-    {
-      "name": "",
-      "values": {}
-    },
-    {
-      "name": "",
-      "values": {}
-    },
-    {
-      "name": "",
-      "values": {}
-    },
-    {
-      "name": "",
-      "values": {}
-    },
-    {
-      "name": "",
-      "values": {}
-    },
-    {
-      "name": "",
-      "values": {}
-    },
-    {
-      "name": "",
-      "values": {}
-    },
-    {
-      "name": "",
-      "values": {}
-    },
-    {
-      "name": "",
-      "values": {}
-    },
-    {
-      "name": "",
-      "values": {}
-    },
-    {
-      "name": "",
-      "values": {}
-    },
-    {
-      "name": "",
-      "values": {}
-    },
-    {
       "name": "BlobstreamX",
       "values": {
         "DATA_COMMITMENT_MAX": {
@@ -221,17 +157,22 @@
     {
       "name": "SuccinctGateway",
       "values": {
-        "blobstreamVerifier": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "feeVault": {
           "description": null,
           "severity": null,
           "type": null
         },
+        "headerRangeVerifier": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "isCallback": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nextHeaderVerifier": {
           "description": null,
           "severity": null,
           "type": null
@@ -257,11 +198,6 @@
           "type": null
         },
         "verifiedOutput": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "verifiers": {
           "description": null,
           "severity": null,
           "type": null
