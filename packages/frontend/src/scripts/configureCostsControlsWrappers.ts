@@ -11,7 +11,7 @@ const SORTING_ARROWS_NAMES = [
 ]
 
 export function configureCostsControlsWrappers() {
-  const { $$ } = makeQuery(document.body)
+  const { $, $$ } = makeQuery(document.body)
   const searchParams = new URLSearchParams(window.location.search)
 
   const cells = $$('[data-role="costs-controls-wrapper"]')
@@ -22,9 +22,16 @@ export function configureCostsControlsWrappers() {
   const timeRangeControls = $$<HTMLInputElement>(
     '[data-role="costs-time-range-controls"] input',
   )
+  const typeControls = $$<HTMLInputElement>(
+    '[data-role="costs-type-controls"] input',
+  )
 
-  let checkedUnitControl = unitControls.find((c) => c.checked)
-  let checkedTimeRangeControl = timeRangeControls.find((c) => c.checked)
+  let checkedTimeRangeControl = $<HTMLInputElement>(
+    '[data-role="costs-time-range-controls"] input:checked',
+  )
+  let checkedUnitControl = $<HTMLInputElement>(
+    '[data-role="costs-unit-controls"] input:checked',
+  )
 
   function getSortingArrowsOrderKey() {
     if (!checkedUnitControl || !checkedTimeRangeControl) {
@@ -33,25 +40,66 @@ export function configureCostsControlsWrappers() {
     return `${checkedTimeRangeControl.value}-${checkedUnitControl.value}`
   }
 
-  function onTimeRangeChange(control: HTMLInputElement) {
+  function onTimeRangeChange(
+    control: HTMLInputElement,
+    urlSearchParams?: URLSearchParams,
+  ) {
+    const searchParams =
+      urlSearchParams ?? new URLSearchParams(window.location.search)
+
     checkedTimeRangeControl = control
     cells.forEach((cell) => cell.setAttribute('data-time-range', control.value))
     SORTING_ARROWS_NAMES.forEach((name) =>
       setSortingArrowsOrderKey(name, getSortingArrowsOrderKey()),
     )
     setSortingArrowsOrderKey('tx-count', control.value)
+
+    searchParams.set('time-range', control.value)
+    setQueryParams(searchParams)
   }
 
   function onUnitChange(control: HTMLInputElement) {
+    const searchParams = new URLSearchParams(window.location.search)
+
     checkedUnitControl = control
     cells.forEach((cell) => cell.setAttribute('data-unit', control.value))
     SORTING_ARROWS_NAMES.forEach((name) =>
       setSortingArrowsOrderKey(name, getSortingArrowsOrderKey()),
     )
+
+    searchParams.set('unit', control.value)
+    setQueryParams(searchParams)
+  }
+
+  function onTypeChange(control: HTMLInputElement) {
+    const searchParams = new URLSearchParams(window.location.search)
+
+    // cells.forEach((cell) => cell.setAttribute('data-type', control.value))
+    // SORTING_ARROWS_NAMES.forEach((name) =>
+    //   setSortingArrowsOrderKey(name, getSortingArrowsOrderKey()),
+    // )
+    const isAmortized = control.value === 'AMORTIZED'
+    const is24hOr7d =
+      checkedTimeRangeControl.value === '7D' ||
+      checkedTimeRangeControl.value === '24H'
+
+    timeRangeControls.forEach((c) => {
+      if (c.value === '24H' || c.value === '7D') {
+        c.disabled = isAmortized
+      }
+      if (c.value === '30D' && isAmortized && is24hOr7d) {
+        c.checked = true
+        onTimeRangeChange(c, searchParams)
+      }
+    })
+
+    searchParams.set('type', control.value)
+    setQueryParams(searchParams)
   }
 
   const preselectedTimeRange = searchParams.get('time-range')
   const preselectedUnit = searchParams.get('unit')
+  const preselectedType = searchParams.get('type')
 
   timeRangeControls.forEach((control) => {
     if (control.value === preselectedTimeRange) {
@@ -59,14 +107,7 @@ export function configureCostsControlsWrappers() {
       onTimeRangeChange(control)
     }
 
-    control.addEventListener('change', () => {
-      const searchParams = new URLSearchParams(window.location.search)
-
-      onTimeRangeChange(control)
-
-      searchParams.set('time-range', control.value)
-      setQueryParams(searchParams)
-    })
+    control.addEventListener('change', () => onTimeRangeChange(control))
   })
 
   unitControls.forEach((control) => {
@@ -74,13 +115,16 @@ export function configureCostsControlsWrappers() {
       control.checked = true
       onUnitChange(control)
     }
+    control.addEventListener('change', () => onUnitChange(control))
+  })
+
+  typeControls.forEach((control) => {
+    if (control.value === preselectedType) {
+      control.checked = true
+      onTypeChange(control)
+    }
     control.addEventListener('change', () => {
-      const searchParams = new URLSearchParams(window.location.search)
-
-      onUnitChange(control)
-
-      searchParams.set('unit', control.value)
-      setQueryParams(searchParams)
+      onTypeChange(control)
     })
   })
 }

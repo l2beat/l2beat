@@ -7,6 +7,7 @@ import { RowConfig } from '../../../../components/table/types'
 import { getScalingCostsColumnsConfig } from '../props/getScalingCostsColumnsConfig'
 import { ScalingCostsViewEntry as ScalingCostsViewEntry } from '../types'
 import { CostsTimeRangeControls } from './CostsTimeRangeControls'
+import { CostsTypeControls } from './CostsTypeControls'
 import { CostsUnitControls } from './CostsUnitControls'
 
 export interface ScalingCostsViewProps {
@@ -21,7 +22,11 @@ export function ScalingCostsView({ items }: ScalingCostsViewProps) {
 
   return (
     <section className="mt-4 flex flex-col gap-y-2 sm:mt-8">
-      <ScalingFilters items={items} hideRollupsOnlyCheckbox />
+      <div className="flex flex-col gap-2 md:flex-row md:justify-between">
+        <ScalingFilters items={items} hideRollupsOnlyCheckbox />
+        <CostsTypeControls />
+      </div>
+
       <div className="flex flex-col gap-2 md:flex-row md:justify-between">
         <CostsUnitControls />
         <CostsTimeRangeControls />
