@@ -2462,10 +2462,10 @@
     sqlite3 "^5.1.6"
     zod "^3.22.2"
 
-"@l2beat/uif@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@l2beat/uif/-/uif-0.3.0.tgz#e2f0fe47ca4f2bdc6895cb1238aa674b53519820"
-  integrity sha512-hmhAHLhL7RZwkTmZ2mgV1SHAZdRuRXvJ1ljah1DhggWvKT4Xtp3AGhN6/60+mDKG+rfZuETSHbwqRyYLQumang==
+"@l2beat/uif@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@l2beat/uif/-/uif-0.3.1.tgz#dad76251378a1774948419aa95f3ee1cb18c4794"
+  integrity sha512-hwYinePc0udaX1kBhymOX2YqljpIjfwIUj/z1mUPX7xkcyKoCHwLAQ9eMeb36sORWnS2jPokH6OoSQlk82Q3hg==
   dependencies:
     "@l2beat/backend-tools" "^0.5.0"
 
