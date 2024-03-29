@@ -10,7 +10,7 @@ interface Props {
 
 export function DetailedValueWithDisplayValue({
   children,
-  precision = 15,
+  precision = 8,
 }: Props) {
   if (!children.displayValue.startsWith('~')) {
     return children.displayValue
