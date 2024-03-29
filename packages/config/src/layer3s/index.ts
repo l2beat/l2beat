@@ -1,5 +1,6 @@
 import { bugless } from './bugless'
 import { degen } from './degen'
+import { dcamonster } from './dcamonster'
 import { deri } from './deri'
 import { mxc } from './mxc'
 import { orb3 } from './orb3'
@@ -16,6 +17,7 @@ export * from './types'
 export const layer3s: Layer3[] = [
   bugless,
   degen,
+  dcamonster,
   deri,
   rari,
   zklinknova,

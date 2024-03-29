@@ -1,12 +1,12 @@
 import { underReviewL3 } from '../layer2s/templates/underReview'
 import { Layer3 } from './types'
 
-export const bugless: Layer3 = underReviewL3({
-  id: 'dca-monster',
+export const dcamonster: Layer3 = underReviewL3({
+  id: 'dcamonster',
   hostChain: 'Multiple',
   display: {
     name: 'DCA.Monster',
-    slug: 'dca-monster',
+    slug: 'dcamonster',
     description:
       'DCA.Monster is an innovative Automated Market Maker (AMM) that utilizes ERC20 streams for precise and efficient on-chain Dollar Cost Averaging (DCA), powered by Cartesi Rollups, aimed at overcoming the traditional challenges associated with on-chain DCA solutions.',
     purposes: ['AMM'],
