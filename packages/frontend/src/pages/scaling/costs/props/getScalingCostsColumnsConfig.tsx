@@ -92,7 +92,7 @@ export function getScalingCostsColumnsConfig() {
           '30D': project.costs.last30d.txCount?.value,
           '90D': project.costs.last90d.txCount?.value,
         }),
-        defaultOrderKey: '7D-USD',
+        defaultOrderKey: '7D',
         rule: 'numeric',
       },
     },
