@@ -1,7 +1,7 @@
 {
   "name": "linea",
   "chain": "ethereum",
-  "blockNumber": 19519696,
+  "blockNumber": 19538689,
   "configHash": "0xd90b4d29fbd12a484abb6e9101721b3d588b5f44b8a9a7d0190f7438c8af27f1",
   "version": 3,
   "contracts": [
@@ -76,7 +76,7 @@
       "implementations": ["0x0eC393209674090368C592A591B25811e490BF36"],
       "sinceTimestamp": 1691086271,
       "values": {
-        "balance": 22443792920215,
+        "balance": 22752518803104,
         "messageService": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
         "owner": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
         "paused": false,
@@ -191,10 +191,10 @@
             "members": ["0xd6B95c960779c72B8C6752119849318E5d550574"]
           }
         },
-        "currentFinalizedShnarf": "0x1f754e350baca45c5eaa6a00280157084fa651226e9404e2969b323e34666808",
-        "currentL2StoredL1MessageNumber": 546161,
-        "currentL2StoredL1RollingHash": "0x5e2fbb5d157e5f5d42dcfecd11b5750e2eaad71c42f0aa315475d81223a642df",
-        "currentPeriodAmountInWei": "8059765497095816804",
+        "currentFinalizedShnarf": "0x52fb1bfc25a323259899a057112bc1f5e011a0fe4cc91cd842ae858adbfffc1c",
+        "currentL2StoredL1MessageNumber": 548504,
+        "currentL2StoredL1RollingHash": "0x755e702c275ad076ce69014c13400f28f28ba928439c47f90bae06c1f5bc1e0e",
+        "currentPeriodAmountInWei": "1146003485330984112803",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "GENERAL_PAUSE_TYPE": 1,
         "generalPause": false,
