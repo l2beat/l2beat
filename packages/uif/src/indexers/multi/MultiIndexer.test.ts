@@ -305,6 +305,17 @@ describe(MultiIndexer.name, () => {
         saved('c', 100, 500, 500),
       ])
     })
+
+    it('gets configurations from different source', async () => {
+      const testIndexer = new TestMultiIndexer(undefined, [])
+      testIndexer.getInitialConfigurations = () => [
+        actual('a', 100, null),
+        actual('b', 100, null),
+      ]
+
+      const newHeight = await testIndexer.initialize()
+      expect(newHeight).toEqual(99)
+    })
   })
 
   describe('multiUpdate', () => {
@@ -388,7 +399,7 @@ describe(MultiIndexer.name, () => {
 
 class TestMultiIndexer extends MultiIndexer<null> {
   constructor(
-    configurations: Configuration<null>[],
+    configurations: Configuration<null>[] | undefined,
     private readonly _saved: SavedConfiguration<null>[],
   ) {
     super(Logger.SILENT, [], configurations)
