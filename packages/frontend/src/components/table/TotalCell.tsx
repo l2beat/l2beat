@@ -1,4 +1,3 @@
-import { notUndefined } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { ScalingL2SummaryViewEntry } from '../../pages/scaling/summary/types'
@@ -14,12 +13,11 @@ export interface TotalCellProps {
 }
 
 export function TotalCell({ project }: TotalCellProps) {
-  const tvlWarnings = project.tvlWarnings?.filter(notUndefined)
   const content = project.tvl ? (
     <>
       <NumberCell
         className="font-bold"
-        tooltip={tvlWarnings ? undefined : project.tvlTooltip}
+        tooltip={project.tvlWarnings ? undefined : project.tvlTooltip}
       >
         {project.tvl?.displayValue}
       </NumberCell>
@@ -33,17 +31,17 @@ export function TotalCell({ project }: TotalCellProps) {
     </Badge>
   )
 
-  if (tvlWarnings?.length) {
+  if (project.tvlWarnings?.length) {
     return (
       <Tooltip>
         <TooltipTrigger className="relative flex items-center gap-1">
           {content}
           <RoundedWarningIcon
-            className={`absolute -right-4 size-4 ${getSentimentFillColor(tvlWarnings.some((w) => w?.sentiment === 'bad') ? 'bad' : 'warning')}`}
+            className={`absolute -right-4 size-4 ${getSentimentFillColor(project.tvlWarnings.some((w) => w?.sentiment === 'bad') ? 'bad' : 'warning')}`}
           />
         </TooltipTrigger>
         <TooltipContent>
-          {tvlWarnings.map((warning, i) => (
+          {project.tvlWarnings.map((warning, i) => (
             <WarningBar
               key={`tvl-warning-${i}`}
               className="mt-2"
