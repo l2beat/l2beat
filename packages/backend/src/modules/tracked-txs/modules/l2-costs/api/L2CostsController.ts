@@ -37,7 +37,7 @@ type L2CostsTrackedTxsConfigEntry = {
 
 export type SummedL2Costs = Omit<L2CostsApiProject, 'syncedUntil'>
 
-const NOW = UnixTime.now()
+const NOW_TO_FULL_HOUR = UnixTime.now().toStartOf('hour')
 
 // Amount of gas required for a basic tx
 const OVERHEAD = 21_000
@@ -136,7 +136,7 @@ export class L2CostsController {
 
       const records = await this.l2CostsRepository.getByProjectAndTimeRange(
         project.projectId,
-        [NOW.add(-90, 'days').toStartOf('hour'), NOW.toStartOf('hour')],
+        [NOW_TO_FULL_HOUR.add(-90, 'days'), NOW_TO_FULL_HOUR],
       )
 
       const recordsWithDetails = await this.makeTransactionCalculations(records)
@@ -157,16 +157,16 @@ export class L2CostsController {
   sumDetails(transactions: DetailedTransaction[]): SummedL2Costs {
     return transactions.reduce<SummedL2Costs>(
       (acc, tx) => {
-        if (tx.timestamp.gt(NOW.add(-1, 'days'))) {
+        if (tx.timestamp.gt(NOW_TO_FULL_HOUR.add(-1, 'days'))) {
           addToAcc(acc, tx, 'last24h')
         }
-        if (tx.timestamp.gt(NOW.add(-7, 'days'))) {
+        if (tx.timestamp.gt(NOW_TO_FULL_HOUR.add(-7, 'days'))) {
           addToAcc(acc, tx, 'last7d')
         }
-        if (tx.timestamp.gt(NOW.add(-30, 'days'))) {
+        if (tx.timestamp.gt(NOW_TO_FULL_HOUR.add(-30, 'days'))) {
           addToAcc(acc, tx, 'last30d')
         }
-        if (tx.timestamp.gt(NOW.add(-90, 'days'))) {
+        if (tx.timestamp.gt(NOW_TO_FULL_HOUR.add(-90, 'days'))) {
           addToAcc(acc, tx, 'last90d')
         }
         return acc
@@ -185,8 +185,8 @@ export class L2CostsController {
   ): Promise<DetailedTransaction[]> {
     const ethPricesMap = await this.priceRepository.findByTimestampRange(
       AssetId.ETH,
-      NOW.add(-90, 'days').toStartOf('hour'),
-      NOW.toStartOf('hour'),
+      NOW_TO_FULL_HOUR.add(-90, 'days').toStartOf('hour'),
+      NOW_TO_FULL_HOUR.toStartOf('hour'),
     )
 
     return transactions.map((tx) => {

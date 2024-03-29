@@ -1,7 +1,7 @@
 {
   "name": "polygon-pos",
   "chain": "ethereum",
-  "blockNumber": 17770180,
+  "blockNumber": 19532088,
   "configHash": "0xb8528a8124102b9ffec26837d8f1e40ad17f143a9f191fbeed14763bd7124c56",
   "version": 3,
   "contracts": [
@@ -62,7 +62,7 @@
       },
       "sinceTimestamp": 1590850580,
       "values": {
-        "counter": 2730237,
+        "counter": 2886616,
         "isOwner": false,
         "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "REGISTRATIONS": [
@@ -177,10 +177,10 @@
       "implementations": ["0x536c55cFe4892E581806e10b38dFE8083551bd03"],
       "sinceTimestamp": 1590849960,
       "values": {
-        "_nextHeaderBlock": 487420000,
+        "_nextHeaderBlock": 599340000,
         "CHAINID": 137,
-        "currentHeaderBlock": 487410000,
-        "getLastChildBlock": 45500325,
+        "currentHeaderBlock": 599330000,
+        "getLastChildBlock": 55172517,
         "heimdallId": "0x7e10229e6df5851dc336f813dde0cf6559cd517f9ff1980e2e57e192ba3a2329",
         "implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "isOwner": false,
@@ -367,7 +367,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
-        "modules": []
+        "modules": [],
+        "threshold": "5 of 9 (56%)"
       },
       "implementations": ["0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"],
       "sinceTimestamp": 1593593561,
@@ -387,7 +388,7 @@
         ],
         "getThreshold": 5,
         "NAME": "Gnosis Safe",
-        "nonce": 181,
+        "nonce": 198,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"

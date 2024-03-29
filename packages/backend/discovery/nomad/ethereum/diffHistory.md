@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xe7a909681ebdf0f056f5a654951a79673e31a16b
+
+# Diff at Thu, 28 Mar 2024 10:25:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@dd32bb06b292cc8459fb09925454ee3a90f5c27e block: 18340273
+- current block number: 19531994
+
+## Description
+
+Update discovery to include the multisig threshold.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18340273 (main branch discovery), not current.
+
+```diff
+    contract Governor (0x93277b8f5939975b9E6694d5Fd2837143afBf68A) {
+    +++ description: None
+      upgradeability.threshold:
++        "3 of 5 (60%)"
+    }
+```
+
+```diff
+    contract RecoveryManager (0xda2f881f7f4e9D2b9559F97c7670472A85C1986A) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 3 (67%)"
+    }
+```
+
 Generated with discovered.json: 0x6e13c45d5dd44f156af0a170d664ab078ff2c8e3
 
 # Diff at Fri, 13 Oct 2023 07:04:17 GMT:
@@ -42,7 +76,7 @@ Newly created contracts are the result of rediscovering the `upgradeBeacon` addr
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Update discovery to include the multisig threshold.
 
 ## Watched changes
 

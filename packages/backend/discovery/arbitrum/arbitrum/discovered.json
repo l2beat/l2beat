@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "chain": "arbitrum",
-  "blockNumber": 189651036,
+  "blockNumber": 195078255,
   "configHash": "0x2147afee830f32168fe97d6064b3d5446e897b6a4f87ff8a98713a7a4febd973",
   "version": 3,
   "contracts": [
@@ -17,7 +17,7 @@
       "sinceTimestamp": 1623867828,
       "values": {
         "counterpartGateway": "0xcEe284F754E854890e311e3280b767F80797180d",
-        "exitNum": 16325,
+        "exitNum": 16506,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "derivedName": "L2CustomGateway"
@@ -36,7 +36,7 @@
         "beaconProxyFactory": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
         "counterpartGateway": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "exitNum": 18378,
+        "exitNum": 18957,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "derivedName": "L2ERC20Gateway"
@@ -123,7 +123,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
-        "modules": ["0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"]
+        "modules": ["0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"],
+        "threshold": "9 of 12 (75%)"
       },
       "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
       "sinceTimestamp": 1692138844,
@@ -259,7 +260,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
-        "modules": ["0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"]
+        "modules": ["0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"],
+        "threshold": "7 of 12 (58%)"
       },
       "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
       "sinceTimestamp": 1692138742,
@@ -340,7 +342,7 @@
       "sinceTimestamp": 1678968435,
       "values": {
         "counterpartGateway": "0xbbcE8aA77782F13D4202a230d978F361B011dB27",
-        "exitNum": 1245,
+        "exitNum": 1289,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "derivedName": "L2ReverseCustomGateway"

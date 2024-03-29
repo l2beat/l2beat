@@ -2,8 +2,39 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "FastWithdrawalAgent",
-      "values": {}
+      "name": "AgentRegistry",
+      "values": {
+        "agents": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "BlockVerifier",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
     },
     {
       "name": "DefaultDepositContract",
@@ -19,66 +50,6 @@
           "type": null
         },
         "pendingOwner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ForcedWithdrawalAgent",
-      "values": {
-        "managers": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "numManagers": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pendingOwner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ProxyOwner",
-      "values": {
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": "Array of addresses that are owners, allowed to chage contract values.",
-          "severity": "LOW",
-          "type": "PERMISSION"
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
           "description": null,
           "severity": null,
           "type": null
@@ -163,6 +134,11 @@
           "severity": null,
           "type": null
         },
+        "loopringV3": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "owner": {
           "description": null,
           "severity": null,
@@ -178,17 +154,101 @@
           "severity": null,
           "type": null
         },
+        "shutdownTriggered": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "version": {
           "description": null,
           "severity": null,
           "type": null
-        },
-        "loopringV3": {
+        }
+      }
+    },
+    {
+      "name": "FastWithdrawalAgent",
+      "values": {}
+    },
+    {
+      "name": "ForcedWithdrawalAgent",
+      "values": {
+        "managers": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "shutdownTriggered": {
+        "numManagers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "LRC_v2",
+      "values": {
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalBurned": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "LoopringIOExchangeOwner",
+      "values": {
+        "blockSubmitters": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "open": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "target": {
           "description": null,
           "severity": null,
           "type": null
@@ -261,104 +321,14 @@
       }
     },
     {
-      "name": "LoopringIOExchangeOwner",
-      "values": {
-        "open": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pendingOwner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "target": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "blockSubmitters": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "AgentRegistry",
-      "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pendingOwner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "agents": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "BlockVerifier",
-      "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "pendingOwner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "LRC_v2",
-      "values": {
-        "decimals": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "name": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "symbol": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalBurned": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalSupply": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "ProtocolFeeVault",
       "values": {
         "DAO_PERDENTAGE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REWARD_PERCENTAGE": {
           "description": null,
           "severity": null,
           "type": null
@@ -388,11 +358,6 @@
           "severity": null,
           "type": null
         },
-        "REWARD_PERCENTAGE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "tokenSellerAddress": {
           "description": null,
           "severity": null,
@@ -406,24 +371,59 @@
       }
     },
     {
+      "name": "ProxyOwner",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": "Array of addresses that are owners, allowed to chage contract values.",
+          "severity": "LOW",
+          "type": "PERMISSION"
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "UserStakingPool",
       "values": {
-        "getTotalStaking": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "lrcAddress": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "MIN_CLAIM_DELAY": {
           "description": null,
           "severity": null,
           "type": null
         },
         "MIN_WITHDRAW_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalStaking": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lrcAddress": {
           "description": null,
           "severity": null,
           "type": null

@@ -151,6 +151,24 @@ export function makeConfig(
         ],
         600,
       ),
+      beaconApiUrl: env.string([
+        'ETHEREUM_BEACON_API_URL_FOR_FINALITY',
+        'ETHEREUM_BEACON_API_URL',
+      ]),
+      beaconApiCPM: env.integer(
+        [
+          'ETHEREUM_BEACON_API_CALLS_PER_MINUTE_FOR_FINALITY',
+          'ETHEREUM_BEACON_API_CALLS_PER_MINUTE',
+        ],
+        600,
+      ),
+      beaconApiTimeout: env.integer(
+        [
+          'ETHEREUM_BEACON_API_TIMEOUT_FOR_FINALITY',
+          'ETHEREUM_BEACON_API_TIMEOUT',
+        ],
+        10000,
+      ),
       configurations: getFinalityConfigurations(flags, env),
     },
     activity: flags.isEnabled('activity') && {

@@ -25,7 +25,7 @@ import {
   SummedL2Costs,
 } from './L2CostsController'
 
-const NOW = UnixTime.now()
+const NOW_TO_FULL_HOUR = UnixTime.now().toStartOf('hour')
 
 describe(L2CostsController.name, () => {
   describe(L2CostsController.prototype.getL2Costs.name, () => {
@@ -61,9 +61,11 @@ describe(L2CostsController.name, () => {
 
       controller.makeTransactionCalculations = mockFn().returns([
         mockObject<DetailedTransaction>({
-          timestamp: NOW.add(-1, 'hours'),
+          timestamp: NOW_TO_FULL_HOUR.add(-1, 'hours'),
         }),
-        mockObject<DetailedTransaction>({ timestamp: NOW.add(-2, 'hours') }),
+        mockObject<DetailedTransaction>({
+          timestamp: NOW_TO_FULL_HOUR.add(-2, 'hours'),
+        }),
       ])
 
       controller.sumDetails = mockFn().returns(
@@ -80,14 +82,14 @@ describe(L2CostsController.name, () => {
       expect(
         l2CostsRepository.getByProjectAndTimeRange,
       ).toHaveBeenNthCalledWith(1, MOCK_PROJECTS[1].projectId, [
-        NOW.add(-90, 'days').toStartOf('hour'),
-        NOW.toStartOf('hour'),
+        NOW_TO_FULL_HOUR.add(-90, 'days'),
+        NOW_TO_FULL_HOUR,
       ])
       expect(
         l2CostsRepository.getByProjectAndTimeRange,
       ).toHaveBeenNthCalledWith(2, MOCK_PROJECTS[2].projectId, [
-        NOW.add(-90, 'days').toStartOf('hour'),
-        NOW.toStartOf('hour'),
+        NOW_TO_FULL_HOUR.add(-90, 'days'),
+        NOW_TO_FULL_HOUR,
       ])
 
       expect(result.type).toEqual('success')
@@ -129,7 +131,7 @@ describe(L2CostsController.name, () => {
       const TX2_GAS_PRICE_ETH = getGasPriceETH(29_000_000_000)
       const expected = [
         {
-          timestamp: NOW.add(-1, 'hours'),
+          timestamp: NOW_TO_FULL_HOUR.add(-1, 'hours'),
           calldataGasUsed: 2700,
           computeGasUsed: 400_000 - 2700 - 21_000,
           overheadGasUsed: 21000 as const,
@@ -148,7 +150,7 @@ describe(L2CostsController.name, () => {
           type: 2 as const,
         },
         {
-          timestamp: NOW.add(-2, 'hours'),
+          timestamp: NOW_TO_FULL_HOUR.add(-2, 'hours'),
           calldataGasUsed: 0,
           computeGasUsed: 0,
           overheadGasUsed: 21000 as const,
@@ -261,8 +263,8 @@ function getMockL2CostsController(params: {
       mockObject<PriceRepository>({
         findByTimestampRange: mockFn().resolvesToOnce(
           new Map([
-            [NOW.add(-1, 'hours').toStartOf('hour').toNumber(), 3000],
-            [NOW.add(-2, 'hours').toStartOf('hour').toNumber(), 3100],
+            [NOW_TO_FULL_HOUR.add(-1, 'hours').toNumber(), 3000],
+            [NOW_TO_FULL_HOUR.add(-2, 'hours').toNumber(), 3100],
           ]),
         ),
       }),
@@ -274,7 +276,7 @@ function getMockL2CostRecords(): L2CostsRecord[] {
   return [
     {
       txHash: '0x1',
-      timestamp: NOW.add(-1, 'hours'),
+      timestamp: NOW_TO_FULL_HOUR.add(-1, 'hours'),
       trackedTxId: TrackedTxId.unsafe('aaa'),
       data: {
         type: 2,
@@ -286,7 +288,7 @@ function getMockL2CostRecords(): L2CostsRecord[] {
     },
     {
       txHash: '0x2',
-      timestamp: NOW.add(-2, 'hours'),
+      timestamp: NOW_TO_FULL_HOUR.add(-2, 'hours'),
       trackedTxId: TrackedTxId.unsafe('bbb'),
       data: {
         type: 3,
@@ -387,7 +389,7 @@ function getMockDetailedTransactions(
     }
 
     const base = {
-      timestamp: NOW.add(-time, 'days'),
+      timestamp: NOW_TO_FULL_HOUR.add(-time, 'days'),
       calldataGasUsed: i + 1,
       computeGasUsed: i + 1,
       totalGas: i + 1,

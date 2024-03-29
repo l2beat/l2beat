@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x719eea4074a6b7d15e0c5fa005f4a80d040398ef
+
+# Diff at Thu, 28 Mar 2024 11:36:42 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@21187e63b9b90823a55c461c331868a470ce17eb block: 189651036
+- current block number: 195078255
+
+## Description
+
+Update discovery to include the multisig threshold.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 189651036 (main branch discovery), not current.
+
+```diff
+    contract SC9 (0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641) {
+    +++ description: None
+      upgradeability.threshold:
++        "9 of 12 (75%)"
+    }
+```
+
+```diff
+    contract SC7 (0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941) {
+    +++ description: None
+      upgradeability.threshold:
++        "7 of 12 (58%)"
+    }
+```
+
 Generated with discovered.json: 0x6cd94aaadac1762751f4e95ba2a134f51e1b436b
 
 # Diff at Tue, 12 Mar 2024 14:47:07 GMT:

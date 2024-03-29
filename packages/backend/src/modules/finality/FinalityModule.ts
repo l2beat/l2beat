@@ -3,6 +3,7 @@ import { assert, assertUnreachable, notUndefined } from '@l2beat/shared-pure'
 
 import { Config } from '../../config'
 import { FinalityProjectConfig } from '../../config/features/finality'
+import { BlobClient } from '../../peripherals/blobclient/BlobClient'
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
@@ -11,12 +12,14 @@ import { LivenessRepository } from '../tracked-txs/modules/liveness/repositories
 import { TrackedTxsConfigsRepository } from '../tracked-txs/repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsIndexer } from '../tracked-txs/TrackedTxsIndexer'
 import { LineaFinalityAnalyzer } from './analyzers/LineaFinalityAnalyzer'
+import { OpStackFinalityAnalyzer } from './analyzers/opStack'
 import { ScrollFinalityAnalyzer } from './analyzers/ScrollFinalityAnalyzer'
 import { zkSyncEraFinalityAnalyzer } from './analyzers/zkSyncEraFinalityAnalyzer'
 import { FinalityController } from './api/FinalityController'
 import { createFinalityRouter } from './api/FinalityRouter'
 import { FinalityIndexer } from './FinalityIndexer'
 import { FinalityRepository } from './repositories/FinalityRepository'
+import { FinalityConfig } from './types/FinalityConfig'
 
 export function createFinalityModule(
   config: Config,
@@ -47,8 +50,17 @@ export function createFinalityModule(
     callsPerMinute: config.finality.ethereumProviderCallsPerMinute,
   })
 
+  const blobClient = peripherals.getClient(BlobClient, {
+    beaconApiUrl: config.finality.beaconApiUrl,
+    rpcUrl: config.finality.ethereumProviderUrl,
+    callsPerMinute: config.finality.beaconApiCPM,
+    timeout: config.finality.beaconApiTimeout,
+  })
+
   const runtimeConfigurations = initializeConfigurations(
     ethereumClient,
+    blobClient,
+    logger,
     peripherals.getRepository(LivenessRepository),
     config.finality.configurations,
     peripherals,
@@ -82,12 +94,14 @@ export function createFinalityModule(
 
 function initializeConfigurations(
   ethereumRPC: RpcClient,
+  blobClient: BlobClient,
+  logger: Logger,
   livenessRepository: LivenessRepository,
   configs: FinalityProjectConfig[],
   peripherals: Peripherals,
-) {
+): FinalityConfig[] {
   return configs
-    .map((configuration) => {
+    .map((configuration): FinalityConfig | undefined => {
       switch (configuration.type) {
         case 'Linea':
           return {
@@ -109,6 +123,23 @@ function initializeConfigurations(
               configuration.projectId,
             ),
             minTimestamp: configuration.minTimestamp,
+          }
+        case 'OPStack-blob':
+          return {
+            projectId: configuration.projectId,
+            analyzer: new OpStackFinalityAnalyzer(
+              blobClient,
+              logger,
+              ethereumRPC,
+              livenessRepository,
+              configuration.projectId,
+              {
+                l2BlockTimeSeconds: configuration.l2BlockTimeSeconds,
+                genesisTimestamp: configuration.genesisTimestamp,
+              },
+            ),
+            minTimestamp: configuration.minTimestamp,
+            granularityPerDay: configuration.granularity ?? 24,
           }
         case 'Scroll':
           return {

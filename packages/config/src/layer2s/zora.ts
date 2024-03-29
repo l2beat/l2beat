@@ -65,7 +65,10 @@ export const zora: Layer2 = opStack({
   ),
   rpcUrl: 'https://rpc.zora.co',
   finality: {
-    type: 'OPStack',
+    type: 'OPStack-blob',
+    genesisTimestamp: new UnixTime(1686693839),
+    minTimestamp: new UnixTime(1710386579),
+    l2BlockTimeSeconds: 2,
     lag: 0,
   },
   genesisTimestamp: new UnixTime(1686695915),

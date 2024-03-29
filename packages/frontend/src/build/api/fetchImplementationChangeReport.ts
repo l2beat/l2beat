@@ -14,7 +14,7 @@ export async function fetchImplementationChangeReport(
     return getMockImplementationChangeApiResponse()
   }
 
-  const url = `${backend.apiUrl}/implementation-change-report`
+  const url = `${backend.updateMonitorApiUrl}/api/implementation-change-report`
   const json = await http.fetchJson(url)
   return ImplementationChangeReportApiResponse.parse(json)
 }

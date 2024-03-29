@@ -112,6 +112,9 @@ export interface TrackedTxsConfig {
 export interface FinalityConfig {
   readonly ethereumProviderUrl: string
   readonly ethereumProviderCallsPerMinute: number
+  readonly beaconApiUrl: string
+  readonly beaconApiCPM: number
+  readonly beaconApiTimeout: number
   readonly configurations: FinalityProjectConfig[]
 }
 

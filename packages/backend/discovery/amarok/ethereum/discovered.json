@@ -1,7 +1,7 @@
 {
   "name": "amarok",
   "chain": "ethereum",
-  "blockNumber": 19517972,
+  "blockNumber": 19531406,
   "configHash": "0x152359c61b35ebefcdf1d1b6bcfc8302dc8a6b09cd0c44bd59c8f2c934112aac",
   "version": 3,
   "contracts": [
@@ -19,7 +19,7 @@
         "disputeBlocks": 120,
         "DOMAIN": 6648936,
         "FINALIZED_HASH": "0x0000000000000000000000000000000000000000000000000000000000000001",
-        "getLastCompletedSnapshotId": 950804,
+        "getLastCompletedSnapshotId": 950896,
         "getSnapshotDuration": 1800,
         "home": "0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc",
         "lastSentBlock": 19098811,
@@ -29,7 +29,7 @@
         "MIRROR_DOMAIN": 6648936,
         "mirrorConnector": "0x0000000000000000000000000000000000000000",
         "optimisticMode": true,
-        "outboundRoot": "0x27a825ead0777e8a8b11d36c12854e0be5234f51f166a6bac30bd5e531471ed1",
+        "outboundRoot": "0xaab16216c336bdb1bfa2cf8386deebfc8f1cf85edfc0b02437f46d71f13c086b",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "PROCESS_GAS": 850000,
@@ -56,7 +56,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "118489446514558797841005399",
+        "totalSupply": "118493353694327663064211428",
         "totalSupplyAt": []
       }
     },
@@ -140,7 +140,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": ["0x172fB6b07D6aB708dd67392a09e1c40d16dA0460"]
+        "modules": ["0x172fB6b07D6aB708dd67392a09e1c40d16dA0460"],
+        "threshold": "8 of 12 (67%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1671651491,
@@ -177,7 +178,7 @@
       "values": {
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1711448315,
+        "getCurrentTime": 1711614335,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -222,7 +223,7 @@
         "getPendingInboundRootsCount": 0,
         "getSnapshotDuration": 1800,
         "hubDomain": 6648936,
-        "lastSavedAggregateRootTimestamp": 1711447679,
+        "lastSavedAggregateRootTimestamp": 1711612559,
         "MAX_DOMAINS": 500,
         "MERKLE": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
         "minDisputeBlocks": 60,
@@ -231,7 +232,7 @@
         "paused": false,
         "pendingInboundRoots": [170, 169],
         "proposed": "0x0000000000000000000000000000000000000000",
-        "proposedAggregateRootHash": "0x0000000000000000000000000000000000000000000000000000000000000001",
+        "proposedAggregateRootHash": "0x8f269e2b17fae86c0e05a84b45c92f785cba293dabf6cbe18cbdf72e5ba7d689",
         "proposedTimestamp": 0,
         "renounced": false,
         "watcherManager": "0x79e6E0242405A66B2dd8B96DEd3b2F0216Fd417d"
@@ -339,7 +340,7 @@
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
           "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
         ],
-        "numProposals": 200
+        "numProposals": 201
       },
       "derivedName": "GovernorV2"
     },
@@ -372,7 +373,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
-        "modules": []
+        "modules": [],
+        "threshold": "1 of 5 (20%)"
       },
       "implementations": ["0x29fcB43b46531BcA003ddC8FCB67FFE91900C762"],
       "sinceTimestamp": 1710955703,
@@ -426,7 +428,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "2 of 4 (50%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1597806870,
@@ -712,7 +715,7 @@
         "LIQUIDITY_FEE_NUMERATOR": 9995,
         "lpTokenTargetAddress": "0xf7DE5aCeEeE6091d1103209C337fA00D0B4b9092",
         "maxRoutersPerTransfer": 5,
-        "nonce": 28907,
+        "nonce": 29535,
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "proposed": "0x0000000000000000000000000000000000000000",

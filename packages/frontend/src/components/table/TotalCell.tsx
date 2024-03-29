@@ -4,6 +4,7 @@ import { ScalingL2SummaryViewEntry } from '../../pages/scaling/summary/types'
 import { getSentimentFillColor } from '../../utils/sentimentFillColor'
 import { Badge } from '../badge/Badge'
 import { RoundedWarningIcon } from '../icons'
+import { WarningBar } from '../project/WarningBar'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { NumberCell } from './NumberCell'
 
@@ -16,7 +17,7 @@ export function TotalCell({ project }: TotalCellProps) {
     <>
       <NumberCell
         className="font-bold"
-        tooltip={project.tvlWarning ? undefined : project.tvlTooltip}
+        tooltip={project.tvlWarnings ? undefined : project.tvlTooltip}
       >
         {project.tvl?.displayValue}
       </NumberCell>
@@ -30,16 +31,29 @@ export function TotalCell({ project }: TotalCellProps) {
     </Badge>
   )
 
-  if (project.tvlWarning) {
+  if (project.tvlWarnings?.length) {
+    const anyBadWarnings = project.tvlWarnings.some(
+      (w) => w?.sentiment === 'bad',
+    )
     return (
       <Tooltip>
         <TooltipTrigger className="relative flex items-center gap-1">
           {content}
           <RoundedWarningIcon
-            className={`absolute -right-4 size-4 ${getSentimentFillColor(project.tvlWarning.sentiment)}`}
+            className={`absolute -right-4 size-4 ${getSentimentFillColor(anyBadWarnings ? 'bad' : 'warning')}`}
           />
         </TooltipTrigger>
-        <TooltipContent>{project.tvlWarning.content}</TooltipContent>
+        <TooltipContent>
+          {project.tvlWarnings.map((warning, i) => (
+            <WarningBar
+              key={`tvl-warning-${i}`}
+              className="mt-2"
+              text={warning.content}
+              icon={RoundedWarningIcon}
+              color={warning.sentiment === 'warning' ? 'yellow' : 'red'}
+            />
+          ))}
+        </TooltipContent>
       </Tooltip>
     )
   }
