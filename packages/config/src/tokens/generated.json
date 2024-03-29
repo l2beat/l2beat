@@ -2911,21 +2911,6 @@
       "formula": "locked"
     },
     {
-      "id": "silo-silo-governance-token",
-      "name": "Silo Governance Token",
-      "coingeckoId": "silo-finance",
-      "address": "0x6f80310CA7F2C654691D1383149Fa1A57d8AB1f8",
-      "symbol": "SILO",
-      "decimals": 18,
-      "deploymentTimestamp": 1638296826,
-      "coingeckoListingTimestamp": 1639267200,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/21454/large/y0iYKZOv_400x400.png?1696520816",
-      "chainId": 1,
-      "type": "CBV",
-      "formula": "locked"
-    },
-    {
       "id": "agix-singularitynet-token",
       "name": "SingularityNET Token",
       "coingeckoId": "singularitynet",
