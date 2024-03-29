@@ -159,15 +159,15 @@
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"]
+            "members": ["0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6"]
           },
           "TIMELOCK_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"]
+            "members": ["0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6"]
           },
           "GUARDIAN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"]
+            "members": ["0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6"]
           }
         },
         "DATA_COMMITMENT_MAX": 10000,
@@ -282,11 +282,14 @@
     }
   ],
   "eoas": [
+    "0x1358eaCFE3a7F4FEB06c0Ae722072F134bcE7caf",
     "0x19abbcEC005D4D83692f7A180125bF0FBd24253D",
+    "0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0",
     "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
+    "0x793979789Ec179183E396e76c1e241bE0c9eE899",
+    "0x91D456f83f4a117B07866fdEdC29306f7E974e15",
     "0xa4ABEE02d42451Ba8c78b66361F53cb0C3dB3B65",
-    "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
-    "0xDEd0000E32f8F40414d3ab3a830f735a3553E18e"
+    "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126"
   ],
   "abis": {
     "0x296666e937b270193B960a7cEC526B351F353166": [
@@ -365,6 +368,9 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6": [
+      "constructor(address _singleton)"
     ],
     "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776": [
       "error CallFailed(address callbackAddress, bytes callbackData)",
@@ -487,6 +493,56 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function verifyAttestation(uint256 _proofNonce, tuple(uint256 height, bytes32 dataRoot) _tuple, tuple(bytes32[] sideNodes, uint256 key, uint256 numLeaves) _proof) view returns (bool)"
+    ],
+    "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": [
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ]
   }
 }

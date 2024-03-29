@@ -11,22 +11,24 @@
     "BlobstreamX": {
       "ignoreMethods": ["state_dataCommitments", "proxiableUUID"],
       "fields": {
-        "accessControl": { "type": "accessControl" },
+        "accessControl": { "type": "accessControl" }
       }
     },
     "SuccinctGateway": {
       "fields": {
-        "blobstreamVerifier" :{
+        "blobstreamVerifier": {
           "type": "call",
-          "method": "function verifiers(bytes32 functionId) view returns (address)",
-          "args": ["0x9a8d1715f31162da0a0c86230f29abd4d9dd33488a7397e601002defa71d716f"] // BlobstreamX.headerRangeFunctionId() - can I fetch this from the contract?
+          "method": "verifiers",
+          "args": [
+            "0x9a8d1715f31162da0a0c86230f29abd4d9dd33488a7397e601002defa71d716f"
+          ] // BlobstreamX.headerRangeFunctionId() - we cannot get it from the contract,
+          // but there's a test :)
         },
-        "verifiers":
-        {
+        "verifiers": {
           "type": "arrayFromTwoEvents",
           "addEvent": "event FunctionRegistered(bytes32 indexed functionId, address verifier, bytes32 salt, address owner)",
           "addKey": "verifier",
-          "removeEvent": "event FunctionVerifierUpdated(bytes32 indexed functionId, address verifier)", // can it remove old + add new values to the verifiers list? 
+          "removeEvent": "event FunctionVerifierUpdated(bytes32 indexed functionId, address verifier)", // can it remove old + add new values to the verifiers list?
           "removeKey": "verifier"
         }
       }
