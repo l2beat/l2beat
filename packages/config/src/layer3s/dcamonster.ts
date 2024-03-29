@@ -9,9 +9,7 @@ export const bugless: Layer3 = underReviewL3({
     slug: 'dca-monster',
     description:
       'DCA.Monster is an innovative Automated Market Maker (AMM) that utilizes ERC20 streams for precise and efficient on-chain Dollar Cost Averaging (DCA), powered by Cartesi Rollups, aimed at overcoming the traditional challenges associated with on-chain DCA solutions.',
-    purposes: [
-      'AMM'
-    ],
+    purposes: ['AMM'],
     category: 'Optimistic Rollup',
     provider: 'Cartesi Rollups',
     links: {
