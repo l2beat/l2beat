@@ -123,9 +123,9 @@ function getDataDetails(
   const dataRange = data[type]
   assert(dataRange, `${type} is undefined`)
 
-  const period = typeToPeriod[type]
+  const days = typeToDays[type]
   const txCount = activityApiProjectData?.daily.data
-    ? getTransactionCount(activityApiProjectData?.daily.data, 'project', period)
+    ? getTransactionCount(activityApiProjectData?.daily.data, 'project', days)
     : undefined
 
   return {
@@ -183,12 +183,12 @@ function getCostsDataBreakdown(
   }
 }
 
-const typeToPeriod = {
-  last24h: 'day',
-  last7d: 'week',
-  last30d: 'month',
-  last90d: 'three months',
-} as const
+const typeToDays = {
+  last24h: 1,
+  last7d: 7,
+  last30d: 30,
+  last90d: 90,
+}
 
 function getIncludedProjects(
   projects: Layer2[],
