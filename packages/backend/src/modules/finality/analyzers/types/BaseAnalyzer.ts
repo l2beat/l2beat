@@ -5,6 +5,7 @@ import {
   TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { chunk } from 'lodash'
 
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
 import { LivenessRepository } from '../../../tracked-txs/modules/liveness/repositories/LivenessRepository'
@@ -45,9 +46,11 @@ export abstract class BaseAnalyzer {
     }
 
     const finalityDelays = []
-    for (const tx of transactions) {
-      const delay = await this.getFinality(tx)
-      finalityDelays.push(delay)
+    const batchedTransactions = chunk(transactions, 10)
+
+    for (const batch of batchedTransactions) {
+      const delays = await Promise.all(batch.map((tx) => this.getFinality(tx)))
+      finalityDelays.push(delays.flat())
     }
 
     return finalityDelays.flat()
