@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x16caa32ed21093a33d913c0d8264f1ada57d589c
+
+# Diff at Thu, 28 Mar 2024 09:10:45 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@867de6120241d47b66bf76f83c490408eb3595b0 block: 19411993
+- current block number: 19531626
+
+## Description
+
+Update discovery to include the multisig threshold.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19411993 (main branch discovery), not current.
+
+```diff
+    contract KarakMultisig (0x28A227d4faF0f4f75897438E24C43EF1CDABb920) {
+    +++ description: None
+      upgradeability.threshold:
++        "3 of 5 (60%)"
+    }
+```
+
 Generated with discovered.json: 0x0a1f7e21850a167f52f38ab6277deb45137398e8
 
 # Diff at Mon, 11 Mar 2024 12:57:34 GMT:
@@ -33,7 +59,7 @@ Generated with discovered.json: 0x4994070662bbd95d21b8c9c1ab21761f41503e62
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Update discovery to include the multisig threshold.
 
 ## Initial discovery
 

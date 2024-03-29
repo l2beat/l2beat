@@ -2,63 +2,8 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "L1ERC721Bridge",
+      "name": "AddressManager",
       "values": {
-        "messenger": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "MESSENGER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OTHER_BRIDGE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "otherBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "OptimismMintableERC20Factory",
-      "values": {
-        "BRIDGE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "ProxyAdmin",
-      "values": {
-        "addressManager": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "isUpgrading": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "owner": {
           "description": null,
           "severity": null,
@@ -67,29 +12,34 @@
       }
     },
     {
-      "name": "L1StandardBridge",
+      "name": "ChallengerMultisig",
       "values": {
-        "l2TokenBridge": {
+        "VERSION": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "messenger": {
+        "domainSeparator": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "MESSENGER": {
+        "getChainId": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "OTHER_BRIDGE": {
+        "getOwners": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "version": {
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
           "description": null,
           "severity": null,
           "type": null
@@ -100,11 +50,6 @@
       "name": "L1CrossDomainMessenger",
       "values": {
         "MESSAGE_VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "messageNonce": {
           "description": null,
           "severity": null,
           "type": null
@@ -154,87 +99,7 @@
           "severity": null,
           "type": null
         },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "AddressManager",
-      "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "LyraMultisig",
-      "values": {
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "OptimismPortal",
-      "values": {
-        "GUARDIAN": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "L2_ORACLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2Sender": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "params": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "paused": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "SYSTEM_CONFIG": {
+        "messageNonce": {
           "description": null,
           "severity": null,
           "type": null
@@ -247,34 +112,59 @@
       }
     },
     {
-      "name": "ChallengerMultisig",
+      "name": "L1ERC721Bridge",
       "values": {
-        "domainSeparator": {
+        "MESSENGER": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getChainId": {
+        "OTHER_BRIDGE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getOwners": {
+        "messenger": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getThreshold": {
+        "otherBridge": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "nonce": {
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1StandardBridge",
+      "values": {
+        "MESSENGER": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "VERSION": {
+        "OTHER_BRIDGE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2TokenBridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
           "description": null,
           "severity": null,
           "type": null
@@ -299,6 +189,21 @@
           "severity": null,
           "type": null
         },
+        "PROPOSER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SUBMISSION_INTERVAL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "deletedOutputs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "latestBlockNumber": {
           "description": null,
           "severity": null,
@@ -319,11 +224,6 @@
           "severity": null,
           "type": null
         },
-        "PROPOSER": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "startingBlockNumber": {
           "description": null,
           "severity": null,
@@ -334,7 +234,52 @@
           "severity": null,
           "type": null
         },
-        "SUBMISSION_INTERVAL": {
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "LyraMultisig",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OptimismMintableERC20Factory",
+      "values": {
+        "BRIDGE": {
           "description": null,
           "severity": null,
           "type": null
@@ -343,8 +288,63 @@
           "description": null,
           "severity": null,
           "type": null
+        }
+      }
+    },
+    {
+      "name": "OptimismPortal",
+      "values": {
+        "GUARDIAN": {
+          "description": null,
+          "severity": null,
+          "type": null
         },
-        "deletedOutputs": {
+        "L2_ORACLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SYSTEM_CONFIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2Sender": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "params": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "addressManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isUpgrading": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
           "description": null,
           "severity": null,
           "type": null
@@ -354,12 +354,32 @@
     {
       "name": "SystemConfig",
       "values": {
+        "UNSAFE_BLOCK_SIGNER_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "batcherHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "gasLimit": {
           "description": null,
           "severity": null,
           "type": null
         },
         "minimumGasLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "opStackDA": {
           "description": null,
           "severity": null,
           "type": null
@@ -384,7 +404,7 @@
           "severity": null,
           "type": null
         },
-        "UNSAFE_BLOCK_SIGNER_SLOT": {
+        "sequencerInbox": {
           "description": null,
           "severity": null,
           "type": null
@@ -395,26 +415,6 @@
           "type": null
         },
         "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "batcherHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "opStackDA": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "sequencerInbox": {
           "description": null,
           "severity": null,
           "type": null

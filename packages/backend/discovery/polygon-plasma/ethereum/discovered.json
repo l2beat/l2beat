@@ -1,7 +1,7 @@
 {
   "name": "polygon-plasma",
   "chain": "ethereum",
-  "blockNumber": 19062081,
+  "blockNumber": 19532081,
   "configHash": "0x2be707f1fd285dfd5a8ea952e3fa4142b52d37ee866602afdf577c362b731e48",
   "version": 3,
   "contracts": [
@@ -35,7 +35,7 @@
       },
       "sinceTimestamp": 1590850580,
       "values": {
-        "counter": 2850337,
+        "counter": 2886615,
         "isOwner": false,
         "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "REGISTRATIONS": [
@@ -154,13 +154,13 @@
         "CHECKPOINT_REWARD": "71795000000000000000000",
         "checkPointBlockInterval": 5120,
         "checkpointRewardDelta": 10,
-        "currentEpoch": 56772,
+        "currentEpoch": 59934,
         "currentValidatorSetSize": 105,
-        "currentValidatorSetTotalStake": "3528079732543138653529987257",
+        "currentValidatorSetTotalStake": "3585680535632990569599321803",
         "delegationEnabled": true,
         "delegatorsReward": [],
         "dynasty": 80,
-        "epoch": 56772,
+        "epoch": 59934,
         "eventsHub": "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
         "extensionCode": "0xef49Ea6996073752b6840CDA34773FFA78F78166",
         "getRegistry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
@@ -173,7 +173,7 @@
         "minDeposit": "1000000000000000000",
         "minHeimdallFee": "1000000000000000000",
         "NFTContract": "0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F",
-        "NFTCounter": 170,
+        "NFTCounter": 172,
         "owner": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
         "ownerOf": [],
         "prevBlockInterval": 1,
@@ -185,13 +185,13 @@
         "rootChain": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
         "signerUpdateLimit": 100,
         "token": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
-        "totalHeimdallFee": "9657939209428901681108",
+        "totalHeimdallFee": "9879939209428901681108",
         "totalRewards": "201179489204211582010647007",
-        "totalRewardsLiquidated": "93582628789935965535713629",
-        "totalStaked": "16853706463170572679011317",
+        "totalRewardsLiquidated": "99137065801861914154851451",
+        "totalStaked": "11303851544084717680341729",
         "validatorReward": [],
         "validatorShareFactory": "0xc4FA447A0e77Eff9717b09C057B40570813bb642",
-        "validatorState": ["3528079732543138653529987257", 105],
+        "validatorState": ["3585680535632990569599321803", 105],
         "validatorThreshold": 105,
         "WITHDRAWAL_DELAY": 80,
         "withdrawalDelay": 80
@@ -258,10 +258,10 @@
       "implementations": ["0x536c55cFe4892E581806e10b38dFE8083551bd03"],
       "sinceTimestamp": 1590849960,
       "values": {
-        "_nextHeaderBlock": 567720000,
+        "_nextHeaderBlock": 599340000,
         "CHAINID": 137,
-        "currentHeaderBlock": 567710000,
-        "getLastChildBlock": 52617893,
+        "currentHeaderBlock": 599330000,
+        "getLastChildBlock": 55172517,
         "heimdallId": "0x7e10229e6df5851dc336f813dde0cf6559cd517f9ff1980e2e57e192ba3a2329",
         "implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "isOwner": false,
@@ -283,7 +283,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "104924536332009474889"
+        "totalSupply": "104824536332009474889"
       },
       "derivedName": "MaticWETH"
     },
@@ -407,7 +407,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
-        "modules": []
+        "modules": [],
+        "threshold": "5 of 9 (56%)"
       },
       "implementations": ["0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"],
       "sinceTimestamp": 1593593561,

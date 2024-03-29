@@ -26,6 +26,7 @@ export interface Config {
   }
   backend: {
     apiUrl: string
+    updateMonitorApiUrl: string
     mock?: boolean
     skipCache: boolean
   }

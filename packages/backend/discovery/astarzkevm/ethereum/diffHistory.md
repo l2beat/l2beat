@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x537893caa59f373cff2679fee537357a320870aa
+
+# Diff at Thu, 28 Mar 2024 08:30:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@867de6120241d47b66bf76f83c490408eb3595b0 block: 19510528
+- current block number: 19531427
+
+## Description
+
+Update discovery to include the multisig threshold.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19510528 (main branch discovery), not current.
+
+```diff
+    contract RollupManagerAdminMultisig (0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 3 (67%)"
+    }
+```
+
+```diff
+    contract SecurityCouncil (0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6) {
+    +++ description: None
+      upgradeability.threshold:
++        "6 of 8 (75%)"
+    }
+```
+
+```diff
+    contract GnosisSafe (0x6c4876Ecb5de33f76700f44d547C593065806dAC) {
+    +++ description: None
+      upgradeability.threshold:
++        "1 of 3 (33%)"
+    }
+```
+
+```diff
+    contract AdminMultisig (0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E) {
+    +++ description: None
+      upgradeability.threshold:
++        "3 of 6 (50%)"
+    }
+```
+
 Generated with discovered.json: 0x80e34d2e9f076e502c2a5f413f27f449b1570d7a
 
 # Diff at Mon, 25 Mar 2024 09:12:11 GMT:
@@ -44,7 +94,7 @@ Generated with discovered.json: 0x9d882fb2ce884a4add9de979baad67a6d2a8b618
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Update discovery to include the multisig threshold.
 
 ## Initial discovery
 

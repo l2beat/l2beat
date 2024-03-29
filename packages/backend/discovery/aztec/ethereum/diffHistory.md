@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x6d7fb9afb3a03a83c9f41e0d5e4b3789b8843695
+
+# Diff at Thu, 28 Mar 2024 08:30:41 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@867de6120241d47b66bf76f83c490408eb3595b0 block: 19511017
+- current block number: 19531429
+
+## Description
+
+Update discovery to include the multisig threshold.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19511017 (main branch discovery), not current.
+
+```diff
+    contract Aztec Multisig (0xE298a76986336686CC3566469e3520d23D1a8aaD) {
+    +++ description: None
+      upgradeability.threshold:
++        "1 of 2 (50%)"
+    }
+```
+
 Generated with discovered.json: 0xfe5a836e62b3c749f591b5f32c82f9a28f1674d6
 
 # Diff at Mon, 25 Mar 2024 10:52:06 GMT:
@@ -191,7 +217,7 @@ discovery. Values are for block 18612421 (main branch discovery), not current.
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Update discovery to include the multisig threshold.
 
 ## Watched changes
 
