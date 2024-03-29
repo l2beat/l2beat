@@ -1,7 +1,7 @@
 {
   "name": "across-v2",
   "chain": "ethereum",
-  "blockNumber": 19531280,
+  "blockNumber": 19538342,
   "configHash": "0xcc1e89bad6ff4a7e353fc10b6d357a4a7f9866b593cb6726bc22acf1b9812f38",
   "version": 3,
   "contracts": [
@@ -17,7 +17,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "118493353694327663064211428",
+        "totalSupply": "118494166266947753798935748",
         "totalSupplyAt": []
       },
       "derivedName": "VotingToken"
@@ -164,7 +164,7 @@
       "implementations": ["0x0eC393209674090368C592A591B25811e490BF36"],
       "sinceTimestamp": 1691086271,
       "values": {
-        "balance": 22634322299312,
+        "balance": 22752518803104,
         "messageService": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
         "owner": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
         "paused": false,
@@ -183,7 +183,7 @@
       "values": {
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1711612811,
+        "getCurrentTime": 1711699295,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -226,11 +226,11 @@
         "EMPTY_RELAYER": "0x0000000000000000000000000000000000000000",
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 28800,
-        "getCurrentTime": 1711612811,
+        "getCurrentTime": 1711699295,
         "hubPool": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "INFINITE_FILL_DEADLINE": 4294967295,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 1200389,
+        "numberOfDeposits": 1202814,
         "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
@@ -249,13 +249,13 @@
       "sinceTimestamp": 1677230459,
       "values": {
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1711612811,
+        "getCurrentTime": 1711699295,
         "getMember": [
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
           "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
         ],
-        "numProposals": 200
+        "numProposals": 201
       },
       "derivedName": "GovernorV2"
     },
@@ -375,7 +375,7 @@
       "values": {
         "emergencyProposals": [],
         "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1711612811,
+        "getCurrentTime": 1711699295,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -518,13 +518,13 @@
         "protocolFeeCaptureAddress": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": [
-          "0xf639244b5bde6e534308158cae3042f055552e2ccfdd5eb6ab6bdb26e459b696",
-          "0xc98bc2e94a12d358da89b13401f96c2fc3460ec617bdae29affa6786189d185c",
+          "0xe0654ed26268d0e9c6a48019d301efc8cb1bcea4382968a8d9094c36e60df48c",
+          "0xde5b76b9ea8480b1000d4e98e42941cc88cdd3066b5fb52fe494a680e69e1f62",
           "0x0000000000000000000000000000000000000000000000000000000000000000",
           0,
           "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
           7,
-          1711613951
+          1711703963
         ],
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
@@ -542,13 +542,13 @@
       "implementations": ["0x934Dd4C63E285551CEceF8459103554D0096c179"],
       "sinceTimestamp": 1689159923,
       "values": {
-        "currentFinalizedShnarf": "0x781c439a641d5663a70fd357d75bc205ce58af58fb64eef403d6c17eb6959e79",
-        "currentL2BlockNumber": 3184364,
-        "currentL2StoredL1MessageNumber": 547715,
-        "currentL2StoredL1RollingHash": "0x6ea3c1c1a0388f780d9f5d1ba4c38432b384b01f8985f5d468b18354e9e67286",
-        "currentPeriodAmountInWei": "42430228178389163254",
-        "currentPeriodEnd": 1711661231,
-        "currentTimestamp": 1711581961,
+        "currentFinalizedShnarf": "0x9d6011e979973f48cec2c9098fa43fe402e7eac5b55b18537ffeb151caf90a0c",
+        "currentL2BlockNumber": 3213488,
+        "currentL2StoredL1MessageNumber": 548468,
+        "currentL2StoredL1RollingHash": "0xef6760d04c9585f02fbe4824c5db311e8333525c58350268178db11dd499aec0",
+        "currentPeriodAmountInWei": "1145452485330984112803",
+        "currentPeriodEnd": 1711751267,
+        "currentTimestamp": 1711669349,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "GENERAL_PAUSE_TYPE": 1,
         "GENESIS_SHNARF": "0x4f64fe1ce613546d34d666d8258c13c6296820fd13114d784203feb91276e838",
@@ -557,7 +557,7 @@
         "L1_L2_PAUSE_TYPE": 2,
         "L2_L1_PAUSE_TYPE": 3,
         "limitInWei": "18750000000000000000000",
-        "nextMessageNumber": 548030,
+        "nextMessageNumber": 548789,
         "OPERATOR_ROLE": "0x97667070c54ef182b0f5858b034beac1b6f3089aa2d3188bb1e8929f4fa9b929",
         "OUTBOX_STATUS_RECEIVED": 2,
         "OUTBOX_STATUS_SENT": 1,
