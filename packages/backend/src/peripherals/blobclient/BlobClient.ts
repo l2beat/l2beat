@@ -76,8 +76,7 @@ export class BlobClient {
     const response = await this.httpClient.fetch(url, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
-        accept: 'application/json',
+        'Content-Type': 'gzip',
       },
       timeout: this.timeout,
     })
