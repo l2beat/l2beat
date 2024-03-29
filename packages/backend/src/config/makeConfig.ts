@@ -162,6 +162,13 @@ export function makeConfig(
         ],
         600,
       ),
+      beaconApiTimeout: env.integer(
+        [
+          'ETHEREUM_BEACON_API_TIMEOUT_FOR_FINALITY',
+          'ETHEREUM_BEACON_API_TIMEOUT',
+        ],
+        10000,
+      ),
       configurations: getFinalityConfigurations(flags, env),
     },
     activity: flags.isEnabled('activity') && {
