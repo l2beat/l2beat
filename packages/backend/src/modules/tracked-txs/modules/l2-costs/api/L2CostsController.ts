@@ -3,7 +3,8 @@ import {
   assert,
   AssetId,
   cacheAsyncFunction,
-  L2CostsApiProject,
+  L2CostsApiChartPoint,
+  L2CostsApiCharts,
   L2CostsApiResponse,
   notUndefined,
   TrackedTxsConfigSubtype,
@@ -15,11 +16,16 @@ import { TaskQueue } from '../../../../../tools/queue/TaskQueue'
 import { PriceRepository } from '../../../../tvl/repositories/PriceRepository'
 import { TrackedTxsConfigsRepository } from '../../../repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsConfig } from '../../../types/TrackedTxsConfig'
+import { addToMap } from '../../utils/addToMap'
 import { getSyncedUntil } from '../../utils/getSyncedUntil'
 import {
   L2CostsRecord,
   L2CostsRepository,
 } from '../repositories/L2CostsRepository'
+import {
+  DetailedTransaction,
+  DetailedTransactionBase,
+} from '../types/DetailedTransaction'
 
 type L2CostsResult = {
   type: 'success'
@@ -35,43 +41,29 @@ type L2CostsTrackedTxsConfigEntry = {
   untilTimestamp: UnixTime | undefined
 }
 
-export type SummedL2Costs = Omit<L2CostsApiProject, 'syncedUntil'>
-
 const NOW_TO_FULL_HOUR = UnixTime.now().toStartOf('hour')
 
 // Amount of gas required for a basic tx
 const OVERHEAD = 21_000
 
-interface DetailedTransactionBase {
-  timestamp: UnixTime
-  calldataGasUsed: number
-  computeGasUsed: number
-  overheadGasUsed: 21000
-  totalGas: number
-  gasCost: number
-  calldataGasCost: number
-  computeGasCost: number
-  totalGasCost: number
-  totalOverheadGasCost: number
-  gasCostUsd: number
-  calldataGasCostUsd: number
-  computeGasCostUsd: number
-  totalGasCostUsd: number
-  totalOverheadGasCostUsd: number
-}
-
-interface DetailedType2Transaction extends DetailedTransactionBase {
-  type: 2
-}
-interface DetailedType3Transaction extends DetailedTransactionBase {
-  type: 3
-  blobGasCost: number
-  blobGasUsed: number
-  blobGasCostUsd: number
-}
-export type DetailedTransaction =
-  | DetailedType2Transaction
-  | DetailedType3Transaction
+const CHART_TYPES: L2CostsApiCharts['hourly']['types'] = [
+  'timestamp',
+  'totalGas',
+  'totalEth',
+  'totalUsd',
+  'overheadGas',
+  'overheadEth',
+  'overheadUsd',
+  'calldataGas',
+  'calldataEth',
+  'calldataUsd',
+  'computeGas',
+  'computeEth',
+  'computeUsd',
+  'blobsGas',
+  'blobsEth',
+  'blobsUsd',
+] as const
 
 export class L2CostsController {
   private readonly taskQueue: TaskQueue<void>
@@ -109,6 +101,9 @@ export class L2CostsController {
   async getL2Costs(): Promise<L2CostsResult> {
     const projects: L2CostsApiResponse['projects'] = {}
 
+    const combinedHourlyMap = new Map<number, L2CostsApiChartPoint>()
+    const combinedDailyMap = new Map<number, L2CostsApiChartPoint>()
+
     const activeProjects = this.projects.filter((p) => !p.isArchived)
     for (const project of activeProjects) {
       if (!project.trackedTxsConfig) {
@@ -136,48 +131,70 @@ export class L2CostsController {
 
       const records = await this.l2CostsRepository.getByProjectAndTimeRange(
         project.projectId,
-        [NOW_TO_FULL_HOUR.add(-90, 'days'), NOW_TO_FULL_HOUR],
+        [NOW_TO_FULL_HOUR.add(-180, 'days'), NOW_TO_FULL_HOUR],
       )
 
       const recordsWithDetails = await this.makeTransactionCalculations(records)
-      const sums = this.sumDetails(recordsWithDetails)
+      const { hourly, daily } = this.aggregateL2Costs(
+        recordsWithDetails,
+        combinedHourlyMap,
+        combinedDailyMap,
+      )
 
       projects[project.projectId.toString()] = {
         syncedUntil,
-        last24h: sums.last24h,
-        last7d: sums.last7d,
-        last30d: sums.last30d,
-        last90d: sums.last90d,
+        hourly,
+        daily,
       }
     }
 
-    return { type: 'success', data: { projects } }
+    return {
+      type: 'success',
+      data: {
+        projects,
+        combined: {
+          hourly: {
+            types: CHART_TYPES,
+            data: Array.from(combinedHourlyMap.values()),
+          },
+          daily: {
+            types: CHART_TYPES,
+            data: Array.from(combinedDailyMap.values()),
+          },
+          syncedUntil: NOW_TO_FULL_HOUR,
+        },
+      },
+    }
   }
 
-  sumDetails(transactions: DetailedTransaction[]): SummedL2Costs {
-    return transactions.reduce<SummedL2Costs>(
-      (acc, tx) => {
-        if (tx.timestamp.gt(NOW_TO_FULL_HOUR.add(-1, 'days'))) {
-          addToAcc(acc, tx, 'last24h')
-        }
-        if (tx.timestamp.gt(NOW_TO_FULL_HOUR.add(-7, 'days'))) {
-          addToAcc(acc, tx, 'last7d')
-        }
-        if (tx.timestamp.gt(NOW_TO_FULL_HOUR.add(-30, 'days'))) {
-          addToAcc(acc, tx, 'last30d')
-        }
-        if (tx.timestamp.gt(NOW_TO_FULL_HOUR.add(-90, 'days'))) {
-          addToAcc(acc, tx, 'last90d')
-        }
-        return acc
-      },
-      {
-        last24h: structuredClone(L2COSTS_DETAILS),
-        last7d: structuredClone(L2COSTS_DETAILS),
-        last30d: structuredClone(L2COSTS_DETAILS),
-        last90d: structuredClone(L2COSTS_DETAILS),
-      },
-    )
+  aggregateL2Costs(
+    transactions: DetailedTransaction[],
+    combinedHourlyMap: Map<number, L2CostsApiChartPoint>,
+    combinedDailyMap: Map<number, L2CostsApiChartPoint>,
+  ) {
+    const hourlyMap = new Map<number, L2CostsApiChartPoint>()
+    const dailyMap = new Map<number, L2CostsApiChartPoint>()
+
+    for (const tx of transactions) {
+      if (tx.timestamp.gt(NOW_TO_FULL_HOUR.add(-7, 'days'))) {
+        addToMap(hourlyMap, 'hour', tx)
+        addToMap(combinedHourlyMap, 'hour', tx)
+      }
+      addToMap(dailyMap, 'day', tx)
+      addToMap(combinedDailyMap, 'day', tx)
+    }
+    const hourly: L2CostsApiCharts['hourly'] = {
+      types: CHART_TYPES,
+      data: Array.from(hourlyMap.values()),
+    }
+    const daily: L2CostsApiCharts['daily'] = {
+      types: CHART_TYPES,
+      data: Array.from(dailyMap.values()),
+    }
+    return {
+      hourly,
+      daily,
+    }
   }
 
   async makeTransactionCalculations(
@@ -285,65 +302,4 @@ export class L2CostsController {
         .filter(notUndefined),
     }
   }
-}
-
-function addToAcc(
-  acc: SummedL2Costs,
-  tx: DetailedTransaction,
-  key: keyof SummedL2Costs,
-) {
-  acc[key].total.gas += tx.totalGas
-  acc[key].total.ethCost += tx.totalGasCost
-  acc[key].total.usdCost += tx.totalGasCostUsd
-
-  acc[key].calldata.gas += tx.calldataGasUsed
-  acc[key].calldata.ethCost += tx.calldataGasCost
-  acc[key].calldata.usdCost += tx.calldataGasCostUsd
-
-  acc[key].compute.gas += tx.computeGasUsed
-  acc[key].compute.ethCost += tx.computeGasCost
-  acc[key].compute.usdCost += tx.computeGasCostUsd
-
-  acc[key].overhead.gas += tx.overheadGasUsed
-  acc[key].overhead.ethCost += tx.totalOverheadGasCost
-  acc[key].overhead.usdCost += tx.totalOverheadGasCostUsd
-
-  if (tx.type === 3) {
-    const blobs = acc[key].blobs
-    if (!blobs) {
-      acc[key].blobs = {
-        gas: tx.blobGasUsed,
-        ethCost: tx.blobGasCost,
-        usdCost: tx.blobGasCostUsd,
-      }
-      return
-    }
-    blobs.gas += tx.blobGasUsed
-    blobs.ethCost += tx.blobGasCost
-    blobs.usdCost += tx.blobGasCostUsd
-  }
-}
-
-const L2COSTS_DETAILS = {
-  total: {
-    gas: 0,
-    ethCost: 0,
-    usdCost: 0,
-  },
-  overhead: {
-    gas: 0,
-    ethCost: 0,
-    usdCost: 0,
-  },
-  calldata: {
-    gas: 0,
-    ethCost: 0,
-    usdCost: 0,
-  },
-  compute: {
-    gas: 0,
-    ethCost: 0,
-    usdCost: 0,
-  },
-  blobs: undefined,
 }
