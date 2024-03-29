@@ -1,3 +1,10 @@
+---
+  title: "Governance Review #11"
+  description: "L2BEAT provides weekly updates on governance in concise articles."
+  publishedOn: "2024-03-29"
+  authorId: anastassis-oikonomopoulos
+---
+
 ## **Optimism**
 
 ### **Upcoming Retro rounds and their design**
