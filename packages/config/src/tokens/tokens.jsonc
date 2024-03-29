@@ -510,6 +510,10 @@
       "address": "0x949D48EcA67b17269629c7194F4b727d4Ef9E5d6"
     },
     {
+      "symbol": "MCB",
+      "address": "0x4e352cF164E64ADCBad318C3a1e222E9EBa4Ce42"
+    },
+    {
       "symbol": "mETH",
       "address": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa"
     },
@@ -642,6 +646,10 @@
     {
       "symbol": "POLY",
       "address": "0x9992eC3cF6A55b00978cdDF2b27BC6882d88D1eC"
+    },
+    {
+      "symbol": "POND",
+      "address": "0x57b946008913b82e4df85f501cbaed910e58d26c"
     },
     {
       "symbol": "PORTX",
@@ -896,6 +904,10 @@
       "symbol": "USDT",
       "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
       "category": "stablecoin"
+    },
+    {
+      "symbol": "VRTX",
+      "address": "0xbbEE07B3e8121227AfCFe1E2B82772246226128e"
     },
     {
       "symbol": "VENT",

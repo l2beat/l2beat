@@ -1906,6 +1906,21 @@
       "formula": "locked"
     },
     {
+      "id": "pond-marlin-pond",
+      "name": "Marlin POND",
+      "coingeckoId": "marlin",
+      "address": "0x57B946008913B82E4dF85f501cbAeD910e58D26C",
+      "symbol": "POND",
+      "decimals": 18,
+      "deploymentTimestamp": 1608108114,
+      "coingeckoListingTimestamp": 1608508800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/8903/large/200x200.png?1706115827",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "mask-mask-network",
       "name": "Mask Network",
       "coingeckoId": "mask-network",
@@ -2021,6 +2036,21 @@
       "coingeckoListingTimestamp": 1615420800,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/14331/large/MUTE.png?1696514019",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "mcb-mux-protocol",
+      "name": "MUX Protocol",
+      "coingeckoId": "mcdex",
+      "address": "0x4e352cF164E64ADCBad318C3a1e222E9EBa4Ce42",
+      "symbol": "MCB",
+      "decimals": 18,
+      "deploymentTimestamp": 1593849744,
+      "coingeckoListingTimestamp": 1594598400,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11796/large/mux.jpg?1696511672",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"
