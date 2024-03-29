@@ -1,6 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { underReviewL2 } from './templates/underReview'
 import { Layer2 } from './types'
 import { subtractOne } from '../common/assessCount'
 import { addSentimentToDataAvailability } from '../common'
@@ -37,7 +36,7 @@ export const kinto: Layer2 = orbitStackL2({
       address: EthereumAddress('0x0f1b7bd7762662b23486320aa91f30312184f70c'),
       tokens: '*',
       description:
-        'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
+        'Escrow for yielding assets that are then bridged in batches.',
     }),
   ],
   bridge: discovery.getContract('Bridge'),
@@ -65,7 +64,7 @@ export const kinto: Layer2 = orbitStackL2({
   ],
   milestones: [
     {
-      name: 'Parallel Mainnet closed launch',
+      name: 'Big Event',
       link: 'https://twitter.com/ParallelFi/status/1743048283684237574',
       date: '2024-01-05T00:00:00Z',
       description: 'Parallel Mainnet is open for developers.',

@@ -1,8 +1,8 @@
 {
   "name": "kinto",
   "chain": "ethereum",
-  "blockNumber": 19531637,
-  "configHash": "0xb12bc3b6281017544f423e4697a7bf6066d50186d6fe538f8f95ee4a4f289d22",
+  "blockNumber": 19538377,
+  "configHash": "0xa9927fee02caa362c2df0359946881216e74dd59b8ca1a371390ee5f308bc614",
   "version": 3,
   "contracts": [
     {
@@ -55,8 +55,7 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "3 of 4 (75%)"
+        "modules": []
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1702416755,
@@ -123,12 +122,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1263,
+        "firstUnresolvedNode": 1271,
         "inbox": "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
         "isERC20Enabled": false,
         "lastStakeBlock": 18788889,
-        "latestConfirmed": 1262,
-        "latestNodeCreated": 1292,
+        "latestConfirmed": 1270,
+        "latestNodeCreated": 1297,
         "loserStakeEscrow": "0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5",
         "minimumAssertionPeriod": 75,
         "outbox": "0x655761AD5FC251F414D6993A73184B0669F278c8",
@@ -146,7 +145,7 @@
         "validatorUtils": "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
         "validatorWalletCreator": "0x9CAd81628aB7D8e239F1A5B497313341578c5F71",
         "validatorWhitelistDisabled": false,
-        "wasmModuleRoot": "0xd2d42f1e7b5ea262991c3fd1fc7ed3dde4b21c28d3a7edec49f7c4fb51c03f73",
+        "wasmModuleRoot": "0xf456393bd4b205d2f7b147d355c42ba852ff31527380884720bb4059ae731169",
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
@@ -289,11 +288,11 @@
           "0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F"
         ],
         "allowedOutboxList": ["0x655761AD5FC251F414D6993A73184B0669F278c8"],
-        "delayedMessageCount": 1578,
+        "delayedMessageCount": 1604,
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerInbox": "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
-        "sequencerMessageCount": 1494,
-        "sequencerReportedSubMessageCount": 123108
+        "sequencerMessageCount": 1516,
+        "sequencerReportedSubMessageCount": 125093
       },
       "derivedName": "Bridge"
     },
@@ -396,7 +395,7 @@
           "0xc31C4549356d46c37021393EeEb6f704B38061eC"
         ],
         "getThreshold": 3,
-        "nonce": 70,
+        "nonce": 71,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -412,7 +411,7 @@
       "implementations": ["0x873484Ba63353C8b71210ce123B465512d408B27"],
       "sinceTimestamp": 1702607855,
       "values": {
-        "batchCount": 1494,
+        "batchCount": 1516,
         "batchPosters": ["0xe27f3f6db6824def1738b2aACe2672aC59046a39"],
         "bridge": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
         "DATA_AUTHENTICATED_FLAG": "0x40",
@@ -424,7 +423,7 @@
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 1577
+        "totalDelayedMessagesRead": 1603
       },
       "derivedName": "SequencerInbox"
     }
