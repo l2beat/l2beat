@@ -166,7 +166,7 @@ function getCostsDataBreakdown(
       amortized: txCount
         ? {
             value: data.usdCost / txCount,
-            displayValue: formatCurrency(data.usdCost / txCount, 'usd', 4),
+            displayValue: formatCurrency(data.usdCost / txCount, 'usd'),
           }
         : undefined,
     },
