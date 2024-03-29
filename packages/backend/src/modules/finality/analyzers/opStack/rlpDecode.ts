@@ -3,6 +3,9 @@ import { assert } from '@l2beat/backend-tools'
 type Bytes = Uint8Array
 type RlpSerializable = RlpSerializable[] | number | Uint8Array
 
+// based on https://github.com/dethcrypto/deth/blob/f2bf2cebb0e1723cb0fcdd2b44b9eb1bae61eea3/packages/evm/src/rlp/rlpDecode.ts
+// with some type tweaks. Thanks to @dethcrypto for the implementation!
+// If you need to encode, port also rlpEncode.ts
 export function rlpDecode(value: Bytes): RlpSerializable {
   const [result, rest] = rlpDecodePartial(value)
   assertEncoding(rest.length === 0)
