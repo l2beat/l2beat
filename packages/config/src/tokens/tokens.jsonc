@@ -18,6 +18,10 @@
       "address": "0xEd04915c23f00A313a544955524EB7DBD823143d"
     },
     {
+      "symbol": "APEX",
+      "address": "0x52A8845DF664D76C69d2EEa607CD793565aF42B8"
+    },
+    {
       "symbol": "EURA",
       "address": "0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8",
       "category": "stablecoin"
@@ -254,6 +258,10 @@
       "address": "0x53C8395465A84955c95159814461466053DedEDE"
     },
     {
+      "symbol": "DOLA",
+      "address": "0x865377367054516e17014CcdED1e7d814EDC9ce4"
+    },
+    {
       "symbol": "DPX",
       "address": "0xEec2bE5c91ae7f8a338e1e5f3b5DE49d07AfdC81"
     },
@@ -353,6 +361,10 @@
       "address": "0xD567B5F02b9073aD3a982a099a23Bf019FF11d1c"
     },
     {
+      "symbol": "GENE",
+      "address": "0x21413c119b0C11C5d96aE1bD328917bC5C8ED67E"
+    },
+    {
       "symbol": "GLM",
       "address": "0x7DD9c5Cba05E151C895FDe1CF355C9A1D5DA6429"
     },
@@ -384,6 +396,10 @@
     {
       "symbol": "HEART",
       "address": "0x8FAc8031e079F409135766C7d5De29cf22EF897C"
+    },
+    {
+      "symbol": "HEGIC",
+      "address": "0x584bC13c7D411c00c01A62e8019472dE68768430"
     },
     {
       "symbol": "HEZ",
@@ -660,6 +676,10 @@
       "address": "0x595832F8FC6BF59c85C527fEC3740A1b7a361269"
     },
     {
+      "symbol": "PREMIA",
+      "address": "0x6399C842dD2bE3dE30BF99Bc7D1bBF6Fa3650E70"
+    },
+    {
       "symbol": "PSTAKE",
       "address": "0xfB5c6815cA3AC72Ce9F5006869AE67f18bF77006"
     },
@@ -756,6 +776,10 @@
     {
       "symbol": "SHIB",
       "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE"
+    },
+    {
+      "symbol": "SILO",
+      "address": "0x6f80310CA7F2C654691D1383149Fa1A57d8AB1f8"
     },
     {
       "symbol": "SIS",
@@ -907,7 +931,8 @@
     },
     {
       "symbol": "VRTX",
-      "address": "0xbbEE07B3e8121227AfCFe1E2B82772246226128e"
+      "address": "0xbbEE07B3e8121227AfCFe1E2B82772246226128e",
+      "coingeckoId": "vertex-protocol"
     },
     {
       "symbol": "VENT",
@@ -992,6 +1017,10 @@
     {
       "symbol": "YFI",
       "address": "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e"
+    },
+    {
+      "symbol": "YFX",
+      "address": "0xF55a93b613D172b86c2Ba3981a849DaE2aeCDE2f"
     },
     {
       "symbol": "YGG",

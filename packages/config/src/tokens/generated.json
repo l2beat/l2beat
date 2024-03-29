@@ -212,6 +212,21 @@
       "formula": "locked"
     },
     {
+      "id": "apex-apex-token",
+      "name": "ApeX Token",
+      "coingeckoId": "apex-token-2",
+      "address": "0x52A8845DF664D76C69d2EEa607CD793565aF42B8",
+      "symbol": "APEX",
+      "decimals": 18,
+      "deploymentTimestamp": 1645960468,
+      "coingeckoListingTimestamp": 1651017600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/25266/large/CxpMECpk_400x400_%281%29.png?1696524406",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "api3-api3",
       "name": "API3",
       "coingeckoId": "api3",
@@ -1022,6 +1037,21 @@
       "formula": "locked"
     },
     {
+      "id": "dola-dola-usd-stablecoin",
+      "name": "Dola USD Stablecoin",
+      "coingeckoId": "dola-usd",
+      "address": "0x865377367054516e17014CcdED1e7d814EDC9ce4",
+      "symbol": "DOLA",
+      "decimals": 18,
+      "deploymentTimestamp": 1614116357,
+      "coingeckoListingTimestamp": 1615248000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14287/large/dola.png?1696513984",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "dpx-dopex-governance-token",
       "name": "Dopex Governance Token",
       "coingeckoId": "dopex",
@@ -1396,6 +1426,21 @@
       "formula": "locked"
     },
     {
+      "id": "gene-genomesdao",
+      "name": "GenomesDAO",
+      "coingeckoId": "genomesdao",
+      "address": "0x21413c119b0C11C5d96aE1bD328917bC5C8ED67E",
+      "symbol": "GENE",
+      "decimals": 18,
+      "deploymentTimestamp": 1636784919,
+      "coingeckoListingTimestamp": 1637798400,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/20807/large/1637683704200x200.png?1696520200",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "gno-gnosis-token",
       "name": "Gnosis Token",
       "coingeckoId": "gnosis",
@@ -1451,6 +1496,21 @@
       "coingeckoListingTimestamp": 1608163200,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/13397/large/Graph_Token.png?1696513159",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "hegic-hegic",
+      "name": "Hegic",
+      "coingeckoId": "hegic",
+      "address": "0x584bC13c7D411c00c01A62e8019472dE68768430",
+      "symbol": "HEGIC",
+      "decimals": 18,
+      "deploymentTimestamp": 1596888964,
+      "coingeckoListingTimestamp": 1599868800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12454/large/new.png?1696512274",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"
@@ -2461,6 +2521,21 @@
       "formula": "locked"
     },
     {
+      "id": "premia-premia",
+      "name": "Premia",
+      "coingeckoId": "premia",
+      "address": "0x6399C842dD2bE3dE30BF99Bc7D1bBF6Fa3650E70",
+      "symbol": "PREMIA",
+      "decimals": 18,
+      "deploymentTimestamp": 1612254689,
+      "coingeckoListingTimestamp": 1613347200,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13962/large/apple-touch-icon.png?1696513698",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "pstake-pstake-finance",
       "name": "pSTAKE Finance",
       "coingeckoId": "pstake-finance",
@@ -2831,6 +2906,21 @@
       "coingeckoListingTimestamp": 1596240000,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/11939/large/shiba.png?1696511800",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "silo-silo-governance-token",
+      "name": "Silo Governance Token",
+      "coingeckoId": "silo-finance",
+      "address": "0x6f80310CA7F2C654691D1383149Fa1A57d8AB1f8",
+      "symbol": "SILO",
+      "decimals": 18,
+      "deploymentTimestamp": 1638296826,
+      "coingeckoListingTimestamp": 1639267200,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/21454/large/y0iYKZOv_400x400.png?1696520816",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"
@@ -3346,6 +3436,21 @@
       "formula": "locked"
     },
     {
+      "id": "vrtx-vertex",
+      "name": "Vertex",
+      "coingeckoId": "vertex-protocol",
+      "address": "0xbbEE07B3e8121227AfCFe1E2B82772246226128e",
+      "symbol": "VRTX",
+      "decimals": 18,
+      "deploymentTimestamp": 1699486679,
+      "coingeckoListingTimestamp": 1700524800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/27927/large/vrtx.png?1696526947",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "vr-victoria-vr",
       "name": "Victoria VR",
       "coingeckoId": "victoria-vr",
@@ -3611,6 +3716,21 @@
       "coingeckoListingTimestamp": 1595030400,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/11849/large/yearn.jpg?1696511720",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "yfx-yfx",
+      "name": "YFX",
+      "coingeckoId": "yfx",
+      "address": "0xF55a93b613D172b86c2Ba3981a849DaE2aeCDE2f",
+      "symbol": "YFX",
+      "decimals": 18,
+      "deploymentTimestamp": 1619081668,
+      "coingeckoListingTimestamp": 1621468800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/15654/large/yfx.PNG?1696515285",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"
