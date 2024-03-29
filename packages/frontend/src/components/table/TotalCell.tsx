@@ -32,12 +32,15 @@ export function TotalCell({ project }: TotalCellProps) {
   )
 
   if (project.tvlWarnings?.length) {
+    const anyBadWarnings = project.tvlWarnings.some(
+      (w) => w?.sentiment === 'bad',
+    )
     return (
       <Tooltip>
         <TooltipTrigger className="relative flex items-center gap-1">
           {content}
           <RoundedWarningIcon
-            className={`absolute -right-4 size-4 ${getSentimentFillColor(project.tvlWarnings.some((w) => w?.sentiment === 'bad') ? 'bad' : 'warning')}`}
+            className={`absolute -right-4 size-4 ${getSentimentFillColor(anyBadWarnings ? 'bad' : 'warning')}`}
           />
         </TooltipTrigger>
         <TooltipContent>
