@@ -1,11 +1,7 @@
 import React from 'react'
 
 import { Badge } from '../../../../components/badge/Badge'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '../../../../components/tooltip/Tooltip'
+import { DetailedValueWithDisplayValue } from '../../../../components/DetailedValueWithDisplayValue'
 import { ValueWithDisplayValue } from '../../../types'
 import { CostsData, CostsDataDetails } from '../types'
 import { CostsControlsWrapper } from './CostsControlsWrapper'
@@ -66,32 +62,39 @@ function Cell({ details, className, type }: CellProps) {
 
   return (
     <div className={className}>
-      <span className="hidden group-data-[unit=ETH]/costs-controls-wrapper:inline">
-        <DetailedOnHover>{detailsData.ethCost}</DetailedOnHover>
-      </span>
-      <span className="hidden group-data-[unit=USD]/costs-controls-wrapper:inline">
-        <DetailedOnHover>{detailsData.usdCost}</DetailedOnHover>
-      </span>
-      <span className="hidden group-data-[unit=GAS]/costs-controls-wrapper:inline">
-        <DetailedOnHover>{detailsData.gas}</DetailedOnHover>
-      </span>
+      <div className="hidden group-data-[unit=ETH]/costs-controls-wrapper:inline">
+        <span className="hidden group-data-[type=TOTAL]/costs-controls-wrapper:inline">
+          <Value>{detailsData.ethCost}</Value>
+        </span>
+        <span className="hidden group-data-[type=AMORTIZED]/costs-controls-wrapper:inline">
+          <Value>{detailsData.ethCost.amortized}</Value>
+        </span>
+      </div>
+      <div className="hidden group-data-[unit=USD]/costs-controls-wrapper:inline">
+        <span className="hidden group-data-[type=TOTAL]/costs-controls-wrapper:inline">
+          <Value>{detailsData.usdCost}</Value>
+        </span>
+        <span className="hidden group-data-[type=AMORTIZED]/costs-controls-wrapper:inline">
+          <Value>{detailsData.usdCost.amortized}</Value>
+        </span>
+      </div>
+      <div className="hidden group-data-[unit=GAS]/costs-controls-wrapper:inline">
+        <span className="hidden group-data-[type=TOTAL]/costs-controls-wrapper:inline">
+          <Value>{detailsData.gas}</Value>
+        </span>
+        <span className="hidden group-data-[type=AMORTIZED]/costs-controls-wrapper:inline">
+          <Value>{detailsData.gas.amortized}</Value>
+        </span>
+      </div>
     </div>
   )
 }
 
-function DetailedOnHover({ children }: { children: ValueWithDisplayValue }) {
-  if (!children.displayValue.startsWith('~')) {
-    return children.displayValue
+function Value({ children }: { children: ValueWithDisplayValue | undefined }) {
+  if (!children) {
+    return <Badge type="gray">Coming soon</Badge>
   }
-
   return (
-    <Tooltip>
-      <TooltipTrigger>{children.displayValue}</TooltipTrigger>
-      <TooltipContent>
-        <span className="text-xs font-medium">
-          {children.value.toFixed(15)}
-        </span>
-      </TooltipContent>
-    </Tooltip>
+    <DetailedValueWithDisplayValue>{children}</DetailedValueWithDisplayValue>
   )
 }

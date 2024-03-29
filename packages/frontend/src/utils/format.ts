@@ -1,22 +1,26 @@
 import { formatLargeNumber } from './formatLargeNumber'
 
-export function formatCurrency(value: number, currency: string) {
+export function formatCurrency(
+  value: number,
+  currency: string,
+  maxDecimals?: number,
+) {
   let num
   let result
 
   switch (currency) {
     case 'usd': {
-      num = formatLargeNumber(value)
+      num = formatLargeNumber(value, maxDecimals)
       result = `$${num}`
       break
     }
     case 'eth': {
-      num = formatLargeNumber(value, 4)
+      num = formatLargeNumber(value, maxDecimals ?? 4)
       result = `Ξ${num}`
       break
     }
     default: {
-      num = formatLargeNumber(value)
+      num = formatLargeNumber(value, maxDecimals)
       result = `${num} ${currency.toUpperCase()}`
     }
   }

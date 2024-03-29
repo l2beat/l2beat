@@ -4,6 +4,7 @@ import {
   assert,
   L2CostsApiProject,
   L2CostsApiResponse,
+  L2CostsBreakdown,
   notUndefined,
 } from '@l2beat/shared-pure'
 
@@ -13,6 +14,7 @@ import { formatCurrency } from '../../../../utils/format'
 import { orderByTvl } from '../../../../utils/orderByTvl'
 import {
   CostsData,
+  CostsDataBreakdown,
   CostsDataDetails,
   CostsPagesData,
   ScalingCostsViewEntry,
@@ -121,93 +123,63 @@ function getDataDetails(
   const dataRange = data[type]
   assert(dataRange, `${type} is undefined`)
 
+  const period = typeToPeriod[type]
   const txCount = activityApiProjectData?.daily.data
-    ? getTransactionCount(
-        activityApiProjectData?.daily.data,
-        'project',
-        typeToPeriod[type],
-      )
+    ? getTransactionCount(activityApiProjectData?.daily.data, 'project', period)
     : undefined
 
   return {
-    total: {
-      ethCost: {
-        displayValue: formatCurrency(dataRange?.total.ethCost, 'eth'),
-        value: dataRange?.total.ethCost,
-      },
-      usdCost: {
-        displayValue: formatCurrency(dataRange?.total.usdCost, 'usd'),
-        value: dataRange?.total.usdCost,
-      },
-      gas: {
-        displayValue: formatLargeNumber(dataRange?.total.gas),
-        value: dataRange?.total.gas,
-      },
-    },
+    total: getCostsDataBreakdown(dataRange.total, txCount),
     blobs: dataRange?.blobs
-      ? {
-          ethCost: {
-            displayValue: formatCurrency(dataRange?.blobs.ethCost, 'eth'),
-            value: dataRange?.blobs.ethCost,
-          },
-          usdCost: {
-            displayValue: formatCurrency(dataRange?.blobs.usdCost, 'usd'),
-            value: dataRange?.blobs.usdCost,
-          },
-          gas: {
-            displayValue: formatLargeNumber(dataRange?.blobs.gas),
-            value: dataRange?.blobs.gas,
-          },
-        }
+      ? getCostsDataBreakdown(dataRange.blobs, txCount)
       : undefined,
-    calldata: {
-      ethCost: {
-        displayValue: formatCurrency(dataRange.calldata.ethCost, 'eth'),
-        value: dataRange.calldata.ethCost,
-      },
-      usdCost: {
-        displayValue: formatCurrency(dataRange.calldata.usdCost, 'usd'),
-        value: dataRange.calldata.usdCost,
-      },
-      gas: {
-        displayValue: formatLargeNumber(dataRange.calldata.gas),
-        value: dataRange.calldata.gas,
-      },
-    },
-    compute: {
-      ethCost: {
-        displayValue: formatCurrency(dataRange.compute.ethCost, 'eth'),
-        value: dataRange.compute.ethCost,
-      },
-      usdCost: {
-        displayValue: formatCurrency(dataRange.compute.usdCost, 'usd'),
-        value: dataRange.compute.usdCost,
-      },
-      gas: {
-        displayValue: formatLargeNumber(dataRange.compute.gas),
-        value: dataRange.compute.gas,
-      },
-    },
-    overhead: {
-      ethCost: {
-        displayValue: formatCurrency(dataRange.overhead.ethCost, 'eth'),
-        value: dataRange.overhead.ethCost,
-      },
-      usdCost: {
-        displayValue: formatCurrency(dataRange.overhead.usdCost, 'usd'),
-        value: dataRange.overhead.usdCost,
-      },
-      gas: {
-        displayValue: formatLargeNumber(dataRange.overhead.gas),
-        value: dataRange.overhead.gas,
-      },
-    },
+    calldata: getCostsDataBreakdown(dataRange.calldata, txCount),
+    compute: getCostsDataBreakdown(dataRange.compute, txCount),
+    overhead: getCostsDataBreakdown(dataRange.overhead, txCount),
     txCount: txCount
       ? {
           value: txCount,
           displayValue: formatLargeNumber(txCount),
         }
       : undefined,
+  }
+}
+
+function getCostsDataBreakdown(
+  data: L2CostsBreakdown,
+  txCount: number | undefined,
+): CostsDataBreakdown {
+  return {
+    ethCost: {
+      displayValue: formatCurrency(data.ethCost, 'eth'),
+      value: data.ethCost,
+      amortized: txCount
+        ? {
+            value: data.ethCost / txCount,
+            displayValue: formatCurrency(data.ethCost / txCount, 'eth', 6),
+          }
+        : undefined,
+    },
+    usdCost: {
+      displayValue: formatCurrency(data.usdCost, 'usd'),
+      value: data.usdCost,
+      amortized: txCount
+        ? {
+            value: data.usdCost / txCount,
+            displayValue: formatCurrency(data.usdCost / txCount, 'usd', 4),
+          }
+        : undefined,
+    },
+    gas: {
+      displayValue: formatLargeNumber(data.gas),
+      value: data.gas,
+      amortized: txCount
+        ? {
+            value: data.gas / txCount,
+            displayValue: formatLargeNumber(data.gas / txCount),
+          }
+        : undefined,
+    },
   }
 }
 

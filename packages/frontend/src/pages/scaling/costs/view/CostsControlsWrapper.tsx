@@ -15,6 +15,7 @@ export function CostsControlsWrapper({
       data-role="costs-controls-wrapper"
       data-unit="USD"
       data-time-range="7D"
+      data-type="TOTAL"
     >
       {children}
     </div>

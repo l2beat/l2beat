@@ -105,20 +105,38 @@ function getSorting(
 ): SortingConfig<ScalingCostsViewEntry> {
   return {
     getOrderValue: (project) => ({
-      '24H-GAS': project.costs.last24h[type]?.gas.value,
-      '7D-GAS': project.costs.last7d[type]?.gas.value,
-      '30D-GAS': project.costs.last30d[type]?.gas.value,
-      '90D-GAS': project.costs.last90d[type]?.gas.value,
-      '24H-ETH': project.costs.last24h[type]?.ethCost.value,
-      '7D-ETH': project.costs.last7d[type]?.ethCost.value,
-      '30D-ETH': project.costs.last30d[type]?.ethCost.value,
-      '90D-ETH': project.costs.last90d[type]?.ethCost.value,
-      '24H-USD': project.costs.last24h[type]?.usdCost.value,
-      '7D-USD': project.costs.last7d[type]?.usdCost.value,
-      '30D-USD': project.costs.last30d[type]?.usdCost.value,
-      '90D-USD': project.costs.last90d[type]?.usdCost.value,
+      '24H-GAS-TOTAL': project.costs.last24h[type]?.gas.value,
+      '7D-GAS-TOTAL': project.costs.last7d[type]?.gas.value,
+      '30D-GAS-TOTAL': project.costs.last30d[type]?.gas.value,
+      '90D-GAS-TOTAL': project.costs.last90d[type]?.gas.value,
+      '24H-ETH-TOTAL': project.costs.last24h[type]?.ethCost.value,
+      '7D-ETH-TOTAL': project.costs.last7d[type]?.ethCost.value,
+      '30D-ETH-TOTAL': project.costs.last30d[type]?.ethCost.value,
+      '90D-ETH-TOTAL': project.costs.last90d[type]?.ethCost.value,
+      '24H-USD-TOTAL': project.costs.last24h[type]?.usdCost.value,
+      '7D-USD-TOTAL': project.costs.last7d[type]?.usdCost.value,
+      '30D-USD-TOTAL': project.costs.last30d[type]?.usdCost.value,
+      '90D-USD-TOTAL': project.costs.last90d[type]?.usdCost.value,
+      '24H-GAS-AMORTIZED': project.costs.last24h[type]?.gas.amortized?.value,
+      '7D-GAS-AMORTIZED': project.costs.last7d[type]?.gas.amortized?.value,
+      '30D-GAS-AMORTIZED': project.costs.last30d[type]?.gas.amortized?.value,
+      '90D-GAS-AMORTIZED': project.costs.last90d[type]?.gas.amortized?.value,
+      '24H-ETH-AMORTIZED':
+        project.costs.last24h[type]?.ethCost.amortized?.value,
+      '7D-ETH-AMORTIZED': project.costs.last7d[type]?.ethCost.amortized?.value,
+      '30D-ETH-AMORTIZED':
+        project.costs.last30d[type]?.ethCost.amortized?.value,
+      '90D-ETH-AMORTIZED':
+        project.costs.last90d[type]?.ethCost.amortized?.value,
+      '24H-USD-AMORTIZED':
+        project.costs.last24h[type]?.usdCost.amortized?.value,
+      '7D-USD-AMORTIZED': project.costs.last7d[type]?.usdCost.amortized?.value,
+      '30D-USD-AMORTIZED':
+        project.costs.last30d[type]?.usdCost.amortized?.value,
+      '90D-USD-AMORTIZED':
+        project.costs.last90d[type]?.usdCost.amortized?.value,
     }),
-    defaultOrderKey: '7D-USD',
+    defaultOrderKey: '7D-USD-TOTAL',
     rule: 'numeric',
   }
 }

@@ -32,12 +32,15 @@ export function configureCostsControlsWrappers() {
   let checkedUnitControl = $<HTMLInputElement>(
     '[data-role="costs-unit-controls"] input:checked',
   )
+  let checkedTypeControl = $<HTMLInputElement>(
+    '[data-role="costs-type-controls"] input:checked',
+  )
 
   function getSortingArrowsOrderKey() {
     if (!checkedUnitControl || !checkedTimeRangeControl) {
       throw new Error('No time range or unit control is checked')
     }
-    return `${checkedTimeRangeControl.value}-${checkedUnitControl.value}`
+    return `${checkedTimeRangeControl.value}-${checkedUnitControl.value}-${checkedTypeControl.value}`
   }
 
   function onTimeRangeChange(
@@ -74,10 +77,10 @@ export function configureCostsControlsWrappers() {
   function onTypeChange(control: HTMLInputElement) {
     const searchParams = new URLSearchParams(window.location.search)
 
-    // cells.forEach((cell) => cell.setAttribute('data-type', control.value))
-    // SORTING_ARROWS_NAMES.forEach((name) =>
-    //   setSortingArrowsOrderKey(name, getSortingArrowsOrderKey()),
-    // )
+    checkedTypeControl = control
+    SORTING_ARROWS_NAMES.forEach((name) =>
+      setSortingArrowsOrderKey(name, getSortingArrowsOrderKey()),
+    )
     const isAmortized = control.value === 'AMORTIZED'
     const is24hOr7d =
       checkedTimeRangeControl.value === '7D' ||
@@ -92,6 +95,7 @@ export function configureCostsControlsWrappers() {
         onTimeRangeChange(c, searchParams)
       }
     })
+    cells.forEach((cell) => cell.setAttribute('data-type', control.value))
 
     searchParams.set('type', control.value)
     setQueryParams(searchParams)

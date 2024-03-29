@@ -53,7 +53,11 @@ export type CostsDataDetails = {
 }
 
 export type CostsDataBreakdown = {
-  ethCost: ValueWithDisplayValue
-  usdCost: ValueWithDisplayValue
-  gas: ValueWithDisplayValue
+  ethCost: TotalCostsValue
+  usdCost: TotalCostsValue
+  gas: TotalCostsValue
+}
+
+export interface TotalCostsValue extends ValueWithDisplayValue {
+  amortized: ValueWithDisplayValue | undefined
 }

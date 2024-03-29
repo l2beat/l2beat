@@ -5,14 +5,14 @@ import { Breakdown } from './breakdown/Breakdown'
 
 interface CostsBreakdownProps {
   blobs: number | undefined
-  calldata: number
-  compute: number
-  overhead: number
+  calldata: number | undefined
+  compute: number | undefined
+  overhead: number | undefined
 }
 
 export function CostsBreakdown(props: CostsBreakdownProps) {
   const groups = compact([
-    {
+    props.calldata && {
       value: props.calldata,
       className: 'dark:fill-blue-400 fill-blue-700',
     },
@@ -20,11 +20,14 @@ export function CostsBreakdown(props: CostsBreakdownProps) {
       value: props.blobs,
       className: 'dark:fill-yellow-100 fill-orange-400',
     },
-    {
+    props.compute && {
       value: props.compute,
       className: 'fill-pink-100',
     },
-    { value: props.overhead, className: 'fill-green-500' },
+    props.overhead && {
+      value: props.overhead,
+      className: 'fill-green-500',
+    },
   ])
 
   return <Breakdown height={3} width={136} values={groups} barGap={1} />
