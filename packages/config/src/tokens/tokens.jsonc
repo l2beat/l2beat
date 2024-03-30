@@ -1079,6 +1079,17 @@
       "formula": "circulatingSupply"
     },
     {
+      "symbol": "ezETH",
+      "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+      "coingeckoId": "renzo-restaked-eth",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Connext",
+        "slug": "connext"
+      }
+    },
+    {
       "symbol": "GMX",
       "address": "0xfc5A1A6EB076a2C7aD06eD22C90d7E710E35ad0a",
       "category": "stablecoin",
