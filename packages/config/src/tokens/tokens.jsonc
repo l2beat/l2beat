@@ -636,6 +636,10 @@
       "address": "0xD528cf2E081f72908e086F8800977df826B5a483"
     },
     {
+      "symbol": "PENDLE",
+      "address": "0x808507121B80c02388fAd14726482e061B8da827"
+    },
+    {
       "symbol": "PEOPLE",
       "address": "0x7A58c0Be72BE218B41C608b7Fe7C5bB630736C71"
     },
@@ -1098,6 +1102,27 @@
       "address": "0x371c7ec6d8039ff7933a2aa28eb827ffe1f52f07",
       "type": "EBV",
       "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
+      "symbol": "RDNT",
+      "address": "0x3082CC23568eA640225c2467653dB90e9250AaA0",
+      "type": "EBV",
+      "formula": "circulatingSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
+      "symbol": "rsETH",
+      "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "coingeckoId": "kelp-dao-restaked-eth",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"

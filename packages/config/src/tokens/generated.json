@@ -2401,6 +2401,21 @@
       "formula": "locked"
     },
     {
+      "id": "pendle-pendle",
+      "name": "Pendle",
+      "coingeckoId": "pendle",
+      "address": "0x808507121B80c02388fAd14726482e061B8da827",
+      "symbol": "PENDLE",
+      "decimals": 18,
+      "deploymentTimestamp": 1619495943,
+      "coingeckoListingTimestamp": 1619568000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/15069/large/Pendle_Logo_Normal-03.png?1696514728",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "perp-perpetual",
       "name": "Perpetual",
       "coingeckoId": "perpetual-protocol",
@@ -4226,6 +4241,44 @@
       "chainId": 42161,
       "type": "EBV",
       "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
+      "id": "arbitrum:rseth-kelpdao-restaked-eth",
+      "name": "KelpDao Restaked ETH",
+      "coingeckoId": "kelp-dao-restaked-eth",
+      "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
+      "symbol": "rsETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1707187495,
+      "coingeckoListingTimestamp": 1705017600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33800/large/Icon___Dark.png?1702991855",
+      "chainId": 42161,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
+      "id": "arbitrum:rdnt-radiant",
+      "name": "Radiant",
+      "coingeckoId": "radiant-capital",
+      "address": "0x3082CC23568eA640225c2467653dB90e9250AaA0",
+      "symbol": "RDNT",
+      "decimals": 18,
+      "deploymentTimestamp": 1678676107,
+      "coingeckoListingTimestamp": 1658793600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/26536/large/Radiant-Logo-200x200.png?1696525610",
+      "chainId": 42161,
+      "type": "EBV",
+      "formula": "circulatingSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
