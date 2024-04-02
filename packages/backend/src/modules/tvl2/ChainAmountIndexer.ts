@@ -17,9 +17,9 @@ import {
 import { BlockTimestampRepository } from './repositories/BlockTimestampRepository'
 import { SyncOptimizer } from './SyncOptimizer'
 
-type AmountConfigEntry = TotalSupplyEntry | EscrowEntry
+type ConfigEntry = TotalSupplyEntry | EscrowEntry
 
-export class ChainIndexer extends MultiIndexer<AmountConfigEntry> {
+export class ChainAmountIndexer extends MultiIndexer<ConfigEntry> {
   indexerId: string
 
   constructor(
@@ -32,7 +32,7 @@ export class ChainIndexer extends MultiIndexer<AmountConfigEntry> {
     private readonly chain: string,
     private readonly minTimestamp: UnixTime,
     private readonly syncOptimizer: SyncOptimizer,
-    private readonly amountConfigurations: AmountConfigEntry[],
+    private readonly amountConfigurations: ConfigEntry[],
   ) {
     super(logger, [parentIndexer])
     this.indexerId = `chain_indexer_${chain}`
@@ -42,7 +42,7 @@ export class ChainIndexer extends MultiIndexer<AmountConfigEntry> {
     const oldConfigurations =
       await this.amountRepository.getConfigurationsByIndexerId(this.indexerId)
 
-    const toAdd: AmountConfigEntry[] = []
+    const toAdd: ConfigEntry[] = []
 
     for (const configuration of this.amountConfigurations) {
       const oldConfiguration = oldConfigurations.find(
@@ -125,7 +125,7 @@ export class ChainIndexer extends MultiIndexer<AmountConfigEntry> {
   override async multiUpdate(
     from: number,
     to: number,
-    configurations: UpdateConfiguration<AmountConfigEntry>[],
+    configurations: UpdateConfiguration<ConfigEntry>[],
   ): Promise<number> {
     this.logger.debug('Updating...')
 
@@ -153,9 +153,7 @@ export class ChainIndexer extends MultiIndexer<AmountConfigEntry> {
     return timestamp.toNumber()
   }
 
-  override async multiInitialize(): Promise<
-    SavedConfiguration<AmountConfigEntry>[]
-  > {
+  override async multiInitialize(): Promise<SavedConfiguration<ConfigEntry>[]> {
     this.logger.debug('Initializing...')
 
     const indexerState = await this.stateRepository.findIndexerState(
@@ -186,7 +184,7 @@ export class ChainIndexer extends MultiIndexer<AmountConfigEntry> {
   }
 
   override async removeData(
-    configurations: RemovalConfiguration<AmountConfigEntry>[],
+    configurations: RemovalConfiguration<ConfigEntry>[],
   ): Promise<void> {
     this.logger.debug('Removing data...')
 
@@ -202,7 +200,7 @@ export class ChainIndexer extends MultiIndexer<AmountConfigEntry> {
   }
 
   override async saveConfigurations(
-    configurations: SavedConfiguration<AmountConfigEntry>[],
+    configurations: SavedConfiguration<ConfigEntry>[],
   ): Promise<void> {
     this.logger.debug('Saving configurations...')
 
