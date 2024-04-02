@@ -9,7 +9,7 @@ import { LineaFinalityAnalyzer } from './LineaFinalityAnalyzer'
 describe(LineaFinalityAnalyzer.name, () => {
   describe(LineaFinalityAnalyzer.prototype.getFinality.name, () => {
     it('correctly decode and returns correct data for calldata example', async () => {
-      const livenessRepository = mockLivenessRepository()
+      const livenessRepository = mockObject<LivenessRepository>()
       const provider = mockObject<RpcClient>({
         getTransaction: mockFn().resolvesTo({
           data: mockCallData(2371262, 2371336),
@@ -36,7 +36,7 @@ describe(LineaFinalityAnalyzer.name, () => {
     })
 
     it('correctly decode and returns correct data for blob example', async () => {
-      const livenessRepository = mockLivenessRepository()
+      const livenessRepository = mockObject<LivenessRepository>()
       const provider = mockObject<RpcClient>({
         getTransaction: mockFn().resolvesTo({
           data: mockBlobCalldata(2371262, 2371336),
@@ -63,15 +63,6 @@ describe(LineaFinalityAnalyzer.name, () => {
     })
   })
 })
-
-function mockLivenessRepository() {
-  return mockObject<LivenessRepository>({
-    findTransactionWithinTimeRange: mockFn().resolvesTo({
-      txHash: '0x121',
-      timestamp: new UnixTime(1705407431),
-    }),
-  })
-}
 
 function mockL2RpcClient(timestamps: number[]) {
   const getBlock = mockFn()

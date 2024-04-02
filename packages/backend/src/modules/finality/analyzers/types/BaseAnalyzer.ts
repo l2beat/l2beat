@@ -1,6 +1,4 @@
 import {
-  assert,
-  notUndefined,
   ProjectId,
   TrackedTxsConfigSubtype,
   UnixTime,
