@@ -37,6 +37,7 @@ export function ScalingCostsPage(props: ScalingCostsPageProps) {
           <Chart
             settingsId="scaling-costs"
             initialType={{ type: 'scaling-costs' }}
+            header="costs"
           />
           <ScalingCostsView {...props.costsView} />
           <OtherSites />

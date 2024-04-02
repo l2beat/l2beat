@@ -4,6 +4,7 @@ import React from 'react'
 import { ChartType } from '../../scripts/charts/types'
 import { cn } from '../../utils/cn'
 import { ActivityHeader } from '../header/ActivityHeader'
+import { CostsHeader } from '../header/CostsHeader'
 import { TvlHeader } from '../header/TvlHeader'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { Logo } from '../Logo'
@@ -36,7 +37,7 @@ export interface ChartProps {
   mobileFull?: boolean
   milestones?: Milestone[]
   sectionClassName?: string
-  header?: 'tvl' | 'activity' | 'project'
+  header?: 'tvl' | 'activity' | 'costs' | 'project'
   showComingSoon?: boolean
   withoutSeparator?: boolean
 }
@@ -185,6 +186,10 @@ function ChartHeader(props: {
 
   if (props.header === 'activity') {
     return <ActivityHeader />
+  }
+
+  if (props.header === 'costs') {
+    return <CostsHeader />
   }
 
   return (
