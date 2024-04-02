@@ -1,8 +1,6 @@
 import {
   assert,
-  AssetId,
   Bytes,
-  ChainId,
   EscrowEntry,
   EthereumAddress,
   UnixTime,
@@ -19,16 +17,7 @@ import {
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { AmountRecord } from './repositories/AmountRepository'
 
-const erc20Interface = new utils.Interface([
-  'function balanceOf(address account) view returns (uint256)',
-])
-
-export interface BalanceQuery {
-  holder: EthereumAddress
-  assetId: AssetId
-}
-
-export interface NativeBalanceEncoding {
+export interface NativeAssetBalanceEncoder {
   sinceBlock: number
   address: EthereumAddress
   encode: (address: EthereumAddress) => Bytes
@@ -39,77 +28,105 @@ export class ChainAmountService {
   constructor(
     private readonly rpcClient: RpcClient,
     private readonly multicallClient: MulticallClient,
-    private readonly chainId: ChainId,
-    private readonly nativeBalanceEncoding: NativeBalanceEncoding | undefined,
+    private readonly nativeAssetBalanceEncoder?: NativeAssetBalanceEncoder,
   ) {}
-
-  public getChainId(): ChainId {
-    return this.chainId
-  }
 
   public async fetchAmounts(
     configurations: UpdateConfiguration<EscrowEntry>[],
     timestamp: UnixTime,
     blockNumber: number,
   ): Promise<AmountRecord[]> {
-    const nativeEncoding =
-      this.nativeBalanceEncoding &&
-      this.nativeBalanceEncoding.sinceBlock <= blockNumber
-        ? this.nativeBalanceEncoding
-        : undefined
+    const nativeAssetBalanceEncoder =
+      this.getNativeAssetBalanceEncoder(blockNumber)
 
-    const [native, nonNative] = partition(
-      configurations,
-      (c) => c.properties.address === 'native' && nativeEncoding === undefined,
-    )
-
-    const nonNativeCalls = nonNative.map((configuration) =>
-      this.encodeForMulticall(configuration.properties, nativeEncoding),
-    )
-    const nonNativeResponses = await this.multicallClient.multicall(
-      nonNativeCalls,
-      blockNumber,
-    )
-
-    const nativeResponses = await Promise.all(
-      native.map((configuration) =>
-        this.rpcClient.getBalance(
-          configuration.properties.escrowAddress,
-          blockNumber,
-        ),
+    const [nonMulticall, multicall] = partition(configurations, (c) =>
+      isNotSupportedByMulticall(
+        nativeAssetBalanceEncoder,
+        c.properties.address,
       ),
     )
 
-    let nonNativeIndex = 0
-    let nativeIndex = 0
-    return configurations.map((configuration) => {
-      if (
-        this.usesNativeCall(configuration.properties.address, nativeEncoding)
-      ) {
-        const response = nativeResponses[nativeIndex++]
+    const nonMulticallAmounts = await this.getNonMulticallAmounts(
+      nonMulticall,
+      blockNumber,
+      timestamp,
+    )
+
+    const multicallAmounts = await this.getMulticallAmounts(
+      multicall,
+      nativeAssetBalanceEncoder,
+      blockNumber,
+      timestamp,
+    )
+
+    return [...nonMulticallAmounts, ...multicallAmounts]
+  }
+
+  getNativeAssetBalanceEncoder(blockNumber: number) {
+    return this.nativeAssetBalanceEncoder &&
+      this.nativeAssetBalanceEncoder.sinceBlock <= blockNumber
+      ? this.nativeAssetBalanceEncoder
+      : undefined
+  }
+
+  async getNonMulticallAmounts(
+    nonMulticall: UpdateConfiguration<EscrowEntry>[],
+    blockNumber: number,
+    timestamp: UnixTime,
+  ): Promise<AmountRecord[]> {
+    return Promise.all(
+      nonMulticall.map(async (configuration) => {
+        const amount = await this.rpcClient.getBalance(
+          configuration.properties.escrowAddress,
+          blockNumber,
+        )
+
         return {
           configurationId: +configuration.id,
           timestamp,
-          amount: response.toBigInt(),
+          amount: amount.toBigInt(),
         }
-      } else {
-        const response = nonNativeResponses[nonNativeIndex++]
-        return {
-          configurationId: +configuration.id,
-          timestamp,
-          amount: this.decodeForMulticall(
-            response,
-            configuration.properties,
-            nativeEncoding,
-          ),
-        }
+      }),
+    )
+  }
+
+  private async getMulticallAmounts(
+    multicall: UpdateConfiguration<EscrowEntry>[],
+    nativeAssetBalanceEncoder: NativeAssetBalanceEncoder | undefined,
+    blockNumber: number,
+    timestamp: UnixTime,
+  ) {
+    const encoded = multicall.map((configuration) => ({
+      request: this.encodeForMulticall(
+        configuration.properties,
+        nativeAssetBalanceEncoder,
+      ),
+      metadata: configuration,
+    }))
+
+    const responses = await this.multicallClient.multicallWithMetadata(
+      encoded,
+      blockNumber,
+    )
+
+    return responses.map(({ response, metadata }) => {
+      const amount = this.decodeForMulticall(
+        response,
+        metadata.properties,
+        nativeAssetBalanceEncoder,
+      )
+
+      return {
+        configurationId: +metadata.id,
+        timestamp,
+        amount,
       }
     })
   }
 
   private encodeForMulticall(
     { address, escrowAddress, chain }: EscrowEntry,
-    nativeEncoding: NativeBalanceEncoding | undefined,
+    nativeEncoding: NativeAssetBalanceEncoder | undefined,
   ): MulticallRequest {
     if (address === 'native') {
       assert(nativeEncoding, `No native balance encoding for chain ${chain}`)
@@ -123,17 +140,10 @@ export class ChainAmountService {
     return encodeErc20BalanceQuery(escrowAddress, address)
   }
 
-  private usesNativeCall(
-    address: EthereumAddress | 'native',
-    nativeEncoding: NativeBalanceEncoding | undefined,
-  ): boolean {
-    return address === 'native' && nativeEncoding === undefined
-  }
-
   private decodeForMulticall(
     response: MulticallResponse,
     configuration: EscrowEntry,
-    nativeEncoding: NativeBalanceEncoding | undefined,
+    nativeEncoding: NativeAssetBalanceEncoder | undefined,
   ) {
     if (!response.success) {
       throw new Error(
@@ -147,6 +157,17 @@ export class ChainAmountService {
     return decodeErc20BalanceQuery(response.data)
   }
 }
+
+function isNotSupportedByMulticall(
+  nativeEncoding: NativeAssetBalanceEncoder | undefined,
+  address: EthereumAddress | 'native',
+) {
+  return address === 'native' && nativeEncoding === undefined
+}
+
+const erc20Interface = new utils.Interface([
+  'function balanceOf(address account) view returns (uint256)',
+])
 
 function encodeErc20BalanceQuery(
   holder: EthereumAddress,
