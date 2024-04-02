@@ -36,10 +36,6 @@
       }
     },
     {
-      "name": "AstarVerifier",
-      "values": {}
-    },
-    {
       "name": "EscrowsAdmin",
       "values": {
         "VERSION": {
@@ -207,18 +203,13 @@
           "severity": "LOW",
           "type": "CODE_CHANGE"
         },
-        "rollupTypeCount": {
-          "description": "The number of unique rollup types that the manager can use.",
-          "severity": "MEDIUM",
-          "type": "CODE_CHANGE"
-        },
-        "rollupTypes": {
+        "rollupData": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "rollupsData": {
-          "description": "Mapping of a rollup type to rollup verifier. Different types may use the same verifier. First entry is a type, second a verifier.",
+        "rollupTypeCount": {
+          "description": "The number of unique rollup types that the manager can use.",
           "severity": "MEDIUM",
           "type": "CODE_CHANGE"
         },
@@ -383,46 +374,6 @@
           "type": null
         },
         "trustedSequencerURL": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "PolygonZkEVMGlobalExitRootV2",
-      "values": {
-        "bridgeAddress": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "depositCount": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getLastGlobalExitRoot": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getRoot": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "lastMainnetExitRoot": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "lastRollupExitRoot": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "rollupManager": {
           "description": null,
           "severity": null,
           "type": null

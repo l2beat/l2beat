@@ -57,6 +57,14 @@
       }
     },
     {
+      "name": "FflonkVerifier",
+      "values": {}
+    },
+    {
+      "name": "FflonkVerifier",
+      "values": {}
+    },
+    {
       "name": "GlobalExitRootV2",
       "values": {
         "bridgeAddress": {
@@ -250,6 +258,16 @@
           "type": null
         },
         "rollupTypeCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rollupTypes": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rollupsData": {
           "description": null,
           "severity": null,
           "type": null

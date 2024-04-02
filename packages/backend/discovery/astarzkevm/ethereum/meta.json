@@ -271,96 +271,6 @@
       }
     },
     {
-      "name": "POL",
-      "values": {
-        "CAP_MANAGER_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DEFAULT_ADMIN_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "DOMAIN_SEPARATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "EMISSION_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PERMIT2": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "PERMIT2_REVOKER_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "decimals": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "eip712Domain": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "lastMint": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "mintPerSecondCap": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "name": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "permit2Enabled": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "symbol": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalSupply": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "version": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "Permit2",
-      "values": {
-        "DOMAIN_SEPARATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "PolygonRollupManager",
       "values": {
         "DEFAULT_ADMIN_ROLE": {
@@ -408,17 +318,12 @@
           "severity": null,
           "type": null
         },
+        "rollupData": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "rollupTypeCount": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "rollupTypes": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "rollupsData": {
           "description": null,
           "severity": null,
           "type": null
@@ -429,46 +334,6 @@
           "type": null
         },
         "verifyBatchTimeTarget": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "PolygonZkEVMGlobalExitRootV2",
-      "values": {
-        "bridgeAddress": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "depositCount": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getLastGlobalExitRoot": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getRoot": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "lastMainnetExitRoot": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "lastRollupExitRoot": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "rollupManager": {
           "description": null,
           "severity": null,
           "type": null
