@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/backend-tools'
+import { assert, Logger } from '@l2beat/backend-tools'
 import {
   ProjectId,
   TrackedTxsConfigSubtype,
@@ -75,6 +75,34 @@ export class LivenessRepository extends BaseRepository {
       .orderBy('l.timestamp', 'desc')
 
     return rows.map(toRecordWithTimestampAndSubtype)
+  }
+
+  /**
+   *
+   * @param projectId Filter only transactions for a specific project.
+   * @param subtype Filter only transactions of a specific subtype.
+   * @param from Lower bound timestamp, inclusive.
+   * @param to Upper bound timestamp, exclusive.
+   * @returns An array of transactions that fall within the specified time range.
+   */
+  async getTransactionsWithinTimeRange(
+    projectId: ProjectId,
+    subtype: TrackedTxsConfigSubtype,
+    from: UnixTime,
+    to: UnixTime,
+  ): Promise<LivenessRecord[]> {
+    assert(from.toNumber() < to.toNumber(), 'From must be less than to')
+    const knex = await this.knex()
+    const rows = await knex('liveness as l')
+      .join('tracked_txs_configs as c', 'l.tracked_tx_id', 'c.id')
+      .select('l.timestamp', 'l.block_number', 'l.tx_hash', 'l.tracked_tx_id')
+      .where('c.project_id', projectId.toString())
+      .andWhere('c.subtype', subtype.toString())
+      .andWhere('l.timestamp', '>=', from.toDate())
+      .andWhere('l.timestamp', '<', to.toDate())
+      .orderBy('l.timestamp', 'asc')
+
+    return rows.map(toRecord)
   }
 
   /**

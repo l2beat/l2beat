@@ -10,6 +10,11 @@ import { chunk } from 'lodash'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
 import { LivenessRepository } from '../../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 
+export type Transaction = {
+  txHash: string
+  timestamp: UnixTime
+}
+
 export abstract class BaseAnalyzer {
   constructor(
     protected readonly provider: RpcClient,
@@ -18,28 +23,17 @@ export abstract class BaseAnalyzer {
     protected readonly l2Provider?: RpcClient,
   ) {}
 
-  async getFinalityWithGranularity(
+  async getFinalityForInterval(
     from: UnixTime,
     to: UnixTime,
-    granularity: number,
   ): Promise<number[] | undefined> {
-    const interval = this.getInterval(from, to, granularity)
-
-    const transactions = (
-      await Promise.all(
-        Array.from({ length: granularity }).map(async (_, i) => {
-          const targetTimestamp = to.add(-interval * i, 'seconds')
-          const lowerBound = targetTimestamp.add(-interval, 'seconds')
-
-          return this.livenessRepository.findTransactionWithinTimeRange(
-            this.projectId,
-            this.getTrackedTxSubtype(),
-            targetTimestamp,
-            lowerBound,
-          )
-        }),
+    const transactions =
+      await this.livenessRepository.getTransactionsWithinTimeRange(
+        this.projectId,
+        this.getTrackedTxSubtype(),
+        from,
+        to,
       )
-    ).filter(notUndefined)
 
     if (!transactions.length) {
       return undefined
@@ -56,11 +50,6 @@ export abstract class BaseAnalyzer {
     return finalityDelays.flat()
   }
 
-  private getInterval(from: UnixTime, to: UnixTime, granularity: number) {
-    assert(to.toNumber() > from.toNumber())
-    return (to.toNumber() - from.toNumber()) / granularity
-  }
-
   abstract getTrackedTxSubtype(): TrackedTxsConfigSubtype
 
   /**
@@ -68,8 +57,5 @@ export abstract class BaseAnalyzer {
    * @param transaction
    * @returns Finality delays in seconds for each transaction
    */
-  abstract getFinality(transaction: {
-    txHash: string
-    timestamp: UnixTime
-  }): Promise<number[]>
+  abstract getFinality(transaction: Transaction): Promise<number[]>
 }
