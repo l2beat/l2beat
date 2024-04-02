@@ -125,14 +125,9 @@ export class AmountRepository extends BaseRepository {
 
   // #region configurations
 
-  async addOrUpdateManyConfigurations(
-    records: (
-      | Omit<AmountConfigurationRecord, 'id'>
-      | AmountConfigurationRecord
-    )[],
+  async addManyConfigurations(
+    records: Omit<AmountConfigurationRecord, 'id'>[],
   ): Promise<number[]> {
-    // TODO: split what to add what to update
-    // or do it in the indexer
     const rows: Omit<AmountConfigurationRow, 'id'>[] =
       records.map(toConfigurationRow)
 

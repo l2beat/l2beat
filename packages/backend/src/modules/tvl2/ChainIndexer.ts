@@ -42,8 +42,30 @@ export class ChainIndexer extends MultiIndexer<TotalSupplyEntry | EscrowEntry> {
   }
 
   override async getInitialConfigurations() {
-    await this.amountRepository.addOrUpdateManyConfigurations(
-      this.amountConfigurations.map((c) => ({
+    const oldConfigurations =
+      await this.amountRepository.getConfigurationsByIndexerId(this.indexerId)
+
+    const toAdd: (TotalSupplyEntry | EscrowEntry)[] = []
+
+    for (const configuration of this.amountConfigurations) {
+      const oldConfiguration = oldConfigurations.find(
+        (c) =>
+          c.chain === this.chain &&
+          c.projectId === configuration.projectId &&
+          c.type === configuration.type &&
+          c.address === configuration.address &&
+          (c.type === 'escrow' && configuration.type === 'escrow'
+            ? c.escrowAddress === configuration.escrowAddress
+            : true),
+      )
+
+      if (!oldConfiguration) {
+        toAdd.push(configuration)
+      }
+    }
+
+    await this.amountRepository.addManyConfigurations(
+      toAdd.map((c) => ({
         ...c,
         indexerId: this.indexerId,
       })),
@@ -199,7 +221,7 @@ export class ChainIndexer extends MultiIndexer<TotalSupplyEntry | EscrowEntry> {
         : undefined,
     }))
 
-    await this.amountRepository.addOrUpdateManyConfigurations(records)
+    await this.amountRepository.addManyConfigurations(records)
 
     this.logger.debug('Configurations saved')
   }
