@@ -50,7 +50,7 @@ export function getProjectDetails(
       props: {
         ...charts.tvl,
         id: 'tvl',
-        title: 'TVL',
+        title: 'Value Locked',
       },
     })
   }
