@@ -1,9 +1,10 @@
 import { Bridge } from '@l2beat/config'
+import compact from 'lodash/compact'
 
 import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
 import { getChartUrl } from '../../../../scripts/charts/data-controller/ChartDataController'
-import { getChart } from '../../../../utils/project/getChart'
+import { getCharts } from '../../../../utils/project/getCharts'
 import { PagesData, Wrapped } from '../../../Page'
 import { ProjectPageProps } from '../view/ProjectPage'
 import { getPageMetadata } from './getPageMetadata'
@@ -22,7 +23,8 @@ export function getProps(
     implementationChange,
   } = pagesData
 
-  const chart = getChart(bridge, tvlApiResponse, config)
+  const charts = getCharts(bridge, tvlApiResponse, config)
+
   return {
     props: {
       navbar: getNavbarProps(config, 'bridges'),
@@ -32,12 +34,16 @@ export function getProps(
         verificationStatus,
         manuallyVerifiedContracts,
         implementationChange,
-        chart,
+        charts,
       ),
       footer: getFooterProps(config),
     },
     wrapper: {
-      preloadApi: getChartUrl(chart.initialType),
+      preloadApis: compact([
+        charts.tvl && getChartUrl(charts.tvl.initialType),
+        charts.activity && getChartUrl(charts.activity.initialType),
+        charts.costs && getChartUrl(charts.costs.initialType),
+      ]),
       metadata: getPageMetadata(bridge),
       banner: config.features.banner,
     },

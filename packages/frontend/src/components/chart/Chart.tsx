@@ -17,7 +17,6 @@ import { ChartLabels } from './ChartLabels'
 import { ChartLoader } from './ChartLoader'
 import { UnitControls } from './CurrencyControls'
 import { EthereumActivityToggle } from './EthereumActivityToggle'
-import { RadioChartTypeControl } from './RadioChartTypeControl'
 import { RangeControls } from './RangeControls'
 import { ScaleControls } from './ScaleControls'
 import { TimeRange } from './TimeRange'
@@ -31,8 +30,6 @@ export interface ChartProps {
   tokens?: TokenControl[]
   initialType: ChartType
   tvlBreakdownHref?: string
-  hasActivity?: boolean
-  hasTvl?: boolean
   metaChart?: boolean
   mobileFull?: boolean
   milestones?: Milestone[]
@@ -75,8 +72,6 @@ export function Chart(props: ChartProps) {
           title={title}
           id={id}
           sectionOrder={props.sectionOrder}
-          hasActivity={props.hasActivity}
-          hasTvl={props.hasTvl}
           metaChart={props.metaChart}
           header={props.header}
           isBridge={isBridge}
@@ -139,9 +134,7 @@ export function Chart(props: ChartProps) {
             />
           </div>
           <div className="flex justify-between">
-            {(props.hasActivity || isActivity) && (
-              <EthereumActivityToggle showToggle={isActivity} />
-            )}
+            {isActivity && <EthereumActivityToggle showToggle={isActivity} />}
             {!isActivity && (
               <div className="mr-4 flex flex-wrap gap-4" data-tvl-only>
                 <UnitControls
@@ -170,8 +163,6 @@ function ChartHeader(props: {
   id: string
   title: string
   sectionOrder: number | undefined
-  hasActivity: boolean | undefined
-  hasTvl: boolean | undefined
   metaChart: boolean | undefined
   header: ChartProps['header'] | undefined
   isBridge: boolean
@@ -199,12 +190,6 @@ function ChartHeader(props: {
         id={props.id}
         sectionOrder={props.sectionOrder}
       />
-      {(props.hasActivity || props.hasTvl) && (
-        <RadioChartTypeControl
-          hasActivity={!!props.hasActivity}
-          hasTvl={!!props.hasTvl}
-        />
-      )}
     </div>
   )
 }

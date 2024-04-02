@@ -50,7 +50,7 @@ export function getProps(
       htmlClassName: 'light overflow-hidden h-[100vh] meta',
       bodyClassName: 'overflow-hidden h-[100vh]',
       metadata: { title: 'Meta Image', description: '', image: '', url: '' },
-      preloadApi: getChartUrl(chartType),
+      preloadApis: [getChartUrl(chartType)],
       banner: false,
     },
   }
@@ -75,7 +75,7 @@ export function getPropsActivity(
       htmlClassName: 'light overflow-hidden h-[100vh] meta',
       bodyClassName: 'overflow-hidden h-[100vh]',
       metadata: { title: 'Meta Image', description: '', image: '', url: '' },
-      preloadApi: getChartUrl({ type: 'scaling-activity' }),
+      preloadApis: [getChartUrl({ type: 'scaling-activity' })],
       banner: false,
     },
   }
@@ -112,7 +112,7 @@ export function getPropsDetailed(
       htmlClassName: 'light overflow-hidden h-[100vh] meta',
       bodyClassName: 'overflow-hidden h-[100vh]',
       metadata: { title: 'Meta Image', description: '', image: '', url: '' },
-      preloadApi: getChartUrl(chartType),
+      preloadApis: [getChartUrl(chartType)],
       banner: false,
     },
   }

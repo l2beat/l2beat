@@ -33,7 +33,7 @@ export function getProps(
       milestones: config.milestones,
     },
     wrapper: {
-      preloadApi: getChartUrl({ type: 'scaling-tvl' }),
+      preloadApis: [getChartUrl({ type: 'scaling-tvl' })],
       metadata: getDefaultPageMetadata({
         image: 'https://l2beat.com/meta-images/overview-scaling.png',
         url: 'https://l2beat.com/scaling/summary',

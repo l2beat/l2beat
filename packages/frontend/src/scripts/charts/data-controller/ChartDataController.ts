@@ -92,6 +92,7 @@ export class ChartDataController {
           values: AggregateDetailedTvlResponse.parse(data),
         }
       case 'scaling-costs':
+      case 'project-costs':
         return {
           type: 'costs',
           values: CostsResponse.parse(data),
@@ -144,6 +145,8 @@ export function getChartUrl<T extends ChartType>(chartType: T) {
       return `/api/tvl/${chartType.slug}.json`
     case 'project-token-tvl':
       return getTokenTvlUrl(chartType.info)
+    case 'project-costs':
+      return `/api/costs/${chartType.slug}.json`
     case 'project-activity':
       return `/api/activity/${chartType.slug}.json`
     case 'storybook-fake-tvl':

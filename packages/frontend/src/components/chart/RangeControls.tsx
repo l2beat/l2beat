@@ -83,6 +83,7 @@ function getOptions(chartType: ChartType): RadioGroupOption[] {
         },
       ]
     case 'scaling-costs':
+    case 'project-costs':
       return [
         {
           value: '1D',

@@ -6,7 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import isEmpty from 'lodash/isEmpty'
 
-import { ChartProps } from '../../../../components'
+import { ProjectDetailsCharts } from '../../../../utils/project/getCharts'
 import { getContractSection } from '../../../../utils/project/getContractSection'
 import { getDiagramImage } from '../../../../utils/project/getDiagramImage'
 import { getPermissionsSection } from '../../../../utils/project/getPermissionsSection'
@@ -38,7 +38,7 @@ export function getProjectDetails(
   verificationStatus: VerificationStatus,
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
   implementationChange: ImplementationChangeReportApiResponse | undefined,
-  chart: ChartProps,
+  charts: ProjectDetailsCharts,
 ) {
   const isUpcoming = project.isUpcoming
   const { incomplete, sections: technologySections } =
@@ -50,14 +50,38 @@ export function getProjectDetails(
   )
   const items: ScalingDetailsItem[] = []
 
-  items.push({
-    type: 'ChartSection',
-    props: {
-      ...chart,
-      id: 'chart',
-      title: 'Chart',
-    },
-  })
+  if (charts.tvl) {
+    items.push({
+      type: 'ChartSection',
+      props: {
+        ...charts.tvl,
+        id: 'tvl',
+        title: 'TVL',
+      },
+    })
+  }
+
+  if (charts.activity) {
+    items.push({
+      type: 'ChartSection',
+      props: {
+        ...charts.activity,
+        id: 'activity',
+        title: 'Activity',
+      },
+    })
+  }
+
+  if (charts.costs) {
+    items.push({
+      type: 'ChartSection',
+      props: {
+        ...charts.costs,
+        id: 'costs',
+        title: 'Costs',
+      },
+    })
+  }
 
   if (!isUpcoming && project.milestones && !isEmpty(project.milestones)) {
     items.push({

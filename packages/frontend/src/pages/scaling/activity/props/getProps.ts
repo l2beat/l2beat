@@ -26,7 +26,7 @@ export function getProps(
         image: 'https://l2beat.com/meta-images/overview-scaling-activity.png',
         url: 'https://l2beat.com/scaling/activity',
       }),
-      preloadApi: getChartUrl({ type: 'scaling-activity' }),
+      preloadApis: [getChartUrl({ type: 'scaling-activity' })],
       banner: config.features.banner,
     },
   }
