@@ -9,7 +9,6 @@ export function getProductionConfig(): Config {
     },
     backend: {
       apiUrl: 'https://api.l2beat.com',
-      updateMonitorApiUrl: 'https://staging.l2beat.com',
       skipCache: false,
     },
   }

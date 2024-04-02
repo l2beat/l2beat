@@ -17,7 +17,6 @@ export function getLocalConfig(): Config {
     },
     backend: {
       apiUrl: 'http://localhost:3000',
-      updateMonitorApiUrl: 'http://localhost:3000',
       skipCache: true,
       mock: useMock,
     },
