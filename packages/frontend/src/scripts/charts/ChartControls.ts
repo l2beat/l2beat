@@ -94,6 +94,7 @@ export class ChartControls {
     const timeRangeControls = $$<HTMLInputElement>(
       '[data-role="chart-range-controls"] input',
     )
+    console.log(timeRangeControls)
     timeRangeControls.forEach((timeRangeControl) => {
       timeRangeControl.checked =
         settings.getTimeRange() === this.toDays(timeRangeControl.value)

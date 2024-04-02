@@ -137,9 +137,7 @@ export function Chart(props: ChartProps) {
             {isActivity && <EthereumActivityToggle showToggle={isActivity} />}
             {!isActivity && (
               <div className="mr-4 flex flex-wrap gap-4" data-tvl-only>
-                <UnitControls
-                  showGas={props.initialType.type === 'scaling-costs'}
-                />
+                <UnitControls chartType={props.initialType} />
                 <TokenControls
                   tvlBreakdownHref={props.tvlBreakdownHref}
                   tokens={props.tokens}
@@ -147,7 +145,7 @@ export function Chart(props: ChartProps) {
               </div>
             )}
             <div className="w-min">
-              <ScaleControls />
+              <ScaleControls chartType={props.initialType} />
             </div>
           </div>
         </div>

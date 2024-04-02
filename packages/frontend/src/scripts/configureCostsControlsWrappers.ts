@@ -10,6 +10,12 @@ const SORTING_ARROWS_NAMES = [
   'overhead',
 ]
 
+const defaultChecked = {
+  timeRange: '7D',
+  unit: 'USD',
+  type: 'TOTAL',
+}
+
 export function configureCostsControlsWrappers() {
   const { $, $$ } = makeQuery(document.body)
   const searchParams = new URLSearchParams(window.location.search)
@@ -26,13 +32,13 @@ export function configureCostsControlsWrappers() {
     '[data-role="costs-type-controls"] input',
   )
 
-  let checkedTimeRangeControl = $<HTMLInputElement>(
+  let checkedTimeRangeControl = $.maybe<HTMLInputElement>(
     '[data-role="chart-range-controls"] input:checked',
   )
-  let checkedUnitControl = $<HTMLInputElement>(
+  let checkedUnitControl = $.maybe<HTMLInputElement>(
     '[data-role="chart-unit-controls"] input:checked',
   )
-  let checkedTypeControl = $<HTMLInputElement>(
+  let checkedTypeControl = $.maybe<HTMLInputElement>(
     '[data-role="costs-type-controls"] input:checked',
   )
 
@@ -40,7 +46,10 @@ export function configureCostsControlsWrappers() {
     if (!checkedUnitControl || !checkedTimeRangeControl) {
       throw new Error('No time range or unit control is checked')
     }
-    return `${checkedTimeRangeControl.value}-${checkedUnitControl.value}-${checkedTypeControl.value}`
+    const timeRange = checkedTimeRangeControl?.value ?? defaultChecked.timeRange
+    const unit = checkedUnitControl?.value ?? defaultChecked.unit
+    const type = checkedTypeControl?.value ?? defaultChecked.type
+    return `${unit}-${timeRange}-${type}`
   }
 
   function onTimeRangeChange(
@@ -83,8 +92,8 @@ export function configureCostsControlsWrappers() {
     )
     const isAmortized = control.value === 'AMORTIZED'
     const is24hOr7d =
-      checkedTimeRangeControl.value === '7D' ||
-      checkedTimeRangeControl.value === '24H'
+      checkedTimeRangeControl?.value === '7D' ||
+      checkedTimeRangeControl?.value === '24H'
 
     timeRangeControls.forEach((c) => {
       if (c.value === '24H' || c.value === '7D') {

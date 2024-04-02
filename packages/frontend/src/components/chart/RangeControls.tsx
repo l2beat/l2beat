@@ -15,7 +15,7 @@ export function RangeControls({ chartType, isMetaChart }: Props) {
   return (
     <RadioGroup
       role="chart-range-controls"
-      name="range"
+      name={`${chartType.type}-range`}
       className={cn(
         'transition-colors duration-200 group-data-[interactivity-disabled]/chart:bg-gray-200 dark:group-data-[interactivity-disabled]/chart:bg-zinc-700',
         isMetaChart && 'hidden',
