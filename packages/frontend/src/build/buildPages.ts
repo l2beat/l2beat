@@ -102,10 +102,17 @@ async function main() {
       | undefined = undefined
     if (config.features.implementationChange) {
       console.time('[IMPLEMENTATION CHANGE]')
-      implementationChange = await fetchImplementationChangeReport(
-        config.backend,
-        http,
-      )
+      try {
+        implementationChange = await fetchImplementationChangeReport(
+          config.backend,
+          http,
+        )
+      } catch (e) {
+        console.log(
+          '[IMPLEMENTATION CHANGE] Failed to fetch implementation change report, this feature will be disabled in this build',
+          e,
+        )
+      }
       console.timeEnd('[IMPLEMENTATION CHANGE]')
     }
 
