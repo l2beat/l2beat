@@ -1,7 +1,7 @@
 {
   "name": "lzomnichain",
   "chain": "ethereum",
-  "blockNumber": 19433467,
+  "blockNumber": 19538717,
   "configHash": "0x38c81e788a227b76cdd826ec97ae7103ead0801d018f7fce691b635b313a03d0",
   "version": 3,
   "contracts": [
