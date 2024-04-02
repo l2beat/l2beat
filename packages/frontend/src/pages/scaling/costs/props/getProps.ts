@@ -18,6 +18,7 @@ export function getProps(
       showActivity: config.features.activity,
       showLiveness: config.features.liveness,
       showFinality: config.features.finality,
+      milestones: config.milestones,
     },
     wrapper: {
       metadata: getDefaultPageMetadata({

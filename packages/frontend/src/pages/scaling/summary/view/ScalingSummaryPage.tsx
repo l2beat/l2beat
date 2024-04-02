@@ -24,7 +24,7 @@ export interface SummaryPageProps {
   showActivity: boolean
   showLiveness: boolean
   showFinality: boolean
-  milestones?: Milestone[]
+  milestones: Milestone[] | undefined
 }
 
 export function ScalingSummaryPage(props: SummaryPageProps) {

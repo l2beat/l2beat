@@ -1,3 +1,4 @@
+import { Milestone } from '@l2beat/config'
 import React from 'react'
 
 import {
@@ -20,6 +21,7 @@ export interface ScalingCostsPageProps {
   showActivity: boolean
   showLiveness: boolean
   showFinality: boolean
+  milestones: Milestone[] | undefined
 }
 
 export function ScalingCostsPage(props: ScalingCostsPageProps) {
@@ -37,6 +39,7 @@ export function ScalingCostsPage(props: ScalingCostsPageProps) {
           <Chart
             settingsId="scaling-costs"
             initialType={{ type: 'scaling-costs' }}
+            milestones={props.milestones}
             header="costs"
           />
           <ScalingCostsView {...props.costsView} />

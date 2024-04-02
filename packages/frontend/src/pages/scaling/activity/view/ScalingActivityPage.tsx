@@ -24,7 +24,7 @@ export interface ActivityPageProps {
   showActivity: boolean
   showFinality: boolean
   showLiveness: boolean
-  milestones?: Milestone[]
+  milestones: Milestone[] | undefined
 }
 
 export function ActivityPage(props: ActivityPageProps) {
