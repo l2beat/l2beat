@@ -22,13 +22,21 @@ import { configureProjectNavigation } from './section-navigation'
 import { configureSorting } from './table/configureSorting'
 import { configureTables } from './table/configureTables'
 
+const { onTimeRangeChange, onUnitChange } = configureCostsControlsWrappers()
+
+configureCharts({
+  callbacks: {
+    onTimeRangeChange,
+    onUnitChange,
+  },
+})
+
 configureThemeToggle()
 configureFloatingBanner()
 configureTables()
 configureProjectFilters()
 configureSidebarMenu()
 configureTooltips()
-configureCharts()
 configureDropdowns()
 configureRosetteOverlay()
 configureHoverableDropdown()
@@ -44,4 +52,3 @@ configureLivenessTimeRangeControls()
 configureOverflowWrappers()
 configureSorting()
 configureEtherscanLinks()
-configureCostsControlsWrappers()

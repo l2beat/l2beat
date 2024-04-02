@@ -20,9 +20,6 @@ export function configureCostsControlsWrappers() {
 
   const cells = $$('[data-role="costs-controls-wrapper"]')
 
-  const unitControls = $$<HTMLInputElement>(
-    '[data-role="chart-unit-controls"] input',
-  )
   const timeRangeControls = $$<HTMLInputElement>(
     '[data-role="chart-range-controls"] input',
   )
@@ -73,15 +70,15 @@ export function configureCostsControlsWrappers() {
       setSortingArrowsOrderKey(name, getSortingArrowsOrderKey()),
     )
     const isAmortized = control.value === 'AMORTIZED'
-    const is24hOr7d =
+    const isOneOrSevenDays =
       checkedTimeRangeControl?.value === '7D' ||
-      checkedTimeRangeControl?.value === '24H'
+      checkedTimeRangeControl?.value === '1D'
 
     timeRangeControls.forEach((c) => {
-      if (c.value === '24H' || c.value === '7D') {
+      if (c.value === '1D' || c.value === '7D') {
         c.disabled = isAmortized
       }
-      if (c.value === '30D' && isAmortized && is24hOr7d) {
+      if (c.value === '30D' && isAmortized && isOneOrSevenDays) {
         c.checked = true
         onTimeRangeChange(c)
       }
@@ -89,17 +86,14 @@ export function configureCostsControlsWrappers() {
     cells.forEach((cell) => cell.setAttribute('data-type', control.value))
   }
 
-  timeRangeControls.forEach((control) => {
-    control.addEventListener('change', () => onTimeRangeChange(control))
-  })
-
-  unitControls.forEach((control) => {
-    control.addEventListener('change', () => onUnitChange(control))
-  })
-
   typeControls.forEach((control) => {
     control.addEventListener('change', () => {
       onTypeChange(control)
     })
   })
+
+  return {
+    onTimeRangeChange,
+    onUnitChange,
+  }
 }

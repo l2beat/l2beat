@@ -156,9 +156,18 @@ const CostsChart = z.object({
       z.number(),
       z.number(),
       z.number(),
-      z.number(),
-      z.number(),
-      z.number(),
+      z
+        .number()
+        .nullable()
+        .transform((x) => x ?? 0),
+      z
+        .number()
+        .nullable()
+        .transform((x) => x ?? 0),
+      z
+        .number()
+        .nullable()
+        .transform((x) => x ?? 0),
     ]),
   ),
 })

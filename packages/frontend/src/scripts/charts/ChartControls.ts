@@ -4,24 +4,28 @@ import isEmpty from 'lodash/isEmpty'
 import { getFilteredSlugs } from '../configureProjectFilters'
 import { getRichSelectValue } from '../configureRichSelect'
 import { makeQuery } from '../query'
-import { setQueryParams } from '../utils/setQueryParams'
 import { ChartSettings, ChartSettingsManager } from './ChartSettings'
 import { ChartDataController } from './data-controller/ChartDataController'
 import { ChartType, Milestones, TokenInfo } from './types'
 import { ChartViewController } from './view-controller/ChartViewController'
 import { ChartUnit } from './view-controller/types'
 
+export interface ChartControlsCallbacks {
+  onTimeRangeChange?: (control: HTMLInputElement) => void
+  onUnitChange?: (control: HTMLInputElement) => void
+}
+
 export class ChartControls {
   private chartType?: ChartType
   private projectSlug?: string
   private isDetailedTvl?: boolean
-  private readonly urlParams = new URLSearchParams(window.location.search)
 
   constructor(
     private readonly chart: HTMLElement,
     private readonly chartSettings: ChartSettingsManager,
     private readonly chartViewController: ChartViewController,
     private readonly chartDataController: ChartDataController,
+    private readonly callbacks?: ChartControlsCallbacks,
   ) {}
 
   init() {
@@ -57,8 +61,31 @@ export class ChartControls {
   }
 
   private setupControls(chart: HTMLElement, settings: ChartSettings) {
-    const { $, $$ } = makeQuery(chart)
-    const tokenSelect = $.maybe('[data-role=rich-select]#token-select')
+    const query = makeQuery(chart)
+
+    this.configureScaleControls(query, settings)
+    const unitControls = this.configureUnitControls(
+      query,
+      settings,
+      this.callbacks?.onUnitChange,
+    )
+    this.configureTimeRangeControls(
+      query,
+      settings,
+      this.callbacks?.onTimeRangeChange,
+    )
+    this.configureEthereumTxsToggle(query, settings)
+    this.configureTokenSelect(query, unitControls)
+    this.configureCanonicalToggle(query)
+    this.configureProjectFilters()
+    this.configureRefetchButton(query)
+  }
+
+  private configureScaleControls(
+    query: ReturnType<typeof makeQuery>,
+    settings: ChartSettings,
+  ) {
+    const { $$ } = query
     const scaleControls = $$<HTMLInputElement>(
       '[data-role="chart-scale-controls"] input',
     )
@@ -71,12 +98,25 @@ export class ChartControls {
         this.chartViewController.configure({ useLogScale })
       })
     })
+  }
 
+  private configureUnitControls(
+    query: ReturnType<typeof makeQuery>,
+    settings: ChartSettings,
+    callback?: ChartControlsCallbacks['onUnitChange'],
+  ) {
+    const { $$ } = query
     const unitControls = $$<HTMLInputElement>(
       '[data-role="chart-unit-controls"] input',
     )
     unitControls.forEach((unitControl) => {
-      unitControl.checked = settings.getUnit() === unitControl.value
+      const isChecked = settings.getUnit() === unitControl.value
+
+      if (isChecked) {
+        unitControl.checked = true
+        callback?.(unitControl)
+      }
+
       unitControl.addEventListener('change', () => {
         if (this.chartType?.type === 'project-token-tvl' && this.projectSlug) {
           this.updateChartType({
@@ -84,87 +124,70 @@ export class ChartControls {
             slug: this.projectSlug,
           })
         }
-
         const unit = unitControl.value as ChartUnit
         settings.setUnit(unit)
         this.chartViewController.configure({ unit })
+        callback?.(unitControl)
       })
     })
 
+    return unitControls
+  }
+
+  private configureTimeRangeControls(
+    query: ReturnType<typeof makeQuery>,
+    settings: ChartSettings,
+    callback?: ChartControlsCallbacks['onTimeRangeChange'],
+  ) {
+    const { $$ } = query
     const timeRangeControls = $$<HTMLInputElement>(
       '[data-role="chart-range-controls"] input',
     )
-    console.log(timeRangeControls)
+
     timeRangeControls.forEach((timeRangeControl) => {
-      timeRangeControl.checked =
+      const isChecked =
         settings.getTimeRange() === this.toDays(timeRangeControl.value)
+
+      if (isChecked) {
+        timeRangeControl.checked = true
+        callback?.(timeRangeControl)
+      }
+
       timeRangeControl.addEventListener('change', () => {
         const timeRangeInDays = this.toDays(timeRangeControl.value)
         settings.setTimeRange(timeRangeInDays)
         this.chartViewController.configure({ timeRangeInDays })
+        callback?.(timeRangeControl)
       })
     })
+  }
 
+  private configureEthereumTxsToggle(
+    query: ReturnType<typeof makeQuery>,
+    settings: ChartSettings,
+  ) {
+    const { $ } = query
     const showEthereumTransactionToggle = $.maybe<HTMLInputElement>(
       '[data-role="toggle-ethereum-activity"]',
     )
-    if (showEthereumTransactionToggle) {
-      showEthereumTransactionToggle.checked =
-        settings.getShowEthereumTransactions()
-      showEthereumTransactionToggle.addEventListener('change', () => {
-        const showEthereumTransactions = !!showEthereumTransactionToggle.checked
-        settings.setShowEthereumTransactions(showEthereumTransactions)
-        this.chartViewController.configure({ showEthereumTransactions })
-      })
-    }
+    if (!showEthereumTransactionToggle) return
 
-    const chartTypeControls = $$<HTMLInputElement>(
-      '[data-role="radio-chart-type-controls"] input',
-    )
-
-    const selectedChart = this.urlParams.get('selectedChart')
-    chartTypeControls.forEach((chartTypeControl) => {
-      chartTypeControl.addEventListener('change', () => {
-        const type = chartTypeControl.value as
-          | 'tvl'
-          | 'detailedTvl'
-          | 'activity'
-
-        if (this.projectSlug) {
-          const selectValue = tokenSelect && getRichSelectValue(tokenSelect)
-          const chartType: ChartType =
-            (type === 'tvl' || type === 'detailedTvl') && selectValue
-              ? {
-                  type: 'project-token-tvl',
-                  info: TokenInfo.parse(JSON.parse(selectValue)),
-                }
-              : type === 'tvl'
-                ? { type: 'project-tvl', slug: this.projectSlug }
-                : type === 'detailedTvl'
-                  ? { type: 'project-detailed-tvl', slug: this.projectSlug }
-                  : { type: 'project-activity', slug: this.projectSlug }
-
-          this.updateChartType(chartType)
-        }
-
-        this.urlParams.set('selectedChart', type)
-        setQueryParams(this.urlParams)
-
-        $$('[data-tvl-only]').forEach((element) =>
-          element.classList.toggle('hidden', type === 'activity'),
-        )
-
-        $$('[data-activity-only]').forEach((element) =>
-          element.classList.toggle('hidden', type !== 'activity'),
-        )
-      })
-
-      if (selectedChart === chartTypeControl.value) {
-        chartTypeControl.checked = true
-        chartTypeControl.dispatchEvent(new Event('change'))
-      }
+    showEthereumTransactionToggle.checked =
+      settings.getShowEthereumTransactions()
+    showEthereumTransactionToggle.addEventListener('change', () => {
+      const showEthereumTransactions = !!showEthereumTransactionToggle.checked
+      settings.setShowEthereumTransactions(showEthereumTransactions)
+      this.chartViewController.configure({ showEthereumTransactions })
     })
+  }
 
+  private configureTokenSelect(
+    query: ReturnType<typeof makeQuery>,
+    unitControls: HTMLInputElement[],
+  ) {
+    const { $ } = query
+
+    const tokenSelect = $.maybe('[data-role=rich-select]#token-select')
     tokenSelect?.addEventListener('change', () => {
       const value = getRichSelectValue(tokenSelect)
       if (!value) {
@@ -185,19 +208,24 @@ export class ChartControls {
         info: tokenInfo,
       })
     })
+  }
 
-    const canonicalToggle = document.querySelector<HTMLInputElement>(
+  private configureCanonicalToggle(query: ReturnType<typeof makeQuery>) {
+    const { $ } = query
+    const canonicalToggle = $.maybe<HTMLInputElement>(
       '[data-role="chart-combined"]',
     )
-    if (canonicalToggle) {
-      canonicalToggle.addEventListener('change', () => {
-        const includeCanonical = !!canonicalToggle.checked
-        this.updateChartType({ type: 'bridges-tvl', includeCanonical })
-      })
-    }
 
-    const projectFilters =
-      document.querySelector<HTMLElement>('#project-filters')
+    canonicalToggle?.addEventListener('change', () => {
+      const includeCanonical = !!canonicalToggle.checked
+      this.updateChartType({ type: 'bridges-tvl', includeCanonical })
+    })
+  }
+
+  private configureProjectFilters() {
+    const { $ } = makeQuery(document.body)
+    const projectFilters = $.maybe('#project-filters')
+
     projectFilters?.addEventListener('change', () => {
       if (
         this.chartType?.type !== 'scaling-tvl' &&
@@ -216,8 +244,12 @@ export class ChartControls {
         filteredSlugs,
       })
     })
+  }
 
+  private configureRefetchButton(query: ReturnType<typeof makeQuery>) {
+    const { $ } = query
     const refetchButton = $('[data-role="chart-refetch-button"]')
+
     refetchButton.addEventListener('click', () => {
       this.chartDataController.refetch()
     })

@@ -110,7 +110,9 @@ async function main() {
       console.timeEnd('[IMPLEMENTATION CHANGE]')
     }
 
+    console.time('[L2 COSTS]')
     const l2CostsApiResponse = fetchL2CostsApi()
+    console.timeEnd('[L2 COSTS]')
 
     createApi(config, tvlApiResponse, activityApiResponse, l2CostsApiResponse)
 

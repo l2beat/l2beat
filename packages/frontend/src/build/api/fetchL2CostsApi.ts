@@ -5,9 +5,19 @@ import {
   L2CostsApiResponse,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { readFileSync } from 'fs-extra'
+import path from 'path'
 
 export function fetchL2CostsApi(): L2CostsApiResponse {
-  return getMockL2CostsApiResponse()
+  const json = readFileSync(path.resolve(__dirname, 'test.json'), 'utf8')
+  const x = L2CostsApiResponse.parse(JSON.parse(json))
+  x.combined.daily.data.sort((a, b) => a[0].toNumber() - b[0].toNumber())
+  x.combined.hourly.data.sort((a, b) => a[0].toNumber() - b[0].toNumber())
+  for (const data of Object.values(x.projects)) {
+    data?.daily.data.sort((a, b) => a[0].toNumber() - b[0].toNumber())
+    data?.hourly.data.sort((a, b) => a[0].toNumber() - b[0].toNumber())
+  }
+  return x
 }
 
 // export async function fetchL2CostsApi(
@@ -21,29 +31,6 @@ export function fetchL2CostsApi(): L2CostsApiResponse {
 //   const json = await http.fetchJson(url)
 //   return L2CostsApiResponse.parse(json)
 // }
-
-function getMockL2CostsApiResponse(): L2CostsApiResponse {
-  const projects = [
-    'zksyncera',
-    'base',
-    'optimism',
-    'honeypot',
-    'fuelv1',
-    'kroma',
-    'mode',
-    'zksync2',
-    'zora',
-  ].reduce<Record<string, L2CostsApiCharts>>((acc, cur) => {
-    const withoutBlobs = cur === 'honeypot' || cur === 'kroma'
-    acc[cur] = generateMockCharts(withoutBlobs)
-    return acc
-  }, {})
-
-  return {
-    combined: generateMockCharts(),
-    projects,
-  }
-}
 
 const TYPES: L2CostsApiChart['types'] = [
   'timestamp',

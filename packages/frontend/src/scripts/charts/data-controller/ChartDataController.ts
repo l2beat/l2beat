@@ -65,6 +65,7 @@ export class ChartDataController {
           // It was aborted on purpose by user so we don't need to show error
           return
         }
+        console.error(err)
         this.chartViewController.showErrorState()
       })
   }
