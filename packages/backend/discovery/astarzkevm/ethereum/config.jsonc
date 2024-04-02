@@ -39,7 +39,7 @@
         "rollupData": {
           "type": "call",
           "method": "rollupIDToRollupData",
-          "args": [2]
+          "args": [2] // astar ID
         }
       }
     },
