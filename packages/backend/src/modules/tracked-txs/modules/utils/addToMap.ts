@@ -15,14 +15,14 @@ export function addToMap(
     let currentBlobUsd: number | null = null
     if (tx.type === 3) {
       currentBlobGas = !currentRecord[13]
-        ? tx.blobGasCost
-        : currentRecord[13] + tx.blobGasCost
+        ? tx.blobGasUsed
+        : currentRecord[13] + tx.blobGasUsed
       currentBlobCost = !currentRecord[14]
         ? tx.blobGasCost
         : currentRecord[14] + tx.blobGasCost
       currentBlobUsd = !currentRecord[15]
-        ? tx.blobGasCost
-        : currentRecord[15] + tx.blobGasCost
+        ? tx.blobGasCostUsd
+        : currentRecord[15] + tx.blobGasCostUsd
     }
     map.set(key, [
       currentRecord[0],
@@ -47,9 +47,9 @@ export function addToMap(
     let currentBlobCost: number | null = null
     let currentBlobUsd: number | null = null
     if (tx.type === 3) {
-      currentBlobGas = tx.blobGasCost
+      currentBlobGas = tx.blobGasUsed
       currentBlobCost = tx.blobGasCost
-      currentBlobUsd = tx.blobGasCost
+      currentBlobUsd = tx.blobGasCostUsd
     }
     map.set(key, [
       new UnixTime(key),

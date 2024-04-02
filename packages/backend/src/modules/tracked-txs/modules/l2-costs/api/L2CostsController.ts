@@ -155,11 +155,15 @@ export class L2CostsController {
         combined: {
           hourly: {
             types: CHART_TYPES,
-            data: Array.from(combinedHourlyMap.values()),
+            data: Array.from(combinedHourlyMap.values()).sort(
+              (a, b) => a[0].toNumber() - b[0].toNumber(),
+            ),
           },
           daily: {
             types: CHART_TYPES,
-            data: Array.from(combinedDailyMap.values()),
+            data: Array.from(combinedDailyMap.values()).sort(
+              (a, b) => a[0].toNumber() - b[0].toNumber(),
+            ),
           },
         },
       },
@@ -184,11 +188,15 @@ export class L2CostsController {
     }
     const hourly: L2CostsApiCharts['hourly'] = {
       types: CHART_TYPES,
-      data: Array.from(hourlyMap.values()),
+      data: Array.from(hourlyMap.values()).sort(
+        (a, b) => a[0].toNumber() - b[0].toNumber(),
+      ),
     }
     const daily: L2CostsApiCharts['daily'] = {
       types: CHART_TYPES,
-      data: Array.from(dailyMap.values()),
+      data: Array.from(dailyMap.values()).sort(
+        (a, b) => a[0].toNumber() - b[0].toNumber(),
+      ),
     }
     return {
       hourly,
@@ -201,7 +209,7 @@ export class L2CostsController {
   ): Promise<DetailedTransaction[]> {
     const ethPricesMap = await this.priceRepository.findByTimestampRange(
       AssetId.ETH,
-      NOW_TO_FULL_HOUR.add(-90, 'days').toStartOf('hour'),
+      NOW_TO_FULL_HOUR.add(-180, 'days').toStartOf('hour'),
       NOW_TO_FULL_HOUR.toStartOf('hour'),
     )
 
