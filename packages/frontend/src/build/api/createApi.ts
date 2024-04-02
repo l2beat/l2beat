@@ -1,8 +1,9 @@
 import {
   ActivityApiCharts,
   ActivityApiResponse,
-  L2CostsApiCharts,
   L2CostsApiResponse,
+  L2CostsCombinedApiCharts,
+  L2CostsProjectApiCharts,
   TvlApiCharts,
   TvlApiResponse,
 } from '@l2beat/shared-pure'
@@ -11,7 +12,11 @@ import path from 'path'
 
 import { Config } from '../config'
 
-type Charts = TvlApiCharts | ActivityApiCharts | L2CostsApiCharts
+type Charts =
+  | TvlApiCharts
+  | ActivityApiCharts
+  | L2CostsCombinedApiCharts
+  | L2CostsProjectApiCharts
 
 export function createApi(
   config: Config,
