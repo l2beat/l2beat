@@ -203,6 +203,18 @@ describe(L2CostsController.name, () => {
           datapoint(START.toStartOf('day').add(-i, 'days'), i === 0 ? 19 : 31),
         ),
       ])
+
+      // adds values to combined maps
+      expect(Array.from(combinedHourlyMap.values())).toEqualUnsorted([
+        ...times(26, (i) =>
+          datapoint(START.add(-i, 'hours'), i === 0 || i === 25 ? 1 : 2),
+        ),
+      ])
+      expect(Array.from(combinedDailyMap.values())).toEqualUnsorted([
+        ...times(2, (i) =>
+          datapoint(START.toStartOf('day').add(-i, 'days'), i === 0 ? 19 : 31),
+        ),
+      ])
     })
   })
 })
