@@ -1,15 +1,15 @@
 import { Layer2 } from '@l2beat/config'
 import {
-  ActivityApiCharts,
+  ActivityApiChart,
   assert,
-  L2CostsApiProject,
+  L2CostsApiChart,
   L2CostsApiResponse,
-  L2CostsBreakdown,
   notUndefined,
 } from '@l2beat/shared-pure'
 
 import { formatLargeNumber } from '../../../../utils'
 import { getTransactionCount } from '../../../../utils/activity/getTransactionCount'
+import { getCostsSum } from '../../../../utils/costs/getCostsSum'
 import { formatCurrency } from '../../../../utils/format'
 import { orderByTvl } from '../../../../utils/orderByTvl'
 import {
@@ -49,8 +49,8 @@ export function getScalingCostsView(
 
         return getScalingCostsViewEntry(
           project,
-          l2CostsProjectData,
-          activityApiProjectData,
+          l2CostsProjectData.daily,
+          activityApiProjectData?.daily,
           hasImplementationChanged,
         )
       })
@@ -60,8 +60,8 @@ export function getScalingCostsView(
 
 function getScalingCostsViewEntry(
   project: Layer2,
-  l2CostsProjectData: L2CostsApiProject,
-  activityApiProjectData: ActivityApiCharts | undefined,
+  l2CostsChart: L2CostsApiChart,
+  activityChart: ActivityApiChart | undefined,
   hasImplementationChanged: boolean,
 ): ScalingCostsViewEntry {
   return {
@@ -76,66 +76,66 @@ function getScalingCostsViewEntry(
     provider: project.display.provider,
     purposes: project.display.purposes,
     stage: project.stage,
-    costs: getCostsData(l2CostsProjectData, activityApiProjectData),
+    costs: getCostsData(l2CostsChart, activityChart),
   }
 }
 
 function getCostsData(
-  l2CostsProjectData: L2CostsApiProject,
-  activityApiProjectData: ActivityApiCharts | undefined,
+  l2CostsChart: L2CostsApiChart,
+  activityApiChart: ActivityApiChart | undefined,
 ): CostsData {
-  const { last24h, last7d, last30d, last90d } = l2CostsProjectData
-  if (!last24h || !last7d || !last30d || !last90d) {
-    throw new Error(
-      'One of the last24h, last7d, last30d or last90d is undefined',
-    )
-  }
-
   return {
-    last24h: getDataDetails(
-      'last24h',
-      l2CostsProjectData,
-      activityApiProjectData,
-    ),
-    last7d: getDataDetails(
-      'last7d',
-      l2CostsProjectData,
-      activityApiProjectData,
-    ),
-    last30d: getDataDetails(
-      'last30d',
-      l2CostsProjectData,
-      activityApiProjectData,
-    ),
-    last90d: getDataDetails(
-      'last90d',
-      l2CostsProjectData,
-      activityApiProjectData,
-    ),
+    last24h: getDataDetails(l2CostsChart, activityApiChart, 1),
+    last7d: getDataDetails(l2CostsChart, activityApiChart, 7),
+    last30d: getDataDetails(l2CostsChart, activityApiChart, 30),
+    last90d: getDataDetails(l2CostsChart, activityApiChart, 90),
   }
 }
 
 function getDataDetails(
-  type: keyof Omit<L2CostsApiProject, 'syncedUntil'>,
-  data: L2CostsApiProject,
-  activityApiProjectData: ActivityApiCharts | undefined,
+  costsChart: L2CostsApiChart,
+  activityChart: ActivityApiChart | undefined,
+  days: number,
 ): CostsDataDetails {
-  const dataRange = data[type]
-  assert(dataRange, `${type} is undefined`)
-
-  const days = typeToDays[type]
-  const txCount = activityApiProjectData?.daily.data
-    ? getTransactionCount(activityApiProjectData?.daily.data, 'project', days)
+  const txCount = activityChart
+    ? getTransactionCount(activityChart?.data, 'project', days)
     : undefined
 
+  const totalData = {
+    ethCost: getCostsSum(costsChart.data, 'totalEth', days),
+    usdCost: getCostsSum(costsChart.data, 'totalUsd', days),
+    gas: getCostsSum(costsChart.data, 'totalGas', days),
+  }
+  const blobsData = {
+    ethCost: getCostsSum(costsChart.data, 'blobsEth', days),
+    usdCost: getCostsSum(costsChart.data, 'blobsUsd', days),
+    gas: getCostsSum(costsChart.data, 'blobsGas', days),
+  }
+
+  const calldataData = {
+    ethCost: getCostsSum(costsChart.data, 'calldataEth', days),
+    usdCost: getCostsSum(costsChart.data, 'calldataUsd', days),
+    gas: getCostsSum(costsChart.data, 'calldataGas', days),
+  }
+
+  const computeData = {
+    ethCost: getCostsSum(costsChart.data, 'computeEth', days),
+    usdCost: getCostsSum(costsChart.data, 'computeUsd', days),
+    gas: getCostsSum(costsChart.data, 'computeGas', days),
+  }
+
+  const overheadData = {
+    ethCost: getCostsSum(costsChart.data, 'overheadEth', days),
+    usdCost: getCostsSum(costsChart.data, 'overheadUsd', days),
+    gas: getCostsSum(costsChart.data, 'overheadGas', days),
+  }
+
   return {
-    total: getCostsDataBreakdown(dataRange.total, txCount),
-    blobs: dataRange?.blobs
-      ? getCostsDataBreakdown(dataRange.blobs, txCount)
-      : undefined,
-    calldata: getCostsDataBreakdown(dataRange.calldata, txCount),
-    compute: getCostsDataBreakdown(dataRange.compute, txCount),
-    overhead: getCostsDataBreakdown(dataRange.overhead, txCount),
+    total: getCostsDataBreakdown(totalData, txCount),
+    blobs: getCostsDataBreakdown(blobsData, txCount),
+    calldata: getCostsDataBreakdown(calldataData, txCount),
+    compute: getCostsDataBreakdown(computeData, txCount),
+    overhead: getCostsDataBreakdown(overheadData, txCount),
     txCount: txCount
       ? {
           value: txCount,
@@ -146,7 +146,11 @@ function getDataDetails(
 }
 
 function getCostsDataBreakdown(
-  data: L2CostsBreakdown,
+  data: {
+    ethCost: number
+    usdCost: number
+    gas: number
+  },
   txCount: number | undefined,
 ): CostsDataBreakdown {
   return {
@@ -181,13 +185,6 @@ function getCostsDataBreakdown(
         : undefined,
     },
   }
-}
-
-const typeToDays = {
-  last24h: 1,
-  last7d: 7,
-  last30d: 30,
-  last90d: 90,
 }
 
 function getIncludedProjects(

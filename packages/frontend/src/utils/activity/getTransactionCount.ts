@@ -8,8 +8,8 @@ export function getTransactionCount(
   assert(days >= 1, 'Days must be at least 1')
 
   const dataIndex = type === 'ethereum' ? 2 : 1
-  const lastSevenDays = data.slice(-days)
-  return lastSevenDays
+  const lastDays = data.slice(-days)
+  return lastDays
     .map((d) => d[dataIndex])
     .reduce((prev, curr) => prev + curr, 0)
 }

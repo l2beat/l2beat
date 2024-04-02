@@ -110,9 +110,9 @@ async function main() {
       console.timeEnd('[IMPLEMENTATION CHANGE]')
     }
 
-    const l2CostsApiResponse = await fetchL2CostsApi(config.backend, http)
+    const l2CostsApiResponse = fetchL2CostsApi()
 
-    createApi(config, tvlApiResponse, activityApiResponse)
+    createApi(config, tvlApiResponse, activityApiResponse, l2CostsApiResponse)
 
     const supportedChains = getChainNames(config)
     const verificationStatus = getVerificationStatus(supportedChains)

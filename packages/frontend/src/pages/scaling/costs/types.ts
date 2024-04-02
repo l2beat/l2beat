@@ -7,7 +7,6 @@ import {
 import {
   ActivityApiResponse,
   ImplementationChangeReportApiResponse,
-  L2CostsApiProject,
   L2CostsApiResponse,
   TvlApiResponse,
 } from '@l2beat/shared-pure'
@@ -37,10 +36,10 @@ export interface ScalingCostsViewEntry {
 }
 
 export type CostsData = {
-  [Timerange in keyof Omit<
-    L2CostsApiProject,
-    'syncedUntil'
-  >]-?: CostsDataDetails
+  last24h: CostsDataDetails
+  last7d: CostsDataDetails
+  last30d: CostsDataDetails
+  last90d: CostsDataDetails
 }
 
 export type CostsDataDetails = {
