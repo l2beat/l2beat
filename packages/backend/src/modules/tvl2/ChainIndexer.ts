@@ -8,8 +8,8 @@ import {
 } from '@l2beat/uif'
 
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
-import { AmountProvider } from './AmountProvider'
 import { BlockTimestampIndexer } from './BlockTimestampIndexer'
+import { ChainAmountService } from './ChainAmountService'
 import {
   AmountConfigurationRecord,
   AmountRepository,
@@ -25,7 +25,7 @@ export class ChainIndexer extends MultiIndexer<AmountConfigEntry> {
   constructor(
     logger: Logger,
     parentIndexer: BlockTimestampIndexer,
-    private readonly amountProvider: AmountProvider,
+    private readonly amountProvider: ChainAmountService,
     private readonly stateRepository: IndexerStateRepository,
     private readonly amountRepository: AmountRepository,
     private readonly blockTimestampRepository: BlockTimestampRepository,

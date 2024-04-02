@@ -35,7 +35,7 @@ export interface NativeBalanceEncoding {
   decode: (response: Bytes) => bigint
 }
 
-export class AmountProvider {
+export class ChainAmountService {
   constructor(
     private readonly rpcClient: RpcClient,
     private readonly multicallClient: MulticallClient,
