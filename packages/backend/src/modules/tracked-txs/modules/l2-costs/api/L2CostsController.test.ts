@@ -1,6 +1,8 @@
 import {
   EthereumAddress,
+  L2CostsApiChart,
   L2CostsApiChartPoint,
+  L2CostsApiCharts,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -19,7 +21,7 @@ import {
   L2CostsRepository,
 } from '../repositories/L2CostsRepository'
 import { DetailedTransaction } from '../types/DetailedTransaction'
-import { L2CostsController } from './L2CostsController'
+import { CHART_TYPES, L2CostsController } from './L2CostsController'
 
 const START = UnixTime.fromDate(new Date('2024-04-02T09:00:00.000Z')).toStartOf(
   'hour',
@@ -66,12 +68,10 @@ describe(L2CostsController.name, () => {
         }),
       ])
 
-      controller.sumDetails = mockFn().returns(
-        mockObject<Omit<L2CostsApiProject, 'syncedUntil'>>({
-          last24h: mockObject<L2CostsDetails>({}),
-          last7d: mockObject<L2CostsDetails>({}),
-          last30d: mockObject<L2CostsDetails>({}),
-          last90d: mockObject<L2CostsDetails>({}),
+      controller.aggregateL2Costs = mockFn().returns(
+        mockObject<L2CostsApiCharts>({
+          hourly: mockObject<L2CostsApiChart>({}),
+          daily: mockObject<L2CostsApiChart>({}),
         }),
       )
 
@@ -80,13 +80,13 @@ describe(L2CostsController.name, () => {
       expect(
         l2CostsRepository.getByProjectAndTimeRange,
       ).toHaveBeenNthCalledWith(1, MOCK_PROJECTS[1].projectId, [
-        START.add(-90, 'days'),
+        START.add(-180, 'days'),
         START,
       ])
       expect(
         l2CostsRepository.getByProjectAndTimeRange,
       ).toHaveBeenNthCalledWith(2, MOCK_PROJECTS[2].projectId, [
-        START.add(-90, 'days'),
+        START.add(-180, 'days'),
         START,
       ])
 
@@ -94,17 +94,13 @@ describe(L2CostsController.name, () => {
       expect(result.data.projects).toEqual({
         project2: {
           syncedUntil: new UnixTime(1000),
-          last24h: mockObject<L2CostsDetails>({}),
-          last7d: mockObject<L2CostsDetails>({}),
-          last30d: mockObject<L2CostsDetails>({}),
-          last90d: mockObject<L2CostsDetails>({}),
+          daily: mockObject<L2CostsApiChart>({}),
+          hourly: mockObject<L2CostsApiChart>({}),
         },
         project3: {
           syncedUntil: new UnixTime(2000),
-          last24h: mockObject<L2CostsDetails>({}),
-          last7d: mockObject<L2CostsDetails>({}),
-          last30d: mockObject<L2CostsDetails>({}),
-          last90d: mockObject<L2CostsDetails>({}),
+          daily: mockObject<L2CostsApiChart>({}),
+          hourly: mockObject<L2CostsApiChart>({}),
         },
       })
     })
@@ -113,7 +109,19 @@ describe(L2CostsController.name, () => {
 
       const result = await controller.getL2Costs()
       if (result.type === 'success') {
-        expect(result.data).toEqual({ projects: {} })
+        expect(result.data).toEqual({
+          projects: {},
+          combined: {
+            hourly: {
+              types: CHART_TYPES,
+              data: [],
+            },
+            daily: {
+              types: CHART_TYPES,
+              data: [],
+            },
+          },
+        })
       }
     })
   })

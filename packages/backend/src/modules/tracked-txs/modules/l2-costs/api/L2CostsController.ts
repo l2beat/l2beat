@@ -161,7 +161,6 @@ export class L2CostsController {
             types: CHART_TYPES,
             data: Array.from(combinedDailyMap.values()),
           },
-          syncedUntil: NOW_TO_FULL_HOUR,
         },
       },
     }
@@ -171,7 +170,7 @@ export class L2CostsController {
     transactions: DetailedTransaction[],
     combinedHourlyMap: Map<number, L2CostsApiChartPoint>,
     combinedDailyMap: Map<number, L2CostsApiChartPoint>,
-  ) {
+  ): Omit<L2CostsApiCharts, 'syncedUntil'> {
     const hourlyMap = new Map<number, L2CostsApiChartPoint>()
     const dailyMap = new Map<number, L2CostsApiChartPoint>()
 

@@ -54,7 +54,7 @@ export const L2CostsApiCharts = z.object({
 export type L2CostsApiCharts = z.infer<typeof L2CostsApiCharts>
 
 export const L2CostsApiResponse = z.object({
-  combined: L2CostsApiCharts,
+  combined: L2CostsApiCharts.omit({ syncedUntil: true }),
   projects: z.record(z.string(), z.optional(L2CostsApiCharts)),
 })
 export type L2CostsApiResponse = z.infer<typeof L2CostsApiResponse>
