@@ -46,7 +46,7 @@ const NOW_TO_FULL_HOUR = UnixTime.now().toStartOf('hour')
 // Amount of gas required for a basic tx
 const OVERHEAD = 21_000
 
-const CHART_TYPES: L2CostsApiCharts['hourly']['types'] = [
+export const CHART_TYPES: L2CostsApiCharts['hourly']['types'] = [
   'timestamp',
   'totalGas',
   'totalEth',
