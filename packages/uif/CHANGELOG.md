@@ -1,5 +1,11 @@
 # @l2beat/uif
 
+## 0.4.0
+
+### Minor Changes
+
+- Add getSafeHeight and setSafeHeight to MultiIndexer
+
 ## 0.3.1
 
 ### Patch Changes

@@ -87,6 +87,49 @@ describe(MultiIndexer.name, () => {
         saved('c', 300, null, 300),
       ])
     })
+
+    it('calls getters in order', async () => {
+      const calls: string[] = []
+      const testIndexer = new TestMultiIndexer([], [])
+      testIndexer.multiInitialize = mockFn(async () => {
+        calls.push('multiInitialize')
+        return []
+      })
+      testIndexer.getInitialConfigurations = mockFn(() => {
+        calls.push('getInitialConfigurations')
+        return []
+      })
+      testIndexer.getSafeHeight = mockFn(() => {
+        calls.push('getSafeHeight')
+        return Promise.resolve(undefined)
+      })
+
+      await testIndexer.initialize()
+
+      expect(calls).toEqual([
+        'multiInitialize',
+        'getInitialConfigurations',
+        'getSafeHeight',
+      ])
+    })
+
+    it('getSafeHeight lower than saved configs', async () => {
+      const testIndexer = new TestMultiIndexer(
+        [actual('a', 100, 200)],
+        [saved('a', 100, 200, 150)],
+      )
+      testIndexer.getSafeHeight.resolvesTo(130)
+      expect(await testIndexer.initialize()).toEqual(130)
+    })
+
+    it('getSafeHeight higher than saved configs', async () => {
+      const testIndexer = new TestMultiIndexer(
+        [actual('a', 100, 200)],
+        [saved('a', 100, 200, 150)],
+      )
+      testIndexer.getSafeHeight.resolvesTo(160)
+      expect(await testIndexer.initialize()).toEqual(150)
+    })
   })
 
   describe(MultiIndexer.prototype.update.name, () => {
@@ -404,6 +447,12 @@ class TestMultiIndexer extends MultiIndexer<null> {
   ) {
     super(Logger.SILENT, [], configurations)
   }
+
+  getSafeHeight =
+    mockFn<MultiIndexer<null>['getSafeHeight']>().resolvesTo(undefined)
+
+  setSafeHeight =
+    mockFn<MultiIndexer<null>['setSafeHeight']>().resolvesTo(undefined)
 
   override multiInitialize(): Promise<SavedConfiguration<null>[]> {
     return Promise.resolve(this._saved)

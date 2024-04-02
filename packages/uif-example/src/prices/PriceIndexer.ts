@@ -36,6 +36,16 @@ export class PriceIndexer extends MultiIndexer<PriceConfig> {
     return this.priceIndexerRepository.load(this.indexerId)
   }
 
+  override async getSafeHeight(): Promise<number | undefined> {
+    // we don't have a safe height for prices as they don't depend on parent indexers
+    return Promise.resolve(undefined)
+  }
+
+  override setSafeHeight(_height: number): Promise<void> {
+    // we don't have a safe height for prices as they don't depend on parent indexers
+    return Promise.resolve()
+  }
+
   override async multiUpdate(
     from: number,
     to: number,
