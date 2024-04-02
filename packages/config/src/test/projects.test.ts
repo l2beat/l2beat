@@ -154,4 +154,12 @@ describe('projects', () => {
       }
     })
   })
+
+  it('has an activityDataSource defined if transaction data API is set', () => {
+    for (const project of layer2s) {
+      if (project.config.transactionApi) {
+        expect(project.display.activityDataSource).toBeTruthy()
+      }
+    }
+  })
 })
