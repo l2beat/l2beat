@@ -1,9 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress } from '@l2beat/shared-pure'
 
-import { Layer2 } from './types'
 import { subtractOne } from '../common/assessCount'
-import { orbitStackL2 } from './templates/orbitStack'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { orbitStackL2 } from './templates/orbitStack'
+import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('kinto')
 
@@ -64,7 +64,7 @@ export const kinto: Layer2 = orbitStackL2({
     //   date: '2024-05-16T00:00:00Z',
     //   description: 'Engen mining is completed and locked funds are deposited to the Kinto L2. Users can deposit and withdraw funds.',
     // },
-        {
+    {
       name: 'Kinto Mainnet Genesis',
       link: 'https://medium.com/mamori-finance/%EF%B8%8F-kintos-launch-the-set-up-7eddfbb4bc38',
       date: '2023-12-15T00:00:00Z',
