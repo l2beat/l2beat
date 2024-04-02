@@ -1,10 +1,5 @@
 import { assert, Logger } from '@l2beat/backend-tools'
-import {
-  AmountConfigEntry,
-  EscrowEntry,
-  TotalSupplyEntry,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { EscrowEntry, TotalSupplyEntry, UnixTime } from '@l2beat/shared-pure'
 import {
   MultiIndexer,
   RemovalConfiguration,
@@ -22,7 +17,9 @@ import {
 import { BlockTimestampRepository } from './repositories/BlockTimestampRepository'
 import { SyncOptimizer } from './SyncOptimizer'
 
-export class ChainIndexer extends MultiIndexer<TotalSupplyEntry | EscrowEntry> {
+type AmountConfigEntry = TotalSupplyEntry | EscrowEntry
+
+export class ChainIndexer extends MultiIndexer<AmountConfigEntry> {
   indexerId: string
 
   constructor(
@@ -35,7 +32,7 @@ export class ChainIndexer extends MultiIndexer<TotalSupplyEntry | EscrowEntry> {
     private readonly chain: string,
     private readonly minTimestamp: UnixTime,
     private readonly syncOptimizer: SyncOptimizer,
-    private readonly amountConfigurations: (TotalSupplyEntry | EscrowEntry)[],
+    private readonly amountConfigurations: AmountConfigEntry[],
   ) {
     super(logger, [parentIndexer])
     this.indexerId = `chain_indexer_${chain}`
@@ -45,7 +42,7 @@ export class ChainIndexer extends MultiIndexer<TotalSupplyEntry | EscrowEntry> {
     const oldConfigurations =
       await this.amountRepository.getConfigurationsByIndexerId(this.indexerId)
 
-    const toAdd: (TotalSupplyEntry | EscrowEntry)[] = []
+    const toAdd: AmountConfigEntry[] = []
 
     for (const configuration of this.amountConfigurations) {
       const oldConfiguration = oldConfigurations.find(
