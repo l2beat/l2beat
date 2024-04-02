@@ -57,7 +57,7 @@ async function main() {
     config.features = Object.fromEntries(
       Object.entries(config.features).map(([key, value]) => [
         key,
-        value && backendFeatures[key],
+        value && (!(key in backendFeatures) || backendFeatures[key]),
       ]),
     ) as Config['features']
 
