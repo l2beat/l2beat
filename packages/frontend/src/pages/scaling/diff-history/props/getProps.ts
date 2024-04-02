@@ -34,7 +34,7 @@ export function getProps(
     },
     wrapper: {
       metadata: getPageMetadata(project),
-      preloadApi: getChartUrl({ type: 'layer2-activity' }),
+      preloadApi: getChartUrl({ type: 'scaling-activity' }),
       banner: config.features.banner,
     },
   }

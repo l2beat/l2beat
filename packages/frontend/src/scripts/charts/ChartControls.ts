@@ -9,6 +9,7 @@ import { ChartSettings, ChartSettingsManager } from './ChartSettings'
 import { ChartDataController } from './data-controller/ChartDataController'
 import { ChartType, Milestones, TokenInfo } from './types'
 import { ChartViewController } from './view-controller/ChartViewController'
+import { ChartUnit } from './view-controller/types'
 
 export class ChartControls {
   private chartType?: ChartType
@@ -32,7 +33,7 @@ export class ChartControls {
     this.chartViewController.init({
       data: undefined,
       timeRangeInDays: settings.getTimeRange(),
-      useAltCurrency: settings.getUseAltCurrency(),
+      unit: settings.getUnit(),
       useLogScale: settings.getUseLogScale(),
       showEthereumTransactions: settings.getShowEthereumTransactions(),
       milestones,
@@ -71,13 +72,12 @@ export class ChartControls {
       })
     })
 
-    const currencyControls = $$<HTMLInputElement>(
-      '[data-role="chart-currency-controls"] input',
+    const unitControls = $$<HTMLInputElement>(
+      '[data-role="chart-unit-controls"] input',
     )
-    currencyControls.forEach((currencyControl) => {
-      currencyControl.checked =
-        settings.getUseAltCurrency() === (currencyControl.value === 'ETH')
-      currencyControl.addEventListener('change', () => {
+    unitControls.forEach((unitControl) => {
+      unitControl.checked = settings.getUnit() === unitControl.value
+      unitControl.addEventListener('change', () => {
         if (this.chartType?.type === 'project-token-tvl' && this.projectSlug) {
           this.updateChartType({
             type: this.isDetailedTvl ? 'project-detailed-tvl' : 'project-tvl',
@@ -85,9 +85,9 @@ export class ChartControls {
           })
         }
 
-        const useAltCurrency = currencyControl.value === 'ETH'
-        settings.setUseAltCurrency(useAltCurrency)
-        this.chartViewController.configure({ useAltCurrency })
+        const unit = unitControl.value as ChartUnit
+        settings.setUnit(unit)
+        this.chartViewController.configure({ unit })
       })
     })
 
@@ -173,10 +173,10 @@ export class ChartControls {
             slug: this.projectSlug,
           })
         }
-        currencyControls.forEach((c) => (c.disabled = false))
+        unitControls.forEach((c) => (c.disabled = false))
         return
       }
-      currencyControls.forEach((c) => (c.disabled = true))
+      unitControls.forEach((c) => (c.disabled = true))
 
       const tokenInfo = TokenInfo.parse(JSON.parse(value))
       this.updateChartType({
@@ -199,9 +199,9 @@ export class ChartControls {
       document.querySelector<HTMLElement>('#project-filters')
     projectFilters?.addEventListener('change', () => {
       if (
-        this.chartType?.type !== 'layer2-tvl' &&
-        this.chartType?.type !== 'layer2-detailed-tvl' &&
-        this.chartType?.type !== 'layer2-activity'
+        this.chartType?.type !== 'scaling-tvl' &&
+        this.chartType?.type !== 'scaling-detailed-tvl' &&
+        this.chartType?.type !== 'scaling-activity'
       ) {
         return
       }

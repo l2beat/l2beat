@@ -41,7 +41,7 @@ export function ActivityPage(props: ActivityPageProps) {
         <main className="mt-4 md:mt-12">
           <Chart
             settingsId="scaling-activity"
-            initialType={{ type: 'layer2-activity' }}
+            initialType={{ type: 'scaling-activity' }}
             milestones={props.milestones}
             header="activity"
           />

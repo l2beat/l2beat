@@ -1,5 +1,6 @@
 import { LocalStorage } from '../local-storage/LocalStorage'
 import { SavedChartSettings, SavedChartState } from '../local-storage/types'
+import { ChartUnit } from './view-controller/types'
 
 export type ChartSettings = ReturnType<
   typeof ChartSettingsManager.prototype.for
@@ -11,7 +12,7 @@ interface ChartSettingsManagerOptions {
 
 const DEFAULT_VALUES: SavedChartSettings = {
   useLogScale: false,
-  useAltCurrency: false,
+  unit: 'USD',
   timeRangeInDays: 365,
   showEthereumTransactions: true,
 }
@@ -33,11 +34,11 @@ export class ChartSettingsManager {
       setUseLogScale: (value: boolean) => {
         this.update(settingsId, { useLogScale: value })
       },
-      getUseAltCurrency: () => {
-        return this.get(settingsId).useAltCurrency
+      getUnit: () => {
+        return this.get(settingsId).unit
       },
-      setUseAltCurrency: (value: boolean) => {
-        this.update(settingsId, { useAltCurrency: value })
+      setUnit: (value: ChartUnit) => {
+        this.update(settingsId, { unit: value })
       },
       getTimeRange: () => {
         const value = this.get(settingsId).timeRangeInDays

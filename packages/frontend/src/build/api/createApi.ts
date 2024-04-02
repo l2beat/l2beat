@@ -48,14 +48,14 @@ export function createApi(
     }
   }
 
-  urlCharts.set('l2costs/combined', l2CostsApiResponse.combined)
+  urlCharts.set('costs/combined', l2CostsApiResponse.combined)
   for (const [projectId, chart] of Object.entries(
     l2CostsApiResponse.projects,
   )) {
     const slug = [...layer2s].find((x) => x.id.toString() === projectId)
       ?.display.slug
     if (chart && slug) {
-      urlCharts.set(`l2costs/${slug}`, chart)
+      urlCharts.set(`costs/${slug}`, chart)
     }
   }
 

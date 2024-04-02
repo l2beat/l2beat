@@ -103,6 +103,43 @@ export function renderDetailedTvlHover(
   ])
 }
 
+export interface CostsData {
+  date: string
+  total: string
+  calldata: string
+  blobs: string | undefined
+  compute: string
+  overhead: string
+}
+
+export function renderCostsHover(data: CostsData) {
+  return renderHover([
+    renderDateRow(data.date),
+    renderDetailedRow({
+      title: 'Total',
+      value: data.total,
+    }),
+    renderHorizontalSeparator(),
+    renderDetailedRow({
+      title: 'Calldata',
+      value: data.calldata,
+    }),
+    data.blobs &&
+      renderDetailedRow({
+        title: 'Blobs',
+        value: data.blobs,
+      }),
+    renderDetailedRow({
+      title: 'Compute',
+      value: data.compute,
+    }),
+    renderDetailedRow({
+      title: 'Overhead',
+      value: data.overhead,
+    }),
+  ])
+}
+
 function renderMilestoneLink(link: string) {
   return `
   <a href="${link}" class="font-semibold pointer-events-auto text-blue-700 z-50 underline transition-colors hover:text-blue-550 dark:text-blue-500 dark:hover:text-blue-550" target="_blank" rel="noreferrer noopener">

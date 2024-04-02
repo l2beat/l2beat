@@ -41,7 +41,7 @@ export function ScalingSummaryPage(props: SummaryPageProps) {
         <main className="mt-4 md:mt-12">
           <Chart
             settingsId="scaling-summary"
-            initialType={{ type: 'layer2-tvl' }}
+            initialType={{ type: 'scaling-tvl' }}
             milestones={props.milestones}
             header="tvl"
           />

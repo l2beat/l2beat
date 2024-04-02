@@ -26,7 +26,7 @@ export function CostsBreakdownValueCell(props: Props) {
       <Cell
         details={props.data.last24h}
         type={props.type}
-        className='hidden group-data-[time-range="24H"]/costs-controls-wrapper:flex'
+        className='hidden group-data-[time-range="1D"]/costs-controls-wrapper:flex'
       />
       <Cell
         details={props.data.last7d}

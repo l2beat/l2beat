@@ -35,7 +35,7 @@ export function getProps(
   const chartType: ChartType = project
     ? { type: 'project-tvl', slug: project.display.slug }
     : type === 'layers2s'
-      ? { type: 'layer2-tvl' }
+      ? { type: 'scaling-tvl' }
       : { type: 'bridges-tvl', includeCanonical: false }
 
   return {
@@ -75,7 +75,7 @@ export function getPropsActivity(
       htmlClassName: 'light overflow-hidden h-[100vh] meta',
       bodyClassName: 'overflow-hidden h-[100vh]',
       metadata: { title: 'Meta Image', description: '', image: '', url: '' },
-      preloadApi: getChartUrl({ type: 'layer2-activity' }),
+      preloadApi: getChartUrl({ type: 'scaling-activity' }),
       banner: false,
     },
   }
@@ -97,7 +97,7 @@ export function getPropsDetailed(
   const chartType: ChartType = project
     ? { type: 'project-detailed-tvl', slug: project.display.slug }
     : type === 'layers2s'
-      ? { type: 'layer2-detailed-tvl' }
+      ? { type: 'scaling-detailed-tvl' }
       : { type: 'bridges-tvl', includeCanonical: false }
 
   return {

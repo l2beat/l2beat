@@ -1,15 +1,24 @@
+import compact from 'lodash/compact'
 import React from 'react'
 
 import { RadioGroup } from './RadioGroup'
 
-export function CurrencyControls() {
+interface Props {
+  showGas?: boolean
+}
+
+export function UnitControls(props: Props) {
   return (
     <RadioGroup
-      role="chart-currency-controls"
-      name="currency"
+      role="chart-unit-controls"
+      name="unit"
       className="transition-colors duration-200 group-data-[interactivity-disabled]/chart:bg-gray-200 dark:group-data-[interactivity-disabled]/chart:bg-zinc-700"
       optionsClassname="group-data-[interactivity-disabled]/chart:opacity-0 transition-opacity duration-200 group-data-[interactivity-disabled]/chart:pointer-events-none"
-      options={[{ value: 'USD', checked: true }, { value: 'ETH' }]}
+      options={compact([
+        { value: 'USD', checked: true },
+        { value: 'ETH' },
+        props.showGas && { value: 'GAS' },
+      ])}
     />
   )
 }

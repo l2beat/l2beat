@@ -1,9 +1,9 @@
 import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
+import { getDefaultPageMetadata } from '../../../metadata'
 import { Wrapped } from '../../../Page'
 import { ScalingRiskPagesData } from '../types'
 import { ScalingRiskPageProps } from '../view/ScalingRiskPage'
-import { getPageMetadata } from './getPageMetadata'
 import { getScalingRiskView } from './getScalingRiskView'
 
 export function getProps(
@@ -20,7 +20,10 @@ export function getProps(
       showFinality: config.features.finality,
     },
     wrapper: {
-      metadata: getPageMetadata(),
+      metadata: getDefaultPageMetadata({
+        image: 'https://l2beat.com/meta-images/overview-scaling.png',
+        url: 'https://l2beat.com/scaling/risk',
+      }),
       banner: config.features.banner,
     },
   }

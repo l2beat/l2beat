@@ -12,6 +12,9 @@ export function getTvlRenderParams(
   if (state.data?.type !== 'tvl') {
     throw new Error('Invalid data type')
   }
+  if (state.unit === 'GAS') {
+    throw new Error('Invalid unit')
+  }
 
   const dataInRange = getEntriesByDays(
     state.timeRangeInDays,
@@ -19,26 +22,26 @@ export function getTvlRenderParams(
     { trimLeft: true },
   )
 
+  const useEth = state.unit === 'ETH'
+
   const points = dataInRange.map((data) => {
     const timestamp = data[0]
     const usd = data[1]
     const eth = data[5]
     return {
-      series: [state.useAltCurrency ? eth : usd],
+      series: [useEth ? eth : usd],
       data: {
         date: formatTimestamp(timestamp, {
           mode: 'datetime',
         }),
-        usd: data[1],
-        eth: eth,
+        usd,
+        eth,
       },
       milestone: state.milestones[timestamp],
     }
   })
 
-  const formatYAxisLabel = state.useAltCurrency
-    ? (x: number) => formatCurrency(x, 'eth')
-    : (x: number) => formatCurrency(x, 'usd')
+  const formatYAxisLabel = (value: number) => formatCurrency(value, state.unit)
 
   const seriesStyle: SeriesStyle[] = [
     {
@@ -52,7 +55,7 @@ export function getTvlRenderParams(
     formatYAxisLabel,
     points,
     seriesStyle,
-    renderHoverContents: (data) => renderTvlHover(data, !!state.useAltCurrency),
+    renderHoverContents: (data) => renderTvlHover(data, useEth),
     useLogScale: state.useLogScale,
     range: [dataInRange[0][0], dataInRange[dataInRange.length - 1][0]],
   }

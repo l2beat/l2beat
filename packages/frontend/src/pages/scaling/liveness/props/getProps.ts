@@ -6,9 +6,9 @@ import {
 
 import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
+import { getDefaultPageMetadata } from '../../../metadata'
 import { Wrapped } from '../../../Page'
 import { ScalingLivenessPageProps } from '../view/ScalingLivenessPage'
-import { getPageMetadata } from './getPageMetadata'
 import { getScalingLivenessView } from './getScalingLivenessView'
 
 export interface LivenessPagesData {
@@ -32,7 +32,10 @@ export function getProps(
     },
     wrapper: {
       banner: config.features.banner,
-      metadata: getPageMetadata(),
+      metadata: getDefaultPageMetadata({
+        image: 'https://l2beat.com/meta-images/overview-scaling.png',
+        url: 'https://l2beat.com/scaling/liveness',
+      }),
     },
   }
 }

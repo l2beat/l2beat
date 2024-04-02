@@ -1,13 +1,13 @@
 import React from 'react'
 
 import {
+  Chart,
   Footer,
   FooterProps,
   Navbar,
   NavbarProps,
 } from '../../../../components'
 import { About } from '../../../../components/About'
-import { SimplePageHeader } from '../../../../components/header/SimplePageHeader'
 import { ScalingNavigationTabs } from '../../../../components/navigation-tabs/ScalingNavigationTabs'
 import { OtherSites } from '../../../../components/other-sites/OtherSites'
 import { PageContent } from '../../../../components/PageContent'
@@ -33,8 +33,11 @@ export function ScalingCostsPage(props: ScalingCostsPageProps) {
           showLiveness={props.showLiveness}
           selected="costs"
         />
-        <main>
-          <SimplePageHeader>Costs</SimplePageHeader>
+        <main className="mt-4 md:mt-12">
+          <Chart
+            settingsId="scaling-costs"
+            initialType={{ type: 'scaling-costs' }}
+          />
           <ScalingCostsView {...props.costsView} />
           <OtherSites />
           <About />

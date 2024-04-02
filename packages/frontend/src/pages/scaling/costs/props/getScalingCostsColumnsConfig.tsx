@@ -105,31 +105,29 @@ function getSorting(
 ): SortingConfig<ScalingCostsViewEntry> {
   return {
     getOrderValue: (project) => ({
-      '24H-GAS-TOTAL': project.costs.last24h[type]?.gas.value,
+      '1D-GAS-TOTAL': project.costs.last24h[type]?.gas.value,
       '7D-GAS-TOTAL': project.costs.last7d[type]?.gas.value,
       '30D-GAS-TOTAL': project.costs.last30d[type]?.gas.value,
       '90D-GAS-TOTAL': project.costs.last90d[type]?.gas.value,
-      '24H-ETH-TOTAL': project.costs.last24h[type]?.ethCost.value,
+      '1D-ETH-TOTAL': project.costs.last24h[type]?.ethCost.value,
       '7D-ETH-TOTAL': project.costs.last7d[type]?.ethCost.value,
       '30D-ETH-TOTAL': project.costs.last30d[type]?.ethCost.value,
       '90D-ETH-TOTAL': project.costs.last90d[type]?.ethCost.value,
-      '24H-USD-TOTAL': project.costs.last24h[type]?.usdCost.value,
+      '1D-USD-TOTAL': project.costs.last24h[type]?.usdCost.value,
       '7D-USD-TOTAL': project.costs.last7d[type]?.usdCost.value,
       '30D-USD-TOTAL': project.costs.last30d[type]?.usdCost.value,
       '90D-USD-TOTAL': project.costs.last90d[type]?.usdCost.value,
-      '24H-GAS-AMORTIZED': project.costs.last24h[type]?.gas.amortized?.value,
+      '1D-GAS-AMORTIZED': project.costs.last24h[type]?.gas.amortized?.value,
       '7D-GAS-AMORTIZED': project.costs.last7d[type]?.gas.amortized?.value,
       '30D-GAS-AMORTIZED': project.costs.last30d[type]?.gas.amortized?.value,
       '90D-GAS-AMORTIZED': project.costs.last90d[type]?.gas.amortized?.value,
-      '24H-ETH-AMORTIZED':
-        project.costs.last24h[type]?.ethCost.amortized?.value,
+      '1D-ETH-AMORTIZED': project.costs.last24h[type]?.ethCost.amortized?.value,
       '7D-ETH-AMORTIZED': project.costs.last7d[type]?.ethCost.amortized?.value,
       '30D-ETH-AMORTIZED':
         project.costs.last30d[type]?.ethCost.amortized?.value,
       '90D-ETH-AMORTIZED':
         project.costs.last90d[type]?.ethCost.amortized?.value,
-      '24H-USD-AMORTIZED':
-        project.costs.last24h[type]?.usdCost.amortized?.value,
+      '1D-USD-AMORTIZED': project.costs.last24h[type]?.usdCost.amortized?.value,
       '7D-USD-AMORTIZED': project.costs.last7d[type]?.usdCost.amortized?.value,
       '30D-USD-AMORTIZED':
         project.costs.last30d[type]?.usdCost.amortized?.value,

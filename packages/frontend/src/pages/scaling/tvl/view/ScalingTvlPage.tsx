@@ -36,7 +36,7 @@ export function ScalingTvlPage(props: ScalingTvlPageProps) {
         <main className="mt-4 md:mt-12">
           <Chart
             settingsId="scaling-tvl"
-            initialType={{ type: 'layer2-detailed-tvl' }}
+            initialType={{ type: 'scaling-detailed-tvl' }}
             header="tvl"
           />
           <ScalingTvlView {...props.tvlView} />

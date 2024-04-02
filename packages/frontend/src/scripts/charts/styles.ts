@@ -78,6 +78,8 @@ export const FILL_STYLES = {
   pink: () => '#FF46C0',
   yellow: () => '#FFC107',
   purple: () => '#7E41CC',
+  green: () => '#5BFF4D',
+  blue: () => '#BADAFF',
   'blue gradient': (ctx: CanvasRenderingContext2D) => {
     const gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0)
     gradient.addColorStop(0, 'rgba(42, 91, 216, 0.3)')
@@ -97,6 +99,8 @@ export const LINE_STYLES = {
   pink: () => '#FF46C0',
   yellow: () => '#FFC107',
   purple: () => '#7E41CC',
+  green: () => '#5BFF4D',
+  blue: () => '#BADAFF',
   'blue gradient': (ctx: CanvasRenderingContext2D) => {
     const gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0)
     gradient.addColorStop(0, 'rgba(42, 91, 216')

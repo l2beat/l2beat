@@ -7,11 +7,13 @@ export interface RadioGroupProps {
   name: string
   className?: string
   optionsClassname?: string
-  options: {
-    value: string
-    checked?: boolean
-    className?: string
-  }[]
+  options: RadioGroupOption[]
+}
+
+export interface RadioGroupOption {
+  value: string
+  checked?: boolean
+  className?: string
 }
 
 export function RadioGroup(props: RadioGroupProps) {

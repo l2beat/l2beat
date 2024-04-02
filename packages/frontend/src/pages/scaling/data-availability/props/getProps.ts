@@ -1,9 +1,9 @@
 import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
+import { getDefaultPageMetadata } from '../../../metadata'
 import { Wrapped } from '../../../Page'
 import { DataAvailabilityPagesData } from '../types'
 import { ScalingDataAvailabilityPageProps } from '../view/ScalingDataAvailabilityPage'
-import { getPageMetadata } from './getPageMetadata'
 import { getScalingDataAvailabilityView } from './getScalingDataAvailabilityView'
 
 export function getProps(
@@ -23,7 +23,10 @@ export function getProps(
       showFinality: config.features.finality,
     },
     wrapper: {
-      metadata: getPageMetadata(),
+      metadata: getDefaultPageMetadata({
+        image: 'https://l2beat.com/meta-images/overview-detailed-scaling.png',
+        url: 'https://l2beat.com/scaling/data-availability',
+      }),
       banner: config.features.banner,
     },
   }

@@ -6,9 +6,7 @@ import { TableView } from '../../../../components/table/TableView'
 import { RowConfig } from '../../../../components/table/types'
 import { getScalingCostsColumnsConfig } from '../props/getScalingCostsColumnsConfig'
 import { ScalingCostsViewEntry as ScalingCostsViewEntry } from '../types'
-import { CostsTimeRangeControls } from './CostsTimeRangeControls'
 import { CostsTypeControls } from './CostsTypeControls'
-import { CostsUnitControls } from './CostsUnitControls'
 
 export interface ScalingCostsViewProps {
   items: ScalingCostsViewEntry[]
@@ -27,10 +25,6 @@ export function ScalingCostsView({ items }: ScalingCostsViewProps) {
         <CostsTypeControls />
       </div>
 
-      <div className="flex flex-col gap-2 md:flex-row md:justify-between">
-        <CostsUnitControls />
-        <CostsTimeRangeControls />
-      </div>
       <TableView columnsConfig={columnsConfig} rows={rows} items={items} />
     </section>
   )

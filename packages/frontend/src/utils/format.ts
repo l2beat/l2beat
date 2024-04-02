@@ -8,7 +8,7 @@ export function formatCurrency(
   let num
   let result
 
-  switch (currency) {
+  switch (currency.toLowerCase()) {
     case 'usd': {
       num = formatLargeNumber(value, maxDecimals)
       result = `$${num}`

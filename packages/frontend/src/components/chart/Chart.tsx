@@ -14,7 +14,7 @@ import { ChartErrorState } from './ChartErrorState'
 import { ChartHover } from './ChartHover'
 import { ChartLabels } from './ChartLabels'
 import { ChartLoader } from './ChartLoader'
-import { CurrencyControls } from './CurrencyControls'
+import { UnitControls } from './CurrencyControls'
 import { EthereumActivityToggle } from './EthereumActivityToggle'
 import { RadioChartTypeControl } from './RadioChartTypeControl'
 import { RangeControls } from './RangeControls'
@@ -43,7 +43,7 @@ export interface ChartProps {
 
 export function Chart(props: ChartProps) {
   const isActivity =
-    props.initialType.type === 'layer2-activity' ||
+    props.initialType.type === 'scaling-activity' ||
     props.initialType.type === 'project-activity' ||
     props.initialType.type === 'storybook-fake-activity'
 
@@ -90,7 +90,7 @@ export function Chart(props: ChartProps) {
           >
             <TimeRange isMetaChart={!!props.metaChart} />
             <RangeControls
-              isActivity={isActivity}
+              chartType={props.initialType}
               isMetaChart={!!props.metaChart}
             />
           </div>
@@ -143,7 +143,9 @@ export function Chart(props: ChartProps) {
             )}
             {!isActivity && (
               <div className="mr-4 flex flex-wrap gap-4" data-tvl-only>
-                <CurrencyControls />
+                <UnitControls
+                  showGas={props.initialType.type === 'scaling-costs'}
+                />
                 <TokenControls
                   tvlBreakdownHref={props.tvlBreakdownHref}
                   tokens={props.tokens}

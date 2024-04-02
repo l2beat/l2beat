@@ -13,7 +13,7 @@ interface CellProps {
 export function CostsTotalCell({ data, className }: CellProps) {
   return (
     <CostsControlsWrapper className={className}>
-      <div className='hidden group-data-[time-range="24H"]/costs-controls-wrapper:block'>
+      <div className='hidden group-data-[time-range="1D"]/costs-controls-wrapper:block'>
         <TotalValue
           details={data.last24h}
           unit="usdCost"

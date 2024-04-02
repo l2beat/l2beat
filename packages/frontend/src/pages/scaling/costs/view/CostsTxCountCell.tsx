@@ -13,7 +13,7 @@ interface Props {
 export function CostsTxCountCell(props: Props) {
   return (
     <CostsControlsWrapper className={props.className}>
-      <div className='hidden group-data-[time-range="24H"]/costs-controls-wrapper:block'>
+      <div className='hidden group-data-[time-range="1D"]/costs-controls-wrapper:block'>
         <Cell txCount={props.data.last24h.txCount} />
       </div>
       <div className='hidden group-data-[time-range="7D"]/costs-controls-wrapper:block'>

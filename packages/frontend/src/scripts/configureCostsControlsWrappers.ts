@@ -17,20 +17,20 @@ export function configureCostsControlsWrappers() {
   const cells = $$('[data-role="costs-controls-wrapper"]')
 
   const unitControls = $$<HTMLInputElement>(
-    '[data-role="costs-unit-controls"] input',
+    '[data-role="chart-unit-controls"] input',
   )
   const timeRangeControls = $$<HTMLInputElement>(
-    '[data-role="costs-time-range-controls"] input',
+    '[data-role="chart-range-controls"] input',
   )
   const typeControls = $$<HTMLInputElement>(
     '[data-role="costs-type-controls"] input',
   )
 
   let checkedTimeRangeControl = $<HTMLInputElement>(
-    '[data-role="costs-time-range-controls"] input:checked',
+    '[data-role="chart-range-controls"] input:checked',
   )
   let checkedUnitControl = $<HTMLInputElement>(
-    '[data-role="costs-unit-controls"] input:checked',
+    '[data-role="chart-unit-controls"] input:checked',
   )
   let checkedTypeControl = $<HTMLInputElement>(
     '[data-role="costs-type-controls"] input:checked',

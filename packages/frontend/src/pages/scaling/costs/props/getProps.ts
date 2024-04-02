@@ -1,7 +1,7 @@
 import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
+import { getDefaultPageMetadata } from '../../../metadata'
 import { Wrapped } from '../../../Page'
-import { getPageMetadata } from '../../activity/props/getPageMetadata'
 import { CostsPagesData } from '../types'
 import { ScalingCostsPageProps } from '../view/ScalingCostsPage'
 import { getScalingCostsView } from './getScalingCostsView'
@@ -20,7 +20,10 @@ export function getProps(
       showFinality: config.features.finality,
     },
     wrapper: {
-      metadata: getPageMetadata(),
+      metadata: getDefaultPageMetadata({
+        image: 'https://l2beat.com/meta-images/overview-scaling.png',
+        url: 'https://l2beat.com/scaling/costs',
+      }),
       banner: config.features.banner,
     },
   }
