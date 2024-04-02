@@ -17,7 +17,7 @@ type CommittedBlock = z.infer<typeof CommittedBlock>
 
 export class ZkSyncLiteFinalityAnalyzer extends BaseAnalyzer {
   override getTrackedTxSubtype(): TrackedTxsConfigSubtype {
-    return 'batchSubmissions'
+    return 'proofSubmissions'
   }
 
   async getFinality(transaction: {
