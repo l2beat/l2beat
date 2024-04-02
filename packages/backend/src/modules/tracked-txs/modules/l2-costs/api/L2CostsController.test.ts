@@ -26,6 +26,7 @@ import { CHART_TYPES, L2CostsController } from './L2CostsController'
 const START = UnixTime.fromDate(new Date('2024-04-02T09:00:00.000Z')).toStartOf(
   'hour',
 )
+const NOW_TO_FULL_HOUR = UnixTime.now().toStartOf('hour')
 
 describe(L2CostsController.name, () => {
   describe(L2CostsController.prototype.getL2Costs.name, () => {
@@ -80,16 +81,15 @@ describe(L2CostsController.name, () => {
       expect(
         l2CostsRepository.getByProjectAndTimeRange,
       ).toHaveBeenNthCalledWith(1, MOCK_PROJECTS[1].projectId, [
-        START.add(-180, 'days'),
-        START,
+        NOW_TO_FULL_HOUR.add(-180, 'days'),
+        NOW_TO_FULL_HOUR,
       ])
       expect(
         l2CostsRepository.getByProjectAndTimeRange,
       ).toHaveBeenNthCalledWith(2, MOCK_PROJECTS[2].projectId, [
-        START.add(-180, 'days'),
-        START,
+        NOW_TO_FULL_HOUR.add(-180, 'days'),
+        NOW_TO_FULL_HOUR,
       ])
-
       expect(result.type).toEqual('success')
       expect(result.data.projects).toEqual({
         project2: {
