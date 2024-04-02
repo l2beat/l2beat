@@ -212,7 +212,7 @@ describe(MulticallClient.name, () => {
     expect(calls).toEqual([BATCH_SIZE, BATCH_SIZE, 1])
   })
 
-  it('offers a named interface', async () => {
+  it('offers a parametrized metadata interface', async () => {
     const ethereumClient = mockObject<RpcClient>({
       async call() {
         return Bytes.fromHex(
@@ -232,17 +232,29 @@ describe(MulticallClient.name, () => {
     )
     const blockTag = MULTICALL_V2_BLOCK + 1
 
-    const result = await multicallClient.multicallNamed(
-      {
-        foo: { address: ADDRESS_A, data: Bytes.fromHex('0x123456') },
-        bar: { address: ADDRESS_B, data: Bytes.fromHex('0x') },
-      },
+    const result = await multicallClient.multicallWithMetadata(
+      [
+        {
+          request: { address: ADDRESS_A, data: Bytes.fromHex('0x123456') },
+          metadata: 'foo',
+        },
+        {
+          request: { address: ADDRESS_B, data: Bytes.fromHex('0x') },
+          metadata: 'bar',
+        },
+      ],
       blockTag,
     )
 
-    expect(result).toEqual({
-      foo: { success: true, data: Bytes.fromHex('0x1234') },
-      bar: { success: false, data: Bytes.fromHex('0xdead') },
-    })
+    expect(result).toEqual([
+      {
+        response: { success: true, data: Bytes.fromHex('0x1234') },
+        metadata: 'foo',
+      },
+      {
+        response: { success: false, data: Bytes.fromHex('0xdead') },
+        metadata: 'bar',
+      },
+    ])
   })
 })

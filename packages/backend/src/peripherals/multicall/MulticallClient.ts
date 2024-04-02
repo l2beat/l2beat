@@ -11,19 +11,19 @@ export class MulticallClient {
     private readonly config: MulticallConfigEntry[],
   ) {}
 
-  async multicallNamed(
-    requests: Record<string, MulticallRequest>,
+  async multicallWithMetadata<T>(
+    requests: { request: MulticallRequest; metadata: T }[],
     blockNumber: number,
-  ): Promise<Record<string, MulticallResponse>> {
-    const entries = Object.entries(requests)
-    const results = await this.multicall(
-      entries.map((x) => x[1]),
+  ): Promise<{ response: MulticallResponse; metadata: T }[]> {
+    const responses = await this.multicall(
+      requests.map((x) => x.request),
       blockNumber,
     )
-    const resultEntries = results.map(
-      (result, i) => [entries[i][0], result] as const,
-    )
-    return Object.fromEntries(resultEntries)
+    const withMetadata = responses.map((result, i) => ({
+      response: result,
+      metadata: requests[i].metadata,
+    }))
+    return withMetadata
   }
 
   async multicall(requests: MulticallRequest[], blockNumber: number) {
