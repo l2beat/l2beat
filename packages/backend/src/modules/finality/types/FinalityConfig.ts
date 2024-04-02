@@ -6,5 +6,4 @@ export interface FinalityConfig {
   projectId: ProjectId
   analyzer: BaseAnalyzer
   minTimestamp: UnixTime
-  granularityPerDay?: number
 }
