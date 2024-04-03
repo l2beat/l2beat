@@ -31,7 +31,7 @@ export function TotalCell({ project }: TotalCellProps) {
     </Badge>
   )
 
-  if (project.tvlWarnings?.length) {
+  if (project.tvlWarnings?.length && project.tvl) {
     const anyBadWarnings = project.tvlWarnings.some(
       (w) => w?.sentiment === 'bad',
     )
