@@ -81,7 +81,8 @@ export function getScalingCostsColumnsConfig() {
       sorting: getSorting('overhead'),
     },
     {
-      name: 'Tx count',
+      name: 'L2 Tx count',
+      tooltip: 'Total number of L2 transactions over the selected time period.',
       getValue: (project) => (
         <CostsTxCountCell data={project.data} className="pr-4" />
       ),
