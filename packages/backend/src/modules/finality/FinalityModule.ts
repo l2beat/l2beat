@@ -139,7 +139,6 @@ function initializeConfigurations(
               },
             ),
             minTimestamp: configuration.minTimestamp,
-            granularityPerDay: configuration.granularity ?? 24 * 60,
           }
         case 'Scroll':
           return {
