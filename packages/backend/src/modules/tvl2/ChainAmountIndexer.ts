@@ -160,8 +160,6 @@ export class ChainAmountIndexer extends MultiIndexer<AmountConfigurationRecord> 
   ): Promise<void> {
     this.logger.debug('Saving configurations...')
 
-    // TODO: ensure that no other configurations are persisted
-
     const records: AmountConfigurationRecord[] = configurations.map((c) => ({
       ...c.properties,
       id: +c.id,
