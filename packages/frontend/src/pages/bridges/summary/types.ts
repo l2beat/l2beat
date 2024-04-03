@@ -1,6 +1,6 @@
 import { ScalingProjectRiskViewEntry } from '@l2beat/config'
 
-import { TokenBreakdownProps } from '../../../components/TokenBreakdown'
+import { TokenBreakdownProps } from '../../../components/breakdown/TokenBreakdown'
 import { ValueWithDisplayValue } from '../../types'
 
 export interface BridgesSummaryViewEntry {

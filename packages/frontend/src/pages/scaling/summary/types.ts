@@ -7,7 +7,7 @@ import {
   StageConfig,
 } from '@l2beat/config'
 
-import { TokenBreakdownProps } from '../../../components/TokenBreakdown'
+import { TokenBreakdownProps } from '../../../components/breakdown/TokenBreakdown'
 import { RiskValues } from '../../../utils/risks/types'
 import { ValueWithDisplayValue } from '../../types'
 

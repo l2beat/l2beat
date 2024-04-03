@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Badge } from '../../../../components/badge/Badge'
-import { CostsBreakdown } from '../../../../components/CostsBreakdown'
+import { CostsBreakdown } from '../../../../components/breakdown/CostsBreakdown'
 import { CostsData, CostsDataBreakdown, CostsDataDetails } from '../types'
 import { CostsControlsWrapper } from './CostsControlsWrapper'
 

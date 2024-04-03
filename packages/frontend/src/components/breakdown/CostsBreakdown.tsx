@@ -1,7 +1,7 @@
 import compact from 'lodash/compact'
 import React from 'react'
 
-import { Breakdown } from './breakdown/Breakdown'
+import { Breakdown } from './Breakdown'
 
 interface CostsBreakdownProps {
   blobs: number | undefined

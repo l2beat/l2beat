@@ -1,9 +1,9 @@
 import React from 'react'
 
-import { Breakdown } from './breakdown/Breakdown'
-import { RoundedWarningIcon } from './icons'
-import { WarningBar } from './project/WarningBar'
-import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip/Tooltip'
+import { RoundedWarningIcon } from '../icons'
+import { WarningBar } from '../project/WarningBar'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
+import { Breakdown } from './Breakdown'
 
 export interface TokenBreakdownProps {
   warning?: string

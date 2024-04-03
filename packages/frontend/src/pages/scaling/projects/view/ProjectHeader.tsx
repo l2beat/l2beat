@@ -18,7 +18,7 @@ import { TypeCell } from '../../../../components/table/TypeCell'
 import {
   TokenBreakdown,
   TokenBreakdownProps,
-} from '../../../../components/TokenBreakdown'
+} from '../../../../components/breakdown/TokenBreakdown'
 import {
   Tooltip,
   TooltipContent,
