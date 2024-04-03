@@ -4063,6 +4063,24 @@
       "formula": "circulatingSupply"
     },
     {
+      "id": "arbitrum:grt-graph-token",
+      "name": "Graph Token",
+      "coingeckoId": "the-graph",
+      "address": "0x9623063377AD1B27544C965cCd7342f7EA7e88C7",
+      "symbol": "GRT",
+      "decimals": 18,
+      "deploymentTimestamp": 1669815527,
+      "coingeckoListingTimestamp": 1608163200,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13397/large/Graph_Token.png?1696513159",
+      "chainId": 42161,
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "The Graph Custom Gateway"
+      }
+    },
+    {
       "id": "arbitrum:hdn-hydranet",
       "name": "Hydranet",
       "coingeckoId": "hydranet",
