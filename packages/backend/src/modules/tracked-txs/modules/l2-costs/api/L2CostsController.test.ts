@@ -183,7 +183,7 @@ describe(L2CostsController.name, () => {
   })
 
   describe(L2CostsController.prototype.aggregateL2Costs.name, () => {
-    it('aggregates l2 costs hourly and daily', () => {
+    it('aggregates l2 costs hourly and daily with blobs', () => {
       const controller = getMockL2CostsController({})
       const transactions = getMockDetailedTransactions(50)
       const combinedHourlyMap = new Map<number, L2CostsApiChartPoint>()
@@ -193,26 +193,43 @@ describe(L2CostsController.name, () => {
         combinedHourlyMap,
         combinedDailyMap,
       )
+
       expect(result.hourly.data).toEqualUnsorted([
         ...times(26, (i) =>
-          datapoint(START.add(-i, 'hours'), i === 0 || i === 25 ? 1 : 2),
+          datapoint(
+            START.add(-i, 'hours'),
+            i === 0 || i === 25 ? 1 : 2,
+            i === 25 ? null : 1,
+          ),
         ),
       ])
       expect(result.daily.data).toEqualUnsorted([
         ...times(2, (i) =>
-          datapoint(START.toStartOf('day').add(-i, 'days'), i === 0 ? 19 : 31),
+          datapoint(
+            START.toStartOf('day').add(-i, 'days'),
+            i === 0 ? 19 : 31,
+            i % 2 === 0 ? 10 : 15,
+          ),
         ),
       ])
 
       // adds values to combined maps
       expect(Array.from(combinedHourlyMap.values())).toEqualUnsorted([
         ...times(26, (i) =>
-          datapoint(START.add(-i, 'hours'), i === 0 || i === 25 ? 1 : 2),
+          datapoint(
+            START.add(-i, 'hours'),
+            i === 0 || i === 25 ? 1 : 2,
+            i === 25 ? null : 1,
+          ),
         ),
       ])
       expect(Array.from(combinedDailyMap.values())).toEqualUnsorted([
         ...times(2, (i) =>
-          datapoint(START.toStartOf('day').add(-i, 'days'), i === 0 ? 19 : 31),
+          datapoint(
+            START.toStartOf('day').add(-i, 'days'),
+            i === 0 ? 19 : 31,
+            i % 2 === 0 ? 10 : 15,
+          ),
         ),
       ])
     })
@@ -341,7 +358,11 @@ function getGasPriceETH(gasPrice: number) {
   return parseFloat((gasPriceGwei * 1e-9).toFixed(18))
 }
 
-function datapoint(timestamp: UnixTime, value: number): L2CostsApiChartPoint {
+function datapoint(
+  timestamp: UnixTime,
+  value: number,
+  blobValue: number | null = null,
+): L2CostsApiChartPoint {
   return [
     timestamp,
     value,
@@ -356,16 +377,13 @@ function datapoint(timestamp: UnixTime, value: number): L2CostsApiChartPoint {
     value,
     value,
     value,
-    null,
-    null,
-    null,
+    blobValue,
+    blobValue,
+    blobValue,
   ]
 }
 
-function getMockDetailedTransactions(
-  amount: number,
-  withBlobs: boolean = false,
-): DetailedTransaction[] {
+function getMockDetailedTransactions(amount: number): DetailedTransaction[] {
   return range(amount).map((i) => {
     const base = {
       timestamp: START.add(-i * 30, 'minutes'),
@@ -385,7 +403,7 @@ function getMockDetailedTransactions(
       totalOverheadGasCostUsd: 1,
       type: 2 as const,
     }
-    if (withBlobs) {
+    if (i % 2 === 0) {
       return {
         ...base,
         type: 3 as const,

@@ -9,21 +9,24 @@ export function addToMap(
 ) {
   const key = tx.timestamp.toStartOf(toStartOf).toNumber()
   const currentRecord = map.get(key)
+
   if (currentRecord) {
-    let currentBlobGas: number | null = null
-    let currentBlobCost: number | null = null
-    let currentBlobUsd: number | null = null
+    let currentBlobGas: number | null = currentRecord[13]
+    let currentBlobCost: number | null = currentRecord[14]
+    let currentBlobUsd: number | null = currentRecord[15]
+
     if (tx.type === 3) {
-      currentBlobGas = !currentRecord[13]
+      currentBlobGas = !currentBlobGas
         ? tx.blobGasUsed
-        : currentRecord[13] + tx.blobGasUsed
-      currentBlobCost = !currentRecord[14]
+        : currentBlobGas + tx.blobGasUsed
+      currentBlobCost = !currentBlobCost
         ? tx.blobGasCost
-        : currentRecord[14] + tx.blobGasCost
-      currentBlobUsd = !currentRecord[15]
+        : currentBlobCost + tx.blobGasCost
+      currentBlobUsd = !currentBlobUsd
         ? tx.blobGasCostUsd
-        : currentRecord[15] + tx.blobGasCostUsd
+        : currentBlobUsd + tx.blobGasCostUsd
     }
+
     map.set(key, [
       currentRecord[0],
       (currentRecord[1] += tx.totalGas),
@@ -46,11 +49,13 @@ export function addToMap(
     let currentBlobGas: number | null = null
     let currentBlobCost: number | null = null
     let currentBlobUsd: number | null = null
+
     if (tx.type === 3) {
       currentBlobGas = tx.blobGasUsed
       currentBlobCost = tx.blobGasCost
       currentBlobUsd = tx.blobGasCostUsd
     }
+
     map.set(key, [
       new UnixTime(key),
       tx.totalGas,
