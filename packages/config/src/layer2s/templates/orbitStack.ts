@@ -29,7 +29,7 @@ const ETHEREUM_EXPLORER_URL = 'https://etherscan.io/address/{0}#code'
 export interface OrbitStackConfigCommon {
   discovery: ProjectDiscovery
   associatedTokens?: string[]
-
+  isNodeAvailable?: boolean | 'UnderReview'
   nonTemplateEscrows?: ScalingProjectEscrow[]
   bridge: ContractParameters
   rollupProxy: ContractParameters
@@ -374,7 +374,8 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
             callsItselfRollup: true,
             stateRootsPostedToL1: true,
             dataAvailabilityOnL1: true,
-            rollupNodeSourceAvailable: 'UnderReview',
+            rollupNodeSourceAvailable:
+              templateVars.isNodeAvailable ?? 'UnderReview',
           },
           stage1: {
             stateVerificationOnL1: true,
