@@ -7,6 +7,7 @@ import { BlobClient } from '../../peripherals/blobclient/BlobClient'
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
+import { StarknetClient } from '../../peripherals/starknet/StarknetClient'
 import { ApplicationModule } from '../ApplicationModule'
 import { LivenessRepository } from '../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { TrackedTxsConfigsRepository } from '../tracked-txs/repositories/TrackedTxsConfigsRepository'
@@ -14,6 +15,7 @@ import { TrackedTxsIndexer } from '../tracked-txs/TrackedTxsIndexer'
 import { LineaFinalityAnalyzer } from './analyzers/LineaFinalityAnalyzer'
 import { OpStackFinalityAnalyzer } from './analyzers/opStack/OpStackFinalityAnalyzer'
 import { ScrollFinalityAnalyzer } from './analyzers/ScrollFinalityAnalyzer'
+import { StarknetFinalityAnalyzer } from './analyzers/StarknetFinalityAnalyzer'
 import { zkSyncEraFinalityAnalyzer } from './analyzers/zkSyncEraFinalityAnalyzer'
 import { ZkSyncLiteFinalityAnalyzer } from './analyzers/ZkSyncLiteFinalityAnalyzer'
 import { FinalityController } from './api/FinalityController'
@@ -100,7 +102,7 @@ function initializeConfigurations(
   livenessRepository: LivenessRepository,
   configs: FinalityProjectConfig[],
   peripherals: Peripherals,
-): FinalityConfig[] {
+): FinalityConfig<StarknetClient | RpcClient>[] {
   return configs
     .map((configuration): FinalityConfig | undefined => {
       switch (configuration.type) {
@@ -161,6 +163,17 @@ function initializeConfigurations(
             ),
             minTimestamp: configuration.minTimestamp,
           }
+        case 'Starknet':
+          return {
+            projectId: configuration.projectId,
+            analyzer: new StarknetFinalityAnalyzer(
+              ethereumRPC,
+              livenessRepository,
+              configuration.projectId,
+              getStarknetRpc(configuration, peripherals),
+            ),
+            minTimestamp: configuration.minTimestamp,
+          }
         case 'OPStack':
           return
         default:
@@ -179,6 +192,21 @@ function getL2RPC(
     `${configuration.projectId.toString()}: L2 provider URL is not defined`,
   )
   return peripherals.getClient(RpcClient, {
+    url: configuration.url,
+    callsPerMinute: configuration.callsPerMinute,
+  })
+}
+
+function getStarknetRpc(
+  configuration: FinalityProjectConfig,
+  peripherals: Peripherals,
+) {
+  assert(
+    configuration.url,
+    `${configuration.projectId.toString()}: L2 provider URL is not defined`,
+  )
+
+  return peripherals.getClient(StarknetClient, {
     url: configuration.url,
     callsPerMinute: configuration.callsPerMinute,
   })

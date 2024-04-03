@@ -6,6 +6,7 @@ import {
 import { chunk } from 'lodash'
 
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
+import { StarknetClient } from '../../../../peripherals/starknet/StarknetClient'
 import { LivenessRepository } from '../../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 
 export type Transaction = {
@@ -13,12 +14,14 @@ export type Transaction = {
   timestamp: UnixTime
 }
 
-export abstract class BaseAnalyzer {
+export abstract class BaseAnalyzer<
+  L2RpcClient extends RpcClient | StarknetClient = RpcClient,
+> {
   constructor(
     protected readonly provider: RpcClient,
     protected readonly livenessRepository: LivenessRepository,
     protected readonly projectId: ProjectId,
-    protected readonly l2Provider?: RpcClient,
+    protected readonly l2Provider?: L2RpcClient,
   ) {}
 
   async getFinalityForInterval(
