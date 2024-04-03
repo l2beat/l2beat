@@ -10,6 +10,7 @@ import { getProjectTvlTooltipText } from '../../../../utils/project/getProjectTv
 import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
 import { getRiskValues } from '../../../../utils/risks/values'
 import { getTvlStats, TvlStats } from '../../../../utils/tvl/getTvlStats'
+import { getTvlWarnings } from '../../../../utils/tvl/getTVLWarnings'
 import { formatPercent, formatUSD } from '../../../../utils/utils'
 import { ScalingL2SummaryViewEntry, ScalingL3SummaryViewEntry } from '../types'
 import { ScalingSummaryViewProps } from '../view/ScalingSummaryView'
@@ -66,6 +67,8 @@ function getScalingL2SummaryEntry(
     stats = getTvlStats(apiProject, project.display.name, associatedTokens)
   }
 
+  const tvlWarnings = getTvlWarnings(apiProject, associatedTokens, project)
+
   return {
     name: project.display.name,
     shortName: project.display.shortName,
@@ -80,7 +83,7 @@ function getScalingL2SummaryEntry(
     showProjectUnderReview: isAnySectionUnderReview(project),
     isUpcoming: project.isUpcoming,
     redWarning: project.display.redWarning,
-    tvlWarning: project.display.tvlWarning,
+    tvlWarnings,
     tvl:
       stats && escrowsConfigured(project)
         ? {

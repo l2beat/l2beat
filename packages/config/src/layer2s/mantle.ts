@@ -92,6 +92,7 @@ export const mantle: Layer2 = opStack({
   l1StandardBridgeEscrow: EthereumAddress(
     '0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012',
   ),
+  rpcUrl: 'https://rpc.mantle.xyz',
   genesisTimestamp: new UnixTime(1687954103),
   l2OutputOracle: discovery.getContract('L2OutputOracle'),
   portal: discovery.getContract('OptimismPortal'),

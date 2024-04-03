@@ -114,6 +114,7 @@ export interface FinalityConfig {
   readonly ethereumProviderCallsPerMinute: number
   readonly beaconApiUrl: string
   readonly beaconApiCPM: number
+  readonly beaconApiTimeout: number
   readonly configurations: FinalityProjectConfig[]
 }
 
@@ -180,6 +181,7 @@ export interface DiscordConfig {
 
 export interface DiscoveryCacheChainConfig {
   reorgSafeDepth?: number
+  enableCache?: boolean
 }
 
 export type UpdateMonitorChainConfig = DiscoveryChainConfig &
