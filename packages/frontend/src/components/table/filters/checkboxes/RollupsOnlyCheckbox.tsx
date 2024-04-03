@@ -21,7 +21,11 @@ export function RollupsOnlyCheckbox<T extends ScalingEntry>({
       label="Rollups only"
       data-slugs-when-checked={generateSlugList(
         items,
-        (i) => i.category === 'Optimistic Rollup' || i.category === 'ZK Rollup',
+        (i) =>
+          i.category === 'Optimistic Rollup' ||
+          i.category === 'ZK Rollup' ||
+          // we want to keep ethereum in the list as a reference
+          i.slug === 'ethereum',
       )}
     />
   )
