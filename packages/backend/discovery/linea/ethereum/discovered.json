@@ -1,7 +1,7 @@
 {
   "name": "linea",
   "chain": "ethereum",
-  "blockNumber": 19538689,
+  "blockNumber": 19574554,
   "configHash": "0xd90b4d29fbd12a484abb6e9101721b3d588b5f44b8a9a7d0190f7438c8af27f1",
   "version": 3,
   "contracts": [
@@ -76,7 +76,7 @@
       "implementations": ["0x0eC393209674090368C592A591B25811e490BF36"],
       "sinceTimestamp": 1691086271,
       "values": {
-        "balance": 22752518803104,
+        "balance": 27718481288676,
         "messageService": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
         "owner": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
         "paused": false,
@@ -103,7 +103,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": ["0xF24f1DC519d88246809B660eb56D94048575d083"]
+        "modules": ["0xF24f1DC519d88246809B660eb56D94048575d083"],
+        "threshold": "4 of 8 (50%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1689149759,
@@ -191,10 +192,10 @@
             "members": ["0xd6B95c960779c72B8C6752119849318E5d550574"]
           }
         },
-        "currentFinalizedShnarf": "0x52fb1bfc25a323259899a057112bc1f5e011a0fe4cc91cd842ae858adbfffc1c",
-        "currentL2StoredL1MessageNumber": 548504,
-        "currentL2StoredL1RollingHash": "0x755e702c275ad076ce69014c13400f28f28ba928439c47f90bae06c1f5bc1e0e",
-        "currentPeriodAmountInWei": "1146003485330984112803",
+        "currentFinalizedShnarf": "0x32d9a72c12dc56f55038e1b0aa0dfc36f9703a3f22195053a50a68664c1d6586",
+        "currentL2StoredL1MessageNumber": 552057,
+        "currentL2StoredL1RollingHash": "0xb5cf935a0dfa924637eeaa380b9d13c6c5438e4dec8b5f5d6738fc1aed2759dd",
+        "currentPeriodAmountInWei": "1559360949319404137227",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "GENERAL_PAUSE_TYPE": 1,
         "generalPause": false,
