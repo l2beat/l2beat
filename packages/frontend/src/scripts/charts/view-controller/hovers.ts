@@ -311,9 +311,9 @@ function renderIcon(icon?: PointStyle | 'gap') {
 }
 
 function renderNameRow(name: string) {
-  return `<div class="max-w-[216px] mb-2 font-bold flex flex-wrap"><svg class="absolute mt-[2px] md:mt-1 dark:fill-green-500 dark:stroke-white fill-green-600 stroke-green-200" width="11" height="10" viewBox="0 0 11 10">
-  <rect x="5.24268" y="0.0502174" width="7" height="7" rx="1.5" transform="rotate(45 5.24268 0.0502174)"/>
-  </svg><span class='ml-4 text-left'>${name}</span></div>`
+  return `<div class="max-w-[216px] mb-2 font-bold flex flex-wrap">
+    <div class="absolute mt-[2px] md:mt-1 size-2.5 rotate-45 border-2 border-green-500 bg-green-700"></div>
+  <span class='ml-4 text-left'>${name}</span></div>`
 }
 
 function renderDescriptionRow(description: string) {

@@ -293,9 +293,9 @@ export class ChartRenderer {
     }
 
     if (milestone) {
-      this.hoverLine.classList.add('dark:bg-green-500', 'bg-green-600')
+      this.hoverLine.classList.add('bg-green-500')
     } else {
-      this.hoverLine.classList.remove('dark:bg-green-500', 'bg-green-600')
+      this.hoverLine.classList.remove('bg-green-500')
     }
 
     this.hoverLine.style.left = `${left - 1}px`

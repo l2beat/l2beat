@@ -76,8 +76,7 @@ export const POINT_CLASS_NAMES: PointClassNames = {
   },
   milestone: {
     type: 'div',
-    className:
-      'size-2 rotate-45 border-2 border-green-200 bg-green-600 dark:border-current dark:bg-green-500',
+    className: 'size-2 rotate-45 border-2 border-green-500 bg-green-700',
   },
 }
 
