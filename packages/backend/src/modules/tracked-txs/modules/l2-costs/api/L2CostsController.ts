@@ -42,7 +42,7 @@ type L2CostsTrackedTxsConfigEntry = {
 }
 
 const NOW_TO_FULL_HOUR = UnixTime.now().toStartOf('hour')
-const SINCE_DAYS = 180
+const MAX_DAYS = 180
 
 // Amount of gas required for a basic tx
 const OVERHEAD = 21_000
@@ -132,7 +132,7 @@ export class L2CostsController {
 
       const records = await this.l2CostsRepository.getByProjectAndTimeRange(
         project.projectId,
-        [NOW_TO_FULL_HOUR.add(-SINCE_DAYS, 'days'), NOW_TO_FULL_HOUR],
+        [NOW_TO_FULL_HOUR.add(-MAX_DAYS, 'days'), NOW_TO_FULL_HOUR],
       )
 
       const recordsWithDetails = await this.makeTransactionCalculations(records)
@@ -153,20 +153,7 @@ export class L2CostsController {
       type: 'success',
       data: {
         projects,
-        combined: {
-          hourly: {
-            types: CHART_TYPES,
-            data: Array.from(combinedHourlyMap.values()).sort(
-              (a, b) => a[0].toNumber() - b[0].toNumber(),
-            ),
-          },
-          daily: {
-            types: CHART_TYPES,
-            data: Array.from(combinedDailyMap.values()).sort(
-              (a, b) => a[0].toNumber() - b[0].toNumber(),
-            ),
-          },
-        },
+        combined: this.getCombinedL2Costs(combinedHourlyMap, combinedDailyMap),
       },
     }
   }
@@ -210,7 +197,7 @@ export class L2CostsController {
   ): Promise<DetailedTransaction[]> {
     const ethPricesMap = await this.priceRepository.findByTimestampRange(
       AssetId.ETH,
-      NOW_TO_FULL_HOUR.add(-SINCE_DAYS, 'days').toStartOf('hour'),
+      NOW_TO_FULL_HOUR.add(-MAX_DAYS, 'days').toStartOf('hour'),
       NOW_TO_FULL_HOUR.toStartOf('hour'),
     )
 
@@ -308,6 +295,26 @@ export class L2CostsController {
           })
         })
         .filter(notUndefined),
+    }
+  }
+
+  private getCombinedL2Costs(
+    combinedHourlyMap: Map<number, L2CostsApiChartPoint>,
+    combinedDailyMap: Map<number, L2CostsApiChartPoint>,
+  ) {
+    return {
+      hourly: {
+        types: CHART_TYPES,
+        data: Array.from(combinedHourlyMap.values()).sort(
+          (a, b) => a[0].toNumber() - b[0].toNumber(),
+        ),
+      },
+      daily: {
+        types: CHART_TYPES,
+        data: Array.from(combinedDailyMap.values()).sort(
+          (a, b) => a[0].toNumber() - b[0].toNumber(),
+        ),
+      },
     }
   }
 }
