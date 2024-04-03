@@ -57,7 +57,6 @@ export function getCostsRenderParams(
       },
     ]
 
-    console.log(state.theme)
     return {
       formatYAxisLabel,
       points,
