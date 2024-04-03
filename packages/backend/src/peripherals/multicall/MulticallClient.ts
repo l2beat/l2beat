@@ -11,21 +11,6 @@ export class MulticallClient {
     private readonly config: MulticallConfigEntry[],
   ) {}
 
-  async multicallNamed(
-    requests: Record<string, MulticallRequest>,
-    blockNumber: number,
-  ): Promise<Record<string, MulticallResponse>> {
-    const entries = Object.entries(requests)
-    const results = await this.multicall(
-      entries.map((x) => x[1]),
-      blockNumber,
-    )
-    const resultEntries = results.map(
-      (result, i) => [entries[i][0], result] as const,
-    )
-    return Object.fromEntries(resultEntries)
-  }
-
   async multicall(requests: MulticallRequest[], blockNumber: number) {
     // We use strictly greater than because contracts are deployed during the block
     const config = this.config.find((x) => blockNumber > x.sinceBlock)
