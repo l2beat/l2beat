@@ -9,12 +9,6 @@ const SORTING_ARROWS_NAMES = [
   'overhead',
 ]
 
-const defaultChecked = {
-  timeRange: '7D',
-  unit: 'USD',
-  type: 'TOTAL',
-}
-
 export function configureCostsControlsWrappers() {
   const { $, $$ } = makeQuery(document.body)
 
@@ -41,10 +35,10 @@ export function configureCostsControlsWrappers() {
     if (!checkedUnitControl || !checkedTimeRangeControl) {
       throw new Error('No time range or unit control is checked')
     }
-    const timeRange = checkedTimeRangeControl?.value ?? defaultChecked.timeRange
-    const unit = checkedUnitControl?.value ?? defaultChecked.unit
-    const type = checkedTypeControl?.value ?? defaultChecked.type
-    return `${unit}-${timeRange}-${type}`
+    const timeRange = checkedTimeRangeControl?.value
+    const unit = checkedUnitControl?.value
+    const type = checkedTypeControl?.value
+    return `${timeRange}-${unit}-${type}`
   }
 
   function onTimeRangeChange(control: HTMLInputElement) {
@@ -80,7 +74,7 @@ export function configureCostsControlsWrappers() {
       }
       if (c.value === '30D' && isAmortized && isOneOrSevenDays) {
         c.checked = true
-        onTimeRangeChange(c)
+        c.dispatchEvent(new Event('change'))
       }
     })
     cells.forEach((cell) => cell.setAttribute('data-type', control.value))
