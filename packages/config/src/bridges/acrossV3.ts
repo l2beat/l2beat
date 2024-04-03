@@ -4,7 +4,6 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-
 import { utils } from 'ethers'
 
 import { NUGGETS } from '../common'
@@ -15,12 +14,14 @@ import { Bridge } from './types'
 const PROJECT_ID = ProjectId('across-v3')
 const discovery = new ProjectDiscovery(PROJECT_ID.toString())
 
-const finalizationDelay = formatSeconds(discovery.getContractValue<number>(
-  'HubPool',
-  'liveness',
-))
+const finalizationDelay = formatSeconds(
+  discovery.getContractValue<number>('HubPool', 'liveness'),
+)
 
-const bondAmount = utils.formatEther(discovery.getContractValue<number>('HubPool', 'bondAmount'));
+const bondAmount = utils.formatEther(
+  discovery.getContractValue<number>('HubPool', 'bondAmount'),
+)
+const bondSymbol = discovery.getContractValue<string>('BondToken', 'symbol')
 
 export const acrossV3: Bridge = {
   type: 'bridge',
@@ -50,19 +51,49 @@ export const acrossV3: Bridge = {
       discovery.getEscrowDetails({
         address: EthereumAddress('0xc186fA914353c44b2E33eBE05f21846F1048bEda'),
         sinceTimestamp: new UnixTime(1653124620),
-        tokens: ['USDC', 'WETH', 'WBTC', 'DAI', 'BAL', 'UMA', 'BOBA', 'USDT', 'ACX'],
+        tokens: [
+          'USDC',
+          'WETH',
+          'WBTC',
+          'DAI',
+          'BAL',
+          'UMA',
+          'BOBA',
+          'USDT',
+          'ACX',
+        ],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5'),
         sinceTimestamp: new UnixTime(1682355155),
-        tokens: ['USDC', 'WETH', 'WBTC', 'DAI', 'BAL', 'UMA', 'BOBA', 'USDT'],
+        tokens: [
+          'USDC',
+          'WETH',
+          'WBTC',
+          'DAI',
+          'BAL',
+          'UMA',
+          'BOBA',
+          'USDT',
+          'ACX',
+        ],
       }),
       {
         // This bridge is inactive, but we keep it
         // in case we have to gather historic data
         address: EthereumAddress('0x4D9079Bb4165aeb4084c526a32695dCfd2F77381'),
         sinceTimestamp: new UnixTime(1653167083),
-        tokens: ['USDC', 'WETH', 'WBTC', 'DAI', 'BAL', 'UMA', 'BOBA', 'USDT'],
+        tokens: [
+          'USDC',
+          'WETH',
+          'WBTC',
+          'DAI',
+          'BAL',
+          'UMA',
+          'BOBA',
+          'USDT',
+          'ACX',
+        ],
         isHistorical: true,
       },
     ],
@@ -70,15 +101,22 @@ export const acrossV3: Bridge = {
   riskView: {
     validatedBy: {
       value: 'Optimistically',
-      description:
-        `Optimistic Oracle on Ethereum is used to assert that an action happened on the destination chain. The timeout used here is ${finalizationDelay}.`,
+      description: `Optimistic Oracle on Ethereum is used to assert that an action happened on the destination chain. The timeout used here is ${finalizationDelay}.`,
       sentiment: 'warning',
     },
     sourceUpgradeability: RISK_VIEW.UPGRADABLE_NO,
     destinationToken: RISK_VIEW.CANONICAL,
   },
   technology: {
-    destination: ['Optimism', 'Polygon', 'Boba', 'Arbitrum', 'ZkSync Era', 'Linea', 'Polygon zkEVM', 'Scroll'],
+    destination: [
+      'Optimism',
+      'Polygon',
+      'Boba',
+      'Arbitrum',
+      'ZkSync Era',
+      'Linea',
+      'Base',
+    ],
     principleOfOperation: {
       name: 'Principle of operation',
       description:
@@ -92,11 +130,15 @@ export const acrossV3: Bridge = {
       risks: [
         {
           category: 'Funds can be frozen if',
-          text: 'owner pauses the contract.',
+          text: 'owner pauses the contract, or changes bond, routes, or fees parameters in such way to make the escrow inoperable.',
         },
         {
           category: 'Funds can be lost if',
-          text: 'owner invokes a "haircut" functionality, dedicated for irrecoverable loss of funds on L2.',
+          text: 'owner invokes a "haircut" functionality, dedicated for irrecoverable loss of funds on L2. Calling the haircutReserves() function, the owner can decrease the token utilizedReserves on L1, decreasing the amount of funds in the bridge expected to flow from L2 to L1.',
+        },
+        {
+          category: 'Funds can be lost if',
+          text: 'third-party bridge infrastructure is compromised, such as canonical messaging services, Linea USDC bridge, and USDC Cross-Chain Transfer Protocol (CCTP) infrastructure.',
         },
       ],
       isIncomplete: true,
@@ -112,7 +154,7 @@ export const acrossV3: Bridge = {
         },
         {
           category: 'Funds can be lost if',
-          text: 'a re-org occurs on destination chain after Optimistic Oracle dispute time passes.',
+          text: 'a re-org occurs on destination chain after the Optimistic Oracle dispute time passes.',
         },
       ],
       references: [
@@ -134,24 +176,33 @@ export const acrossV3: Bridge = {
     addresses: [
       discovery.getContractDetails(
         'HubPool',
-        `Escrow contract for ERC20 tokens and administration of other contracts. There is a ${
-          finalizationDelay} delay before a bundle proposal is considered finalized.`,
+        `Escrow contract for ERC20 tokens and administration of other contracts. There is a ${finalizationDelay} delay before a bundle proposal is considered finalized.`,
       ),
       discovery.getContractDetails(
         'BondToken',
-        `Token (ABT) used to bond the data worker for proposing Relayer refund bundles. It also used as a required bond to dispute a bundle proposal. Currently, the bond amount is set to ${bondAmount} ABT.`,
+        `Token (${bondSymbol}) used to bond the data worker for proposing Relayer refund bundles. It also used as a required bond to dispute a bundle proposal. Currently, the bond amount is set to ${bondAmount} ${bondSymbol}.`,
       ),
-      discovery.getContractDetails('LpTokenFactory',
-        'Factory to deploy new LP tokens for L1 tokens, used to represent a liquidity provider position in the HubPool.'
+      {
+        name: 'UMAOptimisticOracle',
+        address: EthereumAddress('0xeE3Afe347D5C74317041E2618C49534dAf887c24'),
+        description:
+          'UMA Optimistic Oracle smart contract. It registers dispute requests, status of disputes, and dispute settlement.',
+      },
+      discovery.getContractDetails(
+        'GovernorV2',
+        'Owner of the Optimistic Oracle. This contract is used to execute a proposed UMA governance action that has been approved by UMA token holders.',
       ),
-      discovery.getContractDetails('Finder',
-        'Provides addresses of the live contracts implementing certain interfaces.'
+      discovery.getContractDetails(
+        'VotingToken',
+        'Token used to vote on UMA Optimistic Oracle governance proposals.',
       ),
-      discovery.getContractDetails('GovernorV2',
-        'Owner of the Optimistic Oracle. This contract is used to execute a proposed UMA governance action that has been approved by UMA token holders.'
+      discovery.getContractDetails(
+        'LpTokenFactory',
+        'Factory to deploy new LP tokens for L1 tokens, used to represent a liquidity provider position in the HubPool.',
       ),
-      discovery.getContractDetails('VotingToken',
-        'Token used to vote on UMA Optimistic Oracle governance proposals.'
+      discovery.getContractDetails(
+        'Finder',
+        'Provides addresses of the live contracts implementing certain interfaces, such as the whitelist interface for setting the Bond Token.',
       ),
       discovery.getContractDetails('Optimism_Adapter'),
       discovery.getContractDetails('Boba_Adapter'),
@@ -160,21 +211,30 @@ export const acrossV3: Bridge = {
       discovery.getContractDetails('Base_Adapter'),
       discovery.getContractDetails('Polygon_Adapter'),
       discovery.getContractDetails('Ethereum_Adapter'),
-      discovery.getContractDetails('Ethereum_SpokePool',
-        'Contract enabling depositors to transfer assets from Ethereum to L2s, and relayers to fulfill transfer from L2s to Ethereum. Deposit orders are fulfilled by off-chain relayers with the fillV3Relay() function. Relayers are later refunded with destination token out of this contract when the data worker submits a proof that the relayer correctly submitted a relay on this SpokePool.'
+      discovery.getContractDetails(
+        'Ethereum_SpokePool',
+        'Contract enabling depositors to transfer assets from Ethereum to L2s, and relayers to fulfill transfer from L2s to Ethereum. Deposit orders are fulfilled by off-chain relayers with the fillV3Relay() function. Relayers are later refunded with destination token out of this contract when the data worker submits a proof that the relayer correctly submitted a relay on this SpokePool.',
       ),
       {
         name: 'PolygonTokenBridger',
         address: EthereumAddress('0x48d990AbDA20afa1fD1da713AbC041B60a922c65'),
-        description: 'Contract deployed on Ethereum and Polygon PoS to facilitate token transfers from Polygon to the HubPool.',
+        description:
+          'Contract deployed on Ethereum and Polygon PoS to facilitate token transfers from Polygon to the HubPool.',
       },
       {
         name: 'AcrossConfigStore',
         address: EthereumAddress('0x3B03509645713718B78951126E0A6de6f10043f5'),
-        description: 'Contract storing configurations such as token rate models and minimum transfer thresholds, meant for off-chain consumption.',
+        description:
+          'Contract storing configurations such as token rate models and minimum transfer thresholds, meant for off-chain consumption.',
       },
     ],
-    risks: [],
+    risks: [
+      {
+        category: 'Funds can be stolen if',
+        text: 'a Spoke Pool contract receives a malicious code upgrade. There is no delay on code upgrades.',
+        isCritical: true,
+      },
+    ],
   },
   permissions: [
     ...discovery.getMultisigPermission(
