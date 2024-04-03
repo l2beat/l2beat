@@ -1,8 +1,8 @@
 {
-  "name": "across-v2",
+  "name": "across-v3",
   "chain": "ethereum",
-  "blockNumber": 19569361,
-  "configHash": "0x9742db5cb3b9ea450baf3fdd52dabbdebec8e6d6d94fa5fa4d23d85a18d2c4bb",
+  "blockNumber": 19574841,
+  "configHash": "0xf40a817d561025df488d14ed84f8445fafcb380d53fb9b50f02804d1c8d47867",
   "version": 3,
   "contracts": [
     {
@@ -152,7 +152,7 @@
       "values": {
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1712076131,
+        "getCurrentTime": 1712142455,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -195,11 +195,11 @@
         "EMPTY_RELAYER": "0x0000000000000000000000000000000000000000",
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 28800,
-        "getCurrentTime": 1712076131,
+        "getCurrentTime": 1712142455,
         "hubPool": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "INFINITE_FILL_DEADLINE": 4294967295,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 1217608,
+        "numberOfDeposits": 1219401,
         "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
@@ -218,7 +218,7 @@
       "sinceTimestamp": 1677230459,
       "values": {
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1712076131,
+        "getCurrentTime": 1712142455,
         "getMember": [
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
@@ -344,7 +344,7 @@
       "values": {
         "emergencyProposals": [],
         "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1712076131,
+        "getCurrentTime": 1712142455,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -487,13 +487,13 @@
         "protocolFeeCaptureAddress": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": [
-          "0xe4f4d99661d49f878ab855590b3c0cd898c9d88456c41ec34a0544c50e48a8fb",
-          "0x16a8e66d83f1d038fea1b750e6578e1b35f22597aab4c9954743cd6c54dd1c74",
-          "0xd345d8b0f8d0e6900a08703bc68e515c21b8b45d07f8fab395b881c618a08653",
-          0,
+          "0xc7d88fa6e54554867bf4bc4e6d9e7fd8031bd32ab19a5a3b058a408455df64fc",
+          "0xa397fe5768743e93bf9e4553c009ab16a2cbebaffc7dc7d4d2acad9ec39a21cf",
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          127,
           "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
-          7,
-          1712077427
+          0,
+          1712141375
         ],
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"

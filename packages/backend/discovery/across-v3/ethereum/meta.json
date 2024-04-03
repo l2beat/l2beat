@@ -132,6 +132,51 @@
       }
     },
     {
+      "name": "BridgedToken",
+      "values": {
+        "DOMAIN_SEPARATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "_decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eip712Domain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "CoveredCallFinancialProductLibrary",
       "values": {}
     },
@@ -222,17 +267,27 @@
     {
       "name": "Ethereum_SpokePool",
       "values": {
+        "EMPTY_RELAYER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EMPTY_REPAYMENT_CHAIN_ID": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "INFINITE_FILL_DEADLINE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "MAX_TRANSFER_SIZE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "SLOW_FILL_MAX_TOKENS_TO_SEND": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "UPDATE_DEPOSIT_DETAILS_HASH": {
+        "UPDATE_V3_DEPOSIT_DETAILS_HASH": {
           "description": null,
           "severity": null,
           "type": null
@@ -248,6 +303,11 @@
           "type": null
         },
         "depositQuoteTimeBuffer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "fillDeadlineBuffer": {
           "description": null,
           "severity": null,
           "type": null
@@ -303,6 +363,41 @@
           "type": null
         },
         "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
           "description": null,
           "severity": null,
           "type": null
@@ -450,7 +545,36 @@
       }
     },
     {
+      "name": "Linea_Adapter",
+      "values": {
+        "L1_MESSAGE_SERVICE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L1_TOKEN_BRIDGE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L1_USDC_BRIDGE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L1_WETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "LpTokenFactory",
+      "values": {}
+    },
+    {
+      "name": "MultiSend",
       "values": {}
     },
     {
@@ -697,6 +821,111 @@
           "type": null
         },
         "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Roles",
+      "values": {
+        "avatar": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getGuard": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "guard": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "multisend": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "target": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "TokenBridge",
+      "values": {
+        "messageService": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "remoteSender": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sourceChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "targetChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "tokenBeacon": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "UpgradeableBeacon",
+      "values": {
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
           "description": null,
           "severity": null,
           "type": null

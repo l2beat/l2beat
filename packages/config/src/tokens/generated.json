@@ -62,6 +62,21 @@
       "formula": "locked"
     },
     {
+      "id": "acx-across-protocol-token",
+      "name": "Across Protocol Token",
+      "coingeckoId": "across-protocol",
+      "address": "0x44108f0223A3C3028F5Fe7AEC7f9bb2E66beF82F",
+      "symbol": "ACX",
+      "decimals": 18,
+      "deploymentTimestamp": 1666277447,
+      "coingeckoListingTimestamp": 1669593600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/28161/large/across-200x200.png?1696527165",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "alusd-alchemix-usd",
       "name": "Alchemix USD",
       "coingeckoId": "alchemix-usd",

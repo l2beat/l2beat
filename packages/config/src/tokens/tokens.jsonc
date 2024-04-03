@@ -18,6 +18,10 @@
       "address": "0xEd04915c23f00A313a544955524EB7DBD823143d"
     },
     {
+      "symbol": "ACX",
+      "address": "0x44108f0223A3C3028F5Fe7AEC7f9bb2E66beF82F"
+    },
+    {
       "symbol": "EURA",
       "address": "0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8",
       "category": "stablecoin"

@@ -5,6 +5,8 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
+import { utils } from 'ethers'
+
 import { NUGGETS } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
@@ -13,10 +15,12 @@ import { Bridge } from './types'
 const PROJECT_ID = ProjectId('across-v3')
 const discovery = new ProjectDiscovery(PROJECT_ID.toString())
 
-const finalizationDelaySeconds = discovery.getContractValue<number>(
+const finalizationDelay = formatSeconds(discovery.getContractValue<number>(
   'HubPool',
   'liveness',
-)
+))
+
+const bondAmount = utils.formatEther(discovery.getContractValue<number>('HubPool', 'bondAmount'));
 
 export const acrossV3: Bridge = {
   type: 'bridge',
@@ -39,14 +43,14 @@ export const acrossV3: Bridge = {
     description:
       'Across V3 is a cross-chain optimistic bridge that uses actors called Relayers to fulfill user transfer requests on the destination chain.',
     detailedDescription:
-      'Relayers are later reimbursed by providing a proof of their action to an Optimistic Oracle on Ethereum. Relayer reibursements over a specific block range are bundled and posted on-chain as merkle roots which uniquely identify the set of all repayments and rebalance instructions. The architecture leverages a single liquidity pool on Ethereum and separate deposit/reimburse pools on destination chains that are rebalanced using canonical bridges.',
+      'Relayers are later reimbursed by providing a proof of their action to an Optimistic Oracle on Ethereum. Relayer reimbursements over a specific block range are bundled and posted on-chain as merkle roots which uniquely identify the set of all repayments and rebalance instructions. The architecture leverages a single liquidity pool on Ethereum and separate deposit/reimburse pools on destination chains that are rebalanced using canonical bridges.',
   },
   config: {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xc186fA914353c44b2E33eBE05f21846F1048bEda'),
         sinceTimestamp: new UnixTime(1653124620),
-        tokens: ['USDC', 'WETH', 'WBTC', 'DAI', 'BAL', 'UMA', 'BOBA', 'USDT'],
+        tokens: ['USDC', 'WETH', 'WBTC', 'DAI', 'BAL', 'UMA', 'BOBA', 'USDT', 'ACX'],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5'),
@@ -67,7 +71,7 @@ export const acrossV3: Bridge = {
     validatedBy: {
       value: 'Optimistically',
       description:
-        'Optimistic Oracle on Ethereum is used to assert that an action happened on the destination chain. The timeout used here is 2hrs.',
+        `Optimistic Oracle on Ethereum is used to assert that an action happened on the destination chain. The timeout used here is ${finalizationDelay}.`,
       sentiment: 'warning',
     },
     sourceUpgradeability: RISK_VIEW.UPGRADABLE_NO,
@@ -100,7 +104,7 @@ export const acrossV3: Bridge = {
     validation: {
       name: 'Validation via Optimistic Oracle',
       description:
-        'Money from the liquidity pool is used to reimburse Relayers based on a proof of deposit on destination chain that is provided to Optimistic Oracle on Ethereum. The proof can be disputed in a configured time period.',
+        'Money from the liquidity pool is used to reimburse Relayers based on a proof of deposit on a destination chain that is provided to an Optimistic Oracle on Ethereum. The proof can be disputed in a configured time period.',
       risks: [
         {
           category: 'Funds can be stolen if',
@@ -130,36 +134,44 @@ export const acrossV3: Bridge = {
     addresses: [
       discovery.getContractDetails(
         'HubPool',
-        `Escrow contract for ERC20 tokens and administration of other contracts. There is a ${formatSeconds(
-          finalizationDelaySeconds,
-        )} delay before a bundle proposal is considered finalized.`,
+        `Escrow contract for ERC20 tokens and administration of other contracts. There is a ${
+          finalizationDelay} delay before a bundle proposal is considered finalized.`,
       ),
       discovery.getContractDetails(
         'BondToken',
-        'Token used to bond the data worker for proposing Relayer refund bundles.',
+        `Token (ABT) used to bond the data worker for proposing Relayer refund bundles. It also used as a required bond to dispute a bundle proposal. Currently, the bond amount is set to ${bondAmount} ABT.`,
       ),
-      discovery.getContractDetails('LpTokenFactory'),
-      discovery.getContractDetails('Finder'),
-      discovery.getContractDetails('GovernorV2'),
-      discovery.getContractDetails('ProposerV2'),
-      discovery.getContractDetails('VotingToken'),
+      discovery.getContractDetails('LpTokenFactory',
+        'Factory to deploy new LP tokens for L1 tokens, used to represent a liquidity provider position in the HubPool.'
+      ),
+      discovery.getContractDetails('Finder',
+        'Provides addresses of the live contracts implementing certain interfaces.'
+      ),
+      discovery.getContractDetails('GovernorV2',
+        'Owner of the Optimistic Oracle. This contract is used to execute a proposed UMA governance action that has been approved by UMA token holders.'
+      ),
+      discovery.getContractDetails('VotingToken',
+        'Token used to vote on UMA Optimistic Oracle governance proposals.'
+      ),
       discovery.getContractDetails('Optimism_Adapter'),
       discovery.getContractDetails('Boba_Adapter'),
       discovery.getContractDetails('Arbitrum_Adapter'),
       discovery.getContractDetails('ZkSync_Adapter'),
       discovery.getContractDetails('Base_Adapter'),
+      discovery.getContractDetails('Polygon_Adapter'),
       discovery.getContractDetails('Ethereum_Adapter'),
-      discovery.getContractDetails('Ethereum_SpokePool'),
+      discovery.getContractDetails('Ethereum_SpokePool',
+        'Contract enabling depositors to transfer assets from Ethereum to L2s, and relayers to fulfill transfer from L2s to Ethereum. Deposit orders are fulfilled by off-chain relayers with the fillV3Relay() function. Relayers are later refunded with destination token out of this contract when the data worker submits a proof that the relayer correctly submitted a relay on this SpokePool.'
+      ),
       {
-        // TODO: What is this?
         name: 'PolygonTokenBridger',
         address: EthereumAddress('0x48d990AbDA20afa1fD1da713AbC041B60a922c65'),
+        description: 'Contract deployed on Ethereum and Polygon PoS to facilitate token transfers from Polygon to the HubPool.',
       },
-      discovery.getContractDetails('Polygon_Adapter'),
       {
-        // TODO: What is this?
         name: 'AcrossConfigStore',
         address: EthereumAddress('0x3B03509645713718B78951126E0A6de6f10043f5'),
+        description: 'Contract storing configurations such as token rate models and minimum transfer thresholds, meant for off-chain consumption.',
       },
     ],
     risks: [],
@@ -172,7 +184,7 @@ export const acrossV3: Bridge = {
     {
       name: 'BondToken transfer proposers',
       accounts: discovery.getPermissionedAccounts('BondToken', 'proposers'),
-      description: 'Allowed to propose BondToken transfers',
+      description: 'Allowed to propose BondToken transfers.',
     },
   ],
   knowledgeNuggets: [
