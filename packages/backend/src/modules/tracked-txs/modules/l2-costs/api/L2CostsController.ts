@@ -42,6 +42,7 @@ type L2CostsTrackedTxsConfigEntry = {
 }
 
 const NOW_TO_FULL_HOUR = UnixTime.now().toStartOf('hour')
+const SINCE_DAYS = 180
 
 // Amount of gas required for a basic tx
 const OVERHEAD = 21_000
@@ -131,7 +132,7 @@ export class L2CostsController {
 
       const records = await this.l2CostsRepository.getByProjectAndTimeRange(
         project.projectId,
-        [NOW_TO_FULL_HOUR.add(-180, 'days'), NOW_TO_FULL_HOUR],
+        [NOW_TO_FULL_HOUR.add(-SINCE_DAYS, 'days'), NOW_TO_FULL_HOUR],
       )
 
       const recordsWithDetails = await this.makeTransactionCalculations(records)
@@ -209,7 +210,7 @@ export class L2CostsController {
   ): Promise<DetailedTransaction[]> {
     const ethPricesMap = await this.priceRepository.findByTimestampRange(
       AssetId.ETH,
-      NOW_TO_FULL_HOUR.add(-180, 'days').toStartOf('hour'),
+      NOW_TO_FULL_HOUR.add(-SINCE_DAYS, 'days').toStartOf('hour'),
       NOW_TO_FULL_HOUR.toStartOf('hour'),
     )
 
