@@ -1292,6 +1292,17 @@
   ],
   "linea": [
     {
+      "symbol": "ezETH",
+      "address": "0x2416092f143378750bb29b79ed961ab195cceea5",
+      "coingeckoId": "renzo-restaked-eth",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Connext",
+        "slug": "connext"
+      }
+    },
+    {
       "symbol": "STONE",
       "address": "0x93F4d0ab6a8B4271f4a28Db399b5E30612D21116",
       "type": "EBV",
@@ -1347,6 +1358,17 @@
     }
   ],
   "blast": [
+    {
+      "symbol": "ezETH",
+      "address": "0x2416092f143378750bb29b79ed961ab195cceea5",
+      "coingeckoId": "renzo-restaked-eth",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Connext",
+        "slug": "connext"
+      }
+    },
     {
       "symbol": "USDB",
       "address": "0x4300000000000000000000000000000000000003",
