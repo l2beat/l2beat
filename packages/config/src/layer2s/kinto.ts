@@ -15,7 +15,7 @@ export const kinto: Layer2 = orbitStackL2({
     headerWarning: '',
     description:
       'Kinto is an Orbit stack L2 with account abstraction and KYC enabled for all users, supporting both modern financial institutions and decentralized protocols.',
-    purposes: ['DeFi'],
+    purposes: ['Universal', 'DeFi'],
     links: {
       websites: ['https://kinto.xyz'],
       apps: ['https://engen.kinto.xyz/engen-setup'],

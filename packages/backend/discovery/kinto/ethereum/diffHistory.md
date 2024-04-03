@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x45f34e681bc03df68c853718c0136e87a6a2a768
+Generated with discovered.json: 0x17596ec7df731ce584adb8f2f5fd23a6ee82cadc
 
-# Diff at Fri, 29 Mar 2024 08:09:56 GMT:
+# Diff at Wed, 03 Apr 2024 14:05:05 GMT:
 
-- author: sekuba (<sekuba@users.noreply.githum.com>)
-- comparing to: main@fb81931df1e69bb68ad02bc55a22b788201dd072 block: 19531637
-- current block number: 19538377
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@66b605e31075e304396e566f31130e883d656762 block: 19531637
+- current block number: 19575719
 
 ## Description
 
@@ -42,8 +42,6 @@ discovery. Values are for block 19531637 (main branch discovery), not current.
       name:
 -        "GnosisSafe"
 +        "ExecutorMultisig"
-      upgradeability.threshold:
--        "3 of 4 (75%)"
       values.nonce:
 -        3
     }
