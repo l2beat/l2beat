@@ -6,6 +6,7 @@ import { getRichSelectValue } from '../configureRichSelect'
 import { makeQuery } from '../query'
 import { ChartSettings, ChartSettingsManager } from './ChartSettings'
 import { ChartDataController } from './data-controller/ChartDataController'
+import { getChartType } from './getChartType'
 import { ChartType, Milestones, TokenInfo } from './types'
 import { ChartViewController } from './view-controller/ChartViewController'
 import { ChartUnit } from './view-controller/types'
@@ -43,7 +44,7 @@ export class ChartControls {
       milestones,
     })
 
-    const chartType = this.getChartType(this.chart)
+    const chartType = getChartType(this.chart)
     this.updateChartType(chartType)
 
     this.setupControls(this.chart, settings)
@@ -147,7 +148,6 @@ export class ChartControls {
     timeRangeControls.forEach((timeRangeControl) => {
       const isChecked =
         settings.getTimeRange() === this.toDays(timeRangeControl.value)
-
       if (isChecked) {
         timeRangeControl.checked = true
         callback?.(timeRangeControl)
@@ -265,10 +265,6 @@ export class ChartControls {
       result[timestamp] = milestone
     }
     return result
-  }
-
-  private getChartType(chart: HTMLElement) {
-    return ChartType.parse(JSON.parse(chart.dataset.initialType ?? ''))
   }
 
   private toDays(value: string) {

@@ -15,7 +15,7 @@ export function configureCharts(opts?: Options) {
   const charts = $$('[data-role="chart"]')
 
   for (const chart of charts) {
-    const chartSettingsManager = new ChartSettingsManager(opts)
+    const chartSettingsManager = new ChartSettingsManager(chart, opts)
 
     const chartRenderer = new ChartRenderer(chart)
     const chartViewController = new ChartViewController(chart, chartRenderer)
