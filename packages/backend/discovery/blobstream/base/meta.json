@@ -2,14 +2,6 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "",
-      "values": {}
-    },
-    {
-      "name": "",
-      "values": {}
-    },
-    {
       "name": "BlobstreamX",
       "values": {
         "DATA_COMMITMENT_MAX": {
@@ -68,6 +60,36 @@
           "type": null
         },
         "state_proofNonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "FunctionVerifier",
+      "values": {
+        "CIRCUIT_DIGEST": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "verificationKeyHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "FunctionVerifier",
+      "values": {
+        "CIRCUIT_DIGEST": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "verificationKeyHash": {
           "description": null,
           "severity": null,
           "type": null

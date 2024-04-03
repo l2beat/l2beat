@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x5a4bc9442e704b62ca7af42217b7b4968a983565
+Generated with discovered.json: 0x2aff9bf22d03c54504e3e165ecb551663cc6317b
 
-# Diff at Fri, 29 Mar 2024 14:14:58 GMT:
+# Diff at Wed, 03 Apr 2024 08:59:00 GMT:
 
-- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
-- current block number: 12466167
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- current block number: 12672692
 
 ## Description
 
@@ -13,7 +13,7 @@ Initial discovery
 
 ```diff
 +   Status: CREATED
-    contract  (0x294A466b50672029D0a8d7ad7E00AEfDeaE9f529)
+    contract FunctionVerifier (0x294A466b50672029D0a8d7ad7E00AEfDeaE9f529)
     +++ description: None
 ```
 
@@ -49,6 +49,6 @@ Initial discovery
 
 ```diff
 +   Status: CREATED
-    contract  (0xeEadfac6E689443d237B10F78e8424579e2e0177)
+    contract FunctionVerifier (0xeEadfac6E689443d237B10F78e8424579e2e0177)
     +++ description: None
 ```

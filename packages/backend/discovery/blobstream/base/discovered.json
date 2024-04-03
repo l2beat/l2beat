@@ -1,18 +1,21 @@
 {
   "name": "blobstream",
   "chain": "base",
-  "blockNumber": 12466167,
-  "configHash": "0xe603d70a0c2e7203d07cede9276c0908943472f536d8b791a787df214143d54f",
+  "blockNumber": 12672692,
+  "configHash": "0x20cd9668f6ad442485e1387b460144997c3ce77b0b55f8adcc21215bfd69966f",
   "version": 3,
   "contracts": [
     {
-      "name": "",
+      "name": "FunctionVerifier",
       "address": "0x294A466b50672029D0a8d7ad7E00AEfDeaE9f529",
-      "unverified": true,
       "upgradeability": {
         "type": "immutable"
       },
-      "sinceTimestamp": 1710952739
+      "sinceTimestamp": 1710952739,
+      "values": {
+        "CIRCUIT_DIGEST": "0x16cb5c45290c8545b9998275c07e7577fa0962bb6e35597c69de570649b7083f",
+        "verificationKeyHash": "0x16cb5c45290c8545b9998275c07e7577fa0962bb6e35597c69de570649b7083f"
+      }
     },
     {
       "name": "SuccinctFeeVault",
@@ -39,14 +42,15 @@
         "domainSeparator": "0x60a1450d5feea3af7edfa526d1fc4135bb35a918c258d6b26081380c9a92d64a",
         "getChainId": 8453,
         "getOwners": [
+          "0x0449689f2ce80fE45B32092e0d878ad87F0156a9",
           "0x793979789Ec179183E396e76c1e241bE0c9eE899",
           "0x1358eaCFE3a7F4FEB06c0Ae722072F134bcE7caf",
           "0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0",
-          "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
+          "0xA3fC931613a4E2440a199d47B0076e8b85F33099",
           "0x91D456f83f4a117B07866fdEdC29306f7E974e15"
         ],
-        "getThreshold": 3,
-        "nonce": 4,
+        "getThreshold": 4,
+        "nonce": 6,
         "VERSION": "1.3.0"
       }
     },
@@ -100,10 +104,10 @@
         "frozen": false,
         "gateway": "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776",
         "GUARDIAN_ROLE": "0x55435dd261a4b9b3364963f7738a7a662ad9c84396d64be3365284bb7f0a5041",
-        "headerRangeFunctionId": "0x9a8d1715f31162da0a0c86230f29abd4d9dd33488a7397e601002defa71d716f",
-        "latestBlock": 1108500,
-        "nextHeaderFunctionId": "0x9a02adc08852bb853c3f988e9d67e6bfb45439fd299051b2abe4df154e49e98e",
-        "state_proofNonce": 318,
+        "headerRangeFunctionId": "0x46132c86ed84fdc655528f80f9291dd3116b04902036b96925edc78bbf52b8ca",
+        "latestBlock": 1143600,
+        "nextHeaderFunctionId": "0x2ce8ca4f509cb09415b5a6ca6afa265571dac0b9f6ddb46f487e017fec71cf25",
+        "state_proofNonce": 434,
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "VERSION": "0.1.0"
       },
@@ -134,26 +138,37 @@
       }
     },
     {
-      "name": "",
+      "name": "FunctionVerifier",
       "address": "0xeEadfac6E689443d237B10F78e8424579e2e0177",
-      "unverified": true,
       "upgradeability": {
         "type": "immutable"
       },
-      "sinceTimestamp": 1710952827
+      "sinceTimestamp": 1710952827,
+      "values": {
+        "CIRCUIT_DIGEST": "0x16df4a97d228dbf5c20398fa31357d96724dcd1df399d9919b2902f6a42850f1",
+        "verificationKeyHash": "0x16df4a97d228dbf5c20398fa31357d96724dcd1df399d9919b2902f6a42850f1"
+      }
     }
   ],
   "eoas": [
+    "0x0449689f2ce80fE45B32092e0d878ad87F0156a9",
     "0x1358eaCFE3a7F4FEB06c0Ae722072F134bcE7caf",
     "0x19abbcEC005D4D83692f7A180125bF0FBd24253D",
     "0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0",
     "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
     "0x793979789Ec179183E396e76c1e241bE0c9eE899",
     "0x91D456f83f4a117B07866fdEdC29306f7E974e15",
+    "0xA3fC931613a4E2440a199d47B0076e8b85F33099",
     "0xa4ABEE02d42451Ba8c78b66361F53cb0C3dB3B65",
     "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126"
   ],
   "abis": {
+    "0x294A466b50672029D0a8d7ad7E00AEfDeaE9f529": [
+      "function CIRCUIT_DIGEST() view returns (bytes32)",
+      "function verificationKeyHash() pure returns (bytes32)",
+      "function verify(bytes32 _inputHash, bytes32 _outputHash, bytes _proof) view returns (bool)",
+      "function verifyProof(bytes proof, uint256[] public_inputs) view returns (bool success)"
+    ],
     "0x296666e937b270193B960a7cEC526B351F353166": [
       "error FailedToSendNative(uint256 amount)",
       "error InsufficentAllowance(address token, uint256 amount)",
@@ -302,6 +317,12 @@
     ],
     "0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3": [
       "constructor(address _singleton)"
+    ],
+    "0xeEadfac6E689443d237B10F78e8424579e2e0177": [
+      "function CIRCUIT_DIGEST() view returns (bytes32)",
+      "function verificationKeyHash() pure returns (bytes32)",
+      "function verify(bytes32 _inputHash, bytes32 _outputHash, bytes _proof) view returns (bool)",
+      "function verifyProof(bytes proof, uint256[] public_inputs) view returns (bool success)"
     ],
     "0xfb19439fBa9f16aA720be6bE0e53465a9733C964": [
       "error ContractFrozen()",
