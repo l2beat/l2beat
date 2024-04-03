@@ -37,6 +37,12 @@ export const kinto: Layer2 = orbitStackL2({
       description:
         'Escrow for yielding assets that are later bridged to the L2 in batches.',
     }),
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0x7870D5398DB488c669B406fBE57b8d05b6A35e42'),
+      tokens: '*',
+      description:
+        'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
+    }),
   ],
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
@@ -44,6 +50,7 @@ export const kinto: Layer2 = orbitStackL2({
   transactionApi: {
     type: 'rpc',
     defaultUrl: 'https://rpc.kinto-rpc.com',
+    defaultCallsPerMinute: 1500,
     assessCount: subtractOne,
     startBlock: 1,
   },
