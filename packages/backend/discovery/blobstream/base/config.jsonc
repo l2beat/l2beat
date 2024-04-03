@@ -10,6 +10,7 @@
   "overrides": {
     "BlobstreamX": {
       "ignoreMethods": ["state_dataCommitments", "proxiableUUID"],
+      "ignoreInWatchMode": ["latestBlock","state_proofNonce"],
       "fields": {
         "accessControl": { "type": "accessControl" }
       }
@@ -33,6 +34,7 @@
           // but there's a test :)
         }
       }
-    }
+    },
+
   }
 }
