@@ -97,7 +97,7 @@ export class BlobClient {
   private async getBlock(blockNumber: number) {
     this.logger.debug('Getting block ' + blockNumber, { blockNumber })
     const result = await this.callRpc('eth_getBlockByNumber', [
-      blockNumber.toString(),
+      '0x' + blockNumber.toString(16),
       false,
     ])
     const parsed = BlockWithParentBeaconBlockRootSchema.safeParse(result)
