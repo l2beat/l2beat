@@ -90,7 +90,10 @@ export function createTrackedTxsModule(
     start,
     routers: [
       ...subModules.flatMap((m) => m?.routers ?? []),
-      createTrackedTxsStatusRouter(trackedTxsConfigsRepository),
+      createTrackedTxsStatusRouter({
+        clock,
+        trackedTxsConfigsRepository,
+      }),
     ],
     indexer: trackedTxsIndexer,
   }
