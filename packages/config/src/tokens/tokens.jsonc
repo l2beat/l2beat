@@ -1088,6 +1088,15 @@
       "address": "0x4cb9a7ae498cedcbb5eae9f25736ae7d428c9d66",
       "type": "NMV",
       "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "GRT",
+      "address": "0x9623063377AD1B27544C965cCd7342f7EA7e88C7",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "The Graph Custom Gateway"
+      }
     }
   ],
   "optimism": [
