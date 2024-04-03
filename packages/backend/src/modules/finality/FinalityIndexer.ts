@@ -135,7 +135,7 @@ export class FinalityIndexer extends ChildIndexer {
   }
 
   override async setSafeHeight(safeHeight: number): Promise<void> {
-    // await this.stateRepository.setSafeHeight(this.indexerId, safeHeight)
+    await this.stateRepository.setSafeHeight(this.indexerId, safeHeight)
   }
 
   /**
