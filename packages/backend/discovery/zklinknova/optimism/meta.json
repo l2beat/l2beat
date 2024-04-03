@@ -2,91 +2,6 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "Arbitrator",
-      "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "primaryChainGateway": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "primaryChainMessageHashQueue": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "secondaryGateways": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "EthereumGateway",
-      "values": {
-        "ARBITRATOR": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "ZKLINK": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getRemoteGateway": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "GnosisSafe",
-      "values": {
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "L1ERC20Bridge",
       "values": {
         "l2Bridge": {
@@ -107,14 +22,14 @@
       }
     },
     {
-      "name": "LineaL1Gateway",
+      "name": "OptimismL2Gateway",
       "values": {
-        "ARBITRATOR": {
+        "MESSAGE_SERVICE": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "MESSAGE_SERVICE": {
+        "ZKLINK": {
           "description": null,
           "severity": null,
           "type": null

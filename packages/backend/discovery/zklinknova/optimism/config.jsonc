@@ -8,6 +8,23 @@
   ],
   "names": {
     "0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b": "zkLink",
-    "0x5Bd51296423A9079b931414C1De65e7057326EaA": "L1ERC20Bridge"
+    "0x5Bd51296423A9079b931414C1De65e7057326EaA": "L1ERC20Bridge",
+    "0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c": "OptimismL2Gateway"
+  },
+  "overrides": {
+    "0x4200000000000000000000000000000000000007": {
+      "ignoreDiscovery": true
+    },
+    "zkLink": {
+      "ignoreMethods": [
+        "l2LogsRootHash",
+        "l2LogsRootHashes",
+        "proxiableUUID",
+        "priorityOpSyncStatus"
+      ]
+    },
+    "OptimismL2Gateway": {
+      "ignoreMethods": ["proxiableUUID"]
+    }
   }
 }

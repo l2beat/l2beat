@@ -24,7 +24,16 @@
       ]
     },
     "Arbitrator": {
-      "ignoreMethods": ["proxiableUUID"]
+      "ignoreMethods": ["proxiableUUID"],
+      "fields": {
+        "secondaryGateways": {
+          "type": "arrayFromOneEvent",
+          "event": "SecondaryChainStatusUpdate",
+          "valueKey": "gateway",
+          "flagKey": "isActive",
+          "ignoreRelative": true
+        }
+      }
     },
     "LineaL1Gateway": {
       "ignoreMethods": ["proxiableUUID"]
