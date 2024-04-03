@@ -21,7 +21,7 @@ import { AmountRecord } from './repositories/AmountRepository'
 
 type AmountConfiguration = EscrowEntry | TotalSupplyEntry
 
-export interface AmountServiceOptions {
+export interface AmountServiceDependencies {
   readonly logger: Logger
   readonly rpcClient: RpcClient
   readonly multicallClient: MulticallClient
@@ -29,7 +29,7 @@ export interface AmountServiceOptions {
 }
 
 export class AmountService {
-  constructor(private readonly options: AmountServiceOptions) {}
+  constructor(private readonly dependencies: AmountServiceDependencies) {}
 
   public async fetchAmounts(
     configurations: Configuration<AmountConfiguration>[],
@@ -37,7 +37,7 @@ export class AmountService {
     blockNumber: number,
   ): Promise<AmountRecord[]> {
     const nativeAssetBalanceEncoder = getNativeAssetBalanceEncoder(
-      this.options.nativeAssetBalanceEncoder,
+      this.dependencies.nativeAssetBalanceEncoder,
       blockNumber,
     )
 
@@ -69,7 +69,7 @@ export class AmountService {
   ): Promise<AmountRecord[]> {
     return Promise.all(
       nonMulticall.map(async (configuration) => {
-        const amount = await this.options.rpcClient.getBalance(
+        const amount = await this.dependencies.rpcClient.getBalance(
           configuration.properties.escrowAddress,
           blockNumber,
         )
@@ -93,7 +93,7 @@ export class AmountService {
       ...this.encodeForMulticall(configuration, nativeAssetBalanceEncoder),
     }))
 
-    const responses = await this.options.multicallClient.multicall(
+    const responses = await this.dependencies.multicallClient.multicall(
       encoded,
       blockNumber,
     )
@@ -150,7 +150,9 @@ export class AmountService {
     nativeEncoding: NativeAssetBalanceEncoder | undefined,
   ) {
     if (!response.success) {
-      this.options.logger.error(`Multicall failed for configuration: ${id}}`)
+      this.dependencies.logger.error(
+        `Multicall failed for configuration: ${id}}`,
+      )
       return
     }
     switch (properties.type) {
