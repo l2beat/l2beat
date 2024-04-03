@@ -46,15 +46,19 @@ const L2CostsApiChart = z.object({
 })
 export type L2CostsApiChart = z.infer<typeof L2CostsApiChart>
 
-export const L2CostsApiCharts = z.object({
+export const L2CostsCombinedApiCharts = z.object({
   hourly: L2CostsApiChart,
   daily: L2CostsApiChart,
+})
+export type L2CostsCombinedApiCharts = z.infer<typeof L2CostsCombinedApiCharts>
+
+export const L2CostsProjectApiCharts = L2CostsCombinedApiCharts.extend({
   syncedUntil: branded(z.number(), (n) => new UnixTime(n)),
 })
-export type L2CostsApiCharts = z.infer<typeof L2CostsApiCharts>
+export type L2CostsProjectApiCharts = z.infer<typeof L2CostsProjectApiCharts>
 
 export const L2CostsApiResponse = z.object({
-  combined: L2CostsApiCharts.omit({ syncedUntil: true }),
-  projects: z.record(z.string(), z.optional(L2CostsApiCharts)),
+  combined: L2CostsCombinedApiCharts,
+  projects: z.record(z.string(), z.optional(L2CostsProjectApiCharts)),
 })
 export type L2CostsApiResponse = z.infer<typeof L2CostsApiResponse>

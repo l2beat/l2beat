@@ -3,9 +3,10 @@ import {
   assert,
   AssetId,
   cacheAsyncFunction,
+  L2CostsApiChart,
   L2CostsApiChartPoint,
-  L2CostsApiCharts,
   L2CostsApiResponse,
+  L2CostsProjectApiCharts,
   notUndefined,
   TrackedTxsConfigSubtype,
   UnixTime,
@@ -47,7 +48,7 @@ const MAX_DAYS = 180
 // Amount of gas required for a basic tx
 const OVERHEAD = 21_000
 
-export const CHART_TYPES: L2CostsApiCharts['hourly']['types'] = [
+export const CHART_TYPES: L2CostsApiChart['types'] = [
   'timestamp',
   'totalGas',
   'totalEth',
@@ -162,7 +163,7 @@ export class L2CostsController {
     transactions: DetailedTransaction[],
     combinedHourlyMap: Map<number, L2CostsApiChartPoint>,
     combinedDailyMap: Map<number, L2CostsApiChartPoint>,
-  ): Omit<L2CostsApiCharts, 'syncedUntil'> {
+  ): Omit<L2CostsProjectApiCharts, 'syncedUntil'> {
     const hourlyMap = new Map<number, L2CostsApiChartPoint>()
     const dailyMap = new Map<number, L2CostsApiChartPoint>()
 
@@ -174,11 +175,11 @@ export class L2CostsController {
       addToMap(dailyMap, 'day', tx)
       addToMap(combinedDailyMap, 'day', tx)
     }
-    const hourly: L2CostsApiCharts['hourly'] = {
+    const hourly: L2CostsProjectApiCharts['hourly'] = {
       types: CHART_TYPES,
       data: Array.from(hourlyMap.values()),
     }
-    const daily: L2CostsApiCharts['daily'] = {
+    const daily: L2CostsProjectApiCharts['daily'] = {
       types: CHART_TYPES,
       data: Array.from(dailyMap.values()),
     }

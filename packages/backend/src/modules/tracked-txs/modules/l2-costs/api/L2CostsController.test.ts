@@ -2,7 +2,7 @@ import {
   EthereumAddress,
   L2CostsApiChart,
   L2CostsApiChartPoint,
-  L2CostsApiCharts,
+  L2CostsProjectApiCharts,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -70,7 +70,7 @@ describe(L2CostsController.name, () => {
       ])
 
       controller.aggregateL2Costs = mockFn().returns(
-        mockObject<L2CostsApiCharts>({
+        mockObject<L2CostsProjectApiCharts>({
           hourly: mockObject<L2CostsApiChart>({}),
           daily: mockObject<L2CostsApiChart>({}),
         }),
