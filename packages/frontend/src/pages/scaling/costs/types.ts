@@ -11,7 +11,7 @@ import {
   TvlApiResponse,
 } from '@l2beat/shared-pure'
 
-import { ValueWithDisplayValue } from '../../types'
+import { SyncStatus, ValueWithDisplayValue } from '../../types'
 
 export interface CostsPagesData {
   tvlApiResponse: TvlApiResponse
@@ -32,7 +32,7 @@ export interface ScalingCostsViewEntry {
   provider: Layer2Provider | undefined
   purposes: ScalingProjectPurpose[]
   stage: StageConfig
-  costs: CostsData
+  data: CostsData
 }
 
 export type CostsData = {
@@ -41,6 +41,7 @@ export type CostsData = {
   last30d: CostsDataDetails
   last90d: CostsDataDetails
   last180d: CostsDataDetails
+  syncStatus: SyncStatus
 }
 
 export type CostsDataDetails = {

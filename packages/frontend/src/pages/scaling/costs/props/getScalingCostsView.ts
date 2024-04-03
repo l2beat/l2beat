@@ -1,13 +1,16 @@
 import { Layer2 } from '@l2beat/config'
 import {
   ActivityApiChart,
+  ActivityApiCharts,
   assert,
   L2CostsApiChart,
   L2CostsApiResponse,
+  L2CostsProjectApiCharts,
   notUndefined,
+  UnixTime,
 } from '@l2beat/shared-pure'
 
-import { formatLargeNumber } from '../../../../utils'
+import { formatLargeNumber, formatTimestamp } from '../../../../utils'
 import { getTransactionCount } from '../../../../utils/activity/getTransactionCount'
 import { getCostsSum } from '../../../../utils/costs/getCostsSum'
 import { formatCurrency } from '../../../../utils/format'
@@ -49,8 +52,8 @@ export function getScalingCostsView(
 
         return getScalingCostsViewEntry(
           project,
-          l2CostsProjectData.daily,
-          activityApiProjectData?.daily,
+          l2CostsProjectData,
+          activityApiProjectData,
           hasImplementationChanged,
         )
       })
@@ -60,8 +63,8 @@ export function getScalingCostsView(
 
 function getScalingCostsViewEntry(
   project: Layer2,
-  l2CostsChart: L2CostsApiChart,
-  activityChart: ActivityApiChart | undefined,
+  l2CostsChart: L2CostsProjectApiCharts,
+  activityChart: ActivityApiCharts | undefined,
   hasImplementationChanged: boolean,
 ): ScalingCostsViewEntry {
   return {
@@ -76,20 +79,27 @@ function getScalingCostsViewEntry(
     provider: project.display.provider,
     purposes: project.display.purposes,
     stage: project.stage,
-    costs: getCostsData(l2CostsChart, activityChart),
+    data: getCostsData(l2CostsChart, activityChart),
   }
 }
 
 function getCostsData(
-  l2CostsChart: L2CostsApiChart,
-  activityApiChart: ActivityApiChart | undefined,
+  l2CostsChart: L2CostsProjectApiCharts,
+  activityChart: ActivityApiCharts | undefined,
 ): CostsData {
   return {
-    last24h: getDataDetails(l2CostsChart, activityApiChart, 1),
-    last7d: getDataDetails(l2CostsChart, activityApiChart, 7),
-    last30d: getDataDetails(l2CostsChart, activityApiChart, 30),
-    last90d: getDataDetails(l2CostsChart, activityApiChart, 90),
-    last180d: getDataDetails(l2CostsChart, activityApiChart, 180),
+    last24h: getDataDetails(l2CostsChart.daily, activityChart?.daily, 1),
+    last7d: getDataDetails(l2CostsChart.daily, activityChart?.daily, 7),
+    last30d: getDataDetails(l2CostsChart.daily, activityChart?.daily, 30),
+    last90d: getDataDetails(l2CostsChart.daily, activityChart?.daily, 90),
+    last180d: getDataDetails(l2CostsChart.daily, activityChart?.daily, 180),
+    syncStatus: {
+      displaySyncedUntil: formatTimestamp(l2CostsChart.syncedUntil.toNumber(), {
+        mode: 'datetime',
+        longMonthName: true,
+      }),
+      isSynced: isSynced(l2CostsChart.syncedUntil),
+    },
   }
 }
 
@@ -200,4 +210,8 @@ function getIncludedProjects(
       (p.display.category === 'Optimistic Rollup' ||
         p.display.category === 'ZK Rollup'),
   )
+}
+
+function isSynced(syncedUntil: UnixTime) {
+  return UnixTime.now().add(-1, 'days').add(-1, 'hours').lte(syncedUntil)
 }

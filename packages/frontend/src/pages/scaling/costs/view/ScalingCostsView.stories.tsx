@@ -104,7 +104,7 @@ const meta: Meta<typeof ScalingCostsView> = {
           ],
           message: undefined,
         },
-        costs: {
+        data: {
           last24h: {
             total: {
               ethCost: { displayValue: 'Ξ7.52', value: 7.524754309322546 },
@@ -298,7 +298,7 @@ const meta: Meta<typeof ScalingCostsView> = {
           ],
           message: undefined,
         },
-        costs: {
+        data: {
           last24h: {
             total: {
               ethCost: { displayValue: 'Ξ5.58', value: 5.581502362879083 },
@@ -487,7 +487,7 @@ const meta: Meta<typeof ScalingCostsView> = {
           ],
           message: undefined,
         },
-        costs: {
+        data: {
           last24h: {
             total: {
               ethCost: { displayValue: 'Ξ7.28', value: 7.281951224703787 },
@@ -682,7 +682,7 @@ const meta: Meta<typeof ScalingCostsView> = {
             text: 'There is no available node software that can reconstruct the state from L1 data, hence there is no way to verify that this system is a rollup.',
           },
         },
-        costs: {
+        data: {
           last24h: {
             total: {
               ethCost: { displayValue: 'Ξ39.93', value: 39.93625596428643 },
@@ -855,7 +855,7 @@ const meta: Meta<typeof ScalingCostsView> = {
           ],
           message: undefined,
         },
-        costs: {
+        data: {
           last24h: {
             total: {
               ethCost: { displayValue: 'Ξ10.78', value: 10.785002552468061 },

@@ -16,7 +16,7 @@ export function getScalingCostsColumnsConfig() {
       columns: [
         {
           name: 'Total Cost',
-          getValue: (project) => <CostsTotalCell data={project.costs} />,
+          getValue: (project) => <CostsTotalCell data={project.data} />,
           tooltip:
             'The sum of the costs for calldata, blob data, computation, and an additional 21,000 gas overhead per transaction for the selected time period.',
           align: 'center',
@@ -27,7 +27,7 @@ export function getScalingCostsColumnsConfig() {
     {
       name: 'Calldata',
       getValue: (project) => (
-        <CostsBreakdownValueCell data={project.costs} type="calldata" />
+        <CostsBreakdownValueCell data={project.data} type="calldata" />
       ),
       headClassName: underlineClassNames(
         'before:bg-blue-700',
@@ -41,7 +41,7 @@ export function getScalingCostsColumnsConfig() {
     {
       name: 'Blobs',
       getValue: (project) => (
-        <CostsBreakdownValueCell data={project.costs} type="blobs" />
+        <CostsBreakdownValueCell data={project.data} type="blobs" />
       ),
       headClassName: underlineClassNames(
         'before:bg-orange-400',
@@ -55,7 +55,7 @@ export function getScalingCostsColumnsConfig() {
     {
       name: 'Compute',
       getValue: (project) => (
-        <CostsBreakdownValueCell data={project.costs} type="compute" />
+        <CostsBreakdownValueCell data={project.data} type="compute" />
       ),
       headClassName: underlineClassNames('before:bg-pink-100'),
       tooltip:
@@ -67,7 +67,7 @@ export function getScalingCostsColumnsConfig() {
       name: 'Overhead',
       getValue: (project) => (
         <CostsBreakdownValueCell
-          data={project.costs}
+          data={project.data}
           type="overhead"
           className="pr-4"
         />
@@ -81,17 +81,17 @@ export function getScalingCostsColumnsConfig() {
     {
       name: 'Tx count',
       getValue: (project) => (
-        <CostsTxCountCell data={project.costs} className="pr-4" />
+        <CostsTxCountCell data={project.data} className="pr-4" />
       ),
       headClassName: '!pr-4',
       align: 'right',
       sorting: {
         getOrderValue: (project) => ({
-          '24H': project.costs.last24h.txCount?.value,
-          '7D': project.costs.last7d.txCount?.value,
-          '30D': project.costs.last30d.txCount?.value,
-          '90D': project.costs.last90d.txCount?.value,
-          '180D': project.costs.last180d.txCount?.value,
+          '24H': project.data.last24h.txCount?.value,
+          '7D': project.data.last7d.txCount?.value,
+          '30D': project.data.last30d.txCount?.value,
+          '90D': project.data.last90d.txCount?.value,
+          '180D': project.data.last180d.txCount?.value,
         }),
         defaultOrderKey: '7D',
         rule: 'numeric',
@@ -106,42 +106,38 @@ function getSorting(
 ): SortingConfig<ScalingCostsViewEntry> {
   return {
     getOrderValue: (project) => ({
-      '1D-GAS-TOTAL': project.costs.last24h[type]?.gas.value,
-      '7D-GAS-TOTAL': project.costs.last7d[type]?.gas.value,
-      '30D-GAS-TOTAL': project.costs.last30d[type]?.gas.value,
-      '90D-GAS-TOTAL': project.costs.last90d[type]?.gas.value,
-      '180D-GAS-TOTAL': project.costs.last180d[type]?.gas.value,
-      '1D-ETH-TOTAL': project.costs.last24h[type]?.ethCost.value,
-      '7D-ETH-TOTAL': project.costs.last7d[type]?.ethCost.value,
-      '30D-ETH-TOTAL': project.costs.last30d[type]?.ethCost.value,
-      '90D-ETH-TOTAL': project.costs.last90d[type]?.ethCost.value,
-      '180D-ETH-TOTAL': project.costs.last180d[type]?.ethCost.value,
-      '1D-USD-TOTAL': project.costs.last24h[type]?.usdCost.value,
-      '7D-USD-TOTAL': project.costs.last7d[type]?.usdCost.value,
-      '30D-USD-TOTAL': project.costs.last30d[type]?.usdCost.value,
-      '90D-USD-TOTAL': project.costs.last90d[type]?.usdCost.value,
-      '180D-USD-TOTAL': project.costs.last180d[type]?.usdCost.value,
-      '1D-GAS-AMORTIZED': project.costs.last24h[type]?.gas.amortized?.value,
-      '7D-GAS-AMORTIZED': project.costs.last7d[type]?.gas.amortized?.value,
-      '30D-GAS-AMORTIZED': project.costs.last30d[type]?.gas.amortized?.value,
-      '90D-GAS-AMORTIZED': project.costs.last90d[type]?.gas.amortized?.value,
-      '180D-GAS-AMORTIZED': project.costs.last180d[type]?.gas.amortized?.value,
-      '1D-ETH-AMORTIZED': project.costs.last24h[type]?.ethCost.amortized?.value,
-      '7D-ETH-AMORTIZED': project.costs.last7d[type]?.ethCost.amortized?.value,
-      '30D-ETH-AMORTIZED':
-        project.costs.last30d[type]?.ethCost.amortized?.value,
-      '90D-ETH-AMORTIZED':
-        project.costs.last90d[type]?.ethCost.amortized?.value,
+      '1D-GAS-TOTAL': project.data.last24h[type]?.gas.value,
+      '7D-GAS-TOTAL': project.data.last7d[type]?.gas.value,
+      '30D-GAS-TOTAL': project.data.last30d[type]?.gas.value,
+      '90D-GAS-TOTAL': project.data.last90d[type]?.gas.value,
+      '180D-GAS-TOTAL': project.data.last180d[type]?.gas.value,
+      '1D-ETH-TOTAL': project.data.last24h[type]?.ethCost.value,
+      '7D-ETH-TOTAL': project.data.last7d[type]?.ethCost.value,
+      '30D-ETH-TOTAL': project.data.last30d[type]?.ethCost.value,
+      '90D-ETH-TOTAL': project.data.last90d[type]?.ethCost.value,
+      '180D-ETH-TOTAL': project.data.last180d[type]?.ethCost.value,
+      '1D-USD-TOTAL': project.data.last24h[type]?.usdCost.value,
+      '7D-USD-TOTAL': project.data.last7d[type]?.usdCost.value,
+      '30D-USD-TOTAL': project.data.last30d[type]?.usdCost.value,
+      '90D-USD-TOTAL': project.data.last90d[type]?.usdCost.value,
+      '180D-USD-TOTAL': project.data.last180d[type]?.usdCost.value,
+      '1D-GAS-AMORTIZED': project.data.last24h[type]?.gas.amortized?.value,
+      '7D-GAS-AMORTIZED': project.data.last7d[type]?.gas.amortized?.value,
+      '30D-GAS-AMORTIZED': project.data.last30d[type]?.gas.amortized?.value,
+      '90D-GAS-AMORTIZED': project.data.last90d[type]?.gas.amortized?.value,
+      '180D-GAS-AMORTIZED': project.data.last180d[type]?.gas.amortized?.value,
+      '1D-ETH-AMORTIZED': project.data.last24h[type]?.ethCost.amortized?.value,
+      '7D-ETH-AMORTIZED': project.data.last7d[type]?.ethCost.amortized?.value,
+      '30D-ETH-AMORTIZED': project.data.last30d[type]?.ethCost.amortized?.value,
+      '90D-ETH-AMORTIZED': project.data.last90d[type]?.ethCost.amortized?.value,
       '180D-ETH-AMORTIZED':
-        project.costs.last180d[type]?.ethCost.amortized?.value,
-      '1D-USD-AMORTIZED': project.costs.last24h[type]?.usdCost.amortized?.value,
-      '7D-USD-AMORTIZED': project.costs.last7d[type]?.usdCost.amortized?.value,
-      '30D-USD-AMORTIZED':
-        project.costs.last30d[type]?.usdCost.amortized?.value,
-      '90D-USD-AMORTIZED':
-        project.costs.last90d[type]?.usdCost.amortized?.value,
+        project.data.last180d[type]?.ethCost.amortized?.value,
+      '1D-USD-AMORTIZED': project.data.last24h[type]?.usdCost.amortized?.value,
+      '7D-USD-AMORTIZED': project.data.last7d[type]?.usdCost.amortized?.value,
+      '30D-USD-AMORTIZED': project.data.last30d[type]?.usdCost.amortized?.value,
+      '90D-USD-AMORTIZED': project.data.last90d[type]?.usdCost.amortized?.value,
       '180D-USD-AMORTIZED':
-        project.costs.last180d[type]?.usdCost.amortized?.value,
+        project.data.last180d[type]?.usdCost.amortized?.value,
     }),
     defaultOrderKey: '7D-USD-TOTAL',
     rule: 'numeric',
