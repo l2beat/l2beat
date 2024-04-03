@@ -57,6 +57,7 @@ export function getCostsRenderParams(
       },
     ]
 
+    console.log(state.theme)
     return {
       formatYAxisLabel,
       points,
@@ -64,6 +65,7 @@ export function getCostsRenderParams(
       renderHoverContents: (data) => renderCostsHover(data),
       useLogScale: state.useLogScale,
       range: [dataInRange[0][0], dataInRange[dataInRange.length - 1][0]],
+      theme: state.theme,
     }
   }
 }

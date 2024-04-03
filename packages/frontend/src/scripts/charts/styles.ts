@@ -1,10 +1,14 @@
+export type SeriesStylePoint = keyof PointClassNames
+export type SeriesStyleLine = keyof typeof LINE_STYLES
+export type SeriesStyleFill = keyof typeof FILL_STYLES
+
 export interface SeriesStyle {
-  point?: keyof PointClassNames
-  fill?: keyof typeof FILL_STYLES
-  line?: keyof typeof LINE_STYLES
+  point?: SeriesStylePoint
+  fill?: SeriesStyleFill
+  line?: SeriesStyleLine
 }
 
-export type PointStyle = keyof PointClassNames
+export type PointStyle = SeriesStylePoint
 export type PointShapeDefinition =
   | {
       type: 'div'
@@ -75,43 +79,43 @@ export const POINT_CLASS_NAMES: PointClassNames = {
 }
 
 export const FILL_STYLES = {
-  pink: () => '#FF46C0',
-  yellow: () => '#FFC107',
-  purple: () => '#7E41CC',
-  green: () => '#5BFF4D',
-  blue: () => '#BADAFF',
+  pink: () => ({ light: '#FF46C0', dark: '#FF46C0' }),
+  yellow: () => ({ light: '#FFC107', dark: '#FFC107' }),
+  purple: () => ({ light: '#7E41CC', dark: '#7E41CC' }),
+  green: () => ({ light: '#11CC00', dark: '#5BFF4D' }),
+  blue: () => ({ light: '#005DD7', dark: '#BADAFF' }),
   'blue gradient': (ctx: CanvasRenderingContext2D) => {
     const gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0)
     gradient.addColorStop(0, 'rgba(42, 91, 216, 0.3)')
     gradient.addColorStop(1, 'rgba(83, 162, 255, 0.3)')
-    return gradient
+    return { light: gradient, dark: gradient }
   },
   'signature gradient': (ctx: CanvasRenderingContext2D) => {
     const gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0)
     gradient.addColorStop(0, 'rgba(126, 65, 204, 0.4)')
     gradient.addColorStop(0.5, 'rgba(216, 61, 164, 0.4)')
     gradient.addColorStop(1, 'rgba(238, 44, 1, 0.4)')
-    return gradient
+    return { light: gradient, dark: gradient }
   },
 }
 
 export const LINE_STYLES = {
-  pink: () => '#FF46C0',
-  yellow: () => '#FFC107',
-  purple: () => '#7E41CC',
-  green: () => '#5BFF4D',
-  blue: () => '#BADAFF',
+  pink: () => ({ light: '#FF46C0', dark: '#FF46C0' }),
+  yellow: () => ({ light: '#FFC107', dark: '#FFC107' }),
+  purple: () => ({ light: '#7E41CC', dark: '#7E41CC' }),
+  green: () => ({ light: '#11CC00', dark: '#5BFF4D' }),
+  blue: () => ({ light: '#005DD7', dark: '#BADAFF' }),
   'blue gradient': (ctx: CanvasRenderingContext2D) => {
     const gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0)
     gradient.addColorStop(0, 'rgba(42, 91, 216')
     gradient.addColorStop(1, 'rgba(83, 162, 255')
-    return gradient
+    return { light: gradient, dark: gradient }
   },
   'signature gradient': (ctx: CanvasRenderingContext2D) => {
     const gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0)
     gradient.addColorStop(0, 'rgba(126, 65, 204')
     gradient.addColorStop(0.5, 'rgba(216, 61, 164')
     gradient.addColorStop(1, 'rgba(238, 44, 1')
-    return gradient
+    return { light: gradient, dark: gradient }
   },
 }

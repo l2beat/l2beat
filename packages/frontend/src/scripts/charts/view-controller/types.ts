@@ -57,4 +57,5 @@ export interface ChartControlsState {
   showEthereumTransactions?: boolean
   useLogScale: boolean
   milestones: Record<number, Milestone>
+  theme: 'light' | 'dark'
 }

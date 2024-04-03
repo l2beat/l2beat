@@ -3,7 +3,8 @@ import isEmpty from 'lodash/isEmpty'
 
 import { getFilteredSlugs } from '../configureProjectFilters'
 import { getRichSelectValue } from '../configureRichSelect'
-import { makeQuery } from '../query'
+import { getCurrentTheme } from '../configureThemeToggle'
+import { makeQuery, Query } from '../query'
 import { ChartSettings, ChartSettingsManager } from './ChartSettings'
 import { ChartDataController } from './data-controller/ChartDataController'
 import { getChartType } from './getChartType'
@@ -35,6 +36,8 @@ export class ChartControls {
       this.chart.dataset.settingsId ?? 'unknown',
     )
 
+    const theme = getCurrentTheme()
+
     this.chartViewController.init({
       data: undefined,
       timeRangeInDays: settings.getTimeRange(),
@@ -42,6 +45,7 @@ export class ChartControls {
       useLogScale: settings.getUseLogScale(),
       showEthereumTransactions: settings.getShowEthereumTransactions(),
       milestones,
+      theme,
     })
 
     const chartType = getChartType(this.chart)
@@ -64,6 +68,7 @@ export class ChartControls {
   private setupControls(chart: HTMLElement, settings: ChartSettings) {
     const query = makeQuery(chart)
 
+    this.configureThemeControls()
     this.configureScaleControls(query, settings)
     const unitControls = this.configureUnitControls(
       query,
@@ -82,10 +87,19 @@ export class ChartControls {
     this.configureRefetchButton(query)
   }
 
-  private configureScaleControls(
-    query: ReturnType<typeof makeQuery>,
-    settings: ChartSettings,
-  ) {
+  private configureThemeControls() {
+    const { $$ } = makeQuery(document.body)
+
+    const themeToggles = $$('[data-role="dark-theme-toggle"]')
+    themeToggles.forEach((themeToggle) => {
+      themeToggle.addEventListener('change', () => {
+        const theme = getCurrentTheme()
+        this.chartViewController.configure({ theme })
+      })
+    })
+  }
+
+  private configureScaleControls(query: Query, settings: ChartSettings) {
     const { $$ } = query
     const scaleControls = $$<HTMLInputElement>(
       '[data-role="chart-scale-controls"] input',
@@ -102,7 +116,7 @@ export class ChartControls {
   }
 
   private configureUnitControls(
-    query: ReturnType<typeof makeQuery>,
+    query: Query,
     settings: ChartSettings,
     callback?: ChartControlsCallbacks['onUnitChange'],
   ) {
@@ -136,7 +150,7 @@ export class ChartControls {
   }
 
   private configureTimeRangeControls(
-    query: ReturnType<typeof makeQuery>,
+    query: Query,
     settings: ChartSettings,
     callback?: ChartControlsCallbacks['onTimeRangeChange'],
   ) {
@@ -162,10 +176,7 @@ export class ChartControls {
     })
   }
 
-  private configureEthereumTxsToggle(
-    query: ReturnType<typeof makeQuery>,
-    settings: ChartSettings,
-  ) {
+  private configureEthereumTxsToggle(query: Query, settings: ChartSettings) {
     const { $ } = query
     const showEthereumTransactionToggle = $.maybe<HTMLInputElement>(
       '[data-role="toggle-ethereum-activity"]',
@@ -181,10 +192,7 @@ export class ChartControls {
     })
   }
 
-  private configureTokenSelect(
-    query: ReturnType<typeof makeQuery>,
-    unitControls: HTMLInputElement[],
-  ) {
+  private configureTokenSelect(query: Query, unitControls: HTMLInputElement[]) {
     const { $ } = query
 
     const tokenSelect = $.maybe('[data-role=rich-select]#token-select')
@@ -210,7 +218,7 @@ export class ChartControls {
     })
   }
 
-  private configureCanonicalToggle(query: ReturnType<typeof makeQuery>) {
+  private configureCanonicalToggle(query: Query) {
     const { $ } = query
     const canonicalToggle = $.maybe<HTMLInputElement>(
       '[data-role="chart-combined"]',
@@ -246,7 +254,7 @@ export class ChartControls {
     })
   }
 
-  private configureRefetchButton(query: ReturnType<typeof makeQuery>) {
+  private configureRefetchButton(query: Query) {
     const { $ } = query
     const refetchButton = $('[data-role="chart-refetch-button"]')
 

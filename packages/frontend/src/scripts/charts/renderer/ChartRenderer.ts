@@ -9,6 +9,8 @@ import {
   LINE_STYLES,
   POINT_CLASS_NAMES,
   SeriesStyle,
+  SeriesStyleFill,
+  SeriesStyleLine,
 } from '../styles'
 import { renderMilestoneHover } from '../view-controller/hovers'
 import { getYAxis } from './getYAxis'
@@ -27,6 +29,7 @@ export interface RenderParams<T> {
   formatYAxisLabel: (value: number) => string
   renderHoverContents: (pointData: T) => string
   useLogScale: boolean
+  theme: 'dark' | 'light'
 }
 
 const FIRST_LABEL_HEIGHT_PX = 20
@@ -114,7 +117,7 @@ export class ChartRenderer {
 
     for (const { style, path } of paths) {
       if (style.fill) {
-        this.ctx.fillStyle = FILL_STYLES[style.fill](this.ctx)
+        this.ctx.fillStyle = this.getFillStyle(style.fill, params.theme)
         const fillPath = new Path2D(path)
         fillPath.lineTo(this.canvas.width, this.canvas.height)
         fillPath.lineTo(0, this.canvas.height)
@@ -126,7 +129,7 @@ export class ChartRenderer {
     for (const { style, path } of paths) {
       if (style.line) {
         this.ctx.lineWidth = Math.floor(2 * window.devicePixelRatio)
-        this.ctx.strokeStyle = LINE_STYLES[style.line](this.ctx)
+        this.ctx.strokeStyle = this.getStrokeStyle(style.line, params.theme)
         this.ctx.stroke(path)
       }
     }
@@ -357,5 +360,15 @@ export class ChartRenderer {
         return indexResult
       }
     }
+  }
+
+  private getStrokeStyle(line: SeriesStyleLine, theme: 'dark' | 'light') {
+    const strokeStyle = LINE_STYLES[line](this.ctx)
+    return strokeStyle[theme]
+  }
+
+  private getFillStyle(fill: SeriesStyleFill, theme: 'dark' | 'light') {
+    const fillStyle = FILL_STYLES[fill](this.ctx)
+    return fillStyle[theme]
   }
 }

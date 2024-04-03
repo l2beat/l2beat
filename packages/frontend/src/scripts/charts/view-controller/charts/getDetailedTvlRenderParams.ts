@@ -72,6 +72,7 @@ export function getDetailedTvlRenderParams(
       renderHoverContents: (data) => renderDetailedTvlHover(data, useEth),
       useLogScale: state.useLogScale,
       range: [dataInRange[0][0], dataInRange[dataInRange.length - 1][0]],
+      theme: state.theme,
     }
   }
 }
