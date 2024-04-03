@@ -9,7 +9,7 @@ interface EthereumActivityToggleProps {
 
 export function EthereumActivityToggle(props: EthereumActivityToggleProps) {
   return (
-    <div data-activity-only className={props.showToggle ? undefined : 'hidden'}>
+    <div className={props.showToggle ? undefined : 'hidden'}>
       <Checkbox
         role="toggle-ethereum-activity"
         id="ethereum-activity"

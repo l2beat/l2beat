@@ -136,7 +136,7 @@ export function Chart(props: ChartProps) {
           <div className="flex justify-between">
             {isActivity && <EthereumActivityToggle showToggle={isActivity} />}
             {!isActivity && (
-              <div className="mr-4 flex flex-wrap gap-4" data-tvl-only>
+              <div className="mr-4 flex flex-wrap gap-4">
                 <UnitControls chartType={props.initialType} />
                 <TokenControls
                   tvlBreakdownHref={props.tvlBreakdownHref}
