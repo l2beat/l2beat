@@ -15,7 +15,9 @@ export function CostsTypeControls() {
           checked: true,
         },
         {
-          value: 'AMORTIZED',
+          label: 'PER L2 TX',
+          value: 'PER-L2-TX',
+          className: 'w-max',
         },
       ]}
     />

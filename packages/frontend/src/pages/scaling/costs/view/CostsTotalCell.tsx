@@ -123,17 +123,17 @@ function TotalValue({
           overhead={details.overhead[unit].value}
         />
       </div>
-      <div className="hidden flex-col items-end group-data-[type=AMORTIZED]/costs-controls-wrapper:flex">
-        {data.amortized ? (
+      <div className="hidden flex-col items-end group-data-[type=PER-L2-TX]/costs-controls-wrapper:flex">
+        {data.perL2Tx ? (
           <>
             <div className="text-lg font-semibold">
-              {data.amortized.displayValue}
+              {data.perL2Tx.displayValue}
             </div>
             <CostsBreakdown
-              blobs={details.blobs?.[unit].amortized?.value}
-              calldata={details.calldata[unit].amortized?.value}
-              compute={details.compute[unit].amortized?.value}
-              overhead={details.overhead[unit].amortized?.value}
+              blobs={details.blobs?.[unit].perL2Tx?.value}
+              calldata={details.calldata[unit].perL2Tx?.value}
+              compute={details.compute[unit].perL2Tx?.value}
+              overhead={details.overhead[unit].perL2Tx?.value}
             />
           </>
         ) : (

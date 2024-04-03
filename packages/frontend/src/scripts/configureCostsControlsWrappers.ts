@@ -63,16 +63,16 @@ export function configureCostsControlsWrappers() {
     SORTING_ARROWS_NAMES.forEach((name) =>
       setSortingArrowsOrderKey(name, getSortingArrowsOrderKey()),
     )
-    const isAmortized = control.value === 'AMORTIZED'
+    const isPerL2Tx = control.value === 'PER-L2-TX'
     const isOneOrSevenDays =
       checkedTimeRangeControl?.value === '7D' ||
       checkedTimeRangeControl?.value === '1D'
 
     timeRangeControls.forEach((c) => {
       if (c.value === '1D' || c.value === '7D') {
-        c.disabled = isAmortized
+        c.disabled = isPerL2Tx
       }
-      if (c.value === '30D' && isAmortized && isOneOrSevenDays) {
+      if (c.value === '30D' && isPerL2Tx && isOneOrSevenDays) {
         c.checked = true
         c.dispatchEvent(new Event('change'))
       }

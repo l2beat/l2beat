@@ -69,24 +69,24 @@ function Cell({ details, className, type }: CellProps) {
         <span className="hidden group-data-[type=TOTAL]/costs-controls-wrapper:inline">
           <Value>{detailsData.ethCost}</Value>
         </span>
-        <span className="hidden group-data-[type=AMORTIZED]/costs-controls-wrapper:inline">
-          <Value>{detailsData.ethCost.amortized}</Value>
+        <span className="hidden group-data-[type=PER-L2-TX]/costs-controls-wrapper:inline">
+          <Value>{detailsData.ethCost.perL2Tx}</Value>
         </span>
       </div>
       <div className="hidden group-data-[unit=USD]/costs-controls-wrapper:inline">
         <span className="hidden group-data-[type=TOTAL]/costs-controls-wrapper:inline">
           <Value>{detailsData.usdCost}</Value>
         </span>
-        <span className="hidden group-data-[type=AMORTIZED]/costs-controls-wrapper:inline">
-          <Value>{detailsData.usdCost.amortized}</Value>
+        <span className="hidden group-data-[type=PER-L2-TX]/costs-controls-wrapper:inline">
+          <Value>{detailsData.usdCost.perL2Tx}</Value>
         </span>
       </div>
       <div className="hidden group-data-[unit=GAS]/costs-controls-wrapper:inline">
         <span className="hidden group-data-[type=TOTAL]/costs-controls-wrapper:inline">
           <Value>{detailsData.gas}</Value>
         </span>
-        <span className="hidden group-data-[type=AMORTIZED]/costs-controls-wrapper:inline">
-          <Value>{detailsData.gas.amortized}</Value>
+        <span className="hidden group-data-[type=PER-L2-TX]/costs-controls-wrapper:inline">
+          <Value>{detailsData.gas.perL2Tx}</Value>
         </span>
       </div>
     </div>

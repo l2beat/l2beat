@@ -173,7 +173,7 @@ function getCostsDataBreakdown(
     ethCost: {
       displayValue: formatCurrency(data.ethCost, 'eth'),
       value: data.ethCost,
-      amortized: txCount
+      perL2Tx: txCount
         ? {
             value: data.ethCost / txCount,
             displayValue: formatCurrency(data.ethCost / txCount, 'eth', 6),
@@ -183,7 +183,7 @@ function getCostsDataBreakdown(
     usdCost: {
       displayValue: formatCurrency(data.usdCost, 'usd'),
       value: data.usdCost,
-      amortized: txCount
+      perL2Tx: txCount
         ? {
             value: data.usdCost / txCount,
             displayValue: formatCurrency(data.usdCost / txCount, 'usd'),
@@ -193,7 +193,7 @@ function getCostsDataBreakdown(
     gas: {
       displayValue: formatLargeNumber(data.gas),
       value: data.gas,
-      amortized: txCount
+      perL2Tx: txCount
         ? {
             value: data.gas / txCount,
             displayValue: formatLargeNumber(data.gas / txCount),

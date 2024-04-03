@@ -13,6 +13,7 @@ export interface RadioGroupProps {
 
 export interface RadioGroupOption {
   value: string
+  label?: string
   checked?: boolean
   className?: string
 }
@@ -55,7 +56,7 @@ export function RadioGroup(props: RadioGroupProps) {
                 'peer-checked:bg-white dark:peer-checked:bg-black',
             )}
           >
-            {option.value}
+            {option.label ?? option.value}
           </span>
         </label>
       ))}

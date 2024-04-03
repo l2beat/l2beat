@@ -60,5 +60,5 @@ export type CostsDataBreakdown = {
 }
 
 export interface TotalCostsValue extends ValueWithDisplayValue {
-  amortized: ValueWithDisplayValue | undefined
+  perL2Tx: ValueWithDisplayValue | undefined
 }
