@@ -40,7 +40,13 @@ export function createTvl2StatusRouter(
       },
       amounts: {
         entries: amounts.length,
-        datapoints: getDatapoints(amounts, clock),
+        datapoints: getDatapoints(
+          amounts.map((a) => ({
+            ...a,
+            sinceTimestamp: a.sinceTimestampInclusive,
+          })),
+          clock,
+        ),
         chains: Object.keys(amountsByChain).length,
         projects: Object.keys(amountsByProject).length,
         byType: Object.fromEntries(
@@ -48,7 +54,13 @@ export function createTvl2StatusRouter(
             type,
             {
               entries: entries.length,
-              datapoints: getDatapoints(entries, clock),
+              datapoints: getDatapoints(
+                entries.map((a) => ({
+                  ...a,
+                  sinceTimestamp: a.sinceTimestampInclusive,
+                })),
+                clock,
+              ),
             },
           ]),
         ),

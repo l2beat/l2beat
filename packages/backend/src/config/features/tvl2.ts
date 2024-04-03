@@ -53,8 +53,8 @@ function getAmountsConfig(
 
   for (const token of tokenList) {
     if (token.chainId !== ChainId.ETHEREUM) {
-      const project = chainToProject.get(chainConverter.toName(token.chainId))
-      assert(project, 'Project is required for token')
+      const projectId = chainToProject.get(chainConverter.toName(token.chainId))
+      assert(projectId, 'Project is required for token')
 
       switch (token.formula) {
         case 'totalSupply':
