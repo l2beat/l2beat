@@ -4,8 +4,6 @@ import { ChildIndexer, Retries } from '@l2beat/uif'
 import { mean } from 'lodash'
 
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
-import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
-import { StarknetClient } from '../../peripherals/starknet/StarknetClient'
 import {
   FinalityRecord,
   FinalityRepository,
@@ -25,7 +23,7 @@ export class FinalityIndexer extends ChildIndexer {
     parentIndexer: ChildIndexer,
     private readonly stateRepository: IndexerStateRepository,
     private readonly finalityRepository: FinalityRepository,
-    private readonly configuration: FinalityConfig<StarknetClient | RpcClient>,
+    private readonly configuration: FinalityConfig,
   ) {
     super(logger.tag(configuration.projectId.toString()), [parentIndexer], {
       updateRetryStrategy: UPDATE_RETRY_STRATEGY,
@@ -86,7 +84,7 @@ export class FinalityIndexer extends ChildIndexer {
 
   async getFinalityData(
     to: UnixTime,
-    configuration: FinalityConfig<StarknetClient | RpcClient>,
+    configuration: FinalityConfig,
   ): Promise<FinalityRecord | undefined> {
     const from = to.add(-1, 'days')
 
@@ -137,7 +135,7 @@ export class FinalityIndexer extends ChildIndexer {
   }
 
   override async setSafeHeight(safeHeight: number): Promise<void> {
-    await this.stateRepository.setSafeHeight(this.indexerId, safeHeight)
+    // await this.stateRepository.setSafeHeight(this.indexerId, safeHeight)
   }
 
   /**

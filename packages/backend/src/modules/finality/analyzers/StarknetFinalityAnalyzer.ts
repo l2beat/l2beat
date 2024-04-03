@@ -20,14 +20,14 @@ const StarknetStateUpdate = z.object({
 })
 type StarknetStateUpdate = z.infer<typeof StarknetStateUpdate>
 
-export class StarknetFinalityAnalyzer extends BaseAnalyzer<StarknetClient> {
+export class StarknetFinalityAnalyzer extends BaseAnalyzer {
   constructor(
     protected override readonly provider: RpcClient,
     protected override readonly livenessRepository: LivenessRepository,
     protected override readonly projectId: ProjectId,
-    protected override readonly l2Provider: StarknetClient,
+    private readonly l2Provider: StarknetClient,
   ) {
-    super(provider, livenessRepository, projectId, l2Provider)
+    super(provider, livenessRepository, projectId)
   }
   override getTrackedTxSubtype(): TrackedTxsConfigSubtype {
     return 'stateUpdates'

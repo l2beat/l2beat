@@ -102,7 +102,7 @@ function initializeConfigurations(
   livenessRepository: LivenessRepository,
   configs: FinalityProjectConfig[],
   peripherals: Peripherals,
-): FinalityConfig<StarknetClient | RpcClient>[] {
+): FinalityConfig[] {
   return configs
     .map((configuration): FinalityConfig | undefined => {
       switch (configuration.type) {
