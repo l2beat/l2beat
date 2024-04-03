@@ -176,15 +176,11 @@ export class L2CostsController {
     }
     const hourly: L2CostsApiCharts['hourly'] = {
       types: CHART_TYPES,
-      data: Array.from(hourlyMap.values()).sort(
-        (a, b) => a[0].toNumber() - b[0].toNumber(),
-      ),
+      data: Array.from(hourlyMap.values()),
     }
     const daily: L2CostsApiCharts['daily'] = {
       types: CHART_TYPES,
-      data: Array.from(dailyMap.values()).sort(
-        (a, b) => a[0].toNumber() - b[0].toNumber(),
-      ),
+      data: Array.from(dailyMap.values()),
     }
     return {
       hourly,

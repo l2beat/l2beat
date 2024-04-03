@@ -194,7 +194,7 @@ describe(L2CostsController.name, () => {
         combinedDailyMap,
       )
 
-      expect(result.hourly.data).toEqualUnsorted([
+      expect(result.hourly.data).toEqual([
         ...times(26, (i) =>
           datapoint(
             START.add(-i, 'hours'),
@@ -203,7 +203,7 @@ describe(L2CostsController.name, () => {
           ),
         ),
       ])
-      expect(result.daily.data).toEqualUnsorted([
+      expect(result.daily.data).toEqual([
         ...times(2, (i) =>
           datapoint(
             START.toStartOf('day').add(-i, 'days'),
@@ -214,7 +214,7 @@ describe(L2CostsController.name, () => {
       ])
 
       // adds values to combined maps
-      expect(Array.from(combinedHourlyMap.values())).toEqualUnsorted([
+      expect(Array.from(combinedHourlyMap.values())).toEqual([
         ...times(26, (i) =>
           datapoint(
             START.add(-i, 'hours'),
@@ -223,7 +223,7 @@ describe(L2CostsController.name, () => {
           ),
         ),
       ])
-      expect(Array.from(combinedDailyMap.values())).toEqualUnsorted([
+      expect(Array.from(combinedDailyMap.values())).toEqual([
         ...times(2, (i) =>
           datapoint(
             START.toStartOf('day').add(-i, 'days'),
