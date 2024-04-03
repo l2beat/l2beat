@@ -117,11 +117,14 @@ function getDataDetails(
     usdCost: getCostsSum(costsChart.data, 'totalUsd', days),
     gas: getCostsSum(costsChart.data, 'totalGas', days),
   }
+
   const blobsData = {
     ethCost: getCostsSum(costsChart.data, 'blobsEth', days),
     usdCost: getCostsSum(costsChart.data, 'blobsUsd', days),
     gas: getCostsSum(costsChart.data, 'blobsGas', days),
   }
+  const isBlobsDataEmpty =
+    blobsData.ethCost === 0 && blobsData.usdCost === 0 && blobsData.gas === 0
 
   const calldataData = {
     ethCost: getCostsSum(costsChart.data, 'calldataEth', days),
@@ -143,7 +146,9 @@ function getDataDetails(
 
   return {
     total: getCostsDataBreakdown(totalData, txCount),
-    blobs: getCostsDataBreakdown(blobsData, txCount),
+    blobs: isBlobsDataEmpty
+      ? undefined
+      : getCostsDataBreakdown(blobsData, txCount),
     calldata: getCostsDataBreakdown(calldataData, txCount),
     compute: getCostsDataBreakdown(computeData, txCount),
     overhead: getCostsDataBreakdown(overheadData, txCount),

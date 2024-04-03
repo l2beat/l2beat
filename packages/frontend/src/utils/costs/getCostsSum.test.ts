@@ -6,7 +6,7 @@ import { getCostsSum } from './getCostsSum'
 
 const now = UnixTime.now()
 const data: L2CostsApiChartPoint[] = range(180).map(() => {
-  return [now, 10, 10, 10, 1, 1, 1, 5, 5, 5, 3, 3, 3, 1, 1, 1]
+  return [now, 10, 10, 10, 1, 1, 1, 5, 5, 5, 3, 3, 3, null, null, null]
 })
 
 describe('getCostsSum', () => {
@@ -18,6 +18,7 @@ describe('getCostsSum', () => {
     { type: 'overheadGas', days: 30, expected: 30 },
     { type: 'computeEth', days: 180, expected: 540 },
     { type: 'calldataGas', days: Infinity, expected: 900 },
+    { type: 'blobsUsd', days: 5, expected: 0 },
   ] as const
 
   for (const { type, days, expected } of testCases) {
