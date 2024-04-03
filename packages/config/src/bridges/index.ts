@@ -1,4 +1,4 @@
-import { acrossV2 } from './acrossV2'
+import { acrossV3 } from './acrossV3'
 import { allbridge } from './allbridge'
 import { amarok } from './amarok'
 import { ankr } from './ankr'
@@ -46,7 +46,7 @@ import { xdai } from './xdai'
 export * from './types'
 
 export const bridges: Bridge[] = [
-  acrossV2,
+  acrossV3,
   allbridge,
   amarok,
   ankr,

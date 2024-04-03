@@ -10,7 +10,7 @@ import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
 
-const PROJECT_ID = ProjectId('across-v2')
+const PROJECT_ID = ProjectId('across-v3')
 const discovery = new ProjectDiscovery(PROJECT_ID.toString())
 
 const finalizationDelaySeconds = discovery.getContractValue<number>(
@@ -18,12 +18,12 @@ const finalizationDelaySeconds = discovery.getContractValue<number>(
   'liveness',
 )
 
-export const acrossV2: Bridge = {
+export const acrossV3: Bridge = {
   type: 'bridge',
   id: PROJECT_ID,
   display: {
-    name: 'Across V2',
-    slug: 'acrossv2',
+    name: 'Across V3',
+    slug: 'acrossv3',
     category: 'Liquidity Network',
     links: {
       websites: ['https://across.to/'],
@@ -37,9 +37,9 @@ export const acrossV2: Bridge = {
       ],
     },
     description:
-      'Across V2 is a cross-chain optimistic bridge that uses actors called Relayers to fulfill user transfer requests on the destination chain.',
+      'Across V3 is a cross-chain optimistic bridge that uses actors called Relayers to fulfill user transfer requests on the destination chain.',
     detailedDescription:
-      'Relayers are later reimbursed by providing a proof of their action to an Optimistic Oracle on Ethereum. The architecture leverages a single liquidity pool on Ethereum and separate deposit/reimburse pools on destination chains that are rebalanced using canonical bridges.',
+      'Relayers are later reimbursed by providing a proof of their action to an Optimistic Oracle on Ethereum. Relayer reibursements over a specific block range are bundled and posted on-chain as merkle roots which uniquely identify the set of all repayments and rebalance instructions. The architecture leverages a single liquidity pool on Ethereum and separate deposit/reimburse pools on destination chains that are rebalanced using canonical bridges.',
   },
   config: {
     escrows: [
@@ -74,15 +74,15 @@ export const acrossV2: Bridge = {
     destinationToken: RISK_VIEW.CANONICAL,
   },
   technology: {
-    destination: ['Optimism', 'Polygon', 'Boba', 'Arbitrum', 'ZkSync Era'],
+    destination: ['Optimism', 'Polygon', 'Boba', 'Arbitrum', 'ZkSync Era', 'Linea', 'Polygon zkEVM', 'Scroll'],
     principleOfOperation: {
       name: 'Principle of operation',
       description:
         'This bridge performs cross-chain swaps by borrowing liquidity from a network of Relayers who are then reimbursed on a chain of their choosing from a common liquidity pool (which consists of user deposits and deposits of independent Liquidity Providers). Specifically, when a user deposits funds for a swap into a dedicated pool on origin chain, a Relayer first pays the user on the requested destination chain and then shows proof of that deposit to Optimistic Oracle on Ethereum to be reimbursed. Liquidity used for reimbursements is rebalanced between a main pool on Ethereum (called Hub Pool) and pools on destination chains (called Spoke Pools) via native chain bridges.',
       references: [
         {
-          text: 'Across V2 Architecture',
-          href: 'https://github.com/UMAprotocol/UMIPs/blob/master/UMIPs/umip-157.md',
+          text: 'Across V3 Architecture',
+          href: 'https://github.com/UMAprotocol/UMIPs/blob/master/UMIPs/umip-179.md',
         },
       ],
       risks: [
@@ -113,7 +113,7 @@ export const acrossV2: Bridge = {
       ],
       references: [
         {
-          text: 'Across V2 Optimistic Oracle documentation',
+          text: 'Across V3 Optimistic Oracle documentation',
           href: 'https://docs.across.to/how-across-works/security-model',
         },
       ],
