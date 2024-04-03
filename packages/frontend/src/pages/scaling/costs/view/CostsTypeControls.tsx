@@ -8,6 +8,7 @@ export function CostsTypeControls() {
       role="costs-type-controls"
       name="costs-type"
       className="w-min"
+      highlighted
       options={[
         {
           value: 'TOTAL',
