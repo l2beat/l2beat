@@ -33,8 +33,8 @@ export class AmountService {
 
   public async fetchAmounts(
     configurations: Configuration<AmountConfiguration>[],
-    timestamp: UnixTime,
     blockNumber: number,
+    timestamp: UnixTime,
   ): Promise<AmountRecord[]> {
     const [nonMulticall, multicall] = partition(configurations, (c) =>
       isNotSupportedByMulticall(
@@ -48,23 +48,23 @@ export class AmountService {
       // TODO: solve it better with types
       nonMulticall as Configuration<EscrowEntry>[],
       blockNumber,
-      timestamp,
     )
 
     const multicallAmounts = await this.getMulticallAmounts(
       multicall,
       blockNumber,
-      timestamp,
     )
 
-    return [...nonMulticallAmounts, ...multicallAmounts]
+    return [...nonMulticallAmounts, ...multicallAmounts].map((amount) => ({
+      ...amount,
+      timestamp,
+    }))
   }
 
   async getNonMulticallAmounts(
     nonMulticall: Configuration<EscrowEntry>[],
     blockNumber: number,
-    timestamp: UnixTime,
-  ): Promise<AmountRecord[]> {
+  ) {
     return Promise.all(
       nonMulticall.map(async (configuration) => {
         const amount = await this.dependencies.rpcClient.getBalance(
@@ -74,7 +74,6 @@ export class AmountService {
 
         return {
           configurationId: +configuration.id,
-          timestamp,
           amount: amount.toBigInt(),
         }
       }),
@@ -84,7 +83,6 @@ export class AmountService {
   private async getMulticallAmounts(
     configurations: Configuration<AmountConfiguration>[],
     blockNumber: number,
-    timestamp: UnixTime,
   ) {
     const nativeAssetBalanceEncoder = getNativeAssetBalanceEncoder(
       this.dependencies.nativeAssetBalanceEncoder,
@@ -112,7 +110,6 @@ export class AmountService {
 
       return {
         configurationId: +configuration.id,
-        timestamp,
         amount,
       }
     })
