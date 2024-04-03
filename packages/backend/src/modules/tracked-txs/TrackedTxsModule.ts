@@ -3,9 +3,9 @@ import { notUndefined } from '@l2beat/shared-pure'
 
 import { Config } from '../../config'
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
-import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { Clock } from '../../tools/Clock'
+import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import {
   ApplicationModule,
   ApplicationModuleWithIndexer,

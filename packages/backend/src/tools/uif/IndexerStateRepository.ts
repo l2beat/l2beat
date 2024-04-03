@@ -3,8 +3,11 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { IndexerStateRow } from 'knex/types/tables'
 
-import { BaseRepository, CheckConvention } from '../BaseRepository'
-import { Database } from '../Database'
+import {
+  BaseRepository,
+  CheckConvention,
+} from '../../peripherals/database/BaseRepository'
+import { Database } from '../../peripherals/database/Database'
 
 export interface IndexerStateRecord {
   indexerId: string

@@ -3,8 +3,8 @@ import { expect, mockFn, mockObject } from 'earl'
 import { range } from 'lodash'
 
 import { Project } from '../../../../../model/Project'
-import { IndexerStateRepository } from '../../../../../peripherals/database/repositories/IndexerStateRepository'
 import { Clock } from '../../../../../tools/Clock'
+import { IndexerStateRepository } from '../../../../../tools/uif/IndexerStateRepository'
 import {
   TrackedTxsConfigRecord,
   TrackedTxsConfigsRepository,
