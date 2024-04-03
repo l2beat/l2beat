@@ -59,7 +59,7 @@ export const POINT_CLASS_NAMES: PointClassNames = {
   },
   roundedLightYellowSquare: {
     type: 'div',
-    className: 'size-4 dark:bg-yellow-100 bg-yellow-300 rounded',
+    className: 'size-4 dark:bg-yellow-100 bg-orange-400 rounded',
   },
   roundedYellowSquare: {
     type: 'div',
