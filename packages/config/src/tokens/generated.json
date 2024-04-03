@@ -4258,7 +4258,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/33800/large/Icon___Dark.png?1702991855",
       "chainId": 42161,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -4277,8 +4277,8 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/26536/large/Radiant-Logo-200x200.png?1696525610",
       "chainId": 42161,
-      "type": "EBV",
-      "formula": "circulatingSupply",
+      "type": "NMV",
+      "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
