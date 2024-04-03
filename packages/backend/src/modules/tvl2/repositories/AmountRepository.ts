@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { SavedConfiguration } from '@l2beat/uif'
 
 import {
   BaseRepository,
@@ -31,6 +32,7 @@ export interface AmountConfigurationRow {
   include_in_total: boolean
   since_timestamp_inclusive: Date
   until_timestamp_inclusive: Date | null
+  last_synced_timestamp: Date | null
 }
 
 export interface AmountConfigurationRecord {
@@ -45,6 +47,7 @@ export interface AmountConfigurationRecord {
   includeInTotal: boolean
   sinceTimestampInclusive: UnixTime
   untilTimestampInclusive?: UnixTime
+  lastSyncedTimestamp?: UnixTime
 }
 
 export interface AmountWithMetadata
@@ -142,13 +145,13 @@ export class AmountRepository extends BaseRepository {
 
   async getConfigurationsByIndexerId(
     indexerId: string,
-  ): Promise<AmountConfigurationRecord[]> {
+  ): Promise<SavedConfiguration<AmountConfigurationRecord>[]> {
     const knex = await this.knex()
     const rows = await knex('amounts_configurations').where(
       'indexer_id',
       indexerId,
     )
-    return rows.map(toConfigurationRecord)
+    return rows.map(toConfigurationRecord).map(toSavedConfiguration)
   }
 
   async setUntilTimestampInclusive(
@@ -241,6 +244,7 @@ function toConfigurationRow(
     include_in_total: row.includeInTotal,
     since_timestamp_inclusive: row.sinceTimestampInclusive.toDate(),
     until_timestamp_inclusive: row.untilTimestampInclusive?.toDate() ?? null,
+    last_synced_timestamp: row.lastSyncedTimestamp?.toDate() ?? null,
   }
 }
 
@@ -267,7 +271,24 @@ function toConfigurationRecord(
           ),
         }
       : {}),
+    ...(row.last_synced_timestamp
+      ? {
+          lastSyncedTimestamp: UnixTime.fromDate(row.last_synced_timestamp),
+        }
+      : {}),
   }
 
   return r
+}
+
+function toSavedConfiguration(
+  record: AmountConfigurationRecord,
+): SavedConfiguration<AmountConfigurationRecord> {
+  return {
+    id: record.id.toString(),
+    properties: record,
+    minHeight: record.sinceTimestampInclusive.toNumber(),
+    maxHeight: record.untilTimestampInclusive?.toNumber() ?? null,
+    currentHeight: record.lastSyncedTimestamp?.toNumber() ?? null,
+  }
 }

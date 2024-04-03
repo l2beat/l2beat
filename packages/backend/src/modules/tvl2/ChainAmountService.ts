@@ -1,5 +1,6 @@
+import { assert } from '@l2beat/backend-tools'
 import {
-  assert,
+  assertUnreachable,
   Bytes,
   EscrowEntry,
   EthereumAddress,
@@ -15,7 +16,10 @@ import {
   MulticallResponse,
 } from '../../peripherals/multicall/types'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
-import { AmountRecord } from './repositories/AmountRepository'
+import {
+  AmountConfigurationRecord,
+  AmountRecord,
+} from './repositories/AmountRepository'
 
 export interface NativeAssetBalanceEncoder {
   sinceBlock: number
@@ -32,7 +36,7 @@ export class ChainAmountService {
   ) {}
 
   public async fetchAmounts(
-    configurations: UpdateConfiguration<EscrowEntry>[],
+    configurations: UpdateConfiguration<AmountConfigurationRecord>[],
     timestamp: UnixTime,
     blockNumber: number,
   ): Promise<AmountRecord[]> {
@@ -40,14 +44,11 @@ export class ChainAmountService {
       this.getNativeAssetBalanceEncoder(blockNumber)
 
     const [nonMulticall, multicall] = partition(configurations, (c) =>
-      isNotSupportedByMulticall(
-        nativeAssetBalanceEncoder,
-        c.properties.address,
-      ),
+      isNotSupportedByMulticall(nativeAssetBalanceEncoder, c),
     )
 
     const nonMulticallAmounts = await this.getNonMulticallAmounts(
-      nonMulticall,
+      nonMulticall as UpdateConfiguration<EscrowEntry>[],
       blockNumber,
       timestamp,
     )
@@ -91,12 +92,12 @@ export class ChainAmountService {
   }
 
   private async getMulticallAmounts(
-    multicall: UpdateConfiguration<EscrowEntry>[],
+    configurations: UpdateConfiguration<AmountConfigurationRecord>[],
     nativeAssetBalanceEncoder: NativeAssetBalanceEncoder | undefined,
     blockNumber: number,
     timestamp: UnixTime,
   ) {
-    const encoded = multicall.map((configuration) => ({
+    const encoded = configurations.map((configuration) => ({
       request: this.encodeForMulticall(
         configuration.properties,
         nativeAssetBalanceEncoder,
@@ -125,24 +126,39 @@ export class ChainAmountService {
   }
 
   private encodeForMulticall(
-    { address, escrowAddress, chain }: EscrowEntry,
+    configuration: AmountConfigurationRecord,
     nativeEncoding: NativeAssetBalanceEncoder | undefined,
   ): MulticallRequest {
-    if (address === 'native') {
-      assert(nativeEncoding, `No native balance encoding for chain ${chain}`)
-
-      return {
-        address: nativeEncoding.address,
-        data: nativeEncoding.encode(escrowAddress),
-      }
+    switch (configuration.type) {
+      case 'totalSupply':
+        assert(configuration.address !== 'native')
+        return encodeErc20TotalSupplyQuery(configuration.address)
+      case 'escrow':
+        assert(configuration.escrowAddress)
+        if (configuration.address === 'native') {
+          assert(
+            nativeEncoding,
+            `No native balance encoding for chain ${configuration.chain}`,
+          )
+          return {
+            address: nativeEncoding.address,
+            data: nativeEncoding.encode(configuration.escrowAddress),
+          }
+        }
+        return encodeErc20BalanceQuery(
+          configuration.escrowAddress,
+          configuration.address,
+        )
+      case 'circulatingSupply':
+        throw new Error('Circulating supply not supported')
+      default:
+        assertUnreachable(configuration.type)
     }
-
-    return encodeErc20BalanceQuery(escrowAddress, address)
   }
 
   private decodeForMulticall(
     response: MulticallResponse,
-    configuration: EscrowEntry,
+    configuration: AmountConfigurationRecord,
     nativeEncoding: NativeAssetBalanceEncoder | undefined,
   ) {
     if (!response.success) {
@@ -150,23 +166,37 @@ export class ChainAmountService {
         'Multicall failed for ' + configuration.address.toString(),
       )
     }
-    if (configuration.address === 'native') {
-      assert(nativeEncoding, `No native balance encoding `)
-      return nativeEncoding.decode(response.data)
+    switch (configuration.type) {
+      case 'totalSupply':
+        return decodeErc20TotalSupplyQuery(response.data)
+      case 'escrow':
+        if (configuration.address === 'native') {
+          assert(nativeEncoding, `No native balance encoding `)
+          return nativeEncoding.decode(response.data)
+        }
+        return decodeErc20BalanceQuery(response.data)
+      case 'circulatingSupply':
+        throw new Error('Circulating supply not supported')
+      default:
+        assertUnreachable(configuration.type)
     }
-    return decodeErc20BalanceQuery(response.data)
   }
 }
 
 function isNotSupportedByMulticall(
   nativeEncoding: NativeAssetBalanceEncoder | undefined,
-  address: EthereumAddress | 'native',
+  configuration: UpdateConfiguration<AmountConfigurationRecord>,
 ) {
-  return address === 'native' && nativeEncoding === undefined
+  return (
+    configuration.properties.type === 'escrow' &&
+    configuration.properties.address === 'native' &&
+    nativeEncoding === undefined
+  )
 }
 
 const erc20Interface = new utils.Interface([
   'function balanceOf(address account) view returns (uint256)',
+  'function totalSupply() view returns (uint256)',
 ])
 
 function encodeErc20BalanceQuery(
@@ -184,6 +214,24 @@ function encodeErc20BalanceQuery(
 function decodeErc20BalanceQuery(response: Bytes): bigint {
   const [value] = erc20Interface.decodeFunctionResult(
     'balanceOf',
+    response.toString(),
+  )
+
+  return (value as BigNumber).toBigInt()
+}
+
+export function encodeErc20TotalSupplyQuery(
+  tokenAddress: EthereumAddress,
+): MulticallRequest {
+  return {
+    address: tokenAddress,
+    data: Bytes.fromHex(erc20Interface.encodeFunctionData('totalSupply', [])),
+  }
+}
+
+export function decodeErc20TotalSupplyQuery(response: Bytes): bigint {
+  const [value] = erc20Interface.decodeFunctionResult(
+    'totalSupply',
     response.toString(),
   )
 

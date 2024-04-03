@@ -266,7 +266,18 @@ describeDatabase(AmountRepository.name, (database) => {
         const results = await repository.getConfigurationsByIndexerId('a')
 
         expect(results).toEqualUnsorted(
-          newRows.map((r, i) => ({ id: ids[i], ...r })).slice(0, 2),
+          newRows
+            .map((r, i) => ({
+              id: ids[i].toString(),
+              properties: {
+                ...r,
+                id: ids[i],
+              },
+              minHeight: 0,
+              maxHeight: null,
+              currentHeight: null,
+            }))
+            .slice(0, 2),
         )
       },
     )

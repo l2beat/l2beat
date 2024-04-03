@@ -17,9 +17,7 @@ import {
 import { BlockTimestampRepository } from './repositories/BlockTimestampRepository'
 import { SyncOptimizer } from './SyncOptimizer'
 
-type ConfigEntry = TotalSupplyEntry | EscrowEntry
-
-export class ChainAmountIndexer extends MultiIndexer<ConfigEntry> {
+export class ChainAmountIndexer extends MultiIndexer<AmountConfigurationRecord> {
   indexerId: string
 
   constructor(
@@ -32,27 +30,27 @@ export class ChainAmountIndexer extends MultiIndexer<ConfigEntry> {
     private readonly chain: string,
     private readonly minTimestamp: UnixTime,
     private readonly syncOptimizer: SyncOptimizer,
-    private readonly amountConfigurations: ConfigEntry[],
+    private readonly amountConfigurations: (TotalSupplyEntry | EscrowEntry)[],
   ) {
     super(logger, [parentIndexer])
     this.indexerId = `chain_indexer_${chain}`
   }
 
   override async getInitialConfigurations() {
-    const oldConfigurations =
+    const previouslySaved =
       await this.amountRepository.getConfigurationsByIndexerId(this.indexerId)
 
-    const toAdd: ConfigEntry[] = []
+    const toAdd = []
 
     for (const configuration of this.amountConfigurations) {
-      const oldConfiguration = oldConfigurations.find(
+      const oldConfiguration = previouslySaved.find(
         (c) =>
-          c.chain === this.chain &&
-          c.projectId === configuration.projectId &&
-          c.type === configuration.type &&
-          c.address === configuration.address &&
-          (c.type === 'escrow' && configuration.type === 'escrow'
-            ? c.escrowAddress === configuration.escrowAddress
+          c.properties.chain === this.chain &&
+          c.properties.projectId === configuration.projectId &&
+          c.properties.type === configuration.type &&
+          c.properties.address === configuration.address &&
+          (c.properties.type === 'escrow' && configuration.type === 'escrow'
+            ? c.properties.escrowAddress === configuration.escrowAddress
             : true),
       )
 
@@ -68,52 +66,7 @@ export class ChainAmountIndexer extends MultiIndexer<ConfigEntry> {
       })),
     )
 
-    const configurations =
-      await this.amountRepository.getConfigurationsByIndexerId(this.indexerId)
-
-    return configurations.map((c) => {
-      switch (c.type) {
-        case 'totalSupply':
-          assert(c.address !== 'native', 'Native total supply is not supported')
-          return {
-            id: c.id.toString(),
-            properties: {
-              chain: c.chain,
-              projectId: c.projectId,
-              origin: c.origin,
-              type: c.type,
-              sinceTimestampInclusive: c.sinceTimestampInclusive,
-              untilTimestampInclusive: c.untilTimestampInclusive,
-              includeInTotal: c.includeInTotal,
-              address: c.address,
-            },
-            minHeight: c.sinceTimestampInclusive.toNumber(),
-            maxHeight: c.untilTimestampInclusive?.toNumber() ?? null,
-          }
-        case 'escrow':
-          assert(c.escrowAddress, 'Escrow address should be defined')
-          return {
-            id: c.id.toString(),
-            properties: {
-              chain: c.chain,
-              projectId: c.projectId,
-              origin: c.origin,
-              type: c.type,
-              sinceTimestampInclusive: c.sinceTimestampInclusive,
-              untilTimestampInclusive: c.untilTimestampInclusive,
-              includeInTotal: c.includeInTotal,
-              address: c.address,
-              escrowAddress: c.escrowAddress,
-            },
-            minHeight: c.sinceTimestampInclusive.toNumber(),
-            maxHeight: c.untilTimestampInclusive?.toNumber() ?? null,
-          }
-        case 'circulatingSupply':
-          throw new Error(
-            'Programmer error: There should not be circulating supply configurations for this type of indexer',
-          )
-      }
-    })
+    return this.amountRepository.getConfigurationsByIndexerId(this.indexerId)
   }
 
   override async start(): Promise<void> {
@@ -125,7 +78,7 @@ export class ChainAmountIndexer extends MultiIndexer<ConfigEntry> {
   override async multiUpdate(
     from: number,
     to: number,
-    configurations: UpdateConfiguration<ConfigEntry>[],
+    configurations: UpdateConfiguration<AmountConfigurationRecord>[],
   ): Promise<number> {
     this.logger.debug('Updating...')
 
@@ -153,8 +106,11 @@ export class ChainAmountIndexer extends MultiIndexer<ConfigEntry> {
     return timestamp.toNumber()
   }
 
-  override async multiInitialize(): Promise<SavedConfiguration<ConfigEntry>[]> {
+  override async multiInitialize() {
     this.logger.debug('Initializing...')
+
+    const previouslySavedConfigurations =
+      await this.amountRepository.getConfigurationsByIndexerId(this.indexerId)
 
     const indexerState = await this.stateRepository.findIndexerState(
       this.indexerId,
@@ -167,7 +123,7 @@ export class ChainAmountIndexer extends MultiIndexer<ConfigEntry> {
         safeHeight,
         minTimestamp: this.minTimestamp,
       })
-      return safeHeight
+      return previouslySavedConfigurations
     }
 
     // We prevent updating the minimum timestamp of the indexer.
@@ -180,11 +136,11 @@ export class ChainAmountIndexer extends MultiIndexer<ConfigEntry> {
 
     this.logger.debug('Initialized')
 
-    return indexerState.safeHeight
+    return previouslySavedConfigurations
   }
 
   override async removeData(
-    configurations: RemovalConfiguration<ConfigEntry>[],
+    configurations: RemovalConfiguration<AmountConfigurationRecord>[],
   ): Promise<void> {
     this.logger.debug('Removing data...')
 
@@ -200,7 +156,7 @@ export class ChainAmountIndexer extends MultiIndexer<ConfigEntry> {
   }
 
   override async saveConfigurations(
-    configurations: SavedConfiguration<ConfigEntry>[],
+    configurations: SavedConfiguration<AmountConfigurationRecord>[],
   ): Promise<void> {
     this.logger.debug('Saving configurations...')
 
