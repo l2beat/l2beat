@@ -243,9 +243,7 @@ export class ChartRenderer {
     }
     const pointsLength = this.renderParams.points.length
     let pointIndex = Math.round(mouseX * (pointsLength - 1))
-    if (this.lastPointIndex === pointIndex) {
-      return
-    }
+
     this.lastPointIndex = pointIndex
     let point = this.renderParams.points[pointIndex]
 
@@ -262,6 +260,7 @@ export class ChartRenderer {
       this.renderParams.points,
       getCanvasX,
     )
+
     if (milestoneHoverIndex !== undefined) {
       pointIndex = milestoneHoverIndex
       point = this.renderParams.points[pointIndex]
