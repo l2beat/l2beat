@@ -284,7 +284,7 @@ function renderDetailedRow(props: DetailedRowProps) {
 
 function renderIcon(icon?: PointStyle | 'gap') {
   if (icon === 'gap') {
-    return `<div class="inline-block w-2 h-2"></div>`
+    return `<div class="inline-block size-4"></div>`
   }
 
   if (!icon) return ''
