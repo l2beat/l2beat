@@ -50,13 +50,14 @@ function getHref(slug: ScalingTableEntry['slug'], type: ScalingRowType) {
     case 'liveness':
     case 'finality':
     case 'data-availability':
-    case 'costs':
       //TODO: (DA) maybe redirect to the data-availability section
       return base
     case 'tvl':
       return base + '/tvl-breakdown'
     case 'activity':
-      return base + `?selectedChart=${type}`
+      return base + `#activity`
+    case 'costs':
+      return base + `#costs`
     case 'risks':
       return base + '#risk-analysis'
     default:
