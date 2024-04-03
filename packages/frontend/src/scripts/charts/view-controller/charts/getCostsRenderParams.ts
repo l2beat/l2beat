@@ -7,6 +7,8 @@ import { getEntriesByDays } from '../getEntriesByDays'
 import { CostsData, renderCostsHover } from '../hovers'
 import { ChartControlsState, ChartUnit } from '../types'
 
+const DENCUN_UPGRADE_TIMESTAMP = 1710288000
+
 export function getCostsRenderParams(
   state: ChartControlsState,
 ): RenderParams<CostsData> {
@@ -130,13 +132,14 @@ function getData(
   ] = dataPoint
 
   const date = formatTimestamp(timestamp, { mode: 'datetime' })
+  const isPostDencun = timestamp >= DENCUN_UPGRADE_TIMESTAMP
   switch (unit) {
     case 'USD':
       return {
         date,
         total: formatCurrency(totalUsd, 'usd'),
         calldata: formatCurrency(calldataUsd, 'usd'),
-        blobs: formatCurrency(blobsUsd, 'usd'),
+        blobs: isPostDencun ? formatCurrency(blobsUsd, 'usd') : undefined,
         compute: formatCurrency(computeUsd, 'usd'),
         overhead: formatCurrency(overheadUsd, 'usd'),
       }
@@ -145,7 +148,7 @@ function getData(
         date,
         total: formatCurrency(totalEth, 'eth'),
         calldata: formatCurrency(calldataEth, 'eth'),
-        blobs: formatCurrency(blobsEth, 'eth'),
+        blobs: isPostDencun ? formatCurrency(blobsEth, 'eth') : undefined,
         compute: formatCurrency(computeEth, 'eth'),
         overhead: formatCurrency(overheadEth, 'eth'),
       }
@@ -154,7 +157,7 @@ function getData(
         date,
         total: formatLargeNumber(totalGas),
         calldata: formatLargeNumber(calldataGas),
-        blobs: formatLargeNumber(blobsGas),
+        blobs: isPostDencun ? formatLargeNumber(blobsGas) : undefined,
         compute: formatLargeNumber(computeGas),
         overhead: formatLargeNumber(overheadGas),
       }
