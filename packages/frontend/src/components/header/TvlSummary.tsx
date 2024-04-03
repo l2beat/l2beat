@@ -62,21 +62,21 @@ export function TvlSummary(props: TvlSummaryProps) {
           shortLabel: 'Canonical',
           value: formatUSD(props.stats.canonical),
           usage: usage?.canonical ?? 1,
-          icon: <CanonicalIcon className="size-[9px]" />,
+          icon: <CanonicalIcon />,
         },
         {
           label: 'Externally Bridged',
           shortLabel: 'External',
           value: formatUSD(props.stats.external),
           usage: usage?.external ?? 1,
-          icon: <ExternalIcon className="size-[10px]" />,
+          icon: <ExternalIcon />,
         },
         {
           label: 'Natively Minted',
           shortLabel: 'Native',
           value: formatUSD(props.stats.native),
           usage: usage?.native ?? 1,
-          icon: <NativeIcon className="size-[8px]" />,
+          icon: <NativeIcon />,
         },
       ]
     : []
@@ -165,9 +165,7 @@ export function TvlSummary(props: TvlSummaryProps) {
                 className="flex w-full flex-wrap items-end justify-between"
               >
                 <div className="flex items-center gap-1">
-                  <div className="flex size-2.5 items-center justify-center">
-                    {s.icon}
-                  </div>
+                  {s.icon}
                   <span className="text-xs leading-none text-gray-500 dark:text-gray-600">
                     <span className="inline md:hidden">{s.label}</span>
                     <span className="hidden md:inline">{s.shortLabel}</span>
@@ -176,7 +174,7 @@ export function TvlSummary(props: TvlSummaryProps) {
                 <span className="text-base font-semibold leading-none">
                   {s.value}
                   {props.stats && props.stats.tvl > 0 && (
-                    <span className="font-normal text-gray-500">
+                    <span className="hidden font-normal text-gray-500 lg:inline">
                       {` (${s.usage}%)`}
                     </span>
                   )}

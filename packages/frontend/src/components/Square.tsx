@@ -1,22 +1,33 @@
+import { cva, VariantProps } from 'class-variance-authority'
 import React from 'react'
 
-interface SquareProps {
-  height: number
-  width: number
-  className?: string
-}
+interface SquareProps extends VariantProps<typeof squareVariants> {}
 
-export function Square({ height, width, className }: SquareProps) {
+const squareVariants = cva('', {
+  variants: {
+    variant: {
+      default: 'bg-black dark:bg-white rounded',
+      canonical: 'bg-purple-100 rounded',
+      external: 'bg-yellow-200 rounded',
+      native: 'bg-pink-100 rounded',
+    },
+    size: {
+      small: 'size-3',
+      default: 'size-4',
+    },
+  },
+  defaultVariants: {
+    size: 'default',
+    variant: 'default',
+  },
+})
+
+export function Square({ variant, size }: SquareProps) {
   return (
-    <svg
-      viewBox={`0 0 ${width} ${height}`}
+    <div
       role="img"
       aria-label="Square icon"
-      className={className}
-      height={height}
-      width={width}
-    >
-      <rect x="0" y="0" width={width} height={height} />
-    </svg>
+      className={squareVariants({ variant, size })}
+    />
   )
 }

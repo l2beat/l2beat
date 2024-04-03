@@ -27,9 +27,12 @@ interface PointClassNames {
   circle: PointShapeDefinition
   redCircle: PointShapeDefinition
   blueSquare: PointShapeDefinition
-  purpleCircle: PointShapeDefinition
-  pinkSquare: PointShapeDefinition
-  yellowTriangle: PointShapeDefinition
+  roundedPurpleSquare: PointShapeDefinition
+  roundedBlueSquare: PointShapeDefinition
+  roundedYellowSquare: PointShapeDefinition
+  roundedLightYellowSquare: PointShapeDefinition
+  roundedPinkSquare: PointShapeDefinition
+  roundedGreenSquare: PointShapeDefinition
   milestone: PointShapeDefinition
 }
 
@@ -47,29 +50,29 @@ export const POINT_CLASS_NAMES: PointClassNames = {
     type: 'div',
     className: 'size-2 border-2 border-current bg-blue-600',
   },
-  purpleCircle: {
-    type: 'svg',
-    className: 'h-[9px] w-[9px] stroke-black dark:stroke-white',
-    height: 9,
-    width: 9,
-    svgViewBox: '0 0 9 9',
-    svgShape: '<circle cx="4.5" cy="4.5" r="3.5" fill="#A64EFF" />',
+  roundedPurpleSquare: {
+    type: 'div',
+    className: 'size-4 bg-purple-100 rounded',
   },
-  pinkSquare: {
-    type: 'svg',
-    className: 'size-2 stroke-black dark:stroke-white',
-    height: 9,
-    width: 9,
-    svgViewBox: '0 0 9 9',
-    svgShape: `<rect x="0" y="0" width="9" height="9" fill="#FF46C0" stroke-width="2"/>`,
+  roundedBlueSquare: {
+    type: 'div',
+    className: 'size-4 dark:bg-blue-500 bg-blue-700 rounded',
   },
-  yellowTriangle: {
-    type: 'svg',
-    className: 'h-2.5 w-2.5 stroke-black dark:stroke-white',
-    height: 12,
-    width: 12,
-    svgViewBox: '0 0 12 12',
-    svgShape: `<path d="m1.4167 10.234 4.5833-7.9386 4.5833 7.9386z" fill="#ef8f00" stroke-width="1.0585" />`,
+  roundedLightYellowSquare: {
+    type: 'div',
+    className: 'size-4 dark:bg-yellow-100 bg-orange-400 rounded',
+  },
+  roundedYellowSquare: {
+    type: 'div',
+    className: 'size-4 bg-yellow-200 rounded',
+  },
+  roundedPinkSquare: {
+    type: 'div',
+    className: 'size-4 bg-pink-100 rounded',
+  },
+  roundedGreenSquare: {
+    type: 'div',
+    className: 'size-4 dark:bg-green-500 bg-green-600 rounded',
   },
   milestone: {
     type: 'div',

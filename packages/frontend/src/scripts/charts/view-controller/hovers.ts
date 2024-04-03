@@ -86,19 +86,19 @@ export function renderDetailedTvlHover(
       title: 'Canonically Bridged',
       shortTitle: 'Canonical',
       value: formatCurrency(selectedCbv, currency),
-      icon: 'purpleCircle',
+      icon: 'roundedPurpleSquare',
     }),
     renderDetailedRow({
       title: 'Externally Bridged',
       shortTitle: 'External',
       value: formatCurrency(selectedEbv, currency),
-      icon: 'yellowTriangle',
+      icon: 'roundedYellowSquare',
     }),
     renderDetailedRow({
       title: 'Natively Minted',
       shortTitle: 'Native',
       value: formatCurrency(selectedNmv, currency),
-      icon: 'pinkSquare',
+      icon: 'roundedPinkSquare',
     }),
   ])
 }
@@ -123,19 +123,23 @@ export function renderCostsHover(data: CostsData) {
     renderDetailedRow({
       title: 'Calldata',
       value: data.calldata,
+      icon: 'roundedBlueSquare',
     }),
     data.blobs &&
       renderDetailedRow({
         title: 'Blobs',
         value: data.blobs,
+        icon: 'roundedLightYellowSquare',
       }),
     renderDetailedRow({
       title: 'Compute',
       value: data.compute,
+      icon: 'roundedPinkSquare',
     }),
     renderDetailedRow({
       title: 'Overhead',
       value: data.overhead,
+      icon: 'roundedGreenSquare',
     }),
   ])
 }
