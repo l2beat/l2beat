@@ -3,6 +3,7 @@ import {
   ConfigReader,
   DiscoveryEngine,
   DiscoveryLogger,
+  DiscoveryProvider,
   EtherscanLikeClient,
   HandlerExecutor,
   HttpClient,
@@ -14,6 +15,7 @@ import {
 import { providers } from 'ethers'
 
 import { UpdateMonitorChainConfig } from '../../config/Config'
+import { Peripherals } from '../../peripherals/Peripherals'
 import { DiscoveryCache } from './DiscoveryCache'
 import { DiscoveryRunner } from './DiscoveryRunner'
 import { DiscoveryCacheRepository } from './repositories/DiscoveryCacheRepository'
@@ -21,28 +23,15 @@ import { DiscoveryCacheRepository } from './repositories/DiscoveryCacheRepositor
 export function createDiscoveryRunner(
   http: HttpClient,
   configReader: ConfigReader,
-  discoveryCacheRepository: DiscoveryCacheRepository,
+  peripherals: Peripherals,
   discoveryLogger: DiscoveryLogger,
   chainConfig: UpdateMonitorChainConfig,
 ) {
-  const provider = new providers.StaticJsonRpcProvider(chainConfig.rpcUrl)
-  const etherscanLikeClient = EtherscanLikeClient.createForDiscovery(
+  const discoveryProvider = getDiscoveryProvider(
     http,
-    chainConfig.etherscanUrl,
-    chainConfig.etherscanApiKey,
-    chainConfig.etherscanUnsupported,
-  )
-
-  const discoveryCache = new DiscoveryCache(discoveryCacheRepository)
-
-  const discoveryProvider = new ProviderWithCache(
-    provider,
-    etherscanLikeClient,
     discoveryLogger,
-    chainConfig.name,
-    discoveryCache,
-    chainConfig.rpcGetLogsMaxRange,
-    chainConfig.reorgSafeDepth,
+    peripherals,
+    chainConfig,
   )
 
   const proxyDetector = new ProxyDetector(discoveryProvider, discoveryLogger)
@@ -72,4 +61,42 @@ export function createDiscoveryRunner(
   )
 
   return discoveryRunner
+}
+
+function getDiscoveryProvider(
+  http: HttpClient,
+  discoveryLogger: DiscoveryLogger,
+  peripherals: Peripherals,
+  chainConfig: UpdateMonitorChainConfig,
+) {
+  const provider = new providers.StaticJsonRpcProvider(chainConfig.rpcUrl)
+  const etherscanLikeClient = EtherscanLikeClient.createForDiscovery(
+    http,
+    chainConfig.etherscanUrl,
+    chainConfig.etherscanApiKey,
+    chainConfig.etherscanUnsupported,
+  )
+
+  if (chainConfig.enableCache) {
+    const discoveryCacheRepository = peripherals.getRepository(
+      DiscoveryCacheRepository,
+    )
+    const discoveryCache = new DiscoveryCache(discoveryCacheRepository)
+    return new ProviderWithCache(
+      provider,
+      etherscanLikeClient,
+      discoveryLogger,
+      chainConfig.name,
+      discoveryCache,
+      chainConfig.rpcGetLogsMaxRange,
+      chainConfig.reorgSafeDepth,
+    )
+  }
+
+  return new DiscoveryProvider(
+    provider,
+    etherscanLikeClient,
+    discoveryLogger,
+    chainConfig.rpcGetLogsMaxRange,
+  )
 }

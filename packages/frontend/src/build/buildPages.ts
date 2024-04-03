@@ -14,6 +14,7 @@ import { renderPages } from '../pages/renderPages'
 import { createApi } from './api/createApi'
 import { fetchActivityApi } from './api/fetchActivityApi'
 import { fetchDiffHistory } from './api/fetchDiffHistory'
+import { fetchFeaturesApi } from './api/fetchFeaturesApi'
 import { fetchFinalityApi } from './api/fetchFinalityApi'
 import { fetchImplementationChangeReport } from './api/fetchImplementationChangeReport'
 import { fetchL2CostsApi } from './api/fetchL2CostsApi'
@@ -26,7 +27,7 @@ import {
 } from './api/getVerificationStatus'
 import { activitySanityCheck, tvlSanityCheck } from './api/sanityCheck'
 import { JsonHttpClient } from './caching/JsonHttpClient'
-import { getConfig } from './config'
+import { Config, getConfig } from './config'
 
 /**
  * Temporary timeout for HTTP calls due to increased size of new TVL API and flaky connection times
@@ -51,6 +52,15 @@ async function main() {
     const httpClient = new HttpClient(TEMP_HTTP_CALL_TIMEOUT_TIME_MS)
 
     const http = new JsonHttpClient(httpClient, config.backend.skipCache)
+
+    const backendFeatures = await fetchFeaturesApi(config.backend, http)
+
+    config.features = Object.fromEntries(
+      Object.entries(config.features).map(([key, value]) => [
+        key,
+        value && (!(key in backendFeatures) || backendFeatures[key]),
+      ]),
+    ) as Config['features']
 
     console.time('[TVL]')
     const tvlApiResponse = await fetchTvlApi(config.backend, http)
@@ -103,10 +113,17 @@ async function main() {
       | undefined = undefined
     if (config.features.implementationChange) {
       console.time('[IMPLEMENTATION CHANGE]')
-      implementationChange = await fetchImplementationChangeReport(
-        config.backend,
-        http,
-      )
+      try {
+        implementationChange = await fetchImplementationChangeReport(
+          config.backend,
+          http,
+        )
+      } catch (e) {
+        console.log(
+          '[IMPLEMENTATION CHANGE] Failed to fetch implementation change report, this feature will be disabled in this build',
+          e,
+        )
+      }
       console.timeEnd('[IMPLEMENTATION CHANGE]')
     }
 

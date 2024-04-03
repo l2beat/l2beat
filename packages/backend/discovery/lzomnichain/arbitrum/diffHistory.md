@@ -1,4 +1,30 @@
-Generated with discovered.json: 0x46979596123ef327e07c0aa592f2eed6087827b9
+Generated with discovered.json: 0xe759ed162b3674a7bf7f2c2ee3ae9af20c8ffcdd
+
+# Diff at Wed, 03 Apr 2024 10:38:41 GMT:
+
+- author: maciekop (<maciej.opala@l2beat.com>)
+- comparing to: main@34d9eb99e785ccac44323b84405d78f9783b5cc2 block: 195390045
+- current block number: 197126643
+
+## Description
+
+Rediscovery with new field added (upgradeability.threshold)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 195390045 (main branch discovery), not current.
+
+```diff
+    contract LayerZero Multisig (0xFE22f5D2755b06b9149656C5793Cb15A08d09847) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 6 (33%)"
+    }
+```
+
+Generated with discovered.json: 0xc432e0a710a9db01167ba5f9315cb81a49f3675c
 
 # Diff at Thu, 14 Mar 2024 13:16:53 GMT
 

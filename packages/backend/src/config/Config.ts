@@ -181,6 +181,7 @@ export interface DiscordConfig {
 
 export interface DiscoveryCacheChainConfig {
   reorgSafeDepth?: number
+  enableCache?: boolean
 }
 
 export type UpdateMonitorChainConfig = DiscoveryChainConfig &

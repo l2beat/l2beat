@@ -12,7 +12,7 @@ import { LivenessRepository } from '../tracked-txs/modules/liveness/repositories
 import { TrackedTxsConfigsRepository } from '../tracked-txs/repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsIndexer } from '../tracked-txs/TrackedTxsIndexer'
 import { LineaFinalityAnalyzer } from './analyzers/LineaFinalityAnalyzer'
-import { OpStackFinalityAnalyzer } from './analyzers/opStack'
+import { OpStackFinalityAnalyzer } from './analyzers/opStack/OpStackFinalityAnalyzer'
 import { ScrollFinalityAnalyzer } from './analyzers/ScrollFinalityAnalyzer'
 import { zkSyncEraFinalityAnalyzer } from './analyzers/zkSyncEraFinalityAnalyzer'
 import { FinalityController } from './api/FinalityController'
@@ -139,7 +139,6 @@ function initializeConfigurations(
               },
             ),
             minTimestamp: configuration.minTimestamp,
-            granularityPerDay: configuration.granularity ?? 24,
           }
         case 'Scroll':
           return {

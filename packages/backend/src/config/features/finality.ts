@@ -8,7 +8,6 @@ export type FinalityProjectConfig = Layer2FinalityConfig & {
   projectId: ProjectId
   url?: string
   callsPerMinute?: number
-  granularity?: number
 }
 
 export function getFinalityConfigurations(
@@ -46,9 +45,6 @@ function getChainFinalityConfig(env: Env, project: Layer2) {
     callsPerMinute: env.optionalInteger([
       `${ENV_NAME}_RPC_CALLS_PER_MINUTE_FOR_FINALITY`,
       `${ENV_NAME}_RPC_CALLS_PER_MINUTE`,
-    ]),
-    granularity: env.optionalInteger([
-      `${ENV_NAME}_FINALITY_GRANULARITY_PER_DAY`,
     ]),
   }
 }

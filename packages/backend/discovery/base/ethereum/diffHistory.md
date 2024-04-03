@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xd49f30c71097a5953ae88f8abe9e0ea7f194126d
+
+# Diff at Tue, 02 Apr 2024 08:35:50 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@f62e2b01d51472dd8c710b0599031b7ba1a58f0d block: 19532859
+- current block number: 19566961
+
+## Description
+
+The gas limit for the Base L2 is changed (33% raise). Current block time is 2s, elasticity is 10x.
+Context: Plans to raise the gas limit gradually.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: None
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        45000000
++        60000000
+    }
+```
+
 Generated with discovered.json: 0xd85496fdcfa0bcf16ce3b442613d6c777e3cfb01
 
 # Diff at Thu, 28 Mar 2024 13:19:31 GMT:

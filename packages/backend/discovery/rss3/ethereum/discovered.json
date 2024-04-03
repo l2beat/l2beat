@@ -1,7 +1,7 @@
 {
   "name": "rss3",
   "chain": "ethereum",
-  "blockNumber": 19531894,
+  "blockNumber": 19574205,
   "configHash": "0x8cbc24cf9bece8b1e27682ca0ca243990f55311bff72cc7993469663b894897e",
   "version": 3,
   "contracts": [
@@ -91,7 +91,7 @@
         "L2_ORACLE": "0xE6f24d2C32B3109B18ed33cF08eFb490b1e09C10",
         "l2Oracle": "0xE6f24d2C32B3109B18ed33cF08eFb490b1e09C10",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 491822, 19531846],
+        "params": [1000000000, 491822, 19573955],
         "paused": false,
         "superchainConfig": "0x3e5FaB39eD4eFB4fc29A5201059AE819f2f0418A",
         "SYSTEM_CONFIG": "0x80e73D6BfC73c567032304C3891a06c2d9954d09",
@@ -161,7 +161,7 @@
       "sinceTimestamp": 1709859947,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620262",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620373",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -184,7 +184,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "3 of 5 (60%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1709859935,
@@ -243,10 +244,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 880200,
-        "latestOutputIndex": 488,
-        "nextBlockNumber": 882000,
-        "nextOutputIndex": 489,
+        "latestBlockNumber": 1137600,
+        "latestOutputIndex": 631,
+        "nextBlockNumber": 1139400,
+        "nextOutputIndex": 632,
         "proposer": "0x0016b6bacD56a0D1DaFdA52d06B7eFe65AA0816a",
         "PROPOSER": "0x0016b6bacD56a0D1DaFdA52d06B7eFe65AA0816a",
         "startingBlockNumber": 0,
