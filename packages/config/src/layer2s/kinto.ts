@@ -50,7 +50,7 @@ export const kinto: Layer2 = orbitStackL2({
   transactionApi: {
     type: 'rpc',
     defaultUrl: 'https://rpc.kinto-rpc.com',
-    defaultCallsPerMinute: 1500,
+    defaultCallsPerMinute: 600,
     assessCount: subtractOne,
     startBlock: 1,
   },
