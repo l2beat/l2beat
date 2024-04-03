@@ -52,8 +52,8 @@ export function getCostsRenderParams(
         fill: 'pink',
       },
       {
-        line: 'green',
-        fill: 'green',
+        line: 'purple',
+        fill: 'purple',
       },
     ]
 

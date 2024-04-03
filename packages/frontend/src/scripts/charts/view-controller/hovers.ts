@@ -139,7 +139,7 @@ export function renderCostsHover(data: CostsData) {
     renderDetailedRow({
       title: 'Overhead',
       value: data.overhead,
-      icon: 'roundedGreenSquare',
+      icon: 'roundedPurpleSquare',
     }),
   ])
 }
@@ -218,9 +218,9 @@ export function renderTokenTvlHover(
   tokenType: TokenInfo['type'],
 ) {
   const styles: Record<TokenInfo['type'], PointStyle | undefined> = {
-    CBV: 'purpleCircle',
-    EBV: 'yellowTriangle',
-    NMV: 'pinkSquare',
+    CBV: 'roundedPurpleSquare',
+    EBV: 'roundedYellowSquare',
+    NMV: 'roundedPinkSquare',
     regular: undefined,
   }
   const style = styles[tokenType]

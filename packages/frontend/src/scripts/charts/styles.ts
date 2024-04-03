@@ -32,7 +32,6 @@ interface PointClassNames {
   roundedYellowSquare: PointShapeDefinition
   roundedLightYellowSquare: PointShapeDefinition
   roundedPinkSquare: PointShapeDefinition
-  roundedGreenSquare: PointShapeDefinition
   milestone: PointShapeDefinition
 }
 
@@ -56,11 +55,11 @@ export const POINT_CLASS_NAMES: PointClassNames = {
   },
   roundedBlueSquare: {
     type: 'div',
-    className: 'size-4 dark:bg-blue-500 bg-blue-700 rounded',
+    className: 'size-4 dark:bg-sky-500 bg-sky-550 rounded',
   },
   roundedLightYellowSquare: {
     type: 'div',
-    className: 'size-4 dark:bg-yellow-100 bg-orange-400 rounded',
+    className: 'size-4 dark:bg-yellow-100 bg-yellow-300 rounded',
   },
   roundedYellowSquare: {
     type: 'div',
@@ -69,10 +68,6 @@ export const POINT_CLASS_NAMES: PointClassNames = {
   roundedPinkSquare: {
     type: 'div',
     className: 'size-4 bg-pink-100 rounded',
-  },
-  roundedGreenSquare: {
-    type: 'div',
-    className: 'size-4 dark:bg-green-500 bg-green-600 rounded',
   },
   milestone: {
     type: 'div',
@@ -83,10 +78,9 @@ export const POINT_CLASS_NAMES: PointClassNames = {
 export const FILL_STYLES = {
   pink: () => ({ light: '#FF46C0', dark: '#FF46C0' }),
   yellow: () => ({ light: '#FFC107', dark: '#FFC107' }),
-  'light-yellow': () => ({ light: '#FF8B36', dark: '#FFDD28' }),
+  'light-yellow': () => ({ light: '#FFA336', dark: '#FFDD28' }),
   purple: () => ({ light: '#7E41CC', dark: '#7E41CC' }),
-  green: () => ({ light: '#15CA60', dark: '#15CA60' }),
-  blue: () => ({ light: '#005DD7', dark: '#53A2FF' }),
+  blue: () => ({ light: '#2670FF', dark: '#0074FD' }),
   'blue gradient': (ctx: CanvasRenderingContext2D) => {
     const gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0)
     gradient.addColorStop(0, 'rgba(42, 91, 216, 0.3)')
@@ -105,10 +99,9 @@ export const FILL_STYLES = {
 export const LINE_STYLES = {
   pink: () => ({ light: '#FF46C0', dark: '#FF46C0' }),
   yellow: () => ({ light: '#FFC107', dark: '#FFC107' }),
-  'light-yellow': () => ({ light: '#FF8B36', dark: '#FFDD28' }),
+  'light-yellow': () => ({ light: '#FFA336', dark: '#FFDD28' }),
   purple: () => ({ light: '#7E41CC', dark: '#7E41CC' }),
-  green: () => ({ light: '#15CA60', dark: '#15CA60' }),
-  blue: () => ({ light: '#005DD7', dark: '#53A2FF' }),
+  blue: () => ({ light: '#2670FF', dark: '#0074FD' }),
   'blue gradient': (ctx: CanvasRenderingContext2D) => {
     const gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0)
     gradient.addColorStop(0, 'rgba(42, 91, 216')

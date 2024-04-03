@@ -30,8 +30,8 @@ export function getScalingCostsColumnsConfig() {
         <CostsBreakdownValueCell data={project.data} type="calldata" />
       ),
       headClassName: getColumnHeaderUnderline(
-        'before:bg-blue-700',
-        'dark:before:bg-blue-500',
+        'before:bg-sky-550',
+        'dark:before:bg-sky-500',
       ),
       tooltip:
         'The sum of the costs for posting data as calldata on Ethereum for the selected time period.',
@@ -72,9 +72,7 @@ export function getScalingCostsColumnsConfig() {
           className="pr-4"
         />
       ),
-      headClassName: getColumnHeaderUnderline(
-        'before:bg-green-600 dark:before:bg-green-500',
-      ),
+      headClassName: getColumnHeaderUnderline('before:bg-purple-100'),
       tooltip:
         'The sum of the fixed 21,000 GAS overhead per transaction for the selected time period.',
       align: 'right',
