@@ -1,12 +1,13 @@
-import { assert } from '@l2beat/backend-tools'
+import { assert, Logger } from '@l2beat/backend-tools'
 import {
   assertUnreachable,
   Bytes,
   EscrowEntry,
   EthereumAddress,
+  TotalSupplyEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { UpdateConfiguration } from '@l2beat/uif'
+import { Configuration } from '@l2beat/uif'
 import { BigNumber, utils } from 'ethers'
 import { partition } from 'lodash'
 
@@ -16,39 +17,37 @@ import {
   MulticallResponse,
 } from '../../peripherals/multicall/types'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
-import {
-  AmountConfigurationRecord,
-  AmountRecord,
-} from './repositories/AmountRepository'
+import { AmountRecord } from './repositories/AmountRepository'
 
-export interface NativeAssetBalanceEncoder {
-  sinceBlock: number
-  address: EthereumAddress
-  encode: (address: EthereumAddress) => Bytes
-  decode: (response: Bytes) => bigint
+type AmountConfiguration = EscrowEntry | TotalSupplyEntry
+
+export interface AmountServiceOptions {
+  readonly logger: Logger
+  readonly rpcClient: RpcClient
+  readonly multicallClient: MulticallClient
+  readonly nativeAssetBalanceEncoder?: NativeAssetBalanceEncoder
 }
 
-export class ChainAmountService {
-  constructor(
-    private readonly rpcClient: RpcClient,
-    private readonly multicallClient: MulticallClient,
-    private readonly nativeAssetBalanceEncoder?: NativeAssetBalanceEncoder,
-  ) {}
+export class AmountService {
+  constructor(private readonly options: AmountServiceOptions) {}
 
   public async fetchAmounts(
-    configurations: UpdateConfiguration<AmountConfigurationRecord>[],
+    configurations: Configuration<AmountConfiguration>[],
     timestamp: UnixTime,
     blockNumber: number,
   ): Promise<AmountRecord[]> {
-    const nativeAssetBalanceEncoder =
-      this.getNativeAssetBalanceEncoder(blockNumber)
+    const nativeAssetBalanceEncoder = getNativeAssetBalanceEncoder(
+      this.options.nativeAssetBalanceEncoder,
+      blockNumber,
+    )
 
     const [nonMulticall, multicall] = partition(configurations, (c) =>
       isNotSupportedByMulticall(nativeAssetBalanceEncoder, c),
     )
 
     const nonMulticallAmounts = await this.getNonMulticallAmounts(
-      nonMulticall as UpdateConfiguration<EscrowEntry>[],
+      // TODO: solve it better with types
+      nonMulticall as Configuration<EscrowEntry>[],
       blockNumber,
       timestamp,
     )
@@ -63,21 +62,14 @@ export class ChainAmountService {
     return [...nonMulticallAmounts, ...multicallAmounts]
   }
 
-  getNativeAssetBalanceEncoder(blockNumber: number) {
-    return this.nativeAssetBalanceEncoder &&
-      this.nativeAssetBalanceEncoder.sinceBlock <= blockNumber
-      ? this.nativeAssetBalanceEncoder
-      : undefined
-  }
-
   async getNonMulticallAmounts(
-    nonMulticall: UpdateConfiguration<EscrowEntry>[],
+    nonMulticall: Configuration<EscrowEntry>[],
     blockNumber: number,
     timestamp: UnixTime,
   ): Promise<AmountRecord[]> {
     return Promise.all(
       nonMulticall.map(async (configuration) => {
-        const amount = await this.rpcClient.getBalance(
+        const amount = await this.options.rpcClient.getBalance(
           configuration.properties.escrowAddress,
           blockNumber,
         )
@@ -92,33 +84,33 @@ export class ChainAmountService {
   }
 
   private async getMulticallAmounts(
-    configurations: UpdateConfiguration<AmountConfigurationRecord>[],
+    configurations: Configuration<AmountConfiguration>[],
     nativeAssetBalanceEncoder: NativeAssetBalanceEncoder | undefined,
     blockNumber: number,
     timestamp: UnixTime,
   ) {
     const encoded = configurations.map((configuration) => ({
-      request: this.encodeForMulticall(
-        configuration.properties,
-        nativeAssetBalanceEncoder,
-      ),
-      metadata: configuration,
+      ...this.encodeForMulticall(configuration, nativeAssetBalanceEncoder),
     }))
 
-    const responses = await this.multicallClient.multicallWithMetadata(
+    const responses = await this.options.multicallClient.multicall(
       encoded,
       blockNumber,
     )
 
-    return responses.map(({ response, metadata }) => {
-      const amount = this.decodeForMulticall(
-        response,
-        metadata.properties,
-        nativeAssetBalanceEncoder,
-      )
+    return responses.map((response, i) => {
+      const configuration = configurations[i]
+      // In the rare event of a contract call revert we do not want backend to stop because of it
+      // That is why we set the amount to 0n & report the error to the logger
+      const amount =
+        this.decodeForMulticall(
+          response,
+          configuration,
+          nativeAssetBalanceEncoder,
+        ) ?? 0n
 
       return {
-        configurationId: +metadata.id,
+        configurationId: +configuration.id,
         timestamp,
         amount,
       }
@@ -126,66 +118,76 @@ export class ChainAmountService {
   }
 
   private encodeForMulticall(
-    configuration: AmountConfigurationRecord,
+    { properties }: Configuration<AmountConfiguration>,
     nativeEncoding: NativeAssetBalanceEncoder | undefined,
   ): MulticallRequest {
-    switch (configuration.type) {
+    switch (properties.type) {
       case 'totalSupply':
-        assert(configuration.address !== 'native')
-        return encodeErc20TotalSupplyQuery(configuration.address)
+        return encodeErc20TotalSupplyQuery(properties.address)
       case 'escrow':
-        assert(configuration.escrowAddress)
-        if (configuration.address === 'native') {
+        if (properties.address === 'native') {
           assert(
             nativeEncoding,
-            `No native balance encoding for chain ${configuration.chain}`,
+            `No native balance encoding for chain ${properties.chain}`,
           )
           return {
             address: nativeEncoding.address,
-            data: nativeEncoding.encode(configuration.escrowAddress),
+            data: nativeEncoding.encode(properties.escrowAddress),
           }
         }
         return encodeErc20BalanceQuery(
-          configuration.escrowAddress,
-          configuration.address,
+          properties.escrowAddress,
+          properties.address,
         )
-      case 'circulatingSupply':
-        throw new Error('Circulating supply not supported')
       default:
-        assertUnreachable(configuration.type)
+        assertUnreachable(properties)
     }
   }
 
   private decodeForMulticall(
     response: MulticallResponse,
-    configuration: AmountConfigurationRecord,
+    { id, properties }: Configuration<AmountConfiguration>,
     nativeEncoding: NativeAssetBalanceEncoder | undefined,
   ) {
     if (!response.success) {
-      throw new Error(
-        'Multicall failed for ' + configuration.address.toString(),
-      )
+      this.options.logger.error(`Multicall failed for configuration: ${id}}`)
+      return
     }
-    switch (configuration.type) {
+    switch (properties.type) {
       case 'totalSupply':
         return decodeErc20TotalSupplyQuery(response.data)
       case 'escrow':
-        if (configuration.address === 'native') {
+        if (properties.address === 'native') {
           assert(nativeEncoding, `No native balance encoding `)
           return nativeEncoding.decode(response.data)
         }
         return decodeErc20BalanceQuery(response.data)
-      case 'circulatingSupply':
-        throw new Error('Circulating supply not supported')
       default:
-        assertUnreachable(configuration.type)
+        assertUnreachable(properties)
     }
   }
 }
 
+export interface NativeAssetBalanceEncoder {
+  sinceBlock: number
+  address: EthereumAddress
+  encode: (address: EthereumAddress) => Bytes
+  decode: (response: Bytes) => bigint
+}
+
+function getNativeAssetBalanceEncoder(
+  nativeAssetBalanceEncoder: NativeAssetBalanceEncoder | undefined,
+  blockNumber: number,
+) {
+  return nativeAssetBalanceEncoder &&
+    nativeAssetBalanceEncoder.sinceBlock <= blockNumber
+    ? nativeAssetBalanceEncoder
+    : undefined
+}
+
 function isNotSupportedByMulticall(
   nativeEncoding: NativeAssetBalanceEncoder | undefined,
-  configuration: UpdateConfiguration<AmountConfigurationRecord>,
+  configuration: Configuration<AmountConfiguration>,
 ) {
   return (
     configuration.properties.type === 'escrow' &&

@@ -9,7 +9,7 @@ import {
 
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
 import { BlockTimestampIndexer } from './BlockTimestampIndexer'
-import { ChainAmountService } from './ChainAmountService'
+import { AmountService } from './AmountService'
 import {
   AmountConfigurationRecord,
   AmountRepository,
@@ -23,7 +23,7 @@ export class ChainAmountIndexer extends MultiIndexer<AmountConfigurationRecord> 
   constructor(
     logger: Logger,
     parentIndexer: BlockTimestampIndexer,
-    private readonly amountProvider: ChainAmountService,
+    private readonly amountProvider: AmountService,
     private readonly stateRepository: IndexerStateRepository,
     private readonly amountRepository: AmountRepository,
     private readonly blockTimestampRepository: BlockTimestampRepository,

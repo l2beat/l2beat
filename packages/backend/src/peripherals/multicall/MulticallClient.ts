@@ -11,21 +11,6 @@ export class MulticallClient {
     private readonly config: MulticallConfigEntry[],
   ) {}
 
-  async multicallWithMetadata<T>(
-    requests: { request: MulticallRequest; metadata: T }[],
-    blockNumber: number,
-  ): Promise<{ response: MulticallResponse; metadata: T }[]> {
-    const responses = await this.multicall(
-      requests.map((x) => x.request),
-      blockNumber,
-    )
-    const withMetadata = responses.map((result, i) => ({
-      response: result,
-      metadata: requests[i].metadata,
-    }))
-    return withMetadata
-  }
-
   async multicall(requests: MulticallRequest[], blockNumber: number) {
     // We use strictly greater than because contracts are deployed during the block
     const config = this.config.find((x) => blockNumber > x.sinceBlock)
