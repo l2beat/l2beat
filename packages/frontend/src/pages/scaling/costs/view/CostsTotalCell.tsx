@@ -81,6 +81,23 @@ export function CostsTotalCell({ data, className }: CellProps) {
           details={data.last90d}
         />
       </div>
+      <div className='hidden group-data-[time-range="180D"]/costs-controls-wrapper:block'>
+        <TotalValue
+          details={data.last180d}
+          unit="usdCost"
+          className="hidden group-data-[unit=USD]/costs-controls-wrapper:block"
+        />
+        <TotalValue
+          className="hidden group-data-[unit=ETH]/costs-controls-wrapper:block"
+          unit="ethCost"
+          details={data.last180d}
+        />
+        <TotalValue
+          className="hidden group-data-[unit=GAS]/costs-controls-wrapper:block"
+          unit="gas"
+          details={data.last180d}
+        />
+      </div>
     </CostsControlsWrapper>
   )
 }

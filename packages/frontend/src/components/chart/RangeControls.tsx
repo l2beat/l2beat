@@ -98,6 +98,9 @@ function getOptions(chartType: ChartType): RadioGroupOption[] {
         {
           value: '90D',
         },
+        {
+          value: '180D',
+        },
       ]
     default:
       assertUnreachable(chartType)

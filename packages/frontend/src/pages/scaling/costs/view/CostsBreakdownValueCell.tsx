@@ -33,17 +33,20 @@ export function CostsBreakdownValueCell(props: Props) {
         type={props.type}
         className='hidden group-data-[time-range="7D"]/costs-controls-wrapper:flex'
       />
-
       <Cell
         details={props.data.last30d}
         type={props.type}
         className='hidden group-data-[time-range="30D"]/costs-controls-wrapper:flex'
       />
-
       <Cell
         details={props.data.last90d}
         type={props.type}
         className='hidden group-data-[time-range="90D"]/costs-controls-wrapper:flex'
+      />
+      <Cell
+        details={props.data.last180d}
+        type={props.type}
+        className='hidden group-data-[time-range="180D"]/costs-controls-wrapper:flex'
       />
     </CostsControlsWrapper>
   )

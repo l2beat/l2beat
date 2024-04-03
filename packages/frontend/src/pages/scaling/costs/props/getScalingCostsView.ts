@@ -89,6 +89,7 @@ function getCostsData(
     last7d: getDataDetails(l2CostsChart, activityApiChart, 7),
     last30d: getDataDetails(l2CostsChart, activityApiChart, 30),
     last90d: getDataDetails(l2CostsChart, activityApiChart, 90),
+    last180d: getDataDetails(l2CostsChart, activityApiChart, 180),
   }
 }
 

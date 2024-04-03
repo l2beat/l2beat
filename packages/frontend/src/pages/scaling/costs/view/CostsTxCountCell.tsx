@@ -25,6 +25,9 @@ export function CostsTxCountCell(props: Props) {
       <div className='hidden group-data-[time-range="90D"]/costs-controls-wrapper:block'>
         <Cell txCount={props.data.last90d.txCount} />
       </div>
+      <div className='hidden group-data-[time-range="180D"]/costs-controls-wrapper:block'>
+        <Cell txCount={props.data.last180d.txCount} />
+      </div>
     </CostsControlsWrapper>
   )
 }

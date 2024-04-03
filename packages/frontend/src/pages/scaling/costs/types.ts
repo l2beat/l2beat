@@ -40,6 +40,7 @@ export type CostsData = {
   last7d: CostsDataDetails
   last30d: CostsDataDetails
   last90d: CostsDataDetails
+  last180d: CostsDataDetails
 }
 
 export type CostsDataDetails = {
