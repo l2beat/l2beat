@@ -11,11 +11,6 @@ const upgradeability = {
   upgradeDelay: 'No delay',
 }
 
-const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
-  'L2OutputOracle',
-  'FINALIZATION_PERIOD_SECONDS',
-)
-
 export const stack: Layer3 = opStack({
   discovery,
   // hostChain: ProjectId('base'),
