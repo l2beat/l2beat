@@ -7,7 +7,7 @@ Generated with discovered.json: 0x71164dd68d40c603ad2f2be8190d8e65dd9a7765
 
 ## Description
 
-- added bridged token contract: the bridge can mint and burn these tokens (onlyBridge)
+- added Linea support
 - SpokePool upgrade: various functions to register orders, updated to V3 specs. // does it use merkle proofs to withdraw funds?
   Plus some counters of filled orders and deposits. These counters are designed to implement a fee mechanism that is based on a canonical history of deposit and fill events and how they update a virtual running balance of liabilities and assets, which then determines the LP fee charged to relays. Plus some error handling, handling of non-expiring deposits.
 
