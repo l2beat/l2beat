@@ -36,13 +36,12 @@ export class AmountService {
     timestamp: UnixTime,
     blockNumber: number,
   ): Promise<AmountRecord[]> {
-    const nativeAssetBalanceEncoder = getNativeAssetBalanceEncoder(
-      this.dependencies.nativeAssetBalanceEncoder,
-      blockNumber,
-    )
-
     const [nonMulticall, multicall] = partition(configurations, (c) =>
-      isNotSupportedByMulticall(nativeAssetBalanceEncoder, c),
+      isNotSupportedByMulticall(
+        this.dependencies.nativeAssetBalanceEncoder,
+        c,
+        blockNumber,
+      ),
     )
 
     const nonMulticallAmounts = await this.getNonMulticallAmounts(
@@ -54,7 +53,6 @@ export class AmountService {
 
     const multicallAmounts = await this.getMulticallAmounts(
       multicall,
-      nativeAssetBalanceEncoder,
       blockNumber,
       timestamp,
     )
@@ -85,10 +83,13 @@ export class AmountService {
 
   private async getMulticallAmounts(
     configurations: Configuration<AmountConfiguration>[],
-    nativeAssetBalanceEncoder: NativeAssetBalanceEncoder | undefined,
     blockNumber: number,
     timestamp: UnixTime,
   ) {
+    const nativeAssetBalanceEncoder = getNativeAssetBalanceEncoder(
+      this.dependencies.nativeAssetBalanceEncoder,
+      blockNumber,
+    )
     const encoded = configurations.map((configuration) => ({
       ...this.encodeForMulticall(configuration, nativeAssetBalanceEncoder),
     }))
@@ -188,13 +189,19 @@ function getNativeAssetBalanceEncoder(
 }
 
 function isNotSupportedByMulticall(
-  nativeEncoding: NativeAssetBalanceEncoder | undefined,
+  nativeEncoder: NativeAssetBalanceEncoder | undefined,
   configuration: Configuration<AmountConfiguration>,
+  blockNumber: number,
 ) {
+  const nativeAssetBalanceEncoder = getNativeAssetBalanceEncoder(
+    nativeEncoder,
+    blockNumber,
+  )
+
   return (
     configuration.properties.type === 'escrow' &&
     configuration.properties.address === 'native' &&
-    nativeEncoding === undefined
+    nativeAssetBalanceEncoder === undefined
   )
 }
 
