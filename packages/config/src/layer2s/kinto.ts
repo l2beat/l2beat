@@ -35,7 +35,7 @@ export const kinto: Layer2 = orbitStackL2({
       address: EthereumAddress('0x0f1b7bd7762662b23486320aa91f30312184f70c'),
       tokens: '*',
       description:
-        'Escrow for yielding assets that are later bridged to the L2 in batches.',
+        "Bridger escrow that swaps deposited assets to 'L2 final assets' that are later bridged to the L2 in batches.",
     }),
     discovery.getEscrowDetails({
       address: EthereumAddress('0x7870D5398DB488c669B406fBE57b8d05b6A35e42'),
@@ -64,6 +64,12 @@ export const kinto: Layer2 = orbitStackL2({
       'BridgerOwnerMultisig',
       'Multisig that can upgrade the Engen escrow.',
     ),
+    {
+      name: 'Bridger Sender Account.',
+      description:
+        'EOA privileged to call `bridgeDeposits()` on the Bridger L1 escrow to send escrowed funds to the L2. It can also deposit tokens into the escrow itself by submitting signatures.',
+      accounts: [discovery.getPermissionedAccount('Bridger', 'senderAccount')],
+    },
   ],
   milestones: [
     // {
