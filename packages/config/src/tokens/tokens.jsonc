@@ -1121,8 +1121,8 @@
     {
       "symbol": "RDNT",
       "address": "0x3082CC23568eA640225c2467653dB90e9250AaA0",
-      "type": "EBV",
-      "formula": "circulatingSupply",
+      "type": "NMV",
+      "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
@@ -1131,7 +1131,7 @@
     {
       "symbol": "rsETH",
       "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "coingeckoId": "kelp-dao-restaked-eth",
       "bridgedUsing": {
