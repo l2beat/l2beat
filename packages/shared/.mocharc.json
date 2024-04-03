@@ -1,7 +1,6 @@
 {
   "spec": "{src,test}/**/*.test.ts",
   "require": "esbuild-register",
-  "reporter": "progress",
   "watchExtensions": "ts",
   "extension": "ts",
   "file": "src/test/setup.ts"

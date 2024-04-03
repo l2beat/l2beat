@@ -330,7 +330,7 @@ function getMockFinalityRuntimeConfiguration(
   return {
     projectId: ProjectId('project'),
     analyzer: mockObject<BaseAnalyzer>({
-      getFinalityWithGranularity: mockFn().resolvesTo(results),
+      getFinalityForInterval: mockFn().resolvesTo(results),
     }),
     minTimestamp: MIN_TIMESTAMP,
   }

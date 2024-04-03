@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/backend-tools'
+import { assert, Logger } from '@l2beat/backend-tools'
 import {
   ProjectId,
   TrackedTxsConfigSubtype,
@@ -78,39 +78,31 @@ export class LivenessRepository extends BaseRepository {
   }
 
   /**
-   * Searches for the transaction with the closest timestamp to "target", but no older than "floor".
-   * The search is inclusive of "target" and exclusive of "floor".
    *
    * @param projectId Filter only transactions for a specific project.
    * @param subtype Filter only transactions of a specific subtype.
-   * @param targetTimestamp Query will try to find the closest or equal timestamp to target, but no older than floor.
-   * @param floorTimestamp The oldest timestamp search can go to.
-   * @returns An object containing the transaction hash and timestamp if found, otherwise undefined.
+   * @param from Lower bound timestamp, inclusive.
+   * @param to Upper bound timestamp, exclusive.
+   * @returns An array of transactions that fall within the specified time range.
    */
-  async findTransactionWithinTimeRange(
+  async getTransactionsWithinTimeRange(
     projectId: ProjectId,
     subtype: TrackedTxsConfigSubtype,
-    targetTimestamp: UnixTime,
-    floorTimestamp: UnixTime,
-  ): Promise<{ txHash: string; timestamp: UnixTime } | undefined> {
+    from: UnixTime,
+    to: UnixTime,
+  ): Promise<LivenessRecord[]> {
+    assert(from.toNumber() < to.toNumber(), 'From must be less than to')
     const knex = await this.knex()
-
     const rows = await knex('liveness as l')
       .join('tracked_txs_configs as c', 'l.tracked_tx_id', 'c.id')
-      .select('l.tx_hash', 'l.timestamp')
+      .select('l.timestamp', 'l.block_number', 'l.tx_hash', 'l.tracked_tx_id')
       .where('c.project_id', projectId.toString())
       .andWhere('c.subtype', subtype.toString())
-      .andWhere('l.timestamp', '<=', targetTimestamp.toDate())
-      .andWhere('l.timestamp', '>', floorTimestamp.toDate())
-      .orderBy('l.timestamp', 'desc')
-      .distinct('l.tx_hash')
-      .limit(1)
+      .andWhere('l.timestamp', '>=', from.toDate())
+      .andWhere('l.timestamp', '<', to.toDate())
+      .orderBy('l.timestamp', 'asc')
 
-    if (rows.length === 0) {
-      return undefined
-    }
-
-    return rows.map(toRecordWithTxHashAndTimestamp)[0]
+    return rows.map(toRecord)
   }
 
   async getTransactionWithSubtypeDistinctTimestamp(
@@ -197,13 +189,6 @@ function toTransactionRecordWithTimestamp(
     subtype: TrackedTxsConfigSubtype.parse(row.subtype),
     txHash: row.tx_hash,
   }
-}
-
-function toRecordWithTxHashAndTimestamp(row: {
-  tx_hash: string
-  timestamp: Date
-}): { txHash: string; timestamp: UnixTime } {
-  return { txHash: row.tx_hash, timestamp: UnixTime.fromDate(row.timestamp) }
 }
 
 function toRow(record: LivenessRecord): LivenessRow {
