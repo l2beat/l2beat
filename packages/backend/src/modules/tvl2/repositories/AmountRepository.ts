@@ -128,19 +128,34 @@ export class AmountRepository extends BaseRepository {
 
   // #region configurations
 
-  async addManyConfigurations(
-    records: Omit<AmountConfigurationRecord, 'id'>[],
+  // TODO: update convention and change name
+  async addOrUpdateMany(
+    records: (Omit<AmountConfigurationRecord, 'id'> & { id?: number })[],
   ): Promise<number[]> {
-    const rows: Omit<AmountConfigurationRow, 'id'>[] =
+    const rows: (Omit<AmountConfigurationRow, 'id'> & { id?: number })[] =
       records.map(toConfigurationRow)
 
     const knex = await this.knex()
-    const inserted = (await knex
-      .batchInsert('amounts_configurations', rows, 5_000)
-      // @ts-expect-error knex types are wrong
-      .returning('id')) as unknown as { id: number }[]
 
-    return inserted.map((row) => row.id)
+    const ids: number[] = []
+
+    await knex.transaction(async (trx) => {
+      for (let i = 0; i < rows.length; i += 5000) {
+        const chunk = rows.slice(i, i + 5000)
+
+        const inserted = await trx('amounts_configurations')
+          .insert(chunk)
+          .onConflict('id')
+          .merge()
+          .returning('id')
+
+        ids.push(...inserted.map((row: { id: number }) => row.id))
+      }
+
+      return ids
+    })
+
+    return ids
   }
 
   async getConfigurationsByIndexerId(
@@ -154,18 +169,12 @@ export class AmountRepository extends BaseRepository {
     return rows.map(toConfigurationRecord).map(toSavedConfiguration)
   }
 
-  async setUntilTimestampInclusive(
-    id: number,
-    untilTimestampInclusive: UnixTime | undefined,
-  ): Promise<number> {
+  async deleteConfigurationsNotInList(indexerId: string, ids: number[]) {
     const knex = await this.knex()
     return await knex('amounts_configurations')
-      .where({ id })
-      .update({
-        until_timestamp_inclusive: untilTimestampInclusive
-          ? untilTimestampInclusive.toDate()
-          : null,
-      })
+      .where('indexer_id', indexerId)
+      .whereNotIn('id', ids)
+      .delete()
   }
 
   // #endregion
@@ -231,20 +240,21 @@ function toRecordWithMetadata(
 }
 
 function toConfigurationRow(
-  row: Omit<AmountConfigurationRecord, 'id'>,
-): Omit<AmountConfigurationRow, 'id'> {
+  record: Omit<AmountConfigurationRecord, 'id'> & { id?: number },
+): Omit<AmountConfigurationRow, 'id'> & { id?: number } {
   return {
-    indexer_id: row.indexerId,
-    project_id: row.projectId.toString(),
-    chain: row.chain,
-    address: row.address === 'native' ? 'native' : row.address.toString(),
-    escrow_address: row.escrowAddress?.toString() ?? null,
-    origin: row.origin,
-    type: row.type,
-    include_in_total: row.includeInTotal,
-    since_timestamp_inclusive: row.sinceTimestampInclusive.toDate(),
-    until_timestamp_inclusive: row.untilTimestampInclusive?.toDate() ?? null,
-    last_synced_timestamp: row.lastSyncedTimestamp?.toDate() ?? null,
+    id: record.id,
+    indexer_id: record.indexerId,
+    project_id: record.projectId.toString(),
+    chain: record.chain,
+    address: record.address === 'native' ? 'native' : record.address.toString(),
+    escrow_address: record.escrowAddress?.toString() ?? null,
+    origin: record.origin,
+    type: record.type,
+    include_in_total: record.includeInTotal,
+    since_timestamp_inclusive: record.sinceTimestampInclusive.toDate(),
+    until_timestamp_inclusive: record.untilTimestampInclusive?.toDate() ?? null,
+    last_synced_timestamp: record.lastSyncedTimestamp?.toDate() ?? null,
   }
 }
 

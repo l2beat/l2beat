@@ -59,7 +59,7 @@ export class ChainAmountIndexer extends MultiIndexer<AmountConfigurationRecord> 
       }
     }
 
-    await this.amountRepository.addManyConfigurations(
+    await this.amountRepository.addOrUpdateMany(
       toAdd.map((c) => ({
         ...c,
         indexerId: this.indexerId,
@@ -172,7 +172,12 @@ export class ChainAmountIndexer extends MultiIndexer<AmountConfigurationRecord> 
         : undefined,
     }))
 
-    await this.amountRepository.addManyConfigurations(records)
+    await this.amountRepository.addOrUpdateMany(records)
+
+    await this.amountRepository.deleteConfigurationsNotInList(
+      this.indexerId,
+      records.map((r) => r.id),
+    )
 
     this.logger.debug('Configurations saved')
   }

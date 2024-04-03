@@ -21,7 +21,7 @@ describeDatabase(AmountRepository.name, (database) => {
     const INDEXER = 'test_indexer'
 
     beforeEach(async () => {
-      IDS = await repository.addManyConfigurations([
+      IDS = await repository.addOrUpdateMany([
         mock({
           indexerId: INDEXER,
           projectId: ProjectId.ARBITRUM,
@@ -211,7 +211,7 @@ describeDatabase(AmountRepository.name, (database) => {
   })
 
   describe('configurations', () => {
-    describe(AmountRepository.prototype.addManyConfigurations.name, () => {
+    describe(AmountRepository.prototype.addOrUpdateMany.name, () => {
       it('adds new rows', async () => {
         const newRows = [
           {
@@ -221,7 +221,7 @@ describeDatabase(AmountRepository.name, (database) => {
             ...mock({ indexerId: 'b' }),
           },
         ]
-        const ids = await repository.addManyConfigurations(newRows)
+        const ids = await repository.addOrUpdateMany(newRows)
 
         const results = await repository.getAllConfigurations()
 
@@ -230,8 +230,38 @@ describeDatabase(AmountRepository.name, (database) => {
         )
       })
 
+      it('updates rows', async () => {
+        const newRows = [
+          {
+            ...mock({ indexerId: 'a' }),
+          },
+          {
+            ...mock({ indexerId: 'b' }),
+          },
+        ]
+        const ids = await repository.addOrUpdateMany(newRows)
+
+        await repository.addOrUpdateMany(
+          newRows.map((r, i) => ({
+            id: ids[i],
+            ...r,
+            untilTimestampInclusive: new UnixTime(1),
+          })),
+        )
+
+        const results = await repository.getAllConfigurations()
+
+        expect(results).toEqualUnsorted(
+          newRows.map((r, i) => ({
+            id: ids[i],
+            ...r,
+            untilTimestampInclusive: new UnixTime(1),
+          })),
+        )
+      })
+
       it('empty array', async () => {
-        await expect(repository.addManyConfigurations([])).not.toBeRejected()
+        await expect(repository.addOrUpdateMany([])).not.toBeRejected()
       })
 
       it('performs batch insert when more than 10k records', async () => {
@@ -241,9 +271,7 @@ describeDatabase(AmountRepository.name, (database) => {
             ...mock({ indexerId: i.toString() }),
           })
         }
-        await expect(
-          repository.addManyConfigurations(records),
-        ).not.toBeRejected()
+        await expect(repository.addOrUpdateMany(records)).not.toBeRejected()
       })
     })
 
@@ -276,7 +304,7 @@ describeDatabase(AmountRepository.name, (database) => {
             }),
           },
         ]
-        const ids = await repository.addManyConfigurations(newRows)
+        const ids = await repository.addOrUpdateMany(newRows)
 
         const results = await repository.getConfigurationsByIndexerId('a')
 
@@ -297,23 +325,37 @@ describeDatabase(AmountRepository.name, (database) => {
       },
     )
 
-    it(AmountRepository.prototype.setUntilTimestampInclusive.name, async () => {
-      const oldRow = {
-        ...mock({ untilTimestampInclusive: undefined }),
-      }
-      const ids = await repository.addManyConfigurations([oldRow])
+    it(
+      AmountRepository.prototype.deleteConfigurationsNotInList.name,
+      async () => {
+        const rows = [
+          {
+            ...mock(),
+            indexerId: 'indexer-1',
+          },
+          {
+            ...mock(),
+            indexerId: 'indexer-1',
+          },
+          {
+            ...mock(),
+            indexerId: 'indexer-2',
+          },
+        ]
+        const ids = await repository.addOrUpdateMany(rows)
 
-      await repository.setUntilTimestampInclusive(ids[0], new UnixTime(1))
+        await repository.deleteConfigurationsNotInList('indexer-1', [ids[1]])
 
-      const result = await repository.getAllConfigurations()
+        const results = await repository.getAllConfigurations()
 
-      expect(result).toEqual([
-        { ...oldRow, id: ids[0], untilTimestampInclusive: new UnixTime(1) },
-      ])
-    })
+        expect(results).toEqualUnsorted(
+          rows.map((r, i) => ({ ...r, id: ids[i] })).slice(1),
+        )
+      },
+    )
 
     it(AmountRepository.prototype.deleteAll.name, async () => {
-      await repository.addManyConfigurations([mock()])
+      await repository.addOrUpdateMany([mock()])
 
       await repository.deleteAllConfigurations()
 
