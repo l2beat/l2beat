@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x7e3f4209d09895d0fb928b880dc0d9d819ebf187
+
+# Diff at Wed, 03 Apr 2024 10:10:46 GMT:
+
+- author: maciekop (<maciej.opala@l2beat.com>)
+- comparing to: main@34d9eb99e785ccac44323b84405d78f9783b5cc2 block: 19538689
+- current block number: 19574554
+
+## Description
+
+Rediscovery with new field added (upgradeability.threshold)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19538689 (main branch discovery), not current.
+
+```diff
+    contract AdminMultisig (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      upgradeability.threshold:
++        "4 of 8 (50%)"
+    }
+```
+
 Generated with discovered.json: 0x48387c3e14cc391fc0d151576e0a384601cfacae
 
 # Diff at Tue, 26 Mar 2024 16:10:41 GMT:
