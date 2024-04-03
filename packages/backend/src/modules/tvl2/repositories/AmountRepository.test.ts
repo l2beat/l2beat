@@ -252,13 +252,28 @@ describeDatabase(AmountRepository.name, (database) => {
       async () => {
         const newRows = [
           {
-            ...mock({ indexerId: 'a', projectId: ProjectId('a') }),
+            ...mock({
+              indexerId: 'a',
+              projectId: ProjectId('a'),
+              untilTimestampInclusive: new UnixTime(1),
+              lastSyncedTimestamp: new UnixTime(1),
+            }),
           },
           {
-            ...mock({ indexerId: 'a', projectId: ProjectId('b') }),
+            ...mock({
+              indexerId: 'a',
+              projectId: ProjectId('b'),
+              untilTimestampInclusive: new UnixTime(1),
+              lastSyncedTimestamp: new UnixTime(1),
+            }),
           },
           {
-            ...mock({ indexerId: 'b', projectId: ProjectId('b') }),
+            ...mock({
+              indexerId: 'b',
+              projectId: ProjectId('b'),
+              untilTimestampInclusive: new UnixTime(1),
+              lastSyncedTimestamp: new UnixTime(1),
+            }),
           },
         ]
         const ids = await repository.addManyConfigurations(newRows)
@@ -274,8 +289,8 @@ describeDatabase(AmountRepository.name, (database) => {
                 id: ids[i],
               },
               minHeight: 0,
-              maxHeight: null,
-              currentHeight: null,
+              maxHeight: 1,
+              currentHeight: 1,
             }))
             .slice(0, 2),
         )
