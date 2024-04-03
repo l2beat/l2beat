@@ -81,9 +81,10 @@ export const POINT_CLASS_NAMES: PointClassNames = {
 export const FILL_STYLES = {
   pink: () => ({ light: '#FF46C0', dark: '#FF46C0' }),
   yellow: () => ({ light: '#FFC107', dark: '#FFC107' }),
+  'light-yellow': () => ({ light: '#FF8B36', dark: '#FFDD28' }),
   purple: () => ({ light: '#7E41CC', dark: '#7E41CC' }),
-  green: () => ({ light: '#11CC00', dark: '#5BFF4D' }),
-  blue: () => ({ light: '#005DD7', dark: '#BADAFF' }),
+  green: () => ({ light: '#11CC00', dark: '#11CC00' }),
+  blue: () => ({ light: '#005DD7', dark: '#53A2FF' }),
   'blue gradient': (ctx: CanvasRenderingContext2D) => {
     const gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0)
     gradient.addColorStop(0, 'rgba(42, 91, 216, 0.3)')
@@ -102,9 +103,10 @@ export const FILL_STYLES = {
 export const LINE_STYLES = {
   pink: () => ({ light: '#FF46C0', dark: '#FF46C0' }),
   yellow: () => ({ light: '#FFC107', dark: '#FFC107' }),
+  'light-yellow': () => ({ light: '#FF8B36', dark: '#FFDD28' }),
   purple: () => ({ light: '#7E41CC', dark: '#7E41CC' }),
-  green: () => ({ light: '#11CC00', dark: '#5BFF4D' }),
-  blue: () => ({ light: '#005DD7', dark: '#BADAFF' }),
+  green: () => ({ light: '#11CC00', dark: '#11CC00' }),
+  blue: () => ({ light: '#005DD7', dark: '#53A2FF' }),
   'blue gradient': (ctx: CanvasRenderingContext2D) => {
     const gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0)
     gradient.addColorStop(0, 'rgba(42, 91, 216')

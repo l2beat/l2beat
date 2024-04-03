@@ -14,7 +14,7 @@ export function CostsBreakdown(props: CostsBreakdownProps) {
   const groups = compact([
     props.calldata && {
       value: props.calldata,
-      className: 'dark:fill-blue-400 fill-blue-700',
+      className: 'dark:fill-blue-500 fill-blue-700',
     },
     props.blobs && {
       value: props.blobs,
@@ -26,7 +26,7 @@ export function CostsBreakdown(props: CostsBreakdownProps) {
     },
     props.overhead && {
       value: props.overhead,
-      className: 'fill-green-500',
+      className: 'fill-green-600 dark:fill-green-500',
     },
   ])
 

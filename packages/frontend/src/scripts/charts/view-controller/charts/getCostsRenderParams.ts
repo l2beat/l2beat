@@ -44,8 +44,8 @@ export function getCostsRenderParams(
         point: 'circle',
       },
       {
-        line: 'yellow',
-        fill: 'yellow',
+        line: 'light-yellow',
+        fill: 'light-yellow',
       },
       {
         line: 'pink',

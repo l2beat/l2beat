@@ -31,7 +31,7 @@ export function getScalingCostsColumnsConfig() {
       ),
       headClassName: underlineClassNames(
         'before:bg-blue-700',
-        'dark:before:bg-blue-400',
+        'dark:before:bg-blue-500',
       ),
       tooltip:
         'The sum of the costs for posting data as calldata on Ethereum for the selected time period.',
@@ -72,7 +72,7 @@ export function getScalingCostsColumnsConfig() {
           className="pr-4"
         />
       ),
-      headClassName: underlineClassNames('before:bg-green-500'),
+      headClassName: underlineClassNames('before:bg-green-600 dark:before:bg-green-500'),
       tooltip:
         'The sum of the fixed 21,000 GAS overhead per transaction for the selected time period.',
       align: 'right',
