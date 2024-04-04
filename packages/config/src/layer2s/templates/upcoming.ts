@@ -12,7 +12,7 @@ export interface UpcomingConfigL2 {
 export interface UpcomingConfigL3 {
   id: string
   display: Omit<Layer3Display, 'dataAvailabilityMode'>
-  hostChain: ProjectId
+  hostChain: Layer3['hostChain']
 }
 
 export function upcomingL2(templateVars: UpcomingConfigL2): Layer2 {

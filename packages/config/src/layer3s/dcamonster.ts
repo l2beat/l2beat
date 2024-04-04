@@ -1,14 +1,14 @@
-import { underReviewL3 } from '../layer2s/templates/underReview'
+import { upcomingL3 } from '../layer2s/templates/upcoming'
 import { Layer3 } from './types'
 
-export const dcamonster: Layer3 = underReviewL3({
+export const dcamonster: Layer3 = upcomingL3({
   id: 'dcamonster',
   hostChain: 'Multiple',
   display: {
     name: 'DCA.Monster',
     slug: 'dcamonster',
     description:
-      'DCA.Monster is an innovative Automated Market Maker (AMM) that utilizes ERC20 streams for precise and efficient on-chain Dollar Cost Averaging (DCA), powered by Cartesi Rollups, aimed at overcoming the traditional challenges associated with on-chain DCA solutions.',
+      'DCA.Monster is an innovative AMM that utilizes ERC20 streams for precise and efficient on-chain Dollar Cost Averaging (DCA), powered by Cartesi Rollups.',
     purposes: ['AMM'],
     category: 'Optimistic Rollup',
     provider: 'Cartesi Rollups',
