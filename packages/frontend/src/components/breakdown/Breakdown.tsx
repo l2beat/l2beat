@@ -26,7 +26,7 @@ export function Breakdown({
 }: BreakdownProps) {
   return (
     <svg
-      className={cn('w-min overflow-hidden rounded', className)}
+      className={cn('w-max overflow-hidden rounded', className)}
       width={width}
       height={height}
       viewBox={`0 0 ${width} ${height}`}
