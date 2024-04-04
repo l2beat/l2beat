@@ -65,6 +65,8 @@ export const nova: Layer2 = {
     slug: 'nova',
     description:
       'Arbitrum Nova is an AnyTrust Optimium, differing from Arbitrum One by not posting transaction data onchain.',
+    warning:
+      'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
     purposes: ['Universal'],
     category: 'Optimium',
     provider: 'Arbitrum',
