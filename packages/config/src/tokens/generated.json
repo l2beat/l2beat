@@ -1142,6 +1142,21 @@
       "formula": "locked"
     },
     {
+      "id": "eqb-equilibria-token",
+      "name": "Equilibria Token",
+      "coingeckoId": "equilibria-finance",
+      "address": "0xfE80D611c6403f70e5B1b9B722D2B3510B740B2B",
+      "symbol": "EQB",
+      "decimals": 18,
+      "deploymentTimestamp": 1685675747,
+      "coingeckoListingTimestamp": 1686096000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/30645/large/QLLK8pmR_400x400.jpg?1696529516",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "elg-escointoken",
       "name": "EscoinToken",
       "coingeckoId": "escoin-token",
@@ -4168,6 +4183,36 @@
       }
     },
     {
+      "id": "arbitrum:boop-boop",
+      "name": "Boop",
+      "coingeckoId": "boop-2",
+      "address": "0x13A7DeDb7169a17bE92B0E3C7C2315B46f4772B3",
+      "symbol": "BOOP",
+      "decimals": 18,
+      "deploymentTimestamp": 1702958123,
+      "coingeckoListingTimestamp": 1703116800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33874/large/Boop_resized.png?1703144302",
+      "chainId": 42161,
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "id": "arbitrum:grail-camelot-token",
+      "name": "Camelot token",
+      "coingeckoId": "camelot-token",
+      "address": "0x3d9907F9a368ad0a51Be60f7Da3b97cf940982D8",
+      "symbol": "GRAIL",
+      "decimals": 18,
+      "deploymentTimestamp": 1668866817,
+      "coingeckoListingTimestamp": 1670371200,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/28416/large/vj5DIMhP_400x400.jpeg?1696527414",
+      "chainId": 42161,
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
       "id": "arbitrum:dmt-dream-machine-token",
       "name": "DMT",
       "coingeckoId": "dream-machine-token",
@@ -4178,6 +4223,21 @@
       "coingeckoListingTimestamp": 1684800000,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/30505/large/dmt.png?1696529391",
+      "chainId": 42161,
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "id": "arbitrum:equ-equation",
+      "name": "Equation",
+      "coingeckoId": "equation",
+      "address": "0x87AAfFdF26c6885f6010219208D5B161ec7609c0",
+      "symbol": "EQU",
+      "decimals": 18,
+      "deploymentTimestamp": 1697789783,
+      "coingeckoListingTimestamp": 1698624000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/32592/large/equation_logo.png?1699220377",
       "chainId": 42161,
       "type": "NMV",
       "formula": "circulatingSupply"
@@ -4284,6 +4344,21 @@
       }
     },
     {
+      "id": "arbitrum:moz-mozaic-token",
+      "name": "Mozaic Token",
+      "coingeckoId": "mozaic",
+      "address": "0x20547341E58fB558637FA15379C92e11F7b7F710",
+      "symbol": "MOZ",
+      "decimals": 18,
+      "deploymentTimestamp": 1693569643,
+      "coingeckoListingTimestamp": 1694131200,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/30100/large/Main_Logo_1-200x200jpg.jpg?1696529024",
+      "chainId": 42161,
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
       "id": "arbitrum:rdnt-radiant",
       "name": "Radiant",
       "coingeckoId": "radiant-capital",
@@ -4341,6 +4416,21 @@
       }
     },
     {
+      "id": "arbitrum:sparta-sparta",
+      "name": "SPARTA",
+      "coingeckoId": "spartadex",
+      "address": "0x11F98c7E42A367DaB4f200d2fdc460fb445CE9a8",
+      "symbol": "SPARTA",
+      "decimals": 18,
+      "deploymentTimestamp": 1690205532,
+      "coingeckoListingTimestamp": 1691452800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/30836/large/SpartaDex_200x200.jpg?1696529694",
+      "chainId": 42161,
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
       "id": "arbitrum:usdc-usd-coin",
       "name": "USD Coin",
       "coingeckoId": "usd-coin",
@@ -4354,6 +4444,36 @@
       "chainId": 42161,
       "type": "NMV",
       "formula": "totalSupply"
+    },
+    {
+      "id": "arbitrum:vela-velatoken",
+      "name": "VelaToken",
+      "coingeckoId": "vela-token",
+      "address": "0x088cd8f5eF3652623c22D48b1605DCfE860Cd704",
+      "symbol": "VELA",
+      "decimals": 18,
+      "deploymentTimestamp": 1671842085,
+      "coingeckoListingTimestamp": 1674864000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/28739/large/VELA_logo_-_no_background.png?1696527719",
+      "chainId": 42161,
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "id": "arbitrum:winr-winr",
+      "name": "WINR",
+      "coingeckoId": "winr-protocol",
+      "address": "0xD77B108d4f6cefaa0Cae9506A934e825BEccA46E",
+      "symbol": "WINR",
+      "decimals": 18,
+      "deploymentTimestamp": 1678039322,
+      "coingeckoListingTimestamp": 1679011200,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/29340/large/WINR.png?1696528290",
+      "chainId": 42161,
+      "type": "NMV",
+      "formula": "circulatingSupply"
     },
     {
       "id": "arbitrum:xai-xai",
