@@ -156,9 +156,7 @@ export class AmountService {
     response: MulticallResponse,
   ) {
     if (!response.success) {
-      this.dependencies.logger.error(
-        `Multicall failed for configuration: ${id}}`,
-      )
+      this.dependencies.logger.error(`Revert detected: ${id}}`)
       return
     }
     switch (properties.type) {
