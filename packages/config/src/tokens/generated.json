@@ -1142,6 +1142,21 @@
       "formula": "locked"
     },
     {
+      "id": "eqb-equilibria-token",
+      "name": "Equilibria Token",
+      "coingeckoId": "equilibria-finance",
+      "address": "0xfE80D611c6403f70e5B1b9B722D2B3510B740B2B",
+      "symbol": "EQB",
+      "decimals": 18,
+      "deploymentTimestamp": 1685675747,
+      "coingeckoListingTimestamp": 1686096000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/30645/large/QLLK8pmR_400x400.jpg?1696529516",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "elg-escointoken",
       "name": "EscoinToken",
       "coingeckoId": "escoin-token",
@@ -4223,21 +4238,6 @@
       "coingeckoListingTimestamp": 1698624000,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/32592/large/equation_logo.png?1699220377",
-      "chainId": 42161,
-      "type": "NMV",
-      "formula": "circulatingSupply"
-    },
-    {
-      "id": "arbitrum:eqb-equilibria-token",
-      "name": "Equilibria Token",
-      "coingeckoId": "equilibria-finance",
-      "address": "0xBfbCFe8873fE28Dfa25f1099282b088D52bbAD9C",
-      "symbol": "EQB",
-      "decimals": 18,
-      "deploymentTimestamp": 1685677153,
-      "coingeckoListingTimestamp": 1686096000,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/30645/large/QLLK8pmR_400x400.jpg?1696529516",
       "chainId": 42161,
       "type": "NMV",
       "formula": "circulatingSupply"

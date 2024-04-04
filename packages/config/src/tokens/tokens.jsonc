@@ -289,6 +289,10 @@
       "address": "0x4da0C48376C277cdBd7Fc6FdC6936DEE3e4AdF75"
     },
     {
+      "symbol": "EQB",
+      "address": "0xfe80d611c6403f70e5b1b9b722d2b3510b740b2b"
+    },
+    {
       "symbol": "ETH",
       "category": "ether"
     },
@@ -1081,12 +1085,6 @@
     {
       "symbol": "DMT",
       "address": "0x8B0E6f19Ee57089F7649A455D89D7bC6314D04e8",
-      "type": "NMV",
-      "formula": "circulatingSupply"
-    },
-    {
-      "symbol": "EQB",
-      "address": "0xBfbCFe8873fE28Dfa25f1099282b088D52bbAD9C",
       "type": "NMV",
       "formula": "circulatingSupply"
     },
