@@ -211,7 +211,9 @@ describe(L2CostsController.name, () => {
         ...times(26, (i) =>
           datapoint(
             START.add(-i, 'hours'),
+            // first and last hour have only one transaction, all the rest have two transactions
             i === 0 || i === 25 ? 1 : 2,
+            // last hour do not have blob transaction, all the rest have only one with value 1
             i === 25 ? null : 1,
           ),
         ),
@@ -220,8 +222,10 @@ describe(L2CostsController.name, () => {
         ...times(2, (i) =>
           datapoint(
             START.toStartOf('day').add(-i, 'days'),
+            // first day has 19 transactions, second has 31 transactions
             i === 0 ? 19 : 31,
-            i % 2 === 0 ? 10 : 15,
+            // first day has 10 blob transactions, second has 15 blob transactions
+            i === 0 ? 10 : 15,
           ),
         ),
       ])
@@ -231,7 +235,9 @@ describe(L2CostsController.name, () => {
         ...times(26, (i) =>
           datapoint(
             START.add(-i, 'hours'),
+            // first and last hour have only one transaction, all the rest have two transactions
             i === 0 || i === 25 ? 1 : 2,
+            // last hour do not have blob transaction, all the rest have only one with value 1
             i === 25 ? null : 1,
           ),
         ),
@@ -240,8 +246,10 @@ describe(L2CostsController.name, () => {
         ...times(2, (i) =>
           datapoint(
             START.toStartOf('day').add(-i, 'days'),
+            // first day has 19 transactions, second has 31 transactions
             i === 0 ? 19 : 31,
-            i % 2 === 0 ? 10 : 15,
+            // first day has 10 blob transactions, second has 15 blob transactions
+            i === 0 ? 10 : 15,
           ),
         ),
       ])
