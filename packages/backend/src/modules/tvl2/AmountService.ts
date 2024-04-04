@@ -40,7 +40,10 @@ export class AmountService {
     blockNumber: number,
     timestamp: UnixTime,
   ): Promise<AmountRecord[]> {
-    const nativeAssetCodecAtBlock = this.getNativeAssetCodecAtBlock(blockNumber)
+    const nativeAssetCodecAtBlock = getNativeAssetCodecAtBlock(
+      this.$.nativeAssetCodec,
+      blockNumber,
+    )
     const [forRpc, forMulticall] = partition(configurations, (c) =>
       isNotSupportedByMulticall(nativeAssetCodecAtBlock, c),
     )
@@ -85,7 +88,10 @@ export class AmountService {
     configurations: Configuration<AmountConfiguration>[],
     blockNumber: number,
   ) {
-    const nativeAssetCodecAtBlock = this.getNativeAssetCodecAtBlock(blockNumber)
+    const nativeAssetCodecAtBlock = getNativeAssetCodecAtBlock(
+      this.$.nativeAssetCodec,
+      blockNumber,
+    )
     const erc20Codec = this.$.erc20Codec
 
     const encoded = configurations.map((configuration) => ({
@@ -122,13 +128,6 @@ export class AmountService {
         amount,
       }
     })
-  }
-
-  getNativeAssetCodecAtBlock(blockNumber: number) {
-    return this.$.nativeAssetCodec &&
-      this.$.nativeAssetCodec.sinceBlock <= blockNumber
-      ? this.$.nativeAssetCodec
-      : undefined
   }
 }
 
@@ -183,7 +182,16 @@ function decodeForMulticall(
   }
 }
 
-export function isNotSupportedByMulticall(
+function getNativeAssetCodecAtBlock(
+  nativeAssetCodec: NativeAssetMulticallCodec | undefined,
+  blockNumber: number,
+) {
+  return nativeAssetCodec && nativeAssetCodec.sinceBlock <= blockNumber
+    ? nativeAssetCodec
+    : undefined
+}
+
+function isNotSupportedByMulticall(
   nativeCodec: NativeAssetMulticallCodec | undefined,
   configuration: Configuration<AmountConfiguration>,
 ) {
