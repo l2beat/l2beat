@@ -1,7 +1,7 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { opStack } from '../layer2s/templates/opStack'
+import { opStackL3 } from '../layer2s/templates/opStack'
 import { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('stack', 'base')
@@ -11,14 +11,14 @@ const upgradeability = {
   upgradeDelay: 'No delay',
 }
 
-export const stack: Layer3 = opStack({
+export const stack: Layer3 = opStackL3({
   discovery,
-  // hostChain: ProjectId('base'),
+  hostChain: ProjectId('base'),
   display: {
     name: 'Stack',
     slug: 'stack',
     description:
-      'Stack Chain is an Optimistic Rollup on Base using OP stack technology. \
+      'Stack Chain is an Optimium on Base using OP stack technology with Celestia for data availability. \
             Stack Chain is a blockchain for bringing points onchain, allowing brands to create and own their loyalty programs.',
     purposes: ['Social', 'RWA'],
     links: {
