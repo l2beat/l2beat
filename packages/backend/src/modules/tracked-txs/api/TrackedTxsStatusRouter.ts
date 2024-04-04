@@ -19,10 +19,18 @@ export function createTrackedTxsStatusRouter({
     ctx.body = renderTrackedTxsStatusPage({
       data: allConfigs.map((config) => ({
         ...config,
-        // TODO(imxeno): check if this condition is correct
-        synced:
+        // active if:
+        // - untilTimestampExclusive is not set
+        // - untilTimestampExclusive is greater than the last hour
+        // - untilTimestampExclusive is equal to the last synced timestamp (so we synced everything)
+        active: Boolean(
           !config.untilTimestampExclusive ||
-          config.untilTimestampExclusive.gte(clock.getFirstHour()),
+            config.untilTimestampExclusive.gte(clock.getLastHour()) ||
+            (config.lastSyncedTimestamp &&
+              config.untilTimestampExclusive.equals(
+                config.lastSyncedTimestamp,
+              )),
+        ),
         unused: unusedIds.includes(config.id),
       })),
     })

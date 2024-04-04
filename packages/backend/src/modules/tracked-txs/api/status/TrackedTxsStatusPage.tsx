@@ -7,8 +7,8 @@ import { DASHBOARD_COLORS } from '../../../update-monitor/api/view/constants'
 import { TrackedTxsConfigRecord } from '../../repositories/TrackedTxsConfigsRepository'
 
 type TrackedTxsTableRow = TrackedTxsConfigRecord & {
+  active: boolean
   unused: boolean
-  synced: boolean
 }
 
 export function TrackedTxsStatusPage({
@@ -43,7 +43,13 @@ export function TrackedTxsStatusPage({
               {projectId}
             </label>
             <div className="tab">
-              <Table data={configs} />
+              <h2 style={{ marginTop: 8 }}>{projectId}</h2>
+              <h3>Active</h3>
+              <Table data={configs.filter((c) => !c.unused && c.active)} />
+              <h3>Inactive</h3>
+              <Table data={configs.filter((c) => !c.unused && !c.active)} />
+              <h3>Empty</h3>
+              <Table data={configs.filter((c) => c.unused)} />
             </div>
           </Fragment>
         ))}
@@ -57,11 +63,11 @@ function Table({ data }: { data: TrackedTxsTableRow[] }) {
     <table>
       <thead>
         <tr>
-          <TableHead>Project</TableHead>
           <TableHead>Type</TableHead>
           <TableHead>Config ID</TableHead>
-          <TableHead>Until timestamp</TableHead>
           <TableHead>Last synced timestamp</TableHead>
+          <TableHead>Since timestamp</TableHead>
+          <TableHead>Until timestamp</TableHead>
         </tr>
       </thead>
       <tbody>
@@ -72,18 +78,16 @@ function Table({ data }: { data: TrackedTxsTableRow[] }) {
             }}
             key={config.id}
           >
-            <TableData value={config.projectId} />
             <TableData value={config.type} />
             <TableData value={config.id} />
             <TableData
-              value={
-                config.untilTimestampExclusive?.toDate().toUTCString() ?? 'null'
-              }
+              value={config.lastSyncedTimestamp?.toDate().toUTCString()}
             />
             <TableData
-              value={
-                config.lastSyncedTimestamp?.toDate().toUTCString() ?? 'null'
-              }
+              value={config.sinceTimestampInclusive?.toDate().toUTCString()}
+            />
+            <TableData
+              value={config.untilTimestampExclusive?.toDate().toUTCString()}
             />
           </tr>
         ))}
@@ -99,11 +103,8 @@ function getStatusColor(
     ? configOrConfigs
     : [configOrConfigs]
 
-  if (configs.some((config) => config.unused)) {
+  if (configs.some((config) => !config.active)) {
     return DASHBOARD_COLORS.UNVERIFIED
-  }
-  if (configs.some((config) => !config.synced)) {
-    return DASHBOARD_COLORS.IGNORED_IN_WATCH_MODE
   }
   return DASHBOARD_COLORS.WATCHED
 }
