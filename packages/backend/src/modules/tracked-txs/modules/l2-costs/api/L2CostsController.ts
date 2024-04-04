@@ -44,6 +44,7 @@ type L2CostsTrackedTxsConfigEntry = {
 
 const NOW_TO_FULL_HOUR = UnixTime.now().toStartOf('hour')
 const MAX_DAYS = 180
+const RANGES = 2
 
 // Amount of gas required for a basic tx
 const OVERHEAD = 21_000
@@ -131,22 +132,38 @@ export class L2CostsController {
         continue
       }
 
-      const records = await this.l2CostsRepository.getByProjectAndTimeRange(
-        project.projectId,
-        [NOW_TO_FULL_HOUR.add(-MAX_DAYS, 'days'), NOW_TO_FULL_HOUR],
-      )
+      const stepSize = MAX_DAYS / RANGES
 
-      const recordsWithDetails = await this.makeTransactionCalculations(records)
-      const { hourly, daily } = this.aggregateL2Costs(
-        recordsWithDetails,
-        combinedHourlyMap,
-        combinedDailyMap,
-      )
+      for (let i = 0; i < RANGES; i++) {
+        const start = MAX_DAYS - i * stepSize
+        const end = start - stepSize
 
-      projects[project.projectId.toString()] = {
-        syncedUntil,
-        hourly,
-        daily,
+        const records = await this.l2CostsRepository.getByProjectAndTimeRange(
+          project.projectId,
+          [
+            NOW_TO_FULL_HOUR.add(-start, 'days'),
+            NOW_TO_FULL_HOUR.add(-end, 'days'),
+          ],
+        )
+        const recordsWithDetails = await this.makeTransactionCalculations(
+          records,
+        )
+        const { hourly, daily } = this.aggregateL2Costs(
+          recordsWithDetails,
+          combinedHourlyMap,
+          combinedDailyMap,
+        )
+
+        const projectData = projects[project.projectId.toString()]
+        if (projectData) {
+          hourly.data = [...projectData.hourly.data, ...hourly.data]
+          daily.data = [...projectData.daily.data, ...daily.data]
+        }
+        projects[project.projectId.toString()] = {
+          syncedUntil,
+          hourly,
+          daily,
+        }
       }
     }
 
