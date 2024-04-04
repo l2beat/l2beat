@@ -18,7 +18,9 @@ export function DesktopTabs({ pages }: DesktopTabsProps) {
   return (
     <ul
       className={cn(
-        'hidden w-full items-center justify-around md:flex',
+        'hidden w-full',
+        'lg:flex lg:items-center lg:justify-around',
+        'md:grid md:grid-cols-4',
         'rounded-lg border-2 border-gray-200 dark:border-gray-850',
       )}
     >
@@ -26,12 +28,10 @@ export function DesktopTabs({ pages }: DesktopTabsProps) {
         <li
           key={i}
           className={cn(
-            'relative h-16 w-full text-[17px] font-bold',
-            i !== pages.length - 1 && 'border-r-2 border-r-transparent',
-            i !== pages.length - 1 &&
-              !page.selected &&
-              !pages[i + 1]?.selected &&
-              'border-r-gray-200 dark:border-r-gray-850',
+            'relative h-16 w-full border-gray-200 text-[17px] font-bold dark:border-gray-850',
+            (i + 1) % 4 !== 0 && 'border-r-2 ',
+            i === 3 && 'lg:border-r-2',
+            i >= 4 && 'md:border-t-2 lg:border-t-0',
             page.selected && [
               'before:absolute',
               'before:z-10',
@@ -54,8 +54,12 @@ export function DesktopTabs({ pages }: DesktopTabsProps) {
             )}
           >
             {page.icon}
-            <span className="hidden lg:inline">{page.fullTitle}</span>
-            <span className="lg:hidden">{page.shortTitle}</span>
+            <span className="hidden [@media(min-width:1296px)]:inline">
+              {page.fullTitle}
+            </span>
+            <span className="[@media(min-width:1296px)]:hidden">
+              {page.shortTitle}
+            </span>
             {page.new && <NewItemBadge />}
           </a>
         </li>
