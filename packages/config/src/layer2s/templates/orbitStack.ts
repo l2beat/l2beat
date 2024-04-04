@@ -278,8 +278,8 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     hostChain: templateVars.hostChain,
     display: {
       ...templateVars.display,
-      description:
-        'Arbitrum Nova is an AnyTrust Optimium, differing from Arbitrum One by not posting transaction data onchain.',
+      warning:
+        'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
       provider: 'Arbitrum Orbit',
       category: postsToExternalDA ? 'Optimium' : 'Optimistic Rollup',
     },
