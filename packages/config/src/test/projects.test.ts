@@ -128,7 +128,9 @@ describe('projects', () => {
               /^https:\/\/discord\.(gg|com\/invite)\/[\w-]+$/,
             )
           } else if (link.includes('t.me')) {
-            expect(link).toMatchRegex(/^https:\/\/t\.me\/(joinchat\/)?[\w\-\+]+$/)
+            expect(link).toMatchRegex(
+              /^https:\/\/t\.me\/(joinchat\/)?[\w\-+]+$/,
+            )
           } else if (link.includes('medium')) {
             expect(link).toMatchRegex(
               /^https:\/\/([\w-]+\.)?medium\.com\/[@\w-]*$/,
