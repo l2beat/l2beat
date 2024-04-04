@@ -30,5 +30,5 @@ export function CostsBreakdown(props: CostsBreakdownProps) {
     },
   ])
 
-  return <Breakdown height={3} width={136} values={groups} barGap={1} />
+  return <Breakdown height={3} width={119} values={groups} barGap={1} />
 }

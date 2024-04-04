@@ -40,6 +40,7 @@ export function getScalingCostsColumnsConfig() {
           LONG_HYPHEN
         ),
       headClassName: getColumnHeaderUnderline(
+        'w-[132px]',
         'before:bg-sky-550',
         'dark:before:bg-sky-500',
       ),
@@ -57,6 +58,7 @@ export function getScalingCostsColumnsConfig() {
           LONG_HYPHEN
         ),
       headClassName: getColumnHeaderUnderline(
+        'w-[132px]',
         'before:bg-orange-400',
         'dark:before:bg-yellow-100',
       ),
@@ -73,7 +75,10 @@ export function getScalingCostsColumnsConfig() {
         ) : (
           LONG_HYPHEN
         ),
-      headClassName: getColumnHeaderUnderline('before:bg-pink-100'),
+      headClassName: getColumnHeaderUnderline(
+        'w-[132px]',
+        'before:bg-pink-100',
+      ),
       tooltip:
         'The sum of the costs for carrying out different operations within a transaction for the selected time period.',
       align: 'right',
@@ -87,7 +92,10 @@ export function getScalingCostsColumnsConfig() {
         ) : (
           LONG_HYPHEN
         ),
-      headClassName: getColumnHeaderUnderline('before:bg-purple-100'),
+      headClassName: getColumnHeaderUnderline(
+        'w-[132px]',
+        'before:bg-purple-100',
+      ),
       tooltip:
         'The sum of the fixed 21,000 GAS overhead per transaction for the selected time period.',
       align: 'right',
