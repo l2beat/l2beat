@@ -39,28 +39,28 @@ export class AmountService {
     timestamp: UnixTime,
   ): Promise<AmountRecord[]> {
     const nativeAssetCodecAtBlock = this.getNativeAssetCodecAtBlock(blockNumber)
-    const [nonMulticall, multicall] = partition(configurations, (c) =>
+    const [forRpc, forMulticall] = partition(configurations, (c) =>
       isNotSupportedByMulticall(nativeAssetCodecAtBlock, c),
     )
 
-    const nonMulticallAmounts = await this.getNonMulticallAmounts(
+    const rpcAmounts = await this.fetchWithRpc(
       // TODO: solve it better with types
-      nonMulticall as Configuration<EscrowEntry>[],
+      forRpc as Configuration<EscrowEntry>[],
       blockNumber,
     )
 
-    const multicallAmounts = await this.getMulticallAmounts(
-      multicall,
+    const multicallAmounts = await this.fetchWithMulticall(
+      forMulticall,
       blockNumber,
     )
 
-    return [...nonMulticallAmounts, ...multicallAmounts].map((amount) => ({
+    return [...rpcAmounts, ...multicallAmounts].map((amount) => ({
       ...amount,
       timestamp,
     }))
   }
 
-  async getNonMulticallAmounts(
+  async fetchWithRpc(
     configurations: Configuration<EscrowEntry>[],
     blockNumber: number,
   ) {
@@ -87,7 +87,7 @@ export class AmountService {
     )
   }
 
-  private async getMulticallAmounts(
+  private async fetchWithMulticall(
     configurations: Configuration<AmountConfiguration>[],
     blockNumber: number,
   ) {
