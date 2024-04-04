@@ -143,6 +143,7 @@ describe(L2CostsController.name, () => {
 
       const results = await controller.makeTransactionCalculations(
         getMockL2CostRecords(),
+        [START.add(-1, 'hours'), START.add(-2, 'hours')],
       )
 
       const TX1_GAS_PRICE_ETH = getGasPriceETH(41_000_000_000)
