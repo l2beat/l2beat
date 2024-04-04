@@ -1,30 +1,4 @@
-Generated with discovered.json: 0x3df1bdb23fed3e128a1f9ed0811824a816f28626
-
-# Diff at Tue, 02 Apr 2024 17:40:50 GMT:
-
-- author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@b58073d6e00a407c2aba3b43af1c68de0726a85a block: 19531989
-- current block number: 19569646
-
-## Description
-
-Provide description of changes. This section will be preserved.
-
-## Watched changes
-
-```diff
-    contract SystemConfig (0x5e6432F18Bc5d497B1Ab2288a025Fbf9D69E2221) {
-    +++ description: None
-      values.opStackDA:
--        {"isSomeTxsLengthEqualToCelestiaDAExample":false,"isSequencerSendingBlobTx":true}
-      values.sequencerInbox:
--        "0x24E59d9d3Bd73ccC28Dc54062AF7EF7bFF58Bd67"
-      errors:
-+        {"opStackDA":"network timeout at: https://api.etherscan.io/api?module=account&action=txlist&address=0x99199a22125034c808ff20f377d91187E8050F2E&startblock=0&endblock=19569646&page=1&offset=20&sort=desc&apikey=1Z4WUBFZHSHRZ6VMBZJ6SSPQ2UFH67FZED","sequencerInbox":"network timeout at: https://api.etherscan.io/api?module=account&action=txlist&address=0x99199a22125034c808ff20f377d91187E8050F2E&startblock=0&endblock=19569646&page=1&offset=20&sort=desc&apikey=1Z4WUBFZHSHRZ6VMBZJ6SSPQ2UFH67FZED"}
-    }
-```
-
-Generated with discovered.json: 0x04e0719463871ecf3822cc4b9adf17b22f76f521
+Generated with discovered.json: 0x6f45a1009c898f828353ee2a8c6fb0af9ef7ed51
 
 # Diff at Thu, 28 Mar 2024 10:23:04 GMT:
 
