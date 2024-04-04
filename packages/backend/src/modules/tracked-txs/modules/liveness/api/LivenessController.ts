@@ -7,7 +7,6 @@ import {
   TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { Entries } from 'type-fest'
 
 import { Project } from '../../../../../model/Project'
 import { IndexerStateRepository } from '../../../../../peripherals/database/repositories/IndexerStateRepository'
@@ -148,11 +147,11 @@ export class LivenessController {
       }
 
       projects[project.projectId.toString()] = {
-        ...(Object.entries(intervals) as Entries<typeof intervals>).reduce(
-          (acc, [key, value]) => ({
+        ...(Object.keys(intervals) as (keyof typeof intervals)[]).reduce(
+          (acc, key) => ({
             ...acc,
             [key]: {
-              ...value,
+              ...withAnomalies[key],
               syncedUntil: getSyncedUntil(
                 configurations.filter((c) => c.subtype === key),
               ),
