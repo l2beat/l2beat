@@ -44,7 +44,7 @@ export function Chart(props: ChartProps) {
     props.initialType.type === 'scaling-activity' ||
     props.initialType.type === 'project-activity' ||
     props.initialType.type === 'storybook-fake-activity'
-
+  const isProjectSection = props.header === 'project'
   const isBridge = props.initialType.type === 'bridges-tvl'
 
   const id = props.id ?? 'chart'
@@ -80,7 +80,7 @@ export function Chart(props: ChartProps) {
         <div className="flex flex-col gap-4">
           <div
             className={cn(
-              'flex justify-between',
+              'flex flex-wrap justify-between gap-2',
               props.metaChart && 'absolute bottom-0 left-0 w-full',
             )}
           >
@@ -134,9 +134,14 @@ export function Chart(props: ChartProps) {
             />
           </div>
           <div className="flex justify-between">
-            {isActivity && <EthereumActivityToggle showToggle={isActivity} />}
+            {isActivity && (
+              <EthereumActivityToggle
+                showToggle={isActivity}
+                isProjectSection={isProjectSection}
+              />
+            )}
             {!isActivity && (
-              <div className="mr-4 flex flex-wrap gap-4">
+              <div className="mr-4 flex flex-wrap gap-x-4 gap-y-2">
                 <UnitControls chartType={props.initialType} />
                 <TokenControls
                   tvlBreakdownHref={props.tvlBreakdownHref}
