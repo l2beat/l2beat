@@ -1,7 +1,7 @@
 {
   "name": "lzomnichain",
   "chain": "ethereum",
-  "blockNumber": 19433467,
+  "blockNumber": 19574671,
   "configHash": "0x38c81e788a227b76cdd826ec97ae7103ead0801d018f7fce691b635b313a03d0",
   "version": 3,
   "contracts": [
@@ -1384,7 +1384,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "2 of 5 (40%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1648243585,
@@ -1399,7 +1400,7 @@
           "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
         ],
         "getThreshold": 2,
-        "nonce": 79,
+        "nonce": 81,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

@@ -1,7 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/ban-types
-export interface ProjectId extends String {
-  _ProjectIdBrand: string
-}
+import { Branded } from './branded'
+
+export type ProjectId = Branded<string, 'ProjectId'>
 
 export function ProjectId(value: string): ProjectId {
   if (value === '') {

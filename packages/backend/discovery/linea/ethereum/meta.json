@@ -156,7 +156,7 @@
       "values": {}
     },
     {
-      "name": "PlonkVerifierForDataAggregation",
+      "name": "PlonkVerifierForMultiTypeDataAggregation",
       "values": {}
     },
     {
@@ -307,6 +307,11 @@
           "severity": null,
           "type": null
         },
+        "GENESIS_SHNARF": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "INBOX_STATUS_RECEIVED": {
           "description": null,
           "severity": null,
@@ -368,6 +373,11 @@
           "type": null
         },
         "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "currentFinalizedShnarf": {
           "description": null,
           "severity": null,
           "type": null

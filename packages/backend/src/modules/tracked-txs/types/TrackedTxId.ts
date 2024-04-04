@@ -1,9 +1,6 @@
-import { hashJson } from '@l2beat/shared-pure'
+import { Branded, hashJson } from '@l2beat/shared-pure'
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-export interface TrackedTxId extends String {
-  _TrackedTxIdBrand: string
-}
+export type TrackedTxId = Branded<string, 'TrackedTxId'>
 
 export function TrackedTxId(values: string[]) {
   const hash = hashJson(values)

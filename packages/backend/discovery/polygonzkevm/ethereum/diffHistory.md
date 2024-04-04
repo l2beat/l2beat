@@ -1,3 +1,298 @@
+Generated with discovered.json: 0x7df5f71d1ed0f07745e549570e9739ff2364c904
+
+# Diff at Tue, 02 Apr 2024 11:20:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a9206f2bf2edf120bcda65c615e62ea076a00070 block: 19532872
+- current block number: 19567779
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: The number of rollups that the manager can use.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.rollupCount:
+-        2
++        3
++++ description: Mapping of a rollup type to rollup verifier. Different types may use the same verifier. First entry is a type, second a verifier.
++++ type: CODE_CHANGE
++++ severity: MEDIUM
+      values.rollupsData.2:
++        ["0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507","0x0775e11309d75aA6b0967917fB0213C5673eDf81"]
++++ description: The number of unique rollup types that the manager can use.
++++ type: CODE_CHANGE
++++ severity: MEDIUM
+      values.rollupTypeCount:
+-        3
++        4
+      values.rollupTypes.3:
++        ["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C","0x0775e11309d75aA6b0967917fB0213C5673eDf81"]
+    }
+```
+
+```diff
+    contract PolygonZkEVMGlobalExitRootV2 (0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) {
+    +++ description: None
+      values.depositCount:
+-        5945
++        6983
+      values.getLastGlobalExitRoot:
+-        "0xee5c8f1eb72c1915898e2914abf28aa11bfe10ca6e393db30c6b531406f2f6cf"
++        "0xc095e5994a0b9fd52ea40b40a773ef3501d71b6714aaa9f317da893d00a4a232"
+      values.getRoot:
+-        "0x42559113116e8552ddedf5c4552865fc4d53903950bc34bc89d5cf4a0bbbe27e"
++        "0xfa45b3fc78774ebaab9c348497cd3179c1b985b3d5acd9f7943ef5249df28026"
+      values.lastMainnetExitRoot:
+-        "0x1aa4e48476c7ebb872566736708747cb59e441468ea08e19ad6046061352daa9"
++        "0xb660abe75b32c4549f002831954229d9bca2088cbba3e11ed323d658d3405195"
+      values.lastRollupExitRoot:
+-        "0xc730e9d9cb04245242f2616137241456683e0393915305b7f76542e4e1deb344"
++        "0xbe9fd8ca76197d4a5e1a89029ce2a23b17702c9c061ac9e1d5653d6de3cdd87e"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PolygonDataCommittee (0x05652Ec92366F3C2255991a265c499E01Ba58e6a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x1e37EA18e9515db29b3E94A00eD31484A3130204)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolygonValidiumStorageMigration (0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OKBImplementation (0x75231F58b43240C9718Dd58B4967c5114342a86c)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.code/OKBImplementation/implementation/OKb.sol |  408 +++++
+ .../OKBImplementation/implementation/SafeMath.sol  |   28 +
+ .../OKBImplementation/implementation/meta.txt      |    2 +
+ .../.code/OKBImplementation/proxy/Address.sol      |   23 +
+ .../proxy/OwnedUpgradeabilityProxy.sol             |   86 +
+ .../.code/OKBImplementation/proxy/Proxy.sol        |   34 +
+ .../proxy/UpgradeabilityProxy.sol                  |   59 +
+ .../.code/OKBImplementation/proxy/meta.txt         |    2 +
+ .../@openzeppelin/contracts/utils/Strings.sol      |   70 +
+ .../contracts/utils/cryptography/ECDSA.sol         |  213 +++
+ .../@openzeppelin/contracts/utils/math/Math.sol    |  345 ++++
+ .../access/OwnableUpgradeable.sol                  |   95 +
+ .../proxy/utils/Initializable.sol                  |  165 ++
+ .../utils/AddressUpgradeable.sol                   |  219 +++
+ .../utils/ContextUpgradeable.sol                   |   37 +
+ .../v2/consensus/validium/PolygonDataCommittee.sol |  197 ++
+ .../v2/interfaces/IDataAvailabilityProtocol.sol    |   12 +
+ .../v2/interfaces/IPolygonDataCommitteeErrors.sol  |   40 +
+ .../PolygonDataCommittee/implementation/meta.txt   |    2 +
+ .../@openzeppelin/contracts/access/Ownable.sol     |   83 +
+ .../contracts/interfaces/IERC1967.sol              |   26 +
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
+ .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |   32 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  171 ++
+ .../proxy/@openzeppelin/contracts/proxy/Proxy.sol  |   86 +
+ .../contracts/proxy/beacon/BeaconProxy.sol         |   61 +
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   65 +
+ .../contracts/proxy/transparent/ProxyAdmin.sol     |   81 +
+ .../transparent/TransparentUpgradeableProxy.sol    |  193 ++
+ .../@openzeppelin/contracts/utils/Address.sol      |  244 +++
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  |   88 +
+ .../.code/PolygonDataCommittee/proxy/meta.txt      |    2 +
+ .../access/IAccessControlUpgradeable.sol           |   88 +
+ .../proxy/utils/Initializable.sol                  |  165 ++
+ .../token/ERC20/IERC20Upgradeable.sol              |   82 +
+ .../ERC20/extensions/IERC20MetadataUpgradeable.sol |   28 +
+ .../extensions/draft-IERC20PermitUpgradeable.sol   |   60 +
+ .../token/ERC20/utils/SafeERC20Upgradeable.sol     |  116 ++
+ .../utils/AddressUpgradeable.sol                   |  219 +++
+ .../utils/ContextUpgradeable.sol                   |   37 +
+ .../utils/StringsUpgradeable.sol                   |   70 +
+ .../utils/introspection/ERC165Upgradeable.sol      |   42 +
+ .../utils/introspection/IERC165Upgradeable.sol     |   25 +
+ .../utils/math/MathUpgradeable.sol                 |  345 ++++
+ .../@openzeppelin/contracts5/access/Ownable.sol    |  100 +
+ .../contracts5/interfaces/IERC1967.sol             |   24 +
+ .../contracts5/proxy/ERC1967/ERC1967Proxy.sol      |   40 +
+ .../contracts5/proxy/ERC1967/ERC1967Utils.sol      |  193 ++
+ .../@openzeppelin/contracts5/proxy/Proxy.sol       |   69 +
+ .../contracts5/proxy/beacon/IBeacon.sol            |   16 +
+ .../contracts5/proxy/transparent/ProxyAdmin.sol    |   45 +
+ .../transparent/TransparentUpgradeableProxy.sol    |  116 ++
+ .../@openzeppelin/contracts5/utils/Address.sol     |  159 ++
+ .../@openzeppelin/contracts5/utils/Context.sol     |   24 +
+ .../@openzeppelin/contracts5/utils/StorageSlot.sol |  135 ++
+ .../interfaces/IBasePolygonZkEVMGlobalExitRoot.sol |   16 +
+ .../contracts/interfaces/IPolygonZkEVMBridge.sol   |  118 ++
+ .../contracts/interfaces/IPolygonZkEVMErrors.sol   |  211 +++
+ .../contracts/interfaces/IVerifierRollup.sol       |   13 +
+ .../contracts/lib/EmergencyManager.sol             |   73 +
+ .../contracts/v2/PolygonRollupManager.sol          | 1911 ++++++++++++++++++++
+ .../migration/PolygonRollupBaseEtrogNoGap.sol      |  945 ++++++++++
+ .../migration/PolygonValidiumStorageMigration.sol  |  347 ++++
+ .../consensus/zkEVM/PolygonZkEVMExistentEtrog.sol  |  134 ++
+ .../v2/interfaces/IDataAvailabilityProtocol.sol    |   12 +
+ .../contracts/v2/interfaces/IPolygonRollupBase.sol |   20 +
+ .../v2/interfaces/IPolygonRollupManager.sol        |  170 ++
+ .../contracts/v2/interfaces/IPolygonValidium.sol   |   15 +
+ .../v2/interfaces/IPolygonZkEVMBridgeV2.sol        |  166 ++
+ .../interfaces/IPolygonZkEVMGlobalExitRootV2.sol   |   10 +
+ .../v2/interfaces/IPolygonZkEVMVEtrogErrors.sol    |   56 +
+ .../contracts/v2/lib/LegacyZKEVMStateVariables.sol |  153 ++
+ .../v2/lib/PolygonAccessControlUpgradeable.sol     |  245 +++
+ .../contracts/v2/lib/PolygonConstantsBase.sol      |   14 +
+ .../contracts/v2/lib/PolygonRollupBaseEtrog.sol    |  951 ++++++++++
+ .../contracts/v2/lib/PolygonTransparentProxy.sol   |   79 +
+ .../implementation/meta.txt                        |    2 +
+ .../PolygonValidiumStorageMigration/proxy/meta.txt |    2 +
+ .../ProxyAdmin.sol                                 |    0
+ .../meta.txt                                       |    0
+ .../@openzeppelin/contracts/access/Ownable.sol     |   83 +
+ .../contracts/interfaces/IERC1967.sol              |   26 +
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
+ .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |   32 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  171 ++
+ .../@openzeppelin/contracts/proxy/Proxy.sol        |   86 +
+ .../contracts/proxy/beacon/BeaconProxy.sol         |   61 +
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   65 +
+ .../contracts/proxy/transparent/ProxyAdmin.sol     |   81 +
+ .../transparent/TransparentUpgradeableProxy.sol    |  193 ++
+ .../@openzeppelin/contracts/utils/Address.sol      |  244 +++
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  |   88 +
+ .../meta.txt                                       |    2 +
+ 97 files changed, 12282 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19532872 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract AstarValidiumAdmin (0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AstarValidiumEtrog (0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Bridge (0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SecurityCouncil (0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6)
+    +++ description: None
+```
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      values._HALT_AGGREGATION_TIMEOUT:
+-        604800
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]},"TRUSTED_AGGREGATOR":{"adminRole":"TRUSTED_AGGREGATOR_ADMIN","members":["0x6329Fe417621925C81c16F9F9a18c203C21Af7ab","0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"]},"ADD_ROLLUP_TYPE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]},"ADD_EXISTING_ROLLUP":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]},"UPDATE_ROLLUP":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]},"OBSOLETE_ROLLUP_TYPE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]},"CREATE_ROLLUP":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]},"STOP_EMERGENCY":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]},"TWEAK_PARAMETERS":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]},"TRUSTED_AGGREGATOR_ADMIN":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]},"SET_FEE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]},"EMERGENCY_COUNCIL":{"adminRole":"EMERGENCY_COUNCIL_ADMIN","members":["0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6"]},"EMERGENCY_COUNCIL_ADMIN":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6"]}}
+      values.emergencyStateCount:
+-        1
+      values.getRollupExitRoot:
+-        "0xc730e9d9cb04245242f2616137241456683e0393915305b7f76542e4e1deb344"
+      values.lastAggregationTimestamp:
+-        1711631879
+      values.nondeterministicPendingState:
+-        []
+      values.totalSequencedBatches:
+-        27933
+      values.totalVerifiedBatches:
+-        27902
+    }
+```
+
+```diff
+    contract GlobalExitRootV2 (0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) {
+    +++ description: None
+      name:
+-        "GlobalExitRootV2"
++        "PolygonZkEVMGlobalExitRootV2"
+      values.getLastGlobalExitRoot:
++        "0xee5c8f1eb72c1915898e2914abf28aa11bfe10ca6e393db30c6b531406f2f6cf"
+      values.lastMainnetExitRoot:
++        "0x1aa4e48476c7ebb872566736708747cb59e441468ea08e19ad6046061352daa9"
+      values.lastRollupExitRoot:
++        "0xc730e9d9cb04245242f2616137241456683e0393915305b7f76542e4e1deb344"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x6c4876Ecb5de33f76700f44d547C593065806dAC)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AstarValidiumDAC (0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0)
+    +++ description: None
+```
+
+```diff
+    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: None
+      name:
+-        "Timelock"
++        "PolygonZkEVMTimelock"
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"TIMELOCK_ADMIN_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]},"PROPOSER_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]},"EXECUTOR_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]},"CANCELLER_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]}}
+      values.scheduledTransactions:
+-        [{"id":"0xb50bcda49f13b2aa0ddc72fa32eec2b6ea4cd8af5a9823762150c7d94a210476","target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":0,"data":"0x9623609d0000000000000000000000005132a183e9f3cb7c848b0aac5ae0c4f0491b7ab2000000000000000000000000301442aa888701c8b86727d42f3c55fb0dd9ef7f000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000647240f9af0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000001176322e302e302d5243312d666f726b2e3500000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":864000},{"id":"0x99979392a952eef62666ac91808b1c6b3b35a34092712ab965dbb85ac0b0a702","target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":0,"data":"0x9623609d0000000000000000000000005132a183e9f3cb7c848b0aac5ae0c4f0491b7ab2000000000000000000000000b1585916487acedd99952086f2950763d253b923000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000647240f9af0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000001076332e302e302d696e636162657272790000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":864000},{"id":"0xff337aa79b453bd0ae64d7668a9ac83cdf4666bde0977afdf04462c4e14978c8","target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":0,"data":"0x99a88ec4000000000000000000000000580bda1e7a0cfae92fa7f6c20a3794f169ce3cfb0000000000000000000000002e38cd55163137483e30580cb468c2dff1d85077","delay":864000},{"id":"0xff337aa79b453bd0ae64d7668a9ac83cdf4666bde0977afdf04462c4e14978c8","target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":0,"data":"0x99a88ec40000000000000000000000002a3dd3eb832af982ec71669e178424b10dca2ede0000000000000000000000000feb850b183c57534b56b7d56520133c8f9bdb65","delay":864000},{"id":"0xff337aa79b453bd0ae64d7668a9ac83cdf4666bde0977afdf04462c4e14978c8","target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":0,"data":"0x9623609d0000000000000000000000005132a183e9f3cb7c848b0aac5ae0c4f0491b7ab20000000000000000000000003b82da772c825283d85d5d6717a77c6ff582053b000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000001440645af090000000000000000000000006329fe417621925c81c16f9f9a18c203c21af7ab00000000000000000000000000000000000000000000000000000000000697800000000000000000000000000000000000000000000000000000000000069780000000000000000000000000242dae44f5d8fb54b198d03a94da45b5a4413e21000000000000000000000000ef1462451c30ea7ad8555386226059fe837ca4ef00000000000000000000000037c58dfa7bf0a165c5aaeddf3e2edb475ac6dcb6000000000000000000000000519e42c24163192dca44cd3fbdcebf6be91309870000000000000000000000001c3a3da552b8662cd69538356b1e7c2e9cc1ebd80000000000000000000000000000000000000000000000000000000000000007000000000000000000000000000000000000000000000000000000000000044d00000000000000000000000000000000000000000000000000000000","delay":864000},{"id":"0x84be1445c72b5d8056fe3f1a482e08a6ef1a74fdc78f85dbb16f1d5980f4f16a","target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":0,"data":"0xf34eb8eb0000000000000000000000009cf80f7eb1c76ec5ae7a88b417e373449b73ac300000000000000000000000001c3a3da552b8662cd69538356b1e7c2e9cc1ebd800000000000000000000000000000000000000000000000000000000000000070000000000000000000000000000000000000000000000000000000000000000e3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f27200000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000005d547970653a2056616c696469756d2c2056657273696f6e3a206574726f672c2067656e657369733a202f697066732f516d55586e526f5062556d5a75455a43477969486a45736f4e6346567533684c74537668706e664253326d415955000000","delay":864000},{"id":"0x8bae5e2a8aaf4501e263b917591e7fcf9b1d28c85962a8847a845aff916b50ad","target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":0,"data":"0xf34eb8eb0000000000000000000000002650a9a4fc64f63f573ef0f405064ef54bc46f710000000000000000000000004aabba26ea9e7a7fbd052d17a167e6ae3f8ec7be00000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000e3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f27200000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000005e547970653a207a6b45564d2c2056657273696f6e3a20696e636162657272792c2067656e657369733a202f697066732f516d55586e526f5062556d5a75455a43477969486a45736f4e6346567533684c74537668706e664253326d4159550000","delay":864000},{"id":"0xb492d5648af7003fa67cd99f58c95eaec5a32e0768bb99268bee18b19e8cf869","target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":0,"data":"0xc4c928c2000000000000000000000000519e42c24163192dca44cd3fbdcebf6be9130987000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000000","delay":864000},{"id":"0xd43e98454a4d7bef73956a5239de00d4858589ccf39f1d26a8c5bd9d1e5f671b","target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":0,"data":"0xf34eb8eb00000000000000000000000010d296e8add0535be71639e5d1d1c30ae1c6bd4c0000000000000000000000004aabba26ea9e7a7fbd052d17a167e6ae3f8ec7be00000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000e3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f27200000000000000000000000000000000000000000000000000000000000000c00000000000000000000000000000000000000000000000000000000000000061547970653a2056616c696469756d2c2056657273696f6e3a20696e636162657272792c2067656e657369733a202f697066732f516d55586e526f5062556d5a75455a43477969486a45736f4e6346567533684c74537668706e664253326d41595500000000000000000000000000000000000000000000000000000000000000","delay":864000},{"id":"0xd67d30e173069baf06cd69ce4df5951d855ab47e107cbaf1ac07f0fa42fb6af9","target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":0,"data":"0xc4c928c20000000000000000000000001e163594e13030244dcaf4cdfc2cd0ba3206da800000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000041c8b937000000000000000000000000000000000000000000000000000000000","delay":864000},{"id":"0xdf877691807571a83db47daab96ce9c103ea6459d7a56b57f040f8039186cd31","target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":0,"data":"0xf34eb8eb0000000000000000000000002650a9a4fc64f63f573ef0f405064ef54bc46f710000000000000000000000000775e11309d75aa6b0967917fb0213c5673edf8100000000000000000000000000000000000000000000000000000000000000090000000000000000000000000000000000000000000000000000000000000000e3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f27200000000000000000000000000000000000000000000000000000000000000c00000000000000000000000000000000000000000000000000000000000000060547970653a207a6b45564d2c2056657273696f6e3a20656c64656c6265727279322c2067656e657369733a202f697066732f516d55586e526f5062556d5a75455a43477969486a45736f4e6346567533684c74537668706e664253326d415955","delay":0},{"id":"0xdd9feb4dbad03c98d76f1bc8d746e99e1ee05ecac1b4233e1388d6c6532e02f6","target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":0,"data":"0x2f2ff15d66156603fe29d13f97c6f3e3dff4ef71919f9aa61c555be0182d954e94221aac000000000000000000000000242dae44f5d8fb54b198d03a94da45b5a4413e21","delay":0},{"id":"0xdecad137d29f44776cbe1de5721dd879cbc65f189fa8f4f93451c6621fa31363","target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":0,"data":"0xf34eb8eb00000000000000000000000010d296e8add0535be71639e5d1d1c30ae1c6bd4c0000000000000000000000000775e11309d75aa6b0967917fb0213c5673edf8100000000000000000000000000000000000000000000000000000000000000090000000000000000000000000000000000000000000000000000000000000000e3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f27200000000000000000000000000000000000000000000000000000000000000c00000000000000000000000000000000000000000000000000000000000000063547970653a2056616c696469756d2c2056657273696f6e3a20656c64656c6265727279322c2067656e657369733a202f697066732f516d55586e526f5062556d5a75455a43477969486a45736f4e6346567533684c74537668706e664253326d4159550000000000000000000000000000000000000000000000000000000000","delay":0}]
+      values.CANCELLER_ROLE:
++        "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783"
+      values.DEFAULT_ADMIN_ROLE:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.EXECUTOR_ROLE:
++        "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63"
+      values.PROPOSER_ROLE:
++        "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
+      values.TIMELOCK_ADMIN_ROLE:
++        "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract AstarValidiumMultisig (0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xd3e73fddb8acc8a7591d34699a86184f8f54330d
 
 # Diff at Thu, 28 Mar 2024 13:22:10 GMT:

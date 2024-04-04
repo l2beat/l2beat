@@ -66,6 +66,7 @@ export class L2CostsRepository extends BaseRepository {
       .andWhere('l.timestamp', '<', to.toDate())
       .distinct('l.tx_hash')
       .select('l.timestamp', 'l.tx_hash', 'l.tracked_tx_id', 'l.data')
+      .orderBy('l.timestamp', 'asc')
     return rows.map(toRecord)
   }
 

@@ -2,7 +2,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { subtractOne } from '../common/assessCount'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { CELESTIA_DA_PROVIDER, opStack } from './templates/opStack'
+import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('mantapacific')
@@ -12,7 +12,7 @@ const upgradeability = {
   upgradeDelay: 'No delay',
 }
 
-export const mantapacific: Layer2 = opStack({
+export const mantapacific: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
   discovery,
   display: {

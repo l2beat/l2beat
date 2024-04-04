@@ -3,7 +3,7 @@ import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
-import { opStack } from './templates/opStack'
+import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('rss3')
@@ -17,7 +17,7 @@ const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
   'FINALIZATION_PERIOD_SECONDS',
 )
 
-export const rss3: Layer2 = opStack({
+export const rss3: Layer2 = opStackL2({
   discovery,
   display: {
     name: 'RSS3 Value Sublayer',

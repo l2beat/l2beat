@@ -10,19 +10,13 @@ import {
 } from './repositories/FinalityRepository'
 import { FinalityConfig } from './types/FinalityConfig'
 
-/*
-  Once per day we want to fetch finality data for each project for last 24h, with granularity of 10 minutes,
-  so in every hour there will be 6 calls
-*/
-const FINALITY_GRANULARITY = 24 * 6
-
 const UPDATE_RETRY_STRATEGY = Retries.exponentialBackOff({
   maxAttempts: 10,
   initialTimeoutMs: 1000,
 })
 
 export class FinalityIndexer extends ChildIndexer {
-  readonly indexerId
+  readonly indexerId: string
 
   constructor(
     logger: Logger,
@@ -95,11 +89,7 @@ export class FinalityIndexer extends ChildIndexer {
     const from = to.add(-1, 'days')
 
     const projectFinalityTimestamps =
-      await configuration.analyzer.getFinalityWithGranularity(
-        from,
-        to,
-        FINALITY_GRANULARITY,
-      )
+      await configuration.analyzer.getFinalityForInterval(from, to)
 
     if (!projectFinalityTimestamps) return
 

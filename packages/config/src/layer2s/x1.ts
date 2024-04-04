@@ -1,7 +1,7 @@
-import { upcoming } from './templates/upcoming'
+import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
-export const x1: Layer2 = upcoming({
+export const x1: Layer2 = upcomingL2({
   id: 'x1',
   display: {
     name: 'X1',

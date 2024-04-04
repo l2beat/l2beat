@@ -76,8 +76,7 @@ export class BlobClient {
     const response = await this.httpClient.fetch(url, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
-        accept: 'application/json',
+        'Content-Type': 'gzip',
       },
       timeout: this.timeout,
     })
@@ -98,7 +97,7 @@ export class BlobClient {
   private async getBlock(blockNumber: number) {
     this.logger.debug('Getting block ' + blockNumber, { blockNumber })
     const result = await this.callRpc('eth_getBlockByNumber', [
-      blockNumber.toString(),
+      '0x' + blockNumber.toString(16),
       false,
     ])
     const parsed = BlockWithParentBeaconBlockRootSchema.safeParse(result)

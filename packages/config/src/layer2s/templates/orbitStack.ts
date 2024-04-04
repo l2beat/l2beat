@@ -29,7 +29,7 @@ const ETHEREUM_EXPLORER_URL = 'https://etherscan.io/address/{0}#code'
 export interface OrbitStackConfigCommon {
   discovery: ProjectDiscovery
   associatedTokens?: string[]
-
+  isNodeAvailable?: boolean | 'UnderReview'
   nonTemplateEscrows?: ScalingProjectEscrow[]
   bridge: ContractParameters
   rollupProxy: ContractParameters
@@ -278,6 +278,8 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     hostChain: templateVars.hostChain,
     display: {
       ...templateVars.display,
+      warning:
+        'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
       provider: 'Arbitrum Orbit',
       category: postsToExternalDA ? 'Optimium' : 'Optimistic Rollup',
     },
@@ -358,6 +360,8 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     type: 'layer2',
     ...orbitStackCommon(templateVars, ETHEREUM_EXPLORER_URL),
     display: {
+      warning:
+        'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
       ...templateVars.display,
       provider: 'Arbitrum',
       category: postsToExternalDA ? 'Optimium' : 'Optimistic Rollup',
@@ -374,7 +378,8 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
             callsItselfRollup: true,
             stateRootsPostedToL1: true,
             dataAvailabilityOnL1: true,
-            rollupNodeSourceAvailable: 'UnderReview',
+            rollupNodeSourceAvailable:
+              templateVars.isNodeAvailable ?? 'UnderReview',
           },
           stage1: {
             stateVerificationOnL1: true,

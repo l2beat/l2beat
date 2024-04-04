@@ -1,15 +1,15 @@
 import { assert } from '@l2beat/backend-tools'
-import { utils } from 'ethers'
 import { DecompressionStream } from 'stream/web'
+
+import { rlpDecode } from './rlpDecode'
 
 export async function getBatchFromChannel(channel: Uint8Array) {
   const decompressed = await decompressToByteArray(channel)
-  const decoded = utils.RLP.decode(decompressed) as unknown
+  const decoded = rlpDecode(decompressed)
 
-  // we assume decoded is a hex string, meaning it represents only one span batch
-  assert(typeof decoded === 'string', 'Decoded is not a string')
+  assert(decoded instanceof Uint8Array, 'Invalid decoded type')
 
-  return byteArrFromHexStr(decoded)
+  return decoded
 }
 
 export async function decompressToByteArray(compressedData: Uint8Array) {

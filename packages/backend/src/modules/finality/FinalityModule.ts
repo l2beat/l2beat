@@ -12,13 +12,15 @@ import { LivenessRepository } from '../tracked-txs/modules/liveness/repositories
 import { TrackedTxsConfigsRepository } from '../tracked-txs/repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsIndexer } from '../tracked-txs/TrackedTxsIndexer'
 import { LineaFinalityAnalyzer } from './analyzers/LineaFinalityAnalyzer'
-import { OpStackFinalityAnalyzer } from './analyzers/opStack'
+import { OpStackFinalityAnalyzer } from './analyzers/opStack/OpStackFinalityAnalyzer'
 import { ScrollFinalityAnalyzer } from './analyzers/ScrollFinalityAnalyzer'
 import { zkSyncEraFinalityAnalyzer } from './analyzers/zkSyncEraFinalityAnalyzer'
+import { ZkSyncLiteFinalityAnalyzer } from './analyzers/ZkSyncLiteFinalityAnalyzer'
 import { FinalityController } from './api/FinalityController'
 import { createFinalityRouter } from './api/FinalityRouter'
 import { FinalityIndexer } from './FinalityIndexer'
 import { FinalityRepository } from './repositories/FinalityRepository'
+import { FinalityConfig } from './types/FinalityConfig'
 
 export function createFinalityModule(
   config: Config,
@@ -53,7 +55,7 @@ export function createFinalityModule(
     beaconApiUrl: config.finality.beaconApiUrl,
     rpcUrl: config.finality.ethereumProviderUrl,
     callsPerMinute: config.finality.beaconApiCPM,
-    timeout: undefined,
+    timeout: config.finality.beaconApiTimeout,
   })
 
   const runtimeConfigurations = initializeConfigurations(
@@ -98,9 +100,9 @@ function initializeConfigurations(
   livenessRepository: LivenessRepository,
   configs: FinalityProjectConfig[],
   peripherals: Peripherals,
-) {
+): FinalityConfig[] {
   return configs
-    .map((configuration) => {
+    .map((configuration): FinalityConfig | undefined => {
       switch (configuration.type) {
         case 'Linea':
           return {
@@ -143,6 +145,16 @@ function initializeConfigurations(
           return {
             projectId: configuration.projectId,
             analyzer: new ScrollFinalityAnalyzer(
+              ethereumRPC,
+              livenessRepository,
+              configuration.projectId,
+            ),
+            minTimestamp: configuration.minTimestamp,
+          }
+        case 'zkSyncLite':
+          return {
+            projectId: configuration.projectId,
+            analyzer: new ZkSyncLiteFinalityAnalyzer(
               ethereumRPC,
               livenessRepository,
               configuration.projectId,
