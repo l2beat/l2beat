@@ -278,6 +278,8 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     hostChain: templateVars.hostChain,
     display: {
       ...templateVars.display,
+      description:
+        'Arbitrum Nova is an AnyTrust Optimium, differing from Arbitrum One by not posting transaction data onchain.',
       provider: 'Arbitrum Orbit',
       category: postsToExternalDA ? 'Optimium' : 'Optimistic Rollup',
     },
