@@ -138,15 +138,22 @@ export class L2CostsController {
         const start = MAX_DAYS - i * stepSize
         const end = start - stepSize
 
+        const timeRanges: [UnixTime, UnixTime] = [
+          i === 0
+            ? NOW_TO_FULL_HOUR.add(-start, 'days')
+            : NOW_TO_FULL_HOUR.add(-start, 'days').toStartOf('day'),
+          i === RANGES - 1
+            ? NOW_TO_FULL_HOUR.add(-end, 'days')
+            : NOW_TO_FULL_HOUR.add(-end, 'days').toStartOf('day'),
+        ]
+
         const records = await this.l2CostsRepository.getByProjectAndTimeRange(
           project.projectId,
-          [
-            NOW_TO_FULL_HOUR.add(-start, 'days'),
-            NOW_TO_FULL_HOUR.add(-end, 'days'),
-          ],
+          timeRanges,
         )
         const recordsWithDetails = await this.makeTransactionCalculations(
           records,
+          timeRanges,
         )
         const { hourly, daily } = this.aggregateL2Costs(
           recordsWithDetails,
@@ -208,11 +215,12 @@ export class L2CostsController {
 
   async makeTransactionCalculations(
     transactions: L2CostsRecord[],
+    ranges: [UnixTime, UnixTime],
   ): Promise<DetailedTransaction[]> {
     const ethPricesMap = await this.priceRepository.findByTimestampRange(
       AssetId.ETH,
-      NOW_TO_FULL_HOUR.add(-MAX_DAYS, 'days').toStartOf('hour'),
-      NOW_TO_FULL_HOUR.toStartOf('hour'),
+      ranges[0],
+      ranges[1],
     )
 
     return transactions.map((tx) => {
