@@ -89,11 +89,7 @@ export class AmountService {
     const erc20Codec = this.$.erc20Codec
 
     const encoded = configurations.map((configuration) => ({
-      ...this.encodeForMulticall(
-        nativeAssetCodecAtBlock,
-        erc20Codec,
-        configuration,
-      ),
+      ...encodeForMulticall(nativeAssetCodecAtBlock, erc20Codec, configuration),
     }))
 
     const responses = await this.$.multicallClient.multicall(
@@ -102,74 +98,30 @@ export class AmountService {
     )
 
     return responses.map((response, i) => {
-      const configuration = configurations[i]
+      const amount = decodeForMulticall(
+        nativeAssetCodecAtBlock,
+        erc20Codec,
+        configurations[i],
+        response,
+      )
+
       // In the rare event of a contract call revert we do not want backend to stop because of it
       // That is why we set the amount to 0n & report the error to the logger
-      const amount =
-        this.decodeForMulticall(
-          nativeAssetCodecAtBlock,
-          erc20Codec,
-          configuration,
-          response,
-        ) ?? 0n
+      if (amount === undefined) {
+        this.$.logger.error(
+          `Failed to decode amount for configuration ${configurations[i].id}`,
+        )
+        return {
+          configurationId: +configurations[i].id,
+          amount: 0n,
+        }
+      }
 
       return {
-        configurationId: +configuration.id,
+        configurationId: +configurations[i].id,
         amount,
       }
     })
-  }
-
-  private encodeForMulticall(
-    nativeAssetCodec: NativeAssetMulticallCodec | undefined,
-    erc20Codec: ERC20MulticallCodec,
-    { properties }: Configuration<AmountConfiguration>,
-  ): MulticallRequest {
-    switch (properties.type) {
-      case 'totalSupply':
-        return erc20Codec.totalSupply.encode(properties.address)
-      case 'escrow':
-        if (properties.address === 'native') {
-          assert(
-            nativeAssetCodec,
-            `No native balance encoding for chain ${properties.chain}`,
-          )
-          return nativeAssetCodec.balance.encode(properties.escrowAddress)
-        }
-        return erc20Codec.balance.encode({
-          holder: properties.escrowAddress,
-          token: properties.address,
-        })
-      default:
-        assertUnreachable(properties)
-    }
-  }
-
-  private decodeForMulticall(
-    nativeAssetCodec: NativeAssetMulticallCodec | undefined,
-    erc20Codec: ERC20MulticallCodec,
-    { id, properties }: Configuration<AmountConfiguration>,
-    response: MulticallResponse,
-  ) {
-    if (!response.success) {
-      this.$.logger.error(`Revert detected: ${id}}`)
-      return
-    }
-    switch (properties.type) {
-      case 'totalSupply':
-        return erc20Codec.totalSupply.decode(response)
-      case 'escrow':
-        if (properties.address === 'native') {
-          assert(
-            nativeAssetCodec,
-            `Programmer error: native codec should be defined`,
-          )
-          return nativeAssetCodec.balance.decode(response)
-        }
-        return erc20Codec.balance.decode(response)
-      default:
-        assertUnreachable(properties)
-    }
   }
 
   getNativeAssetCodecAtBlock(blockNumber: number) {
@@ -177,6 +129,57 @@ export class AmountService {
       this.$.nativeAssetCodec.sinceBlock <= blockNumber
       ? this.$.nativeAssetCodec
       : undefined
+  }
+}
+
+function encodeForMulticall(
+  nativeAssetCodec: NativeAssetMulticallCodec | undefined,
+  erc20Codec: ERC20MulticallCodec,
+  { properties }: Configuration<AmountConfiguration>,
+): MulticallRequest {
+  switch (properties.type) {
+    case 'totalSupply':
+      return erc20Codec.totalSupply.encode(properties.address)
+    case 'escrow':
+      if (properties.address === 'native') {
+        assert(
+          nativeAssetCodec,
+          `No native balance encoding for chain ${properties.chain}`,
+        )
+        return nativeAssetCodec.balance.encode(properties.escrowAddress)
+      }
+      return erc20Codec.balance.encode({
+        holder: properties.escrowAddress,
+        token: properties.address,
+      })
+    default:
+      assertUnreachable(properties)
+  }
+}
+
+function decodeForMulticall(
+  nativeAssetCodec: NativeAssetMulticallCodec | undefined,
+  erc20Codec: ERC20MulticallCodec,
+  { properties }: Configuration<AmountConfiguration>,
+  response: MulticallResponse,
+) {
+  if (!response.success) {
+    return
+  }
+  switch (properties.type) {
+    case 'totalSupply':
+      return erc20Codec.totalSupply.decode(response)
+    case 'escrow':
+      if (properties.address === 'native') {
+        assert(
+          nativeAssetCodec,
+          `Programmer error: native codec should be defined`,
+        )
+        return nativeAssetCodec.balance.decode(response)
+      }
+      return erc20Codec.balance.decode(response)
+    default:
+      assertUnreachable(properties)
   }
 }
 
