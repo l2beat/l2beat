@@ -3,33 +3,62 @@ import z from 'zod'
 import { branded } from '../branded'
 import { UnixTime } from '../UnixTime'
 
-const L2CostsBreakdown = z.object({
-  gas: z.number(),
-  ethCost: z.number(),
-  usdCost: z.number(),
-})
-export type L2CostsBreakdown = z.infer<typeof L2CostsBreakdown>
+const L2CostsApiChartPoint = z.tuple([
+  branded(z.number(), (n) => new UnixTime(n)),
+  z.number(),
+  z.number(),
+  z.number(),
+  z.number(),
+  z.number(),
+  z.number(),
+  z.number(),
+  z.number(),
+  z.number(),
+  z.number(),
+  z.number(),
+  z.number(),
+  z.number().nullable(),
+  z.number().nullable(),
+  z.number().nullable(),
+])
+export type L2CostsApiChartPoint = z.infer<typeof L2CostsApiChartPoint>
 
-const L2CostsDetails = z.object({
-  total: L2CostsBreakdown,
-  overhead: L2CostsBreakdown,
-  calldata: L2CostsBreakdown,
-  compute: L2CostsBreakdown,
-  blobs: L2CostsBreakdown.or(z.undefined()),
+const L2CostsApiChart = z.object({
+  types: z.tuple([
+    z.literal('timestamp'),
+    z.literal('totalGas'),
+    z.literal('totalEth'),
+    z.literal('totalUsd'),
+    z.literal('overheadGas'),
+    z.literal('overheadEth'),
+    z.literal('overheadUsd'),
+    z.literal('calldataGas'),
+    z.literal('calldataEth'),
+    z.literal('calldataUsd'),
+    z.literal('computeGas'),
+    z.literal('computeEth'),
+    z.literal('computeUsd'),
+    z.literal('blobsGas'),
+    z.literal('blobsEth'),
+    z.literal('blobsUsd'),
+  ]),
+  data: z.array(L2CostsApiChartPoint),
 })
-export type L2CostsDetails = z.infer<typeof L2CostsDetails>
+export type L2CostsApiChart = z.infer<typeof L2CostsApiChart>
 
-export const L2CostsApiProject = z.object({
-  last24h: L2CostsDetails,
-  last7d: L2CostsDetails,
-  last30d: L2CostsDetails,
-  last90d: L2CostsDetails,
+export const L2CostsCombinedApiCharts = z.object({
+  hourly: L2CostsApiChart,
+  daily: L2CostsApiChart,
+})
+export type L2CostsCombinedApiCharts = z.infer<typeof L2CostsCombinedApiCharts>
+
+export const L2CostsProjectApiCharts = L2CostsCombinedApiCharts.extend({
   syncedUntil: branded(z.number(), (n) => new UnixTime(n)),
 })
-
-export type L2CostsApiProject = z.infer<typeof L2CostsApiProject>
+export type L2CostsProjectApiCharts = z.infer<typeof L2CostsProjectApiCharts>
 
 export const L2CostsApiResponse = z.object({
-  projects: z.record(z.string(), z.optional(L2CostsApiProject)),
+  combined: L2CostsCombinedApiCharts,
+  projects: z.record(z.string(), z.optional(L2CostsProjectApiCharts)),
 })
 export type L2CostsApiResponse = z.infer<typeof L2CostsApiResponse>

@@ -106,7 +106,16 @@ describeDatabase(L2CostsRepository.name, (database) => {
         [START, START.add(1, 'hours')],
       )
 
-      expect(results).toEqualUnsorted([DATA[0]])
+      expect(results).toEqual([DATA[0]])
+    })
+
+    it('should return all rows for given project id and since timestamp asc timestamp', async () => {
+      const results = await repository.getByProjectAndTimeRange(
+        ProjectId('project-2'),
+        [START.add(-2, 'hours'), START.add(1, 'hours')],
+      )
+
+      expect(results).toEqual([DATA[2], DATA[0]])
     })
 
     it('should return all rows for given project id and since timestamp with exclusive to', async () => {
@@ -115,7 +124,7 @@ describeDatabase(L2CostsRepository.name, (database) => {
         [START.add(-1, 'days'), START],
       )
 
-      expect(results).toEqualUnsorted([DATA[2]])
+      expect(results).toEqual([DATA[2]])
     })
   })
 
