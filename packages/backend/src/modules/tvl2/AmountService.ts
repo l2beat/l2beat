@@ -27,11 +27,13 @@ export interface AmountServiceDependencies {
   readonly multicallClient: MulticallClient
   readonly nativeAssetCodec?: NativeAssetMulticallCodec
   readonly erc20Codec: ERC20MulticallCodec
-  readonly logger: Logger
+  logger: Logger
 }
 
 export class AmountService {
-  constructor(private readonly dependencies: AmountServiceDependencies) {}
+  constructor(private readonly $: AmountServiceDependencies) {
+    this.$.logger = $.logger.for(this)
+  }
 
   public async fetchAmounts(
     configurations: Configuration<AmountConfiguration>[],
@@ -44,7 +46,7 @@ export class AmountService {
     )
 
     const rpcAmounts = await this.fetchWithRpc(
-      // TODO: solve it better with types
+      // isNotSupportedByMulticall checks that type is "escrow"
       forRpc as Configuration<EscrowEntry>[],
       blockNumber,
     )
@@ -66,22 +68,14 @@ export class AmountService {
   ) {
     return Promise.all(
       configurations.map(async (configuration) => {
-        let amount: bigint
-        try {
-          amount = (
-            await this.dependencies.rpcClient.getBalance(
-              configuration.properties.escrowAddress,
-              blockNumber,
-            )
-          ).toBigInt()
-        } catch (_) {
-          this.dependencies.logger.error(`Revert detected ${configuration.id}`)
-          amount = 0n
-        }
+        const amount = await this.$.rpcClient.getBalance(
+          configuration.properties.escrowAddress,
+          blockNumber,
+        )
 
         return {
           configurationId: +configuration.id,
-          amount,
+          amount: amount.toBigInt(),
         }
       }),
     )
@@ -92,7 +86,7 @@ export class AmountService {
     blockNumber: number,
   ) {
     const nativeAssetCodecAtBlock = this.getNativeAssetCodecAtBlock(blockNumber)
-    const erc20Codec = this.dependencies.erc20Codec
+    const erc20Codec = this.$.erc20Codec
 
     const encoded = configurations.map((configuration) => ({
       ...this.encodeForMulticall(
@@ -102,7 +96,7 @@ export class AmountService {
       ),
     }))
 
-    const responses = await this.dependencies.multicallClient.multicall(
+    const responses = await this.$.multicallClient.multicall(
       encoded,
       blockNumber,
     )
@@ -158,7 +152,7 @@ export class AmountService {
     response: MulticallResponse,
   ) {
     if (!response.success) {
-      this.dependencies.logger.error(`Revert detected: ${id}}`)
+      this.$.logger.error(`Revert detected: ${id}}`)
       return
     }
     switch (properties.type) {
@@ -166,7 +160,10 @@ export class AmountService {
         return erc20Codec.totalSupply.decode(response)
       case 'escrow':
         if (properties.address === 'native') {
-          assert(nativeAssetCodec, `No native balance encoding `)
+          assert(
+            nativeAssetCodec,
+            `Programmer error: native codec should be defined`,
+          )
           return nativeAssetCodec.balance.decode(response)
         }
         return erc20Codec.balance.decode(response)
@@ -176,9 +173,9 @@ export class AmountService {
   }
 
   getNativeAssetCodecAtBlock(blockNumber: number) {
-    return this.dependencies.nativeAssetCodec &&
-      this.dependencies.nativeAssetCodec.sinceBlock <= blockNumber
-      ? this.dependencies.nativeAssetCodec
+    return this.$.nativeAssetCodec &&
+      this.$.nativeAssetCodec.sinceBlock <= blockNumber
+      ? this.$.nativeAssetCodec
       : undefined
   }
 }
