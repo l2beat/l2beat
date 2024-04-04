@@ -83,20 +83,17 @@ export function renderDetailedTvlHover(
     }),
     renderHorizontalSeparator(),
     renderDetailedRow({
-      title: 'Canonically Bridged',
-      shortTitle: 'Canonical',
+      title: 'Canonical',
       value: formatCurrency(selectedCbv, currency),
       icon: 'roundedPurpleSquare',
     }),
     renderDetailedRow({
-      title: 'Externally Bridged',
-      shortTitle: 'External',
+      title: 'External',
       value: formatCurrency(selectedEbv, currency),
       icon: 'roundedYellowSquare',
     }),
     renderDetailedRow({
-      title: 'Natively Minted',
-      shortTitle: 'Native',
+      title: 'Native',
       value: formatCurrency(selectedNmv, currency),
       icon: 'roundedPinkSquare',
     }),
@@ -246,7 +243,7 @@ function renderHover(rows: (string | undefined | false)[]) {
 }
 
 function renderDateRow(date: string) {
-  return `<div class="mb-1">${date}</div>`
+  return `<div class="mb-1 whitespace-nowrap">${date}</div>`
 }
 
 function renderHorizontalSeparator() {
@@ -266,7 +263,7 @@ function renderDetailedRow(props: DetailedRowProps) {
     : ''
 
   const valueHtml = props.value
-    ? `<span class="font-bold tabular-nums">${props.value}</span>`
+    ? `<span class="font-bold tabular-nums whitespace-nowrap">${props.value}</span>`
     : ''
   return `
     <div class="flex w-full justify-between items-center gap-2">
