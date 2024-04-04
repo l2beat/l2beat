@@ -32,7 +32,7 @@ import { subtractOne } from '../../common/assessCount'
 import { ChainConfig } from '../../common/ChainConfig'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
-import { Layer3Display } from '../../layer3s'
+import { Layer3, Layer3Display } from '../../layer3s'
 import { getStage } from '../common/stages/getStage'
 import {
   Layer2,
@@ -624,40 +624,8 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
         }),
         ...templateVars.nonTemplateEscrows,
       ],
-      transactionApi:
-        templateVars.transactionApi ??
-        (templateVars.rpcUrl !== undefined
-          ? {
-              type: 'rpc',
-              startBlock: 1,
-              defaultUrl: templateVars.rpcUrl,
-              defaultCallsPerMinute: 1500,
-              assessCount: subtractOne,
-            }
-          : undefined),
-      finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
-    chainConfig: templateVars.chainConfig,
-    dataAvailability:
-      daProvider !== undefined
-        ? addSentimentToDataAvailability({
-            layers: daProvider.fallback
-              ? [daProvider.name, daProvider.fallback]
-              : [daProvider.name],
-            bridge: daProvider.bridge,
-            mode: 'Transactions data (compressed)',
-          })
-        : addSentimentToDataAvailability({
-            layers: [
-              templateVars.usesBlobs
-                ? 'Ethereum (blobs or calldata)'
-                : 'Ethereum (calldata)',
-            ],
-            bridge: { type: 'Enshrined' },
-            mode: 'Transactions data (compressed)',
-          }),
     stateDerivation: templateVars.stateDerivation,
-    upgradesAndGovernance: templateVars.upgradesAndGovernance,
   }
 }
 
