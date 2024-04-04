@@ -1321,6 +1321,36 @@
       "formula": "locked"
     },
     {
+      "id": "fpi-frax-price-index",
+      "name": "Frax Price Index",
+      "coingeckoId": "frax-price-index",
+      "address": "0x5Ca135cB8527d76e932f34B5145575F9d8cbE08E",
+      "symbol": "FPI",
+      "decimals": 18,
+      "deploymentTimestamp": 1648578483,
+      "coingeckoListingTimestamp": 1649462400,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/24945/large/FPI_icon.png?1696524100",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "fpis-frax-price-index-share",
+      "name": "Frax Price Index Share",
+      "coingeckoId": "frax-price-index-share",
+      "address": "0xc2544A32872A91F4A553b404C6950e89De901fdb",
+      "symbol": "FPIS",
+      "decimals": 18,
+      "deploymentTimestamp": 1648578483,
+      "coingeckoListingTimestamp": 1649462400,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/24944/large/FPIS_icon.png?1696524099",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "fxs-frax-share",
       "name": "Frax Share",
       "coingeckoId": "frax-share",
@@ -2996,6 +3026,21 @@
       "coingeckoListingTimestamp": 1622160000,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/15861/large/abracadabra-3.png?1696515477",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "sfrax-staked-frax",
+      "name": "Staked FRAX",
+      "coingeckoId": "staked-frax",
+      "address": "0xA663B02CF0a4b149d2aD41910CB81e23e1c41c32",
+      "symbol": "sFRAX",
+      "decimals": 18,
+      "deploymentTimestamp": 1697642351,
+      "coingeckoListingTimestamp": 1708387200,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35383/large/sfrax.png?1708445569",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"
