@@ -15,7 +15,6 @@ import { ApplicationModule } from '../ApplicationModule'
 import { UpdateMonitorController } from './api/UpdateMonitorController'
 import { createUpdateMonitorRouter } from './api/UpdateMonitorRouter'
 import { createDiscoveryRunner } from './createDiscoveryRunner'
-import { DiscoveryCacheRepository } from './repositories/DiscoveryCacheRepository'
 import { UpdateMonitorRepository } from './repositories/UpdateMonitorRepository'
 import { UpdateNotifierRepository } from './repositories/UpdateNotifierRepository'
 import { UpdateMonitor } from './UpdateMonitor'
@@ -58,7 +57,7 @@ export function createUpdateMonitorModule(
     createDiscoveryRunner(
       discoveryHttpClient,
       configReader,
-      peripherals.getRepository(DiscoveryCacheRepository),
+      peripherals,
       discoveryLogger,
       chainConfig,
     ),

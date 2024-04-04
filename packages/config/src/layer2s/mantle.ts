@@ -1,7 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { opStack } from './templates/opStack'
+import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('mantle')
@@ -27,7 +27,7 @@ const threshold =
     'quorumThresholdBasisPoints',
   ) / 1000 // Quorum threshold is in basis points, but stake is equal for all members (100k MNT)
 
-export const mantle: Layer2 = opStack({
+export const mantle: Layer2 = opStackL2({
   daProvider: {
     name: 'MantleDA',
     bridge: {
@@ -92,6 +92,7 @@ export const mantle: Layer2 = opStack({
   l1StandardBridgeEscrow: EthereumAddress(
     '0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012',
   ),
+  rpcUrl: 'https://rpc.mantle.xyz',
   genesisTimestamp: new UnixTime(1687954103),
   l2OutputOracle: discovery.getContract('L2OutputOracle'),
   portal: discovery.getContract('OptimismPortal'),
