@@ -27,7 +27,8 @@ import {
   getVerificationStatus,
 } from './api/getVerificationStatus'
 import { JsonHttpClient } from './caching/JsonHttpClient'
-import { Config, getConfig } from './config'
+import { getConfig } from './config'
+import { getCommonFeatures } from './config/getCommonFeatures'
 
 /**
  * Temporary timeout for HTTP calls due to increased size of new TVL API and flaky connection times
@@ -53,14 +54,10 @@ async function main() {
 
     const http = new JsonHttpClient(httpClient, config.backend.skipCache)
 
+    console.time('[FEATURES]')
     const backendFeatures = await fetchFeaturesApi(config.backend, http)
-
-    config.features = Object.fromEntries(
-      Object.entries(config.features).map(([key, value]) => [
-        key,
-        value && (!(key in backendFeatures) || backendFeatures[key]),
-      ]),
-    ) as Config['features']
+    config.features = getCommonFeatures(config.features, backendFeatures)
+    console.timeEnd('[FEATURES]')
 
     console.time('[TVL]')
     const tvlApiResponse = await fetchTvlApi(config.backend, http)
