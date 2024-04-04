@@ -1,7 +1,7 @@
-import { upcoming } from './templates/upcoming'
+import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
-export const polygonpos2: Layer2 = upcoming({
+export const polygonpos2: Layer2 = upcomingL2({
   id: 'polygon-pos-2',
   display: {
     name: 'Polygon PoS 2.0',
