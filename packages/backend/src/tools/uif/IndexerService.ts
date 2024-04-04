@@ -46,7 +46,7 @@ export class IndexerService {
       ...config,
       properties: encode(config.properties),
     }))
-    return this.indexerConfigurationRepository.addSavedConfigurations(
+    return this.indexerConfigurationRepository.addManySavedConfigurations(
       indexerId,
       encoded,
     )
