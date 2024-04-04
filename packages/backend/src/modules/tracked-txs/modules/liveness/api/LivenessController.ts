@@ -192,11 +192,7 @@ export class LivenessController {
 
     const projects: Record<
       string,
-      {
-        batchSubmissions: LivenessTransactionsDetail[]
-        stateUpdates: LivenessTransactionsDetail[]
-        proofSubmissions: LivenessTransactionsDetail[]
-      }
+      Record<TrackedTxsConfigSubtype, LivenessTransactionsDetail[]>
     > = {}
     const last30Days = UnixTime.now().add(-30, 'days')
 
