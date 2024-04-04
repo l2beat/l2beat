@@ -25,6 +25,7 @@ const LivenessDetails = z
     last30Days: LivenessDataPoint,
     last90Days: LivenessDataPoint,
     allTime: LivenessDataPoint,
+    syncedUntil: branded(z.number(), (n) => new UnixTime(n)).optional(),
   })
   .or(z.undefined())
 export type LivenessDetails = z.infer<typeof LivenessDetails>

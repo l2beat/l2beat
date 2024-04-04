@@ -81,6 +81,7 @@
     "eslint-plugin-custom-rules": "file:./.eslint",
     "prettier": "^2.8.3",
     "supertest": "^6.2.3",
-    "ts-node-dev": "^2.0.0"
+    "ts-node-dev": "^2.0.0",
+    "type-fest": "^4.15.0"
   }
 }
