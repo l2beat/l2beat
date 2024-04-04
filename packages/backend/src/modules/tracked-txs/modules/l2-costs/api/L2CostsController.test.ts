@@ -71,8 +71,12 @@ describe(L2CostsController.name, () => {
 
       controller.aggregateL2Costs = mockFn().returns(
         mockObject<L2CostsProjectApiCharts>({
-          hourly: mockObject<L2CostsApiChart>({}),
-          daily: mockObject<L2CostsApiChart>({}),
+          hourly: mockObject<L2CostsApiChart>({
+            data: [],
+          }),
+          daily: mockObject<L2CostsApiChart>({
+            data: [],
+          }),
         }),
       )
 
@@ -82,25 +86,33 @@ describe(L2CostsController.name, () => {
         l2CostsRepository.getByProjectAndTimeRange,
       ).toHaveBeenNthCalledWith(1, MOCK_PROJECTS[1].projectId, [
         NOW_TO_FULL_HOUR.add(-180, 'days'),
-        NOW_TO_FULL_HOUR,
+        NOW_TO_FULL_HOUR.add(-90, 'days').toStartOf('day'),
       ])
       expect(
         l2CostsRepository.getByProjectAndTimeRange,
-      ).toHaveBeenNthCalledWith(2, MOCK_PROJECTS[2].projectId, [
-        NOW_TO_FULL_HOUR.add(-180, 'days'),
-        NOW_TO_FULL_HOUR,
+      ).toHaveBeenNthCalledWith(2, MOCK_PROJECTS[1].projectId, [
+        NOW_TO_FULL_HOUR.add(-90, 'days').toStartOf('day'),
+        NOW_TO_FULL_HOUR.add(-0, 'days'),
       ])
       expect(result.type).toEqual('success')
       expect(result.data.projects).toEqual({
         project2: {
           syncedUntil: new UnixTime(1000),
-          daily: mockObject<L2CostsApiChart>({}),
-          hourly: mockObject<L2CostsApiChart>({}),
+          daily: mockObject<L2CostsApiChart>({
+            data: [],
+          }),
+          hourly: mockObject<L2CostsApiChart>({
+            data: [],
+          }),
         },
         project3: {
           syncedUntil: new UnixTime(2000),
-          daily: mockObject<L2CostsApiChart>({}),
-          hourly: mockObject<L2CostsApiChart>({}),
+          daily: mockObject<L2CostsApiChart>({
+            data: [],
+          }),
+          hourly: mockObject<L2CostsApiChart>({
+            data: [],
+          }),
         },
       })
     })
