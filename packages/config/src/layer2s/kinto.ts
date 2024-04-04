@@ -65,7 +65,7 @@ export const kinto: Layer2 = orbitStackL2({
       'Multisig that can upgrade the Engen escrow.',
     ),
     {
-      name: 'Bridger Sender Account.',
+      name: 'Bridger Sender Account',
       description:
         'EOA privileged to call `bridgeDeposits()` on the Bridger L1 escrow to send escrowed funds to the L2. It can also deposit tokens into the escrow itself by submitting signatures.',
       accounts: [discovery.getPermissionedAccount('Bridger', 'senderAccount')],
