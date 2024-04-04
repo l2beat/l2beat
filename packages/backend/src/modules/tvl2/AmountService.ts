@@ -38,12 +38,12 @@ export class AmountService {
     blockNumber: number,
     timestamp: UnixTime,
   ): Promise<AmountRecord[]> {
+    const nativeAssetCodecAtBlock = getNativeCodecForBlock(
+      this.dependencies.nativeAssetCodec,
+      blockNumber,
+    )
     const [nonMulticall, multicall] = partition(configurations, (c) =>
-      isNotSupportedByMulticall(
-        this.dependencies.nativeAssetCodec,
-        c,
-        blockNumber,
-      ),
+      isNotSupportedByMulticall(nativeAssetCodecAtBlock, c),
     )
 
     const nonMulticallAmounts = await this.getNonMulticallAmounts(
@@ -86,8 +86,18 @@ export class AmountService {
     configurations: Configuration<AmountConfiguration>[],
     blockNumber: number,
   ) {
+    const nativeAssetCodecAtBlock = getNativeCodecForBlock(
+      this.dependencies.nativeAssetCodec,
+      blockNumber,
+    )
+    const erc20Codec = this.dependencies.erc20Codec
+
     const encoded = configurations.map((configuration) => ({
-      ...this.encodeForMulticall(configuration, blockNumber),
+      ...this.encodeForMulticall(
+        nativeAssetCodecAtBlock,
+        erc20Codec,
+        configuration,
+      ),
     }))
 
     const responses = await this.dependencies.multicallClient.multicall(
@@ -100,7 +110,12 @@ export class AmountService {
       // In the rare event of a contract call revert we do not want backend to stop because of it
       // That is why we set the amount to 0n & report the error to the logger
       const amount =
-        this.decodeForMulticall(configuration, blockNumber, response) ?? 0n
+        this.decodeForMulticall(
+          nativeAssetCodecAtBlock,
+          erc20Codec,
+          configuration,
+          response,
+        ) ?? 0n
 
       return {
         configurationId: +configuration.id,
@@ -110,25 +125,20 @@ export class AmountService {
   }
 
   private encodeForMulticall(
+    nativeAssetCodec: NativeAssetMulticallCodec | undefined,
+    erc20Codec: ERC20MulticallCodec,
     { properties }: Configuration<AmountConfiguration>,
-    blockNumber: number,
   ): MulticallRequest {
-    const nativeAssetEncoder = getNativeCodecForBlock(
-      this.dependencies.nativeAssetCodec,
-      blockNumber,
-    )
-    const erc20Codec = this.dependencies.erc20Codec
-
     switch (properties.type) {
       case 'totalSupply':
         return erc20Codec.totalSupply.encode(properties.address)
       case 'escrow':
         if (properties.address === 'native') {
           assert(
-            nativeAssetEncoder,
+            nativeAssetCodec,
             `No native balance encoding for chain ${properties.chain}`,
           )
-          return nativeAssetEncoder.balance.encode(properties.escrowAddress)
+          return nativeAssetCodec.balance.encode(properties.escrowAddress)
         }
         return erc20Codec.balance.encode({
           holder: properties.escrowAddress,
@@ -140,16 +150,11 @@ export class AmountService {
   }
 
   private decodeForMulticall(
+    nativeAssetCodec: NativeAssetMulticallCodec | undefined,
+    erc20Codec: ERC20MulticallCodec,
     { id, properties }: Configuration<AmountConfiguration>,
-    blockNumber: number,
     response: MulticallResponse,
   ) {
-    const nativeAssetCodec = getNativeCodecForBlock(
-      this.dependencies.nativeAssetCodec,
-      blockNumber,
-    )
-    const erc20Codec = this.dependencies.erc20Codec
-
     if (!response.success) {
       this.dependencies.logger.error(
         `Multicall failed for configuration: ${id}}`,
@@ -183,16 +188,10 @@ export function getNativeCodecForBlock(
 export function isNotSupportedByMulticall(
   nativeCodec: NativeAssetMulticallCodec | undefined,
   configuration: Configuration<AmountConfiguration>,
-  blockNumber: number,
 ) {
-  const nativeAssetBalanceEncoder = getNativeCodecForBlock(
-    nativeCodec,
-    blockNumber,
-  )
-
   return (
     configuration.properties.type === 'escrow' &&
     configuration.properties.address === 'native' &&
-    nativeAssetBalanceEncoder === undefined
+    nativeCodec === undefined
   )
 }
