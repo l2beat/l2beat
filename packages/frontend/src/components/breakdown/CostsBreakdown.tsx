@@ -14,21 +14,21 @@ export function CostsBreakdown(props: CostsBreakdownProps) {
   const groups = compact([
     props.calldata && {
       value: props.calldata,
-      className: 'dark:fill-sky-500 fill-sky-550',
+      className: 'dark:bg-sky-500 bg-sky-550',
     },
     props.blobs && {
       value: props.blobs,
-      className: 'dark:fill-yellow-100 fill-orange-400',
+      className: 'dark:bg-yellow-100 bg-orange-400',
     },
     props.compute && {
       value: props.compute,
-      className: 'fill-pink-100',
+      className: 'bg-pink-100',
     },
     props.overhead && {
       value: props.overhead,
-      className: 'fill-purple-100',
+      className: 'bg-purple-100',
     },
   ])
 
-  return <Breakdown height={3} width={119} values={groups} barGap={1} />
+  return <Breakdown className="h-[3px] w-[119px]" gap={1} values={groups} />
 }

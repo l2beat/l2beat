@@ -4,6 +4,7 @@ import React from 'react'
 import { unifyPercentagesAsIntegers } from '../../utils'
 import { formatUSD } from '../../utils/utils'
 import { UpcomingBadge } from '../badge/UpcomingBadge'
+import { ValueLockedBreakdown } from '../breakdown/ValueLockedBreakdown'
 import {
   CanonicalIcon,
   ExternalIcon,
@@ -134,26 +135,7 @@ export function TvlSummary(props: TvlSummaryProps) {
       </div>
 
       {usage && (
-        <div className="my-3 flex h-1 w-full flex-wrap md:my-0">
-          <div
-            className="h-full rounded-l-full bg-purple-100"
-            style={{
-              width: `${usage.canonical}%`,
-            }}
-          />
-          <div
-            className="h-full bg-yellow-200"
-            style={{
-              width: `${usage.external}%`,
-            }}
-          />
-          <div
-            className="h-full rounded-r-full bg-pink-100"
-            style={{
-              width: `${usage.native}%`,
-            }}
-          />
-        </div>
+        <ValueLockedBreakdown {...usage} className="my-3 h-1 w-full md:my-0" />
       )}
 
       {props.stats ? (

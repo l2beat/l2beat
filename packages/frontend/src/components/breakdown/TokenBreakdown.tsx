@@ -20,14 +20,14 @@ export function TokenBreakdown(props: TokenBreakdownProps) {
   const values = [
     {
       value: props.associated,
-      className: 'dark:fill-rose-700 fill-rose-500',
+      className: 'dark:bg-rose-700 bg-rose-500',
     },
     {
       value: props.ether,
-      className: 'dark:fill-green-200 fill-green-900',
+      className: 'dark:bg-green-200 bg-green-900',
     },
-    { value: props.stable, className: 'dark:fill-teal-400 fill-teal-500' },
-    { value: props.other, className: 'fill-sky-600' },
+    { value: props.stable, className: 'dark:bg-teal-400 bg-teal-500' },
+    { value: props.other, className: 'bg-sky-600' },
   ]
 
   return (
