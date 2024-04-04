@@ -1,4 +1,4 @@
-import { Sentiment, WarningWithSentiment } from '@l2beat/shared-pure'
+import { Sentiment, WarningValueWithSentiment } from '@l2beat/shared-pure'
 
 type Risk =
   | 'sequencerFailure'
@@ -13,7 +13,7 @@ export interface RiskValue {
   sentiment: Sentiment
   // TODO: make required
   description?: string
-  warning?: WarningWithSentiment
+  warning?: WarningValueWithSentiment
 }
 
 export type RiskValues = Record<Risk, RiskValue>

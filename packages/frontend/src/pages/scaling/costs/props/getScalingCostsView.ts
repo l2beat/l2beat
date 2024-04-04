@@ -68,6 +68,7 @@ function getScalingCostsViewEntry(
     purposes: project.display.purposes,
     stage: project.stage,
     data: l2CostsChart ? getCostsData(l2CostsChart, activityChart) : undefined,
+    costsWarning: project.display.costsWarning,
   }
 }
 

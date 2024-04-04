@@ -1,10 +1,10 @@
 import {
   Layer2Provider,
-  Layer2TVLWarning,
   Layer3Provider,
   ScalingProjectCategory,
   ScalingProjectPurpose,
   StageConfig,
+  WarningWithSentiment,
 } from '@l2beat/config'
 
 import { TokenBreakdownProps } from '../../../components/breakdown/TokenBreakdown'
@@ -18,7 +18,7 @@ export interface ScalingSummaryViewEntryBase {
   category: ScalingProjectCategory
   warning?: string
   redWarning?: string
-  tvlWarnings?: Layer2TVLWarning[]
+  tvlWarnings?: WarningWithSentiment[]
   isArchived?: boolean
   isVerified?: boolean
   showProjectUnderReview?: boolean

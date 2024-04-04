@@ -246,6 +246,11 @@ export const starknet: Layer2 = {
     finality: {
       finalizationPeriod: 0,
     },
+    costsWarning: {
+      sentiment: 'warning',
+      content:
+        'The proof verification costs are shared among all projects that use the Starkware SHARP verifier.',
+    },
   },
   config: {
     associatedTokens: ['STRK'],

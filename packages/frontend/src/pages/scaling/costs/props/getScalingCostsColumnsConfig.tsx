@@ -20,7 +20,10 @@ export function getScalingCostsColumnsConfig() {
           name: 'Total Cost',
           getValue: (project) =>
             project.data ? (
-              <CostsTotalCell data={project.data} />
+              <CostsTotalCell
+                data={project.data}
+                warning={project.costsWarning}
+              />
             ) : (
               <Badge type="gray">Coming soon</Badge>
             ),

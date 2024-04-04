@@ -128,7 +128,7 @@ async function main() {
     }
 
     console.time('[L2 COSTS]')
-    const l2CostsApiResponse = fetchL2CostsApi()
+    const l2CostsApiResponse = await fetchL2CostsApi(config.backend, http)
     console.timeEnd('[L2 COSTS]')
 
     createApi(config, tvlApiResponse, activityApiResponse, l2CostsApiResponse)

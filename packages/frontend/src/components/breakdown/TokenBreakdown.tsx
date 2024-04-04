@@ -35,14 +35,7 @@ export function TokenBreakdown(props: TokenBreakdownProps) {
       <TooltipTrigger className="flex items-center gap-1">
         <Breakdown values={values} className="opacity-80" />
         {props.warning && (
-          <>
-            {props.warningSeverity === 'warning' && (
-              <RoundedWarningIcon className="fill-yellow-700 dark:fill-yellow-300" />
-            )}
-            {props.warningSeverity === 'bad' && (
-              <RoundedWarningIcon className="fill-red-700 dark:fill-red-300" />
-            )}
-          </>
+          <RoundedWarningIcon sentiment={props.warningSeverity} />
         )}
       </TooltipTrigger>
       <TooltipContent>

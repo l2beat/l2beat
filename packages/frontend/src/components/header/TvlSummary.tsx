@@ -1,8 +1,7 @@
-import { Layer2TVLWarning } from '@l2beat/config'
+import { WarningWithSentiment } from '@l2beat/config'
 import React from 'react'
 
 import { unifyPercentagesAsIntegers } from '../../utils'
-import { getSentimentFillColor } from '../../utils/sentimentFillColor'
 import { formatUSD } from '../../utils/utils'
 import { UpcomingBadge } from '../badge/UpcomingBadge'
 import {
@@ -26,7 +25,7 @@ export interface TvlStats {
 export interface TvlSummaryProps {
   stats?: TvlStats
   tvlBreakdownHref?: string
-  tvlWarning?: Layer2TVLWarning
+  tvlWarning?: WarningWithSentiment
   showTvlBreakdown?: boolean
   isArchived?: boolean
   type?: 'bridge' | 'layer2' | 'layer3'
@@ -105,7 +104,8 @@ export function TvlSummary(props: TvlSummaryProps) {
                 )}
                 {props.tvlWarning && (
                   <RoundedWarningIcon
-                    className={`size-4 ${getSentimentFillColor(props.tvlWarning.sentiment)}`}
+                    className="size-4"
+                    sentiment={props.tvlWarning.sentiment}
                   />
                 )}
               </TooltipTrigger>
@@ -122,7 +122,7 @@ export function TvlSummary(props: TvlSummaryProps) {
                 </p>
               )}
               {props.tvlWarning && (
-                <RoundedWarningIcon className="size-4 fill-yellow-700 dark:fill-yellow-300" />
+                <RoundedWarningIcon className="size-4" sentiment="warning" />
               )}
             </div>
           )

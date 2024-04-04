@@ -5,32 +5,21 @@ import {
   L2CostsProjectApiCharts,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { readFileSync } from 'fs-extra'
-import path from 'path'
 
-export function fetchL2CostsApi(): L2CostsApiResponse {
-  const json = readFileSync(path.resolve(__dirname, 'test.json'), 'utf8')
-  const x = L2CostsApiResponse.parse(JSON.parse(json))
-  x.combined.daily.data.sort((a, b) => a[0].toNumber() - b[0].toNumber())
-  x.combined.hourly.data.sort((a, b) => a[0].toNumber() - b[0].toNumber())
-  for (const data of Object.values(x.projects)) {
-    data?.daily.data.sort((a, b) => a[0].toNumber() - b[0].toNumber())
-    data?.hourly.data.sort((a, b) => a[0].toNumber() - b[0].toNumber())
+import { JsonHttpClient } from '../caching/JsonHttpClient'
+import { Config } from '../config'
+
+export async function fetchL2CostsApi(
+  backend: Config['backend'],
+  http: JsonHttpClient,
+): Promise<L2CostsApiResponse> {
+  if (backend.mock) {
+    return getMockL2CostsApiResponse()
   }
-  return x
+  const url = backend.apiUrl + '/api/l2-costs'
+  const json = await http.fetchJson(url)
+  return L2CostsApiResponse.parse(json)
 }
-
-// export async function fetchL2CostsApi(
-//   backend: Config['backend'],
-//   http: JsonHttpClient,
-// ): Promise<L2CostsApiResponse> {
-//   if (backend.mock) {
-//     return getMockL2CostsApiResponse()
-//   }
-//   const url = backend.apiUrl + '/api/l2-costs'
-//   const json = await http.fetchJson(url)
-//   return L2CostsApiResponse.parse(json)
-// }
 
 const TYPES: L2CostsApiChart['types'] = [
   'timestamp',
@@ -50,6 +39,30 @@ const TYPES: L2CostsApiChart['types'] = [
   'blobsEth',
   'blobsUsd',
 ]
+
+function getMockL2CostsApiResponse(): L2CostsApiResponse {
+  const projects = [
+    'arbitrum',
+    'optimism',
+    'apex',
+    'aevo',
+    'base',
+    'dydx',
+    'brine',
+    'linea',
+    'myria',
+    'scroll',
+    'polygonzkevm',
+  ].reduce<Record<string, L2CostsProjectApiCharts>>((acc, cur) => {
+    acc[cur] = generateMockCharts()
+    return acc
+  }, {})
+
+  return {
+    combined: generateMockCharts(),
+    projects,
+  }
+}
 
 function generateMockCharts(withoutBlobs?: boolean): L2CostsProjectApiCharts {
   let now = UnixTime.now().toStartOf('hour')

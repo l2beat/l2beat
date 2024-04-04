@@ -3,6 +3,7 @@ import {
   ScalingProjectCategory,
   ScalingProjectPurpose,
   StageConfig,
+  WarningWithSentiment,
 } from '@l2beat/config'
 import {
   ActivityApiResponse,
@@ -33,6 +34,7 @@ export interface ScalingCostsViewEntry {
   purposes: ScalingProjectPurpose[]
   stage: StageConfig
   data: CostsData | undefined
+  costsWarning: WarningWithSentiment | undefined
 }
 
 export type CostsData = {
