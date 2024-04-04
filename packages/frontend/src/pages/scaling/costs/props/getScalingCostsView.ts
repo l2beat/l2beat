@@ -1,7 +1,6 @@
 import { Layer2 } from '@l2beat/config'
 import {
   ActivityApiCharts,
-  assert,
   L2CostsApiResponse,
   L2CostsProjectApiCharts,
   notUndefined,
@@ -11,6 +10,8 @@ import { orderByTvl } from '../../../../utils/orderByTvl'
 import { CostsPagesData, ScalingCostsViewEntry } from '../types'
 import { ScalingCostsViewProps } from '../view/ScalingCostsView'
 import { getCostsData } from './getCostsData'
+
+const UPCOMING_PROJECTS = ['paradex']
 
 export function getScalingCostsView(
   projects: Layer2[],
@@ -31,7 +32,6 @@ export function getScalingCostsView(
       .map((project) => {
         const l2CostsProjectData =
           l2CostsApiResponse.projects[project.id.toString()]
-        assert(l2CostsProjectData, 'l2CostsProjectData is undefined')
         const activityApiProjectData =
           activityApiResponse?.projects[project.id.toString()]
 
@@ -51,7 +51,7 @@ export function getScalingCostsView(
 
 function getScalingCostsViewEntry(
   project: Layer2,
-  l2CostsChart: L2CostsProjectApiCharts,
+  l2CostsChart: L2CostsProjectApiCharts | undefined,
   activityChart: ActivityApiCharts | undefined,
   hasImplementationChanged: boolean,
 ): ScalingCostsViewEntry {
@@ -67,7 +67,7 @@ function getScalingCostsViewEntry(
     provider: project.display.provider,
     purposes: project.display.purposes,
     stage: project.stage,
-    data: getCostsData(l2CostsChart, activityChart),
+    data: l2CostsChart ? getCostsData(l2CostsChart, activityChart) : undefined,
   }
 }
 
@@ -77,7 +77,8 @@ function getIncludedProjects(
 ) {
   return projects.filter(
     (p) =>
-      costsApiResponse.projects[p.id.toString()] !== undefined &&
+      (costsApiResponse.projects[p.id.toString()] !== undefined ||
+        UPCOMING_PROJECTS.includes(p.id.toString())) &&
       !p.isArchived &&
       !p.isUpcoming &&
       (p.display.category === 'Optimistic Rollup' ||

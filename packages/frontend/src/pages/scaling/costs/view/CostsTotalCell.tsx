@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { Badge } from '../../../../components/badge/Badge'
 import { CostsBreakdown } from '../../../../components/breakdown/CostsBreakdown'
+import { LONG_HYPHEN } from '../../../../utils/constants'
 import { CostsData, CostsDataBreakdown, CostsDataDetails } from '../types'
 import { CostsControlsWrapper } from './CostsControlsWrapper'
 
@@ -137,7 +137,7 @@ function TotalValue({
             />
           </>
         ) : (
-          <Badge type="gray">Coming soon</Badge>
+          LONG_HYPHEN
         )}
       </div>
     </div>

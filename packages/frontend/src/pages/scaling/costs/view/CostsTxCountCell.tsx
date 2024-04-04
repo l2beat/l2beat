@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Badge } from '../../../../components/badge/Badge'
+import { LONG_HYPHEN } from '../../../../utils/constants'
 import { ValueWithDisplayValue } from '../../../types'
 import { CostsData } from '../types'
 import { CostsControlsWrapper } from './CostsControlsWrapper'
@@ -34,7 +34,7 @@ export function CostsTxCountCell(props: Props) {
 
 function Cell(props: { txCount: ValueWithDisplayValue | undefined }) {
   if (!props.txCount) {
-    return <Badge type="gray">Coming soon</Badge>
+    return LONG_HYPHEN
   }
 
   return props.txCount.displayValue

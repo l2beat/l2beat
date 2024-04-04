@@ -2,6 +2,7 @@ import React from 'react'
 
 import { Badge } from '../../../../components/badge/Badge'
 import { DetailedValueWithDisplayValue } from '../../../../components/DetailedValueWithDisplayValue'
+import { LONG_HYPHEN } from '../../../../utils/constants'
 import { ValueWithDisplayValue } from '../../../types'
 import { CostsData, CostsDataDetails } from '../types'
 import { CostsControlsWrapper } from './CostsControlsWrapper'
@@ -22,7 +23,10 @@ interface CellProps {
 
 export function CostsBreakdownValueCell(props: Props) {
   return (
-    <CostsControlsWrapper className={props.className} syncStatus={props.data.syncStatus}>
+    <CostsControlsWrapper
+      className={props.className}
+      syncStatus={props.data.syncStatus}
+    >
       <Cell
         details={props.data.last24h}
         type={props.type}
@@ -95,7 +99,7 @@ function Cell({ details, className, type }: CellProps) {
 
 function Value({ children }: { children: ValueWithDisplayValue | undefined }) {
   if (!children) {
-    return <Badge type="gray">Coming soon</Badge>
+    return LONG_HYPHEN
   }
   return (
     <DetailedValueWithDisplayValue>{children}</DetailedValueWithDisplayValue>

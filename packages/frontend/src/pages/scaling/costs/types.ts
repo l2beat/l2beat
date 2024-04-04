@@ -32,7 +32,7 @@ export interface ScalingCostsViewEntry {
   provider: Layer2Provider | undefined
   purposes: ScalingProjectPurpose[]
   stage: StageConfig
-  data: CostsData
+  data: CostsData | undefined
 }
 
 export type CostsData = {
