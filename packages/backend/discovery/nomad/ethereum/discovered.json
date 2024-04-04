@@ -1,7 +1,7 @@
 {
   "name": "nomad",
   "chain": "ethereum",
-  "blockNumber": 18340273,
+  "blockNumber": 19531994,
   "configHash": "0x366595cc57060b807ca1972ff0eb013981860352988544b29377f6bb8e56f0d0",
   "version": 3,
   "contracts": [
@@ -17,7 +17,7 @@
       "implementations": ["0x7f221A1850c12b57fed1f0831dd25399a13b68c2"],
       "sinceTimestamp": 1641898337,
       "values": {
-        "committedRoot": "0x9977da56f7c9e2955827bca8ea2675bc565e31b7095f276e83f0850923e9e66b",
+        "committedRoot": "0xbdbc1d35568f4eba93ad3dddeb36adaa97b9362ec579bfe302bc4555758c79f9",
         "homeDomainHash": "0x6d99fb87e3b04d5511e33963be35e5bf1413faef07088eb5a343ed9bae06d90c",
         "LEGACY_STATUS_NONE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "LEGACY_STATUS_PROCESSED": "0x0000000000000000000000000000000000000000000000000000000000000002",
@@ -164,7 +164,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "3 of 5 (60%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1641859677,
@@ -207,7 +208,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "2 of 3 (67%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1641860106,

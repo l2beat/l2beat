@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x718bd993f443ed4d7b1cd04886c877d1f527aefa
+
+# Diff at Thu, 28 Mar 2024 10:33:33 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@dd32bb06b292cc8459fb09925454ee3a90f5c27e block: 19412725
+- current block number: 19532040
+
+## Description
+
+Update discovery to include the multisig threshold.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19412725 (main branch discovery), not current.
+
+```diff
+    contract OrderlyMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      upgradeability.threshold:
++        "3 of 5 (60%)"
+    }
+```
+
+```diff
+    contract ChallengerMultisig (0xcE10372313Ca39Fbf75A09e7f4c0E57F070259f4) {
+    +++ description: None
+      upgradeability.threshold:
++        "4 of 6 (67%)"
+    }
+```
+
 Generated with discovered.json: 0x27306da2737a02c26f8c4f41629c815ee18b5695
 
 # Diff at Mon, 11 Mar 2024 15:24:12 GMT:
@@ -56,7 +90,7 @@ Generated with discovered.json: 0xbe756234887059a7f1f0faab5602440c3db37a6d
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Update discovery to include the multisig threshold.
 
 ## Initial discovery
 

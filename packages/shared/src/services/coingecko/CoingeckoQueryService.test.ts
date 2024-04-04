@@ -37,8 +37,8 @@ describe(CoingeckoQueryService.name, () => {
         const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
         await coingeckoQueryService.getUsdPriceHistoryHourly(
           CoingeckoId('weth'),
-          UnixTime.fromDate(new Date('2021-01-01')).add(-5, 'minutes'),
-          UnixTime.fromDate(new Date('2021-02-01')).add(5, 'minutes'),
+          UnixTime.fromDate(new Date('2021-01-01')),
+          UnixTime.fromDate(new Date('2021-02-01')),
         )
         expect(
           coingeckoClient.getCoinMarketChartRange,
@@ -46,7 +46,10 @@ describe(CoingeckoQueryService.name, () => {
           CoingeckoId('weth'),
           'usd',
           UnixTime.fromDate(new Date('2021-01-01')).add(-3, 'days'),
-          UnixTime.fromDate(new Date('2021-02-01')).add(3, 'days'),
+          UnixTime.fromDate(new Date('2021-01-01')).add(
+            MAX_DAYS_FOR_HOURLY_PRECISION - 3,
+            'days',
+          ),
           undefined,
         )
       })
@@ -384,7 +387,7 @@ describe(CoingeckoQueryService.name, () => {
   describe(
     CoingeckoQueryService.prototype.queryRawHourlyPricesAndMarketCaps.name,
     () => {
-      it('calls for the data until empty', async () => {
+      it('when from not defined call until empty response', async () => {
         const START = UnixTime.now()
 
         const coingeckoClient = mockObject<CoingeckoClient>({

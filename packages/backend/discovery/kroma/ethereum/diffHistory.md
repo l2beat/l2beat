@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x310dac62fc3a977695365cb5f63945bc621c6113
+
+# Diff at Tue, 02 Apr 2024 08:48:56 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@f62e2b01d51472dd8c710b0599031b7ba1a58f0d block: 19474421
+- current block number: 19567016
+
+## Description
+
+A root is challenged.
+Context: Kroma had issues on Apr 1. Sequencer was stopped and is now operational again. Around this incident there were multiple challenges created, so far no challenge was succesful.
+
+## Watched changes
+
+```diff
+    contract Colosseum (0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a) {
+    +++ description: None
++++ description: State roots that have been challenged by the validators. Challenges are created when, according to the validators, the roots commit to an incorrect L2 state.
++++ severity: MEDIUM
+      values.challengedRoots.2:
++        5017
+    }
+```
+
 Generated with discovered.json: 0x192fbb137203cbda301e605a6cd68bc4473be030
 
 # Diff at Wed, 20 Mar 2024 07:28:01 GMT:

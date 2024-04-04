@@ -1,3 +1,69 @@
+Generated with discovered.json: 0xacb5d4376948d7d85443329dcc1ddcbba2f3598f
+
+# Diff at Thu, 28 Mar 2024 10:32:56 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@dd32bb06b292cc8459fb09925454ee3a90f5c27e block: 19439798
+- current block number: 19532035
+
+## Description
+
+Update discovery to include the multisig threshold.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19439798 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 2 (100%)"
+    }
+```
+
+```diff
+    contract ProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 2 (100%)"
+    }
+```
+
+```diff
+    contract FoundationMultisig_1 (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      upgradeability.threshold:
++        "5 of 7 (71%)"
+    }
+```
+
+```diff
+    contract FoundationMultisig_2 (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      upgradeability.threshold:
++        "5 of 7 (71%)"
+    }
+```
+
+```diff
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      upgradeability.threshold:
++        "4 of 13 (31%)"
+    }
+```
+
+```diff
+    contract SynthetixMultisig (0xEb3107117FEAd7de89Cd14D463D340A2E6917769) {
+    +++ description: None
+      upgradeability.threshold:
++        "5 of 11 (45%)"
+    }
+```
+
 Generated with discovered.json: 0xe51a8b638c121d61ad42bd18332c0850a4046684
 
 # Diff at Thu, 14 Mar 2024 00:15:18 GMT:

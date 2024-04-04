@@ -1,3 +1,102 @@
+Generated with discovered.json: 0x17596ec7df731ce584adb8f2f5fd23a6ee82cadc
+
+# Diff at Wed, 03 Apr 2024 14:05:05 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@66b605e31075e304396e566f31130e883d656762 block: 19531637
+- current block number: 19575719
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
+    +++ description: None
+      values.wasmModuleRoot:
+-        "0xd2d42f1e7b5ea262991c3fd1fc7ed3dde4b21c28d3a7edec49f7c4fb51c03f73"
++        "0xf456393bd4b205d2f7b147d355c42ba852ff31527380884720bb4059ae731169"
+    }
+```
+
+```diff
+    contract BridgerOwnerMultisig (0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82) {
+    +++ description: None
+      values.nonce:
+-        70
++        71
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531637 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d) {
+    +++ description: None
+      name:
+-        "GnosisSafe"
++        "ExecutorMultisig"
+      values.nonce:
+-        3
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Bridger (0x0f1b7bd7762662B23486320AA91F30312184f70C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Gateway (0x7870D5398DB488c669B406fBE57b8d05b6A35e42)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1GatewayRouter (0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BridgerOwnerMultisig (0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x53029a74a02a35a658c77a12c8fb1aed6b7fee64
+
+# Diff at Thu, 28 Mar 2024 09:12:29 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@867de6120241d47b66bf76f83c490408eb3595b0 block: 19432708
+- current block number: 19531637
+
+## Description
+
+Update discovery to include the multisig threshold.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19432708 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d) {
+    +++ description: None
+      upgradeability.threshold:
++        "3 of 4 (75%)"
+    }
+```
+
 Generated with discovered.json: 0x2a8f9804aa4d0e1c2654291b4dc0c829b5c12d40
 
 # Diff at Thu, 14 Mar 2024 10:39:07 GMT:
@@ -40,7 +139,7 @@ Generated with discovered.json: 0x6bf630000a540615c26b6e131a88c1214fde842c
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Update discovery to include the multisig threshold.
 
 ## Initial discovery
 

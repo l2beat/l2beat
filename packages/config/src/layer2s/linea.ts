@@ -145,6 +145,24 @@ export const linea: Layer2 = {
       },
       {
         uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xd19d4B5d358258f05D7B411E21A1460D11B0876F',
+          ),
+          selector: '0x2d3c12e5',
+          functionSignature:
+            'function submitBlobData(tuple(bytes32,bytes32,bytes32,uint256,uint256,bytes32),uint256,bytes,bytes)',
+          // first tx with blobs
+          // https://etherscan.io/tx/0x4d03b7e1950256de257ff95b52fac047faeb11600c5975abe7e0ccbc7be7ecfb
+          sinceTimestampInclusive: new UnixTime(1711449407),
+        },
+      },
+      {
+        uses: [
           {
             type: 'liveness',
             subtype: 'stateUpdates',
@@ -209,9 +227,7 @@ export const linea: Layer2 = {
       url: 'https://api.lineascan.build/api',
       type: 'etherscan',
     },
-    // ~ Timestamp of block number 0 on Linea
-    // https://lineascan.build/block/0
-    minTimestampForTvl: UnixTime.fromDate(new Date('2023-07-06T14:00:00Z')),
+    minTimestampForTvl: UnixTime.fromDate(new Date('2023-07-19T14:00:00Z')),
     multicallContracts: [
       {
         address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
@@ -223,7 +239,7 @@ export const linea: Layer2 = {
     coingeckoPlatform: 'linea',
   },
   dataAvailability: addSentimentToDataAvailability({
-    layers: ['Ethereum (calldata)'],
+    layers: ['Ethereum (blobs or calldata)'],
     bridge: { type: 'Enshrined' },
     mode: 'Transactions data (compressed)',
   }),
@@ -234,7 +250,7 @@ export const linea: Layer2 = {
         {
           contract: 'zkEVM',
           references: [
-            'https://etherscan.io/address/0xAA4b3a9515c921996Abe7930bF75Eff7466a4457#code',
+            'https://etherscan.io/address/0x934Dd4C63E285551CEceF8459103554D0096c179#code',
           ],
         },
       ],
@@ -248,7 +264,7 @@ export const linea: Layer2 = {
         {
           contract: 'zkEVM',
           references: [
-            'https://etherscan.io/address/0xAA4b3a9515c921996Abe7930bF75Eff7466a4457#code',
+            'https://etherscan.io/address/0x934Dd4C63E285551CEceF8459103554D0096c179#code',
           ],
         },
       ],
@@ -300,16 +316,16 @@ export const linea: Layer2 = {
       references: [
         {
           text: 'ZkEvmV2.sol - Etherscan source code, _verifyProof() function',
-          href: 'https://etherscan.io/address/0xAA4b3a9515c921996Abe7930bF75Eff7466a4457#code',
+          href: 'https://etherscan.io/address/0x934Dd4C63E285551CEceF8459103554D0096c179#code',
         },
       ],
     },
     dataAvailability: {
-      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
       references: [
         {
           text: 'LineaRollup.sol - Etherscan source code, submitData() function',
-          href: 'https://etherscan.io/address/0xAA4b3a9515c921996Abe7930bF75Eff7466a4457#code',
+          href: 'https://etherscan.io/address/0x934Dd4C63E285551CEceF8459103554D0096c179#code',
         },
       ],
     },
@@ -328,7 +344,7 @@ export const linea: Layer2 = {
       references: [
         {
           text: 'LineaRollup.sol - Etherscan source code, onlyRole(OPERATOR_ROLE) modifier',
-          href: 'https://etherscan.io/address/0xAA4b3a9515c921996Abe7930bF75Eff7466a4457#code',
+          href: 'https://etherscan.io/address/0x934Dd4C63E285551CEceF8459103554D0096c179#code',
         },
       ],
     },
@@ -344,7 +360,7 @@ export const linea: Layer2 = {
         references: [
           {
             text: 'L1MessageService.sol - Etherscan source code, claimMessageWithProof() function',
-            href: 'https://etherscan.io/address/0xAA4b3a9515c921996Abe7930bF75Eff7466a4457#code',
+            href: 'https://etherscan.io/address/0x934Dd4C63E285551CEceF8459103554D0096c179#code',
           },
         ],
       },
@@ -399,7 +415,7 @@ export const linea: Layer2 = {
         references: [
           {
             text: 'LineaRollup.sol - Etherscan source code, state injections: stateRoot and l2MerkleRoot are part of the validity proof input.',
-            href: 'https://etherscan.io/address/0xAA4b3a9515c921996Abe7930bF75Eff7466a4457#code',
+            href: 'https://etherscan.io/address/0x934Dd4C63E285551CEceF8459103554D0096c179#code',
           },
         ],
       }),

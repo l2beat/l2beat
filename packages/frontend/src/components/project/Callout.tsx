@@ -6,6 +6,7 @@ export interface CalloutProps {
   color?: 'red' | 'yellow' | 'blue'
   icon: ReactNode
   body: ReactNode
+  message?: ReactNode
   className?: string
   hoverable?: boolean
   small?: boolean
@@ -15,6 +16,7 @@ export function Callout({
   color,
   icon,
   body,
+  message,
   className,
   hoverable,
   small,
@@ -45,7 +47,10 @@ export function Callout({
       )}
     >
       <span>{icon}</span>
-      <div>{body}</div>
+      <div className="flex flex-col gap-2">
+        {message && message}
+        <div>{body}</div>
+      </div>
     </div>
   )
 }

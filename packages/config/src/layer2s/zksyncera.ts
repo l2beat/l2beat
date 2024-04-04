@@ -140,6 +140,20 @@ export const zksyncera: Layer2 = {
           functionSignature:
             'function commitBatches((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32), (uint64,uint64,uint64,bytes32,uint256,bytes32,bytes32,bytes32,bytes,bytes)[])',
           sinceTimestampInclusive: new UnixTime(1701721931),
+          untilTimestampExclusive: new UnixTime(1710169104),
+        },
+      },
+      {
+        uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD',
+          ),
+          selector: '0x701f58c5',
+          functionSignature:
+            'function commitBatches((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32), (uint64,uint64,uint64,bytes32,uint256,bytes32,bytes32,bytes32,bytes,bytes)[])',
+          sinceTimestampInclusive: new UnixTime(1710169104),
         },
       },
       {

@@ -2,6 +2,7 @@ import { Layer2 } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 
 import { orderByTvl } from '../../../../utils/orderByTvl'
+import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
 import {
   DataAvailabilityPagesData,
   ScalingDataAvailabilityViewEntry,
@@ -17,13 +18,18 @@ export function getScalingDataAvailabilityView(
 
   return {
     items: orderedByTvl
-      .map(getScalingDataAvailabilityViewEntry)
+      .map((p) => {
+        const hasImplementationChanged =
+          !!pagesData.implementationChange?.projects[p.id.toString()]
+        return getScalingDataAvailabilityViewEntry(p, hasImplementationChanged)
+      })
       .filter(notUndefined),
   }
 }
 
 function getScalingDataAvailabilityViewEntry(
   project: Layer2,
+  hasImplementationChanged?: boolean,
 ): ScalingDataAvailabilityViewEntry | undefined {
   if (!project.dataAvailability) return
 
@@ -34,6 +40,8 @@ function getScalingDataAvailabilityViewEntry(
     category: project.display.category,
     provider: project.display.provider,
     warning: project.display.warning,
+    hasImplementationChanged,
+    showProjectUnderReview: isAnySectionUnderReview(project),
     redWarning: project.display.redWarning,
     purposes: project.display.purposes,
     stage: project.stage,

@@ -1,7 +1,12 @@
 import { TransactionData } from '../../modules/tracked-txs/modules/l2-costs/types/TransactionData'
+import {
+  AmountConfigurationRow,
+  AmountRow,
+} from '../../modules/tvl2/repositories/AmountRepository'
 
 export {}
 
+import { BlockTimestampRow } from '../../modules/tvl2/repositories/BlockTimestampRepository'
 import { PriceRow as PriceRow2 } from '../../modules/tvl2/repositories/PriceRepository'
 
 declare module 'knex/types/tables' {
@@ -231,6 +236,9 @@ declare module 'knex/types/tables' {
     tracked_txs_configs: TrackedTxsConfigRow
     l2_costs: L2CostsRow
     prices: PriceRow2
+    block_timestamps: BlockTimestampRow
+    amounts: AmountRow
+    amounts_configurations: AmountConfigurationRow
   }
 }
 

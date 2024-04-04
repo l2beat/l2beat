@@ -16,7 +16,11 @@ export function getProps(
       showFinality: config.features.finality,
       navbar: getNavbarProps(config, 'scaling'),
       footer: getFooterProps(config),
-      tvlView: getScalingTvlView(config.layer2s, pagesData.tvlApiResponse),
+      tvlView: getScalingTvlView(
+        config.layer2s,
+        pagesData.tvlApiResponse,
+        pagesData.implementationChange,
+      ),
     },
     wrapper: {
       metadata: getPageMetadata(),

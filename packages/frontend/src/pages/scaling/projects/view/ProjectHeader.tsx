@@ -48,6 +48,7 @@ export interface ProjectHeaderProps {
   isUpcoming?: boolean
   isLayer3?: boolean
   isUnderReview?: boolean
+  implementationHasChanged: boolean
   showProjectUnderReview?: boolean
   warning?: string | { text: string; href: string }
 }
@@ -125,6 +126,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       isUpcoming={props.isUpcoming}
       isUnderReview={props.isUnderReview}
       isArchived={props.isArchived}
+      implementationHasChanged={props.implementationHasChanged}
       showProjectUnderReview={props.showProjectUnderReview}
       warning={props.warning}
       tvlBreakdownHref={props.tvlBreakdownHref}

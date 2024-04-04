@@ -1,7 +1,7 @@
 {
   "name": "lzomnichain",
   "chain": "polygonpos",
-  "blockNumber": 54650344,
+  "blockNumber": 55210144,
   "configHash": "0x58718a37ccbc74493689cc75d57fee239a87454aec08e93b8c60cf25b015b835",
   "version": 3,
   "contracts": [
@@ -1288,7 +1288,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
-        "modules": []
+        "modules": [],
+        "threshold": "2 of 6 (33%)"
       },
       "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
       "sinceTimestamp": 1648074041,

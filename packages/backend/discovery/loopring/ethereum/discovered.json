@@ -1,7 +1,7 @@
 {
   "name": "loopring",
   "chain": "ethereum",
-  "blockNumber": 19375547,
+  "blockNumber": 19531659,
   "configHash": "0xe1be664e5de50a753f9b75e72cb9efb6e582d287e4e7e1a629cba1c05d782bfb",
   "version": 3,
   "contracts": [
@@ -19,7 +19,7 @@
         "domainSeparator": "0xf35e902e19c9d66a100a3d9b39430a988f9b8d41331d6f346f5c540ef8803264",
         "getAgentRegistry": "0x39B9bf169a7e225ba037C443A40460c77438ea14",
         "getAmmFeeBips": 20,
-        "getBlockHeight": 49529,
+        "getBlockHeight": 50189,
         "getConstants": [
           "21888242871839275222246405745257275088548364400416034343698204186575808495617",
           4096,
@@ -36,9 +36,9 @@
         "getDomainSeparator": "0xf35e902e19c9d66a100a3d9b39430a988f9b8d41331d6f346f5c540ef8803264",
         "getExchangeStake": 0,
         "getMaxAgeDepositUntilWithdrawable": 1296000,
-        "getMerkleRoot": "0x2674580e854ada28df758f8fb10491dd461e44c4c2a4797ba0ee6102ccbfcc08",
+        "getMerkleRoot": "0x2f031810001be8de3c1c24b9caa74cec59b295b384b646c995707ec4fd47ccde",
         "getNumAvailableForcedSlots": 4096,
-        "getProtocolFeeValues": [1709450543, 0, 0, 0, 0],
+        "getProtocolFeeValues": [1711272707, 0, 0, 0, 0],
         "implementation": "0x26d8Ba776a067C5928841985bCe342f75BAE7E82",
         "isInWithdrawalMode": false,
         "isShutdown": false,
@@ -329,7 +329,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "4 of 6 (67%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1606289169,
@@ -389,15 +390,15 @@
       },
       "sinceTimestamp": 1574241665,
       "values": {
-        "getTotalStaking": "533388677547721482268386",
+        "getTotalStaking": "524405020990853519330595",
         "lrcAddress": "0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD",
         "MIN_CLAIM_DELAY": 7776000,
         "MIN_WITHDRAW_DELAY": 7776000,
-        "numAddresses": 967,
+        "numAddresses": 965,
         "owner": "0x96f16FdB8Cd37C02DEeb7025C1C7618E1bB34d97",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "protocolFeeVaultAddress": "0x0000000000000000000000000000000000000000",
-        "total": ["533388677547721482268386", 0, 1615983279]
+        "total": ["524405020990853519330595", 0, 1615983279]
       },
       "derivedName": "UserStakingPool"
     }

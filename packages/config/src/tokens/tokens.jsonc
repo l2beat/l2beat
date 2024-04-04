@@ -18,11 +18,6 @@
       "address": "0xEd04915c23f00A313a544955524EB7DBD823143d"
     },
     {
-      "symbol": "EURA",
-      "address": "0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8",
-      "category": "stablecoin"
-    },
-    {
       "symbol": "AGIX",
       "address": "0x5B7533812759B45C2B44C19e320ba2cD2681b542"
     },
@@ -66,6 +61,10 @@
     {
       "symbol": "APE",
       "address": "0x4d224452801ACEd8B2F0aebE155379bb5D594381"
+    },
+    {
+      "symbol": "APEX",
+      "address": "0x52A8845DF664D76C69d2EEa607CD793565aF42B8"
     },
     {
       "symbol": "API3",
@@ -124,6 +123,11 @@
       "address": "0x42bBFa2e77757C645eeaAd1655E0911a7553Efbc"
     },
     {
+      "symbol": "BORG",
+      "address": "0x64d0f55cd8c7133a9d7102b13987235f486f2224",
+      "coingeckoId": "swissborg"
+    },
+    {
       "symbol": "BRKL",
       "address": "0x4674a4F24C5f63D53F22490Fb3A08eAAAD739ff8"
     },
@@ -172,11 +176,6 @@
     {
       "symbol": "CHSB",
       "address": "0xba9d4199faB4f26eFE3551D490E3821486f135Ba",
-      "coingeckoId": "swissborg"
-    },
-    {
-      "symbol": "BORG",
-      "address": "0x64d0f55cd8c7133a9d7102b13987235f486f2224",
       "coingeckoId": "swissborg"
     },
     {
@@ -254,6 +253,10 @@
       "address": "0x53C8395465A84955c95159814461466053DedEDE"
     },
     {
+      "symbol": "DOLA",
+      "address": "0x865377367054516e17014CcdED1e7d814EDC9ce4"
+    },
+    {
       "symbol": "DPX",
       "address": "0xEec2bE5c91ae7f8a338e1e5f3b5DE49d07AfdC81"
     },
@@ -286,13 +289,17 @@
       "address": "0x4da0C48376C277cdBd7Fc6FdC6936DEE3e4AdF75"
     },
     {
-      "symbol": "ezETH",
-      "address": "0xbf5495efe5db9ce00f80364c8b423567e58d2110",
-      "coingeckoId": "renzo-restaked-eth"
+      "symbol": "EQB",
+      "address": "0xfe80d611c6403f70e5b1b9b722d2b3510b740b2b"
     },
     {
       "symbol": "ETH",
       "category": "ether"
+    },
+    {
+      "symbol": "EURA",
+      "address": "0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8",
+      "category": "stablecoin"
     },
     {
       "symbol": "EURT",
@@ -301,6 +308,11 @@
     {
       "symbol": "eXRD",
       "address": "0x6468e79A80C0eaB0F9A2B574c8d5bC374Af59414"
+    },
+    {
+      "symbol": "ezETH",
+      "address": "0xbf5495efe5db9ce00f80364c8b423567e58d2110",
+      "coingeckoId": "renzo-restaked-eth"
     },
     {
       "symbol": "FEG",
@@ -365,6 +377,10 @@
       "address": "0xD567B5F02b9073aD3a982a099a23Bf019FF11d1c"
     },
     {
+      "symbol": "GENE",
+      "address": "0x21413c119b0C11C5d96aE1bD328917bC5C8ED67E"
+    },
+    {
       "symbol": "GLM",
       "address": "0x7DD9c5Cba05E151C895FDe1CF355C9A1D5DA6429"
     },
@@ -396,6 +412,10 @@
     {
       "symbol": "HEART",
       "address": "0x8FAc8031e079F409135766C7d5De29cf22EF897C"
+    },
+    {
+      "symbol": "HEGIC",
+      "address": "0x584bC13c7D411c00c01A62e8019472dE68768430"
     },
     {
       "symbol": "HEZ",
@@ -522,12 +542,16 @@
       "address": "0x949D48EcA67b17269629c7194F4b727d4Ef9E5d6"
     },
     {
-      "symbol": "mETH",
-      "address": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa"
+      "symbol": "MCB",
+      "address": "0x4e352cF164E64ADCBad318C3a1e222E9EBa4Ce42"
     },
     {
       "symbol": "MELD",
       "address": "0x333000333b26eE30214B4af6419D9ab07a450400"
+    },
+    {
+      "symbol": "mETH",
+      "address": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa"
     },
     {
       "symbol": "Metis",
@@ -628,6 +652,10 @@
       "address": "0xD528cf2E081f72908e086F8800977df826B5a483"
     },
     {
+      "symbol": "PENDLE",
+      "address": "0x808507121B80c02388fAd14726482e061B8da827"
+    },
+    {
       "symbol": "PEOPLE",
       "address": "0x7A58c0Be72BE218B41C608b7Fe7C5bB630736C71"
     },
@@ -656,12 +684,20 @@
       "address": "0x9992eC3cF6A55b00978cdDF2b27BC6882d88D1eC"
     },
     {
+      "symbol": "POND",
+      "address": "0x57b946008913b82e4df85f501cbaed910e58d26c"
+    },
+    {
       "symbol": "PORTX",
       "address": "0x104F3152D8ebFC3f679392977356962Ff36566aC"
     },
     {
       "symbol": "POWR",
       "address": "0x595832F8FC6BF59c85C527fEC3740A1b7a361269"
+    },
+    {
+      "symbol": "PREMIA",
+      "address": "0x6399C842dD2bE3dE30BF99Bc7D1bBF6Fa3650E70"
     },
     {
       "symbol": "PSTAKE",
@@ -741,6 +777,10 @@
       "address": "0x320623b8E4fF03373931769A31Fc52A4E78B5d70"
     },
     {
+      "symbol": "RSS3",
+      "address": "0xc98D64DA73a6616c42117b582e832812e7B8D57F"
+    },
+    {
       "symbol": "RUNE",
       "address": "0x3155BA85D5F96b2d030a4966AF206230e46849cb",
       "coingeckoId": "thorchain"
@@ -799,10 +839,6 @@
       "address": "0x8E6cd950Ad6ba651F6DD608Dc70e5886B1AA6B24"
     },
     {
-      "symbol": "STRK",
-      "address": "0xca14007eff0db1f8135f4c25b34de49ab0d42766"
-    },
-    {
       "symbol": "stETH",
       "address": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
     },
@@ -813,6 +849,10 @@
     {
       "symbol": "STONE",
       "address": "0x7122985656e38BDC0302Db86685bb972b145bD3C"
+    },
+    {
+      "symbol": "STRK",
+      "address": "0xca14007eff0db1f8135f4c25b34de49ab0d42766"
     },
     {
       "symbol": "SUPER",
@@ -922,6 +962,11 @@
       "address": "0x7d5121505149065b562C789A0145eD750e6E8cdD"
     },
     {
+      "symbol": "VRTX",
+      "address": "0xbbEE07B3e8121227AfCFe1E2B82772246226128e",
+      "coingeckoId": "vertex-protocol"
+    },
+    {
       "symbol": "WAGMI",
       "address": "0x92CC36D66e9d739D50673d1f27929a371FB83a67"
     },
@@ -994,6 +1039,10 @@
       "address": "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e"
     },
     {
+      "symbol": "YFX",
+      "address": "0xF55a93b613D172b86c2Ba3981a849DaE2aeCDE2f"
+    },
+    {
       "symbol": "YGG",
       "address": "0x25f8087EAD173b73D6e8B84329989A8eEA16CF73"
     },
@@ -1030,6 +1079,12 @@
       "coingeckoId": "beefy-finance"
     },
     {
+      "symbol": "BOOP",
+      "address": "0x13A7DeDb7169a17bE92B0E3C7C2315B46f4772B3",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
       "symbol": "BTC.b",
       "address": "0x2297aEbD383787A160DD0d9F71508148769342E3",
       "type": "EBV",
@@ -1044,6 +1099,23 @@
       "address": "0x8B0E6f19Ee57089F7649A455D89D7bC6314D04e8",
       "type": "NMV",
       "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "EQU",
+      "address": "0x87AAfFdF26c6885f6010219208D5B161ec7609c0",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "ezETH",
+      "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+      "coingeckoId": "renzo-restaked-eth",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Connext",
+        "slug": "connext"
+      }
     },
     {
       "symbol": "GMX",
@@ -1075,6 +1147,33 @@
       }
     },
     {
+      "symbol": "MOZ",
+      "address": "0x20547341E58fB558637FA15379C92e11F7b7F710",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "RDNT",
+      "address": "0x3082CC23568eA640225c2467653dB90e9250AaA0",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
+      "symbol": "rsETH",
+      "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "coingeckoId": "kelp-dao-restaked-eth",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
       "symbol": "SDEX",
       "address": "0xabD587f2607542723b17f14d00d99b987C29b074",
       "type": "EBV",
@@ -1083,6 +1182,12 @@
         "bridge": "Wormhole",
         "slug": "portal"
       }
+    },
+    {
+      "symbol": "SPARTA",
+      "address": "0x11F98c7E42A367DaB4f200d2fdc460fb445CE9a8",
+      "type": "NMV",
+      "formula": "circulatingSupply"
     },
     {
       "symbol": "USDC",
@@ -1096,9 +1201,42 @@
       "address": "0x4cb9a7ae498cedcbb5eae9f25736ae7d428c9d66",
       "type": "NMV",
       "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "GRAIL",
+      "address": "0x3d9907F9a368ad0a51Be60f7Da3b97cf940982D8",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "GRT",
+      "address": "0x9623063377AD1B27544C965cCd7342f7EA7e88C7",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "The Graph Custom Gateway"
+      }
+    },
+    {
+      "symbol": "VELA",
+      "address": "0x088cd8f5eF3652623c22D48b1605DCfE860Cd704",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "WINR",
+      "address": "0xD77B108d4f6cefaa0Cae9506A934e825BEccA46E",
+      "type": "NMV",
+      "formula": "circulatingSupply"
     }
   ],
   "optimism": [
+    {
+      "symbol": "EXA",
+      "address": "0x1e925de1c68ef83bd98ee3e130ef14a50309c01b",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
     {
       "symbol": "KWENTA",
       "address": "0x920Cf626a271321C151D027030D5d08aF699456b",
@@ -1123,15 +1261,21 @@
       "address": "0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db",
       "type": "NMV",
       "formula": "circulatingSupply"
-    },
-    {
-      "symbol": "EXA",
-      "address": "0x1e925de1c68ef83bd98ee3e130ef14a50309c01b",
-      "type": "NMV",
-      "formula": "circulatingSupply"
     }
   ],
   "base": [
+    {
+      "symbol": "AERO",
+      "address": "0x940181a94a35a4569e4529a3cdfb74e38fd98631",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "DEGEN",
+      "address": "0x4ed4e862860bed51a9570b96d89af5e1b0efefed",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
     {
       "symbol": "SDEX",
       "address": "0xFd4330b0312fdEEC6d4225075b82E00493FF2e3f",
@@ -1143,27 +1287,8 @@
       }
     },
     {
-      "symbol": "USDC",
-      "address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-      "category": "stablecoin",
-      "type": "NMV",
-      "formula": "totalSupply"
-    },
-    {
-      "symbol": "AERO",
-      "address": "0x940181a94a35a4569e4529a3cdfb74e38fd98631",
-      "type": "NMV",
-      "formula": "circulatingSupply"
-    },
-    {
       "symbol": "SEAM",
       "address": "0x1c7a460413dd4e964f96d8dfc56e7223ce88cd85",
-      "type": "NMV",
-      "formula": "circulatingSupply"
-    },
-    {
-      "symbol": "DEGEN",
-      "address": "0x4ed4e862860bed51a9570b96d89af5e1b0efefed",
       "type": "NMV",
       "formula": "circulatingSupply"
     },
@@ -1172,6 +1297,13 @@
       "address": "0x0d97f261b1e88845184f678e2d1e7a98d9fd38de",
       "type": "NMV",
       "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "USDC",
+      "address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "category": "stablecoin",
+      "type": "NMV",
+      "formula": "totalSupply"
     }
   ],
   "lyra": [
@@ -1189,6 +1321,12 @@
     }
   ],
   "mantapacific": [
+    {
+      "symbol": "MANTA",
+      "address": "0x95CeF13441Be50d20cA4558CC0a27B601aC544E5",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
     {
       "symbol": "STONE",
       "address": "0xEc901DA9c68E90798BbBb74c11406A32A70652C3",
@@ -1208,15 +1346,20 @@
         "bridge": "Hyperlane Nexus"
       },
       "coingeckoId": "celestia"
-    },
-    {
-      "symbol": "MANTA",
-      "address": "0x95CeF13441Be50d20cA4558CC0a27B601aC544E5",
-      "type": "NMV",
-      "formula": "circulatingSupply"
     }
   ],
   "linea": [
+    {
+      "symbol": "ezETH",
+      "address": "0x2416092f143378750bb29b79ed961ab195cceea5",
+      "coingeckoId": "renzo-restaked-eth",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Connext",
+        "slug": "connext"
+      }
+    },
     {
       "symbol": "STONE",
       "address": "0x93F4d0ab6a8B4271f4a28Db399b5E30612D21116",
@@ -1274,6 +1417,17 @@
   ],
   "blast": [
     {
+      "symbol": "ezETH",
+      "address": "0x2416092f143378750bb29b79ed961ab195cceea5",
+      "coingeckoId": "renzo-restaked-eth",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Connext",
+        "slug": "connext"
+      }
+    },
+    {
       "symbol": "USDB",
       "address": "0x4300000000000000000000000000000000000003",
       "type": "EBV",
@@ -1294,6 +1448,17 @@
       "bridgedUsing": {
         "bridge": "Connext",
         "slug": "connext"
+      }
+    },
+    {
+      "symbol": "STONE",
+      "address": "0x80137510979822322193FC997d400D5A6C747bf7",
+      "coingeckoId": "stakestone-ether",
+      "type": "EBV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Stargate",
+        "slug": "stargate"
       }
     }
   ]

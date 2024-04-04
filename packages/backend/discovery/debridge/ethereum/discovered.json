@@ -1,7 +1,7 @@
 {
   "name": "debridge",
   "chain": "ethereum",
-  "blockNumber": 18168455,
+  "blockNumber": 19531527,
   "configHash": "0x492b115dd0a08497eaa04d4d947bf81182149cf4de4de7e0dcc03faf69139fd5",
   "version": 3,
   "contracts": [
@@ -31,7 +31,7 @@
         "globalTransferFeeBps": 10,
         "GOVMONITORING_ROLE": "0x2b36fa99e118fa8485d488becf749a974743fbeb6a7aa57e663893bf5d69a3c1",
         "lockedClaim": 1,
-        "nonce": 12239,
+        "nonce": 16703,
         "paused": false,
         "signatureVerifier": "0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
         "SUBMISSION_PREFIX": 1,
@@ -47,7 +47,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "5 of 8 (63%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1637442903,
@@ -65,7 +66,7 @@
           "0x24C0E1C19c8eC997b781dF4B4A0f812aE9667c96"
         ],
         "getThreshold": 5,
-        "nonce": 44,
+        "nonce": 47,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -119,7 +120,7 @@
       "sinceTimestamp": 1637621914,
       "values": {
         "confirmationThreshold": 3,
-        "currentBlock": 18166545,
+        "currentBlock": 19531339,
         "debridgeAddress": "0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "excessConfirmations": 3,
@@ -150,7 +151,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "2 of 3 (67%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1637430511,

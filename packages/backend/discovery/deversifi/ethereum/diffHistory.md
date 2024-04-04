@@ -1,3 +1,52 @@
+Generated with discovered.json: 0x4b6fe18ad8f293504a0a33f9c42978bb3a90f0b0
+
+# Diff at Thu, 28 Mar 2024 08:50:55 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@867de6120241d47b66bf76f83c490408eb3595b0 block: 19512697
+- current block number: 19531530
+
+## Description
+
+Update discovery to include the multisig threshold.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19512697 (main branch discovery), not current.
+
+```diff
+    contract GovernanceMultisig (0xCCa5De1e10c05c50C51ac551D9182cd31aca1889) {
+    +++ description: This Multisig itself is one of the two Governors, the other being an EOA, both equally permissioned to upgrade the bridge.
+      upgradeability.threshold:
++        "4 of 6 (67%)"
+    }
+```
+
+Generated with discovered.json: 0xa8a01225c5752db0370ec77705d39bcb620fa9a0
+
+# Diff at Mon, 25 Mar 2024 16:34:55 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@e6ff14fa637ed6c3a674ff43e070f1cf65f4aa1e block: 19485578
+- current block number: 19512697
+
+## Description
+
+The upgrade delay of the StarkExchange escrow is reduced from 14 to 3 days. This is the delay after which the Governors can upgrade the implementation.
+
+## Watched changes
+
+```diff
+    contract StarkExchange (0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b) {
+    +++ description: None
+      upgradeability.upgradeDelay:
+-        1209600
++        259200
+    }
+```
+
 Generated with discovered.json: 0xa561735c000067bf6baa50f29262ba681f1a87f8
 
 # Diff at Thu, 21 Mar 2024 21:03:02 GMT:
