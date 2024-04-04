@@ -1,8 +1,7 @@
-
 {
   "projects": {
     "arbitrum": {
-      "syncedUntil": 1712062800,
+      "syncedUntil": 1712204428,
       "hourly": {
         "types": [
           "timestamp",
@@ -3913,7 +3912,7 @@
       }
     },
     "base": {
-      "syncedUntil": 1712062800,
+      "syncedUntil": 1712204428,
       "hourly": {
         "types": [
           "timestamp",
@@ -11116,7 +11115,7 @@
       }
     },
     "bobanetwork": {
-      "syncedUntil": 1712062800,
+      "syncedUntil": 1712204428,
       "hourly": {
         "types": [
           "timestamp",
@@ -16977,7 +16976,7 @@
       }
     },
     "honeypot": {
-      "syncedUntil": 1712062800,
+      "syncedUntil": 1712204428,
       "hourly": {
         "types": [
           "timestamp",
@@ -17473,7 +17472,7 @@
       }
     },
     "degate3": {
-      "syncedUntil": 1712062800,
+      "syncedUntil": 1712204428,
       "hourly": {
         "types": [
           "timestamp",
@@ -21264,7 +21263,7 @@
       }
     },
     "dydx": {
-      "syncedUntil": 1712062800,
+      "syncedUntil": 1712204428,
       "hourly": {
         "types": [
           "timestamp",
@@ -25343,7 +25342,7 @@
       }
     },
     "kroma": {
-      "syncedUntil": 1712062800,
+      "syncedUntil": 1712204428,
       "hourly": {
         "types": [
           "timestamp",
@@ -31204,7 +31203,7 @@
       }
     },
     "linea": {
-      "syncedUntil": 1712062800,
+      "syncedUntil": 1712204428,
       "hourly": {
         "types": [
           "timestamp",
@@ -35061,7 +35060,7 @@
       }
     },
     "loopring": {
-      "syncedUntil": 1712062800,
+      "syncedUntil": 1712204428,
       "hourly": {
         "types": [
           "timestamp",
@@ -40400,7 +40399,7 @@
       }
     },
     "mode": {
-      "syncedUntil": 1712062800,
+      "syncedUntil": 1712204428,
       "hourly": {
         "types": [
           "timestamp",
@@ -43722,7 +43721,7 @@
       }
     },
     "optimism": {
-      "syncedUntil": 1712062800,
+      "syncedUntil": 1712204428,
       "hourly": {
         "types": [
           "timestamp",
@@ -47631,7 +47630,7 @@
       }
     },
     "polygonzkevm": {
-      "syncedUntil": 1712062800,
+      "syncedUntil": 1712204428,
       "hourly": {
         "types": [
           "timestamp",
@@ -53510,7 +53509,7 @@
       }
     },
     "rss3": {
-      "syncedUntil": 1712062800,
+      "syncedUntil": 1712204428,
       "hourly": {
         "types": [
           "timestamp",
@@ -56617,7 +56616,7 @@
       }
     },
     "scroll": {
-      "syncedUntil": 1712062800,
+      "syncedUntil": 1712204428,
       "hourly": {
         "types": [
           "timestamp",
@@ -62424,7 +62423,7 @@
       }
     },
     "zkspace": {
-      "syncedUntil": 1712062800,
+      "syncedUntil": 1712204428,
       "hourly": {
         "types": [
           "timestamp",
@@ -65297,7 +65296,7 @@
       }
     },
     "zksync2": {
-      "syncedUntil": 1712062800,
+      "syncedUntil": 1712204428,
       "hourly": {
         "types": [
           "timestamp",
@@ -69196,7 +69195,7 @@
       }
     },
     "zksync": {
-      "syncedUntil": 1712062800,
+      "syncedUntil": 1712204428,
       "hourly": {
         "types": [
           "timestamp",
@@ -74679,7 +74678,7 @@
       }
     },
     "zora": {
-      "syncedUntil": 1712062800,
+      "syncedUntil": 1712204428,
       "hourly": {
         "types": [
           "timestamp",

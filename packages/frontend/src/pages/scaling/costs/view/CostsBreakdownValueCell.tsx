@@ -22,7 +22,7 @@ interface CellProps {
 
 export function CostsBreakdownValueCell(props: Props) {
   return (
-    <CostsControlsWrapper className={props.className}>
+    <CostsControlsWrapper className={props.className} syncStatus={props.data.syncStatus}>
       <Cell
         details={props.data.last24h}
         type={props.type}

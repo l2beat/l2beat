@@ -1,8 +1,8 @@
 import {
   L2CostsApiChart,
   L2CostsApiChartPoint,
-  L2CostsApiCharts,
   L2CostsApiResponse,
+  L2CostsProjectApiCharts,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { readFileSync } from 'fs-extra'
@@ -51,9 +51,9 @@ const TYPES: L2CostsApiChart['types'] = [
   'blobsUsd',
 ]
 
-function generateMockCharts(withoutBlobs?: boolean): L2CostsApiCharts {
+function generateMockCharts(withoutBlobs?: boolean): L2CostsProjectApiCharts {
   let now = UnixTime.now().toStartOf('hour')
-  const charts: L2CostsApiCharts = {
+  const charts: L2CostsProjectApiCharts = {
     hourly: {
       types: TYPES,
       data: [],
