@@ -23,11 +23,11 @@ import { AmountRecord } from './repositories/AmountRepository'
 export type AmountConfiguration = EscrowEntry | TotalSupplyEntry
 
 export interface AmountServiceDependencies {
-  readonly logger: Logger
   readonly rpcClient: RpcClient
   readonly multicallClient: MulticallClient
   readonly nativeAssetCodec?: NativeAssetMulticallCodec
   readonly erc20Codec: ERC20MulticallCodec
+  readonly logger: Logger
 }
 
 export class AmountService {
@@ -38,10 +38,7 @@ export class AmountService {
     blockNumber: number,
     timestamp: UnixTime,
   ): Promise<AmountRecord[]> {
-    const nativeAssetCodecAtBlock = getNativeCodecForBlock(
-      this.dependencies.nativeAssetCodec,
-      blockNumber,
-    )
+    const nativeAssetCodecAtBlock = this.getNativeAssetCodecAtBlock(blockNumber)
     const [nonMulticall, multicall] = partition(configurations, (c) =>
       isNotSupportedByMulticall(nativeAssetCodecAtBlock, c),
     )
@@ -64,19 +61,27 @@ export class AmountService {
   }
 
   async getNonMulticallAmounts(
-    nonMulticall: Configuration<EscrowEntry>[],
+    configurations: Configuration<EscrowEntry>[],
     blockNumber: number,
   ) {
     return Promise.all(
-      nonMulticall.map(async (configuration) => {
-        const amount = await this.dependencies.rpcClient.getBalance(
-          configuration.properties.escrowAddress,
-          blockNumber,
-        )
+      configurations.map(async (configuration) => {
+        let amount: bigint
+        try {
+          amount = (
+            await this.dependencies.rpcClient.getBalance(
+              configuration.properties.escrowAddress,
+              blockNumber,
+            )
+          ).toBigInt()
+        } catch (_) {
+          this.dependencies.logger.error(`Revert detected ${configuration.id}`)
+          amount = 0n
+        }
 
         return {
           configurationId: +configuration.id,
-          amount: amount.toBigInt(),
+          amount,
         }
       }),
     )
@@ -86,10 +91,7 @@ export class AmountService {
     configurations: Configuration<AmountConfiguration>[],
     blockNumber: number,
   ) {
-    const nativeAssetCodecAtBlock = getNativeCodecForBlock(
-      this.dependencies.nativeAssetCodec,
-      blockNumber,
-    )
+    const nativeAssetCodecAtBlock = this.getNativeAssetCodecAtBlock(blockNumber)
     const erc20Codec = this.dependencies.erc20Codec
 
     const encoded = configurations.map((configuration) => ({
@@ -172,15 +174,13 @@ export class AmountService {
         assertUnreachable(properties)
     }
   }
-}
 
-export function getNativeCodecForBlock(
-  nativeAssetCodec: NativeAssetMulticallCodec | undefined,
-  blockNumber: number,
-) {
-  return nativeAssetCodec && nativeAssetCodec.sinceBlock <= blockNumber
-    ? nativeAssetCodec
-    : undefined
+  getNativeAssetCodecAtBlock(blockNumber: number) {
+    return this.dependencies.nativeAssetCodec &&
+      this.dependencies.nativeAssetCodec.sinceBlock <= blockNumber
+      ? this.dependencies.nativeAssetCodec
+      : undefined
+  }
 }
 
 export function isNotSupportedByMulticall(
