@@ -22,6 +22,7 @@ import { degate2 } from './degate2'
 import { degate3 } from './degate3'
 import { dydx } from './dydx'
 import { eclipse } from './eclipse'
+import { edgeless } from './edgeless'
 import { frame } from './frame'
 import { fraxtal } from './fraxtal'
 import { fuel } from './fuel'
@@ -121,6 +122,7 @@ export const layer2s: Layer2[] = [
   degate3,
   dydx,
   eclipse,
+  edgeless,
   frame,
   fraxtal,
   fuel,
