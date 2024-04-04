@@ -113,14 +113,16 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     }),
   )
 
-  pages.push(
-    getCostsPage(config, {
-      tvlApiResponse,
-      l2CostsApiResponse,
-      activityApiResponse,
-      implementationChange,
-    }),
-  )
+  if (config.features.costsPage && l2CostsApiResponse) {
+    pages.push(
+      getCostsPage(config, {
+        tvlApiResponse,
+        l2CostsApiResponse,
+        activityApiResponse,
+        implementationChange,
+      }),
+    )
+  }
 
   outputPages(pages)
 }

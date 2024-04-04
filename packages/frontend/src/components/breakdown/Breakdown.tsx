@@ -20,6 +20,7 @@ export function Breakdown({ values, gap = 2, className }: BreakdownProps) {
     <div className={cn('flex h-[21px] w-[100px] flex-wrap md:my-0', className)}>
       {groups.map((g, i) => (
         <div
+          key={`breakdown-group-${i}`}
           className={cn(
             'h-full first:rounded-l last:mr-0 last:rounded-r',
             g.className,
@@ -54,7 +55,6 @@ function getBreakdownGroups(values: BreakdownValue[]): BreakdownGroup[] {
     weight: (v.value / totalValue) * 100,
     className: v.className,
   }))
-  console.log('before', groups)
 
   const toFilterOut = groups.filter((g) => g.weight < 2)
   const filteredGroups = groups.filter((g) => g.weight >= 2)
@@ -63,6 +63,6 @@ function getBreakdownGroups(values: BreakdownValue[]): BreakdownGroup[] {
   for (const filteredGroup of filteredGroups) {
     filteredGroup.weight += filteredOutSum / filteredGroups.length
   }
-  console.log('after', filteredGroups)
+
   return filteredGroups
 }

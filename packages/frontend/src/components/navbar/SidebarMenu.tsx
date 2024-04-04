@@ -1,12 +1,12 @@
-import compact from 'lodash/compact'
-import React, { ReactElement } from 'react'
+import React from 'react'
 
+import { ConfigFeatures } from '../../build/config/Config'
+import {
+  getScalingNavigationPages,
+  NavigationPage,
+} from '../../utils/getNavigationPages'
 import { NewItemBadge } from '../badge/NewItemBadge'
-import { ActivityIcon, RiskIcon, SummaryIcon, TvlIcon } from '../icons'
-import { CostsIcon } from '../icons/pages/CostsIcon'
-import { DataAvailabilityIcon } from '../icons/pages/DataAvailabilityIcon'
-import { FinalityIcon } from '../icons/pages/FinalityIcon'
-import { LivenessIcon } from '../icons/pages/LivenessIcon'
+import { RiskIcon, SummaryIcon } from '../icons'
 import { MenuCloseIcon } from '../icons/symbols/MenuCloseIcon'
 import { Logo } from '../Logo'
 import { PlainLink } from '../PlainLink'
@@ -17,85 +17,32 @@ import { NavbarPage } from './types'
 
 export interface SidebarMenuProps {
   selectedPage: NavbarPage
-  showActivity: boolean
-  showFinality: boolean
-  showLiveness: boolean
-  showHiringBadge: boolean
-  showNewGovernancePage: boolean
+  features: ConfigFeatures
   forumLink: string
   socialLinks: SocialLinksProps
 }
 
 interface Section {
   title: string
-  items: SectionItem[]
-}
-
-interface SectionItem {
-  title: string
-  link: string
-  icon: (props: { className: string }) => ReactElement
-  new?: boolean
+  items: NavigationPage[]
 }
 
 function getSections(props: SidebarMenuProps): Section[] {
   return [
     {
       title: 'Scaling',
-      items: compact([
-        {
-          title: 'Summary',
-          link: '/scaling/summary',
-          icon: SummaryIcon,
-        },
-        {
-          title: 'Value Locked',
-          link: '/scaling/tvl',
-          icon: TvlIcon,
-        },
-        {
-          title: 'Risks',
-          link: '/scaling/risk',
-          icon: RiskIcon,
-        },
-        {
-          title: 'Data Availability',
-          link: '/scaling/data-availability',
-          icon: DataAvailabilityIcon,
-        },
-        props.showLiveness && {
-          title: 'Liveness',
-          link: '/scaling/liveness',
-          icon: LivenessIcon,
-        },
-        props.showFinality && {
-          title: 'Finality',
-          link: '/scaling/finality',
-          icon: FinalityIcon,
-        },
-        props.showActivity && {
-          title: 'Activity',
-          link: '/scaling/activity',
-          icon: ActivityIcon,
-        },
-        {
-          title: 'Costs',
-          link: '/scaling/costs',
-          icon: CostsIcon,
-          new: true,
-        },
-      ]),
+      items: getScalingNavigationPages(props.features),
     },
     {
       title: 'Bridges',
       items: [
         {
-          title: 'Summary',
+          fullTitle: 'Summary',
           link: '/bridges/summary',
           icon: SummaryIcon,
         },
         {
-          title: 'Risks',
+          fullTitle: 'Risks',
           link: '/bridges/risk',
           icon: RiskIcon,
         },
@@ -146,13 +93,13 @@ function Sections({ sections }: { sections: Section[] }) {
           </div>
           <ul className="ml-4 flex flex-col gap-4">
             {section.items.map((item) => (
-              <li key={item.title}>
+              <li key={item.fullTitle}>
                 <PlainLink
                   href={item.link}
                   className="flex items-center gap-2 font-medium"
                 >
                   <item.icon className="h-auto w-4" />
-                  {item.title}
+                  {item.fullTitle}
                   {item.new && <NewItemBadge />}
                 </PlainLink>
               </li>
@@ -166,8 +113,7 @@ function Sections({ sections }: { sections: Section[] }) {
 
 interface AdditionalSectionProps {
   forumLink: string
-  showNewGovernancePage: boolean
-  showHiringBadge: boolean
+  features: ConfigFeatures
 }
 function AdditionalSections(props: AdditionalSectionProps) {
   return (
@@ -179,7 +125,7 @@ function AdditionalSections(props: AdditionalSectionProps) {
         <PlainLink href="/donate">Donate</PlainLink>
       </li>
       <li>
-        {props.showNewGovernancePage ? (
+        {props.features.governancePage ? (
           <PlainLink href="/governance">Governance</PlainLink>
         ) : (
           <PlainLink href="https://l2beat.notion.site/Delegate-your-votes-to-L2BEAT-8ffc452bed9a431cb158d1e4e19839e3">
@@ -196,7 +142,7 @@ function AdditionalSections(props: AdditionalSectionProps) {
           href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f"
         >
           Jobs
-          {props.showHiringBadge && <HiringBadge className="ml-2" />}
+          {props.features.hiringBadge && <HiringBadge className="ml-2" />}
         </PlainLink>
       </li>
     </ul>

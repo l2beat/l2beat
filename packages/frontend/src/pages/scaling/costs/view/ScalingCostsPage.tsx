@@ -18,9 +18,6 @@ export interface ScalingCostsPageProps {
   costsView: ScalingCostsViewProps
   navbar: NavbarProps
   footer: FooterProps
-  showActivity: boolean
-  showLiveness: boolean
-  showFinality: boolean
   milestones: Milestone[] | undefined
 }
 
@@ -30,9 +27,7 @@ export function ScalingCostsPage(props: ScalingCostsPageProps) {
       <Navbar {...props.navbar} />
       <PageContent>
         <ScalingNavigationTabs
-          showActivity={props.showActivity}
-          showFinality={props.showFinality}
-          showLiveness={props.showLiveness}
+          features={props.navbar.features}
           selected="costs"
         />
         <main className="mt-4 md:mt-12">

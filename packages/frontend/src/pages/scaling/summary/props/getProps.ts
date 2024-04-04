@@ -27,9 +27,6 @@ export function getProps(
         implementationChange,
       ),
       footer: getFooterProps(config),
-      showActivity: config.features.activity,
-      showLiveness: config.features.liveness,
-      showFinality: config.features.finality,
       milestones: config.milestones,
     },
     wrapper: {

@@ -11,9 +11,6 @@ export function getProps(
 ): Wrapped<ScalingTvlPageProps> {
   return {
     props: {
-      showActivity: config.features.activity,
-      showLiveness: config.features.liveness,
-      showFinality: config.features.finality,
       navbar: getNavbarProps(config, 'scaling'),
       footer: getFooterProps(config),
       tvlView: getScalingTvlView(

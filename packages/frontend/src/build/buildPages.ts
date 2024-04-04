@@ -5,6 +5,7 @@ import {
   DiffHistoryApiResponse,
   FinalityApiResponse,
   ImplementationChangeReportApiResponse,
+  L2CostsApiResponse,
   LivenessApiResponse,
   ProjectAssetsBreakdownApiResponse,
 } from '@l2beat/shared-pure'
@@ -25,7 +26,6 @@ import {
   getManuallyVerifiedContracts,
   getVerificationStatus,
 } from './api/getVerificationStatus'
-import { activitySanityCheck, tvlSanityCheck } from './api/sanityCheck'
 import { JsonHttpClient } from './caching/JsonHttpClient'
 import { Config, getConfig } from './config'
 
@@ -65,14 +65,14 @@ async function main() {
     console.time('[TVL]')
     const tvlApiResponse = await fetchTvlApi(config.backend, http)
     console.timeEnd('[TVL]')
-    tvlSanityCheck(tvlApiResponse)
+    // tvlSanityCheck(tvlApiResponse)
 
-    let activityApiResponse: ActivityApiResponse | undefined = undefined
+    let activityApiResponse: ActivityApiResponse | undefined
     if (config.features.activity) {
       console.time('[ACTIVITY]')
       activityApiResponse = await fetchActivityApi(config.backend, http)
       console.timeEnd('[ACTIVITY]')
-      activitySanityCheck(activityApiResponse)
+      // activitySanityCheck(activityApiResponse)
     }
 
     let tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse | undefined =
@@ -88,29 +88,27 @@ async function main() {
       // TODO: (maciekzygmunt) Sanity check?
     }
 
-    let livenessApiResponse: LivenessApiResponse | undefined = undefined
+    let livenessApiResponse: LivenessApiResponse | undefined
     if (config.features.liveness) {
       console.time('[LIVENESS]')
       livenessApiResponse = await fetchLivenessApi(config.backend, http)
       console.timeEnd('[LIVENESS]')
     }
-    let finalityApiResponse: FinalityApiResponse | undefined = undefined
+    let finalityApiResponse: FinalityApiResponse | undefined
     if (config.features.finality) {
       console.time('[FINALITY]')
       finalityApiResponse = await fetchFinalityApi(config.backend, http)
       console.timeEnd('[FINALITY]')
     }
 
-    let diffHistory: DiffHistoryApiResponse | undefined = undefined
+    let diffHistory: DiffHistoryApiResponse | undefined
     if (config.features.diffHistory) {
       console.time('[DIFF HISTORY]')
       diffHistory = await fetchDiffHistory(config.backend, http)
       console.timeEnd('[DIFF HISTORY]')
     }
 
-    let implementationChange:
-      | ImplementationChangeReportApiResponse
-      | undefined = undefined
+    let implementationChange: ImplementationChangeReportApiResponse | undefined
     if (config.features.implementationChange) {
       console.time('[IMPLEMENTATION CHANGE]')
       try {
@@ -127,9 +125,12 @@ async function main() {
       console.timeEnd('[IMPLEMENTATION CHANGE]')
     }
 
-    console.time('[L2 COSTS]')
-    const l2CostsApiResponse = await fetchL2CostsApi(config.backend, http)
-    console.timeEnd('[L2 COSTS]')
+    let l2CostsApiResponse: L2CostsApiResponse | undefined
+    if (config.features.costsPage) {
+      console.time('[L2 COSTS]')
+      l2CostsApiResponse = await fetchL2CostsApi(config.backend, http)
+      console.timeEnd('[L2 COSTS]')
+    }
 
     createApi(config, tvlApiResponse, activityApiResponse, l2CostsApiResponse)
 

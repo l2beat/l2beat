@@ -22,7 +22,7 @@ export function createApi(
   config: Config,
   tvlApiResponse: TvlApiResponse,
   activityApiResponse: ActivityApiResponse | undefined,
-  l2CostsApiResponse: L2CostsApiResponse,
+  l2CostsApiResponse: L2CostsApiResponse | undefined,
 ) {
   const urlCharts = new Map<string, Charts>()
   const { layer2s, layer3s, bridges } = config
@@ -53,14 +53,16 @@ export function createApi(
     }
   }
 
-  urlCharts.set('costs/combined', l2CostsApiResponse.combined)
-  for (const [projectId, chart] of Object.entries(
-    l2CostsApiResponse.projects,
-  )) {
-    const slug = [...layer2s].find((x) => x.id.toString() === projectId)
-      ?.display.slug
-    if (chart && slug) {
-      urlCharts.set(`costs/${slug}`, chart)
+  if (l2CostsApiResponse) {
+    urlCharts.set('costs/combined', l2CostsApiResponse.combined)
+    for (const [projectId, chart] of Object.entries(
+      l2CostsApiResponse.projects,
+    )) {
+      const slug = [...layer2s].find((x) => x.id.toString() === projectId)
+        ?.display.slug
+      if (chart && slug) {
+        urlCharts.set(`costs/${slug}`, chart)
+      }
     }
   }
 

@@ -26,9 +26,6 @@ export interface ScalingFinalityPageProps {
   diagrams: FinalityDiagram[]
   navbar: NavbarProps
   footer: FooterProps
-  showActivity: boolean
-  showLiveness: boolean
-  showFinality: boolean
 }
 
 export function ScalingFinalityPage(props: ScalingFinalityPageProps) {
@@ -37,9 +34,7 @@ export function ScalingFinalityPage(props: ScalingFinalityPageProps) {
       <Navbar {...props.navbar} />
       <PageContent>
         <ScalingNavigationTabs
-          showActivity={props.showActivity}
-          showFinality={props.showFinality}
-          showLiveness={props.showLiveness}
+          features={props.navbar.features}
           selected="finality"
         />
         <main>

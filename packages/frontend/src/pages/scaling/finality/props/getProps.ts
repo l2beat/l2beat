@@ -17,9 +17,6 @@ export function getProps(
       finalityView: getScalingFinalityView(config.layer2s, pagesData),
       diagrams,
       footer: getFooterProps(config),
-      showActivity: config.features.activity,
-      showLiveness: config.features.liveness,
-      showFinality: config.features.finality,
     },
     wrapper: {
       metadata: getDefaultPageMetadata({
