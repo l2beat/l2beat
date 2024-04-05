@@ -7,10 +7,9 @@ export const zircuit: Layer2 = upcomingL2({
     name: 'Zircuit',
     slug: 'zircuit',
     description:
-      'Zircuit is an optimistic rollup built by Quantstamp team on the OP Stack and utilizes the Halo2 proof system, employing AI to stop malicious transactions at the sequencer level.',
+      'Zircuit aims to develop an universal ZK Rollup based on the Optimism Bedrock architecture, and employing AI to identify and stop malicious transactions at the sequencer level.',
     purposes: ['Universal'],
-    category: 'Optimistic Rollup',
-    provider: 'OP Stack',
+    category: 'ZK Rollup',
     links: {
       websites: ['https://zircuit.com/'],
       apps: ['https://bridge.zircuit.com/'],
