@@ -97,6 +97,7 @@ describe(FinalityIndexer.name, () => {
       const from = start.toNumber()
       const to = start.add(1, 'days').toNumber()
 
+      // https://linear.app/l2beat/issue/L2B-4752/refactor-finalityindexer-logic-to-allow-analyzers-different
       // TODO: refactor tests after uif update
       await finalityIndexer.update(from + 1, to)
       expect(finalityRepository.add).not.toHaveBeenCalled()
