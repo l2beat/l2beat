@@ -19,15 +19,16 @@ export function createTrackedTxsStatusRouter({
     ctx.body = renderTrackedTxsStatusPage({
       data: allConfigs.map((config) => {
         const active =
-          !config.untilTimestampExclusive ||
-          config.untilTimestampExclusive.gte(clock.getLastHour())
+          !!config.lastSyncedTimestamp &&
+          (!config.untilTimestampExclusive ||
+            config.untilTimestampExclusive.gte(clock.getLastHour()))
 
         const healthy =
           active ||
-          Boolean(
+          !!(
             config.lastSyncedTimestamp &&
-              config.untilTimestampExclusive &&
-              config.untilTimestampExclusive.equals(config.lastSyncedTimestamp),
+            config.untilTimestampExclusive &&
+            config.untilTimestampExclusive.equals(config.lastSyncedTimestamp)
           )
 
         return {
