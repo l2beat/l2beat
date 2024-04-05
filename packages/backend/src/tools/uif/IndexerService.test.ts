@@ -3,6 +3,7 @@ import { expect, mockObject } from 'earl'
 import { IndexerConfigurationRepository } from './IndexerConfigurationRepository'
 import { IndexerService } from './IndexerService'
 import { IndexerStateRepository } from './IndexerStateRepository'
+import { json } from '@l2beat/shared-pure'
 
 describe(IndexerService.name, () => {
   describe(IndexerService.prototype.setSafeHeight.name, () => {
@@ -64,7 +65,59 @@ describe(IndexerService.name, () => {
     )
   })
 
-  it(IndexerService.prototype.addSavedConfigurations.name, async () => {})
+  it(IndexerService.prototype.addSavedConfigurations.name, async () => {
+    const indexerConfigurationsRepository =
+      mockObject<IndexerConfigurationRepository>({
+        addManySavedConfigurations: async () => -1,
+      })
+
+    const indexerService = new IndexerService(
+      mockObject<IndexerStateRepository>({}),
+      indexerConfigurationsRepository,
+    )
+
+    await indexerService.addSavedConfigurations(
+      'indexer',
+      [
+        {
+          id: 'a',
+          currentHeight: null,
+          minHeight: 0,
+          maxHeight: null,
+          properties: { a: 1 },
+        },
+        {
+          id: 'b',
+          currentHeight: null,
+          minHeight: 0,
+          maxHeight: null,
+          properties: { b: 1 },
+        },
+      ],
+      (properties: json) => JSON.stringify(properties),
+    )
+
+    expect(
+      indexerConfigurationsRepository.addManySavedConfigurations,
+    ).toHaveBeenOnlyCalledWith([
+      {
+        id: 'a',
+        currentHeight: null,
+        minHeight: 0,
+        maxHeight: null,
+        properties: JSON.stringify({ a: 1 }),
+        indexerId: 'indexer',
+      },
+      {
+        id: 'b',
+        currentHeight: null,
+        minHeight: 0,
+        maxHeight: null,
+        properties: JSON.stringify({ b: 1 }),
+        indexerId: 'indexer',
+      },
+    ])
+  })
 
   it(IndexerService.prototype.getSavedConfigurations.name, async () => {})
 
