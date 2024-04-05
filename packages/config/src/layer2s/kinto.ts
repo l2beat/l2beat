@@ -38,7 +38,7 @@ export const kinto: Layer2 = orbitStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: EthereumAddress('0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a '),
+        address: EthereumAddress('0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a'),
         selector: '0x8f111f3c',
         functionSignature:
           'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
@@ -52,7 +52,7 @@ export const kinto: Layer2 = orbitStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: EthereumAddress('0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a '),
+        address: EthereumAddress('0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a'),
         selector: '0x6f12b0c9',
         functionSignature:
           'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder)',
@@ -66,7 +66,7 @@ export const kinto: Layer2 = orbitStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: EthereumAddress('0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a '),
+        address: EthereumAddress('0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a'),
         selector: '0xe0bc9729',
         functionSignature:
           'function addSequencerL2Batch(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
