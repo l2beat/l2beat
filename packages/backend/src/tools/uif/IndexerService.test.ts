@@ -170,7 +170,39 @@ describe(IndexerService.name, () => {
     ])
   })
 
-  it(IndexerService.prototype.updateSavedConfigurations.name, async () => {})
+  it(IndexerService.prototype.updateSavedConfigurations.name, async () => {
+    const indexerConfigurationsRepository =
+      mockObject<IndexerConfigurationRepository>({
+        updateSavedConfigurations: async () => -1,
+      })
 
-  it(IndexerService.prototype.deleteSavedConfigurations.name, async () => {})
+    const indexerService = new IndexerService(
+      mockObject<IndexerStateRepository>({}),
+      indexerConfigurationsRepository,
+    )
+
+    await indexerService.updateSavedConfigurations('indexer', ['a', 'b'], 123)
+
+    expect(
+      indexerConfigurationsRepository.updateSavedConfigurations,
+    ).toHaveBeenOnlyCalledWith('indexer', ['a', 'b'], 123)
+  })
+
+  it(IndexerService.prototype.deleteSavedConfigurations.name, async () => {
+    const indexerConfigurationsRepository =
+      mockObject<IndexerConfigurationRepository>({
+        deleteSavedConfigurations: async () => -1,
+      })
+
+    const indexerService = new IndexerService(
+      mockObject<IndexerStateRepository>({}),
+      indexerConfigurationsRepository,
+    )
+
+    await indexerService.deleteSavedConfigurations('indexer', ['a', 'b'])
+
+    expect(
+      indexerConfigurationsRepository.deleteSavedConfigurations,
+    ).toHaveBeenOnlyCalledWith('indexer', ['a', 'b'])
+  })
 })

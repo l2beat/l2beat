@@ -1,9 +1,6 @@
 import { SavedConfiguration } from '@l2beat/uif'
 
-import {
-  IndexerConfigurationRecord,
-  IndexerConfigurationRepository,
-} from './IndexerConfigurationRepository'
+import { IndexerConfigurationRepository } from './IndexerConfigurationRepository'
 import { IndexerStateRepository } from './IndexerStateRepository'
 
 export class IndexerService {
