@@ -44,7 +44,8 @@ type L2CostsTrackedTxsConfigEntry = {
 
 const NOW_TO_FULL_HOUR = UnixTime.now().toStartOf('hour')
 const MAX_DAYS = 180
-const RANGES = 2
+const RANGES = 1
+const MAX_RECORDS = 50000
 
 // Amount of gas required for a basic tx
 const OVERHEAD = 21_000
@@ -147,29 +148,45 @@ export class L2CostsController {
             : NOW_TO_FULL_HOUR.add(-end, 'days').toStartOf('day'),
         ]
 
-        const records = await this.l2CostsRepository.getByProjectAndTimeRange(
-          project.projectId,
-          timeRanges,
-        )
-        const recordsWithDetails = await this.makeTransactionCalculations(
-          records,
-          timeRanges,
-        )
-        const { hourly, daily } = this.aggregateL2Costs(
-          recordsWithDetails,
-          combinedHourlyMap,
-          combinedDailyMap,
-        )
+        const { count } =
+          await this.l2CostsRepository.getCountByProjectAndTimeRange(
+            project.projectId,
+            timeRanges,
+          )
 
-        const projectData = projects[project.projectId.toString()]
-        if (projectData) {
-          hourly.data = [...projectData.hourly.data, ...hourly.data]
-          daily.data = [...projectData.daily.data, ...daily.data]
-        }
-        projects[project.projectId.toString()] = {
-          syncedUntil,
-          hourly,
-          daily,
+        for (
+          let rangeIndex = 0;
+          rangeIndex < Math.ceil(count / MAX_RECORDS);
+          rangeIndex++
+        ) {
+          const records =
+            await this.l2CostsRepository.getByProjectAndTimeRangePaginated(
+              project.projectId,
+              timeRanges,
+              rangeIndex * MAX_RECORDS,
+              MAX_RECORDS,
+            )
+          const recordsWithDetails = await this.makeTransactionCalculations(
+            records,
+            timeRanges,
+          )
+
+          const { hourly, daily } = this.aggregateL2Costs(
+            recordsWithDetails,
+            combinedHourlyMap,
+            combinedDailyMap,
+          )
+
+          const projectData = projects[project.projectId.toString()]
+          if (projectData) {
+            hourly.data = [...projectData.hourly.data, ...hourly.data]
+            daily.data = [...projectData.daily.data, ...daily.data]
+          }
+          projects[project.projectId.toString()] = {
+            syncedUntil,
+            hourly,
+            daily,
+          }
         }
       }
     }
