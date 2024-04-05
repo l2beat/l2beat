@@ -49,7 +49,13 @@ export function blobsToData(blobs: Uint8Array[]): Uint8Array {
     offset += val.length
   }
 
-  const [decoded] = rlpDecodePartial(rlpData)
+  // We use rlpDecodePartial here because theres trailing zeros in the data that we want to ignore.
+  const [decoded, rest] = rlpDecodePartial(rlpData)
   assert(decoded instanceof Uint8Array, 'Invalid decoded type')
+  assert(
+    rest.every((byte) => byte === 0),
+    'Expected rest to be all zeros',
+  )
+
   return decoded
 }

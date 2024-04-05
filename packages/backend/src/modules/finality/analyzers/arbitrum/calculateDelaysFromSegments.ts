@@ -1,9 +1,10 @@
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
 
+import { RlpSerializable } from '../../utils/rlpDecode'
 import { byteArrToNumber } from './utils'
 
 export function calculateDelaysFromSegments(
-  segments: unknown[],
+  segments: RlpSerializable[],
   submissionTimestamp: number,
 ) {
   let timestamp = 0

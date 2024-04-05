@@ -1,12 +1,14 @@
 import { assert } from '@l2beat/shared-pure'
 import zlib from 'zlib'
 
-import { rlpDecode } from '../../utils/rlpDecode'
+import { rlpDecode, RlpSerializable } from '../../utils/rlpDecode'
 import { byteArrFromHexStr } from '../opStack/utils'
 import { blobsToData } from './blobsToData'
 import { numberToByteArr } from './utils'
 
-export function getSegments(relevantBlobs: { blob: string }[]) {
+export function getSegments(
+  relevantBlobs: { blob: string }[],
+): RlpSerializable[] {
   const blobs = relevantBlobs.map(({ blob }) => byteArrFromHexStr(blob))
   const payload = blobsToData(blobs)
   const decompressed = decompressPayload(payload)
@@ -17,8 +19,13 @@ export function getSegments(relevantBlobs: { blob: string }[]) {
   return segments
 }
 
+const BROTLI_COMPRESSION_TYPE = 0x00
 export function decompressPayload(payload: Uint8Array): Uint8Array {
-  // todo: we should check the first byte. It's probably the compression type.
+  const compressionType = payload[0]
+  assert(
+    compressionType === BROTLI_COMPRESSION_TYPE,
+    `Expected compression type to be ${BROTLI_COMPRESSION_TYPE}, got ${compressionType}`,
+  )
   const data = payload.slice(1)
   const decompressedData = zlib.brotliDecompressSync(data)
   return Uint8Array.from(decompressedData)
