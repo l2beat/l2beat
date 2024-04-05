@@ -24,6 +24,7 @@ export const edgeless: Layer2 = underReviewL2({
         'https://twitter.com/EdgelessNetwork',
         'https://discord.gg/edgeless',
         'https://paragraph.xyz/@edgeless',
+        'https://t.me/+f8yhoOg-4cNhYWEx'
       ],
     },
   },
