@@ -12,6 +12,9 @@ export function getSegments(
   const blobs = relevantBlobs.map(({ blob }) => byteArrFromHexStr(blob))
   const payload = blobsToData(blobs)
   const decompressed = decompressPayload(payload)
+  // I do not understand why this is necessary, but it is
+  // My guess is that the shape of the data is always the same,
+  // so it's an optimization technique to save couple of bytes
   const rlpEncoded = concatWithLengthForRlp(decompressed)
   const segments = rlpDecode(rlpEncoded)
   assert(Array.isArray(segments), 'Expected segments to be an array')
