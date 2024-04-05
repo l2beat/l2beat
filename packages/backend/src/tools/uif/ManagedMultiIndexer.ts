@@ -9,18 +9,18 @@ import {
 
 import { IndexerService } from './IndexerService'
 
-export interface ManagedMultiIndexerOptions<T, U> extends IndexerOptions {
+export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
   parents: Indexer[]
   id: string
   indexerService: IndexerService
   configurations: Configuration<T>[]
-  encode: (value: T) => U
-  decode: (json: U) => T
+  encode: (value: T) => string
+  decode: (blob: string) => T
   logger: Logger
 }
 
-export abstract class MangedMultiIndexer<T, U> extends MultiIndexer<T> {
-  constructor(public readonly options: ManagedMultiIndexerOptions<T, U>) {
+export abstract class MangedMultiIndexer<T> extends MultiIndexer<T> {
+  constructor(public readonly options: ManagedMultiIndexerOptions<T>) {
     super(options.logger, options.parents, options.configurations, options)
   }
 
@@ -80,7 +80,7 @@ export abstract class MangedMultiIndexer<T, U> extends MultiIndexer<T> {
     const toRemove = Array.from(this.savedHeights.keys()).filter(
       (id) => !configurations.some((config) => config.id === id),
     )
-    await this.options.indexerService.removeSavedConfigurations(
+    await this.options.indexerService.deleteSavedConfigurations(
       this.options.id,
       toRemove,
     )

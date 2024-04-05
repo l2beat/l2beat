@@ -12,6 +12,7 @@ import { Database } from '../../peripherals/database/Database'
 export interface IndexerStateRecord {
   indexerId: string
   safeHeight: number
+  // TODO: phase out minTimestamp
   minTimestamp?: UnixTime
 }
 
