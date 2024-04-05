@@ -17,22 +17,26 @@ export function createTrackedTxsStatusRouter({
     const allConfigs = await repository.getAll()
     const unusedIds = await repository.findUnusedConfigurationsIds()
     ctx.body = renderTrackedTxsStatusPage({
-      data: allConfigs.map((config) => ({
-        ...config,
-        // active if:
-        // - untilTimestampExclusive is not set
-        // - untilTimestampExclusive is greater than the last hour
-        // - untilTimestampExclusive is equal to the last synced timestamp (so we synced everything)
-        active: Boolean(
+      data: allConfigs.map((config) => {
+        const active =
           !config.untilTimestampExclusive ||
-            config.untilTimestampExclusive.gte(clock.getLastHour()) ||
-            (config.lastSyncedTimestamp &&
-              config.untilTimestampExclusive.equals(
-                config.lastSyncedTimestamp,
-              )),
-        ),
-        unused: unusedIds.includes(config.id),
-      })),
+          config.untilTimestampExclusive.gte(clock.getLastHour())
+
+        const healthy =
+          active ||
+          Boolean(
+            config.lastSyncedTimestamp &&
+              config.untilTimestampExclusive &&
+              config.untilTimestampExclusive.equals(config.lastSyncedTimestamp),
+          )
+
+        return {
+          ...config,
+          active,
+          healthy,
+          unused: unusedIds.includes(config.id),
+        }
+      }),
     })
   })
 
