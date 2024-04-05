@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x2d47f405a658acbfa64515a3572659d31fdc3fae
+
+# Diff at Thu, 28 Mar 2024 11:26:29 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@21187e63b9b90823a55c461c331868a470ce17eb block: 19167749
+- current block number: 19532302
+
+## Description
+
+Update discovery to include the multisig threshold.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19167749 (main branch discovery), not current.
+
+```diff
+    contract BridgeAdminMultiSig (0x0110B1B231aA3b96a94c900eb3056297526AB725) {
+    +++ description: None
+      upgradeability.threshold:
++        "3 of 4 (75%)"
+    }
+```
+
+```diff
+    contract ZkFairOwner (0x8933Fa0A97f39cd38f56b1887d5cc56cF04F3A88) {
+    +++ description: None
+      upgradeability.threshold:
++        "3 of 4 (75%)"
+    }
+```
+
+```diff
+    contract ZkFairAdmin (0xcd14BE1959928BB8c160D11817E2BE2129e2F25F) {
+    +++ description: None
+      upgradeability.threshold:
++        "3 of 4 (75%)"
+    }
+```
+
 Generated with discovered.json: 0xa2429a0f47ee517399aca4dfbfda0b72c5610ea8
 
 # Diff at Fri, 12 Jan 2024 15:03:34 GMT:

@@ -24,7 +24,8 @@
       "ignoreInWatchMode": [
         "currentPeriodAmountInWei",
         "currentL2StoredL1MessageNumber",
-        "currentL2StoredL1RollingHash"
+        "currentL2StoredL1RollingHash",
+        "currentFinalizedShnarf"
       ],
       "ignoreMethods": [
         "stateRootHashes",

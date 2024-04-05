@@ -1,7 +1,7 @@
 {
   "name": "aptos",
   "chain": "ethereum",
-  "blockNumber": 19168345,
+  "blockNumber": 19531425,
   "configHash": "0x6d3ba500f9e18492dde71766f7b8c6d0490b243723f0b0fc9f69d49a1ec55561",
   "version": 3,
   "contracts": [
@@ -83,7 +83,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "3 of 6 (50%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1647498793,
@@ -99,7 +100,7 @@
           "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0"
         ],
         "getThreshold": 3,
-        "nonce": 668,
+        "nonce": 680,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -132,7 +133,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "2 of 5 (40%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1648243585,
@@ -147,7 +149,7 @@
           "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
         ],
         "getThreshold": 2,
-        "nonce": 65,
+        "nonce": 79,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

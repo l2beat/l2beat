@@ -6,6 +6,7 @@ import {
   StageConfig,
 } from '@l2beat/config'
 import {
+  ImplementationChangeReportApiResponse,
   LivenessApiResponse,
   LivenessDetails,
   TvlApiResponse,
@@ -13,6 +14,7 @@ import {
 export interface LivenessPagesData {
   tvlApiResponse: TvlApiResponse
   livenessApiResponse: LivenessApiResponse
+  implementationChange?: ImplementationChangeReportApiResponse
 }
 
 export interface ScalingLivenessViewEntry {
@@ -23,6 +25,7 @@ export interface ScalingLivenessViewEntry {
   dataAvailabilityMode: DataAvailabilityMode | undefined
   provider: Layer2Provider | undefined
   warning: string | undefined
+  hasImplementationChanged?: boolean
   redWarning: string | undefined
   purposes: ScalingProjectPurpose[]
   stage: StageConfig

@@ -1,7 +1,7 @@
 {
   "name": "lzomnichain",
   "chain": "arbitrum",
-  "blockNumber": 190294110,
+  "blockNumber": 197126643,
   "configHash": "0x06cd600f8deaf37b56eec659f0d629230546a5a14e527a5d9e681ec67bcdb389",
   "version": 3,
   "contracts": [
@@ -1345,7 +1345,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
-        "modules": []
+        "modules": [],
+        "threshold": "2 of 6 (33%)"
       },
       "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
       "sinceTimestamp": 1648074158,
@@ -1361,7 +1362,7 @@
           "0xf1f5E3777a3ADBe6f3289AD6b21eae6427dfb553"
         ],
         "getThreshold": 2,
-        "nonce": 83,
+        "nonce": 85,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"

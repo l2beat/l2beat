@@ -9,7 +9,7 @@ import { EXITS } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
-import { opStack } from './templates/opStack'
+import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('blast')
@@ -32,7 +32,7 @@ const l2OutputOracleImplementation =
 assert(optimismPortalImplementation, 'OptimismPortal implementation not found')
 assert(l2OutputOracleImplementation, 'L2OutputOracle implementation not found')
 
-export const blast: Layer2 = opStack({
+export const blast: Layer2 = opStackL2({
   discovery,
   display: {
     name: 'Blast',
@@ -203,6 +203,13 @@ export const blast: Layer2 = opStack({
       link: 'https://x.com/Blast_L2/status/1763316176263008551?s=20',
       date: '2024-02-29T00:00:00Z',
       description: 'Blast Network is live on mainnet.',
+    },
+    {
+      name: 'Blast upgrades to censor exploiter',
+      link: 'https://x.com/miszke_eth/status/1772946372309737970',
+      date: '2024-03-26T00:00:00Z',
+      description:
+        'The Munchables exploiter is prohibited from forcing transactions.',
     },
   ],
   roleOverrides: {

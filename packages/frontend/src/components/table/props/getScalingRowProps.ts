@@ -10,6 +10,7 @@ interface ScalingTableEntry {
   isVerified?: boolean
   isUpcoming?: boolean
   showProjectUnderReview?: boolean
+  hasImplementationChanged?: boolean
 }
 
 type ScalingRowType =

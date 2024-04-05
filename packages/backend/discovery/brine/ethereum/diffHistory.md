@@ -1,4 +1,4 @@
-Generated with discovered.json: 0xfcd2c88722f38f799b154562423b25573d6af07a
+Generated with discovered.json: 0xb5850ddd61b2f05649c4fc15cdc1a99a42517d3d
 
 # Diff at Wed, 06 Mar 2024 14:41:28 GMT:
 
@@ -43,7 +43,7 @@ Generated with discovered.json: 0x0cd8c4cfa2d1f43c4656c004415ecaf6cdd32409
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Update discovery to include the multisig threshold.
 
 ## Initial discovery
 

@@ -1,0 +1,368 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "Governance",
+      "values": {
+        "defaultFactory": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "networkGovernor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "tokenGovernance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalTokens": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "validators": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Multisig 1",
+      "values": {
+        "NAME": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getModules": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Multisig 2",
+      "values": {
+        "NAME": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getModules": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Multisig 3",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "NftFactory",
+      "values": {
+        "baseURI": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Proxy",
+      "values": {}
+    },
+    {
+      "name": "TokenGovernance",
+      "values": {
+        "governance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "listingCap": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "listingFee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "listingFeeToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "tokenListers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "treasury": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "UpgradeGatekeeper",
+      "values": {
+        "getMaster": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mainContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "managedContracts": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nextTargets": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "noticePeriodFinishTimestamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "upgradeStatus": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "versionId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Verifier",
+      "values": {}
+    },
+    {
+      "name": "ZkSync",
+      "values": {
+        "UPGRADE_NOTICE_PERIOD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "approvedUpgradeNoticePeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "exodusMode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getNoticePeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isReadyForUpgrade": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "revertedBlocks": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "securityCouncilMembers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "securityCouncilThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "upgradePreparationActivationTime": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "upgradePreparationActive": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "upgradeStartTimestamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "verifier": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ZkSync Multisig",
+      "values": {
+        "NAME": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getModules": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}

@@ -1,7 +1,7 @@
-import { upcoming } from './templates/upcoming'
+import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
-export const xchain: Layer2 = upcoming({
+export const xchain: Layer2 = upcomingL2({
   id: 'xchain',
   display: {
     name: 'XCHAIN',

@@ -1,3 +1,132 @@
+Generated with discovered.json: 0x7e3f4209d09895d0fb928b880dc0d9d819ebf187
+
+# Diff at Wed, 03 Apr 2024 10:10:46 GMT:
+
+- author: maciekop (<maciej.opala@l2beat.com>)
+- comparing to: main@34d9eb99e785ccac44323b84405d78f9783b5cc2 block: 19538689
+- current block number: 19574554
+
+## Description
+
+Rediscovery with new field added (upgradeability.threshold)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19538689 (main branch discovery), not current.
+
+```diff
+    contract AdminMultisig (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      upgradeability.threshold:
++        "4 of 8 (50%)"
+    }
+```
+
+Generated with discovered.json: 0x48387c3e14cc391fc0d151576e0a384601cfacae
+
+# Diff at Tue, 26 Mar 2024 16:10:41 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@4e8ac43fb779e7ec6cf93295564b2550a80d90ad block: 19319390
+- current block number: 19519696
+
+## Description
+
+This is an implementation upgrade that adds the ability to use blobs for data submission and deprecates the ability to finalize uncompressed blocks among smaller changes.
+
+### LineaRollup
+
+Main addition here is the submitBlobData() function and its dependencies related to kzg commitment / point evaluation.
+Compressed blocks can still be finalized without proof.
+
+### ZkEvmV2
+
+The function for finalizing uncompressed blocks has been removed.
+
+### PlonkVerifierForDataAggregation updated
+
+The new verifier is the same as 0xfB0C26A89833762b65098dD66b6Ae04b34D153be but with 4 changed constants: VK_QL_COM_X, VK_QL_COM_Y, VK_QK_COM_X, VK_QK_COM_Y.
+The old one was removed from the zkEVM contract. (proof type 0)
+
+### Removed libraries
+
+TransactionDecoder, Rlp and codec libraries have been removed due to being related to raw transaction decoding when finalizing uncompressed blocks.
+
+## Watched changes
+
+```diff
+    contract zkEVM (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0xAA4b3a9515c921996Abe7930bF75Eff7466a4457"
++        "0x934Dd4C63E285551CEceF8459103554D0096c179"
+      implementations.0:
+-        "0xAA4b3a9515c921996Abe7930bF75Eff7466a4457"
++        "0x934Dd4C63E285551CEceF8459103554D0096c179"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.1:
+-        "0x1111111111111111111111111111111111111111"
++        "0x8AB455030E1Ea718e445f423Bb8D993dcAd24Cc4"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.0:
+-        "0xfB0C26A89833762b65098dD66b6Ae04b34D153be"
++        "0x1111111111111111111111111111111111111111"
+      values.GENESIS_SHNARF:
++        "0x4f64fe1ce613546d34d666d8258c13c6296820fd13114d784203feb91276e838"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierForDataAggregation (0xfB0C26A89833762b65098dD66b6Ae04b34D153be)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierForMultiTypeDataAggregation (0x8AB455030E1Ea718e445f423Bb8D993dcAd24Cc4)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../meta.txt => /dev/null                          |   2 -
+ .../PlonkVerifierForMultiTypeDataAggregation.sol}  |  12 +-
+ .../meta.txt                                       |   2 +
+ .../access/AccessControlUpgradeable.sol            |  12 +-
+ .../security/ReentrancyGuardUpgradeable.sol        |   2 +-
+ .../utils/ContextUpgradeable.sol                   |   8 +-
+ .../utils/introspection/ERC165Upgradeable.sol      |   2 +-
+ .../zkEVM/implementation/contracts/LineaRollup.sol | 288 +++++++++++++------
+ .../zkEVM/implementation/contracts/ZkEvmV2.sol     | 188 +-----------
+ .../contracts/interfaces/IGenericErrors.sol        |   2 +-
+ .../contracts/interfaces/IMessageService.sol       |  16 +-
+ .../contracts/interfaces/IPauseManager.sol         |  22 +-
+ .../contracts/interfaces/IRateLimiter.sol          |  47 +--
+ .../contracts/interfaces/l1/IL1MessageManager.sol  |  16 +-
+ .../interfaces/l1/IL1MessageManagerV1.sol          |  10 +-
+ .../contracts/interfaces/l1/IL1MessageService.sol  |  45 ++-
+ .../contracts/interfaces/l1/ILineaRollup.sol       |  99 ++++++-
+ .../contracts/interfaces/l1/IPlonkVerifier.sol     |   2 +-
+ .../contracts/interfaces/l1/IZkEvmV2.sol           |  69 +----
+ .../zkEVM/implementation/contracts/lib/Utils.sol   |   2 +-
+ .../messageService/l1/L1MessageManager.sol         |   5 +-
+ .../messageService/l1/L1MessageService.sol         |  33 +--
+ .../messageService/l1/v1/L1MessageManagerV1.sol    |  49 +---
+ .../messageService/l1/v1/L1MessageServiceV1.sol    |   7 +-
+ .../messageService/lib/Codec.sol => /dev/null      |  28 --
+ .../contracts/messageService/lib/PauseManager.sol  |   6 +-
+ .../contracts/messageService/lib/RateLimiter.sol   |  12 +-
+ .../messageService/lib/Rlp.sol => /dev/null        | 319 ---------------------
+ .../lib/SparseMerkleTreeVerifier.sol               |   2 +-
+ .../lib/TransactionDecoder.sol => /dev/null        |  94 ------
+ .../zkEVM/implementation/meta.txt                  |   2 +-
+ 31 files changed, 457 insertions(+), 946 deletions(-)
+```
+
 Generated with discovered.json: 0xf601728a00dd36fda7e9e790618e91b1f1b4b7a2
 
 # Diff at Tue, 27 Feb 2024 14:09:42 GMT:

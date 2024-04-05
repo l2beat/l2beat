@@ -1,7 +1,7 @@
 {
   "name": "deversifi",
   "chain": "ethereum",
-  "blockNumber": 19485578,
+  "blockNumber": 19531530,
   "configHash": "0x39749206ac0db43403f2640bed50d943aa67053425f3d071cb5631ec668fe616",
   "version": 3,
   "contracts": [
@@ -63,7 +63,7 @@
       "upgradeability": {
         "type": "StarkWare diamond",
         "implementation": "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
-        "upgradeDelay": 1209600,
+        "upgradeDelay": 259200,
         "isFinal": false,
         "facets": {
           "StarkWare_AllVerifiers_2022_2": "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
@@ -93,8 +93,8 @@
         "DEPOSIT_CANCEL_DELAY": 172800,
         "FREEZE_GRACE_PERIOD": 604800,
         "getGlobalConfigCode": 1,
-        "getLastBatchId": 5910,
-        "getOrderRoot": "1344538044936261408820204398236071298556883470031989549654605489467430208218",
+        "getLastBatchId": 5988,
+        "getOrderRoot": "2800966195181113203862263614905461769654313788769296749188972887659618583353",
         "getOrderTreeHeight": 251,
         "getRegisteredAvailabilityVerifiers": [
           "0x28780349A33eEE56bb92241bAAB8095449e24306"
@@ -104,9 +104,9 @@
         ],
         "getRollupTreeHeight": 31,
         "getRollupVaultRoot": "207095555137602068174310225607660532858489993604082708018689543482077973596",
-        "getSequenceNumber": 5885,
+        "getSequenceNumber": 5963,
         "getValidiumTreeHeight": 31,
-        "getValidiumVaultRoot": "545557913321989155394981256226338004358819368608097837892639070924144913360",
+        "getValidiumVaultRoot": "2792765645474964689232783993535048572078041291612276456027180776853900333145",
         "implementation": "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
         "isFrozen": false,
         "isNotFinalized": true,
@@ -131,7 +131,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "4 of 6 (67%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1683214307,
@@ -147,7 +148,7 @@
           "0xe0fE5b38C52A83308bEC9242d768441025DBB4D8"
         ],
         "getThreshold": 4,
-        "nonce": 21,
+        "nonce": 22,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

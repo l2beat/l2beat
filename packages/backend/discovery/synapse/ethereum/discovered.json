@@ -1,7 +1,7 @@
 {
   "name": "synapse",
   "chain": "ethereum",
-  "blockNumber": 19467277,
+  "blockNumber": 19532299,
   "configHash": "0xf9095692a7adaa54b66d921fdf4d38dd052b4b9e06323a767734c08937ed6079",
   "version": 3,
   "contracts": [
@@ -78,7 +78,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": ["0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134"]
+        "modules": ["0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134"],
+        "threshold": "2 of 3 (67%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1628970480,
@@ -91,7 +92,7 @@
           "0x0d745Ad687F2b1E1941569f09f612F60ad4aD5BC"
         ],
         "getThreshold": 2,
-        "nonce": 802,
+        "nonce": 804,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

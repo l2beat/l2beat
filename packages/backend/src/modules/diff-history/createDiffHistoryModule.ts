@@ -15,7 +15,6 @@ import { TaskQueue } from '../../tools/queue/TaskQueue'
 import { ApplicationModule } from '../ApplicationModule'
 import { createDiscoveryRunner } from '../update-monitor/createDiscoveryRunner'
 import { ProjectDiscoverer } from '../update-monitor/ProjectDiscoverer'
-import { DiscoveryCacheRepository } from '../update-monitor/repositories/DiscoveryCacheRepository'
 import { DiscoveryHistoryRepository } from '../update-monitor/repositories/DiscoveryHistoryRepository'
 import { DiffHistoryController } from './api/DiffHistoryController'
 import { createDiffHistoryRouter } from './api/DiffHistoryRouter'
@@ -45,7 +44,7 @@ export function createDiffHistoryModule(
       const runner = createDiscoveryRunner(
         discoveryHttpClient,
         configReader,
-        peripherals.getRepository(DiscoveryCacheRepository),
+        peripherals,
         discoveryLogger,
         chainConfig,
       )
