@@ -33,6 +33,9 @@ const meta: Meta<typeof Navbar> = {
       twitterLink: '#',
       youTubeLink: '#',
     },
+    features: getFeatures({
+      banner: false,
+    }),
   },
 }
 export default meta
