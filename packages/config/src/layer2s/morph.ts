@@ -1,7 +1,7 @@
-import { upcoming } from './templates/upcoming'
+import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
-export const morph: Layer2 = upcoming({
+export const morph: Layer2 = upcomingL2({
   id: 'morph',
   display: {
     name: 'Morph',

@@ -382,7 +382,10 @@ export const starknet: Layer2 = {
     finality: 'coming soon',
     trackedTxs: [
       {
-        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
         query: {
           formula: 'sharpSubmission',
           sinceTimestampInclusive: new UnixTime(1636978914),
@@ -393,7 +396,10 @@ export const starknet: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
         query: {
           formula: 'sharpSubmission',
           sinceTimestampInclusive: new UnixTime(1702921247),
@@ -404,7 +410,10 @@ export const starknet: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
         query: {
           formula: 'sharpSubmission',
           sinceTimestampInclusive: new UnixTime(1704855731),
@@ -415,7 +424,10 @@ export const starknet: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
         query: {
           formula: 'sharpSubmission',
           sinceTimestampInclusive: new UnixTime(1710252995),
@@ -426,7 +438,10 @@ export const starknet: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
         query: {
           formula: 'sharpSubmission',
           sinceTimestampInclusive: new UnixTime(1710625271),
@@ -436,7 +451,10 @@ export const starknet: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
@@ -449,7 +467,10 @@ export const starknet: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
@@ -459,6 +480,59 @@ export const starknet: Layer2 = {
           functionSignature:
             'function updateStateKzgDA(uint256[] programOutput, bytes kzgProof)',
           sinceTimestampInclusive: new UnixTime(1710252995),
+        },
+      },
+      {
+        uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xFD14567eaf9ba941cB8c8a94eEC14831ca7fD1b4',
+          ),
+          selector: '0x5578ceae',
+          functionSignature:
+            'function registerContinuousMemoryPage(uint256 startAddr,uint256[] values,uint256 z,uint256 alpha,uint256 prime)',
+          sinceTimestampInclusive: new UnixTime(1678095635),
+          untilTimestampExclusive: new UnixTime(1706789063),
+        },
+      },
+      {
+        uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x40864568f679c10aC9e72211500096a5130770fA',
+          ),
+          selector: '0x5578ceae',
+          functionSignature:
+            'function registerContinuousMemoryPage(uint256 startAddr,uint256[] values,uint256 z,uint256 alpha,uint256 prime)',
+          sinceTimestampInclusive: new UnixTime(1706789063),
+        },
+      },
+      {
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xDEf8A3b280A54eE7Ed4f72E1c7d6098ad8df44fb',
+          ),
+          selector: '0xe85a6a28',
+          functionSignature:
+            'function verifyFRI(uint256[] proof,uint256[] friQueue,uint256 evaluationPoint,uint256 friStepSize,uint256 expectedRoot)',
+          sinceTimestampInclusive: new UnixTime(1706772791),
+        },
+      },
+      {
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x634DCf4f1421Fc4D95A968A559a450ad0245804c',
+          ),
+          selector: '0x3fe317a6',
+          functionSignature:
+            'function verifyMerkle(uint256[] merkleView,uint256[] initialMerkleQueue,uint256 height,uint256 expectedRoot)',
+          sinceTimestampInclusive: new UnixTime(1706767355),
         },
       },
     ],

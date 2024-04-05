@@ -1,5 +1,9 @@
 import { Bridge, Layer2 } from '@l2beat/config'
-import { TvlApiResponse, VerificationStatus } from '@l2beat/shared-pure'
+import {
+  ImplementationChangeReportApiResponse,
+  TvlApiResponse,
+  VerificationStatus,
+} from '@l2beat/shared-pure'
 
 import { orderByTvl } from '../../../../utils/orderByTvl'
 import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
@@ -14,7 +18,7 @@ export function getBridgesSummaryView(
   projects: (Bridge | Layer2)[],
   pagesData: BridgesPagesData,
 ): BridgesSummaryViewProps {
-  const { tvlApiResponse, verificationStatus } = pagesData
+  const { tvlApiResponse, verificationStatus, implementationChange } = pagesData
 
   const included = projects.filter((project) => !project.isUpcoming)
   const ordered = orderByTvl(included, tvlApiResponse)
@@ -30,6 +34,7 @@ export function getBridgesSummaryView(
         bridgesTvl,
         combinedTvl,
         verificationStatus,
+        implementationChange,
       ),
     ),
   }
@@ -41,6 +46,7 @@ export function getBridgesSummaryViewEntry(
   bridgesTvl: number,
   combinedTvl: number,
   verificationStatus: VerificationStatus,
+  implementationChange: ImplementationChangeReportApiResponse | undefined,
 ): BridgesSummaryViewEntry {
   const associatedTokens = project.config.associatedTokens ?? []
   const apiProject = tvlApiResponse.projects[project.id.toString()]
@@ -50,6 +56,8 @@ export function getBridgesSummaryViewEntry(
     stats = getTvlStats(apiProject, project.display.name, associatedTokens)
   }
   const isVerified = verificationStatus.projects[project.id.toString()]
+  const hasImplementationChanged =
+    !!implementationChange?.projects[project.id.toString()]
 
   return {
     type: project.type,
@@ -59,6 +67,7 @@ export function getBridgesSummaryViewEntry(
     warning: project.display.warning,
     isArchived: project.isArchived,
     isVerified,
+    hasImplementationChanged,
     showProjectUnderReview: isAnySectionUnderReview(project),
     tvl: stats
       ? {

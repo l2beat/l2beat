@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { range } from 'lodash'
 
 import { describeDatabase } from '../../../../../test/database'
 import { TrackedTxsConfigsRepository } from '../../../repositories/TrackedTxsConfigsRepository'
@@ -99,25 +100,81 @@ describeDatabase(L2CostsRepository.name, (database) => {
     })
   })
 
-  describe(L2CostsRepository.prototype.getByProjectAndTimeRange.name, () => {
-    it('should return all rows for given project id and since timestamp', async () => {
-      const results = await repository.getByProjectAndTimeRange(
-        ProjectId('project-2'),
-        [START, START.add(1, 'hours')],
-      )
+  describe(
+    L2CostsRepository.prototype.findCountByProjectAndTimeRange.name,
+    () => {
+      it('should return count of rows for given project id and range timestamp', async () => {
+        const results = await repository.findCountByProjectAndTimeRange(
+          ProjectId('project-2'),
+          [START.add(-2, 'hours'), START.add(1, 'hours')],
+        )
 
-      expect(results).toEqualUnsorted([DATA[0]])
-    })
+        expect(results).toEqual({ count: 2 })
+      })
 
-    it('should return all rows for given project id and since timestamp with exclusive to', async () => {
-      const results = await repository.getByProjectAndTimeRange(
-        ProjectId('project-2'),
-        [START.add(-1, 'days'), START],
-      )
+      it('should return count of rows equal 0 for given project id and range timestamp', async () => {
+        const results = await repository.findCountByProjectAndTimeRange(
+          ProjectId('project-2'),
+          [START.add(1, 'hours'), START.add(2, 'hours')],
+        )
 
-      expect(results).toEqualUnsorted([DATA[2]])
-    })
-  })
+        expect(results).toEqual({ count: 0 })
+      })
+    },
+  )
+
+  describe(
+    L2CostsRepository.prototype.getByProjectAndTimeRangePaginated.name,
+    () => {
+      it('should return limited number of rows', async () => {
+        const trackedTxId = TrackedTxId.random()
+        await configRepository.deleteAll()
+        await configRepository.addMany([
+          {
+            id: trackedTxId,
+            projectId: ProjectId('project-1'),
+            type: 'liveness',
+            sinceTimestampInclusive: START,
+            debugInfo: '',
+          },
+        ])
+        await repository.deleteAll()
+        const DATA = range(7).map((i) => ({
+          timestamp: START.add(-i, 'hours'),
+          txHash: '0x1',
+          trackedTxId: trackedTxId,
+          data: {
+            type: 2 as const,
+            gasUsed: 100,
+            gasPrice: 1,
+            calldataLength: 100,
+            calldataGasUsed: 100,
+          },
+        }))
+        await repository.addMany(DATA)
+
+        const results = await repository.getByProjectAndTimeRangePaginated(
+          ProjectId('project-1'),
+          [START.add(-7, 'hours'), START.add(1, 'hours')],
+          0,
+          5,
+        )
+
+        expect(results).toEqualUnsorted(DATA.slice(2, 8))
+      })
+
+      it('should return all rows for given project id and since timestamp with exclusive to', async () => {
+        const results = await repository.getByProjectAndTimeRangePaginated(
+          ProjectId('project-2'),
+          [START.add(-1, 'days'), START],
+          0,
+          5,
+        )
+
+        expect(results).toEqual([DATA[2]])
+      })
+    },
+  )
 
   describe(L2CostsRepository.prototype.getAll.name, () => {
     it('should return all rows', async () => {
