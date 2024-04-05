@@ -18,7 +18,7 @@ export const stack: Layer3 = opStackL3({
     name: 'Stack',
     slug: 'stack',
     description:
-      'Stack Chain is an Optimium on Base using OP stack technology with Celestia for data availability. \
+      'Stack Chain is an Optimium settling on Base. It uses OP stack technology with Celestia for data availability. \
             Stack Chain is a blockchain for bringing points onchain, allowing brands to create and own their loyalty programs.',
     purposes: ['Social', 'RWA'],
     links: {
@@ -59,5 +59,4 @@ export const stack: Layer3 = opStackL3({
       'Is the ProxyAdmin (owner).',
     ),
   ],
-  nonTemplateContracts: [],
 })
