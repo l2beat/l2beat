@@ -1,6 +1,9 @@
 import { SavedConfiguration } from '@l2beat/uif'
 
-import { IndexerConfigurationRepository } from './IndexerConfigurationRepository'
+import {
+  IndexerConfigurationRecord,
+  IndexerConfigurationRepository,
+} from './IndexerConfigurationRepository'
 import { IndexerStateRepository } from './IndexerStateRepository'
 
 export class IndexerService {
@@ -42,6 +45,26 @@ export class IndexerService {
     )
   }
 
+  async getSavedConfigurations<T>(
+    indexerId: string,
+    decode: (blob: string) => T,
+  ): Promise<SavedConfiguration<T>[]> {
+    const configurations: (SavedConfiguration<string> & {
+      indexerId?: string
+    })[] = await this.indexerConfigurationRepository.getSavedConfigurations(
+      indexerId,
+    )
+
+    for (const config of configurations) {
+      delete config.indexerId
+    }
+
+    return configurations.map((config) => ({
+      ...config,
+      properties: decode(config.properties),
+    }))
+  }
+
   async updateSavedConfigurations(
     indexerId: string,
     configurationIds: string[],
@@ -52,20 +75,6 @@ export class IndexerService {
       configurationIds,
       currentHeight,
     )
-  }
-
-  async getSavedConfigurations<T>(
-    indexerId: string,
-    decode: (blob: string) => T,
-  ): Promise<SavedConfiguration<T>[]> {
-    const configurations =
-      await this.indexerConfigurationRepository.getSavedConfigurations(
-        indexerId,
-      )
-    return configurations.map((config) => ({
-      ...config,
-      properties: decode(config.properties),
-    }))
   }
 
   async deleteSavedConfigurations(

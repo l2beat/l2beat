@@ -1,9 +1,9 @@
+import { json } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { IndexerConfigurationRepository } from './IndexerConfigurationRepository'
 import { IndexerService } from './IndexerService'
 import { IndexerStateRepository } from './IndexerStateRepository'
-import { json } from '@l2beat/shared-pure'
 
 describe(IndexerService.name, () => {
   describe(IndexerService.prototype.setSafeHeight.name, () => {
@@ -119,7 +119,56 @@ describe(IndexerService.name, () => {
     ])
   })
 
-  it(IndexerService.prototype.getSavedConfigurations.name, async () => {})
+  it(IndexerService.prototype.getSavedConfigurations.name, async () => {
+    const indexerConfigurationsRepository =
+      mockObject<IndexerConfigurationRepository>({
+        getSavedConfigurations: async () => [
+          {
+            id: 'a',
+            currentHeight: null,
+            minHeight: 0,
+            maxHeight: null,
+            properties: JSON.stringify({ a: 1 }),
+            indexerId: 'indexer',
+          },
+          {
+            id: 'b',
+            currentHeight: null,
+            minHeight: 0,
+            maxHeight: null,
+            properties: JSON.stringify({ b: 1 }),
+            indexerId: 'indexer',
+          },
+        ],
+      })
+
+    const indexerService = new IndexerService(
+      mockObject<IndexerStateRepository>({}),
+      indexerConfigurationsRepository,
+    )
+
+    const result = await indexerService.getSavedConfigurations(
+      'indexer',
+      (blob: string) => JSON.parse(blob),
+    )
+
+    expect(result).toEqualUnsorted([
+      {
+        id: 'a',
+        currentHeight: null,
+        minHeight: 0,
+        maxHeight: null,
+        properties: { a: 1 },
+      },
+      {
+        id: 'b',
+        currentHeight: null,
+        minHeight: 0,
+        maxHeight: null,
+        properties: { b: 1 },
+      },
+    ])
+  })
 
   it(IndexerService.prototype.updateSavedConfigurations.name, async () => {})
 
