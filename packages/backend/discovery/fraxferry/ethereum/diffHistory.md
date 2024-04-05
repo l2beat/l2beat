@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xe5028b6e5bcf88465c88c0baa97f1f71e8fd72c8
+
+# Diff at Fri, 05 Apr 2024 11:31:19 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@256cdc4999e34442054bfd8bc239f65fe3cedd49 block: 19589154
+- current block number: 19589253
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19589154 (main branch discovery), not current.
+
+```diff
+    contract TimelockMultisig (0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27) {
+    +++ description: None
+      name:
+-        "TimelockMultisig"
++        "Frax Finance Multisig"
+    }
+```
+
 Generated with discovered.json: 0x95793452e0e25388b71fd773a13a74e44eb49312
 
 # Diff at Fri, 05 Apr 2024 11:11:12 GMT:

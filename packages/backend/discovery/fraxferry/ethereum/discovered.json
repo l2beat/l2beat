@@ -1,8 +1,8 @@
 {
   "name": "fraxferry",
   "chain": "ethereum",
-  "blockNumber": 19589154,
-  "configHash": "0x23dbc5bce13d4f48306ce4fe8e549e2307d0b59352302822a8fe4a1760a3eafd",
+  "blockNumber": 19589253,
+  "configHash": "0xc607f22c10d90891a9b5f4a968eb1074a357d53e802488d32197d5670b8f3913",
   "version": 3,
   "contracts": [
     {
@@ -207,7 +207,7 @@
       "derivedName": "Fraxferry"
     },
     {
-      "name": "TimelockMultisig",
+      "name": "Frax Finance Multisig",
       "address": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
       "upgradeability": {
         "type": "gnosis safe",

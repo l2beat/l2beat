@@ -32,7 +32,7 @@
       }
     },
     {
-      "name": "TimelockMultisig",
+      "name": "Frax Finance Multisig",
       "values": {
         "VERSION": {
           "description": null,
