@@ -53,6 +53,8 @@ export const stack: Layer3 = opStackL3({
     CHALLENGER: 'Challenger',
   },
   nonTemplateEscrows: [],
-  nonTemplatePermissions: [], // TODO
+  nonTemplatePermissions: [
+    ...discovery.getMultisigPermission('StackMultisig', 'Is the ProxyAdmin (owner).')
+  ], // TODO
   nonTemplateContracts: [], // TODO
 })
