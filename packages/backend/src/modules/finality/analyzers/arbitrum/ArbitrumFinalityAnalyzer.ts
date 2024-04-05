@@ -44,7 +44,9 @@ export class ArbitrumFinalityAnalyzer extends BaseAnalyzer {
       segments,
       submissionTimestamp.toNumber(),
     )
-    // TODO: this should be better
+    // https://linear.app/l2beat/issue/L2B-4752/refactor-finalityindexer-logic-to-allow-analyzers-different
+    // TODO: refactor FinalityIndexer to enable calculating finality
+    // more accurately
     return [delays.minDelay, delays.avgDelay, delays.maxDelay]
   }
 }
