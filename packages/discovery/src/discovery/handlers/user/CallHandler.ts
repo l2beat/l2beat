@@ -16,6 +16,7 @@ export const CallHandlerDefinition = z.strictObject({
   method: z.optional(z.string()),
   args: z.array(z.union([z.string(), z.number()])),
   ignoreRelative: z.optional(z.boolean()),
+  pickFields: z.optional(z.array(z.union([z.string(), z.number()]))),
   expectRevert: z.optional(z.boolean()),
 })
 
@@ -67,6 +68,7 @@ export class CallHandler implements ClassicHandler {
       this.fragment,
       resolved.args,
       blockNumber,
+      this.definition.pickFields,
     )
 
     if (this.definition.expectRevert && callResult.error === EXEC_REVERT_MSG) {
