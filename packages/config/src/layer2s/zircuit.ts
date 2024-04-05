@@ -16,7 +16,7 @@ export const zircuit: Layer2 = upcomingL2({
       apps: ['https://bridge.zircuit.com/'],
       documentation: ['https://docs.zircuit.com/'],
       explorers: ['https://explorer.zircuit.com/'],
-      repositories: [''],
+      repositories: [],
       socialMedia: [
         'https://twitter.com/ZircuitL2',
         'https://discord.com/invite/zircuit',
