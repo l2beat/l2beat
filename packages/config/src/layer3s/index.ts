@@ -1,6 +1,6 @@
 import { bugless } from './bugless'
-import { degen } from './degen'
 import { dcamonster } from './dcamonster'
+import { degen } from './degen'
 import { deri } from './deri'
 import { mxc } from './mxc'
 import { orb3 } from './orb3'
