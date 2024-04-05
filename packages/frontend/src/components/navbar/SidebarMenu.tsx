@@ -175,6 +175,9 @@ function AdditionalSections(props: AdditionalSectionProps) {
         )}
       </li>
       <li>
+        <PlainLink href="/glossary">Glossary</PlainLink>
+      </li>
+      <li>
         <PlainLink href="/faq">FAQ</PlainLink>
       </li>
       <li>
