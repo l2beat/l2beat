@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xbcc88061f125e4f7b22acf3baf6a534709aa428f
+
+# Diff at Fri, 05 Apr 2024 07:06:11 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@a911910b5e2265ea9037cf3122956a3c9707d183 block: 19532195
+- current block number: 19587942
+
+## Description
+
+A plug is added.
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: Array of plug contract addresses
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.18:
++        "0x6A769e25081396a49a6702758d0830920ac1163A"
+    }
+```
+
 Generated with discovered.json: 0x5f06851d6935822ec7d2e9ae5ae731d06d295cb6
 
 # Diff at Thu, 28 Mar 2024 11:05:29 GMT:

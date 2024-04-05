@@ -1,7 +1,7 @@
 {
   "name": "socket",
   "chain": "ethereum",
-  "blockNumber": 19532195,
+  "blockNumber": 19587942,
   "configHash": "0x6e824ba8f50c887937e01f440395a68559e99b55c0b8825ecd2b9a21c6f07f41",
   "version": 3,
   "contracts": [
@@ -26,8 +26,8 @@
         "SEND_MESSAGE_EVENT_SIG": "0x8c5261668696ce22758910d05bab8f186d6eb247ceac2af2e82c7dc17669b036",
         "signatureVerifier__": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
         "socket__": "0x943AC2775928318653e91d350574436A1b9b16f9",
-        "switchboardFees": 4692138535656000,
-        "verificationOverheadFees": 3413063524000
+        "switchboardFees": 2644171028167500,
+        "verificationOverheadFees": 1967716816000
       },
       "derivedName": "PolygonL1Switchboard"
     },
@@ -50,8 +50,8 @@
         "remoteNativeSwitchboard": "0x9Cf7443685827419B0067fb2471C24969EAA716C",
         "signatureVerifier__": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
         "socket__": "0x943AC2775928318653e91d350574436A1b9b16f9",
-        "switchboardFees": 4944392890456500,
-        "verificationOverheadFees": 1538005352000
+        "switchboardFees": 2526296722209000,
+        "verificationOverheadFees": 3088858864000
       },
       "derivedName": "OptimismSwitchboard"
     },
@@ -88,7 +88,7 @@
         "remoteNativeSwitchboard": "0x1D6811553Aff8231aDd04A84F300b89E15D99EA4",
         "signatureVerifier__": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
         "socket__": "0x943AC2775928318653e91d350574436A1b9b16f9",
-        "switchboardFees": 4944392890456500,
+        "switchboardFees": 2526296722209000,
         "verificationOverheadFees": 52013156000
       },
       "derivedName": "OptimismSwitchboard"
@@ -154,7 +154,7 @@
         "capacitorFactory__": "0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a",
         "chainSlug": 1,
         "executionManager__": "0xFB4dcD94A051a1D2cF3EaF713a2Ef686653884E0",
-        "globalMessageCount": 540,
+        "globalMessageCount": 555,
         "hasher__": "0x5C71beE4a6b0D617D8c3d107D331292741789E27",
         "inboundSwitchboards": [
           "0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287",
@@ -190,7 +190,8 @@
           "0x8F4e67C61232167584333e23D7d67BD73d80a4F5",
           "0x4ab7B94BA3f3CF69354Eb2f6b5E856DC61e13660",
           "0x727aD65db6aE99DB5Dbee8F202846DD6009bf6D5",
-          "0xdCcFb24f983586144c085426dbfa3414045E19a3"
+          "0xdCcFb24f983586144c085426dbfa3414045E19a3",
+          "0x6A769e25081396a49a6702758d0830920ac1163A"
         ],
         "transmitManager__": "0xeD037aFBffC65a94E9CC592947E851FB2f730341",
         "version": "0x484f1c5889188a0a81068ce8c49d8f7c3b3f1b0c1723b50ebd656a8d4f99e356"
@@ -241,7 +242,7 @@
         "remoteNativeSwitchboard": "0xaB2F8c1588ACA57bC2909512B645a860C65770d3",
         "signatureVerifier__": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
         "socket__": "0x943AC2775928318653e91d350574436A1b9b16f9",
-        "switchboardFees": 4523596565943000,
+        "switchboardFees": 2559851731515000,
         "verificationOverheadFees": 6500000000000
       },
       "derivedName": "ArbitrumL1Switchboard"
