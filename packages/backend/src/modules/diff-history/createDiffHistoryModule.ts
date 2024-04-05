@@ -8,14 +8,13 @@ import {
 import { UnixTime } from '@l2beat/shared-pure'
 
 import { Config } from '../../config'
-import { Database } from '../../peripherals/database/Database'
+import { Peripherals } from '../../peripherals/Peripherals'
 import { ChainConverter } from '../../tools/ChainConverter'
 import { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 import { ApplicationModule } from '../ApplicationModule'
 import { createDiscoveryRunner } from '../update-monitor/createDiscoveryRunner'
 import { ProjectDiscoverer } from '../update-monitor/ProjectDiscoverer'
-import { DiscoveryCacheRepository } from '../update-monitor/repositories/DiscoveryCacheRepository'
 import { DiscoveryHistoryRepository } from '../update-monitor/repositories/DiscoveryHistoryRepository'
 import { DiffHistoryController } from './api/DiffHistoryController'
 import { createDiffHistoryRouter } from './api/DiffHistoryRouter'
@@ -23,7 +22,7 @@ import { createDiffHistoryRouter } from './api/DiffHistoryRouter'
 export function createDiffHistoryModule(
   config: Config,
   logger: Logger,
-  database: Database,
+  peripherals: Peripherals,
 ): ApplicationModule | undefined {
   if (!config.diffHistory) {
     logger.info('DiffHistory module disabled')
@@ -34,28 +33,18 @@ export function createDiffHistoryModule(
 
   const discoveryLogger = DiscoveryLogger.SILENT
 
-  const discoveryHistoryRepository = new DiscoveryHistoryRepository(
-    database,
-    logger,
-  )
-
-  const discoveryCacheRepository = new DiscoveryCacheRepository(
-    database,
-    logger,
-  )
-
   const discoveryHttpClient = new DiscoveryHttpClient()
 
   const chainConverter = new ChainConverter(config.chains)
 
   const discoverers = config.diffHistory.chains
     // TODO(radomski): In the initial version we only care about ethereum
-    .filter((chainConfig) => chainConfig.chain === 'ethereum')
+    .filter((chainConfig) => chainConfig.name === 'ethereum')
     .flatMap((chainConfig) => {
       const runner = createDiscoveryRunner(
         discoveryHttpClient,
         configReader,
-        discoveryCacheRepository,
+        peripherals,
         discoveryLogger,
         chainConfig,
       )
@@ -83,7 +72,7 @@ export function createDiffHistoryModule(
             project.name,
             'ethereum',
             configReader,
-            discoveryHistoryRepository,
+            peripherals.getRepository(DiscoveryHistoryRepository),
             new Clock(project.minTimestamp, 60 * 60),
             chainConverter,
             logger,
@@ -93,7 +82,7 @@ export function createDiffHistoryModule(
     })
 
   const controller = new DiffHistoryController(
-    discoveryHistoryRepository,
+    peripherals.getRepository(DiscoveryHistoryRepository),
     configReader,
     chainConverter,
   )

@@ -6,6 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
   makeBridgeCompatible,
   NEW_CRYPTOGRAPHY,
@@ -39,7 +40,7 @@ export const zkspace: Layer2 = {
     purposes: ['NFT', 'AMM', 'Payments'],
     provider: 'zkSync Lite',
     category: 'ZK Rollup',
-    dataAvailabilityMode: 'StateDiffs',
+
     links: {
       websites: ['https://zks.org/'],
       apps: ['https://zks.app'],
@@ -58,6 +59,9 @@ export const zkspace: Layer2 = {
       explanation:
         'ZK Space is a ZK rollup based on zkSync Lite’s code base that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
     },
+    finality: {
+      finalizationPeriod: 0,
+    },
   },
   config: {
     associatedTokens: ['ZKS'],
@@ -68,17 +72,19 @@ export const zkspace: Layer2 = {
         tokens: '*',
       }),
     ],
-    liveness: {
-      duplicateData: [
-        {
-          from: 'stateUpdates',
-          to: 'proofSubmissions',
-        },
-      ],
-      proofSubmissions: [],
-      batchSubmissions: [],
-      stateUpdates: [
-        {
+    trackedTxs: [
+      {
+        uses: [
+          {
+            type: 'liveness',
+            subtype: 'stateUpdates',
+          },
+          {
+            type: 'l2costs',
+            subtype: 'stateUpdates',
+          },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8',
@@ -86,11 +92,23 @@ export const zkspace: Layer2 = {
           selector: '0x6898e6fc',
           functionSignature:
             'function verifyBlocks(uint32 _blockNumberFrom, uint32 _blockNumberTo, uint256[] _recursiveInput, uint256[] _proof, uint256[] _subProofLimbs)',
-          sinceTimestamp: new UnixTime(1639569183),
+          sinceTimestampInclusive: new UnixTime(1639569183),
         },
-      ],
+      },
+    ],
+    liveness: {
+      duplicateData: {
+        from: 'stateUpdates',
+        to: 'proofSubmissions',
+      },
     },
+    finality: 'coming soon',
   },
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['Ethereum (calldata)'],
+    bridge: { type: 'Enshrined' },
+    mode: 'State diffs',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,

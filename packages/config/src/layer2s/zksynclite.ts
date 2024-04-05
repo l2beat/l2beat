@@ -6,8 +6,8 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
@@ -15,6 +15,7 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
@@ -57,11 +58,10 @@ export const zksynclite: Layer2 = {
     name: 'zkSync Lite',
     slug: 'zksync-lite',
     description:
-      'zkSync Lite (formerly zkSync) is a ZK Rollup platform from Matter Labs. It supports payments, token swaps and NFT minting.',
+      'zkSync Lite (formerly zkSync) is a ZK Rollup platform that supports payments, token swaps and NFT minting.',
     purposes: ['Payments'],
     provider: 'zkSync Lite',
     category: 'ZK Rollup',
-    dataAvailabilityMode: 'StateDiffs',
 
     links: {
       websites: ['https://zksync.io/'],
@@ -82,6 +82,9 @@ export const zksynclite: Layer2 = {
       explanation:
         'zkSync Lite is a ZK rollup that posts state diffs to the L1. Transactions within a state diff can be considered final when proven on L1 using a ZK proof, except that an operator can revert them if not executed yet.',
     },
+    finality: {
+      finalizationPeriod: 0,
+    },
   },
   config: {
     escrows: [
@@ -96,9 +99,26 @@ export const zksynclite: Layer2 = {
       defaultUrl: 'https://api.zksync.io/api/v0.2',
       defaultCallsPerMinute: 3_000,
     },
-    liveness: {
-      proofSubmissions: [
-        {
+    trackedTxs: [
+      {
+        uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xabea9132b05a70803a4e85094fd0e1800777fbef',
+          ),
+          selector: '0x45269298',
+          functionSignature:
+            'function commitBlocks((uint32,uint64,bytes32,uint256,bytes32,bytes32), (bytes32,bytes,uint256,tuple[],uint32,uint32)[])',
+          sinceTimestampInclusive: new UnixTime(1612885558),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xaBEA9132b05A70803a4E85094fD0e1800777fBEF',
@@ -106,12 +126,15 @@ export const zksynclite: Layer2 = {
           selector: '0x83981808',
           functionSignature:
             'function proveBlocks((uint32,uint64,bytes32,uint256,bytes32,bytes32)[] calldata _committedBlocks, (uint256[],uint256[],uint256[],uint8[],uint256[16]) memory _proof)',
-          sinceTimestamp: new UnixTime(1592218707),
+          sinceTimestampInclusive: new UnixTime(1592218707),
         },
-      ],
-      batchSubmissions: [],
-      stateUpdates: [
-        {
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xaBEA9132b05A70803a4E85094fD0e1800777fBEF',
@@ -119,11 +142,21 @@ export const zksynclite: Layer2 = {
           selector: '0xb0705b42',
           functionSignature:
             'function executeBlocks(((uint32,uint64,bytes32,uint256,bytes32,bytes32),bytes[])[] calldata _blocksData)',
-          sinceTimestamp: new UnixTime(1592218707),
+          sinceTimestampInclusive: new UnixTime(1592218707),
         },
-      ],
+      },
+    ],
+    finality: {
+      lag: 0,
+      type: 'zkSyncLite',
+      minTimestamp: new UnixTime(1592218708),
     },
   },
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['Ethereum (calldata)'],
+    bridge: { type: 'Enshrined' },
+    mode: 'State diffs',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_SN,
@@ -161,7 +194,7 @@ export const zksynclite: Layer2 = {
         forcedWithdrawalDelay,
       )} to be processed.`,
       warning: {
-        text: 'The Security Council can upgrade with no delay.',
+        value: 'The Security Council can upgrade with no delay.',
         sentiment: 'bad',
       },
       sources: [
@@ -256,7 +289,7 @@ export const zksynclite: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...DATA_AVAILABILITY.ON_CHAIN,
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       references: [
         {
           text: 'Overview - zkSync documentation',

@@ -1,7 +1,7 @@
 {
   "name": "synapse",
   "chain": "ethereum",
-  "blockNumber": 17620009,
+  "blockNumber": 19532299,
   "configHash": "0xf9095692a7adaa54b66d921fdf4d38dd052b4b9e06323a767734c08937ed6079",
   "version": 3,
   "contracts": [
@@ -27,7 +27,10 @@
           },
           "GOVERNANCE_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55"]
+            "members": [
+              "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55",
+              "0xa31C04BFD3545E6d00A80573a0B009F7557D958D"
+            ]
           }
         },
         "bridgeVersion": 6,
@@ -75,7 +78,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": ["0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134"]
+        "modules": ["0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134"],
+        "threshold": "2 of 3 (67%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1628970480,
@@ -88,7 +92,7 @@
           "0x0d745Ad687F2b1E1941569f09f612F60ad4aD5BC"
         ],
         "getThreshold": 2,
-        "nonce": 724,
+        "nonce": 804,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -124,6 +128,7 @@
     "0x0d745Ad687F2b1E1941569f09f612F60ad4aD5BC",
     "0x230A1AC45690B9Ae1176389434610B9526d2f21b",
     "0x9Ce9dc8B12E264F00e80F35326040C75201C38f3",
+    "0xa31C04BFD3545E6d00A80573a0B009F7557D958D",
     "0xb3DAD3C24A861b84fDF380B212662620627D4e15"
   ],
   "abis": {

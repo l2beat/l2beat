@@ -27,6 +27,19 @@ export class BlockscoutClient {
     this.call = this.rateLimiter.wrap(this.call.bind(this))
   }
 
+  static create(
+    services: { httpClient: HttpClient; logger: Logger },
+    options: { url: string; minTimestamp: UnixTime; chainId: ChainId },
+  ) {
+    return new BlockscoutClient(
+      services.httpClient,
+      options.url,
+      options.minTimestamp,
+      options.chainId,
+      services.logger,
+    )
+  }
+
   getChainId(): ChainId {
     return this.chainId
   }

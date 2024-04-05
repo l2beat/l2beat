@@ -1,4 +1,8 @@
-import { ScalingProjectPurpose, StageConfig } from '@l2beat/config'
+import {
+  Layer2TVLWarning,
+  ScalingProjectPurpose,
+  StageConfig,
+} from '@l2beat/config'
 import { pluralize } from '@l2beat/shared-pure'
 import React from 'react'
 
@@ -36,6 +40,7 @@ export interface ProjectHeaderProps {
   tvlBreakdown: TokenBreakdownProps | undefined
   showTvlBreakdown: boolean
   tvlBreakdownHref: string
+  tvlWarning?: Layer2TVLWarning
   risks: RiskValues
   links: ProjectLink[]
   stage: StageConfig
@@ -43,6 +48,7 @@ export interface ProjectHeaderProps {
   isUpcoming?: boolean
   isLayer3?: boolean
   isUnderReview?: boolean
+  implementationHasChanged: boolean
   showProjectUnderReview?: boolean
   warning?: string | { text: string; href: string }
 }
@@ -120,9 +126,11 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       isUpcoming={props.isUpcoming}
       isUnderReview={props.isUnderReview}
       isArchived={props.isArchived}
+      implementationHasChanged={props.implementationHasChanged}
       showProjectUnderReview={props.showProjectUnderReview}
       warning={props.warning}
       tvlBreakdownHref={props.tvlBreakdownHref}
+      tvlWarning={props.tvlWarning}
       showTvlBreakdown={
         props.isUpcoming || props.isLayer3 ? false : props.showTvlBreakdown
       }

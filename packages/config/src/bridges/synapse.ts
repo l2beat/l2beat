@@ -37,12 +37,7 @@ export const synapse: Bridge = {
         sinceTimestamp: new UnixTime(1629082107),
         tokens: ['ETH', 'WETH', 'FRAX', 'USDT', 'USDC', 'WBTC', 'DAI', 'gOHM'],
       },
-      // address of the AMM pool used for swaps to canonical tokens
-      // the address of the pool is passed as a parameter for the function
-      // Synapse team has on their repo contract "Pool Config"
-      // https://github.com/synapsecns/synapse-contracts/blob/master/contracts/bridge/PoolConfig.sol
-      // from which admittedly the nodes are getting swap pool address
-      // but I could not find any trace of it on chain
+      // address of the Synapse AMM pool used for swaps to canonical tokens
       {
         address: EthereumAddress('0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8'),
         sinceTimestamp: new UnixTime(1629082839),
@@ -54,7 +49,12 @@ export const synapse: Bridge = {
     destination: [
       'Arbitrum',
       'Avalanche',
+      'Aurora',
+      'Base',
+      'Blast',
       'BNB Chain',
+      'Cronos',
+      'DFK Chain',
       'Optimism',
       'Polygon',
       'Aurora',
@@ -148,17 +148,30 @@ export const synapse: Bridge = {
       "Manages the bridge parameters and can upgrade its implementation, in case of malicious upgrade user's funds can be lost. Additionally it manages Liquidity Pool with the permissions to mint new tokens.",
     ),
     {
-      name: 'Nodes',
-      description: 'Can withdraw funds and mint SynERC20 Wrapped tokens.',
-      accounts: [
-        {
-          // TODO: add support for deeper queries SynapseBridge.accessControl.NODEGROUP_ROLE.members
-          address: EthereumAddress(
-            '0x230A1AC45690B9Ae1176389434610B9526d2f21b',
-          ),
-          type: 'EOA',
-        },
-      ],
+      name: 'Nodes (NODEGROUP_ROLE)',
+      description:
+        'Is an executor who can call regular bridging functions like withdrawing funds and minting SynERC20 Wrapped tokens.',
+      accounts: discovery.getAccessControlRolePermission(
+        'SynapseBridge',
+        'NODEGROUP_ROLE',
+      ),
+    },
+    {
+      name: 'Governors (GOVERNANCE_ROLE)',
+      description:
+        'Can set bridging fees, pause and unpause the SynapseBridge contract.',
+      accounts: discovery.getAccessControlRolePermission(
+        'SynapseBridge',
+        'GOVERNANCE_ROLE',
+      ),
+    },
+    {
+      name: 'Admin (DEFAULT_ADMIN_ROLE)',
+      description: 'Can call setWethAddress() on the SynapseBridge contract.',
+      accounts: discovery.getAccessControlRolePermission(
+        'SynapseBridge',
+        'DEFAULT_ADMIN_ROLE',
+      ),
     },
   ],
 }

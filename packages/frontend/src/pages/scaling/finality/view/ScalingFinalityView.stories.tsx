@@ -19,7 +19,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
         shortName: undefined,
         slug: 'aevo',
         category: 'Optimistic Rollup',
-        dataAvailabilityMode: 'Transaction data',
+        dataAvailabilityMode: 'Transactions data',
         provider: 'OP Stack',
         warning:
           'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
@@ -94,9 +94,16 @@ const meta: Meta<typeof ScalingFinalityView> = {
             text: 'There is no available node software that can reconstruct the state from L1 data, hence there is no way to verify that this system is a rollup.',
           },
         },
-        timeToInclusion: {
-          averageInSeconds: 344900,
-          maximumInSeconds: 2240,
+        data: {
+          timeToInclusion: {
+            minimumInSeconds: undefined,
+            averageInSeconds: 344900,
+            maximumInSeconds: 2240,
+          },
+          syncStatus: {
+            isSynced: true,
+            displaySyncedUntil: '2024 Feb 12 12:00:00 (UTC)',
+          },
         },
         finalizationPeriod: formatSeconds(3600, { fullUnit: true }),
       },
@@ -111,10 +118,16 @@ const meta: Meta<typeof ScalingFinalityView> = {
         redWarning: undefined,
         purposes: ['Exchange'],
         stage: { stage: 'NotApplicable' },
-        timeToInclusion: {
-          minimumInSeconds: 78,
-          averageInSeconds: 15078,
-          maximumInSeconds: 1259,
+        data: {
+          timeToInclusion: {
+            minimumInSeconds: 78,
+            averageInSeconds: 15078,
+            maximumInSeconds: 1259,
+          },
+          syncStatus: {
+            isSynced: true,
+            displaySyncedUntil: '2024 Feb 12 12:00:00 (UTC)',
+          },
         },
         finalizationPeriod: formatSeconds(2 * 3600, { fullUnit: true }),
       },
@@ -123,7 +136,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
         shortName: undefined,
         slug: 'arbitrum',
         category: 'Optimistic Rollup',
-        dataAvailabilityMode: 'Transaction data',
+        dataAvailabilityMode: 'Transactions data',
         provider: 'Arbitrum',
         warning:
           'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
@@ -215,9 +228,16 @@ const meta: Meta<typeof ScalingFinalityView> = {
           ],
           message: undefined,
         },
-        timeToInclusion: {
-          averageInSeconds: 2329,
-          maximumInSeconds: 4584,
+        data: {
+          timeToInclusion: {
+            minimumInSeconds: undefined,
+            averageInSeconds: 2329,
+            maximumInSeconds: 4584,
+          },
+          syncStatus: {
+            isSynced: true,
+            displaySyncedUntil: '2024 Feb 12 12:00:00 (UTC)',
+          },
         },
         finalizationPeriod: formatSeconds(3 * 3600, { fullUnit: true }),
       },
@@ -226,7 +246,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
         shortName: undefined,
         slug: 'base',
         category: 'Optimistic Rollup',
-        dataAvailabilityMode: 'Transaction data',
+        dataAvailabilityMode: 'Transactions data',
         provider: 'OP Stack',
         warning:
           'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
@@ -298,9 +318,16 @@ const meta: Meta<typeof ScalingFinalityView> = {
           ],
           message: undefined,
         },
-        timeToInclusion: {
-          averageInSeconds: 410,
-          maximumInSeconds: 1626,
+        data: {
+          timeToInclusion: {
+            minimumInSeconds: undefined,
+            averageInSeconds: 410,
+            maximumInSeconds: 1626,
+          },
+          syncStatus: {
+            isSynced: false,
+            displaySyncedUntil: '2024 Feb 12 12:00:00 (UTC)',
+          },
         },
         finalizationPeriod: formatSeconds(4 * 3600, { fullUnit: true }),
       },
@@ -380,10 +407,16 @@ const meta: Meta<typeof ScalingFinalityView> = {
           ],
           message: undefined,
         },
-        timeToInclusion: {
-          minimumInSeconds: 555,
-          averageInSeconds: 18555,
-          maximumInSeconds: 67229,
+        data: {
+          timeToInclusion: {
+            minimumInSeconds: 555,
+            averageInSeconds: 18555,
+            maximumInSeconds: 67229,
+          },
+          syncStatus: {
+            isSynced: true,
+            displaySyncedUntil: '2024 Feb 12 12:00:00 (UTC)',
+          },
         },
         finalizationPeriod: formatSeconds(5 * 3600, { fullUnit: true }),
       },
@@ -392,7 +425,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
         shortName: undefined,
         slug: 'linea',
         category: 'ZK Rollup',
-        dataAvailabilityMode: 'Transaction data',
+        dataAvailabilityMode: 'Transactions data',
         provider: undefined,
         warning: 'The circuit of the program being proven is not public.',
         redWarning: undefined,
@@ -477,9 +510,16 @@ const meta: Meta<typeof ScalingFinalityView> = {
             text: 'There is no available node software that can reconstruct the state from L1 data, hence there is no way to verify that this system is a rollup.',
           },
         },
-        timeToInclusion: {
-          averageInSeconds: 96,
-          maximumInSeconds: 78212,
+        data: {
+          timeToInclusion: {
+            minimumInSeconds: undefined,
+            averageInSeconds: 96,
+            maximumInSeconds: 78212,
+          },
+          syncStatus: {
+            isSynced: true,
+            displaySyncedUntil: '2024 Feb 12 12:00:00 (UTC)',
+          },
         },
         finalizationPeriod: formatSeconds(6 * 3600, { fullUnit: true }),
       },
@@ -494,9 +534,16 @@ const meta: Meta<typeof ScalingFinalityView> = {
         redWarning: undefined,
         purposes: ['NFT', 'Exchange'],
         stage: { stage: 'NotApplicable' },
-        timeToInclusion: {
-          averageInSeconds: 819,
-          maximumInSeconds: 2646,
+        data: {
+          timeToInclusion: {
+            minimumInSeconds: undefined,
+            averageInSeconds: 819,
+            maximumInSeconds: 2646,
+          },
+          syncStatus: {
+            isSynced: true,
+            displaySyncedUntil: '2024 Feb 12 12:00:00 (UTC)',
+          },
         },
         finalizationPeriod: formatSeconds(7 * 3600, { fullUnit: true }),
       },
@@ -505,7 +552,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
         shortName: undefined,
         slug: 'optimism',
         category: 'Optimistic Rollup',
-        dataAvailabilityMode: 'Transaction data',
+        dataAvailabilityMode: 'Transactions data',
         provider: 'OP Stack',
         warning:
           'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
@@ -577,9 +624,16 @@ const meta: Meta<typeof ScalingFinalityView> = {
           ],
           message: undefined,
         },
-        timeToInclusion: {
-          averageInSeconds: 185585,
-          maximumInSeconds: 1211,
+        data: {
+          timeToInclusion: {
+            minimumInSeconds: undefined,
+            averageInSeconds: 185585,
+            maximumInSeconds: 1211,
+          },
+          syncStatus: {
+            isSynced: true,
+            displaySyncedUntil: '2024 Feb 12 12:00:00 (UTC)',
+          },
         },
         finalizationPeriod: formatSeconds(8 * 3600, { fullUnit: true }),
       },
@@ -588,7 +642,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
         shortName: undefined,
         slug: 'scroll',
         category: 'ZK Rollup',
-        dataAvailabilityMode: 'Transaction data',
+        dataAvailabilityMode: 'Transactions data',
         provider: undefined,
         warning: undefined,
         redWarning: undefined,
@@ -672,11 +726,17 @@ const meta: Meta<typeof ScalingFinalityView> = {
             text: 'There is no available node software that can reconstruct the state from L1 data, hence there is no way to verify that this system is a rollup.',
           },
         },
-        timeToInclusion: {
-          averageInSeconds: 4899,
-          maximumInSeconds: 294,
+        data: {
+          timeToInclusion: {
+            minimumInSeconds: undefined,
+            averageInSeconds: 4899,
+            maximumInSeconds: 294,
+          },
+          syncStatus: {
+            isSynced: true,
+            displaySyncedUntil: '2024 Feb 12 12:00:00 (UTC)',
+          },
         },
-        finalizationPeriod: formatSeconds(120, { fullUnit: true }),
       },
       {
         name: 'tanX',
@@ -689,10 +749,7 @@ const meta: Meta<typeof ScalingFinalityView> = {
         redWarning: undefined,
         purposes: ['Exchange'],
         stage: { stage: 'NotApplicable' },
-        timeToInclusion: {
-          averageInSeconds: 175511,
-          maximumInSeconds: 2129,
-        },
+        data: undefined,
         finalizationPeriod: formatSeconds(24 * 3600, { fullUnit: true }),
       },
     ],

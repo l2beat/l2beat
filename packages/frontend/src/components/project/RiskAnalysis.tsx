@@ -1,13 +1,12 @@
 import React from 'react'
 
-import { cn } from '../../utils/cn'
-import { sentimentToTextColor } from '../../utils/risks/color'
 import { RiskValue, RiskValues } from '../../utils/risks/types'
 import { UnderReviewBadge } from '../badge/UnderReviewBadge'
 import { RoundedWarningIcon, ShieldIcon } from '../icons'
 import { UnverifiedIcon } from '../icons/symbols/UnverifiedIcon'
 import { Markdown } from '../Markdown'
 import { BigRosette } from '../rosette'
+import { SentimentText } from '../table/SentimentText'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
 import { ProjectSectionId } from './sectionId'
 import { WarningBar } from './WarningBar'
@@ -108,19 +107,17 @@ function SingleRisk({
         </span>
       ) : (
         <>
-          <span
-            className={cn(
-              sentimentToTextColor(riskValue.sentiment),
-              'mt-2 block text-xl font-bold md:text-2xl',
-            )}
+          <SentimentText
+            sentiment={riskValue.sentiment}
+            className="mt-2 block text-xl font-bold md:text-2xl"
           >
             {riskValue.value}
-          </span>
+          </SentimentText>
           {riskValue.warning && (
             <WarningBar
               className="my-2"
               icon={RoundedWarningIcon}
-              text={riskValue.warning.text}
+              text={riskValue.warning.value}
               color={riskValue.warning.sentiment === 'bad' ? 'red' : 'yellow'}
             />
           )}

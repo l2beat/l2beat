@@ -4,7 +4,7 @@ import { DERIVATION } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
-import { opStack } from './templates/opStack'
+import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('base')
@@ -19,7 +19,7 @@ const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
   'FINALIZATION_PERIOD_SECONDS',
 )
 
-export const base: Layer2 = opStack({
+export const base: Layer2 = opStackL2({
   discovery,
   display: {
     name: 'Base',
@@ -68,7 +68,10 @@ export const base: Layer2 = opStack({
   ),
   rpcUrl: 'https://developer-access-mainnet.base.org',
   finality: {
-    type: 'OPStack',
+    type: 'OPStack-blob',
+    minTimestamp: new UnixTime(1710375515),
+    genesisTimestamp: new UnixTime(1686789347),
+    l2BlockTimeSeconds: 2,
     lag: 0,
   },
   genesisTimestamp: new UnixTime(1686796655),
@@ -149,4 +152,5 @@ export const base: Layer2 = opStack({
     ],
     coingeckoPlatform: 'base',
   },
+  usesBlobs: true,
 })

@@ -1,3 +1,92 @@
+Generated with discovered.json: 0x04e0719463871ecf3822cc4b9adf17b22f76f521
+
+# Diff at Thu, 28 Mar 2024 10:23:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@dd32bb06b292cc8459fb09925454ee3a90f5c27e block: 19439842
+- current block number: 19531989
+
+## Description
+
+Update discovery to include the multisig threshold.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19439842 (main branch discovery), not current.
+
+```diff
+    contract ChallengerMultisig (0x309Fe2536d01867018D120b40e4676723C53A14C) {
+    +++ description: None
+      upgradeability.threshold:
++        "4 of 6 (67%)"
+    }
+```
+
+```diff
+    contract ModeMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      upgradeability.threshold:
++        "3 of 5 (60%)"
+    }
+```
+
+Generated with discovered.json: 0x1d22da0722e3ba859e81dc7e25fcc8b23f10048a
+
+# Diff at Thu, 14 Mar 2024 07:33:30 GMT:
+
+- author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
+- comparing to: main@c79c75cb88d41e2f05e9cca5d501133eae405bbe block: 19411974
+- current block number: 19431787
+
+## Description
+
+Blobs are switched on.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x5e6432F18Bc5d497B1Ab2288a025Fbf9D69E2221) {
+    +++ description: None
+      values.opStackDA.isSequencerSendingBlobTx:
+-        false
++        true
+      values.overhead:
+-        188
++        0
+      values.scalar:
+-        684000
++        "452312848583266388373324160190187140051835877600158453279133701594312344529"
+    }
+```
+
+Generated with discovered.json: 0x7583f54e5c6195c95832243781e1837e45e36883
+
+# Diff at Mon, 11 Mar 2024 12:53:12 GMT:
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: main@64454506aee2b4b4e15b121f096369e92ec4cf20 block: 19176961
+- current block number: 19411974
+
+## Description
+
+Update OP stack DA handler
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19176961 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x5e6432F18Bc5d497B1Ab2288a025Fbf9D69E2221) {
+    +++ description: None
+      values.opStackDA.isSequencerSendingBlobTx:
++        false
+    }
+```
+
 Generated with discovered.json: 0xcc53221fa9d617cfac43ac7d0e03cc50a5345f8c
 
 # Diff at Wed, 07 Feb 2024 14:38:56 GMT:
@@ -57,7 +146,7 @@ Generated with discovered.json: 0x8c8447d97aa00a6dffbf43381ebbea74a47cfdbd
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Update discovery to include the multisig threshold.
 
 ## Initial discovery
 

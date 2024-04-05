@@ -1,5 +1,6 @@
 import {
   Layer2Provider,
+  Layer2TVLWarning,
   ScalingProjectCategory,
   ScalingProjectPurpose,
   StageConfig,
@@ -18,9 +19,11 @@ export interface ScalingTvlViewEntry {
   provider?: Layer2Provider
   warning?: string
   redWarning: string | undefined
+  tvlWarning?: Layer2TVLWarning
   purposes: ScalingProjectPurpose[]
   isArchived?: boolean
   isVerified?: boolean
+  hasImplementationChanged?: boolean
   showProjectUnderReview?: boolean
   isUpcoming?: boolean
   tvl?: ValueWithDisplayValue

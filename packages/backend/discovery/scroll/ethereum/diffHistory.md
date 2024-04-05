@@ -1,3 +1,318 @@
+Generated with discovered.json: 0xab2564ccd95153417c52dae00a8e78fb02f47de6
+
+# Diff at Thu, 28 Mar 2024 11:00:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@21187e63b9b90823a55c461c331868a470ce17eb block: 19375229
+- current block number: 19532167
+
+## Description
+
+Update discovery to include the multisig threshold.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19375229 (main branch discovery), not current.
+
+```diff
+    contract ExecutorMultisig (0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f) {
+    +++ description: None
+      upgradeability.threshold:
++        "1 of 5 (20%)"
+    }
+```
+
+```diff
+    contract FeeVaultMultisig (0x8FA3b4570B4C96f8036C13b64971BA65867eEB48) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 4 (50%)"
+    }
+```
+
+```diff
+    contract EmergencyMultisig (0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 5 (40%)"
+    }
+```
+
+```diff
+    contract ScrollMultisig (0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) {
+    +++ description: None
+      upgradeability.threshold:
++        "4 of 5 (80%)"
+    }
+```
+
+Generated with discovered.json: 0xeedf768927c66f9e3e9594005bea7982654706a9
+
+# Diff at Wed, 06 Mar 2024 09:27:59 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@d60150e480982ada7064a8773c7df37943e92432 block: 19290165
+- current block number: 19375229
+
+## Description
+
+The L2GasPriceOracle is now not used anymore and it has been incorporated into the L1MessageQueue contract.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19290165 (main branch discovery), not current.
+
+```diff
+    contract L2GasPriceOracle (0x987e300fDfb06093859358522a79098848C33852) {
+    +++ description: None
+      name:
+-        "L2GasPriceOracle"
++        "OLD_L2GasPriceOracle"
+    }
+```
+
+Generated with discovered.json: 0x51e6f3f4e484657baa2d2b4469fd0867d1cd86ca
+
+# Diff at Fri, 23 Feb 2024 12:04:50 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@13bd721852038eaabd63b0fc897e802c663577ec block: 18832875
+- current block number: 19290165
+
+## Description
+
+### L1CustomERC20Gateway
+
+Use of errors instead of reverts. Some variables are now immutable (counterpart, router, messenger).
+
+### L1ERC1155Gateway
+
+Again, use of errors instead of reverts. Some variables are now immutable (counterpart, router, messenger).
+
+### L1ERC721Gateway
+
+Same changes.
+
+### L1ETHGateway
+
+Same changes.
+
+### L1MessageQueue
+
+The enforced tx gateway is now immutable and set. An L2 gas price oracle is implemented and a permissioned actor can relay the L2 base fee.
+
+### L1ScrollMessenger
+
+Same changes as first ones.
+
+### L1StandardERC20Gateway
+
+Same changes.
+
+### L1USDCGateway
+
+Same changes.
+
+### L1WETHGateway
+
+Same changes.
+
+### ScrollChain
+
+Same changes. In addition, the verifier is now immutable.
+
+### EnforcedTxGateway
+
+Currently paused, so no risk has changed.
+
+## Watched changes
+
+```diff
+    contract L1MessageQueue (0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B) {
+      upgradeability.implementation:
+-        "0xBC9D741501A20F962756C95BF906b4abffadcf8F"
++        "0xeBaed7A81c298B24EE6d59c22698A951dc448E01"
+      implementations.0:
+-        "0xBC9D741501A20F962756C95BF906b4abffadcf8F"
++        "0xeBaed7A81c298B24EE6d59c22698A951dc448E01"
+      values.enforcedTxGateway:
+-        "0x0000000000000000000000000000000000000000"
++        "0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d"
+      values.l2BaseFee:
++        483000000
+      values.whitelistChecker:
++        "0x259204DDd2bA29bD9b1B9A5c9B093f73d7EAcf37"
+      derivedName:
+-        "L1MessageQueue"
++        "L1MessageQueueWithGasPriceOracle"
+    }
+```
+
+```diff
+    contract L1ERC721Gateway (0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B) {
+      upgradeability.implementation:
+-        "0xDE3be7C2AA151D1E152DDfcBf0962FcDf5323DAe"
++        "0xd1841c5756428812233eEA78afC17cb2D3e392bb"
+      implementations.0:
+-        "0xDE3be7C2AA151D1E152DDfcBf0962FcDf5323DAe"
++        "0xd1841c5756428812233eEA78afC17cb2D3e392bb"
+    }
+```
+
+```diff
+    contract L1ScrollMessenger (0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367) {
+      upgradeability.implementation:
+-        "0xAf2F898a8680cb52766ABE0588ebe6b9bFe37845"
++        "0x72981fD00087fF4F60aBFdE9f353cB1912A37fb6"
+      implementations.0:
+-        "0xAf2F898a8680cb52766ABE0588ebe6b9bFe37845"
++        "0x72981fD00087fF4F60aBFdE9f353cB1912A37fb6"
+    }
+```
+
+```diff
+    contract L1WETHGateway (0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE) {
+      upgradeability.implementation:
+-        "0xd3c42158682D55E082EaBe08a29F7515A97cA307"
++        "0xa4F400593DFfc0ae02F940ab58f6e3Cc6fb9FB49"
+      implementations.0:
+-        "0xd3c42158682D55E082EaBe08a29F7515A97cA307"
++        "0xa4F400593DFfc0ae02F940ab58f6e3Cc6fb9FB49"
+    }
+```
+
+```diff
+    contract L1ETHGateway (0x7F2b8C31F88B6006c382775eea88297Ec1e3E905) {
+      upgradeability.implementation:
+-        "0x1fcbE079c4Bbab37406daB7Dfd35AcAe37D5C55d"
++        "0x546E0bF31FB6e7babD493452e4e6999191367B42"
+      implementations.0:
+-        "0x1fcbE079c4Bbab37406daB7Dfd35AcAe37D5C55d"
++        "0x546E0bF31FB6e7babD493452e4e6999191367B42"
+    }
+```
+
+```diff
+    contract ScrollChain (0xa13BAF47339d63B743e7Da8741db5456DAc1E556) {
+      upgradeability.implementation:
+-        "0x2E07f0FBA71709bb5e1f045b02152E45B451D75f"
++        "0xFA148514d03420b7b1a13eC74da06D2Ca875539C"
+      implementations.0:
+-        "0x2E07f0FBA71709bb5e1f045b02152E45B451D75f"
++        "0xFA148514d03420b7b1a13eC74da06D2Ca875539C"
+    }
+```
+
+```diff
+    contract L1CustomERC20Gateway (0xb2b10a289A229415a124EFDeF310C10cb004B6ff) {
+      upgradeability.implementation:
+-        "0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb"
++        "0x7F512E2E9dfC4552941D99A5b2405BBcF5781C2c"
+      implementations.0:
+-        "0xBAd002fB13adFfcbCba57a4d4a43886f3F4C56cb"
++        "0x7F512E2E9dfC4552941D99A5b2405BBcF5781C2c"
+    }
+```
+
+```diff
+    contract L1ERC1155Gateway (0xb94f7F6ABcb811c5Ac709dE14E37590fcCd975B6) {
+      upgradeability.implementation:
+-        "0xCb4638620E4C6DeCef26374e71b0dd4871863593"
++        "0x244BF7aEf29F03916569470a51fA0794B62F8cd7"
+      implementations.0:
+-        "0xCb4638620E4C6DeCef26374e71b0dd4871863593"
++        "0x244BF7aEf29F03916569470a51fA0794B62F8cd7"
+    }
+```
+
+```diff
+    contract L1StandardERC20Gateway (0xD8A791fE2bE73eb6E6cF1eb0cb3F36adC9B3F8f9) {
+      upgradeability.implementation:
+-        "0x9218732389D80f9b8723C3f32a38865B7a63564A"
++        "0x4015Fc868C06689ABEba4a9dC8FA43B804F6239c"
+      implementations.0:
+-        "0x9218732389D80f9b8723C3f32a38865B7a63564A"
++        "0x4015Fc868C06689ABEba4a9dC8FA43B804F6239c"
+    }
+```
+
+```diff
+    contract L1USDCGateway (0xf1AF3b23DE0A5Ca3CAb7261cb0061C0D779A5c7B) {
+      upgradeability.implementation:
+-        "0x6667123b5017AAB9945F73345848B82D7A953AA8"
++        "0x56ce8A8E8399f6cD5e7e4f549E8BfD673f2AfF5e"
+      implementations.0:
+-        "0x6667123b5017AAB9945F73345848B82D7A953AA8"
++        "0x56ce8A8E8399f6cD5e7e4f549E8BfD673f2AfF5e"
+    }
+```
+
+## Source code changes
+
+```diff
+.../L1CustomERC20Gateway/implementation/meta.txt   |   2 +-
+ .../src/L1/gateways/IL1GatewayRouter.sol           |   2 +-
+ .../src/L1/gateways/L1CustomERC20Gateway.sol       |  21 +++-
+ .../src/libraries/IScrollMessenger.sol             |   7 ++
+ .../src/libraries/gateway/IScrollGateway.sol       |  20 ++++
+ .../src/libraries/gateway/ScrollGatewayBase.sol    |  73 +++++++++-----
+ .../L1ERC1155Gateway/implementation/meta.txt       |   2 +-
+ .../src/L1/gateways/L1ERC1155Gateway.sol           |   8 +-
+ .../src/libraries/IScrollMessenger.sol             |   7 ++
+ .../src/libraries/gateway/IScrollGateway.sol       |  20 ++++
+ .../src/libraries/gateway/ScrollGatewayBase.sol    |  73 +++++++++-----
+ .../L1ERC721Gateway/implementation/meta.txt        |   2 +-
+ .../src/L1/gateways/L1ERC721Gateway.sol            |  11 ++-
+ .../src/libraries/IScrollMessenger.sol             |   7 ++
+ .../src/libraries/gateway/IScrollGateway.sol       |  20 ++++
+ .../src/libraries/gateway/ScrollGatewayBase.sol    |  73 +++++++++-----
+ .../L1ETHGateway/implementation/meta.txt           |   2 +-
+ .../src/L1/gateways/L1ETHGateway.sol               |  22 ++++-
+ .../src/libraries/IScrollMessenger.sol             |   7 ++
+ .../src/libraries/gateway/IScrollGateway.sol       |  20 ++++
+ .../src/libraries/gateway/ScrollGatewayBase.sol    |  73 +++++++++-----
+ .../L1MessageQueue/implementation/meta.txt         |   4 +-
+ .../src/L1/rollup/IL1MessageQueue.sol              |  19 +++-
+ .../rollup/IL1MessageQueueWithGasPriceOracle.sol   |  38 +++++++
+ .../src/L1/rollup/IL2GasPriceOracle.sol            |   6 ++
+ .../src/L1/rollup/L1MessageQueue.sol               |  95 ++++++++++--------
+ .../L1/rollup/L1MessageQueueWithGasPriceOracle.sol | 110 +++++++++++++++++++++
+ .../src/libraries/common/IWhitelist.sol            |   9 ++
+ .../L1ScrollMessenger/implementation/meta.txt      |   2 +-
+ .../implementation/src/L1/L1ScrollMessenger.sol    |  64 +++++++-----
+ .../src/L1/rollup/IL1MessageQueue.sol              |  19 +++-
+ .../implementation/src/L1/rollup/IScrollChain.sol  |   7 ++
+ .../src/libraries/IScrollMessenger.sol             |   7 ++
+ .../src/libraries/ScrollMessengerBase.sol          |  22 ++++-
+ .../L1StandardERC20Gateway/implementation/meta.txt |   2 +-
+ .../src/L1/gateways/IL1GatewayRouter.sol           |   2 +-
+ .../src/L1/gateways/L1StandardERC20Gateway.sol     |  59 +++++++----
+ .../src/libraries/IScrollMessenger.sol             |   7 ++
+ .../src/libraries/gateway/IScrollGateway.sol       |  20 ++++
+ .../src/libraries/gateway/ScrollGatewayBase.sol    |  73 +++++++++-----
+ .../L1USDCGateway/implementation/meta.txt          |   2 +-
+ .../src/L1/gateways/IL1GatewayRouter.sol           |   2 +-
+ .../src/L1/gateways/usdc/L1USDCGateway.sol         |  31 ++++--
+ .../src/libraries/IScrollMessenger.sol             |   7 ++
+ .../src/libraries/gateway/IScrollGateway.sol       |  20 ++++
+ .../src/libraries/gateway/ScrollGatewayBase.sol    |  73 +++++++++-----
+ .../L1WETHGateway/implementation/meta.txt          |   2 +-
+ .../src/L1/gateways/IL1GatewayRouter.sol           |   2 +-
+ .../src/L1/gateways/L1WETHGateway.sol              |  27 ++++-
+ .../src/libraries/IScrollMessenger.sol             |   7 ++
+ .../src/libraries/gateway/IScrollGateway.sol       |  20 ++++
+ .../src/libraries/gateway/ScrollGatewayBase.sol    |  73 +++++++++-----
+ .../ScrollChain/implementation/meta.txt            |   2 +-
+ .../src/L1/rollup/IL1MessageQueue.sol              |  19 +++-
+ .../implementation/src/L1/rollup/IScrollChain.sol  |   7 ++
+ .../implementation/src/L1/rollup/ScrollChain.sol   |  64 +++++++-----
+ 56 files changed, 1078 insertions(+), 317 deletions(-)
+```
+
 Generated with discovered.json: 0xc09ec1a3a28544d8f5f11512b0fbd211ceecb833
 
 # Diff at Thu, 21 Dec 2023 07:52:36 GMT:
@@ -386,7 +701,7 @@ Added Scroll. Their AccessControl extension needed a custom handler since it als
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Update discovery to include the multisig threshold.
 
 ## Watched changes
 

@@ -1,4 +1,13 @@
+import { TransactionData } from '../../modules/tracked-txs/modules/l2-costs/types/TransactionData'
+import {
+  AmountConfigurationRow,
+  AmountRow,
+} from '../../modules/tvl2/repositories/AmountRepository'
+
 export {}
+
+import { BlockTimestampRow } from '../../modules/tvl2/repositories/BlockTimestampRepository'
+import { PriceRow as PriceRow2 } from '../../modules/tvl2/repositories/PriceRepository'
 
 declare module 'knex/types/tables' {
   interface BlockNumberRow {
@@ -150,17 +159,7 @@ declare module 'knex/types/tables' {
     timestamp: Date
     block_number: number
     tx_hash: string
-    liveness_id: string
-  }
-
-  interface LivenessConfigurationRow {
-    id: string
-    project_id: string
-    type: string
-    since_timestamp: Date
-    until_timestamp: Date | null
-    last_synced_timestamp: Date | null
-    debug_info: string
+    tracked_tx_id: string
   }
 
   interface FinalityRow {
@@ -169,6 +168,24 @@ declare module 'knex/types/tables' {
     minimum_time_to_inclusion: number
     maximum_time_to_inclusion: number
     average_time_to_inclusion: number
+  }
+
+  interface TrackedTxsConfigRow {
+    id: string
+    project_id: string
+    type: string
+    subtype: string | null
+    debug_info: string
+    since_timestamp_inclusive: Date
+    until_timestamp_exclusive: Date | null
+    last_synced_timestamp: Date | null
+  }
+
+  interface L2CostsRow {
+    tracked_tx_id: string
+    tx_hash: string
+    timestamp: Date
+    data: TransactionData
   }
 
   interface DiscoveryCacheRow {
@@ -213,10 +230,15 @@ declare module 'knex/types/tables' {
     liveness: LivenessRow
     discovery_cache: DiscoveryCacheRow
     daily_discovery: DiscoveryHistoryRow
-    liveness_configuration: LivenessConfigurationRow
     indexer_state: IndexerStateRow
     tvl_cleaner: TvlCleanerRow
     finality: FinalityRow
+    tracked_txs_configs: TrackedTxsConfigRow
+    l2_costs: L2CostsRow
+    prices: PriceRow2
+    block_timestamps: BlockTimestampRow
+    amounts: AmountRow
+    amounts_configurations: AmountConfigurationRow
   }
 }
 

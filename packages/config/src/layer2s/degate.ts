@@ -7,7 +7,7 @@ import {
 import { utils } from 'ethers'
 
 import {
-  DATA_AVAILABILITY,
+  addSentimentToDataAvailability,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
@@ -15,6 +15,7 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
@@ -59,7 +60,6 @@ export const degate: Layer2 = {
     purposes: ['Exchange'],
     provider: 'Loopring',
     category: 'ZK Rollup',
-    dataAvailabilityMode: 'StateDiffs',
 
     links: {
       websites: ['https://degate.com/'],
@@ -85,11 +85,13 @@ export const degate: Layer2 = {
         tokens: '*',
       }),
     ],
-    liveness: {
-      proofSubmissions: [],
-      batchSubmissions: [],
-      stateUpdates: [
-        {
+    trackedTxs: [
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x6B937A5920726e70c5bF1d4d4E18EEeEd46FaE83',
@@ -97,12 +99,17 @@ export const degate: Layer2 = {
           selector: '0x377bb770',
           functionSignature:
             'function submitBlocks(bool isDataCompressed,bytes data)',
-          sinceTimestamp: new UnixTime(1681993655),
-          untilTimestamp: new UnixTime(1695902495),
+          sinceTimestampInclusive: new UnixTime(1681993655),
+          untilTimestampExclusive: new UnixTime(1695902496),
         },
-      ],
-    },
+      },
+    ],
   },
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['Ethereum (calldata)'],
+    bridge: { type: 'Enshrined' },
+    mode: 'State diffs',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ZKP_SN,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -185,7 +192,7 @@ export const degate: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...DATA_AVAILABILITY.ON_CHAIN,
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
       references: [
         {
           text: 'Introduction - DeGate design doc',

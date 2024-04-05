@@ -2,7 +2,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { opStack } from './templates/opStack'
+import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('mode')
@@ -17,7 +17,7 @@ const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
   'FINALIZATION_PERIOD_SECONDS',
 )
 
-export const mode: Layer2 = opStack({
+export const mode: Layer2 = opStackL2({
   discovery,
   display: {
     name: 'Mode Network',
@@ -31,7 +31,7 @@ export const mode: Layer2 = opStack({
       websites: ['https://mode.network/'],
       apps: [],
       documentation: ['https://docs.mode.network/'],
-      explorers: ['https://sepolia.explorer.mode.network/'],
+      explorers: ['https://modescan.io'],
       repositories: [],
       socialMedia: [
         'https://twitter.com/modenetwork',
@@ -45,6 +45,7 @@ export const mode: Layer2 = opStack({
       finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
     },
   },
+  associatedTokens: [],
   upgradeability,
   l1StandardBridgeEscrow: EthereumAddress(
     '0x735aDBbE72226BD52e818E7181953f42E3b0FF21',
@@ -65,7 +66,10 @@ export const mode: Layer2 = opStack({
     },
   ],
   finality: {
-    type: 'OPStack',
+    type: 'OPStack-blob',
+    l2BlockTimeSeconds: 2,
+    minTimestamp: new UnixTime(1710386375),
+    genesisTimestamp: new UnixTime(1700167583),
     lag: 0,
   },
   knowledgeNuggets: [],
@@ -93,4 +97,27 @@ export const mode: Layer2 = opStack({
     }),
   ],
   nonTemplateEscrows: [],
+  chainConfig: {
+    name: 'mode',
+    chainId: 34443,
+    explorerUrl: 'https://explorer.mode.network',
+    explorerApi: {
+      url: 'https://api.routescan.io/v2/network/mainnet/evm/34443/etherscan/api',
+      type: 'etherscan',
+    },
+    // ~ Timestamp of block number 0 on Mode
+    // The first full hour timestamp that will return the block number
+    // https://explorer.mode.network/block/0
+    minTimestampForTvl: UnixTime.fromDate(new Date('2023-11-16T22:46:23Z')),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 5022,
+        version: '3',
+      },
+    ],
+    coingeckoPlatform: 'mode',
+  },
+  usesBlobs: true,
 })

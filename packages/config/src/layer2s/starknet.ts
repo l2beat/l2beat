@@ -7,8 +7,8 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
@@ -17,12 +17,14 @@ import {
   OPERATOR,
   RISK_VIEW,
   STATE_CORRECTNESS,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import {
   getProxyGovernance,
   getSHARPVerifierContracts,
   getSHARPVerifierGovernors,
+  getSHARPVerifierUpgradeDelay,
 } from '../discovery/starkware'
 import { delayDescriptionFromSeconds } from '../utils/delayDescription'
 import { getStage } from './common/stages/getStage'
@@ -48,6 +50,7 @@ const ESCROW_FXS_ADDRESS = '0x66ba83ba3D3AD296424a2258145d9910E9E40B7C'
 const ESCROW_SFRXETH_ADDRESS = '0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8'
 const ESCROW_LUSD_ADDRESS = '0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5'
 const ESCROW_LORDS_ADDRESS = '0x023A2aAc5d0fa69E3243994672822BA43E34E5C9'
+const ESCROW_STRK_ADDRESS = '0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4'
 
 const escrowETHDelaySeconds = discovery.getContractUpgradeabilityParam(
   ESCROW_ETH_ADDRESS,
@@ -93,6 +96,10 @@ const escrowLUSDDelaySeconds = discovery.getContractUpgradeabilityParam(
   ESCROW_LUSD_ADDRESS,
   'upgradeDelay',
 )
+const escrowSTRKDelaySeconds = discovery.getContractUpgradeabilityParam(
+  ESCROW_STRK_ADDRESS,
+  'upgradeDelay',
+)
 
 const minDelay = Math.min(
   escrowETHDelaySeconds,
@@ -102,6 +109,8 @@ const minDelay = Math.min(
   starknetDelaySeconds,
   escrowWSTETHDelaySeconds,
   escrowRETHDelaySeconds,
+  escrowSTRKDelaySeconds,
+  getSHARPVerifierUpgradeDelay(),
 )
 
 function formatMaxTotalBalanceString(
@@ -123,73 +132,78 @@ function formatMaxTotalBalanceString(
 
 const escrowETHMaxTotalBalanceString = formatMaxTotalBalanceString(
   'ETH',
-  discovery.getContractValue<number>('ETH Bridge', 'maxTotalBalance'),
+  discovery.getContractValue<number>('ETHBridge', 'maxTotalBalance'),
   18,
 )
 
 const escrowWBTCMaxTotalBalanceString = formatMaxTotalBalanceString(
   'WBTC',
-  discovery.getContractValue<number>('WBTC Bridge', 'maxTotalBalance'),
+  discovery.getContractValue<number>('WBTCBridge', 'maxTotalBalance'),
   8,
 )
 
 const escrowUSDCMaxTotalBalanceString = formatMaxTotalBalanceString(
   'USDC',
-  discovery.getContractValue<number>('USDC Bridge', 'maxTotalBalance'),
+  discovery.getContractValue<number>('USDCBridge', 'maxTotalBalance'),
   6,
 )
 
 const escrowUSDTMaxTotalBalanceString = formatMaxTotalBalanceString(
   'USDT',
-  discovery.getContractValue<number>('USDT Bridge', 'maxTotalBalance'),
+  discovery.getContractValue<number>('USDTBridge', 'maxTotalBalance'),
   6,
 )
 
 const escrowWSTETHMaxTotalBalanceString = formatMaxTotalBalanceString(
   'wstETH',
-  discovery.getContractValue<number>('wstETH Bridge', 'maxTotalBalance'),
+  discovery.getContractValue<number>('wstETHBridge', 'maxTotalBalance'),
   18,
 )
 
 const escrowRETHMaxTotalBalanceString = formatMaxTotalBalanceString(
   'rETH',
-  discovery.getContractValue<number>('rETH Bridge', 'maxTotalBalance'),
+  discovery.getContractValue<number>('rETHBridge', 'maxTotalBalance'),
   18,
 )
 
 const escrowUNIMaxTotalBalanceString = formatMaxTotalBalanceString(
   'UNI',
-  discovery.getContractValue<number>('UNI Bridge', 'maxTotalBalance'),
+  discovery.getContractValue<number>('UNIBridge', 'maxTotalBalance'),
   18,
 )
 
 const escrowFRAXMaxTotalBalanceString = formatMaxTotalBalanceString(
   'FRAX',
-  discovery.getContractValue<number>('FRAX Bridge', 'maxTotalBalance'),
+  discovery.getContractValue<number>('FRAXBridge', 'maxTotalBalance'),
   18,
 )
 
 const escrowFXSMaxTotalBalanceString = formatMaxTotalBalanceString(
   'FXS',
-  discovery.getContractValue<number>('FXS Bridge', 'maxTotalBalance'),
+  discovery.getContractValue<number>('FXSBridge', 'maxTotalBalance'),
   18,
 )
 
 const escrowSFRXETHMaxTotalBalanceString = formatMaxTotalBalanceString(
   'sfrxETH',
-  discovery.getContractValue<number>('sfrxETH Bridge', 'maxTotalBalance'),
+  discovery.getContractValue<number>('sfrxETHBridge', 'maxTotalBalance'),
   18,
 )
 
 const escrowLUSDMaxTotalBalanceString = formatMaxTotalBalanceString(
   'LUSD',
-  discovery.getContractValue<number>('LUSD Bridge', 'maxTotalBalance'),
+  discovery.getContractValue<number>('LUSDBridge', 'maxTotalBalance'),
   18,
 )
 
 const escrowDAIMaxTotalBalanceString = formatMaxTotalBalanceString(
   'DAI',
   discovery.getContractValue<number>('L1DaiGateway', 'ceiling'),
+  18,
+)
+const escrowSTRKMaxTotalBalanceString = formatMaxTotalBalanceString(
+  'DAI',
+  discovery.getContractValue<number>('STRKBridge', 'maxTotalBalance'),
   18,
 )
 
@@ -204,7 +218,6 @@ export const starknet: Layer2 = {
       'Starknet is a general purpose ZK Rollup based on STARKs and the Cairo VM.',
     purposes: ['Universal'],
     category: 'ZK Rollup',
-    dataAvailabilityMode: 'StateDiffs',
 
     links: {
       apps: ['https://dappland.com/', 'https://starknet-ecosystem.com/'],
@@ -230,8 +243,12 @@ export const starknet: Layer2 = {
       explanation:
         'Starknet is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. Proofs are aggregated with other projects using SHARP and state updates have to refer to proved claims.',
     },
+    finality: {
+      finalizationPeriod: 0,
+    },
   },
   config: {
+    associatedTokens: ['STRK'],
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_ETH_ADDRESS),
@@ -344,41 +361,96 @@ export const starknet: Layer2 = {
         tokens: ['LORDS'],
         description: 'StarkGate bridge for LORDS.',
       }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress(ESCROW_STRK_ADDRESS),
+        tokens: ['STRK'],
+        description:
+          'StarkGate bridge for STRK.' + ' ' + escrowSTRKMaxTotalBalanceString,
+        upgradeDelay: formatSeconds(escrowSTRKDelaySeconds),
+      }),
     ],
     transactionApi: {
       type: 'starknet',
       defaultUrl: 'https://starknet-mainnet.public.blastapi.io',
       defaultCallsPerMinute: 120,
     },
-    liveness: {
-      proofSubmissions: [
-        {
+    finality: 'coming soon',
+    trackedTxs: [
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
+        query: {
           formula: 'sharpSubmission',
-          sinceTimestamp: new UnixTime(1636978914),
-          untilTimestamp: new UnixTime(1702921247),
+          sinceTimestampInclusive: new UnixTime(1636978914),
+          untilTimestampExclusive: new UnixTime(1702921247),
           programHashes: [
             '1865367024509426979036104162713508294334262484507712987283009063059134893433',
           ],
         },
-        {
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
+        query: {
           formula: 'sharpSubmission',
-          sinceTimestamp: new UnixTime(1702921247),
-          untilTimestamp: new UnixTime(1704855731),
+          sinceTimestampInclusive: new UnixTime(1702921247),
+          untilTimestampExclusive: new UnixTime(1704855731),
           programHashes: [
             '54878256403880350656938046611252303365750679698042371543935159963667935317',
           ],
         },
-        {
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
+        query: {
           formula: 'sharpSubmission',
-          sinceTimestamp: new UnixTime(1704855731),
+          sinceTimestampInclusive: new UnixTime(1704855731),
+          untilTimestampExclusive: new UnixTime(1710252995),
           programHashes: [
             '2479841346739966073527450029179698923866252973805981504232089731754042431018',
           ],
         },
-      ],
-      batchSubmissions: [],
-      stateUpdates: [
-        {
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestampInclusive: new UnixTime(1710252995),
+          untilTimestampExclusive: new UnixTime(1710625271),
+          programHashes: [
+            '109586309220455887239200613090920758778188956576212125550190099009305121410',
+          ],
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
+        query: {
+          formula: 'sharpSubmission',
+          sinceTimestampInclusive: new UnixTime(1710625271),
+          programHashes: [
+            '3383082961563516565935611087683915026448707331436034043529592588079494402084',
+          ],
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
@@ -386,11 +458,85 @@ export const starknet: Layer2 = {
           selector: '0x77552641',
           functionSignature:
             'function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)',
-          sinceTimestamp: new UnixTime(1636978914),
+          sinceTimestampInclusive: new UnixTime(1636978914),
         },
-      ],
-    },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4',
+          ),
+          selector: '0xb72d42a1',
+          functionSignature:
+            'function updateStateKzgDA(uint256[] programOutput, bytes kzgProof)',
+          sinceTimestampInclusive: new UnixTime(1710252995),
+        },
+      },
+      {
+        uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xFD14567eaf9ba941cB8c8a94eEC14831ca7fD1b4',
+          ),
+          selector: '0x5578ceae',
+          functionSignature:
+            'function registerContinuousMemoryPage(uint256 startAddr,uint256[] values,uint256 z,uint256 alpha,uint256 prime)',
+          sinceTimestampInclusive: new UnixTime(1678095635),
+          untilTimestampExclusive: new UnixTime(1706789063),
+        },
+      },
+      {
+        uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x40864568f679c10aC9e72211500096a5130770fA',
+          ),
+          selector: '0x5578ceae',
+          functionSignature:
+            'function registerContinuousMemoryPage(uint256 startAddr,uint256[] values,uint256 z,uint256 alpha,uint256 prime)',
+          sinceTimestampInclusive: new UnixTime(1706789063),
+        },
+      },
+      {
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xDEf8A3b280A54eE7Ed4f72E1c7d6098ad8df44fb',
+          ),
+          selector: '0xe85a6a28',
+          functionSignature:
+            'function verifyFRI(uint256[] proof,uint256[] friQueue,uint256 evaluationPoint,uint256 friStepSize,uint256 expectedRoot)',
+          sinceTimestampInclusive: new UnixTime(1706772791),
+        },
+      },
+      {
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x634DCf4f1421Fc4D95A968A559a450ad0245804c',
+          ),
+          selector: '0x3fe317a6',
+          functionSignature:
+            'function verifyMerkle(uint256[] merkleView,uint256[] initialMerkleQueue,uint256 height,uint256 expectedRoot)',
+          sinceTimestampInclusive: new UnixTime(1706767355),
+        },
+      },
+    ],
   },
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['Ethereum (blobs or calldata)'],
+    bridge: { type: 'Enshrined' },
+    mode: 'State diffs',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_ZKP_ST,
@@ -398,7 +544,7 @@ export const starknet: Layer2 = {
         {
           contract: 'Starknet',
           references: [
-            'https://etherscan.io/address/0x16938E4b59297060484Fa56a12594d8D6F4177e8#code#F1#L218',
+            'https://etherscan.io/address/0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24#code',
           ],
         },
         // we don't have a way to test against shared modules
@@ -410,14 +556,13 @@ export const starknet: Layer2 = {
         // },
       ],
     },
-
     dataAvailability: {
       ...RISK_VIEW.DATA_ON_CHAIN_STATE_DIFFS,
       sources: [
         {
           contract: 'Starknet',
           references: [
-            'https://etherscan.io/address/0x16938E4b59297060484Fa56a12594d8D6F4177e8#code#F1#L213',
+            'https://etherscan.io/address/0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24#code',
           ],
         },
       ],
@@ -429,7 +574,7 @@ export const starknet: Layer2 = {
         {
           contract: 'Starknet',
           references: [
-            'https://etherscan.io/address/0x16938E4b59297060484Fa56a12594d8D6F4177e8#code#F1#L199',
+            'https://etherscan.io/address/0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24#code',
           ],
         },
       ],
@@ -474,7 +619,7 @@ export const starknet: Layer2 = {
       ],
     },
     newCryptography: NEW_CRYPTOGRAPHY.ZK_STARKS,
-    dataAvailability: DATA_AVAILABILITY.STARKNET_ON_CHAIN,
+    dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKNET_ON_CHAIN(true),
     operator: {
       ...OPERATOR.CENTRALIZED_OPERATOR,
       description:
@@ -527,7 +672,7 @@ export const starknet: Layer2 = {
         delayDescriptionFromSeconds(starknetDelaySeconds),
     },
     ...discovery.getMultisigPermission(
-      'Proxy Multisig',
+      'ProxyMultisig',
       'One of Proxy Governors.',
     ),
     {
@@ -635,10 +780,27 @@ export const starknet: Layer2 = {
     },
     ...discovery.getMultisigPermission(
       'BridgeMultisig',
-      'Can upgrade the following bridges: WBTC, ETH, USDT, USDC.',
+      'Can upgrade the following bridges: FRAX, FXS, sfrxETH, USDT, WBTC, ETH, USDT, and additional permissions on other bridges, like setting the max total balance or activate withdrawal limits.',
     ),
+    {
+      name: 'StarkGate STRK owner',
+      accounts: discovery.getAccessControlRolePermission(
+        'STRKBridge',
+        'GOVERNANCE_ADMIN',
+      ),
+      description:
+        'Can upgrade implementation of the STRK escrow, potentially gaining access to all funds stored in the bridge. ' +
+        delayDescriptionFromSeconds(escrowSTRKDelaySeconds),
+    },
   ],
   milestones: [
+    {
+      name: 'Starknet Provisions',
+      link: 'https://www.starknet.io/en/content/starknet-provisions-program',
+      date: '2024-02-14T00:00:00Z',
+      description:
+        'Starknet begins allocating $STRK to early contributors and users.',
+    },
     {
       name: 'Starknet Alpha',
       link: 'https://medium.com/starkware/starknet-alpha-now-on-mainnet-4cf35efd1669',

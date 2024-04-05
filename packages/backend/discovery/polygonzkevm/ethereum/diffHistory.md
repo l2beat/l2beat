@@ -1,4 +1,905 @@
-Generated with discovered.json: 0xce8b41575c0b51dafec8f3ef40c3daba3c4fba4d
+Generated with discovered.json: 0x7df5f71d1ed0f07745e549570e9739ff2364c904
+
+# Diff at Tue, 02 Apr 2024 11:20:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a9206f2bf2edf120bcda65c615e62ea076a00070 block: 19532872
+- current block number: 19567779
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: The number of rollups that the manager can use.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.rollupCount:
+-        2
++        3
++++ description: Mapping of a rollup type to rollup verifier. Different types may use the same verifier. First entry is a type, second a verifier.
++++ type: CODE_CHANGE
++++ severity: MEDIUM
+      values.rollupsData.2:
++        ["0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507","0x0775e11309d75aA6b0967917fB0213C5673eDf81"]
++++ description: The number of unique rollup types that the manager can use.
++++ type: CODE_CHANGE
++++ severity: MEDIUM
+      values.rollupTypeCount:
+-        3
++        4
+      values.rollupTypes.3:
++        ["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C","0x0775e11309d75aA6b0967917fB0213C5673eDf81"]
+    }
+```
+
+```diff
+    contract PolygonZkEVMGlobalExitRootV2 (0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) {
+    +++ description: None
+      values.depositCount:
+-        5945
++        6983
+      values.getLastGlobalExitRoot:
+-        "0xee5c8f1eb72c1915898e2914abf28aa11bfe10ca6e393db30c6b531406f2f6cf"
++        "0xc095e5994a0b9fd52ea40b40a773ef3501d71b6714aaa9f317da893d00a4a232"
+      values.getRoot:
+-        "0x42559113116e8552ddedf5c4552865fc4d53903950bc34bc89d5cf4a0bbbe27e"
++        "0xfa45b3fc78774ebaab9c348497cd3179c1b985b3d5acd9f7943ef5249df28026"
+      values.lastMainnetExitRoot:
+-        "0x1aa4e48476c7ebb872566736708747cb59e441468ea08e19ad6046061352daa9"
++        "0xb660abe75b32c4549f002831954229d9bca2088cbba3e11ed323d658d3405195"
+      values.lastRollupExitRoot:
+-        "0xc730e9d9cb04245242f2616137241456683e0393915305b7f76542e4e1deb344"
++        "0xbe9fd8ca76197d4a5e1a89029ce2a23b17702c9c061ac9e1d5653d6de3cdd87e"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PolygonDataCommittee (0x05652Ec92366F3C2255991a265c499E01Ba58e6a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x1e37EA18e9515db29b3E94A00eD31484A3130204)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolygonValidiumStorageMigration (0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OKBImplementation (0x75231F58b43240C9718Dd58B4967c5114342a86c)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.code/OKBImplementation/implementation/OKb.sol |  408 +++++
+ .../OKBImplementation/implementation/SafeMath.sol  |   28 +
+ .../OKBImplementation/implementation/meta.txt      |    2 +
+ .../.code/OKBImplementation/proxy/Address.sol      |   23 +
+ .../proxy/OwnedUpgradeabilityProxy.sol             |   86 +
+ .../.code/OKBImplementation/proxy/Proxy.sol        |   34 +
+ .../proxy/UpgradeabilityProxy.sol                  |   59 +
+ .../.code/OKBImplementation/proxy/meta.txt         |    2 +
+ .../@openzeppelin/contracts/utils/Strings.sol      |   70 +
+ .../contracts/utils/cryptography/ECDSA.sol         |  213 +++
+ .../@openzeppelin/contracts/utils/math/Math.sol    |  345 ++++
+ .../access/OwnableUpgradeable.sol                  |   95 +
+ .../proxy/utils/Initializable.sol                  |  165 ++
+ .../utils/AddressUpgradeable.sol                   |  219 +++
+ .../utils/ContextUpgradeable.sol                   |   37 +
+ .../v2/consensus/validium/PolygonDataCommittee.sol |  197 ++
+ .../v2/interfaces/IDataAvailabilityProtocol.sol    |   12 +
+ .../v2/interfaces/IPolygonDataCommitteeErrors.sol  |   40 +
+ .../PolygonDataCommittee/implementation/meta.txt   |    2 +
+ .../@openzeppelin/contracts/access/Ownable.sol     |   83 +
+ .../contracts/interfaces/IERC1967.sol              |   26 +
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
+ .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |   32 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  171 ++
+ .../proxy/@openzeppelin/contracts/proxy/Proxy.sol  |   86 +
+ .../contracts/proxy/beacon/BeaconProxy.sol         |   61 +
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   65 +
+ .../contracts/proxy/transparent/ProxyAdmin.sol     |   81 +
+ .../transparent/TransparentUpgradeableProxy.sol    |  193 ++
+ .../@openzeppelin/contracts/utils/Address.sol      |  244 +++
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  |   88 +
+ .../.code/PolygonDataCommittee/proxy/meta.txt      |    2 +
+ .../access/IAccessControlUpgradeable.sol           |   88 +
+ .../proxy/utils/Initializable.sol                  |  165 ++
+ .../token/ERC20/IERC20Upgradeable.sol              |   82 +
+ .../ERC20/extensions/IERC20MetadataUpgradeable.sol |   28 +
+ .../extensions/draft-IERC20PermitUpgradeable.sol   |   60 +
+ .../token/ERC20/utils/SafeERC20Upgradeable.sol     |  116 ++
+ .../utils/AddressUpgradeable.sol                   |  219 +++
+ .../utils/ContextUpgradeable.sol                   |   37 +
+ .../utils/StringsUpgradeable.sol                   |   70 +
+ .../utils/introspection/ERC165Upgradeable.sol      |   42 +
+ .../utils/introspection/IERC165Upgradeable.sol     |   25 +
+ .../utils/math/MathUpgradeable.sol                 |  345 ++++
+ .../@openzeppelin/contracts5/access/Ownable.sol    |  100 +
+ .../contracts5/interfaces/IERC1967.sol             |   24 +
+ .../contracts5/proxy/ERC1967/ERC1967Proxy.sol      |   40 +
+ .../contracts5/proxy/ERC1967/ERC1967Utils.sol      |  193 ++
+ .../@openzeppelin/contracts5/proxy/Proxy.sol       |   69 +
+ .../contracts5/proxy/beacon/IBeacon.sol            |   16 +
+ .../contracts5/proxy/transparent/ProxyAdmin.sol    |   45 +
+ .../transparent/TransparentUpgradeableProxy.sol    |  116 ++
+ .../@openzeppelin/contracts5/utils/Address.sol     |  159 ++
+ .../@openzeppelin/contracts5/utils/Context.sol     |   24 +
+ .../@openzeppelin/contracts5/utils/StorageSlot.sol |  135 ++
+ .../interfaces/IBasePolygonZkEVMGlobalExitRoot.sol |   16 +
+ .../contracts/interfaces/IPolygonZkEVMBridge.sol   |  118 ++
+ .../contracts/interfaces/IPolygonZkEVMErrors.sol   |  211 +++
+ .../contracts/interfaces/IVerifierRollup.sol       |   13 +
+ .../contracts/lib/EmergencyManager.sol             |   73 +
+ .../contracts/v2/PolygonRollupManager.sol          | 1911 ++++++++++++++++++++
+ .../migration/PolygonRollupBaseEtrogNoGap.sol      |  945 ++++++++++
+ .../migration/PolygonValidiumStorageMigration.sol  |  347 ++++
+ .../consensus/zkEVM/PolygonZkEVMExistentEtrog.sol  |  134 ++
+ .../v2/interfaces/IDataAvailabilityProtocol.sol    |   12 +
+ .../contracts/v2/interfaces/IPolygonRollupBase.sol |   20 +
+ .../v2/interfaces/IPolygonRollupManager.sol        |  170 ++
+ .../contracts/v2/interfaces/IPolygonValidium.sol   |   15 +
+ .../v2/interfaces/IPolygonZkEVMBridgeV2.sol        |  166 ++
+ .../interfaces/IPolygonZkEVMGlobalExitRootV2.sol   |   10 +
+ .../v2/interfaces/IPolygonZkEVMVEtrogErrors.sol    |   56 +
+ .../contracts/v2/lib/LegacyZKEVMStateVariables.sol |  153 ++
+ .../v2/lib/PolygonAccessControlUpgradeable.sol     |  245 +++
+ .../contracts/v2/lib/PolygonConstantsBase.sol      |   14 +
+ .../contracts/v2/lib/PolygonRollupBaseEtrog.sol    |  951 ++++++++++
+ .../contracts/v2/lib/PolygonTransparentProxy.sol   |   79 +
+ .../implementation/meta.txt                        |    2 +
+ .../PolygonValidiumStorageMigration/proxy/meta.txt |    2 +
+ .../ProxyAdmin.sol                                 |    0
+ .../meta.txt                                       |    0
+ .../@openzeppelin/contracts/access/Ownable.sol     |   83 +
+ .../contracts/interfaces/IERC1967.sol              |   26 +
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
+ .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |   32 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  171 ++
+ .../@openzeppelin/contracts/proxy/Proxy.sol        |   86 +
+ .../contracts/proxy/beacon/BeaconProxy.sol         |   61 +
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   65 +
+ .../contracts/proxy/transparent/ProxyAdmin.sol     |   81 +
+ .../transparent/TransparentUpgradeableProxy.sol    |  193 ++
+ .../@openzeppelin/contracts/utils/Address.sol      |  244 +++
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  |   88 +
+ .../meta.txt                                       |    2 +
+ 97 files changed, 12282 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19532872 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract AstarValidiumAdmin (0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AstarValidiumEtrog (0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Bridge (0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SecurityCouncil (0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6)
+    +++ description: None
+```
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      values._HALT_AGGREGATION_TIMEOUT:
+-        604800
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]},"TRUSTED_AGGREGATOR":{"adminRole":"TRUSTED_AGGREGATOR_ADMIN","members":["0x6329Fe417621925C81c16F9F9a18c203C21Af7ab","0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"]},"ADD_ROLLUP_TYPE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]},"ADD_EXISTING_ROLLUP":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]},"UPDATE_ROLLUP":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]},"OBSOLETE_ROLLUP_TYPE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]},"CREATE_ROLLUP":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]},"STOP_EMERGENCY":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]},"TWEAK_PARAMETERS":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]},"TRUSTED_AGGREGATOR_ADMIN":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]},"SET_FEE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]},"EMERGENCY_COUNCIL":{"adminRole":"EMERGENCY_COUNCIL_ADMIN","members":["0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6"]},"EMERGENCY_COUNCIL_ADMIN":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6"]}}
+      values.emergencyStateCount:
+-        1
+      values.getRollupExitRoot:
+-        "0xc730e9d9cb04245242f2616137241456683e0393915305b7f76542e4e1deb344"
+      values.lastAggregationTimestamp:
+-        1711631879
+      values.nondeterministicPendingState:
+-        []
+      values.totalSequencedBatches:
+-        27933
+      values.totalVerifiedBatches:
+-        27902
+    }
+```
+
+```diff
+    contract GlobalExitRootV2 (0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) {
+    +++ description: None
+      name:
+-        "GlobalExitRootV2"
++        "PolygonZkEVMGlobalExitRootV2"
+      values.getLastGlobalExitRoot:
++        "0xee5c8f1eb72c1915898e2914abf28aa11bfe10ca6e393db30c6b531406f2f6cf"
+      values.lastMainnetExitRoot:
++        "0x1aa4e48476c7ebb872566736708747cb59e441468ea08e19ad6046061352daa9"
+      values.lastRollupExitRoot:
++        "0xc730e9d9cb04245242f2616137241456683e0393915305b7f76542e4e1deb344"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x6c4876Ecb5de33f76700f44d547C593065806dAC)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AstarValidiumDAC (0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0)
+    +++ description: None
+```
+
+```diff
+    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: None
+      name:
+-        "Timelock"
++        "PolygonZkEVMTimelock"
+      values.accessControl:
+-        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]},"TIMELOCK_ADMIN_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]},"PROPOSER_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]},"EXECUTOR_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]},"CANCELLER_ROLE":{"adminRole":"TIMELOCK_ADMIN_ROLE","members":["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]}}
+      values.scheduledTransactions:
+-        [{"id":"0xb50bcda49f13b2aa0ddc72fa32eec2b6ea4cd8af5a9823762150c7d94a210476","target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":0,"data":"0x9623609d0000000000000000000000005132a183e9f3cb7c848b0aac5ae0c4f0491b7ab2000000000000000000000000301442aa888701c8b86727d42f3c55fb0dd9ef7f000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000647240f9af0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000001176322e302e302d5243312d666f726b2e3500000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":864000},{"id":"0x99979392a952eef62666ac91808b1c6b3b35a34092712ab965dbb85ac0b0a702","target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":0,"data":"0x9623609d0000000000000000000000005132a183e9f3cb7c848b0aac5ae0c4f0491b7ab2000000000000000000000000b1585916487acedd99952086f2950763d253b923000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000647240f9af0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000001076332e302e302d696e636162657272790000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":864000},{"id":"0xff337aa79b453bd0ae64d7668a9ac83cdf4666bde0977afdf04462c4e14978c8","target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":0,"data":"0x99a88ec4000000000000000000000000580bda1e7a0cfae92fa7f6c20a3794f169ce3cfb0000000000000000000000002e38cd55163137483e30580cb468c2dff1d85077","delay":864000},{"id":"0xff337aa79b453bd0ae64d7668a9ac83cdf4666bde0977afdf04462c4e14978c8","target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":0,"data":"0x99a88ec40000000000000000000000002a3dd3eb832af982ec71669e178424b10dca2ede0000000000000000000000000feb850b183c57534b56b7d56520133c8f9bdb65","delay":864000},{"id":"0xff337aa79b453bd0ae64d7668a9ac83cdf4666bde0977afdf04462c4e14978c8","target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":0,"data":"0x9623609d0000000000000000000000005132a183e9f3cb7c848b0aac5ae0c4f0491b7ab20000000000000000000000003b82da772c825283d85d5d6717a77c6ff582053b000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000001440645af090000000000000000000000006329fe417621925c81c16f9f9a18c203c21af7ab00000000000000000000000000000000000000000000000000000000000697800000000000000000000000000000000000000000000000000000000000069780000000000000000000000000242dae44f5d8fb54b198d03a94da45b5a4413e21000000000000000000000000ef1462451c30ea7ad8555386226059fe837ca4ef00000000000000000000000037c58dfa7bf0a165c5aaeddf3e2edb475ac6dcb6000000000000000000000000519e42c24163192dca44cd3fbdcebf6be91309870000000000000000000000001c3a3da552b8662cd69538356b1e7c2e9cc1ebd80000000000000000000000000000000000000000000000000000000000000007000000000000000000000000000000000000000000000000000000000000044d00000000000000000000000000000000000000000000000000000000","delay":864000},{"id":"0x84be1445c72b5d8056fe3f1a482e08a6ef1a74fdc78f85dbb16f1d5980f4f16a","target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":0,"data":"0xf34eb8eb0000000000000000000000009cf80f7eb1c76ec5ae7a88b417e373449b73ac300000000000000000000000001c3a3da552b8662cd69538356b1e7c2e9cc1ebd800000000000000000000000000000000000000000000000000000000000000070000000000000000000000000000000000000000000000000000000000000000e3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f27200000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000005d547970653a2056616c696469756d2c2056657273696f6e3a206574726f672c2067656e657369733a202f697066732f516d55586e526f5062556d5a75455a43477969486a45736f4e6346567533684c74537668706e664253326d415955000000","delay":864000},{"id":"0x8bae5e2a8aaf4501e263b917591e7fcf9b1d28c85962a8847a845aff916b50ad","target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":0,"data":"0xf34eb8eb0000000000000000000000002650a9a4fc64f63f573ef0f405064ef54bc46f710000000000000000000000004aabba26ea9e7a7fbd052d17a167e6ae3f8ec7be00000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000e3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f27200000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000005e547970653a207a6b45564d2c2056657273696f6e3a20696e636162657272792c2067656e657369733a202f697066732f516d55586e526f5062556d5a75455a43477969486a45736f4e6346567533684c74537668706e664253326d4159550000","delay":864000},{"id":"0xb492d5648af7003fa67cd99f58c95eaec5a32e0768bb99268bee18b19e8cf869","target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":0,"data":"0xc4c928c2000000000000000000000000519e42c24163192dca44cd3fbdcebf6be9130987000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000000","delay":864000},{"id":"0xd43e98454a4d7bef73956a5239de00d4858589ccf39f1d26a8c5bd9d1e5f671b","target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":0,"data":"0xf34eb8eb00000000000000000000000010d296e8add0535be71639e5d1d1c30ae1c6bd4c0000000000000000000000004aabba26ea9e7a7fbd052d17a167e6ae3f8ec7be00000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000e3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f27200000000000000000000000000000000000000000000000000000000000000c00000000000000000000000000000000000000000000000000000000000000061547970653a2056616c696469756d2c2056657273696f6e3a20696e636162657272792c2067656e657369733a202f697066732f516d55586e526f5062556d5a75455a43477969486a45736f4e6346567533684c74537668706e664253326d41595500000000000000000000000000000000000000000000000000000000000000","delay":864000},{"id":"0xd67d30e173069baf06cd69ce4df5951d855ab47e107cbaf1ac07f0fa42fb6af9","target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":0,"data":"0xc4c928c20000000000000000000000001e163594e13030244dcaf4cdfc2cd0ba3206da800000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000041c8b937000000000000000000000000000000000000000000000000000000000","delay":864000},{"id":"0xdf877691807571a83db47daab96ce9c103ea6459d7a56b57f040f8039186cd31","target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":0,"data":"0xf34eb8eb0000000000000000000000002650a9a4fc64f63f573ef0f405064ef54bc46f710000000000000000000000000775e11309d75aa6b0967917fb0213c5673edf8100000000000000000000000000000000000000000000000000000000000000090000000000000000000000000000000000000000000000000000000000000000e3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f27200000000000000000000000000000000000000000000000000000000000000c00000000000000000000000000000000000000000000000000000000000000060547970653a207a6b45564d2c2056657273696f6e3a20656c64656c6265727279322c2067656e657369733a202f697066732f516d55586e526f5062556d5a75455a43477969486a45736f4e6346567533684c74537668706e664253326d415955","delay":0},{"id":"0xdd9feb4dbad03c98d76f1bc8d746e99e1ee05ecac1b4233e1388d6c6532e02f6","target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":0,"data":"0x2f2ff15d66156603fe29d13f97c6f3e3dff4ef71919f9aa61c555be0182d954e94221aac000000000000000000000000242dae44f5d8fb54b198d03a94da45b5a4413e21","delay":0},{"id":"0xdecad137d29f44776cbe1de5721dd879cbc65f189fa8f4f93451c6621fa31363","target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":0,"data":"0xf34eb8eb00000000000000000000000010d296e8add0535be71639e5d1d1c30ae1c6bd4c0000000000000000000000000775e11309d75aa6b0967917fb0213c5673edf8100000000000000000000000000000000000000000000000000000000000000090000000000000000000000000000000000000000000000000000000000000000e3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f27200000000000000000000000000000000000000000000000000000000000000c00000000000000000000000000000000000000000000000000000000000000063547970653a2056616c696469756d2c2056657273696f6e3a20656c64656c6265727279322c2067656e657369733a202f697066732f516d55586e526f5062556d5a75455a43477969486a45736f4e6346567533684c74537668706e664253326d4159550000000000000000000000000000000000000000000000000000000000","delay":0}]
+      values.CANCELLER_ROLE:
++        "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783"
+      values.DEFAULT_ADMIN_ROLE:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.EXECUTOR_ROLE:
++        "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63"
+      values.PROPOSER_ROLE:
++        "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
+      values.TIMELOCK_ADMIN_ROLE:
++        "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract AstarValidiumMultisig (0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xd3e73fddb8acc8a7591d34699a86184f8f54330d
+
+# Diff at Thu, 28 Mar 2024 13:22:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@d6dd20a306b268b851f83df5487b048c1253bb51 block: 19525935
+- current block number: 19532872
+
+## Description
+
+Update discovery to include the multisig threshold.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19525935 (main branch discovery), not current.
+
+```diff
+    contract AdminMultisig (0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 3 (67%)"
+    }
+```
+
+```diff
+    contract SecurityCouncil (0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6) {
+    +++ description: None
+      upgradeability.threshold:
++        "6 of 8 (75%)"
+    }
+```
+
+```diff
+    contract GnosisSafe (0x6c4876Ecb5de33f76700f44d547C593065806dAC) {
+    +++ description: None
+      upgradeability.threshold:
++        "1 of 3 (33%)"
+    }
+```
+
+```diff
+    contract EscrowsAdmin (0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904) {
+    +++ description: None
+      upgradeability.threshold:
++        "5 of 10 (50%)"
+    }
+```
+
+```diff
+    contract AstarValidiumMultisig (0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E) {
+    +++ description: None
+      upgradeability.threshold:
++        "3 of 6 (50%)"
+    }
+```
+
+Generated with discovered.json: 0xf529407fa5a83721b1e452946ad1c73f810e6979
+
+# Diff at Tue, 26 Mar 2024 11:08:48 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@b787afc6089da9eb3ee495639a48cf4838b84df9 block: 19510549
+- current block number: 19518217
+
+## Description
+
+Added fetch of scheduled transactions.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19510549 (main branch discovery), not current.
+
+```diff
+    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: None
+      values.scheduledTransactions:
++        [{"id":"0xb50bcda49f13b2aa0ddc72fa32eec2b6ea4cd8af5a9823762150c7d94a210476","target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":0,"data":"0x9623609d0000000000000000000000005132a183e9f3cb7c848b0aac5ae0c4f0491b7ab2000000000000000000000000301442aa888701c8b86727d42f3c55fb0dd9ef7f000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000647240f9af0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000001176322e302e302d5243312d666f726b2e3500000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":864000},{"id":"0x99979392a952eef62666ac91808b1c6b3b35a34092712ab965dbb85ac0b0a702","target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":0,"data":"0x9623609d0000000000000000000000005132a183e9f3cb7c848b0aac5ae0c4f0491b7ab2000000000000000000000000b1585916487acedd99952086f2950763d253b923000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000647240f9af0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000001076332e302e302d696e636162657272790000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":864000},{"id":"0xff337aa79b453bd0ae64d7668a9ac83cdf4666bde0977afdf04462c4e14978c8","target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":0,"data":"0x99a88ec4000000000000000000000000580bda1e7a0cfae92fa7f6c20a3794f169ce3cfb0000000000000000000000002e38cd55163137483e30580cb468c2dff1d85077","delay":864000},{"id":"0xff337aa79b453bd0ae64d7668a9ac83cdf4666bde0977afdf04462c4e14978c8","target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":0,"data":"0x99a88ec40000000000000000000000002a3dd3eb832af982ec71669e178424b10dca2ede0000000000000000000000000feb850b183c57534b56b7d56520133c8f9bdb65","delay":864000},{"id":"0xff337aa79b453bd0ae64d7668a9ac83cdf4666bde0977afdf04462c4e14978c8","target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":0,"data":"0x9623609d0000000000000000000000005132a183e9f3cb7c848b0aac5ae0c4f0491b7ab20000000000000000000000003b82da772c825283d85d5d6717a77c6ff582053b000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000001440645af090000000000000000000000006329fe417621925c81c16f9f9a18c203c21af7ab00000000000000000000000000000000000000000000000000000000000697800000000000000000000000000000000000000000000000000000000000069780000000000000000000000000242dae44f5d8fb54b198d03a94da45b5a4413e21000000000000000000000000ef1462451c30ea7ad8555386226059fe837ca4ef00000000000000000000000037c58dfa7bf0a165c5aaeddf3e2edb475ac6dcb6000000000000000000000000519e42c24163192dca44cd3fbdcebf6be91309870000000000000000000000001c3a3da552b8662cd69538356b1e7c2e9cc1ebd80000000000000000000000000000000000000000000000000000000000000007000000000000000000000000000000000000000000000000000000000000044d00000000000000000000000000000000000000000000000000000000","delay":864000},{"id":"0x84be1445c72b5d8056fe3f1a482e08a6ef1a74fdc78f85dbb16f1d5980f4f16a","target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":0,"data":"0xf34eb8eb0000000000000000000000009cf80f7eb1c76ec5ae7a88b417e373449b73ac300000000000000000000000001c3a3da552b8662cd69538356b1e7c2e9cc1ebd800000000000000000000000000000000000000000000000000000000000000070000000000000000000000000000000000000000000000000000000000000000e3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f27200000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000005d547970653a2056616c696469756d2c2056657273696f6e3a206574726f672c2067656e657369733a202f697066732f516d55586e526f5062556d5a75455a43477969486a45736f4e6346567533684c74537668706e664253326d415955000000","delay":864000},{"id":"0x8bae5e2a8aaf4501e263b917591e7fcf9b1d28c85962a8847a845aff916b50ad","target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":0,"data":"0xf34eb8eb0000000000000000000000002650a9a4fc64f63f573ef0f405064ef54bc46f710000000000000000000000004aabba26ea9e7a7fbd052d17a167e6ae3f8ec7be00000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000e3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f27200000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000005e547970653a207a6b45564d2c2056657273696f6e3a20696e636162657272792c2067656e657369733a202f697066732f516d55586e526f5062556d5a75455a43477969486a45736f4e6346567533684c74537668706e664253326d4159550000","delay":864000},{"id":"0xb492d5648af7003fa67cd99f58c95eaec5a32e0768bb99268bee18b19e8cf869","target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":0,"data":"0xc4c928c2000000000000000000000000519e42c24163192dca44cd3fbdcebf6be9130987000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000000","delay":864000},{"id":"0xd43e98454a4d7bef73956a5239de00d4858589ccf39f1d26a8c5bd9d1e5f671b","target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":0,"data":"0xf34eb8eb00000000000000000000000010d296e8add0535be71639e5d1d1c30ae1c6bd4c0000000000000000000000004aabba26ea9e7a7fbd052d17a167e6ae3f8ec7be00000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000e3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f27200000000000000000000000000000000000000000000000000000000000000c00000000000000000000000000000000000000000000000000000000000000061547970653a2056616c696469756d2c2056657273696f6e3a20696e636162657272792c2067656e657369733a202f697066732f516d55586e526f5062556d5a75455a43477969486a45736f4e6346567533684c74537668706e664253326d41595500000000000000000000000000000000000000000000000000000000000000","delay":864000},{"id":"0xd67d30e173069baf06cd69ce4df5951d855ab47e107cbaf1ac07f0fa42fb6af9","target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":0,"data":"0xc4c928c20000000000000000000000001e163594e13030244dcaf4cdfc2cd0ba3206da800000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000041c8b937000000000000000000000000000000000000000000000000000000000","delay":864000},{"id":"0xdf877691807571a83db47daab96ce9c103ea6459d7a56b57f040f8039186cd31","target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":0,"data":"0xf34eb8eb0000000000000000000000002650a9a4fc64f63f573ef0f405064ef54bc46f710000000000000000000000000775e11309d75aa6b0967917fb0213c5673edf8100000000000000000000000000000000000000000000000000000000000000090000000000000000000000000000000000000000000000000000000000000000e3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f27200000000000000000000000000000000000000000000000000000000000000c00000000000000000000000000000000000000000000000000000000000000060547970653a207a6b45564d2c2056657273696f6e3a20656c64656c6265727279322c2067656e657369733a202f697066732f516d55586e526f5062556d5a75455a43477969486a45736f4e6346567533684c74537668706e664253326d415955","delay":0},{"id":"0xdd9feb4dbad03c98d76f1bc8d746e99e1ee05ecac1b4233e1388d6c6532e02f6","target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":0,"data":"0x2f2ff15d66156603fe29d13f97c6f3e3dff4ef71919f9aa61c555be0182d954e94221aac000000000000000000000000242dae44f5d8fb54b198d03a94da45b5a4413e21","delay":0},{"id":"0xdecad137d29f44776cbe1de5721dd879cbc65f189fa8f4f93451c6621fa31363","target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":0,"data":"0xf34eb8eb00000000000000000000000010d296e8add0535be71639e5d1d1c30ae1c6bd4c0000000000000000000000000775e11309d75aa6b0967917fb0213c5673edf8100000000000000000000000000000000000000000000000000000000000000090000000000000000000000000000000000000000000000000000000000000000e3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f27200000000000000000000000000000000000000000000000000000000000000c00000000000000000000000000000000000000000000000000000000000000063547970653a2056616c696469756d2c2056657273696f6e3a20656c64656c6265727279322c2067656e657369733a202f697066732f516d55586e526f5062556d5a75455a43477969486a45736f4e6346567533684c74537668706e664253326d4159550000000000000000000000000000000000000000000000000000000000","delay":0}]
+    }
+```
+
+Generated with discovered.json: 0x65c228f8ed1ab55cbd9a6e85bc1f2f348606c976
+
+# Diff at Mon, 25 Mar 2024 09:16:42 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@9bc44b13c53d42ef5e81d478df7a78975e8d4088 block: 19440911
+- current block number: 19510549
+
+## Description
+
+A bug stalled the chain for 13 hours and the emergency state was activated in response. A new rollup type was added to update the Polygon zkEVM verifier. The emergency state was then deactivated. We are waiting for the post-mortem.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract FflonkVerifier (0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be)
+    +++ description: None
+```
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      values.accessControl.UPDATE_ROLLUP.members.1:
++        "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"
++++ description: The emergency state has been activated, meaning that the upgrade delay is now zero.
++++ type: RISK_PARAMETER
++++ severity: HIGH
+      values.emergencyStateCount:
+-        0
++        1
+      values.lastDeactivatedEmergencyStateTimestamp:
+-        0
++        1711323791
++++ description: Mapping of a rollup type to rollup verifier. Different types may use the same verifier. First entry is a type, second a verifier.
++++ type: CODE_CHANGE
++++ severity: MEDIUM
+      values.rollupsData.0.1:
+-        "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be"
++        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++++ description: The number of unique rollup types that the manager can use.
++++ type: CODE_CHANGE
++++ severity: MEDIUM
+      values.rollupTypeCount:
+-        2
++        3
+      values.rollupTypes.2:
++        ["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71","0x0775e11309d75aA6b0967917fB0213C5673eDf81"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PolygonzkEVMVerifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.code@19440911/FflonkVerifier/meta.txt => /dev/null      | 2 --
+ .../PolygonzkEVMVerifier}/contracts/verifiers/FflonkVerifier.sol      | 4 ++--
+ .../polygonzkevm/ethereum/.code/PolygonzkEVMVerifier/meta.txt         | 2 ++
+ 3 files changed, 4 insertions(+), 4 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19440911 (main branch discovery), not current.
+
+```diff
+    contract PolygonzkEVMVerifier (0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be) {
+    +++ description: None
+      name:
+-        "PolygonzkEVMVerifier"
++        "FflonkVerifier"
+    }
+```
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      values.nondeterminsiticPendingState:
+-        []
++++ description: The emergency state has been activated, meaning that the upgrade delay is now zero.
++++ type: RISK_PARAMETER
++++ severity: HIGH
+      values.emergencyStateCount:
++        0
+      values.nondeterministicPendingState:
++        []
+      values.rollupTypes:
++        [["0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30","0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"],["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71","0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be"]]
+    }
+```
+
+Generated with discovered.json: 0x9b4d7769cda4996d3d0134957a58e639e4b6f2dc
+
+# Diff at Fri, 15 Mar 2024 14:22:39 GMT:
+
+- author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
+- comparing to: main@955bf46d3045f69b7cc7dac86edbb5dae6945bc4 block: 19433041
+- current block number: 19440911
+
+## Description
+
+- Relatively small changes to `PolygonZkEVMExistentEtrog` which now is called `PolygonZkEVMEtrog`
+- New FFlonkVerifier (`0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be`) for PolygonzkEVM. The previous FFlonkVerifier is still used by Astar Validium. Because of the change there are now two RollupTypes.
+
+### PolygonZkEVMExistentEtrog
+
+Contract name has changed to `PolygonZkEVMEtrog`. The method `seqenceBatches` now takes to additional parameters: `maxSequenceTimestamp` and `initSequencedBatch`. It is an additional safety measure, the `maxSequenceTimestamp` must be inside a safety range (actual + 36 seconds). This timestamp should be equal or higher of the last block inside the sequence, otherwise this batch will be invalidated by circuit.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: Mapping of a rollup type to rollup verifier. Different types may use the same verifier. First entry is a type, second a verifier.
++++ type: CODE_CHANGE
++++ severity: MEDIUM
+      values.rollupsData.0.1:
+-        "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"
++        "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be"
++++ description: The number of unique rollup types that the manager can use.
++++ type: CODE_CHANGE
++++ severity: MEDIUM
+      values.rollupTypeCount:
+-        1
++        2
+    }
+```
+
+```diff
+    contract PolygonZkEVMEtrog (0x519E42c24163192Dca44CD3fBDCEBF6be9130987) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x79BCB82B35A335cD8A8Ec433b304a0c91f67CDE0"
++        "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"
+      implementations.0:
+-        "0x79BCB82B35A335cD8A8Ec433b304a0c91f67CDE0"
++        "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"
+      values.SET_UP_ETROG_TX:
+-        "0xdf2a8080944d5cf5032b2a844602278b01199ed191a86c93ff8080821092808000000000000000000000000000000000000000000000000000000005ca1ab1e000000000000000000000000000000000000000000000000000000005ca1ab1e01bff"
+      values.TIMESTAMP_RANGE:
++        36
+      derivedName:
+-        "PolygonZkEVMExistentEtrog"
++        "PolygonZkEVMEtrog"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PolygonzkEVMVerifier (0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../v2/consensus/zkEVM/PolygonZkEVMEtrog.sol       |   34 +
+ .../v2/interfaces/IPolygonZkEVMVEtrogErrors.sol    |   10 +
+ .../contracts/v2/lib/PolygonRollupBaseEtrog.sol    |   36 +-
+ .../PolygonZkEVMEtrog/implementation/meta.txt      |    4 +-
+ .../contracts/verifiers/FflonkVerifier.sol         | 1244 ++++++++++++++++++++
+ .../ethereum/.code/PolygonzkEVMVerifier/meta.txt   |    2 +
+ 6 files changed, 1324 insertions(+), 6 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19433041 (main branch discovery), not current.
+
+```diff
+    contract FflonkVerifier (0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8) {
+    +++ description: None
+      name:
+-        "FflonkVerifier"
++        "AstarVerifier"
+    }
+```
+
+```diff
+    contract PolygonZkEVMExistentEtrog (0x519E42c24163192Dca44CD3fBDCEBF6be9130987) {
+    +++ description: None
+      name:
+-        "PolygonZkEVMExistentEtrog"
++        "PolygonZkEVMEtrog"
+    }
+```
+
+Generated with discovered.json: 0xf5c29c1b6e921c17297af2fa6650362ebbbffcb5
+
+# Diff at Thu, 14 Mar 2024 11:46:46 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@24c5721630392f8b6f59093376472db03d18b2c2 block: 19282832
+- current block number: 19433041
+
+## Description
+
+Added a Validium - AstarZKEVM.
+The validium is owned by AstarValidiumAdmin that itself is owned by AstarValidiumMultisig.
+
+A trusted aggregator has been added that is an [EOA](https://etherscan.io/address/0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE).
+On 2024-02-29 [willbutton.eth](https://etherscan.io/tx/0x760fd86f9453477e23df16def04777fb6282dda9f8546e93b2f7b866467b2e49) sent some eth to that address.
+A day later it was given 5ETH by a [multisig](https://etherscan.io/address/0xc984295ad7a950fb5031154bcfc0b6267b948706) and 20ETH a week later by the same multisig.
+The account has been calling `verifyBatchesTrustedAggregator()` starting from 2024-03-04 and does so around once an hour.
+We don't have that multisig in any discovery.
+The trusted aggregator can call `verifyBatchesTrustedAggregator()`, `overridePendingState()` as well as `consolidatePendingState()` skipping all timeout restrictions.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      values.accessControl.TRUSTED_AGGREGATOR.members.1:
++        "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
++++ description: The number of rollups that the manager can use.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.rollupCount:
+-        1
++        2
++++ description: Addresses of the rollup backend as well as the rollup verifier.
++++ type: CODE_CHANGE
++++ severity: MEDIUM
+      values.rollupsData.1:
++        ["0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80","0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"]
++++ description: The number of unique rollup types that the manager can use.
++++ type: CODE_CHANGE
++++ severity: MEDIUM
+      values.rollupTypeCount:
+-        0
++        1
+    }
+```
+
+```diff
++   Status: CREATED
+    contract AstarValidiumAdmin (0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AstarValidiumEtrog (0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x6c4876Ecb5de33f76700f44d547C593065806dAC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AstarValidiumDAC (0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AstarValidiumMultisig (0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../@openzeppelin/contracts/access/Ownable.sol     |   83 +
+ .../contracts/interfaces/IERC1967.sol              |   26 +
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
+ .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |   32 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  171 ++
+ .../@openzeppelin/contracts/proxy/Proxy.sol        |   86 +
+ .../contracts/proxy/beacon/BeaconProxy.sol         |   61 +
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   65 +
+ .../contracts/proxy/transparent/ProxyAdmin.sol     |   81 +
+ .../transparent/TransparentUpgradeableProxy.sol    |  193 ++
+ .../@openzeppelin/contracts/utils/Address.sol      |  244 +++
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  |   88 +
+ .../ethereum/.code/AstarValidiumAdmin/meta.txt     |    2 +
+ .../@openzeppelin/contracts/utils/Strings.sol      |   70 +
+ .../contracts/utils/cryptography/ECDSA.sol         |  213 +++
+ .../@openzeppelin/contracts/utils/math/Math.sol    |  345 ++++
+ .../access/OwnableUpgradeable.sol                  |   95 +
+ .../proxy/utils/Initializable.sol                  |  165 ++
+ .../utils/AddressUpgradeable.sol                   |  219 +++
+ .../utils/ContextUpgradeable.sol                   |   37 +
+ .../v2/consensus/validium/PolygonDataCommittee.sol |  197 ++
+ .../v2/interfaces/IDataAvailabilityProtocol.sol    |   12 +
+ .../v2/interfaces/IPolygonDataCommitteeErrors.sol  |   40 +
+ .../.code/AstarValidiumDAC/implementation/meta.txt |    2 +
+ .../@openzeppelin/contracts/access/Ownable.sol     |   83 +
+ .../contracts/interfaces/IERC1967.sol              |   26 +
+ .../contracts/interfaces/draft-IERC1822.sol        |   20 +
+ .../contracts/proxy/ERC1967/ERC1967Proxy.sol       |   32 +
+ .../contracts/proxy/ERC1967/ERC1967Upgrade.sol     |  171 ++
+ .../proxy/@openzeppelin/contracts/proxy/Proxy.sol  |   86 +
+ .../contracts/proxy/beacon/BeaconProxy.sol         |   61 +
+ .../contracts/proxy/beacon/IBeacon.sol             |   16 +
+ .../contracts/proxy/beacon/UpgradeableBeacon.sol   |   65 +
+ .../contracts/proxy/transparent/ProxyAdmin.sol     |   81 +
+ .../transparent/TransparentUpgradeableProxy.sol    |  193 ++
+ .../@openzeppelin/contracts/utils/Address.sol      |  244 +++
+ .../@openzeppelin/contracts/utils/Context.sol      |   24 +
+ .../@openzeppelin/contracts/utils/StorageSlot.sol  |   88 +
+ .../ethereum/.code/AstarValidiumDAC/proxy/meta.txt |    2 +
+ .../access/IAccessControlUpgradeable.sol           |   88 +
+ .../proxy/utils/Initializable.sol                  |  165 ++
+ .../token/ERC20/IERC20Upgradeable.sol              |   82 +
+ .../ERC20/extensions/IERC20MetadataUpgradeable.sol |   28 +
+ .../extensions/draft-IERC20PermitUpgradeable.sol   |   60 +
+ .../token/ERC20/utils/SafeERC20Upgradeable.sol     |  116 ++
+ .../utils/AddressUpgradeable.sol                   |  219 +++
+ .../utils/ContextUpgradeable.sol                   |   37 +
+ .../utils/StringsUpgradeable.sol                   |   70 +
+ .../utils/introspection/ERC165Upgradeable.sol      |   42 +
+ .../utils/introspection/IERC165Upgradeable.sol     |   25 +
+ .../utils/math/MathUpgradeable.sol                 |  345 ++++
+ .../@openzeppelin/contracts5/access/Ownable.sol    |  100 +
+ .../contracts5/interfaces/IERC1967.sol             |   24 +
+ .../contracts5/proxy/ERC1967/ERC1967Proxy.sol      |   40 +
+ .../contracts5/proxy/ERC1967/ERC1967Utils.sol      |  193 ++
+ .../@openzeppelin/contracts5/proxy/Proxy.sol       |   69 +
+ .../contracts5/proxy/beacon/IBeacon.sol            |   16 +
+ .../contracts5/proxy/transparent/ProxyAdmin.sol    |   45 +
+ .../transparent/TransparentUpgradeableProxy.sol    |  116 ++
+ .../@openzeppelin/contracts5/utils/Address.sol     |  159 ++
+ .../@openzeppelin/contracts5/utils/Context.sol     |   24 +
+ .../@openzeppelin/contracts5/utils/StorageSlot.sol |  135 ++
+ .../interfaces/IBasePolygonZkEVMGlobalExitRoot.sol |   16 +
+ .../contracts/interfaces/IPolygonZkEVMBridge.sol   |  118 ++
+ .../contracts/interfaces/IPolygonZkEVMErrors.sol   |  211 +++
+ .../contracts/interfaces/IVerifierRollup.sol       |   13 +
+ .../contracts/lib/EmergencyManager.sol             |   73 +
+ .../contracts/v2/PolygonRollupManager.sol          | 1911 ++++++++++++++++++++
+ .../v2/consensus/validium/PolygonValidiumEtrog.sol |  279 +++
+ .../consensus/zkEVM/PolygonZkEVMExistentEtrog.sol  |  134 ++
+ .../v2/interfaces/IDataAvailabilityProtocol.sol    |   12 +
+ .../contracts/v2/interfaces/IPolygonRollupBase.sol |   20 +
+ .../v2/interfaces/IPolygonRollupManager.sol        |  170 ++
+ .../contracts/v2/interfaces/IPolygonValidium.sol   |   15 +
+ .../v2/interfaces/IPolygonZkEVMBridgeV2.sol        |  166 ++
+ .../interfaces/IPolygonZkEVMGlobalExitRootV2.sol   |   10 +
+ .../v2/interfaces/IPolygonZkEVMVEtrogErrors.sol    |   46 +
+ .../contracts/v2/lib/LegacyZKEVMStateVariables.sol |  153 ++
+ .../v2/lib/PolygonAccessControlUpgradeable.sol     |  245 +++
+ .../contracts/v2/lib/PolygonConstantsBase.sol      |   14 +
+ .../contracts/v2/lib/PolygonRollupBaseEtrog.sol    |  923 ++++++++++
+ .../contracts/v2/lib/PolygonTransparentProxy.sol   |   79 +
+ .../AstarValidiumEtrog/implementation/meta.txt     |    2 +
+ .../@openzeppelin/contracts5/access/Ownable.sol    |  100 +
+ .../contracts5/interfaces/IERC1967.sol             |   24 +
+ .../contracts5/proxy/ERC1967/ERC1967Proxy.sol      |   40 +
+ .../contracts5/proxy/ERC1967/ERC1967Utils.sol      |  193 ++
+ .../proxy/@openzeppelin/contracts5/proxy/Proxy.sol |   69 +
+ .../contracts5/proxy/beacon/IBeacon.sol            |   16 +
+ .../contracts5/proxy/transparent/ProxyAdmin.sol    |   45 +
+ .../transparent/TransparentUpgradeableProxy.sol    |  116 ++
+ .../@openzeppelin/contracts5/utils/Address.sol     |  159 ++
+ .../@openzeppelin/contracts5/utils/Context.sol     |   24 +
+ .../@openzeppelin/contracts5/utils/StorageSlot.sol |  135 ++
+ .../contracts/v2/lib/PolygonTransparentProxy.sol   |   79 +
+ .../.code/AstarValidiumEtrog/proxy/meta.txt        |    2 +
+ .../implementation/contracts/GnosisSafe.sol        |  422 +++++
+ .../implementation/contracts/base/Executor.sol     |   27 +
+ .../contracts/base/FallbackManager.sol             |   53 +
+ .../implementation/contracts/base/GuardManager.sol |   50 +
+ .../contracts/base/ModuleManager.sol               |  133 ++
+ .../implementation/contracts/base/OwnerManager.sol |  149 ++
+ .../implementation/contracts/common/Enum.sol       |    8 +
+ .../contracts/common/EtherPaymentFallback.sol      |   13 +
+ .../contracts/common/SecuredTokenTransfer.sol      |   35 +
+ .../contracts/common/SelfAuthorized.sol            |   16 +
+ .../contracts/common/SignatureDecoder.sol          |   36 +
+ .../implementation/contracts/common/Singleton.sol  |   11 +
+ .../contracts/common/StorageAccessible.sol         |   47 +
+ .../contracts/external/GnosisSafeMath.sol          |   54 +
+ .../contracts/interfaces/ISignatureValidator.sol   |   20 +
+ .../AstarValidiumMultisig/implementation/meta.txt  |    2 +
+ .../proxy/GnosisSafeProxy.sol                      |  155 ++
+ .../.code/AstarValidiumMultisig/proxy/meta.txt     |    2 +
+ .../implementation/contracts/GnosisSafe.sol        |  422 +++++
+ .../implementation/contracts/base/Executor.sol     |   27 +
+ .../contracts/base/FallbackManager.sol             |   53 +
+ .../implementation/contracts/base/GuardManager.sol |   50 +
+ .../contracts/base/ModuleManager.sol               |  133 ++
+ .../implementation/contracts/base/OwnerManager.sol |  149 ++
+ .../implementation/contracts/common/Enum.sol       |    8 +
+ .../contracts/common/EtherPaymentFallback.sol      |   13 +
+ .../contracts/common/SecuredTokenTransfer.sol      |   35 +
+ .../contracts/common/SelfAuthorized.sol            |   16 +
+ .../contracts/common/SignatureDecoder.sol          |   36 +
+ .../implementation/contracts/common/Singleton.sol  |   11 +
+ .../contracts/common/StorageAccessible.sol         |   47 +
+ .../contracts/external/GnosisSafeMath.sol          |   54 +
+ .../contracts/interfaces/ISignatureValidator.sol   |   20 +
+ .../.code/GnosisSafe/implementation/meta.txt       |    2 +
+ .../.code/GnosisSafe/proxy/GnosisSafeProxy.sol     |  155 ++
+ .../ethereum/.code/GnosisSafe/proxy/meta.txt       |    2 +
+ 134 files changed, 14055 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19282832 (main branch discovery), not current.
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: Addresses of the rollup backend as well as the rollup verifier.
++++ type: CODE_CHANGE
++++ severity: MEDIUM
+      values.rollupsData.0.11:
+-        0
++++ description: Addresses of the rollup backend as well as the rollup verifier.
++++ type: CODE_CHANGE
++++ severity: MEDIUM
+      values.rollupsData.0.10:
+-        0
++++ description: Addresses of the rollup backend as well as the rollup verifier.
++++ type: CODE_CHANGE
++++ severity: MEDIUM
+      values.rollupsData.0.9:
+-        1984749
++++ description: Addresses of the rollup backend as well as the rollup verifier.
++++ type: CODE_CHANGE
++++ severity: MEDIUM
+      values.rollupsData.0.8:
+-        0
++++ description: Addresses of the rollup backend as well as the rollup verifier.
++++ type: CODE_CHANGE
++++ severity: MEDIUM
+      values.rollupsData.0.7:
+-        0
++++ description: Addresses of the rollup backend as well as the rollup verifier.
++++ type: CODE_CHANGE
++++ severity: MEDIUM
+      values.rollupsData.0.6:
+-        1991783
++++ description: Addresses of the rollup backend as well as the rollup verifier.
++++ type: CODE_CHANGE
++++ severity: MEDIUM
+      values.rollupsData.0.5:
+-        1991800
++++ description: Addresses of the rollup backend as well as the rollup verifier.
++++ type: CODE_CHANGE
++++ severity: MEDIUM
+      values.rollupsData.0.4:
+-        "0x8ad85f1e7b882d12cf6c64cf256cab8d255d6085e8109400741d82850a1d944b"
++++ description: Addresses of the rollup backend as well as the rollup verifier.
++++ type: CODE_CHANGE
++++ severity: MEDIUM
+      values.rollupsData.0.3:
+-        7
++++ description: Addresses of the rollup backend as well as the rollup verifier.
++++ type: CODE_CHANGE
++++ severity: MEDIUM
+      values.rollupsData.0.2:
+-        "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"
++++ description: Addresses of the rollup backend as well as the rollup verifier.
++++ type: CODE_CHANGE
++++ severity: MEDIUM
+      values.rollupsData.0.1:
+-        1101
++        "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"
+    }
+```
+
+Generated with discovered.json: 0xa044c3c3b7dd5811d191b9d7da48b7a243b45f1c
+
+# Diff at Thu, 22 Feb 2024 11:24:11 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@74fbd7f65d394338041f8804041b27ceceea98b1 block: 19263381
+- current block number: 19282832
+
+## Description
+
+Added way to discover rollups added to the RollupManager. Currently we do not support ignoring nested values.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+      values.rollupsData.0.6:
+-        1990615
++        1991783
+      values.rollupsData.0.5:
+-        1990630
++        1991800
+      values.rollupsData.0.4:
+-        "0x6116cb825d6526a68480b15d3958bc28af06dc073278d491f6c1c14b435e6694"
++        "0x8ad85f1e7b882d12cf6c64cf256cab8d255d6085e8109400741d82850a1d944b"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19263381 (main branch discovery), not current.
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+      values.rollupsData:
++        [["0x519E42c24163192Dca44CD3fBDCEBF6be9130987",1101,"0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8",7,"0x6116cb825d6526a68480b15d3958bc28af06dc073278d491f6c1c14b435e6694",1990630,1990615,0,0,1984749,0,0]]
+    }
+```
+
+Generated with discovered.json: 0xea555dc810751b7357d2f5afb96482369ae5b864
 
 # Diff at Wed, 14 Feb 2024 14:38:23 GMT:
 

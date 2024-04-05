@@ -1,8 +1,8 @@
 {
   "name": "immutablezkevm",
   "chain": "ethereum",
-  "blockNumber": 19175701,
-  "configHash": "0xe594698860e3ce578a365d256380c647ca98e4e597cda6f423741991d1be2f2e",
+  "blockNumber": 19531603,
+  "configHash": "0xd48c792b7b7ba66515fff219b7e00954236493cfc3ade965424ac999cff14a48",
   "version": 3,
   "contracts": [
     {
@@ -124,7 +124,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "2 of 5 (40%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1702945151,
@@ -139,7 +140,7 @@
           "0xbD8Dc294478ec4dAd9f1b4596bf275f4d0309817"
         ],
         "getThreshold": 2,
-        "nonce": 8,
+        "nonce": 13,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

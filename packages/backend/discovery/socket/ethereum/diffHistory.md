@@ -1,3 +1,225 @@
+Generated with discovered.json: 0x5f06851d6935822ec7d2e9ae5ae731d06d295cb6
+
+# Diff at Thu, 28 Mar 2024 11:05:29 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@21187e63b9b90823a55c461c331868a470ce17eb block: 19497754
+- current block number: 19532195
+
+## Description
+
+Update discovery to include the multisig threshold.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19497754 (main branch discovery), not current.
+
+```diff
+    contract USDCVaultOwner (0x246d38588b16Dd877c558b245e6D5a711C649fCF) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 3 (67%)"
+    }
+```
+
+Generated with discovered.json: 0x255f035589a4edd15c65708c90afa4cdecca5909
+
+# Diff at Fri, 22 Mar 2024 07:51:07 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@022e2fdbd062a978ff7ecc702973b614915f5846 block: 19483658
+- current block number: 19488785
+
+## Description
+
+More bridging fee changes.
+
+## Watched changes
+
+```diff
+    contract PolygonL1Switchboard (0x053407DFA30267f6332f3c94a9e9F704A55e62CD) {
+    +++ description: None
++++ description: Fee charged by the switchboard for processing a transaction
++++ severity: LOW
+      values.switchboardFees:
+-        5884471559011500
++        4244501643700500
++++ description: Fee charged for verifying transaction
++++ severity: LOW
+      values.verificationOverheadFees:
+-        3278655744000
++        824668780000
+    }
+```
+
+```diff
+    contract OptimismSwitchboard2 (0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA) {
+    +++ description: None
++++ description: Fee charged by the switchboard for processing a transaction
++++ severity: LOW
+      values.switchboardFees:
+-        5568057713790000
++        4307646578800500
++++ description: Fee charged for verifying transaction
++++ severity: LOW
+      values.verificationOverheadFees:
+-        340928172000
++        359338720000
+    }
+```
+
+```diff
+    contract OptimismSwitchboard (0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287) {
+    +++ description: None
++++ description: Fee charged by the switchboard for processing a transaction
++++ severity: LOW
+      values.switchboardFees:
+-        5568057713790000
++        3270848270917500
+    }
+```
+
+```diff
+    contract ArbitrumL1Switchboard (0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe) {
+    +++ description: None
++++ description: Fee charged by the switchboard for processing a transaction
++++ severity: LOW
+      values.switchboardFees:
+-        6280699596483000
++        4386707880087000
+    }
+```
+
+Generated with discovered.json: 0x9c077c8bf899c1f9ec86477b7bf996418783348f
+
+# Diff at Thu, 21 Mar 2024 14:34:30 GMT:
+
+- author: sekuba (<sekuba@users.noreply.githum.com>)
+- comparing to: main@550e8c13dc36da304ad797c4c213a735d633c96b block: 19389434
+- current block number: 19483658
+
+## Description
+
+Bridging fees are raised (doubled) for the optimism switchboards.
+
+## Watched changes
+
+```diff
+    contract PolygonL1Switchboard (0x053407DFA30267f6332f3c94a9e9F704A55e62CD) {
+    +++ description: None
++++ description: Fee charged by the switchboard for processing a transaction
++++ severity: LOW
+      values.switchboardFees:
+-        2700564286365000
++        5884471559011500
++++ description: Fee charged for verifying transaction
++++ severity: LOW
+      values.verificationOverheadFees:
+-        1196689560000
++        3278655744000
+    }
+```
+
+```diff
+    contract OptimismSwitchboard2 (0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA) {
+    +++ description: None
++++ description: Fee charged by the switchboard for processing a transaction
++++ severity: LOW
+      values.switchboardFees:
+-        2251544461254000
++        5568057713790000
++++ description: Fee charged for verifying transaction
++++ severity: LOW
+      values.verificationOverheadFees:
+-        319607508000
++        340928172000
+    }
+```
+
+```diff
+    contract OptimismSwitchboard (0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287) {
+    +++ description: None
++++ description: Fee charged by the switchboard for processing a transaction
++++ severity: LOW
+      values.switchboardFees:
+-        2251544461254000
++        5568057713790000
++++ description: Fee charged for verifying transaction
++++ severity: LOW
+      values.verificationOverheadFees:
+-        44002200000
++        52013156000
+    }
+```
+
+```diff
+    contract ArbitrumL1Switchboard (0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe) {
+    +++ description: None
++++ description: Fee charged by the switchboard for processing a transaction
++++ severity: LOW
+      values.switchboardFees:
+-        2458955286249000
++        6280699596483000
++++ description: Fee charged for verifying transaction
++++ severity: LOW
+      values.verificationOverheadFees:
+-        55000000000000
++        6500000000000
+    }
+```
+
+Generated with discovered.json: 0x2f2ba4933ab604e3fea69cb0554f79110c0ea619
+
+# Diff at Fri, 08 Mar 2024 09:05:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a10be30b5303dc6a457478efdaca424c246501ca block: 19375693
+- current block number: 19389434
+
+## Description
+
+Two new plugs.
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
+      values.plugs[17]:
++        "0xdCcFb24f983586144c085426dbfa3414045E19a3"
+      values.plugs[16]:
++        "0x727aD65db6aE99DB5Dbee8F202846DD6009bf6D5"
+    }
+```
+
+Generated with discovered.json: 0x37cb2efea554c7c5038c7efcd12e8cd84046d16f
+
+# Diff at Wed, 06 Mar 2024 11:01:08 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@724fc93d9bd160395a856b93ce5016ca876c6436 block: 19212794
+- current block number: 19375693
+
+## Description
+
+Three new plugs.
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
+      values.plugs[15]:
++        "0x4ab7B94BA3f3CF69354Eb2f6b5E856DC61e13660"
+      values.plugs[14]:
++        "0x8F4e67C61232167584333e23D7d67BD73d80a4F5"
+      values.plugs[13]:
++        "0x68411d61adF1341A6392C87A93941FdD3EE7DF8E"
+    }
+```
+
 Generated with discovered.json: 0xbe11b5db1a4e90286ad51c890467859b0f633f8f
 
 # Diff at Mon, 12 Feb 2024 15:19:43 GMT:

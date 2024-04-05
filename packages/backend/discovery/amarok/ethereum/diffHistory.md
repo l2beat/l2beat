@@ -1,3 +1,302 @@
+Generated with discovered.json: 0xe3a1c5468421a3a6936776e8fd06dd4be298a474
+
+# Diff at Thu, 28 Mar 2024 08:27:00 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@867de6120241d47b66bf76f83c490408eb3595b0 block: 19517972
+- current block number: 19531406
+
+## Description
+
+Update discovery to include the multisig threshold.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19517972 (main branch discovery), not current.
+
+```diff
+    contract Connext Multisig (0x4d50a469fc788a3c0CdC8Fd67868877dCb246625) {
+    +++ description: None
+      upgradeability.threshold:
++        "8 of 12 (67%)"
+    }
+```
+
+```diff
+    contract Connext Fee Multisig (0x7bE978Cc84612E08f7844672B0E6A6F367FE2b6A) {
+    +++ description: None
+      upgradeability.threshold:
++        "1 of 5 (20%)"
+    }
+```
+
+```diff
+    contract GnosisSafe (0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 4 (50%)"
+    }
+```
+
+Generated with discovered.json: 0x00e8f6fe2ff1e801c73b28ac65367c537e9b2588
+
+# Diff at Tue, 26 Mar 2024 10:19:30 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@e6ff14fa637ed6c3a674ff43e070f1cf65f4aa1e block: 19482562
+- current block number: 19517972
+
+## Description
+
+One new router is added by the Connext Fee Multisig. Ignore Fee Multisig nonce.
+
+## Watched changes
+
+```diff
+    contract ConnextBridge (0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6) {
+    +++ description: None
+      values.ROUTERS.27:
++        "0xc82C7d826b1eD0b2A4E9A2bE72B445416f901FD1"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19482562 (main branch discovery), not current.
+
+```diff
+    contract Connext Fee Multisig (0x7bE978Cc84612E08f7844672B0E6A6F367FE2b6A) {
+    +++ description: None
+      values.nonce:
+-        1
+    }
+```
+
+Generated with discovered.json: 0x2b9a2dbfa0e1df2aabd59731d5051595c6415516
+
+# Diff at Thu, 21 Mar 2024 10:53:07 GMT:
+
+- author: sekuba (<sekuba@users.noreply.githum.com>)
+- comparing to: main@3d626df8a3d129805d6a0f5894ea1a2e437970ee block: 19441852
+- current block number: 19482562
+
+## Description
+
+Add two routers and change the relayer fee vault from the Gnosis Safe (Multisig 2) to a different one.
+The new fee vault Multisig has a 1/5 threshold (old one 3/5) and only keeps 2 of the old signers.
+
+## Watched changes
+
+```diff
+    contract ConnextBridge (0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6) {
+    +++ description: None
++++ description: This address receives the bridge fees
++++ severity: LOW
+      values.relayerFeeVault:
+-        "0xf2964cCcB7CDA9e808aaBe8DB0DDDAF7890dd378"
++        "0x7bE978Cc84612E08f7844672B0E6A6F367FE2b6A"
+      values.ROUTERS.26:
++        "0xc770eC66052fe77ff2eF9edF9558236e2D1C41Ef"
+      values.ROUTERS.25:
++        "0x5f4E31F4F402E368743bF29954f80f7C4655EA68"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xf2964cCcB7CDA9e808aaBe8DB0DDDAF7890dd378)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Connext Fee Multisig (0x7bE978Cc84612E08f7844672B0E6A6F367FE2b6A)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../implementation/contracts/Safe.sol}             | 289 +++++++++++----------
+ .../implementation/contracts/SafeL2.sol            |  74 ++++++
+ .../implementation/contracts/base/Executor.sol     |  19 +-
+ .../contracts/base/FallbackManager.sol             |  82 ++++++
+ .../implementation/contracts/base/GuardManager.sol |  79 ++++++
+ .../contracts/base/ModuleManager.sol               | 191 ++++++++++++++
+ .../implementation/contracts/base/OwnerManager.sol |  96 ++++---
+ .../implementation/contracts/common/Enum.sol       |  13 +
+ .../common/NativeCurrencyPaymentFallback.sol       |  18 ++
+ .../contracts/common/SecuredTokenTransfer.sol      |  38 +++
+ .../contracts/common/SelfAuthorized.sol            |  18 ++
+ .../contracts/common/SignatureDecoder.sol          |  36 +++
+ .../implementation/contracts/common/Singleton.sol  |  13 +
+ .../contracts/common/StorageAccessible.sol         |  14 +-
+ .../contracts/external/SafeMath.sol}               |  28 +-
+ .../contracts/interfaces/IERC165.sol               |  15 ++
+ .../contracts/interfaces/ISignatureValidator.sol   |   6 +-
+ .../Connext Fee Multisig/implementation/meta.txt   |   2 +
+ .../proxy/contracts/proxies/SafeProxy.sol          |  50 ++++
+ .../.code/Connext Fee Multisig/proxy/meta.txt      |   2 +
+ .../implementation/contracts/GnosisSafe.sol        |   0
+ .../implementation/contracts/base/Executor.sol     |   0
+ .../contracts/base/FallbackManager.sol             |   0
+ .../implementation/contracts/base/GuardManager.sol |   0
+ .../contracts/base/ModuleManager.sol               |   0
+ .../implementation/contracts/base/OwnerManager.sol |   0
+ .../implementation/contracts/common/Enum.sol       |   0
+ .../contracts/common/EtherPaymentFallback.sol      |   0
+ .../contracts/common/SecuredTokenTransfer.sol      |   0
+ .../contracts/common/SelfAuthorized.sol            |   0
+ .../contracts/common/SignatureDecoder.sol          |   0
+ .../implementation/contracts/common/Singleton.sol  |   0
+ .../contracts/common/StorageAccessible.sol         |   0
+ .../contracts/external/GnosisSafeMath.sol          |   0
+ .../contracts/interfaces/ISignatureValidator.sol   |   0
+ .../GnosisSafe}/implementation/meta.txt            |   0
+ .../GnosisSafe}/proxy/Proxy.sol                    |   0
+ .../GnosisSafe}/proxy/meta.txt                     |   0
+ .../base/FallbackManager.sol => /dev/null          |  53 ----
+ .../contracts/base/GuardManager.sol => /dev/null   |  50 ----
+ .../contracts/base/ModuleManager.sol => /dev/null  | 133 ----------
+ .../contracts/common/Enum.sol => /dev/null         |   8 -
+ .../common/EtherPaymentFallback.sol => /dev/null   |  13 -
+ .../common/SecuredTokenTransfer.sol => /dev/null   |  35 ---
+ .../common/SelfAuthorized.sol => /dev/null         |  16 --
+ .../common/SignatureDecoder.sol => /dev/null       |  36 ---
+ .../contracts/common/Singleton.sol => /dev/null    |  11 -
+ .../implementation/meta.txt => /dev/null           |   2 -
+ .../proxy/GnosisSafeProxy.sol => /dev/null         | 155 -----------
+ .../proxy/meta.txt => /dev/null                    |   2 -
+ 50 files changed, 886 insertions(+), 711 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19441852 (main branch discovery), not current.
+
+```diff
+    contract Connext Multisig 2 (0xf2964cCcB7CDA9e808aaBe8DB0DDDAF7890dd378) {
+    +++ description: None
+      name:
+-        "Connext Multisig 2"
++        "GnosisSafe"
+    }
+```
+
+Generated with discovered.json: 0xb76dcd04bed4c034b382d58f57e071221946805c
+
+# Diff at Wed, 13 Mar 2024 08:08:25 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@800d2d30954e8bfb14ad062b9806c50997706541 block: 19317899
+- current block number: 19424856
+
+## Description
+
+New Connector 'OptimismHubConnector' added, matches the source code of existing connector in index 4 (OP Mainnet connector).
+This connector is for the op stack L2 Mode Network and now renamed to 'ModeHubConnector'.
+
+## Watched changes
+
+```diff
+    contract RootManager (0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A) {
+    +++ description: None
+      values.connectors[12]:
++        "0x7b2bE683266909A6a4068e743083dd40621d663E"
++++ description: Hash of all connectors' addresses. Changes when a connector is added or removed.
++++ severity: LOW
+      values.connectorsHash:
+-        "0x14b530936915b09786ec041c63aa2b1ec72eb6cdefd18fe41d79b92b93aa90bd"
++        "0x13d3fa9798ffd60797858bd05e95cbe3c3d7ebb6ee02922f0625e12f8bcbe51c"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ModeHubConnector (0x7b2bE683266909A6a4068e743083dd40621d663E)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../@openzeppelin/contracts/utils/Address.sol      | 244 +++++++++++++++++++++
+ .../contracts/messaging/connectors/Connector.sol   | 216 ++++++++++++++++++
+ .../contracts/messaging/connectors/GasCap.sol      |  61 ++++++
+ .../messaging/connectors/HubConnector.sol          |  44 ++++
+ .../messaging/connectors/optimism/BaseOptimism.sol |  28 +++
+ .../connectors/optimism/OptimismHubConnector.sol   | 148 +++++++++++++
+ .../messaging/connectors/optimism/lib/Types.sol    |  84 +++++++
+ .../contracts/messaging/interfaces/IConnector.sol  |  64 ++++++
+ .../messaging/interfaces/IRootManager.sol          |  22 ++
+ .../interfaces/ambs/optimism/IOptimismPortal.sol   |  25 +++
+ .../interfaces/ambs/optimism/OptimismAmb.sol       |  28 +++
+ .../contracts/shared/ProposedOwnable.sol           | 172 +++++++++++++++
+ .../shared/interfaces/IProposedOwnable.sol         |  42 ++++
+ .../ethereum/.code/ModeHubConnector/meta.txt       |   2 +
+ 14 files changed, 1180 insertions(+)
+```
+
+Generated with discovered.json: 0xedbcbcd69c61aab19a00452e1a0f26ed281f8f56
+
+# Diff at Tue, 27 Feb 2024 09:09:39 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@4f9617ef0b726c0af67b0e31e0d1ed434f10f1ef block: 19267405
+- current block number: 19317899
+
+## Description
+
+Two Watcher addresses are changed.
+
+## Watched changes
+
+```diff
+    contract WatcherManager (0x79e6E0242405A66B2dd8B96DEd3b2F0216Fd417d) {
+      values.WATCHERS.1:
+-        "0x917133b1dE100E9fF8F03E24c43F9272dD6A8E99"
++        "0x151Ea574C62b505aEe2F89f33D8c152E28A956b0"
+      values.WATCHERS.0:
+-        "0x9c77788d761ee0347Ab550883237CeD274a0F248"
++        "0x56dD71fffD089EdAdbA8eCdaaDb94269713f8f4d"
+    }
+```
+
+Generated with discovered.json: 0x76284a08ee267ddde579dbc4f104ea8865a380fa
+
+# Diff at Tue, 20 Feb 2024 07:23:08 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@308930b4cc7f93870a161e88abb1361d44caae90 block: 19176699
+- current block number: 19267405
+
+## Description
+
+A new proposal is submitted, related to identifier update, and a new relayer is added.
+
+## Watched changes
+
+```diff
+    contract GovernorV2 (0x7b292034084A41B9D441B71b6E3557Edd0463fa8) {
+      values.numProposals:
+-        198
++        199
+    }
+```
+
+```diff
+    contract ConnextBridge (0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6) {
+      values.RELAYERS[13]:
++        "0xF9D64d54D32EE2BDceAAbFA60C4C438E224427d0"
+    }
+```
+
 Generated with discovered.json: 0x658319b9c3fe837c9e09311f58fef75b5fc7adcd
 
 # Diff at Wed, 07 Feb 2024 13:46:24 GMT:

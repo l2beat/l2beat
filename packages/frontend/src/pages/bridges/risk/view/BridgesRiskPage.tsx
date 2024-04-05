@@ -8,7 +8,7 @@ import {
 } from '../../../../components'
 import { About } from '../../../../components/About'
 import { BridgesMvpWarning } from '../../../../components/BridgesMvpWarning'
-import { RiskHeader } from '../../../../components/header/RiskHeader'
+import { SimplePageHeader } from '../../../../components/header/SimplePageHeader'
 import { BridgesNavigationTabs } from '../../../../components/navigation-tabs/BridgesNavigationTabs'
 import { PageContent } from '../../../../components/PageContent'
 import { BridgesRiskView, BridgesRiskViewProps } from './BridgesRiskView'
@@ -26,7 +26,7 @@ export function BridgesRiskPage(props: BridgesRiskPageProps) {
       <PageContent>
         <BridgesNavigationTabs selected="risk" />
         <main>
-          <RiskHeader />
+          <SimplePageHeader>Risk Analysis</SimplePageHeader>
           <BridgesMvpWarning />
           <BridgesRiskView {...props.riskView} />
           <About />

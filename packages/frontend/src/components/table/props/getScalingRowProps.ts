@@ -10,6 +10,7 @@ interface ScalingTableEntry {
   isVerified?: boolean
   isUpcoming?: boolean
   showProjectUnderReview?: boolean
+  hasImplementationChanged?: boolean
 }
 
 type ScalingRowType =
@@ -19,6 +20,7 @@ type ScalingRowType =
   | 'activity'
   | 'liveness'
   | 'finality'
+  | 'data-availability'
 
 export function getScalingRowProps(
   entry: ScalingTableEntry,
@@ -46,6 +48,8 @@ function getHref(slug: ScalingTableEntry['slug'], type: ScalingRowType) {
     case 'summary':
     case 'liveness':
     case 'finality':
+    case 'data-availability':
+      //TODO: (DA) maybe redirect to the data-availability section
       return base
     case 'tvl':
       return base + '/tvl-breakdown'

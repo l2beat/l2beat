@@ -1,12 +1,13 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
-  DATA_AVAILABILITY,
+  addSentimentToDataAvailability,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
   OPERATOR,
   RISK_VIEW,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
@@ -26,7 +27,7 @@ export const honeypot: Layer2 = {
       'Honeypot is an application-specific rollup designed to challenge the security of Cartesi Rollups. It provides a gamified battlefield to incentivize bug hunters to hack the application to obtain the funds locked in the rollup contract.',
     purposes: ['Bug bounty'],
     category: 'Optimistic Rollup',
-    dataAvailabilityMode: 'TxData',
+
     links: {
       websites: ['https://cartesi.io/'],
       apps: [],
@@ -81,11 +82,13 @@ export const honeypot: Layer2 = {
         description: 'Contract storing bounty funds.',
       }),
     ],
-    liveness: {
-      proofSubmissions: [],
-      batchSubmissions: [],
-      stateUpdates: [
-        {
+    trackedTxs: [
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
           formula: 'functionCall',
           address: EthereumAddress(
             '0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f',
@@ -93,11 +96,16 @@ export const honeypot: Layer2 = {
           selector: '0xddfdfbb0',
           functionSignature:
             'function submitClaim(bytes calldata _claimData) external onlyOwner',
-          sinceTimestamp: new UnixTime(1694467715),
+          sinceTimestampInclusive: new UnixTime(1694467715),
         },
-      ],
-    },
+      },
+    ],
   },
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['Ethereum (calldata)'],
+    bridge: { type: 'Enshrined' },
+    mode: 'Transactions data',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: {
       ...RISK_VIEW.STATE_NONE,
@@ -140,7 +148,7 @@ export const honeypot: Layer2 = {
       ],
     },
     dataAvailability: {
-      ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
       references: [
         {
           text: 'InputBox.sol#30 - Etherscan source code, addInput function',

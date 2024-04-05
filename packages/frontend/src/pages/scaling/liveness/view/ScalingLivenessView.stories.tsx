@@ -17,17 +17,15 @@ const meta: Meta<typeof ScalingLivenessView> = {
         name: 'Arbitrum One',
         shortName: undefined,
         slug: 'arbitrum',
-        purposes: ['Exchange'],
-        redWarning: undefined,
+        purposes: ['Universal'],
         warning:
           'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
+        redWarning: undefined,
         category: 'Optimistic Rollup',
-        dataAvailabilityMode: 'TxData',
+        dataAvailabilityMode: 'Transactions data (compressed)',
         provider: 'Arbitrum',
-        explanation: 'Arbitrum One is a permissioned Optimistic Rollup.',
         stage: {
           stage: 'Stage 1',
-          message: undefined,
           missing: {
             nextStage: 'Stage 2',
             requirements: [
@@ -110,173 +108,136 @@ const meta: Meta<typeof ScalingLivenessView> = {
               ],
             },
           ],
+          message: undefined,
         },
-        isSynced: false,
+        explanation:
+          'Arbitrum One is an Optimistic rollup that posts transactions data to the L1. For a transaction to be considered final, it has to be posted on L1. Forced txs can be delayed up to 1d. The state root gets finalized 6d 8h after it has been posted.',
         stateUpdates: {
           last30Days: {
-            averageInSeconds: 3650,
-            minimumInSeconds: 12,
-            maximumInSeconds: 12612,
+            averageInSeconds: 3238,
+            minimumInSeconds: 32029,
+            maximumInSeconds: 66971,
           },
           last90Days: {
-            averageInSeconds: 3626,
-            minimumInSeconds: 12,
-            maximumInSeconds: 12612,
+            averageInSeconds: 37,
+            minimumInSeconds: 45233,
+            maximumInSeconds: 1741,
           },
           allTime: {
-            averageInSeconds: 3621,
-            minimumInSeconds: 12,
-            maximumInSeconds: 12612,
+            averageInSeconds: 36444,
+            minimumInSeconds: 2379,
+            maximumInSeconds: 306,
           },
+          warning:
+            'Please note, for Optimistic rollups the state is not finalized until the challenge period passes.',
         },
         batchSubmissions: {
           last30Days: {
-            averageInSeconds: 217,
-            minimumInSeconds: 12,
-            maximumInSeconds: 768,
+            averageInSeconds: 54568,
+            minimumInSeconds: 441405,
+            maximumInSeconds: 441876,
           },
           last90Days: {
-            averageInSeconds: 201,
-            minimumInSeconds: 12,
-            maximumInSeconds: 828,
+            averageInSeconds: 20271,
+            minimumInSeconds: 3536,
+            maximumInSeconds: 778,
           },
           allTime: {
-            averageInSeconds: 99,
-            minimumInSeconds: 12,
-            maximumInSeconds: 6348,
+            averageInSeconds: 34887,
+            minimumInSeconds: 145,
+            maximumInSeconds: 2705,
           },
-          warning: 'Some warning',
+          warning: undefined,
         },
-        proofSubmissions: {},
+        proofSubmissions: { warning: undefined },
         anomalyEntries: [
+          { isAnomaly: false },
           {
-            isAnomaly: false,
+            isAnomaly: true,
+            anomalies: [
+              {
+                type: 'TX DATA SUBMISSION',
+                timestamp: 1706738434,
+                durationInSeconds: 1778,
+              },
+            ],
           },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
           {
-            isAnomaly: false,
+            isAnomaly: true,
+            anomalies: [
+              {
+                type: 'TX DATA SUBMISSION',
+                timestamp: 1707004837,
+                durationInSeconds: 76,
+              },
+            ],
           },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
           {
             isAnomaly: true,
             anomalies: [
               {
                 type: 'STATE UPDATE',
-                timestamp: 1699552295,
-                durationInSeconds: 11340,
+                timestamp: 1707966575,
+                durationInSeconds: 3124,
+              },
+              {
+                type: 'TX DATA SUBMISSION',
+                timestamp: 1707996551,
+                durationInSeconds: 2501,
               },
             ],
           },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
+          { isAnomaly: false },
+          { isAnomaly: false },
           {
             isAnomaly: true,
             anomalies: [
               {
-                type: 'STATE UPDATE',
-                timestamp: 1700105831,
-                durationInSeconds: 11700,
+                type: 'TX DATA SUBMISSION',
+                timestamp: 1708294300,
+                durationInSeconds: 7032,
               },
             ],
           },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: true,
-            anomalies: [
-              {
-                type: 'STATE UPDATE',
-                timestamp: 1700464307,
-                durationInSeconds: 12612,
-              },
-            ],
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
         ],
+        isSynced: true,
       },
       {
-        name: 'OP Mainnet',
+        name: 'Base',
         shortName: undefined,
-        slug: 'optimism',
-        purposes: ['Exchange'],
-        redWarning: undefined,
+        slug: 'base',
+        purposes: ['Universal'],
         warning:
-          'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
+          'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
+        redWarning: undefined,
         category: 'Optimistic Rollup',
-        dataAvailabilityMode: 'TxData',
+        dataAvailabilityMode: 'Transactions data',
         provider: 'OP Stack',
-        explanation: undefined,
         stage: {
           stage: 'Stage 0',
-          message: undefined,
           missing: {
             nextStage: 'Stage 1',
             requirements: [
@@ -339,593 +300,213 @@ const meta: Meta<typeof ScalingLivenessView> = {
               ],
             },
           ],
+          message: undefined,
         },
-        isSynced: true,
+        explanation:
+          'Base is an Optimistic rollup that posts transactions data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to 12h or until it gets published. The state root gets finalized 7d after it has been posted.',
         stateUpdates: {
           last30Days: {
-            averageInSeconds: 3601,
-            minimumInSeconds: 3084,
-            maximumInSeconds: 3876,
+            averageInSeconds: 2787,
+            minimumInSeconds: 73663,
+            maximumInSeconds: 2957,
           },
           last90Days: {
-            averageInSeconds: 3600,
-            minimumInSeconds: 3060,
-            maximumInSeconds: 4128,
+            averageInSeconds: 69234,
+            minimumInSeconds: 9282,
+            maximumInSeconds: 2109,
           },
           allTime: {
-            averageInSeconds: 3600,
-            minimumInSeconds: 1140,
-            maximumInSeconds: 6156,
+            averageInSeconds: 2737,
+            minimumInSeconds: 2429,
+            maximumInSeconds: 1338,
           },
+          warning:
+            'Please note, for Optimistic rollups the state is not finalized until the challenge period passes.',
         },
         batchSubmissions: {
           last30Days: {
-            averageInSeconds: 47,
-            minimumInSeconds: 12,
-            maximumInSeconds: 396,
+            averageInSeconds: 240575,
+            minimumInSeconds: 2114,
+            maximumInSeconds: 10240,
           },
           last90Days: {
-            averageInSeconds: 141,
-            minimumInSeconds: 12,
-            maximumInSeconds: 420,
+            averageInSeconds: 2275,
+            minimumInSeconds: 1786,
+            maximumInSeconds: 892,
           },
           allTime: {
-            averageInSeconds: 117,
-            minimumInSeconds: 12,
-            maximumInSeconds: 1032,
+            averageInSeconds: 25583,
+            minimumInSeconds: 44991,
+            maximumInSeconds: 27634,
           },
+          warning: undefined,
         },
-        proofSubmissions: {},
+        proofSubmissions: { warning: undefined },
         anomalyEntries: [
+          { isAnomaly: false },
+          { isAnomaly: false },
           {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-        ],
-      },
-      {
-        name: 'Base',
-        shortName: undefined,
-        slug: 'base',
-        purposes: ['Exchange'],
-        redWarning: undefined,
-        warning:
-          'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
-        category: 'Optimistic Rollup',
-        dataAvailabilityMode: 'TxData',
-        provider: 'OP Stack',
-        explanation: undefined,
-        stage: {
-          stage: 'Stage 0',
-          message: undefined,
-          missing: {
-            nextStage: 'Stage 1',
-            requirements: [
-              'The proof system is still under development.',
-              "Users' withdrawals can be censored by the permissioned operators.",
-              'Upgrades executed by actors with more centralized control than a Security Council provide less than 7d for users to exit if the permissioned operator is down or censoring.',
+            isAnomaly: true,
+            anomalies: [
+              {
+                type: 'TX DATA SUBMISSION',
+                timestamp: 1706768394,
+                durationInSeconds: 1908,
+              },
             ],
           },
-          summary: [
-            {
-              stage: 'Stage 0',
-              requirements: [
-                {
-                  satisfied: true,
-                  description: 'The project calls itself a rollup.',
-                },
-                {
-                  satisfied: true,
-                  description: 'L2 state roots are posted to Ethereum L1.',
-                },
-                {
-                  satisfied: true,
-                  description:
-                    'Inputs for the state transition function are posted to L1.',
-                },
-                {
-                  satisfied: true,
-                  description:
-                    'A source-available node exists that can recreate the state from L1 data. [View code](https://github.com/base-org/node)',
-                },
-              ],
-            },
-            {
-              stage: 'Stage 1',
-              requirements: [
-                {
-                  satisfied: false,
-                  description: 'The proof system is still under development.',
-                },
-                {
-                  satisfied: false,
-                  description:
-                    "Users' withdrawals can be censored by the permissioned operators.",
-                },
-                {
-                  satisfied: false,
-                  description:
-                    'Upgrades executed by actors with more centralized control than a Security Council provide less than 7d for users to exit if the permissioned operator is down or censoring.',
-                },
-              ],
-            },
-            {
-              stage: 'Stage 2',
-              requirements: [
-                {
-                  satisfied: false,
-                  description:
-                    'Upgrades unrelated to on-chain provable bugs provide less than 30d to exit.',
-                },
-              ],
-            },
-          ],
-        },
-        isSynced: true,
-        stateUpdates: {
-          last30Days: {
-            averageInSeconds: 3601,
-            minimumInSeconds: 2700,
-            maximumInSeconds: 4212,
-          },
-          last90Days: {
-            averageInSeconds: 3601,
-            minimumInSeconds: 60,
-            maximumInSeconds: 9156,
-          },
-          allTime: {
-            averageInSeconds: 3593,
-            minimumInSeconds: 60,
-            maximumInSeconds: 9156,
-          },
-        },
-        batchSubmissions: {
-          last30Days: {
-            averageInSeconds: 61,
-            minimumInSeconds: 12,
-            maximumInSeconds: 1536,
-          },
-          last90Days: {
-            averageInSeconds: 59,
-            minimumInSeconds: 12,
-            maximumInSeconds: 2832,
-          },
-          allTime: {
-            averageInSeconds: 64,
-            minimumInSeconds: 12,
-            maximumInSeconds: 2832,
-          },
-        },
-        proofSubmissions: {},
-        anomalyEntries: [
           {
-            isAnomaly: false,
+            isAnomaly: true,
+            anomalies: [
+              {
+                type: 'STATE UPDATE',
+                timestamp: 1706863393,
+                durationInSeconds: 196,
+              },
+            ],
+          },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          {
+            isAnomaly: true,
+            anomalies: [
+              {
+                type: 'TX DATA SUBMISSION',
+                timestamp: 1707401116,
+                durationInSeconds: 41639,
+              },
+            ],
           },
           {
-            isAnomaly: false,
+            isAnomaly: true,
+            anomalies: [
+              {
+                type: 'STATE UPDATE',
+                timestamp: 1707459767,
+                durationInSeconds: 2736,
+              },
+            ],
+          },
+          {
+            isAnomaly: true,
+            anomalies: [
+              {
+                type: 'STATE UPDATE',
+                timestamp: 1707566710,
+                durationInSeconds: 3367,
+              },
+            ],
+          },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          {
+            isAnomaly: true,
+            anomalies: [
+              {
+                type: 'TX DATA SUBMISSION',
+                timestamp: 1707836155,
+                durationInSeconds: 1301,
+              },
+            ],
           },
           {
             isAnomaly: true,
             anomalies: [
               {
                 type: 'TX DATA SUBMISSION',
-                timestamp: 1699397243,
-                durationInSeconds: 1536,
+                timestamp: 1707870332,
+                durationInSeconds: 10606,
               },
             ],
           },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
+          { isAnomaly: false },
           {
             isAnomaly: true,
             anomalies: [
               {
                 type: 'TX DATA SUBMISSION',
-                timestamp: 1700661779,
-                durationInSeconds: 216,
+                timestamp: 1708075242,
+                durationInSeconds: 16193,
               },
             ],
           },
           {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-        ],
-      },
-      {
-        name: 'zkSync Era',
-        shortName: undefined,
-        slug: 'zksync-era',
-        purposes: ['Exchange'],
-        redWarning: undefined,
-        warning:
-          'Withdrawals are delayed by 21h. The length of the delay can be arbitrarily set by a MultiSig.',
-        category: 'ZK Rollup',
-        dataAvailabilityMode: 'StateDiffs',
-        provider: 'ZK Stack',
-        explanation: undefined,
-        stage: {
-          stage: 'Stage 0',
-          message: undefined,
-          missing: {
-            nextStage: 'Stage 1',
-            requirements: [
-              "Users' withdrawals can be censored by the permissioned operators.",
-              'Upgrades executed by actors with more centralized control than a Security Council provide less than 7d for users to exit if the permissioned operator is down or censoring.',
+            isAnomaly: true,
+            anomalies: [
+              {
+                type: 'STATE UPDATE',
+                timestamp: 1708161379,
+                durationInSeconds: 2979,
+              },
             ],
           },
-          summary: [
-            {
-              stage: 'Stage 0',
-              requirements: [
-                {
-                  satisfied: true,
-                  description: 'The project calls itself a rollup.',
-                },
-                {
-                  satisfied: true,
-                  description: 'L2 state roots are posted to Ethereum L1.',
-                },
-                {
-                  satisfied: true,
-                  description:
-                    'Inputs for the state transition function are posted to L1.',
-                },
-                {
-                  satisfied: true,
-                  description:
-                    'A source-available node exists that can recreate the state from L1 data. [View code](https://github.com/matter-labs/zksync-era)',
-                },
-              ],
-            },
-            {
-              stage: 'Stage 1',
-              requirements: [
-                {
-                  satisfied: true,
-                  description:
-                    'A complete and functional proof system is deployed.',
-                },
-                {
-                  satisfied: false,
-                  description:
-                    "Users' withdrawals can be censored by the permissioned operators.",
-                },
-                {
-                  satisfied: false,
-                  description:
-                    'Upgrades executed by actors with more centralized control than a Security Council provide less than 7d for users to exit if the permissioned operator is down or censoring.',
-                },
-              ],
-            },
-            {
-              stage: 'Stage 2',
-              requirements: [
-                {
-                  satisfied: false,
-                  description:
-                    'Upgrades unrelated to on-chain provable bugs provide less than 30d to exit.',
-                },
-              ],
-            },
-          ],
-        },
+          { isAnomaly: false },
+          {
+            isAnomaly: true,
+            anomalies: [
+              {
+                type: 'TX DATA SUBMISSION',
+                timestamp: 1708372477,
+                durationInSeconds: 1904,
+              },
+            ],
+          },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          {
+            isAnomaly: true,
+            anomalies: [
+              {
+                type: 'STATE UPDATE',
+                timestamp: 1708667362,
+                durationInSeconds: 70147,
+              },
+              {
+                type: 'STATE UPDATE',
+                timestamp: 1708699581,
+                durationInSeconds: 83653,
+              },
+            ],
+          },
+          {
+            isAnomaly: true,
+            anomalies: [
+              {
+                type: 'STATE UPDATE',
+                timestamp: 1708755093,
+                durationInSeconds: 2353,
+              },
+              {
+                type: 'TX DATA SUBMISSION',
+                timestamp: 1708785147,
+                durationInSeconds: 727,
+              },
+            ],
+          },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+        ],
         isSynced: true,
-        stateUpdates: {
-          last30Days: {
-            averageInSeconds: 3461,
-            minimumInSeconds: 360,
-            maximumInSeconds: 10164,
-          },
-          last90Days: {
-            averageInSeconds: 2570,
-            minimumInSeconds: 24,
-            maximumInSeconds: 10164,
-          },
-          allTime: {
-            averageInSeconds: 2566,
-            minimumInSeconds: 12,
-            maximumInSeconds: 49644,
-          },
-        },
-        batchSubmissions: {},
-        proofSubmissions: {
-          last30Days: {
-            averageInSeconds: 259,
-            minimumInSeconds: 12,
-            maximumInSeconds: 16344,
-          },
-          last90Days: {
-            averageInSeconds: 249,
-            minimumInSeconds: 12,
-            maximumInSeconds: 44256,
-          },
-          allTime: {
-            averageInSeconds: 236,
-            minimumInSeconds: 12,
-            maximumInSeconds: 52488,
-          },
-        },
-        anomalyEntries: [
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: true,
-            anomalies: [
-              {
-                type: 'PROOF SUBMISSION',
-                timestamp: 1699839995,
-                durationInSeconds: 16344,
-              },
-            ],
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: true,
-            anomalies: [
-              {
-                type: 'PROOF SUBMISSION',
-                timestamp: 1701584327,
-                durationInSeconds: 14376,
-              },
-            ],
-          },
-          {
-            isAnomaly: false,
-          },
-        ],
       },
       {
         name: 'dYdX v3',
         shortName: undefined,
         slug: 'dydx',
         purposes: ['Exchange'],
-        redWarning: 'This warning is just some random stuff I wrote.',
         warning:
           'This page describes dYdX v3, which is an L2 built on Ethereum. Recently deployed dYdX v4 is a separate blockchain based on Cosmos SDK, unrelated to Ethereum and is using different technology. No information on this page applies to dYdX v4.',
+        redWarning: undefined,
         category: 'ZK Rollup',
-        dataAvailabilityMode: 'StateDiffs',
+        dataAvailabilityMode: 'State diffs',
         provider: 'StarkEx',
-        explanation: 'dYdX v3 is a ZK Rollup built on StarkEx.',
         stage: {
           stage: 'Stage 1',
-          message: undefined,
           missing: {
             nextStage: 'Stage 2',
             requirements: [
@@ -987,147 +568,96 @@ const meta: Meta<typeof ScalingLivenessView> = {
               ],
             },
           ],
+          message: undefined,
         },
-        isSynced: true,
+        explanation:
+          'dYdX is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. The verification is done as part of the state update.',
         stateUpdates: {
           last30Days: {
-            averageInSeconds: 2464,
-            minimumInSeconds: 12,
-            maximumInSeconds: 12180,
+            averageInSeconds: 1560,
+            minimumInSeconds: 62160,
+            maximumInSeconds: 2943,
           },
           last90Days: {
-            averageInSeconds: 3479,
-            minimumInSeconds: 12,
-            maximumInSeconds: 18264,
+            averageInSeconds: 363376,
+            minimumInSeconds: 1711,
+            maximumInSeconds: 64300,
           },
           allTime: {
-            averageInSeconds: 3899,
-            minimumInSeconds: 12,
-            maximumInSeconds: 22872,
+            averageInSeconds: 1235,
+            minimumInSeconds: 932,
+            maximumInSeconds: 2401,
           },
+          warning: undefined,
         },
-        batchSubmissions: {},
-        proofSubmissions: {
+        batchSubmissions: {
           last30Days: {
-            averageInSeconds: 2466,
-            minimumInSeconds: 12,
-            maximumInSeconds: 12180,
+            averageInSeconds: 7416,
+            minimumInSeconds: 59109,
+            maximumInSeconds: 889,
           },
-          last90Days: {
-            averageInSeconds: 3482,
-            minimumInSeconds: 12,
-            maximumInSeconds: 18276,
-          },
+          last90Days: undefined,
           allTime: {
-            averageInSeconds: 3903,
-            minimumInSeconds: 12,
-            maximumInSeconds: 22872,
+            averageInSeconds: 56689,
+            minimumInSeconds: 14489,
+            maximumInSeconds: 57670,
           },
+          warning: undefined,
         },
+        proofSubmissions: { warning: undefined },
         anomalyEntries: [
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
           {
-            isAnomaly: false,
+            isAnomaly: true,
+            anomalies: [
+              {
+                type: 'TX DATA SUBMISSION',
+                timestamp: 1706918512,
+                durationInSeconds: 996,
+              },
+            ],
           },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
         ],
+        isSynced: true,
       },
       {
         name: 'Linea',
         shortName: undefined,
         slug: 'linea',
-        purposes: ['Exchange'],
-        redWarning: undefined,
+        purposes: ['Universal'],
         warning: 'The circuit of the program being proven is not public.',
+        redWarning: undefined,
         category: 'ZK Rollup',
-        dataAvailabilityMode: 'TxData',
+        dataAvailabilityMode: 'Transactions data',
         provider: undefined,
-        explanation: 'Calculation explanation',
         stage: {
           stage: 'Stage 0',
           missing: {
@@ -1208,248 +738,521 @@ const meta: Meta<typeof ScalingLivenessView> = {
             text: 'There is no available node software that can reconstruct the state from L1 data, hence there is no way to verify that this system is a rollup.',
           },
         },
-        isSynced: true,
+        explanation:
+          'Linea is a ZK rollup that posts transactions data to the L1. For a transaction to be considered final, it has to be posted on L1. Tx data, proofs and state roots are currently posted in the same transaction. Blocks can also be finalized by the operator without the need to provide a proof.',
         stateUpdates: {
           last30Days: {
-            averageInSeconds: 121,
-            minimumInSeconds: 12,
-            maximumInSeconds: 69408,
+            averageInSeconds: 338,
+            minimumInSeconds: 3344,
+            maximumInSeconds: 1375,
           },
           last90Days: {
-            averageInSeconds: 117,
-            minimumInSeconds: 12,
-            maximumInSeconds: 80340,
+            averageInSeconds: 30704,
+            minimumInSeconds: 82397,
+            maximumInSeconds: 2626,
           },
           allTime: {
-            averageInSeconds: 130,
-            minimumInSeconds: 12,
-            maximumInSeconds: 213168,
+            averageInSeconds: 172948,
+            minimumInSeconds: 7208,
+            maximumInSeconds: 52341,
           },
-          warning: 'Some warning',
+          warning: undefined,
         },
         batchSubmissions: {
           last30Days: {
-            averageInSeconds: 121,
-            minimumInSeconds: 12,
-            maximumInSeconds: 69408,
+            averageInSeconds: 2624,
+            minimumInSeconds: 3202,
+            maximumInSeconds: 2830,
           },
           last90Days: {
-            averageInSeconds: 117,
-            minimumInSeconds: 12,
-            maximumInSeconds: 80340,
+            averageInSeconds: 40154,
+            minimumInSeconds: 2869,
+            maximumInSeconds: 3034,
           },
           allTime: {
-            averageInSeconds: 130,
-            minimumInSeconds: 12,
-            maximumInSeconds: 213168,
+            averageInSeconds: 76919,
+            minimumInSeconds: 54908,
+            maximumInSeconds: 88067,
           },
+          warning: undefined,
         },
-        proofSubmissions: {
-          last30Days: {
-            averageInSeconds: 121,
-            minimumInSeconds: 12,
-            maximumInSeconds: 69408,
-          },
-          last90Days: {
-            averageInSeconds: 117,
-            minimumInSeconds: 12,
-            maximumInSeconds: 80340,
-          },
-          allTime: {
-            averageInSeconds: 130,
-            minimumInSeconds: 12,
-            maximumInSeconds: 213168,
-          },
-        },
+        proofSubmissions: { warning: undefined },
         anomalyEntries: [
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: true,
-            anomalies: [
-              {
-                type: 'STATE UPDATE',
-                timestamp: 1699328231,
-                durationInSeconds: 56328,
-              },
-              {
-                type: 'STATE UPDATE',
-                timestamp: 1699385819,
-                durationInSeconds: 22596,
-              },
-            ],
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: true,
-            anomalies: [
-              {
-                type: 'STATE UPDATE',
-                timestamp: 1699490963,
-                durationInSeconds: 43248,
-              },
-            ],
-          },
-          {
-            isAnomaly: true,
-            anomalies: [
-              {
-                type: 'STATE UPDATE',
-                timestamp: 1699589699,
-                durationInSeconds: 69408,
-              },
-              {
-                type: 'STATE UPDATE',
-                timestamp: 1699660607,
-                durationInSeconds: 37716,
-              },
-            ],
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: true,
-            anomalies: [
-              {
-                type: 'STATE UPDATE',
-                timestamp: 1699916999,
-                durationInSeconds: 43404,
-              },
-            ],
-          },
-          {
-            isAnomaly: true,
-            anomalies: [
-              {
-                type: 'STATE UPDATE',
-                timestamp: 1699997171,
-                durationInSeconds: 30384,
-              },
-            ],
-          },
-          {
-            isAnomaly: true,
-            anomalies: [
-              {
-                type: 'STATE UPDATE',
-                timestamp: 1700088527,
-                durationInSeconds: 31836,
-              },
-            ],
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: true,
-            anomalies: [
-              {
-                type: 'STATE UPDATE',
-                timestamp: 1700613179,
-                durationInSeconds: 40344,
-              },
-              {
-                type: 'STATE UPDATE',
-                timestamp: 1700696879,
-                durationInSeconds: 37212,
-              },
-            ],
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: true,
-            anomalies: [
-              {
-                type: 'STATE UPDATE',
-                timestamp: 1701215855,
-                durationInSeconds: 37176,
-              },
-            ],
-          },
-          {
-            isAnomaly: true,
-            anomalies: [
-              {
-                type: 'STATE UPDATE',
-                timestamp: 1701289787,
-                durationInSeconds: 23376,
-              },
-            ],
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: true,
-            anomalies: [
-              {
-                type: 'STATE UPDATE',
-                timestamp: 1701394091,
-                durationInSeconds: 28656,
-              },
-              {
-                type: 'STATE UPDATE',
-                timestamp: 1701469619,
-                durationInSeconds: 37620,
-              },
-            ],
-          },
-          {
-            isAnomaly: false,
-          },
-          {
-            isAnomaly: true,
-            anomalies: [
-              {
-                type: 'STATE UPDATE',
-                timestamp: 1701646859,
-                durationInSeconds: 17280,
-              },
-            ],
-          },
-          {
-            isAnomaly: false,
-          },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
         ],
+        isSynced: true,
+      },
+      {
+        name: 'OP Mainnet',
+        shortName: undefined,
+        slug: 'optimism',
+        purposes: ['Universal'],
+        warning:
+          'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
+        redWarning: undefined,
+        category: 'Optimistic Rollup',
+        dataAvailabilityMode: 'Transactions data',
+        provider: 'OP Stack',
+        stage: {
+          stage: 'Stage 0',
+          missing: {
+            nextStage: 'Stage 1',
+            requirements: [
+              'The proof system is still under development.',
+              "Users' withdrawals can be censored by the permissioned operators.",
+              'Upgrades executed by actors with more centralized control than a Security Council provide less than 7d for users to exit if the permissioned operator is down or censoring.',
+              'The Security Council is not properly set up.',
+            ],
+          },
+          summary: [
+            {
+              stage: 'Stage 0',
+              requirements: [
+                {
+                  satisfied: true,
+                  description: 'The project calls itself a rollup.',
+                },
+                {
+                  satisfied: true,
+                  description: 'L2 state roots are posted to Ethereum L1.',
+                },
+                {
+                  satisfied: true,
+                  description:
+                    'Inputs for the state transition function are posted to L1.',
+                },
+                {
+                  satisfied: true,
+                  description:
+                    'A source-available node exists that can recreate the state from L1 data. [View code](https://github.com/ethereum-optimism/optimism/tree/develop/op-node)',
+                },
+              ],
+            },
+            {
+              stage: 'Stage 1',
+              requirements: [
+                {
+                  satisfied: false,
+                  description: 'The proof system is still under development.',
+                },
+                {
+                  satisfied: false,
+                  description:
+                    "Users' withdrawals can be censored by the permissioned operators.",
+                },
+                {
+                  satisfied: false,
+                  description:
+                    'Upgrades executed by actors with more centralized control than a Security Council provide less than 7d for users to exit if the permissioned operator is down or censoring.',
+                },
+                {
+                  satisfied: false,
+                  description: 'The Security Council is not properly set up.',
+                },
+              ],
+            },
+            {
+              stage: 'Stage 2',
+              requirements: [
+                {
+                  satisfied: false,
+                  description:
+                    'Upgrades unrelated to on-chain provable bugs provide less than 30d to exit.',
+                },
+              ],
+            },
+          ],
+          message: undefined,
+        },
+        explanation:
+          'Optimism is an Optimistic rollup that posts transactions data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to 12h or until it gets published. The state root gets finalized 7d after it has been posted.',
+        stateUpdates: {
+          last30Days: {
+            averageInSeconds: 2203,
+            minimumInSeconds: 756,
+            maximumInSeconds: 8639,
+          },
+          last90Days: {
+            averageInSeconds: 1992,
+            minimumInSeconds: 82608,
+            maximumInSeconds: 1113,
+          },
+          allTime: {
+            averageInSeconds: 997,
+            minimumInSeconds: 1164,
+            maximumInSeconds: 80046,
+          },
+          warning:
+            'Please note, for Optimistic rollups the state is not finalized until the challenge period passes.',
+        },
+        batchSubmissions: {
+          last30Days: {
+            averageInSeconds: 2184,
+            minimumInSeconds: 16268,
+            maximumInSeconds: 957,
+          },
+          last90Days: {
+            averageInSeconds: 15933,
+            minimumInSeconds: 662,
+            maximumInSeconds: 2129,
+          },
+          allTime: undefined,
+          warning: undefined,
+        },
+        proofSubmissions: { warning: undefined },
+        anomalyEntries: [
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          {
+            isAnomaly: true,
+            anomalies: [
+              {
+                type: 'TX DATA SUBMISSION',
+                timestamp: 1708585019,
+                durationInSeconds: 20538,
+              },
+            ],
+          },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+        ],
+        isSynced: true,
+      },
+      {
+        name: 'Polygon zkEVM',
+        shortName: undefined,
+        slug: 'polygonzkevm',
+        purposes: ['Universal'],
+        warning: 'The forced transaction mechanism is currently disabled.',
+        redWarning: undefined,
+        category: 'ZK Rollup',
+        dataAvailabilityMode: 'Transactions data',
+        provider: 'Polygon',
+        stage: {
+          stage: 'Stage 0',
+          missing: {
+            nextStage: 'Stage 1',
+            requirements: [
+              "Users' withdrawals can be censored by the permissioned operators.",
+              'Upgrades executed by actors with more centralized control than a Security Council provide less than 7d for users to exit if the permissioned operator is down or censoring.',
+              'Security Council members are not publicly known.',
+            ],
+          },
+          summary: [
+            {
+              stage: 'Stage 0',
+              requirements: [
+                {
+                  satisfied: true,
+                  description: 'The project calls itself a rollup.',
+                },
+                {
+                  satisfied: true,
+                  description: 'L2 state roots are posted to Ethereum L1.',
+                },
+                {
+                  satisfied: true,
+                  description:
+                    'Inputs for the state transition function are posted to L1.',
+                },
+                {
+                  satisfied: true,
+                  description:
+                    'A source-available node exists that can recreate the state from L1 data. [View code](https://github.com/0xPolygonHermez/zkevm-node)',
+                },
+              ],
+            },
+            {
+              stage: 'Stage 1',
+              requirements: [
+                {
+                  satisfied: true,
+                  description:
+                    'A complete and functional proof system is deployed.',
+                },
+                {
+                  satisfied: false,
+                  description:
+                    "Users' withdrawals can be censored by the permissioned operators.",
+                },
+                {
+                  satisfied: false,
+                  description:
+                    'Upgrades executed by actors with more centralized control than a Security Council provide less than 7d for users to exit if the permissioned operator is down or censoring.',
+                },
+                {
+                  satisfied: false,
+                  description:
+                    'Security Council members are not publicly known.',
+                },
+              ],
+            },
+            {
+              stage: 'Stage 2',
+              requirements: [
+                {
+                  satisfied: false,
+                  description:
+                    'Upgrades unrelated to on-chain provable bugs provide less than 30d to exit.',
+                },
+                {
+                  satisfied: false,
+                  description:
+                    "The Security Council's actions are not confined to on-chain provable bugs.",
+                },
+              ],
+            },
+          ],
+          message: undefined,
+        },
+        explanation:
+          'Polygon zkEVM is a ZK rollup that posts transactions data to the L1. For a transaction to be considered final, it has to be posted on L1. State updates are a three step process: first blocks are committed to L1, then they are proved, and then it is possible to execute them.',
+        stateUpdates: {
+          last30Days: {
+            averageInSeconds: 762,
+            minimumInSeconds: 55038,
+            maximumInSeconds: 79201,
+          },
+          last90Days: {
+            averageInSeconds: 16470,
+            minimumInSeconds: 75434,
+            maximumInSeconds: 60249,
+          },
+          allTime: {
+            averageInSeconds: 2424,
+            minimumInSeconds: 3054,
+            maximumInSeconds: 180,
+          },
+          warning: undefined,
+        },
+        batchSubmissions: {
+          last30Days: {
+            averageInSeconds: 1146,
+            minimumInSeconds: 2664,
+            maximumInSeconds: 74131,
+          },
+          last90Days: {
+            averageInSeconds: 1512,
+            minimumInSeconds: 2642,
+            maximumInSeconds: 641,
+          },
+          allTime: {
+            averageInSeconds: 75077,
+            minimumInSeconds: 23144,
+            maximumInSeconds: 2380,
+          },
+          warning: undefined,
+        },
+        proofSubmissions: { warning: undefined },
+        anomalyEntries: [
+          { isAnomaly: false },
+          {
+            isAnomaly: true,
+            anomalies: [
+              {
+                type: 'STATE UPDATE',
+                timestamp: 1706694401,
+                durationInSeconds: 76068,
+              },
+            ],
+          },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          {
+            isAnomaly: true,
+            anomalies: [
+              {
+                type: 'STATE UPDATE',
+                timestamp: 1707176689,
+                durationInSeconds: 84453,
+              },
+            ],
+          },
+          {
+            isAnomaly: true,
+            anomalies: [
+              {
+                type: 'TX DATA SUBMISSION',
+                timestamp: 1707263909,
+                durationInSeconds: 19750,
+              },
+            ],
+          },
+          {
+            isAnomaly: true,
+            anomalies: [
+              {
+                type: 'STATE UPDATE',
+                timestamp: 1707323837,
+                durationInSeconds: 1637,
+              },
+            ],
+          },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          {
+            isAnomaly: true,
+            anomalies: [
+              {
+                type: 'TX DATA SUBMISSION',
+                timestamp: 1707769596,
+                durationInSeconds: 1698,
+              },
+            ],
+          },
+          { isAnomaly: false },
+          {
+            isAnomaly: true,
+            anomalies: [
+              {
+                type: 'STATE UPDATE',
+                timestamp: 1707921069,
+                durationInSeconds: 56057,
+              },
+            ],
+          },
+          {
+            isAnomaly: true,
+            anomalies: [
+              {
+                type: 'TX DATA SUBMISSION',
+                timestamp: 1707974329,
+                durationInSeconds: 510144,
+              },
+            ],
+          },
+          { isAnomaly: false },
+          {
+            isAnomaly: true,
+            anomalies: [
+              {
+                type: 'STATE UPDATE',
+                timestamp: 1708169295,
+                durationInSeconds: 2673,
+              },
+            ],
+          },
+          {
+            isAnomaly: true,
+            anomalies: [
+              {
+                type: 'STATE UPDATE',
+                timestamp: 1708251020,
+                durationInSeconds: 58902,
+              },
+              {
+                type: 'TX DATA SUBMISSION',
+                timestamp: 1708268193,
+                durationInSeconds: 76369,
+              },
+            ],
+          },
+          { isAnomaly: false },
+          {
+            isAnomaly: true,
+            anomalies: [
+              {
+                type: 'TX DATA SUBMISSION',
+                timestamp: 1708423615,
+                durationInSeconds: 325,
+              },
+            ],
+          },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          { isAnomaly: false },
+          {
+            isAnomaly: true,
+            anomalies: [
+              {
+                type: 'TX DATA SUBMISSION',
+                timestamp: 1708796461,
+                durationInSeconds: 1431,
+              },
+            ],
+          },
+          { isAnomaly: false },
+          {
+            isAnomaly: true,
+            anomalies: [
+              {
+                type: 'STATE UPDATE',
+                timestamp: 1708983542,
+                durationInSeconds: 61807,
+              },
+            ],
+          },
+          {
+            isAnomaly: true,
+            anomalies: [
+              {
+                type: 'STATE UPDATE',
+                timestamp: 1709071142,
+                durationInSeconds: 49928,
+              },
+            ],
+          },
+          { isAnomaly: false },
+        ],
+        isSynced: false,
       },
     ],
   },

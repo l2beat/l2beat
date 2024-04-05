@@ -13,8 +13,8 @@ const LINKS = [
     url: '/status/discovery',
   },
   {
-    name: 'Liveness',
-    url: '/status/liveness',
+    name: 'Tracked txs',
+    url: '/status/tracked-txs',
   },
   {
     name: 'TVL',
@@ -28,8 +28,10 @@ export function StatusPagesLinksPage() {
       <div className={`card`} style={{ width: '800px' }}>
         <p>Links</p>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          {LINKS.map((link) => (
-            <a href={link.url}>{link.name}</a>
+          {LINKS.map((link, i) => (
+            <a key={i} href={link.url}>
+              {link.name}
+            </a>
           ))}
         </div>
       </div>

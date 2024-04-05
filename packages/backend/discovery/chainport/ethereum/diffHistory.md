@@ -1,3 +1,136 @@
+Generated with discovered.json: 0xdb49aab240757275e0beb521161d624104bfdd56
+
+# Diff at Thu, 28 Mar 2024 08:48:24 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@867de6120241d47b66bf76f83c490408eb3595b0 block: 19467300
+- current block number: 19531518
+
+## Description
+
+Update discovery to include the multisig threshold.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19467300 (main branch discovery), not current.
+
+```diff
+    contract MultisigVault2 (0x450aD18B4442ce2972Af2a7A12439984db4Afaf9) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 3 (67%)"
+    }
+```
+
+```diff
+    contract MultisigVault1 (0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 3 (67%)"
+    }
+```
+
+Generated with discovered.json: 0x8db723b5dec0e6a44d1881afc2458d6f3fd6aebf
+
+# Diff at Tue, 19 Mar 2024 07:26:39 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@87a9df6317bf41ef2d063033dfc77d54521b9991 block: 19440568
+- current block number: 19467300
+
+## Description
+
+A proposal was submitted and is executed. The execution emitted the Unpaused event from two unverified contracts (0xe452aB0cA5cCBeDd7A27E66C82644Cad747bb976 and 0x442bE00c47C7B1d3A972D179dc696DEd006862b8) and was externally titled: 'Unfreeze SwapClone + StableBridgeCore'
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
++++ description: The amount of proposals ever created. Goes up by 1 for each proposal.
++++ severity: MEDIUM
+      values.proposalCount:
+-        51
++        52
+    }
+```
+
+Generated with discovered.json: 0x6c4694a51a3ccf3920314d28aac8d48e9e63e622
+
+# Diff at Fri, 15 Mar 2024 13:13:16 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@e2d7fd753a5234b8cba1b13f16353dfafe85c087 block: 19389379
+- current block number: 19440568
+
+## Description
+
+A proposal is submitted which would change the FeeCollector, AdminFeeCollector and add a Maintainer (There are currently 6 Maintainers registered, they can at least freeze the bridges). The new maintainer has the address 0xc051b171464D77bdF47f08bC7606630F17aB0753.
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
++++ description: The amount of proposals ever created. Goes up by 1 for each proposal.
++++ severity: MEDIUM
+      values.proposalCount:
+-        50
++        51
+    }
+```
+
+Generated with discovered.json: 0x86f5a697e88e62dc3e2832bb21f5115cd2bec5e2
+
+# Diff at Fri, 08 Mar 2024 08:53:50 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a10be30b5303dc6a457478efdaca424c246501ca block: 19375580
+- current block number: 19389379
+
+## Description
+
+New proposal created and executed with the description "Change Arbitrage Settings on Main and Side Bridges".
+It called `setArbitrageManagerAndLimit()` but we can't see what this is doing because the targets have unverified sources.
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
++++ description: The amount of proposals ever created. Goes up by 1 for each proposal.
++++ severity: MEDIUM
+      values.proposalCount:
+-        49
++        50
+    }
+```
+
+Generated with discovered.json: 0x5fa08b3a2322e373062b7d84998ac427346b7e7b
+
+# Diff at Wed, 06 Mar 2024 10:38:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@724fc93d9bd160395a856b93ce5016ca876c6436 block: 19118389
+- current block number: 19375580
+
+## Description
+
+New proposal created and executed with the description "Unfreeze bridges".
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
+      values.proposalCount:
+-        48
++        49
+    }
+```
+
 Generated with discovered.json: 0x860ce22e6e5ca8d7087c013b808735c88781475f
 
 # Diff at Tue, 30 Jan 2024 09:20:32 GMT:

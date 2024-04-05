@@ -1,5 +1,5 @@
 {
-  "$schema": "../../config.schema.json",
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
   "chain": "ethereum",
   "name": "opticsV1",
   "initialAddresses": [
@@ -21,10 +21,12 @@
   },
   "overrides": {
     "HomeBeaconProxy": {
-      "proxyType": "Optics Beacon proxy"
+      "proxyType": "Optics Beacon proxy",
+      "ignoreInWatchMode": ["committedRoot", "count", "root", "tree"]
     },
     "ReplicaBeaconProxy": {
-      "proxyType": "Optics Beacon proxy"
+      "proxyType": "Optics Beacon proxy",
+      "ignoreInWatchMode": ["committedRoot"]
     },
     "BridgeRouterBeaconProxy": {
       "proxyType": "Optics Beacon proxy",

@@ -138,7 +138,7 @@ const meta = {
         shortName: undefined,
         slug: 'omnichain',
         warning:
-          'The security parameters of each individual token must be individually assessed, and can be changed by the developers. Omnichain tokens are are in the early stages of development, use at your own risk.',
+          'The security parameters of each individual token must be individually assessed, and can be changed by the developers. Omnichain tokens are in the early stages of development, use at your own risk.',
         isArchived: undefined,
         isVerified: false,
         tvl: {
@@ -844,7 +844,7 @@ export const ActiveWithCanonicalBridges: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     await userEvent.click(canvas.getByText('Active projects'), { delay: 25 })
-    await userEvent.click(canvas.getByText('Include canonical bridges'))
+    await userEvent.click(canvas.getByText('Canonical bridges'))
   },
 }
 
@@ -859,6 +859,6 @@ export const ArchivedWithCanonicalBridges: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     await userEvent.click(canvas.getByText('Archived projects'), { delay: 25 })
-    await userEvent.click(canvas.getByText('Include canonical bridges'))
+    await userEvent.click(canvas.getByText('Canonical bridges'))
   },
 }

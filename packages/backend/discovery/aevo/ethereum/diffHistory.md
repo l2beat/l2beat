@@ -1,3 +1,55 @@
+Generated with discovered.json: 0x8515d796dbba68b3a4f472d49cd438453c0217e4
+
+# Diff at Thu, 28 Mar 2024 08:24:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@867de6120241d47b66bf76f83c490408eb3595b0 block: 19411980
+- current block number: 19531398
+
+## Description
+
+Update discovery to include the multisig threshold.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19411980 (main branch discovery), not current.
+
+```diff
+    contract AevoMultiSig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      upgradeability.threshold:
++        "3 of 5 (60%)"
+    }
+```
+
+Generated with discovered.json: 0x5ac8e286dec030bdfa6c4454607ac3469df1550a
+
+# Diff at Mon, 11 Mar 2024 12:55:52 GMT:
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: main@64454506aee2b4b4e15b121f096369e92ec4cf20 block: 19176638
+- current block number: 19411980
+
+## Description
+
+Update OP stack DA handler
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19176638 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca) {
+    +++ description: None
+      values.opStackDA.isSequencerSendingBlobTx:
++        false
+    }
+```
+
 Generated with discovered.json: 0x7c248e7cf936813d85d694d339b4b74a03d9aa12
 
 # Diff at Wed, 07 Feb 2024 13:34:15 GMT:

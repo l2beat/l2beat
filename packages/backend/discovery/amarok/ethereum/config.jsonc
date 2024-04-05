@@ -1,5 +1,5 @@
 {
-  "$schema": "../../config.schema.json",
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
   "chain": "ethereum",
   "name": "amarok",
   "names": {
@@ -9,8 +9,8 @@
     "0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A": "RootManager",
     "0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78": "RelayTransit",
     "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625": "Connext Multisig",
+    "0x7bE978Cc84612E08f7844672B0E6A6F367FE2b6A": "Connext Fee Multisig",
     "0x278F956cde8D0816786A83Aea58dc7F76c13AD8e": "Connext Multisig Member",
-    "0xf2964cCcB7CDA9e808aaBe8DB0DDDAF7890dd378": "Connext Multisig 2",
     "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE": "OptimisticOracleV3",
     "0x50efaC9619225d7fB4703C5872da978849B6E7cC": "ProposerV2",
     "0x7b292034084A41B9D441B71b6E3557Edd0463fa8": "GovernorV2",
@@ -30,7 +30,8 @@
     "0x5B0E1a507E786f0a7c11C972ad5F4dd254661e24": "MantleHubConnector",
     "0x23b7abe4cc664F24Eb68E80cFAdc572857799a94": "NewOptimismHubConnector",
     "0x7ed49D0a13255802A281C08688563bd8D5f726b1": "PolygonZkHubConnector",
-    "0x9Ba7D2Ab079Bd1924859e2fECDAD1bEBe5B119Fa": "OptimismV0HubConnector"
+    "0x9Ba7D2Ab079Bd1924859e2fECDAD1bEBe5B119Fa": "OptimismV0HubConnector",
+    "0x7b2bE683266909A6a4068e743083dd40621d663E": "ModeHubConnector"
   },
   "maxDepth": 9,
   "initialAddresses": ["0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6"],
@@ -61,6 +62,9 @@
       },
       "ignoreInWatchMode": ["nonce", "proposedTimestamp"],
       "ignoreRelatives": ["lpTokenTargetAddress", "RELAYERS"]
+    },
+    "Connext Fee Multisig": {
+      "ignoreMethods": ["nonce"]
     },
     "MainnetSpokeConnector": {
       "ignoreMethods": ["snapshotRoots"],
@@ -162,6 +166,10 @@
       "ignoreRelatives": ["AMB", "mirrorConnector", "stateCommitmentChain"],
       "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
     },
+    "ModeHubConnector": {
+      "ignoreRelatives": ["AMB", "mirrorConnector", "OPTIMISM_PORTAL"],
+      "ignoreInWatchMode": ["proposed", "proposedTimestamp"]
+    },
     "RootChain": {
       "ignoreMethods": ["headerBlocks"]
     },
@@ -171,11 +179,9 @@
     "Connext Multisig": {
       "ignoreInWatchMode": ["nonce"]
     },
-    "Connext Multisig 2": {
-      "ignoreInWatchMode": ["nonce"]
-    },
     "GovernorV2": {
-      "ignoreMethods": ["getProposal", "proposals", "getCurrentTime"]
+      "ignoreMethods": ["getProposal", "proposals", "getCurrentTime"],
+      "ignoreInWatchMode": ["numProposals"]
     },
     "ProposerV2": {
       "ignoreMethods": ["bondedProposals"],

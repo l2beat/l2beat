@@ -11,6 +11,7 @@ import { CoingeckoClient } from './CoingeckoClient'
 import { CoinMarketChartRangeData } from './model'
 
 export const MAX_DAYS_FOR_HOURLY_PRECISION = 80
+const SECONDS_IN_DAY = 24 * 60 * 60
 export const COINGECKO_INTERPOLATION_WINDOW_DAYS = 3
 
 export interface QueryResultPoint {
@@ -20,9 +21,13 @@ export interface QueryResultPoint {
 }
 
 export class CoingeckoQueryService {
+  static MAX_DAYS_FOR_ONE_CALL =
+    MAX_DAYS_FOR_HOURLY_PRECISION - 2 * COINGECKO_INTERPOLATION_WINDOW_DAYS
+
   constructor(private readonly coingeckoClient: CoingeckoClient) {}
 
-  async getUsdPriceHistory(
+  /** performance is not a big issue as we download 80 days worth of prices at once */
+  async getUsdPriceHistoryHourly(
     coingeckoId: CoingeckoId,
     from: UnixTime,
     to: UnixTime,
@@ -31,6 +36,7 @@ export class CoingeckoQueryService {
     const queryResult = await this.queryHourlyPricesAndMarketCaps(
       coingeckoId,
       { from, to },
+      // TODO: either make it multichain or remove this fallback
       address,
     )
     return queryResult.prices
@@ -99,6 +105,13 @@ export class CoingeckoQueryService {
       let currentFrom = currentTo.add(-MAX_DAYS_FOR_HOURLY_PRECISION, 'days')
       if (adjustedFrom && currentFrom.lt(adjustedFrom)) {
         currentFrom = adjustedFrom
+        const diff = currentTo.toNumber() - currentFrom.toNumber()
+        if (diff < MAX_DAYS_FOR_HOURLY_PRECISION * SECONDS_IN_DAY) {
+          currentTo = new UnixTime(
+            currentFrom.toNumber() +
+              MAX_DAYS_FOR_HOURLY_PRECISION * SECONDS_IN_DAY,
+          )
+        }
       }
 
       const data = await this.coingeckoClient.getCoinMarketChartRange(

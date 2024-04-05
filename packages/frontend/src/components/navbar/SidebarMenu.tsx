@@ -1,6 +1,8 @@
-import React from 'react'
+import compact from 'lodash/compact'
+import React, { ReactElement } from 'react'
 
 import { ActivityIcon, RiskIcon, SummaryIcon, TvlIcon } from '../icons'
+import { DataAvailabilityIcon } from '../icons/pages/DataAvailabilityIcon'
 import { FinalityIcon } from '../icons/pages/FinalityIcon'
 import { LivenessIcon } from '../icons/pages/LivenessIcon'
 import { MenuCloseIcon } from '../icons/symbols/MenuCloseIcon'
@@ -22,7 +24,80 @@ export interface SidebarMenuProps {
   socialLinks: SocialLinksProps
 }
 
+interface Section {
+  title: string
+  items: SectionItem[]
+}
+
+interface SectionItem {
+  title: string
+  link: string
+  icon: (props: { className: string }) => ReactElement
+}
+
+function getSections(props: SidebarMenuProps): Section[] {
+  return [
+    {
+      title: 'Scaling',
+      items: compact([
+        {
+          title: 'Summary',
+          link: '/scaling/summary',
+          icon: SummaryIcon,
+        },
+        {
+          title: 'Value Locked',
+          link: '/scaling/tvl',
+          icon: TvlIcon,
+        },
+        {
+          title: 'Risks',
+          link: '/scaling/risk',
+          icon: RiskIcon,
+        },
+        {
+          title: 'Data Availability',
+          link: '/scaling/data-availability',
+          icon: DataAvailabilityIcon,
+        },
+        props.showLiveness && {
+          title: 'Liveness',
+          link: '/scaling/liveness',
+          icon: LivenessIcon,
+        },
+        props.showFinality && {
+          title: 'Finality',
+          link: '/scaling/finality',
+          icon: FinalityIcon,
+        },
+        props.showActivity && {
+          title: 'Activity',
+          link: '/scaling/activity',
+          icon: ActivityIcon,
+        },
+      ]),
+    },
+    {
+      title: 'Bridges',
+      items: [
+        {
+          title: 'Summary',
+          link: '/bridges/summary',
+          icon: SummaryIcon,
+        },
+        {
+          title: 'Risks',
+          link: '/bridges/risk',
+          icon: RiskIcon,
+        },
+      ],
+    },
+  ]
+}
+
 export function SidebarMenu(props: SidebarMenuProps) {
+  const sections = getSections(props)
+
   return (
     <div
       id="sidebar-menu"
@@ -40,99 +115,77 @@ export function SidebarMenu(props: SidebarMenuProps) {
         </div>
       </div>
       <div className="relative mt-2 flex-1 overflow-y-auto overflow-x-visible">
-        <ul className="mt-8 px-6">
-          <li>
-            <div className="mb-4 text-sm font-bold uppercase tracking-wider text-pink-900 dark:text-pink-200">
-              <a href="/scaling/summary">Scaling</a>
-            </div>
-            <ul className="ml-4 flex flex-col gap-4">
-              <li className="flex gap-2 font-medium">
-                <SummaryIcon className="h-auto w-4" />
-                <a href="/scaling/summary">Summary</a>
-              </li>
-              <li className="flex gap-2 font-medium">
-                <TvlIcon className="h-auto w-4" />
-                <a href="/scaling/tvl">Value Locked</a>
-              </li>
-              <li className="flex gap-2 font-medium">
-                <RiskIcon className="h-auto w-4" />
-                <a href="/scaling/risk">Risks</a>
-              </li>
-              {props.showLiveness && (
-                <li className="flex gap-2 font-medium">
-                  <LivenessIcon className="h-auto w-4" />
-                  <a href="/scaling/liveness">Liveness</a>
-                </li>
-              )}
-              {props.showFinality && (
-                <li className="flex gap-2 font-medium">
-                  <FinalityIcon className="h-auto w-4" />
-                  <a href="/scaling/finality">Finality</a>
-                </li>
-              )}
-              {props.showActivity && (
-                <li className="flex items-center gap-2 font-medium">
-                  <ActivityIcon className="h-auto w-4" />
-                  <a href="/scaling/activity">Activity</a>
-                </li>
-              )}
-            </ul>
-          </li>
-        </ul>
-        <ul className="mt-8 px-6">
-          <li>
-            <div className="mb-4 flex items-center gap-2">
-              <span className="text-sm font-bold uppercase tracking-wider text-pink-900 dark:text-pink-200">
-                <a href="/bridges/summary">Bridges</a>
-              </span>
-            </div>
-            <ul className="ml-4 flex flex-col gap-4">
-              <li className="flex items-center gap-2 font-medium">
-                <SummaryIcon className="h-auto w-4" />
-                <a href="/bridges/summary">Summary</a>
-              </li>
-              <li className="flex items-center gap-2 font-medium">
-                <RiskIcon className="h-auto w-4" />
-                <a href="/bridges/risk">Risks</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
+        <Sections sections={sections} />
         <hr className="mb-6 mt-8 w-full border-gray-200 dark:border-gray-850" />
-        <ul className="flex flex-col gap-4 px-6 text-sm font-medium">
-          <li>
-            <PlainLink href={props.forumLink}>Forum</PlainLink>
-          </li>
-          <li>
-            <a href="/donate">Donate</a>
-          </li>
-          <li>
-            {props.showNewGovernancePage ? (
-              <a href="/governance">Governance</a>
-            ) : (
-              <a href="https://l2beat.notion.site/Delegate-your-votes-to-L2BEAT-8ffc452bed9a431cb158d1e4e19839e3">
-                Governance
-              </a>
-            )}
-          </li>
-          <li>
-            <a href="/faq">FAQ</a>
-          </li>
-          <li>
-            <PlainLink
-              className="flex items-center"
-              href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f"
-            >
-              Jobs
-              {props.showHiringBadge && <HiringBadge className="ml-2" />}
-            </PlainLink>
-          </li>
-        </ul>
+        <AdditionalSections {...props} />
         <hr className="my-6 w-full border-gray-200 dark:border-gray-850" />
         <ul className="mb-12 flex gap-4 px-6">
           <SocialLinks {...props.socialLinks} />
         </ul>
       </div>
     </div>
+  )
+}
+
+function Sections({ sections }: { sections: Section[] }) {
+  return (
+    <>
+      {sections.map((section) => (
+        <div className="mt-8 px-6" key={section.title}>
+          <div className="mb-4 text-sm font-bold uppercase tracking-wider text-pink-900 dark:text-pink-200">
+            {section.title}
+          </div>
+          <ul className="ml-4 flex flex-col gap-4">
+            {section.items.map((item) => (
+              <li key={item.title}>
+                <PlainLink href={item.link} className="flex gap-2 font-medium">
+                  <item.icon className="h-auto w-4" />
+                  {item.title}
+                </PlainLink>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </>
+  )
+}
+
+interface AdditionalSectionProps {
+  forumLink: string
+  showNewGovernancePage: boolean
+  showHiringBadge: boolean
+}
+function AdditionalSections(props: AdditionalSectionProps) {
+  return (
+    <ul className="flex flex-col gap-4 px-6 text-sm font-medium">
+      <li>
+        <PlainLink href={props.forumLink}>Forum</PlainLink>
+      </li>
+      <li>
+        <PlainLink href="/donate">Donate</PlainLink>
+      </li>
+      <li>
+        {props.showNewGovernancePage ? (
+          <PlainLink href="/governance">Governance</PlainLink>
+        ) : (
+          <PlainLink href="https://l2beat.notion.site/Delegate-your-votes-to-L2BEAT-8ffc452bed9a431cb158d1e4e19839e3">
+            Governance
+          </PlainLink>
+        )}
+      </li>
+      <li>
+        <PlainLink href="/faq">FAQ</PlainLink>
+      </li>
+      <li>
+        <PlainLink
+          className="flex items-center"
+          href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f"
+        >
+          Jobs
+          {props.showHiringBadge && <HiringBadge className="ml-2" />}
+        </PlainLink>
+      </li>
+    </ul>
   )
 }

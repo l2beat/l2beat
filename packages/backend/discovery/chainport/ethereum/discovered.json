@@ -1,7 +1,7 @@
 {
   "name": "chainport",
   "chain": "ethereum",
-  "blockNumber": 19118389,
+  "blockNumber": 19531518,
   "configHash": "0x0ab956d72177a32407a07a09748a05327ed5ec567942679c19812ae0733ce023",
   "version": 3,
   "contracts": [
@@ -36,7 +36,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "2 of 3 (67%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1641296925,
@@ -84,7 +85,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "2 of 3 (67%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1627899254,
@@ -97,7 +99,7 @@
           "0x00040D1445683B7Ef71bf2D94CB7Fe2224Eba8d8"
         ],
         "getThreshold": 2,
-        "nonce": 184,
+        "nonce": 193,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -112,7 +114,7 @@
       "values": {
         "getMembersRegistry": "0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa",
         "name": "ChainportCongress",
-        "proposalCount": 48
+        "proposalCount": 52
       },
       "derivedName": "ChainportCongress"
     }

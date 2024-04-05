@@ -2,6 +2,7 @@ import {
   FinalityApiResponse,
   FinalityDataPoint,
   FinalityProjectData,
+  UnixTime,
 } from '@l2beat/shared-pure'
 
 import { JsonHttpClient } from '../caching/JsonHttpClient'
@@ -21,23 +22,31 @@ export async function fetchFinalityApi(
 
 function getMockFinalityApiResponse(): FinalityApiResponse {
   const projects = [
-    'arbitrum',
-    'optimism',
-    'apex',
-    'aevo',
+    'zksyncera',
     'base',
-    'dydx',
-    'brine',
-    'linea',
-    'myria',
-    'scroll',
+    'optimism',
+    'honeypot',
+    'fuelv1',
+    'kroma',
+    'mode',
+    'zksync2',
+    'zora',
   ].reduce<Record<string, FinalityProjectData>>((acc, cur) => {
-    acc[cur] = { timeToInclusion: generateMockData() }
+    acc[cur] = {
+      timeToInclusion: generateMockData(),
+      syncedUntil: UnixTime.now(),
+    }
     return acc
   }, {})
 
   return {
-    projects,
+    projects: {
+      ...projects,
+      optimism: {
+        ...projects.optimism,
+        syncedUntil: UnixTime.now().add(-2, 'days'),
+      },
+    },
   }
 }
 

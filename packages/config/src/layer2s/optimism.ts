@@ -5,7 +5,7 @@ import { subtractOneAfterBlockInclusive } from '../common/assessCount'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
-import { opStack } from './templates/opStack'
+import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('optimism')
 
@@ -19,7 +19,7 @@ const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
   'FINALIZATION_PERIOD_SECONDS',
 )
 
-export const optimism: Layer2 = opStack({
+export const optimism: Layer2 = opStackL2({
   discovery,
   display: {
     name: 'OP Mainnet',
@@ -36,6 +36,7 @@ export const optimism: Layer2 = opStack({
       explorers: [
         'https://optimistic.etherscan.io',
         'https://optimism.blockscout.com/',
+        'https://mainnet.superscan.network',
       ],
       repositories: ['https://github.com/ethereum-optimism/optimism'],
       socialMedia: [
@@ -75,7 +76,11 @@ export const optimism: Layer2 = opStack({
   },
   genesisTimestamp: new UnixTime(1686074603),
   finality: {
-    type: 'OPStack',
+    type: 'OPStack-blob',
+    // timestamp of the first blob tx
+    minTimestamp: new UnixTime(1710375155),
+    l2BlockTimeSeconds: 2,
+    genesisTimestamp: new UnixTime(1686068903),
     lag: 0,
   },
   l2OutputOracle: discovery.getContract('L2OutputOracle'),
@@ -86,10 +91,22 @@ export const optimism: Layer2 = opStack({
       'Since OP Mainnet has migrated from the OVM to Bedrock, a node must be synced using a data directory that can be found [here](https://community.optimism.io/docs/useful-tools/networks/#links). To reproduce the migration itself, see this [guide](https://blog.oplabs.co/reproduce-bedrock-migration/).',
   },
   upgradesAndGovernance:
-    'All contracts are upgradable by the `ProxyAdmin` which is controlled by a 2/2 multisig composed by the Optimism Foundation and a Security Council. Currently, the Guardian, the Proposer and the Challenger roles are assigned to single actors and are immutable, meaning that an implementation upgrade is required to update them. \n\nThe `FoundationMultisig_2` controls both the Guardian and Challenger role. The single Sequencer actor can be modified by the `FoundationMultisig_2` via the `SystemConfig` contract. \n\nAt the moment, for regular upgrades, the DAO signals its intent by voting on upgrade proposals, but has no direct control over the upgrade process.',
+    'All contracts are upgradable by the `ProxyAdmin` which is controlled by a 2/2 multisig composed by the Optimism Foundation and a Security Council. Currently, the Guardian, the Proposer and the Challenger roles are assigned to single actors and are immutable, meaning that an implementation upgrade is required to update them. \n\nThe `FoundationMultisig_2` controls both the Guardian and Challenger role. `FoundationMultisig_2` controls the `SuperchainConfig` Superchain-wide pause mechanism that can pause `L1CrossDomainMessenger` messages relay, as well as ERC-20 and ERC-721 withdrawals. The single Sequencer actor can be modified by the `FoundationMultisig_2` via the `SystemConfig` contract. \n\nAt the moment, for regular upgrades, the DAO signals its intent by voting on upgrade proposals, but has no direct control over the upgrade process.',
   isNodeAvailable: true,
   hasProperSecurityCouncil: false,
   milestones: [
+    // {
+    //   name: 'Optimism Protocol Upgrade #6: Multi-Chain Prep (MCP) L1',
+    //   link: 'https://vote.optimism.io/proposals/47253113366919812831791422571513347073374828501432502648295761953879525315523',
+    //   date: 'upcoming',
+    //   description: 'Superchain enables L1 contracts to be upgraded atomically across multiple chains in a single transaction.',
+    // },
+    {
+      name: 'Network Upgrade #5: Ecotone',
+      link: 'https://vote.optimism.io/proposals/95119698597711750186734377984697814101707190887694311194110013874163880701970',
+      date: '2024-03-14T00:00:00Z',
+      description: 'Optimism adopts EIP-4844.',
+    },
     {
       name: 'Fault Proof System is live on OP Goerli',
       link: 'https://blog.oplabs.co/op-stack-fault-proof-alpha/',
@@ -215,6 +232,13 @@ export const optimism: Layer2 = opStack({
       'This address is the owner of the following contracts: SystemConfig. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals, and as a Challenger for state roots.',
     ),
   ],
+  nonTemplateContracts: [
+    discovery.getContractDetails('SuperchainConfig', {
+      description:
+        'The SuperchainConfig contract is used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.',
+      ...upgradeability,
+    }),
+  ],
   chainConfig: {
     name: 'optimism',
     chainId: 10,
@@ -243,4 +267,5 @@ export const optimism: Layer2 = opStack({
     ],
     coingeckoPlatform: 'optimistic-ethereum',
   },
+  usesBlobs: true,
 })

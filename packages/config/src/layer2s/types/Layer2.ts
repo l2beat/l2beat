@@ -1,6 +1,7 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, Sentiment } from '@l2beat/shared-pure'
 
 import {
+  DataAvailabilityWithSentiment,
   KnowledgeNugget,
   Layer2Provider,
   Milestone,
@@ -12,10 +13,12 @@ import {
 import { ChainConfig } from '../../common/ChainConfig'
 import { ScalingProjectRiskView } from '../../common/ScalingProjectRiskView'
 import { ScalingProjectStateDerivation } from '../../common/ScalingProjectStateDerivation'
+import { ScalingProjectStateValidation } from '../../common/ScalingProjectStateValidation'
 import { ScalingProjectTechnology } from '../../common/ScalingProjectTechnology'
 import { StageConfig } from '../common/stages/types'
 import { Layer2FinalityConfig } from './Layer2FinalityConfig'
-import { Layer2Liveness } from './Layer2LivenessConfig'
+import { Layer2LivenessConfig } from './Layer2LivenessConfig'
+import { Layer2TxConfig } from './Layer2TrackedTxsConfig'
 import { Layer2TransactionApi } from './Layer2TransactionApi'
 
 export interface Layer2 {
@@ -34,6 +37,8 @@ export interface Layer2 {
   config: Layer2Config
   /** Technical chain configuration */
   chainConfig?: ChainConfig
+  /** Data availability of scaling project project */
+  dataAvailability?: DataAvailabilityWithSentiment
   /** Risk view values for this layer2 */
   riskView: ScalingProjectRiskView
   /** Rollup stage */
@@ -42,8 +47,8 @@ export interface Layer2 {
   technology: ScalingProjectTechnology
   /** Open-source node details */
   stateDerivation?: ScalingProjectStateDerivation
-  /** How project validates state? */
-  stateValidation?: string
+  /** Explains how project validates state */
+  stateValidation?: ScalingProjectStateValidation
   /** List of smart contracts used in the layer2 */
   contracts: ScalingProjectContracts
   /** Upgrades and governance explained */
@@ -62,6 +67,8 @@ export interface Layer2Display extends ScalingProjectDisplay {
   /** Tooltip contents for liveness tab for given project */
   liveness?: Layer2LivenessDisplay
   finality?: Layer2FinalityDisplay
+  /** Warning for TVL */
+  tvlWarning?: Layer2TVLWarning
 }
 export interface Layer2LivenessDisplay {
   explanation?: string
@@ -82,8 +89,17 @@ export interface Layer2FinalityDisplay {
 export interface Layer2Config extends ScalingProjectConfig {
   /** API parameters used to get transaction count */
   transactionApi?: Layer2TransactionApi
-  /** Configuration for getting state updates and batch submission */
-  liveness?: Layer2Liveness
+  /** List of transactions that are tracked by our backend */
+  trackedTxs?: Layer2TxConfig[]
+  /** Configuration for getting liveness data */
+  liveness?: Layer2LivenessConfig
   /** Configuration for getting finality data */
-  finality?: Layer2FinalityConfig
+  finality?: Layer2FinalityConfig | 'coming soon'
+}
+
+export interface Layer2TVLWarning {
+  /** Content of the warning */
+  content: string
+  /** Color with which the warning should be displayed */
+  sentiment: Extract<Sentiment, 'bad' | 'warning'>
 }

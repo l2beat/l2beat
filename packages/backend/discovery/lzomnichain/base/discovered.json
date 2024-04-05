@@ -1,8 +1,8 @@
 {
   "name": "lzomnichain",
   "chain": "base",
-  "blockNumber": 9577249,
-  "configHash": "0xb10db71148a6e70fb9842f7963d90fe33bd5b70b59ac9ee789fefbb8f9207db3",
+  "blockNumber": 12418351,
+  "configHash": "0xba7ada491838394e3aedc1cb91f588df392763653c03e34258a77e0f21502cec",
   "version": 3,
   "contracts": [
     {
@@ -11,7 +11,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
-        "modules": []
+        "modules": [],
+        "threshold": "2 of 5 (40%)"
       },
       "implementations": ["0xfb1bffC9d739B8D520DaF37dF666da4C687191EA"],
       "sinceTimestamp": 1689358473,
@@ -26,7 +27,7 @@
           "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
         ],
         "getThreshold": 2,
-        "nonce": 27,
+        "nonce": 43,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -65,7 +66,9 @@
           "110": 20,
           "111": 20,
           "112": 20,
+          "125": 20,
           "126": 20,
+          "138": 20,
           "145": 20,
           "150": 20,
           "151": 20,
@@ -74,6 +77,7 @@
           "165": 20,
           "167": 20,
           "175": 20,
+          "176": 20,
           "177": 20,
           "181": 20,
           "182": 20,
@@ -84,9 +88,14 @@
           "202": 20,
           "210": 20,
           "212": 20,
+          "213": 20,
           "214": 20,
           "230": 20,
-          "234": 20
+          "234": 20,
+          "235": 20,
+          "238": 20,
+          "243": 20,
+          "255": 20
         },
         "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": 2,
         "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": 1,
@@ -127,7 +136,15 @@
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           },
+          "125": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
           "126": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "138": {
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           },
@@ -160,6 +177,10 @@
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           },
           "175": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "176": {
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           },
@@ -203,6 +224,10 @@
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           },
+          "213": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
           "214": {
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
@@ -212,6 +237,22 @@
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           },
           "234": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "235": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "238": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "243": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "255": {
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           }
@@ -281,12 +322,28 @@
             "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
             "relayer": "0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"
           },
+          "125": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 10,
+            "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
+            "relayer": "0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"
+          },
           "126": {
             "inboundProofLib": 2,
             "inboundBlockConfirm": 10,
             "outboundProofType": 2,
             "outboundBlockConfirm": 10,
             "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
+            "relayer": "0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"
+          },
+          "138": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 10,
+            "oracle": "0xAaB5A48CFC03Efa9cC34A2C1aAcCCB84b4b770e4",
             "relayer": "0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"
           },
           "145": {
@@ -351,6 +408,14 @@
             "outboundProofType": 2,
             "outboundBlockConfirm": 10,
             "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
+            "relayer": "0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"
+          },
+          "176": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 2,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 10,
+            "oracle": "0xAaB5A48CFC03Efa9cC34A2C1aAcCCB84b4b770e4",
             "relayer": "0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"
           },
           "177": {
@@ -433,6 +498,14 @@
             "oracle": "0xAaB5A48CFC03Efa9cC34A2C1aAcCCB84b4b770e4",
             "relayer": "0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"
           },
+          "213": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 10,
+            "oracle": "0xAaB5A48CFC03Efa9cC34A2C1aAcCCB84b4b770e4",
+            "relayer": "0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"
+          },
           "214": {
             "inboundProofLib": 2,
             "inboundBlockConfirm": 5,
@@ -443,13 +516,45 @@
           },
           "230": {
             "inboundProofLib": 2,
-            "inboundBlockConfirm": 5,
+            "inboundBlockConfirm": 21,
             "outboundProofType": 2,
             "outboundBlockConfirm": 10,
             "oracle": "0xAaB5A48CFC03Efa9cC34A2C1aAcCCB84b4b770e4",
             "relayer": "0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"
           },
           "234": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 10,
+            "oracle": "0xAaB5A48CFC03Efa9cC34A2C1aAcCCB84b4b770e4",
+            "relayer": "0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"
+          },
+          "235": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 10,
+            "oracle": "0xAaB5A48CFC03Efa9cC34A2C1aAcCCB84b4b770e4",
+            "relayer": "0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"
+          },
+          "238": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 10,
+            "oracle": "0xAaB5A48CFC03Efa9cC34A2C1aAcCCB84b4b770e4",
+            "relayer": "0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"
+          },
+          "243": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 10,
+            "oracle": "0xAaB5A48CFC03Efa9cC34A2C1aAcCCB84b4b770e4",
+            "relayer": "0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"
+          },
+          "255": {
             "inboundProofLib": 2,
             "inboundBlockConfirm": 5,
             "outboundProofType": 2,
@@ -489,7 +594,15 @@
             "0x2D61DCDD36F10b22176E0433B86F74567d529aAa",
             "0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"
           ],
+          "125": [
+            "0x2D61DCDD36F10b22176E0433B86F74567d529aAa",
+            "0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"
+          ],
           "126": [
+            "0x2D61DCDD36F10b22176E0433B86F74567d529aAa",
+            "0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"
+          ],
+          "138": [
             "0x2D61DCDD36F10b22176E0433B86F74567d529aAa",
             "0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"
           ],
@@ -519,6 +632,10 @@
             "0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"
           ],
           "175": [
+            "0x2D61DCDD36F10b22176E0433B86F74567d529aAa",
+            "0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"
+          ],
+          "176": [
             "0x2D61DCDD36F10b22176E0433B86F74567d529aAa",
             "0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"
           ],
@@ -562,6 +679,10 @@
             "0x2D61DCDD36F10b22176E0433B86F74567d529aAa",
             "0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"
           ],
+          "213": [
+            "0x2D61DCDD36F10b22176E0433B86F74567d529aAa",
+            "0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"
+          ],
           "214": [
             "0x2D61DCDD36F10b22176E0433B86F74567d529aAa",
             "0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"
@@ -571,6 +692,22 @@
             "0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"
           ],
           "234": [
+            "0x2D61DCDD36F10b22176E0433B86F74567d529aAa",
+            "0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"
+          ],
+          "235": [
+            "0x2D61DCDD36F10b22176E0433B86F74567d529aAa",
+            "0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"
+          ],
+          "238": [
+            "0x2D61DCDD36F10b22176E0433B86F74567d529aAa",
+            "0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"
+          ],
+          "243": [
+            "0x2D61DCDD36F10b22176E0433B86F74567d529aAa",
+            "0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"
+          ],
+          "255": [
             "0x2D61DCDD36F10b22176E0433B86F74567d529aAa",
             "0xC1b15d3B262bEeC0e3565C11C9e0F6134BdaCB36"
           ]
@@ -588,7 +725,9 @@
           "110": 2,
           "111": 2,
           "112": 2,
+          "125": 2,
           "126": 2,
+          "138": 2,
           "145": 2,
           "150": 2,
           "151": 2,
@@ -597,6 +736,7 @@
           "165": 2,
           "167": 2,
           "175": 2,
+          "176": 2,
           "177": 2,
           "181": 2,
           "182": 2,
@@ -607,9 +747,14 @@
           "202": 2,
           "210": 2,
           "212": 2,
+          "213": 2,
           "214": 2,
           "230": 2,
-          "234": 2
+          "234": 2,
+          "235": 2,
+          "238": 2,
+          "243": 2,
+          "255": 2
         },
         "treasuryContract": "0x980205D352F198748B626f6f7C38A8a5663Ec981",
         "treasuryZROFees": 0,
@@ -622,7 +767,9 @@
           "110": "0x0000000000000000000000004d73adb72bc3dd368966edd0f0b2148401a178e2",
           "111": "0x0000000000000000000000004d73adb72bc3dd368966edd0f0b2148401a178e2",
           "112": "0x0000000000000000000000004d73adb72bc3dd368966edd0f0b2148401a178e2",
+          "125": "0x000000000000000000000000377530cda84dfb2673bf4d145dcf0c4d7fdcb5b6",
           "126": "0x0000000000000000000000004d73adb72bc3dd368966edd0f0b2148401a178e2",
+          "138": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "145": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "150": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "151": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
@@ -631,6 +778,7 @@
           "165": "0x000000000000000000000000042b8289c97896529ec2fe49ba1a8b9c956a86cc",
           "167": "0x000000000000000000000000e9ba4c1e76d874a43942718dafc96009ec9d9917",
           "175": "0x0000000000000000000000002d61dcdd36f10b22176e0433b86f74567d529aaa",
+          "176": "0x0000000000000000000000000be3818b1c495bbd44b6579f6d0a4bea1bcbff8a",
           "177": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "181": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "182": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
@@ -641,9 +789,14 @@
           "202": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "210": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "212": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "213": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "214": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "230": "0x000000000000000000000000980205d352f198748b626f6f7c38a8a5663ec981",
-          "234": "0x000000000000000000000000980205d352f198748b626f6f7c38a8a5663ec981"
+          "234": "0x000000000000000000000000980205d352f198748b626f6f7c38a8a5663ec981",
+          "235": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "238": "0x0000000000000000000000004bb746ed0df6a8be563ff66dfc502f084779f9c9",
+          "243": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "255": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251"
         }
       },
       "derivedName": "UltraLightNodeV2"
@@ -654,10 +807,10 @@
       "unverified": true,
       "upgradeability": {
         "type": "EIP1967 proxy",
-        "implementation": "0x4EE2F9B7cf3A68966c370F3eb2C16613d3235245",
+        "implementation": "0xde54D17cCf5Bdb2FADA00e15D863EC395aB9b9D4",
         "admin": "0x9740FF91F1985D8d2B71494aE1A2f723bb3Ed9E4"
       },
-      "implementations": ["0x4EE2F9B7cf3A68966c370F3eb2C16613d3235245"],
+      "implementations": ["0xde54D17cCf5Bdb2FADA00e15D863EC395aB9b9D4"],
       "sinceTimestamp": 1689300865
     },
     {
@@ -723,8 +876,12 @@
         "getChainId": 184,
         "isReceivingPayload": false,
         "isSendingPayload": false,
-        "latestVersion": 1,
-        "libraryLookup": ["0x38dE71124f7a447a01D67945a51eDcE9FF491251"],
+        "latestVersion": 3,
+        "libraryLookup": [
+          "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
+          "0x9DB3714048B5499Ec65F807787897D3b3Aa70072",
+          "0x58D53a2d6a08B72a15137F3381d21b90638bd753"
+        ],
         "owner": "0x28937ca4873f7289Ebea0708c4E42b24835eCfF0"
       },
       "derivedName": "Endpoint"
@@ -767,7 +924,7 @@
       "values": {
         "allowlistSize": 0,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "defaultMultiplierBps": 12000,
+        "defaultMultiplierBps": 12100,
         "paused": false,
         "priceFeed": "0x3c2269811836af69497E5F486A85D7316753cf62",
         "quorum": 2,

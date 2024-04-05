@@ -1,5 +1,6 @@
-import React, { ReactNode } from 'react'
+import React from 'react'
 
+import { TableData, TableHead } from '../../../status/Components'
 import { Page } from '../../../status/Page'
 import { reactToHtml } from '../../../status/reactToHtml'
 import { DashboardProject } from '../props/getDashboardProjects'
@@ -77,6 +78,7 @@ export function DashboardPage(props: DashboardPageProps) {
           {Object.entries(props.projects).map(([chainName, projects]) => (
             <>
               <tr
+                key={chainName}
                 style={{
                   padding: '0px',
                   textAlign: 'left',
@@ -184,40 +186,6 @@ export function DashboardPage(props: DashboardPageProps) {
         </tbody>
       </table>
     </Page>
-  )
-}
-
-function TableData(props: {
-  value?: number | string | ReactNode
-  color?: string
-}) {
-  return (
-    <td
-      style={{
-        padding: '2px 12px',
-        textAlign: 'left',
-        color: props.color ?? '',
-      }}
-    >
-      {props.value !== undefined && props.value}
-    </td>
-  )
-}
-
-function TableHead(props: {
-  children?: ReactNode
-  rowSpan?: number
-  colSpan?: number
-  style?: React.CSSProperties
-}) {
-  return (
-    <th
-      rowSpan={props.rowSpan}
-      colSpan={props.colSpan}
-      style={{ padding: '2px 12px', textAlign: 'left', ...props.style }}
-    >
-      {props.children}
-    </th>
   )
 }
 

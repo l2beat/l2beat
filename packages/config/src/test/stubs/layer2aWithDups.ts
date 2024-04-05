@@ -1,10 +1,11 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
-  DATA_AVAILABILITY,
+  addSentimentToDataAvailability,
   FORCE_TRANSACTIONS,
   OPERATOR,
   RISK_VIEW,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { Layer2 } from '../../layer2s/types'
 
@@ -18,7 +19,6 @@ export const layer2aWithDups: Layer2 = {
     purposes: ['Universal'],
     provider: 'OP Stack',
     category: 'Optimistic Rollup',
-    dataAvailabilityMode: 'TxData',
     links: {
       websites: [],
       apps: [],
@@ -58,6 +58,11 @@ export const layer2aWithDups: Layer2 = {
       },
     ],
   },
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['Ethereum (calldata)'],
+    bridge: { type: 'Enshrined' },
+    mode: 'Transactions data',
+  }),
   riskView: {
     stateValidation: RISK_VIEW.STATE_FP,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -76,16 +81,18 @@ export const layer2aWithDups: Layer2 = {
       risks: [],
       references: [],
     },
-    dataAvailability: { ...DATA_AVAILABILITY.ON_CHAIN_CANONICAL },
+    dataAvailability: { ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL },
     operator: { ...OPERATOR.CENTRALIZED_SEQUENCER },
     forceTransactions: { ...FORCE_TRANSACTIONS.CANONICAL_ORDERING },
     exitMechanisms: [],
-    smartContracts: {
-      name: '',
-      description: '',
-      risks: [],
-      references: [],
-    },
+    otherConsiderations: [
+      {
+        name: '',
+        description: '',
+        risks: [],
+        references: [],
+      },
+    ],
   },
   permissions: [
     {

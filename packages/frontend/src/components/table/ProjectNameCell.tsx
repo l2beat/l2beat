@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { SyncStatus } from '../../pages/types'
+import { NotSyncedBadge } from '../badge/NotSyncedBadge'
 import { ShieldIcon, UnderReviewIcon } from '../icons'
 import { UnverifiedIcon } from '../icons/symbols/UnverifiedIcon'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
@@ -14,7 +16,9 @@ export interface ProjectCellProps {
     isArchived?: boolean
     redWarning?: string
     showProjectUnderReview?: boolean
+    hasImplementationChanged?: boolean
     warning?: string
+    data?: { syncStatus?: SyncStatus }
   }
 }
 
@@ -65,6 +69,25 @@ export function ProjectNameCell({ project }: ProjectCellProps) {
             <TooltipContent>{project.warning}</TooltipContent>
           </Tooltip>
         </span>
+      )}
+      {project.hasImplementationChanged && (
+        <span className="pl-1.5">
+          <Tooltip className="inline-block">
+            <TooltipTrigger>
+              <UnderReviewIcon className="relative top-px size-4" />
+            </TooltipTrigger>
+            <TooltipContent>
+              There are unhandled implementation changes. The project is under
+              review and part of the information might be outdated.
+            </TooltipContent>
+          </Tooltip>
+        </span>
+      )}
+      {project.data?.syncStatus?.isSynced === false && (
+        <NotSyncedBadge
+          className="relative top-[-3px] ml-2"
+          displaySyncedUntil={project.data?.syncStatus.displaySyncedUntil}
+        />
       )}
     </div>
   )

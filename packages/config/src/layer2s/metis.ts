@@ -1,6 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
@@ -16,6 +17,7 @@ const discovery = new ProjectDiscovery('metis')
 const upgradeDelay = 0
 
 export const metis: Layer2 = {
+  isUnderReview: true,
   type: 'layer2',
   id: ProjectId('metis'),
   display: {
@@ -29,7 +31,6 @@ export const metis: Layer2 = {
     purposes: ['Universal'],
     provider: 'OVM',
     category: 'Optimium',
-    dataAvailabilityMode: 'NotApplicable',
     links: {
       websites: ['https://metis.io'],
       apps: [],
@@ -68,6 +69,11 @@ export const metis: Layer2 = {
       startBlock: 1,
     },
   },
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['MEMO'],
+    bridge: { type: 'Optimistic' },
+    mode: 'Transactions data',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_NONE,
     dataAvailability: RISK_VIEW.DATA_EXTERNAL_MEMO,
@@ -157,23 +163,25 @@ export const metis: Layer2 = {
       },
       EXITS.FORCED('forced-withdrawals'),
     ],
-    smartContracts: {
-      name: 'EVM compatible smart contracts are supported',
-      description:
-        'Metis uses the Optimistic Virtual Machine (OVM) 2.0 to execute transactions. This is similar to the EVM, but is independent from it and allows fraud proofs to be executed.',
-      risks: [
-        {
-          category: 'Funds can be lost if',
-          text: 'there are mistakes in the highly complex OVM implementation.',
-        },
-      ],
-      references: [
-        {
-          text: 'MVM repository - Metis source code',
-          href: 'https://github.com/MetisProtocol/mvm',
-        },
-      ],
-    },
+    otherConsiderations: [
+      {
+        name: 'EVM compatible smart contracts are supported',
+        description:
+          'Metis uses the Optimistic Virtual Machine (OVM) 2.0 to execute transactions. This is similar to the EVM, but is independent from it and allows fraud proofs to be executed.',
+        risks: [
+          {
+            category: 'Funds can be lost if',
+            text: 'there are mistakes in the highly complex OVM implementation.',
+          },
+        ],
+        references: [
+          {
+            text: 'MVM repository - Metis source code',
+            href: 'https://github.com/MetisProtocol/mvm',
+          },
+        ],
+      },
+    ],
   },
   permissions: [
     ...discovery.getMultisigPermission(

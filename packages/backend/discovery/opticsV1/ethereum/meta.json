@@ -1,0 +1,396 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "BridgeRouterBeaconProxy",
+      "values": {
+        "PRE_FILL_FEE_DENOMINATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PRE_FILL_FEE_NUMERATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "xAppConnectionManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "BridgeUpgradeBeacon",
+      "values": {}
+    },
+    {
+      "name": "GnosisSafe",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GovernanceRouterBeaconProxy",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domains": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governorDomain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "inRecovery": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "localDomain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "recoveryActiveAt": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "recoveryManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "recoveryTimelock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "xAppConnectionManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GovernanceUpgradeBeacon",
+      "values": {}
+    },
+    {
+      "name": "Governor",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "HomeBeaconProxy",
+      "values": {
+        "MAX_MESSAGE_BODY_BYTES": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "committedRoot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "count": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "homeDomainHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "localDomain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "queueEnd": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "queueLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "root": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "state": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "suggestUpdate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "tree": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "updater": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "updaterManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "HomeUpgradeBeacon",
+      "values": {}
+    },
+    {
+      "name": "RecoveryManager",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ReplicaBeaconProxy",
+      "values": {
+        "PROCESS_GAS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RESERVE_GAS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "committedRoot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "homeDomainHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "localDomain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "optimisticSeconds": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "remoteDomain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "state": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "updater": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ReplicaUpgradeBeacon",
+      "values": {}
+    },
+    {
+      "name": "UpdaterManager",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "updater": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "UpgradeBeaconController",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "XAppConnectionManager",
+      "values": {
+        "home": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "localDomain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "watchers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}

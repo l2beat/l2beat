@@ -15,6 +15,7 @@ import { getMultisigReportDownloadPage } from './multisig-report'
 import { outputPages } from './output'
 import { Page, PagesData } from './Page'
 import { getActivityPage } from './scaling/activity'
+import { getScalingDataAvailabilityPage } from './scaling/data-availability'
 import { getDiffHistoryPages } from './scaling/diff-history'
 import { getFinalityPage } from './scaling/finality'
 import { getLivenessPage } from './scaling/liveness'
@@ -35,6 +36,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     livenessApiResponse,
     finalityApiResponse,
     diffHistory,
+    implementationChange,
   } = pagesData
 
   pages.push(getRiskPage(config, pagesData))
@@ -57,6 +59,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
       getActivityPage(config, {
         activityApiResponse,
         verificationStatus,
+        implementationChange,
       }),
     )
   }
@@ -77,6 +80,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
       getLivenessPage(config, {
         livenessApiResponse,
         tvlApiResponse,
+        implementationChange,
       }),
     )
   }
@@ -86,6 +90,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
       getFinalityPage(config, {
         finalityApiResponse,
         tvlApiResponse,
+        implementationChange,
       }),
     )
   }
@@ -101,6 +106,13 @@ export async function renderPages(config: Config, pagesData: PagesData) {
   }
 
   pages.push(getGlossaryPage(config))
+
+  pages.push(
+    getScalingDataAvailabilityPage(config, {
+      tvlApiResponse,
+      implementationChange,
+    }),
+  )
 
   outputPages(pages)
 }

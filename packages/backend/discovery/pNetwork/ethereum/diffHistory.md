@@ -1,3 +1,66 @@
+Generated with discovered.json: 0xb07f2407341e6d1ffdce948d40d54f0bc2868442
+
+# Diff at Thu, 28 Mar 2024 10:34:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@dd32bb06b292cc8459fb09925454ee3a90f5c27e block: 19375664
+- current block number: 19532042
+
+## Description
+
+Update discovery to include the multisig threshold.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19375664 (main branch discovery), not current.
+
+```diff
+    contract pNetwork Multisig (0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 4 (50%)"
+    }
+```
+
+Generated with discovered.json: 0x291bd7fd91be18fd4ed6c946a065b180ce88e00c
+
+# Diff at Wed, 21 Feb 2024 08:21:41 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@f247182ed17ab198e708715bad7d245c5212992d block: 19118450
+- current block number: 19274813
+
+## Description
+
+Changes related to the inflation mechanism for the ethPNT token (introduced with previous changes below). The values below get updated for each new month/year.
+
+## Watched changes
+
+```diff
+    contract EthPntv2 (0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2) {
+      values.currentMonthNumber:
+-        0
++        1
+      values.currentMonthWithdrawnAmount:
+-        "1100000000000000000000000"
++        "360000000000000000000000"
+      values.currentYearWithdrawnAmount:
+-        "1100000000000000000000000"
++        "1460000000000000000000000"
+      values.maxWithdrawableAmounts.1:
+-        "18255045741928169125886545"
++        "17895045741928169125886545"
+      values.maxWithdrawableAmounts.0:
+-        "835504574192816912588654"
++        "1575504574192816912588654"
+      values.totalSupply:
+-        "9900000000000000000000000"
++        "10260000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x8209f29438745b169ea4fcac0c17ac2784cf83c8
 
 # Diff at Tue, 30 Jan 2024 09:32:52 GMT:

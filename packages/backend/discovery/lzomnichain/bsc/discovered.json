@@ -1,8 +1,8 @@
 {
   "name": "lzomnichain",
   "chain": "bsc",
-  "blockNumber": 35473523,
-  "configHash": "0x98a11a7a5bd0b5ef463a25161512ce578955c1febfd51029bf63564bb3b3bf29",
+  "blockNumber": 37363085,
+  "configHash": "0x31a90e21170b899e7187928b99964de81a8cfb8e4f190116b88262b5ca80976f",
   "version": 3,
   "contracts": [
     {
@@ -66,11 +66,13 @@
         "getChainId": 2,
         "isReceivingPayload": false,
         "isSendingPayload": false,
-        "latestVersion": 3,
+        "latestVersion": 5,
         "libraryLookup": [
           "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
           "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2",
-          "0xF487E8D03CDa77Ce9a66B35220D6cBB95d4C2877"
+          "0xF487E8D03CDa77Ce9a66B35220D6cBB95d4C2877",
+          "0xfCCE712C9be5A78FE5f842008e0ed7af59455278",
+          "0xff3da3a1cd39Bbaeb8D7cB2deB83EfC065CBb38F"
         ],
         "owner": "0x8D452629c5FfCDDE407069da48c096e1F8beF22c"
       },
@@ -136,6 +138,7 @@
           "182": 20,
           "183": 20,
           "184": 20,
+          "195": 20,
           "196": 20,
           "197": 20,
           "198": 20,
@@ -151,7 +154,13 @@
           "217": 20,
           "218": 20,
           "230": 20,
-          "234": 20
+          "234": 20,
+          "235": 20,
+          "238": 20,
+          "243": 20,
+          "255": 20,
+          "257": 20,
+          "260": 20
         },
         "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": 2,
         "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": 1,
@@ -296,6 +305,10 @@
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           },
+          "195": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
           "196": {
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
@@ -357,6 +370,30 @@
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           },
           "234": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "235": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "238": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "243": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "255": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "257": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "260": {
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           }
@@ -650,6 +687,14 @@
             "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
             "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
           },
+          "195": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
           "196": {
             "inboundProofLib": 2,
             "inboundBlockConfirm": 5,
@@ -764,13 +809,61 @@
           },
           "230": {
             "inboundProofLib": 2,
-            "inboundBlockConfirm": 5,
+            "inboundBlockConfirm": 21,
             "outboundProofType": 2,
             "outboundBlockConfirm": 20,
             "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
             "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
           },
           "234": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "235": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "238": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "243": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "255": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "257": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0x5a54fe5234E811466D5366846283323c954310B2",
+            "relayer": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          },
+          "260": {
             "inboundProofLib": 2,
             "inboundBlockConfirm": 5,
             "outboundProofType": 2,
@@ -913,6 +1006,10 @@
             "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
             "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
           ],
+          "195": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
           "196": [
             "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
             "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
@@ -976,6 +1073,30 @@
           "234": [
             "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
             "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "235": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "238": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "243": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "255": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "257": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
+          ],
+          "260": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6"
           ]
         },
         "layerZeroToken": "0x0000000000000000000000000000000000000000",
@@ -1019,6 +1140,7 @@
           "182": 2,
           "183": 2,
           "184": 2,
+          "195": 2,
           "196": [1, 2],
           "197": [1, 2],
           "198": [1, 2],
@@ -1034,7 +1156,13 @@
           "217": [1, 2],
           "218": [1, 2],
           "230": 2,
-          "234": 2
+          "234": 2,
+          "235": 2,
+          "238": 2,
+          "243": 2,
+          "255": 2,
+          "257": 2,
+          "260": 2
         },
         "treasuryContract": "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
         "treasuryZROFees": 0,
@@ -1073,6 +1201,7 @@
           "182": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "183": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "184": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "195": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "196": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "197": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "198": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
@@ -1088,7 +1217,13 @@
           "217": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "218": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "230": "0x000000000000000000000000980205d352f198748b626f6f7c38a8a5663ec981",
-          "234": "0x000000000000000000000000980205d352f198748b626f6f7c38a8a5663ec981"
+          "234": "0x000000000000000000000000980205d352f198748b626f6f7c38a8a5663ec981",
+          "235": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "238": "0x0000000000000000000000004bb746ed0df6a8be563ff66dfc502f084779f9c9",
+          "243": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "255": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "257": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "260": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251"
         }
       },
       "derivedName": "UltraLightNodeV2"
@@ -1143,10 +1278,10 @@
       "unverified": true,
       "upgradeability": {
         "type": "EIP1967 proxy",
-        "implementation": "0x23768Cfd95B699d9B772ce042e490F9deA5ae6d6",
+        "implementation": "0xa79dE9B3409361Cd3367856b5Fa9BC258C1f9F0F",
         "admin": "0x5b3b51F830A79a250808f080e0e8dB08BAdf2D1C"
       },
-      "implementations": ["0x23768Cfd95B699d9B772ce042e490F9deA5ae6d6"],
+      "implementations": ["0xa79dE9B3409361Cd3367856b5Fa9BC258C1f9F0F"],
       "sinceTimestamp": 1687808660
     },
     {
@@ -1155,7 +1290,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
-        "modules": []
+        "modules": [],
+        "threshold": "2 of 6 (33%)"
       },
       "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
       "sinceTimestamp": 1648073735,
@@ -1171,7 +1307,7 @@
           "0xf1f5E3777a3ADBe6f3289AD6b21eae6427dfb553"
         ],
         "getThreshold": 2,
-        "nonce": 62,
+        "nonce": 81,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -1188,16 +1324,29 @@
       }
     },
     {
-      "name": "",
+      "name": "RelayerV2",
       "address": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182",
-      "unverified": true,
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x7701C12D268847dB94bbF37A4C4af53Bb6bAF8B0",
         "admin": "0x38dE71124f7a447a01D67945a51eDcE9FF491251"
       },
       "implementations": ["0x7701C12D268847dB94bbF37A4C4af53Bb6bAF8B0"],
-      "sinceTimestamp": 1661531611
+      "sinceTimestamp": 1661531611,
+      "values": {
+        "AIRDROP_GAS_LIMIT": 10000,
+        "fpBytes": 160,
+        "mptOverhead": 500,
+        "multiplierBps": 12000,
+        "owner": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
+        "paused": false,
+        "priceFeed": "0x7A50b180265eb5347Ce7b92224F0B0Cd6cE0493b",
+        "stargateBridgeAddr": "0x6694340fc020c5E6B96567843da2df01b2CE1eb6",
+        "stargateBridgeAddress": "0x0000000000000000000000000000000000000000",
+        "stargateComposer": "0xeCc19E177d24551aA7ed6Bc6FE566eCa726CC8a9",
+        "uln": "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2",
+        "validateProofBytes": 164
+      }
     },
     {
       "name": "VerifierNetwork",
@@ -1209,7 +1358,7 @@
       "values": {
         "allowlistSize": 0,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "defaultMultiplierBps": 12000,
+        "defaultMultiplierBps": 12100,
         "paused": false,
         "priceFeed": "0x7A50b180265eb5347Ce7b92224F0B0Cd6cE0493b",
         "quorum": 2,
@@ -1219,16 +1368,22 @@
       }
     },
     {
-      "name": "",
+      "name": "RelayerV2Radar",
       "address": "0xde19274c009A22921E3966a1Ec868cEba40A5DaC",
-      "unverified": true,
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x8363302080e711E0CAb978C081b9e69308d49808",
         "admin": "0x38dE71124f7a447a01D67945a51eDcE9FF491251"
       },
       "implementations": ["0x8363302080e711E0CAb978C081b9e69308d49808"],
-      "sinceTimestamp": 1669420588
+      "sinceTimestamp": 1669420588,
+      "values": {
+        "owner": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
+        "paused": false,
+        "relayerV2": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182",
+        "stargateBridgeAddress": "0x0000000000000000000000000000000000000000",
+        "uln": "0xF487E8D03CDa77Ce9a66B35220D6cBB95d4C2877"
+      }
     },
     {
       "name": "VerifierFeeLib",
@@ -1500,6 +1655,56 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "0x7701C12D268847dB94bbF37A4C4af53Bb6bAF8B0": [
+      "event ApproveAddress(address addr, bool approved)",
+      "event AssignJob(uint256 totalFee)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event SetDstConfig(uint16 chainId, uint16 outboundProofType, uint128 dstNativeAmtCap, uint64 baseGas, uint64 gasPerByte)",
+      "event SetDstPrice(uint16 chainId, uint128 dstPriceRatio, uint128 dstGasPriceInWei)",
+      "event SetPriceConfigUpdater(address priceConfigUpdater, bool allow)",
+      "event ValueTransferFailed(address indexed to, uint256 indexed quantity)",
+      "event Withdraw(address to, uint256 amount)",
+      "function AIRDROP_GAS_LIMIT() view returns (uint256)",
+      "function approvedAddresses(address) view returns (bool)",
+      "function assignJob(uint16 _dstChainId, uint16 _outboundProofType, address _userApplication, uint256 _payloadSize, bytes _adapterParams) returns (uint256 fee)",
+      "function dstConfigLookup(uint16, uint16) view returns (uint128 dstNativeAmtCap, uint64 baseGas, uint64 gasPerByte)",
+      "function dstFloorMarginsUSD(uint16) view returns (uint128)",
+      "function dstMultipliers(uint16) view returns (uint128)",
+      "function dstPriceLookup(uint16 _dstChainId) view returns (tuple(uint128 dstPriceRatio, uint128 dstGasPriceInWei))",
+      "function dstPriceLookupOld(uint16) view returns (uint128 dstPriceRatio, uint128 dstGasPriceInWei)",
+      "function fpBytes() view returns (uint16)",
+      "function getFee(uint16 _dstChainId, uint16 _outboundProofType, address _userApplication, uint256 _payloadSize, bytes _adapterParams) view returns (uint256)",
+      "function initialize(address _uln, address _priceFeed, address _stargateBridgeAddr, address _stargateComposer)",
+      "function isApproved(address _relayerAddress) view returns (bool)",
+      "function mptOverhead() view returns (uint16)",
+      "function multiplierBps() view returns (uint128)",
+      "function onUpgrade(address _stargateBridgeAddr, address _stargateComposer)",
+      "function owner() view returns (address)",
+      "function paused() view returns (bool)",
+      "function priceConfigUpdaters(address) view returns (bool)",
+      "function priceFeed() view returns (address)",
+      "function renounceOwnership()",
+      "function setApprovedAddress(address _relayerAddress, bool _approve)",
+      "function setDstConfig(uint16 _chainId, uint16 _outboundProofType, uint128 _dstNativeAmtCap, uint64 _baseGas, uint64 _gasPerByte)",
+      "function setDstFloorMarginsUSD(tuple(uint16 chainId, uint128 floorMargin)[] _margins)",
+      "function setDstPrice(uint16 _chainId, uint128 _dstPriceRatio, uint128 _dstGasPriceInWei)",
+      "function setDstPriceMultipliers(tuple(uint16 chainId, uint128 multiplier)[] _multipliers)",
+      "function setPause(bool _paused)",
+      "function setPriceConfigUpdater(address _priceConfigUpdater, bool _allow)",
+      "function setPriceFeed(address _priceFeed)",
+      "function setPriceMultiplierBps(uint128 _multiplierBps)",
+      "function setStargateAddress(address _stargateAddress)",
+      "function stargateBridgeAddr() view returns (address)",
+      "function stargateBridgeAddress() view returns (address)",
+      "function stargateComposer() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function uln() view returns (address)",
+      "function validateProofBytes() view returns (uint16)",
+      "function validateTransactionProofV1(uint16 _srcChainId, address _dstAddress, uint256 _gasLimit, bytes32 _blockHash, bytes32 _data, bytes _transactionProof)",
+      "function validateTransactionProofV2(uint16 _srcChainId, address _dstAddress, uint256 _gasLimit, bytes32 _blockHash, bytes32 _data, bytes _transactionProof, address _to) payable",
+      "function withdrawFee(address _to, uint256 _amount)",
+      "function withdrawToken(address _token, address _to, uint256 _amount)"
+    ],
     "0x7A50b180265eb5347Ce7b92224F0B0Cd6cE0493b": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1509,6 +1714,39 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x8363302080e711E0CAb978C081b9e69308d49808": [
+      "event ApproveAddress(address addr, bool approved)",
+      "event AssignJob(uint256 totalFee)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event SetDstConfig(uint16 chainId, uint16 outboundProofType, uint128 dstNativeAmtCap, uint64 baseGas, uint64 gasPerByte)",
+      "event SetDstPrice(uint16 chainId, uint128 dstPriceRatio, uint128 dstGasPriceInWei)",
+      "event ValueTransferFailed(address indexed to, uint256 indexed quantity)",
+      "event Withdraw(address to, uint256 amount)",
+      "function approvedAddresses(address) view returns (bool)",
+      "function assignJob(uint16 _dstChainId, uint16 _outboundProofType, address _userApplication, uint256 _payloadSize, bytes _adapterParams) returns (uint256)",
+      "function dstConfigLookup(uint16 _legacyChainId, uint16 _outboundProofType) view returns (tuple(uint128 dstNativeAmtCap, uint64 baseGas, uint64 gasPerByte))",
+      "function dstPriceLookup(uint16 _legacyChainId) view returns (tuple(uint128 dstPriceRatio, uint128 dstGasPriceInWei))",
+      "function getFee(uint16 _dstChainId, uint16 _outboundProofType, address _userApplication, uint256 _payloadSize, bytes _adapterParams) view returns (uint256)",
+      "function getV2ChainId(uint16 _legacyChainId) view returns (uint16)",
+      "function initialize(address _ulnRadar, address _relayerV2)",
+      "function isApproved(address _relayerAddress) view returns (bool)",
+      "function legacyToV2ChainId(uint16) view returns (uint16)",
+      "function owner() view returns (address)",
+      "function paused() view returns (bool)",
+      "function relayerV2() view returns (address)",
+      "function renounceOwnership()",
+      "function setApprovedAddress(address _relayerAddress, bool _approve)",
+      "function setDstConfig(uint16 _chainId, uint16 _outboundProofType, uint128 _dstNativeAmtCap, uint64 _baseGas, uint64 _gasPerByte)",
+      "function setDstPrice(uint16 _chainId, uint128 _dstPriceRatio, uint128 _dstGasPriceInWei)",
+      "function setPause(bool _paused)",
+      "function setStargateAddress(address _stargateAddress)",
+      "function stargateBridgeAddress() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function uln() view returns (address)",
+      "function validateTransactionProofV1(uint16 _srcChainId, address _dstAddress, uint256 _gasLimit, bytes32 _blockHash, bytes32 _data, bytes _transactionProof)",
+      "function validateTransactionProofV2(uint16 _srcChainId, address _dstAddress, uint256 _gasLimit, bytes32 _blockHash, bytes32 _data, bytes _transactionProof, address _to) payable",
+      "function withdrawFee(address _to, uint256 _amount)"
     ],
     "0x8D452629c5FfCDDE407069da48c096e1F8beF22c": [
       "constructor(address _singleton)"

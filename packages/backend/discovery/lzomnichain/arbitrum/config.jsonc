@@ -1,5 +1,5 @@
 {
-  "$schema": "../../config.schema.json",
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
   "chain": "arbitrum",
   "name": "lzomnichain",
   "initialAddresses": ["0x4D73AdB72bC3DD368966edD0f0b2148401A178E2"],
@@ -34,6 +34,14 @@
       "ignoreInWatchMode": ["nonce"]
     },
     "UltraLightNodeV2": {
+      "ignoreInWatchMode": [
+        "chainAddressSizeMap",
+        "defaultAppConfig",
+        "defaultAdapterParams",
+        "inboundProofLibrary",
+        "supportedOutboundProof",
+        "ulnLookup"
+      ],
       "fields": {
         "chainAddressSizeMap": {
           "type": "stateFromEvent",

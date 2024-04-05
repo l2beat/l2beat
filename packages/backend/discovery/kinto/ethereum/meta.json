@@ -1,0 +1,749 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "",
+      "values": {}
+    },
+    {
+      "name": "Bridge",
+      "values": {
+        "activeOutbox": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "allowedDelayedInboxList": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "allowedOutboxList": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delayedMessageCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rollup": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sequencerInbox": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sequencerMessageCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sequencerReportedSubMessageCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Bridger",
+      "values": {
+        "DAI": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L1GatewayRouter": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "USDe": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "WETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "exchangeProxy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2Vault": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sDAI": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sUSDe": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "senderAccount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "standardGateway": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "swapsEnabled": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "weETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "wstETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "BridgerOwnerMultisig",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ChallengeManager",
+      "values": {
+        "bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "osp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "resultReceiver": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sequencerInbox": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalChallengesCreated": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ExecutorMultisig",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Inbox",
+      "values": {
+        "allowListEnabled": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getProxyAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxDataSize": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sequencerInbox": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1ERC20Gateway",
+      "values": {
+        "cloneableProxyHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "counterpartGateway": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "inbox": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2BeaconProxyFactory": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "router": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "whitelist": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1GatewayRouter",
+      "values": {
+        "counterpartGateway": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultGateway": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "inbox": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "router": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "whitelist": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OneStepProofEntry",
+      "values": {
+        "prover0": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proverHostIo": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proverMath": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proverMem": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OneStepProver0",
+      "values": {}
+    },
+    {
+      "name": "OneStepProverHostIo",
+      "values": {}
+    },
+    {
+      "name": "OneStepProverMath",
+      "values": {}
+    },
+    {
+      "name": "OneStepProverMemory",
+      "values": {}
+    },
+    {
+      "name": "Outbox",
+      "values": {
+        "OUTBOX_VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2ToL1BatchNum": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2ToL1Block": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2ToL1EthBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2ToL1OutputId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2ToL1Sender": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2ToL1Timestamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rollup": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "RollupEventInbox",
+      "values": {
+        "bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rollup": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "RollupProxy",
+      "values": {
+        "VALIDATOR_AFK_BLOCKS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "baseStake": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "challengeManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "challenges": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "confirmPeriodBlocks": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "currentRequiredStake": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "extraChallengeTimeBlocks": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "firstUnresolvedNode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "inbox": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isERC20Enabled": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lastStakeBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestConfirmed": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestNodeCreated": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "loserStakeEscrow": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minimumAssertionPeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "outbox": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rollupDeploymentBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rollupEventInbox": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sequencerInbox": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "setValidatorCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stakeToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stakerCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalWithdrawableFunds": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "validatorUtils": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "validatorWalletCreator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "validatorWhitelistDisabled": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "validators": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "wasmModuleRoot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "zombieAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "zombieCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "zombieLatestStakedNode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SequencerInbox",
+      "values": {
+        "DATA_AUTHENTICATED_FLAG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "HEADER_LENGTH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "IS_HARDCODED_SEQUENCER_BATCH_POSTER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "batchCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "batchPosters": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "keySetUpdates": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxDataSize": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxTimeVariation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rollup": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sequencerVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "setIsBatchPosterCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalDelayedMessagesRead": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "UpgradeExecutor",
+      "values": {
+        "ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EXECUTOR_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ValidatorUtils",
+      "values": {}
+    },
+    {
+      "name": "ValidatorWalletCreator",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "template": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}

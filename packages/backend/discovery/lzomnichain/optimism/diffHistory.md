@@ -1,3 +1,98 @@
+Generated with discovered.json: 0xd206e9e146cfb96bab322e6baf16b45033a9aef3
+
+# Diff at Wed, 03 Apr 2024 11:00:16 GMT:
+
+- author: maciekop (<maciej.opala@l2beat.com>)
+- comparing to: main@34d9eb99e785ccac44323b84405d78f9783b5cc2 block: 117411953
+- current block number: 118271566
+
+## Description
+
+Rediscovery with new field added (upgradeability.threshold)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 117411953 (main branch discovery), not current.
+
+```diff
+    contract LayerZero Multisig (0x2458BAAbfb21aE1da11D9dD6AD4E48aB2fBF9959) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 6 (33%)"
+    }
+```
+
+Generated with discovered.json: 0xccb32d94081ff2426be40cc817ad59c7e00c7008
+
+# Diff at Thu, 14 Mar 2024 13:25:03 GMT
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@3ffa91064379f34a2916a1ad4e93791b752e7e9e block: 117060360
+- current block number: 117411953
+
+## Description
+
+New PriceFeed Oracle implementation has been deployed. Nothing that would affect protocol security has been changed.
+
+## Watched changes
+
+```diff
+    contract  (0x6d65a44Bd6Cfe1a8b2E816c918Dd83a6b04c8DEe) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0xF51caABe877c28655Ce881F3b08482ab82255e49"
++        "0x098c11c44e2bEE854BD8Ff61eCb2953d7FdF66a1"
+      implementations.0:
+-        "0xF51caABe877c28655Ce881F3b08482ab82255e49"
++        "0x098c11c44e2bEE854BD8Ff61eCb2953d7FdF66a1"
+    }
+```
+
+## Source code changes
+
+```diff
+.../-0x6d65a44Bd6Cfe1a8b2E816c918Dd83a6b04c8DEe/implementation/meta.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+
+Generated with discovered.json: 0xdba7f7bc196b0f81281b8229bf0da9d0866fecac
+
+# Diff at Wed, 06 Mar 2024 10:05:16 GMT
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: main@1a2512004b35590384683b93c95d8ec95426d2a6 block: 115172250
+- current block number: 117060360
+
+## Description
+
+Added v2 contracts to libraryLookup
+
+## Watched changes
+
+```diff
+    contract Endpoint (0x3c2269811836af69497E5F486A85D7316753cf62) {
+    +++ description: None
+      values.latestVersion:
+-        2
++        4
+      values.libraryLookup[3]:
++        "0x6C9AE31DFB56699d6bD553146f653DCEC3b174Fe"
+      values.libraryLookup[2]:
++        "0x3823094993190Fbb3bFABfEC8365b8C18517566F"
+    }
+```
+
+```diff
+    contract VerifierNetwork (0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc) {
+    +++ description: None
+      values.defaultMultiplierBps:
+-        12000
++        12100
+    }
+```
+
 Generated with discovered.json: 0xa75a79550de63fd1635e490daf70f9cc484be310
 
 # Diff at Mon, 22 Jan 2024 17:08:21 GMT

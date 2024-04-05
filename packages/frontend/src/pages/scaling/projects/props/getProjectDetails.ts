@@ -1,5 +1,6 @@
 import { Layer2 } from '@l2beat/config'
 import {
+  ImplementationChangeReportApiResponse,
   ManuallyVerifiedContracts,
   VerificationStatus,
 } from '@l2beat/shared-pure'
@@ -7,8 +8,8 @@ import isEmpty from 'lodash/isEmpty'
 
 import { ChartProps } from '../../../../components'
 import { getContractSection } from '../../../../utils/project/getContractSection'
+import { getDiagramImage } from '../../../../utils/project/getDiagramImage'
 import { getPermissionsSection } from '../../../../utils/project/getPermissionsSection'
-import { getUpgradesAndGovernanceImage } from '../../../../utils/project/getUpgradesAndGovernanceImage'
 import {
   getProjectEditLink,
   getProjectIssueLink,
@@ -36,6 +37,7 @@ export function getProjectDetails(
   project: Layer2,
   verificationStatus: VerificationStatus,
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
+  implementationChange: ImplementationChangeReportApiResponse | undefined,
   chart: ChartProps,
 ) {
   const isUpcoming = project.isUpcoming
@@ -149,6 +151,7 @@ export function getProjectDetails(
         props: {
           id: 'state-validation',
           title: 'State validation',
+          image: getDiagramImage('state-validation', project.display.slug),
           stateValidation: project.stateValidation,
           isUnderReview: project.isUnderReview,
         },
@@ -174,7 +177,10 @@ export function getProjectDetails(
           id: 'upgrades-and-governance',
           title: 'Upgrades & Governance',
           content: project.upgradesAndGovernance,
-          image: getUpgradesAndGovernanceImage(project.display.slug),
+          image: getDiagramImage(
+            'upgrades-and-governance',
+            project.display.slug,
+          ),
           isUnderReview: project.isUnderReview,
         },
       })
@@ -197,6 +203,7 @@ export function getProjectDetails(
         project,
         verificationStatus,
         manuallyVerifiedContracts,
+        implementationChange,
       ),
     })
 

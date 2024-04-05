@@ -52,7 +52,9 @@ If you want to add a new Layer 2 project you can do that by opening a PR. To do 
    existing projects as reference.
 3. Add your project into `packages/config/src/layer2s/index.ts`. The order of the projects should be
    kept alphabetical.
-4. Add a square PNG project icon with a minimum size of 128x128 pixels into packages/frontend/src/static/icons. Run yarn tinify-logos afterwards to reduce its size.
+4. Add a square PNG project icon with a minimum size of 128x128 pixels into
+   packages/frontend/src/static/icons. From the `packages/frontend` directory
+   run `yarn tinify-logos` afterwards to reduce its size.
 5. If your project is a fork of an already existing project (like Boba Network that is on top of
    Optimism) or it was built using a Rollups SDK/framework (like ImmutableX that is on top of
    StarkEx) you can show this information by:
@@ -69,7 +71,11 @@ If you want to add a new Layer 2 project you can do that by opening a PR. To do 
        `packages/frontend/src/components/ScalingLegend.tsx`.
      - To finish, add the technology provider icon in the technology column of the project's table
        that is located at `packages/frontend/src/components/table/TechnologyCell.tsx`.
-6. Open a PR :D
+6. Make sure that things like linting, formatting and tests are all passing. To
+   check their status you can run `yarn lint:fix`, `yarn format:fix` or `yarn test`
+   respectively. We greatly encourage doing this before the last step as it
+   shortens the amount of time needed for your project to be added.
+7. Open a PR :D
 
 Adding a new project in this way will automatically update both the data fetching logic as well as
 the frontend.
@@ -85,13 +91,19 @@ If you want to add a new Layer 3 project you can do that by opening a PR. To do 
    Take `projectId` of host chian and add it to `hostChain` property.
 3. Add your project into `packages/config/src/layer3s/index.ts`. The order of the projects should be
    kept alphabetical.
-4. Add a square PNG project icon with a minimum size of 128x128 pixels into packages/frontend/src/static/icons. Run yarn tinify-logos afterwards to reduce its size.
+4. Add a square PNG project icon with a minimum size of 128x128 pixels into
+   packages/frontend/src/static/icons. From the `packages/frontend` directory
+   run `yarn tinify-logos` afterwards to reduce its size.
 5. If your project is a fork of an already existing project (like Boba Network that is on top of
    Optimism) or it was built using a Rollups SDK/framework (like ImmutableX that is on top of
    StarkEx) you can show this information by:
    - In your project's .ts file find the field `technology`, add a field `provider` (if it is not
      already) and set the technology provider your project is based on.
-6. Open a PR :D
+6. Make sure that things like linting, formatting and tests are all passing. To
+   check their status you can run `yarn lint:fix`, `yarn format:fix` or `yarn test`
+   respectively. We greatly encourage doing this before the last step as it
+   shortens the amount of time needed for your project to be added.
+7. Open a PR :D
 
 ### Add missing tokens
 
@@ -116,11 +128,12 @@ the data presented should be we also very much welcome PRs.
 
 The L2BEAT website repository is a monorepo consisting of many interdependent packages.
 
-1. `packages/shared` - utils and types used by the other packages
-2. `packages/config` - the shared configuration that defines what projects and tokens are tracked by
+1. `packages/shared-pure` - utils and types used by the other packages (does not depend on node APIs)
+2. `packages/shared` - utils and types used by the other packages
+3. `packages/config` - the shared configuration that defines what projects and tokens are tracked by
    the website
-3. `packages/backend` - a backend server that downloads balances from chain and exposes and API for
+4. `packages/backend` - a backend server that downloads balances from chain and exposes and API for
    the frontend
-4. `packages/frontend` - statically generated site which displays data fetched from the backend API
+5. `packages/frontend` - statically generated site which displays data fetched from the backend API
 
 To learn more about each of the projects read their respective README's.

@@ -18,7 +18,7 @@ export function RollupsOnlyCheckbox<T extends ScalingEntry>({
       className={className}
       role="chart-rollups-only"
       id="rollups-only-checkbox"
-      label="Show rollups only"
+      label="Rollups only"
       data-slugs-when-checked={generateSlugList(
         items,
         (i) => i.category === 'Optimistic Rollup' || i.category === 'ZK Rollup',

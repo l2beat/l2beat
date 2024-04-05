@@ -1,7 +1,7 @@
 {
   "name": "aevo",
   "chain": "ethereum",
-  "blockNumber": 19176638,
+  "blockNumber": 19531398,
   "configHash": "0x3de8bed5e5444eb5e03d2add993154b6fc5428e77bc45962e5f6e9013dc5f852",
   "version": 3,
   "contracts": [
@@ -18,7 +18,7 @@
       "sinceTimestamp": 1679193095,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292631227",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292635107",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -71,7 +71,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "3 of 5 (60%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1680797639,
@@ -86,7 +87,7 @@
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
         ],
         "getThreshold": 3,
-        "nonce": 11,
+        "nonce": 20,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -105,7 +106,7 @@
         "GUARDIAN": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "L2_ORACLE": "0x909E51211e959339EFb14b36f5A50955a8ae3770",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 694997, 19176475],
+        "params": [1000000000, 694997, 19531377],
         "paused": false,
         "SYSTEM_CONFIG": "0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca",
         "version": "1.7.2"
@@ -139,10 +140,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 3600,
         "L2_BLOCK_TIME": 10,
-        "latestBlockNumber": 2811600,
-        "latestOutputIndex": 4685,
-        "nextBlockNumber": 2812200,
-        "nextOutputIndex": 4686,
+        "latestBlockNumber": 3241800,
+        "latestOutputIndex": 5402,
+        "nextBlockNumber": 3242400,
+        "nextOutputIndex": 5403,
         "PROPOSER": "0x75ACb7ae6C76B3f5cA049431FE2c0797dD002b90",
         "startingBlockNumber": 0,
         "startingTimestamp": 1679193011,
@@ -166,7 +167,8 @@
         "gasLimit": 150000000,
         "minimumGasLimit": 21000000,
         "opStackDA": {
-          "isSomeTxsLengthEqualToCelestiaDAExample": true
+          "isSomeTxsLengthEqualToCelestiaDAExample": true,
+          "isSequencerSendingBlobTx": false
         },
         "overhead": 188,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",

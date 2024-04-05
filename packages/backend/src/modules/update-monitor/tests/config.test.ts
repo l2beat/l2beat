@@ -29,6 +29,7 @@ describe('discovery config.jsonc', () => {
       chainConfigs
         ?.flat()
         ?.filter((c) => !c.name.startsWith('l2beat-'))
+        ?.filter((c) => !c.name.startsWith('shared-'))
         ?.filter((c) => !projectIds.includes(c.name))
         .map((c) => c.name) ?? []
 
@@ -218,45 +219,51 @@ describe('discovery config.jsonc', () => {
     })
   })
 
-  describe('names', () => {
-    it('every name is unique', async () => {
-      for (const configs of chainConfigs ?? []) {
-        for (const c of configs) {
-          if (c.raw.names === undefined) {
-            continue
-          }
+  it('every name in config.jsonc is unique', async () => {
+    for (const configs of chainConfigs ?? []) {
+      for (const c of configs) {
+        if (c.raw.names === undefined) {
+          continue
+        }
 
+        assert(
+          new Set(Object.values(c.raw.names)).size ===
+            Object.values(c.raw.names).length,
+          `names field in ${c.name} configuration includes duplicate names`,
+        )
+      }
+    }
+  })
+
+  it('discovered.json hash matches the one stored in diffHistory.md', async () => {
+    for (const configs of chainConfigs ?? []) {
+      if (configs.length > 0) {
+        for (const c of configs) {
+          const diffHistoryPath = `./discovery/${c.name}/${c.chain}/diffHistory.md`
+          const currentHash = await getDiscoveryHash(c.name, c.chain)
+          const savedHash = getDiffHistoryHash(diffHistoryPath)
           assert(
-            new Set(Object.values(c.raw.names)).size ===
-              Object.values(c.raw.names).length,
-            `names field in ${c.name} configuration includes duplicate names`,
+            savedHash !== undefined,
+            `The diffHistory.md of ${c.chain}:${c.name} has to contain a hash of the discovered.json. Perhaps you generated the discovered.json without generating the diffHistory.md?`,
+          )
+          assert(
+            currentHash === savedHash,
+            `The hash for ${c.chain}:${
+              c.name
+            } of your local discovered.json (${currentHash.toString()}) does not match the hash stored in the diffHistory.md (${savedHash.toString()}). Perhaps you generated the discovered.json without generating the diffHistory.md?`,
           )
         }
       }
-    })
+    }
   })
 
-  describe('discovered.json hashes', () => {
-    it('hashes match', async () => {
-      for (const configs of chainConfigs ?? []) {
-        if (configs.length > 0) {
-          for (const c of configs) {
-            const diffHistoryPath = `./discovery/${c.name}/${c.chain}/diffHistory.md`
-            const currentHash = await getDiscoveryHash(c.name, c.chain)
-            const savedHash = getDiffHistoryHash(diffHistoryPath)
-            assert(
-              savedHash !== undefined,
-              `The diffHistory.md of ${c.chain}:${c.name} has to contain a hash of the discovered.json. Perhaps you generated the discovered.json without generating the diffHistory.md?`,
-            )
-            assert(
-              currentHash === savedHash,
-              `The hash for ${c.chain}:${
-                c.name
-              } of your local discovered.json (${currentHash.toString()}) does not match the hash stored in the diffHistory.md (${savedHash.toString()}). Perhaps you generated the discovered.json without generating the diffHistory.md?`,
-            )
-          }
-        }
+  it('meta.json is of correct schema', async () => {
+    for (const configs of chainConfigs ?? []) {
+      for (const c of configs) {
+        await expect(
+          async () => await configReader.readMeta(c.name, c.chain),
+        ).not.toBeRejected()
       }
-    })
+    }
   })
 })

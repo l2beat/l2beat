@@ -45,10 +45,10 @@ interface SocialDetails {
 
 export function parseSocial(href: string): SocialDetails {
   const link = formatLink(href)
-  if (link.startsWith('discord.gg')) {
+  if (link.startsWith('discord.gg') || link.startsWith('discord.com/invite/')) {
     return {
       platform: 'discord',
-      text: 'discord.gg',
+      text: 'Discord',
     }
   } else if (link.startsWith('twitter.com')) {
     return {

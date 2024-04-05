@@ -1,7 +1,7 @@
-import { upcoming } from './templates/upcoming'
+import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
-export const taiko: Layer2 = upcoming({
+export const taiko: Layer2 = upcomingL2({
   id: 'taiko',
   display: {
     name: 'Taiko',
@@ -14,7 +14,7 @@ export const taiko: Layer2 = upcoming({
       websites: ['https://taiko.xyz'],
       apps: ['https://bridge.test.taiko.xyz'],
       documentation: ['https://taiko.xyz/docs'],
-      explorers: ['https://jolnir.taikoscan.network/'],
+      explorers: ['https://katla.taikoscan.network/'],
       repositories: ['https://github.com/taikoxyz'],
       socialMedia: [
         'https://twitter.com/taikoxyz',

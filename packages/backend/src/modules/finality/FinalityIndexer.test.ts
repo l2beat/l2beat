@@ -1,9 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ChildIndexer } from '@l2beat/uif'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
-import { LivenessIndexer } from '../liveness/LivenessIndexer'
 import { BaseAnalyzer } from './analyzers/types/BaseAnalyzer'
 import { FinalityIndexer } from './FinalityIndexer'
 import {
@@ -16,133 +16,136 @@ const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2024-02-07T00:00:00Z'))
 
 describe(FinalityIndexer.name, () => {
   describe(FinalityIndexer.prototype.update.name, () => {
-    it('have all projects synced', async () => {
+    it('skips update if to is earlier than minTimestamp', async () => {
       const finalityRepository = mockObject<FinalityRepository>({
-        getProjectsSyncedOnTimestamp: mockFn().resolvesToOnce([
-          ProjectId('project-1'),
-        ]),
-        addMany: mockFn(),
+        add: mockFn(),
       })
-      const runtimeConfigurations = getMockFinalityRuntimeConfigurations([
-        undefined,
-      ])
 
       const finalityIndexer = getMockFinalityIndexer({
-        runtimeConfigurations,
         finalityRepository,
       })
+      const mockIsConfigurationSynced = mockFn()
+      finalityIndexer.isConfigurationSynced = mockIsConfigurationSynced
+
+      const from = MIN_TIMESTAMP.toNumber()
+      const to = MIN_TIMESTAMP.add(-1, 'days').toNumber()
+
+      // TODO: refactor tests after uif update
+      const result = await finalityIndexer.update(from + 1, to)
+      expect(result).toEqual(to)
+      expect(mockIsConfigurationSynced).not.toHaveBeenCalled()
+      expect(finalityRepository.add).not.toHaveBeenCalled()
+    })
+
+    it('skips update if the project is synced', async () => {
+      const finalityRepository = mockObject<FinalityRepository>({
+        add: mockFn(),
+      })
+
+      const finalityIndexer = getMockFinalityIndexer({
+        finalityRepository,
+      })
+      const mockIsConfigurationSynced = mockFn().resolvesToOnce(true)
+      finalityIndexer.isConfigurationSynced = mockIsConfigurationSynced
 
       const from = MIN_TIMESTAMP.toNumber()
       const to = MIN_TIMESTAMP.add(1, 'days').toNumber()
 
-      const result = await finalityIndexer.update(from, to)
-      expect(finalityRepository.addMany).not.toHaveBeenCalled()
+      // TODO: refactor tests after uif update
+      const result = await finalityIndexer.update(from + 1, to)
+      expect(mockIsConfigurationSynced).toHaveBeenCalledWith(
+        new UnixTime(to).toStartOf('day'),
+      )
+      expect(finalityRepository.add).not.toHaveBeenCalled()
       expect(result).toEqual(to)
     })
 
-    it('correctly syncs not synced projects', async () => {
+    it('skips adding to database if finalityData is undefined', async () => {
       const finalityRepository = mockObject<FinalityRepository>({
-        getProjectsSyncedOnTimestamp: mockFn().resolvesToOnce([
-          ProjectId('project-1'),
-        ]),
-        addMany: mockFn().resolvesToOnce(1),
+        add: mockFn(),
       })
-      const runtimeConfigurations = getMockFinalityRuntimeConfigurations([
-        undefined,
-        [2, 4],
-      ])
 
       const finalityIndexer = getMockFinalityIndexer({
-        runtimeConfigurations,
         finalityRepository,
       })
+      const mockIsConfigurationSynced = mockFn().resolvesToOnce(false)
+      finalityIndexer.isConfigurationSynced = mockIsConfigurationSynced
+      finalityIndexer.getFinalityData = mockFn().resolvesToOnce(undefined)
 
       const from = MIN_TIMESTAMP.toNumber()
       const to = MIN_TIMESTAMP.add(1, 'days').toNumber()
 
-      await finalityIndexer.update(from, to)
-      expect(finalityRepository.addMany).toHaveBeenNthCalledWith(1, [
-        {
-          projectId: ProjectId('project-2'),
-          timestamp: MIN_TIMESTAMP.add(1, 'days'),
-          averageTimeToInclusion: 3,
-          minimumTimeToInclusion: 2,
-          maximumTimeToInclusion: 4,
-        },
-      ])
+      // TODO: refactor tests after uif update
+      const result = await finalityIndexer.update(from + 1, to)
+      expect(finalityRepository.add).not.toHaveBeenCalled()
+      expect(result).toEqual(to)
     })
 
-    it('correctly syncs all projects on full day', async () => {
-      const project1Results = {
-        averageTimeToInclusion: 2,
-        minimumTimeToInclusion: 1,
-        maximumTimeToInclusion: 3,
-      }
-      const project2Results = {
-        averageTimeToInclusion: 4,
-        minimumTimeToInclusion: 1,
-        maximumTimeToInclusion: 7,
-      }
-
+    it('correctly syncs not synced project', async () => {
       const finalityRepository = mockObject<FinalityRepository>({
-        getProjectsSyncedOnTimestamp: mockFn().resolvesToOnce([]),
-        addMany: mockFn().resolvesToOnce(1),
+        add: mockFn().resolvesToOnce(1),
       })
-      const runtimeConfigurations = getMockFinalityRuntimeConfigurations([
-        [1, 2, 3],
-        [1, 7],
-      ])
-
+      const runtimeConfiguration = getMockFinalityRuntimeConfiguration([2, 4])
       const finalityIndexer = getMockFinalityIndexer({
-        runtimeConfigurations,
+        runtimeConfiguration,
         finalityRepository,
       })
+      finalityIndexer.isConfigurationSynced = mockFn().resolvesToOnce(false)
 
       const from = MIN_TIMESTAMP.toNumber()
       const to = MIN_TIMESTAMP.add(1, 'days').toNumber()
 
-      await finalityIndexer.update(from, to)
-      expect(finalityRepository.addMany).toHaveBeenNthCalledWith(1, [
-        {
-          projectId: ProjectId('project-1'),
-          timestamp: MIN_TIMESTAMP.add(1, 'days'),
-          ...project1Results,
-        },
-        {
-          projectId: ProjectId('project-2'),
-          timestamp: MIN_TIMESTAMP.add(1, 'days'),
-          ...project2Results,
-        },
-      ])
+      // TODO: refactor tests after uif update
+      await finalityIndexer.update(from + 1, to)
+      expect(finalityRepository.add).toHaveBeenCalledWith({
+        projectId: ProjectId('project'),
+        timestamp: MIN_TIMESTAMP.add(1, 'days'),
+        averageTimeToInclusion: 3,
+        minimumTimeToInclusion: 2,
+        maximumTimeToInclusion: 4,
+      })
     })
   })
 
-  describe(FinalityIndexer.prototype.getSyncStatus.name, () => {
-    it('correctly returns configurations to sync', async () => {
+  describe(FinalityIndexer.prototype.isConfigurationSynced.name, () => {
+    it('returns true if project is synced', async () => {
+      const syncedTimestamp = new UnixTime(41234123)
+
       const finalityRepository = mockObject<FinalityRepository>({
-        getProjectsSyncedOnTimestamp: mockFn().resolvesToOnce([
-          ProjectId('project-1'),
-          ProjectId('project-2'),
-        ]),
+        findLatestByProjectId: mockFn().resolvesToOnce({
+          projectId: ProjectId('project'),
+          timestamp: syncedTimestamp,
+        }),
       })
-      const runtimeConfigurations = getMockFinalityRuntimeConfigurations([
-        undefined,
-        undefined,
-        undefined,
-      ])
 
       const finalityIndexer = getMockFinalityIndexer({
         finalityRepository,
-        runtimeConfigurations,
       })
 
-      const results = await finalityIndexer.getSyncStatus(MIN_TIMESTAMP)
-      expect(results).toEqualUnsorted([
-        {
-          projectId: ProjectId('project-3'),
-          analyzer: runtimeConfigurations[2].analyzer,
-        },
-      ])
+      const result = await finalityIndexer.isConfigurationSynced(
+        syncedTimestamp,
+      )
+      expect(result).toEqual(true)
+    })
+
+    it('returns false if project is not synced', async () => {
+      const syncedTimestamp = new UnixTime(41234123)
+
+      const finalityRepository = mockObject<FinalityRepository>({
+        findLatestByProjectId: mockFn().resolvesToOnce({
+          projectId: ProjectId('project'),
+          timestamp: syncedTimestamp.add(-1, 'seconds'),
+        }),
+      })
+
+      const finalityIndexer = getMockFinalityIndexer({
+        finalityRepository,
+      })
+
+      const result = await finalityIndexer.isConfigurationSynced(
+        syncedTimestamp,
+      )
+      expect(result).toEqual(false)
     })
   })
 
@@ -153,63 +156,34 @@ describe(FinalityIndexer.name, () => {
         minimumTimeToInclusion: 1,
         maximumTimeToInclusion: 3,
       }
-      const project2Results = {
-        averageTimeToInclusion: 4,
-        minimumTimeToInclusion: 1,
-        maximumTimeToInclusion: 7,
+
+      const runtimeConfiguration = getMockFinalityRuntimeConfiguration([
+        1, 2, 3,
+      ])
+      const finalityIndexer = getMockFinalityIndexer({ runtimeConfiguration })
+
+      const result = await finalityIndexer.getFinalityData(
+        MIN_TIMESTAMP,
+        runtimeConfiguration,
+      )
+      const EXPECTED: FinalityRecord = {
+        projectId: ProjectId('project'),
+        timestamp: MIN_TIMESTAMP,
+        ...project1Results,
       }
 
-      const configurations = getMockFinalityRuntimeConfigurations([
-        [1, 2, 3],
-        [1, 7],
-      ])
-      const finalityIndexer = getMockFinalityIndexer({})
-
-      const results = await finalityIndexer.getFinalityData(
-        MIN_TIMESTAMP,
-        configurations,
-      )
-      const EXPECTED: FinalityRecord[] = [
-        {
-          projectId: ProjectId('project-1'),
-          timestamp: MIN_TIMESTAMP,
-          ...project1Results,
-        },
-        {
-          projectId: ProjectId('project-2'),
-          timestamp: MIN_TIMESTAMP,
-          ...project2Results,
-        },
-      ]
-      expect(results).toEqualUnsorted(EXPECTED)
+      expect(result).toEqual(EXPECTED)
     })
 
-    it('does not return project when undefined', async () => {
-      const project1Results = {
-        averageTimeToInclusion: 2,
-        minimumTimeToInclusion: 1,
-        maximumTimeToInclusion: 3,
-      }
-      const project2Results = undefined
+    it('returns undefined if no data for given project', async () => {
+      const runtimeConfiguration = getMockFinalityRuntimeConfiguration()
+      const finalityIndexer = getMockFinalityIndexer({ runtimeConfiguration })
 
-      const configurations = getMockFinalityRuntimeConfigurations([
-        [1, 3],
-        project2Results,
-      ])
-      const finalityIndexer = getMockFinalityIndexer({})
-
-      const results = await finalityIndexer.getFinalityData(
+      const result = await finalityIndexer.getFinalityData(
         MIN_TIMESTAMP,
-        configurations,
+        runtimeConfiguration,
       )
-      const EXPECTED: FinalityRecord[] = [
-        {
-          projectId: ProjectId('project-1'),
-          timestamp: MIN_TIMESTAMP,
-          ...project1Results,
-        },
-      ]
-      expect(results).toEqualUnsorted(EXPECTED)
+      expect(result).toEqual(undefined)
     })
   })
 
@@ -240,7 +214,6 @@ describe(FinalityIndexer.name, () => {
       })
       const finalityIndexer = getMockFinalityIndexer({
         stateRepository,
-        runtimeConfigurations: [],
       })
 
       await finalityIndexer.start()
@@ -298,7 +271,7 @@ describe(FinalityIndexer.name, () => {
       await finalityIndexer.setSafeHeight(safeHeight)
 
       expect(stateRepository.setSafeHeight).toHaveBeenOnlyCalledWith(
-        'finality_indexer',
+        'finality_indexer_project',
         safeHeight,
       )
     })
@@ -319,20 +292,20 @@ describe(FinalityIndexer.name, () => {
 function getMockFinalityIndexer(params: {
   stateRepository?: IndexerStateRepository
   finalityRepository?: FinalityRepository
-  runtimeConfigurations?: FinalityConfig[]
+  runtimeConfiguration?: FinalityConfig
 }) {
-  const { stateRepository, finalityRepository, runtimeConfigurations } = params
+  const { stateRepository, finalityRepository, runtimeConfiguration } = params
 
   return new FinalityIndexer(
     Logger.SILENT,
-    mockObject<LivenessIndexer>({
+    mockObject<ChildIndexer>({
       start: async () => {},
       tick: async () => 1,
       subscribe: () => {},
     }),
     stateRepository ?? mockObject<IndexerStateRepository>({}),
     finalityRepository ?? mockObject<FinalityRepository>({}),
-    runtimeConfigurations ?? [],
+    runtimeConfiguration ?? getMockFinalityRuntimeConfiguration(),
   )
 }
 
@@ -351,13 +324,14 @@ function getMockStateRepository(
   return stateRepository
 }
 
-function getMockFinalityRuntimeConfigurations(
-  results: (number[] | undefined)[],
-): FinalityConfig[] {
-  return results.map((r, i) => ({
-    projectId: ProjectId(`project-${i + 1}`),
+function getMockFinalityRuntimeConfiguration(
+  results?: number[],
+): FinalityConfig {
+  return {
+    projectId: ProjectId('project'),
     analyzer: mockObject<BaseAnalyzer>({
-      getFinalityWithGranularity: mockFn().resolvesTo(r),
+      getFinalityForInterval: mockFn().resolvesTo(results),
     }),
-  }))
+    minTimestamp: MIN_TIMESTAMP,
+  }
 }

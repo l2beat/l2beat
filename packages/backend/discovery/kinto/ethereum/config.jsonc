@@ -1,0 +1,147 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "chain": "ethereum",
+  "name": "kinto",
+  "initialAddresses": [
+    "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB", // Bridge
+    "0x0f1b7bd7762662B23486320AA91F30312184f70C" // Bridger
+  ],
+  "names": {
+    "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11": "RollupProxy",
+    "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB": "Bridge",
+    "0x6228e2FB8C561f1a5A963039Bc38Eb6D539A1A7F": "ChallengeManager",
+    "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a": "SequencerInbox",
+    "0x655761AD5FC251F414D6993A73184B0669F278c8": "Outbox",
+    "0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a": "UpgradeExecutor",
+    "0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d": "L1ERC20Gateway",
+    "0xa1c86E2362dba0525075622af6d5f739B1304D45": "L1CustomGateway",
+    "0x150286BdbE7C8Cd23D41a8e1e64438e0dc04dc3d": "L1WETHGateway",
+    "0x4811500e0d376Fa8d2EA3CCb7c61E0afB4F5A7f1": "OneStepProverMemory",
+    "0x89AF7C4C2198c426cFe6E86de0680A0850503e06": "OneStepProverMath",
+    "0x99a2A31300816C1FA3f40818AC9280fe7271F878": "OneStepProverHostIo",
+    "0xDf94F0474F205D086dbc2e66D69a856FCf520622": "OneStepProver0",
+    "0x74C717C01425eb475A5fC55d2A4a9045fC9800df": "ProxyAdmin",
+    "0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d": "ExecutorMultisig",
+    "0x0f1b7bd7762662B23486320AA91F30312184f70C": "Bridger",
+    "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82": "BridgerOwnerMultisig"
+  },
+  "overrides": {
+    "ChallengeManager": {
+      "ignoreMethods": ["challenges"]
+    },
+    "RollupProxy": {
+      "ignoreMethods": [
+        // Execution reverted
+        "proxiableUUID"
+      ],
+      "ignoreInWatchMode": [
+        "firstUnresolvedNode",
+        "latestConfirmed",
+        "latestNodeCreated"
+      ],
+      "fields": {
+        // when this changes, it means the validators have changed
+        "setValidatorCount": {
+          "type": "eventCount",
+          "topics": [
+            // event OwnerFunctionCalled(uint256 indexed id);
+            "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
+            // id == 6 is emitted inside setValidator()
+            "0x0000000000000000000000000000000000000000000000000000000000000006"
+          ]
+        },
+        "challenges": {
+          "type": "stateFromEvent",
+          "event": "RollupChallengeStarted",
+          "returnParams": [
+            "challengeIndex",
+            "asserter",
+            "challenger",
+            "challengedNode"
+          ]
+        },
+        "validators": {
+          "type": "arbitrumActors",
+          "actorType": "validator"
+        }
+      }
+    },
+    "Outbox": {
+      "ignoreMethods": ["spent", "isSpent"]
+    },
+    "Bridge": {
+      "ignoreMethods": ["sequencerInboxAccs", "delayedInboxAccs"],
+      "ignoreInWatchMode": [
+        "delayedMessageCount",
+        "sequencerMessageCount",
+        "sequencerReportedSubMessageCount"
+      ]
+    },
+    "Bridger": {
+      "ignoreRelatives": [
+        "DAI",
+        "ETH",
+        "exchangeProxy",
+        "l2Vault",
+        "sDAI",
+        "sUSDe",
+        "USDe",
+        "weETH",
+        "WETH",
+        "wstETH"
+      ],
+      "ignoreMethods": ["proxiableUUID", "depositCount", "domainSeparator"]
+    },
+    "SequencerInbox": {
+      "ignoreMethods": ["inboxAccs"],
+      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
+      "fields": {
+        // getting sequencers from the contract is too complex at the moment
+        // so we hardcode it in config .ts
+        // this field will notify us in case of changes
+        "IS_HARDCODED_SEQUENCER_BATCH_POSTER": {
+          "type": "call",
+          "method": "function isBatchPoster(address) external view returns (bool)",
+          "args": ["0x5eAD389b57d533A94a0eacd570Dc1CC59C25F2D4"]
+        },
+        "sequencerVersion": {
+          "type": "arbitrumSequencerVersion"
+        },
+        // when this changes, it means the sequencers have changed
+        "setIsBatchPosterCount": {
+          "type": "eventCount",
+          "topics": [
+            // event OwnerFunctionCalled(uint256 indexed id);
+            "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
+            // id == 6 is emitted inside setValidator()
+            "0x0000000000000000000000000000000000000000000000000000000000000001"
+          ]
+        },
+        "batchPosters": {
+          "type": "arbitrumActors",
+          "actorType": "batchPoster"
+        },
+        "keySetUpdates": {
+          "type": "eventCount",
+          "topics": [
+            // SetValidKeyset(bytes32,bytes)
+            "0xabca9b7986bc22ad0160eb0cb88ae75411eacfba4052af0b457a9335ef655722"
+          ]
+        }
+      }
+    },
+    "UpgradeExecutor": {
+      "fields": {
+        "accessControl": {
+          "type": "accessControl"
+        }
+      }
+    },
+    "L1WETHGateway": {
+      "ignoreMethods": ["l1Weth"]
+    },
+    "ExecutorMultisig": {
+      "ignoreMethods": ["nonce"]
+    }
+  }
+}

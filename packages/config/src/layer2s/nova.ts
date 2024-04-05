@@ -6,8 +6,8 @@ import {
 } from '@l2beat/shared-pure'
 
 import {
+  addSentimentToDataAvailability,
   CONTRACTS,
-  DATA_AVAILABILITY,
   EXITS,
   FORCE_TRANSACTIONS,
   makeBridgeCompatible,
@@ -15,6 +15,7 @@ import {
   NUGGETS,
   OPERATOR,
   RISK_VIEW,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { subtractOne } from '../common/assessCount'
 import { UPGRADE_MECHANISM } from '../common/upgradeMechanism'
@@ -50,10 +51,11 @@ const nOfChallengers = discovery.getContractValue<string[]>(
   'validators',
 ).length
 
-const DAC = discovery.getContractValue<Record<number, number>>(
-  'SequencerInbox',
-  'dacKeyset',
-)
+const DAC = discovery.getContractValue<{
+  membersCount: number
+  requiredSignatures: number
+}>('SequencerInbox', 'dacKeyset')
+const { membersCount, requiredSignatures } = DAC
 
 export const nova: Layer2 = {
   type: 'layer2',
@@ -63,9 +65,10 @@ export const nova: Layer2 = {
     slug: 'nova',
     description:
       'Arbitrum Nova is an AnyTrust Optimium, differing from Arbitrum One by not posting transaction data onchain.',
+    warning:
+      'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
     purposes: ['Universal'],
     category: 'Optimium',
-    dataAvailabilityMode: 'NotApplicable',
     provider: 'Arbitrum',
     links: {
       websites: [
@@ -123,9 +126,21 @@ export const nova: Layer2 = {
       startBlock: 1,
     },
   },
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['DAC', 'Ethereum (calldata)'],
+    bridge: {
+      type: 'DAC Members',
+      membersCount,
+      requiredSignatures,
+    },
+    mode: 'Transactions data (compressed)',
+  }),
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(nOfChallengers),
-    dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC(DAC),
+    dataAvailability: RISK_VIEW.DATA_EXTERNAL_DAC({
+      membersCount,
+      requiredSignatures,
+    }),
     exitWindow: {
       ...RISK_VIEW.EXIT_WINDOW(l2TimelockDelay, selfSequencingDelay, 0),
       sentiment: 'bad',
@@ -145,7 +160,7 @@ export const nova: Layer2 = {
         l1TimelockDelay,
       )} L1 timelock.`,
       warning: {
-        text: 'The Security Council can upgrade with no delay.',
+        value: 'The Security Council can upgrade with no delay.',
         sentiment: 'bad',
       },
     },
@@ -179,7 +194,10 @@ export const nova: Layer2 = {
         },
       ],
     },
-    dataAvailability: DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN(DAC),
+    dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.ANYTRUST_OFF_CHAIN({
+      membersCount,
+      requiredSignatures,
+    }),
     operator: {
       ...OPERATOR.CENTRALIZED_SEQUENCER,
       references: [
@@ -230,28 +248,30 @@ export const nova: Layer2 = {
         ],
       },
     ],
-    smartContracts: {
-      name: 'EVM compatible smart contracts are supported',
-      description:
-        'Arbitrum Nova uses Nitro technology that allows running fraud proofs by executing EVM code on top of WASM.',
-      risks: [
-        {
-          category: 'Funds can be lost if',
-          text: 'there are mistakes in the highly complex Nitro and WASM one-step prover implementation.',
-        },
-      ],
-      references: [
-        {
-          text: 'Arbitrum Nitro Sneak Preview',
-          href: 'https://medium.com/offchainlabs/arbitrum-nitro-sneak-preview-44550d9054f5',
-        },
-      ],
-    },
-    upgradeMechanism: UPGRADE_MECHANISM.ARBITRUM_DAO(
-      l1TimelockDelay,
-      challengeWindow * assumedBlockTime,
-      l2TimelockDelay,
-    ),
+    otherConsiderations: [
+      {
+        name: 'EVM compatible smart contracts are supported',
+        description:
+          'Arbitrum Nova uses Nitro technology that allows running fraud proofs by executing EVM code on top of WASM.',
+        risks: [
+          {
+            category: 'Funds can be lost if',
+            text: 'there are mistakes in the highly complex Nitro and WASM one-step prover implementation.',
+          },
+        ],
+        references: [
+          {
+            text: 'Arbitrum Nitro Sneak Preview',
+            href: 'https://medium.com/offchainlabs/arbitrum-nitro-sneak-preview-44550d9054f5',
+          },
+        ],
+      },
+      UPGRADE_MECHANISM.ARBITRUM_DAO(
+        l1TimelockDelay,
+        challengeWindow * assumedBlockTime,
+        l2TimelockDelay,
+      ),
+    ],
   },
   contracts: {
     addresses: [
@@ -278,6 +298,10 @@ export const nova: Layer2 = {
       discovery.getContractDetails(
         'SequencerInbox',
         'Main entry point for the Sequencer submitting transaction batches to a Rollup.',
+      ),
+      discovery.getContractDetails(
+        'BatchPosterManagerMultisig',
+        'It can update whether an address is authorized to be a batch poster at the sequencer inbox. The UpgradeExecutor retains the ability to update the batch poster manager (along with any batch posters).',
       ),
       discovery.getContractDetails(
         'Inbox',

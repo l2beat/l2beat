@@ -2,9 +2,11 @@ import {
   ManuallyVerifiedContracts,
   VerificationStatus,
 } from '@l2beat/shared-pure'
+import partition from 'lodash/partition'
 import React from 'react'
 
 import { ContractEntry, TechnologyContract } from './ContractEntry'
+import { ContractsUpdated } from './ContractsUpdated'
 import { ProjectDetailsSection } from './ProjectDetailsSection'
 import { ReferenceList, TechnologyReference } from './ReferenceList'
 import { RiskList, TechnologyRisk } from './RiskList'
@@ -36,6 +38,18 @@ export function ContractsSection(props: ContractsSectionProps) {
     return null
   }
 
+  const [changedContracts, unchangedContracts] = partition(
+    props.contracts,
+    (c) => c.implementationHasChanged,
+  )
+  const [changedEscrows, unchangedEscrows] = partition(
+    props.escrows,
+    (c) => c.implementationHasChanged,
+  )
+  const hasContractsImplementationChanged = props.contracts.some(
+    (c) => c.implementationHasChanged,
+  )
+
   return (
     <ProjectDetailsSection
       title={props.title}
@@ -44,6 +58,7 @@ export function ContractsSection(props: ContractsSectionProps) {
       isUnderReview={props.isUnderReview}
       includeChildrenIfUnderReview
     >
+      {hasContractsImplementationChanged && <ContractsUpdated />}
       {props.isIncomplete && <TechnologyIncompleteShort />}
       {props.architectureImage && (
         <figure className="mb-8 mt-4 text-center">
@@ -63,7 +78,7 @@ export function ContractsSection(props: ContractsSectionProps) {
             The system consists of the following smart contracts:
           </h3>
           <div className="my-4">
-            {props.contracts.map((contract, i) => (
+            {unchangedContracts.map((contract, i) => (
               <React.Fragment key={i}>
                 <ContractEntry
                   contract={contract}
@@ -73,6 +88,13 @@ export function ContractsSection(props: ContractsSectionProps) {
                 />
               </React.Fragment>
             ))}
+            {changedContracts.length > 0 && (
+              <ImplementationHasChangedContracts
+                contracts={changedContracts}
+                manuallyVerifiedContracts={props.manuallyVerifiedContracts}
+                verificationStatus={props.verificationStatus}
+              />
+            )}
           </div>
         </>
       )}
@@ -84,7 +106,7 @@ export function ContractsSection(props: ContractsSectionProps) {
             tokens:
           </h3>
           <div className="my-4">
-            {props.escrows.map((contract, i) => (
+            {unchangedEscrows.map((contract, i) => (
               <React.Fragment key={i}>
                 <ContractEntry
                   contract={contract}
@@ -94,6 +116,13 @@ export function ContractsSection(props: ContractsSectionProps) {
                 />
               </React.Fragment>
             ))}
+            {changedEscrows.length > 0 && (
+              <ImplementationHasChangedContracts
+                contracts={changedEscrows}
+                manuallyVerifiedContracts={props.manuallyVerifiedContracts}
+                verificationStatus={props.verificationStatus}
+              />
+            )}
           </div>
         </>
       )}
@@ -107,5 +136,30 @@ export function ContractsSection(props: ContractsSectionProps) {
       )}
       <ReferenceList references={props.references} />
     </ProjectDetailsSection>
+  )
+}
+
+function ImplementationHasChangedContracts(props: {
+  contracts: TechnologyContract[]
+  verificationStatus: VerificationStatus
+  manuallyVerifiedContracts: ManuallyVerifiedContracts
+}) {
+  return (
+    <div className="rounded-lg border border-dashed border-yellow-200 px-4 py-3">
+      <div className="flex w-full items-center rounded bg-yellow-700/20 p-4">
+        There are implementation changes and part of the information might be
+        outdated.
+      </div>
+      {props.contracts.map((contract, i) => (
+        <React.Fragment key={i}>
+          <ContractEntry
+            contract={contract}
+            verificationStatus={props.verificationStatus}
+            manuallyVerifiedContracts={props.manuallyVerifiedContracts}
+            className="my-4 p-0"
+          />
+        </React.Fragment>
+      ))}
+    </div>
   )
 }

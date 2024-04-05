@@ -1,14 +1,30 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { CONTRACTS } from '../common'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
+
+const discovery = new ProjectDiscovery('ronin')
+
+const operatorsCount = discovery.getPermissionedAccounts(
+  'MainchainBridgeManager',
+  'getBridgeOperators',
+).length
+
+const thresholdArray = discovery.getContractValue<number[]>(
+  'MainchainGateway',
+  'getThreshold',
+)
+const thresholdPerc = thresholdArray[0]
+
+const operatorsString = `${thresholdPerc}% out of ${operatorsCount}`
 
 export const ronin: Bridge = {
   type: 'bridge',
   id: ProjectId('ronin'),
   display: {
-    name: 'Ronin V2',
+    name: 'Ronin V3',
     slug: 'ronin',
     links: {
       websites: ['https://bridge.roninchain.com/'],
@@ -26,7 +42,7 @@ export const ronin: Bridge = {
       // repositories: ['https://github.com/axieinfinity/ronin-smart-contracts-v2']
     },
     description:
-      'Ronin Bridge V2 is the official bridge for the Axie Infinity chain (Ronin chain). It uses external validators to confirm deposits for a typical Token Bridge swap.',
+      'Ronin Bridge V3 is the official bridge for the Axie Infinity chain (Ronin chain). It uses external validators to confirm deposits for a typical Token Bridge swap.',
     category: 'Token Bridge',
   },
   config: {
@@ -47,12 +63,12 @@ export const ronin: Bridge = {
   riskView: {
     validatedBy: {
       value: 'Third Party',
-      description: '2/3 MultiSig',
+      description: `${operatorsString} operators.`,
       sentiment: 'bad',
     },
     sourceUpgradeability: {
       value: 'Yes',
-      description: 'Gateway Proxy can be upgraded by a 2/3 MultiSig.',
+      description: `Gateway Proxy can be upgraded by ${operatorsString} operators.`,
       sentiment: 'bad',
     },
     destinationToken: {
@@ -123,105 +139,75 @@ export const ronin: Bridge = {
     // TODO: we need all contracts (check roles on escrows) and a diagram
     addresses: [
       {
-        address: EthereumAddress('0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08'),
-        name: 'Bridge V2 (Escrow & Mainchain Gateway)',
-        description: 'Upgradeable Bridge V2 contract (MainchainGatewayV2).',
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: EthereumAddress('0x661E14A43173191d65951fbf7285749F416cbC8C'),
-          implementation: EthereumAddress(
-            '0x71356E37e0368Bd10bFDbF41dC052fE5FA24cD05',
-          ),
-        },
+        ...discovery.getContractDetails(
+          'MainchainGateway',
+          `Bridge V3 contract handling deposits and withdrawals.`,
+        ),
+        upgradableBy: ['MainchainBridgeManager Governors'],
+        upgradeDelay: 'No delay',
       },
-      {
-        address: EthereumAddress('0x9EcbB8dBfF5D32643fe308B399ceF26d384875BA'),
-        name: 'RoninValidator',
-        description: 'Upgradeable Ronin Validator contract.',
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: EthereumAddress('0x661E14A43173191d65951fbf7285749F416cbC8C'),
-          implementation: EthereumAddress(
-            '0xd5c2FB313f9536558C2f3bd6cf698E6295b3C3B1',
-          ),
-        },
-      },
-      {
-        address: EthereumAddress('0x661E14A43173191d65951fbf7285749F416cbC8C'),
-        name: 'GovernanceAdmin',
-        description: 'Admin of Bridge and Validator Upgradeable Proxies.',
-      },
+      discovery.getContractDetails(
+        'MainchainBridgeManager',
+        `Contract storing all operators, governors and their associated weights. It is used to manage all administrative actions of the bridge.`,
+      ),
+      discovery.getContractDetails(
+        'PauseEnforcer',
+        `Contract allowing PAUSER to pause the bridge.`,
+      ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
     {
+      name: 'MainchainBridgeManager Operators',
+      accounts: discovery.getPermissionedAccounts(
+        'MainchainBridgeManager',
+        'getBridgeOperators',
+      ),
+      description: `List of operators that can validate incoming messages. Transfer needs to be signed by ${operatorsString} Operators.`,
+    },
+    {
+      name: 'MainchainBridgeManager Governors',
+      accounts: discovery.getPermissionedAccounts(
+        'MainchainBridgeManager',
+        'getGovernors',
+      ),
+      description: `List of governors that can update their corresponding operators, upgrade and change bridge parameters.`,
+    },
+    {
+      name: 'Ronin Bridge AdminMultiSig', // non-standard MultiSig
       accounts: [
         {
-          address: EthereumAddress(
-            '0x2DA02aC5f19Ae362a4121718d990e655eB628D96',
-          ),
+          address: discovery.getContract('RoninBridgeAdminMultiSig').address,
           type: 'MultiSig',
         },
       ],
-      name: 'GovernanceAdmin admin role 2/3 MultiSig',
       description:
-        'Can propose upgrades to Bridge and RoninValidator contracts and invoke admin functions.',
+        'Admin of the Ronin Bridge, can change Sentry Account and accounts able to unlock withdrawals. This is a non-standard MultiSig with 2 / 3 threshold.',
     },
     {
-      accounts: [
-        {
-          address: EthereumAddress(
-            '0xE5EB222996967BE79468C28bA39D665fd96E8b30',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x6bfC8F9096446d350713C4eB9d9b68866F87a9d0',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xaD99Fc4d593bAe582c2Ca83aCD98Ae6fcDb36192',
-          ),
-          type: 'EOA',
-        },
-      ],
-      name: 'GovernanceAdmin MultiSig Participants',
-      description: 'Participants of the GovernanceAdmin 2/3 MultiSig.',
+      name: 'Ronin Bridge AdminMultiSig participants', // non-standard MultiSig owners
+      accounts: discovery.getPermissionedAccounts(
+        'RoninBridgeAdminMultiSig',
+        'getOwners',
+      ),
+
+      description: 'Those are the participants of the AdminMultisig.',
     },
     {
+      name: 'MainchainGatewayV3 Sentry Account',
       accounts: [
-        {
-          address: EthereumAddress(
-            '0x58a8DcFdeF9BB5E164382562317C13D6F2A706F4',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xE5EB222996967BE79468C28bA39D665fd96E8b30',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0x6bfC8F9096446d350713C4eB9d9b68866F87a9d0',
-          ),
-          type: 'EOA',
-        },
-        {
-          address: EthereumAddress(
-            '0xaD99Fc4d593bAe582c2Ca83aCD98Ae6fcDb36192',
-          ),
-          type: 'EOA',
-        },
+        discovery.getPermissionedAccount('MainchainGateway', 'emergencyPauser'),
       ],
-      name: 'Withdrawal Unlockers',
-      description:
-        'Addresses able to unlock withdrawals that cross tier limits.',
+      description: 'An address that can pause the bridge in case of emergency.',
+    },
+    {
+      name: 'MainchainGatewayV3 Withdrawal Unlockers',
+      accounts: discovery.getAccessControlRolePermission(
+        'MainchainGateway',
+        'WITHDRAWAL_UNLOCKER_ROLE',
+      ),
+      description: 'Addresses that can unlock withdrawals.',
     },
   ],
 }

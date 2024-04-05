@@ -1,3 +1,160 @@
+Generated with discovered.json: 0xd49f30c71097a5953ae88f8abe9e0ea7f194126d
+
+# Diff at Tue, 02 Apr 2024 08:35:50 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@f62e2b01d51472dd8c710b0599031b7ba1a58f0d block: 19532859
+- current block number: 19566961
+
+## Description
+
+The gas limit for the Base L2 is changed (33% raise). Current block time is 2s, elasticity is 10x.
+Context: Plans to raise the gas limit gradually.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: None
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        45000000
++        60000000
+    }
+```
+
+Generated with discovered.json: 0xd85496fdcfa0bcf16ce3b442613d6c777e3cfb01
+
+# Diff at Thu, 28 Mar 2024 13:19:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@d6dd20a306b268b851f83df5487b048c1253bb51 block: 19531207
+- current block number: 19532859
+
+## Description
+
+Update discovery to include the multisig threshold.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531207 (main branch discovery), not current.
+
+```diff
+    contract GuardianMultisig (0x14536667Cd30e52C0b458BaACcB9faDA7046E056) {
+    +++ description: None
+      upgradeability.threshold:
++        "3 of 8 (38%)"
+    }
+```
+
+```diff
+    contract AdminMultisig (0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 2 (100%)"
+    }
+```
+
+```diff
+    contract BaseMultisig (0x9855054731540A48b28990B63DcF4f33d8AE46A1) {
+    +++ description: None
+      upgradeability.threshold:
++        "3 of 6 (50%)"
+    }
+```
+
+```diff
+    contract OptimismMultisig (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      upgradeability.threshold:
++        "5 of 7 (71%)"
+    }
+```
+
+Generated with discovered.json: 0x7a4a21435359044819e1c7ad6454f2e0f5311bf1
+
+# Diff at Thu, 28 Mar 2024 07:45:55 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@5dfb8d5d243e41677914078b08f80de1889c6556 block: 19439852
+- current block number: 19531207
+
+## Description
+
+The gas limit for the Base L2 is changed (50% raise). Current block time is 2s, elasticity is 10x.
+Context: Congestion on base, plans to raise the gas limit gradually.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: None
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        30000000
++        45000000
+    }
+```
+
+Generated with discovered.json: 0xc4322ab5b04954fb99593b31607ae478be311b36
+
+# Diff at Thu, 14 Mar 2024 00:20:47 GMT:
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: main@e9ab5d808868ba1ecef1f4a9acee050bd71c3c54 block: 19411971
+- current block number: 19429655
+
+## Description
+
+Base uses blobs now.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: None
+      values.opStackDA.isSequencerSendingBlobTx:
+-        false
++        true
+      values.overhead:
+-        188
++        0
+      values.scalar:
+-        684000
++        "452312848583266388373324160190187140051835877600158453279134021569375896653"
+    }
+```
+
+Generated with discovered.json: 0x344f98dfb9a45ff46b90d16771333c22eec6f0c0
+
+# Diff at Mon, 11 Mar 2024 12:52:00 GMT:
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: main@64454506aee2b4b4e15b121f096369e92ec4cf20 block: 19176777
+- current block number: 19411971
+
+## Description
+
+Update OP stack DA handler
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19176777 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: None
+      values.opStackDA.isSequencerSendingBlobTx:
++        false
+    }
+```
+
 Generated with discovered.json: 0x38be013948f7ef1753cbf9d4a57c31e079275867
 
 # Diff at Wed, 07 Feb 2024 14:02:18 GMT:

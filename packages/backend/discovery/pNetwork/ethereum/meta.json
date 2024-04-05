@@ -1,0 +1,849 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "ACL",
+      "values": {
+        "ANY_ENTITY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "BURN_ENTITY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "CREATE_PERMISSIONS_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EMPTY_PARAM_HASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "NO_PERMISSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "appId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getEVMScriptRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getInitializationBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRecoveryVault": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasInitialized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isDepositable": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isPetrified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "kernel": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ERC20 Vault V1",
+      "values": {
+        "PNETWORK": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ERC20 Vault V2",
+      "values": {
+        "ETHPNT_TOKEN_ADDRESS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ORIGIN_CHAIN_ID": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PNETWORK": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PNT_TOKEN_ADDRESS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "EVMScriptRegistry",
+      "values": {
+        "REGISTRY_ADD_EXECUTOR_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REGISTRY_MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "appId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getEVMScriptRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getInitializationBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRecoveryVault": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasInitialized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isDepositable": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isPetrified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "kernel": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "EthPntv2",
+      "values": {
+        "DOMAIN_SEPARATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PNT_INIT_TOTAL_SUPPLY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RATE_DIVISOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "currentMonthNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "currentMonthWithdrawnAmount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "currentYearNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "currentYearWithdrawnAmount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "inflationOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isWhitelistingEnabled": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxWithdrawableAmounts": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "monthlyRateCap": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "monthlyWithdrawableLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "yearlyRateCap": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "yearlyWithdrawableLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Kernel",
+      "values": {
+        "APP_ADDR_NAMESPACE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "APP_BASES_NAMESPACE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "APP_MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "CORE_NAMESPACE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ACL_APP_ID": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "KERNEL_APP_ID": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "acl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getInitializationBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRecoveryVault": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasInitialized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isDepositable": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isPetrified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "recoveryVaultAppId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "MiniMeToken",
+      "values": {
+        "controller": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "creationBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "parentSnapShotBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "parentToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "tokenFactory": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "transfersEnabled": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "MiniMeTokenFactory",
+      "values": {}
+    },
+    {
+      "name": "PNT",
+      "values": {
+        "adminOperator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultOperators": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getHubAddr": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getInflation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "granularity": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "gsnExtraGas": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "gsnFeeTarget": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "gsnTrustedSigner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "inflationAmounts": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "inflationOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "inflationStartTime": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "inflationTimeSpans": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "inflationWithdrawnAmount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "relayHubVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "PProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "RelayHub",
+      "values": {
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "TokenManager",
+      "values": {
+        "ASSIGN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "BURN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ISSUE_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_VESTINGS_PER_ADDRESS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MINT_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REVOKE_VESTINGS_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "appId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getEVMScriptRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getInitializationBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRecoveryVault": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasInitialized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isDepositable": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isForwarder": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isPetrified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "kernel": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxAccountTokens": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "UOS Vault",
+      "values": {
+        "PNETWORK": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "pNetwork Multisig",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "pNetworkDAOVoting",
+      "values": {
+        "CREATE_VOTES_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MODIFY_BUFFER_BLOCKS_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MODIFY_EXECUTION_DELAY_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MODIFY_MIN_OPEN_VOTE_AMOUNT_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MODIFY_QUORUM_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MODIFY_SUPPORT_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PCT_BASE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "appId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "bufferBlocks": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "canExecute": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "durationBlocks": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "executionDelayBlocks": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getEVMScriptRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getInitializationBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRecoveryVault": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getVote": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasInitialized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isDepositable": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isForwarder": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isPetrified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "kernel": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minAcceptQuorumPct": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minOpenVoteAmount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "supportRequiredPct": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "votesLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}

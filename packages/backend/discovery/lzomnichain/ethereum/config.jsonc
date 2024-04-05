@@ -1,5 +1,5 @@
 {
-  "$schema": "../../config.schema.json",
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
   "chain": "ethereum",
   "name": "lzomnichain",
   "initialAddresses": [
@@ -39,6 +39,14 @@
       "ignoreInWatchMode": ["nonce"]
     },
     "UltraLightNodeV2": {
+      "ignoreInWatchMode": [
+        "chainAddressSizeMap",
+        "defaultAppConfig",
+        "defaultAdapterParams",
+        "inboundProofLibrary",
+        "supportedOutboundProof",
+        "ulnLookup"
+      ],
       "fields": {
         "chainAddressSizeMap": {
           "type": "stateFromEvent",

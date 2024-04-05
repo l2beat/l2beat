@@ -31,17 +31,28 @@ export function getChainDiscoveryConfig(
   const ENV_NAME = chain.toUpperCase()
 
   return {
-    chain: chainConfig.name,
-    rpcUrl: env.string(`DISCOVERY_${ENV_NAME}_RPC_URL`),
-    rpcGetLogsMaxRange: env.optionalInteger(
-      `DISCOVERY_${ENV_NAME}_RPC_GETLOGS_MAX_RANGE`,
-    ),
+    name: chainConfig.name,
+    rpcUrl: env.string([
+      `${ENV_NAME}_RPC_URL_FOR_DISCOVERY`,
+      `${ENV_NAME}_RPC_URL`,
+    ]),
+    rpcGetLogsMaxRange: env.optionalInteger([
+      `${ENV_NAME}_RPC_GETLOGS_MAX_RANGE_FOR_DISCOVERY`,
+      `${ENV_NAME}_RPC_GETLOGS_MAX_RANGE`,
+    ]),
+    enableCache: env.optionalBoolean([
+      `${ENV_NAME}_DISCOVERY_CACHE_ENABLED`,
+      'DISCOVERY_CACHE_ENABLED',
+    ]),
     multicall: getMulticall3Config(
       multicallV3.sinceBlock,
       multicallV3.address,
       multicallV3.batchSize,
     ),
-    etherscanApiKey: env.string(`DISCOVERY_${ENV_NAME}_ETHERSCAN_API_KEY`),
+    etherscanApiKey: env.string([
+      `${ENV_NAME}_ETHERSCAN_API_KEY_FOR_DISCOVERY`,
+      `${ENV_NAME}_ETHERSCAN_API_KEY`,
+    ]),
     etherscanUrl: chainConfig.explorerApi.url,
     etherscanUnsupported: chainConfig.explorerApi.missingFeatures,
   }

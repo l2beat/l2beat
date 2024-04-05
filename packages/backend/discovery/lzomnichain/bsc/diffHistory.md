@@ -1,3 +1,143 @@
+Generated with discovered.json: 0xc32c308a2a7a987b4838d093eec28799aa0ef43d
+
+# Diff at Thu, 28 Mar 2024 12:03:36 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@21187e63b9b90823a55c461c331868a470ce17eb block: 37334769
+- current block number: 37363085
+
+## Description
+
+Update discovery to include the multisig threshold.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 37334769 (main branch discovery), not current.
+
+```diff
+    contract LayerZero Multisig (0x8D452629c5FfCDDE407069da48c096e1F8beF22c) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 6 (33%)"
+    }
+```
+
+Generated with discovered.json: 0x0134498f1b3f721c8991a776286b33b07e30bbcc
+
+# Diff at Wed, 27 Mar 2024 12:07:22 GMT
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@d53834b65ee1cdf52eb5d460179c975873642177 block: 36963441
+- current block number: 37334769
+
+## Description
+
+RelayerV2 got verified.
+Ignored stargate and related pools from being discovered.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 36963441 (main branch discovery), not current.
+
+```diff
+    contract  (0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182) {
+    +++ description: None
+      name:
+-        ""
++        "RelayerV2"
+      unverified:
+-        true
+      values:
++        {"AIRDROP_GAS_LIMIT":10000,"fpBytes":160,"mptOverhead":500,"multiplierBps":12000,"owner":"0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327","paused":false,"priceFeed":"0x7A50b180265eb5347Ce7b92224F0B0Cd6cE0493b","stargateBridgeAddr":"0x6694340fc020c5E6B96567843da2df01b2CE1eb6","stargateBridgeAddress":"0x0000000000000000000000000000000000000000","stargateComposer":"0xeCc19E177d24551aA7ed6Bc6FE566eCa726CC8a9","uln":"0x4D73AdB72bC3DD368966edD0f0b2148401A178E2","validateProofBytes":164}
+    }
+```
+
+```diff
+    contract  (0xde19274c009A22921E3966a1Ec868cEba40A5DaC) {
+    +++ description: None
+      name:
+-        ""
++        "RelayerV2Radar"
+      unverified:
+-        true
+      values:
++        {"owner":"0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327","paused":false,"relayerV2":"0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182","stargateBridgeAddress":"0x0000000000000000000000000000000000000000","uln":"0xF487E8D03CDa77Ce9a66B35220D6cBB95d4C2877"}
+    }
+```
+
+Generated with discovered.json: 0xe669a6ddb3ce1b73e2a5e475a0aa9b5fe0c2175c
+
+# Diff at Thu, 14 Mar 2024 13:54:24 GMT
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@3ffa91064379f34a2916a1ad4e93791b752e7e9e block: 36728945
+- current block number: 36963441
+
+## Description
+
+New PriceFeed Oracle implementation has been deployed. Nothing that would affect protocol security has been changed.
+
+## Watched changes
+
+```diff
+    contract  (0x7A50b180265eb5347Ce7b92224F0B0Cd6cE0493b) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x23768Cfd95B699d9B772ce042e490F9deA5ae6d6"
++        "0xa79dE9B3409361Cd3367856b5Fa9BC258C1f9F0F"
+      implementations.0:
+-        "0x23768Cfd95B699d9B772ce042e490F9deA5ae6d6"
++        "0xa79dE9B3409361Cd3367856b5Fa9BC258C1f9F0F"
+    }
+```
+
+## Source code changes
+
+```diff
+.../-0x7A50b180265eb5347Ce7b92224F0B0Cd6cE0493b/implementation/meta.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+
+Generated with discovered.json: 0xf1deebe4e4f496f539ecac2f289a0b5400b6652f
+
+# Diff at Wed, 06 Mar 2024 10:04:33 GMT
+
+- author: Michał Sobieraj-Jakubiec (<michalsidzej@gmail.com>)
+- comparing to: main@1a2512004b35590384683b93c95d8ec95426d2a6 block: 35473523
+- current block number: 36728945
+
+## Description
+
+Added v2 contracts to libraryLookup
+
+## Watched changes
+
+```diff
+    contract Endpoint (0x3c2269811836af69497E5F486A85D7316753cf62) {
+    +++ description: None
+      values.latestVersion:
+-        3
++        5
+      values.libraryLookup[4]:
++        "0xff3da3a1cd39Bbaeb8D7cB2deB83EfC065CBb38F"
+      values.libraryLookup[3]:
++        "0xfCCE712C9be5A78FE5f842008e0ed7af59455278"
+    }
+```
+
+```diff
+    contract VerifierNetwork (0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc) {
+    +++ description: None
+      values.defaultMultiplierBps:
+-        12000
++        12100
+    }
+```
+
 Generated with discovered.json: 0xd9b13b3cd935828899e6cd44c8a21037f7f2bca2
 
 # Diff at Mon, 22 Jan 2024 17:50:53 GMT

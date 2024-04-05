@@ -1,0 +1,73 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "chain": "ethereum",
+  "name": "astarzkevm",
+  "initialAddresses": ["0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"],
+  "names": {
+    "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2": "PolygonRollupManager",
+    "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe": "Bridge",
+    "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80": "AstarValidiumEtrog",
+    "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8": "AstarVerifier",
+    "0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0": "AstarValidiumDAC",
+    "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E": "AdminMultisig",
+    "0x519E42c24163192Dca44CD3fBDCEBF6be9130987": "PolygonZkEVMEtrog",
+    "0x0775e11309d75aA6b0967917fB0213C5673eDf81": "PolygonZkEVMVerifier",
+    "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6": "POL"
+  },
+  "overrides": {
+    "PolygonRollupManager": {
+      "ignoreMethods": [
+        "checkStateRootInsidePrime",
+        "pendingStateTransitions",
+        "batchFee",
+        "calculateRewardPerBatch",
+        "getForcedBatchFee",
+        "getLastVerifiedBatch",
+        "lastBatchSequenced",
+        "lastForceBatch",
+        "lastForceBatchSequenced",
+        "lastPendingState",
+        "lastPendingStateConsolidated",
+        "lastTimestamp",
+        "lastVerifiedBatch",
+        "multiplierBatchFee",
+        "getRollupExitRoot",
+        "lastAggregationTimestamp",
+        "totalSequencedBatches",
+        "totalVerifiedBatches"
+      ],
+      "fields": {
+        "rollupsData": {
+          "type": "array",
+          "method": "rollupIDToRollupData",
+          "startIndex": 1,
+          "filter": ["rollupContract", "verifier"],
+          "length": "{{ rollupCount }}"
+        },
+        "rollupTypes": {
+          "type": "array",
+          "method": "rollupTypeMap",
+          "startIndex": 1,
+          "length": "{{ rollupTypeCount }}",
+          "filter": ["consensusImplementation", "verifier"],
+          "ignoreRelative": true
+        }
+      }
+    },
+    "Bridge": { "ignoreDiscovery": true },
+    "AstarValidiumDAC": {
+      "fields": {
+        "members": {
+          "type": "array",
+          "method": "members",
+          "maxLength": 50
+        }
+      }
+    },
+    "AstarValidiumEtrog": {
+      "ignoreInWatchMode": ["lastAccInputHash"]
+    },
+    "PolygonZkEVMEtrog": { "ignoreDiscovery": true },
+    "PolygonZkEVMVerifier": { "ignoreDiscovery": true }
+  }
+}

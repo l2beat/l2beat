@@ -1,5 +1,5 @@
 {
-  "$schema": "../../config.schema.json",
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
   "chain": "ethereum",
   "name": "linea",
   "initialAddresses": [
@@ -24,7 +24,8 @@
       "ignoreInWatchMode": [
         "currentPeriodAmountInWei",
         "currentL2StoredL1MessageNumber",
-        "currentL2StoredL1RollingHash"
+        "currentL2StoredL1RollingHash",
+        "currentFinalizedShnarf"
       ],
       "ignoreMethods": [
         "stateRootHashes",

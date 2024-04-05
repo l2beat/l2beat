@@ -1,5 +1,5 @@
 {
-  "$schema": "../../config.schema.json",
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
   "chain": "ethereum",
   "name": "degate3",
   "initialAddresses": ["0x54D7aE423Edb07282645e740C046B9373970a168"],

@@ -1,0 +1,435 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "AAVEInterestERC20",
+      "values": {
+        "aaveReceiver": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getModuleInterfacesVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "incentivesController": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lendingPool": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mediator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minAavePaid": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stkAAVEToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "BridgeGovernance",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "BridgeValidators",
+      "values": {
+        "F_ADDR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "deployedAtBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getBridgeValidatorsInterfacesVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isInitialized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "requiredSignatures": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "upgradeabilityOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "validatorCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "validatorList": {
+          "description": "Array of the signers in the validator multisig",
+          "severity": "MEDIUM",
+          "type": "PERMISSION"
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ForeignAMB",
+      "values": {
+        "allowReentrantRequests": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimalShift": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "deployedAtBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "destinationChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "gasPrice": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getBridgeInterfacesVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getBridgeMode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isInitialized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxGasPerTx": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messageId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messageSender": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messageSourceChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "requiredBlockConfirmations": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "requiredSignatures": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sourceChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "transactionHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "upgradeabilityOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "validatorContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "MultiTokenMediator",
+      "values": {
+        "bridgeContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getBridgeInterfacesVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getBridgeMode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isInitialized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mediatorContractOnOtherSide": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "requestGasLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "tokenFactory": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "upgradeabilityOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "PermittableToken",
+      "values": {
+        "DOMAIN_SEPARATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PERMIT_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PERMIT_TYPEHASH_LEGACY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "bridgeContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTokenInterfacesVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mintingFinished": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "TokenFactory",
+      "values": {
+        "getModuleInterfacesVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "tokenImage": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}
