@@ -54,7 +54,8 @@ function getMockL2CostsApiResponse(): L2CostsApiResponse {
     'scroll',
     'polygonzkevm',
   ].reduce<Record<string, L2CostsProjectApiCharts>>((acc, cur) => {
-    acc[cur] = generateMockCharts()
+    const withoutBlobs = cur === 'polygonzkevm' || cur === 'linea'
+    acc[cur] = generateMockCharts(withoutBlobs)
     return acc
   }, {})
 
@@ -95,12 +96,12 @@ const getDataPoint = (
   timestamp: UnixTime,
   withoutBlobs?: boolean,
 ): L2CostsApiChartPoint => {
-  const calldataMultiplier = Math.random()
+  const calldataMultiplier = Math.random() * 3
   const blobsMultiplier = Math.random()
-  const computeMultiplier = Math.random()
-  const overheadMultiplier = Math.random()
+  const computeMultiplier = Math.random() * 2
+  const overheadMultiplier = Math.random() * 0.5
 
-  const base = Math.random() * 10
+  const base = 7 + Math.random() * 3
   const usdMultiplier = base * 3500
   const gasMultiplier = (base + Math.random() * base) * 100000
 
@@ -146,9 +147,9 @@ const getDataPoint = (
     computeGas,
     computeEth,
     computeUsd,
-    blobsGas,
-    blobsEth,
-    blobsUsd,
+    withoutBlobs ? null : blobsGas,
+    withoutBlobs ? null : blobsEth,
+    withoutBlobs ? null : blobsUsd,
   ] as const
 }
 
