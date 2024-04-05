@@ -7,17 +7,16 @@
 
 ## **TL;DR**
 
-* Although the below contains parts of the official and ratified governance process, it is not in and of itself the officially recognized process for submitting a proposal to the Arbitrum DAO. Instead, it’s a compilation of knowledge and experience from existing participants that could be seen as ‘tips and tricks’ to submitting your proposal.
-* You don’t necessarily have to follow every step word-for-word. Each individual and/or group as well as their proposal is unique and might need fewer or more steps based on the overall context.
-* Making sure you’re an active part of Arbitrum DAO by participating in the forums, chats, and/or community calls before submitting a proposal can help you get off on the right foot with the community.
-* Before submitting a proposal, seek to collect feedback in private from delegates.
-* When publishing your proposal, make sure to adhere to the suggested format. Anticipate what questions delegates might ask and ensure you have adequate information for them not to.
-* Be concise when explaining your proposal, but don’t overlook crucial information.
-* If you do not have the necessary voting power to create a Snapshot or Tally vote, you can ask a delegate who does to create it on your behalf.
-* The entire AIP voting process typically takes 37 days to complete for Constitutional AIPs or 27 days for Non-Constitutional AIPs
-* If your proposal fails, you can always iterate based on delegate feedback and resubmit.
-* This guide was published in April 2024 and is up-to-date until that time. The process might change as things evolve. We’ll come back and update the post as needed.
-
+- Although the below contains parts of the official and ratified governance process, it is not in and of itself the officially recognized process for submitting a proposal to the Arbitrum DAO. Instead, it’s a compilation of knowledge and experience from existing participants that could be seen as ‘tips and tricks’ to submitting your proposal.
+- You don’t necessarily have to follow every step word-for-word. Each individual and/or group as well as their proposal is unique and might need fewer or more steps based on the overall context.
+- Making sure you’re an active part of Arbitrum DAO by participating in the forums, chats, and/or community calls before submitting a proposal can help you get off on the right foot with the community.
+- Before submitting a proposal, seek to collect feedback in private from delegates.
+- When publishing your proposal, make sure to adhere to the suggested format. Anticipate what questions delegates might ask and ensure you have adequate information for them not to.
+- Be concise when explaining your proposal, but don’t overlook crucial information.
+- If you do not have the necessary voting power to create a Snapshot or Tally vote, you can ask a delegate who does to create it on your behalf.
+- The entire AIP voting process typically takes 37 days to complete for Constitutional AIPs or 27 days for Non-Constitutional AIPs
+- If your proposal fails, you can always iterate based on delegate feedback and resubmit.
+- This guide was published in April 2024 and is up-to-date until that time. The process might change as things evolve. We’ll come back and update the post as needed.
 
 ## **Considerations**
 
@@ -27,25 +26,20 @@ If you have solid reasons to believe that the value created from your proposal j
 
 Oftentimes, it might be hard to assess your proposal in the context of the DAO. A good approach is to see whether there have been any similar proposals to the DAO in the past, or if there have been any similar proposals to other DAOs. Having a reference point can help put things into perspective both for you and also for the delegates when they are reviewing.
 
-
 ## **Frameworks vs Direct-to-DAO**
 
 Once you’ve assessed your proposal, it’s time to see if it fits into any of the frameworks that already exist. As is the case with most DAOs, Arbitrum has frameworks in place to facilitate governance proposals. The 2 main categories of proposals are **constitutional** and **non-constitutional** Arbitrum Improvement Proposals, or AIPs.
 
-
-
-* **Constitutional AIPs** are those that modify the text or procedures of the[ Constitution](https://docs.arbitrum.foundation/dao-constitution) or AIP-1, install or modify the software on any chain, or take any action that requires "chain owner" permission on any chain.
-* **Non-constitutional AIPs** are all other AIPs, such as those that request funds/grants or provide general guidelines or information to the community.
+- **Constitutional AIPs** are those that modify the text or procedures of the[ Constitution](https://docs.arbitrum.foundation/dao-constitution) or AIP-1, install or modify the software on any chain, or take any action that requires "chain owner" permission on any chain.
+- **Non-constitutional AIPs** are all other AIPs, such as those that request funds/grants or provide general guidelines or information to the community.
 
 If you’re reading this guide before proposing, chances are your proposal falls into the second category - and that’s where we’ll focus in this guide.
 
 Two easy questions to help you narrow down even further on how you’ll approach the DAO with your proposal are:
 
-
-
 1. Am I requesting a grant for something I’m building on Arbitrum?
 2. Is this something that would require a framework, or is it a one-off thing?
-    1. As a follow-up: if it does require a framework, does one already exist?
+   1. As a follow-up: if it does require a framework, does one already exist?
 
 **Requesting Grants**
 
@@ -61,16 +55,13 @@ If you’re a service provider, you should contact the[ Arbitrum DAO Procurement
 
 If a framework doesn’t exist for what you’re seeking to propose, then you should either discuss with delegates and see whether one is being worked on or, if you’re feeling brave, start working on one yourself.
 
-
 ## **Pre-RFC**
 
 Before going to the forums and publishing your proposal as a ‘Request for Comment (RFC)’, you should first make sure that you’ve somehow established yourself in the Arbitrum DAO community. Ways to do that include:
 
-
-
-* Having been active in the governance forums
-* Having attended open governance calls
-* Having talked with delegates online or in person
+- Having been active in the governance forums
+- Having attended open governance calls
+- Having talked with delegates online or in person
 
 If you haven’t done any of the above, you might need to either have someone who’s already in the DAO introduce you to the right people or have a strong and credible out-of-the-DAO presence and reputation.
 
@@ -80,24 +71,17 @@ Ideally, you want to share your proposal with a few delegates before you even pu
 
 While getting in direct touch with delegates might seem daunting at first, if you get a hold of one and ask them to connect you with others, the thread of contacts will start untangling pretty quickly.
 
-
 ## **RFC**
 
 First and foremost, you need to format your proposal in a way that is familiar to the DAO and easy to navigate. There’s a proposal template in the[ DAO’s governance docs here](https://docs.arbitrum.foundation/how-tos/create-submit-dao-proposal). Drafting an easy-to-understand yet solid proposal is more art than science. Below we’ve compiled some advice that will save you the time and effort of going back and forth with delegates and other community members that review your proposal.
-
-
 
 1. I**nclude a TL;DR at the top.**
 
 The point of having a TL;DR of the proposal at the very top, similar to the one found at the start of this post, is so people can quickly get an overview and a refresh of the essence of the proposal without having to read through endless text. It doesn’t need to cover all the minor details, but it should include all the important ones.
 
-
-
 2. **Avoid using “sales” language.**
 
 We’re excited that you want to build “the first in the world” or the “best-in-class” whatever, but the DAO is not a customer. The feedback you will receive will be based on the merit of the proposal rather than that of the pitch. If anything, you’re tiring both yourself and the delegates by adding unnecessary fluff. Be concise and to the point and it will be much better received.
-
-
 
 3. **Get specific and don’t let things hanging**
 
@@ -105,22 +89,19 @@ While you want to avoid unnecessary fluff language, you do not want to be brief 
 
 A non-exhaustive list of things that have been typically discussed in the past are:
 
-
-
-* The total amount requested. You can denominate in either USD or ARB, but the funds you’ll receive will most likely be in ARB so keep that in mind.
-* The timeline of your proposal
-* A breakdown of how the money is going to be spent
-* How will the funds be managed - will it be a multisig? If yes, who are going to be the signers?
-* Will it be converted into stables or used as ARB?
-* Is there going to be a milestone-based funding? If yes, what will the milestones be and how much money is it going to be unlocked at each?
-* If there have to be some sort of elections relevant to your proposal, how will they be carried out? Who will manage the process?
-* If there are smart contracts associated with your proposal, who is going to create them and audit them?
-* If your proposal is meant to be a pilot or trial, what happens when it concludes? 
+- The total amount requested. You can denominate in either USD or ARB, but the funds you’ll receive will most likely be in ARB so keep that in mind.
+- The timeline of your proposal
+- A breakdown of how the money is going to be spent
+- How will the funds be managed - will it be a multisig? If yes, who are going to be the signers?
+- Will it be converted into stables or used as ARB?
+- Is there going to be a milestone-based funding? If yes, what will the milestones be and how much money is it going to be unlocked at each?
+- If there have to be some sort of elections relevant to your proposal, how will they be carried out? Who will manage the process?
+- If there are smart contracts associated with your proposal, who is going to create them and audit them?
+- If your proposal is meant to be a pilot or trial, what happens when it concludes?
 
 4. **Contact info**
 
 Feedback on your proposal will typically be given publicly under your forum post. However, you might want to give delegates a way to reach you in case they want to discuss your proposal in more detail. Telegram is most delegates’ app of choice, but any line of communication is welcome.
-
 
 ## **Temperature Check on Snapshot**
 
@@ -144,7 +125,6 @@ There’s a bi-weekly call hosted by the Arbitrum Foundation where proposals are
 
 Doing a temperature check on Snapshot is an optional, but strongly recommended step in the governance process. If an AIP fails this temperature check, the original AIP author is encouraged to refrain from proceeding with an on-chain vote, and voters are encouraged to reject it if the author proceeds anyway. If an AIP proposer decides to skip temp-check, voters consider it as a factor when casting their vote.
 
-
 ## **Formal Vote on Tally**
 
 After the temperature check, and given it was successful, the next step is to proceed with the on-chain vote on Tally. As with Snapshot, a Tally vote can only be initiated by $ARB token holders who hold (or represent) at least 0.01% of the votable supply. The Tally vote would run for 14 days and to be approved, more than 50% of the votable tokens that voted on the proposal must have voted in favor of the proposal; constitutional proposals must receive votes from at least 5% of all votable tokens in existence; non-constitutional proposal must receive votes from at least 3% of all votable tokens in existence.
@@ -158,7 +138,6 @@ The on-chain vote is executed permissionlessly after the vote concludes. For exa
 **Post-vote implementation**
 
 Keep in mind that if your proposal is successful, it won’t be executed for another 14 days after the on-chain vote has concluded. This waiting period is because of the L2 waiting period, the L2-to-L1 message, and the L1 waiting period. You can learn more about the lifecycle of a the proposal and the different waiting periods[ here](https://docs.arbitrum.foundation/concepts/lifecycle-anatomy-aip-proposal).
-
 
 ## **Resubmitting a proposal**
 

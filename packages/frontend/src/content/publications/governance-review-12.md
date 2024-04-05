@@ -15,21 +15,17 @@ We were not aware of any significant governance-related news in Optimism over th
 
 You can find us to discuss all things Optimism during our [Optimism Office Hours](meet.google.com/pem-jzrh-gkq) every Tuesday at 3 pm UTC.
 
-
 ## **Arbitrum**
-
 
 ### **On Chain Vote - Request for Continuation of the Arbitrum DDA Program Request**
 
-[This proposal](https://forum.arbitrum.foundation/t/questbook-dda-program-phase-2-request-for-continuation/21326) seeks to start a new program for the Arbitrum Grants via DDA through Questbook with a budget of $4,000,000 spread across 4 domains over the next two quarters. 
+[This proposal](https://forum.arbitrum.foundation/t/questbook-dda-program-phase-2-request-for-continuation/21326) seeks to start a new program for the Arbitrum Grants via DDA through Questbook with a budget of $4,000,000 spread across 4 domains over the next two quarters.
 
 The [Tally vote](https://www.tally.xyz/gov/arbitrum/proposal/98446466630612736687159241204141593794174501692677162686607521796118942563659) ends on April 20 2024 at 5:57 pm UTC
-
 
 ### **[RFC] Activate Stylus and Enable Next-Gen WebAssembly Smart Contracts**
 
 The Arbitrum Foundation [submitted an RFC](https://forum.arbitrum.foundation/t/aip-activate-stylus-and-enable-next-gen-webassembly-smart-contracts/22970) that outlines a path toward activating Stylus on Arbitrum One and Arbitrum Nova. Stylus is an upgrade that introduces a new virtual machine that runs alongside the EVM which enables developers to write smart contracts in new programming languages, like Rust, that are more efficient than Solidity smart contracts.
-
 
 ### **[RFC] Request to match my donation to bootstrap Curve Lending on Arbitrum**
 
@@ -37,16 +33,13 @@ Michael Egorov, founder of Curve, [submitted an RFC](https://forum.arbitrum.foun
 
 It’s important to note that Curve DAO got 3,476,795 ARB from the initial distribution and is currently using these funds to incentivize some pools.
 
-
 ### **[RFC] Subsidy Fund for Security Services**
 
 Bernard [submitted an RFC](https://forum.arbitrum.foundation/t/non-constitutional-subsidy-fund-for-security-services/22958/1) on behalf of the Arbitrum DAO Procurement Committee (ADPC) that proposes to set up a subsidy fund, seeking $10 million worth of ARB to be administered and selected by the ADPC. These subsidies will be exclusive to a pre-approved whitelisted set of security audit service providers, selected by the ADPC, who will publicly display their fees.
 
-
 ### **[RFC] Defending Open Source: A United Stand for Developer Rights and Software Freedom**
 
 ImmutableLawyer [submitted an RFC](https://forum.arbitrum.foundation/t/proposal-non-constitutional-defending-open-source-a-united-stand-for-developer-rights-and-software-freedom/23047/1) that proposes a monetary contribution between 1.5M to 2.5M ARB to Coin Center from the ArbitrumDAO to continue their policy, litigation & advocacy efforts in relation to open-source software & software developers’ rights.
-
 
 ### **[RFC] Funding DAO Legal Defence and Advocacy with Defi Education Fund**
 
@@ -54,16 +47,13 @@ GFXLabs [submitted an RFC](https://forum.arbitrum.foundation/t/proposal-non-cons
 
 The post itself contains a lot of information on DEF and a summary of its past efforts.
 
-
 ### **[RFC] Introducing AREA GrantsDAO**
 
 Lumen from Powerhouse [submitted an RFC](https://forum.arbitrum.foundation/t/non-constitutional-introducing-area-grantsdao/23022) that describes a potential GrantsDAO, AREA, focused on supporting the development of an open-source software ecosystem on Arbiturm. AREA aims to fund projects that facilitate businesses to operate on-chain. The RFC outlines the structure of the GrantsDAO but it’s not a proposal in and of itself as it doesn’t request approval or funds from the DAO – that will come in a separate proposal according to the post.
 
-
 ### **[RFC] Idea for a Direct User Rewards Program**
 
 AJC [submitted an RFC](https://forum.arbitrum.foundation/t/idea-for-a-direct-user-rewards-program/22939) that seeks to discuss the initiation of a simple rewards program that directly airdrops ARB tokens to users. The goal is to create a long-lasting program that continuously rewards both new and old Arbitrum users. This proposal is currently still in ideation, so the exact details of how this will look are TBD.
-
 
 ### **[RFC] L3 Orbit Ecosystem Fund**
 
@@ -71,12 +61,9 @@ Cryptobyrde [submitted an RFC](https://forum.arbitrum.foundation/t/l3-orbit-ecos
 
 The Ecosystem Fund would use the funds to:
 
-
-
-* Provide liquidity for ARB-(project token) on Arbitrum L2 linearly to Bridged TVL 
-* Provide liquidity mining for ARB-(project token) on Arbitrum L2 linearly to Bridged TVL
-* Buy the project token on Arbitrum L2 linearly to L3 chain activity
-
+- Provide liquidity for ARB-(project token) on Arbitrum L2 linearly to Bridged TVL
+- Provide liquidity mining for ARB-(project token) on Arbitrum L2 linearly to Bridged TVL
+- Buy the project token on Arbitrum L2 linearly to L3 chain activity
 
 ### **Delegate Incentive Program Results (MARCH 2024)**
 
@@ -90,16 +77,13 @@ There are several proposals being discussed at the same time and we'd love to le
 
 You can find us to discuss all of the above and more during our [Arbitrum Office Hours](meet.google.com/jkj-nnop-arc) every Thursday at 3 pm UTC.
 
-
 ## **Uniswap**
-
 
 ### **Temp Check - Onboard Uniswap to Sei**
 
 The [proposal to deploy Uniswap on Sei](https://gov.uniswap.org/t/deploy-uniswap-v3-on-sei/23471) was optimistically approved after the 7-day RFC period and there is now a vote to determine the size of the UNI onboarding package for the deployment, if any.
 
 The [Snapshot vote](https://snapshot.org/#/uniswapgovernance.eth/proposal/0xe7274e00eb2a084cdc3b7510a8b40aa303ac2d7944e9706ad090c974c76e71bf) ends on April 8 2024 at 8:09 pm UTC
-
 
 ### **[RFC] Gasless Voting for Uniswap DAO on Tally**
 
@@ -115,7 +99,6 @@ Voting on mainet can be expensive which acts as a deterrent for governance parti
 
 You can find us to discuss the above and more during our [Uniswap Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
 
-
 ## **Hop**
 
 **Discuss with L2BEAT**
@@ -125,7 +108,6 @@ We were not aware of any significant governance-related news in Hop over the las
 **When/where to catch us:**
 
 You can find us to discuss all things Hop during our [Hop Office Hours](http://meet.google.com/twm-jafw-esn) every Friday at 3 pm UTC.
-
 
 ## **Polygon**
 
@@ -137,7 +119,6 @@ We were not aware of any significant governance-related news in Polygon over the
 
 You can find us to discuss all things Polygon during our [Polygon Office Hours](meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
 
-
 ## **Starknet**
 
 **Discuss with L2BEAT**
@@ -147,7 +128,6 @@ We were not aware of any significant governance-related news in Starknet over th
 **When/where to catch us:**
 
 You can find us to discuss all things Starknet during our [Starknet Office Hours](http://meet.google.com/avz-chuc-ksa) every Friday at 3 pm UTC.
-
 
 ## **Connext**
 
