@@ -1,5 +1,4 @@
 import { Logger } from '@l2beat/backend-tools'
-import { SavedConfiguration } from '@l2beat/uif'
 
 import {
   BaseRepository,
@@ -31,12 +30,11 @@ export class IndexerConfigurationRepository extends BaseRepository {
   }
 
   async addManySavedConfigurations(
-    configurations: SavedConfiguration<string>[],
-    indexerId: string,
+    configurations: IndexerConfigurationRecord[],
   ) {
     const knex = await this.knex()
 
-    const rows = configurations.map((record) => toRow(indexerId, record))
+    const rows = configurations.map((record) => toRow(record))
     await knex.batchInsert('indexer_configurations', rows, 5_000)
 
     return rows.length
@@ -44,7 +42,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
 
   async getSavedConfigurations(
     indexerId: string,
-  ): Promise<SavedConfiguration<string>[]> {
+  ): Promise<IndexerConfigurationRecord[]> {
     const knex = await this.knex()
 
     const rows = await knex('indexer_configurations').where(
@@ -95,13 +93,10 @@ export class IndexerConfigurationRepository extends BaseRepository {
   // #endregion
 }
 
-function toRow(
-  indexer_id: string,
-  record: SavedConfiguration<string>,
-): IndexerConfigurationRow {
+function toRow(record: IndexerConfigurationRecord): IndexerConfigurationRow {
   return {
     id: record.id,
-    indexer_id,
+    indexer_id: record.indexerId,
     properties: record.properties,
     current_height: record.currentHeight,
     min_height: record.minHeight,

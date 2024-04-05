@@ -21,6 +21,17 @@ export class IndexerStateRepository extends BaseRepository {
     this.autoWrap<CheckConvention<IndexerStateRepository>>(this)
   }
 
+  async add(
+    record: IndexerStateRecord,
+    trx?: Knex.Transaction,
+  ): Promise<string> {
+    const knex = await this.knex(trx)
+
+    await knex('indexer_state').insert(toRow(record))
+
+    return `[${record.indexerId}]: ${record.safeHeight}`
+  }
+
   async findIndexerState(
     indexerId: string,
   ): Promise<IndexerStateRecord | undefined> {
@@ -45,16 +56,7 @@ export class IndexerStateRepository extends BaseRepository {
       .update({ safe_height: safeHeight })
   }
 
-  async add(
-    record: IndexerStateRecord,
-    trx?: Knex.Transaction,
-  ): Promise<string> {
-    const knex = await this.knex(trx)
-
-    await knex('indexer_state').insert(toRow(record))
-
-    return `[${record.indexerId}]: ${record.safeHeight}`
-  }
+  // #region methods used only in tests
 
   async getAll(): Promise<IndexerStateRecord[]> {
     const knex = await this.knex()
@@ -66,6 +68,8 @@ export class IndexerStateRepository extends BaseRepository {
     const knex = await this.knex()
     return knex('indexer_state').delete()
   }
+
+  // #endregion
 }
 
 function toRecord(row: IndexerStateRow): IndexerStateRecord {
