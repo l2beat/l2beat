@@ -30,18 +30,6 @@ export class IndexerConfigurationRepository extends BaseRepository {
     this.autoWrap<CheckConvention<IndexerConfigurationRepository>>(this)
   }
 
-  async getSavedConfigurations(
-    indexerId: string,
-  ): Promise<SavedConfiguration<string>[]> {
-    const knex = await this.knex()
-
-    const rows = await knex('indexer_configurations').where(
-      'indexer_id',
-      indexerId,
-    )
-    return rows.map(toRecord)
-  }
-
   async addManySavedConfigurations(
     configurations: SavedConfiguration<string>[],
     indexerId: string,
@@ -54,16 +42,16 @@ export class IndexerConfigurationRepository extends BaseRepository {
     return rows.length
   }
 
-  async deleteSavedConfigurations(
+  async getSavedConfigurations(
     indexerId: string,
-    configurationIds: string[],
-  ) {
+  ): Promise<SavedConfiguration<string>[]> {
     const knex = await this.knex()
 
-    return knex('indexer_configurations')
-      .where('indexer_id', indexerId)
-      .whereIn('id', configurationIds)
-      .delete()
+    const rows = await knex('indexer_configurations').where(
+      'indexer_id',
+      indexerId,
+    )
+    return rows.map(toRecord)
   }
 
   async updateSavedConfigurations(
@@ -77,6 +65,18 @@ export class IndexerConfigurationRepository extends BaseRepository {
       .where('indexer_id', indexerId)
       .whereIn('id', configurationIds)
       .update({ current_height: currentHeight })
+  }
+
+  async deleteSavedConfigurations(
+    indexerId: string,
+    configurationIds: string[],
+  ) {
+    const knex = await this.knex()
+
+    return knex('indexer_configurations')
+      .where('indexer_id', indexerId)
+      .whereIn('id', configurationIds)
+      .delete()
   }
 
   // #region methods used only in tests
@@ -102,7 +102,7 @@ function toRow(
   return {
     id: record.id,
     indexer_id,
-    properties: JSON.stringify(record.properties),
+    properties: record.properties,
     current_height: record.currentHeight,
     min_height: record.minHeight,
     max_height: record.maxHeight,

@@ -21,7 +21,7 @@ export async function up(knex: Knex) {
     table.integer('max_height').nullable()
 
     table.string('indexer_id').notNullable()
-    table.jsonb('properties').notNullable()
+    table.string('properties').notNullable()
     // We do not create composite primary key because we want DB to enforce uniqueness
     // IDs will be generated in the runtime, so in case of collision the DB constraint will throw
     table.primary(['id'])
