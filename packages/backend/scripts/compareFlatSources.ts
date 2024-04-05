@@ -230,8 +230,8 @@ async function compareTwoProjects(config: Config): Promise<void> {
   assert(config.firstProjectName, 'project1 is required')
   assert(config.secondProjectName, 'project2 is required')
 
-  const firstProject = await readProject(config.firstProjectName)
-  const secondProject = await readProject(config.secondProjectName)
+  const firstProject = await readProject(config.firstProjectName, 'ethereum')
+  const secondProject = await readProject(config.secondProjectName, 'ethereum')
   assert(firstProject, `Project ${config.firstProjectName} not found`)
   assert(secondProject, `Project ${config.secondProjectName} not found`)
 
