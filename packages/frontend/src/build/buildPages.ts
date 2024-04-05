@@ -26,10 +26,10 @@ import {
   getManuallyVerifiedContracts,
   getVerificationStatus,
 } from './api/getVerificationStatus'
+import { activitySanityCheck,tvlSanityCheck } from './api/sanityCheck'
 import { JsonHttpClient } from './caching/JsonHttpClient'
 import { getConfig } from './config'
 import { getCommonFeatures } from './config/getCommonFeatures'
-import { tvlSanityCheck, activitySanityCheck } from './api/sanityCheck'
 
 /**
  * Temporary timeout for HTTP calls due to increased size of new TVL API and flaky connection times
