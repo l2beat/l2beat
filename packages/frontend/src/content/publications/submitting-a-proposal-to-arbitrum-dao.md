@@ -75,7 +75,7 @@ While getting in direct touch with delegates might seem daunting at first, if yo
 
 First and foremost, you need to format your proposal in a way that is familiar to the DAO and easy to navigate. There’s a proposal template in the[ DAO’s governance docs here](https://docs.arbitrum.foundation/how-tos/create-submit-dao-proposal). Drafting an easy-to-understand yet solid proposal is more art than science. Below we’ve compiled some advice that will save you the time and effort of going back and forth with delegates and other community members that review your proposal.
 
-1. I**nclude a TL;DR at the top.**
+1. **Include a TL;DR at the top.**
 
 The point of having a TL;DR of the proposal at the very top, similar to the one found at the start of this post, is so people can quickly get an overview and a refresh of the essence of the proposal without having to read through endless text. It doesn’t need to cover all the minor details, but it should include all the important ones.
 
