@@ -26,7 +26,11 @@ export function getProps(
   return {
     props: {
       navbar: getNavbarProps(config, 'bridges'),
-      projectHeader: getProjectHeader(bridge, tvlApiResponse),
+      projectHeader: getProjectHeader(
+        bridge,
+        tvlApiResponse,
+        implementationChange,
+      ),
       projectDetails: getProjectDetails(
         bridge,
         verificationStatus,

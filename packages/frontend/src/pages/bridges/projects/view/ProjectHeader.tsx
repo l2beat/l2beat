@@ -17,6 +17,7 @@ export interface ProjectHeaderProps {
   tvlWeeklyChange?: string
   destination: ScalingProjectRiskViewEntry
   validatedBy?: ScalingProjectRiskViewEntry
+  hasImplementationChanged?: boolean
   type: string
   links: ProjectLink[]
   isArchived?: boolean
@@ -64,6 +65,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       stats={{ summary: stats }}
       isArchived={props.isArchived}
       showProjectUnderReview={props.showProjectUnderReview}
+      implementationHasChanged={props.hasImplementationChanged}
       warning={props.warning}
     />
   )
