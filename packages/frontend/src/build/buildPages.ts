@@ -29,6 +29,7 @@ import {
 import { JsonHttpClient } from './caching/JsonHttpClient'
 import { getConfig } from './config'
 import { getCommonFeatures } from './config/getCommonFeatures'
+import { tvlSanityCheck, activitySanityCheck } from './api/sanityCheck'
 
 /**
  * Temporary timeout for HTTP calls due to increased size of new TVL API and flaky connection times
@@ -62,14 +63,14 @@ async function main() {
     console.time('[TVL]')
     const tvlApiResponse = await fetchTvlApi(config.backend, http)
     console.timeEnd('[TVL]')
-    // tvlSanityCheck(tvlApiResponse)
+    tvlSanityCheck(tvlApiResponse)
 
     let activityApiResponse: ActivityApiResponse | undefined
     if (config.features.activity) {
       console.time('[ACTIVITY]')
       activityApiResponse = await fetchActivityApi(config.backend, http)
       console.timeEnd('[ACTIVITY]')
-      // activitySanityCheck(activityApiResponse)
+      activitySanityCheck(activityApiResponse)
     }
 
     let tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse | undefined =
