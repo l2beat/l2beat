@@ -1,14 +1,15 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
-import { SavedConfiguration } from '@l2beat/uif'
 import { expect } from 'earl'
 
 import { describeDatabase } from '../../../test/database'
-import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
+import {
+  IndexerConfigurationRecord,
+  IndexerConfigurationRepository,
+} from '../../../tools/uif/IndexerConfigurationRepository'
 import { AmountRecord, AmountRepository } from './AmountRepository'
 
 describeDatabase(AmountRepository.name, (database) => {
-  const INDEXER = 'test_indexer'
   const CONFIGURATIONS = [
     mock({ id: '1' }),
     mock({ id: '2' }),
@@ -22,10 +23,7 @@ describeDatabase(AmountRepository.name, (database) => {
   )
 
   beforeEach(async () => {
-    await configurationsRepository.addManySavedConfigurations(
-      CONFIGURATIONS,
-      INDEXER,
-    )
+    await configurationsRepository.addManySavedConfigurations(CONFIGURATIONS)
   })
 
   afterEach(async () => {
@@ -89,10 +87,11 @@ describeDatabase(AmountRepository.name, (database) => {
 })
 
 function mock(
-  record?: Partial<SavedConfiguration<string>>,
-): SavedConfiguration<string> {
+  record?: Partial<IndexerConfigurationRecord>,
+): IndexerConfigurationRecord {
   return {
     id: 'a',
+    indexerId: 'indexer',
     currentHeight: null,
     minHeight: 0,
     maxHeight: null,
