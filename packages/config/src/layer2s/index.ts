@@ -76,6 +76,7 @@ import { sorare } from './sorare'
 import { specular } from './specular'
 import { starknet } from './starknet'
 import { stealthchain } from './stealthchain'
+import { swell } from './swell'
 import { taiko } from './taiko'
 import { tanx } from './tanx'
 import { ten } from './ten'
@@ -176,6 +177,7 @@ export const layer2s: Layer2[] = [
   specular,
   starknet,
   stealthchain,
+  swell,
   taiko,
   tanx,
   ten,
