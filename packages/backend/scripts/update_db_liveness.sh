@@ -24,9 +24,10 @@ function download_dump() {
         heroku psql --app l2beat-production -c "\copy tracked_txs_configs TO 'txs_conf.csv' CSV"
         echo "Downloading the indexer_state table to a csv file..."
         heroku psql --app l2beat-production -c "\copy indexer_state to 'index.csv' CSV"
-        echo "Downloading the liveness table to a csv file. This can take few minutes..."
         echo "Downloading the finality table to a csv file. This can take few minutes..."
         heroku psql --app l2beat-production -c "\copy finality to 'finality.csv' CSV"
+        echo "Downloading the liveness table to a csv file..."
+        heroku psql --app l2beat-production -c "\copy liveness to 'liveness.csv' CSV"
 }
 
 # Get the current timestamp
@@ -96,5 +97,8 @@ psql -d l2beat_local -c "\copy indexer_state FROM 'index.csv' DELIMITER ',' CSV;
 echo "Restoring the finality table from the csv file..."
 psql -d l2beat_local -c "DELETE FROM finality;"
 psql -d l2beat_local -c "\copy finality FROM 'finality.csv' DELIMITER ',' CSV;"
+echo "Restoring the liveness table from the csv file..."
+psql -d l2beat_local -c "DELETE FROM liveness;"
+psql -d l2beat_local -c "\copy liveness FROM 'liveness.csv' DELIMITER ',' CSV;"
 
 echo "Database restored successfully."
