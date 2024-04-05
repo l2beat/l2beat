@@ -5,7 +5,7 @@ export const swell: Layer2 = upcomingL2({
   id: 'swell',
   display: {
     name: 'Swell',
-    slug: 'Swell',
+    slug: 'swell',
     description:
       'Swell L2, powered by Polygon CDK,  will leverage EigenDA and the AggLayer in collaboration with AltLayer and Chainlink.',
     purposes: ['Universal', 'Restaking'],
