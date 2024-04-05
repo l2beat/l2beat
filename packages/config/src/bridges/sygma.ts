@@ -175,22 +175,22 @@ export const sygma: Bridge = {
   ],
   milestones: [
     {
-      name: 'Sygma launches on mainnet',
+      name: 'Mainnet',
       date: '2023-06-23T00:00:00.00Z',
       link: 'https://blog.buildwithsygma.com/sygma-begins-mainnet-rollout/',
     },
     {
-      name: 'Phala Network integrates protocol Sygma into SubBridge',
+      name: 'SubBridge Integration',
       date: '2023-07-05T00:00:00.00Z',
       link: 'https://twitter.com/PhalaNetwork/status/1676604920923914240',
     },
     {
-      name: 'Full migration of Phala liquidity into Sygma bridge contract',
+      name: 'SubBridge Full Liquidity Migration',
       date: '2023-12-12T00:00:00.00Z',
       link: 'https://twitter.com/PhalaNetwork/status/1734571542644682966',
     },
     {
-      name: 'Sygma announces testnet for Spectre zk verification',
+      name: 'Spectre Testnet',
       date: '2024-01-17T00:00:00.00Z',
       link: 'https://blog.buildwithsygma.com/spectre-a-zk-coprocessor-to-extend-sygmas-security/',
     },
