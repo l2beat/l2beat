@@ -1,5 +1,5 @@
 {
-  "$schema": "../../config.schema.json",
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
   "chain": "ethereum",
   "name": "fraxferry",
   "initialAddresses": [
@@ -43,12 +43,14 @@
     "0x049Bd8C3adC3fE7d3Fc2a44541d955A537c2A484": "FiewsOracle",
     "0x43eC799eAdd63848443E2347C49f5f52e8Fe0F6f": "FraxswapFactory",
     "0x61eB091ea16A32ea5B880d0b3D09d518c340D750": "AccessControlledOffchainAggregator",
-    "0x90503D86E120B3B309CEBf00C2CA013aB3624736": "BokkyPooBahsDateTimeContract"
+    "0x90503D86E120B3B309CEBf00C2CA013aB3624736": "BokkyPooBahsDateTimeContract",
+    "0x6A7efa964Cf6D9Ab3BC3c47eBdDB853A8853C502": "FPI Multisig"
   },
   "overrides": {
     "sfraxFerryBridgeArbitrum": {
       "ignoreMethods": ["cancelled", "batches", "transactions"], // too many values
-      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"]
+      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"],
+      "ignoreRelatives": ["token", "targetToken"]
     },
     "fraxFerryBridgeArbitrum": {
       "ignoreMethods": ["cancelled", "batches", "transactions"], // too many values
@@ -60,23 +62,28 @@
           "valueKey": "crewmember",
           "flagKey": "set"
         }
-      }
+      },
+      "ignoreRelatives": ["token", "targetToken"]
     },
     "fxsFerryBridgeArbitrum": {
       "ignoreMethods": ["cancelled", "batches", "transactions"], // too many values
-      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"]
+      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"],
+      "ignoreRelatives": ["token", "targetToken"]
     },
     "sfrxFerryBridgeArbitrum": {
       "ignoreMethods": ["cancelled", "batches", "transactions"], // too many values
-      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"]
+      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"],
+      "ignoreRelatives": ["token", "targetToken"]
     },
     "fpisFerryBridgeArbitrum": {
       "ignoreMethods": ["cancelled", "batches", "transactions"], // too many values
-      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"]
+      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"],
+      "ignoreRelatives": ["token", "targetToken"]
     },
     "fpiFerryBridgeArbitrum": {
       "ignoreMethods": ["cancelled", "batches", "transactions"], // too many values
-      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"]
+      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"],
+      "ignoreRelatives": ["token", "targetToken"]
     },
     "StakedFrax": {
       "ignoreMethods": [
@@ -227,6 +234,9 @@
     },
     "USDC": {
       "ignoreDiscovery": true
+    },
+    "FPI Multisig": {
+      "ignoreMethods": ["nonce"]
     }
   }
 }
