@@ -40,7 +40,7 @@ export const sygma: Bridge = {
         'https://docs.buildwithsygma.com/environments/testnet/obtain-testnet-tokens',
         'https://validator.faucet.chainsafe.dev/upload',
         'https://sygma-react-widget.pages.dev',
-        'https://docs.buildwithsygma.com/environments/testnet/obtain-testnet-tokens/'
+        'https://docs.buildwithsygma.com/environments/testnet/obtain-testnet-tokens/',
       ],
     },
   },
