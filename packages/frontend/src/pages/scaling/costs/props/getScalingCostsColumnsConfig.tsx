@@ -28,7 +28,7 @@ export function getScalingCostsColumnsConfig() {
               <Badge type="gray">Coming soon</Badge>
             ),
           tooltip:
-            'The sum of the costs for calldata, blob data, computation, and an additional 21,000 gas overhead per transaction for the selected time period.',
+            'The total cost that is a sum of the costs for calldata, computation, blobs, and overhead.',
           align: 'center',
           sorting: getSorting('total'),
         },
@@ -48,7 +48,7 @@ export function getScalingCostsColumnsConfig() {
         'dark:before:bg-sky-500',
       ),
       tooltip:
-        'The sum of the costs for posting data as calldata on Ethereum for the selected time period.',
+        'The cost for posting data as calldata on Ethereum for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.',
       align: 'right',
       sorting: getSorting('calldata'),
     },
@@ -66,7 +66,7 @@ export function getScalingCostsColumnsConfig() {
         'dark:before:bg-yellow-100',
       ),
       tooltip:
-        'The sum of the costs for posting data as blobs on Ethereum for the selected time period.',
+        'The cost for posting data as blobs on Ethereum for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.',
       align: 'right',
       sorting: getSorting('blobs'),
     },
@@ -83,7 +83,7 @@ export function getScalingCostsColumnsConfig() {
         'before:bg-pink-100',
       ),
       tooltip:
-        'The sum of the costs for carrying out different operations within a transaction for the selected time period.',
+        'The cost for carrying out different operations within a transaction for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.',
       align: 'right',
       sorting: getSorting('compute'),
     },
@@ -100,7 +100,7 @@ export function getScalingCostsColumnsConfig() {
         'before:bg-purple-100',
       ),
       tooltip:
-        'The sum of the fixed 21,000 GAS overhead per transaction for the selected time period.',
+        'The cost of the fixed 21,000 GAS overhead per L1 transaction for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.',
       align: 'right',
       sorting: getSorting('overhead'),
     },
