@@ -8,13 +8,13 @@ import {
 import { Database } from '../../../peripherals/database/Database'
 
 export interface AmountRow {
-  configuration_id: number
+  configuration_id: string
   timestamp: Date
   amount: string
 }
 
 export interface AmountRecord {
-  configurationId: number
+  configurationId: string
   timestamp: UnixTime
   amount: bigint
 }
@@ -25,16 +25,12 @@ export class AmountRepository extends BaseRepository {
     this.autoWrap<CheckConvention<AmountRepository>>(this)
   }
 
-  // #region amounts
-
   async addMany(records: AmountRecord[]) {
     const rows: AmountRow[] = records.map(toRow)
     const knex = await this.knex()
     await knex.batchInsert('amounts', rows, 10_000)
     return rows.length
   }
-
-  // #endregion
 
   // #region methods used only in tests
 

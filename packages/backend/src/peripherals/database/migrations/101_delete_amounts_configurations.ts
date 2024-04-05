@@ -16,6 +16,13 @@ import { Knex } from 'knex'
 export async function up(knex: Knex) {
   await knex.schema.alterTable('amounts', function (table) {
     table.dropForeign(['configuration_id'])
+    table.dropPrimary()
+    table.dropColumn('configuration_id')
+  })
+
+  await knex.schema.alterTable('amounts', function (table) {
+    table.string('configuration_id').notNullable()
+    table.primary(['configuration_id', 'timestamp'])
   })
 
   await knex.schema.dropTable('amounts_configurations')
@@ -40,6 +47,13 @@ export async function down(knex: Knex) {
   })
 
   await knex.schema.alterTable('amounts', function (table) {
+    table.dropPrimary()
+    table.dropColumn('configuration_id')
+  })
+
+  await knex.schema.alterTable('amounts', function (table) {
+    table.integer('configuration_id').notNullable()
+    table.primary(['configuration_id', 'timestamp'])
     table
       .foreign('configuration_id')
       .references('id')

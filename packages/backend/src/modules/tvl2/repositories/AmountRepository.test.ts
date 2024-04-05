@@ -1,69 +1,102 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
+import { SavedConfiguration } from '@l2beat/uif'
 import { expect } from 'earl'
 
 import { describeDatabase } from '../../../test/database'
+import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
 import { AmountRecord, AmountRepository } from './AmountRepository'
 
 describeDatabase(AmountRepository.name, (database) => {
-  const repository = new AmountRepository(database, Logger.SILENT)
+  const INDEXER = 'test_indexer'
+  const CONFIGURATIONS = [
+    mock({ id: '1' }),
+    mock({ id: '2' }),
+    mock({ id: '3' }),
+  ]
 
-  afterEach(async () => {
-    await repository.deleteAll()
+  const repository = new AmountRepository(database, Logger.SILENT)
+  const configurationsRepository = new IndexerConfigurationRepository(
+    database,
+    Logger.SILENT,
+  )
+
+  beforeEach(async () => {
+    await configurationsRepository.addManySavedConfigurations(
+      CONFIGURATIONS,
+      INDEXER,
+    )
   })
 
-  describe('amounts', () => {
-    describe(AmountRepository.prototype.addMany.name, () => {
-      it('adds new rows', async () => {
-        const newRows = [
-          {
-            configurationId: 1,
-            timestamp: UnixTime.ZERO,
-            amount: 111n,
-          },
-          {
-            configurationId: 2,
-            timestamp: UnixTime.ZERO,
-            amount: 111n,
-          },
-        ]
-        await repository.addMany(newRows)
+  afterEach(async () => {
+    await configurationsRepository.deleteAll()
+  })
 
-        const results = await repository.getAll()
-        expect(results).toEqualUnsorted(newRows)
-      })
-
-      it('empty array', async () => {
-        await expect(repository.addMany([])).not.toBeRejected()
-      })
-
-      it('performs batch insert when more than 10k records', async () => {
-        const records: AmountRecord[] = []
-        for (let i = 5; i < 15_000; i++) {
-          records.push({
-            configurationId: 1,
-            timestamp: new UnixTime(i),
-            amount: 111n,
-          })
-        }
-        await expect(repository.addMany(records)).not.toBeRejected()
-      })
-    })
-
-    it(AmountRepository.prototype.deleteAll.name, async () => {
-      await repository.addMany([
+  describe(AmountRepository.prototype.addMany.name, () => {
+    it('adds new rows', async () => {
+      const newRows = [
         {
-          configurationId: 1,
+          configurationId: CONFIGURATIONS[0].id,
           timestamp: UnixTime.ZERO,
           amount: 111n,
         },
-      ])
-
-      await repository.deleteAll()
+        {
+          configurationId: CONFIGURATIONS[1].id,
+          timestamp: UnixTime.ZERO,
+          amount: 111n,
+        },
+      ]
+      await repository.addMany(newRows)
 
       const results = await repository.getAll()
+      expect(results).toEqualUnsorted(newRows)
+    })
 
-      expect(results).toEqual([])
+    it('empty array', async () => {
+      await expect(repository.addMany([])).not.toBeRejected()
+    })
+
+    it('performs batch insert when more than 10k records', async () => {
+      const records: AmountRecord[] = []
+      for (let i = 5; i < 15_000; i++) {
+        records.push({
+          configurationId: CONFIGURATIONS[0].id,
+          timestamp: new UnixTime(i),
+          amount: 111n,
+        })
+      }
+      await expect(repository.addMany(records)).not.toBeRejected()
     })
   })
+
+  // #region methods used only in tests
+  it(AmountRepository.prototype.deleteAll.name, async () => {
+    await repository.addMany([
+      {
+        configurationId: CONFIGURATIONS[0].id,
+        timestamp: UnixTime.ZERO,
+        amount: 111n,
+      },
+    ])
+
+    await repository.deleteAll()
+
+    const results = await repository.getAll()
+
+    expect(results).toEqual([])
+  })
+  // #endregion
 })
+
+function mock(
+  record?: Partial<SavedConfiguration<string>>,
+): SavedConfiguration<string> {
+  return {
+    id: 'a',
+    currentHeight: null,
+    minHeight: 0,
+    maxHeight: null,
+    properties: '',
+    ...record,
+  }
+}

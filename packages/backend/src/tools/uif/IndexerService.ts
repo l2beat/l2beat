@@ -56,7 +56,7 @@ export class IndexerService {
     indexerId: string,
     configurationIds: string[],
   ): Promise<void> {
-    return this.indexerConfigurationRepository.removeSavedConfigurations(
+    return this.indexerConfigurationRepository.deleteSavedConfigurations(
       indexerId,
       configurationIds,
     )

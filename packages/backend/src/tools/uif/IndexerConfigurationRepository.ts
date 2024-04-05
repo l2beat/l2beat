@@ -54,7 +54,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
     return rows.length
   }
 
-  async removeSavedConfigurations(
+  async deleteSavedConfigurations(
     indexerId: string,
     configurationIds: string[],
   ) {
@@ -78,6 +78,21 @@ export class IndexerConfigurationRepository extends BaseRepository {
       .whereIn('id', configurationIds)
       .update({ current_height: currentHeight })
   }
+
+  // #region methods used only in tests
+
+  async getAll(): Promise<IndexerConfigurationRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('indexer_configurations')
+    return rows.map(toRecord)
+  }
+
+  async deleteAll() {
+    const knex = await this.knex()
+    return knex('indexer_configurations').delete()
+  }
+
+  // #endregion
 }
 
 function toRow(
@@ -87,7 +102,7 @@ function toRow(
   return {
     id: record.id,
     indexer_id,
-    properties: record.properties,
+    properties: JSON.stringify(record.properties),
     current_height: record.currentHeight,
     min_height: record.minHeight,
     max_height: record.maxHeight,
