@@ -44,7 +44,6 @@ type L2CostsTrackedTxsConfigEntry = {
 
 const NOW_TO_FULL_HOUR = UnixTime.now().toStartOf('hour')
 const MAX_DAYS = 180
-const RANGES = 1
 const MAX_RECORDS = 50000
 
 // Amount of gas required for a basic tx
@@ -133,60 +132,48 @@ export class L2CostsController {
         continue
       }
 
-      const stepSize = MAX_DAYS / RANGES
+      const timeRanges: [UnixTime, UnixTime] = [
+        NOW_TO_FULL_HOUR.add(-MAX_DAYS, 'days'),
+        NOW_TO_FULL_HOUR,
+      ]
 
-      for (let i = 0; i < RANGES; i++) {
-        const start = MAX_DAYS - i * stepSize
-        const end = start - stepSize
-
-        const timeRanges: [UnixTime, UnixTime] = [
-          i === 0
-            ? NOW_TO_FULL_HOUR.add(-start, 'days')
-            : NOW_TO_FULL_HOUR.add(-start, 'days').toStartOf('day'),
-          i === RANGES - 1
-            ? NOW_TO_FULL_HOUR.add(-end, 'days')
-            : NOW_TO_FULL_HOUR.add(-end, 'days').toStartOf('day'),
-        ]
-
-        const { count } =
-          await this.l2CostsRepository.findCountByProjectAndTimeRange(
+      const { count } =
+        await this.l2CostsRepository.findCountByProjectAndTimeRange(
+          project.projectId,
+          timeRanges,
+        )
+      for (
+        let rangeIndex = 0;
+        rangeIndex < Math.ceil(count / MAX_RECORDS);
+        rangeIndex++
+      ) {
+        const records =
+          await this.l2CostsRepository.getByProjectAndTimeRangePaginated(
             project.projectId,
             timeRanges,
+            rangeIndex * MAX_RECORDS,
+            MAX_RECORDS,
           )
+        const recordsWithDetails = await this.makeTransactionCalculations(
+          records,
+          timeRanges,
+        )
 
-        for (
-          let rangeIndex = 0;
-          rangeIndex < Math.ceil(count / MAX_RECORDS);
-          rangeIndex++
-        ) {
-          const records =
-            await this.l2CostsRepository.getByProjectAndTimeRangePaginated(
-              project.projectId,
-              timeRanges,
-              rangeIndex * MAX_RECORDS,
-              MAX_RECORDS,
-            )
-          const recordsWithDetails = await this.makeTransactionCalculations(
-            records,
-            timeRanges,
-          )
+        const { hourly, daily } = this.aggregateL2Costs(
+          recordsWithDetails,
+          combinedHourlyMap,
+          combinedDailyMap,
+        )
 
-          const { hourly, daily } = this.aggregateL2Costs(
-            recordsWithDetails,
-            combinedHourlyMap,
-            combinedDailyMap,
-          )
-
-          const projectData = projects[project.projectId.toString()]
-          if (projectData) {
-            hourly.data = [...projectData.hourly.data, ...hourly.data]
-            daily.data = [...projectData.daily.data, ...daily.data]
-          }
-          projects[project.projectId.toString()] = {
-            syncedUntil,
-            hourly,
-            daily,
-          }
+        const projectData = projects[project.projectId.toString()]
+        if (projectData) {
+          hourly.data = [...projectData.hourly.data, ...hourly.data]
+          daily.data = [...projectData.daily.data, ...daily.data]
+        }
+        projects[project.projectId.toString()] = {
+          syncedUntil,
+          hourly,
+          daily,
         }
       }
     }
