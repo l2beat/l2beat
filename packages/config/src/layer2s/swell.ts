@@ -12,7 +12,7 @@ export const swell: Layer2 = upcomingL2({
     category: 'Validium',
     provider: 'Polygon',
     links: {
-      websites: ['https://www.swellnetwork.io/'],
+      websites: ['https://swellnetwork.io/'],
       apps: [],
       documentation: ['https://docs.swellnetwork.io/'],
       explorers: [],
