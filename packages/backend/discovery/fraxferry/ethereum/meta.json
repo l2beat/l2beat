@@ -58,11 +58,6 @@
           "description": null,
           "severity": null,
           "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
         }
       }
     },

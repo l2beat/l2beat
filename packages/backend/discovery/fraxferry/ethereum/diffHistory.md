@@ -1,41 +1,14 @@
-Generated with discovered.json: 0xe5028b6e5bcf88465c88c0baa97f1f71e8fd72c8
+Generated with discovered.json: 0x60380fb9853345495e1cc4a3837502812ae1cb38
 
-# Diff at Fri, 05 Apr 2024 11:31:19 GMT:
+# Diff at Fri, 05 Apr 2024 11:56:30 GMT:
 
-- author: sekuba (<sekuba@users.noreply.github.com>)
-- comparing to: main@256cdc4999e34442054bfd8bc239f65fe3cedd49 block: 19589154
-- current block number: 19589253
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@6e27442909c4cbe26f03c6413f64274ff68aa0d7 block: 19517283
+- current block number: 19589377
 
 ## Description
 
 Provide description of changes. This section will be preserved.
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 19589154 (main branch discovery), not current.
-
-```diff
-    contract TimelockMultisig (0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27) {
-    +++ description: None
-      name:
--        "TimelockMultisig"
-+        "Frax Finance Multisig"
-    }
-```
-
-Generated with discovered.json: 0x95793452e0e25388b71fd773a13a74e44eb49312
-
-# Diff at Fri, 05 Apr 2024 11:11:12 GMT:
-
-- author: sekuba (<sekuba@users.noreply.github.com>)
-- comparing to: main@5f9d1d2356b8701a8e895aff2949c43c7a22883f block: 19517283
-- current block number: 19589154
-
-## Description
-
-One signer of the FPI Multisig (owner of the FPI and FPIS frax ferry bridges) is changed.
 
 ## Watched changes
 
@@ -114,8 +87,6 @@ discovery. Values are for block 19517283 (main branch discovery), not current.
       name:
 -        "GnosisSafe"
 +        "FPI Multisig"
-      upgradeability.threshold:
-+        "3 of 5 (60%)"
       values.nonce:
 -        487
     }
@@ -160,8 +131,11 @@ discovery. Values are for block 19517283 (main branch discovery), not current.
 ```diff
     contract TimelockMultisig (0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27) {
     +++ description: None
-      upgradeability.threshold:
-+        "3 of 5 (60%)"
+      name:
+-        "TimelockMultisig"
++        "Frax Finance Multisig"
+      values.nonce:
+-        5402
     }
 ```
 
