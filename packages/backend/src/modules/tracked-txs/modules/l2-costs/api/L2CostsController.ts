@@ -149,7 +149,7 @@ export class L2CostsController {
         ]
 
         const { count } =
-          await this.l2CostsRepository.getCountByProjectAndTimeRange(
+          await this.l2CostsRepository.findCountByProjectAndTimeRange(
             project.projectId,
             timeRanges,
           )

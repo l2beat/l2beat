@@ -53,24 +53,7 @@ export class L2CostsRepository extends BaseRepository {
     return rows.map((r) => toRecord(r))
   }
 
-  async getByProjectAndTimeRange(
-    projectId: ProjectId,
-    timeRange: [UnixTime, UnixTime],
-  ): Promise<L2CostsRecord[]> {
-    const [from, to] = timeRange
-    const knex = await this.knex()
-    const rows = await knex('l2_costs as l')
-      .join('tracked_txs_configs as c', 'l.tracked_tx_id', 'c.id')
-      .where('c.project_id', projectId)
-      .andWhere('l.timestamp', '>=', from.toDate())
-      .andWhere('l.timestamp', '<', to.toDate())
-      .distinct('l.tx_hash')
-      .select('l.timestamp', 'l.tx_hash', 'l.tracked_tx_id', 'l.data')
-      .orderBy('l.timestamp', 'asc')
-    return rows.map(toRecord)
-  }
-
-  async getCountByProjectAndTimeRange(
+  async findCountByProjectAndTimeRange(
     projectId: ProjectId,
     timeRange: [UnixTime, UnixTime],
   ): Promise<{ count: number }> {
