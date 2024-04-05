@@ -15,7 +15,7 @@ import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
   await knex.schema.createTable('indexer_configurations', function (table) {
-    table.string('id').notNullable()
+    table.specificType('id', 'CHAR(12)').notNullable()
     table.integer('current_height').nullable()
     table.integer('min_height').notNullable()
     table.integer('max_height').nullable()
