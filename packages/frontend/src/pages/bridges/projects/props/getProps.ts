@@ -15,18 +15,27 @@ export function getProps(
   config: Config,
   pagesData: PagesData,
 ): Wrapped<ProjectPageProps> {
-  const { tvlApiResponse, verificationStatus, manuallyVerifiedContracts } =
-    pagesData
+  const {
+    tvlApiResponse,
+    verificationStatus,
+    manuallyVerifiedContracts,
+    implementationChange,
+  } = pagesData
 
   const chart = getChart(bridge, tvlApiResponse, config)
   return {
     props: {
       navbar: getNavbarProps(config, 'bridges'),
-      projectHeader: getProjectHeader(bridge, tvlApiResponse),
+      projectHeader: getProjectHeader(
+        bridge,
+        tvlApiResponse,
+        implementationChange,
+      ),
       projectDetails: getProjectDetails(
         bridge,
         verificationStatus,
         manuallyVerifiedContracts,
+        implementationChange,
         chart,
       ),
       footer: getFooterProps(config),

@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x07d9b55885b29033ec3731f18859237455278c7f
+
+# Diff at Thu, 28 Mar 2024 11:28:58 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@21187e63b9b90823a55c461c331868a470ce17eb block: 19434460
+- current block number: 19532313
+
+## Description
+
+Update discovery to include the multisig threshold.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19434460 (main branch discovery), not current.
+
+```diff
+    contract Matter Labs Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: Can instantly upgrade all contracts and roles in the zksync Era contracts
+      upgradeability.threshold:
++        "4 of 8 (50%)"
+    }
+```
+
 Generated with discovered.json: 0xc0158f98e4c7abbca10d59b4d5f862a4fbf0c27c
 
 # Diff at Thu, 14 Mar 2024 16:35:37 GMT:
@@ -8,7 +34,7 @@ Generated with discovered.json: 0xc0158f98e4c7abbca10d59b4d5f862a4fbf0c27c
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Update discovery to include the multisig threshold.
 
 ## Config/verification related changes
 

@@ -18,10 +18,11 @@ export interface ScalingSummaryViewEntryBase {
   category: ScalingProjectCategory
   warning?: string
   redWarning?: string
-  tvlWarning?: Layer2TVLWarning
+  tvlWarnings?: Layer2TVLWarning[]
   isArchived?: boolean
   isVerified?: boolean
   showProjectUnderReview?: boolean
+  hasImplementationChanged?: boolean
   isUpcoming?: boolean
   purposes: ScalingProjectPurpose[]
 }

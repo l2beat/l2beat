@@ -1,0 +1,640 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "FPI Multisig",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Frax Finance Multisig",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "fpiFerryBridgeArbitrum",
+      "values": {
+        "FEE_MAX": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FEE_MIN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FEE_RATE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_WAIT_PERIOD_ADD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_WAIT_PERIOD_EXECUTE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REDUCED_DECIMALS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "captain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainid": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "executeIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "firstOfficer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "noBatches": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "noTransactions": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nominatedOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "targetChain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "targetToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "fpisFerryBridgeArbitrum",
+      "values": {
+        "FEE_MAX": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FEE_MIN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FEE_RATE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_WAIT_PERIOD_ADD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_WAIT_PERIOD_EXECUTE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REDUCED_DECIMALS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "captain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainid": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "executeIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "firstOfficer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "noBatches": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "noTransactions": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nominatedOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "targetChain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "targetToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "fraxFerryBridgeArbitrum",
+      "values": {
+        "FEE_MAX": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FEE_MIN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FEE_RATE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_WAIT_PERIOD_ADD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_WAIT_PERIOD_EXECUTE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REDUCED_DECIMALS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "captain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainid": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "crewmembers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "executeIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "firstOfficer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "noBatches": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "noTransactions": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nominatedOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "targetChain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "targetToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "fxsFerryBridgeArbitrum",
+      "values": {
+        "FEE_MAX": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FEE_MIN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FEE_RATE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_WAIT_PERIOD_ADD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_WAIT_PERIOD_EXECUTE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REDUCED_DECIMALS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "captain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainid": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "executeIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "firstOfficer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "noBatches": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "noTransactions": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nominatedOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "targetChain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "targetToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "sfraxFerryBridgeArbitrum",
+      "values": {
+        "FEE_MAX": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FEE_MIN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FEE_RATE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_WAIT_PERIOD_ADD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_WAIT_PERIOD_EXECUTE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REDUCED_DECIMALS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "captain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainid": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "executeIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "firstOfficer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "noBatches": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "noTransactions": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nominatedOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "targetChain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "targetToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "sfrxFerryBridgeArbitrum",
+      "values": {
+        "FEE_MAX": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FEE_MIN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FEE_RATE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_WAIT_PERIOD_ADD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_WAIT_PERIOD_EXECUTE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REDUCED_DECIMALS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "captain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainid": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "executeIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "firstOfficer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "noBatches": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "noTransactions": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nominatedOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "targetChain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "targetToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}

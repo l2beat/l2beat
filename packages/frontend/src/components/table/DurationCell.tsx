@@ -7,24 +7,29 @@ export function DurationCell(props: { durationInSeconds: number }) {
   const hours = Math.floor(minutes / 60)
   const days = Math.floor(hours / 24)
 
-  const duration =
-    days > 0 ? (
-      <span className="text-orange-600 dark:text-orange-500">
-        {days} {pluralize(days, 'day')}
-      </span>
-    ) : hours > 0 ? (
-      <span className="text-yellow-700 dark:text-yellow-100">
-        {hours} {pluralize(hours, 'hour')}
-      </span>
-    ) : minutes > 0 ? (
-      <span>
-        {minutes} {pluralize(minutes, 'minute')}
-      </span>
-    ) : (
-      <span className="text-green-300 dark:text-green-450">
-        {seconds} {pluralize(seconds, 'second')}
-      </span>
-    )
+  const durationText: string =
+    days > 1
+      ? `${days} ${pluralize(days, 'day')}`
+      : hours > 0
+        ? `${hours} ${pluralize(hours, 'hour')}`
+        : minutes > 0
+          ? `${minutes} ${pluralize(minutes, 'minute')}`
+          : `${seconds} ${pluralize(seconds, 'second')}`
 
-  return duration
+  const colorClassName = getDurationColorClassName(seconds)
+
+  return <span className={colorClassName}>{durationText}</span>
+}
+
+function getDurationColorClassName(durationInSeconds: number) {
+  if (durationInSeconds < 60) {
+    return 'text-green-300 dark:text-green-450'
+  }
+  if (durationInSeconds < 60 * 60) {
+    return ''
+  }
+  if (durationInSeconds < 60 * 60 * 24) {
+    return 'text-yellow-700 dark:text-yellow-100'
+  }
+  return 'text-orange-600 dark:text-orange-500'
 }

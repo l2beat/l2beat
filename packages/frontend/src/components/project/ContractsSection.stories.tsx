@@ -27,6 +27,19 @@ const props: ContractsSectionProps = {
       links: [],
     },
     {
+      name: 'CanonicalTransactionChain',
+      etherscanUrl: 'etherscan.io',
+      chain: 'ethereum',
+      addresses: [
+        '0x5E4e65926BA27467555EB562121fac00D24E9dD2',
+        '0x5E4e65926BA27467555EB562121fac00D24E9dD2',
+        '0x5E4e65926BA27467555EB562121fac00D24E9dD2',
+      ],
+      description:
+        'The Canonical Transaction Chain (CTC) contract is an append-only log of transactions which must be applied to the OVM state. It defines the ordering of transactions by writing them to the CTC:batches instance of the Chain Storage Container. CTC batches can only be submitted by OVM_Sequencer. The CTC also allows any account to enqueue() an L2 transaction, which the Sequencer must eventually append to the rollup state.',
+      links: [],
+    },
+    {
       name: 'L1CrossDomainMessenger',
       etherscanUrl: 'etherscan.io',
       chain: 'ethereum',
@@ -119,6 +132,36 @@ const props: ContractsSectionProps = {
 }
 
 export const Contracts: Story = { args: props }
+
+export const ImplementationHasChangedContracts: Story = {
+  args: {
+    ...props,
+    contracts: [
+      ...props.contracts,
+      {
+        name: 'Changed L1TestEscrow',
+        etherscanUrl: 'etherscan.io',
+        chain: 'ethereum',
+        addresses: ['0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C66'],
+        description:
+          'DAI Vault for custom DAI Gateway managed by MakerDAO. This contract stores the following tokens: DAI.',
+        links: [],
+        implementationHasChanged: true,
+      },
+    ],
+    escrows: [
+      ...props.escrows,
+      {
+        name: 'Generic escrow changed',
+        etherscanUrl: 'etherscan.io',
+        chain: 'ethereum',
+        addresses: ['0x5E4e65926BA27467555EB562121fac00D24E9dD2'],
+        links: [],
+        implementationHasChanged: true,
+      },
+    ],
+  },
+}
 
 export const NoImage: Story = {
   args: {

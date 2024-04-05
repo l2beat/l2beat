@@ -21,7 +21,7 @@ interface FunctionCall {
   formula: 'functionCall'
   address: EthereumAddress
   selector: `0x${string}`
-  functionSignature: string
+  functionSignature: `function ${string}`
   sinceTimestampInclusive: UnixTime
   untilTimestampExclusive?: UnixTime
 }

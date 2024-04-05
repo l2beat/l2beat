@@ -1,7 +1,7 @@
 {
   "name": "hypr",
   "chain": "ethereum",
-  "blockNumber": 19412042,
+  "blockNumber": 19531598,
   "configHash": "0x9e2c35ea1221b878866a558bf7ce24e7be41cb498e415d24605654bc3449a014",
   "version": 3,
   "contracts": [
@@ -43,7 +43,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "4 of 6 (67%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1705511519,
@@ -97,10 +98,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 2323800,
-        "latestOutputIndex": 1290,
-        "nextBlockNumber": 2325600,
-        "nextOutputIndex": 1291,
+        "latestBlockNumber": 3049200,
+        "latestOutputIndex": 1693,
+        "nextBlockNumber": 3051000,
+        "nextOutputIndex": 1694,
         "PROPOSER": "0xeF2169180a2eda91B695eA5e5C4f4547C013840c",
         "startingBlockNumber": 0,
         "startingTimestamp": 1705512383,
@@ -115,7 +116,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "3 of 5 (60%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1680797639,
@@ -130,7 +132,7 @@
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
         ],
         "getThreshold": 3,
-        "nonce": 15,
+        "nonce": 20,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -163,7 +165,7 @@
       "sinceTimestamp": 1705512431,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620152",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620171",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -191,7 +193,7 @@
         "GUARDIAN": "0x28fB4D0e436874F4107948E358df3C242De06788",
         "L2_ORACLE": "0x3E4F4Eb77a9c1f88c0e1F5aDCc9d3521Ce157FdD",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 490798, 19395015],
+        "params": [1000000000, 490798, 19530443],
         "paused": false,
         "SYSTEM_CONFIG": "0xBB08cf90DEb93492b463f1Ee5DA9453e51643586",
         "version": "1.7.2"

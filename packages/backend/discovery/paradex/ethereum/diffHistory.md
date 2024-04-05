@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x44eb161c66f4b404ab266f476c9ef78fac1b7823
+
+# Diff at Thu, 28 Mar 2024 10:35:47 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@dd32bb06b292cc8459fb09925454ee3a90f5c27e block: 19467601
+- current block number: 19532051
+
+## Description
+
+Update discovery to include the multisig threshold.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19467601 (main branch discovery), not current.
+
+```diff
+    contract ParadexImplementationGovernorMultisig (0x0a64d3D7747549aF6d65C225D56ac8f71e436B93) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 5 (40%)"
+    }
+```
+
 Generated with discovered.json: 0x55dc427d90067c7f872f6e28295faff5e1cf4097
 
 # Diff at Tue, 19 Mar 2024 08:27:29 GMT:
@@ -256,7 +282,7 @@ Change in the deposit limits of the USDC Bridge contract:
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Update discovery to include the multisig threshold.
 
 ## Watched changes
 

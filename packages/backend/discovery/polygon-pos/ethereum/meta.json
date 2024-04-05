@@ -1,0 +1,644 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "ChainExitERC1155Predicate",
+      "values": {
+        "CHAIN_EXIT_EVENT_SIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TOKEN_TYPE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CustomPredicate",
+      "values": {
+        "CUSTOM_EVENT_SIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ERC1155Predicate",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TOKEN_TYPE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TRANSFER_BATCH_EVENT_SIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TRANSFER_SINGLE_EVENT_SIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ERC20EscrowPredicate",
+      "values": {
+        "WITHDRAWN_EVENT_SIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rootChainManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ERC20MintBurnPredicate",
+      "values": {
+        "WITHDRAWN_EVENT_SIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rootChainManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ERC20Predicate",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TOKEN_TYPE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TRANSFER_EVENT_SIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ERC721Predicate",
+      "values": {
+        "BATCH_LIMIT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TOKEN_TYPE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TRANSFER_EVENT_SIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "EtherPredicate",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TOKEN_TYPE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TRANSFER_EVENT_SIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "MerklePatriciaProof",
+      "values": {}
+    },
+    {
+      "name": "MintableERC1155Predicate",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TOKEN_TYPE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TRANSFER_BATCH_EVENT_SIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TRANSFER_SINGLE_EVENT_SIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "MintableERC20Predicate",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TOKEN_TYPE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TRANSFER_EVENT_SIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "PolygonMultisig",
+      "values": {
+        "NAME": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getModules": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "RootChain",
+      "values": {
+        "CHAINID": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VOTE_TYPE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "_nextHeaderBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "currentHeaderBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLastChildBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "heimdallId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "networkId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "RootChainManager",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEPOSIT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ERC712_VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ETHER_ADDRESS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAPPER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAP_TOKEN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PREDICATES": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "checkpointManagerAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "childChainManagerAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getDomainSeperator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stateSenderAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "StateSender",
+      "values": {
+        "REGISTRATIONS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "counter": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Timelock",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EXECUTOR_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROPOSER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TIMELOCK_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getMinDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "UnstoppableDomainsPredicate",
+      "values": {
+        "BATCH_LIMIT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TOKEN_TYPE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TRANSFER_EVENT_SIG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}

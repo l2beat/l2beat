@@ -2,14 +2,193 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "RollupProcessorV2",
+      "name": "Aztec Multisig",
       "values": {
-        "allowThirdPartyContracts": {
+        "VERSION": {
           "description": null,
           "severity": null,
           "type": null
         },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "DefiBridgeProxy",
+      "values": {}
+    },
+    {
+      "name": "Emergency Multisig",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Lister Multisig",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Resume Multisig",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "RollupProcessorV2",
+      "values": {
         "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EMERGENCY_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "LISTER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OWNER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RESUME_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "allowThirdPartyContracts": {
           "description": null,
           "severity": null,
           "type": null
@@ -20,11 +199,6 @@
           "type": null
         },
         "delayBeforeEscapeHatch": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "EMERGENCY_ROLE": {
           "description": null,
           "severity": null,
           "type": null
@@ -74,7 +248,17 @@
           "severity": null,
           "type": null
         },
+        "getSupportedAsset": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "getSupportedAssetsLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getSupportedBridge": {
           "description": null,
           "severity": null,
           "type": null
@@ -89,16 +273,6 @@
           "severity": null,
           "type": null
         },
-        "LISTER_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "OWNER_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "paused": {
           "description": null,
           "severity": null,
@@ -109,7 +283,7 @@
           "severity": null,
           "type": null
         },
-        "RESUME_ROLE": {
+        "rollupProviders": {
           "description": null,
           "severity": null,
           "type": null
@@ -123,180 +297,6 @@
           "description": "Address of the ZK verifier.",
           "severity": "LOW",
           "type": "PERMISSION"
-        },
-        "accessControl": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "rollupProviders": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getSupportedAsset": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getSupportedBridge": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "Aztec Multisig",
-      "values": {
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "Lister Multisig",
-      "values": {
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "DefiBridgeProxy",
-      "values": {}
-    },
-    {
-      "name": "ProxyAdmin",
-      "values": {
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "Resume Multisig",
-      "values": {
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "Emergency Multisig",
-      "values": {
-        "domainSeparator": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getChainId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getOwners": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "VERSION": {
-          "description": null,
-          "severity": null,
-          "type": null
         }
       }
     },

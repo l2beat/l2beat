@@ -1,0 +1,355 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "Allbridge Messenger",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "DAI_POOL",
+      "values": {
+        "PP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "a": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accRewardPerShareP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "adminFeeAmount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "adminFeeShareBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "d": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "feeShareBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPrice": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "router": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "tokenBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalLpAmount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "vUsdBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Fee Oracle",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "LPBridge",
+      "values": {
+        "DAI_POOL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "USDC_POOL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "USDT_POOL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "allbridgeMessenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "wormholeMessenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "TokenBridge",
+      "values": {
+        "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "feeCollector": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "feeOracle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "unlockSigner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "validator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "USDC_POOL",
+      "values": {
+        "PP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "a": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accRewardPerShareP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "adminFeeAmount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "adminFeeShareBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "d": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "feeShareBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPrice": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "router": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "tokenBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalLpAmount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "vUsdBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "USDT_POOL",
+      "values": {
+        "PP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "a": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accRewardPerShareP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "adminFeeAmount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "adminFeeShareBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "d": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "feeShareBP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPrice": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "router": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "tokenBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalLpAmount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "vUsdBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Validator",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Wormhole Messenger",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}

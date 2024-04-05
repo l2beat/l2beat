@@ -55,7 +55,13 @@ export const amarok: Bridge = {
       {
         address: EthereumAddress('0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6'),
         sinceTimestamp: new UnixTime(1671625595),
-        tokens: ['USDC', 'WETH', 'USDT', 'DAI', 'Metis', 'alUSD', 'ezETH'],
+        tokens: ['USDC', 'WETH', 'USDT', 'DAI', 'Metis', 'alUSD'],
+      },
+      // shared ezETH lockbox (xERC20)
+      {
+        address: EthereumAddress('0xC8140dA31E6bCa19b287cC35531c2212763C2059'),
+        sinceTimestamp: new UnixTime(1671625595),
+        tokens: ['ezETH'],
       },
     ],
   },
@@ -193,8 +199,8 @@ export const amarok: Bridge = {
       'Owner of the main Connext Bridge Diamond Proxy. Can upgrade the functionality of any system component with no delay. Maintains the list of Watchers.',
     ),
     ...discovery.getMultisigPermission(
-      'Connext Multisig 2',
-      'Collects fees from the bridge.',
+      'Connext Fee Multisig',
+      'Collects fees from the bridge. Can manage Routers through its RouterAdmin role.',
     ),
     {
       name: 'Watchers',

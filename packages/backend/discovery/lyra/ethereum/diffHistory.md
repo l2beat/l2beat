@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x2b8a433c890c5381a408307e0dfdd3466200fdb8
+
+# Diff at Thu, 28 Mar 2024 10:17:32 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@dd32bb06b292cc8459fb09925454ee3a90f5c27e block: 19488865
+- current block number: 19531962
+
+## Description
+
+Update discovery to include the multisig threshold.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19488865 (main branch discovery), not current.
+
+```diff
+    contract LyraMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      upgradeability.threshold:
++        "3 of 5 (60%)"
+    }
+```
+
+```diff
+    contract ChallengerMultisig (0x91F4be0C264FAFA1fEd75c4440910Cba2cAd98e8) {
+    +++ description: None
+      upgradeability.threshold:
++        "4 of 6 (67%)"
+    }
+```
+
 Generated with discovered.json: 0x483b8b606b6d775399f6b2056e464f7b45b6ef3a
 
 # Diff at Mon, 11 Mar 2024 13:04:46 GMT:

@@ -2,7 +2,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { opStack } from './templates/opStack'
+import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('mode')
@@ -17,7 +17,7 @@ const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
   'FINALIZATION_PERIOD_SECONDS',
 )
 
-export const mode: Layer2 = opStack({
+export const mode: Layer2 = opStackL2({
   discovery,
   display: {
     name: 'Mode Network',
@@ -66,7 +66,10 @@ export const mode: Layer2 = opStack({
     },
   ],
   finality: {
-    type: 'OPStack',
+    type: 'OPStack-blob',
+    l2BlockTimeSeconds: 2,
+    minTimestamp: new UnixTime(1710386375),
+    genesisTimestamp: new UnixTime(1700167583),
     lag: 0,
   },
   knowledgeNuggets: [],

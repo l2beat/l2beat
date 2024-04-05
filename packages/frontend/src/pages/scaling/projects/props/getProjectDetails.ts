@@ -1,5 +1,6 @@
 import { Layer2 } from '@l2beat/config'
 import {
+  ImplementationChangeReportApiResponse,
   ManuallyVerifiedContracts,
   VerificationStatus,
 } from '@l2beat/shared-pure'
@@ -36,6 +37,7 @@ export function getProjectDetails(
   project: Layer2,
   verificationStatus: VerificationStatus,
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
+  implementationChange: ImplementationChangeReportApiResponse | undefined,
   chart: ChartProps,
 ) {
   const isUpcoming = project.isUpcoming
@@ -201,6 +203,7 @@ export function getProjectDetails(
         project,
         verificationStatus,
         manuallyVerifiedContracts,
+        implementationChange,
       ),
     })
 

@@ -1,7 +1,7 @@
 {
   "name": "zksync2",
   "chain": "ethereum",
-  "blockNumber": 19434460,
+  "blockNumber": 19532313,
   "configHash": "0xbd99d349adec02a1cfbad7c97b56bfd4d5b03373fb227e6f321efa1bf9e2908f",
   "version": 3,
   "contracts": [
@@ -117,7 +117,7 @@
             ["0x701f58c5", "0xc3d93e7c", "0x7f61885c", "0x97c09d34"]
           ]
         ],
-        "getFirstUnprocessedPriorityTx": 3053250,
+        "getFirstUnprocessedPriorityTx": 3086482,
         "getGovernor": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61",
         "getL2BootloaderBytecodeHash": "0x010007ede999d096c84553fb514d3d6ca76fbf39789dda76bfeda9f3ae06236e",
         "getL2DefaultAccountBytecodeHash": "0x0100055b041eb28aff6e3a6e0f37c31fd053fc9ef142683b05e5f0aee6934066",
@@ -125,16 +125,16 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingGovernor": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 831,
+        "getPriorityQueueSize": 2323,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 22,
-        "getTotalBatchesCommitted": 461690,
-        "getTotalBatchesExecuted": 460851,
-        "getTotalBatchesVerified": 461623,
-        "getTotalBlocksCommitted": 461690,
-        "getTotalBlocksExecuted": 460851,
-        "getTotalBlocksVerified": 461623,
-        "getTotalPriorityTxs": 3054081,
+        "getTotalBatchesCommitted": 468252,
+        "getTotalBatchesExecuted": 467928,
+        "getTotalBatchesVerified": 468173,
+        "getTotalBlocksCommitted": 468252,
+        "getTotalBlocksExecuted": 467928,
+        "getTotalBlocksVerified": 468173,
+        "getTotalPriorityTxs": 3088805,
         "getVerifier": "0xdd9C826196cf3510B040A8784D85aE36674c7Ed2",
         "getVerifierParams": [
           "0x5a3ef282b21e12fe1f4438e5bb158fc5060b160559c5158c6389d62d9fe3d080",
@@ -143,8 +143,8 @@
         ],
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": [
-          "0x0ff16d9baf20bbae043fd6747fe2c953ac2cfa4642197d64e1e00199f1685c86",
-          1710352007,
+          "0x81b15ce3b2c193e793d2a157801984043da1289bfbac008f97094f5def7525d2",
+          1711539215,
           0
         ],
         "validators": ["0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD"]
@@ -157,7 +157,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "4 of 8 (50%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1666872275,
@@ -175,7 +176,7 @@
           "0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df"
         ],
         "getThreshold": 4,
-        "nonce": 94,
+        "nonce": 95,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

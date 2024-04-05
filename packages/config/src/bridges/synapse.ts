@@ -37,12 +37,7 @@ export const synapse: Bridge = {
         sinceTimestamp: new UnixTime(1629082107),
         tokens: ['ETH', 'WETH', 'FRAX', 'USDT', 'USDC', 'WBTC', 'DAI', 'gOHM'],
       },
-      // address of the AMM pool used for swaps to canonical tokens
-      // the address of the pool is passed as a parameter for the function
-      // Synapse team has on their repo contract "Pool Config"
-      // https://github.com/synapsecns/synapse-contracts/blob/master/contracts/bridge/PoolConfig.sol
-      // from which admittedly the nodes are getting swap pool address
-      // but I could not find any trace of it on chain
+      // address of the Synapse AMM pool used for swaps to canonical tokens
       {
         address: EthereumAddress('0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8'),
         sinceTimestamp: new UnixTime(1629082839),
@@ -54,7 +49,12 @@ export const synapse: Bridge = {
     destination: [
       'Arbitrum',
       'Avalanche',
+      'Aurora',
+      'Base',
+      'Blast',
       'BNB Chain',
+      'Cronos',
+      'DFK Chain',
       'Optimism',
       'Polygon',
       'Aurora',

@@ -56,6 +56,7 @@ export interface ApiConfig {
   readonly cache: {
     readonly tvl: boolean
     readonly liveness: boolean
+    readonly l2costs: boolean
   }
 }
 
@@ -86,6 +87,7 @@ export interface TvlConfig {
 export interface Tvl2Config {
   readonly prices: PriceConfigEntry[]
   readonly amounts: AmountConfigEntry[]
+  readonly chains: ChainTvlConfig[]
   readonly coingeckoApiKey: string | undefined
 }
 
@@ -110,6 +112,9 @@ export interface TrackedTxsConfig {
 export interface FinalityConfig {
   readonly ethereumProviderUrl: string
   readonly ethereumProviderCallsPerMinute: number
+  readonly beaconApiUrl: string
+  readonly beaconApiCPM: number
+  readonly beaconApiTimeout: number
   readonly configurations: FinalityProjectConfig[]
 }
 
@@ -176,6 +181,7 @@ export interface DiscordConfig {
 
 export interface DiscoveryCacheChainConfig {
   reorgSafeDepth?: number
+  enableCache?: boolean
 }
 
 export type UpdateMonitorChainConfig = DiscoveryChainConfig &

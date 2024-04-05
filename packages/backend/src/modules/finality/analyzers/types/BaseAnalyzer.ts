@@ -1,13 +1,17 @@
 import {
-  assert,
-  notUndefined,
   ProjectId,
   TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { chunk } from 'lodash'
 
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
 import { LivenessRepository } from '../../../tracked-txs/modules/liveness/repositories/LivenessRepository'
+
+export type Transaction = {
+  txHash: string
+  timestamp: UnixTime
+}
 
 export abstract class BaseAnalyzer {
   constructor(
@@ -17,52 +21,39 @@ export abstract class BaseAnalyzer {
     protected readonly l2Provider?: RpcClient,
   ) {}
 
-  async getFinalityWithGranularity(
+  async getFinalityForInterval(
     from: UnixTime,
     to: UnixTime,
-    granularity: number,
-  ) {
-    const interval = this.getInterval(from, to, granularity)
-
-    const transactions = (
-      await Promise.all(
-        Array.from({ length: granularity }).map(async (_, i) => {
-          const targetTimestamp = to.add(-interval * i, 'seconds')
-          const lowerBound = targetTimestamp.add(-interval, 'seconds')
-
-          return this.livenessRepository.findTransactionWithinTimeRange(
-            this.projectId,
-            this.getTrackedTxSubtype(),
-            targetTimestamp,
-            lowerBound,
-          )
-        }),
+  ): Promise<number[] | undefined> {
+    const transactions =
+      await this.livenessRepository.getTransactionsWithinTimeRange(
+        this.projectId,
+        this.getTrackedTxSubtype(),
+        from,
+        to,
       )
-    ).filter(notUndefined)
 
     if (!transactions.length) {
       return undefined
     }
 
-    const finalityDelays = (
-      await Promise.all(
-        transactions.map(async (transaction) => {
-          return this.getFinality(transaction)
-        }),
-      )
-    ).flat()
+    const finalityDelays = []
+    const batchedTransactions = chunk(transactions, 10)
 
-    return finalityDelays
-  }
+    for (const batch of batchedTransactions) {
+      const delays = await Promise.all(batch.map((tx) => this.getFinality(tx)))
+      finalityDelays.push(delays.flat())
+    }
 
-  private getInterval(from: UnixTime, to: UnixTime, granularity: number) {
-    assert(to.toNumber() > from.toNumber())
-    return (to.toNumber() - from.toNumber()) / granularity
+    return finalityDelays.flat()
   }
 
   abstract getTrackedTxSubtype(): TrackedTxsConfigSubtype
-  abstract getFinality(transaction: {
-    txHash: string
-    timestamp: UnixTime
-  }): Promise<number[]>
+
+  /**
+   *
+   * @param transaction
+   * @returns Finality delays in seconds for each transaction
+   */
+  abstract getFinality(transaction: Transaction): Promise<number[]>
 }

@@ -12,6 +12,7 @@ export interface BridgesSummaryViewEntry {
   isArchived?: boolean
   isUpcoming?: boolean
   isVerified?: boolean
+  hasImplementationChanged?: boolean
   showProjectUnderReview?: boolean
   tvl?: ValueWithDisplayValue
   tvlBreakdown?: TokenBreakdownProps
