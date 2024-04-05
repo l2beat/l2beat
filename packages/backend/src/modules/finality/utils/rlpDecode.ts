@@ -12,7 +12,7 @@ export function rlpDecode(value: Bytes): RlpSerializable {
   return result
 }
 
-function rlpDecodePartial(value: Bytes): [RlpSerializable, Bytes] {
+export function rlpDecodePartial(value: Bytes): [RlpSerializable, Bytes] {
   assertEncoding(value.length !== 0)
   const firstByte = value[0]
 
