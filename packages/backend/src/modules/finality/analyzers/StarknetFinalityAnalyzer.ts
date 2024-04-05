@@ -12,7 +12,7 @@ import { StarknetClient } from '../../../peripherals/starknet/StarknetClient'
 import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { BaseAnalyzer } from './types/BaseAnalyzer'
 
-const ZBigNumber = z.instanceof(BigNumber).transform(Number)
+const ZBigNumber = z.instanceof(BigNumber).transform((n) => n.toBigInt())
 
 const StarknetStateUpdate = z.object({
   programOutput: z.array(ZBigNumber),
@@ -76,5 +76,5 @@ function extractBlockNumber(stateUpdate: StarknetStateUpdate): number {
     `Could not extract block number from starknet program output`,
   )
 
-  return maybeBlockNumber
+  return Number(maybeBlockNumber)
 }

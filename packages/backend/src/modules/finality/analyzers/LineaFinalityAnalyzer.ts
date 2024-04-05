@@ -33,9 +33,9 @@ const iface = new utils.Interface([calldataFn, blobFn])
 
 export class LineaFinalityAnalyzer extends BaseAnalyzer {
   constructor(
-    protected override readonly provider: RpcClient,
-    protected override readonly livenessRepository: LivenessRepository,
-    protected override readonly projectId: ProjectId,
+    provider: RpcClient,
+    livenessRepository: LivenessRepository,
+    projectId: ProjectId,
     private readonly l2Provider: RpcClient,
   ) {
     super(provider, livenessRepository, projectId)
