@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { subtractOne } from '../common/assessCount'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -32,6 +32,64 @@ export const parallel: Layer2 = orbitStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
+  trackedTxs: [
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0xb4795A0edae98d7820C37F06f6b858e7acb51DF8'),
+        selector: '0x8f111f3c',
+        functionSignature:
+          'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+        sinceTimestampInclusive: new UnixTime(1704122339),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0xb4795A0edae98d7820C37F06f6b858e7acb51DF8'),
+        selector: '0x6f12b0c9',
+        functionSignature:
+          'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder)',
+        sinceTimestampInclusive: new UnixTime(1704122339),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0xb4795A0edae98d7820C37F06f6b858e7acb51DF8'),
+        selector: '0xe0bc9729',
+        functionSignature:
+          'function addSequencerL2Batch(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+        sinceTimestampInclusive: new UnixTime(1704122339),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0xb6e0586616ebe79b2f86ddb32048c500d23b3ac3'),
+        selector: '0xa04cee60',
+        functionSignature:
+          'function updateSendRoot(bytes32 root, bytes32 l2BlockHash) external',
+        sinceTimestampInclusive: new UnixTime(1704122339),
+      },
+    },
+  ],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d'),
