@@ -1,10 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import {
-  assert,
-  assertUnreachable,
-  notUndefined,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { assert, assertUnreachable, notUndefined } from '@l2beat/shared-pure'
 
 import { Config } from '../../config'
 import { FinalityProjectConfig } from '../../config/features/finality'
@@ -205,7 +200,7 @@ function initializeConfigurations(
               configuration.projectId,
               getL2Rpc(configuration, peripherals, LoopringClient),
             ),
-            minTimestamp: new UnixTime(1616396742),
+            minTimestamp: configuration.minTimestamp,
           }
         default:
           assertUnreachable(configuration)
