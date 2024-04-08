@@ -3,6 +3,7 @@ import { ProjectId } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 import { Layer3 } from './types'
+import { subtractOne } from '../common/assessCount'
 
 const discovery = new ProjectDiscovery('degen', 'base')
 
@@ -26,8 +27,17 @@ export const degen: Layer3 = orbitStackL3({
         'https://warpcast.com/~/channel/degen',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
+  },
+  transactionApi: {
+    type: 'rpc',
+    defaultUrl: 'https://rpc.degen.tips',
+    defaultCallsPerMinute: 900,
+    assessCount: subtractOne,
+    startBlock: 1,
   },
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
+
 })
