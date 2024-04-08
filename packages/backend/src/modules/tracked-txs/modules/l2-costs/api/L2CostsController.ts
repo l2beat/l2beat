@@ -94,11 +94,11 @@ export class L2CostsController {
     this.taskQueue.addToFront()
     this.logger.info('Caching: initial caching scheduled')
 
-    const tenMinutes = 10 * 60 * 1000
+    const thirtyMinutes = 30 * 60 * 1000
     setInterval(() => {
       this.taskQueue.addIfEmpty()
       this.logger.info('Caching: refetch scheduled')
-    }, tenMinutes)
+    }, thirtyMinutes)
   }
 
   async getL2Costs(): Promise<L2CostsResult> {
