@@ -23,19 +23,28 @@ export interface IndexerConfigurationRecord {
   maxHeight: number | null
 }
 
+const BATCH_SIZE = 5_000
+
 export class IndexerConfigurationRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
     this.autoWrap<CheckConvention<IndexerConfigurationRepository>>(this)
   }
 
-  async addManySavedConfigurations(
+  async addOrUpdateManyConfigurations(
     configurations: IndexerConfigurationRecord[],
   ) {
-    const knex = await this.knex()
-
     const rows = configurations.map((record) => toRow(record))
-    await knex.batchInsert('indexer_configurations', rows, 5_000)
+
+    await this.runInTransaction(async (trx) => {
+      for (let i = 0; i < rows.length; i += BATCH_SIZE) {
+        const knex = await this.knex(trx)
+        await knex('indexer_configurations')
+          .insert(rows.slice(i, i + BATCH_SIZE))
+          .onConflict(['id'])
+          .merge()
+      }
+    })
 
     return rows.length
   }
@@ -65,7 +74,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
       .update({ current_height: currentHeight })
   }
 
-  async deleteSavedConfigurations(
+  async deleteConfigurationsExcluding(
     indexerId: string,
     configurationIds: string[],
   ) {
@@ -73,7 +82,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
 
     return knex('indexer_configurations')
       .where('indexer_id', indexerId)
-      .whereIn('id', configurationIds)
+      .whereNotIn('id', configurationIds)
       .delete()
   }
 

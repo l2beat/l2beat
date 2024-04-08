@@ -22,11 +22,11 @@ describeDatabase(IndexerConfigurationRepository.name, (database) => {
   })
 
   it(
-    IndexerConfigurationRepository.prototype.addManySavedConfigurations.name,
+    IndexerConfigurationRepository.prototype.addOrUpdateManyConfigurations.name,
     async () => {
       const records = [CONFIGURATIONS[0], CONFIGURATIONS[1]]
 
-      await repository.addManySavedConfigurations(records)
+      await repository.addOrUpdateManyConfigurations(records)
 
       const result = await repository.getAll()
 
@@ -39,7 +39,7 @@ describeDatabase(IndexerConfigurationRepository.name, (database) => {
     async () => {
       const records = CONFIGURATIONS
 
-      await repository.addManySavedConfigurations(records)
+      await repository.addOrUpdateManyConfigurations(records)
 
       const result = await repository.getSavedConfigurations('indexer-1')
 
@@ -52,7 +52,7 @@ describeDatabase(IndexerConfigurationRepository.name, (database) => {
     async () => {
       const records = CONFIGURATIONS
 
-      await repository.addManySavedConfigurations(records)
+      await repository.addOrUpdateManyConfigurations(records)
       await repository.updateSavedConfigurations(
         'indexer-1',
         records.slice(0, 3).map((r) => r.id), // test .whereIn clause
@@ -70,12 +70,12 @@ describeDatabase(IndexerConfigurationRepository.name, (database) => {
   )
 
   it(
-    IndexerConfigurationRepository.prototype.deleteSavedConfigurations.name,
+    IndexerConfigurationRepository.prototype.deleteConfigurationsExcluding.name,
     async () => {
       const records = CONFIGURATIONS
 
-      await repository.addManySavedConfigurations(records)
-      await repository.deleteSavedConfigurations('indexer-1', [
+      await repository.addOrUpdateManyConfigurations(records)
+      await repository.deleteConfigurationsExcluding('indexer-1', [
         records[0].id,
         records[2].id, // test .whereIn clause
       ])

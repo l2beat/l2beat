@@ -27,7 +27,7 @@ export class IndexerService {
 
   // #region ManagedMultiIndexer
 
-  async addSavedConfigurations<T>(
+  async upsertConfigurations<T>(
     indexerId: string,
     configurations: SavedConfiguration<T>[],
     encode: (value: T) => string,
@@ -37,7 +37,7 @@ export class IndexerService {
       properties: encode(config.properties),
     }))
 
-    await this.indexerConfigurationRepository.addManySavedConfigurations(
+    await this.indexerConfigurationRepository.addOrUpdateManyConfigurations(
       encoded.map((e) => ({ ...e, indexerId })),
     )
   }
@@ -74,11 +74,11 @@ export class IndexerService {
     )
   }
 
-  async deleteSavedConfigurations(
+  async persistOnlyUsedConfigurations(
     indexerId: string,
     configurationIds: string[],
   ): Promise<void> {
-    await this.indexerConfigurationRepository.deleteSavedConfigurations(
+    await this.indexerConfigurationRepository.deleteConfigurationsExcluding(
       indexerId,
       configurationIds,
     )

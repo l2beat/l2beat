@@ -23,7 +23,7 @@ describeDatabase(AmountRepository.name, (database) => {
   )
 
   beforeEach(async () => {
-    await configurationsRepository.addManySavedConfigurations(CONFIGURATIONS)
+    await configurationsRepository.addOrUpdateManyConfigurations(CONFIGURATIONS)
   })
 
   afterEach(async () => {

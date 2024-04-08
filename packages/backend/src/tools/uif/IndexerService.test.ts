@@ -65,10 +65,10 @@ describe(IndexerService.name, () => {
     )
   })
 
-  it(IndexerService.prototype.addSavedConfigurations.name, async () => {
+  it(IndexerService.prototype.upsertConfigurations.name, async () => {
     const indexerConfigurationsRepository =
       mockObject<IndexerConfigurationRepository>({
-        addManySavedConfigurations: async () => -1,
+        addOrUpdateManyConfigurations: async () => -1,
       })
 
     const indexerService = new IndexerService(
@@ -76,7 +76,7 @@ describe(IndexerService.name, () => {
       indexerConfigurationsRepository,
     )
 
-    await indexerService.addSavedConfigurations(
+    await indexerService.upsertConfigurations(
       'indexer',
       [
         {
@@ -98,7 +98,7 @@ describe(IndexerService.name, () => {
     )
 
     expect(
-      indexerConfigurationsRepository.addManySavedConfigurations,
+      indexerConfigurationsRepository.addOrUpdateManyConfigurations,
     ).toHaveBeenOnlyCalledWith([
       {
         id: 'a',
@@ -188,10 +188,10 @@ describe(IndexerService.name, () => {
     ).toHaveBeenOnlyCalledWith('indexer', ['a', 'b'], 123)
   })
 
-  it(IndexerService.prototype.deleteSavedConfigurations.name, async () => {
+  it(IndexerService.prototype.persistOnlyUsedConfigurations.name, async () => {
     const indexerConfigurationsRepository =
       mockObject<IndexerConfigurationRepository>({
-        deleteSavedConfigurations: async () => -1,
+        deleteConfigurationsExcluding: async () => -1,
       })
 
     const indexerService = new IndexerService(
@@ -199,10 +199,10 @@ describe(IndexerService.name, () => {
       indexerConfigurationsRepository,
     )
 
-    await indexerService.deleteSavedConfigurations('indexer', ['a', 'b'])
+    await indexerService.persistOnlyUsedConfigurations('indexer', ['a', 'b'])
 
     expect(
-      indexerConfigurationsRepository.deleteSavedConfigurations,
+      indexerConfigurationsRepository.deleteConfigurationsExcluding,
     ).toHaveBeenOnlyCalledWith('indexer', ['a', 'b'])
   })
 })
