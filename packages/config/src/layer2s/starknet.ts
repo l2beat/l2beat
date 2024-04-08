@@ -249,7 +249,7 @@ export const starknet: Layer2 = {
     costsWarning: {
       sentiment: 'warning',
       content:
-        'The proof verification costs are shared among all projects that use the Starkware SHARP verifier.',
+        'The proof verification costs are shared among all projects that use the Starkware SHARP verifier. Therefore, Starknet’s costs are currently overestimated.',
     },
   },
   config: {
