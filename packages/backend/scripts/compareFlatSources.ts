@@ -10,6 +10,7 @@ type ShortStackKey =
   | 'arbitrum'
   | 'loopring'
   | 'opstack'
+  | 'orbit'
   | 'ovm'
   | 'polygon'
   | 'starkex'
@@ -24,6 +25,7 @@ const shortStackToFullName: Record<
   arbitrum: 'Arbitrum',
   loopring: 'Loopring',
   opstack: 'OP Stack',
+  orbit: 'Arbitrum Orbit',
   ovm: 'OVM',
   polygon: 'Polygon',
   starkex: 'StarkEx',
@@ -37,8 +39,8 @@ const allShortStacks = Object.keys(shortStackToFullName)
 interface Config {
   subcommand: 'project' | 'all' | 'help'
   stack?: ShortStackKey
-  firstProjectName?: string
-  secondProjectName?: string
+  firstProjectPath?: string
+  secondProjectPath?: string
   forceTable?: boolean
 }
 
@@ -92,8 +94,8 @@ function parseCliParameters(): Config {
 
   const mode = args.shift()
   if (mode === 'project') {
-    const firstProjectName = args.shift()
-    const secondProjectName = args.shift()
+    const firstProjectPath = args.shift()
+    const secondProjectPath = args.shift()
 
     let forceTable = false
     if (args.includes('--force-table')) {
@@ -102,8 +104,8 @@ function parseCliParameters(): Config {
 
     return {
       subcommand: 'project',
-      firstProjectName,
-      secondProjectName,
+      firstProjectPath,
+      secondProjectPath,
       forceTable,
     }
   } else if (mode === 'all') {
@@ -135,7 +137,7 @@ function parseCliParameters(): Config {
 
 function printUsage(): void {
   console.log(
-    'Usage: yarn compare-flat-sources <project1> <project2> --force-table',
+    'Usage: yarn compare-flat-sources <chain:projectName> <chain:projectName> --force-table',
   )
 }
 
@@ -227,13 +229,17 @@ async function compareAllProjects(config: Config): Promise<void> {
 }
 
 async function compareTwoProjects(config: Config): Promise<void> {
-  assert(config.firstProjectName, 'project1 is required')
-  assert(config.secondProjectName, 'project2 is required')
+  assert(config.firstProjectPath, 'project1 is required')
+  assert(config.secondProjectPath, 'project2 is required')
+  const { name: firstProjectName, chain: firstProjectChain } =
+    decodeProjectPath(config.firstProjectPath)
+  const { name: secondProjectName, chain: secondProjectChain } =
+    decodeProjectPath(config.secondProjectPath)
 
-  const firstProject = await readProject(config.firstProjectName, 'ethereum')
-  const secondProject = await readProject(config.secondProjectName, 'ethereum')
-  assert(firstProject, `Project ${config.firstProjectName} not found`)
-  assert(secondProject, `Project ${config.secondProjectName} not found`)
+  const firstProject = await readProject(firstProjectName, firstProjectChain)
+  const secondProject = await readProject(secondProjectName, secondProjectChain)
+  assert(firstProject, `Project ${config.firstProjectPath} not found`)
+  assert(secondProject, `Project ${config.secondProjectPath} not found`)
 
   const matrix: Record<string, Record<string, string>> = {}
 
@@ -610,4 +616,14 @@ function needsToBe(expression: boolean, message: string): asserts expression {
     console.log(`${chalk.red('ERROR')}: ${message}`)
     process.exit(1)
   }
+}
+
+function decodeProjectPath(projectPath: string): {
+  name: string
+  chain: string
+} {
+  assert(projectPath.includes(':'), 'Invalid project path')
+
+  const [chain, name] = projectPath.split(':')
+  return { name, chain }
 }
