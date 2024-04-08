@@ -19,7 +19,7 @@ export function configureTooltips() {
     content: HTMLElement,
     isDisabledOnMobile: boolean,
   ) {
-    if (isDisabledOnMobile && isMobile()) return
+    if ((isDisabledOnMobile && isMobile()) || !content.innerHTML) return
     visible = true
     activeElement = element
     tooltip.classList.toggle('max-w-[300px]', !element.dataset.tooltipBig)

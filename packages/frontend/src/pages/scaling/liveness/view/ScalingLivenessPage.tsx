@@ -21,9 +21,6 @@ export interface ScalingLivenessPageProps {
   livenessView: ScalingLivenessViewProps
   navbar: NavbarProps
   footer: FooterProps
-  showActivity: boolean
-  showLiveness: boolean
-  showFinality: boolean
 }
 
 export function ScalingLivenessPage(props: ScalingLivenessPageProps) {
@@ -32,9 +29,7 @@ export function ScalingLivenessPage(props: ScalingLivenessPageProps) {
       <Navbar {...props.navbar} />
       <PageContent>
         <ScalingNavigationTabs
-          showActivity={props.showActivity}
-          showFinality={props.showFinality}
-          showLiveness={props.showLiveness}
+          features={props.navbar.features}
           selected="liveness"
         />
         <main>
