@@ -1,4 +1,4 @@
-import { layer2s as allLayer2s } from '@l2beat/config'
+import { layer2s as allLayer2s, layer3s as allLayer3s } from '@l2beat/config'
 import {
   ActivityApiChart,
   ActivityApiCharts,
@@ -26,7 +26,7 @@ function getMockActivityApiResponse(): ActivityApiResponse {
     combined: getMockActivityApiChart(),
     projects: {},
   }
-  for (const project of allLayer2s) {
+  for (const project of [...allLayer2s, ...allLayer3s]) {
     result.projects[project.id.toString()] = getMockActivityApiChart()
   }
   return result
