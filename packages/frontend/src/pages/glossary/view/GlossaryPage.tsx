@@ -70,10 +70,10 @@ function GlossaryItem(props: { entry: GlossaryEntry }) {
 
 function NavigationList(props: { entries: GlossaryEntry[] }) {
   return (
-    <nav className="custom-scrollbar sticky top-12 hidden max-h-[90vh] w-[1200px] overflow-y-scroll lg:block">
-      <ul className="flex flex-col gap-4">
+    <nav className="sticky top-12 hidden max-h-[90vh] w-[246px] min-w-[246px] overflow-y-scroll lg:block">
+      <ul className="flex flex-col gap-4 pr-6">
         {props.entries.map((entry) => (
-          <li key={entry.id} className="pr-1">
+          <li key={entry.id}>
             <a
               href={`#${entry.id}`}
               className="flex gap-1 text-base font-semibold text-gray-850 transition hover:text-pink-900 dark:text-white dark:opacity-80 dark:hover:text-pink-200 dark:hover:opacity-100"
