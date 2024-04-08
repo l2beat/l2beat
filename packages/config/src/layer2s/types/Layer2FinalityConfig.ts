@@ -11,6 +11,7 @@ export type Layer2FinalityConfig =
         | 'Starknet'
         | 'Arbitrum'
         | 'Loopring'
+        | 'Degate'
       minTimestamp: UnixTime
       lag: number
     }

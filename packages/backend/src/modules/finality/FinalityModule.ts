@@ -5,6 +5,7 @@ import { Config } from '../../config'
 import { FinalityProjectConfig } from '../../config/features/finality'
 import { BlobClient } from '../../peripherals/blobclient/BlobClient'
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
+import { DegateClient } from '../../peripherals/degate'
 import { LoopringClient } from '../../peripherals/loopring/LoopringClient'
 import { ClientClass, Peripherals } from '../../peripherals/Peripherals'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
@@ -199,6 +200,17 @@ function initializeConfigurations(
               livenessRepository,
               configuration.projectId,
               getL2Rpc(configuration, peripherals, LoopringClient),
+            ),
+            minTimestamp: configuration.minTimestamp,
+          }
+        case 'Degate':
+          return {
+            projectId: configuration.projectId,
+            analyzer: new LoopringFinalityAnalyzer(
+              ethereumRPC,
+              livenessRepository,
+              configuration.projectId,
+              getL2Rpc(configuration, peripherals, DegateClient),
             ),
             minTimestamp: configuration.minTimestamp,
           }
