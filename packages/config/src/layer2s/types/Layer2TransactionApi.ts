@@ -1,27 +1,8 @@
-import { UnixTime } from '@l2beat/shared-pure'
-
-export type AssessCount = (count: number, blockNumber: number) => number
-
-export interface SimpleTransactionApi<T extends string> {
-  type: T
-  defaultUrl?: string
-  defaultCallsPerMinute?: number
-}
-
-export interface RpcTransactionApi {
-  type: 'rpc'
-  defaultUrl?: string
-  defaultCallsPerMinute?: number
-  assessCount?: AssessCount
-  startBlock?: number
-}
-
-export interface StarkexTransactionApi {
-  type: 'starkex'
-  product: string[]
-  sinceTimestamp: UnixTime
-  resyncLastDays?: number
-}
+import {
+  RpcTransactionApi,
+  SimpleTransactionApi,
+  StarkexTransactionApi,
+} from '../../common'
 
 export type Layer2TransactionApi =
   | SimpleTransactionApi<'starknet'>

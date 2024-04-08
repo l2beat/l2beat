@@ -4,6 +4,7 @@ import {
   KnowledgeNugget,
   Layer3Provider,
   Milestone,
+  RpcTransactionApi,
   ScalingProjectConfig,
   ScalingProjectContracts,
   ScalingProjectDisplay,
@@ -27,7 +28,7 @@ export interface Layer3 {
   /** Information displayed about the layer3 on the frontend */
   display: Layer3Display
   /** Information required to calculate the stats of the layer3 */
-  config: ScalingProjectConfig
+  config: Layer3Config
   /** Risk view values for this layer3 */
   riskView: ScalingProjectRiskView
   /** Deep dive into layer3 technology */
@@ -45,6 +46,12 @@ export interface Layer3 {
   /** List of knowledge nuggets: useful articles worth reading */
   knowledgeNuggets?: KnowledgeNugget[]
 }
+
+export interface Layer3Config extends ScalingProjectConfig {
+  /** API parameters used to get transaction count */
+  transactionApi?: Layer3TransactionApi
+}
+export type Layer3TransactionApi = RpcTransactionApi
 
 export interface Layer3Display extends ScalingProjectDisplay {
   /** Technology provider */

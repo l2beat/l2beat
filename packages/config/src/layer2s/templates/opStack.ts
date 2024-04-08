@@ -32,7 +32,11 @@ import { subtractOne } from '../../common/assessCount'
 import { ChainConfig } from '../../common/ChainConfig'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
-import { type Layer3, type Layer3Display } from '../../layer3s'
+import {
+  type Layer3,
+  type Layer3Display,
+  Layer3TransactionApi,
+} from '../../layer3s/types'
 import { getStage } from '../common/stages/getStage'
 import {
   type Layer2,
@@ -96,6 +100,7 @@ export interface OpStackConfigL3 extends OpStackConfigCommon {
   display: Omit<Layer3Display, 'provider' | 'category' | 'dataAvailabilityMode'>
   hostChain: ProjectId
   nativeToken?: string
+  transactionApi?: Layer3TransactionApi
 }
 
 export function opStackCommon(
