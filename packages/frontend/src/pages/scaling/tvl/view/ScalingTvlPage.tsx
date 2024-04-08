@@ -16,9 +16,6 @@ import { ScalingTvlView, ScalingTvlViewProps } from './ScalingTvlView'
 export interface ScalingTvlPageProps {
   navbar: NavbarProps
   footer: FooterProps
-  showActivity: boolean
-  showLiveness: boolean
-  showFinality: boolean
   tvlView: ScalingTvlViewProps
 }
 
@@ -28,15 +25,13 @@ export function ScalingTvlPage(props: ScalingTvlPageProps) {
       <Navbar {...props.navbar} />
       <PageContent>
         <ScalingNavigationTabs
-          showActivity={props.showActivity}
-          showLiveness={props.showLiveness}
-          showFinality={props.showFinality}
+          features={props.navbar.features}
           selected="detailed"
         />
         <main className="mt-4 md:mt-12">
           <Chart
             settingsId="scaling-tvl"
-            initialType={{ type: 'layer2-detailed-tvl' }}
+            initialType={{ type: 'scaling-detailed-tvl' }}
             header="tvl"
           />
           <ScalingTvlView {...props.tvlView} />

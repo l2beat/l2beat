@@ -68,7 +68,9 @@ export interface Layer2Display extends ScalingProjectDisplay {
   liveness?: Layer2LivenessDisplay
   finality?: Layer2FinalityDisplay
   /** Warning for TVL */
-  tvlWarning?: Layer2TVLWarning
+  tvlWarning?: WarningWithSentiment
+  /** Warning for Costs */
+  costsWarning?: WarningWithSentiment
 }
 export interface Layer2LivenessDisplay {
   explanation?: string
@@ -97,7 +99,7 @@ export interface Layer2Config extends ScalingProjectConfig {
   finality?: Layer2FinalityConfig | 'coming soon'
 }
 
-export interface Layer2TVLWarning {
+export interface WarningWithSentiment {
   /** Content of the warning */
   content: string
   /** Color with which the warning should be displayed */

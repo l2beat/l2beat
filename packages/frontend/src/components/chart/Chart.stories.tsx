@@ -210,25 +210,6 @@ export const With7D: Story = {
   },
 }
 
-export const With30D: Story = {
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement)
-    await userEvent.click(canvas.getByDisplayValue('30D'))
-  },
-}
-
-export const With90D: Story = {
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement)
-    await userEvent.click(canvas.getByDisplayValue('90D'))
-  },
-  parameters: {
-    chromatic: {
-      modes: onlyDesktopModes,
-    },
-  },
-}
-
 export const With180D: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
@@ -241,59 +222,17 @@ export const With180D: Story = {
   },
 }
 
-export const With1Y: Story = {
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement)
-    await userEvent.click(canvas.getByDisplayValue('1Y'))
-  },
-}
-
-export const WithMax: Story = {
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement)
-    await userEvent.click(canvas.getByDisplayValue('MAX'))
-  },
-}
-
-export const TvlWithHeader: Story = {
+export const Tvl: Story = {
   args: {
     header: 'tvl',
-  },
-}
-
-export const TvlWithTokens: Story = {
-  args: {
     tokens,
   },
 }
 
-export const TvlWithActivity: Story = {
-  args: {
-    hasTvl: true,
-    hasActivity: true,
-    header: 'project',
-  },
-}
-
-export const DetailedTvlWithActivity: Story = {
-  args: {
-    initialType: { type: 'storybook-fake-detailed-tvl' },
-    hasTvl: true,
-    hasActivity: true,
-    header: 'project',
-  },
-}
-
-export const DetailedTvlWithHeader: Story = {
+export const DetailedTvl: Story = {
   args: {
     initialType: { type: 'storybook-fake-detailed-tvl' },
     header: 'tvl',
-  },
-}
-
-export const DetailedTvlWithTokens: Story = {
-  args: {
-    initialType: { type: 'storybook-fake-detailed-tvl' },
     tokens,
   },
 }
@@ -301,31 +240,13 @@ export const DetailedTvlWithTokens: Story = {
 export const Activity: Story = {
   args: {
     initialType: { type: 'storybook-fake-activity' },
-  },
-}
-
-export const ActivityWithoutEthTxs: Story = {
-  args: {
-    initialType: { type: 'storybook-fake-activity' },
-  },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement)
-    const checkbox =
-      canvas.queryByText('ETH Mainnet Transactions') ??
-      canvas.getByText('ETH Txs')
-    await userEvent.click(checkbox)
-  },
-}
-
-export const ActivityWithHeader: Story = {
-  args: {
-    initialType: { type: 'storybook-fake-activity' },
     header: 'activity',
   },
 }
 
-export const WithProjectHeader: Story = {
+export const Costs: Story = {
   args: {
-    header: 'project',
+    initialType: { type: 'storybook-fake-costs' },
+    header: 'costs',
   },
 }

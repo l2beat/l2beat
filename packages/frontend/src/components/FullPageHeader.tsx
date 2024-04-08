@@ -12,7 +12,6 @@ export function FullPageHeader(props: Props) {
   return (
     <header className="bg-pure-white py-24 dark:bg-zinc-900">
       <PageContent
-        type="subpage"
         className={cn(
           'flex items-center justify-center',
           props.pageContentClassName,
