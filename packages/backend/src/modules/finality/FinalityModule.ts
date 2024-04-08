@@ -12,6 +12,7 @@ import { ApplicationModule } from '../ApplicationModule'
 import { LivenessRepository } from '../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { TrackedTxsConfigsRepository } from '../tracked-txs/repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsIndexer } from '../tracked-txs/TrackedTxsIndexer'
+import { ArbitrumFinalityAnalyzer } from './analyzers/arbitrum/ArbitrumFinalityAnalyzer'
 import { LineaFinalityAnalyzer } from './analyzers/LineaFinalityAnalyzer'
 import { OpStackFinalityAnalyzer } from './analyzers/opStack/OpStackFinalityAnalyzer'
 import { ScrollFinalityAnalyzer } from './analyzers/ScrollFinalityAnalyzer'
@@ -140,6 +141,18 @@ function initializeConfigurations(
                 l2BlockTimeSeconds: configuration.l2BlockTimeSeconds,
                 genesisTimestamp: configuration.genesisTimestamp,
               },
+            ),
+            minTimestamp: configuration.minTimestamp,
+          }
+        case 'Arbitrum':
+          return {
+            projectId: configuration.projectId,
+            analyzer: new ArbitrumFinalityAnalyzer(
+              blobClient,
+              logger,
+              ethereumRPC,
+              livenessRepository,
+              configuration.projectId,
             ),
             minTimestamp: configuration.minTimestamp,
           }
