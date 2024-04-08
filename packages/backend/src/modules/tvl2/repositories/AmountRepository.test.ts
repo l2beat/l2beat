@@ -7,14 +7,9 @@ import {
   IndexerConfigurationRecord,
   IndexerConfigurationRepository,
 } from '../../../tools/uif/IndexerConfigurationRepository'
-import { IndexerStateRepository } from '../../../tools/uif/IndexerStateRepository'
 import { AmountRecord, AmountRepository } from './AmountRepository'
 
 describeDatabase(AmountRepository.name, (database) => {
-  const indexerStateRepository = new IndexerStateRepository(
-    database,
-    Logger.SILENT,
-  )
   const configurationsRepository = new IndexerConfigurationRepository(
     database,
     Logger.SILENT,
@@ -28,12 +23,11 @@ describeDatabase(AmountRepository.name, (database) => {
   ]
 
   beforeEach(async () => {
-    await indexerStateRepository.add(mockIndexer(CONFIGURATIONS[0].indexerId))
     await configurationsRepository.addOrUpdateManyConfigurations(CONFIGURATIONS)
   })
 
   afterEach(async () => {
-    await indexerStateRepository.deleteAll()
+    await configurationsRepository.deleteAll()
   })
 
   describe(AmountRepository.prototype.addMany.name, () => {
@@ -103,12 +97,5 @@ function mock(
     maxHeight: null,
     properties: '',
     ...record,
-  }
-}
-
-function mockIndexer(indexerId: string) {
-  return {
-    indexerId,
-    safeHeight: 0,
   }
 }
