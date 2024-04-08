@@ -55,6 +55,16 @@ export class FinalityIndexer extends ChildIndexer {
       return to
     }
 
+    const now = UnixTime.now().toStartOf('day')
+    if (targetTimestamp.toNumber() < now.add(-1, 'days').toNumber()) {
+      this.logger.debug('Update skipped: target in the past', {
+        from,
+        to,
+        targetTimestamp,
+      })
+      return to
+    }
+
     const finalityData = await this.getFinalityData(
       targetTimestamp,
       this.configuration,

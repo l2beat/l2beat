@@ -81,6 +81,28 @@ describe(FinalityIndexer.name, () => {
       expect(result).toEqual(to)
     })
 
+    it('skips updates for target in the past', async () => {
+      const finalityRepository = mockObject<FinalityRepository>({
+        add: mockFn().resolvesToOnce(1),
+      })
+      const runtimeConfiguration = getMockFinalityRuntimeConfiguration([2, 4])
+      const finalityIndexer = getMockFinalityIndexer({
+        runtimeConfiguration,
+        finalityRepository,
+      })
+      finalityIndexer.isConfigurationSynced = mockFn().resolvesToOnce(false)
+
+      const start = UnixTime.now().add(-3, 'days')
+
+      const from = start.toNumber()
+      const to = start.add(1, 'days').toNumber()
+
+      // https://linear.app/l2beat/issue/L2B-4752/refactor-finalityindexer-logic-to-allow-analyzers-different
+      // TODO: refactor tests after uif update
+      await finalityIndexer.update(from + 1, to)
+      expect(finalityRepository.add).not.toHaveBeenCalled()
+    })
+
     it('correctly syncs not synced project', async () => {
       const finalityRepository = mockObject<FinalityRepository>({
         add: mockFn().resolvesToOnce(1),
@@ -92,14 +114,15 @@ describe(FinalityIndexer.name, () => {
       })
       finalityIndexer.isConfigurationSynced = mockFn().resolvesToOnce(false)
 
-      const from = MIN_TIMESTAMP.toNumber()
-      const to = MIN_TIMESTAMP.add(1, 'days').toNumber()
+      const start = UnixTime.now().toStartOf('day')
+      const from = start.toNumber()
+      const to = start.add(1, 'days').toNumber()
 
       // TODO: refactor tests after uif update
       await finalityIndexer.update(from + 1, to)
       expect(finalityRepository.add).toHaveBeenCalledWith({
         projectId: ProjectId('project'),
-        timestamp: MIN_TIMESTAMP.add(1, 'days'),
+        timestamp: start.add(1, 'days'),
         averageTimeToInclusion: 3,
         minimumTimeToInclusion: 2,
         maximumTimeToInclusion: 4,
