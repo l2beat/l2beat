@@ -89,6 +89,7 @@ export class ChartSettingsManager {
         }
       case 'scaling-costs':
       case 'project-costs':
+      case 'storybook-fake-costs':
         return {
           useLogScale: false,
           unit: 'USD',

@@ -265,4 +265,5 @@ export const ChartType = z.discriminatedUnion('type', [
   z.object({ type: z.literal('storybook-fake-tvl') }),
   z.object({ type: z.literal('storybook-fake-activity') }),
   z.object({ type: z.literal('storybook-fake-detailed-tvl') }),
+  z.object({ type: z.literal('storybook-fake-costs') }),
 ])

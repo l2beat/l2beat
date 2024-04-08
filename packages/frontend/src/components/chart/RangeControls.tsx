@@ -84,6 +84,7 @@ function getOptions(chartType: ChartType): RadioGroupOption[] {
       ]
     case 'scaling-costs':
     case 'project-costs':
+    case 'storybook-fake-costs':
       return [
         {
           value: '1D',

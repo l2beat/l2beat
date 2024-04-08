@@ -94,6 +94,7 @@ export class ChartDataController {
         }
       case 'scaling-costs':
       case 'project-costs':
+      case 'storybook-fake-costs':
         return {
           type: 'costs',
           values: CostsResponse.parse(data),
@@ -155,6 +156,8 @@ export function getChartUrl<T extends ChartType>(chartType: T) {
       return '/fake-tvl.json'
     case 'storybook-fake-activity':
       return '/fake-activity.json'
+    case 'storybook-fake-costs':
+      return '/fake-costs.json'
     default:
       assertUnreachable(chartType)
   }

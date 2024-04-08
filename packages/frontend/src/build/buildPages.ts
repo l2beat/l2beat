@@ -26,7 +26,7 @@ import {
   getManuallyVerifiedContracts,
   getVerificationStatus,
 } from './api/getVerificationStatus'
-import { activitySanityCheck,tvlSanityCheck } from './api/sanityCheck'
+import { activitySanityCheck, tvlSanityCheck } from './api/sanityCheck'
 import { JsonHttpClient } from './caching/JsonHttpClient'
 import { getConfig } from './config'
 import { getCommonFeatures } from './config/getCommonFeatures'
