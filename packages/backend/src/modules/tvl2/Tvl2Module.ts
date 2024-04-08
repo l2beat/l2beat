@@ -9,9 +9,9 @@ import {
 
 import { Config } from '../../config'
 import { Tvl2Config } from '../../config/Config'
-import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { Clock } from '../../tools/Clock'
+import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import { ApplicationModule } from '../ApplicationModule'
 import { HourlyIndexer } from '../tracked-txs/HourlyIndexer'
 import { createTvl2StatusRouter } from './api/Tvl2StatusRouter'

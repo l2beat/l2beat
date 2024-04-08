@@ -3,12 +3,16 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { IndexerStateRow } from 'knex/types/tables'
 
-import { BaseRepository, CheckConvention } from '../BaseRepository'
-import { Database } from '../Database'
+import {
+  BaseRepository,
+  CheckConvention,
+} from '../../peripherals/database/BaseRepository'
+import { Database } from '../../peripherals/database/Database'
 
 export interface IndexerStateRecord {
   indexerId: string
   safeHeight: number
+  // TODO: phase out minTimestamp
   minTimestamp?: UnixTime
 }
 
@@ -16,6 +20,17 @@ export class IndexerStateRepository extends BaseRepository {
   constructor(database: Database, logger: Logger) {
     super(database, logger)
     this.autoWrap<CheckConvention<IndexerStateRepository>>(this)
+  }
+
+  async add(
+    record: IndexerStateRecord,
+    trx?: Knex.Transaction,
+  ): Promise<string> {
+    const knex = await this.knex(trx)
+
+    await knex('indexer_state').insert(toRow(record))
+
+    return `[${record.indexerId}]: ${record.safeHeight}`
   }
 
   async findIndexerState(
@@ -42,16 +57,7 @@ export class IndexerStateRepository extends BaseRepository {
       .update({ safe_height: safeHeight })
   }
 
-  async add(
-    record: IndexerStateRecord,
-    trx?: Knex.Transaction,
-  ): Promise<string> {
-    const knex = await this.knex(trx)
-
-    await knex('indexer_state').insert(toRow(record))
-
-    return `[${record.indexerId}]: ${record.safeHeight}`
-  }
+  // #region methods used only in tests
 
   async getAll(): Promise<IndexerStateRecord[]> {
     const knex = await this.knex()
@@ -63,6 +69,8 @@ export class IndexerStateRepository extends BaseRepository {
     const knex = await this.knex()
     return knex('indexer_state').delete()
   }
+
+  // #endregion
 }
 
 function toRecord(row: IndexerStateRow): IndexerStateRecord {
