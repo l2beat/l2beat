@@ -11,10 +11,10 @@ describeDatabase(IndexerConfigurationRepository.name, (database) => {
   const repository = new IndexerConfigurationRepository(database, Logger.SILENT)
 
   const CONFIGURATIONS = [
-    mock({ id: 'a', indexerId: 'indexer-1' }),
-    mock({ id: 'b', indexerId: 'indexer-1' }),
-    mock({ id: 'c', indexerId: 'indexer-2' }),
-    mock({ id: 'd', indexerId: 'indexer-3' }),
+    mock({ id: 'a'.repeat(12), indexerId: 'indexer-1' }),
+    mock({ id: 'b'.repeat(12), indexerId: 'indexer-1' }),
+    mock({ id: 'c'.repeat(12), indexerId: 'indexer-2' }),
+    mock({ id: 'd'.repeat(12), indexerId: 'indexer-3' }),
   ]
 
   beforeEach(async () => {
@@ -76,8 +76,9 @@ describeDatabase(IndexerConfigurationRepository.name, (database) => {
 
       await repository.addOrUpdateManyConfigurations(records)
       await repository.deleteConfigurationsExcluding('indexer-1', [
-        records[0].id,
-        records[2].id, // test .whereIn clause
+        CONFIGURATIONS[1].id,
+        CONFIGURATIONS[2].id,
+        CONFIGURATIONS[3].id,
       ])
 
       const result = await repository.getAll()
