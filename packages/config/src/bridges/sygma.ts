@@ -37,8 +37,8 @@ export const sygma: Bridge = {
       ],
       apps: [
         `https://subbridge.io`,
-        'https://transfer-ui.test.buildwithsygma.com/transfer',
-        'https://faucet-ui-stage.buildwithsygma.com/',
+        'https://docs.buildwithsygma.com/environments/testnet/obtain-testnet-tokens',
+        'https://sygma-react-widget.pages.dev/',
         'https://validator.faucet.chainsafe.dev/upload',
       ],
     },
@@ -103,7 +103,7 @@ export const sygma: Bridge = {
     destinationToken: {
       name: 'Destination tokens',
       description:
-        'Tokens received on the destination chain can be either wrapped tokens or native tokens depending on the specific implementation. For example, on Phalas integrated use-case with Sygma, native tokens are burned in Substrate/Polkadot and unlocked on EVM, and vice versa where tokens get locked on EVM and minted in Substrate/Polkadot.',
+        'Tokens received on the destination chain can be either wrapped tokens or native tokens depending on the specific implementation. For example, on Phalas integrated use-case with Sygma, native tokens are locked in Substrate/Polkadot and unlocked on EVM, and vice versa where tokens get locked on EVM and released in Substrate/Polkadot.',
       risks: [],
       references: [],
     },
