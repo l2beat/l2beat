@@ -225,6 +225,7 @@ describe(L2CostsController.name, () => {
         transactions,
         combinedHourlyMap,
         combinedDailyMap,
+        START_OF_HOUR,
       )
 
       // we mock a normal transaction every 30 minutes, and once per hour with blob
