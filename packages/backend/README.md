@@ -237,5 +237,5 @@ The `/status` endpoints were created to see the current state of our backend.
 
 - `/activity/status`
 - `/status/discovery`
-- `/status/liveness`
+- `/status/tracked-txs`
 - `/status/tvl`

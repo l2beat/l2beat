@@ -14,7 +14,7 @@ export function ChartHover() {
         data-role="chart-hover-contents"
         className={cn(
           'absolute z-50 rounded-lg px-3 py-2 text-right text-2xs md:px-4 md:py-3 md:text-xs',
-          'bg-gray-200 shadow-[0_4px_8px_rgba(0,0,0,0.25)] dark:bg-zinc-700',
+          'bg-white shadow-[0_4px_8px_rgba(0,0,0,0.25)] dark:bg-neutral-700',
           'pointer-events-none select-none',
           'flex flex-col items-start justify-center',
           'transition-[bottom] duration-[50ms] ease-linear',

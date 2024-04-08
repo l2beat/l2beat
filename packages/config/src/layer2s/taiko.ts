@@ -1,7 +1,7 @@
-import { upcoming } from './templates/upcoming'
+import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
-export const taiko: Layer2 = upcoming({
+export const taiko: Layer2 = upcomingL2({
   id: 'taiko',
   display: {
     name: 'Taiko',

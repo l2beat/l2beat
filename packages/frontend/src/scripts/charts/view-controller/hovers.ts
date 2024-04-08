@@ -83,22 +83,60 @@ export function renderDetailedTvlHover(
     }),
     renderHorizontalSeparator(),
     renderDetailedRow({
-      title: 'Canonically Bridged',
-      shortTitle: 'Canonical',
+      title: 'Canonical',
       value: formatCurrency(selectedCbv, currency),
-      icon: 'purpleCircle',
+      icon: 'roundedPurpleSquare',
     }),
     renderDetailedRow({
-      title: 'Externally Bridged',
-      shortTitle: 'External',
+      title: 'External',
       value: formatCurrency(selectedEbv, currency),
-      icon: 'yellowTriangle',
+      icon: 'roundedYellowSquare',
     }),
     renderDetailedRow({
-      title: 'Natively Minted',
-      shortTitle: 'Native',
+      title: 'Native',
       value: formatCurrency(selectedNmv, currency),
-      icon: 'pinkSquare',
+      icon: 'roundedPinkSquare',
+    }),
+  ])
+}
+
+export interface CostsData {
+  date: string
+  total: string
+  calldata: string
+  blobs: string | undefined
+  compute: string
+  overhead: string
+}
+
+export function renderCostsHover(data: CostsData) {
+  return renderHover([
+    renderDateRow(data.date),
+    renderDetailedRow({
+      title: 'Total',
+      value: data.total,
+    }),
+    renderHorizontalSeparator(),
+    renderDetailedRow({
+      title: 'Calldata',
+      value: data.calldata,
+      icon: 'roundedBlueSquare',
+    }),
+    data.blobs &&
+      renderDetailedRow({
+        title: 'Blobs',
+        value: data.blobs,
+        icon: 'roundedLightYellowSquare',
+      }),
+    renderDetailedRow({
+      title: 'Compute',
+      value: data.compute,
+      icon: 'roundedPinkSquare',
+    }),
+    renderDetailedRow({
+      title: 'Overhead',
+      value: data.overhead,
+      icon: 'roundedPurpleSquare',
     }),
   ])
 }
@@ -177,9 +215,9 @@ export function renderTokenTvlHover(
   tokenType: TokenInfo['type'],
 ) {
   const styles: Record<TokenInfo['type'], PointStyle | undefined> = {
-    CBV: 'purpleCircle',
-    EBV: 'yellowTriangle',
-    NMV: 'pinkSquare',
+    CBV: 'roundedPurpleSquare',
+    EBV: 'roundedYellowSquare',
+    NMV: 'roundedPinkSquare',
     regular: undefined,
   }
   const style = styles[tokenType]
@@ -205,7 +243,7 @@ function renderHover(rows: (string | undefined | false)[]) {
 }
 
 function renderDateRow(date: string) {
-  return `<div class="mb-1">${date}</div>`
+  return `<div class="mb-1 whitespace-nowrap">${date}</div>`
 }
 
 function renderHorizontalSeparator() {
@@ -225,7 +263,7 @@ function renderDetailedRow(props: DetailedRowProps) {
     : ''
 
   const valueHtml = props.value
-    ? `<span class="font-bold tabular-nums">${props.value}</span>`
+    ? `<span class="font-bold tabular-nums whitespace-nowrap">${props.value}</span>`
     : ''
   return `
     <div class="flex w-full justify-between items-center gap-2">
@@ -243,7 +281,7 @@ function renderDetailedRow(props: DetailedRowProps) {
 
 function renderIcon(icon?: PointStyle | 'gap') {
   if (icon === 'gap') {
-    return `<div class="inline-block w-2 h-2"></div>`
+    return `<div class="inline-block size-4"></div>`
   }
 
   if (!icon) return ''
@@ -270,9 +308,9 @@ function renderIcon(icon?: PointStyle | 'gap') {
 }
 
 function renderNameRow(name: string) {
-  return `<div class="max-w-[216px] mb-2 font-bold flex flex-wrap"><svg class="absolute mt-[2px] md:mt-1 dark:fill-green-500 dark:stroke-white fill-green-600 stroke-green-200" width="11" height="10" viewBox="0 0 11 10">
-  <rect x="5.24268" y="0.0502174" width="7" height="7" rx="1.5" transform="rotate(45 5.24268 0.0502174)"/>
-  </svg><span class='ml-4 text-left'>${name}</span></div>`
+  return `<div class="max-w-[216px] mb-2 font-bold flex flex-wrap">
+    <div class="absolute mt-[2px] md:mt-1 size-2.5 rotate-45 border-2 border-green-500 bg-green-700"></div>
+  <span class='ml-4 text-left'>${name}</span></div>`
 }
 
 function renderDescriptionRow(description: string) {

@@ -1,8 +1,8 @@
 {
   "name": "socket",
   "chain": "ethereum",
-  "blockNumber": 19532195,
-  "configHash": "0x6e824ba8f50c887937e01f440395a68559e99b55c0b8825ecd2b9a21c6f07f41",
+  "blockNumber": 19588327,
+  "configHash": "0x1aec9cadcb312ecf917cf685c9fc6a27476a221c485084adc6c153673c01824e",
   "version": 3,
   "contracts": [
     {
@@ -26,8 +26,8 @@
         "SEND_MESSAGE_EVENT_SIG": "0x8c5261668696ce22758910d05bab8f186d6eb247ceac2af2e82c7dc17669b036",
         "signatureVerifier__": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
         "socket__": "0x943AC2775928318653e91d350574436A1b9b16f9",
-        "switchboardFees": 4692138535656000,
-        "verificationOverheadFees": 3413063524000
+        "switchboardFees": 2771099381232000,
+        "verificationOverheadFees": 2967500276000
       },
       "derivedName": "PolygonL1Switchboard"
     },
@@ -50,8 +50,8 @@
         "remoteNativeSwitchboard": "0x9Cf7443685827419B0067fb2471C24969EAA716C",
         "signatureVerifier__": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
         "socket__": "0x943AC2775928318653e91d350574436A1b9b16f9",
-        "switchboardFees": 4944392890456500,
-        "verificationOverheadFees": 1538005352000
+        "switchboardFees": 2771099381232000,
+        "verificationOverheadFees": 1766873212000
       },
       "derivedName": "OptimismSwitchboard"
     },
@@ -88,7 +88,7 @@
         "remoteNativeSwitchboard": "0x1D6811553Aff8231aDd04A84F300b89E15D99EA4",
         "signatureVerifier__": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
         "socket__": "0x943AC2775928318653e91d350574436A1b9b16f9",
-        "switchboardFees": 4944392890456500,
+        "switchboardFees": 2526296722209000,
         "verificationOverheadFees": 52013156000
       },
       "derivedName": "OptimismSwitchboard"
@@ -119,6 +119,19 @@
       "derivedName": "GnosisSafe"
     },
     {
+      "name": "WBTC Vault",
+      "address": "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1705069499,
+      "values": {
+        "nominee": "0x0000000000000000000000000000000000000000",
+        "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+      },
+      "derivedName": "Vault"
+    },
+    {
       "name": "Hasher",
       "address": "0x5C71beE4a6b0D617D8c3d107D331292741789E27",
       "upgradeability": {
@@ -144,6 +157,19 @@
       "derivedName": "Vault"
     },
     {
+      "name": "SNX Vault",
+      "address": "0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1708294763,
+      "values": {
+        "nominee": "0x0000000000000000000000000000000000000000",
+        "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+      },
+      "derivedName": "Vault"
+    },
+    {
       "name": "Socket",
       "address": "0x943AC2775928318653e91d350574436A1b9b16f9",
       "upgradeability": {
@@ -154,7 +180,7 @@
         "capacitorFactory__": "0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a",
         "chainSlug": 1,
         "executionManager__": "0xFB4dcD94A051a1D2cF3EaF713a2Ef686653884E0",
-        "globalMessageCount": 540,
+        "globalMessageCount": 555,
         "hasher__": "0x5C71beE4a6b0D617D8c3d107D331292741789E27",
         "inboundSwitchboards": [
           "0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287",
@@ -190,12 +216,54 @@
           "0x8F4e67C61232167584333e23D7d67BD73d80a4F5",
           "0x4ab7B94BA3f3CF69354Eb2f6b5E856DC61e13660",
           "0x727aD65db6aE99DB5Dbee8F202846DD6009bf6D5",
-          "0xdCcFb24f983586144c085426dbfa3414045E19a3"
+          "0xdCcFb24f983586144c085426dbfa3414045E19a3",
+          "0x6A769e25081396a49a6702758d0830920ac1163A"
         ],
         "transmitManager__": "0xeD037aFBffC65a94E9CC592947E851FB2f730341",
         "version": "0x484f1c5889188a0a81068ce8c49d8f7c3b3f1b0c1723b50ebd656a8d4f99e356"
       },
       "derivedName": "Socket"
+    },
+    {
+      "name": "WETH Vault 2",
+      "address": "0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1709063015,
+      "values": {
+        "nominee": "0x0000000000000000000000000000000000000000",
+        "owner": "0x3B88D6a4CCBD93c22c211C7f6e3ea8b1D30f81BF",
+        "token__": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      },
+      "derivedName": "Vault"
+    },
+    {
+      "name": "WETH9",
+      "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1513077455,
+      "values": {
+        "decimals": 18,
+        "name": "Wrapped Ether",
+        "symbol": "WETH",
+        "totalSupply": "2997542922595290340510005"
+      }
+    },
+    {
+      "name": "WETH Vault",
+      "address": "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1705069895,
+      "values": {
+        "nominee": "0x0000000000000000000000000000000000000000",
+        "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+      },
+      "derivedName": "Vault"
     },
     {
       "name": "FastSwitchboard",
@@ -241,10 +309,23 @@
         "remoteNativeSwitchboard": "0xaB2F8c1588ACA57bC2909512B645a860C65770d3",
         "signatureVerifier__": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
         "socket__": "0x943AC2775928318653e91d350574436A1b9b16f9",
-        "switchboardFees": 4523596565943000,
+        "switchboardFees": 2559851731515000,
         "verificationOverheadFees": 6500000000000
       },
       "derivedName": "ArbitrumL1Switchboard"
+    },
+    {
+      "name": "wstETH Vault",
+      "address": "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1709517155,
+      "values": {
+        "nominee": "0x0000000000000000000000000000000000000000",
+        "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+      },
+      "derivedName": "Vault"
     },
     {
       "name": "TransmitManager",
@@ -290,6 +371,7 @@
     }
   ],
   "eoas": [
+    "0x3B88D6a4CCBD93c22c211C7f6e3ea8b1D30f81BF",
     "0x4cEa25e9c999E69F45765539783D149024f99F12",
     "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",
     "0x76E6F5C2A64df0F53077602642B79a45D5Ba6D52",
@@ -517,6 +599,40 @@
     "0x246d38588b16Dd877c558b245e6D5a711C649fCF": [
       "constructor(address _masterCopy)"
     ],
+    "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab": [
+      "constructor(address token_)",
+      "error AmountOutsideLimit()",
+      "error ConnectorUnavailable()",
+      "error InvalidTokenAddress()",
+      "error OnlyNominee()",
+      "error OnlyOwner()",
+      "error ZeroAddress()",
+      "error ZeroAmount()",
+      "event LimitParamsUpdated(tuple(bool isLock, address connector, uint256 maxLimit, uint256 ratePerSecond)[] updates)",
+      "event OwnerClaimed(address indexed claimer)",
+      "event OwnerNominated(address indexed nominee)",
+      "event PendingTokensTransferred(address connector, address receiver, uint256 unlockedAmount, uint256 pendingAmount)",
+      "event TokensDeposited(address connector, address depositor, address receiver, uint256 depositAmount)",
+      "event TokensPending(address connector, address receiver, uint256 pendingAmount, uint256 totalPendingAmount)",
+      "event TokensUnlocked(address connector, address receiver, uint256 unlockedAmount)",
+      "function claimOwner()",
+      "function connectorPendingUnlocks(address) view returns (uint256)",
+      "function depositToAppChain(address receiver_, uint256 amount_, uint256 msgGasLimit_, address connector_) payable",
+      "function getCurrentLockLimit(address connector_) view returns (uint256)",
+      "function getCurrentUnlockLimit(address connector_) view returns (uint256)",
+      "function getLockLimitParams(address connector_) view returns (tuple(uint256 lastUpdateTimestamp, uint256 ratePerSecond, uint256 maxLimit, uint256 lastUpdateLimit))",
+      "function getMinFees(address connector_, uint256 msgGasLimit_) view returns (uint256 totalFees)",
+      "function getUnlockLimitParams(address connector_) view returns (tuple(uint256 lastUpdateTimestamp, uint256 ratePerSecond, uint256 maxLimit, uint256 lastUpdateLimit))",
+      "function nominateOwner(address nominee_)",
+      "function nominee() view returns (address)",
+      "function owner() view returns (address)",
+      "function pendingUnlocks(address, address) view returns (uint256)",
+      "function receiveInbound(bytes payload_)",
+      "function rescueFunds(address token_, address rescueTo_, uint256 amount_)",
+      "function token__() view returns (address)",
+      "function unlockPendingFor(address receiver_, address connector_)",
+      "function updateLimitParams(tuple(bool isLock, address connector, uint256 maxLimit, uint256 ratePerSecond)[] updates_)"
+    ],
     "0x5C71beE4a6b0D617D8c3d107D331292741789E27": [
       "constructor(address owner_)",
       "error InvalidTokenAddress()",
@@ -568,6 +684,40 @@
       "function rescueFunds(address token_, address rescueTo_, uint256 amount_)",
       "function token__() view returns (address)",
       "function transferOwnership(address newOwner)",
+      "function unlockPendingFor(address receiver_, address connector_)",
+      "function updateLimitParams(tuple(bool isLock, address connector, uint256 maxLimit, uint256 ratePerSecond)[] updates_)"
+    ],
+    "0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592": [
+      "constructor(address token_)",
+      "error AmountOutsideLimit()",
+      "error ConnectorUnavailable()",
+      "error InvalidTokenAddress()",
+      "error OnlyNominee()",
+      "error OnlyOwner()",
+      "error ZeroAddress()",
+      "error ZeroAmount()",
+      "event LimitParamsUpdated(tuple(bool isLock, address connector, uint256 maxLimit, uint256 ratePerSecond)[] updates)",
+      "event OwnerClaimed(address indexed claimer)",
+      "event OwnerNominated(address indexed nominee)",
+      "event PendingTokensTransferred(address connector, address receiver, uint256 unlockedAmount, uint256 pendingAmount)",
+      "event TokensDeposited(address connector, address depositor, address receiver, uint256 depositAmount)",
+      "event TokensPending(address connector, address receiver, uint256 pendingAmount, uint256 totalPendingAmount)",
+      "event TokensUnlocked(address connector, address receiver, uint256 unlockedAmount)",
+      "function claimOwner()",
+      "function connectorPendingUnlocks(address) view returns (uint256)",
+      "function depositToAppChain(address receiver_, uint256 amount_, uint256 msgGasLimit_, address connector_) payable",
+      "function getCurrentLockLimit(address connector_) view returns (uint256)",
+      "function getCurrentUnlockLimit(address connector_) view returns (uint256)",
+      "function getLockLimitParams(address connector_) view returns (tuple(uint256 lastUpdateTimestamp, uint256 ratePerSecond, uint256 maxLimit, uint256 lastUpdateLimit))",
+      "function getMinFees(address connector_, uint256 msgGasLimit_) view returns (uint256 totalFees)",
+      "function getUnlockLimitParams(address connector_) view returns (tuple(uint256 lastUpdateTimestamp, uint256 ratePerSecond, uint256 maxLimit, uint256 lastUpdateLimit))",
+      "function nominateOwner(address nominee_)",
+      "function nominee() view returns (address)",
+      "function owner() view returns (address)",
+      "function pendingUnlocks(address, address) view returns (uint256)",
+      "function receiveInbound(bytes payload_)",
+      "function rescueFunds(address token_, address rescueTo_, uint256 amount_)",
+      "function token__() view returns (address)",
       "function unlockPendingFor(address receiver_, address connector_)",
       "function updateLimitParams(tuple(bool isLock, address connector, uint256 maxLimit, uint256 ratePerSecond)[] updates_)"
     ],
@@ -648,6 +798,91 @@
       "function transmitManager__() view returns (address)",
       "function useSiblingSwitchboard(uint32 siblingChainSlug_, address siblingSwitchboard_)",
       "function version() view returns (bytes32)"
+    ],
+    "0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa": [
+      "constructor(address token_)",
+      "error AmountOutsideLimit()",
+      "error ConnectorUnavailable()",
+      "error InvalidTokenAddress()",
+      "error OnlyNominee()",
+      "error OnlyOwner()",
+      "error ZeroAddress()",
+      "error ZeroAmount()",
+      "event LimitParamsUpdated(tuple(bool isLock, address connector, uint256 maxLimit, uint256 ratePerSecond)[] updates)",
+      "event OwnerClaimed(address indexed claimer)",
+      "event OwnerNominated(address indexed nominee)",
+      "event PendingTokensTransferred(address connector, address receiver, uint256 unlockedAmount, uint256 pendingAmount)",
+      "event TokensDeposited(address connector, address depositor, address receiver, uint256 depositAmount)",
+      "event TokensPending(address connector, address receiver, uint256 pendingAmount, uint256 totalPendingAmount)",
+      "event TokensUnlocked(address connector, address receiver, uint256 unlockedAmount)",
+      "function claimOwner()",
+      "function connectorPendingUnlocks(address) view returns (uint256)",
+      "function depositToAppChain(address receiver_, uint256 amount_, uint256 msgGasLimit_, address connector_) payable",
+      "function getCurrentLockLimit(address connector_) view returns (uint256)",
+      "function getCurrentUnlockLimit(address connector_) view returns (uint256)",
+      "function getLockLimitParams(address connector_) view returns (tuple(uint256 lastUpdateTimestamp, uint256 ratePerSecond, uint256 maxLimit, uint256 lastUpdateLimit))",
+      "function getMinFees(address connector_, uint256 msgGasLimit_) view returns (uint256 totalFees)",
+      "function getUnlockLimitParams(address connector_) view returns (tuple(uint256 lastUpdateTimestamp, uint256 ratePerSecond, uint256 maxLimit, uint256 lastUpdateLimit))",
+      "function nominateOwner(address nominee_)",
+      "function nominee() view returns (address)",
+      "function owner() view returns (address)",
+      "function pendingUnlocks(address, address) view returns (uint256)",
+      "function receiveInbound(bytes payload_)",
+      "function rescueFunds(address token_, address rescueTo_, uint256 amount_)",
+      "function token__() view returns (address)",
+      "function unlockPendingFor(address receiver_, address connector_)",
+      "function updateLimitParams(tuple(bool isLock, address connector, uint256 maxLimit, uint256 ratePerSecond)[] updates_)"
+    ],
+    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": [
+      "function name() view returns (string)",
+      "function approve(address guy, uint256 wad) returns (bool)",
+      "function totalSupply() view returns (uint256)",
+      "function transferFrom(address src, address dst, uint256 wad) returns (bool)",
+      "function withdraw(uint256 wad)",
+      "function decimals() view returns (uint8)",
+      "function balanceOf(address) view returns (uint256)",
+      "function symbol() view returns (string)",
+      "function transfer(address dst, uint256 wad) returns (bool)",
+      "function deposit() payable",
+      "function allowance(address, address) view returns (uint256)",
+      "event Approval(address indexed src, address indexed guy, uint256 wad)",
+      "event Transfer(address indexed src, address indexed dst, uint256 wad)",
+      "event Deposit(address indexed dst, uint256 wad)",
+      "event Withdrawal(address indexed src, uint256 wad)"
+    ],
+    "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e": [
+      "constructor(address token_)",
+      "error AmountOutsideLimit()",
+      "error ConnectorUnavailable()",
+      "error InvalidTokenAddress()",
+      "error OnlyNominee()",
+      "error OnlyOwner()",
+      "error ZeroAddress()",
+      "error ZeroAmount()",
+      "event LimitParamsUpdated(tuple(bool isLock, address connector, uint256 maxLimit, uint256 ratePerSecond)[] updates)",
+      "event OwnerClaimed(address indexed claimer)",
+      "event OwnerNominated(address indexed nominee)",
+      "event PendingTokensTransferred(address connector, address receiver, uint256 unlockedAmount, uint256 pendingAmount)",
+      "event TokensDeposited(address connector, address depositor, address receiver, uint256 depositAmount)",
+      "event TokensPending(address connector, address receiver, uint256 pendingAmount, uint256 totalPendingAmount)",
+      "event TokensUnlocked(address connector, address receiver, uint256 unlockedAmount)",
+      "function claimOwner()",
+      "function connectorPendingUnlocks(address) view returns (uint256)",
+      "function depositToAppChain(address receiver_, uint256 amount_, uint256 msgGasLimit_, address connector_) payable",
+      "function getCurrentLockLimit(address connector_) view returns (uint256)",
+      "function getCurrentUnlockLimit(address connector_) view returns (uint256)",
+      "function getLockLimitParams(address connector_) view returns (tuple(uint256 lastUpdateTimestamp, uint256 ratePerSecond, uint256 maxLimit, uint256 lastUpdateLimit))",
+      "function getMinFees(address connector_, uint256 msgGasLimit_) view returns (uint256 totalFees)",
+      "function getUnlockLimitParams(address connector_) view returns (tuple(uint256 lastUpdateTimestamp, uint256 ratePerSecond, uint256 maxLimit, uint256 lastUpdateLimit))",
+      "function nominateOwner(address nominee_)",
+      "function nominee() view returns (address)",
+      "function owner() view returns (address)",
+      "function pendingUnlocks(address, address) view returns (uint256)",
+      "function receiveInbound(bytes payload_)",
+      "function rescueFunds(address token_, address rescueTo_, uint256 amount_)",
+      "function token__() view returns (address)",
+      "function unlockPendingFor(address receiver_, address connector_)",
+      "function updateLimitParams(tuple(bool isLock, address connector, uint256 maxLimit, uint256 ratePerSecond)[] updates_)"
     ],
     "0xD5a83a40F262E2247e6566171f9ADc76b745F5cD": [
       "constructor(address owner_, address socket_, uint32 chainSlug_, uint256 timeoutInSeconds_, address signatureVerifier_)",
@@ -834,6 +1069,40 @@
       "function updateSibling(uint32 siblingChainSlug_, address remoteNativeSwitchboard_)",
       "function verificationOverheadFees() view returns (uint128)",
       "function withdrawFees(address withdrawTo_)"
+    ],
+    "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3": [
+      "constructor(address token_)",
+      "error AmountOutsideLimit()",
+      "error ConnectorUnavailable()",
+      "error InvalidTokenAddress()",
+      "error OnlyNominee()",
+      "error OnlyOwner()",
+      "error ZeroAddress()",
+      "error ZeroAmount()",
+      "event LimitParamsUpdated(tuple(bool isLock, address connector, uint256 maxLimit, uint256 ratePerSecond)[] updates)",
+      "event OwnerClaimed(address indexed claimer)",
+      "event OwnerNominated(address indexed nominee)",
+      "event PendingTokensTransferred(address connector, address receiver, uint256 unlockedAmount, uint256 pendingAmount)",
+      "event TokensDeposited(address connector, address depositor, address receiver, uint256 depositAmount)",
+      "event TokensPending(address connector, address receiver, uint256 pendingAmount, uint256 totalPendingAmount)",
+      "event TokensUnlocked(address connector, address receiver, uint256 unlockedAmount)",
+      "function claimOwner()",
+      "function connectorPendingUnlocks(address) view returns (uint256)",
+      "function depositToAppChain(address receiver_, uint256 amount_, uint256 msgGasLimit_, address connector_) payable",
+      "function getCurrentLockLimit(address connector_) view returns (uint256)",
+      "function getCurrentUnlockLimit(address connector_) view returns (uint256)",
+      "function getLockLimitParams(address connector_) view returns (tuple(uint256 lastUpdateTimestamp, uint256 ratePerSecond, uint256 maxLimit, uint256 lastUpdateLimit))",
+      "function getMinFees(address connector_, uint256 msgGasLimit_) view returns (uint256 totalFees)",
+      "function getUnlockLimitParams(address connector_) view returns (tuple(uint256 lastUpdateTimestamp, uint256 ratePerSecond, uint256 maxLimit, uint256 lastUpdateLimit))",
+      "function nominateOwner(address nominee_)",
+      "function nominee() view returns (address)",
+      "function owner() view returns (address)",
+      "function pendingUnlocks(address, address) view returns (uint256)",
+      "function receiveInbound(bytes payload_)",
+      "function rescueFunds(address token_, address rescueTo_, uint256 amount_)",
+      "function token__() view returns (address)",
+      "function unlockPendingFor(address receiver_, address connector_)",
+      "function updateLimitParams(tuple(bool isLock, address connector, uint256 maxLimit, uint256 ratePerSecond)[] updates_)"
     ],
     "0xeD037aFBffC65a94E9CC592947E851FB2f730341": [
       "constructor(address owner_, uint32 chainSlug_, address socket_, address signatureVerifier_)",

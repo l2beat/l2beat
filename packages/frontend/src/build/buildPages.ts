@@ -5,6 +5,7 @@ import {
   DiffHistoryApiResponse,
   FinalityApiResponse,
   ImplementationChangeReportApiResponse,
+  L2CostsApiResponse,
   LivenessApiResponse,
   ProjectAssetsBreakdownApiResponse,
 } from '@l2beat/shared-pure'
@@ -17,6 +18,7 @@ import { fetchDiffHistory } from './api/fetchDiffHistory'
 import { fetchFeaturesApi } from './api/fetchFeaturesApi'
 import { fetchFinalityApi } from './api/fetchFinalityApi'
 import { fetchImplementationChangeReport } from './api/fetchImplementationChangeReport'
+import { fetchL2CostsApi } from './api/fetchL2CostsApi'
 import { fetchLivenessApi } from './api/fetchLivenessApi'
 import { fetchTvlApi } from './api/fetchTvlApi'
 import { fetchTvlBreakdownApi } from './api/fetchTvlBreakdownApi'
@@ -26,7 +28,8 @@ import {
 } from './api/getVerificationStatus'
 import { activitySanityCheck, tvlSanityCheck } from './api/sanityCheck'
 import { JsonHttpClient } from './caching/JsonHttpClient'
-import { Config, getConfig } from './config'
+import { getConfig } from './config'
+import { getCommonFeatures } from './config/getCommonFeatures'
 
 /**
  * Temporary timeout for HTTP calls due to increased size of new TVL API and flaky connection times
@@ -52,21 +55,17 @@ async function main() {
 
     const http = new JsonHttpClient(httpClient, config.backend.skipCache)
 
+    console.time('[FEATURES]')
     const backendFeatures = await fetchFeaturesApi(config.backend, http)
-
-    config.features = Object.fromEntries(
-      Object.entries(config.features).map(([key, value]) => [
-        key,
-        value && (!(key in backendFeatures) || backendFeatures[key]),
-      ]),
-    ) as Config['features']
+    config.features = getCommonFeatures(config.features, backendFeatures)
+    console.timeEnd('[FEATURES]')
 
     console.time('[TVL]')
     const tvlApiResponse = await fetchTvlApi(config.backend, http)
     console.timeEnd('[TVL]')
     tvlSanityCheck(tvlApiResponse)
 
-    let activityApiResponse: ActivityApiResponse | undefined = undefined
+    let activityApiResponse: ActivityApiResponse | undefined
     if (config.features.activity) {
       console.time('[ACTIVITY]')
       activityApiResponse = await fetchActivityApi(config.backend, http)
@@ -87,29 +86,27 @@ async function main() {
       // TODO: (maciekzygmunt) Sanity check?
     }
 
-    let livenessApiResponse: LivenessApiResponse | undefined = undefined
+    let livenessApiResponse: LivenessApiResponse | undefined
     if (config.features.liveness) {
       console.time('[LIVENESS]')
       livenessApiResponse = await fetchLivenessApi(config.backend, http)
       console.timeEnd('[LIVENESS]')
     }
-    let finalityApiResponse: FinalityApiResponse | undefined = undefined
+    let finalityApiResponse: FinalityApiResponse | undefined
     if (config.features.finality) {
       console.time('[FINALITY]')
       finalityApiResponse = await fetchFinalityApi(config.backend, http)
       console.timeEnd('[FINALITY]')
     }
 
-    let diffHistory: DiffHistoryApiResponse | undefined = undefined
+    let diffHistory: DiffHistoryApiResponse | undefined
     if (config.features.diffHistory) {
       console.time('[DIFF HISTORY]')
       diffHistory = await fetchDiffHistory(config.backend, http)
       console.timeEnd('[DIFF HISTORY]')
     }
 
-    let implementationChange:
-      | ImplementationChangeReportApiResponse
-      | undefined = undefined
+    let implementationChange: ImplementationChangeReportApiResponse | undefined
     if (config.features.implementationChange) {
       console.time('[IMPLEMENTATION CHANGE]')
       try {
@@ -126,7 +123,14 @@ async function main() {
       console.timeEnd('[IMPLEMENTATION CHANGE]')
     }
 
-    createApi(config, tvlApiResponse, activityApiResponse)
+    let l2CostsApiResponse: L2CostsApiResponse | undefined
+    if (config.features.costsPage) {
+      console.time('[L2 COSTS]')
+      l2CostsApiResponse = await fetchL2CostsApi(config.backend, http)
+      console.timeEnd('[L2 COSTS]')
+    }
+
+    createApi(config, tvlApiResponse, activityApiResponse, l2CostsApiResponse)
 
     const supportedChains = getChainNames(config)
     const verificationStatus = getVerificationStatus(supportedChains)
@@ -141,6 +145,7 @@ async function main() {
       tvlBreakdownApiResponse,
       livenessApiResponse,
       finalityApiResponse,
+      l2CostsApiResponse,
       diffHistory,
       implementationChange,
     }

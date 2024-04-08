@@ -1,7 +1,7 @@
 import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { opStack } from './templates/opStack'
+import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('fraxtal')
@@ -15,7 +15,7 @@ const upgradeability = {
   upgradeDelay: 'No delay',
 }
 
-export const fraxtal: Layer2 = opStack({
+export const fraxtal: Layer2 = opStackL2({
   daProvider: {
     name: 'FraxtalDA',
     riskView: {
