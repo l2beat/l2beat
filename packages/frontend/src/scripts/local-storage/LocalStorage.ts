@@ -6,12 +6,14 @@ export const strictBoolean = z
   .enum(['true', 'false'])
   .transform((x) => x === 'true')
 
-export const stringAsObjectOrNull = <T extends z.AnyZodObject | z.ZodRecord>(
+export const stringAsObjectOrUndefined = <
+  T extends z.AnyZodObject | z.ZodRecord,
+>(
   schema: T,
 ) =>
   z.string().transform((x) => {
     const result = schema.safeParse(JSON.parse(x))
-    if (!result.success) return null
+    if (!result.success) return undefined
     return result.data as z.infer<T>
   })
 
@@ -22,8 +24,8 @@ const LocalStorageKeySchemas = {
   'gg-19-floating-banner-closed': strictBoolean,
   'combined-bridges-checked': strictBoolean,
   'rollups-only-checked': strictBoolean,
-  'top-bar-variant-data': stringAsObjectOrNull(TopBarVariantData),
-  'chart-settings': stringAsObjectOrNull(SavedChartState),
+  'top-bar-variant-data': stringAsObjectOrUndefined(TopBarVariantData),
+  'chart-settings': stringAsObjectOrUndefined(SavedChartState),
 } as const
 
 type LocalStorageKeys = keyof typeof LocalStorageKeySchemas
