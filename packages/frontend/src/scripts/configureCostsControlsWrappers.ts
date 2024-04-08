@@ -33,7 +33,7 @@ export function configureCostsControlsWrappers() {
 
   function getSortingArrowsOrderKey() {
     if (!checkedUnitControl || !checkedTimeRangeControl) {
-      throw new Error('No time range or unit control is checked')
+      return
     }
     const timeRange = checkedTimeRangeControl?.value
     const unit = checkedUnitControl?.value
@@ -44,25 +44,28 @@ export function configureCostsControlsWrappers() {
   function onTimeRangeChange(control: HTMLInputElement) {
     checkedTimeRangeControl = control
     cells.forEach((cell) => cell.setAttribute('data-time-range', control.value))
-    SORTING_ARROWS_NAMES.forEach((name) =>
-      setSortingArrowsOrderKey(name, getSortingArrowsOrderKey()),
-    )
+    SORTING_ARROWS_NAMES.forEach((name) => {
+      const orderKey = getSortingArrowsOrderKey()
+      if (orderKey) setSortingArrowsOrderKey(name, orderKey)
+    })
     setSortingArrowsOrderKey('l2-tx-count', control.value)
   }
 
   function onUnitChange(control: HTMLInputElement) {
     checkedUnitControl = control
     cells.forEach((cell) => cell.setAttribute('data-unit', control.value))
-    SORTING_ARROWS_NAMES.forEach((name) =>
-      setSortingArrowsOrderKey(name, getSortingArrowsOrderKey()),
-    )
+    SORTING_ARROWS_NAMES.forEach((name) => {
+      const orderKey = getSortingArrowsOrderKey()
+      if (orderKey) setSortingArrowsOrderKey(name, orderKey)
+    })
   }
 
   function onTypeChange(control: HTMLInputElement) {
     checkedTypeControl = control
-    SORTING_ARROWS_NAMES.forEach((name) =>
-      setSortingArrowsOrderKey(name, getSortingArrowsOrderKey()),
-    )
+    SORTING_ARROWS_NAMES.forEach((name) => {
+      const orderKey = getSortingArrowsOrderKey()
+      if (orderKey) setSortingArrowsOrderKey(name, orderKey)
+    })
     const isPerL2Tx = control.value === 'PER-L2-TX'
     const isOneOrSevenDays =
       checkedTimeRangeControl?.value === '7D' ||
