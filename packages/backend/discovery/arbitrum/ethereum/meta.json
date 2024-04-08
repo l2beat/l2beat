@@ -2,6 +2,10 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
+      "name": "",
+      "values": {}
+    },
+    {
       "name": "ArbitrumOneBridge",
       "values": {
         "activeOutbox": {
@@ -50,6 +54,41 @@
       "name": "ArbitrumProxyAdmin",
       "values": {
         "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "BatchPosterManagerMultisig",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
           "description": null,
           "severity": null,
           "type": null
@@ -854,7 +893,22 @@
     {
       "name": "SequencerInbox",
       "values": {
+        "BROTLI_MESSAGE_HEADER_FLAG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DAS_MESSAGE_HEADER_FLAG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "DATA_AUTHENTICATED_FLAG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DATA_BLOB_HEADER_FLAG": {
           "description": null,
           "severity": null,
           "type": null
@@ -869,7 +923,22 @@
           "severity": null,
           "type": null
         },
+        "TREE_DAS_MESSAGE_HEADER_FLAG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ZERO_HEAVY_MESSAGE_HEADER_FLAG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "batchCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "batchPosterManager": {
           "description": null,
           "severity": null,
           "type": null
@@ -884,12 +953,27 @@
           "severity": null,
           "type": null
         },
+        "isUsingFeeToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "keySetUpdates": {
           "description": null,
           "severity": null,
           "type": null
         },
+        "maxDataSize": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "maxTimeVariation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "reader4844": {
           "description": null,
           "severity": null,
           "type": null
