@@ -15,27 +15,22 @@ describeDatabase(IndexerConfigurationRepository.name, (database) => {
   )
   const repository = new IndexerConfigurationRepository(database, Logger.SILENT)
 
+  const INDEXERS = ['indexer-1', 'indexer-2', 'indexer-3']
   const CONFIGURATIONS = [
-    mock({ id: 'a'.repeat(12), indexerId: 'indexer-1' }),
-    mock({ id: 'b'.repeat(12), indexerId: 'indexer-1' }),
-    mock({ id: 'c'.repeat(12), indexerId: 'indexer-2' }),
-    mock({ id: 'd'.repeat(12), indexerId: 'indexer-3' }),
+    mock({ id: 'a'.repeat(12), indexerId: INDEXERS[0] }),
+    mock({ id: 'b'.repeat(12), indexerId: INDEXERS[0] }),
+    mock({ id: 'c'.repeat(12), indexerId: INDEXERS[1] }),
+    mock({ id: 'd'.repeat(12), indexerId: INDEXERS[2] }),
   ]
 
   beforeEach(async () => {
+    await Promise.all(
+      INDEXERS.map((i) => indexerStateRepository.add(mockIndexer(i))),
+    )
+  })
+
+  afterEach(async () => {
     await indexerStateRepository.deleteAll()
-    await indexerStateRepository.add({
-      indexerId: 'indexer-1',
-      safeHeight: 0,
-    })
-    await indexerStateRepository.add({
-      indexerId: 'indexer-2',
-      safeHeight: 0,
-    })
-    await indexerStateRepository.add({
-      indexerId: 'indexer-3',
-      safeHeight: 0,
-    })
   })
 
   it(
@@ -120,5 +115,12 @@ function mock(
     maxHeight: null,
     properties: 'properties',
     ...record,
+  }
+}
+
+function mockIndexer(indexerId: string) {
+  return {
+    indexerId,
+    safeHeight: 0,
   }
 }

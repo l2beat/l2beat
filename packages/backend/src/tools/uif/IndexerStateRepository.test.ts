@@ -8,7 +8,7 @@ import { IndexerStateRepository } from './IndexerStateRepository'
 describeDatabase(IndexerStateRepository.name, (database) => {
   const repository = new IndexerStateRepository(database, Logger.SILENT)
 
-  beforeEach(async () => {
+  afterEach(async () => {
     await repository.deleteAll()
   })
 

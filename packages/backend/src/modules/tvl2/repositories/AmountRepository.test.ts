@@ -15,23 +15,20 @@ describeDatabase(AmountRepository.name, (database) => {
     database,
     Logger.SILENT,
   )
+  const configurationsRepository = new IndexerConfigurationRepository(
+    database,
+    Logger.SILENT,
+  )
+  const amountRepository = new AmountRepository(database, Logger.SILENT)
+
   const CONFIGURATIONS = [
     mock({ id: '1'.repeat(12) }),
     mock({ id: '2'.repeat(12) }),
     mock({ id: '3'.repeat(12) }),
   ]
 
-  const repository = new AmountRepository(database, Logger.SILENT)
-  const configurationsRepository = new IndexerConfigurationRepository(
-    database,
-    Logger.SILENT,
-  )
-
   beforeEach(async () => {
-    await indexerStateRepository.add({
-      indexerId: 'indexer',
-      safeHeight: 0,
-    })
+    await indexerStateRepository.add(mockIndexer(CONFIGURATIONS[0].indexerId))
     await configurationsRepository.addOrUpdateManyConfigurations(CONFIGURATIONS)
   })
 
@@ -53,14 +50,14 @@ describeDatabase(AmountRepository.name, (database) => {
           amount: 111n,
         },
       ]
-      await repository.addMany(newRows)
+      await amountRepository.addMany(newRows)
 
-      const results = await repository.getAll()
+      const results = await amountRepository.getAll()
       expect(results).toEqualUnsorted(newRows)
     })
 
     it('empty array', async () => {
-      await expect(repository.addMany([])).not.toBeRejected()
+      await expect(amountRepository.addMany([])).not.toBeRejected()
     })
 
     it('performs batch insert when more than 10k records', async () => {
@@ -72,13 +69,13 @@ describeDatabase(AmountRepository.name, (database) => {
           amount: 111n,
         })
       }
-      await expect(repository.addMany(records)).not.toBeRejected()
+      await expect(amountRepository.addMany(records)).not.toBeRejected()
     })
   })
 
   // #region methods used only in tests
   it(AmountRepository.prototype.deleteAll.name, async () => {
-    await repository.addMany([
+    await amountRepository.addMany([
       {
         configurationId: CONFIGURATIONS[0].id,
         timestamp: UnixTime.ZERO,
@@ -86,9 +83,9 @@ describeDatabase(AmountRepository.name, (database) => {
       },
     ])
 
-    await repository.deleteAll()
+    await amountRepository.deleteAll()
 
-    const results = await repository.getAll()
+    const results = await amountRepository.getAll()
 
     expect(results).toEqual([])
   })
@@ -106,5 +103,12 @@ function mock(
     maxHeight: null,
     properties: '',
     ...record,
+  }
+}
+
+function mockIndexer(indexerId: string) {
+  return {
+    indexerId,
+    safeHeight: 0,
   }
 }
