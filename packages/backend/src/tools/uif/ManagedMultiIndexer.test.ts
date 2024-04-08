@@ -1,6 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
-import { RemovalConfiguration, UpdateConfiguration } from '@l2beat/uif'
-import { expect, mockObject } from 'earl'
+import {
+  RemovalConfiguration,
+  SavedConfiguration,
+  UpdateConfiguration,
+} from '@l2beat/uif'
+import { expect, mockFn, mockObject } from 'earl'
 
 import { IndexerService } from './IndexerService'
 import {
@@ -51,11 +55,83 @@ describe(MangedMultiIndexer.name, () => {
   })
 
   it(MangedMultiIndexer.prototype.multiInitialize.name, async () => {
-    throw new Error('not implemented')
+    const configurations = [mock<string>({ id: 'a' })]
+    const indexerService = mockObject<IndexerService>({
+      getSavedConfigurations: mockFn().resolvesTo(configurations),
+    })
+
+    const decode = (blob: string) => blob
+    const indexer = new TestIndexer({
+      parents: [],
+      id: 'indexer',
+      indexerService,
+      configurations: [],
+      logger: Logger.SILENT,
+      encode: (v: string) => v,
+      decode,
+    })
+
+    const result = await indexer.multiInitialize()
+
+    expect(result).toEqual(configurations)
+    expect(indexerService.getSavedConfigurations).toHaveBeenOnlyCalledWith(
+      'indexer',
+      decode,
+    )
   })
 
   it(MangedMultiIndexer.prototype.saveConfigurations.name, async () => {
-    throw new Error('not implemented')
+    const configurations = [mock<string>({ id: 'a', currentHeight: null })]
+    const indexerService = mockObject<IndexerService>({
+      upsertConfigurations: async () => {},
+      updateSavedConfigurations: async () => {},
+      persistOnlyUsedConfigurations: async () => {},
+    })
+
+    const encode = (v: unknown) => v as string
+    const indexer = new TestIndexer({
+      parents: [],
+      id: 'indexer',
+      indexerService,
+      configurations: [],
+      logger: Logger.SILENT,
+      encode,
+      decode: (blob: string) => blob,
+    })
+
+    await indexer.saveConfigurations(configurations)
+
+    expect(indexerService.upsertConfigurations).toHaveBeenOnlyCalledWith(
+      'indexer',
+      configurations,
+      encode,
+    )
+    expect(
+      indexerService.persistOnlyUsedConfigurations,
+    ).toHaveBeenOnlyCalledWith(
+      'indexer',
+      configurations.map((c) => c.id),
+    )
+
+    await indexer.saveConfigurations(
+      configurations.map((c) => ({ ...c, currentHeight: 1 })),
+    )
+    await indexer.saveConfigurations(
+      configurations.map((c) => ({ ...c, currentHeight: 2 })),
+    )
+
+    expect(indexerService.updateSavedConfigurations).toHaveBeenNthCalledWith(
+      1,
+      'indexer',
+      configurations.map((c) => c.id),
+      1,
+    )
+
+    expect(indexerService.updateSavedConfigurations).toHaveBeenLastCalledWith(
+      'indexer',
+      configurations.map((c) => c.id),
+      2,
+    )
   })
 })
 
@@ -74,5 +150,18 @@ class TestIndexer extends MangedMultiIndexer<string> {
   }
   constructor(override readonly options: ManagedMultiIndexerOptions<string>) {
     super(options)
+  }
+}
+
+function mock<T>(
+  record: Partial<SavedConfiguration<T>>,
+): SavedConfiguration<T> {
+  return {
+    id: 'id',
+    currentHeight: null,
+    minHeight: 0,
+    maxHeight: null,
+    properties: 'properties' as T,
+    ...record,
   }
 }
