@@ -6,6 +6,7 @@ import {
 } from '@l2beat/uif'
 import { expect, mockFn, mockObject } from 'earl'
 
+import { _TEST_ONLY_resetUniqueIds } from './ids'
 import { IndexerService } from './IndexerService'
 import {
   ManagedMultiIndexerOptions,
@@ -13,6 +14,49 @@ import {
 } from './ManagedMultiIndexer'
 
 describe(MangedMultiIndexer.name, () => {
+  afterEach(() => {
+    _TEST_ONLY_resetUniqueIds()
+  })
+
+  describe('constructor', () => {
+    it('constructor throws on duplicate indexer ids', () => {
+      const common = {
+        parents: [],
+        configurations: [],
+        indexerService: mockObject<IndexerService>(),
+        logger: Logger.SILENT,
+        encode: (v: string) => v,
+        decode: (blob: string) => blob,
+      }
+      new TestIndexer({ ...common, id: 'a' })
+      expect(() => {
+        new TestIndexer({ ...common, id: 'a' })
+      }).toThrow('Indexer id a is duplicated!')
+    })
+
+    it('constructor throws on duplicate configuration ids', () => {
+      const common = {
+        parents: [],
+        indexerService: mockObject<IndexerService>(),
+        logger: Logger.SILENT,
+        encode: (v: string) => v,
+        decode: (blob: string) => blob,
+      }
+      new TestIndexer({
+        ...common,
+        id: 'a',
+        configurations: [mock({ id: 'a' }), mock({ id: 'b' })],
+      })
+      expect(() => {
+        new TestIndexer({
+          ...common,
+          id: 'b',
+          configurations: [mock({ id: 'a' })],
+        })
+      }).toThrow('Configuration id a is duplicated!')
+    })
+  })
+
   it(MangedMultiIndexer.prototype.getSafeHeight.name, async () => {
     const indexerService = mockObject<IndexerService>({
       getSafeHeight: async () => 1,

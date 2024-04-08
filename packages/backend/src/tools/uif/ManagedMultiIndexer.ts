@@ -7,6 +7,7 @@ import {
   SavedConfiguration,
 } from '@l2beat/uif'
 
+import { assetUniqueConfigId, assetUniqueIndexerId } from './ids'
 import { IndexerService } from './IndexerService'
 
 export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
@@ -22,6 +23,11 @@ export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
 export abstract class MangedMultiIndexer<T> extends MultiIndexer<T> {
   constructor(public readonly options: ManagedMultiIndexerOptions<T>) {
     super(options.logger, options.parents, options.configurations, options)
+
+    assetUniqueIndexerId(options.id)
+    for (const configuration of options.configurations) {
+      assetUniqueConfigId(configuration.id)
+    }
   }
 
   async getSafeHeight() {

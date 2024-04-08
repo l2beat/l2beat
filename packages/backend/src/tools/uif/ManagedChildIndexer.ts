@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ChildIndexer, Indexer, IndexerOptions } from '@l2beat/uif'
 
+import { assetUniqueIndexerId } from './ids'
 import { IndexerService } from './IndexerService'
 
 export interface ManagedChildIndexerOptions extends IndexerOptions {
@@ -14,6 +15,7 @@ export interface ManagedChildIndexerOptions extends IndexerOptions {
 export abstract class ManagedChildIndexer extends ChildIndexer {
   constructor(public readonly options: ManagedChildIndexerOptions) {
     super(options.logger, options.parents, options)
+    assetUniqueIndexerId(options.id)
   }
 
   async initialize() {
