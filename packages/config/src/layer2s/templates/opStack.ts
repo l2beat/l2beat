@@ -32,11 +32,11 @@ import { subtractOne } from '../../common/assessCount'
 import { ChainConfig } from '../../common/ChainConfig'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
-import { Layer3, Layer3Display } from '../../layer3s'
+import { type Layer3, type Layer3Display } from '../../layer3s'
 import { getStage } from '../common/stages/getStage'
 import {
-  Layer2,
-  Layer2Display,
+  type Layer2,
+  type Layer2Display,
   Layer2FinalityConfig,
   Layer2TransactionApi,
 } from '../types'

@@ -15,7 +15,7 @@ export function ContractsUpdated() {
       body={
         <div>
           <strong>Note:</strong> Contracts presented in this section had their
-          implementaions updated since the last time our team looked at this
+          implementations updated since the last time our team looked at this
           project. The information presented may be inaccurate.
         </div>
       }

@@ -1,7 +1,7 @@
 {
   "name": "blobstream",
   "chain": "base",
-  "blockNumber": 12672692,
+  "blockNumber": 12726128,
   "configHash": "0x20cd9668f6ad442485e1387b460144997c3ce77b0b55f8adcc21215bfd69966f",
   "version": 3,
   "contracts": [
@@ -34,7 +34,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
-        "modules": []
+        "modules": [],
+        "threshold": "4 of 6 (67%)"
       },
       "implementations": ["0xfb1bffC9d739B8D520DaF37dF666da4C687191EA"],
       "sinceTimestamp": 1710507013,
@@ -105,9 +106,9 @@
         "gateway": "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776",
         "GUARDIAN_ROLE": "0x55435dd261a4b9b3364963f7738a7a662ad9c84396d64be3365284bb7f0a5041",
         "headerRangeFunctionId": "0x46132c86ed84fdc655528f80f9291dd3116b04902036b96925edc78bbf52b8ca",
-        "latestBlock": 1143600,
+        "latestBlock": 1152600,
         "nextHeaderFunctionId": "0x2ce8ca4f509cb09415b5a6ca6afa265571dac0b9f6ddb46f487e017fec71cf25",
-        "state_proofNonce": 434,
+        "state_proofNonce": 464,
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "VERSION": "0.1.0"
       },
@@ -119,7 +120,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
-        "modules": []
+        "modules": [],
+        "threshold": "3 of 4 (75%)"
       },
       "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
       "sinceTimestamp": 1706568681,

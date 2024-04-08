@@ -23,16 +23,14 @@ import {
 import { DetailedTransaction } from '../types/DetailedTransaction'
 import { CHART_TYPES, L2CostsController } from './L2CostsController'
 
-const START = UnixTime.fromDate(new Date('2024-04-02T09:00:00.000Z')).toStartOf(
-  'hour',
-)
 const NOW_TO_FULL_HOUR = UnixTime.now().toStartOf('hour')
 
 describe(L2CostsController.name, () => {
   describe(L2CostsController.prototype.getL2Costs.name, () => {
     it('correctly calculates l2costs', async () => {
       const l2CostsRepository = mockObject<L2CostsRepository>({
-        getByProjectAndTimeRange: mockFn().resolvesTo([]),
+        getByProjectAndTimeRangePaginated: mockFn().resolvesTo([]),
+        findCountByProjectAndTimeRange: mockFn().resolvesTo({ count: 51000 }),
       })
       const controller = getMockL2CostsController({
         projects: MOCK_PROJECTS,
@@ -62,10 +60,10 @@ describe(L2CostsController.name, () => {
 
       controller.makeTransactionCalculations = mockFn().returns([
         mockObject<DetailedTransaction>({
-          timestamp: START.add(-1, 'hours'),
+          timestamp: NOW_TO_FULL_HOUR.add(-1, 'hours'),
         }),
         mockObject<DetailedTransaction>({
-          timestamp: START.add(-2, 'hours'),
+          timestamp: NOW_TO_FULL_HOUR.add(-2, 'hours'),
         }),
       ])
 
@@ -83,17 +81,26 @@ describe(L2CostsController.name, () => {
       const result = await controller.getL2Costs()
 
       expect(
-        l2CostsRepository.getByProjectAndTimeRange,
-      ).toHaveBeenNthCalledWith(1, MOCK_PROJECTS[1].projectId, [
-        NOW_TO_FULL_HOUR.add(-180, 'days'),
-        NOW_TO_FULL_HOUR.add(-90, 'days').toStartOf('day'),
-      ])
+        l2CostsRepository.getByProjectAndTimeRangePaginated,
+      ).toHaveBeenCalledTimes(4)
       expect(
-        l2CostsRepository.getByProjectAndTimeRange,
-      ).toHaveBeenNthCalledWith(2, MOCK_PROJECTS[1].projectId, [
-        NOW_TO_FULL_HOUR.add(-90, 'days').toStartOf('day'),
-        NOW_TO_FULL_HOUR.add(-0, 'days'),
-      ])
+        l2CostsRepository.getByProjectAndTimeRangePaginated,
+      ).toHaveBeenNthCalledWith(
+        1,
+        MOCK_PROJECTS[1].projectId,
+        [NOW_TO_FULL_HOUR.add(-180, 'days'), NOW_TO_FULL_HOUR],
+        0,
+        50000,
+      )
+      expect(
+        l2CostsRepository.getByProjectAndTimeRangePaginated,
+      ).toHaveBeenNthCalledWith(
+        2,
+        MOCK_PROJECTS[1].projectId,
+        [NOW_TO_FULL_HOUR.add(-180, 'days'), NOW_TO_FULL_HOUR],
+        50000,
+        50000,
+      )
       expect(result.type).toEqual('success')
       expect(result.data.projects).toEqual({
         project2: {
@@ -143,14 +150,14 @@ describe(L2CostsController.name, () => {
 
       const results = await controller.makeTransactionCalculations(
         getMockL2CostRecords(),
-        [START.add(-1, 'hours'), START.add(-2, 'hours')],
+        [NOW_TO_FULL_HOUR.add(-1, 'hours'), NOW_TO_FULL_HOUR.add(-2, 'hours')],
       )
 
       const TX1_GAS_PRICE_ETH = getGasPriceETH(41_000_000_000)
       const TX2_GAS_PRICE_ETH = getGasPriceETH(29_000_000_000)
       const expected = [
         {
-          timestamp: START.add(-1, 'hours'),
+          timestamp: NOW_TO_FULL_HOUR.add(-1, 'hours'),
           calldataGasUsed: 2700,
           computeGasUsed: 400_000 - 2700 - 21_000,
           overheadGasUsed: 21000 as const,
@@ -169,7 +176,7 @@ describe(L2CostsController.name, () => {
           type: 2 as const,
         },
         {
-          timestamp: START.add(-2, 'hours'),
+          timestamp: NOW_TO_FULL_HOUR.add(-2, 'hours'),
           calldataGasUsed: 0,
           computeGasUsed: 0,
           overheadGasUsed: 21000 as const,
@@ -210,7 +217,7 @@ describe(L2CostsController.name, () => {
       expect(result.hourly.data).toEqual([
         ...times(26, (i) =>
           datapoint(
-            START.add(-i, 'hours'),
+            NOW_TO_FULL_HOUR.add(-i, 'hours'),
             // first and last hour have only one transaction, all the rest have two transactions
             i === 0 || i === 25 ? 1 : 2,
             // last hour do not have blob transaction, all the rest have only one with value 1
@@ -221,7 +228,7 @@ describe(L2CostsController.name, () => {
       expect(result.daily.data).toEqual([
         ...times(2, (i) =>
           datapoint(
-            START.toStartOf('day').add(-i, 'days'),
+            NOW_TO_FULL_HOUR.toStartOf('day').add(-i, 'days'),
             // first day has 19 transactions, second has 31 transactions
             i === 0 ? 19 : 31,
             // first day has 10 blob transactions, second has 15 blob transactions
@@ -234,7 +241,7 @@ describe(L2CostsController.name, () => {
       expect(Array.from(combinedHourlyMap.values())).toEqual([
         ...times(26, (i) =>
           datapoint(
-            START.add(-i, 'hours'),
+            NOW_TO_FULL_HOUR.add(-i, 'hours'),
             // first and last hour have only one transaction, all the rest have two transactions
             i === 0 || i === 25 ? 1 : 2,
             // last hour do not have blob transaction, all the rest have only one with value 1
@@ -245,7 +252,7 @@ describe(L2CostsController.name, () => {
       expect(Array.from(combinedDailyMap.values())).toEqual([
         ...times(2, (i) =>
           datapoint(
-            START.toStartOf('day').add(-i, 'days'),
+            NOW_TO_FULL_HOUR.toStartOf('day').add(-i, 'days'),
             // first day has 19 transactions, second has 31 transactions
             i === 0 ? 19 : 31,
             // first day has 10 blob transactions, second has 15 blob transactions
@@ -277,8 +284,8 @@ function getMockL2CostsController(params: {
       mockObject<PriceRepository>({
         findByTimestampRange: mockFn().resolvesToOnce(
           new Map([
-            [START.add(-1, 'hours').toNumber(), 3000],
-            [START.add(-2, 'hours').toNumber(), 3100],
+            [NOW_TO_FULL_HOUR.add(-1, 'hours').toNumber(), 3000],
+            [NOW_TO_FULL_HOUR.add(-2, 'hours').toNumber(), 3100],
           ]),
         ),
       }),
@@ -290,7 +297,7 @@ function getMockL2CostRecords(): L2CostsRecord[] {
   return [
     {
       txHash: '0x1',
-      timestamp: START.add(-1, 'hours'),
+      timestamp: NOW_TO_FULL_HOUR.add(-1, 'hours'),
       trackedTxId: TrackedTxId.unsafe('aaa'),
       data: {
         type: 2,
@@ -302,7 +309,7 @@ function getMockL2CostRecords(): L2CostsRecord[] {
     },
     {
       txHash: '0x2',
-      timestamp: START.add(-2, 'hours'),
+      timestamp: NOW_TO_FULL_HOUR.add(-2, 'hours'),
       trackedTxId: TrackedTxId.unsafe('bbb'),
       data: {
         type: 3,
@@ -407,7 +414,7 @@ function datapoint(
 function getMockDetailedTransactions(amount: number): DetailedTransaction[] {
   return range(amount).map((i) => {
     const base = {
-      timestamp: START.add(-i * 30, 'minutes'),
+      timestamp: NOW_TO_FULL_HOUR.add(-i * 30, 'minutes'),
       calldataGasUsed: 1,
       computeGasUsed: 1,
       totalGas: 1,

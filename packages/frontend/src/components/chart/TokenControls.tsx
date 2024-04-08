@@ -25,11 +25,7 @@ export function TokenControls({
   }
 
   return (
-    <div
-      className={cn('flex h-full')}
-      data-role="chart-token-element"
-      data-tvl-only
-    >
+    <div className={cn('flex h-full')} data-role="chart-token-element">
       <RichSelect
         label="Tokens"
         id="token-select"

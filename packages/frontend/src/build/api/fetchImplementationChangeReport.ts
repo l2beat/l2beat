@@ -38,6 +38,16 @@ function getMockImplementationChangeApiResponse(): ImplementationChangeReportApi
           },
         ],
       },
+      'across-v2': {
+        ethereum: [
+          {
+            containingContract: EthereumAddress(
+              '0x48d990AbDA20afa1fD1da713AbC041B60a922c65',
+            ),
+            newImplementations: [EthereumAddress.random()],
+          },
+        ],
+      },
     },
   }
 }

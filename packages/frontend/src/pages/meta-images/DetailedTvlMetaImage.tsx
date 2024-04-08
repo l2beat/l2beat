@@ -13,7 +13,7 @@ export interface DetailedTvlMetaImageProps {
   chartType: Extract<
     ChartType,
     | { type: 'project-detailed-tvl' }
-    | { type: 'layer2-detailed-tvl' }
+    | { type: 'scaling-detailed-tvl' }
     | { type: 'bridges-tvl' }
   >
   fake?: boolean

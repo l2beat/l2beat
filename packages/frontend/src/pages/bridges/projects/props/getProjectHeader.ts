@@ -1,5 +1,8 @@
 import { Bridge, ScalingProjectLinks } from '@l2beat/config'
-import { TvlApiResponse } from '@l2beat/shared-pure'
+import {
+  ImplementationChangeReportApiResponse,
+  TvlApiResponse,
+} from '@l2beat/shared-pure'
 
 import { ProjectLink } from '../../../../components/icons'
 import { getDestination } from '../../../../utils/getDestination'
@@ -11,9 +14,12 @@ import { ProjectHeaderProps } from '../view/ProjectHeader'
 export function getProjectHeader(
   project: Bridge,
   tvlApiResponse: TvlApiResponse,
+  implementationChange: ImplementationChangeReportApiResponse | undefined,
 ): ProjectHeaderProps {
   const charts = tvlApiResponse.projects[project.id.toString()]?.charts
   const { tvl, tvlWeeklyChange } = getTvlWithChange(charts)
+  const hasImplementationChanged =
+    !!implementationChange?.projects[project.id.toString()]
 
   return {
     icon: `/icons/${project.display.slug}.png`,
@@ -22,6 +28,7 @@ export function getProjectHeader(
     tvl: project.config.escrows.length > 0 ? formatUSD(tvl) : undefined,
     tvlWeeklyChange:
       project.config.escrows.length > 0 ? tvlWeeklyChange : undefined,
+    hasImplementationChanged,
     destination: getDestination(project.technology.destination),
     validatedBy: project.riskView?.validatedBy,
     type: project.display.category,

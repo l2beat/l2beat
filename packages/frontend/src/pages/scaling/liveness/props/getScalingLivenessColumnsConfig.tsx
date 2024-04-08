@@ -149,7 +149,11 @@ export function getScalingLivenessColumnsConfig() {
       getValue: (project) => (
         <AnomalyIndicator
           anomalyEntries={project.isSynced ? project.anomalyEntries : []}
-          showComingSoon={!project.isSynced || project.slug === 'linea'}
+          showComingSoon={
+            !project.isSynced ||
+            project.slug === 'linea' ||
+            project.slug === 'starknet'
+          }
         />
       ),
     },
