@@ -47,7 +47,7 @@ export function configureCostsControlsWrappers() {
     SORTING_ARROWS_NAMES.forEach((name) =>
       setSortingArrowsOrderKey(name, getSortingArrowsOrderKey()),
     )
-    setSortingArrowsOrderKey('tx-count', control.value)
+    setSortingArrowsOrderKey('l2-tx-count', control.value)
   }
 
   function onUnitChange(control: HTMLInputElement) {
