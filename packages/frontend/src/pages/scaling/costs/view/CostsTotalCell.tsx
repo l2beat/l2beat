@@ -2,6 +2,7 @@ import { WarningWithSentiment } from '@l2beat/config'
 import React from 'react'
 
 import { CostsBreakdown } from '../../../../components/breakdown/CostsBreakdown'
+import { DetailedValueWithDisplayValue } from '../../../../components/DetailedValueWithDisplayValue'
 import { RoundedWarningIcon } from '../../../../components/icons'
 import { Callout } from '../../../../components/project/Callout'
 import {
@@ -139,65 +140,65 @@ function TotalValue({
 }) {
   const data = details.total[unit]
   return (
-    <Tooltip>
-      <TooltipTrigger>
-        <div className={className}>
-          <div className="hidden flex-col items-end group-data-[type=TOTAL]/costs-controls-wrapper:flex">
+    <div className={className}>
+      <div className="hidden flex-col items-end group-data-[type=TOTAL]/costs-controls-wrapper:flex">
+        <div className="flex items-center gap-1">
+          {warning && <Warning warning={warning} />}
+          <span className="text-lg font-semibold">
+            <DetailedValueWithDisplayValue>
+              {data}
+            </DetailedValueWithDisplayValue>
+          </span>
+        </div>
+        <CostsBreakdown
+          blobs={details.blobs?.[unit].value}
+          calldata={details.calldata[unit].value}
+          compute={details.compute[unit].value}
+          overhead={details.overhead[unit].value}
+        />
+      </div>
+      <div className="hidden flex-col items-end group-data-[type=PER-L2-TX]/costs-controls-wrapper:flex">
+        {data.perL2Tx ? (
+          <>
             <div className="flex items-center gap-1">
-              <span className="text-lg font-semibold">{data.displayValue}</span>
-              {warning && (
-                <RoundedWarningIcon
-                  className="size-4"
-                  sentiment={warning.sentiment}
-                />
-              )}
+              {warning && <Warning warning={warning} />}
+              <span className="text-lg font-semibold">
+                <DetailedValueWithDisplayValue>
+                  {data.perL2Tx}
+                </DetailedValueWithDisplayValue>
+              </span>
             </div>
             <CostsBreakdown
-              blobs={details.blobs?.[unit].value}
-              calldata={details.calldata[unit].value}
-              compute={details.compute[unit].value}
-              overhead={details.overhead[unit].value}
+              blobs={details.blobs?.[unit].perL2Tx?.value}
+              calldata={details.calldata[unit].perL2Tx?.value}
+              compute={details.compute[unit].perL2Tx?.value}
+              overhead={details.overhead[unit].perL2Tx?.value}
             />
-          </div>
-          <div className="hidden flex-col items-end group-data-[type=PER-L2-TX]/costs-controls-wrapper:flex">
-            {data.perL2Tx ? (
-              <>
-                <div className="flex items-center gap-1">
-                  <span className="text-lg font-semibold">
-                    {data.perL2Tx.displayValue}
-                  </span>
-                  {warning && (
-                    <RoundedWarningIcon
-                      className="size-4"
-                      sentiment={warning.sentiment}
-                    />
-                  )}
-                </div>
-                <CostsBreakdown
-                  blobs={details.blobs?.[unit].perL2Tx?.value}
-                  calldata={details.calldata[unit].perL2Tx?.value}
-                  compute={details.compute[unit].perL2Tx?.value}
-                  overhead={details.overhead[unit].perL2Tx?.value}
-                />
-              </>
-            ) : (
-              LONG_HYPHEN
-            )}
-          </div>
-        </div>
+          </>
+        ) : (
+          LONG_HYPHEN
+        )}
+      </div>
+    </div>
+  )
+}
+
+function Warning({ warning }: { warning: WarningWithSentiment }) {
+  return (
+    <Tooltip>
+      <TooltipTrigger>
+        <RoundedWarningIcon className="size-4" sentiment={warning.sentiment} />
       </TooltipTrigger>
       <TooltipContent>
-        {warning?.content ? (
-          <Callout
-            icon={
-              <RoundedWarningIcon
-                className="size-5"
-                sentiment={warning.sentiment}
-              />
-            }
-            body={warning.content}
-          />
-        ) : null}
+        <Callout
+          icon={
+            <RoundedWarningIcon
+              className="size-5"
+              sentiment={warning.sentiment}
+            />
+          }
+          body={warning.content}
+        />
       </TooltipContent>
     </Tooltip>
   )
