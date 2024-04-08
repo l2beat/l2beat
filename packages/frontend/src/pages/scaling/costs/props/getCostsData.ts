@@ -119,7 +119,7 @@ function getCostsDataBreakdown(
       perL2Tx: txCount
         ? {
             value: data.usdCost / txCount,
-            displayValue: formatCurrency(data.usdCost / txCount, 'usd'),
+            displayValue: formatCurrency(data.usdCost / txCount, 'usd', 4),
           }
         : undefined,
     },
