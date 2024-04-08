@@ -92,6 +92,7 @@ export function getScalingNavigationPages(
       icon: CostsIcon,
       link: '/scaling/costs',
       selected: selectedPage === 'costs',
+      new: true,
     },
   ])
 }
