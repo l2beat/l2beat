@@ -203,7 +203,7 @@ function initializeConfigurations(
               ethereumRPC,
               livenessRepository,
               configuration.projectId,
-              peripherals.getClient(configuration, peripherals, LoopringClient),
+              getL2Rpc(configuration, peripherals, LoopringClient),
             ),
             minTimestamp: new UnixTime(1616396742),
           }
