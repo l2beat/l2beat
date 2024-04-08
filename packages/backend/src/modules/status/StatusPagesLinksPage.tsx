@@ -13,8 +13,8 @@ const LINKS = [
     url: '/status/discovery',
   },
   {
-    name: 'Liveness',
-    url: '/status/liveness',
+    name: 'Tracked txs',
+    url: '/status/tracked-txs',
   },
   {
     name: 'TVL',

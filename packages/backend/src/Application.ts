@@ -6,6 +6,7 @@ import { Config } from './config'
 import { createActivityModule } from './modules/activity/ActivityModule'
 import { ApplicationModule } from './modules/ApplicationModule'
 import { createDiffHistoryModule } from './modules/diff-history/createDiffHistoryModule'
+import { createFeaturesModule } from './modules/features/FeaturesModule'
 import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createHealthModule } from './modules/health/HealthModule'
 import { createImplementationChangeModule } from './modules/implementation-change-report/createImplementationChangeModule'
@@ -66,6 +67,7 @@ export class Application {
       ),
       createLzOAppsModule(config, logger),
       createTvl2Module(config, logger, peripherals, clock),
+      createFeaturesModule(config),
     ]
 
     const apiServer = new ApiServer(
@@ -77,6 +79,16 @@ export class Application {
 
     this.start = async () => {
       logger.for(this).info('Starting', { features: config.flags })
+      const unusedFlags = Object.values(config.flags)
+        .filter((x) => !x.used)
+        .map((x) => x.feature)
+      if (unusedFlags.length > 0) {
+        logger
+          .for(this)
+          .warn('Some feature flags are not used', { unusedFlags })
+      }
+      logger.for(this).info('Log level', config.logger.logLevel)
+
       await apiServer.start()
       await database.start()
       for (const module of modules) {

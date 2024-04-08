@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x98ae8aae2c09a4a4c7ec4db1638ab9aa4b9109ff
+
+# Diff at Thu, 28 Mar 2024 11:34:42 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@21187e63b9b90823a55c461c331868a470ce17eb block: 21838858
+- current block number: 24791025
+
+## Description
+
+Update discovery to include the multisig threshold.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21838858 (main branch discovery), not current.
+
+```diff
+    contract OpticsV2Governor (0x070c2843402Aa0637ae0F2E2edf601aAB5E72509) {
+    +++ description: None
+      upgradeability.threshold:
++        "4 of 7 (57%)"
+    }
+```
+
 Generated with discovered.json: 0xe0eb643589af786ceaa130d75b2bd202d54100f7
 
 # Diff at Mon, 09 Oct 2023 14:48:14 GMT:

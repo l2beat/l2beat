@@ -52,21 +52,30 @@ describeDatabase(TrackedTxsConfigsRepository.name, (database) => {
     })
   })
 
-  describe(TrackedTxsConfigsRepository.prototype.getByProjectId.name, () => {
-    it('should return configs for given project id', async () => {
-      await repository.addMany(TRACKED_TXS_RECORDS)
-      const results = await repository.getByProjectId(ProjectId('project1'))
+  describe(
+    TrackedTxsConfigsRepository.prototype.getByProjectIdAndType.name,
+    () => {
+      it('should return configs for given project id and type', async () => {
+        await repository.addMany(TRACKED_TXS_RECORDS)
+        const results = await repository.getByProjectIdAndType(
+          ProjectId('project1'),
+          'liveness',
+        )
 
-      expect(results).toEqualUnsorted([TRACKED_TXS_RECORDS[0]])
-    })
+        expect(results).toEqualUnsorted([TRACKED_TXS_RECORDS[0]])
+      })
 
-    it('should return empty array if no configs for given project id', async () => {
-      await repository.addMany(TRACKED_TXS_RECORDS)
-      const results = await repository.getByProjectId(ProjectId('project4'))
+      it('should return empty array if no configs for given project id', async () => {
+        await repository.addMany(TRACKED_TXS_RECORDS)
+        const results = await repository.getByProjectIdAndType(
+          ProjectId('project4'),
+          'liveness',
+        )
 
-      expect(results).toEqualUnsorted([])
-    })
-  })
+        expect(results).toEqualUnsorted([])
+      })
+    },
+  )
 
   describe(
     TrackedTxsConfigsRepository.prototype

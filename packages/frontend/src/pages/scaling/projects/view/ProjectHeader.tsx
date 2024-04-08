@@ -1,12 +1,16 @@
 import {
-  Layer2TVLWarning,
   ScalingProjectPurpose,
   StageConfig,
+  WarningWithSentiment,
 } from '@l2beat/config'
 import { pluralize } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { UpcomingBadge } from '../../../../components/badge/UpcomingBadge'
+import {
+  TokenBreakdown,
+  TokenBreakdownProps,
+} from '../../../../components/breakdown/TokenBreakdown'
 import { DetailsHeader } from '../../../../components/header/DetailsHeader'
 import { ProjectSummaryStat } from '../../../../components/header/ProjectSummary'
 import { StatWithChange } from '../../../../components/header/stats/StatWithChange'
@@ -15,10 +19,6 @@ import { InfoIcon, ProjectLink } from '../../../../components/icons'
 import { StageBadge } from '../../../../components/stages/StageBadge'
 import { StageTooltip } from '../../../../components/stages/StageTooltip'
 import { TypeCell } from '../../../../components/table/TypeCell'
-import {
-  TokenBreakdown,
-  TokenBreakdownProps,
-} from '../../../../components/TokenBreakdown'
 import {
   Tooltip,
   TooltipContent,
@@ -40,7 +40,7 @@ export interface ProjectHeaderProps {
   tvlBreakdown: TokenBreakdownProps | undefined
   showTvlBreakdown: boolean
   tvlBreakdownHref: string
-  tvlWarning?: Layer2TVLWarning
+  tvlWarning?: WarningWithSentiment
   risks: RiskValues
   links: ProjectLink[]
   stage: StageConfig
@@ -48,6 +48,7 @@ export interface ProjectHeaderProps {
   isUpcoming?: boolean
   isLayer3?: boolean
   isUnderReview?: boolean
+  implementationHasChanged: boolean
   showProjectUnderReview?: boolean
   warning?: string | { text: string; href: string }
 }
@@ -125,6 +126,7 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       isUpcoming={props.isUpcoming}
       isUnderReview={props.isUnderReview}
       isArchived={props.isArchived}
+      implementationHasChanged={props.implementationHasChanged}
       showProjectUnderReview={props.showProjectUnderReview}
       warning={props.warning}
       tvlBreakdownHref={props.tvlBreakdownHref}

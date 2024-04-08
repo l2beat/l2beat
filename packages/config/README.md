@@ -62,6 +62,7 @@ In some tests rpc calls to ethereum network are performed through Alchemy. In or
 | OMGNetwork                        | -                                                        |
 | Optimism                          | https://optimism.mirror.xyz/                             |
 | Rhino.fi                          | https://rhino.fi/blog                                    |
+| RSS3, Value Sublayer              | https://rss3.io/blog                                     |
 | Sorare                            | https://medium.com/sorare                                |
 | Starknet                          | https://medium.com/starkware                             |
 | ZkSpace, ZkSwap V1, ZkSwap V2     | https://medium.com/@zkspaceofficial                      |

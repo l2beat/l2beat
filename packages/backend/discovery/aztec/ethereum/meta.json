@@ -60,8 +60,8 @@
           "type": null
         },
         "reimburseConstant": {
-          "description": null,
-          "severity": null,
+          "description": "Tip that gets added to a gas reimbursement for processing the rollup.",
+          "severity": "LOW",
           "type": null
         },
         "rollupProcessor": {

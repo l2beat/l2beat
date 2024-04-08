@@ -82,7 +82,7 @@
       }
     },
     {
-      "name": "Connext Multisig",
+      "name": "Connext Fee Multisig",
       "values": {
         "VERSION": {
           "description": null,
@@ -108,16 +108,11 @@
           "description": null,
           "severity": null,
           "type": null
-        },
-        "nonce": {
-          "description": null,
-          "severity": null,
-          "type": null
         }
       }
     },
     {
-      "name": "Connext Multisig 2",
+      "name": "Connext Multisig",
       "values": {
         "VERSION": {
           "description": null,
@@ -245,8 +240,8 @@
           "type": null
         },
         "relayerFeeVault": {
-          "description": null,
-          "severity": null,
+          "description": "This address receives the bridge fees",
+          "severity": "LOW",
           "type": null
         },
         "routerAllowlistRemoved": {

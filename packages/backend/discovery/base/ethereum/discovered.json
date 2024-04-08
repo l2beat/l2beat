@@ -1,7 +1,7 @@
 {
   "name": "base",
   "chain": "ethereum",
-  "blockNumber": 19439852,
+  "blockNumber": 19566961,
   "configHash": "0x0fb2651d767e83a737c4761a595c97892ae9588262c3fdd7f546e4abbc037fa4",
   "version": 3,
   "contracts": [
@@ -40,7 +40,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "3 of 8 (38%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1685980643,
@@ -58,7 +59,7 @@
           "0x49243DcE94e0f5A1B08b9556bBEc5a84363c3839"
         ],
         "getThreshold": 3,
-        "nonce": 11,
+        "nonce": 15,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -96,7 +97,7 @@
         "GUARDIAN": "0x14536667Cd30e52C0b458BaACcB9faDA7046E056",
         "L2_ORACLE": "0x56315b90c40730925ec5485cf004d835058518A0",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 100000, 19439852],
+        "params": [1000000000, 100000, 19566960],
         "paused": false,
         "SYSTEM_CONFIG": "0x73a79Fab69143498Ed3712e519A88a918e1f4072",
         "version": "1.7.0"
@@ -127,10 +128,10 @@
         ],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 11853000,
-        "latestOutputIndex": 6584,
-        "nextBlockNumber": 11854800,
-        "nextOutputIndex": 6585,
+        "latestBlockNumber": 12627000,
+        "latestOutputIndex": 7014,
+        "nextBlockNumber": 12628800,
+        "nextOutputIndex": 7015,
         "PROPOSER": "0x642229f238fb9dE03374Be34B0eD8D9De80752c5",
         "startingBlockNumber": 0,
         "startingTimestamp": 1686789348,
@@ -183,7 +184,7 @@
       "sinceTimestamp": 1686793895,
       "values": {
         "batcherHash": "0x5050F69a9786F081509234F1a7F4684b5E5b76C9",
-        "gasLimit": 30000000,
+        "gasLimit": 60000000,
         "minimumGasLimit": 21000000,
         "opStackDA": {
           "isSomeTxsLengthEqualToCelestiaDAExample": false,
@@ -214,7 +215,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "2 of 2 (100%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1689804143,
@@ -244,7 +246,7 @@
       "sinceTimestamp": 1686793895,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292770430",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292775786",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -275,7 +277,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "3 of 6 (50%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1684875515,
@@ -302,7 +305,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
-        "modules": []
+        "modules": [],
+        "threshold": "5 of 7 (71%)"
       },
       "implementations": ["0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"],
       "sinceTimestamp": 1610850364,

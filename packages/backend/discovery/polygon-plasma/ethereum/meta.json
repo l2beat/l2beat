@@ -1,0 +1,852 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "ChildChain",
+      "values": {}
+    },
+    {
+      "name": "DepositManager",
+      "values": {
+        "childChain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "locked": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxErc20Deposit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "registry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rootChain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stateSender": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ERC20PredicateBurnOnly",
+      "values": {
+        "CHAINID": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "networkId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ERC721PredicateBurnOnly",
+      "values": {
+        "CHAINID": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "networkId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "EventsHub",
+      "values": {
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "registry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ExitNFT",
+      "values": {
+        "getApproved": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ownerOf": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Governance",
+      "values": {
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "MaticToken",
+      "values": {
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "MaticWETH",
+      "values": {
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "PolygonMultisig",
+      "values": {
+        "NAME": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getModules": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Registry",
+      "values": {
+        "erc20Predicate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "erc721Predicate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChildChainAndStateSender": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getDepositManagerAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getSlashingManagerAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStakeManagerAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getValidatorShareAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getWethTokenAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getWithdrawManagerAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "RootChain",
+      "values": {
+        "CHAINID": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VOTE_TYPE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "_nextHeaderBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "currentHeaderBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLastChildBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "heimdallId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "networkId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SlashingManager",
+      "values": {}
+    },
+    {
+      "name": "StakeManager",
+      "values": {
+        "CHECKPOINT_REWARD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "NFTContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "NFTCounter": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "WITHDRAWAL_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accountStateRoot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "auctionPeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "checkPointBlockInterval": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "checkpointRewardDelta": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "currentEpoch": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "currentValidatorSetSize": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "currentValidatorSetTotalStake": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delegationEnabled": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delegatorsReward": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "dynasty": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "epoch": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eventsHub": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "extensionCode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "locked": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "logger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxRewardedCheckpoints": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minDeposit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minHeimdallFee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ownerOf": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "prevBlockInterval": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proposerBonus": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "registry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "replacementCoolDown": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rewardDecreasePerCheckpoint": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rootChain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "signerUpdateLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalHeimdallFee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalRewards": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalRewardsLiquidated": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalStaked": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "validatorReward": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "validatorShareFactory": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "validatorState": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "validatorThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "withdrawalDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "StakingInfo",
+      "values": {
+        "getAccountStateRoot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStakerDetails": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "registry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "StateSender",
+      "values": {
+        "REGISTRATIONS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "counter": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Timelock",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EXECUTOR_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROPOSER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TIMELOCK_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getMinDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ValidatorShare",
+      "values": {
+        "activeAmount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "commissionRate_deprecated": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delegation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eventsHub": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "exchangeRate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lastCommissionUpdate_deprecated": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "locked": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minAmount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rewardPerShare": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stakeManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stakingLogger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalStake_deprecated": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "validatorId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "validatorRewards_deprecated": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "withdrawExchangeRate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "withdrawPool": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "withdrawShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ValidatorShareFactory",
+      "values": {}
+    },
+    {
+      "name": "WithdrawManager",
+      "values": {
+        "HALF_EXIT_PERIOD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ON_FINALIZE_GAS_LIMIT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "exitNft": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "exitWindow": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}

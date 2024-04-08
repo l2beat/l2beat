@@ -1,3 +1,53 @@
+Generated with discovered.json: 0xe8150e042bf9dae4cfc4db303c574ed4f8089f15
+
+# Diff at Thu, 28 Mar 2024 11:28:26 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@21187e63b9b90823a55c461c331868a470ce17eb block: 18621109
+- current block number: 19532310
+
+## Description
+
+Update discovery to include the multisig threshold.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18621109 (main branch discovery), not current.
+
+```diff
+    contract Multisig 1 (0x002A5dc50bbB8d5808e418Aeeb9F060a2Ca17346) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 4 (50%)"
+    }
+```
+
+```diff
+    contract Multisig 2 (0x19eD6cc20D44e5cF4Bb4894F50162F72402d8567) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 5 (40%)"
+    }
+```
+
+```diff
+    contract Multisig 3 (0x225d3822De44E58eE935440E0c0B829C4232086e) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 3 (67%)"
+    }
+```
+
+```diff
+    contract ZkSync Multisig (0xE24f4870Ab85DE8E356C5fC56138587206c70d99) {
+    +++ description: None
+      upgradeability.threshold:
++        "4 of 7 (57%)"
+    }
+```
+
 Generated with discovered.json: 0x458592c7ff46f3e95422b638c0a5a7e9033c8c53
 
 # Diff at Tue, 21 Nov 2023 15:45:04 GMT:

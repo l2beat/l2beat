@@ -4,7 +4,7 @@ import { PriceConfigEntry, UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
 import { Knex } from 'knex'
 
-import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
+import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import { HourlyIndexer } from '../tracked-txs/HourlyIndexer'
 import { PriceRecord, PriceRepository } from './repositories/PriceRepository'
 import { SyncOptimizer } from './SyncOptimizer'
@@ -27,12 +27,12 @@ export class PriceIndexer extends ChildIndexer {
 
   override async start(): Promise<void> {
     this.logger.debug('Starting...')
-    await this.initialize()
     await super.start()
     this.logger.debug('Started')
   }
 
   override async update(_from: number, _to: number): Promise<number> {
+    _from -= 1 // TODO: refactor logic after uif update
     this.logger.debug('Updating...')
 
     const from = this.getAdjustedFrom(_from)
@@ -86,7 +86,12 @@ export class PriceIndexer extends ChildIndexer {
       }))
   }
 
-  override async getSafeHeight(): Promise<number> {
+  override async initialize(): Promise<number> {
+    await this.doInitialize()
+    return await this.getSafeHeight()
+  }
+
+  async getSafeHeight(): Promise<number> {
     const indexerState = await this.stateRepository.findIndexerState(
       this.indexerId,
     )
@@ -102,7 +107,7 @@ export class PriceIndexer extends ChildIndexer {
     await this.stateRepository.setSafeHeight(this.indexerId, safeHeight, trx)
   }
 
-  async initialize() {
+  async doInitialize() {
     this.logger.debug('Initializing...')
 
     const indexerState = await this.stateRepository.findIndexerState(

@@ -1,7 +1,7 @@
 {
   "name": "mantle",
   "chain": "ethereum",
-  "blockNumber": 19477042,
+  "blockNumber": 19531981,
   "configHash": "0xba05a40a024d293bb9fb2c3f31d7170679d2b84533f9f65f885a84c51b3b1c97",
   "version": 3,
   "contracts": [
@@ -134,7 +134,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "3 of 7 (43%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1686902471,
@@ -171,10 +172,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 61409546,
-        "latestOutputIndex": 131,
-        "nextBlockNumber": 61411346,
-        "nextOutputIndex": 132,
+        "latestBlockNumber": 61744346,
+        "latestOutputIndex": 317,
+        "nextBlockNumber": 61746146,
+        "nextOutputIndex": 318,
         "PROPOSER": "0x6667961f5e9C98A76a48767522150889703Ed77D",
         "startingBlockNumber": 61171946,
         "startingTimestamp": 1710474204,
@@ -276,7 +277,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "6 of 13 (46%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1683509999,
@@ -350,7 +352,7 @@
         "dataLayrBombVerifier": "0x0000000000000000000000000000000000000000",
         "dataLayrChallenge": "0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94",
         "dataPermissionManager": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
-        "dataStoresForDuration": [22083, 0, 0, 0, 0, 0, 0, 22084, 1710954527],
+        "dataStoresForDuration": [22833, 0, 0, 0, 0, 0, 0, 22834, 1711624463],
         "DURATION_SCALE": 3600,
         "eigenLayrDelegation": "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798",
         "feePerBytePerTime": 1,
@@ -400,7 +402,7 @@
         "HASH_MESSAGE_GAS_PER_BYTE": 2,
         "L1_MNT_ADDRESS": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619994",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620560",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -449,7 +451,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "2 of 2 (100%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1684377983,
@@ -574,7 +577,7 @@
         "L1_MNT_ADDRESS": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
         "L2_ORACLE": "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 591926, 19476533],
+        "params": [1000000000, 591926, 19531880],
         "paused": false,
         "SYSTEM_CONFIG": "0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
         "version": "1.7.0"

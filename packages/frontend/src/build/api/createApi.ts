@@ -1,6 +1,9 @@
 import {
   ActivityApiCharts,
   ActivityApiResponse,
+  L2CostsApiResponse,
+  L2CostsCombinedApiCharts,
+  L2CostsProjectApiCharts,
   TvlApiCharts,
   TvlApiResponse,
 } from '@l2beat/shared-pure'
@@ -9,12 +12,19 @@ import path from 'path'
 
 import { Config } from '../config'
 
+type Charts =
+  | TvlApiCharts
+  | ActivityApiCharts
+  | L2CostsCombinedApiCharts
+  | L2CostsProjectApiCharts
+
 export function createApi(
   config: Config,
   tvlApiResponse: TvlApiResponse,
   activityApiResponse: ActivityApiResponse | undefined,
+  l2CostsApiResponse: L2CostsApiResponse | undefined,
 ) {
-  const urlCharts = new Map<string, TvlApiCharts | ActivityApiCharts>()
+  const urlCharts = new Map<string, Charts>()
   const { layer2s, layer3s, bridges } = config
 
   urlCharts.set('tvl/scaling', tvlApiResponse.layers2s)
@@ -28,7 +38,7 @@ export function createApi(
     }
   }
 
-  if (activityApiResponse?.combined) {
+  if (activityApiResponse) {
     urlCharts.set('activity/combined', activityApiResponse.combined)
 
     for (const [projectId, chart] of Object.entries(
@@ -43,12 +53,23 @@ export function createApi(
     }
   }
 
+  if (l2CostsApiResponse) {
+    urlCharts.set('costs/combined', l2CostsApiResponse.combined)
+    for (const [projectId, chart] of Object.entries(
+      l2CostsApiResponse.projects,
+    )) {
+      const slug = [...layer2s].find((x) => x.id.toString() === projectId)
+        ?.display.slug
+      if (chart && slug) {
+        urlCharts.set(`costs/${slug}`, chart)
+      }
+    }
+  }
+
   outputCharts(urlCharts)
 }
 
-export function outputCharts(
-  urlCharts: Map<string, TvlApiCharts | ActivityApiCharts>,
-) {
+export function outputCharts(urlCharts: Map<string, Charts>) {
   for (const [url, charts] of urlCharts) {
     const json = JSON.stringify(charts)
     fsx.mkdirpSync(path.join('build/api', path.dirname(url)))

@@ -1,4 +1,4 @@
-import { DataAvailabilityMode, Layer2 } from '@l2beat/config'
+import { Layer2 } from '@l2beat/config'
 import {
   FinalityApiResponse,
   FinalityProjectData,
@@ -16,36 +16,42 @@ export function getScalingFinalityView(
   projects: Layer2[],
   pagesData: FinalityPagesData,
 ): ScalingFinalityViewProps {
-  const { finalityApiResponse, tvlApiResponse } = pagesData
+  const { finalityApiResponse, tvlApiResponse, implementationChange } =
+    pagesData
 
   const includedProjects = getIncludedProjects(projects, finalityApiResponse)
   const orderedProjects = orderByTvl(includedProjects, tvlApiResponse)
 
   return {
     items: orderedProjects
-      .map((project) =>
-        getScalingFinalityViewEntry(
+      .map((project) => {
+        const hasImplementationChanged =
+          !!implementationChange?.projects[project.id.toString()]
+        return getScalingFinalityViewEntry(
           project,
           finalityApiResponse.projects[project.id.toString()],
-        ),
-      )
+          hasImplementationChanged,
+        )
+      })
       .filter(notUndefined),
   }
 }
 
-export function getScalingFinalityViewEntry(
+function getScalingFinalityViewEntry(
   project: Layer2,
   finalityProjectData: FinalityProjectData | undefined,
+  hasImplementationChanged?: boolean,
 ): ScalingFinalityViewEntry {
   return {
     name: project.display.name,
     shortName: project.display.shortName,
     slug: project.display.slug,
     category: project.display.category,
-    dataAvailabilityMode: daModeToDisplay(project.dataAvailability?.mode),
+    dataAvailabilityMode: project.dataAvailability?.mode,
     provider: project.display.provider,
     warning: project.display.warning,
     redWarning: project.display.redWarning,
+    hasImplementationChanged,
     purposes: project.display.purposes,
     stage: project.stage,
     data: getFinalityData(finalityProjectData, project),
@@ -100,12 +106,4 @@ function getIncludedProjects(
       (p.display.category === 'ZK Rollup' ||
         p.display.category === 'Optimistic Rollup'),
   )
-}
-
-function daModeToDisplay(daMode: DataAvailabilityMode | undefined) {
-  if (!daMode) {
-    return undefined
-  }
-
-  return daMode
 }

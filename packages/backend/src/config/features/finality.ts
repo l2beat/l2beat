@@ -35,6 +35,16 @@ export function getFinalityConfigurations(
 }
 
 function getChainFinalityConfig(env: Env, project: Layer2) {
+  if (
+    project.config.transactionApi?.type === 'loopring' ||
+    project.config.transactionApi?.type === 'degate'
+  ) {
+    return {
+      url: project.config.transactionApi.defaultUrl,
+      callsPerMinute: project.config.transactionApi.defaultCallsPerMinute,
+    }
+  }
+
   const ENV_NAME = project.id.toUpperCase().replace(/-/g, '_')
 
   return {

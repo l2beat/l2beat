@@ -4,7 +4,12 @@
   "name": "socket",
   "initialAddresses": [
     "0x943AC2775928318653e91d350574436A1b9b16f9",
-    "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d"
+    "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d",
+    "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab",
+    "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e",
+    "0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592",
+    "0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa",
+    "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3"
   ],
   "names": {
     "0x943AC2775928318653e91d350574436A1b9b16f9": "Socket",
@@ -14,7 +19,12 @@
     "0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA": "OptimismSwitchboard2",
     "0xD5a83a40F262E2247e6566171f9ADc76b745F5cD": "FastSwitchboard",
     "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d": "USDC Vault",
-    "0x246d38588b16Dd877c558b245e6D5a711C649fCF": "USDCVaultOwner"
+    "0x246d38588b16Dd877c558b245e6D5a711C649fCF": "USDCVaultOwner",
+    "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab": "WBTC Vault",
+    "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e": "WETH Vault",
+    "0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592": "SNX Vault",
+    "0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa": "WETH Vault 2",
+    "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3": "wstETH Vault"
   },
   "overrides": {
     "Socket": {
@@ -39,6 +49,7 @@
       }
     },
     "OptimismSwitchboard": {
+      "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"],
       "ignoreRelatives": [
         "capacitor__",
         "crossDomainMessenger__",
@@ -46,6 +57,7 @@
       ]
     },
     "OptimismSwitchboard2": {
+      "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"],
       "ignoreRelatives": [
         "capacitor__",
         "crossDomainMessenger__",
@@ -53,6 +65,7 @@
       ]
     },
     "PolygonL1Switchboard": {
+      "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"],
       "ignoreRelatives": [
         "capacitor__",
         "checkpointManager",
@@ -61,6 +74,7 @@
       ]
     },
     "ArbitrumL1Switchboard": {
+      "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"],
       "ignoreRelatives": [
         "capacitor__",
         "bridge__",
@@ -84,6 +98,21 @@
     },
     "USDCVaultOwner": {
       "ignoreInWatchMode": ["nonce"]
+    },
+    "WBTC Vault": {
+      "ignoreMethods": ["token__"]
+    },
+    "WETH Vault": {
+      "ignoreMethods": ["token__"]
+    },
+    "SNX Vault": {
+      "ignoreMethods": ["token__"]
+    },
+    "wstETH Vault": {
+      "ignoreMethods": ["token__"]
+    },
+    "WETH Vault 2": {
+      "ignoreMethods": ["token__"]
     }
   }
 }

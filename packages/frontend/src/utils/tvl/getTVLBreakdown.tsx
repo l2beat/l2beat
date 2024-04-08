@@ -2,7 +2,7 @@ import { safeGetTokenByAssetId } from '@l2beat/config'
 import { TvlApiToken } from '@l2beat/shared-pure'
 import React from 'react'
 
-import { TokenBreakdownProps } from '../../components/TokenBreakdown'
+import { TokenBreakdownProps } from '../../components/breakdown/TokenBreakdown'
 import { formatPercent } from '../utils'
 
 export function getTvlBreakdown(
@@ -16,7 +16,7 @@ export function getTvlBreakdown(
   return {
     ...partial,
     label: getTVLBreakdownLabel(partial, associatedTokens),
-    ...getTvlWarning(partial, name, associatedTokens),
+    ...getTvlWarning(partial.associated, name, associatedTokens),
   }
 }
 
@@ -78,14 +78,14 @@ function getTVLBreakdownLabel(
   )
 }
 
-function getTvlWarning(
-  breakdown: ReturnType<typeof getPartialTVLBreakdown>,
+export function getTvlWarning(
+  associatedRatio: ReturnType<typeof getPartialTVLBreakdown>['associated'],
   name: string,
   associatedTokens: string[],
 ) {
   let warning: string | undefined
-  if (breakdown.associated > 0.1) {
-    const percent = formatPercent(breakdown.associated)
+  if (associatedRatio > 0.1) {
+    const percent = formatPercent(associatedRatio)
     if (associatedTokens.length === 1) {
       const what = `The ${associatedTokens[0]} token associated with ${name}`
       warning = `${what} accounts for ${percent} of the TVL!`
@@ -96,6 +96,6 @@ function getTvlWarning(
     }
   }
   const warningSeverity: 'bad' | 'warning' =
-    breakdown.associated > 0.9 ? 'bad' : 'warning'
+    associatedRatio > 0.8 ? 'bad' : 'warning'
   return { warning, warningSeverity }
 }

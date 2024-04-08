@@ -1,4 +1,4 @@
-import { Layer2TVLWarning } from '@l2beat/config'
+import { WarningWithSentiment } from '@l2beat/config'
 import React from 'react'
 
 import { cn } from '../../utils/cn'
@@ -6,6 +6,7 @@ import { RiskValues } from '../../utils/risks/types'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { ProjectLink } from '../icons'
 import { ArchivedBar } from '../project/ArchivedBar'
+import { ImplementationUnderReviewBar } from '../project/ImplementationUnderReviewBar'
 import { UnderReviewBar } from '../project/UnderReviewBar'
 import { UpcomingBar } from '../project/UpcomingBar'
 import { WarningBar } from '../project/WarningBar'
@@ -25,9 +26,10 @@ export interface HeaderProps {
   isUpcoming?: boolean
   isUnderReview?: boolean
   tvlBreakdownHref?: string
-  tvlWarning?: Layer2TVLWarning
+  tvlWarning?: WarningWithSentiment
   showTvlBreakdown?: boolean
   showProjectUnderReview?: boolean
+  implementationHasChanged?: boolean
   risks?: RiskValues
   links: ProjectLink[]
   type: 'bridge' | 'layer2' | 'layer3'
@@ -73,11 +75,10 @@ export function DetailsHeader(props: HeaderProps) {
             {props.description && (
               <div className="mt-4 text-base">{props.description}</div>
             )}
-            {props.isArchived && <ArchivedBar className="w-full" />}
-            {props.isUpcoming && <UpcomingBar className="w-full" />}
-            {props.showProjectUnderReview && (
-              <UnderReviewBar className="w-full" />
-            )}
+            {props.isArchived && <ArchivedBar />}
+            {props.isUpcoming && <UpcomingBar />}
+            {props.showProjectUnderReview && <UnderReviewBar />}
+            {props.implementationHasChanged && <ImplementationUnderReviewBar />}
             {props.warning && (
               <WarningBar
                 text={

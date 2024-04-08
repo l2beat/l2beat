@@ -26,6 +26,11 @@ export const rari: Layer3 = orbitStackL3({
       socialMedia: ['https://twitter.com/RariChain'],
     },
   },
+  nonTemplateContracts: [
+    discovery.getContractDetails('L1GatewayRouter', {
+      description: 'Router managing token <--> gateway mapping.',
+    }),
+  ],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6'),

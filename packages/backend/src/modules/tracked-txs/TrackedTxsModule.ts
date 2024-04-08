@@ -3,13 +3,14 @@ import { notUndefined } from '@l2beat/shared-pure'
 
 import { Config } from '../../config'
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
-import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { Clock } from '../../tools/Clock'
+import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import {
   ApplicationModule,
   ApplicationModuleWithIndexer,
 } from '../ApplicationModule'
+import { createTrackedTxsStatusRouter } from './api/TrackedTxsStatusRouter'
 import { HourlyIndexer } from './HourlyIndexer'
 import { createL2CostsModule } from './modules/l2-costs/L2CostsModule'
 import { createLivenessModule } from './modules/liveness/LivenessModule'
@@ -59,13 +60,17 @@ export function createTrackedTxsModule(
     l2costs: l2costsModule?.updater,
   }
 
+  const trackedTxsConfigsRepository = peripherals.getRepository(
+    TrackedTxsConfigsRepository,
+  )
+
   const trackedTxsIndexer = new TrackedTxsIndexer(
     logger,
     hourlyIndexer,
     updaters,
     trackedTxsClient,
     peripherals.getRepository(IndexerStateRepository),
-    peripherals.getRepository(TrackedTxsConfigsRepository),
+    trackedTxsConfigsRepository,
     runtimeConfigurations,
     config.trackedTxsConfig.minTimestamp,
   )
@@ -83,7 +88,13 @@ export function createTrackedTxsModule(
 
   return {
     start,
-    routers: subModules.flatMap((m) => m?.routers ?? []),
+    routers: [
+      ...subModules.flatMap((m) => m?.routers ?? []),
+      createTrackedTxsStatusRouter({
+        clock,
+        trackedTxsConfigsRepository,
+      }),
+    ],
     indexer: trackedTxsIndexer,
   }
 }
