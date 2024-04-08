@@ -5,7 +5,7 @@ import {
 } from '@l2beat/shared-pure'
 
 import { orderByTvl } from '../../../../utils/orderByTvl'
-import { getTokens } from '../../../../utils/project/getChart'
+import { getTokens } from '../../../../utils/project/getCharts'
 import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
 import { getRiskValues } from '../../../../utils/risks/values'
 import { getDetailedTvlWithChange } from '../../../../utils/tvl/getTvlWithChange'

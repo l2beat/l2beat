@@ -1,5 +1,9 @@
 import { z } from 'zod'
 
+declare const __brand: unique symbol
+type Brand<B> = { [__brand]: B }
+export type Branded<T, B> = T & Brand<B>
+
 export function branded<B extends z.ZodTypeAny, R>(
   baseParser: B,
   Brand: (b: z.infer<B>) => R,

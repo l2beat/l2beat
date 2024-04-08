@@ -1,13 +1,15 @@
 import React from 'react'
 
 interface Props {
-  preloadApi?: string
+  preloadApis?: string[]
 }
 
 export function Preload(props: Props) {
   return (
     <>
-      <link rel="preload" href={props.preloadApi} as="fetch" />
+      {props.preloadApis?.map((api) => (
+        <link rel="preload" key={api} href={api} as="fetch" />
+      ))}
       <link
         rel="preload"
         href="/fonts/Roboto/roboto-v30-latin-regular.woff2"

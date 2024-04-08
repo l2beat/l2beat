@@ -6,6 +6,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { install, InstalledClock } from '@sinonjs/fake-timers'
 import { expect, mockFn, mockObject } from 'earl'
 import { range, times } from 'lodash'
 
@@ -23,16 +24,26 @@ import {
 import { DetailedTransaction } from '../types/DetailedTransaction'
 import { CHART_TYPES, L2CostsController } from './L2CostsController'
 
-const START = UnixTime.fromDate(new Date('2024-04-02T09:00:00.000Z')).toStartOf(
-  'hour',
-)
-const NOW_TO_FULL_HOUR = UnixTime.now().toStartOf('hour')
-
 describe(L2CostsController.name, () => {
+  let time: InstalledClock
+  let START_OF_HOUR: UnixTime
+  let START_OF_DAY: UnixTime
+
+  beforeEach(() => {
+    time = install()
+    setTime('10:00:00')
+    START_OF_HOUR = UnixTime.now().toStartOf('hour')
+    START_OF_DAY = START_OF_HOUR.toStartOf('day')
+  })
+
+  afterEach(() => {
+    time.uninstall()
+  })
   describe(L2CostsController.prototype.getL2Costs.name, () => {
     it('correctly calculates l2costs', async () => {
       const l2CostsRepository = mockObject<L2CostsRepository>({
-        getByProjectAndTimeRange: mockFn().resolvesTo([]),
+        getByProjectAndTimeRangePaginated: mockFn().resolvesTo([]),
+        findCountByProjectAndTimeRange: mockFn().resolvesTo({ count: 51000 }),
       })
       const controller = getMockL2CostsController({
         projects: MOCK_PROJECTS,
@@ -62,45 +73,66 @@ describe(L2CostsController.name, () => {
 
       controller.makeTransactionCalculations = mockFn().returns([
         mockObject<DetailedTransaction>({
-          timestamp: START.add(-1, 'hours'),
+          timestamp: START_OF_HOUR.add(-1, 'hours'),
         }),
         mockObject<DetailedTransaction>({
-          timestamp: START.add(-2, 'hours'),
+          timestamp: START_OF_HOUR.add(-2, 'hours'),
         }),
       ])
 
       controller.aggregateL2Costs = mockFn().returns(
         mockObject<L2CostsProjectApiCharts>({
-          hourly: mockObject<L2CostsApiChart>({}),
-          daily: mockObject<L2CostsApiChart>({}),
+          hourly: mockObject<L2CostsApiChart>({
+            data: [],
+          }),
+          daily: mockObject<L2CostsApiChart>({
+            data: [],
+          }),
         }),
       )
 
       const result = await controller.getL2Costs()
 
       expect(
-        l2CostsRepository.getByProjectAndTimeRange,
-      ).toHaveBeenNthCalledWith(1, MOCK_PROJECTS[1].projectId, [
-        NOW_TO_FULL_HOUR.add(-180, 'days'),
-        NOW_TO_FULL_HOUR,
-      ])
+        l2CostsRepository.getByProjectAndTimeRangePaginated,
+      ).toHaveBeenCalledTimes(4)
       expect(
-        l2CostsRepository.getByProjectAndTimeRange,
-      ).toHaveBeenNthCalledWith(2, MOCK_PROJECTS[2].projectId, [
-        NOW_TO_FULL_HOUR.add(-180, 'days'),
-        NOW_TO_FULL_HOUR,
-      ])
+        l2CostsRepository.getByProjectAndTimeRangePaginated,
+      ).toHaveBeenNthCalledWith(
+        1,
+        MOCK_PROJECTS[1].projectId,
+        [START_OF_HOUR.add(-180, 'days'), START_OF_HOUR],
+        0,
+        50000,
+      )
+      expect(
+        l2CostsRepository.getByProjectAndTimeRangePaginated,
+      ).toHaveBeenNthCalledWith(
+        2,
+        MOCK_PROJECTS[1].projectId,
+        [START_OF_HOUR.add(-180, 'days'), START_OF_HOUR],
+        50000,
+        50000,
+      )
       expect(result.type).toEqual('success')
       expect(result.data.projects).toEqual({
         project2: {
           syncedUntil: new UnixTime(1000),
-          daily: mockObject<L2CostsApiChart>({}),
-          hourly: mockObject<L2CostsApiChart>({}),
+          daily: mockObject<L2CostsApiChart>({
+            data: [],
+          }),
+          hourly: mockObject<L2CostsApiChart>({
+            data: [],
+          }),
         },
         project3: {
           syncedUntil: new UnixTime(2000),
-          daily: mockObject<L2CostsApiChart>({}),
-          hourly: mockObject<L2CostsApiChart>({}),
+          daily: mockObject<L2CostsApiChart>({
+            data: [],
+          }),
+          hourly: mockObject<L2CostsApiChart>({
+            data: [],
+          }),
         },
       })
     })
@@ -131,13 +163,14 @@ describe(L2CostsController.name, () => {
 
       const results = await controller.makeTransactionCalculations(
         getMockL2CostRecords(),
+        [START_OF_HOUR.add(-1, 'hours'), START_OF_HOUR.add(-2, 'hours')],
       )
 
       const TX1_GAS_PRICE_ETH = getGasPriceETH(41_000_000_000)
       const TX2_GAS_PRICE_ETH = getGasPriceETH(29_000_000_000)
       const expected = [
         {
-          timestamp: START.add(-1, 'hours'),
+          timestamp: START_OF_HOUR.add(-1, 'hours'),
           calldataGasUsed: 2700,
           computeGasUsed: 400_000 - 2700 - 21_000,
           overheadGasUsed: 21000 as const,
@@ -156,7 +189,7 @@ describe(L2CostsController.name, () => {
           type: 2 as const,
         },
         {
-          timestamp: START.add(-2, 'hours'),
+          timestamp: START_OF_HOUR.add(-2, 'hours'),
           calldataGasUsed: 0,
           computeGasUsed: 0,
           overheadGasUsed: 21000 as const,
@@ -194,224 +227,220 @@ describe(L2CostsController.name, () => {
         combinedDailyMap,
       )
 
+      // we mock a normal transaction every 30 minutes, and once per hour with blob
       expect(result.hourly.data).toEqual([
-        ...times(26, (i) =>
-          datapoint(
-            START.add(-i, 'hours'),
-            i === 0 || i === 25 ? 1 : 2,
-            i === 25 ? null : 1,
-          ),
+        datapoint(START_OF_HOUR, 1, 1),
+        ...times(24, (i) =>
+          datapoint(START_OF_HOUR.add(-(i + 1), 'hours'), 2, 1),
         ),
+        datapoint(START_OF_HOUR.add(-25, 'hours'), 1, null),
       ])
+
       expect(result.daily.data).toEqual([
-        ...times(2, (i) =>
-          datapoint(
-            START.toStartOf('day').add(-i, 'days'),
-            i === 0 ? 19 : 31,
-            i % 2 === 0 ? 10 : 15,
-          ),
-        ),
+        datapoint(START_OF_DAY, 21, 11),
+        datapoint(START_OF_DAY.add(-1, 'days'), 29, 14),
       ])
 
       // adds values to combined maps
       expect(Array.from(combinedHourlyMap.values())).toEqual([
-        ...times(26, (i) =>
-          datapoint(
-            START.add(-i, 'hours'),
-            i === 0 || i === 25 ? 1 : 2,
-            i === 25 ? null : 1,
-          ),
+        datapoint(START_OF_HOUR, 1, 1),
+        ...times(24, (i) =>
+          datapoint(START_OF_HOUR.add(-(i + 1), 'hours'), 2, 1),
         ),
+        datapoint(START_OF_HOUR.add(-25, 'hours'), 1, null),
       ])
       expect(Array.from(combinedDailyMap.values())).toEqual([
-        ...times(2, (i) =>
-          datapoint(
-            START.toStartOf('day').add(-i, 'days'),
-            i === 0 ? 19 : 31,
-            i % 2 === 0 ? 10 : 15,
-          ),
-        ),
+        datapoint(START_OF_DAY, 21, 11),
+        datapoint(START_OF_DAY.add(-1, 'days'), 29, 14),
       ])
     })
   })
-})
 
-function getMockL2CostsController(params: {
-  l2CostsRepository?: L2CostsRepository
-  trackedTxsConfigsRepository?: TrackedTxsConfigsRepository
-  priceRepository?: PriceRepository
-  projects?: Project[]
-}) {
-  const {
-    l2CostsRepository,
-    trackedTxsConfigsRepository,
-    priceRepository,
-    projects,
-  } = params
+  function setTime(hhmmss: string) {
+    const newLocal = new Date(`2024-04-08T${hhmmss}.000Z`)
+    const newTime = newLocal
+    time.setSystemTime(newTime)
+    return newTime
+  }
 
-  return new L2CostsController(
-    l2CostsRepository ?? mockObject<L2CostsRepository>({}),
-    trackedTxsConfigsRepository ?? mockObject<TrackedTxsConfigsRepository>({}),
-    priceRepository ??
-      mockObject<PriceRepository>({
-        findByTimestampRange: mockFn().resolvesToOnce(
-          new Map([
-            [START.add(-1, 'hours').toNumber(), 3000],
-            [START.add(-2, 'hours').toNumber(), 3100],
-          ]),
-        ),
-      }),
-    projects ?? [],
-  )
-}
+  function getMockL2CostsController(params: {
+    l2CostsRepository?: L2CostsRepository
+    trackedTxsConfigsRepository?: TrackedTxsConfigsRepository
+    priceRepository?: PriceRepository
+    projects?: Project[]
+  }) {
+    const {
+      l2CostsRepository,
+      trackedTxsConfigsRepository,
+      priceRepository,
+      projects,
+    } = params
 
-function getMockL2CostRecords(): L2CostsRecord[] {
-  return [
-    {
-      txHash: '0x1',
-      timestamp: START.add(-1, 'hours'),
-      trackedTxId: TrackedTxId.unsafe('aaa'),
-      data: {
-        type: 2,
-        gasUsed: 400000,
-        gasPrice: 41000000000,
-        calldataLength: 2000,
-        calldataGasUsed: 2700,
-      },
-    },
-    {
-      txHash: '0x2',
-      timestamp: START.add(-2, 'hours'),
-      trackedTxId: TrackedTxId.unsafe('bbb'),
-      data: {
-        type: 3,
-        gasUsed: 21000,
-        gasPrice: 29_000_000_000,
-        blobGasPrice: 1,
-        blobGasUsed: 780_000,
-        calldataGasUsed: 0,
-        calldataLength: 0,
-      },
-    },
-  ]
-}
+    return new L2CostsController(
+      l2CostsRepository ?? mockObject<L2CostsRepository>({}),
+      trackedTxsConfigsRepository ??
+        mockObject<TrackedTxsConfigsRepository>({}),
+      priceRepository ??
+        mockObject<PriceRepository>({
+          findByTimestampRange: mockFn().resolvesToOnce(
+            new Map([
+              [START_OF_HOUR.add(-1, 'hours').toNumber(), 3000],
+              [START_OF_HOUR.add(-2, 'hours').toNumber(), 3100],
+            ]),
+          ),
+        }),
+      projects ?? [],
+    )
+  }
 
-const MOCK_PROJECTS: Project[] = [
-  mockObject<Project>({
-    projectId: ProjectId('project1'),
-    isArchived: false,
-    trackedTxsConfig: undefined,
-  }),
-  mockObject<Project>({
-    projectId: ProjectId('project2'),
-    isArchived: false,
-    trackedTxsConfig: {
-      entries: [
-        {
-          address: EthereumAddress.random(),
-          formula: 'functionCall',
-          projectId: ProjectId('project2'),
-          selector: '0x1234',
-          sinceTimestampInclusive: new UnixTime(1000),
-          uses: [
-            {
-              id: TrackedTxId.unsafe('aaa'),
-              type: 'liveness',
-              subtype: 'batchSubmissions',
-            },
-            {
-              id: TrackedTxId.unsafe('aaa'),
-              type: 'l2costs',
-              subtype: 'batchSubmissions',
-            },
-          ],
+  function getMockL2CostRecords(): L2CostsRecord[] {
+    return [
+      {
+        txHash: '0x1',
+        timestamp: START_OF_HOUR.add(-1, 'hours'),
+        trackedTxId: TrackedTxId.unsafe('aaa'),
+        data: {
+          type: 2,
+          gasUsed: 400000,
+          gasPrice: 41000000000,
+          calldataLength: 2000,
+          calldataGasUsed: 2700,
         },
-      ],
-    },
-  }),
-  mockObject<Project>({
-    projectId: ProjectId('project3'),
-    isArchived: false,
-    trackedTxsConfig: {
-      entries: [
-        {
-          from: EthereumAddress.random(),
-          to: EthereumAddress.random(),
-          formula: 'transfer',
-          projectId: ProjectId('project3'),
-          sinceTimestampInclusive: new UnixTime(2000),
-          uses: [
-            {
-              id: TrackedTxId.unsafe('bbb'),
-              type: 'l2costs',
-              subtype: 'stateUpdates',
-            },
-          ],
+      },
+      {
+        txHash: '0x2',
+        timestamp: START_OF_HOUR.add(-2, 'hours'),
+        trackedTxId: TrackedTxId.unsafe('bbb'),
+        data: {
+          type: 3,
+          gasUsed: 21000,
+          gasPrice: 29_000_000_000,
+          blobGasPrice: 1,
+          blobGasUsed: 780_000,
+          calldataGasUsed: 0,
+          calldataLength: 0,
         },
-      ],
-    },
-  }),
-]
+      },
+    ]
+  }
 
-function getGasPriceETH(gasPrice: number) {
-  const gasPriceGwei = parseFloat((gasPrice * 1e-9).toFixed(9))
-  return parseFloat((gasPriceGwei * 1e-9).toFixed(18))
-}
-
-function datapoint(
-  timestamp: UnixTime,
-  value: number,
-  blobValue: number | null = null,
-): L2CostsApiChartPoint {
-  return [
-    timestamp,
-    value,
-    value,
-    value,
-    value * 21_000,
-    value,
-    value,
-    value,
-    value,
-    value,
-    value,
-    value,
-    value,
-    blobValue,
-    blobValue,
-    blobValue,
+  const MOCK_PROJECTS: Project[] = [
+    mockObject<Project>({
+      projectId: ProjectId('project1'),
+      isArchived: false,
+      trackedTxsConfig: undefined,
+    }),
+    mockObject<Project>({
+      projectId: ProjectId('project2'),
+      isArchived: false,
+      trackedTxsConfig: {
+        entries: [
+          {
+            address: EthereumAddress.random(),
+            formula: 'functionCall',
+            projectId: ProjectId('project2'),
+            selector: '0x1234',
+            sinceTimestampInclusive: new UnixTime(1000),
+            uses: [
+              {
+                id: TrackedTxId.unsafe('aaa'),
+                type: 'liveness',
+                subtype: 'batchSubmissions',
+              },
+              {
+                id: TrackedTxId.unsafe('aaa'),
+                type: 'l2costs',
+                subtype: 'batchSubmissions',
+              },
+            ],
+          },
+        ],
+      },
+    }),
+    mockObject<Project>({
+      projectId: ProjectId('project3'),
+      isArchived: false,
+      trackedTxsConfig: {
+        entries: [
+          {
+            from: EthereumAddress.random(),
+            to: EthereumAddress.random(),
+            formula: 'transfer',
+            projectId: ProjectId('project3'),
+            sinceTimestampInclusive: new UnixTime(2000),
+            uses: [
+              {
+                id: TrackedTxId.unsafe('bbb'),
+                type: 'l2costs',
+                subtype: 'stateUpdates',
+              },
+            ],
+          },
+        ],
+      },
+    }),
   ]
-}
 
-function getMockDetailedTransactions(amount: number): DetailedTransaction[] {
-  return range(amount).map((i) => {
-    const base = {
-      timestamp: START.add(-i * 30, 'minutes'),
-      calldataGasUsed: 1,
-      computeGasUsed: 1,
-      totalGas: 1,
-      gasCost: 1,
-      calldataGasCost: 1,
-      computeGasCost: 1,
-      calldataGasCostUsd: 1,
-      computeGasCostUsd: 1,
-      totalGasCost: 1,
-      gasCostUsd: 1,
-      totalGasCostUsd: 1,
-      overheadGasUsed: 21_000 as const,
-      totalOverheadGasCost: 1,
-      totalOverheadGasCostUsd: 1,
-      type: 2 as const,
-    }
-    if (i % 2 === 0) {
-      return {
-        ...base,
-        type: 3 as const,
-        blobGasCost: 1,
-        blobGasCostUsd: 1,
-        blobGasUsed: 1,
+  function getGasPriceETH(gasPrice: number) {
+    const gasPriceGwei = parseFloat((gasPrice * 1e-9).toFixed(9))
+    return parseFloat((gasPriceGwei * 1e-9).toFixed(18))
+  }
+
+  function datapoint(
+    timestamp: UnixTime,
+    value: number,
+    blobValue: number | null = null,
+  ): L2CostsApiChartPoint {
+    return [
+      timestamp,
+      value,
+      value,
+      value,
+      value * 21_000,
+      value,
+      value,
+      value,
+      value,
+      value,
+      value,
+      value,
+      value,
+      blobValue,
+      blobValue,
+      blobValue,
+    ]
+  }
+
+  function getMockDetailedTransactions(amount: number): DetailedTransaction[] {
+    return range(amount).map((i) => {
+      const base = {
+        timestamp: START_OF_HOUR.add(-i * 30, 'minutes'),
+        calldataGasUsed: 1,
+        computeGasUsed: 1,
+        totalGas: 1,
+        gasCost: 1,
+        calldataGasCost: 1,
+        computeGasCost: 1,
+        calldataGasCostUsd: 1,
+        computeGasCostUsd: 1,
+        totalGasCost: 1,
+        gasCostUsd: 1,
+        totalGasCostUsd: 1,
+        overheadGasUsed: 21_000 as const,
+        totalOverheadGasCost: 1,
+        totalOverheadGasCostUsd: 1,
+        type: 2 as const,
       }
-    }
-    return base
-  })
-}
+      if (i % 2 === 0) {
+        return {
+          ...base,
+          type: 3 as const,
+          blobGasCost: 1,
+          blobGasCostUsd: 1,
+          blobGasUsed: 1,
+        }
+      }
+      return base
+    })
+  }
+})

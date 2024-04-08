@@ -121,6 +121,63 @@ const TokenTvlChart = z.object({
   data: z.array(z.tuple([z.number(), z.number(), z.number()])),
 })
 
+export type CostsChart = z.infer<typeof CostsChart>
+const CostsChart = z.object({
+  types: z.tuple([
+    z.literal('timestamp'),
+    z.literal('totalGas'),
+    z.literal('totalEth'),
+    z.literal('totalUsd'),
+    z.literal('overheadGas'),
+    z.literal('overheadEth'),
+    z.literal('overheadUsd'),
+    z.literal('calldataGas'),
+    z.literal('calldataEth'),
+    z.literal('calldataUsd'),
+    z.literal('computeGas'),
+    z.literal('computeEth'),
+    z.literal('computeUsd'),
+    z.literal('blobsGas'),
+    z.literal('blobsEth'),
+    z.literal('blobsUsd'),
+  ]),
+  data: z.array(
+    z.tuple([
+      z.number(),
+      z.number(),
+      z.number(),
+      z.number(),
+      z.number(),
+      z.number(),
+      z.number(),
+      z.number(),
+      z.number(),
+      z.number(),
+      z.number(),
+      z.number(),
+      z.number(),
+      z
+        .number()
+        .nullable()
+        .transform((x) => x ?? 0),
+      z
+        .number()
+        .nullable()
+        .transform((x) => x ?? 0),
+      z
+        .number()
+        .nullable()
+        .transform((x) => x ?? 0),
+    ]),
+  ),
+})
+
+export type CostsResponse = z.infer<typeof CostsResponse>
+export const CostsResponse = z.object({
+  hourly: CostsChart,
+  daily: CostsChart,
+})
+
 export type TokenTvlResponse = z.infer<typeof TokenTvlResponse>
 export const TokenTvlResponse = z.object({
   hourly: TokenTvlChart,
@@ -182,16 +239,19 @@ export const TokenInfo = z.discriminatedUnion('type', [
 export type ChartType = z.infer<typeof ChartType>
 export const ChartType = z.discriminatedUnion('type', [
   z.object({
-    type: z.literal('layer2-tvl'),
+    type: z.literal('scaling-tvl'),
     filteredSlugs: z.array(z.string()).optional(),
   }),
   z.object({
-    type: z.literal('layer2-detailed-tvl'),
+    type: z.literal('scaling-detailed-tvl'),
     filteredSlugs: z.array(z.string()).optional(),
   }),
   z.object({
-    type: z.literal('layer2-activity'),
+    type: z.literal('scaling-activity'),
     filteredSlugs: z.array(z.string()).optional(),
+  }),
+  z.object({
+    type: z.literal('scaling-costs'),
   }),
   z.object({ type: z.literal('bridges-tvl'), includeCanonical: z.boolean() }),
   z.object({ type: z.literal('project-tvl'), slug: z.string() }),
@@ -200,8 +260,10 @@ export const ChartType = z.discriminatedUnion('type', [
     info: TokenInfo,
   }),
   z.object({ type: z.literal('project-detailed-tvl'), slug: z.string() }),
+  z.object({ type: z.literal('project-costs'), slug: z.string() }),
   z.object({ type: z.literal('project-activity'), slug: z.string() }),
   z.object({ type: z.literal('storybook-fake-tvl') }),
   z.object({ type: z.literal('storybook-fake-activity') }),
   z.object({ type: z.literal('storybook-fake-detailed-tvl') }),
+  z.object({ type: z.literal('storybook-fake-costs') }),
 ])

@@ -44,6 +44,7 @@ type L2CostsTrackedTxsConfigEntry = {
 
 const NOW_TO_FULL_HOUR = UnixTime.now().toStartOf('hour')
 const MAX_DAYS = 180
+const MAX_RECORDS = 50000
 
 // Amount of gas required for a basic tx
 const OVERHEAD = 21_000
@@ -93,11 +94,11 @@ export class L2CostsController {
     this.taskQueue.addToFront()
     this.logger.info('Caching: initial caching scheduled')
 
-    const tenMinutes = 10 * 60 * 1000
+    const thirtyMinutes = 30 * 60 * 1000
     setInterval(() => {
       this.taskQueue.addIfEmpty()
       this.logger.info('Caching: refetch scheduled')
-    }, tenMinutes)
+    }, thirtyMinutes)
   }
 
   async getL2Costs(): Promise<L2CostsResult> {
@@ -131,22 +132,49 @@ export class L2CostsController {
         continue
       }
 
-      const records = await this.l2CostsRepository.getByProjectAndTimeRange(
-        project.projectId,
-        [NOW_TO_FULL_HOUR.add(-MAX_DAYS, 'days'), NOW_TO_FULL_HOUR],
-      )
+      const timeRanges: [UnixTime, UnixTime] = [
+        NOW_TO_FULL_HOUR.add(-MAX_DAYS, 'days'),
+        NOW_TO_FULL_HOUR,
+      ]
 
-      const recordsWithDetails = await this.makeTransactionCalculations(records)
-      const { hourly, daily } = this.aggregateL2Costs(
-        recordsWithDetails,
-        combinedHourlyMap,
-        combinedDailyMap,
-      )
+      const { count } =
+        await this.l2CostsRepository.findCountByProjectAndTimeRange(
+          project.projectId,
+          timeRanges,
+        )
+      for (
+        let rangeIndex = 0;
+        rangeIndex < Math.ceil(count / MAX_RECORDS);
+        rangeIndex++
+      ) {
+        const records =
+          await this.l2CostsRepository.getByProjectAndTimeRangePaginated(
+            project.projectId,
+            timeRanges,
+            rangeIndex * MAX_RECORDS,
+            MAX_RECORDS,
+          )
+        const recordsWithDetails = await this.makeTransactionCalculations(
+          records,
+          timeRanges,
+        )
 
-      projects[project.projectId.toString()] = {
-        syncedUntil,
-        hourly,
-        daily,
+        const { hourly, daily } = this.aggregateL2Costs(
+          recordsWithDetails,
+          combinedHourlyMap,
+          combinedDailyMap,
+        )
+
+        const projectData = projects[project.projectId.toString()]
+        if (projectData) {
+          hourly.data = [...projectData.hourly.data, ...hourly.data]
+          daily.data = [...projectData.daily.data, ...daily.data]
+        }
+        projects[project.projectId.toString()] = {
+          syncedUntil,
+          hourly,
+          daily,
+        }
       }
     }
 
@@ -191,11 +219,12 @@ export class L2CostsController {
 
   async makeTransactionCalculations(
     transactions: L2CostsRecord[],
+    ranges: [UnixTime, UnixTime],
   ): Promise<DetailedTransaction[]> {
     const ethPricesMap = await this.priceRepository.findByTimestampRange(
       AssetId.ETH,
-      NOW_TO_FULL_HOUR.add(-MAX_DAYS, 'days').toStartOf('hour'),
-      NOW_TO_FULL_HOUR.toStartOf('hour'),
+      ranges[0],
+      ranges[1],
     )
 
     return transactions.map((tx) => {

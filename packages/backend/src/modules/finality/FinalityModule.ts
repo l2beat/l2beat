@@ -4,17 +4,21 @@ import { assert, assertUnreachable, notUndefined } from '@l2beat/shared-pure'
 import { Config } from '../../config'
 import { FinalityProjectConfig } from '../../config/features/finality'
 import { BlobClient } from '../../peripherals/blobclient/BlobClient'
-import { Peripherals } from '../../peripherals/Peripherals'
+import { ClientClass, Peripherals } from '../../peripherals/Peripherals'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
+import { StarknetClient } from '../../peripherals/starknet/StarknetClient'
 import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import { ApplicationModule } from '../ApplicationModule'
 import { LivenessRepository } from '../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { TrackedTxsConfigsRepository } from '../tracked-txs/repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsIndexer } from '../tracked-txs/TrackedTxsIndexer'
+import { ArbitrumFinalityAnalyzer } from './analyzers/arbitrum/ArbitrumFinalityAnalyzer'
 import { LineaFinalityAnalyzer } from './analyzers/LineaFinalityAnalyzer'
 import { OpStackFinalityAnalyzer } from './analyzers/opStack/OpStackFinalityAnalyzer'
 import { ScrollFinalityAnalyzer } from './analyzers/ScrollFinalityAnalyzer'
+import { StarknetFinalityAnalyzer } from './analyzers/StarknetFinalityAnalyzer'
 import { zkSyncEraFinalityAnalyzer } from './analyzers/zkSyncEraFinalityAnalyzer'
+import { ZkSyncLiteFinalityAnalyzer } from './analyzers/ZkSyncLiteFinalityAnalyzer'
 import { FinalityController } from './api/FinalityController'
 import { createFinalityRouter } from './api/FinalityRouter'
 import { FinalityIndexer } from './FinalityIndexer'
@@ -110,7 +114,7 @@ function initializeConfigurations(
               ethereumRPC,
               livenessRepository,
               configuration.projectId,
-              getL2RPC(configuration, peripherals),
+              getL2Rpc(configuration, peripherals, RpcClient),
             ),
             minTimestamp: configuration.minTimestamp,
           }
@@ -140,6 +144,18 @@ function initializeConfigurations(
             ),
             minTimestamp: configuration.minTimestamp,
           }
+        case 'Arbitrum':
+          return {
+            projectId: configuration.projectId,
+            analyzer: new ArbitrumFinalityAnalyzer(
+              blobClient,
+              logger,
+              ethereumRPC,
+              livenessRepository,
+              configuration.projectId,
+            ),
+            minTimestamp: configuration.minTimestamp,
+          }
         case 'Scroll':
           return {
             projectId: configuration.projectId,
@@ -147,6 +163,27 @@ function initializeConfigurations(
               ethereumRPC,
               livenessRepository,
               configuration.projectId,
+            ),
+            minTimestamp: configuration.minTimestamp,
+          }
+        case 'zkSyncLite':
+          return {
+            projectId: configuration.projectId,
+            analyzer: new ZkSyncLiteFinalityAnalyzer(
+              ethereumRPC,
+              livenessRepository,
+              configuration.projectId,
+            ),
+            minTimestamp: configuration.minTimestamp,
+          }
+        case 'Starknet':
+          return {
+            projectId: configuration.projectId,
+            analyzer: new StarknetFinalityAnalyzer(
+              ethereumRPC,
+              livenessRepository,
+              configuration.projectId,
+              getL2Rpc(configuration, peripherals, StarknetClient),
             ),
             minTimestamp: configuration.minTimestamp,
           }
@@ -159,16 +196,18 @@ function initializeConfigurations(
     .filter(notUndefined)
 }
 
-function getL2RPC(
+function getL2Rpc<Client, Options>(
   configuration: FinalityProjectConfig,
   peripherals: Peripherals,
+  clientClass: ClientClass<Client, Options>,
 ) {
   assert(
     configuration.url,
     `${configuration.projectId.toString()}: L2 provider URL is not defined`,
   )
-  return peripherals.getClient(RpcClient, {
+
+  return peripherals.getClient(clientClass, {
     url: configuration.url,
     callsPerMinute: configuration.callsPerMinute,
-  })
+  } as Options)
 }

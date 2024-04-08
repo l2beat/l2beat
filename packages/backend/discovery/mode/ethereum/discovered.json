@@ -1,7 +1,7 @@
 {
   "name": "mode",
   "chain": "ethereum",
-  "blockNumber": 19531989,
+  "blockNumber": 19582837,
   "configHash": "0x8112d68123af4f0b999458fa75f435f115b529407e7aaafb976629a3c0cc36fe",
   "version": 3,
   "contracts": [
@@ -66,10 +66,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 5725800,
-        "latestOutputIndex": 3180,
-        "nextBlockNumber": 5727600,
-        "nextOutputIndex": 3181,
+        "latestBlockNumber": 6033600,
+        "latestOutputIndex": 3351,
+        "nextBlockNumber": 6035400,
+        "nextOutputIndex": 3352,
         "PROPOSER": "0x674F64D64Ddc198db83cd9047dF54BF89cCD0ddB",
         "startingBlockNumber": 0,
         "startingTimestamp": 1700167583,
@@ -200,7 +200,7 @@
         "GUARDIAN": "0x309Fe2536d01867018D120b40e4676723C53A14C",
         "L2_ORACLE": "0x4317ba146D4933D889518a3e5E11Fe7a53199b04",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 288136, 19531985],
+        "params": [1000000000, 287624, 19582832],
         "paused": false,
         "SYSTEM_CONFIG": "0x5e6432F18Bc5d497B1Ab2288a025Fbf9D69E2221",
         "version": "1.7.2"
@@ -220,7 +220,7 @@
       "sinceTimestamp": 1700167631,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292782670",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292788214",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
