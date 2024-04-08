@@ -42,7 +42,6 @@ type L2CostsTrackedTxsConfigEntry = {
   untilTimestamp: UnixTime | undefined
 }
 
-const NOW_TO_FULL_HOUR = UnixTime.now().toStartOf('hour')
 const MAX_DAYS = 180
 const MAX_RECORDS = 50000
 
@@ -132,9 +131,11 @@ export class L2CostsController {
         continue
       }
 
+      const nowToFullHour = UnixTime.now().toStartOf('hour')
+
       const timeRanges: [UnixTime, UnixTime] = [
-        NOW_TO_FULL_HOUR.add(-MAX_DAYS, 'days'),
-        NOW_TO_FULL_HOUR,
+        nowToFullHour.add(-MAX_DAYS, 'days'),
+        nowToFullHour,
       ]
 
       const { count } =
@@ -163,6 +164,7 @@ export class L2CostsController {
           recordsWithDetails,
           combinedHourlyMap,
           combinedDailyMap,
+          nowToFullHour,
         )
 
         const projectData = projects[project.projectId.toString()]
@@ -191,12 +193,13 @@ export class L2CostsController {
     transactions: DetailedTransaction[],
     combinedHourlyMap: Map<number, L2CostsApiChartPoint>,
     combinedDailyMap: Map<number, L2CostsApiChartPoint>,
+    nowToFullHour: UnixTime,
   ): Omit<L2CostsProjectApiCharts, 'syncedUntil'> {
     const hourlyMap = new Map<number, L2CostsApiChartPoint>()
     const dailyMap = new Map<number, L2CostsApiChartPoint>()
 
     for (const tx of transactions) {
-      if (tx.timestamp.gt(NOW_TO_FULL_HOUR.add(-7, 'days'))) {
+      if (tx.timestamp.gt(nowToFullHour.add(-7, 'days'))) {
         addToMap(hourlyMap, 'hour', tx)
         addToMap(combinedHourlyMap, 'hour', tx)
       }
