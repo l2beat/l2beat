@@ -147,18 +147,25 @@ export class LivenessController {
       }
 
       projects[project.projectId.toString()] = {
-        ...(Object.keys(intervals) as (keyof typeof intervals)[]).reduce(
-          (acc, key) => ({
-            ...acc,
-            [key]: {
-              ...withAnomalies[key],
-              syncedUntil: getSyncedUntil(
-                configurations.filter((c) => c.subtype === key),
-              ),
-            },
-          }),
-          {},
-        ),
+        ...withAnomalies,
+        stateUpdates: {
+          ...withAnomalies.stateUpdates,
+          syncedUntil: getSyncedUntil(
+            configurations.filter((c) => c.subtype === 'stateUpdates'),
+          ),
+        },
+        batchSubmissions: {
+          ...withAnomalies.batchSubmissions,
+          syncedUntil: getSyncedUntil(
+            configurations.filter((c) => c.subtype === 'batchSubmissions'),
+          ),
+        },
+        proofSubmissions: {
+          ...withAnomalies.proofSubmissions,
+          syncedUntil: getSyncedUntil(
+            configurations.filter((c) => c.subtype === 'proofSubmissions'),
+          ),
+        },
         anomalies: withAnomalies.anomalies,
         syncedUntil,
       }
