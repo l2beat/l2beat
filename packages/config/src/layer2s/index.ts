@@ -86,6 +86,7 @@ import { Layer2 } from './types'
 import { x1 } from './x1'
 import { xchain } from './xchain'
 import { zentachain } from './zentachain'
+import { zircuit } from './zircuit'
 import { zkcandy } from './zkcandy'
 import { zkfair } from './zkfair'
 import { zklighter } from './zklighter'
@@ -185,6 +186,7 @@ export const layer2s: Layer2[] = [
   x1,
   xchain,
   zentachain,
+  zircuit,
   zkcandy,
   zkfair,
   zklighter,
