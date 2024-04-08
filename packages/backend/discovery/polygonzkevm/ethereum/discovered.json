@@ -1,8 +1,8 @@
 {
   "name": "polygonzkevm",
   "chain": "ethereum",
-  "blockNumber": 19568029,
-  "configHash": "0xb4411340971b0544516f06db98bff00e367a99ca2506f2cfcfe527c8bda46adb",
+  "blockNumber": 19610645,
+  "configHash": "0xe6d75e189422a44ce1653aa10809f44f4bf927ee7c9f4a59c29c928c3dc3f162",
   "version": 3,
   "contracts": [
     {
@@ -42,7 +42,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "2 of 3 (67%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1678956815,
@@ -150,15 +151,7 @@
           "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
           1101,
           "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
-          9,
-          "0x831e967a0b27ec7dd7598180ad9e368942c4585b8c54f24fb197e1f5b7bd9a78",
-          2004210,
-          2004203,
-          0,
-          0,
-          2001442,
-          3,
-          0
+          9
         ],
         "rollupTypeCount": 4,
         "trustedAggregatorTimeout": 432000,
@@ -194,7 +187,7 @@
         "INITIALIZE_TX_CONSTANT_BYTES_EMPTY_METADATA": 31,
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
-        "lastAccInputHash": "0x28edc3eb29a90a3ea37f280abeb223f4ed72265e2b304b882982475c850e7cca",
+        "lastAccInputHash": "0x0e0c47190b0b4b7d187618146f02308224778b4f47aaebf1f5e0211e2aaec212",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "polygon zkEVM",
@@ -294,7 +287,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "5 of 10 (50%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1694792111,

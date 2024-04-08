@@ -47,7 +47,8 @@
         "rollupData": {
           "type": "call",
           "method": "rollupIDToRollupData",
-          "args": [1] // polygon zkEVM ID
+          "args": [1], // polygon zkEVM ID
+          "pickFields": ["rollupContract","chainID", "verifier","forkID"]
         }
       }
     },

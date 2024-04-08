@@ -39,7 +39,8 @@
         "rollupData": {
           "type": "call",
           "method": "rollupIDToRollupData",
-          "args": [2] // astar ID
+          "args": [2], // astar ID
+          "pickFields": ["rollupContract","chainID", "verifier","forkID"]
         }
       }
     },

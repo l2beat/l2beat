@@ -79,7 +79,7 @@
           "type": "array",
           "method": "rollupIDToRollupData",
           "startIndex": 1,
-          "filter": ["rollupContract", "verifier"],
+          "pickFields": ["rollupContract", "verifier"],
           "length": "{{ rollupCount }}"
         },
         "rollupTypes": {
@@ -87,7 +87,7 @@
           "method": "rollupTypeMap",
           "startIndex": 1,
           "length": "{{ rollupTypeCount }}",
-          "filter": ["consensusImplementation", "verifier"],
+          "pickFields": ["consensusImplementation", "verifier"],
           "ignoreRelative": true
         }
       }

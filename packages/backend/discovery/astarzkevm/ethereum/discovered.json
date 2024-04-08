@@ -1,8 +1,8 @@
 {
   "name": "astarzkevm",
   "chain": "ethereum",
-  "blockNumber": 19568021,
-  "configHash": "0xcc3cc645e9a8169e785d39171dba9f4160c53fb43994cb0f6df27a062264afe5",
+  "blockNumber": 19610563,
+  "configHash": "0xd563c2df9891f8aeb424358ca63dc9e360e152e8e616c55a1f1fb73ee4935401",
   "version": 3,
   "contracts": [
     {
@@ -66,7 +66,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0xc42b58a9ad53baf565eaa9077f7dae8b7f249384a887aa24f8c8437a5d5ebb02",
+        "lastAccInputHash": "0xc8932078fd85ad9c32183507b384f185164f4525a73c3d53b58438abf662423e",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "Astar zkEVM",
@@ -105,15 +105,7 @@
           "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
           3776,
           "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8",
-          7,
-          "0xb618d55ee9b83d1caef7e504b947df3b8b3ea6c92434e7bd82390fb5bf150c9a",
-          11969,
-          11925,
-          0,
-          0,
-          0,
-          1,
-          0
+          7
         ],
         "rollupTypeCount": 4,
         "trustedAggregatorTimeout": 432000,
@@ -127,7 +119,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "1 of 3 (33%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1708443503,
@@ -208,7 +201,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "3 of 6 (50%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1708444367,

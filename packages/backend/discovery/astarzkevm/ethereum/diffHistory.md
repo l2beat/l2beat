@@ -1,31 +1,14 @@
-Generated with discovered.json: 0xb0a6f9e2a6af93c7f8108532f29dd3ce856e82a8
+Generated with discovered.json: 0xabc94f0c2caf10e72a17895fe1dea01beaa436bc
 
-# Diff at Tue, 02 Apr 2024 12:09:47 GMT:
+# Diff at Mon, 08 Apr 2024 11:10:18 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@3ea380545d572c2b8ab33a5fe7a19fb44cbb674d block: 19567776
-- current block number: 19568021
+- comparing to: main@c96c038f2bf3b6b17187b5a1f9d0ef0282942108 block: 19567776
+- current block number: 19610563
 
 ## Description
 
 Provide description of changes. This section will be preserved.
-
-## Watched changes
-
-```diff
-    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
-    +++ description: None
-      values.rollupData.6:
--        11905
-+        11925
-      values.rollupData.5:
--        11925
-+        11969
-      values.rollupData.4:
--        "0xa3d0f874858b4e5ad1cbaefba7df364778a0c6f11495882f17c1af28ff73fb79"
-+        "0xb618d55ee9b83d1caef7e504b947df3b8b3ea6c92434e7bd82390fb5bf150c9a"
-    }
-```
 
 ## Config/verification related changes
 
@@ -71,7 +54,7 @@ discovery. Values are for block 19567776 (main branch discovery), not current.
       values.rollupTypes:
 -        [["0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30","0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"],["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71","0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be"],["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71","0x0775e11309d75aA6b0967917fB0213C5673eDf81"],["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C","0x0775e11309d75aA6b0967917fB0213C5673eDf81"]]
       values.rollupData:
-+        ["0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",3776,"0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8",7,"0xa3d0f874858b4e5ad1cbaefba7df364778a0c6f11495882f17c1af28ff73fb79",11925,11905,0,0,0,1,0]
++        ["0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",3776,"0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8",7]
     }
 ```
 
@@ -82,25 +65,9 @@ discovery. Values are for block 19567776 (main branch discovery), not current.
 ```
 
 ```diff
-    contract GnosisSafe (0x6c4876Ecb5de33f76700f44d547C593065806dAC) {
-    +++ description: None
-      upgradeability.threshold:
--        "1 of 3 (33%)"
-    }
-```
-
-```diff
 -   Status: DELETED
     contract OKBImplementation (0x75231F58b43240C9718Dd58B4967c5114342a86c)
     +++ description: None
-```
-
-```diff
-    contract AdminMultisig (0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E) {
-    +++ description: None
-      upgradeability.threshold:
--        "3 of 6 (50%)"
-    }
 ```
 
 Generated with discovered.json: 0x7256084bd40282d48d13d1d9f843a405770a177a

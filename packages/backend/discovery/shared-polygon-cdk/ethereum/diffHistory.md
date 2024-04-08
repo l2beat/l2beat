@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x1ef5bdbf9c464bc1e2b90cc1a3ae3c71f6fa3a62
+Generated with discovered.json: 0xc767a63020fb739f4a7ba1ee64ace83fd42f8a3a
 
-# Diff at Tue, 02 Apr 2024 12:12:13 GMT:
+# Diff at Mon, 08 Apr 2024 11:28:10 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@3ea380545d572c2b8ab33a5fe7a19fb44cbb674d block: 19525405
-- current block number: 19568032
+- comparing to: main@c96c038f2bf3b6b17187b5a1f9d0ef0282942108 block: 19525405
+- current block number: 19610652
 
 ## Description
 
@@ -160,6 +160,22 @@ Provide description of changes. This section will be preserved.
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 19525405 (main branch discovery), not current.
+
+```diff
+    contract RollupManagerAdminMultisig (0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 3 (67%)"
+    }
+```
+
+```diff
+    contract SecurityCouncil (0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6) {
+    +++ description: None
+      upgradeability.threshold:
++        "6 of 8 (75%)"
+    }
+```
 
 ```diff
     contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
