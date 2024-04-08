@@ -12,4 +12,7 @@ export type ValueWithSentiment<T, S extends string = Sentiment> = {
     })
 
 type WarningSentiment = 'bad' | 'warning'
-export type WarningWithSentiment = ValueWithSentiment<string, WarningSentiment>
+export type WarningValueWithSentiment = ValueWithSentiment<
+  string,
+  WarningSentiment
+>

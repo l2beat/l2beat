@@ -6,6 +6,7 @@ export function getProductionConfig(): Config {
     ...common,
     features: {
       ...common.features,
+      costsPage: false,
     },
     backend: {
       apiUrl: 'https://api.l2beat.com',

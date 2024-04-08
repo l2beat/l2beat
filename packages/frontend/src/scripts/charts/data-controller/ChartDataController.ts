@@ -2,6 +2,7 @@ import {
   ActivityResponse,
   AggregateDetailedTvlResponse,
   ChartType,
+  CostsResponse,
   TokenInfo,
   TokenTvlResponse,
 } from '../types'
@@ -64,6 +65,7 @@ export class ChartDataController {
           // It was aborted on purpose by user so we don't need to show error
           return
         }
+        console.error(err)
         this.chartViewController.showErrorState()
       })
   }
@@ -75,7 +77,7 @@ export class ChartDataController {
 
   private parseData(chartType: ChartType, data: unknown): ChartData {
     switch (chartType.type) {
-      case 'layer2-tvl':
+      case 'scaling-tvl':
       case 'bridges-tvl':
       case 'project-tvl':
       case 'storybook-fake-tvl':
@@ -83,12 +85,19 @@ export class ChartDataController {
           type: 'tvl',
           values: AggregateDetailedTvlResponse.parse(data),
         }
-      case 'layer2-detailed-tvl':
+      case 'scaling-detailed-tvl':
       case 'project-detailed-tvl':
       case 'storybook-fake-detailed-tvl':
         return {
           type: 'detailed-tvl',
           values: AggregateDetailedTvlResponse.parse(data),
+        }
+      case 'scaling-costs':
+      case 'project-costs':
+      case 'storybook-fake-costs':
+        return {
+          type: 'costs',
+          values: CostsResponse.parse(data),
         }
       case 'project-token-tvl':
         return {
@@ -98,13 +107,13 @@ export class ChartDataController {
           values: TokenTvlResponse.parse(data),
         }
 
-      case 'layer2-activity':
+      case 'scaling-activity':
       case 'project-activity':
       case 'storybook-fake-activity':
         return {
           type: 'activity',
           isAggregate:
-            chartType.type === 'layer2-activity' &&
+            chartType.type === 'scaling-activity' &&
             chartType.filteredSlugs?.length !== 1,
           values: ActivityResponse.parse(data),
         }
@@ -116,17 +125,19 @@ export class ChartDataController {
 
 export function getChartUrl<T extends ChartType>(chartType: T) {
   switch (chartType.type) {
-    case 'layer2-tvl':
-    case 'layer2-detailed-tvl':
+    case 'scaling-tvl':
+    case 'scaling-detailed-tvl':
       return chartType.filteredSlugs
         ? `/api/tvl/aggregate?projectSlugs=${chartType.filteredSlugs.join(',')}`
         : '/api/tvl/scaling.json'
-    case 'layer2-activity':
+    case 'scaling-activity':
       return chartType.filteredSlugs
         ? `/api/activity/aggregate?projectSlugs=${chartType.filteredSlugs.join(
             ',',
           )}`
         : '/api/activity/combined.json'
+    case 'scaling-costs':
+      return '/api/costs/combined.json'
     case 'bridges-tvl':
       return chartType.includeCanonical
         ? '/api/tvl/combined.json'
@@ -136,6 +147,8 @@ export function getChartUrl<T extends ChartType>(chartType: T) {
       return `/api/tvl/${chartType.slug}.json`
     case 'project-token-tvl':
       return getTokenTvlUrl(chartType.info)
+    case 'project-costs':
+      return `/api/costs/${chartType.slug}.json`
     case 'project-activity':
       return `/api/activity/${chartType.slug}.json`
     case 'storybook-fake-tvl':
@@ -143,6 +156,8 @@ export function getChartUrl<T extends ChartType>(chartType: T) {
       return '/fake-tvl.json'
     case 'storybook-fake-activity':
       return '/fake-activity.json'
+    case 'storybook-fake-costs':
+      return '/fake-costs.json'
     default:
       assertUnreachable(chartType)
   }
