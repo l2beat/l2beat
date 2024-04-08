@@ -628,36 +628,6 @@
           "description": null,
           "severity": null,
           "type": null
-        },
-        "token__": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "WETH9",
-      "values": {
-        "decimals": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "name": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "symbol": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "totalSupply": {
-          "description": null,
-          "severity": null,
-          "type": null
         }
       }
     },
