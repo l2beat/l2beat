@@ -1,4 +1,4 @@
-import { assert,ProjectId } from '@l2beat/shared-pure'
+import { assert, ProjectId } from '@l2beat/shared-pure'
 
 import { subtractOne } from '../common/assessCount'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -54,8 +54,9 @@ export const degen: Layer3 = orbitStackL3({
           'UpgradeExecutor',
           'EXECUTOR_ROLE',
         ).members[0]
-        const discoveredRollupOwnerMultisig =
-          discovery.getContract('RollupOwnerMultisig').address
+        const discoveredRollupOwnerMultisig = discovery.getContract(
+          'RollupOwnerMultisig',
+        ).address
         assert(
           discoveredAdminOwner === discoveredUpgradeExecutorAddy &&
             discoveredExecutor === discoveredRollupOwnerMultisig,
