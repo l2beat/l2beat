@@ -36,7 +36,7 @@ export const Overview = () => {
     <TvlMetaImage
       tvl="$1.34 B"
       sevenDayChange="+3.45%"
-      chartType={{ type: 'layer2-tvl' }}
+      chartType={{ type: 'scaling-tvl' }}
       fake
     />
   )
@@ -67,7 +67,7 @@ export const DetailedTvlOverview = () => {
     <DetailedTvlMetaImage
       tvl="$1.34 B"
       sevenDayChange="+3.45%"
-      chartType={{ type: 'layer2-detailed-tvl' }}
+      chartType={{ type: 'scaling-detailed-tvl' }}
       fake
     />
   )

@@ -32,7 +32,8 @@ describe(L2CostsController.name, () => {
   describe(L2CostsController.prototype.getL2Costs.name, () => {
     it('correctly calculates l2costs', async () => {
       const l2CostsRepository = mockObject<L2CostsRepository>({
-        getByProjectAndTimeRange: mockFn().resolvesTo([]),
+        getByProjectAndTimeRangePaginated: mockFn().resolvesTo([]),
+        findCountByProjectAndTimeRange: mockFn().resolvesTo({ count: 51000 }),
       })
       const controller = getMockL2CostsController({
         projects: MOCK_PROJECTS,
@@ -83,17 +84,26 @@ describe(L2CostsController.name, () => {
       const result = await controller.getL2Costs()
 
       expect(
-        l2CostsRepository.getByProjectAndTimeRange,
-      ).toHaveBeenNthCalledWith(1, MOCK_PROJECTS[1].projectId, [
-        NOW_TO_FULL_HOUR.add(-180, 'days'),
-        NOW_TO_FULL_HOUR.add(-90, 'days').toStartOf('day'),
-      ])
+        l2CostsRepository.getByProjectAndTimeRangePaginated,
+      ).toHaveBeenCalledTimes(4)
       expect(
-        l2CostsRepository.getByProjectAndTimeRange,
-      ).toHaveBeenNthCalledWith(2, MOCK_PROJECTS[1].projectId, [
-        NOW_TO_FULL_HOUR.add(-90, 'days').toStartOf('day'),
-        NOW_TO_FULL_HOUR.add(-0, 'days'),
-      ])
+        l2CostsRepository.getByProjectAndTimeRangePaginated,
+      ).toHaveBeenNthCalledWith(
+        1,
+        MOCK_PROJECTS[1].projectId,
+        [NOW_TO_FULL_HOUR.add(-180, 'days'), NOW_TO_FULL_HOUR],
+        0,
+        50000,
+      )
+      expect(
+        l2CostsRepository.getByProjectAndTimeRangePaginated,
+      ).toHaveBeenNthCalledWith(
+        2,
+        MOCK_PROJECTS[1].projectId,
+        [NOW_TO_FULL_HOUR.add(-180, 'days'), NOW_TO_FULL_HOUR],
+        50000,
+        50000,
+      )
       expect(result.type).toEqual('success')
       expect(result.data.projects).toEqual({
         project2: {

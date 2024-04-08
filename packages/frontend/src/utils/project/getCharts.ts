@@ -4,6 +4,7 @@ import {
   AssetId,
   AssetType,
   ChainId,
+  L2CostsApiResponse,
   ProjectId,
   TvlApiResponse,
 } from '@l2beat/shared-pure'
@@ -11,51 +12,66 @@ import {
 import { Config } from '../../build/config'
 import { ChartProps } from '../../components'
 import { TokenControl } from '../../components/chart/TokenControls'
-import { ChartType, TokenInfo } from '../../scripts/charts/types'
+import { TokenInfo } from '../../scripts/charts/types'
 import { unifyTokensResponse } from '../tvl/getTvlStats'
 
-export function getChart(
+export interface ProjectDetailsCharts {
+  tvl: ChartProps | undefined
+  activity: ChartProps | undefined
+  costs: ChartProps | undefined
+}
+
+export function getCharts(
   project: Layer2 | Layer3 | Bridge,
   tvlApiResponse: TvlApiResponse,
-  config?: Config,
+  config: Config,
   activityApiResponse?: ActivityApiResponse,
-): ChartProps {
-  const hasActivity =
-    config?.features.activity &&
-    !!activityApiResponse?.projects[project.id.toString()]
+  costsApiResponse?: L2CostsApiResponse,
+): ProjectDetailsCharts {
   const hasTvl =
     project.config.escrows.length !== 0 &&
     !!tvlApiResponse.projects[project.id.toString()]
+  const hasActivity =
+    !!config?.features.activity &&
+    !!activityApiResponse?.projects[project.id.toString()]
+  const hasCosts = !!costsApiResponse?.projects[project.id.toString()]
 
   return {
-    settingsId: `project-${project.display.slug}`,
-    initialType: getInitialType(project, hasTvl, !!hasActivity),
-    tokens: getTokens(project.id, tvlApiResponse, project.type === 'layer2'),
-    tvlBreakdownHref:
-      (project.type === 'layer2' || project.type === 'layer3') &&
-      !project.isUpcoming
-        ? `/scaling/projects/${project.display.slug}/tvl-breakdown`
-        : undefined,
-    hasTvl,
-    hasActivity,
-    milestones: project.milestones,
-    showComingSoon: !hasTvl && !hasActivity,
-  }
-}
-
-function getInitialType(
-  project: Layer2 | Layer3 | Bridge,
-  hasTvl: boolean,
-  hasActivity: boolean,
-): ChartType {
-  if (project.type === 'layer2' || project.type === 'layer3') {
-    if (hasActivity && !hasTvl) {
-      return { type: 'project-activity', slug: project.display.slug }
-    } else {
-      return { type: 'project-detailed-tvl', slug: project.display.slug }
-    }
-  } else {
-    return { type: 'project-tvl', slug: project.display.slug }
+    tvl: hasTvl
+      ? {
+          settingsId: `project-${project.display.slug}-tvl`,
+          initialType:
+            project.type === 'bridge'
+              ? { type: 'project-tvl', slug: project.display.slug }
+              : { type: 'project-detailed-tvl', slug: project.display.slug },
+          tokens: getTokens(
+            project.id,
+            tvlApiResponse,
+            project.type === 'layer2',
+          ),
+          tvlBreakdownHref:
+            (project.type === 'layer2' || project.type === 'layer3') &&
+            !project.isUpcoming
+              ? `/scaling/projects/${project.display.slug}/tvl-breakdown`
+              : undefined,
+          milestones: project.milestones,
+          showComingSoon: !hasTvl && !hasActivity,
+        }
+      : undefined,
+    activity: hasActivity
+      ? {
+          settingsId: `project-${project.display.slug}-activity`,
+          initialType: { type: 'project-activity', slug: project.display.slug },
+          milestones: project.milestones,
+        }
+      : undefined,
+    costs: hasCosts
+      ? {
+          settingsId: `project-${project.display.slug}-costs`,
+          initialType: { type: 'project-costs', slug: project.display.slug },
+          milestones: project.milestones,
+        }
+      : undefined,
   }
 }
 

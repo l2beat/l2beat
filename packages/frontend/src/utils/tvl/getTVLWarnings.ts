@@ -1,4 +1,8 @@
-import { Layer2, Layer2TVLWarning, safeGetTokenByAssetId } from '@l2beat/config'
+import {
+  Layer2,
+  safeGetTokenByAssetId,
+  WarningWithSentiment,
+} from '@l2beat/config'
 import { TvlApiResponse, TvlApiToken } from '@l2beat/shared-pure'
 
 import { getTvlWarning } from './getTVLBreakdown'
@@ -8,7 +12,7 @@ export function getTvlWarnings(
   apiProject: TvlApiResponse['projects'][string],
   associatedTokens: string[],
   project: Layer2,
-): Layer2TVLWarning[] {
+): WarningWithSentiment[] {
   const total = apiProject?.charts.hourly.data.at(-1)?.[1] ?? 0
   const tokens = unifyTokensResponse(apiProject?.tokens)
   const associatedRatio = getAssociatedRatio(associatedTokens, total, tokens)
@@ -18,7 +22,7 @@ export function getTvlWarnings(
     associatedTokens,
   )
 
-  const tvlWarnings: Layer2TVLWarning[] = []
+  const tvlWarnings: WarningWithSentiment[] = []
   if (warning && warningSeverity === 'bad') {
     tvlWarnings.push({
       content: warning,

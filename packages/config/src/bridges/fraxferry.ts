@@ -804,6 +804,14 @@ export const fraxferry: Bridge = {
       ],
     },
     {
+      name: 'FPI Bridge Owner',
+      description:
+        'Has the same permissions as the above Bridge Owner, but only for the FPI and FPIS bridge contracts.',
+      accounts: [
+        discovery.getPermissionedAccount('fpiFerryBridgeArbitrum', 'owner'),
+      ],
+    },
+    {
       name: 'Captain',
       description:
         'Address authorized to post batch transaction data from the origin chain. Note that there are over 60 frax ferry bridges smart contracts, each with its own `Captain`. Please check the captain() method of the specific escrow smart contract you are interested in.',

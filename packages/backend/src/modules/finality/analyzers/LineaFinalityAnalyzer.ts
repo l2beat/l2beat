@@ -1,5 +1,4 @@
 import {
-  assert,
   ProjectId,
   TrackedTxsConfigSubtype,
   UnixTime,
@@ -58,7 +57,6 @@ export class LineaFinalityAnalyzer extends BaseAnalyzer {
     const firstBlockInData = Number(decodedInput[0][3])
     const lastBlockInData = Number(decodedInput[0][4])
 
-    assert(this.l2Provider, 'Linea RPC provider not defined')
     const timestamps = await Promise.all([
       (await this.l2Provider.getBlock(firstBlockInData)).timestamp,
       (await this.l2Provider.getBlock(lastBlockInData)).timestamp,
