@@ -1,10 +1,16 @@
 import { Logger } from '@l2beat/backend-tools'
-import { assert, assertUnreachable, notUndefined } from '@l2beat/shared-pure'
+import {
+  assert,
+  assertUnreachable,
+  notUndefined,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { Config } from '../../config'
 import { FinalityProjectConfig } from '../../config/features/finality'
 import { BlobClient } from '../../peripherals/blobclient/BlobClient'
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
+import { LoopringClient } from '../../peripherals/loopring/LoopringClient'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { ApplicationModule } from '../ApplicationModule'
@@ -12,6 +18,7 @@ import { LivenessRepository } from '../tracked-txs/modules/liveness/repositories
 import { TrackedTxsConfigsRepository } from '../tracked-txs/repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsIndexer } from '../tracked-txs/TrackedTxsIndexer'
 import { LineaFinalityAnalyzer } from './analyzers/LineaFinalityAnalyzer'
+import { LoopringFinalityAnalyzer } from './analyzers/LoopringFinalityAnalyzer'
 import { OpStackFinalityAnalyzer } from './analyzers/opStack/OpStackFinalityAnalyzer'
 import { ScrollFinalityAnalyzer } from './analyzers/ScrollFinalityAnalyzer'
 import { zkSyncEraFinalityAnalyzer } from './analyzers/zkSyncEraFinalityAnalyzer'
@@ -163,6 +170,20 @@ function initializeConfigurations(
           }
         case 'OPStack':
           return
+        case 'Loopring':
+          return {
+            projectId: configuration.projectId,
+            analyzer: new LoopringFinalityAnalyzer(
+              ethereumRPC,
+              livenessRepository,
+              configuration.projectId,
+              peripherals.getClient(LoopringClient, {
+                url: configuration.url,
+                callsPerMinute: configuration.callsPerMinute,
+              }),
+            ),
+            minTimestamp: new UnixTime(1616396742),
+          }
         default:
           assertUnreachable(configuration)
       }

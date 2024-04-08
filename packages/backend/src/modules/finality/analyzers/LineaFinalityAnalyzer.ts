@@ -1,6 +1,13 @@
-import { assert, TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  ProjectId,
+  TrackedTxsConfigSubtype,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
+import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
+import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { BaseAnalyzer } from './types/BaseAnalyzer'
 
 type Decoded = [[string, string, string, number, number]]
@@ -26,6 +33,15 @@ const blobFn = `function submitBlobData(
 const iface = new utils.Interface([calldataFn, blobFn])
 
 export class LineaFinalityAnalyzer extends BaseAnalyzer {
+  constructor(
+    provider: RpcClient,
+    livenessRepository: LivenessRepository,
+    projectId: ProjectId,
+    private readonly l2Provider: RpcClient,
+  ) {
+    super(provider, livenessRepository, projectId)
+  }
+
   override getTrackedTxSubtype(): TrackedTxsConfigSubtype {
     return 'batchSubmissions'
   }
