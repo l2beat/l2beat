@@ -1,3 +1,4 @@
+import { startsWithNumber } from '../utils/startsWithLetterOrNumber'
 import { makeQuery } from './query'
 
 export function configureAlphabetSelectors() {
@@ -27,10 +28,7 @@ function configureAlphabetSelector(alphabetSelector: HTMLElement) {
       alphabetSelectorItem.getAttribute('aria-disabled') === 'true'
     if (isDisabled) return
 
-    if (
-      hash &&
-      alphabetSelectorItem.getAttribute('data-char') === hash.charAt(1)
-    ) {
+    if (hash && isItemCharEqualToHash(alphabetSelectorItem, hash)) {
       changeSelected(alphabetSelectorItem)
     }
 
@@ -41,12 +39,20 @@ function configureAlphabetSelector(alphabetSelector: HTMLElement) {
 
   window.addEventListener('hashchange', () => {
     const hash = window.location.hash
-    const toSelect = alphabetSelectorItems.find(
-      (alphabetSelectorItem) =>
-        alphabetSelectorItem.getAttribute('data-char') === hash.charAt(1),
+    const toSelect = alphabetSelectorItems.find((alphabetSelectorItem) =>
+      isItemCharEqualToHash(alphabetSelectorItem, hash),
     )
     if (toSelect) {
       changeSelected(toSelect)
     }
   })
+}
+
+function isItemCharEqualToHash(item: HTMLElement, hash: string) {
+  const char = hash.charAt(1)
+  const itemChar = item.getAttribute('data-char')
+
+  if (startsWithNumber(char)) return itemChar === '#'
+
+  return itemChar === char
 }
