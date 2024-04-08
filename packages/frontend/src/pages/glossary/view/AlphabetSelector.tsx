@@ -14,7 +14,7 @@ export function AlphabetSelector<T extends { id: string }>(props: Props<T>) {
   const optionsWithEntry = getOptionsWithEntry(props.entries)
   return (
     <div data-role="alphabet-selector">
-      <OverflowWrapper>
+      <OverflowWrapper within="full-page-header">
         <ul className="flex gap-2">
           {optionsWithEntry.map(({ char, entry }) => (
             <li key={`alphabet-selector-${char}`}>

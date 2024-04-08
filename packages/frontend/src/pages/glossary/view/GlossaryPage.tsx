@@ -17,7 +17,7 @@ export function GlossaryPage(props: GlossaryPageProps) {
     <>
       <Navbar {...props.navbar} />
       <FullPageHeader pageContentClassName="">
-        <div>
+        <div className="w-full">
           <div className="flex flex-col items-start gap-6 lg:flex-row lg:justify-between">
             <h1 className="text-6xl font-bold">Glossary</h1>
             <div className="w-full text-lg lg:w-2/3">
