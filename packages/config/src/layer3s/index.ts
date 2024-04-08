@@ -22,7 +22,7 @@ export const layer3s: Layer3[] = [
   xai,
   orb3,
   popapex,
+  stack,
   syndicateframe,
   mxc,
-  stack,
 ]

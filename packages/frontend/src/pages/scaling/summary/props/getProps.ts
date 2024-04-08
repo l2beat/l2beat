@@ -2,9 +2,9 @@ import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
 import { getChartUrl } from '../../../../scripts/charts/data-controller/ChartDataController'
 import { getTvlWithChange } from '../../../../utils/tvl/getTvlWithChange'
+import { getDefaultPageMetadata } from '../../../metadata'
 import { PagesData, Wrapped } from '../../../Page'
 import { SummaryPageProps } from '../view/ScalingSummaryPage'
-import { getPageMetadata } from './getPageMetadata'
 import { getScalingSummaryView } from './getScalingSummaryView'
 
 export function getProps(
@@ -27,14 +27,14 @@ export function getProps(
         implementationChange,
       ),
       footer: getFooterProps(config),
-      showActivity: config.features.activity,
-      showLiveness: config.features.liveness,
-      showFinality: config.features.finality,
       milestones: config.milestones,
     },
     wrapper: {
-      preloadApi: getChartUrl({ type: 'layer2-tvl' }),
-      metadata: getPageMetadata(),
+      preloadApis: [getChartUrl({ type: 'scaling-tvl' })],
+      metadata: getDefaultPageMetadata({
+        image: 'https://l2beat.com/meta-images/overview-scaling.png',
+        url: 'https://l2beat.com/scaling/summary',
+      }),
       banner: config.features.banner,
     },
   }

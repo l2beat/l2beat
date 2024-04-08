@@ -1,0 +1,259 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "EthCrossChainData",
+      "values": {
+        "EthToPolyTxHashIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getEthTxHashIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "EthCrossChainManager",
+      "values": {
+        "EthCrossChainDataAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "whiteLister": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "EthCrossChainManagerProxy",
+      "values": {
+        "getEthCrossChainManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Lock Proxy 1",
+      "values": {
+        "isOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "managerProxyContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Lock Proxy 2",
+      "values": {
+        "isOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "managerProxyContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Lock Proxy 3",
+      "values": {
+        "managerProxyContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Lock Proxy 4",
+      "values": {
+        "isOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "managerProxyContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Lock Proxy 5",
+      "values": {
+        "isOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "managerProxyContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Lock Proxy 6",
+      "values": {}
+    },
+    {
+      "name": "Lock Proxy 7",
+      "values": {
+        "isOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "managerProxyContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "PolyWrapper",
+      "values": {
+        "chainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "feeCollector": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lockProxyIndexMap": {
+          "description": "These addresses can escrow funds for the bridge.",
+          "severity": "MEDIUM",
+          "type": null
+        },
+        "maxLockProxyIndex": {
+          "description": "This is the number of lockProxy escrows registered in the bridge.",
+          "severity": "LOW",
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}

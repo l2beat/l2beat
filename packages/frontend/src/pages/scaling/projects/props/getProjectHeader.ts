@@ -60,7 +60,7 @@ export function getProjectHeader(
     ? getTpsWeeklyChange(activityData, 'project')
     : undefined
   const transactionMonthlyCount = activityData
-    ? getTransactionCount(activityData, 'project', 'month')
+    ? getTransactionCount(activityData, 'project', 30)
     : undefined
 
   const tvlBreakdown = getTvlBreakdown(

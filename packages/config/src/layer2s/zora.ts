@@ -4,7 +4,7 @@ import { DERIVATION } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
-import { opStack } from './templates/opStack'
+import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zora')
@@ -19,7 +19,7 @@ const upgradeability = {
   upgradeDelay: 'No delay',
 }
 
-export const zora: Layer2 = opStack({
+export const zora: Layer2 = opStackL2({
   discovery,
   display: {
     name: 'Zora',
