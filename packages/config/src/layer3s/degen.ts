@@ -1,9 +1,9 @@
-import { ProjectId, assert } from '@l2beat/shared-pure'
+import { assert,ProjectId } from '@l2beat/shared-pure'
 
+import { subtractOne } from '../common/assessCount'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 import { Layer3 } from './types'
-import { subtractOne } from '../common/assessCount'
 
 const discovery = new ProjectDiscovery('degen', 'base')
 
@@ -44,19 +44,18 @@ export const degen: Layer3 = orbitStackL3({
     ...discovery.getMultisigPermission(
       'AdminMultisig',
       (() => {
-        const discoveredAdminOwner = <String>(
-          discovery.getContractValue('ProxyAdmin', 'owner')
+        const discoveredAdminOwner = discovery.getAddressFromValue(
+          'ProxyAdmin',
+          'owner',
         )
-        const discoveredUpgradeExecutorAddy = discovery
-          .getContract('UpgradeExecutor')
-          .address.toString()
-        const discoveredExecutor = <String>(
-          discovery.getAccessControlField('UpgradeExecutor', 'EXECUTOR_ROLE')
-            .members[0]
-        )
-        const discoveredAdminMultisig = discovery
-          .getContract('AdminMultisig')
-          .address.toString()
+        const discoveredUpgradeExecutorAddy =
+          discovery.getContract('UpgradeExecutor').address
+        const discoveredExecutor = discovery.getAccessControlField(
+          'UpgradeExecutor',
+          'EXECUTOR_ROLE',
+        ).members[0]
+        const discoveredAdminMultisig =
+          discovery.getContract('AdminMultisig').address
         assert(
           discoveredAdminOwner === discoveredUpgradeExecutorAddy &&
             discoveredExecutor === discoveredAdminMultisig,
