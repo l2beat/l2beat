@@ -21,7 +21,6 @@ export async function up(knex: Knex) {
   })
 
   await knex.schema.alterTable('amounts', function (table) {
-    table.string('configuration_id').notNullable()
     table.specificType('configuration_id', 'CHAR(12)').notNullable()
     table.primary(['configuration_id', 'timestamp'])
   })

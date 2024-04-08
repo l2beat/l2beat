@@ -15,15 +15,14 @@ import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
   await knex.schema.createTable('indexer_configurations', function (table) {
+    // Hash collision probability for 1M configurations for 6-byte hash is 0.1776%
     table.specificType('id', 'CHAR(12)').notNullable()
+    table.string('indexer_id').notNullable()
     table.integer('current_height').nullable()
     table.integer('min_height').notNullable()
     table.integer('max_height').nullable()
-
-    table.string('indexer_id').notNullable()
     table.string('properties').notNullable()
-    // We do not create composite primary key because we want DB to enforce uniqueness
-    // IDs will be generated in the runtime, so in case of collision the DB constraint will throw
+
     table.primary(['id'])
     table.index(['indexer_id'])
   })
