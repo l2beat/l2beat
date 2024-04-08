@@ -144,13 +144,13 @@ function TotalValue({
         <div className={className}>
           <div className="hidden flex-col items-end group-data-[type=TOTAL]/costs-controls-wrapper:flex">
             <div className="flex items-center gap-1">
-              <span className="text-lg font-semibold">{data.displayValue}</span>
               {warning && (
                 <RoundedWarningIcon
                   className="size-4"
                   sentiment={warning.sentiment}
                 />
               )}
+              <span className="text-lg font-semibold">{data.displayValue}</span>
             </div>
             <CostsBreakdown
               blobs={details.blobs?.[unit].value}
@@ -163,15 +163,15 @@ function TotalValue({
             {data.perL2Tx ? (
               <>
                 <div className="flex items-center gap-1">
-                  <span className="text-lg font-semibold">
-                    {data.perL2Tx.displayValue}
-                  </span>
                   {warning && (
                     <RoundedWarningIcon
                       className="size-4"
                       sentiment={warning.sentiment}
                     />
                   )}
+                  <span className="text-lg font-semibold">
+                    {data.perL2Tx.displayValue}
+                  </span>
                 </div>
                 <CostsBreakdown
                   blobs={details.blobs?.[unit].perL2Tx?.value}
