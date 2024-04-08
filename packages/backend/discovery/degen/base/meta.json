@@ -136,21 +136,6 @@
       }
     },
     {
-      "name": "L1GatewayRouter",
-      "values": {
-        "DEFAULT_ADMIN_ROLE": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "accessControl": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
       "name": "OneStepProofEntry",
       "values": {
         "prover0": {
@@ -505,6 +490,21 @@
           "type": null
         },
         "totalDelayedMessagesRead": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "UTBEntry",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accessControl": {
           "description": null,
           "severity": null,
           "type": null

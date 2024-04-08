@@ -39,5 +39,12 @@ export const degen: Layer3 = orbitStackL3({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
+  nonTemplateContracts: [
+    discovery.getContractDetails('UTBEntry', {
+      description:
+        'The UTB contract serves as a gateway .',
+      // ...upgradeability,
+    }),
+  ],
 
 })

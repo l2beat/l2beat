@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x5017c4b132f79608d8361e7db3bdedd36ac432f2
+Generated with discovered.json: 0xf9f8fd072902a549af58fb1aedffc5fd741ac329
 
-# Diff at Fri, 05 Apr 2024 15:15:43 GMT:
+# Diff at Mon, 08 Apr 2024 09:30:42 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
-- current block number: 12770390
+- current block number: 12889640
 
 ## Description
 
@@ -37,7 +37,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract L1GatewayRouter (0x43019F8BE1F192587883b67dEA2994999f5a2de2)
+    contract UTBEntry (0x43019F8BE1F192587883b67dEA2994999f5a2de2)
     +++ description: None
 ```
 

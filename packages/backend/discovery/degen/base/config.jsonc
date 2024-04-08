@@ -16,7 +16,7 @@
     "0x67812161Bbb6aCF891aA6028BC614a660961ceD8": "ChallengeManager",
     "0xaA3A7A2ec2477A61082E1C41a2c6710587917028": "UpgradeExecutor",
 
-    "0x43019F8BE1F192587883b67dEA2994999f5a2de2": "L1GatewayRouter", // not really: UTB
+    "0x43019F8BE1F192587883b67dEA2994999f5a2de2": "UTBEntry", // not really: UTB
     "0xf70da97812CB96acDF810712Aa562db8dfA3dbEF": "Relay Bridge"
   },
   "overrides": {
@@ -113,7 +113,7 @@
     "ChallengeManager": {
       "ignoreMethods": ["challenges"]
     },
-    "L1GatewayRouter": {
+    "UTBEntry": {
       "fields": {
         "accessControl": {
           "type": "accessControl"
