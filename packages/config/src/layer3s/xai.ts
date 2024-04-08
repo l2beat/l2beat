@@ -87,8 +87,7 @@ export const xai: Layer3 = orbitStackL3({
   ],
   nonTemplateContracts: [
     discovery.getContractDetails('L1GatewayRouter', {
-      description:
-        'Router managing token <--> gateway mapping.',
+      description: 'Router managing token <--> gateway mapping.',
     }),
     discovery.getContractDetails('SentryReferee', {
       description:

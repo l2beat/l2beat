@@ -33,10 +33,9 @@ export const deri = orbitStackL3({
   sequencerInbox: discovery.getContract('SequencerInbox'),
 
   nonTemplateContracts: [
-      discovery.getContractDetails('L1GatewayRouter', {
-          description:
-              'Router managing token <--> gateway mapping.',
-      }),
+    discovery.getContractDetails('L1GatewayRouter', {
+      description: 'Router managing token <--> gateway mapping.',
+    }),
   ],
   nonTemplatePermissions: [
     {

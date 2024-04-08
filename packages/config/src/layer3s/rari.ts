@@ -27,10 +27,9 @@ export const rari: Layer3 = orbitStackL3({
     },
   },
   nonTemplateContracts: [
-      discovery.getContractDetails('L1GatewayRouter', {
-          description:
-              'Router managing token <--> gateway mapping.',
-      }),
+    discovery.getContractDetails('L1GatewayRouter', {
+      description: 'Router managing token <--> gateway mapping.',
+    }),
   ],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({

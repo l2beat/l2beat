@@ -115,8 +115,7 @@ export const kinto: Layer2 = orbitStackL2({
   },
   nonTemplateContracts: [
     discovery.getContractDetails('L1GatewayRouter', {
-      description:
-        'Router managing token <--> gateway mapping.',
+      description: 'Router managing token <--> gateway mapping.',
     }),
   ],
   nonTemplatePermissions: [
