@@ -6,6 +6,7 @@ import {
 import assert from 'assert'
 import { BigNumber, utils } from 'ethers'
 
+import { DegateClient } from '../../../peripherals/degate'
 import { LoopringClient } from '../../../peripherals/loopring/LoopringClient'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
@@ -16,7 +17,7 @@ export class LoopringFinalityAnalyzer extends BaseAnalyzer {
     provider: RpcClient,
     livenessRepository: LivenessRepository,
     projectId: ProjectId,
-    private readonly l2Provider: LoopringClient,
+    private readonly l2Provider: LoopringClient | DegateClient,
   ) {
     super(provider, livenessRepository, projectId)
   }
