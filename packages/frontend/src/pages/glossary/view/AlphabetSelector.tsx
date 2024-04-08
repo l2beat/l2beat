@@ -36,6 +36,7 @@ function Char({ char, href }: CharProps) {
     <a
       href={href}
       data-role="alphabet-selector-item"
+      data-char={char.toLowerCase()}
       aria-disabled={!href}
       className={cn(
         'flex size-[34px] items-center justify-center rounded border border-zinc-700',
