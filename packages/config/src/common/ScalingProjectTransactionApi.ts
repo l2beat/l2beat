@@ -22,3 +22,12 @@ export interface StarkexTransactionApi {
   sinceTimestamp: UnixTime
   resyncLastDays?: number
 }
+
+export type ScalingProjectTransactionApi =
+  | SimpleTransactionApi<'starknet'>
+  | SimpleTransactionApi<'aztec'>
+  | SimpleTransactionApi<'zksync'>
+  | SimpleTransactionApi<'loopring'>
+  | SimpleTransactionApi<'degate'>
+  | RpcTransactionApi
+  | StarkexTransactionApi

@@ -4,11 +4,11 @@ import {
   KnowledgeNugget,
   Layer3Provider,
   Milestone,
-  RpcTransactionApi,
   ScalingProjectConfig,
   ScalingProjectContracts,
   ScalingProjectDisplay,
   ScalingProjectPermission,
+  ScalingProjectTransactionApi,
 } from '../../common'
 import { ScalingProjectRiskView } from '../../common/ScalingProjectRiskView'
 import { ScalingProjectStateDerivation } from '../../common/ScalingProjectStateDerivation'
@@ -49,9 +49,8 @@ export interface Layer3 {
 
 export interface Layer3Config extends ScalingProjectConfig {
   /** API parameters used to get transaction count */
-  transactionApi?: Layer3TransactionApi
+  transactionApi?: ScalingProjectTransactionApi
 }
-export type Layer3TransactionApi = RpcTransactionApi
 
 export interface Layer3Display extends ScalingProjectDisplay {
   /** Technology provider */

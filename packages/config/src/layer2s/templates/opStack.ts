@@ -26,24 +26,16 @@ import {
   ScalingProjectStateDerivation,
   ScalingProjectTechnology,
   ScalingProjectTechnologyChoice,
+  ScalingProjectTransactionApi,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { subtractOne } from '../../common/assessCount'
 import { ChainConfig } from '../../common/ChainConfig'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
-import {
-  type Layer3,
-  type Layer3Display,
-  Layer3TransactionApi,
-} from '../../layer3s/types'
+import { type Layer3, type Layer3Display } from '../../layer3s/types'
 import { getStage } from '../common/stages/getStage'
-import {
-  type Layer2,
-  type Layer2Display,
-  Layer2FinalityConfig,
-  Layer2TransactionApi,
-} from '../types'
+import { type Layer2, type Layer2Display, Layer2FinalityConfig } from '../types'
 
 export const CELESTIA_DA_PROVIDER: DAProvider = {
   name: 'Celestia',
@@ -71,7 +63,7 @@ export interface OpStackConfigCommon {
   l1StandardBridgeEscrow: EthereumAddress
   l1StandardBridgeTokens?: string[]
   rpcUrl?: string
-  transactionApi?: Layer2TransactionApi
+  transactionApi?: ScalingProjectTransactionApi
   genesisTimestamp: UnixTime
   finality?: Layer2FinalityConfig
   l2OutputOracle: ContractParameters
@@ -100,7 +92,6 @@ export interface OpStackConfigL3 extends OpStackConfigCommon {
   display: Omit<Layer3Display, 'provider' | 'category' | 'dataAvailabilityMode'>
   hostChain: ProjectId
   nativeToken?: string
-  transactionApi?: Layer3TransactionApi
 }
 
 export function opStackCommon(

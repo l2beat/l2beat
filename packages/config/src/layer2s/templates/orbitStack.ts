@@ -15,6 +15,7 @@ import {
   ScalingProjectEscrow,
   ScalingProjectPermission,
   ScalingProjectTechnology,
+  ScalingProjectTransactionApi,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { subtractOne } from '../../common/assessCount'
@@ -22,12 +23,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { VALUES } from '../../discovery/values'
 import { Layer3, Layer3Display } from '../../layer3s/types'
 import { getStage } from '../common/stages/getStage'
-import {
-  Layer2,
-  Layer2Display,
-  Layer2TransactionApi,
-  Layer2TxConfig,
-} from '../types'
+import { Layer2, Layer2Display, Layer2TxConfig } from '../types'
 
 const ETHEREUM_EXPLORER_URL = 'https://etherscan.io/address/{0}#code'
 
@@ -43,7 +39,7 @@ export interface OrbitStackConfigCommon {
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
   nonTemplateContracts?: ScalingProjectContract[]
   rpcUrl?: string
-  transactionApi?: Layer2TransactionApi
+  transactionApi?: ScalingProjectTransactionApi
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
   trackedTxs?: Layer2TxConfig[]
