@@ -1,5 +1,5 @@
 import { Env } from '@l2beat/backend-tools'
-import { layer2s, Layer2TransactionApi } from '@l2beat/config'
+import { layer2s, Layer2TransactionApi, layer3s } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 
 import { ActivityTransactionConfig } from '../../modules/activity/ActivityTransactionConfig'
@@ -17,7 +17,7 @@ export function getProjectsWithActivity() {
         startBlock: 8929324,
       } as Layer2TransactionApi,
     },
-    ...layer2s.flatMap((x) =>
+    ...[...layer2s, ...layer3s].flatMap((x) =>
       x.config.transactionApi
         ? [{ id: x.id, transactionApi: x.config.transactionApi }]
         : [],
