@@ -42,7 +42,7 @@ export const degen: Layer3 = orbitStackL3({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
-      'AdminMultisig',
+      'RollupOwnerMultisig',
       (() => {
         const discoveredAdminOwner = discovery.getAddressFromValue(
           'ProxyAdmin',
@@ -54,15 +54,15 @@ export const degen: Layer3 = orbitStackL3({
           'UpgradeExecutor',
           'EXECUTOR_ROLE',
         ).members[0]
-        const discoveredAdminMultisig =
-          discovery.getContract('AdminMultisig').address
+        const discoveredRollupOwnerMultisig =
+          discovery.getContract('RollupOwnerMultisig').address
         assert(
           discoveredAdminOwner === discoveredUpgradeExecutorAddy &&
-            discoveredExecutor === discoveredAdminMultisig,
+            discoveredExecutor === discoveredRollupOwnerMultisig,
           'Update the permissions section if this changes.',
         )
         const description =
-          'Has the executor role of the UpgradeExecutor and indirectly owns the ProxyAdmin (can upgrade the system).'
+          'Has the executor role of the UpgradeExecutor and indirectly owns the ProxyAdmin (can upgrade the whole system).'
         return description
       })(),
     ),

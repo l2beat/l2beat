@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xf801a6c36158abb80531a7d6f4dc65aef5a51065
+Generated with discovered.json: 0xb10226147642416599acfd9706b5734973b04a80
 
-# Diff at Mon, 08 Apr 2024 15:12:58 GMT:
+# Diff at Mon, 08 Apr 2024 19:50:43 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
-- current block number: 12899907
+- current block number: 12908240
 
 ## Description
 
@@ -61,7 +61,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract AdminMultisig (0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104)
+    contract RollupOwnerMultisig (0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104)
     +++ description: None
 ```
 
