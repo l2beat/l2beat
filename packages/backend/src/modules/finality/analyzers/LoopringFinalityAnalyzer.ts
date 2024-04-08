@@ -4,7 +4,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import assert from 'assert'
-import { utils } from 'ethers'
+import { BigNumber, utils } from 'ethers'
 
 import { LoopringClient } from '../../../peripherals/loopring/LoopringClient'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
@@ -36,19 +36,18 @@ export class LoopringFinalityAnalyzer extends BaseAnalyzer {
     const { logs } = await tx.wait()
 
     const log = logs
-      .filter((log) =>
-        log.topics.includes(
+      .filter(
+        (log) =>
+          log.topics[0] ===
           '0xcc86d9ed29ebae540f9d25a4976d4da36ea4161b854b8ecf18f491cf6b0feb5c',
-        ),
       )
       .map((log) => this.decodeLog(log))
       .find((log) => log.name === 'BlockSubmitted')
 
     assert(log, 'BlockSubmitted log not found')
 
-    const blockIdx = log.args.blockIdx as number
-
-    const block = await this.l2Provider.getBlock(blockIdx)
+    const blockIdx = BigNumber.from(log.args.blockIdx)
+    const block = await this.l2Provider.getBlock(blockIdx.toNumber())
 
     return [l1Timestamp.toNumber() - block.createdAt.toNumber()]
   }
