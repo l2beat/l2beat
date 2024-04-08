@@ -182,8 +182,11 @@ export const paradex: Layer2 = {
         },
       },
     ],
-
-    finality: 'coming soon',
+    finality: {
+      lag: 0,
+      type: 'Starknet',
+      minTimestamp: new UnixTime(1710346920),
+    },
   },
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (blobs or calldata)'],
