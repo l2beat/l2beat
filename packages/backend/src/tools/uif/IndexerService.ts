@@ -25,6 +25,7 @@ export class IndexerService {
     return record?.safeHeight
   }
 
+  // #endregion
   // #region ManagedMultiIndexer
 
   async upsertConfigurations<T>(

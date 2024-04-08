@@ -22,7 +22,7 @@ export abstract class ManagedChildIndexer extends ChildIndexer {
     const safeHeight = await this.options.indexerService.getSafeHeight(
       this.options.id,
     )
-    return safeHeight ?? this.options.minHeight
+    return safeHeight ?? this.options.minHeight - 1
   }
 
   async setSafeHeight(safeHeight: number) {
