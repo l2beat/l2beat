@@ -13,21 +13,17 @@ export function getDetailedTvlRenderParams(
     if (state.data?.type !== 'detailed-tvl') {
       throw new Error('Invalid data type')
     }
-    if (state.unit === 'GAS') {
-      throw new Error('Invalid unit')
-    }
 
     const dataInRange = getEntriesByDays(
       state.timeRangeInDays,
       state.data.values,
       { trimLeft: true },
     )
-    const useEth = state.unit === 'ETH'
 
     const points = dataInRange.map(
       ([timestamp, usd, cbv, ebv, nmv, eth, cbvEth, ebvEth, nmvEth]) => {
         return {
-          series: useEth
+          series: state.useAltCurrency
             ? [cbvEth + ebvEth + nmvEth, ebvEth + nmvEth, nmvEth]
             : [cbv + ebv + nmv, ebv + nmv, nmv],
           data: {
@@ -46,8 +42,8 @@ export function getDetailedTvlRenderParams(
       },
     )
 
-    const formatYAxisLabel = (value: number) =>
-      formatCurrency(value, state.unit)
+    const formatYAxisLabel = (val: number) =>
+      formatCurrency(val, state.useAltCurrency ? 'eth' : 'usd')
 
     const seriesStyle: SeriesStyle[] = [
       {
@@ -69,10 +65,10 @@ export function getDetailedTvlRenderParams(
       formatYAxisLabel,
       points,
       seriesStyle,
-      renderHoverContents: (data) => renderDetailedTvlHover(data, useEth),
+      renderHoverContents: (data) =>
+        renderDetailedTvlHover(data, !!state.useAltCurrency),
       useLogScale: state.useLogScale,
       range: [dataInRange[0][0], dataInRange[dataInRange.length - 1][0]],
-      theme: state.theme,
     }
   }
 }

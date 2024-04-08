@@ -13,7 +13,7 @@ describe(getTransactionCount.name, () => {
       ONE_TPS * 2,
     ])
 
-    const result = getTransactionCount(data, 'project', 30)
+    const result = getTransactionCount(data, 'project', 'month')
 
     expect(result).toEqual(30 * ONE_TPS)
   })
@@ -24,7 +24,7 @@ describe(getTransactionCount.name, () => {
       ONE_TPS * 2,
     ])
 
-    const result = getTransactionCount(data, 'project', 7)
+    const result = getTransactionCount(data, 'project', 'week')
 
     expect(result).toEqual(7 * ONE_TPS)
   })
@@ -33,7 +33,7 @@ describe(getTransactionCount.name, () => {
     const result = getTransactionCount(
       [[new UnixTime(1), ONE_TPS, ONE_TPS * 2]],
       'project',
-      30,
+      'month',
     )
 
     expect(result).toEqual(ONE_TPS)
@@ -46,14 +46,8 @@ describe(getTransactionCount.name, () => {
       ONE_TPS * 2,
     ])
 
-    const result = getTransactionCount(data, 'ethereum', 30)
+    const result = getTransactionCount(data, 'ethereum', 'month')
 
     expect(result).toEqual(30 * ONE_TPS * 2)
-  })
-
-  it('throws if the days is less than 1', () => {
-    expect(() => getTransactionCount([], 'project', 0.99)).toThrow(
-      'Days must be at least 1',
-    )
   })
 })

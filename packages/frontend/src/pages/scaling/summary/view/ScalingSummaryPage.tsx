@@ -21,7 +21,10 @@ export interface SummaryPageProps {
   tvlView: ScalingSummaryViewProps
   navbar: NavbarProps
   footer: FooterProps
-  milestones: Milestone[] | undefined
+  showActivity: boolean
+  showLiveness: boolean
+  showFinality: boolean
+  milestones?: Milestone[]
 }
 
 export function ScalingSummaryPage(props: SummaryPageProps) {
@@ -30,13 +33,15 @@ export function ScalingSummaryPage(props: SummaryPageProps) {
       <Navbar {...props.navbar} />
       <PageContent>
         <ScalingNavigationTabs
-          features={props.navbar.features}
+          showActivity={props.showActivity}
+          showLiveness={props.showLiveness}
+          showFinality={props.showFinality}
           selected="summary"
         />
         <main className="mt-4 md:mt-12">
           <Chart
             settingsId="scaling-summary"
-            initialType={{ type: 'scaling-tvl' }}
+            initialType={{ type: 'layer2-tvl' }}
             milestones={props.milestones}
             header="tvl"
           />

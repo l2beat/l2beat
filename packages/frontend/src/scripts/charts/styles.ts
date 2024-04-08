@@ -1,14 +1,10 @@
-export type SeriesStylePoint = keyof PointClassNames
-export type SeriesStyleLine = keyof typeof LINE_STYLES
-export type SeriesStyleFill = keyof typeof FILL_STYLES
-
 export interface SeriesStyle {
-  point?: SeriesStylePoint
-  fill?: SeriesStyleFill
-  line?: SeriesStyleLine
+  point?: keyof PointClassNames
+  fill?: keyof typeof FILL_STYLES
+  line?: keyof typeof LINE_STYLES
 }
 
-export type PointStyle = SeriesStylePoint
+export type PointStyle = keyof PointClassNames
 export type PointShapeDefinition =
   | {
       type: 'div'
@@ -27,11 +23,9 @@ interface PointClassNames {
   circle: PointShapeDefinition
   redCircle: PointShapeDefinition
   blueSquare: PointShapeDefinition
-  roundedPurpleSquare: PointShapeDefinition
-  roundedBlueSquare: PointShapeDefinition
-  roundedYellowSquare: PointShapeDefinition
-  roundedLightYellowSquare: PointShapeDefinition
-  roundedPinkSquare: PointShapeDefinition
+  purpleCircle: PointShapeDefinition
+  pinkSquare: PointShapeDefinition
+  yellowTriangle: PointShapeDefinition
   milestone: PointShapeDefinition
 }
 
@@ -49,70 +43,71 @@ export const POINT_CLASS_NAMES: PointClassNames = {
     type: 'div',
     className: 'size-2 border-2 border-current bg-blue-600',
   },
-  roundedPurpleSquare: {
-    type: 'div',
-    className: 'size-4 bg-purple-100 rounded',
+  purpleCircle: {
+    type: 'svg',
+    className: 'h-[9px] w-[9px] stroke-black dark:stroke-white',
+    height: 9,
+    width: 9,
+    svgViewBox: '0 0 9 9',
+    svgShape: '<circle cx="4.5" cy="4.5" r="3.5" fill="#A64EFF" />',
   },
-  roundedBlueSquare: {
-    type: 'div',
-    className: 'size-4 dark:bg-sky-500 bg-sky-550 rounded',
+  pinkSquare: {
+    type: 'svg',
+    className: 'size-2 stroke-black dark:stroke-white',
+    height: 9,
+    width: 9,
+    svgViewBox: '0 0 9 9',
+    svgShape: `<rect x="0" y="0" width="9" height="9" fill="#FF46C0" stroke-width="2"/>`,
   },
-  roundedLightYellowSquare: {
-    type: 'div',
-    className: 'size-4 dark:bg-yellow-100 bg-orange-400 rounded',
-  },
-  roundedYellowSquare: {
-    type: 'div',
-    className: 'size-4 bg-yellow-200 rounded',
-  },
-  roundedPinkSquare: {
-    type: 'div',
-    className: 'size-4 bg-pink-100 rounded',
+  yellowTriangle: {
+    type: 'svg',
+    className: 'h-2.5 w-2.5 stroke-black dark:stroke-white',
+    height: 12,
+    width: 12,
+    svgViewBox: '0 0 12 12',
+    svgShape: `<path d="m1.4167 10.234 4.5833-7.9386 4.5833 7.9386z" fill="#ef8f00" stroke-width="1.0585" />`,
   },
   milestone: {
     type: 'div',
-    className: 'size-2 rotate-45 border-2 border-green-500 bg-green-700',
+    className:
+      'size-2 rotate-45 border-2 border-green-200 bg-green-600 dark:border-current dark:bg-green-500',
   },
 }
 
 export const FILL_STYLES = {
-  pink: () => ({ light: '#FF46C0', dark: '#FF46C0' }),
-  yellow: () => ({ light: '#FFC107', dark: '#FFC107' }),
-  'light-yellow': () => ({ light: '#FFA336', dark: '#FFDD28' }),
-  purple: () => ({ light: '#7E41CC', dark: '#7E41CC' }),
-  blue: () => ({ light: '#2670FF', dark: '#0074FD' }),
+  pink: () => '#FF46C0',
+  yellow: () => '#FFC107',
+  purple: () => '#7E41CC',
   'blue gradient': (ctx: CanvasRenderingContext2D) => {
     const gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0)
     gradient.addColorStop(0, 'rgba(42, 91, 216, 0.3)')
     gradient.addColorStop(1, 'rgba(83, 162, 255, 0.3)')
-    return { light: gradient, dark: gradient }
+    return gradient
   },
   'signature gradient': (ctx: CanvasRenderingContext2D) => {
     const gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0)
     gradient.addColorStop(0, 'rgba(126, 65, 204, 0.4)')
     gradient.addColorStop(0.5, 'rgba(216, 61, 164, 0.4)')
     gradient.addColorStop(1, 'rgba(238, 44, 1, 0.4)')
-    return { light: gradient, dark: gradient }
+    return gradient
   },
 }
 
 export const LINE_STYLES = {
-  pink: () => ({ light: '#FF46C0', dark: '#FF46C0' }),
-  yellow: () => ({ light: '#FFC107', dark: '#FFC107' }),
-  'light-yellow': () => ({ light: '#FFA336', dark: '#FFDD28' }),
-  purple: () => ({ light: '#7E41CC', dark: '#7E41CC' }),
-  blue: () => ({ light: '#2670FF', dark: '#0074FD' }),
+  pink: () => '#FF46C0',
+  yellow: () => '#FFC107',
+  purple: () => '#7E41CC',
   'blue gradient': (ctx: CanvasRenderingContext2D) => {
     const gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0)
     gradient.addColorStop(0, 'rgba(42, 91, 216')
     gradient.addColorStop(1, 'rgba(83, 162, 255')
-    return { light: gradient, dark: gradient }
+    return gradient
   },
   'signature gradient': (ctx: CanvasRenderingContext2D) => {
     const gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0)
     gradient.addColorStop(0, 'rgba(126, 65, 204')
     gradient.addColorStop(0.5, 'rgba(216, 61, 164')
     gradient.addColorStop(1, 'rgba(238, 44, 1')
-    return { light: gradient, dark: gradient }
+    return gradient
   },
 }

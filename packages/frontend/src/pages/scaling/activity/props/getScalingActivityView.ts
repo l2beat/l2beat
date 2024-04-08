@@ -106,7 +106,7 @@ function getActivityViewEntryDetails(
   return {
     tpsDaily: getTpsDaily(data, type),
     tpsWeeklyChange: getTpsWeeklyChange(data, type),
-    transactionsMonthlyCount: getTransactionCount(data, type, 30),
+    transactionsMonthlyCount: getTransactionCount(data, type, 'month'),
     ...getMaxTps(data, type),
   }
 }

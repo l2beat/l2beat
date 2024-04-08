@@ -10,7 +10,7 @@ export interface TvlMetaImageProps {
   sevenDayChange: string
   chartType: Extract<
     ChartType,
-    { type: 'project-tvl' } | { type: 'scaling-tvl' } | { type: 'bridges-tvl' }
+    { type: 'project-tvl' } | { type: 'layer2-tvl' } | { type: 'bridges-tvl' }
   >
   name?: string
   icon?: string

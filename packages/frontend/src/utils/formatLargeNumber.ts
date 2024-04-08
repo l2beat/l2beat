@@ -1,23 +1,13 @@
-import round from 'lodash/round'
-
 const units = ['', 'K', 'M', 'B', 'T']
 
 const HAIR_SPACE = '\u200a'
 
-export function formatLargeNumber(value: number, maxDecimals = 2): string {
-  const minimum = Math.pow(10, -maxDecimals)
-  if (value === 0 || (value < minimum && value > -minimum)) {
+export function formatLargeNumber(value: number): string {
+  if (value === 0) {
     return '0.00'
+  } else if (value < 0) {
+    return `-${formatLargeNumber(-value)}`
   }
-
-  if (value < 0) {
-    return `-${formatLargeNumber(-value, maxDecimals)}`
-  }
-
-  if (value < 1) {
-    return round(value, maxDecimals).toString()
-  }
-
   const str = Math.floor(value * 100).toString()
   for (const [i, unit] of units.entries()) {
     if (str.length <= 4 + i * 3) {

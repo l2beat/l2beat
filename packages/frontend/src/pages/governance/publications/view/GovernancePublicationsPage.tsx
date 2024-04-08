@@ -24,7 +24,7 @@ export function GovernancePublicationsPage(
     <>
       <Navbar {...props.navbar} />
       <Header />
-      <PageContent>
+      <PageContent type="subpage">
         <h1 className="mt-20 text-3xl font-bold">
           All governance publications
         </h1>

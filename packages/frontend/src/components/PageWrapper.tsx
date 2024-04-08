@@ -19,7 +19,7 @@ export function PageWrapper(props: PageWrapperProps) {
         props.htmlClassName,
       )}
     >
-      <Head {...props.metadata} preloadApis={props.preloadApis} />
+      <Head {...props.metadata} preloadApi={props.preloadApi} />
       <body className={props.bodyClassName}>
         <script src="/scripts/prerender.js" />
         {props.children}

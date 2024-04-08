@@ -20,6 +20,9 @@ export interface ScalingDataAvailabilityPageProps {
   dataAvailabilityView: ScalingDataAvailabilityViewProps
   navbar: NavbarProps
   footer: FooterProps
+  showActivity: boolean
+  showLiveness: boolean
+  showFinality: boolean
 }
 
 export function ScalingDataAvailabilityPage(
@@ -28,9 +31,11 @@ export function ScalingDataAvailabilityPage(
   return (
     <>
       <Navbar {...props.navbar} />
-      <PageContent>
+      <PageContent type="subpage">
         <ScalingNavigationTabs
-          features={props.navbar.features}
+          showActivity={props.showActivity}
+          showFinality={props.showFinality}
+          showLiveness={props.showLiveness}
           selected="data-availability"
         />
         <main>

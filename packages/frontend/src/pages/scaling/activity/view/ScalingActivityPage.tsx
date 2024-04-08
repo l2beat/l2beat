@@ -21,7 +21,10 @@ export interface ActivityPageProps {
   activityView: ScalingActivityViewProps
   footer: FooterProps
   navbar: NavbarProps
-  milestones: Milestone[] | undefined
+  showActivity: boolean
+  showFinality: boolean
+  showLiveness: boolean
+  milestones?: Milestone[]
 }
 
 export function ActivityPage(props: ActivityPageProps) {
@@ -30,13 +33,15 @@ export function ActivityPage(props: ActivityPageProps) {
       <Navbar {...props.navbar} />
       <PageContent>
         <ScalingNavigationTabs
-          features={props.navbar.features}
+          showActivity={props.showActivity}
+          showFinality={props.showFinality}
+          showLiveness={props.showLiveness}
           selected="activity"
         />
         <main className="mt-4 md:mt-12">
           <Chart
             settingsId="scaling-activity"
-            initialType={{ type: 'scaling-activity' }}
+            initialType={{ type: 'layer2-activity' }}
             milestones={props.milestones}
             header="activity"
           />

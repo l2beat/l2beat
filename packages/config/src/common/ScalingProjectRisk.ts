@@ -1,7 +1,4 @@
-import {
-  ValueWithSentiment,
-  WarningValueWithSentiment,
-} from '@l2beat/shared-pure'
+import { ValueWithSentiment, WarningWithSentiment } from '@l2beat/shared-pure'
 
 export interface ScalingProjectRisk {
   /** Category of this risk */
@@ -26,7 +23,7 @@ export type ScalingProjectRiskCategory =
 export interface ScalingProjectRiskViewEntry
   extends ValueWithSentiment<string> {
   description: string
-  warning?: WarningValueWithSentiment
+  warning?: WarningWithSentiment
   // second line in risk view
   secondLine?: string
   secondSentiment?: 'warning' | 'bad'

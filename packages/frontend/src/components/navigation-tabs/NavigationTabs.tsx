@@ -1,8 +1,16 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 
-import { NavigationPage } from '../../utils/getNavigationPages'
 import { DesktopTabs } from './DesktopTabs'
 import { MobileTabs } from './MobileTabs'
+
+export interface NavigationPage {
+  fullTitle: ReactNode
+  shortTitle: ReactNode
+  icon?: ReactNode
+  link: string
+  selected: boolean
+  new?: boolean
+}
 
 export interface PageSelectionProps {
   pages: NavigationPage[]

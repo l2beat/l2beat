@@ -22,7 +22,7 @@ export function DonatePage(props: DonatePageProps) {
     <>
       <Navbar {...props.navbar} />
       <Header {...props.header} />
-      <PageContent>
+      <PageContent type="subpage">
         <DonateFundingSources {...props.fundingSources} />
       </PageContent>
       <Footer narrow {...props.footer} />

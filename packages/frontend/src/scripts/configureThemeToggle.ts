@@ -7,14 +7,13 @@ import { LocalStorage } from './local-storage/LocalStorage'
 // https://paco.me/writing/disable-theme-transitions
 
 export function configureThemeToggle() {
-  function toggleDarkMode(toggleElement: Element) {
-    const isLight = getCurrentTheme() === 'light'
-    updateTheme(isLight)
-    LocalStorage.setItem('theme', isLight ? 'dark' : 'light')
-    toggleElement.dispatchEvent(new Event('change'))
+  function toggleDarkMode() {
+    const isDark = !document.documentElement.classList.contains('dark')
+    updateTheme(isDark)
+    LocalStorage.setItem('theme', isDark ? 'dark' : 'light')
   }
 
-  function updateTheme(isLight: boolean) {
+  function updateTheme(isDark: boolean) {
     const css = document.createElement('style')
     css.type = 'text/css'
     css.appendChild(
@@ -30,7 +29,7 @@ export function configureThemeToggle() {
     )
     document.head.appendChild(css)
 
-    if (isLight) {
+    if (isDark) {
       document.documentElement.classList.add('dark')
     } else {
       document.documentElement.classList.remove('dark')
@@ -41,9 +40,5 @@ export function configureThemeToggle() {
 
   document
     .querySelectorAll('[data-role="dark-theme-toggle"]')
-    .forEach((e) => e.addEventListener('click', () => toggleDarkMode(e)))
-}
-
-export function getCurrentTheme() {
-  return document.documentElement.classList.contains('dark') ? 'dark' : 'light'
+    .forEach((e) => e.addEventListener('click', toggleDarkMode))
 }

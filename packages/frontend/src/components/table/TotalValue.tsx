@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { ScalingTvlViewEntry } from '../../pages/scaling/tvl/types'
+import { getSentimentFillColor } from '../../utils/sentimentFillColor'
 import { RoundedWarningIcon } from '../icons'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 import { ValueWithPercentageCell } from './ValueWithPercentageCell'
@@ -23,8 +24,7 @@ export function TotalValue({ project }: TotalValueProps) {
         <TooltipTrigger className="relative flex items-center gap-1">
           {content}
           <RoundedWarningIcon
-            className="absolute -right-5 size-5 pl-1"
-            sentiment={project.tvlWarning.sentiment}
+            className={`absolute -right-5 size-5 pl-1 ${getSentimentFillColor(project.tvlWarning.sentiment)}`}
           />
         </TooltipTrigger>
         <TooltipContent>{project.tvlWarning.content}</TooltipContent>
