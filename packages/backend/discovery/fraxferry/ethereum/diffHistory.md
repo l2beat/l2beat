@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xf59b292e8d18dbff6b5fb428a682d89a9b877a6b
+
+# Diff at Mon, 08 Apr 2024 06:44:20 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@ad88f63bb61619b31763ca9524dff8964cdc75f3 block: 19589377
+- current block number: 19609246
+
+## Description
+
+No change.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19589377 (main branch discovery), not current.
+
+```diff
+    contract FPI Multisig (0x6A7efa964Cf6D9Ab3BC3c47eBdDB853A8853C502) {
+    +++ description: None
+      upgradeability.threshold:
++        "3 of 5 (60%)"
+    }
+```
+
+```diff
+    contract Frax Finance Multisig (0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27) {
+    +++ description: None
+      upgradeability.threshold:
++        "3 of 5 (60%)"
+    }
+```
+
 Generated with discovered.json: 0x60380fb9853345495e1cc4a3837502812ae1cb38
 
 # Diff at Fri, 05 Apr 2024 11:56:30 GMT:

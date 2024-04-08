@@ -1,7 +1,7 @@
 {
   "name": "fraxferry",
   "chain": "ethereum",
-  "blockNumber": 19589377,
+  "blockNumber": 19609246,
   "configHash": "0x5e97a88687250601cce4c2a545272a1d4835b39ed82b505eb91bb8e334fb4fd8",
   "version": 3,
   "contracts": [
@@ -15,14 +15,14 @@
       "values": {
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
         "chainid": 1,
-        "executeIndex": 3,
+        "executeIndex": 5,
         "FEE_MAX": "100000000000000000000",
         "FEE_MIN": "5000000000000000000",
         "FEE_RATE": 10,
         "firstOfficer": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
         "MIN_WAIT_PERIOD_ADD": 3600,
         "MIN_WAIT_PERIOD_EXECUTE": 79200,
-        "noBatches": 4,
+        "noBatches": 5,
         "nominatedOwner": "0x0000000000000000000000000000000000000000",
         "noTransactions": 0,
         "owner": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
@@ -44,16 +44,16 @@
       "values": {
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
         "chainid": 1,
-        "executeIndex": 9,
+        "executeIndex": 10,
         "FEE_MAX": "100000000000000000000",
         "FEE_MIN": "1000000000000000000",
         "FEE_RATE": 10,
         "firstOfficer": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
         "MIN_WAIT_PERIOD_ADD": 3600,
         "MIN_WAIT_PERIOD_EXECUTE": 79200,
-        "noBatches": 9,
+        "noBatches": 10,
         "nominatedOwner": "0x0000000000000000000000000000000000000000",
-        "noTransactions": 5,
+        "noTransactions": 6,
         "owner": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
         "paused": false,
         "REDUCED_DECIMALS": 10000000000,
@@ -103,14 +103,14 @@
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
         "chainid": 1,
         "crewmembers": ["0xBB437059584e30598b3AF0154472E47E6e2a45B9"],
-        "executeIndex": 20,
+        "executeIndex": 22,
         "FEE_MAX": "100000000000000000000",
         "FEE_MIN": "5000000000000000000",
         "FEE_RATE": 10,
         "firstOfficer": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
         "MIN_WAIT_PERIOD_ADD": 3600,
         "MIN_WAIT_PERIOD_EXECUTE": 79200,
-        "noBatches": 21,
+        "noBatches": 22,
         "nominatedOwner": "0x0000000000000000000000000000000000000000",
         "noTransactions": 5,
         "owner": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
@@ -128,7 +128,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "3 of 5 (60%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1649111477,
@@ -211,7 +212,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "3 of 5 (60%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1629667690,
