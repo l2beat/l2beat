@@ -40,8 +40,6 @@ export async function up(knex: Knex) {
   await knex.schema.alterTable('amounts', function (table) {
     table.specificType('configuration_id', 'CHAR(12)').notNullable()
     table.primary(['configuration_id', 'timestamp'])
-  })
-  await knex.schema.alterTable('amounts', function (table) {
     table
       .foreign('configuration_id')
       .references('id')
