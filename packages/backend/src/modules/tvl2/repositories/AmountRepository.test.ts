@@ -7,13 +7,18 @@ import {
   IndexerConfigurationRecord,
   IndexerConfigurationRepository,
 } from '../../../tools/uif/IndexerConfigurationRepository'
+import { IndexerStateRepository } from '../../../tools/uif/IndexerStateRepository'
 import { AmountRecord, AmountRepository } from './AmountRepository'
 
 describeDatabase(AmountRepository.name, (database) => {
+  const indexerStateRepository = new IndexerStateRepository(
+    database,
+    Logger.SILENT,
+  )
   const CONFIGURATIONS = [
-    mock({ id: '1' }),
-    mock({ id: '2' }),
-    mock({ id: '3' }),
+    mock({ id: '1'.repeat(12) }),
+    mock({ id: '2'.repeat(12) }),
+    mock({ id: '3'.repeat(12) }),
   ]
 
   const repository = new AmountRepository(database, Logger.SILENT)
@@ -23,11 +28,15 @@ describeDatabase(AmountRepository.name, (database) => {
   )
 
   beforeEach(async () => {
+    await indexerStateRepository.add({
+      indexerId: 'indexer',
+      safeHeight: 0,
+    })
     await configurationsRepository.addOrUpdateManyConfigurations(CONFIGURATIONS)
   })
 
   afterEach(async () => {
-    await configurationsRepository.deleteAll()
+    await indexerStateRepository.deleteAll()
   })
 
   describe(AmountRepository.prototype.addMany.name, () => {

@@ -27,6 +27,15 @@ export async function up(knex: Knex) {
     table.index(['indexer_id'])
   })
 
+  await knex.schema.alterTable('indexer_configurations', function (table) {
+    table
+      .foreign('indexer_id')
+      .references('indexer_id')
+      .inTable('indexer_state')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE')
+  })
+
   await knex.schema.alterTable('amounts', function (table) {
     table
       .foreign('configuration_id')
@@ -40,6 +49,9 @@ export async function up(knex: Knex) {
 export async function down(knex: Knex) {
   await knex.schema.alterTable('amounts', function (table) {
     table.dropForeign(['configuration_id'])
+  })
+  await knex.schema.alterTable('indexer_configurations', function (table) {
+    table.dropForeign(['indexer_id'])
   })
   await knex.schema.dropTable('indexer_configurations')
 }

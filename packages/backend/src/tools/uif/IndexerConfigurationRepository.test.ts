@@ -6,8 +6,13 @@ import {
   IndexerConfigurationRecord,
   IndexerConfigurationRepository,
 } from './IndexerConfigurationRepository'
+import { IndexerStateRepository } from './IndexerStateRepository'
 
 describeDatabase(IndexerConfigurationRepository.name, (database) => {
+  const indexerStateRepository = new IndexerStateRepository(
+    database,
+    Logger.SILENT,
+  )
   const repository = new IndexerConfigurationRepository(database, Logger.SILENT)
 
   const CONFIGURATIONS = [
@@ -18,7 +23,19 @@ describeDatabase(IndexerConfigurationRepository.name, (database) => {
   ]
 
   beforeEach(async () => {
-    await repository.deleteAll()
+    await indexerStateRepository.deleteAll()
+    await indexerStateRepository.add({
+      indexerId: 'indexer-1',
+      safeHeight: 0,
+    })
+    await indexerStateRepository.add({
+      indexerId: 'indexer-2',
+      safeHeight: 0,
+    })
+    await indexerStateRepository.add({
+      indexerId: 'indexer-3',
+      safeHeight: 0,
+    })
   })
 
   it(
