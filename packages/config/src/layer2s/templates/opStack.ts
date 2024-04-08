@@ -629,6 +629,17 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
         }),
         ...templateVars.nonTemplateEscrows,
       ],
+      transactionApi:
+        templateVars.transactionApi ??
+        (templateVars.rpcUrl !== undefined
+          ? {
+              type: 'rpc',
+              startBlock: 1,
+              defaultUrl: templateVars.rpcUrl,
+              defaultCallsPerMinute: 1500,
+              assessCount: subtractOne,
+            }
+          : undefined),
     },
     stateDerivation: templateVars.stateDerivation,
   }
