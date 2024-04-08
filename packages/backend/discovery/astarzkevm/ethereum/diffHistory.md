@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xabc94f0c2caf10e72a17895fe1dea01beaa436bc
+Generated with discovered.json: 0xfef9baadda4970faf426f8f3f466cd74a3fe021c
 
-# Diff at Mon, 08 Apr 2024 11:10:18 GMT:
+# Diff at Mon, 08 Apr 2024 11:46:25 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@c96c038f2bf3b6b17187b5a1f9d0ef0282942108 block: 19567776
-- current block number: 19610563
+- comparing to: main@786d5557d38c508087b24a36535c329c2bdbb5ab block: 19567776
+- current block number: 19610741
 
 ## Description
 
@@ -53,8 +53,11 @@ discovery. Values are for block 19567776 (main branch discovery), not current.
 -        [["0x519E42c24163192Dca44CD3fBDCEBF6be9130987","0x0775e11309d75aA6b0967917fB0213C5673eDf81"],["0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80","0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"],["0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507","0x0775e11309d75aA6b0967917fB0213C5673eDf81"]]
       values.rollupTypes:
 -        [["0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30","0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"],["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71","0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be"],["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71","0x0775e11309d75aA6b0967917fB0213C5673eDf81"],["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C","0x0775e11309d75aA6b0967917fB0213C5673eDf81"]]
++++ description: Contains important info such as the etrog and verifier address, the rollup type and chain id
++++ type: CODE_CHANGE
++++ severity: HIGH
       values.rollupData:
-+        ["0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",3776,"0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8",7]
++        ["0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",3776,"0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8",7,1,0]
     }
 ```
 

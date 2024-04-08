@@ -40,7 +40,7 @@
           "type": "call",
           "method": "rollupIDToRollupData",
           "args": [2], // astar ID
-          "pickFields": ["rollupContract","chainID", "verifier","forkID"]
+          "pickFields": ["rollupContract", "chainID", "verifier", "forkID", "rollupTypeID", "rollupCompatibilityID"]
         }
       }
     },

@@ -1,7 +1,7 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 19610652,
+  "blockNumber": 19610745,
   "configHash": "0x71290ff26c25629038a873aef85bc85cc2e38a8515afecd7c77b3f06880ed619",
   "version": 3,
   "contracts": [
@@ -122,7 +122,7 @@
         "gasTokenAddress": "0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
-        "getRoot": "0x4c192bea55efafabb33b31d83aa5711814bf6ebf190676a5b0abc7ca13a87ecc",
+        "getRoot": "0xe56ec48a5865fc1c3422cbe98f94b298fe2990acee3b1122d9f1906ba21f45df",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
@@ -359,7 +359,7 @@
             "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
           ]
         ],
-        "totalSequencedBatches": 44064,
+        "totalSequencedBatches": 44119,
         "totalVerifiedBatches": 40046,
         "trustedAggregatorTimeout": 432000,
         "verifyBatchTimeTarget": 1800
@@ -378,8 +378,8 @@
       "sinceTimestamp": 1679653151,
       "values": {
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 7943,
-        "getRoot": "0x40089323910feaa9fcf4e060cc7fce6ef3c3c1125a191549295088922e4b2bb1",
+        "depositCount": 7945,
+        "getRoot": "0xfb7491a123a61c0180f0ab25a33320015dfffeb3e22c329e9b17f4eed4966b86",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "derivedName": "PolygonZkEVMGlobalExitRootV2"

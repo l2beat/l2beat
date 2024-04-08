@@ -319,9 +319,9 @@
           "type": null
         },
         "rollupData": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Contains important info such as the etrog and verifier address, the rollup type and chain id",
+          "severity": "HIGH",
+          "type": "CODE_CHANGE"
         },
         "rollupTypeCount": {
           "description": null,

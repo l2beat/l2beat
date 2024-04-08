@@ -204,9 +204,9 @@
           "type": "CODE_CHANGE"
         },
         "rollupData": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "Contains important info such as the etrog and verifier address, the rollup type and chain id",
+          "severity": "HIGH",
+          "type": "CODE_CHANGE"
         },
         "rollupTypeCount": {
           "description": "The number of unique rollup types that the manager can use.",
