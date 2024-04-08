@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, assert } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
@@ -10,6 +10,7 @@ const discovery = new ProjectDiscovery('degen', 'base')
 export const degen: Layer3 = orbitStackL3({
   hostChain: ProjectId('base'),
   discovery,
+  nativeToken: 'DEGEN',
   display: {
     name: 'Degen Chain',
     slug: 'degen',
@@ -39,12 +40,39 @@ export const degen: Layer3 = orbitStackL3({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
+  nonTemplatePermissions: [
+    ...discovery.getMultisigPermission(
+      'AdminMultisig',
+      (() => {
+        const discoveredAdminOwner = <String>(
+          discovery.getContractValue('ProxyAdmin', 'owner')
+        )
+        const discoveredUpgradeExecutorAddy = discovery
+          .getContract('UpgradeExecutor')
+          .address.toString()
+        const discoveredExecutor = <String>(
+          discovery.getAccessControlField('UpgradeExecutor', 'EXECUTOR_ROLE')
+            .members[0]
+        )
+        const discoveredAdminMultisig = discovery
+          .getContract('AdminMultisig')
+          .address.toString()
+        assert(
+          discoveredAdminOwner === discoveredUpgradeExecutorAddy &&
+            discoveredExecutor === discoveredAdminMultisig,
+          'Update the permissions section if this changes.',
+        )
+        const description =
+          'Has the executor role of the UpgradeExecutor and indirectly owns the ProxyAdmin (can upgrade the system).'
+        return description
+      })(),
+    ),
+  ],
   nonTemplateContracts: [
-    discovery.getContractDetails('UTBEntry', {
+    discovery.getContractDetails('UTBDecent', {
       description:
-        'The UTB contract serves as a gateway .',
+        'The UTB contract serves as a bridge gateway by integrating with Decent (LayerZero) to allow bridging and swapping in- and out of Degen L3.',
       // ...upgradeability,
     }),
   ],
-
 })

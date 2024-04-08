@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xf9f8fd072902a549af58fb1aedffc5fd741ac329
+Generated with discovered.json: 0xf801a6c36158abb80531a7d6f4dc65aef5a51065
 
-# Diff at Mon, 08 Apr 2024 09:30:42 GMT:
+# Diff at Mon, 08 Apr 2024 15:12:58 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
-- current block number: 12889640
+- current block number: 12899907
 
 ## Description
 
@@ -37,7 +37,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract UTBEntry (0x43019F8BE1F192587883b67dEA2994999f5a2de2)
+    contract UTBDecent (0x43019F8BE1F192587883b67dEA2994999f5a2de2)
     +++ description: None
 ```
 
@@ -56,6 +56,12 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract ERC20RollupEventInbox (0x766DD3A13d17C6D175975C89225bde89F052dBc4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AdminMultisig (0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104)
     +++ description: None
 ```
 

@@ -6,6 +6,41 @@
       "values": {}
     },
     {
+      "name": "AdminMultisig",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "Bridge",
       "values": {
         "activeOutbox": {
@@ -497,7 +532,7 @@
       }
     },
     {
-      "name": "UTBEntry",
+      "name": "UTBDecent",
       "values": {
         "DEFAULT_ADMIN_ROLE": {
           "description": null,
@@ -525,6 +560,11 @@
           "type": null
         },
         "EXECUTOR_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accessControl": {
           "description": null,
           "severity": null,
           "type": null
