@@ -22,9 +22,9 @@ type StarknetStateUpdate = z.infer<typeof StarknetStateUpdate>
 
 export class StarknetFinalityAnalyzer extends BaseAnalyzer {
   constructor(
-    protected override readonly provider: RpcClient,
-    protected override readonly livenessRepository: LivenessRepository,
-    protected override readonly projectId: ProjectId,
+    provider: RpcClient,
+    livenessRepository: LivenessRepository,
+    projectId: ProjectId,
     private readonly l2Provider: StarknetClient,
   ) {
     super(provider, livenessRepository, projectId)
