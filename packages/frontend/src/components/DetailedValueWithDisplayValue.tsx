@@ -1,20 +1,19 @@
 import React from 'react'
 
 import { ValueWithDisplayValue } from '../pages/types'
+import { getFirstTwoNonZeroPrecision } from '../utils/getFirstTwoNonZeroPrecision'
 import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip/Tooltip'
 
 interface Props {
   children: ValueWithDisplayValue
-  precision?: number
 }
 
-export function DetailedValueWithDisplayValue({
-  children,
-  precision = 8,
-}: Props) {
-  if (!children.displayValue.startsWith('~')) {
+export function DetailedValueWithDisplayValue({ children }: Props) {
+  if (!children.displayValue.startsWith('<')) {
     return children.displayValue
   }
+
+  const precision = getFirstTwoNonZeroPrecision(children.value)
 
   return (
     <Tooltip>

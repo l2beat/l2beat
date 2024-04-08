@@ -1,33 +1,27 @@
+import round from 'lodash/round'
+
 import { formatLargeNumber } from './formatLargeNumber'
+
+const currencyToSymbol: Record<string, string> = {
+  usd: '$',
+  eth: 'Ξ',
+}
 
 export function formatCurrency(
   value: number,
   currency: string,
-  maxDecimals?: number,
+  maxDecimals: number = 2,
 ) {
-  let num
-  let result
-
-  switch (currency.toLowerCase()) {
-    case 'usd': {
-      num = formatLargeNumber(value, maxDecimals)
-      result = `$${num}`
-      break
-    }
-    case 'eth': {
-      num = formatLargeNumber(value, maxDecimals ?? 4)
-      result = `Ξ${num}`
-      break
-    }
-    default: {
-      num = formatLargeNumber(value, maxDecimals)
-      result = `${num} ${currency.toUpperCase()}`
-    }
+  const minimum = round(Math.pow(10, -maxDecimals), maxDecimals)
+  const symbol = currencyToSymbol[currency.toLowerCase()]
+  if (value < minimum) {
+    return symbol
+      ? `<${symbol}${minimum}`
+      : `<${minimum} ${currency.toUpperCase()}`
   }
 
-  const isRoundedToZero = num === '0.00' && value !== 0
-
-  return isRoundedToZero ? `~${result}` : result
+  const num = formatLargeNumber(value, maxDecimals)
+  return symbol ? `${symbol}${num}` : `${num} ${currency.toUpperCase()}`
 }
 
 export function formatCurrencyExactValue(value: number, currency: string) {
