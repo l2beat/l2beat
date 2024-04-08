@@ -1,4 +1,5 @@
 import { configureCharts } from './charts'
+import { configureAlphabetSelectors } from './configureAlphabetSelectors'
 import { configureBridgesAndCombinedOnly } from './configureBridgesAndCombinedOnly'
 import { configureDropdowns } from './configureDropdowns'
 import { configureEtherscanLinks } from './configureEtherscanLinks'
@@ -43,3 +44,4 @@ configureLivenessTimeRangeControls()
 configureOverflowWrappers()
 configureSorting()
 configureEtherscanLinks()
+configureAlphabetSelectors()
