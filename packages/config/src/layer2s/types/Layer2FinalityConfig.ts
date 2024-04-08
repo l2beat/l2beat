@@ -10,6 +10,8 @@ export type Layer2FinalityConfig =
         | 'zkSyncLite'
         | 'Starknet'
         | 'Arbitrum'
+        | 'Loopring'
+        | 'Degate'
       minTimestamp: UnixTime
       lag: number
     }
