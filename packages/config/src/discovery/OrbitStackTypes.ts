@@ -6,7 +6,6 @@ export type OrbitStackContractName =
   | 'SequencerInbox'
   | 'Inbox'
   | 'Outbox'
-  | 'L1GatewayRouter'
   | 'UpgradeExecutor'
   | 'ChallengeManager'
   | 'OneStepProofEntry'
@@ -45,10 +44,6 @@ export const ORBIT_STACK_CONTRACT_DESCRIPTION: OrbitStackContractTemplate[] = [
     name: 'Outbox',
     coreDescription:
       'Contract that allows L2->L1 calls, i.e. messages initiated on L2 which eventually resolve in execution on L1.',
-  },
-  {
-    name: 'L1GatewayRouter',
-    coreDescription: 'Router managing token <--> gateway mapping.',
   },
   {
     name: 'UpgradeExecutor',

@@ -86,6 +86,10 @@ export const xai: Layer3 = orbitStackL3({
     },
   ],
   nonTemplateContracts: [
+    discovery.getContractDetails('L1GatewayRouter', {
+      description:
+        'Router managing token <--> gateway mapping.',
+    }),
     discovery.getContractDetails('SentryReferee', {
       description:
         'The referree contract allows to create new challenges (state root reports) from the permissioned challenger, collects assertions from sentry nodes, and distributes esXAI rewards for operating a sentry node. \
