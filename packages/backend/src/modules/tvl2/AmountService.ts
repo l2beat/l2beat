@@ -25,9 +25,14 @@ export type AmountConfiguration = EscrowEntry | TotalSupplyEntry
 export interface AmountServiceDependencies {
   readonly rpcClient: RpcClient
   readonly multicallClient: MulticallClient
-  readonly nativeAssetCodec?: NativeAssetMulticallCodec
   readonly erc20Codec: ERC20MulticallCodec
+  readonly nativeAssetCodec?: NativeAssetMulticallCodec
   logger: Logger
+}
+
+interface Amount {
+  configurationId: string
+  amount: bigint
 }
 
 export class AmountService {
@@ -44,15 +49,14 @@ export class AmountService {
       this.$.nativeAssetCodec,
       blockNumber,
     )
-    const [forRpc, forMulticall] = partition(configurations, (c) =>
-      isNotSupportedByMulticall(nativeAssetCodecAtBlock, c),
+    const [forRpc, forMulticall] = partition(
+      configurations,
+      // isNotSupportedByMulticall checks that type is "escrow"
+      (c): c is Configuration<EscrowEntry> =>
+        isNotSupportedByMulticall(nativeAssetCodecAtBlock, c),
     )
 
-    const rpcAmounts = await this.fetchWithRpc(
-      // isNotSupportedByMulticall checks that type is "escrow"
-      forRpc as Configuration<EscrowEntry>[],
-      blockNumber,
-    )
+    const rpcAmounts = await this.fetchWithRpc(forRpc, blockNumber)
 
     const multicallAmounts = await this.fetchWithMulticall(
       forMulticall,
@@ -65,10 +69,10 @@ export class AmountService {
     }))
   }
 
-  async fetchWithRpc(
+  private async fetchWithRpc(
     configurations: Configuration<EscrowEntry>[],
     blockNumber: number,
-  ) {
+  ): Promise<Amount[]> {
     return Promise.all(
       configurations.map(async (configuration) => {
         const amount = await this.$.rpcClient.getBalance(
@@ -77,7 +81,7 @@ export class AmountService {
         )
 
         return {
-          configurationId: +configuration.id,
+          configurationId: configuration.id,
           amount: amount.toBigInt(),
         }
       }),
@@ -87,7 +91,11 @@ export class AmountService {
   private async fetchWithMulticall(
     configurations: Configuration<AmountConfiguration>[],
     blockNumber: number,
-  ) {
+  ): Promise<Amount[]> {
+    if (configurations.length === 0) {
+      return []
+    }
+
     const nativeAssetCodecAtBlock = getNativeAssetCodecAtBlock(
       this.$.nativeAssetCodec,
       blockNumber,
@@ -103,7 +111,7 @@ export class AmountService {
       blockNumber,
     )
 
-    return responses.map((response, i) => {
+    return responses.map((response, i): Amount => {
       const amount = decodeForMulticall(
         nativeAssetCodecAtBlock,
         erc20Codec,
@@ -118,13 +126,13 @@ export class AmountService {
           `Failed to decode amount for configuration ${configurations[i].id}`,
         )
         return {
-          configurationId: +configurations[i].id,
+          configurationId: configurations[i].id,
           amount: 0n,
         }
       }
 
       return {
-        configurationId: +configurations[i].id,
+        configurationId: configurations[i].id,
         amount,
       }
     })
@@ -194,7 +202,7 @@ function getNativeAssetCodecAtBlock(
 function isNotSupportedByMulticall(
   nativeCodec: NativeAssetMulticallCodec | undefined,
   configuration: Configuration<AmountConfiguration>,
-) {
+): configuration is Configuration<EscrowEntry> {
   return (
     configuration.properties.type === 'escrow' &&
     configuration.properties.address === 'native' &&
