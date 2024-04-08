@@ -1,7 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 import React, { useEffect } from 'react'
 
-import { ConfigFeatures } from '../../build/config/Config'
 import { configureSidebarMenu } from '../../scripts/configureSidebarMenu'
 import { configureThemeToggle } from '../../scripts/configureThemeToggle'
 import { Navbar } from './Navbar'
@@ -25,6 +24,8 @@ const meta: Meta<typeof Navbar> = {
   ],
   args: {
     forumLink: '#',
+    showActivity: true,
+    showHiringBadge: true,
     socialLinks: {
       discordLink: '#',
       githubLink: '#',
@@ -33,34 +34,35 @@ const meta: Meta<typeof Navbar> = {
       twitterLink: '#',
       youTubeLink: '#',
     },
-    features: getFeatures({
-      banner: false,
-    }),
   },
 }
 export default meta
 type Story = StoryObj<typeof Navbar>
 
-export const Primary: Story = {
+export const NoBannerScaling: Story = {
   args: {
+    showBanner: false,
     selectedPage: 'scaling',
   },
 }
 
-export const Banner: Story = {
+export const NoBannerBridges: Story = {
   args: {
-    features: getFeatures({ banner: true }),
-    selectedPage: 'scaling',
+    showBanner: false,
+    selectedPage: 'bridges',
   },
 }
 
-export const HiringBadge: Story = {
+export const NoBannerDonate: Story = {
   args: {
-    features: getFeatures({ hiringBadge: true }),
-    selectedPage: 'scaling',
+    showBanner: false,
+    selectedPage: 'donate',
   },
 }
 
-function getFeatures(features: Partial<ConfigFeatures>): ConfigFeatures {
-  return features as ConfigFeatures
+export const BannerScaling: Story = {
+  args: {
+    showBanner: true,
+    selectedPage: 'scaling',
+  },
 }

@@ -1,33 +1,14 @@
 import { formatLargeNumber } from './formatLargeNumber'
 
-export function formatCurrency(
-  value: number,
-  currency: string,
-  maxDecimals?: number,
-) {
-  let num
-  let result
-
-  switch (currency.toLowerCase()) {
-    case 'usd': {
-      num = formatLargeNumber(value, maxDecimals)
-      result = `$${num}`
-      break
-    }
-    case 'eth': {
-      num = formatLargeNumber(value, maxDecimals ?? 4)
-      result = `Ξ${num}`
-      break
-    }
-    default: {
-      num = formatLargeNumber(value, maxDecimals)
-      result = `${num} ${currency.toUpperCase()}`
-    }
+export function formatCurrency(value: number, currency: string) {
+  const num = formatLargeNumber(value)
+  if (currency === 'usd') {
+    return `$${num}`
+  } else if (currency === 'eth') {
+    return `Ξ${num}`
+  } else {
+    return `${num} ${currency.toUpperCase()}`
   }
-
-  const isRoundedToZero = num === '0.00' && value !== 0
-
-  return isRoundedToZero ? `~${result}` : result
 }
 
 export function formatCurrencyExactValue(value: number, currency: string) {
@@ -38,6 +19,11 @@ export function formatCurrencyExactValue(value: number, currency: string) {
   const [integer, decimal = ''] = string.split('.')
   const formatted = formatInteger(integer)
   return formatted + (decimal && `.${decimal}`)
+}
+
+export function formatCurrencyExact(value: number, currency: string) {
+  const formatted = formatCurrencyExactValue(value, currency)
+  return `${formatted} ${currency.toUpperCase()}`
 }
 
 function formatCrypto(value: number) {

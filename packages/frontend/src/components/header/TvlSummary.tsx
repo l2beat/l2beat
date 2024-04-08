@@ -1,10 +1,10 @@
-import { WarningWithSentiment } from '@l2beat/config'
+import { Layer2TVLWarning } from '@l2beat/config'
 import React from 'react'
 
 import { unifyPercentagesAsIntegers } from '../../utils'
+import { getSentimentFillColor } from '../../utils/sentimentFillColor'
 import { formatUSD } from '../../utils/utils'
 import { UpcomingBadge } from '../badge/UpcomingBadge'
-import { ValueLockedBreakdown } from '../breakdown/ValueLockedBreakdown'
 import {
   CanonicalIcon,
   ExternalIcon,
@@ -26,7 +26,7 @@ export interface TvlStats {
 export interface TvlSummaryProps {
   stats?: TvlStats
   tvlBreakdownHref?: string
-  tvlWarning?: WarningWithSentiment
+  tvlWarning?: Layer2TVLWarning
   showTvlBreakdown?: boolean
   isArchived?: boolean
   type?: 'bridge' | 'layer2' | 'layer3'
@@ -62,21 +62,21 @@ export function TvlSummary(props: TvlSummaryProps) {
           shortLabel: 'Canonical',
           value: formatUSD(props.stats.canonical),
           usage: usage?.canonical ?? 1,
-          icon: <CanonicalIcon />,
+          icon: <CanonicalIcon className="size-[9px]" />,
         },
         {
           label: 'Externally Bridged',
           shortLabel: 'External',
           value: formatUSD(props.stats.external),
           usage: usage?.external ?? 1,
-          icon: <ExternalIcon />,
+          icon: <ExternalIcon className="size-[10px]" />,
         },
         {
           label: 'Natively Minted',
           shortLabel: 'Native',
           value: formatUSD(props.stats.native),
           usage: usage?.native ?? 1,
-          icon: <NativeIcon />,
+          icon: <NativeIcon className="size-[8px]" />,
         },
       ]
     : []
@@ -105,8 +105,7 @@ export function TvlSummary(props: TvlSummaryProps) {
                 )}
                 {props.tvlWarning && (
                   <RoundedWarningIcon
-                    className="size-4"
-                    sentiment={props.tvlWarning.sentiment}
+                    className={`size-4 ${getSentimentFillColor(props.tvlWarning.sentiment)}`}
                   />
                 )}
               </TooltipTrigger>
@@ -123,7 +122,7 @@ export function TvlSummary(props: TvlSummaryProps) {
                 </p>
               )}
               {props.tvlWarning && (
-                <RoundedWarningIcon className="size-4" sentiment="warning" />
+                <RoundedWarningIcon className="size-4 fill-yellow-700 dark:fill-yellow-300" />
               )}
             </div>
           )
@@ -135,7 +134,26 @@ export function TvlSummary(props: TvlSummaryProps) {
       </div>
 
       {usage && (
-        <ValueLockedBreakdown {...usage} className="my-3 h-1 w-full md:my-0" />
+        <div className="my-3 flex h-1 w-full flex-wrap md:my-0">
+          <div
+            className="h-full rounded-l-full bg-purple-100"
+            style={{
+              width: `${usage.canonical}%`,
+            }}
+          />
+          <div
+            className="h-full bg-yellow-200"
+            style={{
+              width: `${usage.external}%`,
+            }}
+          />
+          <div
+            className="h-full rounded-r-full bg-pink-100"
+            style={{
+              width: `${usage.native}%`,
+            }}
+          />
+        </div>
       )}
 
       {props.stats ? (
@@ -147,7 +165,9 @@ export function TvlSummary(props: TvlSummaryProps) {
                 className="flex w-full flex-wrap items-end justify-between"
               >
                 <div className="flex items-center gap-1">
-                  {s.icon}
+                  <div className="flex size-2.5 items-center justify-center">
+                    {s.icon}
+                  </div>
                   <span className="text-xs leading-none text-gray-500 dark:text-gray-600">
                     <span className="inline md:hidden">{s.label}</span>
                     <span className="hidden md:inline">{s.shortLabel}</span>
@@ -156,7 +176,7 @@ export function TvlSummary(props: TvlSummaryProps) {
                 <span className="text-base font-semibold leading-none">
                   {s.value}
                   {props.stats && props.stats.tvl > 0 && (
-                    <span className="hidden font-normal text-gray-500 lg:inline">
+                    <span className="font-normal text-gray-500">
                       {` (${s.usage}%)`}
                     </span>
                   )}

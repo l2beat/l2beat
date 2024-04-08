@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { Config } from '../../build/config'
-import { ConfigFeatures } from '../../build/config/Config'
 import { MenuOpenIcon } from '../icons'
 import { Logo } from '../Logo'
 import { PlainLink } from '../PlainLink'
@@ -19,7 +18,12 @@ import { NavbarPage } from './types'
 import { VerticalBar } from './VerticalBar'
 
 export interface NavbarProps {
-  features: ConfigFeatures
+  showBanner: boolean
+  showActivity: boolean
+  showFinality: boolean
+  showLiveness: boolean
+  showHiringBadge: boolean
+  showNewGovernancePage: boolean
   forumLink: string
   socialLinks: SocialLinksProps
   selectedPage: NavbarPage
@@ -30,8 +34,13 @@ export function getNavbarProps(
   selectedPage: NavbarPage,
 ): NavbarProps {
   return {
-    features: config.features,
+    showBanner: config.features.banner,
     forumLink: config.links.forum,
+    showHiringBadge: config.features.hiringBadge,
+    showActivity: config.features.activity,
+    showFinality: config.features.finality,
+    showLiveness: config.features.liveness,
+    showNewGovernancePage: config.features.governancePage,
     socialLinks: getSocialLinksProps(config),
     selectedPage,
   }
@@ -42,11 +51,15 @@ export function Navbar(props: NavbarProps) {
     <>
       <SidebarMenu
         selectedPage={props.selectedPage}
-        features={props.features}
+        showActivity={props.showActivity}
+        showFinality={props.showFinality}
+        showLiveness={props.showLiveness}
+        showHiringBadge={props.showHiringBadge}
+        showNewGovernancePage={props.showNewGovernancePage}
         forumLink={props.forumLink}
         socialLinks={props.socialLinks}
       />
-      {props.features.banner && <Banner />}
+      {props.showBanner && <Banner />}
       <div className="h-14 border-b border-gray-200 text-base dark:border-gray-850 lg:h-16">
         <nav className="relative mx-auto box-border flex h-full max-w-[1780px] items-center justify-between px-4 lg:px-12">
           <ul className="flex h-full items-center">
@@ -104,7 +117,7 @@ export function Navbar(props: NavbarProps) {
                 </PageLink>
               </li>
               <li className="h-full">
-                {props.features.governancePage ? (
+                {props.showNewGovernancePage ? (
                   <PageLink
                     selected={props.selectedPage === 'governance'}
                     href="/governance"
@@ -128,9 +141,7 @@ export function Navbar(props: NavbarProps) {
                   href="https://l2beat.notion.site/We-are-hiring-Work-at-L2BEAT-e4e637265ae94c5db7dfa2de336b940f"
                 >
                   Jobs
-                  {props.features.hiringBadge && (
-                    <HiringBadge className="ml-1" />
-                  )}
+                  {props.showHiringBadge && <HiringBadge className="ml-1" />}
                 </PlainLink>
               </li>
             </ul>

@@ -24,7 +24,7 @@ export function FinalityDurationCell(props: Props) {
           />
         </div>
         {props.data.timeToInclusion.warning && (
-          <RoundedWarningIcon className="size-5" sentiment="warning" />
+          <RoundedWarningIcon className="size-5 fill-yellow-700 dark:fill-yellow-300" />
         )}
       </TooltipTrigger>
       <TooltipContent>

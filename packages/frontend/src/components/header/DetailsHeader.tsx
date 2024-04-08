@@ -1,4 +1,4 @@
-import { WarningWithSentiment } from '@l2beat/config'
+import { Layer2TVLWarning } from '@l2beat/config'
 import React from 'react'
 
 import { cn } from '../../utils/cn'
@@ -26,7 +26,7 @@ export interface HeaderProps {
   isUpcoming?: boolean
   isUnderReview?: boolean
   tvlBreakdownHref?: string
-  tvlWarning?: WarningWithSentiment
+  tvlWarning?: Layer2TVLWarning
   showTvlBreakdown?: boolean
   showProjectUnderReview?: boolean
   implementationHasChanged?: boolean

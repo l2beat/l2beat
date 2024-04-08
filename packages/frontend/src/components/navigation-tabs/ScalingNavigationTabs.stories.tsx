@@ -11,20 +11,9 @@ type Story = StoryObj<typeof ScalingNavigationTabsComponent>
 export const ScalingNavigationTabs: Story = {
   args: {
     selected: 'summary',
-    features: {
-      liveness: true,
-      finality: true,
-      activity: true,
-      costsPage: true,
-      banner: false,
-      tvlBreakdown: false,
-      diffHistory: false,
-      implementationChange: false,
-      gitcoinOption: false,
-      hiringBadge: false,
-      buildAllProjectPages: false,
-      governancePage: false,
-    },
+    showActivity: true,
+    showFinality: true,
+    showLiveness: true,
   },
   argTypes: {
     selected: {

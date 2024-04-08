@@ -2,7 +2,7 @@ import { safeGetTokenByAssetId } from '@l2beat/config'
 import { TvlApiToken } from '@l2beat/shared-pure'
 import React from 'react'
 
-import { TokenBreakdownProps } from '../../components/breakdown/TokenBreakdown'
+import { TokenBreakdownProps } from '../../components/TokenBreakdown'
 import { formatPercent } from '../utils'
 
 export function getTvlBreakdown(

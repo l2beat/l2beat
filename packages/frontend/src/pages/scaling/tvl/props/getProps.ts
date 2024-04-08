@@ -1,8 +1,8 @@
 import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
-import { getDefaultPageMetadata } from '../../../metadata'
 import { PagesData, Wrapped } from '../../../Page'
 import { ScalingTvlPageProps } from '../view/ScalingTvlPage'
+import { getPageMetadata } from './getPageMetadata'
 import { getScalingTvlView } from './getScalingTvlView'
 
 export function getProps(
@@ -11,6 +11,9 @@ export function getProps(
 ): Wrapped<ScalingTvlPageProps> {
   return {
     props: {
+      showActivity: config.features.activity,
+      showLiveness: config.features.liveness,
+      showFinality: config.features.finality,
       navbar: getNavbarProps(config, 'scaling'),
       footer: getFooterProps(config),
       tvlView: getScalingTvlView(
@@ -20,10 +23,7 @@ export function getProps(
       ),
     },
     wrapper: {
-      metadata: getDefaultPageMetadata({
-        image: 'https://l2beat.com/meta-images/overview-detailed-scaling.png',
-        url: 'https://l2beat.com/scaling/tvl',
-      }),
+      metadata: getPageMetadata(),
       banner: config.features.banner,
     },
   }

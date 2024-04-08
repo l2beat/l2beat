@@ -1,6 +1,5 @@
 import React from 'react'
 
-import { LONG_HYPHEN } from '../../utils/constants'
 import { isZeroUSD } from '../../utils/utils'
 import { TokenControl } from '../chart/TokenControls'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
@@ -11,6 +10,10 @@ export interface ValueWithPercentageCellProps {
   percentChange?: string
   tokens?: TokenControl[]
 }
+
+// NOTE(radomski): This is not an ASCII minus character, but a UTF-8 "Em Dash"
+// Look here for more: https://www.compart.com/en/unicode/U+2014
+const LONG_HYPHEN = '—'
 
 export function ValueWithPercentageCell(props: ValueWithPercentageCellProps) {
   return (

@@ -1,11 +1,11 @@
 import { Config } from '../../../../build/config'
 import { getFooterProps, getNavbarProps } from '../../../../components'
 import { getChartUrl } from '../../../../scripts/charts/data-controller/ChartDataController'
-import { getDefaultPageMetadata } from '../../../metadata'
 import { Wrapped } from '../../../Page'
 import { BridgesPagesData } from '../../types'
 import { BridgesSummaryPageProps } from '../view/BridgesSummaryPage'
 import { getBridgesSummaryView } from './getBridgesSummaryView'
+import { getPageMetadata } from './getPageMetadata'
 
 export function getProps(
   config: Config,
@@ -21,16 +21,8 @@ export function getProps(
       footer: getFooterProps(config),
     },
     wrapper: {
-      preloadApis: [
-        getChartUrl({
-          type: 'bridges-tvl',
-          includeCanonical: false,
-        }),
-      ],
-      metadata: getDefaultPageMetadata({
-        image: 'https://l2beat.com/meta-images/overview-bridges.png',
-        url: 'https://l2beat.com/bridges/summary',
-      }),
+      preloadApi: getChartUrl({ type: 'bridges-tvl', includeCanonical: false }),
+      metadata: getPageMetadata(),
       banner: config.features.banner,
     },
   }

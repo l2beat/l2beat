@@ -1,7 +1,5 @@
 import { z } from 'zod'
 
-import { ChartUnit } from '../charts/view-controller/types'
-
 export type TopBarVariantData = z.infer<typeof TopBarVariantData>
 export const TopBarVariantData = z.object({
   variant: z.union([z.literal('gitcoin'), z.literal('l2warsaw')]),
@@ -11,7 +9,7 @@ export const TopBarVariantData = z.object({
 export type SavedChartSettings = z.infer<typeof SavedChartSettings>
 export const SavedChartSettings = z.object({
   useLogScale: z.boolean(),
-  unit: ChartUnit,
+  useAltCurrency: z.boolean(),
   timeRangeInDays: z.number(),
   showEthereumTransactions: z.boolean(),
 })

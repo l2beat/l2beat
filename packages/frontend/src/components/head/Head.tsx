@@ -10,7 +10,7 @@ interface Props {
   description: string
   image: string
   url: string
-  preloadApis?: string[]
+  preloadApi?: string
 }
 
 export function Head(props: Props) {
@@ -21,7 +21,7 @@ export function Head(props: Props) {
       <link rel="stylesheet" href="/styles/style.css" />
       <link rel="stylesheet" href="/styles/main.css" />
       <Favicons />
-      <Preload preloadApis={props.preloadApis} />
+      <Preload preloadApi={props.preloadApi} />
       <MetaTags
         title={props.title}
         description={props.description}

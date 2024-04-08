@@ -23,7 +23,7 @@ export function ActivityMetaImage(props: ActivityMetaImageProps) {
         initialType={
           props.fake
             ? { type: 'storybook-fake-activity' }
-            : { type: 'scaling-activity' }
+            : { type: 'layer2-activity' }
         }
         metaChart
       />
