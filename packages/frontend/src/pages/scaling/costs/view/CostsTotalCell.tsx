@@ -162,7 +162,7 @@ function TotalValue({
           <div className="hidden flex-col items-end group-data-[type=PER-L2-TX]/costs-controls-wrapper:flex">
             {data.perL2Tx ? (
               <>
-                <div>
+                <div className="flex items-center gap-1">
                   <span className="text-lg font-semibold">
                     {data.perL2Tx.displayValue}
                   </span>
