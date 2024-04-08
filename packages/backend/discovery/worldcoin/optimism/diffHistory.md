@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x3ffc7c300d9513731348a743d0958a940d00372e
+Generated with discovered.json: 0x81e7f6271bee9bcf57df4b071f02612187dc750b
 
-# Diff at Thu, 04 Apr 2024 10:41:50 GMT:
+# Diff at Mon, 08 Apr 2024 10:50:08 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current block number: 118314254
+- current block number: 118487300
 
 ## Description
 
@@ -25,13 +25,13 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract OpWorldID (0x42FF98C4E85212a5D31358ACbFe76a621b50fC02)
+    contract OpWorldID_Old (0x42FF98C4E85212a5D31358ACbFe76a621b50fC02)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract WorldIDRouterImplV1 (0x57f928158C3EE7CDad1e4D8642503c4D0201f611)
+    contract WorldIDRouterV1 (0x57f928158C3EE7CDad1e4D8642503c4D0201f611)
     +++ description: None
 ```
 
@@ -61,7 +61,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract OpWorldID (0xB3E7771a6e2d7DD8C0666042B7a07C39b938eb7d)
+    contract OpWorldID_New (0xB3E7771a6e2d7DD8C0666042B7a07C39b938eb7d)
     +++ description: None
 ```
 

@@ -1,8 +1,8 @@
 {
   "name": "worldcoin",
   "chain": "optimism",
-  "blockNumber": 118314254,
-  "configHash": "0x26a2994ecff3921972958c05c26e755d069b73834378ecedc2d5f55d645ff1eb",
+  "blockNumber": 118487300,
+  "configHash": "0x5e32f6519951ef032dc940a4128790eda0d936215a50bb6092eb4ef7b7240bda",
   "version": 3,
   "contracts": [
     {
@@ -46,7 +46,15 @@
       }
     },
     {
-      "name": "OpWorldID_Old",
+      "name": "SemaphoreVerifier",
+      "address": "0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1695411619
+    },
+    {
+      "name": "OpWorldID_Zero",
       "address": "0x42FF98C4E85212a5D31358ACbFe76a621b50fC02",
       "upgradeability": {
         "type": "immutable"
@@ -57,7 +65,8 @@
         "isLocal": false,
         "latestRoot": "16412537888131705117576507501476154387116854019668596975685798118923752115572",
         "owner": "0x86D26Ed31556EA7694BD0cC4e674D7526f70511a",
-        "rootHistoryExpiry": 604800
+        "rootHistoryExpiry": 604800,
+        "verifier": "0x5eB2c4a34A82a329C3E5D9F97F78Dc5446C3A9FB"
       },
       "derivedName": "OpWorldID"
     },
@@ -101,6 +110,14 @@
         "nonce": 12,
         "VERSION": "1.3.0"
       }
+    },
+    {
+      "name": "SemaphoreVerifier",
+      "address": "0x5eB2c4a34A82a329C3E5D9F97F78Dc5446C3A9FB",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1689065805
     },
     {
       "name": "GnosisSafe",
@@ -168,7 +185,7 @@
       }
     },
     {
-      "name": "OpWorldID_New",
+      "name": "OpWorldID_One",
       "address": "0xB3E7771a6e2d7DD8C0666042B7a07C39b938eb7d",
       "upgradeability": {
         "type": "immutable"
@@ -177,9 +194,10 @@
       "values": {
         "getTreeDepth": 30,
         "isLocal": false,
-        "latestRoot": "21445440309867689239602660528515820031735228567117736710303284081542925925194",
+        "latestRoot": "21219534704526922570476676090709397734243894472224878564858188365576633283241",
         "owner": "0xa6d85F3b3bE6Ff6DC52C3aaBe9A35d0ce252b79F",
-        "rootHistoryExpiry": 604800
+        "rootHistoryExpiry": 604800,
+        "verifier": "0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF"
       },
       "derivedName": "OpWorldID"
     },
@@ -250,7 +268,7 @@
         "REMOTE_TOKEN": "0x163f8C2467924be0ae7B5347228CABF260318753",
         "remoteToken": "0x163f8C2467924be0ae7B5347228CABF260318753",
         "symbol": "WLD",
-        "totalSupply": "161030421704379622691110803",
+        "totalSupply": "160912115699063652779506597",
         "version": "1.0.0"
       }
     },
@@ -263,7 +281,7 @@
       "sinceTimestamp": 1710076379,
       "values": {
         "calculateId": [],
-        "getCurrentId": 30
+        "getCurrentId": 31
       },
       "derivedName": "WLDGrant"
     },
@@ -365,6 +383,9 @@
     "0x140C0227Cbe493A56868DDF4ea582E92ef3e9744": [
       "constructor(address _singleton)"
     ],
+    "0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF": [
+      "function verifyProof(uint256 merkleTreeRoot, uint256 nullifierHash, uint256 signal, uint256 externalNullifier, uint256[8] proof, uint256 merkleTreeDepth) view"
+    ],
     "0x42FF98C4E85212a5D31358ACbFe76a621b50fC02": [
       "constructor(uint8 _treeDepth)",
       "error CannotOverwriteRoot()",
@@ -397,6 +418,9 @@
     ],
     "0x59a0f98345f54bAB245A043488ECE7FCecD7B596": [
       "constructor(address _singleton)"
+    ],
+    "0x5eB2c4a34A82a329C3E5D9F97F78Dc5446C3A9FB": [
+      "function verifyProof(uint256 merkleTreeRoot, uint256 nullifierHash, uint256 signal, uint256 externalNullifier, uint256[8] proof, uint256 merkleTreeDepth) view"
     ],
     "0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6": [
       "constructor(address _singleton)"

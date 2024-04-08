@@ -317,7 +317,7 @@
       }
     },
     {
-      "name": "OpWorldID_New",
+      "name": "OpWorldID_One",
       "values": {
         "getTreeDepth": {
           "description": null,
@@ -340,6 +340,11 @@
           "type": null
         },
         "rootHistoryExpiry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "verifier": {
           "description": null,
           "severity": null,
           "type": null
@@ -347,7 +352,7 @@
       }
     },
     {
-      "name": "OpWorldID_Old",
+      "name": "OpWorldID_Zero",
       "values": {
         "getTreeDepth": {
           "description": null,
@@ -370,6 +375,11 @@
           "type": null
         },
         "rootHistoryExpiry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "verifier": {
           "description": null,
           "severity": null,
           "type": null
@@ -475,6 +485,14 @@
           "type": null
         }
       }
+    },
+    {
+      "name": "SemaphoreVerifier",
+      "values": {}
+    },
+    {
+      "name": "SemaphoreVerifier",
+      "values": {}
     },
     {
       "name": "WLDGrant",
