@@ -4,6 +4,7 @@ import React from 'react'
 import { ChartType } from '../../scripts/charts/types'
 import { cn } from '../../utils/cn'
 import { ActivityHeader } from '../header/ActivityHeader'
+import { CostsHeader } from '../header/CostsHeader'
 import { TvlHeader } from '../header/TvlHeader'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { Logo } from '../Logo'
@@ -14,9 +15,8 @@ import { ChartErrorState } from './ChartErrorState'
 import { ChartHover } from './ChartHover'
 import { ChartLabels } from './ChartLabels'
 import { ChartLoader } from './ChartLoader'
-import { CurrencyControls } from './CurrencyControls'
+import { UnitControls } from './CurrencyControls'
 import { EthereumActivityToggle } from './EthereumActivityToggle'
-import { RadioChartTypeControl } from './RadioChartTypeControl'
 import { RangeControls } from './RangeControls'
 import { ScaleControls } from './ScaleControls'
 import { TimeRange } from './TimeRange'
@@ -30,23 +30,21 @@ export interface ChartProps {
   tokens?: TokenControl[]
   initialType: ChartType
   tvlBreakdownHref?: string
-  hasActivity?: boolean
-  hasTvl?: boolean
   metaChart?: boolean
   mobileFull?: boolean
   milestones?: Milestone[]
   sectionClassName?: string
-  header?: 'tvl' | 'activity' | 'project'
+  header?: 'tvl' | 'activity' | 'costs' | 'project'
   showComingSoon?: boolean
   withoutSeparator?: boolean
 }
 
 export function Chart(props: ChartProps) {
   const isActivity =
-    props.initialType.type === 'layer2-activity' ||
+    props.initialType.type === 'scaling-activity' ||
     props.initialType.type === 'project-activity' ||
     props.initialType.type === 'storybook-fake-activity'
-
+  const isProjectSection = props.header === 'project'
   const isBridge = props.initialType.type === 'bridges-tvl'
 
   const id = props.id ?? 'chart'
@@ -74,8 +72,6 @@ export function Chart(props: ChartProps) {
           title={title}
           id={id}
           sectionOrder={props.sectionOrder}
-          hasActivity={props.hasActivity}
-          hasTvl={props.hasTvl}
           metaChart={props.metaChart}
           header={props.header}
           isBridge={isBridge}
@@ -84,13 +80,13 @@ export function Chart(props: ChartProps) {
         <div className="flex flex-col gap-4">
           <div
             className={cn(
-              'flex justify-between',
+              'flex flex-wrap justify-between gap-2',
               props.metaChart && 'absolute bottom-0 left-0 w-full',
             )}
           >
             <TimeRange isMetaChart={!!props.metaChart} />
             <RangeControls
-              isActivity={isActivity}
+              chartType={props.initialType}
               isMetaChart={!!props.metaChart}
             />
           </div>
@@ -138,12 +134,15 @@ export function Chart(props: ChartProps) {
             />
           </div>
           <div className="flex justify-between">
-            {(props.hasActivity || isActivity) && (
-              <EthereumActivityToggle showToggle={isActivity} />
+            {isActivity && (
+              <EthereumActivityToggle
+                showToggle={isActivity}
+                isProjectSection={isProjectSection}
+              />
             )}
             {!isActivity && (
-              <div className="mr-4 flex flex-wrap gap-4" data-tvl-only>
-                <CurrencyControls />
+              <div className="mr-4 flex flex-wrap gap-x-4 gap-y-2">
+                <UnitControls chartType={props.initialType} />
                 <TokenControls
                   tvlBreakdownHref={props.tvlBreakdownHref}
                   tokens={props.tokens}
@@ -151,7 +150,7 @@ export function Chart(props: ChartProps) {
               </div>
             )}
             <div className="w-min">
-              <ScaleControls />
+              <ScaleControls chartType={props.initialType} />
             </div>
           </div>
         </div>
@@ -167,8 +166,6 @@ function ChartHeader(props: {
   id: string
   title: string
   sectionOrder: number | undefined
-  hasActivity: boolean | undefined
-  hasTvl: boolean | undefined
   metaChart: boolean | undefined
   header: ChartProps['header'] | undefined
   isBridge: boolean
@@ -185,6 +182,10 @@ function ChartHeader(props: {
     return <ActivityHeader />
   }
 
+  if (props.header === 'costs') {
+    return <CostsHeader />
+  }
+
   return (
     <div className="mb-6 flex flex-col gap-1 md:flex-row md:items-center md:gap-5">
       <ProjectDetailsSectionHeader
@@ -192,12 +193,6 @@ function ChartHeader(props: {
         id={props.id}
         sectionOrder={props.sectionOrder}
       />
-      {(props.hasActivity || props.hasTvl) && (
-        <RadioChartTypeControl
-          hasActivity={!!props.hasActivity}
-          hasTvl={!!props.hasTvl}
-        />
-      )}
     </div>
   )
 }

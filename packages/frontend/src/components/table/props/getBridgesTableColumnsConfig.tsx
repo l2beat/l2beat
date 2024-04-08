@@ -2,7 +2,7 @@ import React from 'react'
 
 import { BridgesRiskViewEntry } from '../../../pages/bridges/risk/types'
 import { BridgesSummaryViewEntry } from '../../../pages/bridges/summary/types'
-import { TokenBreakdown } from '../../TokenBreakdown'
+import { TokenBreakdown } from '../../breakdown/TokenBreakdown'
 import { NumberCell } from '../NumberCell'
 import { RiskCell } from '../RiskCell'
 import { TypeCell } from '../TypeCell'
