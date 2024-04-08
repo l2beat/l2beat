@@ -48,6 +48,7 @@ export function getTokenTvlRenderParams(
         renderTokenTvlHover(data, tokenSymbol, tokenType),
       useLogScale: state.useLogScale,
       range: [dataInRange[0][0], dataInRange[dataInRange.length - 1][0]],
+      theme: state.theme,
     }
   }
 }

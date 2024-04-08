@@ -5,8 +5,9 @@ import { Config } from '../../config'
 import { FinalityProjectConfig } from '../../config/features/finality'
 import { BlobClient } from '../../peripherals/blobclient/BlobClient'
 import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
-import { Peripherals } from '../../peripherals/Peripherals'
+import { ClientClass, Peripherals } from '../../peripherals/Peripherals'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
+import { StarknetClient } from '../../peripherals/starknet/StarknetClient'
 import { ApplicationModule } from '../ApplicationModule'
 import { LivenessRepository } from '../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { TrackedTxsConfigsRepository } from '../tracked-txs/repositories/TrackedTxsConfigsRepository'
@@ -15,6 +16,7 @@ import { ArbitrumFinalityAnalyzer } from './analyzers/arbitrum/ArbitrumFinalityA
 import { LineaFinalityAnalyzer } from './analyzers/LineaFinalityAnalyzer'
 import { OpStackFinalityAnalyzer } from './analyzers/opStack/OpStackFinalityAnalyzer'
 import { ScrollFinalityAnalyzer } from './analyzers/ScrollFinalityAnalyzer'
+import { StarknetFinalityAnalyzer } from './analyzers/StarknetFinalityAnalyzer'
 import { zkSyncEraFinalityAnalyzer } from './analyzers/zkSyncEraFinalityAnalyzer'
 import { ZkSyncLiteFinalityAnalyzer } from './analyzers/ZkSyncLiteFinalityAnalyzer'
 import { FinalityController } from './api/FinalityController'
@@ -112,7 +114,7 @@ function initializeConfigurations(
               ethereumRPC,
               livenessRepository,
               configuration.projectId,
-              getL2RPC(configuration, peripherals),
+              getL2Rpc(configuration, peripherals, RpcClient),
             ),
             minTimestamp: configuration.minTimestamp,
           }
@@ -174,6 +176,17 @@ function initializeConfigurations(
             ),
             minTimestamp: configuration.minTimestamp,
           }
+        case 'Starknet':
+          return {
+            projectId: configuration.projectId,
+            analyzer: new StarknetFinalityAnalyzer(
+              ethereumRPC,
+              livenessRepository,
+              configuration.projectId,
+              getL2Rpc(configuration, peripherals, StarknetClient),
+            ),
+            minTimestamp: configuration.minTimestamp,
+          }
         case 'OPStack':
           return
         default:
@@ -183,16 +196,18 @@ function initializeConfigurations(
     .filter(notUndefined)
 }
 
-function getL2RPC(
+function getL2Rpc<Client, Options>(
   configuration: FinalityProjectConfig,
   peripherals: Peripherals,
+  clientClass: ClientClass<Client, Options>,
 ) {
   assert(
     configuration.url,
     `${configuration.projectId.toString()}: L2 provider URL is not defined`,
   )
-  return peripherals.getClient(RpcClient, {
+
+  return peripherals.getClient(clientClass, {
     url: configuration.url,
     callsPerMinute: configuration.callsPerMinute,
-  })
+  } as Options)
 }
