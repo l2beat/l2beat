@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xa83178f53f6a63952fe8b5488d76a52bd121cead
+
+# Diff at Fri, 05 Apr 2024 11:41:00 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@6e27442909c4cbe26f03c6413f64274ff68aa0d7 block: 197243619
+- current block number: 197829534
+
+## Description
+
+No changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 197243619 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafeL2 (0x738a9b55304f9fcF776B3BA285e50c0f9eF77997) {
+    +++ description: None
+      upgradeability.threshold:
++        "4 of 6 (67%)"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3) {
+    +++ description: None
+      upgradeability.threshold:
++        "3 of 4 (75%)"
+    }
+```
+
 Generated with discovered.json: 0x2990628bad137a08bd1e6cf7186a0989a1dc8319
 
 # Diff at Wed, 03 Apr 2024 18:46:58 GMT:
