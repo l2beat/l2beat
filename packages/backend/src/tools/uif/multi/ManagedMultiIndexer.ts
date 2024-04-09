@@ -7,8 +7,8 @@ import {
   SavedConfiguration,
 } from '@l2beat/uif'
 
-import { assetUniqueConfigId, assetUniqueIndexerId } from './ids'
-import { IndexerService } from './IndexerService'
+import { assetUniqueConfigId, assetUniqueIndexerId } from '../ids'
+import { IndexerService } from '../IndexerService'
 
 export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
   parents: Indexer[]
@@ -20,7 +20,7 @@ export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
   logger: Logger
 }
 
-export abstract class MangedMultiIndexer<T> extends MultiIndexer<T> {
+export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
   constructor(public readonly options: ManagedMultiIndexerOptions<T>) {
     super(options.logger, options.parents, options.configurations, options)
 
