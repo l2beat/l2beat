@@ -1,6 +1,6 @@
 import round from 'lodash/round'
 
-import { formatLargeNumber } from './formatLargeNumber'
+import { formatNumber } from './formatNumber'
 
 const currencyToSymbol: Record<string, string> = {
   usd: '$',
@@ -10,17 +10,19 @@ const currencyToSymbol: Record<string, string> = {
 export function formatCurrency(
   value: number,
   currency: string,
-  maxDecimals: number = 2,
+  decimals?: number,
 ) {
-  const minimum = round(Math.pow(10, -maxDecimals), maxDecimals)
   const symbol = currencyToSymbol[currency.toLowerCase()]
-  if (value < minimum) {
-    return symbol
-      ? `<${symbol}${minimum}`
-      : `<${minimum} ${currency.toUpperCase()}`
+  if (decimals) {
+    const minimum = round(Math.pow(10, -decimals), decimals)
+    if (value < minimum) {
+      return symbol
+        ? `<${symbol}${minimum}`
+        : `<${minimum} ${currency.toUpperCase()}`
+    }
   }
 
-  const num = formatLargeNumber(value, maxDecimals)
+  const num = formatNumber(value, decimals)
   return symbol ? `${symbol}${num}` : `${num} ${currency.toUpperCase()}`
 }
 
