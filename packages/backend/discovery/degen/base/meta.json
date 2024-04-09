@@ -28,6 +28,11 @@
           "severity": null,
           "type": null
         },
+        "nativeToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "rollup": {
           "description": null,
           "severity": null,
@@ -81,6 +86,21 @@
       }
     },
     {
+      "name": "ERC20RollupEventInbox",
+      "values": {
+        "bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rollup": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "Inbox",
       "values": {
         "allowListEnabled": {
@@ -109,106 +129,6 @@
           "type": null
         },
         "sequencerInbox": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L1CustomGateway",
-      "values": {
-        "counterpartGateway": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "inbox": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "router": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "whitelist": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L1ERC20Gateway",
-      "values": {
-        "cloneableProxyHash": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "counterpartGateway": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "inbox": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "l2BeaconProxyFactory": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "router": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "whitelist": {
-          "description": null,
-          "severity": null,
-          "type": null
-        }
-      }
-    },
-    {
-      "name": "L1GatewayRouter",
-      "values": {
-        "counterpartGateway": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "defaultGateway": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "inbox": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "router": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "whitelist": {
           "description": null,
           "severity": null,
           "type": null
@@ -299,6 +219,11 @@
           "severity": null,
           "type": null
         },
+        "l2ToL1WithdrawalAmount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "rollup": {
           "description": null,
           "severity": null,
@@ -317,14 +242,34 @@
       }
     },
     {
-      "name": "RollupEventInbox",
+      "name": "RollupOwnerMultisig",
       "values": {
-        "bridge": {
+        "VERSION": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "rollup": {
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
           "description": null,
           "severity": null,
           "type": null
@@ -549,6 +494,11 @@
           "severity": null,
           "type": null
         },
+        "keySetUpdates": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "maxDataSize": {
           "description": null,
           "severity": null,
@@ -575,6 +525,21 @@
           "type": null
         },
         "totalDelayedMessagesRead": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "UTBDecent",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accessControl": {
           "description": null,
           "severity": null,
           "type": null

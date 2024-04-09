@@ -1,7 +1,7 @@
 {
   "name": "rari",
   "chain": "arbitrum",
-  "blockNumber": 188309907,
+  "blockNumber": 198865244,
   "configHash": "0x73ad37b9d5a51e0ba2b762f888889da027bd8c3f5f3285f9f528db911d02d757",
   "version": 3,
   "contracts": [
@@ -84,11 +84,11 @@
           "0x3bC4894370dE0Aa304ed717c2e01866c46F1CEa6"
         ],
         "allowedOutboxList": ["0x91591BB66075BCfF94AA128B003134165C3Ab83a"],
-        "delayedMessageCount": 46786,
+        "delayedMessageCount": 50211,
         "rollup": "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89",
         "sequencerInbox": "0xA436f1867adD490BF1530c636f2FB090758bB6B3",
-        "sequencerMessageCount": 1161,
-        "sequencerReportedSubMessageCount": 216617
+        "sequencerMessageCount": 1943,
+        "sequencerReportedSubMessageCount": 270419
       },
       "derivedName": "Bridge"
     },
@@ -134,12 +134,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 919,
+        "firstUnresolvedNode": 1656,
         "inbox": "0x37e60F80d921dc5E7f501a7130F31f6548dBa564",
         "isERC20Enabled": false,
         "lastStakeBlock": 19045354,
-        "latestConfirmed": 918,
-        "latestNodeCreated": 1070,
+        "latestConfirmed": 1655,
+        "latestNodeCreated": 1807,
         "loserStakeEscrow": "0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552",
         "minimumAssertionPeriod": 75,
         "outbox": "0x91591BB66075BCfF94AA128B003134165C3Ab83a",
@@ -297,7 +297,7 @@
       "implementations": ["0x1d182075d07744D71E37f77f1654165f6DAFad08"],
       "sinceTimestamp": 1705716145,
       "values": {
-        "batchCount": 1161,
+        "batchCount": 1943,
         "batchPosters": ["0x974533F82B7BADF54Fb91C15f07F3f095e35321C"],
         "bridge": "0x255f80Ef2F09FCE0944faBb292b8510F01316Cf0",
         "dacKeyset": {
@@ -312,7 +312,7 @@
         "rollup": "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 46780
+        "totalDelayedMessagesRead": 50210
       },
       "derivedName": "SequencerInbox"
     },

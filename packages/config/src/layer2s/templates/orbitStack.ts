@@ -473,6 +473,8 @@ function getExplorerLinkFormat(hostChain: ProjectId): string {
     return ETHEREUM_EXPLORER_URL
   } else if (hostChain === ProjectId('arbitrum')) {
     return 'https://arbiscan.io/address/{0}#code'
+  } else if (hostChain === ProjectId('base')) {
+    return 'https://explorer.degen.tips/address/{0}?tab=contract'
   }
 
   assert(false, `Host chain ${hostChain.toString()} is not supported`)
