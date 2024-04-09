@@ -39,7 +39,10 @@ export abstract class BaseAnalyzer {
     const finalityDelays = []
     const batchedTransactions = chunk(transactions, 10)
 
+    let i = 0
     for (const batch of batchedTransactions) {
+      console.log('batch', i++, 'of', batchedTransactions.length)
+      console.log('project:', this.projectId)
       const delays = await Promise.all(batch.map((tx) => this.getFinality(tx)))
       finalityDelays.push(delays.flat())
     }

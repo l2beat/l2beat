@@ -45,7 +45,7 @@ export class OpStackFinalityAnalyzer extends BaseAnalyzer {
       const l1Timestamp = transaction.timestamp
       // get blobs relevant to the transaction
       const { relevantBlobs, blockNumber } =
-        await this.blobClient.getRelevantBlobs(transaction.txHash)
+        await this.blobClient.getTxWithRelevantBlobs(transaction.txHash)
       const rollupData = getRollupData(relevantBlobs)
       const frames = rollupData.map((ru) => getFrames(ru))
       const channel = this.channelBank.addFramesToChannel(frames, blockNumber)

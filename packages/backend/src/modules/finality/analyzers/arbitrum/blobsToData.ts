@@ -1,6 +1,13 @@
 import { assert } from '@l2beat/backend-tools'
 
 import { rlpDecodePartial } from '../../utils/rlpDecode'
+import { byteArrFromHexStr } from '../opStack/utils'
+
+export function getRollupData(relevantBlobs: { blob: string }[]) {
+  const blobs = relevantBlobs.map(({ blob }) => byteArrFromHexStr(blob))
+  const payload = blobsToData(blobs)
+  return payload
+}
 
 const BlobTxFieldElementsPerBlob = 4096
 

@@ -100,6 +100,7 @@ export class FinalityIndexer extends ChildIndexer {
 
     const projectFinalityTimestamps =
       await configuration.analyzer.getFinalityForInterval(from, to)
+    console.log('projectFinalityTimestamps', projectFinalityTimestamps)
 
     if (!projectFinalityTimestamps) return
 

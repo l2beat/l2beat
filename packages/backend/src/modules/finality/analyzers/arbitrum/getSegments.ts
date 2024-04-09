@@ -2,15 +2,9 @@ import { assert } from '@l2beat/shared-pure'
 import zlib from 'zlib'
 
 import { rlpDecode, RlpSerializable } from '../../utils/rlpDecode'
-import { byteArrFromHexStr } from '../opStack/utils'
-import { blobsToData } from './blobsToData'
 import { numberToByteArr } from './utils'
 
-export function getSegments(
-  relevantBlobs: { blob: string }[],
-): RlpSerializable[] {
-  const blobs = relevantBlobs.map(({ blob }) => byteArrFromHexStr(blob))
-  const payload = blobsToData(blobs)
+export function getSegments(payload: Uint8Array): RlpSerializable[] {
   const decompressed = decompressPayload(payload)
   // I do not understand why this is necessary, but it is
   // My guess is that the shape of the data is always the same,

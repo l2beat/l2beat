@@ -1,5 +1,6 @@
-import { Logger, RateLimiter } from '@l2beat/backend-tools'
+import { assert, Logger, RateLimiter } from '@l2beat/backend-tools'
 import { HttpClient } from '@l2beat/shared'
+import { stringAsInt } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { z } from 'zod'
 
@@ -10,6 +11,8 @@ type BlobClientOptions = {
 
 export class BlobClient {
   timeout: number
+
+  static BLOB_TX_TYPE = 3
 
   constructor(
     private readonly beaconApiUrl: string,
@@ -48,21 +51,22 @@ export class BlobClient {
     )
   }
 
-  async getRelevantBlobs(txHash: string) {
+  async getTxWithRelevantBlobs(txHash: string) {
     const tx = await this.getTransaction(txHash.toString())
 
-    const blockSidecar = await this.getBlockSidecar(tx.blockNumber)
-
-    if (!tx.blobVersionedHashes) {
-      return { relevantBlobs: [], blockNumber: tx.blockNumber }
+    if (tx.type !== BlobClient.BLOB_TX_TYPE) {
+      return { ...tx, relevantBlobs: [] }
     }
+
+    const blockSidecar = await this.getBlockSidecar(tx.blockNumber)
+    assert(tx.blobVersionedHashes, 'Blob transaction without blob hashes')
 
     const relevantBlobs = filterOutIrrelevant(
       blockSidecar,
       tx.blobVersionedHashes,
     )
 
-    return { relevantBlobs, blockNumber: tx.blockNumber }
+    return { ...tx, relevantBlobs }
   }
 
   private async getBlockSidecar(blockNumber: number) {
@@ -91,12 +95,8 @@ export class BlobClient {
 
   private async getTransaction(txHash: string) {
     const result = await this.callRpc('eth_getTransactionByHash', [txHash])
-    const parsed = TxWithBlobsSchema.parse(result)
 
-    return {
-      blockNumber: Number(parsed.blockNumber),
-      blobVersionedHashes: parsed.blobVersionedHashes,
-    }
+    return TxWithBlobsSchema.parse(result)
   }
 
   private async getBlock(blockNumber: number) {
@@ -174,8 +174,11 @@ const BlockSidecarSchema = z.object({
 type BlockSidecar = z.infer<typeof BlockSidecarSchema>
 
 const TxWithBlobsSchema = z.object({
-  blockNumber: z.string(),
+  blockNumber: stringAsInt(),
   blobVersionedHashes: z.array(z.string()).optional(),
+  type: stringAsInt(),
+  input: z.string(),
+  hash: z.string(),
 })
 
 const BlockWithParentBeaconBlockRootSchema = z.object({

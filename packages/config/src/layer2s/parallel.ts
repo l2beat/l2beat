@@ -90,6 +90,11 @@ export const parallel: Layer2 = orbitStackL2({
       },
     },
   ],
+  finality: {
+    type: 'Arbitrum',
+    lag: 0,
+    minTimestamp: new UnixTime(1704125939),
+  },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d'),

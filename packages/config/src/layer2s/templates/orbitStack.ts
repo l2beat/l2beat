@@ -23,7 +23,12 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { VALUES } from '../../discovery/values'
 import { Layer3, Layer3Display } from '../../layer3s/types'
 import { getStage } from '../common/stages/getStage'
-import { Layer2, Layer2Display, Layer2TxConfig } from '../types'
+import {
+  Layer2,
+  Layer2Display,
+  Layer2FinalityConfig,
+  Layer2TxConfig,
+} from '../types'
 
 const ETHEREUM_EXPLORER_URL = 'https://etherscan.io/address/{0}#code'
 
@@ -54,6 +59,7 @@ export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
   display: Omit<Layer2Display, 'provider' | 'category' | 'dataAvailabilityMode'>
   nativeToken?: string
+  finality: Layer2FinalityConfig
 }
 
 export function orbitStackCommon(
@@ -474,7 +480,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
             }
           : undefined),
       trackedTxs: templateVars.trackedTxs,
-      finality: 'coming soon',
+      finality: templateVars.finality,
     },
   }
 }
