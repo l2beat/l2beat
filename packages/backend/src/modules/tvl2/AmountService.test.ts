@@ -9,7 +9,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { Configuration } from '@l2beat/uif'
-import { expect, mockObject } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 import { BigNumber } from 'ethers'
 
 import {
@@ -17,6 +17,7 @@ import {
   NativeAssetMulticallCodec,
 } from '../../peripherals/multicall/codecs'
 import { MulticallClient } from '../../peripherals/multicall/MulticallClient'
+import { MulticallRequest } from '../../peripherals/multicall/types'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { AmountConfiguration, AmountService } from './AmountService'
 
@@ -91,11 +92,21 @@ describe(AmountService.name, () => {
       multicall: () => Promise.resolve([]),
     })
 
+    const mockNativeEncode = mockFn((_: EthereumAddress) =>
+      mockObject<MulticallRequest>(),
+    )
+
     const service = new AmountService({
       rpcClient: mockObject<RpcClient>({}),
       multicallClient: mockMulticall,
       erc20Codec: mockErc20Codec,
-      nativeAssetCodec: mockNativeCodec,
+      nativeAssetCodec: {
+        sinceBlock: 0,
+        balance: {
+          encode: mockNativeEncode,
+          decode: mockFn(() => 0n),
+        },
+      },
       logger: Logger.SILENT,
     })
 
@@ -107,6 +118,9 @@ describe(AmountService.name, () => {
     await service.fetchAmounts(configurations, blockNumber, timestamp)
 
     expect(mockMulticall.multicall).toHaveBeenCalledTimes(1)
+    expect(mockNativeEncode).toHaveBeenOnlyCalledWith(
+      escrowNativeConfig.escrowAddress,
+    )
   })
 
   it('calls RPC for ERC20s', async () => {
@@ -114,22 +128,49 @@ describe(AmountService.name, () => {
       multicall: () => Promise.resolve([]),
     })
 
+    const mockErc20BalanceEncode = mockFn(
+      (_: { holder: EthereumAddress; token: EthereumAddress }) =>
+        mockObject<MulticallRequest>(),
+    )
+
+    const mockErc20TotalSupplyEncode = mockFn((_: EthereumAddress) =>
+      mockObject<MulticallRequest>(),
+    )
+
     const service = new AmountService({
       rpcClient: mockObject<RpcClient>({}),
       multicallClient: mockMulticall,
-      erc20Codec: mockErc20Codec,
+      erc20Codec: {
+        totalSupply: {
+          encode: mockErc20TotalSupplyEncode,
+          decode: mockFn(() => 0n),
+        },
+        balance: {
+          encode: mockErc20BalanceEncode,
+          decode: mockFn(() => 0n),
+        },
+      },
       nativeAssetCodec: mockNativeCodec,
       logger: Logger.SILENT,
     })
 
-    const erc20Config = mockTotalSupplyConfig()
+    const erc20TotalSupplyConfig = mockTotalSupplyConfig()
+    const erc20BalanceConfig = mockEscrowConfig()
     const configurations: Configuration<AmountConfiguration>[] = [
-      mockUifConfig(erc20Config),
+      mockUifConfig(erc20TotalSupplyConfig),
+      mockUifConfig(erc20BalanceConfig),
     ]
 
     await service.fetchAmounts(configurations, blockNumber, timestamp)
 
     expect(mockMulticall.multicall).toHaveBeenCalledTimes(1)
+    expect(mockErc20TotalSupplyEncode).toHaveBeenOnlyCalledWith(
+      erc20TotalSupplyConfig.address,
+    )
+    expect(mockErc20BalanceEncode).toHaveBeenOnlyCalledWith({
+      token: erc20BalanceConfig.address as EthereumAddress,
+      holder: erc20BalanceConfig.escrowAddress,
+    })
   })
 
   it('works with complex example', async () => {
