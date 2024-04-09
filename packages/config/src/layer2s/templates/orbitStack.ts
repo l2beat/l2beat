@@ -321,6 +321,17 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
         }),
         ...(templateVars.nonTemplateEscrows ?? []),
       ],
+      transactionApi:
+        templateVars.transactionApi ??
+        (templateVars.rpcUrl !== undefined
+          ? {
+              type: 'rpc',
+              startBlock: 1,
+              defaultUrl: templateVars.rpcUrl,
+              defaultCallsPerMinute: 1500,
+              assessCount: subtractOne,
+            }
+          : undefined),
     },
     milestones: [],
     knowledgeNuggets: [],
