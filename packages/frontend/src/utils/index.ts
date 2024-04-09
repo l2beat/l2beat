@@ -1,3 +1,3 @@
 export * from './dates'
-export * from './formatLargeNumber'
+export * from './formatNumber'
 export * from './math'
