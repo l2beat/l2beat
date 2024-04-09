@@ -514,9 +514,7 @@ export class ProjectDiscovery {
       (contract) => gatherAddressesFromUpgradeability(contract.upgradeability),
     )
 
-    return addressesWithinUpgradeability.filter(
-      (addr) => !this.isEOA(addr),
-    )
+    return addressesWithinUpgradeability.filter((addr) => !this.isEOA(addr))
   }
 
   getContractByAddress(address: string): ContractParameters {
