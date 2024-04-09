@@ -1397,6 +1397,25 @@
         "bridge": "Layer Zero",
         "slug": "omnichain"
       }
+    },
+    {
+      "symbol": "LUBE",
+      "address": "0x1be3735dd0c0eb229fb11094b6c277192349ebbf",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "MENDI",
+      "address": "0x43e8809ea748eff3204ee01f08872f063e44065f",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "LYNX",
+      "address": "0x1a51b19CE03dbE0Cb44C1528E34a7EDD7771E9Af",
+      "type": "NMV",
+      "formula": "circulatingSupply",
+      "coingeckoId": "lynex"
     }
   ],
   "zkfair": [
