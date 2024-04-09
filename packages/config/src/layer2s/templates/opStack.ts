@@ -2,6 +2,7 @@ import { ContractParameters } from '@l2beat/discovery-types'
 import {
   assert,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -34,6 +35,7 @@ import { ChainConfig } from '../../common/ChainConfig'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import { type Layer3, type Layer3Display } from '../../layer3s/types'
+import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common'
 import { getStage } from '../common/stages/getStage'
 import { type Layer2, type Layer2Display, Layer2FinalityConfig } from '../types'
 
@@ -327,6 +329,12 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
     )
   }
 
+  const FINALIZATION_PERIOD_SECONDS: number =
+    templateVars.discovery.getContractValue<number>(
+      'L2OutputOracle',
+      'FINALIZATION_PERIOD_SECONDS',
+    )
+
   return {
     type: 'layer2',
     ...opStackCommon(templateVars),
@@ -338,11 +346,27 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
         templateVars.display.warning === undefined
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
           : templateVars.display.warning,
-      finality: {
-        warning:
-          "It's assumed that transaction data batches are submitted sequentially.",
-        finalizationPeriod: templateVars.display.finality?.finalizationPeriod,
-      },
+      liveness:
+        daProvider !== undefined
+          ? undefined
+          : {
+              warnings: {
+                stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
+              },
+              explanation: `${templateVars.display.name} is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
+                HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
+              )} or until it gets published. The state root gets finalized ${formatSeconds(
+                FINALIZATION_PERIOD_SECONDS,
+              )} after it has been posted.`,
+            },
+      finality:
+        daProvider !== undefined
+          ? undefined
+          : {
+              warning:
+                "It's assumed that transaction data batches are submitted sequentially.",
+              finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
+            },
     },
     config: {
       associatedTokens: templateVars.associatedTokens,
