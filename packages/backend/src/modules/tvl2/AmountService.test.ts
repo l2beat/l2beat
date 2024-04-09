@@ -38,13 +38,11 @@ describe(AmountService.name, () => {
     const mockRpc = mockObject<RpcClient>({
       getBalance: () => Promise.resolve(BigNumber.from(0)),
     })
-    const mockMulticall = mockObject<MulticallClient>({
-      multicall: () => Promise.resolve([]),
-    })
     const service = new AmountService({
       rpcClient: mockRpc,
-      multicallClient: mockMulticall,
+      multicallClient: mockObject<MulticallClient>({}),
       erc20Codec: mockErc20Codec,
+      nativeAssetCodec: undefined,
       logger: Logger.SILENT,
     })
 
@@ -55,25 +53,20 @@ describe(AmountService.name, () => {
 
     await service.fetchAmounts(configurations, blockNumber, timestamp)
 
-    expect(mockRpc.getBalance).toHaveBeenCalledTimes(1)
-    expect(mockRpc.getBalance).toHaveBeenCalledWith(
+    expect(mockRpc.getBalance).toHaveBeenOnlyCalledWith(
       escrowNativeConfig.escrowAddress,
       blockNumber,
     )
-    expect(mockMulticall.multicall).toHaveBeenCalledTimes(0)
   })
 
   it('calls RPC if nativeAssetCodec provided but before sinceBlock', async () => {
     const mockRpc = mockObject<RpcClient>({
       getBalance: () => Promise.resolve(BigNumber.from(0)),
     })
-    const mockMulticall = mockObject<MulticallClient>({
-      multicall: () => Promise.resolve([]),
-    })
 
     const service = new AmountService({
       rpcClient: mockRpc,
-      multicallClient: mockMulticall,
+      multicallClient: mockObject<MulticallClient>({}),
       erc20Codec: mockErc20Codec,
       nativeAssetCodec: mockNativeCodec,
       logger: Logger.SILENT,
@@ -87,24 +80,19 @@ describe(AmountService.name, () => {
 
     await service.fetchAmounts(configurations, blockNumber, timestamp)
 
-    expect(mockRpc.getBalance).toHaveBeenCalledTimes(1)
-    expect(mockRpc.getBalance).toHaveBeenCalledWith(
+    expect(mockRpc.getBalance).toHaveBeenOnlyCalledWith(
       escrowNativeConfig.escrowAddress,
       blockNumber,
     )
-    expect(mockMulticall.multicall).toHaveBeenCalledTimes(0)
   })
 
   it('calls multicall if nativeAssetCodec provided', async () => {
-    const mockRpc = mockObject<RpcClient>({
-      getBalance: () => Promise.resolve(BigNumber.from(0)),
-    })
     const mockMulticall = mockObject<MulticallClient>({
       multicall: () => Promise.resolve([]),
     })
 
     const service = new AmountService({
-      rpcClient: mockRpc,
+      rpcClient: mockObject<RpcClient>({}),
       multicallClient: mockMulticall,
       erc20Codec: mockErc20Codec,
       nativeAssetCodec: mockNativeCodec,
@@ -118,20 +106,16 @@ describe(AmountService.name, () => {
 
     await service.fetchAmounts(configurations, blockNumber, timestamp)
 
-    expect(mockRpc.getBalance).toHaveBeenCalledTimes(0)
     expect(mockMulticall.multicall).toHaveBeenCalledTimes(1)
   })
 
   it('calls RPC for ERC20s', async () => {
-    const mockRpc = mockObject<RpcClient>({
-      getBalance: () => Promise.resolve(BigNumber.from(0)),
-    })
     const mockMulticall = mockObject<MulticallClient>({
       multicall: () => Promise.resolve([]),
     })
 
     const service = new AmountService({
-      rpcClient: mockRpc,
+      rpcClient: mockObject<RpcClient>({}),
       multicallClient: mockMulticall,
       erc20Codec: mockErc20Codec,
       nativeAssetCodec: mockNativeCodec,
@@ -145,7 +129,6 @@ describe(AmountService.name, () => {
 
     await service.fetchAmounts(configurations, blockNumber, timestamp)
 
-    expect(mockRpc.getBalance).toHaveBeenCalledTimes(0)
     expect(mockMulticall.multicall).toHaveBeenCalledTimes(1)
   })
 
