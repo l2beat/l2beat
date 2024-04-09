@@ -104,22 +104,26 @@ function getCostsDataBreakdown(
 ): CostsDataBreakdown {
   return {
     ethCost: {
-      displayValue: formatCurrency(data.ethCost, 'eth', 2),
+      displayValue: formatCurrency(data.ethCost, 'eth'),
       value: data.ethCost,
       perL2Tx: txCount
         ? {
             value: data.ethCost / txCount,
-            displayValue: formatCurrency(data.ethCost / txCount, 'eth', 6),
+            displayValue: formatCurrency(data.ethCost / txCount, 'eth', {
+              decimals: 6,
+            }),
           }
         : undefined,
     },
     usdCost: {
-      displayValue: formatCurrency(data.usdCost, 'usd', 2),
+      displayValue: formatCurrency(data.usdCost, 'usd'),
       value: data.usdCost,
       perL2Tx: txCount
         ? {
             value: data.usdCost / txCount,
-            displayValue: formatCurrency(data.usdCost / txCount, 'usd', 4),
+            displayValue: formatCurrency(data.usdCost / txCount, 'usd', {
+              decimals: 4,
+            }),
           }
         : undefined,
     },
