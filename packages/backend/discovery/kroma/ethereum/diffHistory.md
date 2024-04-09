@@ -8,15 +8,38 @@ Generated with discovered.json: 0x68b9b451a1ae0f51c4cc2055cdd6530505b7c803
 
 ## Description
 
-challengedRoot 5017 replaced with zero
-Change Semver to ISemver
-validatorPool: add withdrawTo
-The zkverifier logic stays the same but constants are changed.
-upgradeGovernor added
-renames
-processWithdrawal from feevault
-add accesscontrol logic to colosseum but not used
+This upgrade brings small changes with huge diffs in the non-flat sources because new (but unused!) .sol files were pushed to etherscan among the actually upgraded implementations. This happens because for example the SecurityCouncil.sol that is shown on the Collosseum implementation's address on etherscan is now a newer version than the actual SecurityCouncil.sol that sits at the SECURITY_COUNCIL address (currently `0x3de211088dF516da72efe68D386b561BEE256Ec4`) The newer version is used only as an interface while the old version at the defined address is imported and used.
+Our flat source files mostly ignore this.
 
+### Main changes
+
+1. Change from Semver to ISemver in the two upgraded implementations (ValidatorPool and Colosseum) with no functional changes
+2. Support of Post-Shanghai (on the L2) block headers on the L1 Colosseum
+3. Ability to withdraw to a specified address from the ValidatorPool
+
+original description from the onchain upgrade proposal in tx# `0x80b280058f4eab3d9b250be874a5e7e816beaf68553f3ba61ec5c76340cfec5d`:
+[Smart Contract upgrades for v1.3.4]
+
+### 1. Addition of withdrawTo in ValidatorPool
+
+Previously, validators could only withdraw funds to themselves. Now, with the withdrawTo function, they can withdraw directly to a specified address. Implementation contract address: `0x8EDc4cCa2aF96f5D5141d55333043a65c3f59Ec4`
+
+### 2. Change in block header hash function for Colosseum
+
+With the Shanghai upgrade on the Kroma mainnet, a withdrawalsRoot field has been added to the block header. Accordingly, the hash function for obtaining the block header in Colosseum has been modified. Implemenatation contract address: `0x311b4A33b6dC4e080eE0d98caAaf8dF86C833066`
+
+### Current Context
+
+Kroma also had two fork incidents on their mainnet L2:
+
+- March 12: https://twitter.com/kroma_network/status/1775801201197531144
+- Apr 1: https://twitter.com/kroma_network/status/1774683208753590506
+
+Right after the upgrade that is described above, an L2 output root was deleted after having been fault proven:
+
+- output root # 5017 from Apr 1 at L2 block number 9028800 in eth mainnet tx# 0x74e2739982fde96145d822151d93e093ab915e357cdd7167dd925ce4026e0841
+
+Earlier Challenges for the same output were not successfully proven and i assume that the difference in block header construction after the upgrade was a fix for that.
 
 ## Watched changes
 
