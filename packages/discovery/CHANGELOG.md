@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.46.9
+
+### Patch Changes
+
+- getLogs can now filter events for non-indexed values
+
 ## 0.46.8
 
 ### Patch Changes

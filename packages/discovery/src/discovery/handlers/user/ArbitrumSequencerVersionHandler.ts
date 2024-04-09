@@ -1,5 +1,5 @@
 import { assert } from '@l2beat/backend-tools'
-import { providers, utils } from 'ethers'
+import { utils } from 'ethers'
 import * as z from 'zod'
 
 import { Bytes } from '../../../utils/Bytes'
@@ -49,11 +49,25 @@ export class ArbitrumSequencerVersionHandler implements ClassicHandler {
       'Checking Arbitrum Sequencer Version',
     ])
 
-    const lastEvent = await this.getLastEventWithTxInput(
-      provider,
+    const lastEvents = await provider.getLogs(
       address,
+      [[abi.getEventTopic('SequencerBatchDelivered')]],
+      0,
       blockNumber,
+      {
+        howManyEvents: 1,
+        filter: (log): boolean => {
+          const decoded = abi.parseLog(log)
+          assert(
+            decoded.name === 'SequencerBatchDelivered',
+            'Unexpected event name',
+          )
+          return decoded.args.dataLocation === 0
+        },
+        maxRange: 1000,
+      },
     )
+    const lastEvent = lastEvents[0]
     assert(lastEvent !== undefined, 'No event found')
 
     const tx = await provider.getTransaction(Hash256(lastEvent.transactionHash))
@@ -75,41 +89,5 @@ export class ArbitrumSequencerVersionHandler implements ClassicHandler {
     } else {
       throw new Error(`Unexpected function signature ${calldata.slice(0, 10)}}`)
     }
-  }
-
-  async getLastEventWithTxInput(
-    provider: DiscoveryProvider,
-    address: EthereumAddress,
-    blockNumber: number,
-  ): Promise<providers.Log | undefined> {
-    let currentBlockNumber = blockNumber
-    const blockStep = 1000
-    while (currentBlockNumber > 0) {
-      const events = await provider.getLogs(
-        address,
-        [[abi.getEventTopic('SequencerBatchDelivered')]],
-        Math.max(0, currentBlockNumber - blockStep),
-        currentBlockNumber,
-      )
-      currentBlockNumber -= blockStep
-
-      while (events.length > 0) {
-        const last = events.pop()
-        if (last === undefined) {
-          break
-        }
-
-        const decoded = abi.parseLog(last)
-        assert(
-          decoded.name === 'SequencerBatchDelivered',
-          'Unexpected event name',
-        )
-        if (decoded.args.dataLocation === 0) {
-          return last
-        }
-      }
-    }
-
-    return undefined
   }
 }

@@ -69,6 +69,11 @@ export class DiscoveryProvider {
     topics: Topics,
     fromBlock: number,
     toBlock: number,
+    options: {
+      howManyEvents?: number
+      maxRange?: number
+      filter?: (log: providers.Log) => boolean
+    } = {},
   ): Promise<providers.Log[]> {
     if (fromBlock > toBlock) {
       throw new Error(
@@ -76,33 +81,43 @@ export class DiscoveryProvider {
       )
     }
 
-    if (this.getLogsMaxRange === undefined) {
-      return await this.getLogsBatch(address, topics, fromBlock, toBlock)
-    }
-
     // To support efficient caching, we divide the requested blocks range into
-    // sequential boundaries of `maxRange` size, e.g [0,10k-1], [10k, 20k-1], ...
+    // sequential boundaries of `maxRange` size, e.g [10k, 20k-1], [0,10k-1], ...
     // Otherwise ranges would depend on `fromBlock` and even small change to it
     // would make the previous cache useless.
 
-    // Let's start with the deployment block number if it's higher than fromBlock
+    // Let's fetch to the deployment block number if it's higher than fromBlock
     const { blockNumber: deploymentBlockNumber } =
       (await this.getDeploymentInfo(address)) ?? { blockNumber: 0 } // for cases where API to get deployment info is not available
 
-    const maxRange = this.getLogsMaxRange
-    const allLogs: providers.Log[][] = []
+    let allLogs: providers.Log[] = []
+    const ranges = [this.getLogsMaxRange, options.maxRange].filter(
+      (x): x is number => !!x,
+    )
+    const maxRange = ranges.length > 0 ? Math.min(...ranges) : undefined
 
-    let start = Math.max(fromBlock, deploymentBlockNumber)
+    const lowerLimitBlock = Math.max(fromBlock, deploymentBlockNumber)
+    let end = toBlock
     do {
-      const curBoundaryStart = Math.floor(start / maxRange) * maxRange
-      const curBoundaryEnd = curBoundaryStart + maxRange - 1 // getLogs 'to' is inclusive!
-      const end = Math.min(curBoundaryEnd, toBlock)
-      const logs = await this.getLogsBatch(address, topics, start, end)
-      allLogs.push(logs)
-      start = end + 1
-    } while (start <= toBlock)
+      const curBoundaryStart = maxRange
+        ? Math.floor(end / maxRange) * maxRange
+        : fromBlock - toBlock
+      const start = Math.max(lowerLimitBlock, curBoundaryStart)
 
-    return allLogs.flat()
+      const logs = await this.getLogsBatch(address, topics, start, end)
+      const filtered = options.filter ? logs.filter(options.filter) : logs
+      allLogs = filtered.concat(allLogs)
+      end = start - 1
+
+      if (
+        options.howManyEvents !== undefined &&
+        allLogs.length >= options.howManyEvents
+      ) {
+        return allLogs.slice(0, options.howManyEvents)
+      }
+    } while (end >= lowerLimitBlock)
+
+    return allLogs
   }
 
   public async getLogsBatch(
