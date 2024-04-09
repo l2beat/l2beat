@@ -8,6 +8,7 @@ import {
   ScalingProjectContracts,
   ScalingProjectDisplay,
   ScalingProjectPermission,
+  ScalingProjectTransactionApi,
 } from '../../common'
 import { ScalingProjectRiskView } from '../../common/ScalingProjectRiskView'
 import { ScalingProjectStateDerivation } from '../../common/ScalingProjectStateDerivation'
@@ -27,7 +28,7 @@ export interface Layer3 {
   /** Information displayed about the layer3 on the frontend */
   display: Layer3Display
   /** Information required to calculate the stats of the layer3 */
-  config: ScalingProjectConfig
+  config: Layer3Config
   /** Risk view values for this layer3 */
   riskView: ScalingProjectRiskView
   /** Deep dive into layer3 technology */
@@ -44,6 +45,11 @@ export interface Layer3 {
   milestones?: Milestone[]
   /** List of knowledge nuggets: useful articles worth reading */
   knowledgeNuggets?: KnowledgeNugget[]
+}
+
+export interface Layer3Config extends ScalingProjectConfig {
+  /** API parameters used to get transaction count */
+  transactionApi?: ScalingProjectTransactionApi
 }
 
 export interface Layer3Display extends ScalingProjectDisplay {

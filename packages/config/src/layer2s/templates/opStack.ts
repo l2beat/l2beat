@@ -26,20 +26,16 @@ import {
   ScalingProjectStateDerivation,
   ScalingProjectTechnology,
   ScalingProjectTechnologyChoice,
+  ScalingProjectTransactionApi,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { subtractOne } from '../../common/assessCount'
 import { ChainConfig } from '../../common/ChainConfig'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
-import { Layer3, Layer3Display } from '../../layer3s'
+import { type Layer3, type Layer3Display } from '../../layer3s/types'
 import { getStage } from '../common/stages/getStage'
-import {
-  Layer2,
-  Layer2Display,
-  Layer2FinalityConfig,
-  Layer2TransactionApi,
-} from '../types'
+import { type Layer2, type Layer2Display, Layer2FinalityConfig } from '../types'
 
 export const CELESTIA_DA_PROVIDER: DAProvider = {
   name: 'Celestia',
@@ -67,7 +63,7 @@ export interface OpStackConfigCommon {
   l1StandardBridgeEscrow: EthereumAddress
   l1StandardBridgeTokens?: string[]
   rpcUrl?: string
-  transactionApi?: Layer2TransactionApi
+  transactionApi?: ScalingProjectTransactionApi
   genesisTimestamp: UnixTime
   finality?: Layer2FinalityConfig
   l2OutputOracle: ContractParameters
@@ -624,6 +620,17 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
         }),
         ...templateVars.nonTemplateEscrows,
       ],
+      transactionApi:
+        templateVars.transactionApi ??
+        (templateVars.rpcUrl !== undefined
+          ? {
+              type: 'rpc',
+              startBlock: 1,
+              defaultUrl: templateVars.rpcUrl,
+              defaultCallsPerMinute: 1500,
+              assessCount: subtractOne,
+            }
+          : undefined),
     },
     stateDerivation: templateVars.stateDerivation,
   }

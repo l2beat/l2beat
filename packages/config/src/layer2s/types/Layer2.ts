@@ -9,6 +9,7 @@ import {
   ScalingProjectContracts,
   ScalingProjectDisplay,
   ScalingProjectPermission,
+  ScalingProjectTransactionApi,
 } from '../../common'
 import { ChainConfig } from '../../common/ChainConfig'
 import { ScalingProjectRiskView } from '../../common/ScalingProjectRiskView'
@@ -19,7 +20,6 @@ import { StageConfig } from '../common/stages/types'
 import { Layer2FinalityConfig } from './Layer2FinalityConfig'
 import { Layer2LivenessConfig } from './Layer2LivenessConfig'
 import { Layer2TxConfig } from './Layer2TrackedTxsConfig'
-import { Layer2TransactionApi } from './Layer2TransactionApi'
 
 export interface Layer2 {
   type: 'layer2'
@@ -68,7 +68,9 @@ export interface Layer2Display extends ScalingProjectDisplay {
   liveness?: Layer2LivenessDisplay
   finality?: Layer2FinalityDisplay
   /** Warning for TVL */
-  tvlWarning?: Layer2TVLWarning
+  tvlWarning?: WarningWithSentiment
+  /** Warning for Costs */
+  costsWarning?: WarningWithSentiment
 }
 export interface Layer2LivenessDisplay {
   explanation?: string
@@ -88,7 +90,7 @@ export interface Layer2FinalityDisplay {
 
 export interface Layer2Config extends ScalingProjectConfig {
   /** API parameters used to get transaction count */
-  transactionApi?: Layer2TransactionApi
+  transactionApi?: ScalingProjectTransactionApi
   /** List of transactions that are tracked by our backend */
   trackedTxs?: Layer2TxConfig[]
   /** Configuration for getting liveness data */
@@ -97,7 +99,7 @@ export interface Layer2Config extends ScalingProjectConfig {
   finality?: Layer2FinalityConfig | 'coming soon'
 }
 
-export interface Layer2TVLWarning {
+export interface WarningWithSentiment {
   /** Content of the warning */
   content: string
   /** Color with which the warning should be displayed */

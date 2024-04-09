@@ -52,6 +52,11 @@ export class BlobClient {
     const tx = await this.getTransaction(txHash.toString())
 
     const blockSidecar = await this.getBlockSidecar(tx.blockNumber)
+
+    if (!tx.blobVersionedHashes) {
+      return { relevantBlobs: [], blockNumber: tx.blockNumber }
+    }
+
     const relevantBlobs = filterOutIrrelevant(
       blockSidecar,
       tx.blobVersionedHashes,
@@ -170,7 +175,7 @@ type BlockSidecar = z.infer<typeof BlockSidecarSchema>
 
 const TxWithBlobsSchema = z.object({
   blockNumber: z.string(),
-  blobVersionedHashes: z.array(z.string()),
+  blobVersionedHashes: z.array(z.string()).optional(),
 })
 
 const BlockWithParentBeaconBlockRootSchema = z.object({

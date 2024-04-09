@@ -1,20 +1,26 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { underReviewL3 } from '../layer2s/templates/underReview'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { opStackL3 } from '../layer2s/templates/opStack'
 import { Layer3 } from './types'
 
-export const stack: Layer3 = underReviewL3({
-  id: 'stack',
+const discovery = new ProjectDiscovery('stack', 'base')
+
+const upgradeability = {
+  upgradableBy: ['ProxyAdmin'],
+  upgradeDelay: 'No delay',
+}
+
+export const stack: Layer3 = opStackL3({
+  discovery,
   hostChain: ProjectId('base'),
   display: {
     name: 'Stack',
     slug: 'stack',
     description:
-      'Stack Chain is an Optimistic Rollup on Base using OP stack technology. \
+      'Stack Chain is an Optimium settling on Base. It uses OP stack technology with Celestia for data availability. \
             Stack Chain is a blockchain for bringing points onchain, allowing brands to create and own their loyalty programs.',
-    category: 'Optimistic Rollup',
     purposes: ['Social', 'RWA'],
-    provider: 'OP Stack',
     links: {
       websites: ['https://stack.so/'],
       apps: ['https://bridge.stack.so'],
@@ -27,5 +33,30 @@ export const stack: Layer3 = underReviewL3({
         'https://stack.mirror.xyz/',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
   },
+  upgradeability,
+  l1StandardBridgeEscrow: EthereumAddress(
+    '0xbA256039AEdaD407692D8Deb366308BE6Bb2515C',
+  ),
+  rpcUrl: 'https://rpc.stack.so',
+  genesisTimestamp: new UnixTime(1709683711),
+  l2OutputOracle: discovery.getContract('L2OutputOracle'),
+  portal: discovery.getContract('OptimismPortal'),
+  isNodeAvailable: 'UnderReview',
+  milestones: [],
+  knowledgeNuggets: [],
+  roleOverrides: {
+    batcherHash: 'Sequencer',
+    PROPOSER: 'Proposer',
+    GUARDIAN: 'Guardian',
+    CHALLENGER: 'Challenger',
+  },
+  nonTemplateEscrows: [],
+  nonTemplatePermissions: [
+    ...discovery.getMultisigPermission(
+      'StackMultisig',
+      'Is the ProxyAdmin (owner).',
+    ),
+  ],
 })

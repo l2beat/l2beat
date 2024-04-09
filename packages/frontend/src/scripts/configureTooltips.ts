@@ -15,11 +15,11 @@ export function configureTooltips() {
 
   function show(
     element: HTMLElement,
-    trigger: HTMLElement,
-    content: HTMLElement,
+    trigger: Element,
+    content: Element,
     isDisabledOnMobile: boolean,
   ) {
-    if (isDisabledOnMobile && isMobile()) return
+    if ((isDisabledOnMobile && isMobile()) || !content.innerHTML) return
     visible = true
     activeElement = element
     tooltip.classList.toggle('max-w-[300px]', !element.dataset.tooltipBig)
@@ -79,13 +79,17 @@ export function configureTooltips() {
   })
 
   for (const element of elements) {
-    const content = element.querySelector<HTMLElement>(
-      '[data-role=tooltip-content]',
-    )
-    const trigger = element.querySelector<HTMLElement>(
-      '[data-role=tooltip-trigger]',
-    )
+    const trigger = element.children.item(0)
+    const content = element.children.item(1)
+
     if (!content || !trigger) continue
+    if (
+      trigger?.getAttribute('data-role') !== 'tooltip-trigger' ||
+      content?.getAttribute('data-role') !== 'tooltip-content'
+    ) {
+      throw new Error('Invalid tooltip structure')
+    }
+
     element.setAttribute('tabindex', '0')
     const isDisabledOnMobile = Boolean(
       element.getAttribute('data-tooltip-mobile-disabled'),

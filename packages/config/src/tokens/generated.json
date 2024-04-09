@@ -767,6 +767,21 @@
       "formula": "locked"
     },
     {
+      "id": "cnfi-connect-financial",
+      "name": "Connect Financial",
+      "coingeckoId": "connect-financial",
+      "address": "0xEABB8996eA1662cAd2f7fB715127852cd3262Ae9",
+      "symbol": "CNFI",
+      "decimals": 18,
+      "deploymentTimestamp": 1608608338,
+      "coingeckoListingTimestamp": 1609977600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13592/large/cf-logo-iconic-black.png?1696513344",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "people-constitutiondao",
       "name": "ConstitutionDAO",
       "coingeckoId": "constitutiondao",
@@ -1291,6 +1306,21 @@
       "formula": "locked"
     },
     {
+      "id": "fore-fore-protocol",
+      "name": "FORE Protocol",
+      "coingeckoId": "fore-protocol",
+      "address": "0xB2ee0aDBe0EF1281025d0676511bB1df14600f4D",
+      "symbol": "FORE",
+      "decimals": 18,
+      "deploymentTimestamp": 1687435091,
+      "coingeckoListingTimestamp": 1689552000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31001/large/EXCHANGE_LOGO_FORE.png?1696529839",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "frax-frax",
       "name": "Frax",
       "coingeckoId": "frax",
@@ -1516,6 +1546,21 @@
       "formula": "locked"
     },
     {
+      "id": "gob-goons-of-balatroon",
+      "name": "Goons of Balatroon",
+      "coingeckoId": "goons-of-balatroon",
+      "address": "0x830eB1204380E9c44434Db8700257025358707c6",
+      "symbol": "GOB",
+      "decimals": 18,
+      "deploymentTimestamp": 1693241255,
+      "coingeckoListingTimestamp": 1661990400,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/27104/large/TokenLogo200x200.png?1702250134",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "gohm-governance-ohm",
       "name": "Governance OHM",
       "coingeckoId": "governance-ohm",
@@ -1526,6 +1571,21 @@
       "coingeckoListingTimestamp": 1638316800,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/21129/large/token_wsOHM_logo.png?1696520508",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "govi-govi",
+      "name": "GOVI",
+      "coingeckoId": "govi",
+      "address": "0xeEAA40B28A2d1b0B08f6f97bB1DD4B75316c6107",
+      "symbol": "GOVI",
+      "decimals": 18,
+      "deploymentTimestamp": 1608731186,
+      "coingeckoListingTimestamp": 1612396800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13875/large/GOVI.png?1696513619",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"
@@ -2461,6 +2521,21 @@
       "formula": "locked"
     },
     {
+      "id": "pepe-pepe",
+      "name": "Pepe",
+      "coingeckoId": "pepe",
+      "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933",
+      "symbol": "PEPE",
+      "decimals": 18,
+      "deploymentTimestamp": 1681483895,
+      "coingeckoListingTimestamp": 1681776000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/29850/large/pepe-token.jpeg?1696528776",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "perp-perpetual",
       "name": "Perpetual",
       "coingeckoId": "perpetual-protocol",
@@ -2971,6 +3046,21 @@
       "formula": "locked"
     },
     {
+      "id": "silo-silo-governance-token",
+      "name": "Silo Governance Token",
+      "coingeckoId": "silo-finance",
+      "address": "0x6f80310CA7F2C654691D1383149Fa1A57d8AB1f8",
+      "symbol": "Silo",
+      "decimals": 18,
+      "deploymentTimestamp": 1638296826,
+      "coingeckoListingTimestamp": 1639267200,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/21454/large/y0iYKZOv_400x400.png?1696520816",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "agix-singularitynet-token",
       "name": "SingularityNET Token",
       "coingeckoId": "singularitynet",
@@ -3326,6 +3416,21 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "thales-thales-dao-token",
+      "name": "Thales DAO Token",
+      "coingeckoId": "thales",
+      "address": "0x8947da500Eb47F82df21143D0C01A29862a8C3c5",
+      "symbol": "THALES",
+      "decimals": 18,
+      "deploymentTimestamp": 1643045985,
+      "coingeckoListingTimestamp": 1631750400,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/18388/large/CLVZJN_C_400x400.png?1696517879",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"
@@ -3942,7 +4047,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/33103/large/200_200.png?1702602672",
       "chainId": 169,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -4167,7 +4272,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/33103/large/200_200.png?1702602672",
       "chainId": 34443,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Stargate",
@@ -4220,7 +4325,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/26115/large/btcb.png?1696525205",
       "chainId": 42161,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -4362,7 +4467,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/17569/large/JoeToken.png?1703732357",
       "chainId": 42161,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -4581,7 +4686,7 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/33103/large/200_200.png?1702602672",
       "chainId": 59144,
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",

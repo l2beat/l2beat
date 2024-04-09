@@ -246,6 +246,11 @@ export const starknet: Layer2 = {
     finality: {
       finalizationPeriod: 0,
     },
+    costsWarning: {
+      sentiment: 'warning',
+      content:
+        'The proof verification costs are shared among all projects that use the Starkware SHARP verifier. Therefore, Starknet’s costs are currently overestimated.',
+    },
   },
   config: {
     associatedTokens: ['STRK'],
@@ -374,7 +379,11 @@ export const starknet: Layer2 = {
       defaultUrl: 'https://starknet-mainnet.public.blastapi.io',
       defaultCallsPerMinute: 120,
     },
-    finality: 'coming soon',
+    finality: {
+      lag: 0,
+      type: 'Starknet',
+      minTimestamp: new UnixTime(1710252998),
+    },
     trackedTxs: [
       {
         uses: [

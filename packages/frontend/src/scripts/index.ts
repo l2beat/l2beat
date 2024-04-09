@@ -1,6 +1,7 @@
 import { configureCharts } from './charts'
 import { configureAlphabetSelectors } from './configureAlphabetSelectors'
 import { configureBridgesAndCombinedOnly } from './configureBridgesAndCombinedOnly'
+import { configureCostsControlsWrappers } from './configureCostsControlsWrappers'
 import { configureDropdowns } from './configureDropdowns'
 import { configureEtherscanLinks } from './configureEtherscanLinks'
 import { configureExpandableContainer } from './configureExpandableContainer'
@@ -24,13 +25,21 @@ import { configureProjectNavigation } from './section-navigation'
 import { configureSorting } from './table/configureSorting'
 import { configureTables } from './table/configureTables'
 
+const { onTimeRangeChange, onUnitChange } = configureCostsControlsWrappers()
+
+configureCharts({
+  callbacks: {
+    onTimeRangeChange,
+    onUnitChange,
+  },
+})
+
 configureThemeToggle()
 configureFloatingBanner()
 configureTables()
 configureProjectFilters()
 configureSidebarMenu()
 configureTooltips()
-configureCharts()
 configureDropdowns()
 configureRosetteOverlay()
 configureHoverableDropdown()

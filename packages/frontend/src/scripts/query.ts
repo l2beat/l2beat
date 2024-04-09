@@ -1,3 +1,5 @@
+export type Query = ReturnType<typeof makeQuery>
+
 export function makeQuery(element: Element = document.body) {
   function $<T extends HTMLElement>(selector: string) {
     const result = element.querySelector<T>(selector)
