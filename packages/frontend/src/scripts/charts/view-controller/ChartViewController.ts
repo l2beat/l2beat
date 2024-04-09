@@ -114,7 +114,7 @@ export class ChartViewController {
         this.state.data.values,
         currency,
       )
-      this.header.value.innerHTML = formatCurrency(tvl, currency)
+      this.header.value.innerHTML = formatCurrency(tvl, currency, 2)
       if (this.header.valueChange) {
         this.header.valueChange.innerHTML = getChangeHtml(tvlWeeklyChange)
       }

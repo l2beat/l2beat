@@ -104,7 +104,7 @@ function getCostsDataBreakdown(
 ): CostsDataBreakdown {
   return {
     ethCost: {
-      displayValue: formatCurrency(data.ethCost, 'eth'),
+      displayValue: formatCurrency(data.ethCost, 'eth', 2),
       value: data.ethCost,
       perL2Tx: txCount
         ? {
@@ -114,7 +114,7 @@ function getCostsDataBreakdown(
         : undefined,
     },
     usdCost: {
-      displayValue: formatCurrency(data.usdCost, 'usd'),
+      displayValue: formatCurrency(data.usdCost, 'usd', 2),
       value: data.usdCost,
       perL2Tx: txCount
         ? {

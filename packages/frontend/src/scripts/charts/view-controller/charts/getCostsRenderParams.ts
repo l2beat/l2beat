@@ -138,20 +138,20 @@ function getData(
     case 'USD':
       return {
         date,
-        total: formatCurrency(totalUsd, 'usd'),
-        calldata: formatCurrency(calldataUsd, 'usd'),
-        blobs: isPostDencun ? formatCurrency(blobsUsd, 'usd') : undefined,
-        compute: formatCurrency(computeUsd, 'usd'),
-        overhead: formatCurrency(overheadUsd, 'usd'),
+        total: formatCurrency(totalUsd, 'usd', 2),
+        calldata: formatCurrency(calldataUsd, 'usd', 2),
+        blobs: isPostDencun ? formatCurrency(blobsUsd, 'usd', 2) : undefined,
+        compute: formatCurrency(computeUsd, 'usd', 2),
+        overhead: formatCurrency(overheadUsd, 'usd', 2),
       }
     case 'ETH':
       return {
         date,
-        total: formatCurrency(totalEth, 'eth'),
-        calldata: formatCurrency(calldataEth, 'eth'),
-        blobs: isPostDencun ? formatCurrency(blobsEth, 'eth') : undefined,
-        compute: formatCurrency(computeEth, 'eth'),
-        overhead: formatCurrency(overheadEth, 'eth'),
+        total: formatCurrency(totalEth, 'eth', 2),
+        calldata: formatCurrency(calldataEth, 'eth', 2),
+        blobs: isPostDencun ? formatCurrency(blobsEth, 'eth', 2) : undefined,
+        compute: formatCurrency(computeEth, 'eth', 2),
+        overhead: formatCurrency(overheadEth, 'eth', 2),
       }
     case 'GAS':
       return {

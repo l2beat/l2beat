@@ -10,14 +10,16 @@ const currencyToSymbol: Record<string, string> = {
 export function formatCurrency(
   value: number,
   currency: string,
-  decimals: number = 2,
+  decimals?: number,
 ) {
-  const minimum = round(Math.pow(10, -decimals), decimals)
   const symbol = currencyToSymbol[currency.toLowerCase()]
-  if (value < minimum) {
-    return symbol
-      ? `<${symbol}${minimum}`
-      : `<${minimum} ${currency.toUpperCase()}`
+  if (decimals) {
+    const minimum = round(Math.pow(10, -decimals), decimals)
+    if (value < minimum) {
+      return symbol
+        ? `<${symbol}${minimum}`
+        : `<${minimum} ${currency.toUpperCase()}`
+    }
   }
 
   const num = formatNumber(value, decimals)
