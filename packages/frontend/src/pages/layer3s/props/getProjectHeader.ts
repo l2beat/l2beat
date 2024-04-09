@@ -7,7 +7,7 @@ import {
 
 import { Config } from '../../../build/config'
 import { ProjectLink } from '../../../components/icons'
-import { formatLargeNumber } from '../../../utils'
+import { formatNumber } from '../../../utils'
 import { getTpsDaily } from '../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../utils/activity/getTpsWeeklyChange'
 import { getTransactionCount } from '../../../utils/activity/getTransactionCount'
@@ -75,7 +75,7 @@ export function getProjectHeader(
     tpsWeeklyChange,
     transactionMonthlyCount:
       transactionMonthlyCount !== undefined
-        ? formatLargeNumber(transactionMonthlyCount)
+        ? formatNumber(transactionMonthlyCount)
         : undefined,
     purposes: project.display.purposes,
     technology: project.display.category,

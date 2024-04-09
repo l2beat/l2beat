@@ -1,4 +1,4 @@
-import { formatLargeNumber, formatTimestamp } from '../../../../utils'
+import { formatNumber, formatTimestamp } from '../../../../utils'
 import { RenderParams } from '../../renderer/ChartRenderer'
 import { SeriesStyle } from '../../styles'
 import { TokenInfo } from '../../types'
@@ -36,7 +36,7 @@ export function getTokenTvlRenderParams(
     })
 
     const formatYAxisLabel = (val: number) =>
-      `${formatLargeNumber(val)} ${tokenSymbol}`
+      `${formatNumber(val)} ${tokenSymbol}`
 
     const seriesStyle: SeriesStyle[] = [tokenTypeToStyle(tokenType)]
 
