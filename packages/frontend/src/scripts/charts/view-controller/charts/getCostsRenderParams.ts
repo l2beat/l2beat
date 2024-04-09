@@ -1,4 +1,4 @@
-import { formatLargeNumber, formatTimestamp } from '../../../../utils'
+import { formatNumber, formatTimestamp } from '../../../../utils'
 import { formatCurrency } from '../../../../utils/format'
 import { RenderParams } from '../../renderer/ChartRenderer'
 import { SeriesStyle } from '../../styles'
@@ -34,7 +34,7 @@ export function getCostsRenderParams(
 
     const formatYAxisLabel = (value: number) =>
       state.unit === 'GAS'
-        ? formatLargeNumber(value)
+        ? formatNumber(value)
         : formatCurrency(value, state.unit)
 
     const seriesStyle: SeriesStyle[] = [
@@ -138,29 +138,29 @@ function getData(
     case 'USD':
       return {
         date,
-        total: formatCurrency(totalUsd, 'usd'),
-        calldata: formatCurrency(calldataUsd, 'usd'),
-        blobs: isPostDencun ? formatCurrency(blobsUsd, 'usd') : undefined,
-        compute: formatCurrency(computeUsd, 'usd'),
-        overhead: formatCurrency(overheadUsd, 'usd'),
+        total: formatCurrency(totalUsd, 'usd', 2),
+        calldata: formatCurrency(calldataUsd, 'usd', 2),
+        blobs: isPostDencun ? formatCurrency(blobsUsd, 'usd', 2) : undefined,
+        compute: formatCurrency(computeUsd, 'usd', 2),
+        overhead: formatCurrency(overheadUsd, 'usd', 2),
       }
     case 'ETH':
       return {
         date,
-        total: formatCurrency(totalEth, 'eth'),
-        calldata: formatCurrency(calldataEth, 'eth'),
-        blobs: isPostDencun ? formatCurrency(blobsEth, 'eth') : undefined,
-        compute: formatCurrency(computeEth, 'eth'),
-        overhead: formatCurrency(overheadEth, 'eth'),
+        total: formatCurrency(totalEth, 'eth', 2),
+        calldata: formatCurrency(calldataEth, 'eth', 2),
+        blobs: isPostDencun ? formatCurrency(blobsEth, 'eth', 2) : undefined,
+        compute: formatCurrency(computeEth, 'eth', 2),
+        overhead: formatCurrency(overheadEth, 'eth', 2),
       }
     case 'GAS':
       return {
         date,
-        total: formatLargeNumber(totalGas),
-        calldata: formatLargeNumber(calldataGas),
-        blobs: isPostDencun ? formatLargeNumber(blobsGas) : undefined,
-        compute: formatLargeNumber(computeGas),
-        overhead: formatLargeNumber(overheadGas),
+        total: formatNumber(totalGas),
+        calldata: formatNumber(calldataGas),
+        blobs: isPostDencun ? formatNumber(blobsGas) : undefined,
+        compute: formatNumber(computeGas),
+        overhead: formatNumber(overheadGas),
       }
   }
 }
