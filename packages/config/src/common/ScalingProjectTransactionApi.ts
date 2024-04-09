@@ -23,7 +23,7 @@ export interface StarkexTransactionApi {
   resyncLastDays?: number
 }
 
-export type Layer2TransactionApi =
+export type ScalingProjectTransactionApi =
   | SimpleTransactionApi<'starknet'>
   | SimpleTransactionApi<'aztec'>
   | SimpleTransactionApi<'zksync'>
