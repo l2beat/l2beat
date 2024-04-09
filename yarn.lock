@@ -2441,31 +2441,10 @@
   dependencies:
     zod "^3.22.2"
 
-"@l2beat/discovery@0.46.7":
-  version "0.46.7"
-  resolved "https://registry.yarnpkg.com/@l2beat/discovery/-/discovery-0.46.7.tgz#f3fb13c9d57e66aa537f9e8470d9226255f61ba1"
-  integrity sha512-iE7WLBw/C5ZGm0ONYT+lmaS5Jbznlksu/bR0njMrsINMicXPvQxhApc8s8r4or7BTbHvCUpyvSSPl2KvF6Q2zg==
-  dependencies:
-    "@l2beat/backend-tools" "^0.5.1"
-    "@l2beat/discovery-types" "^0.8.1"
-    "@solidity-parser/parser" "^0.18.0"
-    chalk "^4.1.2"
-    deep-diff "^1.0.2"
-    dotenv "^16.0.3"
-    ethers "^5.7.2"
-    jsonc-parser "^3.2.0"
-    lodash "^4.17.21"
-    mkdirp "^3.0.0"
-    node-fetch "^2.6.7"
-    prettier "^3.0.3"
-    rimraf "^5.0.0"
-    sqlite3 "^5.1.6"
-    zod "^3.22.2"
-
-"@l2beat/discovery@0.46.8":
-  version "0.46.8"
-  resolved "https://registry.yarnpkg.com/@l2beat/discovery/-/discovery-0.46.8.tgz#1994af1a13900122b48fe2ea909e7672e07b2dc4"
-  integrity sha512-TmDflGfDJnHIU0OpIF+B+PDGH+TCbNUPpioJSP9Sqp9w3hpBoxL30Fmy/YgPxzcDBeiHc9tmpQC4Ar/q7/xnHg==
+"@l2beat/discovery@0.46.11":
+  version "0.46.11"
+  resolved "https://registry.yarnpkg.com/@l2beat/discovery/-/discovery-0.46.11.tgz#f7af6d9fd5447e7d9d3a85950104e2f8446cc414"
+  integrity sha512-SyNiHHRPVdEiP/UbEHeAz/nNOl+yrZ5wmE6ZrkN6Q6NE0qJGzj2ngQeon3zcLQaxfhgjG+vuuvGN7TzHzHsG9g==
   dependencies:
     "@l2beat/backend-tools" "^0.5.1"
     "@l2beat/discovery-types" "^0.8.1"
