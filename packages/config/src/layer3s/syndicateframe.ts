@@ -27,5 +27,7 @@ export const syndicateframe: Layer3 = underReviewL3({
       ],
       socialMedia: ['https://warpcast.com/syndicate'],
     },
+    activityDataSource: 'Blockchain RPC',
   },
+  // rpcUrl: 'https://rpc-frame.syndicate.io'
 })

@@ -119,6 +119,7 @@ export const zkfair: Layer2 = {
     transactionApi: {
       type: 'rpc',
       defaultUrl: 'https://rpc.zkfair.io',
+      defaultCallsPerMinute: 1500,
       startBlock: 1,
     },
   },
