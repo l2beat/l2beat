@@ -676,10 +676,15 @@ export const starknet: Layer2 = {
   upgradesAndGovernance: (() => {
     const proxyGovernors = getProxyGovernance(discovery, 'Starknet')
     const proxygovMulti = discovery.getContract('ProxyMultisig')
-    const implGovernors = discovery.getPermissionedAccounts('Starknet', 'governors')
-    
+    const implGovernors = discovery.getPermissionedAccounts(
+      'Starknet',
+      'governors',
+    )
+
     assert(
-      proxyGovernors[1].address === proxygovMulti.address && proxyGovernors.length === 2 && discovery.isEOA(implGovernors[0].address),
+      proxyGovernors[1].address === proxygovMulti.address &&
+        proxyGovernors.length === 2 &&
+        discovery.isEOA(implGovernors[0].address),
       'The pattern of Starkware Governance (One Multisig, one EOA in all three pillars) has changed, please update the description below.',
     )
     const description = `
