@@ -72,6 +72,10 @@ export function getChainConfig(chain: string): DiscoveryChainConfig {
       //support for legacy local configs
       `DISCOVERY_${ENV_NAME}_RPC_GETLOGS_MAX_RANGE`,
     ]),
+    reorgSafeDepth: env.optionalInteger([
+      `${ENV_NAME}_REORG_SAFE_DEPTH_FOR_DISCOVERY`,
+      `${ENV_NAME}_REORG_SAFE_DEPTH`,
+    ]),
     multicall: chainConfig.multicall,
     etherscanApiKey: env.string([
       `${ENV_NAME}_ETHERSCAN_API_KEY_FOR_DISCOVERY`,

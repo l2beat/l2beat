@@ -149,6 +149,7 @@ export async function discover(
   logger: DiscoveryLogger,
   blockNumber: number,
   getLogsMaxRange?: number,
+  reorgSafeDepth?: number,
 ): Promise<Analysis[]> {
   const sqliteCache = new SQLiteCache()
   await sqliteCache.init()
@@ -160,6 +161,7 @@ export async function discover(
     config.chain,
     sqliteCache,
     getLogsMaxRange,
+    reorgSafeDepth,
   )
 
   const proxyDetector = new ProxyDetector(discoveryProvider, logger)

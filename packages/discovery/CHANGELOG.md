@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.46.10
+
+### Patch Changes
+
+- Read reorgSafeDepth from environment variable
+
 ## 0.46.9
 
 ### Patch Changes
