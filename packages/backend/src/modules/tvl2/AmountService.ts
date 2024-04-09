@@ -51,7 +51,6 @@ export class AmountService {
     )
     const [forRpc, forMulticall] = partition(
       configurations,
-      // isNotSupportedByMulticall checks that type is "escrow"
       (c): c is Configuration<EscrowEntry> =>
         isNotSupportedByMulticall(nativeAssetCodecAtBlock, c),
     )
