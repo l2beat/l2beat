@@ -17,7 +17,7 @@ export function formatNumber(value: number, decimals = 2): string {
   }
 
   let unitIndex = 0
-  while (value > 1000 && unitIndex < units.length - 1) {
+  while (value >= 1000 && unitIndex < units.length - 1) {
     value /= 1000
     unitIndex++
   }
