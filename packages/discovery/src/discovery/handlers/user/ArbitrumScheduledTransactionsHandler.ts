@@ -8,6 +8,7 @@ import { EtherscanLikeClient } from '../../../utils/EtherscanLikeClient'
 import { HttpClient } from '../../../utils/HttpClient'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { ProviderWithCache } from '../../provider/ProviderWithCache'
 import { ClassicHandler, HandlerResult } from '../Handler'
 import { callMethod } from '../utils/callMethod'
 import { toContractValue } from '../utils/toContractValue'
@@ -107,7 +108,7 @@ export class ArbitrumScheduledTransactionsHandler implements ClassicHandler {
     // * otherwise the target is the Executor address on Ethereum
     const decoded =
       target.toString() === retryableTicketMagic.toString()
-        ? await this.decodeL2Call(log)
+        ? await this.decodeL2Call(log, provider)
         : await this.decodeExecuteCall(
             'ethereum',
             target,
@@ -175,7 +176,10 @@ export class ArbitrumScheduledTransactionsHandler implements ClassicHandler {
     }
   }
 
-  async decodeL2Call(log: utils.LogDescription): Promise<ContractValue> {
+  async decodeL2Call(
+    log: utils.LogDescription,
+    provider: DiscoveryProvider,
+  ): Promise<ContractValue> {
     // A call to an Executor on L2 starts as a call to an Inbox contract on
     // Ethereum. The call data has the following structure:
     // (can be found in L1ArbitrumTimelock.sol)
@@ -199,7 +203,7 @@ export class ArbitrumScheduledTransactionsHandler implements ClassicHandler {
     }
     const l2Executor = EthereumAddress(res.l2Target as string)
     const l2Calldata = res.l2Calldata as string
-    const providerForChain = this.createProviderForChain(chain)
+    const providerForChain = this.createProviderForChain(chain, provider)
     const decoded = await this.decodeExecuteCall(
       chain,
       l2Executor,
@@ -212,7 +216,10 @@ export class ArbitrumScheduledTransactionsHandler implements ClassicHandler {
     }
   }
 
-  createProviderForChain(chain: string): DiscoveryProvider | undefined {
+  createProviderForChain(
+    chain: string,
+    curProvider: DiscoveryProvider,
+  ): DiscoveryProvider | undefined {
     if (chain === 'nova') {
       // Nova arbiscan doesn't provide API so we're out of luck
       return undefined
@@ -228,11 +235,23 @@ export class ArbitrumScheduledTransactionsHandler implements ClassicHandler {
     )
     const provider = new providers.StaticJsonRpcProvider(chainConfig.rpcUrl)
 
-    return new DiscoveryProvider(
-      provider,
-      etherscanClient,
-      logger,
-      chainConfig.rpcGetLogsMaxRange,
-    )
+    if (curProvider instanceof ProviderWithCache) {
+      return new ProviderWithCache(
+        provider,
+        etherscanClient,
+        logger,
+        chainConfig.name,
+        curProvider.cache,
+        chainConfig.rpcGetLogsMaxRange,
+        chainConfig.reorgSafeDepth,
+      )
+    } else {
+      return new DiscoveryProvider(
+        provider,
+        etherscanClient,
+        logger,
+        chainConfig.rpcGetLogsMaxRange,
+      )
+    }
   }
 }

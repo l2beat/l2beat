@@ -40,7 +40,7 @@ export class ProviderWithCache extends DiscoveryProvider {
     etherscanLikeClient: EtherscanLikeClient,
     logger: DiscoveryLogger,
     private readonly chain: string,
-    private readonly cache: DiscoveryCache,
+    public readonly cache: DiscoveryCache,
     getLogsMaxRange?: number,
     readonly reorgSafeDepth?: number,
   ) {

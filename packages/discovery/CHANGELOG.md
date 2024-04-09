@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.46.11
+
+### Patch Changes
+
+- Use cache for L2 calls in ArbitrumScheduledTransactionsHandler
+
 ## 0.46.10
 
 ### Patch Changes
