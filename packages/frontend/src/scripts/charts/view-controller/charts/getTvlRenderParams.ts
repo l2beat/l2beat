@@ -41,7 +41,8 @@ export function getTvlRenderParams(
     }
   })
 
-  const formatYAxisLabel = (value: number) => formatCurrency(value, state.unit)
+  const formatYAxisLabel = (value: number) =>
+    formatCurrency(value, state.unit, { showLessThanMinimum: false })
 
   const seriesStyle: SeriesStyle[] = [
     {

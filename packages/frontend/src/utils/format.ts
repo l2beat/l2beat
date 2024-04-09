@@ -7,13 +7,22 @@ const currencyToSymbol: Record<string, string> = {
   eth: 'Ξ',
 }
 
+interface FormatCurrencyOptions {
+  decimals?: number
+  showLessThanMinimum?: boolean
+}
+
 export function formatCurrency(
   value: number,
   currency: string,
-  decimals?: number,
+  opts?: FormatCurrencyOptions,
 ) {
   const symbol = currencyToSymbol[currency.toLowerCase()]
-  if (decimals) {
+
+  const decimals = opts?.decimals ?? 2
+  const showLessThanMinimum = opts?.showLessThanMinimum ?? true
+
+  if (showLessThanMinimum) {
     const minimum = round(Math.pow(10, -decimals), decimals)
     if (value < minimum) {
       return symbol
