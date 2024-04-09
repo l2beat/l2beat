@@ -72,13 +72,17 @@ function GlossaryItem(props: { entry: GlossaryEntry }) {
 
 function NavigationList(props: { entries: GlossaryEntry[] }) {
   return (
-    <nav className="sticky top-12 hidden max-h-[90vh] w-[246px] min-w-[246px] overflow-y-scroll lg:block">
+    <nav
+      data-role="glossary-nav-list"
+      className="sticky top-12 hidden max-h-[90vh] w-[246px] min-w-[246px] overflow-y-scroll lg:block"
+    >
       <ul className="flex flex-col gap-4 pr-6">
         {props.entries.map((entry) => (
           <li key={entry.id}>
             <a
               href={`#${entry.id}`}
-              className="flex gap-1 text-base font-semibold text-gray-850 transition hover:text-pink-900 dark:text-white dark:opacity-80 dark:hover:text-pink-200 dark:hover:opacity-100"
+              data-role="glossary-nav-item"
+              className='flex gap-1 text-xs font-medium text-gray-850 transition-colors hover:text-pink-900 data-[selected="true"]:text-[#C164E3] dark:text-white dark:opacity-80 dark:hover:text-pink-200 dark:hover:opacity-100 dark:data-[selected="true"]:text-[#C164E3]'
             >
               <span className="line-clamp-1">{entry.term}</span>
               {entry.isSpicy && '🌶️'}

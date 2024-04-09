@@ -5,6 +5,7 @@ import { configureDropdowns } from './configureDropdowns'
 import { configureEtherscanLinks } from './configureEtherscanLinks'
 import { configureExpandableContainer } from './configureExpandableContainer'
 import { configureFloatingBanner } from './configureFloatingBanner'
+import { configureGlossaryNavList } from './configureGlossaryNavList'
 import { configureHoverableDropdown } from './configureHoverableDropdown'
 import { configureLivenessTimeRangeControls } from './configureLivenessTimeRangeControls'
 import { configureMultipleEscrowsButton } from './configureMultipleEscrowsButton'
@@ -47,3 +48,4 @@ configureSorting()
 configureEtherscanLinks()
 configureAlphabetSelectors()
 configureScrollToTopButton()
+configureGlossaryNavList()
