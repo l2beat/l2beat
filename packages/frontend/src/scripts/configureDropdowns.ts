@@ -1,7 +1,7 @@
 import { makeQuery } from './query'
 
 export function configureDropdowns() {
-  const { $$ } = makeQuery(document.body)
+  const { $$ } = makeQuery()
 
   const dropdowns = $$('[data-role=dropdown]')
 

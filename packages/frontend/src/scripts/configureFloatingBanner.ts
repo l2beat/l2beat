@@ -2,7 +2,7 @@ import { LocalStorage } from './local-storage/LocalStorage'
 import { makeQuery } from './query'
 
 export function configureFloatingBanner() {
-  const { $ } = makeQuery(document.body)
+  const { $ } = makeQuery()
   const hasClosedBanner = LocalStorage.getItem('gg-19-floating-banner-closed')
 
   const banner = $.maybe('[data-role=floating-banner]')

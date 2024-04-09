@@ -3,7 +3,7 @@ import { makeQuery } from './query'
 import { isMobile } from './utils/isMobile'
 
 export function configureTooltips() {
-  const { $, $$ } = makeQuery(document.body)
+  const { $, $$ } = makeQuery()
 
   const tooltip = $('[data-role=tooltip-popup]')
   const tooltipContent = $('[data-role=tooltip-popup] span')

@@ -12,6 +12,7 @@ import { configureOverflowWrappers } from './configureOverflowWrappers'
 import { configureProjectFilters } from './configureProjectFilters'
 import { configureRichSelects } from './configureRichSelect'
 import { configureRosetteOverlay } from './configureRosetteOverlay'
+import { configureScrollToTopButton } from './configureScrollToTopButton'
 import { configureSidebarMenu } from './configureSidebarMenu'
 import { configureTabs } from './configureTabs'
 import { configureThemeToggle } from './configureThemeToggle'
@@ -45,3 +46,4 @@ configureOverflowWrappers()
 configureSorting()
 configureEtherscanLinks()
 configureAlphabetSelectors()
+configureScrollToTopButton()

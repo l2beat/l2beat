@@ -2,7 +2,7 @@ import { startsWithNumber } from '../utils/startsWithLetterOrNumber'
 import { makeQuery } from './query'
 
 export function configureAlphabetSelectors() {
-  const { $ } = makeQuery(document.body)
+  const { $ } = makeQuery()
 
   const alphabetSelector = $.maybe('[data-role=alphabet-selector]')
   if (!alphabetSelector) return

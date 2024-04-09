@@ -1,7 +1,7 @@
 import { makeQuery } from './query'
 
 export function configureMultipleEscrowsButton() {
-  const { $, $$ } = makeQuery(document.body)
+  const { $, $$ } = makeQuery()
   const multipleEscrowsButtons = $$('[data-role=multiple-escrows]')
 
   multipleEscrowsButtons.forEach((button) => {

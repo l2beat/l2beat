@@ -2,7 +2,7 @@ import { DESKTOP_PROJECT_NAVIGATION_IDS } from '../../components/project/navigat
 import { makeQuery } from '../query'
 
 export function getDesktopElements() {
-  const { $, $$ } = makeQuery(document.body)
+  const { $, $$ } = makeQuery()
   const container = $.maybe<HTMLElement>(
     `#${DESKTOP_PROJECT_NAVIGATION_IDS.container}`,
   )
@@ -27,7 +27,7 @@ export function getDesktopElements() {
 }
 
 export function getMobileElements() {
-  const { $, $$ } = makeQuery(document.body)
+  const { $, $$ } = makeQuery()
   const container = $.maybe(`[data-role=overflow-wrapper]`)
   const content = $.maybe('[data-role=overflow-wrapper-content]')
   const summaryItem = $.maybe<HTMLAnchorElement>(

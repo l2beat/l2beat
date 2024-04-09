@@ -10,7 +10,7 @@ interface Options {
 }
 
 export function configureCharts(opts?: Options) {
-  const { $$ } = makeQuery(document.body)
+  const { $$ } = makeQuery()
   const charts = $$('[data-role="chart"]')
 
   for (const chart of charts) {

@@ -29,7 +29,7 @@ type SortingRule = z.infer<typeof SortingRule>
 const tabState: Record<string, UrlState['queryParams']> = {}
 
 export function configureSorting() {
-  const { $$ } = makeQuery(document.body)
+  const { $$ } = makeQuery()
   const urlState = getUrlState()
 
   const sortingArrowsElements = $$('[data-role="sorting-arrows"]')
@@ -212,7 +212,7 @@ function getSortingArrowsElement(
 }
 
 export function setSortingArrowsOrderKey(name: string, orderKey: string) {
-  const { $$ } = makeQuery(document.body)
+  const { $$ } = makeQuery()
   const tables = $$('[data-role="table"]')
   tables.forEach((table) => {
     const { $ } = makeQuery(table)

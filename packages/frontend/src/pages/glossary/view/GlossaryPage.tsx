@@ -3,6 +3,7 @@ import React from 'react'
 import { Footer, FooterProps, Navbar, NavbarProps } from '../../../components'
 import { FullPageHeader } from '../../../components/FullPageHeader'
 import { PageContent } from '../../../components/PageContent'
+import { ScrollToTopButton } from '../../../components/ScrollToTopButton'
 import { GlossaryEntry } from '../props/getGlossaryEntry'
 import { AlphabetSelector } from './AlphabetSelector'
 
@@ -46,6 +47,7 @@ export function GlossaryPage(props: GlossaryPageProps) {
           ))}
         </main>
       </PageContent>
+      <ScrollToTopButton />
       <Footer {...props.footer} />
     </>
   )
