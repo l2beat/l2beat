@@ -192,7 +192,7 @@ describe(aggregateReports.name, () => {
       [
         project(ARBITRUM, 'layer2'),
         project(OPTIMISM, 'layer2'),
-        project(ProjectId('other'), 'layer3', false),
+        project(ProjectId('other'), 'layer2', false, true),
       ],
       NOW,
     )
@@ -243,8 +243,9 @@ describe(aggregateReports.name, () => {
     projectId: ProjectId,
     type: ReportProject['type'],
     isUpcoming = false,
+    isLayer3 = false,
   ): ReportProject {
-    return { projectId, type, escrows: [], isUpcoming }
+    return { projectId, type, escrows: [], isUpcoming, isLayer3 }
   }
 
   function record(

@@ -29,6 +29,7 @@ export interface Project {
   isArchived?: boolean
   type: 'layer2' | 'bridge' | 'layer3'
   isUpcoming?: boolean
+  isLayer3?: boolean
   escrows: ProjectEscrow[]
   transactionApi?: ScalingProjectTransactionApi
   trackedTxsConfig?: TrackedTxsConfig
