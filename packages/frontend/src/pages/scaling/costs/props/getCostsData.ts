@@ -6,7 +6,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { formatLargeNumber, formatTimestamp } from '../../../../utils'
+import { formatNumber, formatTimestamp } from '../../../../utils'
 import { getTransactionCount } from '../../../../utils/activity/getTransactionCount'
 import { getCostsSum } from '../../../../utils/costs/getCostsSum'
 import { formatCurrency } from '../../../../utils/format'
@@ -88,7 +88,7 @@ function getDataDetails(
     txCount: txCount
       ? {
           value: txCount,
-          displayValue: formatLargeNumber(txCount),
+          displayValue: formatNumber(txCount),
         }
       : undefined,
   }
@@ -109,7 +109,9 @@ function getCostsDataBreakdown(
       perL2Tx: txCount
         ? {
             value: data.ethCost / txCount,
-            displayValue: formatCurrency(data.ethCost / txCount, 'eth', 6),
+            displayValue: formatCurrency(data.ethCost / txCount, 'eth', {
+              decimals: 6,
+            }),
           }
         : undefined,
     },
@@ -119,17 +121,19 @@ function getCostsDataBreakdown(
       perL2Tx: txCount
         ? {
             value: data.usdCost / txCount,
-            displayValue: formatCurrency(data.usdCost / txCount, 'usd', 4),
+            displayValue: formatCurrency(data.usdCost / txCount, 'usd', {
+              decimals: 4,
+            }),
           }
         : undefined,
     },
     gas: {
-      displayValue: formatLargeNumber(data.gas),
+      displayValue: formatNumber(data.gas),
       value: data.gas,
       perL2Tx: txCount
         ? {
             value: data.gas / txCount,
-            displayValue: formatLargeNumber(data.gas / txCount),
+            displayValue: formatNumber(data.gas / txCount),
           }
         : undefined,
     },

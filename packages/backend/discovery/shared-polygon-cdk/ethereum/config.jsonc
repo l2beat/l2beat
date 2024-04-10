@@ -8,6 +8,10 @@
     "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": "ProxyAdmin",
     "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF": "Timelock",
     "0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6": "SecurityCouncil",
+    "0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0": "AstarValidiumDAC",
+    "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80": "AstarValidiumEtrog",
+    "0x519E42c24163192Dca44CD3fBDCEBF6be9130987": "PolygonZkEVMEtrog",
+    "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507": "PolygonValidiumStorageMigration",
     "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb": "GlobalExitRootV2",
     "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe": "Bridge",
     "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21": "RollupManagerAdminMultisig",
@@ -32,7 +36,12 @@
         "lastVerifiedBatch",
         "multiplierBatchFee"
       ],
-      "ignoreInWatchMode": [],
+      "ignoreInWatchMode": [
+        "getRollupExitRoot",
+        "lastAggregationTimestamp",
+        "totalSequencedBatches",
+        "totalVerifiedBatches"
+      ],
       "fields": {
         "_HALT_AGGREGATION_TIMEOUT": {
           "type": "hardcoded",
@@ -65,6 +74,21 @@
           "topics": [
             "0x2261efe5aef6fedc1fd1550b25facc9181745623049c7901287030b9ad1a5497"
           ]
+        },
+        "rollupsData": {
+          "type": "array",
+          "method": "rollupIDToRollupData",
+          "startIndex": 1,
+          "pickFields": ["rollupContract", "verifier"],
+          "length": "{{ rollupCount }}"
+        },
+        "rollupTypes": {
+          "type": "array",
+          "method": "rollupTypeMap",
+          "startIndex": 1,
+          "length": "{{ rollupTypeCount }}",
+          "pickFields": ["consensusImplementation", "verifier"],
+          "ignoreRelative": true
         }
       }
     },
@@ -113,6 +137,21 @@
     },
     "RollupManagerAdminMultisig": {
       "ignoreMethods": ["nonce"]
+    },
+    "AstarValidiumDAC": {
+      "ignoreDiscovery": true // already fetched in Astar
+    },
+    "AstarValidiumEtrog": {
+      "ignoreDiscovery": true // already fetched in Astar
+    },
+    "PolygonZkEVMEtrog": {
+      "ignoreDiscovery": true // already fetched in Polygon zkEVM
+    },
+    "PolygonValidiumStorageMigration": {
+      "ignoreInWatchMode": ["lastAccInputHash"]
+    },
+    "POL": {
+      "ignoreInWatchMode": ["lastMint", "totalSupply"]
     }
   }
 }

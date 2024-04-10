@@ -31,4 +31,5 @@ export const mxc: Layer3 = underReviewL3({
     },
     activityDataSource: 'Blockchain RPC',
   },
+  // rpcUrl: 'https://rpc.mxc.com'
 })

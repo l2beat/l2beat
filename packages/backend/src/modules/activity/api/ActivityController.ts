@@ -27,11 +27,11 @@ export class ActivityController {
   ) {}
 
   async getActivity(): Promise<ActivityApiResponse> {
-    const projectsCounts = await this.getPostprocessedDailyCounts()
-    const layer2sCounts: DailyTransactionCountProjectsMap = new Map()
+    const dbCounts = await this.getPostprocessedDailyCounts()
+    const projectCounts: DailyTransactionCountProjectsMap = new Map()
     let ethereumCounts: DailyTransactionCount[] | undefined
 
-    for (const [projectId, counts] of projectsCounts) {
+    for (const [projectId, counts] of dbCounts) {
       if (projectId === ProjectId.ETHEREUM) {
         ethereumCounts = counts
         continue
@@ -39,17 +39,17 @@ export class ActivityController {
       if (!this.projectIds.includes(projectId)) {
         continue
       }
-      layer2sCounts.set(projectId, counts)
+      projectCounts.set(projectId, counts)
     }
     assert(ethereumCounts, 'Ethereum missing in daily transaction count')
 
     const combinedChartPoints = alignActivityData(
-      toCombinedActivity(layer2sCounts),
+      toCombinedActivity(projectCounts),
       ethereumCounts,
     )
 
     const projects: ActivityApiResponse['projects'] = {}
-    for (const [projectId, counts] of layer2sCounts.entries()) {
+    for (const [projectId, counts] of projectCounts.entries()) {
       projects[projectId.toString()] = formatActivityChart(
         alignActivityData(counts, ethereumCounts),
       )

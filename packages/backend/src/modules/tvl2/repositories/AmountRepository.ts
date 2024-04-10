@@ -6,7 +6,6 @@ import {
   CheckConvention,
 } from '../../../peripherals/database/BaseRepository'
 import { Database } from '../../../peripherals/database/Database'
-
 export interface AmountRow {
   configuration_id: string
   timestamp: Date
@@ -14,7 +13,7 @@ export interface AmountRow {
 }
 
 export interface AmountRecord {
-  configurationId: string
+  configId: string
   timestamp: UnixTime
   amount: bigint
 }
@@ -50,7 +49,7 @@ export class AmountRepository extends BaseRepository {
 
 function toRecord(row: AmountRow): AmountRecord {
   return {
-    configurationId: row.configuration_id,
+    configId: row.configuration_id,
     timestamp: UnixTime.fromDate(row.timestamp),
     amount: BigInt(row.amount),
   }
@@ -58,7 +57,7 @@ function toRecord(row: AmountRow): AmountRecord {
 
 function toRow(record: AmountRecord): AmountRow {
   return {
-    configuration_id: record.configurationId,
+    configuration_id: record.configId,
     timestamp: record.timestamp.toDate(),
     amount: record.amount.toString(),
   }

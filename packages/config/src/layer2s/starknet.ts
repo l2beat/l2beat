@@ -1,4 +1,5 @@
 import {
+  assert,
   EthereumAddress,
   formatLargeNumberShared,
   formatSeconds,
@@ -398,6 +399,7 @@ export const starknet: Layer2 = {
             '1865367024509426979036104162713508294334262484507712987283009063059134893433',
           ],
         },
+        _hackCostMultiplier: 0.85,
       },
       {
         uses: [
@@ -412,6 +414,7 @@ export const starknet: Layer2 = {
             '54878256403880350656938046611252303365750679698042371543935159963667935317',
           ],
         },
+        _hackCostMultiplier: 0.85,
       },
       {
         uses: [
@@ -426,6 +429,7 @@ export const starknet: Layer2 = {
             '2479841346739966073527450029179698923866252973805981504232089731754042431018',
           ],
         },
+        _hackCostMultiplier: 0.85,
       },
       {
         uses: [
@@ -440,6 +444,7 @@ export const starknet: Layer2 = {
             '109586309220455887239200613090920758778188956576212125550190099009305121410',
           ],
         },
+        _hackCostMultiplier: 0.85,
       },
       {
         uses: [
@@ -453,6 +458,7 @@ export const starknet: Layer2 = {
             '3383082961563516565935611087683915026448707331436034043529592588079494402084',
           ],
         },
+        _hackCostMultiplier: 0.85,
       },
       {
         uses: [
@@ -499,6 +505,7 @@ export const starknet: Layer2 = {
           sinceTimestampInclusive: new UnixTime(1678095635),
           untilTimestampExclusive: new UnixTime(1706789063),
         },
+        _hackCostMultiplier: 0.85,
       },
       {
         uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
@@ -512,6 +519,7 @@ export const starknet: Layer2 = {
             'function registerContinuousMemoryPage(uint256 startAddr,uint256[] values,uint256 z,uint256 alpha,uint256 prime)',
           sinceTimestampInclusive: new UnixTime(1706789063),
         },
+        _hackCostMultiplier: 0.85,
       },
       {
         uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
@@ -525,6 +533,7 @@ export const starknet: Layer2 = {
             'function verifyFRI(uint256[] proof,uint256[] friQueue,uint256 evaluationPoint,uint256 friStepSize,uint256 expectedRoot)',
           sinceTimestampInclusive: new UnixTime(1706772791),
         },
+        _hackCostMultiplier: 0.85,
       },
       {
         uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
@@ -538,6 +547,7 @@ export const starknet: Layer2 = {
             'function verifyMerkle(uint256[] merkleView,uint256[] initialMerkleQueue,uint256 height,uint256 expectedRoot)',
           sinceTimestampInclusive: new UnixTime(1706767355),
         },
+        _hackCostMultiplier: 0.85,
       },
     ],
   },
@@ -672,6 +682,35 @@ export const starknet: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(minDelay)],
   },
+  upgradesAndGovernance: (() => {
+    const proxyGovernors = getProxyGovernance(discovery, 'Starknet')
+    const proxygovMulti = discovery.getContract('ProxyMultisig')
+    const implGovernors = discovery.getPermissionedAccounts(
+      'Starknet',
+      'governors',
+    )
+
+    assert(
+      proxyGovernors[1].address === proxygovMulti.address &&
+        proxyGovernors.length === 2 &&
+        discovery.isEOA(implGovernors[0].address),
+      'The pattern of Starkware Governance (One Multisig, one EOA in all three pillars) has changed, please update the description below.',
+    )
+    const description = `
+The Upgrading mechanism of Starknet follows a similar scheme for all of their smart contracts. A contract initializes with the creator of the contract as a Governor, who can then nominate or remove other Governors allowing them to call restricted governor functions.
+
+The Starknet core contract is upgradable by 2 appointed \`Starknet Proxy Governors\`: A Proxy multisig with a ${discovery.getMultisigStats('ProxyMultisig')} threshold and an EOA. Implementations can be upgraded ${starknetDelaySeconds === 0 ? 'without delay, thus users are not provided with an exit window in case of unwanted upgrades.' : 'with a delay of ' + formatSeconds(starknetDelaySeconds) + '.'}
+    
+\`Starknet Implementation Governors\` have the authority to execute governed functions that modify contract parameters without delay. These actions encompass registering/removing Operators, specifying the program and config hash, or setting the Message Cancellation Delay between L1 and L2. Currently it is governed by a Multisig with a ${discovery.getMultisigStats('ImplementationMultisig')} threshold and an EOA. The verifier address is set upon initialization of the Starknet Implementation contract.
+    
+Via the proxy contracts, the \`SHARP Verifier Governors\` can upgrade the GPSStatement Verifier implementation. It is important to note that the state is also maintained in the implementation contract, rather than in the proxy itself. An upgrade to the Verifier could potentially introduce code that approves fraudulent states. Currently, there is ${getSHARPVerifierUpgradeDelay() === 0 ? 'no' : 'a ' + formatSeconds(getSHARPVerifierUpgradeDelay())} delay before any upgrade takes effect.
+    
+The StarkGate bridge escrows are mostly governed and upgraded by a Bridge Multisig, others by different owners. (see Permissions section)
+    
+At present, the StarkNet Foundation hosts voting for STRK token holders (or their delegates) regarding protocol updates to reflect community intent, however, there is no direct authority to implement the execution of these upgrades.
+`
+    return description
+  })(),
   permissions: [
     {
       name: 'Starknet Proxy Governors',

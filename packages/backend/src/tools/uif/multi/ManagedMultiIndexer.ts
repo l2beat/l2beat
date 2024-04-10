@@ -1,14 +1,10 @@
-import { assert, Logger } from '@l2beat/backend-tools'
-import {
-  Configuration,
-  Indexer,
-  IndexerOptions,
-  MultiIndexer,
-  SavedConfiguration,
-} from '@l2beat/uif'
+import { Logger } from '@l2beat/backend-tools'
+import { Indexer, IndexerOptions } from '@l2beat/uif'
 
-import { assetUniqueConfigId, assetUniqueIndexerId } from './ids'
-import { IndexerService } from './IndexerService'
+import { assetUniqueConfigId, assetUniqueIndexerId } from '../ids'
+import { IndexerService } from '../IndexerService'
+import { MultiIndexer } from './MultiIndexer'
+import { Configuration, SavedConfiguration } from './types'
 
 export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
   parents: Indexer[]
@@ -20,7 +16,7 @@ export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
   logger: Logger
 }
 
-export abstract class MangedMultiIndexer<T> extends MultiIndexer<T> {
+export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
   constructor(public readonly options: ManagedMultiIndexerOptions<T>) {
     super(options.logger, options.parents, options.configurations, options)
 
@@ -48,30 +44,28 @@ export abstract class MangedMultiIndexer<T> extends MultiIndexer<T> {
     )
   }
 
-  private savedOnce = false
-  override async saveConfigurations(
+  override async setSavedConfigurations(
     configurations: SavedConfiguration<T>[],
   ): Promise<void> {
-    if (!this.savedOnce) {
-      await this.options.indexerService.upsertConfigurations(
-        this.options.id,
-        configurations,
-        this.options.encode,
-      )
-      await this.options.indexerService.persistOnlyUsedConfigurations(
-        this.options.id,
-        configurations.map((c) => c.id),
-      )
-      this.savedOnce = true
-    } else {
-      const newHeight = configurations[0].currentHeight
-      assert(configurations.every((c) => c.currentHeight === newHeight))
+    await this.options.indexerService.upsertConfigurations(
+      this.options.id,
+      configurations,
+      this.options.encode,
+    )
+    await this.options.indexerService.persistOnlyUsedConfigurations(
+      this.options.id,
+      configurations.map((c) => c.id),
+    )
+  }
 
-      await this.options.indexerService.updateSavedConfigurations(
-        this.options.id,
-        configurations.map((c) => c.id),
-        newHeight,
-      )
-    }
+  override async updateCurrentHeight(
+    configurationIds: string[],
+    currentHeight: number,
+  ): Promise<void> {
+    await this.options.indexerService.updateSavedConfigurations(
+      this.options.id,
+      configurationIds,
+      currentHeight,
+    )
   }
 }
