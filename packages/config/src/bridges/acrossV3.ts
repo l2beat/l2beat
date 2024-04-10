@@ -130,7 +130,7 @@ export const acrossV3: Bridge = {
       risks: [
         {
           category: 'Funds can be frozen if',
-          text: 'owner pauses the contract, or changes bond, routes, or fees parameters in such way to make the escrow inoperable.',
+          text: 'owner pauses the Hub Pool contract, or changes bond, routes, or fees parameters in such a way as to make the escrow inoperable.',
         },
         {
           category: 'Funds can be lost if',
@@ -141,7 +141,6 @@ export const acrossV3: Bridge = {
           text: 'third-party bridge infrastructure is compromised, such as canonical messaging services, Linea USDC bridge, and USDC Cross-Chain Transfer Protocol (CCTP) infrastructure.',
         },
       ],
-      isIncomplete: true,
     },
     validation: {
       name: 'Validation via Optimistic Oracle',
