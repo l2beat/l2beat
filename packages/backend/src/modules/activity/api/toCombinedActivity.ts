@@ -7,9 +7,14 @@ export function toCombinedActivity(
   projectCounts: Map<ProjectId, DailyTransactionCount[]>,
 ): { daily: (DailyTransactionCount & { includesEstimated: number })[], estimatedSince: UnixTime, estimatedImpact: number } {
   const layer2sCounts = [...projectCounts.entries()];
+
+  // Find the cutoff time for the estimation of the daily transaction count
   const cutoffTime = findCutoffTime(layer2sCounts.map(([_, counts]) => counts));
 
+  // Construct the X-axis of the chart (array of days)
   const days = [...new Set(layer2sCounts.map(([_, counts]) => counts.map(c => c.timestamp)))].flat().sort();
+
+  // An object that stores the last present value of each project in case the one for the current day is missing
   const lastPresentValue: Record<ProjectId, number> = Object.fromEntries([...projectCounts.keys()].map((k) => [k, 0]));
   
   const dailyData = days.map((day) => {
@@ -29,6 +34,7 @@ export function toCombinedActivity(
   })
 
   const lastDaily = dailyData.at(-1);
+  const estimatedImpact = (lastDaily?.includesEstimated ?? 0) / (lastDaily?.count ?? 1);
 
-  return { daily: dailyData, estimatedSince: cutoffTime, estimatedImpact: (lastDaily?.includesEstimated ?? 0) / (lastDaily?.count ?? 1)};
+  return { daily: dailyData, estimatedSince: cutoffTime, estimatedImpact };
 }
