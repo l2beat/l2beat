@@ -120,6 +120,7 @@ export abstract class SequenceProcessor extends EventEmitter {
     return {
       latest: this.state?.latest ?? null,
       lastProcessed: this.state?.lastProcessed ?? null,
+      syncedOnce: this.state?.syncedOnce ?? false,
       isProcessing: !this.processQueue.isEmpty(),
     }
   }
