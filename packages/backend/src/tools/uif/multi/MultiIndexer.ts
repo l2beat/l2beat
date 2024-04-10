@@ -167,9 +167,10 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
 
     if (newHeight > from) {
       this.updateSavedConfigurations(configurations, newHeight)
-      await this.saveConfigurations(
-        this.saved.filter((c) => configurations.some((c2) => c2.id === c.id)),
+      const onlyUpdated = this.saved.filter((c) =>
+        configurations.some((cc) => cc.id === c.id),
       )
+      await this.saveConfigurations(onlyUpdated)
     }
 
     return newHeight

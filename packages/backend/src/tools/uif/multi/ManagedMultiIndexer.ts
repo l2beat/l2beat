@@ -44,6 +44,7 @@ export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
     )
   }
 
+  // TODO: Split into two functions
   private savedOnce = false
   override async saveConfigurations(
     configurations: SavedConfiguration<T>[],
