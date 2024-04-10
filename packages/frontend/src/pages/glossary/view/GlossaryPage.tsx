@@ -2,6 +2,7 @@ import React from 'react'
 
 import { Footer, FooterProps, Navbar, NavbarProps } from '../../../components'
 import { FullPageHeader } from '../../../components/FullPageHeader'
+import { ChiliIcon } from '../../../components/icons/symbols/ChiliIcon'
 import { PageContent } from '../../../components/PageContent'
 import { ScrollToTopButton } from '../../../components/ScrollToTopButton'
 import { GlossaryEntry } from '../props/getGlossaryEntry'
@@ -58,10 +59,10 @@ function GlossaryItem(props: { entry: GlossaryEntry }) {
     <section className="mt-12 first:mt-0" id={props.entry.id}>
       <a
         href={`#${props.entry.id}`}
-        className="mb-4 block text-2xl font-bold text-gray-850 no-underline dark:text-white"
+        className="mb-4 flex items-center gap-2 text-2xl font-bold text-gray-850 no-underline dark:text-white"
       >
         {props.entry.term}
-        {props.entry.isSpicy && ' 🌶️'}
+        {props.entry.isSpicy && <ChiliIcon className="size-6 shrink-0" />}
       </a>
       <p className="text-lg text-gray-850 dark:text-white">
         {props.entry.definition}
@@ -82,10 +83,10 @@ function NavigationList(props: { entries: GlossaryEntry[] }) {
             <a
               href={`#${entry.id}`}
               data-role="glossary-nav-item"
-              className='flex gap-1 text-xs font-medium text-gray-850 transition-colors hover:text-pink-900 data-[selected="true"]:text-[#C164E3] dark:text-white dark:opacity-80 dark:hover:text-pink-200 dark:hover:opacity-100 dark:data-[selected="true"]:text-[#C164E3]'
+              className='flex items-center gap-1 text-xs font-medium text-gray-850 transition-colors hover:text-pink-900 data-[selected="true"]:text-[#C164E3] dark:text-white dark:opacity-80 dark:hover:text-pink-200 dark:hover:opacity-100 dark:data-[selected="true"]:text-[#C164E3]'
             >
               <span className="line-clamp-1">{entry.term}</span>
-              {entry.isSpicy && '🌶️'}
+              {entry.isSpicy && <ChiliIcon className="shrink-0" />}
             </a>
           </li>
         ))}
