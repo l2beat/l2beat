@@ -164,6 +164,7 @@ describe(L2CostsController.name, () => {
       const results = await controller.makeTransactionCalculations(
         getMockL2CostRecords(),
         [START_OF_HOUR.add(-1, 'hours'), START_OF_HOUR.add(-2, 'hours')],
+        [],
       )
 
       const TX1_GAS_PRICE_ETH = getGasPriceETH(41_000_000_000)
@@ -173,7 +174,7 @@ describe(L2CostsController.name, () => {
           timestamp: START_OF_HOUR.add(-1, 'hours'),
           calldataGasUsed: 2700,
           computeGasUsed: 400_000 - 2700 - 21_000,
-          overheadGasUsed: 21000 as const,
+          overheadGasUsed: 21000,
           totalGas: 400_000,
           gasCost: 400_000 * TX1_GAS_PRICE_ETH,
           calldataGasCost: 2700 * TX1_GAS_PRICE_ETH,
@@ -427,7 +428,7 @@ describe(L2CostsController.name, () => {
         totalGasCost: 1,
         gasCostUsd: 1,
         totalGasCostUsd: 1,
-        overheadGasUsed: 21_000 as const,
+        overheadGasUsed: 21_000,
         totalOverheadGasCost: 1,
         totalOverheadGasCostUsd: 1,
         type: 2 as const,
