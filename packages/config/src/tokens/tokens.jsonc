@@ -1308,8 +1308,20 @@
       "formula": "circulatingSupply"
     },
     {
+      "symbol": "BRETT",
+      "address": "0x532f27101965dd16442E59d40670FaF5eBB142E4",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
       "symbol": "DEGEN",
       "address": "0x4ed4e862860bed51a9570b96d89af5e1b0efefed",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "MOCHI",
+      "address": "0xF6e932Ca12afa26665dC4dDE7e27be02A7c02e50",
       "type": "NMV",
       "formula": "circulatingSupply"
     },
@@ -1326,6 +1338,12 @@
     {
       "symbol": "SEAM",
       "address": "0x1c7a460413dd4e964f96d8dfc56e7223ce88cd85",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "TOSHI",
+      "address": "0xAC1Bd2486aAf3B5C0fc3Fd868558b082a531B2B4",
       "type": "NMV",
       "formula": "circulatingSupply"
     },
