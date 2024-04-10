@@ -8,7 +8,7 @@ Generated with discovered.json: 0xd7223a19aedf6b671fb2d20d5b8e144c97f68deb
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Add wstETH escrow governed by Lido.
 
 ## Config/verification related changes
 

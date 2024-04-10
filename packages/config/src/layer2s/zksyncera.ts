@@ -280,9 +280,6 @@ export const zksyncera: Layer2 = {
       url: 'https://block-explorer-api.mainnet.zksync.io/api',
       type: 'etherscan',
     },
-    // ~ Timestamp of block number 0 on Mode
-    // The first full hour timestamp that will return the block number
-    // https://explorer.mode.network/block/0
     minTimestampForTvl: new UnixTime(1676384520),
     coingeckoPlatform: 'zksync',
   },

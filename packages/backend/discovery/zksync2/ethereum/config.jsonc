@@ -86,7 +86,13 @@
       "ignoreRelatives": ["l2Bridge", "l2TokenBeacon"]
     },
     "L1ERC20Bridge_wstETH": {
-      "ignoreRelatives": ["l1Token", "l2Token", "l2Bridge", "l2TokenAddress", "proxy__getAdmin"]
+      "ignoreRelatives": [
+        "l1Token",
+        "l2Token",
+        "l2Bridge",
+        "l2TokenAddress",
+        "proxy__getAdmin"
+      ]
     },
     "LidoAgent": {
       "ignoreDiscovery": true
