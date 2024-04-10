@@ -7,7 +7,7 @@ import { scrollVerticallyToItem } from './utils/scrollToItem'
 export function configureGlossaryNavList() {
   const { $: document$ } = makeQuery()
 
-  const navList = document$.maybe('[data-role=glossary-nav-list]')
+  const navList = document$.maybe('[data-role=glossary-side-nav]')
 
   if (!navList) return
   let destinationItem: HTMLAnchorElement | null = null
@@ -15,7 +15,7 @@ export function configureGlossaryNavList() {
   const { $, $$ } = makeQuery(navList)
   const overflowingContainer = $('ul')
 
-  const navItems = $$<HTMLAnchorElement>('[data-role=glossary-nav-item]')
+  const navItems = $$<HTMLAnchorElement>('[data-role=glossary-side-nav-item]')
   let selectedNavItem: HTMLElement | undefined = navItems.find(
     (item) => item.href === window.location.href,
   )

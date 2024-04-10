@@ -64,10 +64,16 @@ function configureAlphabetSelector(alphabetSelector: HTMLElement) {
         highlightItem(item)
         scrollToItem(item)
       },
-      projectNavigationItemQuerySelector: (sectionId) =>
-        `a[data-char="${sectionId.charAt(0)}"]`,
+      projectNavigationItemQuerySelector: (sectionId) => {
+        const char = getCharFromSectionId(sectionId)
+        return `a[data-char="${char}"]`
+      },
     })
   })
+}
+
+function getCharFromSectionId(sectionId: string) {
+  return startsWithNumber(sectionId) ? '#' : sectionId.charAt(0)
 }
 
 function isItemCharEqualToHash(item: HTMLElement, hash: string) {
