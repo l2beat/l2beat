@@ -35,15 +35,22 @@ export function Tooltip({
 interface TooltipTriggerProps {
   children: React.ReactNode
   className?: string
+  onClickHideDisabled?: boolean
 }
 
 export function TooltipTrigger({
   children,
   className,
+  onClickHideDisabled,
   ...rest
 }: TooltipTriggerProps) {
   return (
-    <div data-role="tooltip-trigger" className={className} {...rest}>
+    <div
+      data-role="tooltip-trigger"
+      className={className}
+      data-on-click-hide-disabled={onClickHideDisabled}
+      {...rest}
+    >
       {children}
     </div>
   )

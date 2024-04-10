@@ -99,6 +99,9 @@ export function configureTooltips() {
     const isDisabledOnMobile = Boolean(
       element.getAttribute('data-tooltip-mobile-disabled'),
     )
+    const isOnClickHideDisabled = Boolean(
+      trigger.getAttribute('data-on-click-hide-disabled'),
+    )
 
     let mouseEnteredAt = Date.now()
 
@@ -119,7 +122,7 @@ export function configureTooltips() {
       }
       if (activeElement === element) {
         // only hide if immediately preceded by mouse enter
-        if (Date.now() - mouseEnteredAt > 50) {
+        if (Date.now() - mouseEnteredAt > 50 && !isOnClickHideDisabled) {
           hide()
         }
       } else {
