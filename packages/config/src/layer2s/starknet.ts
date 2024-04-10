@@ -399,6 +399,7 @@ export const starknet: Layer2 = {
             '1865367024509426979036104162713508294334262484507712987283009063059134893433',
           ],
         },
+        _hackCostMultiplier: 0.85,
       },
       {
         uses: [
@@ -413,6 +414,7 @@ export const starknet: Layer2 = {
             '54878256403880350656938046611252303365750679698042371543935159963667935317',
           ],
         },
+        _hackCostMultiplier: 0.85,
       },
       {
         uses: [
@@ -427,6 +429,7 @@ export const starknet: Layer2 = {
             '2479841346739966073527450029179698923866252973805981504232089731754042431018',
           ],
         },
+        _hackCostMultiplier: 0.85,
       },
       {
         uses: [
@@ -441,6 +444,7 @@ export const starknet: Layer2 = {
             '109586309220455887239200613090920758778188956576212125550190099009305121410',
           ],
         },
+        _hackCostMultiplier: 0.85,
       },
       {
         uses: [
@@ -454,6 +458,7 @@ export const starknet: Layer2 = {
             '3383082961563516565935611087683915026448707331436034043529592588079494402084',
           ],
         },
+        _hackCostMultiplier: 0.85,
       },
       {
         uses: [
@@ -500,6 +505,7 @@ export const starknet: Layer2 = {
           sinceTimestampInclusive: new UnixTime(1678095635),
           untilTimestampExclusive: new UnixTime(1706789063),
         },
+        _hackCostMultiplier: 0.85,
       },
       {
         uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
@@ -513,6 +519,7 @@ export const starknet: Layer2 = {
             'function registerContinuousMemoryPage(uint256 startAddr,uint256[] values,uint256 z,uint256 alpha,uint256 prime)',
           sinceTimestampInclusive: new UnixTime(1706789063),
         },
+        _hackCostMultiplier: 0.85,
       },
       {
         uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
@@ -526,6 +533,7 @@ export const starknet: Layer2 = {
             'function verifyFRI(uint256[] proof,uint256[] friQueue,uint256 evaluationPoint,uint256 friStepSize,uint256 expectedRoot)',
           sinceTimestampInclusive: new UnixTime(1706772791),
         },
+        _hackCostMultiplier: 0.85,
       },
       {
         uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
@@ -539,6 +547,7 @@ export const starknet: Layer2 = {
             'function verifyMerkle(uint256[] merkleView,uint256[] initialMerkleQueue,uint256 height,uint256 expectedRoot)',
           sinceTimestampInclusive: new UnixTime(1706767355),
         },
+        _hackCostMultiplier: 0.85,
       },
     ],
   },
