@@ -1,4 +1,5 @@
 import {
+  assert,
   EthereumAddress,
   formatLargeNumberShared,
   formatSeconds,
@@ -246,6 +247,11 @@ export const starknet: Layer2 = {
     finality: {
       finalizationPeriod: 0,
     },
+    costsWarning: {
+      sentiment: 'warning',
+      content:
+        'The proof verification costs are shared among all projects that use the Starkware SHARP verifier. Therefore, Starknet’s costs are currently overestimated.',
+    },
   },
   config: {
     associatedTokens: ['STRK'],
@@ -374,10 +380,17 @@ export const starknet: Layer2 = {
       defaultUrl: 'https://starknet-mainnet.public.blastapi.io',
       defaultCallsPerMinute: 120,
     },
-    finality: 'coming soon',
+    finality: {
+      lag: 0,
+      type: 'Starknet',
+      minTimestamp: new UnixTime(1710252998),
+    },
     trackedTxs: [
       {
-        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
         query: {
           formula: 'sharpSubmission',
           sinceTimestampInclusive: new UnixTime(1636978914),
@@ -388,7 +401,10 @@ export const starknet: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
         query: {
           formula: 'sharpSubmission',
           sinceTimestampInclusive: new UnixTime(1702921247),
@@ -399,7 +415,10 @@ export const starknet: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
         query: {
           formula: 'sharpSubmission',
           sinceTimestampInclusive: new UnixTime(1704855731),
@@ -410,7 +429,10 @@ export const starknet: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
         query: {
           formula: 'sharpSubmission',
           sinceTimestampInclusive: new UnixTime(1710252995),
@@ -421,7 +443,10 @@ export const starknet: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
         query: {
           formula: 'sharpSubmission',
           sinceTimestampInclusive: new UnixTime(1710625271),
@@ -431,7 +456,10 @@ export const starknet: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
@@ -444,7 +472,10 @@ export const starknet: Layer2 = {
         },
       },
       {
-        uses: [{ type: 'liveness', subtype: 'stateUpdates' }],
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
@@ -454,6 +485,59 @@ export const starknet: Layer2 = {
           functionSignature:
             'function updateStateKzgDA(uint256[] programOutput, bytes kzgProof)',
           sinceTimestampInclusive: new UnixTime(1710252995),
+        },
+      },
+      {
+        uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xFD14567eaf9ba941cB8c8a94eEC14831ca7fD1b4',
+          ),
+          selector: '0x5578ceae',
+          functionSignature:
+            'function registerContinuousMemoryPage(uint256 startAddr,uint256[] values,uint256 z,uint256 alpha,uint256 prime)',
+          sinceTimestampInclusive: new UnixTime(1678095635),
+          untilTimestampExclusive: new UnixTime(1706789063),
+        },
+      },
+      {
+        uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x40864568f679c10aC9e72211500096a5130770fA',
+          ),
+          selector: '0x5578ceae',
+          functionSignature:
+            'function registerContinuousMemoryPage(uint256 startAddr,uint256[] values,uint256 z,uint256 alpha,uint256 prime)',
+          sinceTimestampInclusive: new UnixTime(1706789063),
+        },
+      },
+      {
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xDEf8A3b280A54eE7Ed4f72E1c7d6098ad8df44fb',
+          ),
+          selector: '0xe85a6a28',
+          functionSignature:
+            'function verifyFRI(uint256[] proof,uint256[] friQueue,uint256 evaluationPoint,uint256 friStepSize,uint256 expectedRoot)',
+          sinceTimestampInclusive: new UnixTime(1706772791),
+        },
+      },
+      {
+        uses: [{ type: 'l2costs', subtype: 'proofSubmissions' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x634DCf4f1421Fc4D95A968A559a450ad0245804c',
+          ),
+          selector: '0x3fe317a6',
+          functionSignature:
+            'function verifyMerkle(uint256[] merkleView,uint256[] initialMerkleQueue,uint256 height,uint256 expectedRoot)',
+          sinceTimestampInclusive: new UnixTime(1706767355),
         },
       },
     ],
@@ -589,6 +673,35 @@ export const starknet: Layer2 = {
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_SECONDS_RISK(minDelay)],
   },
+  upgradesAndGovernance: (() => {
+    const proxyGovernors = getProxyGovernance(discovery, 'Starknet')
+    const proxygovMulti = discovery.getContract('ProxyMultisig')
+    const implGovernors = discovery.getPermissionedAccounts(
+      'Starknet',
+      'governors',
+    )
+
+    assert(
+      proxyGovernors[1].address === proxygovMulti.address &&
+        proxyGovernors.length === 2 &&
+        discovery.isEOA(implGovernors[0].address),
+      'The pattern of Starkware Governance (One Multisig, one EOA in all three pillars) has changed, please update the description below.',
+    )
+    const description = `
+    The Upgrading mechanism of Starknet follows a similar scheme for all of their smart contracts. A contract initializes with the creator of the contract as a Governor, who can then nominate or remove other Governors allowing them to call restricted governor functions.
+
+    The Starknet core contract is upgradable by 2 appointed \`Starknet Proxy Governors\`: A Proxy multisig with a ${discovery.getMultisigStats('ProxyMultisig')} threshold and an EOA. Implementations can be upgraded ${starknetDelaySeconds === 0 ? 'without delay, thus users are not provided with an exit window in case of unwanted upgrades.' : 'with a delay of ' + formatSeconds(starknetDelaySeconds) + '.'}
+    
+    \`Starknet Implementation Governors\` have the authority to execute governed functions that modify contract parameters without delay. These actions encompass registering/removing Operators, specifying the program and config hash, or setting the Message Cancellation Delay between L1 and L2. Currently it is governed by a Multisig with a ${discovery.getMultisigStats('ImplementationMultisig')} threshold and an EOA. The verifier address is set upon initialization of the Starknet Implementation contract.
+    
+    Via the proxy contracts, the \`SHARP Verifier Governors\` can upgrade the GPSStatement Verifier implementation. It is important to note that the state is also maintained in the implementation contract, rather than in the proxy itself. An upgrade to the Verifier could potentially introduce code that approves fraudulent states. Currently, there is ${getSHARPVerifierUpgradeDelay() === 0 ? 'no' : 'a ' + formatSeconds(getSHARPVerifierUpgradeDelay())} delay before any upgrade takes effect.
+    
+    The StarkGate bridge escrows are mostly governed and upgraded by a Bridge Multisig, others by different owners. (see Permissions section)
+    
+    At present, the StarkNet Foundation hosts voting for STRK token holders (or their delegates) regarding protocol updates to reflect community intent, however, there is no direct authority to implement the execution of these upgrades.
+`
+    return description
+  })(),
   permissions: [
     {
       name: 'Starknet Proxy Governors',

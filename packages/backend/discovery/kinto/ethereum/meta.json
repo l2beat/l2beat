@@ -51,6 +51,126 @@
       }
     },
     {
+      "name": "Bridger",
+      "values": {
+        "DAI": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "L1GatewayRouter": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "USDe": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "WETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "exchangeProxy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2Vault": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sDAI": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sUSDe": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "senderAccount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "standardGateway": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "swapsEnabled": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "weETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "wstETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "BridgerOwnerMultisig",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "ChallengeManager",
       "values": {
         "bridge": {
@@ -81,7 +201,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "ExecutorMultisig",
       "values": {
         "VERSION": {
           "description": null,
@@ -104,11 +224,6 @@
           "type": null
         },
         "getThreshold": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "nonce": {
           "description": null,
           "severity": null,
           "type": null
@@ -144,6 +259,76 @@
           "type": null
         },
         "sequencerInbox": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1ERC20Gateway",
+      "values": {
+        "cloneableProxyHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "counterpartGateway": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "inbox": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2BeaconProxyFactory": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "router": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "whitelist": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "L1GatewayRouter",
+      "values": {
+        "counterpartGateway": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "defaultGateway": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "inbox": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "router": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "whitelist": {
           "description": null,
           "severity": null,
           "type": null

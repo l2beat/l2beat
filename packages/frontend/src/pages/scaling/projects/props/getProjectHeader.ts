@@ -10,7 +10,7 @@ import {
 
 import { Config } from '../../../../build/config'
 import { ProjectLink } from '../../../../components/icons'
-import { formatLargeNumber } from '../../../../utils'
+import { formatNumber } from '../../../../utils'
 import { getTpsDaily } from '../../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../../utils/activity/getTpsWeeklyChange'
 import { getTransactionCount } from '../../../../utils/activity/getTransactionCount'
@@ -60,7 +60,7 @@ export function getProjectHeader(
     ? getTpsWeeklyChange(activityData, 'project')
     : undefined
   const transactionMonthlyCount = activityData
-    ? getTransactionCount(activityData, 'project', 'month')
+    ? getTransactionCount(activityData, 'project', 30)
     : undefined
 
   const tvlBreakdown = getTvlBreakdown(
@@ -86,7 +86,7 @@ export function getProjectHeader(
     tvlWarning: project.display.tvlWarning,
     transactionMonthlyCount:
       transactionMonthlyCount !== undefined
-        ? formatLargeNumber(transactionMonthlyCount)
+        ? formatNumber(transactionMonthlyCount)
         : undefined,
     purposes: project.display.purposes,
     technology: project.display.category,

@@ -4,7 +4,7 @@ import { DERIVATION } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { HARDCODED } from '../discovery/values/hardcoded'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
-import { CELESTIA_DA_PROVIDER, opStack } from './templates/opStack'
+import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('publicgoodsnetwork')
@@ -19,7 +19,7 @@ const upgradeability = {
   upgradeDelay: 'No delay',
 }
 
-export const publicgoodsnetwork: Layer2 = opStack({
+export const publicgoodsnetwork: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
   discovery,
   display: {

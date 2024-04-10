@@ -19,11 +19,7 @@
     "0x519E42c24163192Dca44CD3fBDCEBF6be9130987": "PolygonZkEVMEtrog",
     "0x0775e11309d75aA6b0967917fB0213C5673eDf81": "PolygonzkEVMVerifier",
     "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6": "PolygonEcosystemToken",
-    "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80": "AstarValidiumEtrog",
-    "0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0": "AstarValidiumDAC",
-    "0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d": "AstarValidiumAdmin",
-    "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E": "AstarValidiumMultisig",
-    "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8": "AstarVerifier"
+    "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb": "GlobalExitRootV2"
   },
   "overrides": {
     "PolygonRollupManager": {
@@ -48,20 +44,18 @@
         "totalVerifiedBatches"
       ],
       "fields": {
-        "rollupsData": {
-          "type": "array",
+        "rollupData": {
+          "type": "call",
           "method": "rollupIDToRollupData",
-          "startIndex": 1,
-          "filter": ["rollupContract", "verifier"],
-          "length": "{{ rollupCount }}"
-        },
-        "rollupTypes": {
-          "type": "array",
-          "method": "rollupTypeMap",
-          "startIndex": 1,
-          "length": "{{ rollupTypeCount }}",
-          "filter": ["consensusImplementation", "verifier"],
-          "ignoreRelative": true
+          "args": [1], // polygon zkEVM ID
+          "pickFields": [
+            "rollupContract",
+            "chainID",
+            "verifier",
+            "forkID",
+            "rollupTypeID",
+            "rollupCompatibilityID"
+          ]
         }
       }
     },
@@ -88,10 +82,11 @@
     "PolygonZkEVMEtrog": {
       "ignoreInWatchMode": ["lastAccInputHash"]
     },
-    "AstarValidiumEtrog": { "ignoreDiscovery": true },
-    "AstarValidiumDAC": { "ignoreDiscovery": true },
     "PolygonEcosystemToken": {
       "ignoreInWatchMode": ["lastMint", "totalSupply"]
+    },
+    "GlobalExitRootV2": {
+      "ignoreDiscovery": true // already fetched in shared-config
     }
   }
 }

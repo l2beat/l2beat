@@ -85,17 +85,19 @@ export class TrackedTxsConfigsRepository extends BaseRepository {
       : undefined
   }
 
-  // TODO: (tracked_txs_status) function useful for implementing tracked txs status
-  // async findUnusedConfigurationsIds(): Promise<TrackedTxsConfigHash[]> {
-  //   const knex = await this.knex()
-  //   const rows = (await knex('tracked_txs_configs as c')
-  //     .select('c.config_hash')
-  //     .leftJoin('liveness as l', 'c.config_hash', 'l.config_hash')
-  //     .groupBy('c.config_hash')
-  //     .havingRaw('count(l.config_hash) = 0')) as { config_hash: string }[]
+  async findUnusedConfigurationsIds() {
+    const knex = await this.knex()
+    const rows = (await knex('tracked_txs_configs as c')
+      .select('c.id')
+      .leftJoin('liveness as l', 'c.id', 'l.tracked_tx_id')
+      .leftJoin('l2_costs as l2', 'c.id', 'l2.tracked_tx_id')
+      .groupBy('c.id')
+      .havingRaw(
+        'count(l.tracked_tx_id) = 0 AND count(l2.tracked_tx_id) = 0',
+      )) as { id: string }[]
 
-  //   return rows.map((row) => TrackedTxsConfigHash.unsafe(row.config_hash))
-  // }
+    return rows.map((row) => TrackedTxId.unsafe(row.id))
+  }
 
   async setLastSyncedTimestamp(
     trackedTxId: TrackedTxId,

@@ -1,3 +1,124 @@
+Generated with discovered.json: 0xfb0b61de4c8e0445a4631e0fabe790a63dede53e
+
+# Diff at Mon, 08 Apr 2024 07:34:22 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@ad88f63bb61619b31763ca9524dff8964cdc75f3 block: 19588327
+- current block number: 19609491
+
+## Description
+
+A new plug is added. Its source code is not verified on Etherscan.
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: Array of plug contract addresses
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.19:
++        "0x2Dba37E679358125BaB2132dDF5133d7d66F7D06"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19588327 (main branch discovery), not current.
+
+```diff
+    contract WETH Vault 2 (0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa) {
+    +++ description: None
+      values.token__:
+-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract WETH9 (0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xce7bfd338e208ebb4e3ce8a443525d2c636ed6ce
+
+# Diff at Fri, 05 Apr 2024 08:24:08 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@a911910b5e2265ea9037cf3122956a3c9707d183 block: 19532195
+- current block number: 19588327
+
+## Description
+
+A plug is added.
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: Array of plug contract addresses
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.18:
++        "0x6A769e25081396a49a6702758d0830920ac1163A"
+    }
+```
+
+```diff
+    contract WETH9 (0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2) {
+    +++ description: None
+      values.totalSupply:
+-        "2986807183575385281668118"
++        "2997542922595290340510005"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19532195 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract WBTC Vault (0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SNX Vault (0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WETH Vault 2 (0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WETH9 (0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WETH Vault (0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract wstETH Vault (0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x5f06851d6935822ec7d2e9ae5ae731d06d295cb6
 
 # Diff at Thu, 28 Mar 2024 11:05:29 GMT:
