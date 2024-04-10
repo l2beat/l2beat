@@ -16,6 +16,7 @@ import { Project } from '../../../../../model/Project'
 import { TaskQueue } from '../../../../../tools/queue/TaskQueue'
 import { PriceRepository } from '../../../../tvl/repositories/PriceRepository'
 import { TrackedTxsConfigsRepository } from '../../../repositories/TrackedTxsConfigsRepository'
+import { TrackedTxId } from '../../../types/TrackedTxId'
 import { TrackedTxsConfig } from '../../../types/TrackedTxsConfig'
 import { addToMap } from '../../utils/addToMap'
 import { getSyncedUntil } from '../../utils/getSyncedUntil'
@@ -138,6 +139,10 @@ export class L2CostsController {
         nowToFullHour,
       ]
 
+      const multipliersConfigs = this.findConfigsWithMultiplier(
+        project.trackedTxsConfig,
+      )
+
       const { count } =
         await this.l2CostsRepository.findCountByProjectAndTimeRange(
           project.projectId,
@@ -158,6 +163,7 @@ export class L2CostsController {
         const recordsWithDetails = await this.makeTransactionCalculations(
           records,
           timeRanges,
+          multipliersConfigs,
         )
 
         const { hourly, daily } = this.aggregateL2Costs(
@@ -187,6 +193,35 @@ export class L2CostsController {
         combined: this.getCombinedL2Costs(combinedHourlyMap, combinedDailyMap),
       },
     }
+  }
+
+  findConfigsWithMultiplier(config: TrackedTxsConfig) {
+    const entiresWithMultiplier = config.entries.filter((e) => e.costMultiplier)
+
+    return entiresWithMultiplier.flatMap((e) => {
+      const {
+        projectId: _,
+        uses: __,
+        costMultiplier: ___,
+        untilTimestampExclusive: ____,
+        ...queryWithoutUntilTimestamp
+      } = e
+
+      return e.uses
+        .filter((u) => u.type === 'l2costs')
+        .map((use) => {
+          return {
+            id: TrackedTxId([
+              JSON.stringify({
+                type: use.type,
+                subtype: use.subtype,
+              }),
+              JSON.stringify(queryWithoutUntilTimestamp),
+            ]),
+            costMultiplier: e.costMultiplier ?? 1,
+          }
+        })
+    })
   }
 
   aggregateL2Costs(
@@ -223,6 +258,7 @@ export class L2CostsController {
   async makeTransactionCalculations(
     transactions: L2CostsRecord[],
     ranges: [UnixTime, UnixTime],
+    configsWithMultiplier: { id: TrackedTxId; costMultiplier: number }[],
   ): Promise<DetailedTransaction[]> {
     const ethPricesMap = await this.priceRepository.findByTimestampRange(
       AssetId.ETH,
@@ -242,15 +278,22 @@ export class L2CostsController {
           .toISOString()}`,
       )
 
+      let costMultiplier = 1
+      const multiplierConfig = configsWithMultiplier.find(
+        (c) => c.id === tx.trackedTxId,
+      )
+      if (multiplierConfig) {
+        costMultiplier = multiplierConfig.costMultiplier
+      }
+
       const gasPriceGwei = parseFloat((tx.data.gasPrice * 1e-9).toFixed(9))
       const gasPriceETH = parseFloat((gasPriceGwei * 1e-9).toFixed(18))
 
-      const calldataGasUsed = tx.data.calldataGasUsed
-      const computeGasUsed =
-        tx.data.gasUsed - tx.data.calldataGasUsed - OVERHEAD
-      const overheadGasUsed = OVERHEAD
-      const totalGas = tx.data.gasUsed
-      const gasCost = tx.data.gasUsed * gasPriceETH
+      const calldataGasUsed = tx.data.calldataGasUsed * costMultiplier
+      const overheadGasUsed = OVERHEAD * costMultiplier
+      const totalGas = tx.data.gasUsed * costMultiplier
+      const computeGasUsed = totalGas - calldataGasUsed - overheadGasUsed
+      const gasCost = totalGas * gasPriceETH
       const calldataGasCost = calldataGasUsed * gasPriceETH
       const computeGasCost = computeGasUsed * gasPriceETH
       const totalGasCost = gasCost
@@ -285,16 +328,17 @@ export class L2CostsController {
         const blobGasPriceETH = parseFloat(
           (blobGasPriceGwei * 1e-9).toFixed(18),
         )
-        const blobGasCost = tx.data.blobGasUsed * blobGasPriceETH
+        const blobGasUsed = tx.data.blobGasUsed * costMultiplier
+        const blobGasCost = blobGasUsed * blobGasPriceETH
         const blobGasCostUsd = blobGasCost * ethUsdPrice
 
         return {
           ...detailedTransaction,
           type: 3,
           blobGasCost,
-          blobGasUsed: tx.data.blobGasUsed,
+          blobGasUsed,
           blobGasCostUsd,
-          totalGas: totalGas + tx.data.blobGasUsed,
+          totalGas: totalGas + blobGasUsed,
           totalGasCost: totalGasCost + blobGasCost,
           totalGasCostUsd: (totalGasCost + blobGasCost) * ethUsdPrice,
         } as const

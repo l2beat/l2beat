@@ -27,6 +27,7 @@ export const xai: Layer3 = orbitStackL3({
         'https://discord.gg/xaigames',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
   },
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),

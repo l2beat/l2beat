@@ -40,6 +40,10 @@ export function getChainDiscoveryConfig(
       `${ENV_NAME}_RPC_GETLOGS_MAX_RANGE_FOR_DISCOVERY`,
       `${ENV_NAME}_RPC_GETLOGS_MAX_RANGE`,
     ]),
+    reorgSafeDepth: env.optionalInteger([
+      `${ENV_NAME}_REORG_SAFE_DEPTH_FOR_DISCOVERY`,
+      `${ENV_NAME}_REORG_SAFE_DEPTH`,
+    ]),
     enableCache: env.optionalBoolean([
       `${ENV_NAME}_DISCOVERY_CACHE_ENABLED`,
       'DISCOVERY_CACHE_ENABLED',

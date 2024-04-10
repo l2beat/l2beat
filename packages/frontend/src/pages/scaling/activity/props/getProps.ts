@@ -14,7 +14,10 @@ export function getProps(
   return {
     props: {
       navbar: getNavbarProps(config, 'scaling'),
-      activityView: getScalingActivityView(config.layer2s, pagesData),
+      activityView: getScalingActivityView(
+        [...config.layer2s, ...config.layer3s],
+        pagesData,
+      ),
       footer: getFooterProps(config),
       milestones: config.milestones,
     },

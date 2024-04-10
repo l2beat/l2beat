@@ -9,6 +9,7 @@ import {
   ScalingProjectContracts,
   ScalingProjectDisplay,
   ScalingProjectPermission,
+  ScalingProjectTransactionApi,
 } from '../../common'
 import { ChainConfig } from '../../common/ChainConfig'
 import { ScalingProjectRiskView } from '../../common/ScalingProjectRiskView'
@@ -19,7 +20,6 @@ import { StageConfig } from '../common/stages/types'
 import { Layer2FinalityConfig } from './Layer2FinalityConfig'
 import { Layer2LivenessConfig } from './Layer2LivenessConfig'
 import { Layer2TxConfig } from './Layer2TrackedTxsConfig'
-import { Layer2TransactionApi } from './Layer2TransactionApi'
 
 export interface Layer2 {
   type: 'layer2'
@@ -90,7 +90,7 @@ export interface Layer2FinalityDisplay {
 
 export interface Layer2Config extends ScalingProjectConfig {
   /** API parameters used to get transaction count */
-  transactionApi?: Layer2TransactionApi
+  transactionApi?: ScalingProjectTransactionApi
   /** List of transactions that are tracked by our backend */
   trackedTxs?: Layer2TxConfig[]
   /** Configuration for getting liveness data */

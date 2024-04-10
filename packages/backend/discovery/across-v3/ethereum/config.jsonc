@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
   "chain": "ethereum",
-  "name": "across-v2",
+  "name": "across-v3",
   "initialAddresses": ["0xc186fA914353c44b2E33eBE05f21846F1048bEda"],
   "names": {
     "0xc186fA914353c44b2E33eBE05f21846F1048bEda": "HubPool",
@@ -16,7 +16,9 @@
     "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE": "OptimisticOracleV3",
     "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "USDC",
     "0x8692B776d1Ff0664177c90465038056Dc64f8991": "OptimisticGovernor",
-    "0xE233009838CB898b50e0012a6E783FC9FeE447FB": "ZkSync_Adapter"
+    "0xE233009838CB898b50e0012a6E783FC9FeE447FB": "ZkSync_Adapter",
+    "0xd19d4B5d358258f05D7B411E21A1460D11B0876F": "LineaRollup",
+    "0x504A330327A089d8364C4ab3811Ee26976d388ce": "LineaUSDCBridge"
   },
   "overrides": {
     "HubPool": {
@@ -75,6 +77,9 @@
     },
     "ZkSync_Adapter": {
       "ignoreInWatchMode": ["getL1CallValue"] // required amount of ETH to send a message, changes depending on the gas price
+    },
+    "LineaRollup": {
+      "ignoreDiscovery": true
     },
     "0x6B175474E89094C44Da98b954EedeAC495271d0F": {
       // Maker: Dai Stablecoin
@@ -165,6 +170,9 @@
       "ignoreDiscovery": true
     },
     "USDC": {
+      "ignoreDiscovery": true
+    },
+    "LineaUSDCBridge": {
       "ignoreDiscovery": true
     },
     "OptimisticGovernor": {

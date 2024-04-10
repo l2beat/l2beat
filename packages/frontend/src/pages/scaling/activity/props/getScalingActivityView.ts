@@ -1,4 +1,4 @@
-import { Layer2 } from '@l2beat/config'
+import { Layer2, Layer3 } from '@l2beat/config'
 import {
   ActivityApiChart,
   ActivityApiResponse,
@@ -19,7 +19,7 @@ import {
 import { ScalingActivityViewProps } from '../view/ScalingActivityView'
 
 export function getScalingActivityView(
-  projects: Layer2[],
+  projects: (Layer2 | Layer3)[],
   pagesData: ActivityPagesData,
 ): ScalingActivityViewProps {
   const { activityApiResponse, verificationStatus, implementationChange } =
@@ -46,7 +46,7 @@ export function getScalingActivityView(
 }
 
 export function getScalingActivityViewEntry(
-  project: Layer2,
+  project: Layer2 | Layer3,
   activityApiResponse: ActivityApiResponse,
   verificationStatus: VerificationStatus,
   implementationChange?: ImplementationChangeReportApiResponse,
@@ -69,7 +69,7 @@ export function getScalingActivityViewEntry(
     isVerified,
     showProjectUnderReview: isAnySectionUnderReview(project),
     dataSource: project.display.activityDataSource,
-    stage: project.stage,
+    stage: project.type === 'layer2' ? project.stage : undefined,
     data: getActivityViewEntryDetails(data, 'project'),
   }
 }
@@ -111,6 +111,8 @@ function getActivityViewEntryDetails(
   }
 }
 
-export function getIncludedProjects<T extends Layer2>(projects: T[]) {
-  return projects.filter((x) => !x.isArchived && !x.isUpcoming)
+export function getIncludedProjects<T extends Layer2 | Layer3>(projects: T[]) {
+  return projects.filter(
+    (x) => (x.type === 'layer2' ? !x.isArchived : true) && !x.isUpcoming,
+  )
 }
