@@ -156,6 +156,10 @@ export class ProjectDiscovery {
     }
   }
 
+  isEOA(address: EthereumAddress): boolean {
+    return this.discovery.eoas.includes(address)
+  }
+
   getInversion(): InvertedAddresses {
     return calculateInversion(this.discovery)
   }
@@ -331,7 +335,7 @@ export class ProjectDiscovery {
       `Values must be Ethereum addresses`,
     )
     const address = EthereumAddress(account)
-    const isEOA = this.discovery.eoas.includes(address)
+    const isEOA = this.isEOA(address)
     const contract = this.discovery.contracts.find(
       (contract) => contract.address === address,
     )
@@ -510,9 +514,7 @@ export class ProjectDiscovery {
       (contract) => gatherAddressesFromUpgradeability(contract.upgradeability),
     )
 
-    return addressesWithinUpgradeability.filter(
-      (addr) => !this.discovery.eoas.includes(addr),
-    )
+    return addressesWithinUpgradeability.filter((addr) => !this.isEOA(addr))
   }
 
   getContractByAddress(address: string): ContractParameters {

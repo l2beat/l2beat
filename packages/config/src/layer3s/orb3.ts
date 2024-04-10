@@ -30,5 +30,7 @@ export const orb3: Layer3 = underReviewL3({
         'https://mirror.xyz/0xCC98fAeE2309c7424cFE5995741b96BE61c9253f',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
   },
+  // rpcUrl: 'https://rpc.orb3.tech',
 })
