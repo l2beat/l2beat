@@ -25,7 +25,7 @@ export interface EscrowEntry extends AmountConfigBase {
   escrowAddress: EthereumAddress
 }
 
-interface AmountConfigBase {
+export interface AmountConfigBase {
   chain: string
   project: ProjectId
   source: 'canonical' | 'external' | 'native'
