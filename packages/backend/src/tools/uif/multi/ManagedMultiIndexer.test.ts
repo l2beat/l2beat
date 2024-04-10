@@ -6,14 +6,14 @@ import {
 } from '@l2beat/uif'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { _TEST_ONLY_resetUniqueIds } from './ids'
-import { IndexerService } from './IndexerService'
+import { _TEST_ONLY_resetUniqueIds } from '../ids'
+import { IndexerService } from '../IndexerService'
 import {
+  ManagedMultiIndexer,
   ManagedMultiIndexerOptions,
-  MangedMultiIndexer,
 } from './ManagedMultiIndexer'
 
-describe(MangedMultiIndexer.name, () => {
+describe(ManagedMultiIndexer.name, () => {
   afterEach(() => {
     _TEST_ONLY_resetUniqueIds()
   })
@@ -57,7 +57,7 @@ describe(MangedMultiIndexer.name, () => {
     })
   })
 
-  it(MangedMultiIndexer.prototype.getSafeHeight.name, async () => {
+  it(ManagedMultiIndexer.prototype.getSafeHeight.name, async () => {
     const indexerService = mockObject<IndexerService>({
       getSafeHeight: async () => 1,
     })
@@ -78,7 +78,7 @@ describe(MangedMultiIndexer.name, () => {
     expect(indexerService.getSafeHeight).toHaveBeenOnlyCalledWith('indexer')
   })
 
-  it(MangedMultiIndexer.prototype.setSafeHeight.name, async () => {
+  it(ManagedMultiIndexer.prototype.setSafeHeight.name, async () => {
     const indexerService = mockObject<IndexerService>({
       setSafeHeight: async () => {},
     })
@@ -98,7 +98,7 @@ describe(MangedMultiIndexer.name, () => {
     expect(indexerService.setSafeHeight).toHaveBeenOnlyCalledWith('indexer', 1)
   })
 
-  it(MangedMultiIndexer.prototype.multiInitialize.name, async () => {
+  it(ManagedMultiIndexer.prototype.multiInitialize.name, async () => {
     const configurations = [mock<string>({ id: 'a' })]
     const indexerService = mockObject<IndexerService>({
       getSavedConfigurations: mockFn().resolvesTo(configurations),
@@ -124,7 +124,7 @@ describe(MangedMultiIndexer.name, () => {
     )
   })
 
-  it(MangedMultiIndexer.prototype.saveConfigurations.name, async () => {
+  it(ManagedMultiIndexer.prototype.saveConfigurations.name, async () => {
     const configurations = [mock<string>({ id: 'a', currentHeight: null })]
     const indexerService = mockObject<IndexerService>({
       upsertConfigurations: async () => {},
@@ -179,7 +179,7 @@ describe(MangedMultiIndexer.name, () => {
   })
 })
 
-class TestIndexer extends MangedMultiIndexer<string> {
+class TestIndexer extends ManagedMultiIndexer<string> {
   override multiUpdate(
     _from: number,
     to: number,
