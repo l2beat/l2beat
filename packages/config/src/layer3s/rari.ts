@@ -25,7 +25,14 @@ export const rari: Layer3 = orbitStackL3({
       repositories: ['https://github.com/OffchainLabs/nitro'],
       socialMedia: ['https://twitter.com/RariChain'],
     },
+    activityDataSource: 'Blockchain RPC',
   },
+  rpcUrl: 'https://mainnet.rpc.rarichain.org/http',
+  nonTemplateContracts: [
+    discovery.getContractDetails('L1GatewayRouter', {
+      description: 'Router managing token <--> gateway mapping.',
+    }),
+  ],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6'),

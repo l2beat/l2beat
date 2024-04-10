@@ -18,6 +18,15 @@
       "address": "0xEd04915c23f00A313a544955524EB7DBD823143d"
     },
     {
+      "symbol": "ACX",
+      "address": "0x44108f0223A3C3028F5Fe7AEC7f9bb2E66beF82F"
+    },
+    {
+      "symbol": "EURA",
+      "address": "0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8",
+      "category": "stablecoin"
+    },
+    {
       "symbol": "AGIX",
       "address": "0x5B7533812759B45C2B44C19e320ba2cD2681b542"
     },
@@ -183,6 +192,10 @@
       "address": "0x3506424F91fD33084466F402d5D97f05F8e3b4AF"
     },
     {
+      "symbol": "CNFI",
+      "address": "0xEABB8996eA1662cAd2f7fB715127852cd3262Ae9"
+    },
+    {
       "symbol": "COMP",
       "address": "0xc00e94Cb662C3520282E6f5717214004A7f26888"
     },
@@ -328,6 +341,10 @@
       "address": "0xaea46A60368A7bD060eec7DF8CBa43b7EF41Ad85"
     },
     {
+      "symbol": "FORE",
+      "address": "0xB2ee0aDBe0EF1281025d0676511bB1df14600f4D"
+    },
+    {
       "symbol": "FPI",
       "address": "0x5Ca135cB8527d76e932f34B5145575F9d8cbE08E"
     },
@@ -389,8 +406,16 @@
       "address": "0x6810e776880C02933D47DB1b9fc05908e5386b96"
     },
     {
+      "symbol": "GOB",
+      "address": "0x830eB1204380E9c44434Db8700257025358707c6"
+    },
+    {
       "symbol": "gOHM",
       "address": "0x0ab87046fBb341D058F17CBC4c1133F25a20a52f"
+    },
+    {
+      "symbol": "GOVI",
+      "address": "0xeEAA40B28A2d1b0B08f6f97bB1DD4B75316c6107"
     },
     {
       "symbol": "GRT",
@@ -660,6 +685,10 @@
       "address": "0x7A58c0Be72BE218B41C608b7Fe7C5bB630736C71"
     },
     {
+      "symbol": "PEPE",
+      "address": "0x6982508145454Ce325dDbE47a25d4ec3d2311933"
+    },
+    {
       "symbol": "PERP",
       "address": "0xbC396689893D065F41bc2C6EcbeE5e0085233447"
     },
@@ -802,6 +831,10 @@
       "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE"
     },
     {
+      "symbol": "Silo",
+      "address": "0x6f80310CA7F2C654691D1383149Fa1A57d8AB1f8"
+    },
+    {
       "symbol": "SIS",
       "address": "0xd38BB40815d2B0c2d2c866e0c72c5728ffC76dd9"
     },
@@ -877,6 +910,10 @@
     {
       "symbol": "TEL",
       "address": "0x467Bccd9d29f223BcE8043b84E8C8B282827790F"
+    },
+    {
+      "symbol": "THALES",
+      "address": "0x8947da500Eb47F82df21143D0C01A29862a8C3c5"
     },
     {
       "symbol": "TLOS",
@@ -1087,7 +1124,7 @@
     {
       "symbol": "BTC.b",
       "address": "0x2297aEbD383787A160DD0d9F71508148769342E3",
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -1139,7 +1176,7 @@
     {
       "symbol": "JOE",
       "address": "0x371c7ec6d8039ff7933a2aa28eb827ffe1f52f07",
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -1271,8 +1308,20 @@
       "formula": "circulatingSupply"
     },
     {
+      "symbol": "BRETT",
+      "address": "0x532f27101965dd16442E59d40670FaF5eBB142E4",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
       "symbol": "DEGEN",
       "address": "0x4ed4e862860bed51a9570b96d89af5e1b0efefed",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "MOCHI",
+      "address": "0xF6e932Ca12afa26665dC4dDE7e27be02A7c02e50",
       "type": "NMV",
       "formula": "circulatingSupply"
     },
@@ -1289,6 +1338,12 @@
     {
       "symbol": "SEAM",
       "address": "0x1c7a460413dd4e964f96d8dfc56e7223ce88cd85",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "TOSHI",
+      "address": "0xAC1Bd2486aAf3B5C0fc3Fd868558b082a531B2B4",
       "type": "NMV",
       "formula": "circulatingSupply"
     },
@@ -1330,7 +1385,7 @@
     {
       "symbol": "STONE",
       "address": "0xEc901DA9c68E90798BbBb74c11406A32A70652C3",
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -1363,12 +1418,31 @@
     {
       "symbol": "STONE",
       "address": "0x93F4d0ab6a8B4271f4a28Db399b5E30612D21116",
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
       }
+    },
+    {
+      "symbol": "LUBE",
+      "address": "0x1be3735dd0c0eb229fb11094b6c277192349ebbf",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "MENDI",
+      "address": "0x43e8809ea748eff3204ee01f08872f063e44065f",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "LYNX",
+      "address": "0x1a51b19CE03dbE0Cb44C1528E34a7EDD7771E9Af",
+      "type": "NMV",
+      "formula": "circulatingSupply",
+      "coingeckoId": "lynex"
     }
   ],
   "zkfair": [
@@ -1454,12 +1528,21 @@
       "symbol": "STONE",
       "address": "0x80137510979822322193FC997d400D5A6C747bf7",
       "coingeckoId": "stakestone-ether",
-      "type": "EBV",
+      "type": "NMV",
       "formula": "totalSupply",
       "bridgedUsing": {
         "bridge": "Stargate",
         "slug": "stargate"
       }
+    }
+  ],
+  "zksync2": [
+    {
+      "symbol": "USDC",
+      "address": "0x1d17CBcF0D6D143135aE902365D2E5e2A16538D4",
+      "category": "stablecoin",
+      "type": "NMV",
+      "formula": "totalSupply"
     }
   ]
 }

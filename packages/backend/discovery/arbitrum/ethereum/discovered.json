@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "chain": "ethereum",
-  "blockNumber": 19488784,
+  "blockNumber": 19581597,
   "configHash": "0x58845971c88ed63a11f0d4e941ef033ab0419e507f3c019ed4bf585f23e94458",
   "version": 3,
   "contracts": [
@@ -120,7 +120,7 @@
       "implementations": ["0x31DA64D19Cd31A19CD09F4070366Fe2144792cf7"],
       "sinceTimestamp": 1661457944,
       "values": {
-        "batchCount": 581742,
+        "batchCount": 585976,
         "batchPosterManager": "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
@@ -141,7 +141,7 @@
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 1456644,
+        "totalDelayedMessagesRead": 1471058,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -326,12 +326,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 12621,
+        "firstUnresolvedNode": 12934,
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isERC20Enabled": false,
         "lastStakeBlock": 15447818,
-        "latestConfirmed": 12620,
-        "latestNodeCreated": 12774,
+        "latestConfirmed": 12933,
+        "latestNodeCreated": 13087,
         "loserStakeEscrow": "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -490,11 +490,11 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 1456655,
+        "delayedMessageCount": 1471066,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 581742,
-        "sequencerReportedSubMessageCount": 170747511
+        "sequencerMessageCount": 585976,
+        "sequencerReportedSubMessageCount": 175249845
       },
       "derivedName": "Bridge"
     },
@@ -638,7 +638,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "4 of 6 (67%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1630382926,
@@ -654,7 +655,7 @@
           "0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe"
         ],
         "getThreshold": 4,
-        "nonce": 186,
+        "nonce": 187,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -722,7 +723,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "4 of 6 (67%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1707458255,
@@ -1439,7 +1441,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": ["0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"]
+        "modules": ["0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"],
+        "threshold": "9 of 12 (75%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1692138791,

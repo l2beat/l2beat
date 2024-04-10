@@ -1,3 +1,46 @@
+Generated with discovered.json: 0x78c10f4a622dd76630db8342b594a1a21335e18e
+
+# Diff at Thu, 04 Apr 2024 09:48:09 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@867bb633ffb1ced5b037cf9e9116dcf019a58dbf block: 19488784
+- current block number: 19581597
+
+## Description
+
+Human-readable multisig thresholds were automatically added by new version of
+discovery.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19488784 (main branch discovery), not current.
+
+```diff
+    contract ValidatorOwnerMultisig (0xC234E41AE2cb00311956Aa7109fC801ae8c80941) {
+    +++ description: None
+      upgradeability.threshold:
++        "4 of 6 (67%)"
+    }
+```
+
+```diff
+    contract BatchPosterManagerMultisig (0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B) {
+    +++ description: None
+      upgradeability.threshold:
++        "4 of 6 (67%)"
+    }
+```
+
+```diff
+    contract SecurityCouncil (0xF06E95eF589D9c38af242a8AAee8375f14023F85) {
+    +++ description: None
+      upgradeability.threshold:
++        "9 of 12 (75%)"
+    }
+```
+
 Generated with discovered.json: 0x3ea08e093c4fc78a79b685a42dbbadc7258c49c0
 
 # Diff at Fri, 22 Mar 2024 07:51:09 GMT:

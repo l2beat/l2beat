@@ -16,6 +16,7 @@ import { Project } from '../../../../../model/Project'
 import { TaskQueue } from '../../../../../tools/queue/TaskQueue'
 import { PriceRepository } from '../../../../tvl/repositories/PriceRepository'
 import { TrackedTxsConfigsRepository } from '../../../repositories/TrackedTxsConfigsRepository'
+import { TrackedTxId } from '../../../types/TrackedTxId'
 import { TrackedTxsConfig } from '../../../types/TrackedTxsConfig'
 import { addToMap } from '../../utils/addToMap'
 import { getSyncedUntil } from '../../utils/getSyncedUntil'
@@ -42,7 +43,6 @@ type L2CostsTrackedTxsConfigEntry = {
   untilTimestamp: UnixTime | undefined
 }
 
-const NOW_TO_FULL_HOUR = UnixTime.now().toStartOf('hour')
 const MAX_DAYS = 180
 const MAX_RECORDS = 50000
 
@@ -94,11 +94,11 @@ export class L2CostsController {
     this.taskQueue.addToFront()
     this.logger.info('Caching: initial caching scheduled')
 
-    const tenMinutes = 10 * 60 * 1000
+    const thirtyMinutes = 30 * 60 * 1000
     setInterval(() => {
       this.taskQueue.addIfEmpty()
       this.logger.info('Caching: refetch scheduled')
-    }, tenMinutes)
+    }, thirtyMinutes)
   }
 
   async getL2Costs(): Promise<L2CostsResult> {
@@ -132,10 +132,16 @@ export class L2CostsController {
         continue
       }
 
+      const nowToFullHour = UnixTime.now().toStartOf('hour')
+
       const timeRanges: [UnixTime, UnixTime] = [
-        NOW_TO_FULL_HOUR.add(-MAX_DAYS, 'days'),
-        NOW_TO_FULL_HOUR,
+        nowToFullHour.add(-MAX_DAYS, 'days'),
+        nowToFullHour,
       ]
+
+      const multipliersConfigs = this.findConfigsWithMultiplier(
+        project.trackedTxsConfig,
+      )
 
       const { count } =
         await this.l2CostsRepository.findCountByProjectAndTimeRange(
@@ -157,12 +163,14 @@ export class L2CostsController {
         const recordsWithDetails = await this.makeTransactionCalculations(
           records,
           timeRanges,
+          multipliersConfigs,
         )
 
         const { hourly, daily } = this.aggregateL2Costs(
           recordsWithDetails,
           combinedHourlyMap,
           combinedDailyMap,
+          nowToFullHour,
         )
 
         const projectData = projects[project.projectId.toString()]
@@ -187,16 +195,46 @@ export class L2CostsController {
     }
   }
 
+  findConfigsWithMultiplier(config: TrackedTxsConfig) {
+    const entiresWithMultiplier = config.entries.filter((e) => e.costMultiplier)
+
+    return entiresWithMultiplier.flatMap((e) => {
+      const {
+        projectId: _,
+        uses: __,
+        costMultiplier: ___,
+        untilTimestampExclusive: ____,
+        ...queryWithoutUntilTimestamp
+      } = e
+
+      return e.uses
+        .filter((u) => u.type === 'l2costs')
+        .map((use) => {
+          return {
+            id: TrackedTxId([
+              JSON.stringify({
+                type: use.type,
+                subtype: use.subtype,
+              }),
+              JSON.stringify(queryWithoutUntilTimestamp),
+            ]),
+            costMultiplier: e.costMultiplier ?? 1,
+          }
+        })
+    })
+  }
+
   aggregateL2Costs(
     transactions: DetailedTransaction[],
     combinedHourlyMap: Map<number, L2CostsApiChartPoint>,
     combinedDailyMap: Map<number, L2CostsApiChartPoint>,
+    nowToFullHour: UnixTime,
   ): Omit<L2CostsProjectApiCharts, 'syncedUntil'> {
     const hourlyMap = new Map<number, L2CostsApiChartPoint>()
     const dailyMap = new Map<number, L2CostsApiChartPoint>()
 
     for (const tx of transactions) {
-      if (tx.timestamp.gt(NOW_TO_FULL_HOUR.add(-7, 'days'))) {
+      if (tx.timestamp.gt(nowToFullHour.add(-7, 'days'))) {
         addToMap(hourlyMap, 'hour', tx)
         addToMap(combinedHourlyMap, 'hour', tx)
       }
@@ -220,6 +258,7 @@ export class L2CostsController {
   async makeTransactionCalculations(
     transactions: L2CostsRecord[],
     ranges: [UnixTime, UnixTime],
+    configsWithMultiplier: { id: TrackedTxId; costMultiplier: number }[],
   ): Promise<DetailedTransaction[]> {
     const ethPricesMap = await this.priceRepository.findByTimestampRange(
       AssetId.ETH,
@@ -239,15 +278,22 @@ export class L2CostsController {
           .toISOString()}`,
       )
 
+      let costMultiplier = 1
+      const multiplierConfig = configsWithMultiplier.find(
+        (c) => c.id === tx.trackedTxId,
+      )
+      if (multiplierConfig) {
+        costMultiplier = multiplierConfig.costMultiplier
+      }
+
       const gasPriceGwei = parseFloat((tx.data.gasPrice * 1e-9).toFixed(9))
       const gasPriceETH = parseFloat((gasPriceGwei * 1e-9).toFixed(18))
 
-      const calldataGasUsed = tx.data.calldataGasUsed
-      const computeGasUsed =
-        tx.data.gasUsed - tx.data.calldataGasUsed - OVERHEAD
-      const overheadGasUsed = OVERHEAD
-      const totalGas = tx.data.gasUsed
-      const gasCost = tx.data.gasUsed * gasPriceETH
+      const calldataGasUsed = tx.data.calldataGasUsed * costMultiplier
+      const overheadGasUsed = OVERHEAD * costMultiplier
+      const totalGas = tx.data.gasUsed * costMultiplier
+      const computeGasUsed = totalGas - calldataGasUsed - overheadGasUsed
+      const gasCost = totalGas * gasPriceETH
       const calldataGasCost = calldataGasUsed * gasPriceETH
       const computeGasCost = computeGasUsed * gasPriceETH
       const totalGasCost = gasCost
@@ -282,16 +328,17 @@ export class L2CostsController {
         const blobGasPriceETH = parseFloat(
           (blobGasPriceGwei * 1e-9).toFixed(18),
         )
-        const blobGasCost = tx.data.blobGasUsed * blobGasPriceETH
+        const blobGasUsed = tx.data.blobGasUsed * costMultiplier
+        const blobGasCost = blobGasUsed * blobGasPriceETH
         const blobGasCostUsd = blobGasCost * ethUsdPrice
 
         return {
           ...detailedTransaction,
           type: 3,
           blobGasCost,
-          blobGasUsed: tx.data.blobGasUsed,
+          blobGasUsed,
           blobGasCostUsd,
-          totalGas: totalGas + tx.data.blobGasUsed,
+          totalGas: totalGas + blobGasUsed,
           totalGasCost: totalGasCost + blobGasCost,
           totalGasCostUsd: (totalGasCost + blobGasCost) * ethUsdPrice,
         } as const

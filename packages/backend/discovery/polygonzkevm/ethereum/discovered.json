@@ -1,8 +1,8 @@
 {
   "name": "polygonzkevm",
   "chain": "ethereum",
-  "blockNumber": 19567779,
-  "configHash": "0x678bb9db372a5e3bfa91f9b19ef1232060f713cdfeadb8bc39d590f2a53b2c27",
+  "blockNumber": 19610743,
+  "configHash": "0x5ca56ad5f4fc2677630f64ada63d0604a05ad86b5e79034eb1cfd47f19cec2c7",
   "version": 3,
   "contracts": [
     {
@@ -14,34 +14,6 @@
       "sinceTimestamp": 1668647879,
       "values": {
         "DOMAIN_SEPARATOR": "0x866a5aba21966af95d6c7ab78eb2b2fc913915c28be3b9aa07cc04ff903e3f28"
-      }
-    },
-    {
-      "name": "PolygonDataCommittee",
-      "address": "0x05652Ec92366F3C2255991a265c499E01Ba58e6a",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xd620Ca1ad5c3888e4521c3374cE4088Cb78079b8",
-        "admin": "0x1e37EA18e9515db29b3E94A00eD31484A3130204"
-      },
-      "implementations": ["0xd620Ca1ad5c3888e4521c3374cE4088Cb78079b8"],
-      "sinceTimestamp": 1711787327,
-      "values": {
-        "committeeHash": "0xfa0cdb192e4e3d5bda14ab176fe857843eda35d462548ac406f8e2be43d29ec7",
-        "getAmountOfMembers": 2,
-        "getProcotolName": "DataAvailabilityCommittee",
-        "members": [
-          [
-            "http://okx-defi-xlayer-dac1-pro:8444",
-            "0x19A81baC80f9cE3A45095f3df3a7cF69ef18fC08"
-          ],
-          [
-            "http://okx-defi-xlayer-dac2-pro:8444",
-            "0xE94Ac3cBc1C7EFFEACca68e3Bfe5D81E26A659B5"
-          ]
-        ],
-        "owner": "0x491619874b866c3cDB7C8553877da223525ead01",
-        "requiredAmountOfSignatures": 2
       }
     },
     {
@@ -62,26 +34,6 @@
       "sinceTimestamp": 1679653103,
       "values": {
         "owner": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
-      }
-    },
-    {
-      "name": "AstarVerifier",
-      "address": "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1706364923,
-      "derivedName": "FflonkVerifier"
-    },
-    {
-      "name": "ProxyAdmin",
-      "address": "0x1e37EA18e9515db29b3E94A00eD31484A3130204",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1711787315,
-      "values": {
-        "owner": "0xE4c5BFaddbf21a1F35AE66F180F78822078FBfDE"
       }
     },
     {
@@ -107,52 +59,6 @@
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
-    },
-    {
-      "name": "PolygonValidiumStorageMigration",
-      "address": "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
-      "unverified": true,
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
-        "admin": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
-      },
-      "implementations": ["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"],
-      "sinceTimestamp": 1711785755,
-      "values": {
-        "admin": "0x491619874b866c3cDB7C8553877da223525ead01",
-        "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "calculatePolPerForceBatch": 0,
-        "dataAvailabilityProtocol": "0x05652Ec92366F3C2255991a265c499E01Ba58e6a",
-        "forceBatchAddress": "0x491619874b866c3cDB7C8553877da223525ead01",
-        "forceBatchTimeout": 432000,
-        "gasTokenAddress": "0x75231F58b43240C9718Dd58B4967c5114342a86c",
-        "gasTokenNetwork": 0,
-        "GLOBAL_EXIT_ROOT_MANAGER_L2": "0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
-        "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
-        "INITIALIZE_TX_BRIDGE_LIST_LEN_LEN": 249,
-        "INITIALIZE_TX_BRIDGE_PARAMS": "0x80808401c9c38094",
-        "INITIALIZE_TX_BRIDGE_PARAMS_AFTER_BRIDGE_ADDRESS": "0x80b9",
-        "INITIALIZE_TX_BRIDGE_PARAMS_AFTER_BRIDGE_ADDRESS_EMPTY_METADATA": "0x80b8",
-        "INITIALIZE_TX_CONSTANT_BYTES": 32,
-        "INITIALIZE_TX_CONSTANT_BYTES_EMPTY_METADATA": 31,
-        "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
-        "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
-        "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0xb91af35fe1453f255efa25f9fe30898f8899f5052687984981d45b6a5b0b52b4",
-        "lastForceBatch": 0,
-        "lastForceBatchSequenced": 0,
-        "networkName": "X Layer",
-        "pendingAdmin": "0x0000000000000000000000000000000000000000",
-        "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
-        "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-        "SIGNATURE_INITIALIZE_TX_R": "0x00000000000000000000000000000000000000000000000000000005ca1ab1e0",
-        "SIGNATURE_INITIALIZE_TX_S": "0x000000000000000000000000000000000000000000000000000000005ca1ab1e",
-        "SIGNATURE_INITIALIZE_TX_V": 27,
-        "TIMESTAMP_RANGE": 36,
-        "trustedSequencer": "0xAF9d27ffe4d51eD54AC8eEc78f2785D7E11E5ab1",
-        "trustedSequencerURL": "https://rpc.xlayer.tech"
-      }
     },
     {
       "name": "PolygonEcosystemToken",
@@ -241,39 +147,15 @@
         "pendingStateTimeout": 432000,
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "rollupCount": 3,
-        "rollupsData": [
-          [
-            "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
-            "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
-          ],
-          [
-            "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
-            "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"
-          ],
-          [
-            "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
-            "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
-          ]
+        "rollupData": [
+          "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+          1101,
+          "0x0775e11309d75aA6b0967917fB0213C5673eDf81",
+          9,
+          3,
+          0
         ],
         "rollupTypeCount": 4,
-        "rollupTypes": [
-          [
-            "0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30",
-            "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"
-          ],
-          [
-            "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
-            "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be"
-          ],
-          [
-            "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
-            "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
-          ],
-          [
-            "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C",
-            "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
-          ]
-        ],
         "trustedAggregatorTimeout": 432000,
         "verifyBatchTimeTarget": 1800
       },
@@ -307,7 +189,7 @@
         "INITIALIZE_TX_CONSTANT_BYTES_EMPTY_METADATA": 31,
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
-        "lastAccInputHash": "0xd84b1ebf683fafe94416109c8bdc96e9a6d13dce2478d83aa022631d599f0c6f",
+        "lastAccInputHash": "0x4cbe667e1d63147bfd0e4018edc1e54f18961cbc0a6fd649fc08c09d20264342",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "polygon zkEVM",
@@ -322,26 +204,6 @@
         "trustedSequencerURL": "https://zkevm-rpc.com/"
       },
       "derivedName": "PolygonZkEVMEtrog"
-    },
-    {
-      "name": "PolygonZkEVMGlobalExitRootV2",
-      "address": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x2E38cD55163137483E30580Cb468C2dFf1d85077",
-        "admin": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
-      },
-      "implementations": ["0x2E38cD55163137483E30580Cb468C2dFf1d85077"],
-      "sinceTimestamp": 1679653151,
-      "values": {
-        "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 6983,
-        "getLastGlobalExitRoot": "0xc095e5994a0b9fd52ea40b40a773ef3501d71b6714aaa9f317da893d00a4a232",
-        "getRoot": "0xfa45b3fc78774ebaab9c348497cd3179c1b985b3d5acd9f7943ef5249df28026",
-        "lastMainnetExitRoot": "0xb660abe75b32c4549f002831954229d9bca2088cbba3e11ed323d658d3405195",
-        "lastRollupExitRoot": "0xbe9fd8ca76197d4a5e1a89029ce2a23b17702c9c061ac9e1d5653d6de3cdd87e",
-        "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
-      }
     },
     {
       "name": "usdcBridge",
@@ -362,29 +224,6 @@
         "zkNetworkId": 1
       },
       "derivedName": "L1Escrow"
-    },
-    {
-      "name": "OKBImplementation",
-      "address": "0x75231F58b43240C9718Dd58B4967c5114342a86c",
-      "upgradeability": {
-        "type": "ZeppelinOS proxy",
-        "implementation": "0x5DbA7dfCDbfb8812D30FDd99d9441F8b7a605621",
-        "owner": "0x4A164CA582D169f7caad471250991Dd861ddA981"
-      },
-      "implementations": ["0x5DbA7dfCDbfb8812D30FDd99d9441F8b7a605621"],
-      "sinceTimestamp": 1556264879,
-      "values": {
-        "decimals": 18,
-        "implementation": "0x5DbA7dfCDbfb8812D30FDd99d9441F8b7a605621",
-        "lawEnforcementRole": "0x5B27e98516fD2Bd5001D4dfE3f5a2263f702f634",
-        "name": "OKB",
-        "owner": "0xc3d82e22501f3D836727e335d3cf2151b07947d7",
-        "paused": false,
-        "proxyOwner": "0x4A164CA582D169f7caad471250991Dd861ddA981",
-        "supplyController": "0x4a11078a99b118BbFee78a5c187D98D264360433",
-        "symbol": "OKB",
-        "totalSupply": "300000000000000000000000000"
-      }
     },
     {
       "name": "PolygonZkEVMTimelock",
@@ -479,27 +318,18 @@
   "eoas": [
     "0x099198353446A9E3a20672eDC1Bd461E978842c3",
     "0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800",
-    "0x19A81baC80f9cE3A45095f3df3a7cF69ef18fC08",
-    "0x491619874b866c3cDB7C8553877da223525ead01",
-    "0x4a11078a99b118BbFee78a5c187D98D264360433",
-    "0x4A164CA582D169f7caad471250991Dd861ddA981",
     "0x4c1665d6651ecEfa59B9B3041951608468b18891",
     "0x4DE44Aa0Ef9DB64DF3eB3465d35D73d0409d44ed",
     "0x4E83124eD15b13265240B61EC9627797CCE1032E",
-    "0x5B27e98516fD2Bd5001D4dfE3f5a2263f702f634",
     "0xA0B02B28920812324f1cC3255bd8840867d3f227",
     "0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
-    "0xAF9d27ffe4d51eD54AC8eEc78f2785D7E11E5ab1",
     "0xb771380f912E4b5F6beDdf81314C383c13F16ab5",
     "0xBDa0B27f93B2FD3f076725b89cf02e48609bC189",
-    "0xc3d82e22501f3D836727e335d3cf2151b07947d7",
     "0xc4591c41e01a7a654B5427f39Bbd1dEe5bD45D1D",
     "0xD09971D8ed6C6a5e57581e90d593ee5B94e348D4",
     "0xd1B856ee12Bd00922cae8DD86ab068f8c0F95224",
     "0xDB5D9c10FD2a92692DB51853e06058EE0436d69B",
-    "0xE4c5BFaddbf21a1F35AE66F180F78822078FBfDE",
     "0xE6Ee0F8D81170160d50ed77b9C91E6219473d43a",
-    "0xE94Ac3cBc1C7EFFEACca68e3Bfe5D81E26A659B5",
     "0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2",
     "0xF53D1fB2EeD22Cf1E8f7E90Da7f1CAe88344065F",
     "0xf56AE6520776934127AB68438d1b4652BCe07F8f"
@@ -538,12 +368,6 @@
       "function transferFrom(tuple(address from, address to, uint160 amount, address token)[] transferDetails)",
       "function transferFrom(address from, address to, uint160 amount, address token)"
     ],
-    "0x05652Ec92366F3C2255991a265c499E01Ba58e6a": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
-    ],
     "0x0775e11309d75aA6b0967917fB0213C5673eDf81": [
       "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
     ],
@@ -557,125 +381,6 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
-    "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C": [
-      "constructor(address _globalExitRootManager, address _pol, address _bridgeAddress, address _rollupManager)",
-      "error BatchAlreadyVerified()",
-      "error BatchNotSequencedOrNotSequenceEnd()",
-      "error ExceedMaxVerifyBatches()",
-      "error FinalNumBatchBelowLastVerifiedBatch()",
-      "error FinalNumBatchDoesNotMatchPendingState()",
-      "error FinalPendingStateNumInvalid()",
-      "error ForceBatchNotAllowed()",
-      "error ForceBatchTimeoutNotExpired()",
-      "error ForceBatchesAlreadyActive()",
-      "error ForceBatchesDecentralized()",
-      "error ForceBatchesNotAllowedOnEmergencyState()",
-      "error ForceBatchesOverflow()",
-      "error ForcedDataDoesNotMatch()",
-      "error GasTokenNetworkMustBeZeroOnEther()",
-      "error GlobalExitRootNotExist()",
-      "error HaltTimeoutNotExpired()",
-      "error HaltTimeoutNotExpiredAfterEmergencyState()",
-      "error HugeTokenMetadataNotSupported()",
-      "error InitNumBatchAboveLastVerifiedBatch()",
-      "error InitNumBatchDoesNotMatchPendingState()",
-      "error InitSequencedBatchDoesNotMatch()",
-      "error InvalidInitializeTransaction()",
-      "error InvalidProof()",
-      "error InvalidRangeBatchTimeTarget()",
-      "error InvalidRangeForceBatchTimeout()",
-      "error InvalidRangeMultiplierBatchFee()",
-      "error MaxTimestampSequenceInvalid()",
-      "error NewAccInputHashDoesNotExist()",
-      "error NewPendingStateTimeoutMustBeLower()",
-      "error NewStateRootNotInsidePrime()",
-      "error NewTrustedAggregatorTimeoutMustBeLower()",
-      "error NotEnoughMaticAmount()",
-      "error NotEnoughPOLAmount()",
-      "error OldAccInputHashDoesNotExist()",
-      "error OldStateRootDoesNotExist()",
-      "error OnlyAdmin()",
-      "error OnlyPendingAdmin()",
-      "error OnlyRollupManager()",
-      "error OnlyTrustedAggregator()",
-      "error OnlyTrustedSequencer()",
-      "error PendingStateDoesNotExist()",
-      "error PendingStateInvalid()",
-      "error PendingStateNotConsolidable()",
-      "error PendingStateTimeoutExceedHaltAggregationTimeout()",
-      "error SequenceWithDataAvailabilityNotAllowed()",
-      "error SequenceZeroBatches()",
-      "error SequencedTimestampBelowForcedTimestamp()",
-      "error SequencedTimestampInvalid()",
-      "error StoredRootMustBeDifferentThanNewRoot()",
-      "error SwitchToSameValue()",
-      "error TransactionsLengthAboveMax()",
-      "error TrustedAggregatorTimeoutExceedHaltAggregationTimeout()",
-      "error TrustedAggregatorTimeoutNotExpired()",
-      "event AcceptAdminRole(address newAdmin)",
-      "event ForceBatch(uint64 indexed forceBatchNum, bytes32 lastGlobalExitRoot, address sequencer, bytes transactions)",
-      "event InitialSequenceBatches(bytes transactions, bytes32 lastGlobalExitRoot, address sequencer)",
-      "event Initialized(uint8 version)",
-      "event SequenceBatches(uint64 indexed numBatch, bytes32 l1InfoRoot)",
-      "event SequenceForceBatches(uint64 indexed numBatch)",
-      "event SetDataAvailabilityProtocol(address newDataAvailabilityProtocol)",
-      "event SetForceBatchAddress(address newForceBatchAddress)",
-      "event SetForceBatchTimeout(uint64 newforceBatchTimeout)",
-      "event SetTrustedSequencer(address newTrustedSequencer)",
-      "event SetTrustedSequencerURL(string newTrustedSequencerURL)",
-      "event SwitchSequenceWithDataAvailability()",
-      "event TransferAdminRole(address newPendingAdmin)",
-      "event VerifyBatches(uint64 indexed numBatch, bytes32 stateRoot, address indexed aggregator)",
-      "function GLOBAL_EXIT_ROOT_MANAGER_L2() view returns (address)",
-      "function INITIALIZE_TX_BRIDGE_LIST_LEN_LEN() view returns (uint8)",
-      "function INITIALIZE_TX_BRIDGE_PARAMS() view returns (bytes)",
-      "function INITIALIZE_TX_BRIDGE_PARAMS_AFTER_BRIDGE_ADDRESS() view returns (bytes)",
-      "function INITIALIZE_TX_BRIDGE_PARAMS_AFTER_BRIDGE_ADDRESS_EMPTY_METADATA() view returns (bytes)",
-      "function INITIALIZE_TX_CONSTANT_BYTES() view returns (uint16)",
-      "function INITIALIZE_TX_CONSTANT_BYTES_EMPTY_METADATA() view returns (uint16)",
-      "function INITIALIZE_TX_DATA_LEN_EMPTY_METADATA() view returns (uint8)",
-      "function INITIALIZE_TX_EFFECTIVE_PERCENTAGE() view returns (bytes1)",
-      "function SIGNATURE_INITIALIZE_TX_R() view returns (bytes32)",
-      "function SIGNATURE_INITIALIZE_TX_S() view returns (bytes32)",
-      "function SIGNATURE_INITIALIZE_TX_V() view returns (uint8)",
-      "function TIMESTAMP_RANGE() view returns (uint256)",
-      "function acceptAdminRole()",
-      "function admin() view returns (address)",
-      "function bridgeAddress() view returns (address)",
-      "function calculatePolPerForceBatch() view returns (uint256)",
-      "function dataAvailabilityProtocol() view returns (address)",
-      "function forceBatch(bytes transactions, uint256 polAmount)",
-      "function forceBatchAddress() view returns (address)",
-      "function forceBatchTimeout() view returns (uint64)",
-      "function forcedBatches(uint64) view returns (bytes32)",
-      "function gasTokenAddress() view returns (address)",
-      "function gasTokenNetwork() view returns (uint32)",
-      "function generateInitializeTransaction(uint32 networkID, address _gasTokenAddress, uint32 _gasTokenNetwork, bytes _gasTokenMetadata) view returns (bytes)",
-      "function globalExitRootManager() view returns (address)",
-      "function initialize(address _admin, address sequencer, uint32 networkID, address _gasTokenAddress, string sequencerURL, string _networkName)",
-      "function initializeMigration()",
-      "function isSequenceWithDataAvailabilityAllowed() view returns (bool)",
-      "function lastAccInputHash() view returns (bytes32)",
-      "function lastForceBatch() view returns (uint64)",
-      "function lastForceBatchSequenced() view returns (uint64)",
-      "function networkName() view returns (string)",
-      "function onVerifyBatches(uint64 lastVerifiedBatch, bytes32 newStateRoot, address aggregator)",
-      "function pendingAdmin() view returns (address)",
-      "function pol() view returns (address)",
-      "function rollupManager() view returns (address)",
-      "function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint64 maxSequenceTimestamp, uint64 initSequencedBatch, address l2Coinbase)",
-      "function sequenceBatchesValidium(tuple(bytes32 transactionsHash, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint64 maxSequenceTimestamp, uint64 initSequencedBatch, address l2Coinbase, bytes dataAvailabilityMessage)",
-      "function sequenceForceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches)",
-      "function setDataAvailabilityProtocol(address newDataAvailabilityProtocol)",
-      "function setForceBatchAddress(address newForceBatchAddress)",
-      "function setForceBatchTimeout(uint64 newforceBatchTimeout)",
-      "function setTrustedSequencer(address newTrustedSequencer)",
-      "function setTrustedSequencerURL(string newTrustedSequencerURL)",
-      "function switchSequenceWithDataAvailability(bool newIsSequenceWithDataAvailabilityAllowed)",
-      "function transferAdminRole(address newPendingAdmin)",
-      "function trustedSequencer() view returns (address)",
-      "function trustedSequencerURL() view returns (string)"
     ],
     "0x18FED1E19dC564DC917D203be9d40790472D22e9": [
       "constructor()",
@@ -728,20 +433,6 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function wrappedTokenAddress() view returns (address)"
-    ],
-    "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8": [
-      "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
-    ],
-    "0x1e37EA18e9515db29b3E94A00eD31484A3130204": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function changeProxyAdmin(address proxy, address newAdmin)",
-      "function getProxyAdmin(address proxy) view returns (address)",
-      "function getProxyImplementation(address proxy) view returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function upgrade(address proxy, address implementation)",
-      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
     "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21": [
       "constructor(address _singleton)"
@@ -854,24 +545,6 @@
       "function transferAdminRole(address newPendingAdmin)",
       "function trustedSequencer() view returns (address)",
       "function trustedSequencerURL() view returns (string)"
-    ],
-    "0x2E38cD55163137483E30580Cb468C2dFf1d85077": [
-      "constructor(address _rollupManager, address _bridgeAddress)",
-      "error MerkleTreeFull()",
-      "error OnlyAllowedContracts()",
-      "event UpdateL1InfoTree(bytes32 indexed mainnetExitRoot, bytes32 indexed rollupExitRoot)",
-      "function bridgeAddress() view returns (address)",
-      "function calculateRoot(bytes32 leafHash, bytes32[32] smtProof, uint32 index) pure returns (bytes32)",
-      "function depositCount() view returns (uint256)",
-      "function getLastGlobalExitRoot() view returns (bytes32)",
-      "function getLeafValue(bytes32 newGlobalExitRoot, uint256 lastBlockHash, uint64 timestamp) pure returns (bytes32)",
-      "function getRoot() view returns (bytes32)",
-      "function globalExitRootMap(bytes32) view returns (uint256)",
-      "function lastMainnetExitRoot() view returns (bytes32)",
-      "function lastRollupExitRoot() view returns (bytes32)",
-      "function rollupManager() view returns (address)",
-      "function updateExitRoot(bytes32 newRoot)",
-      "function verifyMerkleProof(bytes32 leafHash, bytes32[32] smtProof, uint32 index, bytes32 root) pure returns (bool)"
     ],
     "0x3b82Da772c825283d85d5d6717A77C6Ff582053b": [
       "constructor(address _globalExitRootManager, address _pol, address _bridgeAddress)",
@@ -1066,73 +739,10 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "0x5DbA7dfCDbfb8812D30FDd99d9441F8b7a605621": [
-      "function name() view returns (string)",
-      "function approve(address spender, uint256 value) returns (bool)",
-      "function totalSupply() view returns (uint256)",
-      "function transferFrom(address _from, address _to, uint256 _value) returns (bool)",
-      "function decimals() view returns (uint8)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function setLawEnforcementRole(address _newLawEnforcementRole)",
-      "function unpause()",
-      "function unfreeze(address _addr)",
-      "function setSupplyController(address _newSupplyController)",
-      "function paused() view returns (bool)",
-      "function balanceOf(address _addr) view returns (uint256)",
-      "function initialize()",
-      "function pause()",
-      "function freeze(address _addr)",
-      "function owner() view returns (address)",
-      "function symbol() view returns (string)",
-      "function decreaseSupply(uint256 _value) returns (bool success)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function lawEnforcementRole() view returns (address)",
-      "function transfer(address _to, uint256 _value) returns (bool)",
-      "function increaseSupply(uint256 _value) returns (bool success)",
-      "function allowance(address _owner, address spender) view returns (uint256)",
-      "function wipeFrozenAddress(address _addr)",
-      "function isFrozen(address _addr) view returns (bool)",
-      "function supplyController() view returns (address)",
-      "function transferOwnership(address _newOwner)",
-      "constructor()",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event OwnershipTransferred(address indexed oldOwner, address indexed newOwner)",
-      "event Pause()",
-      "event Unpause()",
-      "event AddressFrozen(address indexed addr)",
-      "event AddressUnfrozen(address indexed addr)",
-      "event FrozenAddressWiped(address indexed addr)",
-      "event LawEnforcementRoleSet(address indexed oldLawEnforcementRole, address indexed newLawEnforcementRole)",
-      "event SupplyIncreased(address indexed to, uint256 value)",
-      "event SupplyDecreased(address indexed from, uint256 value)",
-      "event SupplyControllerSet(address indexed oldSupplyController, address indexed newSupplyController)"
-    ],
     "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB": [
       "constructor(address impl_, bytes data_) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
-    ],
-    "0x75231F58b43240C9718Dd58B4967c5114342a86c": [
-      "function proxyOwner() view returns (address owner)",
-      "function upgradeTo(address implementation)",
-      "function upgradeToAndCall(address implementation, bytes data) payable",
-      "function implementation() view returns (address impl)",
-      "function transferProxyOwnership(address newOwner)",
-      "constructor()",
-      "event ProxyOwnershipTransferred(address previousOwner, address newOwner)",
       "event Upgraded(address indexed implementation)"
     ],
     "0xA4e6762eAAf259DA74696F46fAAF79bA9DdE14E6": [
@@ -1167,30 +777,6 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function zkMinterBurner() view returns (address)",
       "function zkNetworkId() view returns (uint32)"
-    ],
-    "0xd620Ca1ad5c3888e4521c3374cE4088Cb78079b8": [
-      "constructor()",
-      "error CommitteeAddressDoesNotExist()",
-      "error EmptyURLNotAllowed()",
-      "error TooManyRequiredSignatures()",
-      "error UnexpectedAddrsAndSignaturesSize()",
-      "error UnexpectedAddrsBytesLength()",
-      "error UnexpectedCommitteeHash()",
-      "error WrongAddrOrder()",
-      "event CommitteeUpdated(bytes32 committeeHash)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function committeeHash() view returns (bytes32)",
-      "function getAmountOfMembers() view returns (uint256)",
-      "function getProcotolName() pure returns (string)",
-      "function initialize()",
-      "function members(uint256) view returns (string url, address addr)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function requiredAmountOfSignatures() view returns (uint256)",
-      "function setupCommittee(uint256 _requiredAmountOfSignatures, string[] urls, bytes addrsBytes)",
-      "function transferOwnership(address newOwner)",
-      "function verifyMessage(bytes32 signedHash, bytes signaturesAndAddrs) view"
     ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",

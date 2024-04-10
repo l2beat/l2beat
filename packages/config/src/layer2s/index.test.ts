@@ -2,6 +2,7 @@ import {
   assertUnreachable,
   EthereumAddress,
   gatherAddressesFromUpgradeability,
+  notUndefined,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
@@ -100,7 +101,7 @@ describe('layer2s', () => {
   })
 
   describe('tracked transactions', () => {
-    it('every tracked transaction which is function call has valid signatures', () => {
+    describe('every tracked transaction which is function call has valid signatures', () => {
       for (const project of layer2s) {
         it(`${project.id.toString()} : has valid signatures`, () => {
           if (project.config.trackedTxs?.length !== 0) {
@@ -111,7 +112,7 @@ describe('layer2s', () => {
               functionSignature: string
             }[]
 
-            functionCalls.forEach((c) => {
+            functionCalls?.forEach((c) => {
               const i = new utils.Interface([c.functionSignature])
               const fragment = i.fragments[0]
               const calculatedSignature = i.getSighash(fragment)
@@ -119,6 +120,19 @@ describe('layer2s', () => {
             })
           }
         })
+      }
+    })
+
+    describe('every cost multiplier is in 0 to 1 range', () => {
+      for (const project of layer2s) {
+        if (project.config.trackedTxs) {
+          it(`${project.id.toString()} : has valid cost multipliers`, () => {
+            const costMultipliers = project.config.trackedTxs
+              ?.map((t) => t._hackCostMultiplier)
+              .filter(notUndefined)
+            expect(costMultipliers?.every((m) => m > 0 && m <= 1)).toEqual(true)
+          })
+        }
       }
     })
 

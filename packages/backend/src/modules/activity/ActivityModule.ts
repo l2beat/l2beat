@@ -49,7 +49,7 @@ export function createActivityModule(
     peripherals.getRepository(ActivityViewRepository),
     clock,
   )
-  const activityV2Router = createActivityRouter(activityController, config)
+  const activityV2Router = createActivityRouter(activityController)
 
   const start = async () => {
     logger = logger.for('ActivityModule')

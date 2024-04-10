@@ -9,9 +9,9 @@ import {
 } from '@l2beat/shared-pure'
 
 import { Project } from '../../../../../model/Project'
-import { IndexerStateRepository } from '../../../../../peripherals/database/repositories/IndexerStateRepository'
 import { Clock } from '../../../../../tools/Clock'
 import { TaskQueue } from '../../../../../tools/queue/TaskQueue'
+import { IndexerStateRepository } from '../../../../../tools/uif/IndexerStateRepository'
 import { TrackedTxsConfigsRepository } from '../../../repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsConfig } from '../../../types/TrackedTxsConfig'
 import { getSyncedUntil } from '../../utils/getSyncedUntil'

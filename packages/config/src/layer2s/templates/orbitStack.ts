@@ -15,6 +15,7 @@ import {
   ScalingProjectEscrow,
   ScalingProjectPermission,
   ScalingProjectTechnology,
+  ScalingProjectTransactionApi,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { subtractOne } from '../../common/assessCount'
@@ -22,7 +23,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { VALUES } from '../../discovery/values'
 import { Layer3, Layer3Display } from '../../layer3s/types'
 import { getStage } from '../common/stages/getStage'
-import { Layer2, Layer2Display, Layer2TransactionApi } from '../types'
+import { Layer2, Layer2Display, Layer2TxConfig } from '../types'
 
 const ETHEREUM_EXPLORER_URL = 'https://etherscan.io/address/{0}#code'
 
@@ -38,9 +39,10 @@ export interface OrbitStackConfigCommon {
   nonTemplateTechnology?: Partial<ScalingProjectTechnology>
   nonTemplateContracts?: ScalingProjectContract[]
   rpcUrl?: string
-  transactionApi?: Layer2TransactionApi
+  transactionApi?: ScalingProjectTransactionApi
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
+  trackedTxs?: Layer2TxConfig[]
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -319,6 +321,17 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
         }),
         ...(templateVars.nonTemplateEscrows ?? []),
       ],
+      transactionApi:
+        templateVars.transactionApi ??
+        (templateVars.rpcUrl !== undefined
+          ? {
+              type: 'rpc',
+              startBlock: 1,
+              defaultUrl: templateVars.rpcUrl,
+              defaultCallsPerMinute: 1500,
+              assessCount: subtractOne,
+            }
+          : undefined),
     },
     milestones: [],
     knowledgeNuggets: [],
@@ -460,6 +473,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
               assessCount: subtractOne,
             }
           : undefined),
+      trackedTxs: templateVars.trackedTxs,
       finality: 'coming soon',
     },
   }
@@ -470,6 +484,8 @@ function getExplorerLinkFormat(hostChain: ProjectId): string {
     return ETHEREUM_EXPLORER_URL
   } else if (hostChain === ProjectId('arbitrum')) {
     return 'https://arbiscan.io/address/{0}#code'
+  } else if (hostChain === ProjectId('base')) {
+    return 'https://explorer.degen.tips/address/{0}?tab=contract'
   }
 
   assert(false, `Host chain ${hostChain.toString()} is not supported`)
