@@ -1,4 +1,3 @@
-
 /*
                       ====== IMPORTANT NOTICE ======
 
@@ -15,13 +14,13 @@ should create a new migration file that fixes the issue.
 import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
-    await knex.schema.alterTable('sequence_processor', function (table) {
-        table.boolean('synced_once').notNullable().defaultTo(false)
-    });
+  await knex.schema.alterTable('sequence_processor', function (table) {
+    table.boolean('synced_once').notNullable().defaultTo(false)
+  })
 }
 
 export async function down(knex: Knex) {
-    await knex.schema.alterTable('sequence_processor', function (table) {
-        table.dropColumn('synced_once')
-    });
+  await knex.schema.alterTable('sequence_processor', function (table) {
+    table.dropColumn('synced_once')
+  })
 }
