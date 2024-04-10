@@ -162,7 +162,14 @@ export abstract class SequenceProcessor extends EventEmitter {
         this.logger.info('Processing range started', { from, to })
         await this.repository.runInTransaction(async (trx) => {
           await this.processRange(from, to, trx)
-          await this.setState({ lastProcessed: to, latest, syncedOnce: !!this.state?.syncedOnce || to === latest }, trx)
+          await this.setState(
+            {
+              lastProcessed: to,
+              latest,
+              syncedOnce: !!this.state?.syncedOnce || to === latest,
+            },
+            trx,
+          )
         })
         this.logger.info('Processing range finished', { from, to })
       }
