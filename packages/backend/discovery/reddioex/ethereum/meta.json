@@ -2,38 +2,29 @@
   "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
   "contracts": [
     {
-      "name": "",
-      "values": {}
-    },
-    {
-      "name": "Broker",
+      "name": "Committee",
       "values": {
-        "EXP_TIME": {
+        "constructorArgs": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "PRICE_DECIMALS": {
+        "hasRegisteredFact": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "SLIPPAGE_DENOMINATOR": {
+        "identify": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "nonce": {
+        "isFinalized": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "onchainVaults": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "owner": {
+        "signaturesRequired": {
           "description": null,
           "severity": null,
           "type": null
@@ -81,7 +72,7 @@
       }
     },
     {
-      "name": "Proxy",
+      "name": "StarkExchange",
       "values": {
         "DEPOSIT_CANCEL_DELAY": {
           "description": null,
@@ -89,11 +80,6 @@
           "type": null
         },
         "FREEZE_GRACE_PERIOD": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "GOVERNORS": {
           "description": null,
           "severity": null,
           "type": null
@@ -138,11 +124,6 @@
           "severity": null,
           "type": null
         },
-        "UPGRADE_DELAY_SLOT": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "VERIFIER_REMOVAL_DELAY": {
           "description": null,
           "severity": null,
@@ -158,17 +139,7 @@
           "severity": null,
           "type": null
         },
-        "getActionCount": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getActionHashByIndex": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
-        "getAssetInfo": {
+        "getGlobalConfigCode": {
           "description": null,
           "severity": null,
           "type": null
@@ -198,6 +169,16 @@
           "severity": null,
           "type": null
         },
+        "getRollupTreeHeight": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRollupVaultRoot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "getSequenceNumber": {
           "description": null,
           "severity": null,
@@ -208,12 +189,12 @@
           "severity": null,
           "type": null
         },
-        "getVaultRoot": {
+        "getValidiumTreeHeight": {
           "description": null,
           "severity": null,
           "type": null
         },
-        "getVaultTreeHeight": {
+        "getValidiumVaultRoot": {
           "description": null,
           "severity": null,
           "type": null
