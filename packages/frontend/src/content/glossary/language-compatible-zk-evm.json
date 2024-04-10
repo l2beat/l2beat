@@ -1,5 +1,5 @@
 {
   "term": "Language-compatible ZK-EVM",
-  "definition": "A ZK-Rollup that can interpret and execute Solidity or other high-level-language source code. This code is compiled into bytecode that differs from that which the EVM runs. (Type 4 in Vitalik's classification (opens in a new tab)).",
+  "definition": "A ZK-Rollup that can interpret and execute Solidity or other high-level-language source code. This code is compiled into bytecode that differs from that which the EVM runs. (Type 4 in Vitalik's classification).",
   "isSpicy": true
 }

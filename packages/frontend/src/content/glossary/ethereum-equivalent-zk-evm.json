@@ -1,5 +1,5 @@
 {
   "term": "Ethereum-equivalent ZK-EVM",
-  "definition": "A ZK-Rollup that can prove the correctness of an actual Ethereum L1 block in its ZK-EVM circuit. No changes made to any part of Ethereum--EVM but also peripheral things like storage structures and hash functions. (Type 1 in Vitalik's classification (opens in a new tab)).",
+  "definition": "A ZK-Rollup that can prove the correctness of an actual Ethereum L1 block in its ZK-EVM circuit. No changes made to any part of Ethereum--EVM but also peripheral things like storage structures and hash functions. (Type 1 in Vitalik's classification).",
   "isSpicy": true
 }

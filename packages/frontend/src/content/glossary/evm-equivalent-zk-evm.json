@@ -1,5 +1,5 @@
 {
   "term": "EVM-equivalent ZK-EVM",
-  "definition": "A ZK-Rollup that can interpret and execute EVM bytecode. All EVM opcodes and pre-compiles are supported and provable through the [ZK-EVM])(#ZK-EVM) circuit. (Type 2 in Vitalik's classification (opens in a new tab)).",
+  "definition": "A ZK-Rollup that can interpret and execute EVM bytecode. All EVM opcodes and pre-compiles are supported and provable through the [ZK-EVM])(#ZK-EVM) circuit. (Type 2 in Vitalik's classification).",
   "isSpicy": true
 }
