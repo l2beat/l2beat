@@ -148,7 +148,7 @@ describe(ManagedMultiIndexer.name, () => {
     )
   })
 
-  describeDatabase(' e2e', (database) => {
+  describeDatabase('e2e', (database) => {
     const stateRepository = new IndexerStateRepository(database, Logger.SILENT)
     const configurationsRepository = new IndexerConfigurationRepository(
       database,
