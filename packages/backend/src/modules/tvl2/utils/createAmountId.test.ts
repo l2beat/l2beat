@@ -1,7 +1,7 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { createAmountId } from './amountId'
+import { createAmountId } from './createAmountId'
 
 describe(createAmountId.name, () => {
   it('works for totalSupply', () => {
