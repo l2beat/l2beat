@@ -212,9 +212,9 @@ describe(AmountService.name, () => {
     )
 
     expect(amounts).toEqual([
-      { configurationId: 'totalSupply', timestamp, amount: 40n },
-      { configurationId: 'balance', timestamp, amount: 20n },
-      { configurationId: 'native', timestamp, amount: 60n },
+      { configId: 'totalSupply', timestamp, amount: 40n },
+      { configId: 'balance', timestamp, amount: 20n },
+      { configId: 'native', timestamp, amount: 60n },
     ])
   })
 })
@@ -252,7 +252,7 @@ function mockTotalSupplyConfig(
   }
 }
 
-function mockBaseConfig(base: Partial<AmountConfigBase>): AmountConfigBase {
+function mockBaseConfig(base: Partial<AmountConfigBase>) {
   return {
     chain: 'chain',
     project: ProjectId('project'),

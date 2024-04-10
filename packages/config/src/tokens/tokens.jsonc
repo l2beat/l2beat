@@ -18,6 +18,15 @@
       "address": "0xEd04915c23f00A313a544955524EB7DBD823143d"
     },
     {
+      "symbol": "ACX",
+      "address": "0x44108f0223A3C3028F5Fe7AEC7f9bb2E66beF82F"
+    },
+    {
+      "symbol": "EURA",
+      "address": "0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8",
+      "category": "stablecoin"
+    },
+    {
       "symbol": "AGIX",
       "address": "0x5B7533812759B45C2B44C19e320ba2cD2681b542"
     },
@@ -1299,8 +1308,20 @@
       "formula": "circulatingSupply"
     },
     {
+      "symbol": "BRETT",
+      "address": "0x532f27101965dd16442E59d40670FaF5eBB142E4",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
       "symbol": "DEGEN",
       "address": "0x4ed4e862860bed51a9570b96d89af5e1b0efefed",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "MOCHI",
+      "address": "0xF6e932Ca12afa26665dC4dDE7e27be02A7c02e50",
       "type": "NMV",
       "formula": "circulatingSupply"
     },
@@ -1317,6 +1338,12 @@
     {
       "symbol": "SEAM",
       "address": "0x1c7a460413dd4e964f96d8dfc56e7223ce88cd85",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "TOSHI",
+      "address": "0xAC1Bd2486aAf3B5C0fc3Fd868558b082a531B2B4",
       "type": "NMV",
       "formula": "circulatingSupply"
     },
@@ -1397,6 +1424,25 @@
         "bridge": "Layer Zero",
         "slug": "omnichain"
       }
+    },
+    {
+      "symbol": "LUBE",
+      "address": "0x1be3735dd0c0eb229fb11094b6c277192349ebbf",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "MENDI",
+      "address": "0x43e8809ea748eff3204ee01f08872f063e44065f",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "LYNX",
+      "address": "0x1a51b19CE03dbE0Cb44C1528E34a7EDD7771E9Af",
+      "type": "NMV",
+      "formula": "circulatingSupply",
+      "coingeckoId": "lynex"
     }
   ],
   "zkfair": [
@@ -1488,6 +1534,15 @@
         "bridge": "Stargate",
         "slug": "stargate"
       }
+    }
+  ],
+  "zksync2": [
+    {
+      "symbol": "USDC",
+      "address": "0x1d17CBcF0D6D143135aE902365D2E5e2A16538D4",
+      "category": "stablecoin",
+      "type": "NMV",
+      "formula": "totalSupply"
     }
   ]
 }
