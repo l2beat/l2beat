@@ -1,24 +1,34 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { findMinLast } from './findMinLast'
+import { findCutoffTime } from './findCutoffTime'
 import { DailyTransactionCount } from './types'
 
 export function toCombinedActivity(
   projectCounts: Map<ProjectId, DailyTransactionCount[]>,
-): DailyTransactionCount[] {
-  const layer2sCounts = Array.from(projectCounts.values())
-  const minLast = findMinLast(layer2sCounts)
-  return layer2sCounts
-    .flat()
-    .sort((a, b) => +a.timestamp - +b.timestamp)
-    .filter((c) => (minLast ? c.timestamp.lte(minLast) : true))
-    .reduce<DailyTransactionCount[]>((acc, { count, timestamp }) => {
-      const current = acc.at(-1)
-      if (!current?.timestamp.equals(timestamp)) {
-        acc.push({ timestamp, count })
-      } else {
-        current.count = current.count + count
-      }
-      return acc
-    }, [])
+): { daily: (DailyTransactionCount & { includesEstimated: number })[], estimatedSince: UnixTime, estimatedImpact: number } {
+  const layer2sCounts = [...projectCounts.entries()];
+  const cutoffTime = findCutoffTime(layer2sCounts.map(([_, counts]) => counts));
+
+  const days = [...new Set(layer2sCounts.map(([_, counts]) => counts.map(c => c.timestamp)))].flat().sort();
+  const lastPresentValue: Record<ProjectId, number> = Object.fromEntries([...projectCounts.keys()].map((k) => [k, 0]));
+  
+  const dailyData = days.map((day) => {
+    let includesEstimated = 0;
+    const count = layer2sCounts
+      .map(([projectId, counts]) => {
+        const current = counts.find((c) => c.timestamp.equals(day))
+        if (current) {
+          lastPresentValue[projectId] = current.count;
+          return current.count;
+        }
+        includesEstimated += lastPresentValue[projectId]
+        return lastPresentValue[projectId];
+      })
+      .reduce((acc, c) => acc + c, 0);
+    return { timestamp: day, count, includesEstimated };
+  })
+
+  const lastDaily = dailyData.at(-1);
+
+  return { daily: dailyData, estimatedSince: cutoffTime, estimatedImpact: (lastDaily?.includesEstimated ?? 0) / (lastDaily?.count ?? 1)};
 }
