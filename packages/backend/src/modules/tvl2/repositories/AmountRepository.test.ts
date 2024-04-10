@@ -16,14 +16,14 @@ describeDatabase(AmountRepository.name, (database) => {
   )
   const amountRepository = new AmountRepository(database, Logger.SILENT)
 
-  const CONFIGURATIONS = [
+  const CONFIGS = [
     mock({ id: '1'.repeat(12) }),
     mock({ id: '2'.repeat(12) }),
     mock({ id: '3'.repeat(12) }),
   ]
 
   beforeEach(async () => {
-    await configurationsRepository.addOrUpdateManyConfigurations(CONFIGURATIONS)
+    await configurationsRepository.addOrUpdateManyConfigurations(CONFIGS)
   })
 
   afterEach(async () => {
@@ -34,12 +34,12 @@ describeDatabase(AmountRepository.name, (database) => {
     it('adds new rows', async () => {
       const newRows = [
         {
-          configurationId: CONFIGURATIONS[0].id,
+          configId: CONFIGS[0].id,
           timestamp: UnixTime.ZERO,
           amount: 111n,
         },
         {
-          configurationId: CONFIGURATIONS[1].id,
+          configId: CONFIGS[1].id,
           timestamp: UnixTime.ZERO,
           amount: 111n,
         },
@@ -58,7 +58,7 @@ describeDatabase(AmountRepository.name, (database) => {
       const records: AmountRecord[] = []
       for (let i = 5; i < 15_000; i++) {
         records.push({
-          configurationId: CONFIGURATIONS[0].id,
+          configId: CONFIGS[0].id,
           timestamp: new UnixTime(i),
           amount: 111n,
         })
@@ -71,7 +71,7 @@ describeDatabase(AmountRepository.name, (database) => {
   it(AmountRepository.prototype.deleteAll.name, async () => {
     await amountRepository.addMany([
       {
-        configurationId: CONFIGURATIONS[0].id,
+        configId: CONFIGS[0].id,
         timestamp: UnixTime.ZERO,
         amount: 111n,
       },
