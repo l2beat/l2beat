@@ -1,5 +1,5 @@
 import { assert } from '@l2beat/backend-tools'
-import { Layer2, layer2s } from '@l2beat/config'
+import { Layer2, layer2s, Layer3, layer3s } from '@l2beat/config'
 import chalk from 'chalk'
 import { readdir, readFile } from 'fs/promises'
 import { resolve } from 'path'
@@ -10,6 +10,7 @@ type ShortStackKey =
   | 'arbitrum'
   | 'loopring'
   | 'opstack'
+  | 'orbit'
   | 'ovm'
   | 'polygon'
   | 'starkex'
@@ -19,11 +20,12 @@ type ShortStackKey =
 
 const shortStackToFullName: Record<
   ShortStackKey,
-  Layer2['display']['provider']
+  Layer2['display']['provider'] | Layer3['display']['provider']
 > = {
   arbitrum: 'Arbitrum',
   loopring: 'Loopring',
   opstack: 'OP Stack',
+  orbit: 'Arbitrum Orbit',
   ovm: 'OVM',
   polygon: 'Polygon',
   starkex: 'StarkEx',
@@ -37,8 +39,8 @@ const allShortStacks = Object.keys(shortStackToFullName)
 interface Config {
   subcommand: 'project' | 'all' | 'help'
   stack?: ShortStackKey
-  firstProjectName?: string
-  secondProjectName?: string
+  firstProjectPath?: string
+  secondProjectPath?: string
   forceTable?: boolean
 }
 
@@ -92,8 +94,8 @@ function parseCliParameters(): Config {
 
   const mode = args.shift()
   if (mode === 'project') {
-    const firstProjectName = args.shift()
-    const secondProjectName = args.shift()
+    const firstProjectPath = args.shift()
+    const secondProjectPath = args.shift()
 
     let forceTable = false
     if (args.includes('--force-table')) {
@@ -102,8 +104,8 @@ function parseCliParameters(): Config {
 
     return {
       subcommand: 'project',
-      firstProjectName,
-      secondProjectName,
+      firstProjectPath,
+      secondProjectPath,
       forceTable,
     }
   } else if (mode === 'all') {
@@ -135,7 +137,7 @@ function parseCliParameters(): Config {
 
 function printUsage(): void {
   console.log(
-    'Usage: yarn compare-flat-sources <project1> <project2> --force-table',
+    'Usage: yarn compare-flat-sources <chain:projectName> <chain:projectName> --force-table',
   )
 }
 
@@ -143,16 +145,24 @@ async function compareAllProjects(config: Config): Promise<void> {
   const stack = config.stack
   assert(stack !== undefined, 'stack is required')
 
-  const l2s = layer2s.filter(
-    (l2) =>
-      l2.display.provider === shortStackToFullName[stack] &&
-      !l2.isArchived &&
-      !l2.isUpcoming,
+  const allConfigs = [...layer2s, ...layer3s]
+
+  const configs = allConfigs.filter(
+    (config) =>
+      config.display.provider === shortStackToFullName[stack] &&
+      ('isArchived' in config ? !config.isArchived : true) &&
+      ('hostChain' in config ? config.hostChain !== 'Multiple' : true) &&
+      !config.isUpcoming,
   )
 
   console.log(`= ${'Reading projects...'} `.padEnd(36, '='))
   const stackProject = await Promise.all(
-    l2s.map((l2) => readProject(l2.id.toString())),
+    configs.map((config) =>
+      readProject(
+        config.id.toString(),
+        'hostChain' in config ? config.hostChain : 'ethereum',
+      ),
+    ),
   )
   const projects = stackProject.filter((p) => p !== undefined) as Project[]
 
@@ -219,13 +229,17 @@ async function compareAllProjects(config: Config): Promise<void> {
 }
 
 async function compareTwoProjects(config: Config): Promise<void> {
-  assert(config.firstProjectName, 'project1 is required')
-  assert(config.secondProjectName, 'project2 is required')
+  assert(config.firstProjectPath, 'project1 is required')
+  assert(config.secondProjectPath, 'project2 is required')
+  const { name: firstProjectName, chain: firstProjectChain } =
+    decodeProjectPath(config.firstProjectPath)
+  const { name: secondProjectName, chain: secondProjectChain } =
+    decodeProjectPath(config.secondProjectPath)
 
-  const firstProject = await readProject(config.firstProjectName)
-  const secondProject = await readProject(config.secondProjectName)
-  assert(firstProject, `Project ${config.firstProjectName} not found`)
-  assert(secondProject, `Project ${config.secondProjectName} not found`)
+  const firstProject = await readProject(firstProjectName, firstProjectChain)
+  const secondProject = await readProject(secondProjectName, secondProjectChain)
+  assert(firstProject, `Project ${config.firstProjectPath} not found`)
+  assert(secondProject, `Project ${config.secondProjectPath} not found`)
 
   const matrix: Record<string, Record<string, string>> = {}
 
@@ -360,9 +374,12 @@ function removeCommonPath(fileIds: FileId[]): FileId[] {
   }))
 }
 
-async function readProject(projectName: string): Promise<Project | undefined> {
+async function readProject(
+  projectName: string,
+  chain: string,
+): Promise<Project | undefined> {
   try {
-    const sources = await getFlatSources(projectName)
+    const sources = await getFlatSources(projectName, chain)
     const concatenatedSources = sources.map((source) => source.content).join('')
     const concatenatedSourceHashChunks =
       buildSimilarityHashmap(concatenatedSources)
@@ -423,8 +440,11 @@ function removeComments(source: string): string {
   return result
 }
 
-async function getFlatSources(project: string): Promise<HashedFileContent[]> {
-  const path = `./discovery/${project}/ethereum/.flat/`
+async function getFlatSources(
+  project: string,
+  chain: string,
+): Promise<HashedFileContent[]> {
+  const path = `./discovery/${project}/${chain}/.flat/`
 
   const filePaths = await listFilesRecursively(path)
   const allFilesAreSol = filePaths.every((file) => file.endsWith('.sol'))
@@ -596,4 +616,14 @@ function needsToBe(expression: boolean, message: string): asserts expression {
     console.log(`${chalk.red('ERROR')}: ${message}`)
     process.exit(1)
   }
+}
+
+function decodeProjectPath(projectPath: string): {
+  name: string
+  chain: string
+} {
+  assert(projectPath.includes(':'), 'Invalid project path')
+
+  const [chain, name] = projectPath.split(':')
+  return { name, chain }
 }

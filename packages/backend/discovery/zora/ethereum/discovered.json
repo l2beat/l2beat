@@ -1,7 +1,7 @@
 {
   "name": "zora",
   "chain": "ethereum",
-  "blockNumber": 19439848,
+  "blockNumber": 19532317,
   "configHash": "0x962258a2cde6545c111f7fe566d44e917ddc61b05c04c8e49780416740074288",
   "version": 3,
   "contracts": [
@@ -19,7 +19,7 @@
         "GUARDIAN": "0xC72aE5c7cc9a332699305E29F68Be66c73b60542",
         "L2_ORACLE": "0x9E6204F750cD866b299594e2aC9eA824E2e5f95c",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 100000, 19439842],
+        "params": [1000000000, 100000, 19532267],
         "paused": false,
         "SYSTEM_CONFIG": "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86",
         "version": "1.6.0"
@@ -78,10 +78,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 11901780,
-        "latestOutputIndex": 6836,
-        "nextBlockNumber": 11903580,
-        "nextOutputIndex": 6837,
+        "latestBlockNumber": 12461580,
+        "latestOutputIndex": 7147,
+        "nextBlockNumber": 12463380,
+        "nextOutputIndex": 7148,
         "PROPOSER": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
         "startingBlockNumber": 0,
         "startingTimestamp": 1686693839,
@@ -118,7 +118,7 @@
           1000000,
           "340282366920938463463374607431768211455"
         ],
-        "scalar": "452312848583266388373324160190187140051835877600158453279135269880145643075",
+        "scalar": "452312848583266388373324160190187140051835877600158453279133909097067335200",
         "sequencerInbox": "0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf",
         "UNSAFE_BLOCK_SIGNER_SLOT": "0x65a7ed542fb37fe237fdfbdd70b31598523fe5b32879e307bae27a0bd9581c08",
         "unsafeBlockSigner": "0x3Dc8Dfd0709C835cAd15a6A27e089FF4cF4C9228",
@@ -148,7 +148,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "2 of 8 (25%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1686592343,
@@ -166,7 +167,7 @@
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
         ],
         "getThreshold": 2,
-        "nonce": 8,
+        "nonce": 14,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -177,7 +178,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "4 of 6 (67%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1686592547,
@@ -224,7 +226,7 @@
       "sinceTimestamp": 1686694019,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621281",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621296",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,

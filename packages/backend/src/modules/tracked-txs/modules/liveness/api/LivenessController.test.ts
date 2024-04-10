@@ -3,8 +3,8 @@ import { expect, mockFn, mockObject } from 'earl'
 import { range } from 'lodash'
 
 import { Project } from '../../../../../model/Project'
-import { IndexerStateRepository } from '../../../../../peripherals/database/repositories/IndexerStateRepository'
 import { Clock } from '../../../../../tools/Clock'
+import { IndexerStateRepository } from '../../../../../tools/uif/IndexerStateRepository'
 import {
   TrackedTxsConfigRecord,
   TrackedTxsConfigsRepository,
@@ -48,7 +48,7 @@ describe(LivenessController.name, () => {
       const livenessController = new LivenessController(
         getMockLivenessRepository(RECORDS),
         mockObject<TrackedTxsConfigsRepository>({
-          getByProjectId: mockFn().resolvesTo([
+          getByProjectIdAndType: mockFn().resolvesTo([
             mockObject<TrackedTxsConfigRecord>({
               untilTimestampExclusive: undefined,
               lastSyncedTimestamp: undefined,
@@ -90,7 +90,7 @@ describe(LivenessController.name, () => {
       const livenessController = new LivenessController(
         getMockLivenessRepository(RECORDS),
         mockObject<TrackedTxsConfigsRepository>({
-          getByProjectId: mockFn().resolvesTo([
+          getByProjectIdAndType: mockFn().resolvesTo([
             mockObject<TrackedTxsConfigRecord>({
               untilTimestampExclusive: undefined,
               lastSyncedTimestamp: UnixTime.now(),
@@ -168,8 +168,8 @@ describe(LivenessController.name, () => {
       const livenessController = new LivenessController(
         getMockLivenessRepository(RECORDS),
         mockObject<TrackedTxsConfigsRepository>({
-          getByProjectId: mockFn()
-            .given(ProjectId('project1'))
+          getByProjectIdAndType: mockFn()
+            .given(ProjectId('project1'), 'liveness')
             .resolvesToOnce([
               mockObject<TrackedTxsConfigRecord>({
                 untilTimestampExclusive: undefined,

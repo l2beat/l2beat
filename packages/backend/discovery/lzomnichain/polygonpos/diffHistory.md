@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x1e032070f33ade8d8c811e2ce84da730c2c03107
+
+# Diff at Fri, 29 Mar 2024 10:00:27 GMT:
+
+- author: sekuba (<sekuba@users.noreply.githum.com>)
+- comparing to: main@fb81931df1e69bb68ad02bc55a22b788201dd072 block: 54650344
+- current block number: 55210144
+
+## Description
+
+Config change
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 54650344 (main branch discovery), not current.
+
+```diff
+    contract LayerZero Multisig (0xF1a5F92F5F89e8b539136276f827BF1648375312) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 6 (33%)"
+    }
+```
+
 Generated with discovered.json: 0x34094c8161f4f14bd2f6c0f4d89b6da4e11a1fa1
 
 # Diff at Thu, 14 Mar 2024 14:01:10 GMT

@@ -7,7 +7,7 @@ export function createImplementationChangeRouter(
 ) {
   const router = new Router()
 
-  router.get('/implementation-change-report', async (ctx) => {
+  router.get('/api/implementation-change-report', async (ctx) => {
     ctx.body = await controller.getImplementationChangeReport()
   })
 

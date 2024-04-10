@@ -1,3 +1,74 @@
+Generated with discovered.json: 0xc32c308a2a7a987b4838d093eec28799aa0ef43d
+
+# Diff at Thu, 28 Mar 2024 12:03:36 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@21187e63b9b90823a55c461c331868a470ce17eb block: 37334769
+- current block number: 37363085
+
+## Description
+
+Update discovery to include the multisig threshold.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 37334769 (main branch discovery), not current.
+
+```diff
+    contract LayerZero Multisig (0x8D452629c5FfCDDE407069da48c096e1F8beF22c) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 6 (33%)"
+    }
+```
+
+Generated with discovered.json: 0x0134498f1b3f721c8991a776286b33b07e30bbcc
+
+# Diff at Wed, 27 Mar 2024 12:07:22 GMT
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@d53834b65ee1cdf52eb5d460179c975873642177 block: 36963441
+- current block number: 37334769
+
+## Description
+
+RelayerV2 got verified.
+Ignored stargate and related pools from being discovered.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 36963441 (main branch discovery), not current.
+
+```diff
+    contract  (0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182) {
+    +++ description: None
+      name:
+-        ""
++        "RelayerV2"
+      unverified:
+-        true
+      values:
++        {"AIRDROP_GAS_LIMIT":10000,"fpBytes":160,"mptOverhead":500,"multiplierBps":12000,"owner":"0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327","paused":false,"priceFeed":"0x7A50b180265eb5347Ce7b92224F0B0Cd6cE0493b","stargateBridgeAddr":"0x6694340fc020c5E6B96567843da2df01b2CE1eb6","stargateBridgeAddress":"0x0000000000000000000000000000000000000000","stargateComposer":"0xeCc19E177d24551aA7ed6Bc6FE566eCa726CC8a9","uln":"0x4D73AdB72bC3DD368966edD0f0b2148401A178E2","validateProofBytes":164}
+    }
+```
+
+```diff
+    contract  (0xde19274c009A22921E3966a1Ec868cEba40A5DaC) {
+    +++ description: None
+      name:
+-        ""
++        "RelayerV2Radar"
+      unverified:
+-        true
+      values:
++        {"owner":"0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327","paused":false,"relayerV2":"0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182","stargateBridgeAddress":"0x0000000000000000000000000000000000000000","uln":"0xF487E8D03CDa77Ce9a66B35220D6cBB95d4C2877"}
+    }
+```
+
 Generated with discovered.json: 0xe669a6ddb3ce1b73e2a5e475a0aa9b5fe0c2175c
 
 # Diff at Thu, 14 Mar 2024 13:54:24 GMT

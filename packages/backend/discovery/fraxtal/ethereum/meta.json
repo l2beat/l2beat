@@ -723,6 +723,7 @@
     },
     {
       "name": "frxETHMultisig",
+      "description": "This address is the owner of the gas token contract frxETH, and the frxETHMinter contract. It can pause and unpause ETH deposits, and change how much ETH is withheld from each submit() transaction.",
       "values": {
         "VERSION": {
           "description": null,

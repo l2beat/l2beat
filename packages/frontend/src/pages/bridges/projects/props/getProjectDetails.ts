@@ -1,11 +1,12 @@
 import { Bridge } from '@l2beat/config'
 import {
+  ImplementationChangeReportApiResponse,
   ManuallyVerifiedContracts,
   VerificationStatus,
 } from '@l2beat/shared-pure'
 import isEmpty from 'lodash/isEmpty'
 
-import { ChartProps } from '../../../../components'
+import { ProjectDetailsCharts } from '../../../../utils/project/getCharts'
 import { getContractSection } from '../../../../utils/project/getContractSection'
 import { getPermissionsSection } from '../../../../utils/project/getPermissionsSection'
 import {
@@ -30,7 +31,8 @@ export function getProjectDetails(
   bridge: Bridge,
   verificationStatus: VerificationStatus,
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
-  chart: ChartProps,
+  implementationChange: ImplementationChangeReportApiResponse | undefined,
+  charts: ProjectDetailsCharts,
 ) {
   const { incomplete, sections: technologySections } =
     getTechnologyOverview(bridge)
@@ -41,14 +43,40 @@ export function getProjectDetails(
   )
 
   const items: BridgeDetailsItem[] = []
-  items.push({
-    type: 'ChartSection',
-    props: {
-      ...chart,
-      id: 'chart',
-      title: 'Chart',
-    },
-  })
+
+  if (charts.tvl) {
+    items.push({
+      type: 'ChartSection',
+      props: {
+        ...charts.tvl,
+        id: 'tvl',
+        title: 'Value Locked',
+      },
+    })
+  }
+
+  if (charts.activity) {
+    items.push({
+      type: 'ChartSection',
+      props: {
+        ...charts.activity,
+        id: 'activity',
+        title: 'Activity',
+      },
+    })
+  }
+
+  if (charts.costs) {
+    items.push({
+      type: 'ChartSection',
+      props: {
+        ...charts.costs,
+        id: 'costs',
+        title: 'Costs',
+      },
+    })
+  }
+
   if (bridge.milestones && !isEmpty(bridge.milestones)) {
     items.push({
       type: 'MilestonesSection',
@@ -117,6 +145,7 @@ export function getProjectDetails(
         bridge,
         verificationStatus,
         manuallyVerifiedContracts,
+        implementationChange,
       ),
     })
 

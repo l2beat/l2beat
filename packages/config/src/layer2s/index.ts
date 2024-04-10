@@ -14,6 +14,7 @@ import { bobanetwork } from './bobanetwork'
 import { canto } from './canto'
 import { canvasconnect } from './canvasconnect'
 import { capx } from './capx'
+import { coti } from './coti'
 import { cronos } from './cronos'
 import { debank } from './debank'
 import { degate } from './degate'
@@ -21,6 +22,7 @@ import { degate2 } from './degate2'
 import { degate3 } from './degate3'
 import { dydx } from './dydx'
 import { eclipse } from './eclipse'
+import { edgeless } from './edgeless'
 import { frame } from './frame'
 import { fraxtal } from './fraxtal'
 import { fuel } from './fuel'
@@ -74,6 +76,7 @@ import { sorare } from './sorare'
 import { specular } from './specular'
 import { starknet } from './starknet'
 import { stealthchain } from './stealthchain'
+import { swell } from './swell'
 import { taiko } from './taiko'
 import { tanx } from './tanx'
 import { ten } from './ten'
@@ -83,8 +86,10 @@ import { Layer2 } from './types'
 import { x1 } from './x1'
 import { xchain } from './xchain'
 import { zentachain } from './zentachain'
+import { zircuit } from './zircuit'
 import { zkcandy } from './zkcandy'
 import { zkfair } from './zkfair'
+import { zklighter } from './zklighter'
 import { zkspace } from './zkspace'
 import { zkswap } from './zkswap'
 import { zkswap2 } from './zkswap2'
@@ -110,6 +115,7 @@ export const layer2s: Layer2[] = [
   canto,
   capx,
   canvasconnect,
+  coti,
   cronos,
   debank,
   honeypot,
@@ -118,6 +124,7 @@ export const layer2s: Layer2[] = [
   degate3,
   dydx,
   eclipse,
+  edgeless,
   frame,
   fraxtal,
   fuel,
@@ -170,6 +177,7 @@ export const layer2s: Layer2[] = [
   specular,
   starknet,
   stealthchain,
+  swell,
   taiko,
   tanx,
   ten,
@@ -178,8 +186,10 @@ export const layer2s: Layer2[] = [
   x1,
   xchain,
   zentachain,
+  zircuit,
   zkcandy,
   zkfair,
+  zklighter,
   zkspace,
   zkswap,
   zkswap2,

@@ -15,18 +15,22 @@ export function getScalingRiskView(
   return {
     items: ordered
       .filter((p) => !p.isUpcoming)
-      .map((p) =>
-        getScalingRiskViewEntry(
+      .map((p) => {
+        const hasImplementationChanged =
+          !!pagesData.implementationChange?.projects[p.id.toString()]
+        return getScalingRiskViewEntry(
           p,
           pagesData.verificationStatus.projects[p.id.toString()],
-        ),
-      ),
+          hasImplementationChanged,
+        )
+      }),
   }
 }
 
 export function getScalingRiskViewEntry(
   project: Layer2,
   isVerified?: boolean,
+  hasImplementationChanged?: boolean,
 ): ScalingRiskViewEntry {
   return {
     name: project.display.name,
@@ -35,6 +39,7 @@ export function getScalingRiskViewEntry(
     provider: project.display.provider,
     purposes: project.display.purposes,
     warning: project.display.warning,
+    hasImplementationChanged,
     redWarning: project.display.redWarning,
     isArchived: project.isArchived,
     showProjectUnderReview: isAnySectionUnderReview(project),

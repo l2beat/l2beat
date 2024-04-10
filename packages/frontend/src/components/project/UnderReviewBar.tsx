@@ -7,7 +7,7 @@ export function UnderReviewBar({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        'flex justify-center py-2.5 md:px-0',
+        'flex w-full justify-center py-2.5 md:px-0',
         'rounded-lg bg-yellow-700/20',
         className,
       )}

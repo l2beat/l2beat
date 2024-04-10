@@ -1,7 +1,7 @@
 {
   "name": "lyra",
   "chain": "ethereum",
-  "blockNumber": 19488865,
+  "blockNumber": 19531962,
   "configHash": "0x01068392ea8f8fbda1752af503075266be7520bc8821e1280729ba7ed2eb77b9",
   "version": 3,
   "contracts": [
@@ -72,10 +72,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 5533200,
-        "latestOutputIndex": 3073,
-        "nextBlockNumber": 5535000,
-        "nextOutputIndex": 3074,
+        "latestBlockNumber": 5797800,
+        "latestOutputIndex": 3220,
+        "nextBlockNumber": 5799600,
+        "nextOutputIndex": 3221,
         "PROPOSER": "0x03e820562ffd2e0390787caD706EaF1FF98C2608",
         "startingBlockNumber": 0,
         "startingTimestamp": 1700021615,
@@ -103,7 +103,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "3 of 5 (60%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1680797639,
@@ -136,7 +137,7 @@
       "sinceTimestamp": 1700021675,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619899",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619902",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -201,7 +202,7 @@
         "GUARDIAN": "0x91F4be0C264FAFA1fEd75c4440910Cba2cAd98e8",
         "L2_ORACLE": "0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
-        "params": [1000000000, 590849, 19478699],
+        "params": [1000000000, 590849, 19512451],
         "paused": false,
         "SYSTEM_CONFIG": "0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e",
         "version": "1.7.2"
@@ -214,7 +215,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "4 of 6 (67%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1699922135,

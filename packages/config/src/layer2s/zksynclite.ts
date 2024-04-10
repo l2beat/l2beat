@@ -146,7 +146,11 @@ export const zksynclite: Layer2 = {
         },
       },
     ],
-    finality: 'coming soon',
+    finality: {
+      lag: 0,
+      type: 'zkSyncLite',
+      minTimestamp: new UnixTime(1592218708),
+    },
   },
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (calldata)'],

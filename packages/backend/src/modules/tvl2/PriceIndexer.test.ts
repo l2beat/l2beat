@@ -12,7 +12,7 @@ import {
 import { expect, mockFn, mockObject } from 'earl'
 import { Knex } from 'knex'
 
-import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
+import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import { HourlyIndexer } from '../tracked-txs/HourlyIndexer'
 import { PriceIndexer } from './PriceIndexer'
 import { PriceRepository } from './repositories/PriceRepository'
@@ -73,7 +73,11 @@ describe(PriceIndexer.name, () => {
         syncOptimizer,
       )
 
-      const newSafeHeight = await indexer.update(from.toNumber(), to.toNumber())
+      const newSafeHeight = await indexer.update(
+        // TODO: refactor tests after uif update
+        from.toNumber() + 1,
+        to.toNumber(),
+      )
 
       expect(
         coingeckoQueryService.getUsdPriceHistoryHourly,
@@ -119,7 +123,11 @@ describe(PriceIndexer.name, () => {
         }),
       )
 
-      const newSafeHeight = await indexer.update(from.toNumber(), to.toNumber())
+      const newSafeHeight = await indexer.update(
+        // TODO: refactor tests after uif update
+        from.toNumber() + 1,
+        to.toNumber(),
+      )
 
       expect(
         coingeckoQueryService.getUsdPriceHistoryHourly,
@@ -142,7 +150,7 @@ describe(PriceIndexer.name, () => {
     })
   })
 
-  describe(PriceIndexer.prototype.initialize.name, () => {
+  describe(PriceIndexer.prototype.doInitialize.name, () => {
     it('initialize state when not initialized', async () => {
       const stateRepository = mockObject<IndexerStateRepository>({
         findIndexerState: async () => undefined,
@@ -165,7 +173,7 @@ describe(PriceIndexer.name, () => {
         mockObject<SyncOptimizer>({}),
       )
 
-      await indexer.initialize()
+      await indexer.doInitialize()
 
       expect(stateRepository.add).toHaveBeenCalledWith({
         indexerId: indexer.indexerId,
@@ -203,7 +211,7 @@ describe(PriceIndexer.name, () => {
         mockObject<SyncOptimizer>({}),
       )
 
-      await expect(() => indexer.initialize()).toBeRejectedWith(
+      await expect(() => indexer.doInitialize()).toBeRejectedWith(
         'Minimum timestamp of this indexer cannot be updated',
       )
     })

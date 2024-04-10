@@ -1,0 +1,39 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "chain": "arbitrum",
+  "name": "blobstream",
+  "initialAddresses": ["0xa83ca7775bc2889825bcdedffa5b758cf69e8794"],
+  "names": {
+    "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794": "BlobstreamX",
+    "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776": "SuccinctGateway"
+  },
+  "overrides": {
+    "BlobstreamX": {
+      "ignoreMethods": ["state_dataCommitments", "proxiableUUID"],
+      "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
+      "fields": {
+        "accessControl": { "type": "accessControl" }
+      }
+    },
+    "SuccinctGateway": {
+      "fields": {
+        "headerRangeVerifier": {
+          "type": "call",
+          "method": "verifiers",
+          "args": [
+            "0x949dc389c82c63394889813be437513ebc5d06f43bbc9c1e2eb4b791faade1a0"
+          ] // BlobstreamX.headerRangeFunctionId() - we cannot get it from the contract,
+          // but there's a test :)
+        },
+        "nextHeaderVerifier": {
+          "type": "call",
+          "method": "verifiers",
+          "args": [
+            "0x044611c8d01cf88e09811f3270a654e7faf319e96b38f3dd7f9d218c8bb4d0ef"
+          ] // BlobstreamX.nextHeaderFunctionId() - we cannot get it from the contract,
+          // but there's a test :)
+        }
+      }
+    }
+  }
+}

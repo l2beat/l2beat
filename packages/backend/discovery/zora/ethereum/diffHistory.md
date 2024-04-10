@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x8e8b7c912999391cfb5eb4ae8f11c842508f419d
+
+# Diff at Thu, 28 Mar 2024 11:29:58 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@21187e63b9b90823a55c461c331868a470ce17eb block: 19439848
+- current block number: 19532317
+
+## Description
+
+Update discovery to include the multisig threshold.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19439848 (main branch discovery), not current.
+
+```diff
+    contract ZoraMultisig (0xC72aE5c7cc9a332699305E29F68Be66c73b60542) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 8 (25%)"
+    }
+```
+
+```diff
+    contract ChallengerMultisig (0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72) {
+    +++ description: None
+      upgradeability.threshold:
++        "4 of 6 (67%)"
+    }
+```
+
 Generated with discovered.json: 0x9b35815efb3ceb3b2c2040c529bff139eb5b685a
 
 # Diff at Thu, 14 Mar 2024 07:34:32 GMT:

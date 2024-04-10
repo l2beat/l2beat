@@ -1,0 +1,175 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "ArbitrumL1Messenger",
+      "values": {
+        "bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "inbox": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "EthereumFillManager",
+      "values": {
+        "l1Resolver": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "liquidityProviders": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "EthereumL1Messenger",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "EthereumL2Messenger",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "resolver": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "EthereumRequestManager",
+      "values": {
+        "CLAIM_ID_WITHDRAWN_EXPIRED": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_VALIDITY_PERIOD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_VALIDITY_PERIOD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "chains": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "challengePeriodExtension": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "claimPeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "claimRequestExtension": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "claimStake": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "currentNonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lpFeePPM": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minFeePPM": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "protocolFeePPM": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OptimismL1Messenger",
+      "values": {
+        "nativeMessenger": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Resolver",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}

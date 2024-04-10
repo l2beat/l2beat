@@ -14,6 +14,7 @@ import { getMultisigReportDownloadPage } from './multisig-report'
 import { outputPages } from './output'
 import { Page, PagesData } from './Page'
 import { getActivityPage } from './scaling/activity'
+import { getCostsPage } from './scaling/costs'
 import { getScalingDataAvailabilityPage } from './scaling/data-availability'
 import { getDiffHistoryPages } from './scaling/diff-history'
 import { getFinalityPage } from './scaling/finality'
@@ -34,7 +35,9 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     tvlBreakdownApiResponse,
     livenessApiResponse,
     finalityApiResponse,
+    l2CostsApiResponse,
     diffHistory,
+    implementationChange,
   } = pagesData
 
   pages.push(getRiskPage(config, pagesData))
@@ -57,6 +60,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
       getActivityPage(config, {
         activityApiResponse,
         verificationStatus,
+        implementationChange,
       }),
     )
   }
@@ -77,6 +81,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
       getLivenessPage(config, {
         livenessApiResponse,
         tvlApiResponse,
+        implementationChange,
       }),
     )
   }
@@ -86,6 +91,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
       getFinalityPage(config, {
         finalityApiResponse,
         tvlApiResponse,
+        implementationChange,
       }),
     )
   }
@@ -100,7 +106,23 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     pages.push(...getGovernancePublicationPages(config))
   }
 
-  pages.push(getScalingDataAvailabilityPage(config, { tvlApiResponse }))
+  pages.push(
+    getScalingDataAvailabilityPage(config, {
+      tvlApiResponse,
+      implementationChange,
+    }),
+  )
+
+  if (config.features.costsPage && l2CostsApiResponse) {
+    pages.push(
+      getCostsPage(config, {
+        tvlApiResponse,
+        l2CostsApiResponse,
+        activityApiResponse,
+        implementationChange,
+      }),
+    )
+  }
 
   outputPages(pages)
 }

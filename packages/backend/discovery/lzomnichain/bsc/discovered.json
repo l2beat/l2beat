@@ -1,8 +1,8 @@
 {
   "name": "lzomnichain",
   "chain": "bsc",
-  "blockNumber": 36963441,
-  "configHash": "0x52634779792fbffd0e225268ec0f430ac1c1a83a0c5c3705582b615210e80cba",
+  "blockNumber": 37363085,
+  "configHash": "0x31a90e21170b899e7187928b99964de81a8cfb8e4f190116b88262b5ca80976f",
   "version": 3,
   "contracts": [
     {
@@ -1290,7 +1290,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
-        "modules": []
+        "modules": [],
+        "threshold": "2 of 6 (33%)"
       },
       "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
       "sinceTimestamp": 1648073735,
@@ -1323,16 +1324,29 @@
       }
     },
     {
-      "name": "",
+      "name": "RelayerV2",
       "address": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182",
-      "unverified": true,
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x7701C12D268847dB94bbF37A4C4af53Bb6bAF8B0",
         "admin": "0x38dE71124f7a447a01D67945a51eDcE9FF491251"
       },
       "implementations": ["0x7701C12D268847dB94bbF37A4C4af53Bb6bAF8B0"],
-      "sinceTimestamp": 1661531611
+      "sinceTimestamp": 1661531611,
+      "values": {
+        "AIRDROP_GAS_LIMIT": 10000,
+        "fpBytes": 160,
+        "mptOverhead": 500,
+        "multiplierBps": 12000,
+        "owner": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
+        "paused": false,
+        "priceFeed": "0x7A50b180265eb5347Ce7b92224F0B0Cd6cE0493b",
+        "stargateBridgeAddr": "0x6694340fc020c5E6B96567843da2df01b2CE1eb6",
+        "stargateBridgeAddress": "0x0000000000000000000000000000000000000000",
+        "stargateComposer": "0xeCc19E177d24551aA7ed6Bc6FE566eCa726CC8a9",
+        "uln": "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2",
+        "validateProofBytes": 164
+      }
     },
     {
       "name": "VerifierNetwork",
@@ -1354,16 +1368,22 @@
       }
     },
     {
-      "name": "",
+      "name": "RelayerV2Radar",
       "address": "0xde19274c009A22921E3966a1Ec868cEba40A5DaC",
-      "unverified": true,
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x8363302080e711E0CAb978C081b9e69308d49808",
         "admin": "0x38dE71124f7a447a01D67945a51eDcE9FF491251"
       },
       "implementations": ["0x8363302080e711E0CAb978C081b9e69308d49808"],
-      "sinceTimestamp": 1669420588
+      "sinceTimestamp": 1669420588,
+      "values": {
+        "owner": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
+        "paused": false,
+        "relayerV2": "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182",
+        "stargateBridgeAddress": "0x0000000000000000000000000000000000000000",
+        "uln": "0xF487E8D03CDa77Ce9a66B35220D6cBB95d4C2877"
+      }
     },
     {
       "name": "VerifierFeeLib",
@@ -1635,6 +1655,56 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "0x7701C12D268847dB94bbF37A4C4af53Bb6bAF8B0": [
+      "event ApproveAddress(address addr, bool approved)",
+      "event AssignJob(uint256 totalFee)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event SetDstConfig(uint16 chainId, uint16 outboundProofType, uint128 dstNativeAmtCap, uint64 baseGas, uint64 gasPerByte)",
+      "event SetDstPrice(uint16 chainId, uint128 dstPriceRatio, uint128 dstGasPriceInWei)",
+      "event SetPriceConfigUpdater(address priceConfigUpdater, bool allow)",
+      "event ValueTransferFailed(address indexed to, uint256 indexed quantity)",
+      "event Withdraw(address to, uint256 amount)",
+      "function AIRDROP_GAS_LIMIT() view returns (uint256)",
+      "function approvedAddresses(address) view returns (bool)",
+      "function assignJob(uint16 _dstChainId, uint16 _outboundProofType, address _userApplication, uint256 _payloadSize, bytes _adapterParams) returns (uint256 fee)",
+      "function dstConfigLookup(uint16, uint16) view returns (uint128 dstNativeAmtCap, uint64 baseGas, uint64 gasPerByte)",
+      "function dstFloorMarginsUSD(uint16) view returns (uint128)",
+      "function dstMultipliers(uint16) view returns (uint128)",
+      "function dstPriceLookup(uint16 _dstChainId) view returns (tuple(uint128 dstPriceRatio, uint128 dstGasPriceInWei))",
+      "function dstPriceLookupOld(uint16) view returns (uint128 dstPriceRatio, uint128 dstGasPriceInWei)",
+      "function fpBytes() view returns (uint16)",
+      "function getFee(uint16 _dstChainId, uint16 _outboundProofType, address _userApplication, uint256 _payloadSize, bytes _adapterParams) view returns (uint256)",
+      "function initialize(address _uln, address _priceFeed, address _stargateBridgeAddr, address _stargateComposer)",
+      "function isApproved(address _relayerAddress) view returns (bool)",
+      "function mptOverhead() view returns (uint16)",
+      "function multiplierBps() view returns (uint128)",
+      "function onUpgrade(address _stargateBridgeAddr, address _stargateComposer)",
+      "function owner() view returns (address)",
+      "function paused() view returns (bool)",
+      "function priceConfigUpdaters(address) view returns (bool)",
+      "function priceFeed() view returns (address)",
+      "function renounceOwnership()",
+      "function setApprovedAddress(address _relayerAddress, bool _approve)",
+      "function setDstConfig(uint16 _chainId, uint16 _outboundProofType, uint128 _dstNativeAmtCap, uint64 _baseGas, uint64 _gasPerByte)",
+      "function setDstFloorMarginsUSD(tuple(uint16 chainId, uint128 floorMargin)[] _margins)",
+      "function setDstPrice(uint16 _chainId, uint128 _dstPriceRatio, uint128 _dstGasPriceInWei)",
+      "function setDstPriceMultipliers(tuple(uint16 chainId, uint128 multiplier)[] _multipliers)",
+      "function setPause(bool _paused)",
+      "function setPriceConfigUpdater(address _priceConfigUpdater, bool _allow)",
+      "function setPriceFeed(address _priceFeed)",
+      "function setPriceMultiplierBps(uint128 _multiplierBps)",
+      "function setStargateAddress(address _stargateAddress)",
+      "function stargateBridgeAddr() view returns (address)",
+      "function stargateBridgeAddress() view returns (address)",
+      "function stargateComposer() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function uln() view returns (address)",
+      "function validateProofBytes() view returns (uint16)",
+      "function validateTransactionProofV1(uint16 _srcChainId, address _dstAddress, uint256 _gasLimit, bytes32 _blockHash, bytes32 _data, bytes _transactionProof)",
+      "function validateTransactionProofV2(uint16 _srcChainId, address _dstAddress, uint256 _gasLimit, bytes32 _blockHash, bytes32 _data, bytes _transactionProof, address _to) payable",
+      "function withdrawFee(address _to, uint256 _amount)",
+      "function withdrawToken(address _token, address _to, uint256 _amount)"
+    ],
     "0x7A50b180265eb5347Ce7b92224F0B0Cd6cE0493b": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1644,6 +1714,39 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x8363302080e711E0CAb978C081b9e69308d49808": [
+      "event ApproveAddress(address addr, bool approved)",
+      "event AssignJob(uint256 totalFee)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event SetDstConfig(uint16 chainId, uint16 outboundProofType, uint128 dstNativeAmtCap, uint64 baseGas, uint64 gasPerByte)",
+      "event SetDstPrice(uint16 chainId, uint128 dstPriceRatio, uint128 dstGasPriceInWei)",
+      "event ValueTransferFailed(address indexed to, uint256 indexed quantity)",
+      "event Withdraw(address to, uint256 amount)",
+      "function approvedAddresses(address) view returns (bool)",
+      "function assignJob(uint16 _dstChainId, uint16 _outboundProofType, address _userApplication, uint256 _payloadSize, bytes _adapterParams) returns (uint256)",
+      "function dstConfigLookup(uint16 _legacyChainId, uint16 _outboundProofType) view returns (tuple(uint128 dstNativeAmtCap, uint64 baseGas, uint64 gasPerByte))",
+      "function dstPriceLookup(uint16 _legacyChainId) view returns (tuple(uint128 dstPriceRatio, uint128 dstGasPriceInWei))",
+      "function getFee(uint16 _dstChainId, uint16 _outboundProofType, address _userApplication, uint256 _payloadSize, bytes _adapterParams) view returns (uint256)",
+      "function getV2ChainId(uint16 _legacyChainId) view returns (uint16)",
+      "function initialize(address _ulnRadar, address _relayerV2)",
+      "function isApproved(address _relayerAddress) view returns (bool)",
+      "function legacyToV2ChainId(uint16) view returns (uint16)",
+      "function owner() view returns (address)",
+      "function paused() view returns (bool)",
+      "function relayerV2() view returns (address)",
+      "function renounceOwnership()",
+      "function setApprovedAddress(address _relayerAddress, bool _approve)",
+      "function setDstConfig(uint16 _chainId, uint16 _outboundProofType, uint128 _dstNativeAmtCap, uint64 _baseGas, uint64 _gasPerByte)",
+      "function setDstPrice(uint16 _chainId, uint128 _dstPriceRatio, uint128 _dstGasPriceInWei)",
+      "function setPause(bool _paused)",
+      "function setStargateAddress(address _stargateAddress)",
+      "function stargateBridgeAddress() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function uln() view returns (address)",
+      "function validateTransactionProofV1(uint16 _srcChainId, address _dstAddress, uint256 _gasLimit, bytes32 _blockHash, bytes32 _data, bytes _transactionProof)",
+      "function validateTransactionProofV2(uint16 _srcChainId, address _dstAddress, uint256 _gasLimit, bytes32 _blockHash, bytes32 _data, bytes _transactionProof, address _to) payable",
+      "function withdrawFee(address _to, uint256 _amount)"
     ],
     "0x8D452629c5FfCDDE407069da48c096e1F8beF22c": [
       "constructor(address _singleton)"

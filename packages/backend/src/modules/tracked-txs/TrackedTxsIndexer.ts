@@ -8,7 +8,7 @@ import { ChildIndexer } from '@l2beat/uif'
 import { Knex } from 'knex'
 import { pickBy } from 'lodash'
 
-import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
+import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import { HourlyIndexer } from './HourlyIndexer'
 import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsClient } from './TrackedTxsClient'
@@ -48,12 +48,12 @@ export class TrackedTxsIndexer extends ChildIndexer {
   }
 
   override async start(): Promise<void> {
-    await this.initialize()
     await super.start()
     this.logger.info('Started')
   }
 
   override async update(from: number, to: number): Promise<number> {
+    from -= 1 // TODO: refactor logic after uif update
     const { from: unixFrom, to: unixTo } = adjustRangeForBigQueryCall(from, to)
 
     const [configurations, syncTo] = await this.getConfigurationsToSync(
@@ -115,7 +115,12 @@ export class TrackedTxsIndexer extends ChildIndexer {
     return [configurationsToSync, syncTo]
   }
 
-  private async initialize(): Promise<void> {
+  override async initialize(): Promise<number> {
+    await this.doInitialize()
+    return await this.getSafeHeight()
+  }
+
+  private async doInitialize(): Promise<void> {
     const databaseEntries = await this.configRepository.getAll()
     const { toAdd, toRemove, toChangeUntilTimestamp } =
       diffTrackedTxConfigurations(this.configs, databaseEntries)
@@ -206,7 +211,7 @@ export class TrackedTxsIndexer extends ChildIndexer {
     await this.setSafeHeight(safeHeight, trx)
   }
 
-  override async getSafeHeight(): Promise<number> {
+  async getSafeHeight(): Promise<number> {
     const indexerState = await this.stateRepository.findIndexerState(
       this.indexerId,
     )

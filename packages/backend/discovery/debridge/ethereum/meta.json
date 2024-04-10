@@ -1,0 +1,410 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "Admin Multisig",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CallProxy",
+      "values": {
+        "DEBRIDGE_GATE_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "submissionChainIdFrom": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "submissionNativeSender": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "DeBridgeGate",
+      "values": {
+        "BPS_DENOMINATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEPLOY_PREFIX": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "GOVMONITORING_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SUBMISSION_PREFIX": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "callProxy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "deBridgeTokenDeployer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "excessConfirmations": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "feeContractUpdater": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "feeProxy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "gap0": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "gap1": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "globalFixedNativeFee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "globalTransferFeeBps": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lockedClaim": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "signatureVerifier": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "weth": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "wethGate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "DeBridgeToken",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DOMAIN_SEPARATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MINTER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAUSER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PERMIT_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "DeBridgeTokenDeployer",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "deBridgeTokenAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "debridgeAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "tokenImplementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SignatureVerifier",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "confirmationThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "currentBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "debridgeAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "excessConfirmations": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minConfirmations": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "oracles": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "requiredOraclesCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "submissionsInBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SimpleFeeProxy",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "debridgeGate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "treasury": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}

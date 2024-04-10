@@ -5,13 +5,17 @@ import { cn } from '../../utils/cn'
 export interface RadioGroupProps {
   role: string
   name: string
+  highlighted?: boolean
   className?: string
   optionsClassname?: string
-  options: {
-    value: string
-    checked?: boolean
-    className?: string
-  }[]
+  options: RadioGroupOption[]
+}
+
+export interface RadioGroupOption {
+  value: string
+  label?: string
+  checked?: boolean
+  className?: string
 }
 
 export function RadioGroup(props: RadioGroupProps) {
@@ -46,9 +50,13 @@ export function RadioGroup(props: RadioGroupProps) {
               'relative block px-2',
               'cursor-pointer rounded-md peer-checked:bg-white peer-disabled:cursor-not-allowed peer-disabled:!bg-transparent peer-disabled:opacity-60 dark:peer-checked:bg-black',
               'outline-current peer-focus-visible:outline peer-focus-visible:outline-2',
+              props.highlighted &&
+                'from-purple-100 to-pink-100 peer-checked:bg-gradient-to-r peer-checked:text-white',
+              !props.highlighted &&
+                'peer-checked:bg-white dark:peer-checked:bg-black',
             )}
           >
-            {option.value}
+            {option.label ?? option.value}
           </span>
         </label>
       ))}

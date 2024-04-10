@@ -17,3 +17,4 @@ export type ScalingProjectPurpose =
   | 'Social'
   | 'RWA'
   | 'IoT'
+  | 'Restaking'

@@ -18,14 +18,6 @@
       "values": {}
     },
     {
-      "name": "",
-      "values": {}
-    },
-    {
-      "name": "",
-      "values": {}
-    },
-    {
       "name": "Endpoint",
       "values": {
         "BLOCK_VERSION": {
@@ -229,6 +221,101 @@
       "name": "ProxyAdmin",
       "values": {
         "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "RelayerV2",
+      "values": {
+        "AIRDROP_GAS_LIMIT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "fpBytes": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mptOverhead": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "multiplierBps": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "priceFeed": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stargateBridgeAddr": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stargateBridgeAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stargateComposer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "uln": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "validateProofBytes": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "RelayerV2Radar",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "relayerV2": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stargateBridgeAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "uln": {
           "description": null,
           "severity": null,
           "type": null

@@ -3,18 +3,12 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer, Retries } from '@l2beat/uif'
 import { mean } from 'lodash'
 
-import { IndexerStateRepository } from '../../peripherals/database/repositories/IndexerStateRepository'
+import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import {
   FinalityRecord,
   FinalityRepository,
 } from './repositories/FinalityRepository'
 import { FinalityConfig } from './types/FinalityConfig'
-
-/*
-  Once per day we want to fetch finality data for each project for last 24h, with granularity of 10 minutes,
-  so in every hour there will be 6 calls
-*/
-const FINALITY_GRANULARITY = 24 * 6
 
 const UPDATE_RETRY_STRATEGY = Retries.exponentialBackOff({
   maxAttempts: 10,
@@ -22,7 +16,7 @@ const UPDATE_RETRY_STRATEGY = Retries.exponentialBackOff({
 })
 
 export class FinalityIndexer extends ChildIndexer {
-  readonly indexerId
+  readonly indexerId: string
 
   constructor(
     logger: Logger,
@@ -39,11 +33,11 @@ export class FinalityIndexer extends ChildIndexer {
 
   override async start(): Promise<void> {
     this.logger.info('Starting...')
-    await this.initialize()
     await super.start()
   }
 
   override async update(from: number, to: number): Promise<number> {
+    from -= 1 // TODO: refactor logic after uif update
     const targetTimestamp = new UnixTime(to).toStartOf('day')
 
     if (to < this.configuration.minTimestamp.toNumber()) {
@@ -54,6 +48,16 @@ export class FinalityIndexer extends ChildIndexer {
     const isSynced = await this.isConfigurationSynced(targetTimestamp)
     if (isSynced) {
       this.logger.debug('Update skipped: configuration already synced', {
+        from,
+        to,
+        targetTimestamp,
+      })
+      return to
+    }
+
+    const now = UnixTime.now().toStartOf('day')
+    if (targetTimestamp.toNumber() < now.add(-1, 'days').toNumber()) {
+      this.logger.debug('Update skipped: target in the past', {
         from,
         to,
         targetTimestamp,
@@ -95,11 +99,7 @@ export class FinalityIndexer extends ChildIndexer {
     const from = to.add(-1, 'days')
 
     const projectFinalityTimestamps =
-      await configuration.analyzer.getFinalityWithGranularity(
-        from,
-        to,
-        FINALITY_GRANULARITY,
-      )
+      await configuration.analyzer.getFinalityForInterval(from, to)
 
     if (!projectFinalityTimestamps) return
 
@@ -112,8 +112,9 @@ export class FinalityIndexer extends ChildIndexer {
     }
   }
 
-  private async initialize() {
+  override async initialize(): Promise<number> {
     await this.initializeIndexerState()
+    return await this.getSafeHeight()
   }
 
   async initializeIndexerState() {
@@ -134,7 +135,7 @@ export class FinalityIndexer extends ChildIndexer {
     await this.setSafeHeight(safeHeight)
   }
 
-  override async getSafeHeight(): Promise<number> {
+  async getSafeHeight(): Promise<number> {
     const indexerState = await this.stateRepository.findIndexerState(
       this.indexerId,
     )

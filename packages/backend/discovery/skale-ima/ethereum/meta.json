@@ -1,0 +1,380 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "CommunityPool",
+      "values": {
+        "CONSTANT_SETTER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "LINKER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "contractManagerOfSkaleManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messageProxy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minTransactionGas": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "multiplierDivider": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "multiplierNumerator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "DepositBoxERC1155",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEPOSIT_BOX_MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "LINKER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "contractManagerOfSkaleManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "linker": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messageProxy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "DepositBoxERC20",
+      "values": {
+        "ARBITER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEPOSIT_BOX_MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "LINKER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "contractManagerOfSkaleManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "linker": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messageProxy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "DepositBoxERC721",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEPOSIT_BOX_MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "LINKER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "contractManagerOfSkaleManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "linker": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messageProxy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "DepositBoxERC721WithMetadata",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEPOSIT_BOX_MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "LINKER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "contractManagerOfSkaleManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "linker": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messageProxy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "DepositBoxEth",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEPOSIT_BOX_MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "LINKER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "contractManagerOfSkaleManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "linker": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messageProxy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Linker",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "LINKER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "contractManagerOfSkaleManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messageProxy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "MessageProxyForMainnet",
+      "values": {
+        "CHAIN_CONNECTOR_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "CONSTANT_SETTER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EXTRA_CONTRACT_REGISTRAR_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAINNET_HASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MESSAGES_LENGTH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAUSABLE_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REVERT_REASON_LENGTH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "communityPool": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "contractManagerOfSkaleManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "gasLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "headerMessageGasCost": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messageGasCost": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "messageInProgress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdminOwner",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}
