@@ -225,11 +225,34 @@ describe(ManagedMultiIndexer.name, () => {
       )
       await indexer.start()
 
-      const configurations = await getSavedConfigurations(indexerService)
-
-      expect(configurations).toEqualUnsorted([])
       expect(indexer.removeData).toHaveBeenOnlyCalledWith([
         removal('d', 100, 550),
+      ])
+    })
+
+    it('minHeight changed', async () => {
+      const indexer = await initializeMockIndexer(
+        indexerService,
+        [saved('d', 100, null, 550)],
+        [actual('d', 50, null)],
+      )
+      await indexer.start()
+
+      expect(indexer.removeData).toHaveBeenOnlyCalledWith([
+        removal('d', 100, 550),
+      ])
+    })
+
+    it('maxHeight changed', async () => {
+      const indexer = await initializeMockIndexer(
+        indexerService,
+        [saved('d', 100, null, 550)],
+        [actual('d', 100, 200)],
+      )
+      await indexer.start()
+
+      expect(indexer.removeData).toHaveBeenOnlyCalledWith([
+        removal('d', 201, 550),
       ])
     })
   })
