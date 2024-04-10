@@ -76,7 +76,7 @@ describeDatabase('ManagedMultiIndexer e2e', (database) => {
       ...mock('f'),
     }
     const db = mockObject({
-      add: async (_ids: string[], _timestamp: number) => {},
+      add: async () => {},
       remove: async (_id: string, _from: number, _to: number) => {},
     })
     const indexer = new TestIndexer(
@@ -159,6 +159,7 @@ describeDatabase('ManagedMultiIndexer e2e', (database) => {
       151,
       MAX_HEIGHT_CHANGE.currentHeight,
     )
+    expect(db.remove).toHaveBeenCalledTimes(3)
   })
 
   //   it('update', async () => {
