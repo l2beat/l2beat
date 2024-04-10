@@ -25,6 +25,7 @@ export function configureTooltips() {
     tooltip.classList.toggle('max-w-[300px]', !element.dataset.tooltipBig)
     const rect = trigger.getBoundingClientRect()
     tooltipContent.innerHTML = content.innerHTML
+    const prefferedPosition = content.getAttribute('data-preffered-position')
     tooltip.style.display = 'block'
     const tooltipHeight = tooltip.getBoundingClientRect().height
     const tooltipWidth = tooltip.getBoundingClientRect().width
@@ -37,14 +38,18 @@ export function configureTooltips() {
     const isOverflowingOnBottom =
       rect.y + rect.height + 7 + tooltipHeight >= window.innerHeight
     const isOverflowingOnTop = rect.top - tooltipHeight <= 7
-    if (!isOverflowingOnBottom || isOverflowingOnTop) {
-      tooltip.style.top = `${rect.bottom + 7}px`
-      tooltipTriangle.style.top = `${rect.bottom}px`
-      tooltipTriangle.classList.remove('rotate-180')
-    } else {
+
+    if (
+      (prefferedPosition === 'top' && !isOverflowingOnTop) ||
+      isOverflowingOnBottom
+    ) {
       tooltip.style.top = `${rect.top - 7 - tooltipHeight}px`
       tooltipTriangle.style.top = `${rect.top - 7}px`
       tooltipTriangle.classList.add('rotate-180')
+    } else {
+      tooltip.style.top = `${rect.bottom + 7}px`
+      tooltipTriangle.style.top = `${rect.bottom}px`
+      tooltipTriangle.classList.remove('rotate-180')
     }
 
     tooltip.style.textAlign =

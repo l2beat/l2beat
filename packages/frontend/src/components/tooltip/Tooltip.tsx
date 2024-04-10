@@ -51,12 +51,20 @@ export function TooltipTrigger({
 
 interface TooltipContentProps {
   children: React.ReactNode
+  prefferedPosition?: 'top' | 'bottom'
 }
 
-export function TooltipContent({ children }: TooltipContentProps) {
+export function TooltipContent({
+  children,
+  prefferedPosition,
+}: TooltipContentProps) {
   if (!children) return null
   return (
-    <div className="hidden" data-role="tooltip-content">
+    <div
+      className="hidden"
+      data-role="tooltip-content"
+      data-preffered-position={prefferedPosition}
+    >
       {children}
     </div>
   )

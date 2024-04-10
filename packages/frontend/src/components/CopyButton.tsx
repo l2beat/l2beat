@@ -22,7 +22,7 @@ export function CopyButton(props: Props) {
             <SatisfiedIcon className="hidden size-6 fill-green-700 group-data-[copied=true]:block dark:fill-green-450" />
           </button>
         </TooltipTrigger>
-        <TooltipContent>Copy URL</TooltipContent>
+        <TooltipContent prefferedPosition="top">Copy URL</TooltipContent>
       </Tooltip>
     </>
   )
