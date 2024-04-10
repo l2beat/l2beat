@@ -33,11 +33,13 @@ interface Tvl2ProjectResult {
   native: number
 }
 
+type AmountConfigMap = Map<
+  ProjectId,
+  (AmountConfigEntry & { configId: string })[]
+>
+
 export class Tvl2Controller {
-  private readonly amountConfig: Map<
-    ProjectId,
-    (AmountConfigEntry & { configId: string })[]
-  >
+  private readonly amountConfig: AmountConfigMap
   private readonly priceConfig: Map<string, number>
 
   constructor(
@@ -47,16 +49,7 @@ export class Tvl2Controller {
     private readonly projects: Tvl2Project[],
     config: Tvl2Config,
   ) {
-    const amountConfigEntries = Object.entries(
-      groupBy(config.amounts, 'project'),
-    ).map(
-      ([k, v]) =>
-        [
-          ProjectId(k),
-          v.map((x) => ({ ...x, configId: createAmountId(x) })),
-        ] as const,
-    )
-    this.amountConfig = new Map(amountConfigEntries)
+    this.amountConfig = getAmountConfigMap(config)
     this.priceConfig = new Map(
       config.prices.map((x) => [createAssetId(x), x.decimals]),
     )
@@ -78,6 +71,7 @@ export class Tvl2Controller {
     const result: Tvl2Result = {
       daily: [],
     }
+
     for (let t = minTimestamp; t.lte(maxTimestamp); t = t.add(1, 'days')) {
       result.daily.push(await this.getTvlAt(t))
     }
@@ -113,13 +107,14 @@ export class Tvl2Controller {
     timestamp: UnixTime,
   ): Promise<Tvl2ProjectResult> {
     const projectConfigs = this.amountConfig.get(project)
-
     assert(projectConfigs, 'Config not found')
+
     const configIds = projectConfigs.map((x) => x.configId)
-    const records = await this.amountRepository.getByProjectIdAndTimestamp(
+    const records = await this.amountRepository.getByConfigIdsAndTimestamp(
       configIds,
       timestamp,
     )
+    assert(records.length === configIds.length, 'Records and config mismatch')
 
     const prices = await this.priceRepository.getByTimestamp(timestamp)
 
@@ -128,13 +123,12 @@ export class Tvl2Controller {
       external: 0,
       native: 0,
     }
-    for (const record of records) {
-      // todo: if we sort by config id we can avoid this lookup.
-      // and just use the index.
-      const amountConfig = projectConfigs.find(
-        (x) => x.configId === record.configId,
-      )
-      assert(amountConfig, 'Amount config not found')
+
+    for (let i = 0; i < records.length; i++) {
+      const record = records[i]
+      const amountConfig = projectConfigs[i]
+      assert(amountConfig.configId === record.configId, 'Config mismatch')
+
       const assetId = createAssetId({
         address: amountConfig.address,
         chain: amountConfig.chain,
@@ -150,6 +144,21 @@ export class Tvl2Controller {
     }
     return results
   }
+}
+
+function getAmountConfigMap(config: Tvl2Config) {
+  const groupedEntries = Object.entries(groupBy(config.amounts, 'project'))
+  const amountConfigEntries = groupedEntries.map(
+    ([k, v]) =>
+      [
+        ProjectId(k),
+        v
+          .map((x) => ({ ...x, configId: createAmountId(x) }))
+          .sort((a, b) => a.configId.localeCompare(b.configId)),
+      ] as const,
+  )
+
+  return new Map(amountConfigEntries)
 }
 
 function createAssetId(price: {
