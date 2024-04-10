@@ -27,7 +27,7 @@ export interface Project {
   projectId: ProjectId
   slug: string
   isArchived?: boolean
-  type: 'layer2' | 'bridge' | 'layer3'
+  type: 'layer2' | 'bridge'
   isUpcoming?: boolean
   isLayer3?: boolean
   escrows: ProjectEscrow[]
