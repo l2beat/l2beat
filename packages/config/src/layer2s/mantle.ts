@@ -111,6 +111,14 @@ export const mantle: Layer2 = opStackL2({
       type: 'etherscan',
     },
     minTimestampForTvl: new UnixTime(1688314886),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 304717,
+        version: '3',
+      },
+    ],
     coingeckoPlatform: 'mantle',
   },
   nonTemplateContracts: [
