@@ -20,6 +20,25 @@ body {
   scrollbar-width: none; /* Firefox */
 }
 
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  @apply rounded-full bg-gray-200;
+}
+
+.dark ::-webkit-scrollbar-track {
+  @apply rounded-full bg-zinc-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-gray-50;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-zinc-500;
+}
 /* Please use https://gwfh.mranftl.com/fonts/roboto-serif?subsets=latin */
 
 /* roboto-regular - latin */
