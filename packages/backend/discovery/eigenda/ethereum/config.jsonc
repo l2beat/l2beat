@@ -1,0 +1,12 @@
+{
+    "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+    "chain": "ethereum",
+    "name": "eigenda",
+    "initialAddresses": ["0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"],
+    "names": {
+      "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0": "eigenDAServiceManager",
+      "0x8247EF5705d3345516286B72bFE6D690197C2E99": "eigenDAProxyAdmin"
+    },
+    "overrides": {}
+  }
+  
