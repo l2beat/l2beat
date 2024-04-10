@@ -2,6 +2,7 @@ import {
   assertUnreachable,
   EthereumAddress,
   gatherAddressesFromUpgradeability,
+  notUndefined,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
@@ -119,6 +120,19 @@ describe('layer2s', () => {
             })
           }
         })
+      }
+    })
+
+    describe('every cost multiplier is in 0 to 1 range', () => {
+      for (const project of layer2s) {
+        if (project.config.trackedTxs) {
+          it(`${project.id.toString()} : has valid cost multipliers`, () => {
+            const costMultipliers = project.config.trackedTxs
+              ?.map((t) => t._hackCostMultiplier)
+              .filter(notUndefined)
+            expect(costMultipliers?.every((m) => m > 0 && m <= 1)).toEqual(true)
+          })
+        }
       }
     })
 
