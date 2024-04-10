@@ -252,7 +252,7 @@ function mockTotalSupplyConfig(
   }
 }
 
-function mockBaseConfig(base: Partial<AmountConfigBase>): AmountConfigBase {
+function mockBaseConfig(base: Partial<AmountConfigBase>) {
   return {
     chain: 'chain',
     project: ProjectId('project'),

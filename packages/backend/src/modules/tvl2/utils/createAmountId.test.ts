@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { CoingeckoId, EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { createAmountId } from './createAmountId'
@@ -6,72 +6,90 @@ import { createAmountId } from './createAmountId'
 describe(createAmountId.name, () => {
   it('works for totalSupply', () => {
     expect(
-      createAmountId('chain', ProjectId('projectId'), {
+      createAmountId({
+        chain: 'chain',
+        project: ProjectId('projectId'),
         type: 'totalSupply',
-        address: 'address',
+        address: EthereumAddress.unsafe('address'),
       }),
     ).toEqual('88f4c5c9a84c')
   })
 
   it('works for circulatingSupply', () => {
     expect(
-      createAmountId('chain', ProjectId('projectId'), {
+      createAmountId({
+        chain: 'chain',
+        project: ProjectId('projectId'),
         type: 'circulatingSupply',
-        address: 'address',
-        coingeckoId: 'coingeckoId',
+        address: EthereumAddress.unsafe('address'),
+        coingeckoId: CoingeckoId('coingeckoId'),
       }),
     ).toEqual('bd311ede8f4c')
   })
 
   it('works for escrow', () => {
     expect(
-      createAmountId('chain', ProjectId('projectId'), {
+      createAmountId({
+        chain: 'chain',
+        project: ProjectId('projectId'),
         type: 'escrow',
-        address: 'address',
-        escrowAddress: 'escrowAddress',
+        address: EthereumAddress.unsafe('address'),
+        escrowAddress: EthereumAddress.unsafe('escrowAddress'),
       }),
     ).toEqual('25188634c56f')
   })
 
   it('changes with projectId', () => {
     expect(
-      createAmountId('chain', ProjectId('projectId2'), {
+      createAmountId({
+        chain: 'chain',
+        project: ProjectId('projectId2'),
         type: 'totalSupply',
-        address: 'address',
+        address: EthereumAddress.unsafe('address'),
       }),
     ).not.toEqual(
-      createAmountId('chain', ProjectId('projectId'), {
+      createAmountId({
+        chain: 'chain',
+        project: ProjectId('projectId'),
         type: 'totalSupply',
-        address: 'address',
+        address: EthereumAddress.unsafe('address'),
       }),
     )
   })
 
   it('changes with chain', () => {
     expect(
-      createAmountId('chain2', ProjectId('projectId'), {
+      createAmountId({
+        chain: 'chain2',
+        project: ProjectId('projectId'),
         type: 'totalSupply',
-        address: 'address',
+        address: EthereumAddress.unsafe('address'),
       }),
     ).not.toEqual(
-      createAmountId('chain', ProjectId('projectId'), {
+      createAmountId({
+        chain: 'chain',
+        project: ProjectId('projectId'),
         type: 'totalSupply',
-        address: 'address',
+        address: EthereumAddress.unsafe('address'),
       }),
     )
   })
 
   it('changes with type', () => {
     expect(
-      createAmountId('chain', ProjectId('projectId'), {
+      createAmountId({
+        chain: 'chain',
+        project: ProjectId('projectId'),
         type: 'totalSupply',
-        address: 'address',
+        address: EthereumAddress.unsafe('address'),
       }),
     ).not.toEqual(
-      createAmountId('chain', ProjectId('projectId'), {
+      createAmountId({
+        chain: 'chain',
+        project: ProjectId('projectId'),
         type: 'escrow',
-        address: 'address',
-        escrowAddress: 'escrowAddress',
+        address: EthereumAddress.unsafe('address'),
+        escrowAddress: EthereumAddress.unsafe('escrowAddress'),
       }),
     )
   })

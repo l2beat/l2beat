@@ -3,26 +3,27 @@ import { EthereumAddress } from './EthereumAddress'
 import { ProjectId } from './ProjectId'
 import { UnixTime } from './UnixTime'
 
-export type AmountConfigEntry =
+export type AmountConfigEntry = AmountConfigIdentifiable & {
+  source: 'canonical' | 'external' | 'native'
+  sinceTimestamp: UnixTime
+  includeInTotal: boolean
+}
+export type AmountConfigIdentifiable =
   | TotalSupplyEntry
   | CirculatingSupplyEntry
   | EscrowEntry
 
-export type TotalSupplyEntry = AmountConfigBase & TotalSupplySpecific
-export interface TotalSupplySpecific {
+export interface TotalSupplyEntry extends AmountConfigBase {
   type: 'totalSupply'
   address: EthereumAddress
 }
 
-export type CirculatingSupplyEntry = AmountConfigBase &
-  CirculatingSupplySpecific
-export interface CirculatingSupplySpecific {
+export interface CirculatingSupplyEntry extends AmountConfigBase {
   type: 'circulatingSupply'
   address: EthereumAddress | 'native'
   coingeckoId: CoingeckoId
 }
-export type EscrowEntry = AmountConfigBase & EscrowSpecific
-export interface EscrowSpecific {
+export interface EscrowEntry extends AmountConfigBase {
   type: 'escrow'
   address: EthereumAddress | 'native'
   escrowAddress: EthereumAddress
@@ -31,7 +32,4 @@ export interface EscrowSpecific {
 export interface AmountConfigBase {
   chain: string
   project: ProjectId
-  source: 'canonical' | 'external' | 'native'
-  sinceTimestamp: UnixTime
-  includeInTotal: boolean
 }
