@@ -1,13 +1,9 @@
 import { Env, LoggerOptions } from '@l2beat/backend-tools'
-import { bridges, chains, layer2s, layer3s, tokenList } from '@l2beat/config'
+import { bridges, chains, layer2s, tokenList } from '@l2beat/config'
 import { ConfigReader } from '@l2beat/discovery'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
-import {
-  bridgeToProject,
-  layer2ToProject,
-  layer3ToProject,
-} from '../model/Project'
+import { bridgeToProject, layer2ToProject } from '../model/Project'
 import { Config, DiscordConfig } from './Config'
 import { FeatureFlags } from './FeatureFlags'
 import {
@@ -43,10 +39,7 @@ export function makeConfig(
 
   return {
     name,
-    projects: layer2s
-      .map(layer2ToProject)
-      .concat(bridges.map(bridgeToProject))
-      .concat(layer3s.map(layer3ToProject)),
+    projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
     tokens: tokenList,
     logger: {
       logLevel: env.string('LOG_LEVEL', 'INFO') as LoggerOptions['logLevel'],
