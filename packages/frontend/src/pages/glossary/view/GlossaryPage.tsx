@@ -18,7 +18,7 @@ export function GlossaryPage(props: GlossaryPageProps) {
   return (
     <>
       <Navbar {...props.navbar} />
-      <FullPageHeader pageContentClassName="">
+      <FullPageHeader className="pb-0">
         <div className="w-full">
           <div className="flex flex-col items-start gap-6 lg:flex-row lg:justify-between">
             <h1 className="text-6xl font-bold">Glossary</h1>
@@ -35,10 +35,14 @@ export function GlossaryPage(props: GlossaryPageProps) {
               </p>
             </div>
           </div>
-          <div className="mt-8 lg:mt-14">
-            <AlphabetSelector entries={props.entries} />
-          </div>
         </div>
+      </FullPageHeader>
+      <FullPageHeader
+        className="sticky top-0 py-8 lg:pt-14"
+        pageContentClassName="block"
+        as="div"
+      >
+        <AlphabetSelector entries={props.entries} />
       </FullPageHeader>
       <PageContent className="mt-12 flex">
         <NavigationList entries={props.entries} />
@@ -75,7 +79,7 @@ function NavigationList(props: { entries: GlossaryEntry[] }) {
   return (
     <nav
       data-role="glossary-nav-list"
-      className="sticky top-12 hidden max-h-[70vh] w-[246px] min-w-[246px] lg:block"
+      className="sticky top-[145px] hidden max-h-[70vh] w-[246px] min-w-[246px] lg:block"
     >
       <div className="relative h-full">
         <ul className="flex h-full flex-col gap-4 overflow-y-scroll pb-8 pr-6">
