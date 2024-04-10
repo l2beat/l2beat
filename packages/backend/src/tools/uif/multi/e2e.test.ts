@@ -15,13 +15,6 @@ import {
   ManagedMultiIndexerOptions,
 } from './ManagedMultiIndexer'
 
-/* What to test:
-
-update()
-- splits correctly into ranges
-
-*/
-
 const INDEXER_ID = 'indexer'
 
 describeDatabase('ManagedMultiIndexer e2e', (database) => {
@@ -150,7 +143,7 @@ describeDatabase('ManagedMultiIndexer e2e', (database) => {
     expect(db.remove).toHaveBeenCalledTimes(3)
   })
 
-  it.only('update', async () => {
+  it('update', async () => {
     const stateRepository = new IndexerStateRepository(database, Logger.SILENT)
     const configurationsRepository = new IndexerConfigurationRepository(
       database,
@@ -163,7 +156,7 @@ describeDatabase('ManagedMultiIndexer e2e', (database) => {
     )
 
     const db = mockObject({
-      add: async (_ids: string[], _timestamp: number) => {},
+      add: async (_ids: string[], from: number, to: number) => {},
       remove: async (_id: string, _from: number, _to: number) => {},
     })
 
@@ -171,7 +164,7 @@ describeDatabase('ManagedMultiIndexer e2e', (database) => {
     // 200 - 300 AB
     // 301 - 399 B
     // 400 - 500 BC
-    // 500 - inf C
+    // 501 - inf C
     const A = mock('a', { minHeight: 100, maxHeight: 300 })
     const B = mock('b', { minHeight: 200, maxHeight: 500 })
     //TODO: add current heighth
@@ -195,16 +188,24 @@ describeDatabase('ManagedMultiIndexer e2e', (database) => {
     const target = 600
     let current = 99
 
-    // This "+ 1" logic mimics Indexer.executeUpdate
+    // This "+1" logic mimics Indexer.executeUpdate
     while (current + 1 < target) {
       current = await indexer.update(current + 1, target)
     }
 
-    expect(db.add).toHaveBeenNthCalledWith(1, [A.id], 100)
-    expect(db.add).toHaveBeenNthCalledWith(2, [A.id, B.id], 200)
-    expect(db.add).toHaveBeenNthCalledWith(3, [B.id], 301)
-    expect(db.add).toHaveBeenNthCalledWith(4, [B.id, C.id], 400)
-    expect(db.add).toHaveBeenLastCalledWith([C.id], 501)
+    expect(db.add).toHaveBeenNthCalledWith(1, [A.id], 100, 199)
+    expect(db.add).toHaveBeenNthCalledWith(2, [A.id, B.id], 200, 300)
+    expect(db.add).toHaveBeenNthCalledWith(3, [B.id], 301, 399)
+    expect(db.add).toHaveBeenNthCalledWith(4, [B.id, C.id], 400, 500)
+    expect(db.add).toHaveBeenLastCalledWith([C.id], 501, 600)
+
+    const configurations = await configurationsRepository.getAll()
+
+    expect(configurations).toEqual([
+      { ...A, currentHeight: A.maxHeight },
+      { ...B, currentHeight: B.maxHeight },
+      { ...C, currentHeight: target },
+    ])
   })
 })
 
@@ -212,7 +213,7 @@ class TestIndexer extends ManagedMultiIndexer<string> {
   constructor(
     override readonly options: ManagedMultiIndexerOptions<string>,
     private readonly db: {
-      add: (ids: string[], timestamp: number) => Promise<void>
+      add: (ids: string[], from: number, to: number) => Promise<void>
       remove: (id: string, from: number, to: number) => Promise<void>
     },
   ) {
@@ -221,14 +222,15 @@ class TestIndexer extends ManagedMultiIndexer<string> {
 
   override async multiUpdate(
     from: number,
-    _to: number,
+    to: number,
     configurations: UpdateConfiguration<string>[],
   ): Promise<number> {
     await this.db.add(
       configurations.map((c) => c.id),
       from,
+      to,
     )
-    return _to
+    return to
   }
   override async removeData(
     configurations: RemovalConfiguration<string>[],
