@@ -67,18 +67,9 @@ describeDatabase('ManagedMultiIndexer e2e', (database) => {
         indexerService,
         configurations: [
           UNCHANGED,
-          {
-            ...MIN_HEIGHT_CHANGE,
-            minHeight: 50,
-          },
-          {
-            ...MAX_HEIGHT_CHANGE,
-            maxHeight: 150,
-          },
-          {
-            ...PROPERTIES_CHANGE,
-            properties: 'different-properties',
-          },
+          { ...MIN_HEIGHT_CHANGE, minHeight: 50 },
+          { ...MAX_HEIGHT_CHANGE, maxHeight: 150 },
+          { ...PROPERTIES_CHANGE, properties: 'different-properties' },
           // configuration "e" not present, should be deleted
           ADDED,
         ],
