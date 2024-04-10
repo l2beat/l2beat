@@ -75,22 +75,25 @@ function NavigationList(props: { entries: GlossaryEntry[] }) {
   return (
     <nav
       data-role="glossary-nav-list"
-      className="sticky top-12 hidden max-h-[90vh] w-[246px] min-w-[246px] overflow-y-scroll lg:block"
+      className="sticky top-12 hidden max-h-[70vh] w-[246px] min-w-[246px] lg:block"
     >
-      <ul className="flex flex-col gap-4 pr-6">
-        {props.entries.map((entry) => (
-          <li key={entry.id}>
-            <a
-              href={`#${entry.id}`}
-              data-role="glossary-nav-item"
-              className='flex items-center gap-1 text-xs font-medium text-gray-850 transition-colors hover:text-pink-900 data-[selected="true"]:text-[#C164E3] dark:text-white dark:opacity-80 dark:hover:text-pink-200 dark:hover:opacity-100 dark:data-[selected="true"]:text-[#C164E3]'
-            >
-              <span className="line-clamp-1">{entry.term}</span>
-              {entry.isSpicy && <ChiliIcon className="shrink-0" />}
-            </a>
-          </li>
-        ))}
-      </ul>
+      <div className="relative h-full">
+        <ul className="flex h-full flex-col gap-4 overflow-y-scroll pb-8 pr-6">
+          {props.entries.map((entry) => (
+            <li key={entry.id}>
+              <a
+                href={`#${entry.id}`}
+                data-role="glossary-nav-item"
+                className='flex items-center gap-1 text-xs font-medium text-gray-850 transition-colors hover:text-pink-900 data-[selected="true"]:text-[#C164E3] dark:text-white dark:opacity-80 dark:hover:text-pink-200 dark:hover:opacity-100 dark:data-[selected="true"]:text-[#C164E3]'
+              >
+                <span className="line-clamp-1">{entry.term}</span>
+                {entry.isSpicy && <ChiliIcon className="shrink-0" />}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-8 bg-gradient-to-t from-white via-white dark:from-neutral-900 dark:via-neutral-900" />
+      </div>
     </nav>
   )
 }
