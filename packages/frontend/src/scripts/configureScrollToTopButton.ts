@@ -25,4 +25,8 @@ export function configureScrollToTopButton() {
 
     scrollToTopButton.removeAttribute('data-visible')
   })
+
+  scrollToTopButton.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  })
 }
