@@ -146,8 +146,7 @@ describe(MultiIndexer.name, () => {
       expect(testIndexer.multiUpdate).toHaveBeenOnlyCalledWith(100, 200, [
         update('a', 100, 200, false),
       ])
-      expect(testIndexer.updateCurrentHeight).toHaveBeenNthCalledWith(
-        2,
+      expect(testIndexer.updateCurrentHeight).toHaveBeenOnlyCalledWith(
         ['a'],
         200,
       )
@@ -166,8 +165,7 @@ describe(MultiIndexer.name, () => {
       expect(testIndexer.multiUpdate).toHaveBeenOnlyCalledWith(300, 400, [
         update('b', 300, 400, false),
       ])
-      expect(testIndexer.updateCurrentHeight).toHaveBeenNthCalledWith(
-        2,
+      expect(testIndexer.updateCurrentHeight).toHaveBeenOnlyCalledWith(
         ['b'],
         400,
       )
@@ -187,8 +185,7 @@ describe(MultiIndexer.name, () => {
         update('a', 100, 200, false),
         update('b', 100, 400, false),
       ])
-      expect(testIndexer.updateCurrentHeight).toHaveBeenNthCalledWith(
-        2,
+      expect(testIndexer.updateCurrentHeight).toHaveBeenOnlyCalledWith(
         ['a', 'b'],
         200,
       )
@@ -208,8 +205,7 @@ describe(MultiIndexer.name, () => {
         update('a', 100, 400, false),
         update('b', 200, 500, false),
       ])
-      expect(testIndexer.updateCurrentHeight).toHaveBeenNthCalledWith(
-        2,
+      expect(testIndexer.updateCurrentHeight).toHaveBeenOnlyCalledWith(
         ['a', 'b'],
         400,
       )
@@ -226,7 +222,7 @@ describe(MultiIndexer.name, () => {
 
       expect(newHeight).toEqual(99)
       expect(testIndexer.multiUpdate).not.toHaveBeenCalled()
-      expect(testIndexer.updateCurrentHeight).toHaveBeenCalledTimes(1)
+      expect(testIndexer.updateCurrentHeight).toHaveBeenCalledTimes(0)
     })
 
     it('skips calling multiUpdate if we are too late', async () => {
@@ -240,7 +236,7 @@ describe(MultiIndexer.name, () => {
 
       expect(newHeight).toEqual(500)
       expect(testIndexer.multiUpdate).not.toHaveBeenCalled()
-      expect(testIndexer.updateCurrentHeight).toHaveBeenCalledTimes(1)
+      expect(testIndexer.updateCurrentHeight).toHaveBeenCalledTimes(0)
     })
 
     it('skips calling multiUpdate between configs', async () => {
@@ -254,7 +250,7 @@ describe(MultiIndexer.name, () => {
 
       expect(newHeight).toEqual(299)
       expect(testIndexer.multiUpdate).not.toHaveBeenCalled()
-      expect(testIndexer.updateCurrentHeight).toHaveBeenCalledTimes(1)
+      expect(testIndexer.updateCurrentHeight).toHaveBeenCalledTimes(0)
     })
 
     it('calls multiUpdate with a matching configuration with data', async () => {
@@ -271,9 +267,8 @@ describe(MultiIndexer.name, () => {
         update('a', 100, 200, true),
         update('b', 100, 400, false),
       ])
-      expect(testIndexer.updateCurrentHeight).toHaveBeenNthCalledWith(
-        2,
-        ['a'],
+      expect(testIndexer.updateCurrentHeight).toHaveBeenOnlyCalledWith(
+        ['b'],
         200,
       )
     })
@@ -290,8 +285,7 @@ describe(MultiIndexer.name, () => {
         update('a', 100, 200, true),
         update('b', 100, 400, false),
       ])
-      expect(testIndexer.updateCurrentHeight).toHaveBeenNthCalledWith(
-        2,
+      expect(testIndexer.updateCurrentHeight).toHaveBeenOnlyCalledWith(
         ['b'],
         200,
       )
@@ -303,7 +297,7 @@ describe(MultiIndexer.name, () => {
         update('a', 100, 200, true),
         update('b', 100, 400, true),
       ])
-      expect(testIndexer.updateCurrentHeight).toHaveBeenCalledTimes(2)
+      expect(testIndexer.updateCurrentHeight).toHaveBeenCalledTimes(1)
 
       // Next range
       expect(await testIndexer.update(201, 500)).toEqual(400)
@@ -311,7 +305,7 @@ describe(MultiIndexer.name, () => {
         update('b', 100, 400, false),
       ])
       expect(testIndexer.updateCurrentHeight).toHaveBeenNthCalledWith(
-        3,
+        2,
         ['b'],
         400,
       )
@@ -334,8 +328,7 @@ describe(MultiIndexer.name, () => {
         update('b', 100, 500, true),
         update('c', 100, 500, true),
       ])
-      expect(testIndexer.updateCurrentHeight).toHaveBeenNthCalledWith(
-        2,
+      expect(testIndexer.updateCurrentHeight).toHaveBeenOnlyCalledWith(
         ['a'],
         250,
       )
@@ -347,7 +340,7 @@ describe(MultiIndexer.name, () => {
         update('c', 100, 500, true),
       ])
       expect(testIndexer.updateCurrentHeight).toHaveBeenNthCalledWith(
-        3,
+        2,
         ['a', 'b'],
         500,
       )
@@ -391,7 +384,7 @@ describe(MultiIndexer.name, () => {
 
       const newHeight = await testIndexer.update(200, 300)
       expect(newHeight).toEqual(300)
-      expect(testIndexer.setSavedConfigurations).toHaveBeenNthCalledWith(2, [
+      expect(testIndexer.setSavedConfigurations).toHaveBeenOnlyCalledWith([
         saved('a', 100, 300, 300),
         saved('b', 100, 400, 300),
       ])
@@ -408,7 +401,7 @@ describe(MultiIndexer.name, () => {
 
       const newHeight = await testIndexer.update(200, 300)
       expect(newHeight).toEqual(250)
-      expect(testIndexer.setSavedConfigurations).toHaveBeenNthCalledWith(2, [
+      expect(testIndexer.setSavedConfigurations).toHaveBeenOnlyCalledWith([
         saved('a', 100, 300, 250),
         saved('b', 100, 400, 250),
       ])
