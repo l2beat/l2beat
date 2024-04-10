@@ -5,6 +5,7 @@ import { FullPageHeader } from '../../../components/FullPageHeader'
 import { ChiliIcon } from '../../../components/icons/symbols/ChiliIcon'
 import { PageContent } from '../../../components/PageContent'
 import { ScrollToTopButton } from '../../../components/ScrollToTopButton'
+import { cn } from '../../../utils/cn'
 import { GlossaryEntry } from '../props/getGlossaryEntry'
 import { AlphabetSelector } from './AlphabetSelector'
 
@@ -88,7 +89,11 @@ function NavigationList(props: { entries: GlossaryEntry[] }) {
               <a
                 href={`#${entry.id}`}
                 data-role="glossary-nav-item"
-                className='flex items-center gap-1 text-xs font-medium text-gray-850 transition-colors duration-100 hover:text-pink-900 data-[selected="true"]:text-[#C164E3] dark:text-white dark:opacity-80 dark:hover:text-pink-200 dark:hover:opacity-100 dark:data-[selected="true"]:text-[#C164E3]'
+                className={cn(
+                  'flex items-center gap-1 text-xs font-medium transition-colors duration-100',
+                  'text-zinc-500 hover:text-zinc-700 dark:text-pure-white/80 dark:hover:text-pure-white',
+                  'data-[selected="true"]:text-pink-900 data-[selected="true"]:hover:text-fuchsia-700 dark:data-[selected="true"]:text-pink-200 dark:data-[selected="true"]:hover:text-[#C164E3]',
+                )}
               >
                 <span className="line-clamp-1">{entry.term}</span>
                 {entry.isSpicy && <ChiliIcon className="shrink-0" />}

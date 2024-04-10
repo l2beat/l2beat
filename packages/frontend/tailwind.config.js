@@ -165,6 +165,7 @@ module.exports = {
         500: '#27AC9F',
       },
       sky: { 500: '#0074FD', 550: '#2670FF', 600: '#2083C1' },
+      fuchsia: { 700: '#860CB0' },
     },
     screens: {
       xs: '400px',
