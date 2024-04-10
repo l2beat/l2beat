@@ -15,17 +15,23 @@ export function configureAlphabetSelectors() {
 }
 
 function configureAlphabetSelector(alphabetSelector: HTMLElement) {
+  const { $$: document$$ } = makeQuery()
   const { $, $$ } = makeQuery(alphabetSelector)
   const alphabetSelectorItems = $$<HTMLAnchorElement>(
     '[data-role=alphabet-selector-item]',
   )
+  const sections = document$$('section')
   const hash = window.location.hash
 
   let destinationItem: HTMLAnchorElement | null = null
-  let selectedAlphabetSelectorItem: HTMLElement | null = null
+  let selectedAlphabetSelectorItem = alphabetSelectorItems.find(
+    (item) =>
+      isItemCharEqualToHash(item, hash) &&
+      !(item.getAttribute('aria-disabled') === 'true'),
+  )
   const overflowingList = $('[data-role=overflow-wrapper-content]')
 
-  function highlightItem(item: HTMLElement) {
+  function highlightItem(item: HTMLAnchorElement) {
     selectedAlphabetSelectorItem?.removeAttribute('data-selected')
     item.setAttribute('data-selected', 'true')
     selectedAlphabetSelectorItem = item
@@ -41,25 +47,19 @@ function configureAlphabetSelector(alphabetSelector: HTMLElement) {
     50,
   )
 
-  alphabetSelectorItems.forEach((alphabetSelectorItem) => {
-    const isDisabled =
-      alphabetSelectorItem.getAttribute('aria-disabled') === 'true'
-    if (isDisabled) return
+  if (selectedAlphabetSelectorItem) {
+    highlightItem(selectedAlphabetSelectorItem)
+    scrollToItem(selectedAlphabetSelectorItem)
+  }
 
-    if (hash && isItemCharEqualToHash(alphabetSelectorItem, hash)) {
-      highlightItem(alphabetSelectorItem)
-    }
-
-    alphabetSelectorItem.addEventListener(
-      'click',
-      () => (destinationItem = alphabetSelectorItem),
-    )
-  })
+  alphabetSelectorItems.forEach((item) =>
+    item.addEventListener('click', () => (destinationItem = item)),
+  )
 
   window.addEventListener('scroll', () => {
     highlightCurrentSection({
       navigationList: alphabetSelector,
-      sections: Array.from(document.querySelectorAll('section')),
+      sections,
       onHighlight: (item) => {
         highlightItem(item)
         scrollToItem(item)
