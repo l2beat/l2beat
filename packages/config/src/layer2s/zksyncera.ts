@@ -277,7 +277,7 @@ export const zksyncera: Layer2 = {
     chainId: 324,
     explorerUrl: 'https://explorer.zksync.io/',
     explorerApi: {
-      url: 'https://block-explorer-api.mainnet.zksync.io/api',
+      url: 'https://api-era.zksync.network/api',
       type: 'etherscan',
     },
     minTimestampForTvl: new UnixTime(1676384520),
