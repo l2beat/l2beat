@@ -156,7 +156,7 @@ describeDatabase('ManagedMultiIndexer e2e', (database) => {
     )
 
     const db = mockObject({
-      add: async (_ids: string[], from: number, to: number) => {},
+      add: async (_ids: string[], _from: number, _to: number) => {},
       remove: async (_id: string, _from: number, _to: number) => {},
     })
 
