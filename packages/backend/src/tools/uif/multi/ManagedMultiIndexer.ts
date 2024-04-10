@@ -1,14 +1,10 @@
 import { assert, Logger } from '@l2beat/backend-tools'
-import {
-  Configuration,
-  Indexer,
-  IndexerOptions,
-  MultiIndexer,
-  SavedConfiguration,
-} from '@l2beat/uif'
+import { Indexer, IndexerOptions } from '@l2beat/uif'
 
 import { assetUniqueConfigId, assetUniqueIndexerId } from '../ids'
 import { IndexerService } from '../IndexerService'
+import { MultiIndexer } from './MultiIndexer'
+import { Configuration, SavedConfiguration } from './types'
 
 export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
   parents: Indexer[]
@@ -65,7 +61,11 @@ export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
       this.savedOnce = true
     } else {
       const newHeight = configurations[0].currentHeight
-      assert(configurations.every((c) => c.currentHeight === newHeight))
+      assert(
+        configurations
+          .filter((c) => c.currentHeight !== null)
+          .every((c) => c.currentHeight === newHeight),
+      )
 
       await this.options.indexerService.updateSavedConfigurations(
         this.options.id,

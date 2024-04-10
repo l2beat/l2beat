@@ -43,27 +43,17 @@ describeDatabase('ManagedMultiIndexer e2e', (database) => {
   })
 
   it('start', async () => {
-    const UNCHANGED = {
-      ...mock('a'),
-    }
-    const MIN_HEIGHT_CHANGE = {
-      ...mock('b'),
-      minHeight: 100,
-      currentHeight: 200,
-    }
-    const MAX_HEIGHT_CHANGE = {
-      ...mock('c'),
+    const UNCHANGED = mock('a')
+    const MIN_HEIGHT_CHANGE = mock('b', { minHeight: 100, currentHeight: 200 })
+    const MAX_HEIGHT_CHANGE = mock('c', {
       minHeight: 100,
       currentHeight: 200,
       maxHeight: null,
-    }
-    const PROPERTIES_CHANGE = {
-      ...mock('d'),
-    }
-    const REMOVED = {
-      ...mock('e'),
-      currentHeight: 100,
-    }
+    })
+
+    const PROPERTIES_CHANGE = mock('d')
+    const REMOVED = mock('e', { currentHeight: 100 })
+
     await configurationsRepository.addOrUpdateManyConfigurations([
       UNCHANGED,
       MIN_HEIGHT_CHANGE,
@@ -72,9 +62,7 @@ describeDatabase('ManagedMultiIndexer e2e', (database) => {
       REMOVED,
     ])
 
-    const ADDED = {
-      ...mock('f'),
-    }
+    const ADDED = mock('f')
     const db = mockObject({
       add: async () => {},
       remove: async (_id: string, _from: number, _to: number) => {},
@@ -145,93 +133,79 @@ describeDatabase('ManagedMultiIndexer e2e', (database) => {
     expect(db.remove).toHaveBeenCalledWith(
       REMOVED.id,
       REMOVED.minHeight,
-      REMOVED.currentHeight,
+      REMOVED.currentHeight!,
     )
 
     expect(db.remove).toHaveBeenCalledWith(
       MIN_HEIGHT_CHANGE.id,
       MIN_HEIGHT_CHANGE.minHeight,
-      MIN_HEIGHT_CHANGE.currentHeight,
+      MIN_HEIGHT_CHANGE.currentHeight!,
     )
 
     expect(db.remove).toHaveBeenCalledWith(
       MAX_HEIGHT_CHANGE.id,
       151,
-      MAX_HEIGHT_CHANGE.currentHeight,
+      MAX_HEIGHT_CHANGE.currentHeight!,
     )
     expect(db.remove).toHaveBeenCalledTimes(3)
   })
 
-  //   it('update', async () => {
-  //     const stateRepository = new IndexerStateRepository(database, Logger.SILENT)
-  //     const configurationsRepository = new IndexerConfigurationRepository(
-  //       database,
-  //       Logger.SILENT,
-  //     )
+  it.only('update', async () => {
+    const stateRepository = new IndexerStateRepository(database, Logger.SILENT)
+    const configurationsRepository = new IndexerConfigurationRepository(
+      database,
+      Logger.SILENT,
+    )
 
-  //     const indexerService = new IndexerService(
-  //       stateRepository,
-  //       configurationsRepository,
-  //     )
+    const indexerService = new IndexerService(
+      stateRepository,
+      configurationsRepository,
+    )
 
-  //     const db = mockObject({
-  //       add: async (_ids: string[], _timestamp: number) => {},
-  //       remove: async (_id: string, _from: number, _to: number) => {},
-  //     })
+    const db = mockObject({
+      add: async (_ids: string[], _timestamp: number) => {},
+      remove: async (_id: string, _from: number, _to: number) => {},
+    })
 
-  //     const indexer = new TestIndexer(
-  //       {
-  //         parents: [],
-  //         id: INDEXER_ID,
-  //         indexerService,
-  //         configurations: [
-  //           {
-  //             id: '1'.repeat(12),
-  //             minHeight: 1,
-  //             maxHeight: null,
-  //             properties: { address: '0x1' },
-  //           },
-  //         ],
-  //         logger: Logger.SILENT,
-  //         encode: (v: ConfigurationProperties) => JSON.stringify(v),
-  //         decode: (blob: string) => JSON.parse(blob),
-  //       },
-  //       db,
-  //     )
+    // 100 - 199 A
+    // 200 - 300 AB
+    // 301 - 399 B
+    // 400 - 500 BC
+    // 500 - inf C
+    const A = mock('a', { minHeight: 100, maxHeight: 300 })
+    const B = mock('b', { minHeight: 200, maxHeight: 500 })
+    //TODO: add current heighth
+    const C = mock('c', { minHeight: 400, maxHeight: null })
 
-  //     await indexer.start()
+    const indexer = new TestIndexer(
+      {
+        parents: [],
+        id: INDEXER_ID,
+        indexerService,
+        configurations: [A, B, C],
+        logger: Logger.SILENT,
+        encode: (v: string) => v,
+        decode: (blob: string) => blob,
+      },
+      db,
+    )
 
-  //     const indexerState = await stateRepository.getAll()
-  //     const configurations = await configurationsRepository.getAll()
+    await indexer.start()
 
-  //     expect(indexerState).toEqual([
-  //       {
-  //         indexerId: INDEXER_ID,
-  //         safeHeight: 0,
-  //         minTimestamp: undefined,
-  //       },
-  //     ])
+    const target = 600
+    let current = 99
 
-  //     expect(configurations).toEqual([
-  //       {
-  //         id: '111111111111',
-  //         indexerId: INDEXER_ID,
-  //         properties: '{"address":"0x1"}',
-  //         currentHeight: 10,
-  //         minHeight: 1,
-  //         maxHeight: null,
-  //       },
-  //     ])
+    // This "+ 1" logic mimics Indexer.executeUpdate
+    while (current + 1 < target) {
+      current = await indexer.update(current + 1, target)
+    }
 
-  //     const target = 10
-  //     let current = 1
-
-  //     while (current !== target) {
-  //       current = await indexer.update(current, target)
-  //     }
-
-  //     expect(db.add).toHaveBeenCalledWith(['111111111111'], 1)
-  //   })
+    expect(db.add).toHaveBeenNthCalledWith(1, [A.id], 100)
+    expect(db.add).toHaveBeenNthCalledWith(2, [A.id, B.id], 200)
+    expect(db.add).toHaveBeenNthCalledWith(3, [B.id], 301)
+    expect(db.add).toHaveBeenNthCalledWith(4, [B.id, C.id], 400)
+    expect(db.add).toHaveBeenLastCalledWith([C.id], 501)
+  })
 })
 
 class TestIndexer extends ManagedMultiIndexer<string> {
@@ -254,7 +228,7 @@ class TestIndexer extends ManagedMultiIndexer<string> {
       configurations.map((c) => c.id),
       from,
     )
-    return from + 1
+    return _to
   }
   override async removeData(
     configurations: RemovalConfiguration<string>[],
