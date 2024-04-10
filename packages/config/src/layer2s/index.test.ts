@@ -101,7 +101,7 @@ describe('layer2s', () => {
   })
 
   describe('tracked transactions', () => {
-    it('every tracked transaction which is function call has valid signatures', () => {
+    describe('every tracked transaction which is function call has valid signatures', () => {
       for (const project of layer2s) {
         it(`${project.id.toString()} : has valid signatures`, () => {
           if (project.config.trackedTxs?.length !== 0) {
@@ -112,7 +112,7 @@ describe('layer2s', () => {
               functionSignature: string
             }[]
 
-            functionCalls.forEach((c) => {
+            functionCalls?.forEach((c) => {
               const i = new utils.Interface([c.functionSignature])
               const fragment = i.fragments[0]
               const calculatedSignature = i.getSighash(fragment)
