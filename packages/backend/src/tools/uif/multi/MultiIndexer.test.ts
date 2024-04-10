@@ -27,7 +27,7 @@ describe(MultiIndexer.name, () => {
       expect(testIndexer.removeData).toHaveBeenOnlyCalledWith([
         removal('c', 100, 300),
       ])
-      expect(testIndexer.saveConfigurations).toHaveBeenOnlyCalledWith([
+      expect(testIndexer.setSavedConfigurations).toHaveBeenOnlyCalledWith([
         saved('a', 100, 400, 300),
         saved('b', 200, 500, 300),
       ])
@@ -43,7 +43,7 @@ describe(MultiIndexer.name, () => {
       expect(newHeight).toEqual(Infinity)
 
       expect(testIndexer.removeData).not.toHaveBeenCalled()
-      expect(testIndexer.saveConfigurations).toHaveBeenCalledWith([
+      expect(testIndexer.setSavedConfigurations).toHaveBeenCalledWith([
         saved('a', 100, 400, 400),
         saved('b', 200, 500, 500),
       ])
@@ -59,7 +59,7 @@ describe(MultiIndexer.name, () => {
       expect(newHeight).toEqual(99)
 
       expect(testIndexer.removeData).not.toHaveBeenCalled()
-      expect(testIndexer.saveConfigurations).toHaveBeenCalledWith([
+      expect(testIndexer.setSavedConfigurations).toHaveBeenCalledWith([
         saved('a', 100, 400, null),
         saved('b', 200, null, null),
       ])
@@ -81,7 +81,7 @@ describe(MultiIndexer.name, () => {
       expect(testIndexer.removeData).toHaveBeenCalledWith([
         removal('b', 100, 199),
       ])
-      expect(testIndexer.saveConfigurations).toHaveBeenCalledWith([
+      expect(testIndexer.setSavedConfigurations).toHaveBeenCalledWith([
         saved('a', 100, 500, 300),
         saved('b', 200, 400, 300),
         saved('c', 300, null, 300),
@@ -146,10 +146,10 @@ describe(MultiIndexer.name, () => {
       expect(testIndexer.multiUpdate).toHaveBeenOnlyCalledWith(100, 200, [
         update('a', 100, 200, false),
       ])
-      expect(testIndexer.saveConfigurations).toHaveBeenNthCalledWith(2, [
-        saved('a', 100, 200, 200),
-        saved('b', 300, 400, null),
-      ])
+      expect(testIndexer.updateCurrentHeight).toHaveBeenOnlyCalledWith(
+        ['a'],
+        200,
+      )
     })
 
     it('calls multiUpdate with a late matching configuration', async () => {
@@ -165,10 +165,10 @@ describe(MultiIndexer.name, () => {
       expect(testIndexer.multiUpdate).toHaveBeenOnlyCalledWith(300, 400, [
         update('b', 300, 400, false),
       ])
-      expect(testIndexer.saveConfigurations).toHaveBeenNthCalledWith(2, [
-        saved('a', 100, 200, 200),
-        saved('b', 300, 400, 400),
-      ])
+      expect(testIndexer.updateCurrentHeight).toHaveBeenOnlyCalledWith(
+        ['b'],
+        400,
+      )
     })
 
     it('calls multiUpdate with two matching configurations', async () => {
@@ -185,10 +185,10 @@ describe(MultiIndexer.name, () => {
         update('a', 100, 200, false),
         update('b', 100, 400, false),
       ])
-      expect(testIndexer.saveConfigurations).toHaveBeenNthCalledWith(2, [
-        saved('a', 100, 200, 200),
-        saved('b', 100, 400, 200),
-      ])
+      expect(testIndexer.updateCurrentHeight).toHaveBeenOnlyCalledWith(
+        ['a', 'b'],
+        200,
+      )
     })
 
     it('calls multiUpdate with two middle matching configurations', async () => {
@@ -205,10 +205,10 @@ describe(MultiIndexer.name, () => {
         update('a', 100, 400, false),
         update('b', 200, 500, false),
       ])
-      expect(testIndexer.saveConfigurations).toHaveBeenNthCalledWith(2, [
-        saved('a', 100, 400, 400),
-        saved('b', 200, 500, 400),
-      ])
+      expect(testIndexer.updateCurrentHeight).toHaveBeenOnlyCalledWith(
+        ['a', 'b'],
+        400,
+      )
     })
 
     it('skips calling multiUpdate if we are too early', async () => {
@@ -222,7 +222,7 @@ describe(MultiIndexer.name, () => {
 
       expect(newHeight).toEqual(99)
       expect(testIndexer.multiUpdate).not.toHaveBeenCalled()
-      expect(testIndexer.saveConfigurations).toHaveBeenCalledTimes(1)
+      expect(testIndexer.updateCurrentHeight).toHaveBeenCalledTimes(0)
     })
 
     it('skips calling multiUpdate if we are too late', async () => {
@@ -236,7 +236,7 @@ describe(MultiIndexer.name, () => {
 
       expect(newHeight).toEqual(500)
       expect(testIndexer.multiUpdate).not.toHaveBeenCalled()
-      expect(testIndexer.saveConfigurations).toHaveBeenCalledTimes(1)
+      expect(testIndexer.updateCurrentHeight).toHaveBeenCalledTimes(0)
     })
 
     it('skips calling multiUpdate between configs', async () => {
@@ -250,7 +250,7 @@ describe(MultiIndexer.name, () => {
 
       expect(newHeight).toEqual(299)
       expect(testIndexer.multiUpdate).not.toHaveBeenCalled()
-      expect(testIndexer.saveConfigurations).toHaveBeenCalledTimes(1)
+      expect(testIndexer.updateCurrentHeight).toHaveBeenCalledTimes(0)
     })
 
     it('calls multiUpdate with a matching configuration with data', async () => {
@@ -267,10 +267,10 @@ describe(MultiIndexer.name, () => {
         update('a', 100, 200, true),
         update('b', 100, 400, false),
       ])
-      expect(testIndexer.saveConfigurations).toHaveBeenNthCalledWith(2, [
-        saved('a', 100, 200, 200),
-        saved('b', 100, 400, 200),
-      ])
+      expect(testIndexer.updateCurrentHeight).toHaveBeenOnlyCalledWith(
+        ['b'],
+        200,
+      )
     })
 
     it('multiple update calls', async () => {
@@ -285,10 +285,10 @@ describe(MultiIndexer.name, () => {
         update('a', 100, 200, true),
         update('b', 100, 400, false),
       ])
-      expect(testIndexer.saveConfigurations).toHaveBeenNthCalledWith(2, [
-        saved('a', 100, 200, 200),
-        saved('b', 100, 400, 200),
-      ])
+      expect(testIndexer.updateCurrentHeight).toHaveBeenOnlyCalledWith(
+        ['b'],
+        200,
+      )
 
       // The same range. In real life might be a result of a parent reorg
       // Invalidate is a no-op so we don't need to call it
@@ -297,20 +297,18 @@ describe(MultiIndexer.name, () => {
         update('a', 100, 200, true),
         update('b', 100, 400, true),
       ])
-      expect(testIndexer.saveConfigurations).toHaveBeenNthCalledWith(3, [
-        saved('a', 100, 200, 200),
-        saved('b', 100, 400, 200),
-      ])
+      expect(testIndexer.updateCurrentHeight).toHaveBeenCalledTimes(1)
 
       // Next range
       expect(await testIndexer.update(201, 500)).toEqual(400)
       expect(testIndexer.multiUpdate).toHaveBeenNthCalledWith(3, 201, 400, [
         update('b', 100, 400, false),
       ])
-      expect(testIndexer.saveConfigurations).toHaveBeenNthCalledWith(4, [
-        saved('a', 100, 200, 200),
-        saved('b', 100, 400, 400),
-      ])
+      expect(testIndexer.updateCurrentHeight).toHaveBeenNthCalledWith(
+        2,
+        ['b'],
+        400,
+      )
     })
 
     it('correctly updates currentHeight in saved configurations', async () => {
@@ -330,11 +328,10 @@ describe(MultiIndexer.name, () => {
         update('b', 100, 500, true),
         update('c', 100, 500, true),
       ])
-      expect(testIndexer.saveConfigurations).toHaveBeenNthCalledWith(2, [
-        saved('a', 100, 500, 250),
-        saved('b', 100, 500, 250),
-        saved('c', 100, 500, 500),
-      ])
+      expect(testIndexer.updateCurrentHeight).toHaveBeenOnlyCalledWith(
+        ['a'],
+        250,
+      )
 
       expect(await testIndexer.update(251, 500)).toEqual(500)
       expect(testIndexer.multiUpdate).toHaveBeenNthCalledWith(2, 251, 500, [
@@ -342,11 +339,11 @@ describe(MultiIndexer.name, () => {
         update('b', 100, 500, false),
         update('c', 100, 500, true),
       ])
-      expect(testIndexer.saveConfigurations).toHaveBeenNthCalledWith(3, [
-        saved('a', 100, 500, 500),
-        saved('b', 100, 500, 500),
-        saved('c', 100, 500, 500),
-      ])
+      expect(testIndexer.updateCurrentHeight).toHaveBeenNthCalledWith(
+        2,
+        ['a', 'b'],
+        500,
+      )
     })
 
     it('gets configurations from different source', async () => {
@@ -373,7 +370,7 @@ describe(MultiIndexer.name, () => {
 
       const newHeight = await testIndexer.update(200, 500)
       expect(newHeight).toEqual(200)
-      expect(testIndexer.saveConfigurations).toHaveBeenCalledTimes(1)
+      expect(testIndexer.setSavedConfigurations).toHaveBeenCalledTimes(1)
     })
 
     it('returns the targetHeight', async () => {
@@ -387,7 +384,7 @@ describe(MultiIndexer.name, () => {
 
       const newHeight = await testIndexer.update(200, 300)
       expect(newHeight).toEqual(300)
-      expect(testIndexer.saveConfigurations).toHaveBeenNthCalledWith(2, [
+      expect(testIndexer.setSavedConfigurations).toHaveBeenOnlyCalledWith([
         saved('a', 100, 300, 300),
         saved('b', 100, 400, 300),
       ])
@@ -404,7 +401,7 @@ describe(MultiIndexer.name, () => {
 
       const newHeight = await testIndexer.update(200, 300)
       expect(newHeight).toEqual(250)
-      expect(testIndexer.saveConfigurations).toHaveBeenNthCalledWith(2, [
+      expect(testIndexer.setSavedConfigurations).toHaveBeenOnlyCalledWith([
         saved('a', 100, 300, 250),
         saved('b', 100, 400, 250),
       ])
@@ -464,8 +461,11 @@ class TestMultiIndexer extends MultiIndexer<null> {
 
   removeData = mockFn<MultiIndexer<null>['removeData']>().resolvesTo(undefined)
 
-  saveConfigurations =
-    mockFn<MultiIndexer<null>['saveConfigurations']>().resolvesTo(undefined)
+  setSavedConfigurations =
+    mockFn<MultiIndexer<null>['setSavedConfigurations']>().resolvesTo(undefined)
+
+  updateCurrentHeight =
+    mockFn<MultiIndexer<null>['updateCurrentHeight']>().resolvesTo(undefined)
 }
 
 function actual(
