@@ -124,7 +124,7 @@ describe(ManagedMultiIndexer.name, () => {
     )
   })
 
-  it(ManagedMultiIndexer.prototype.saveConfigurations.name, async () => {
+  it(ManagedMultiIndexer.prototype.setSavedConfigurations.name, async () => {
     const configurations = [mock<string>({ id: 'a', currentHeight: null })]
     const indexerService = mockObject<IndexerService>({
       upsertConfigurations: async () => {},
@@ -143,7 +143,7 @@ describe(ManagedMultiIndexer.name, () => {
       decode: (blob: string) => blob,
     })
 
-    await indexer.saveConfigurations(configurations)
+    await indexer.setSavedConfigurations(configurations)
 
     expect(indexerService.upsertConfigurations).toHaveBeenOnlyCalledWith(
       'indexer',
@@ -156,25 +156,32 @@ describe(ManagedMultiIndexer.name, () => {
       'indexer',
       configurations.map((c) => c.id),
     )
+  })
 
-    await indexer.saveConfigurations(
-      configurations.map((c) => ({ ...c, currentHeight: 1 })),
-    )
-    await indexer.saveConfigurations(
-      configurations.map((c) => ({ ...c, currentHeight: 2 })),
-    )
+  it(ManagedMultiIndexer.prototype.updateCurrentHeight.name, async () => {
+    const indexerService = mockObject<IndexerService>({
+      upsertConfigurations: async () => {},
+      updateSavedConfigurations: async () => {},
+      persistOnlyUsedConfigurations: async () => {},
+    })
+
+    const encode = (v: unknown) => v as string
+    const indexer = new TestIndexer({
+      parents: [],
+      id: 'indexer',
+      indexerService,
+      configurations: [],
+      logger: Logger.SILENT,
+      encode,
+      decode: (blob: string) => blob,
+    })
+    await indexer.updateCurrentHeight(['a', 'b', 'c'], 1)
 
     expect(indexerService.updateSavedConfigurations).toHaveBeenNthCalledWith(
       1,
       'indexer',
-      configurations.map((c) => c.id),
+      ['a', 'b', 'c'],
       1,
-    )
-
-    expect(indexerService.updateSavedConfigurations).toHaveBeenLastCalledWith(
-      'indexer',
-      configurations.map((c) => c.id),
-      2,
     )
   })
 })

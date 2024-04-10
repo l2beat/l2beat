@@ -104,8 +104,13 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
    * indexer should save the returned configurations and ensure that no other
    * configurations are persisted.
    */
-  abstract saveConfigurations(
+  abstract setSavedConfigurations(
     configurations: SavedConfiguration<T>[],
+  ): Promise<void>
+
+  abstract updateCurrentHeight(
+    configurationIds: string[],
+    currentHeight: number,
   ): Promise<void>
 
   /**
@@ -135,7 +140,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
     if (toRemove.length > 0) {
       await this.removeData(toRemove)
     }
-    await this.saveConfigurations(toSave)
+    await this.setSavedConfigurations(toSave)
 
     return Math.min(safeHeight, oldSafeHeight)
   }
@@ -166,11 +171,13 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
     }
 
     if (newHeight > from) {
-      this.updateSavedConfigurations(configurations, newHeight)
-      const onlyUpdated = this.saved.filter((c) =>
-        configurations.some((cc) => cc.id === c.id),
+      const updatedIds = this.updateSavedConfigurations(
+        configurations,
+        newHeight,
       )
-      await this.saveConfigurations(onlyUpdated)
+      if (updatedIds.length > 0) {
+        await this.updateCurrentHeight(updatedIds, newHeight)
+      }
     }
 
     return newHeight
@@ -179,7 +186,8 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
   private updateSavedConfigurations(
     updatedConfigurations: UpdateConfiguration<T>[],
     newHeight: number,
-  ): void {
+  ): string[] {
+    const touched: string[] = []
     for (const updated of updatedConfigurations) {
       const saved = this.saved.find((c) => c.id === updated.id)
       if (!saved) {
@@ -187,8 +195,10 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
       }
       if (saved.currentHeight === null || saved.currentHeight < newHeight) {
         saved.currentHeight = newHeight
+        touched.push(saved.id)
       }
     }
+    return touched
   }
 
   async invalidate(targetHeight: number): Promise<number> {

@@ -1,4 +1,4 @@
-import { assert, Logger } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import { Indexer, IndexerOptions } from '@l2beat/uif'
 
 import { assetUniqueConfigId, assetUniqueIndexerId } from '../ids'
@@ -44,35 +44,28 @@ export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
     )
   }
 
-  // TODO: Split into two functions
-  private savedOnce = false
-  override async saveConfigurations(
+  override async setSavedConfigurations(
     configurations: SavedConfiguration<T>[],
   ): Promise<void> {
-    if (!this.savedOnce) {
-      await this.options.indexerService.upsertConfigurations(
-        this.options.id,
-        configurations,
-        this.options.encode,
-      )
-      await this.options.indexerService.persistOnlyUsedConfigurations(
-        this.options.id,
-        configurations.map((c) => c.id),
-      )
-      this.savedOnce = true
-    } else {
-      const newHeight = configurations[0].currentHeight
-      assert(
-        configurations
-          .filter((c) => c.currentHeight !== null)
-          .every((c) => c.currentHeight === newHeight),
-      )
+    await this.options.indexerService.upsertConfigurations(
+      this.options.id,
+      configurations,
+      this.options.encode,
+    )
+    await this.options.indexerService.persistOnlyUsedConfigurations(
+      this.options.id,
+      configurations.map((c) => c.id),
+    )
+  }
 
-      await this.options.indexerService.updateSavedConfigurations(
-        this.options.id,
-        configurations.map((c) => c.id),
-        newHeight,
-      )
-    }
+  override async updateCurrentHeight(
+    configurationIds: string[],
+    currentHeight: number,
+  ): Promise<void> {
+    await this.options.indexerService.updateSavedConfigurations(
+      this.options.id,
+      configurationIds,
+      currentHeight,
+    )
   }
 }

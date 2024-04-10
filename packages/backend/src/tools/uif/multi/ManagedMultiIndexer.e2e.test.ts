@@ -150,6 +150,12 @@ describeDatabase('ManagedMultiIndexer e2e', (database) => {
       Logger.SILENT,
     )
 
+    const A = mock('a', { minHeight: 100, maxHeight: 300 })
+    const B = mock('b', { minHeight: 200, maxHeight: 500 })
+    const C = mock('c', { minHeight: 400, maxHeight: 550 })
+    const D = mock('d', { minHeight: 100, maxHeight: null, currentHeight: 550 })
+    await configurationsRepository.addOrUpdateManyConfigurations([D])
+
     const indexerService = new IndexerService(
       stateRepository,
       configurationsRepository,
@@ -160,22 +166,12 @@ describeDatabase('ManagedMultiIndexer e2e', (database) => {
       remove: async (_id: string, _from: number, _to: number) => {},
     })
 
-    // 100 - 199 A
-    // 200 - 300 AB
-    // 301 - 399 B
-    // 400 - 500 BC
-    // 501 - inf C
-    const A = mock('a', { minHeight: 100, maxHeight: 300 })
-    const B = mock('b', { minHeight: 200, maxHeight: 500 })
-    //TODO: add current heighth
-    const C = mock('c', { minHeight: 400, maxHeight: null })
-
     const indexer = new TestIndexer(
       {
         parents: [],
         id: INDEXER_ID,
         indexerService,
-        configurations: [A, B, C],
+        configurations: [A, B, C, D],
         logger: Logger.SILENT,
         encode: (v: string) => v,
         decode: (blob: string) => blob,
@@ -193,18 +189,27 @@ describeDatabase('ManagedMultiIndexer e2e', (database) => {
       current = await indexer.update(current + 1, target)
     }
 
+    // 100 - 199 A
+    // 200 - 300 AB
+    // 301 - 399 B
+    // 400 - 500 BC
+    // 501 - 550 C
+    // 551 - inf CD
     expect(db.add).toHaveBeenNthCalledWith(1, [A.id], 100, 199)
     expect(db.add).toHaveBeenNthCalledWith(2, [A.id, B.id], 200, 300)
     expect(db.add).toHaveBeenNthCalledWith(3, [B.id], 301, 399)
     expect(db.add).toHaveBeenNthCalledWith(4, [B.id, C.id], 400, 500)
-    expect(db.add).toHaveBeenLastCalledWith([C.id], 501, 600)
+    expect(db.add).toHaveBeenNthCalledWith(5, [C.id, D.id], 501, 550)
+    expect(db.add).toHaveBeenLastCalledWith([D.id], 551, 600)
+    // expect(db.add).toHaveBeenLastCalledWith([C.id, D.id], 551, 600)
 
     const configurations = await configurationsRepository.getAll()
 
-    expect(configurations).toEqual([
+    expect(configurations).toEqualUnsorted([
       { ...A, currentHeight: A.maxHeight },
       { ...B, currentHeight: B.maxHeight },
-      { ...C, currentHeight: target },
+      { ...C, currentHeight: 550 },
+      { ...D, currentHeight: target },
     ])
   })
 })
