@@ -102,6 +102,17 @@ export const mantle: Layer2 = opStackL2({
     GUARDIAN: 'Guardian',
     CHALLENGER: 'Challenger',
   },
+  chainConfig: {
+    name: 'mantle',
+    chainId: 5000,
+    explorerUrl: 'https://explorer.mantle.xyz/',
+    explorerApi: {
+      url: 'https://explorer.mantle.xyz/api',
+      type: 'etherscan',
+    },
+    minTimestampForTvl: new UnixTime(1688314886),
+    coingeckoPlatform: 'mantle',
+  },
   nonTemplateContracts: [
     discovery.getContractDetails('DataLayrServiceManager', {
       description:

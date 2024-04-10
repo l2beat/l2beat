@@ -733,6 +733,10 @@
       "address": "0xfB5c6815cA3AC72Ce9F5006869AE67f18bF77006"
     },
     {
+      "symbol": "Puff",
+      "address": "0x18fA05ee5e478EED8925946abb41d09AEc5d34D6"
+    },
+    {
       "symbol": "PUNDIX",
       "address": "0x0FD10b9899882a6f2fcb5c371E17e70FdEe00C38"
     },
@@ -1383,6 +1387,30 @@
         "bridge": "Hyperlane Nexus"
       },
       "coingeckoId": "celestia"
+    }
+  ],
+  "mantle": [
+    {
+      "symbol": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
+      "symbol": "sUSDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
     }
   ],
   "linea": [
