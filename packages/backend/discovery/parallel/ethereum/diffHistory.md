@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x1f50a129759f08f46e0fdf3cef9ee0472619aa51
+
+# Diff at Wed, 10 Apr 2024 12:14:43 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@8d6361da46756940fee1e580763c5716ffc574d4 block: 19532058
+- current block number: 19625158
+
+## Description
+
+Upgrade L2 system to [ArbOS Version 20 "Atlas"](https://forum.arbitrum.foundation/t/aip-arbos-version-20-atlas/20957)
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x6594085ca55a2B3a5fAD1C57A270D060eEa99877) {
+    +++ description: None
+      values.wasmModuleRoot:
+-        "0x0754e09320c381566cc0449904c377a52bd34a6b9404432e80afd573b67f7b17"
++        "0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4"
+    }
+```
+
 Generated with discovered.json: 0x3234178d91d403e54fbe5caf0f912f14a404a51e
 
 # Diff at Thu, 28 Mar 2024 10:37:17 GMT:
