@@ -70,6 +70,14 @@ export const TvlApiResponse = z.object({
 })
 export type TvlApiResponse = z.infer<typeof TvlApiResponse>
 
+export const Tvl2ApiResponse = z.object({
+  bridges: TvlApiCharts,
+  layer2s: TvlApiCharts,
+  combined: TvlApiCharts,
+  projects: z.record(z.string(), TvlApiCharts.optional()),
+})
+export type Tvl2ApiResponse = z.infer<typeof Tvl2ApiResponse>
+
 const BaseAssetBreakdownData = z.object({
   assetId: branded(z.string(), AssetId),
   chainId: branded(z.number(), ChainId),

@@ -24,6 +24,37 @@ export class AmountRepository extends BaseRepository {
     this.autoWrap<CheckConvention<AmountRepository>>(this)
   }
 
+  async getHourly(from: UnixTime, to: UnixTime, configIds: string[]) {
+    const knex = await this.knex()
+    const rows = await knex('amounts')
+      .where('timestamp', '>=', from.toDate())
+      .where('timestamp', '<', to.toDate())
+      .whereIn('configuration_id', configIds)
+      .orderBy('timestamp')
+    return rows.map(toRecord)
+  }
+
+  async getSixHourly(from: UnixTime, to: UnixTime, configIds: string[]) {
+    const knex = await this.knex()
+    const rows = await knex('amounts')
+      .where('timestamp', '>=', from.toDate())
+      .where('timestamp', '<', to.toDate())
+      .whereIn('configuration_id', configIds)
+      // this is probably very inefficient
+      .whereRaw('timestamp % 21600 = 0')
+    return rows.map(toRecord)
+  }
+
+  async getDaily(to: UnixTime, configIds: string[]) {
+    const knex = await this.knex()
+    const rows = await knex('amounts')
+      .where('timestamp', '<', to.toDate())
+      .whereIn('configuration_id', configIds)
+      // this is probably very inefficient
+      .whereRaw('timestamp % 86400 = 0')
+    return rows.map(toRecord)
+  }
+
   async addMany(records: AmountRecord[]) {
     const rows: AmountRow[] = records.map(toRow)
     const knex = await this.knex()

@@ -27,6 +27,33 @@ export class PriceRepository extends BaseRepository {
     this.autoWrap<CheckConvention<PriceRepository>>(this)
   }
 
+  async getHourly(from: UnixTime, to: UnixTime): Promise<PriceRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('prices')
+      .where('timestamp', '>=', from.toDate())
+      .where('timestamp', '<', to.toDate())
+    return rows.map(toRecord)
+  }
+
+  async getSixHourly(from: UnixTime, to: UnixTime) {
+    const knex = await this.knex()
+    const rows = await knex('prices')
+      .where('timestamp', '>=', from.toDate())
+      .where('timestamp', '<', to.toDate())
+      // this is probably very inefficient
+      .whereRaw('timestamp % 21600 = 0')
+    return rows.map(toRecord)
+  }
+
+  async getDaily(to: UnixTime) {
+    const knex = await this.knex()
+    const rows = await knex('prices')
+      .where('timestamp', '<', to.toDate())
+      // this is probably very inefficient
+      .whereRaw('timestamp % 86400 = 0')
+    return rows.map(toRecord)
+  }
+
   async addMany(records: PriceRecord[]) {
     const rows: PriceRow[] = records.map(toRow)
     const knex = await this.knex()

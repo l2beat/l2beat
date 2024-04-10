@@ -7,6 +7,7 @@ export type PriceConfigEntry = CoingeckoPriceConfigEntry
 interface PriceConfigBase {
   address: EthereumAddress | 'native'
   chain: string
+  decimals: number
   sinceTimestamp: UnixTime
 }
 
