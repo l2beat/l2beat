@@ -1,6 +1,7 @@
 import { configureCharts } from './charts'
 import { configureAlphabetSelectors } from './configureAlphabetSelectors'
 import { configureBridgesAndCombinedOnly } from './configureBridgesAndCombinedOnly'
+import { configureCopyButtons } from './configureCopyButtons'
 import { configureCostsControlsWrappers } from './configureCostsControlsWrappers'
 import { configureDropdowns } from './configureDropdowns'
 import { configureEtherscanLinks } from './configureEtherscanLinks'
@@ -58,3 +59,4 @@ configureEtherscanLinks()
 configureAlphabetSelectors()
 configureScrollToTopButton()
 configureGlossaryNavList()
+configureCopyButtons()

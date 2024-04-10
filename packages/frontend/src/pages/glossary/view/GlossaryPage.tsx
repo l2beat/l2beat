@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { Footer, FooterProps, Navbar, NavbarProps } from '../../../components'
+import { CopyButton } from '../../../components/CopyButton'
 import { FullPageHeader } from '../../../components/FullPageHeader'
 import { ChiliIcon } from '../../../components/icons/symbols/ChiliIcon'
 import { PageContent } from '../../../components/PageContent'
@@ -62,13 +63,17 @@ export function GlossaryPage(props: GlossaryPageProps) {
 function GlossaryItem(props: { entry: GlossaryEntry }) {
   return (
     <section className="mt-12 first:mt-0" id={props.entry.id}>
-      <a
-        href={`#${props.entry.id}`}
-        className="mb-4 flex items-center gap-2 text-2xl font-bold text-gray-850 no-underline dark:text-white"
-      >
-        {props.entry.term}
-        {props.entry.isSpicy && <ChiliIcon className="size-6 shrink-0" />}
-      </a>
+      <div className="mb-4 flex items-center gap-2">
+        <a
+          href={`#${props.entry.id}`}
+          className="flex items-center gap-2 text-2xl font-bold text-gray-850 no-underline dark:text-white"
+        >
+          {props.entry.term}
+          {props.entry.isSpicy && <ChiliIcon className="size-6 shrink-0" />}
+        </a>
+        <CopyButton toCopy={`https://l2beat.com/glossary#${props.entry.id}`} />
+      </div>
+
       <p className="text-lg text-gray-850 dark:text-white">
         {props.entry.definition}
       </p>
