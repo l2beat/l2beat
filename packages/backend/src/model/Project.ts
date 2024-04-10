@@ -5,6 +5,7 @@ import {
   Layer2FinalityConfig,
   Layer2LivenessConfig,
   Layer2TxConfig,
+  Layer3,
   ScalingProjectTransactionApi,
   tokenList,
 } from '@l2beat/config'
@@ -27,9 +28,8 @@ export interface Project {
   projectId: ProjectId
   slug: string
   isArchived?: boolean
-  type: 'layer2' | 'bridge'
+  type: 'layer2' | 'bridge' | 'layer3'
   isUpcoming?: boolean
-  isLayer3?: boolean
   escrows: ProjectEscrow[]
   transactionApi?: ScalingProjectTransactionApi
   trackedTxsConfig?: TrackedTxsConfig
@@ -68,6 +68,21 @@ export function layer2ToProject(layer2: Layer2): Project {
       layer2.config.finality !== 'coming soon'
         ? layer2.config.finality
         : undefined,
+  }
+}
+
+export function layer3ToProject(layer3: Layer3): Project {
+  return {
+    projectId: layer3.id,
+    slug: layer3.display.slug,
+    type: 'layer3',
+    isUpcoming: layer3.isUpcoming,
+    escrows: layer3.config.escrows.map((escrow) => ({
+      address: escrow.address,
+      sinceTimestamp: escrow.sinceTimestamp,
+      tokens: [],
+    })),
+    transactionApi: layer3.config.transactionApi,
   }
 }
 
