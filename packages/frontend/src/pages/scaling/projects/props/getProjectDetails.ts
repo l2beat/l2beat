@@ -23,6 +23,7 @@ import {
   ProjectDetailsMilestonesSection,
   ProjectDetailsPermissionsSection,
   ProjectDetailsRiskAnalysisSection,
+  ProjectDetailsRiskSection,
   ProjectDetailsStageSection,
   ProjectDetailsStateDerivationSection,
   ProjectDetailsStateValidationSection,
@@ -31,6 +32,7 @@ import {
   ProjectDetailsUpcomingDisclaimer,
   ProjectDetailsUpgradesAndGovernanceSection,
 } from '../../../types'
+import { getRiskSection } from './getRiskSection'
 import { getTechnologyOverview } from './getTechnologyOverview'
 
 export function getProjectDetails(
@@ -132,6 +134,14 @@ export function getProjectDetails(
           title: 'Rollup stage',
           isUnderReview: project.isUnderReview,
         },
+      })
+    }
+
+    const riskSection = getRiskSection(project, verificationStatus)
+    if (riskSection.riskGroups.length > 0) {
+      items.push({
+        type: 'RiskSection',
+        props: riskSection,
       })
     }
 
@@ -272,6 +282,7 @@ export type ScalingDetailsSection =
   | ProjectDetailsMilestonesSection
   | ProjectDetailsKnowledgeNuggetsSection
   | ProjectDetailsRiskAnalysisSection
+  | ProjectDetailsRiskSection
   | ProjectDetailsTechnologySection
   | ProjectDetailsStateDerivationSection
   | ProjectDetailsStateValidationSection
