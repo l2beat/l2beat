@@ -1,3 +1,103 @@
+Generated with discovered.json: 0x865fbe50de0f059c5957fa7a2f254f1f5adbaf16
+
+# Diff at Wed, 10 Apr 2024 10:20:14 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@6bb1fb9faf46a5960ef8903031fd713f6bd1234a block: 19610741
+- current block number: 19624593
+
+## Description
+
+Migration of rollup contract Etrog and added related verifier.
+Rollup contract changes:
+
+- added timestamp range to check on sequenced batched, batches with timestamp outside range will be invalidated by circuit.
+- added possibility to migrate data availability protocol.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract FflonkVerifier (0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8)
+    +++ description: None
+```
+
+```diff
+    contract AstarValidiumEtrog (0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30"
++        "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"
+      implementations.0:
+-        "0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30"
++        "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"
+      values.TIMESTAMP_RANGE:
++        36
+      derivedName:
+-        "PolygonValidiumEtrog"
++        "PolygonValidiumStorageMigration"
+    }
+```
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: Contains important info such as the etrog and verifier address, the rollup type and chain id
++++ type: CODE_CHANGE
++++ severity: HIGH
+      values.rollupData.4:
+-        1
++        4
++++ description: Contains important info such as the etrog and verifier address, the rollup type and chain id
++++ type: CODE_CHANGE
++++ severity: HIGH
+      values.rollupData.3:
+-        7
++        9
++++ description: Contains important info such as the etrog and verifier address, the rollup type and chain id
++++ type: CODE_CHANGE
++++ severity: HIGH
+      values.rollupData.2:
+-        "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"
++        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract AstarVerifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../migration/PolygonRollupBaseEtrogNoGap.sol      | 945 +++++++++++++++++++++
+ .../migration/PolygonValidiumStorageMigration.sol} |  84 +-
+ .../v2/interfaces/IPolygonZkEVMVEtrogErrors.sol    |  10 +
+ .../contracts/v2/lib/PolygonRollupBaseEtrog.sol    |  34 +-
+ .../AstarValidiumEtrog/implementation/meta.txt     |   4 +-
+ .../contracts/verifiers/FflonkVerifier.sol         |   4 +-
+ .../ethereum/.code/AstarVerifier/meta.txt          |   2 +
+ .../FflonkVerifier/meta.txt => /dev/null           |   2 -
+ 8 files changed, 1068 insertions(+), 17 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19610741 (main branch discovery), not current.
+
+```diff
+    contract AstarVerifier (0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8) {
+    +++ description: None
+      name:
+-        "AstarVerifier"
++        "FflonkVerifier"
+    }
+```
+
 Generated with discovered.json: 0xfef9baadda4970faf426f8f3f466cd74a3fe021c
 
 # Diff at Mon, 08 Apr 2024 11:46:25 GMT:
