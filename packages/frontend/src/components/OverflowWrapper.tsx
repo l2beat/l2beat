@@ -28,7 +28,7 @@ export function OverflowWrapper({
     >
       <div
         className={cn(
-          'pointer-events-none absolute inset-y-0 left-0 z-10 w-6 bg-gradient-to-r opacity-0 transition-opacity group-data-[arrow-left-visible=true]/overflow-wrapper:pointer-events-auto group-data-[arrow-left-visible=true]/overflow-wrapper:opacity-100',
+          'pointer-events-none absolute inset-y-0 -left-px z-10 w-6 bg-gradient-to-r opacity-0 transition-opacity group-data-[arrow-left-visible=true]/overflow-wrapper:pointer-events-auto group-data-[arrow-left-visible=true]/overflow-wrapper:opacity-100',
           !within &&
             'from-white via-white dark:from-neutral-900 dark:via-neutral-900',
           within === 'nav-tabs' &&
@@ -50,7 +50,7 @@ export function OverflowWrapper({
       </div>
       <div
         className={cn(
-          'pointer-events-none absolute inset-y-0 right-0 z-10 w-6 bg-gradient-to-l opacity-0 transition-opacity group-data-[arrow-right-visible=true]/overflow-wrapper:pointer-events-auto group-data-[arrow-right-visible=true]/overflow-wrapper:opacity-100',
+          'pointer-events-none absolute inset-y-0 -right-px z-10 w-6 bg-gradient-to-l opacity-0 transition-opacity group-data-[arrow-right-visible=true]/overflow-wrapper:pointer-events-auto group-data-[arrow-right-visible=true]/overflow-wrapper:opacity-100',
           !within &&
             'from-white via-white dark:from-neutral-900 dark:via-neutral-900',
           within === 'nav-tabs' &&

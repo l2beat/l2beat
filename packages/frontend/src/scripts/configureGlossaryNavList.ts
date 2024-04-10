@@ -1,42 +1,56 @@
+import debounce from 'lodash/debounce'
+
 import { makeQuery } from './query'
+import { highlightCurrentSection } from './utils/highlightCurrentSection'
+import { scrollVerticallyToItem } from './utils/scrollToItem'
 
 export function configureGlossaryNavList() {
-  const { $ } = makeQuery()
+  const { $: document$ } = makeQuery()
 
-  const navList = $.maybe('[data-role=glossary-nav-list]')
+  const navList = document$.maybe('[data-role=glossary-nav-list]')
 
   if (!navList) return
+  let destinationItem: HTMLAnchorElement | null = null
 
-  const { $$ } = makeQuery(navList)
+  const { $, $$ } = makeQuery(navList)
+  const overflowingContainer = $('ul')
+
   const navItems = $$<HTMLAnchorElement>('[data-role=glossary-nav-item]')
   let selectedNavItem: HTMLElement | undefined = navItems.find(
     (item) => item.href === window.location.href,
   )
 
-  function onClick(item: HTMLElement) {
+  function highlightItem(item: HTMLElement) {
     const isAlreadySelected = item.getAttribute('data-selected') === 'true'
     if (isAlreadySelected) return
 
     selectedNavItem?.removeAttribute('data-selected')
     item.setAttribute('data-selected', 'true')
-    // item.scrollIntoView({ block: 'center', behavior: 'smooth' })
     selectedNavItem = item
   }
 
   if (selectedNavItem) {
-    onClick(selectedNavItem)
+    highlightItem(selectedNavItem)
   }
 
-  navItems.forEach((navItem) => {
-    navItem.addEventListener('click', () => onClick(navItem))
-  })
+  navItems.forEach((navItem) =>
+    navItem.addEventListener('click', () => (destinationItem = navItem)),
+  )
 
-  window.addEventListener('hashchange', () => {
-    const item = navItems.find(
-      (navItem) => navItem.href === window.location.href,
-    )
-    if (!item) return
+  const scrollToItem = debounce(
+    (item: HTMLAnchorElement) =>
+      scrollVerticallyToItem({ item, overflowingContainer, destinationItem }),
+    50,
+  )
 
-    onClick(item)
+  window.addEventListener('scroll', () => {
+    highlightCurrentSection({
+      navigationList: navList,
+      sections: Array.from(document.querySelectorAll('section')),
+      onHighlight: (item) => {
+        highlightItem(item)
+        scrollToItem(item)
+      },
+    })
   })
 }

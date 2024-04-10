@@ -1,6 +1,6 @@
 import { DESKTOP_PROJECT_NAVIGATION_IDS } from '../../components/project/navigation/ids'
+import { highlightCurrentSection } from '../utils/highlightCurrentSection'
 import { getDesktopElements } from './getElements'
-import { highlightCurrentSection } from './highlightCurrentSection'
 
 interface PreviouslyHighlighted {
   item: Element
@@ -70,7 +70,7 @@ export function configureDesktopProjectNavigation() {
   handleShowingProjectTitle()
   highlightCurrentSection({
     navigationList: list,
-    summary: summaryItem,
+    topItem: summaryItem,
     sections,
     onHighlight: highlightItem,
   })
@@ -79,7 +79,7 @@ export function configureDesktopProjectNavigation() {
     handleShowingProjectTitle()
     highlightCurrentSection({
       navigationList: list,
-      summary: summaryItem,
+      topItem: summaryItem,
       sections,
       onHighlight: highlightItem,
     })

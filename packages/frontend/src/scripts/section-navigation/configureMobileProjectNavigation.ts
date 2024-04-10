@@ -1,7 +1,8 @@
 import debounce from 'lodash/debounce'
 
+import { highlightCurrentSection } from '../utils/highlightCurrentSection'
+import { scrollHorizontallyToItem } from '../utils/scrollToItem'
 import { getMobileElements } from './getElements'
-import { highlightCurrentSection } from './highlightCurrentSection'
 
 export function configureMobileProjectNavigation() {
   const elements = getMobileElements()
@@ -13,20 +14,15 @@ export function configureMobileProjectNavigation() {
   let previouslyHighlightedItem: Element | null = null
   let destinationItem: HTMLAnchorElement | null = null
 
-  const scrollToItem = debounce((item: HTMLAnchorElement) => {
-    if (destinationItem && destinationItem !== item) {
-      return
-    }
-    const scrollPosition =
-      item.offsetLeft -
-      content.getBoundingClientRect().width / 2 +
-      item.offsetWidth / 2
-    content.scrollTo({
-      left: scrollPosition,
-      behavior: 'smooth',
-    })
-    destinationItem = null
-  }, 50)
+  const scrollToItem = debounce(
+    (item: HTMLAnchorElement) =>
+      scrollHorizontallyToItem({
+        item,
+        destinationItem,
+        overflowingContainer: content,
+      }),
+    50,
+  )
 
   const highlightItem = (item: Element | HTMLAnchorElement) => {
     previouslyHighlightedItem?.removeAttribute('data-selected')
@@ -37,7 +33,7 @@ export function configureMobileProjectNavigation() {
   highlightCurrentSection({
     navigationList: content,
     sections,
-    summary: summaryItem,
+    topItem: summaryItem,
     onHighlight: highlightItem,
   })
 
@@ -52,9 +48,8 @@ export function configureMobileProjectNavigation() {
     highlightCurrentSection({
       navigationList: content,
       sections,
-      summary: summaryItem,
+      topItem: summaryItem,
       onHighlight: (item) => {
-        highlightItem(item)
         scrollToItem(item)
       },
     })

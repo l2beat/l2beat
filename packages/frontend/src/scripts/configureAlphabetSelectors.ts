@@ -1,5 +1,9 @@
+import debounce from 'lodash/debounce'
+
 import { startsWithNumber } from '../utils/startsWithLetterOrNumber'
 import { makeQuery } from './query'
+import { highlightCurrentSection } from './utils/highlightCurrentSection'
+import { scrollHorizontallyToItem } from './utils/scrollToItem'
 
 export function configureAlphabetSelectors() {
   const { $ } = makeQuery()
@@ -11,17 +15,31 @@ export function configureAlphabetSelectors() {
 }
 
 function configureAlphabetSelector(alphabetSelector: HTMLElement) {
-  const { $$ } = makeQuery(alphabetSelector)
-  const alphabetSelectorItems = $$('[data-role=alphabet-selector-item]')
+  const { $, $$ } = makeQuery(alphabetSelector)
+  const alphabetSelectorItems = $$<HTMLAnchorElement>(
+    '[data-role=alphabet-selector-item]',
+  )
   const hash = window.location.hash
 
+  let destinationItem: HTMLAnchorElement | null = null
   let selectedAlphabetSelectorItem: HTMLElement | null = null
+  const overflowingList = $('[data-role=overflow-wrapper-content]')
 
-  function changeSelected(selectedItem: HTMLElement) {
+  function highlightItem(item: HTMLElement) {
     selectedAlphabetSelectorItem?.removeAttribute('data-selected')
-    selectedItem.setAttribute('data-selected', 'true')
-    selectedAlphabetSelectorItem = selectedItem
+    item.setAttribute('data-selected', 'true')
+    selectedAlphabetSelectorItem = item
   }
+
+  const scrollToItem = debounce(
+    (item: HTMLAnchorElement) =>
+      scrollHorizontallyToItem({
+        item,
+        destinationItem,
+        overflowingContainer: overflowingList,
+      }),
+    50,
+  )
 
   alphabetSelectorItems.forEach((alphabetSelectorItem) => {
     const isDisabled =
@@ -29,22 +47,26 @@ function configureAlphabetSelector(alphabetSelector: HTMLElement) {
     if (isDisabled) return
 
     if (hash && isItemCharEqualToHash(alphabetSelectorItem, hash)) {
-      changeSelected(alphabetSelectorItem)
+      highlightItem(alphabetSelectorItem)
     }
 
-    alphabetSelectorItem.addEventListener('click', () =>
-      changeSelected(alphabetSelectorItem),
+    alphabetSelectorItem.addEventListener(
+      'click',
+      () => (destinationItem = alphabetSelectorItem),
     )
   })
 
-  window.addEventListener('hashchange', () => {
-    const hash = window.location.hash
-    const toSelect = alphabetSelectorItems.find((alphabetSelectorItem) =>
-      isItemCharEqualToHash(alphabetSelectorItem, hash),
-    )
-    if (toSelect) {
-      changeSelected(toSelect)
-    }
+  window.addEventListener('scroll', () => {
+    highlightCurrentSection({
+      navigationList: alphabetSelector,
+      sections: Array.from(document.querySelectorAll('section')),
+      onHighlight: (item) => {
+        highlightItem(item)
+        scrollToItem(item)
+      },
+      projectNavigationItemQuerySelector: (sectionId) =>
+        `a[data-char="${sectionId.charAt(0)}"]`,
+    })
   })
 }
 

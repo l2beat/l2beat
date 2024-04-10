@@ -1,4 +1,5 @@
 import { setSortingQueryParamsByTabId } from './table/configureSorting'
+import { scrollHorizontallyToItem } from './utils/scrollToItem'
 
 interface TabWithContent {
   tab: HTMLAnchorElement
@@ -16,7 +17,8 @@ function configureTabsNavigation(tabNavigation: HTMLElement) {
   if (!elements) {
     return
   }
-  const { tabsWithContent, tabsContainer, tabs, underline } = elements
+  const { tabsWithContent, overflowingTabsContainer, tabs, underline } =
+    elements
 
   let selectedId = tabs[0].id
 
@@ -38,17 +40,12 @@ function configureTabsNavigation(tabNavigation: HTMLElement) {
     underline.style.width = `${tab.clientWidth}px`
   }
 
-  const scrollToItem = (item: HTMLAnchorElement) => {
-    const scrollPosition =
-      item.offsetLeft -
-      tabsContainer.getBoundingClientRect().width / 2 +
-      item.offsetWidth / 2
-
-    tabsContainer.scrollTo({
-      left: scrollPosition,
-      behavior: 'smooth',
+  const scrollToItem = (item: HTMLAnchorElement) =>
+    scrollHorizontallyToItem({
+      item,
+      destinationItem: null,
+      overflowingContainer: overflowingTabsContainer,
     })
-  }
 
   const onTabClick = (id: string) => {
     const { tab, content } = tabsWithContent[id]
@@ -83,20 +80,20 @@ function configureTabsNavigation(tabNavigation: HTMLElement) {
 }
 
 function getElements(tabNavigation: HTMLElement) {
-  const tabsContainer = tabNavigation.querySelector<HTMLElement>(
-    '[data-tabs-role=tabs-items-container]',
+  const overflowingTabsContainer = tabNavigation.querySelector<HTMLElement>(
+    '[data-role=overflow-wrapper-content]',
   )
   const underline = tabNavigation.querySelector<HTMLElement>(
     '[data-role=tabs-underline]',
   )
 
   const tabs = Array.from(
-    tabsContainer?.querySelectorAll<HTMLAnchorElement>(
+    overflowingTabsContainer?.querySelectorAll<HTMLAnchorElement>(
       '[data-role=tabs-item]',
     ) ?? [],
   )
 
-  if (!underline || !tabsContainer || tabs.length === 0) {
+  if (!underline || !overflowingTabsContainer || tabs.length === 0) {
     return
   }
   const tabsWithContent: Record<string, TabWithContent> = {}
@@ -118,7 +115,7 @@ function getElements(tabNavigation: HTMLElement) {
   })
 
   return {
-    tabsContainer,
+    overflowingTabsContainer,
     tabs,
     underline,
     tabsWithContent,

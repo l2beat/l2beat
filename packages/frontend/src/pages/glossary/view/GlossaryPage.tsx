@@ -88,7 +88,7 @@ function NavigationList(props: { entries: GlossaryEntry[] }) {
               <a
                 href={`#${entry.id}`}
                 data-role="glossary-nav-item"
-                className='flex items-center gap-1 text-xs font-medium text-gray-850 transition-colors hover:text-pink-900 data-[selected="true"]:text-[#C164E3] dark:text-white dark:opacity-80 dark:hover:text-pink-200 dark:hover:opacity-100 dark:data-[selected="true"]:text-[#C164E3]'
+                className='flex items-center gap-1 text-xs font-medium text-gray-850 transition-colors duration-100 hover:text-pink-900 data-[selected="true"]:text-[#C164E3] dark:text-white dark:opacity-80 dark:hover:text-pink-200 dark:hover:opacity-100 dark:data-[selected="true"]:text-[#C164E3]'
               >
                 <span className="line-clamp-1">{entry.term}</span>
                 {entry.isSpicy && <ChiliIcon className="shrink-0" />}

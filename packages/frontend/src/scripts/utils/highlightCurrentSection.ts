@@ -1,20 +1,29 @@
 interface HighlightCurrentSectionOpts {
   navigationList: Element
-  summary: HTMLAnchorElement
   sections: HTMLElement[]
   onHighlight: (item: HTMLAnchorElement) => void
+  topItem?: HTMLAnchorElement
+  projectNavigationItemQuerySelector?: (sectionId: string) => string
 }
 
 const OFFSET_RATIO = 0.15
 
 export function highlightCurrentSection({
   navigationList,
-  summary,
   sections,
   onHighlight,
+  topItem,
+  projectNavigationItemQuerySelector,
 }: HighlightCurrentSectionOpts) {
-  if (isScrolledToTop()) {
-    onHighlight(summary)
+  function getItemSelector(sectionId: string) {
+    return (
+      projectNavigationItemQuerySelector?.(sectionId) ??
+      `a[href="#${sectionId}"]`
+    )
+  }
+
+  if (isScrolledToTop() && topItem) {
+    onHighlight(topItem)
     return
   }
 
@@ -22,7 +31,7 @@ export function highlightCurrentSection({
     const lastSection = sections[sections.length - 1]
     const lastProjectNavigationItem =
       navigationList.querySelector<HTMLAnchorElement>(
-        `a[href="#${lastSection.id}"]`,
+        getItemSelector(lastSection.id),
       )
     if (!lastProjectNavigationItem) return
     onHighlight(lastProjectNavigationItem)
@@ -35,14 +44,14 @@ export function highlightCurrentSection({
     const sectionBottom = sectionTop + sectionHeight
     const viewportHeight = window.innerHeight
 
-    const scrollPos = window.pageYOffset + viewportHeight * OFFSET_RATIO
+    const scrollPos = window.scrollY + viewportHeight * OFFSET_RATIO
     const isCurrentSection =
       scrollPos >= sectionTop && scrollPos < sectionBottom
 
     if (isCurrentSection) {
       const projectNavigationItem =
         navigationList.querySelector<HTMLAnchorElement>(
-          `a[href="#${section.id}"]`,
+          getItemSelector(section.id),
         )
 
       if (!projectNavigationItem) {
