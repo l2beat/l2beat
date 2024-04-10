@@ -168,4 +168,17 @@ describe('projects', () => {
       }
     }
   })
+
+  it("doesn't render unwanted code blocks in descriptions", () => {
+    for (const p of layer2s) {
+      const markdownFields = [p.upgradesAndGovernance]
+      for (const field of markdownFields) {
+        if (!field) continue
+        assert(
+          !field.split('\n').some((x) => /^(\t|\s{4}).+/.test(x)),
+          `possibly unwanted code block found in ${p.id.toString()}`,
+        )
+      }
+    }
+  })
 })
