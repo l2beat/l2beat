@@ -4091,6 +4091,21 @@
       }
     },
     {
+      "id": "zksync2:usdc-usdc",
+      "name": "USDC",
+      "coingeckoId": "usd-coin",
+      "address": "0x1d17CBcF0D6D143135aE902365D2E5e2A16538D4",
+      "symbol": "USDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1706644361,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "chainId": 324,
+      "type": "NMV",
+      "formula": "totalSupply"
+    },
+    {
       "id": "lyra:usdc-usd-coin",
       "name": "USD Coin",
       "coingeckoId": "usd-coin",
