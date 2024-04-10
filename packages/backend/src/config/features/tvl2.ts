@@ -142,6 +142,7 @@ function getPricesConfig(
         chain: chain,
         sinceTimestamp: token.sinceTimestamp,
         coingeckoId: token.coingeckoId,
+        decimals: token.decimals,
       })
     } else {
       if (token.sinceTimestamp.lt(curr.sinceTimestamp)) {
@@ -151,6 +152,7 @@ function getPricesConfig(
           chain: chain,
           sinceTimestamp: token.sinceTimestamp,
           coingeckoId: token.coingeckoId,
+          decimals: token.decimals,
         })
       }
     }

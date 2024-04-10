@@ -24,6 +24,17 @@ export class AmountRepository extends BaseRepository {
     this.autoWrap<CheckConvention<AmountRepository>>(this)
   }
 
+  async getByProjectIdAndTimestamp(
+    configIds: string[],
+    timestamp: UnixTime,
+  ): Promise<AmountRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex('amounts')
+      .whereIn('configuration_id', configIds)
+      .where('timestamp', timestamp.toDate())
+    return rows.map((row) => toRecord(row))
+  }
+
   async addMany(records: AmountRecord[]) {
     const rows: AmountRow[] = records.map(toRow)
     const knex = await this.knex()

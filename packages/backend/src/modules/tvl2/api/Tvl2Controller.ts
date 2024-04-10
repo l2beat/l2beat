@@ -1,7 +1,16 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  AmountConfigEntry,
+  assert,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import { groupBy } from 'lodash'
 
+import { Tvl2Config } from '../../../config/Config'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
+import { createAmountId } from '../utils/createAmountId'
 
 interface Tvl2Project {
   id: ProjectId
@@ -25,12 +34,33 @@ interface Tvl2ProjectResult {
 }
 
 export class Tvl2Controller {
+  private readonly amountConfig: Map<
+    ProjectId,
+    (AmountConfigEntry & { configId: string })[]
+  >
+  private readonly priceConfig: Map<string, number>
+
   constructor(
     private readonly amountRepository: AmountRepository,
     private readonly priceRepository: PriceRepository,
     private readonly priceIndexer: { get safeHeight(): number },
     private readonly projects: Tvl2Project[],
-  ) {}
+    config: Tvl2Config,
+  ) {
+    const amountConfigEntries = Object.entries(
+      groupBy(config.amounts, 'project'),
+    ).map(
+      ([k, v]) =>
+        [
+          ProjectId(k),
+          v.map((x) => ({ ...x, configId: createAmountId(x) })),
+        ] as const,
+    )
+    this.amountConfig = new Map(amountConfigEntries)
+    this.priceConfig = new Map(
+      config.prices.map((x) => [createAssetId(x), x.decimals]),
+    )
+  }
 
   async getTvl(): Promise<Tvl2Result> {
     const minTimestamp = this.projects
@@ -82,8 +112,12 @@ export class Tvl2Controller {
     project: ProjectId,
     timestamp: UnixTime,
   ): Promise<Tvl2ProjectResult> {
+    const projectConfigs = this.amountConfig.get(project)
+
+    assert(projectConfigs, 'Config not found')
+    const configIds = projectConfigs.map((x) => x.configId)
     const records = await this.amountRepository.getByProjectIdAndTimestamp(
-      project,
+      configIds,
       timestamp,
     )
 
@@ -95,20 +129,32 @@ export class Tvl2Controller {
       native: 0,
     }
     for (const record of records) {
-      const price = prices.find(
-        (x) => x.chain === record.chain && x.address === record.address,
+      // todo: if we sort by config id we can avoid this lookup.
+      // and just use the index.
+      const amountConfig = projectConfigs.find(
+        (x) => x.configId === record.configId,
       )
-      if (!price) {
-        // TODO: better error handling.
-        throw new Error(
-          `Price not found for ${
-            record.chain
-          } ${record.address.toString()} @ ${timestamp.toNumber()}`,
-        )
-      }
-      // TODO: divide by token decimals.
-      results[record.origin] += Number(record.amount) * price.priceUsd
+      assert(amountConfig, 'Amount config not found')
+      const assetId = createAssetId({
+        address: amountConfig.address,
+        chain: amountConfig.chain,
+      })
+      const price = prices.find((x) => createAssetId(x) === assetId)
+      assert(price, 'Price not found')
+
+      const decimals = this.priceConfig.get(assetId)
+      assert(decimals, 'Decimals not found')
+
+      results[amountConfig.source] +=
+        (Number(record.amount) * price.priceUsd) / decimals
     }
     return results
   }
+}
+
+function createAssetId(price: {
+  address: EthereumAddress | 'native'
+  chain: string
+}): string {
+  return `${price.chain}-${price.address.toString()}`
 }
