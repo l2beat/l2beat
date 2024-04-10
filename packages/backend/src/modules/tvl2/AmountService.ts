@@ -31,7 +31,7 @@ export interface AmountServiceDependencies {
 }
 
 interface Amount {
-  configurationId: string
+  configId: string
   amount: bigint
 }
 
@@ -80,7 +80,7 @@ export class AmountService {
         )
 
         return {
-          configurationId: configuration.id,
+          configId: configuration.id,
           amount: amount.toBigInt(),
         }
       }),
@@ -125,13 +125,13 @@ export class AmountService {
           `Failed to decode amount for configuration ${configurations[i].id}`,
         )
         return {
-          configurationId: configurations[i].id,
+          configId: configurations[i].id,
           amount: 0n,
         }
       }
 
       return {
-        configurationId: configurations[i].id,
+        configId: configurations[i].id,
         amount,
       }
     })

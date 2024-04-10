@@ -8,18 +8,21 @@ export type AmountConfigEntry =
   | CirculatingSupplyEntry
   | EscrowEntry
 
-export interface TotalSupplyEntry extends AmountConfigBase {
+export type TotalSupplyEntry = AmountConfigBase & TotalSupplySpecific
+export interface TotalSupplySpecific {
   type: 'totalSupply'
   address: EthereumAddress
 }
 
-export interface CirculatingSupplyEntry extends AmountConfigBase {
+export type CirculatingSupplyEntry = AmountConfigBase &
+  CirculatingSupplySpecific
+export interface CirculatingSupplySpecific {
   type: 'circulatingSupply'
   address: EthereumAddress | 'native'
   coingeckoId: CoingeckoId
 }
-
-export interface EscrowEntry extends AmountConfigBase {
+export type EscrowEntry = AmountConfigBase & EscrowSpecific
+export interface EscrowSpecific {
   type: 'escrow'
   address: EthereumAddress | 'native'
   escrowAddress: EthereumAddress
