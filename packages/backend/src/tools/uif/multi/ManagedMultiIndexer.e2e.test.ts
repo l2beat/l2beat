@@ -2,17 +2,17 @@ import { Logger } from '@l2beat/backend-tools'
 import { RemovalConfiguration, UpdateConfiguration } from '@l2beat/uif'
 import { expect, mockObject } from 'earl'
 
-import { describeDatabase } from '../../test/database'
-import { _TEST_ONLY_resetUniqueIds } from './ids'
+import { describeDatabase } from '../../../test/database'
+import { _TEST_ONLY_resetUniqueIds } from '../ids'
 import {
   IndexerConfigurationRecord,
   IndexerConfigurationRepository,
-} from './IndexerConfigurationRepository'
-import { IndexerService } from './IndexerService'
-import { IndexerStateRepository } from './IndexerStateRepository'
+} from '../IndexerConfigurationRepository'
+import { IndexerService } from '../IndexerService'
+import { IndexerStateRepository } from '../IndexerStateRepository'
 import {
+  ManagedMultiIndexer,
   ManagedMultiIndexerOptions,
-  MangedMultiIndexer,
 } from './ManagedMultiIndexer'
 
 /* What to test:
@@ -111,16 +111,16 @@ describeDatabase('ManagedMultiIndexer e2e', (database) => {
     await indexer.start()
 
     const safeHeight = await indexer.getSafeHeight()
-    expect(safeHeight).toEqual(0)
+    expect(safeHeight).toEqual(undefined)
 
     const indexerState = await stateRepository.findIndexerState(INDEXER_ID)
     const configurations = await configurationsRepository.getAll()
 
-    // expect(indexerState).toEqual({
-    //   indexerId: INDEXER_ID,
-    //   safeHeight: 0,
-    //   minTimestamp: undefined,
-    // })
+    expect(indexerState).toEqual({
+      indexerId: INDEXER_ID,
+      safeHeight: 0,
+      minTimestamp: undefined,
+    })
 
     expect(configurations).toEqual([
       UNCHANGED,
@@ -233,7 +233,7 @@ describeDatabase('ManagedMultiIndexer e2e', (database) => {
   //   })
 })
 
-class TestIndexer extends MangedMultiIndexer<string> {
+class TestIndexer extends ManagedMultiIndexer<string> {
   constructor(
     override readonly options: ManagedMultiIndexerOptions<string>,
     private readonly db: {
