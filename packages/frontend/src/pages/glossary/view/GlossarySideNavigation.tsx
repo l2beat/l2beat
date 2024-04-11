@@ -20,7 +20,7 @@ export function GlossarySideNavigation(props: { entries: GlossaryEntry[] }) {
                 className={cn(
                   'flex items-center gap-1 text-xs font-medium transition-colors duration-100',
                   'text-zinc-500 hover:text-zinc-700 dark:text-pure-white/80 dark:hover:text-pure-white',
-                  'data-[selected="true"]:text-pink-900 data-[selected="true"]:hover:text-fuchsia-700 dark:data-[selected="true"]:text-pink-200 dark:data-[selected="true"]:hover:text-[#C164E3]',
+                  'data-[selected="true"]:text-pink-900 data-[selected="true"]:hover:text-fuchsia-700 dark:data-[selected="true"]:text-pink-200 dark:data-[selected="true"]:hover:text-purple-450',
                 )}
               >
                 <span className="line-clamp-1">{entry.term}</span>
