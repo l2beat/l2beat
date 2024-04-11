@@ -6,6 +6,7 @@ export interface MulticallConfigEntry {
   address: EthereumAddress
   encodeBatch: (requests: MulticallRequest[]) => Bytes
   decodeBatch: (result: Bytes) => MulticallResponse[]
+  isNativeBalanceSupported: boolean
 }
 
 export interface MulticallRequest {
@@ -16,4 +17,26 @@ export interface MulticallRequest {
 export interface MulticallResponse {
   success: boolean
   data: Bytes
+}
+
+export interface ERC20MulticallCodec {
+  balance: {
+    encode: (
+      holder: EthereumAddress,
+      token: EthereumAddress,
+    ) => MulticallRequest
+    decode: (response: Bytes) => bigint
+  }
+  totalSupply: {
+    encode: (tokenAddress: EthereumAddress) => MulticallRequest
+    decode: (response: Bytes) => bigint
+  }
+}
+
+export interface NativeAssetMulticallCodec {
+  sinceBlock: number
+  balance: {
+    encode: (address: EthereumAddress) => MulticallRequest
+    decode: (response: Bytes) => bigint
+  }
 }

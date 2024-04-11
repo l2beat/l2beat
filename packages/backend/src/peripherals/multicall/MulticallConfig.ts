@@ -19,28 +19,34 @@ export const ETHEREUM_MULTICALL_V1_BLOCK = 7929876
 export function toMulticallConfigEntry(
   config: MulticallContractConfig,
 ): MulticallConfigEntry {
-  const [encodeBatch, decodeBatch] = getEncodeAndDecode(config.version)
+  const [encodeBatch, decodeBatch, isNativeBalanceSupported] =
+    getEncodeAndDecode(config.version)
+
   return {
     sinceBlock: config.sinceBlock,
     batchSize: config.batchSize,
     address: config.address,
     encodeBatch,
     decodeBatch,
+    isNativeBalanceSupported,
   }
 }
 
 function getEncodeAndDecode(
   version: MulticallContractConfig['version'],
-): [MulticallConfigEntry['encodeBatch'], MulticallConfigEntry['decodeBatch']] {
+): [
+  MulticallConfigEntry['encodeBatch'],
+  MulticallConfigEntry['decodeBatch'],
+  boolean,
+] {
   switch (version) {
     case '1':
-      return [encodeMulticallV1, decodeMulticallV1]
+      return [encodeMulticallV1, decodeMulticallV1, true]
     case '2':
-      return [encodeMulticallV2, decodeMulticallV2]
     case '3':
-      return [encodeMulticallV2, decodeMulticallV2]
+      return [encodeMulticallV2, decodeMulticallV2, true]
     case 'optimism':
-      return [encodeOptimismMulticall, decodeOptimismMulticall]
+      return [encodeOptimismMulticall, decodeOptimismMulticall, false]
   }
 }
 

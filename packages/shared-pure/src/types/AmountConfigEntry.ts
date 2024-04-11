@@ -3,12 +3,7 @@ import { EthereumAddress } from './EthereumAddress'
 import { ProjectId } from './ProjectId'
 import { UnixTime } from './UnixTime'
 
-export type AmountConfigEntry = AmountConfigIdentifiable & {
-  source: 'canonical' | 'external' | 'native'
-  sinceTimestamp: UnixTime
-  includeInTotal: boolean
-}
-export type AmountConfigIdentifiable =
+export type AmountConfigEntry =
   | TotalSupplyEntry
   | CirculatingSupplyEntry
   | EscrowEntry
@@ -32,4 +27,8 @@ export interface EscrowEntry extends AmountConfigBase {
 export interface AmountConfigBase {
   chain: string
   project: ProjectId
+  source: 'canonical' | 'external' | 'native'
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
+  includeInTotal: boolean
 }
