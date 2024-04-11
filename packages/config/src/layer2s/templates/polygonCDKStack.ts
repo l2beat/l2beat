@@ -275,7 +275,13 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
         },
       },
       finality:
-        templateVars.daProvider !== undefined ? undefined : 'coming soon',
+        templateVars.daProvider !== undefined
+          ? undefined
+          : {
+              type: 'PolygonZkEvm',
+              minTimestamp: new UnixTime(1679653163),
+              lag: 0,
+            },
     },
     chainConfig: templateVars.chainConfig,
     dataAvailability:
