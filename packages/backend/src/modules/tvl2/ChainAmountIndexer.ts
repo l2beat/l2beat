@@ -22,19 +22,13 @@ export interface ChainAmountIndexerDeps
   amountRepository: AmountRepository
   blockTimestampsRepository: BlockTimestampRepository
   syncOptimizer: SyncOptimizer
+  chain: string
 }
 
 export class ChainAmountIndexer extends ManagedMultiIndexer<AmountType> {
-  private readonly chain: string
   indexerId: string
   constructor(private readonly $: ChainAmountIndexerDeps) {
     super($)
-    this.chain = $.configurations[0].properties.chain
-    assert(this.chain, 'No chain found')
-    assert(
-      $.configurations.every((x) => x.properties.chain === this.chain),
-      'Configurations chain mismatch',
-    )
     this.indexerId = $.id
   }
 
@@ -57,7 +51,7 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<AmountType> {
 
     const blockNumber =
       await this.$.blockTimestampsRepository.findByChainAndTimestamp(
-        this.chain,
+        this.$.chain,
         timestamp,
       )
     assert(blockNumber, 'Block number not found')
@@ -69,7 +63,11 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<AmountType> {
     )
 
     const nonZeroAmounts = amounts.filter((a) => a.amount > 0)
-    await this.$.amountRepository.addMany(nonZeroAmounts)
+    try {
+      await this.$.amountRepository.addMany(nonZeroAmounts)
+    } catch (error) {
+      this.$.logger.error('Error while adding amounts', error)
+    }
 
     return timestamp.toNumber()
   }

@@ -1,4 +1,4 @@
-import { assert, Logger } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import {
   assertUnreachable,
   EscrowEntry,
@@ -9,8 +9,8 @@ import { Configuration } from '@l2beat/uif'
 import { partition } from 'lodash'
 
 import {
-  ERC20MulticallCodec,
-  NativeAssetMulticallCodec,
+  erc20Codec,
+  nativeAssetCodec,
 } from '../../peripherals/multicall/codecs'
 import { MulticallClient } from '../../peripherals/multicall/MulticallClient'
 import {
@@ -25,8 +25,6 @@ export type AmountConfiguration = EscrowEntry | TotalSupplyEntry
 export interface AmountServiceDependencies {
   readonly rpcClient: RpcClient
   readonly multicallClient: MulticallClient
-  readonly erc20Codec: ERC20MulticallCodec
-  readonly nativeAssetCodec?: NativeAssetMulticallCodec
   logger: Logger
 }
 
@@ -45,14 +43,10 @@ export class AmountService {
     blockNumber: number,
     timestamp: UnixTime,
   ): Promise<AmountRecord[]> {
-    const nativeAssetCodecAtBlock = getNativeAssetCodecAtBlock(
-      this.$.nativeAssetCodec,
-      blockNumber,
-    )
     const [forRpc, forMulticall] = partition(
       configurations,
       (c): c is Configuration<EscrowEntry> =>
-        isNotSupportedByMulticall(nativeAssetCodecAtBlock, c),
+        isNotSupportedByMulticall(c, this.$.multicallClient, blockNumber),
     )
 
     const rpcAmounts = await this.fetchWithRpc(forRpc, blockNumber)
@@ -94,15 +88,8 @@ export class AmountService {
     if (configurations.length === 0) {
       return []
     }
-
-    const nativeAssetCodecAtBlock = getNativeAssetCodecAtBlock(
-      this.$.nativeAssetCodec,
-      blockNumber,
-    )
-    const erc20Codec = this.$.erc20Codec
-
     const encoded = configurations.map((configuration) => ({
-      ...encodeForMulticall(nativeAssetCodecAtBlock, erc20Codec, configuration),
+      ...this.encodeForMulticall(configuration),
     }))
 
     const responses = await this.$.multicallClient.multicall(
@@ -111,12 +98,7 @@ export class AmountService {
     )
 
     return responses.map((response, i): Amount => {
-      const amount = decodeForMulticall(
-        nativeAssetCodecAtBlock,
-        erc20Codec,
-        configurations[i],
-        response,
-      )
+      const amount = this.decodeForMulticall(configurations[i], response)
 
       // In the rare event of a contract call revert we do not want backend to stop because of it
       // That is why we set the amount to 0n & report the error to the logger
@@ -136,75 +118,55 @@ export class AmountService {
       }
     })
   }
-}
 
-function encodeForMulticall(
-  nativeAssetCodec: NativeAssetMulticallCodec | undefined,
-  erc20Codec: ERC20MulticallCodec,
-  { properties }: Configuration<AmountConfiguration>,
-): MulticallRequest {
-  switch (properties.type) {
-    case 'totalSupply':
-      return erc20Codec.totalSupply.encode(properties.address)
-    case 'escrow':
-      if (properties.address === 'native') {
-        assert(
-          nativeAssetCodec,
-          `No native balance encoding for chain ${properties.chain}`,
+  encodeForMulticall({
+    properties,
+  }: Configuration<AmountConfiguration>): MulticallRequest {
+    switch (properties.type) {
+      case 'totalSupply':
+        return erc20Codec.totalSupply.encode(properties.address)
+      case 'escrow':
+        if (properties.address === 'native') {
+          return nativeAssetCodec.balance.encode(properties.escrowAddress)
+        }
+        return erc20Codec.balance.encode(
+          properties.escrowAddress,
+          properties.address,
         )
-        return nativeAssetCodec.balance.encode(properties.escrowAddress)
-      }
-      return erc20Codec.balance.encode(
-        properties.escrowAddress,
-        properties.address,
-      )
-    default:
-      assertUnreachable(properties)
+      default:
+        assertUnreachable(properties)
+    }
   }
-}
 
-function decodeForMulticall(
-  nativeAssetCodec: NativeAssetMulticallCodec | undefined,
-  erc20Codec: ERC20MulticallCodec,
-  { properties }: Configuration<AmountConfiguration>,
-  response: MulticallResponse,
-) {
-  if (!response.success) {
-    return
+  decodeForMulticall(
+    { properties }: Configuration<AmountConfiguration>,
+    response: MulticallResponse,
+  ) {
+    if (!response.success) {
+      return
+    }
+    switch (properties.type) {
+      case 'totalSupply':
+        return erc20Codec.totalSupply.decode(response.data)
+      case 'escrow':
+        if (properties.address === 'native') {
+          return nativeAssetCodec.balance.decode(response.data)
+        }
+        return erc20Codec.balance.decode(response.data)
+      default:
+        assertUnreachable(properties)
+    }
   }
-  switch (properties.type) {
-    case 'totalSupply':
-      return erc20Codec.totalSupply.decode(response.data)
-    case 'escrow':
-      if (properties.address === 'native') {
-        assert(
-          nativeAssetCodec,
-          `Programmer error: native codec should be defined`,
-        )
-        return nativeAssetCodec.balance.decode(response.data)
-      }
-      return erc20Codec.balance.decode(response.data)
-    default:
-      assertUnreachable(properties)
-  }
-}
-
-function getNativeAssetCodecAtBlock(
-  nativeAssetCodec: NativeAssetMulticallCodec | undefined,
-  blockNumber: number,
-) {
-  return nativeAssetCodec && nativeAssetCodec.sinceBlock <= blockNumber
-    ? nativeAssetCodec
-    : undefined
 }
 
 function isNotSupportedByMulticall(
-  nativeCodec: NativeAssetMulticallCodec | undefined,
   configuration: Configuration<AmountConfiguration>,
+  multicallClient: MulticallClient,
+  blockNumber: number,
 ): configuration is Configuration<EscrowEntry> {
   return (
     configuration.properties.type === 'escrow' &&
     configuration.properties.address === 'native' &&
-    nativeCodec === undefined
+    !multicallClient.isNativeBalanceSupported(blockNumber)
   )
 }

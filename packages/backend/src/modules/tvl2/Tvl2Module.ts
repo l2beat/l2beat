@@ -206,23 +206,13 @@ function getChainAmountIndexers(
     .map((chain) => {
       assert(chain.config !== undefined, 'Chain config is required')
 
-      assert(
-        chain.config.multicall.erc20Codec,
-        'Erc20Codec not defined for ' + chain.chain,
-      )
-
       const rpcClient = peripherals.getClient(RpcClient, {
         url: chain.config.providerUrl,
         callsPerMinute: chain.config.providerCallsPerMinute,
       })
       const amountService = new AmountService({
         rpcClient: rpcClient,
-        multicallClient: new MulticallClient(
-          rpcClient,
-          chain.config.multicall.config,
-        ),
-        erc20Codec: chain.config.multicall.erc20Codec,
-        nativeAssetCodec: chain.config.multicall.nativeAssetCodec,
+        multicallClient: new MulticallClient(rpcClient, chain.config.multicall),
         logger: logger.tag(chain.chain),
       })
 
@@ -235,7 +225,7 @@ function getChainAmountIndexers(
       const escrowsAndTotalSupplies = config.amounts.filter(
         (a) =>
           (a.type === 'escrow' || a.type === 'totalSupply') &&
-          a.chain === 'ethereum',
+          a.chain === chain.chain,
       ) as (EscrowEntry | TotalSupplyEntry)[]
 
       const chainMinTimestamp = chain.config.minBlockTimestamp
@@ -264,6 +254,7 @@ function getChainAmountIndexers(
         syncOptimizer,
         logger: logger.tag(chain.chain),
         indexerService,
+        chain: chain.chain,
       })
     })
 }
