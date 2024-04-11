@@ -9,14 +9,14 @@ export function configureGlossarySideNav() {
   const navList = document$.maybe('[data-role=glossary-side-nav]')
 
   if (!navList) return
-  const sections = document$$('section')
 
+  const sections = document$$('section')
   let destinationItem: HTMLAnchorElement | null = null
 
   const { $, $$ } = makeQuery(navList)
   const overflowingContainer = $('ul')
-
   const navItems = $$<HTMLAnchorElement>('[data-role=glossary-side-nav-item]')
+
   let selectedNavItem = navItems.find(
     (item) => item.href === window.location.href,
   )
