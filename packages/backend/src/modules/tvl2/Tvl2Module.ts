@@ -10,7 +10,9 @@ import {
   Bytes,
   EscrowEntry,
   EthereumAddress,
+  ProjectId,
   TotalSupplyEntry,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import { BigNumber, utils } from 'ethers'
 
@@ -29,6 +31,7 @@ import { Clock } from '../../tools/Clock'
 import { IndexerConfigurationRepository } from '../../tools/uif/IndexerConfigurationRepository'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
+import { Configuration } from '../../tools/uif/multi/types'
 import { ApplicationModule } from '../ApplicationModule'
 import { HourlyIndexer } from '../tracked-txs/HourlyIndexer'
 import { ETHEREUM_BALANCE_ENCODING } from '../tvl/balances/BalanceProvider'
@@ -44,7 +47,6 @@ import { AmountRepository } from './repositories/AmountRepository'
 import { BlockTimestampRepository } from './repositories/BlockTimestampRepository'
 import { PriceRepository } from './repositories/PriceRepository'
 import { SyncOptimizer } from './SyncOptimizer'
-import { Configuration } from '../../tools/uif/multi/types'
 import { createAmountId } from './utils/createAmountId'
 
 export function createTvl2Module(
@@ -117,9 +119,11 @@ export function createTvl2Module(
   })
 
   const ethereumBlockIndexer = blockTimestampIndexers.find(
-    (indexer) => indexer.indexerId === '',
+    (indexer) => indexer.indexerId === 'block_timestamp_indexer_ethereum',
   )
   assert(ethereumBlockIndexer)
+
+  const ethMinTimestamp = config.tvl2.ethereum.config.minBlockTimestamp
 
   const escrowsAndTotalSupplies = config.tvl2.amounts.filter(
     (a) =>
@@ -131,18 +135,23 @@ export function createTvl2Module(
     escrowsAndTotalSupplies.map((a) => ({
       id: createAmountId(a),
       properties: a,
-      minHeight: a.sinceTimestamp,
-      maxHeight: a.untilTimestamp,
+      minHeight: a.sinceTimestamp.lt(ethMinTimestamp)
+        ? ethMinTimestamp.toNumber()
+        : a.sinceTimestamp.toNumber(),
+      maxHeight: a.untilTimestamp?.toNumber() ?? null,
     }))
 
-  const chainIndexer = new ChainIndexer({
+  const ethereumChainIndexer = new ChainIndexer({
     amountService,
     amountRepository: peripherals.getRepository(AmountRepository),
+    blockTimestampsRepository: peripherals.getRepository(
+      BlockTimestampRepository,
+    ),
     parents: [ethereumBlockIndexer],
     id: 'chain_indexer_ethereum',
     configurations,
-    encode: () => 'TODO',
-    decode: () => 'TODO',
+    encode,
+    decode,
     syncOptimizer,
     logger: logger.tag('ethereum'),
     indexerService,
@@ -157,9 +166,12 @@ export function createTvl2Module(
 
     await hourlyIndexer.start()
 
-    for (const indexer of indexers) {
-      await indexer.start()
-    }
+    // for (const indexer of indexers) {
+    //   await indexer.start()
+    // }
+
+    await ethereumBlockIndexer.start()
+    await ethereumChainIndexer.start()
 
     logger.info('Started')
   }
@@ -167,6 +179,83 @@ export function createTvl2Module(
   return {
     routers: [statusRouter],
     start,
+  }
+}
+
+function encode(value: EscrowEntry | TotalSupplyEntry): string {
+  switch (value.type) {
+    case 'escrow':
+      return JSON.stringify({
+        ...value,
+        address: value.address.toString(),
+        escrowAddress: value.escrowAddress.toString(),
+        chain: value.chain,
+        project: value.project.toString(),
+        source: value.source,
+        sinceTimestamp: value.sinceTimestamp.toNumber(),
+        ...({ untilTimestamp: value.untilTimestamp?.toNumber() } ?? {}),
+        includeInTotal: value.includeInTotal,
+      })
+    case 'totalSupply':
+      return JSON.stringify({
+        ...value,
+        address: value.address.toString(),
+        chain: value.chain,
+        project: value.project.toString(),
+        source: value.source,
+        sinceTimestamp: value.sinceTimestamp.toNumber(),
+        ...({ untilTimestamp: value.untilTimestamp?.toNumber() } ?? {}),
+        includeInTotal: value.includeInTotal,
+      })
+  }
+}
+
+function decode(value: string): EscrowEntry | TotalSupplyEntry {
+  const obj = JSON.parse(value) as {
+    type: string
+    address: string
+    escrowAddress: string | undefined
+    chain: string
+    project: string
+    source: string
+    sinceTimestamp: number
+    untilTimestamp?: number
+    includeInTotal: boolean
+  }
+
+  switch (obj.type) {
+    case 'escrow':
+      assert(obj.escrowAddress !== undefined, 'escrowAddress is required')
+      return {
+        address:
+          obj.address === 'native' ? 'native' : EthereumAddress(obj.address),
+        escrowAddress: EthereumAddress(obj.escrowAddress),
+        chain: obj.chain,
+        project: ProjectId(obj.project),
+        source: obj.source,
+        sinceTimestamp: new UnixTime(obj.sinceTimestamp),
+        ...({
+          untilTimestamp:
+            obj.untilTimestamp && new UnixTime(obj.untilTimestamp),
+        } ?? {}),
+        includeInTotal: obj.includeInTotal,
+      } as EscrowEntry
+    case 'totalSupply':
+      return {
+        address:
+          obj.address === 'native' ? 'native' : EthereumAddress(obj.address),
+        chain: obj.chain,
+        project: ProjectId(obj.project),
+        source: obj.source,
+        sinceTimestamp: new UnixTime(obj.sinceTimestamp),
+        ...({
+          untilTimestamp:
+            obj.untilTimestamp && new UnixTime(obj.untilTimestamp),
+        } ?? {}),
+        includeInTotal: obj.includeInTotal,
+      } as TotalSupplyEntry
+    default:
+      throw new Error('Unknown type')
   }
 }
 

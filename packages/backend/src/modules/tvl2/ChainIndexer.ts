@@ -1,3 +1,4 @@
+import { assert } from '@l2beat/backend-tools'
 import { EscrowEntry, TotalSupplyEntry, UnixTime } from '@l2beat/shared-pure'
 
 import {
@@ -10,6 +11,7 @@ import {
 } from '../../tools/uif/multi/types'
 import { AmountService } from './AmountService'
 import { AmountRepository } from './repositories/AmountRepository'
+import { BlockTimestampRepository } from './repositories/BlockTimestampRepository'
 import { SyncOptimizer } from './SyncOptimizer'
 
 type AmountType = EscrowEntry | TotalSupplyEntry
@@ -18,6 +20,7 @@ export interface ChainIndexerDependencies
   extends ManagedMultiIndexerOptions<AmountType> {
   amountService: AmountService
   amountRepository: AmountRepository
+  blockTimestampsRepository: BlockTimestampRepository
   syncOptimizer: SyncOptimizer
 }
 
@@ -42,9 +45,18 @@ export class ChainIndexer extends ManagedMultiIndexer<AmountType> {
     const configurationsWithMissingData = configurations.filter(
       (c) => !c.hasData,
     )
+
+    const blockNumber =
+      await this.$.blockTimestampsRepository.findByChainAndTimestamp(
+        'ethereum', //TODO
+        timestamp,
+      )
+
+    assert(blockNumber, 'Block number not found')
+
     const amounts = await this.$.amountService.fetchAmounts(
       configurationsWithMissingData,
-      to,
+      blockNumber?.blockNumber,
       timestamp,
     )
 
