@@ -49,6 +49,8 @@ export function getProjectDetails(
     verificationStatus,
     manuallyVerifiedContracts,
   )
+  const riskSection = getRiskSection(project, verificationStatus)
+
   const items: ScalingDetailsItem[] = []
 
   if (charts.tvl) {
@@ -120,7 +122,6 @@ export function getProjectDetails(
       },
     })
 
-    const riskSection = getRiskSection(project, verificationStatus)
     if (riskSection.riskGroups.length > 0) {
       items.push({
         type: 'RiskSection',
