@@ -252,11 +252,11 @@ function mockTotalSupplyConfig(
   }
 }
 
-function mockBaseConfig(base: Partial<AmountConfigBase>) {
+function mockBaseConfig(base: Partial<AmountConfigBase>): AmountConfigBase {
   return {
     chain: 'chain',
     project: ProjectId('project'),
-    source: 'canonical',
+    source: 'canonical' as const,
     sinceTimestamp: new UnixTime(123),
     includeInTotal: true,
     ...base,

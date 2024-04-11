@@ -12,6 +12,10 @@ import { Knex } from 'knex'
 
 import { Project } from '../model/Project'
 import { ActivityTransactionConfig } from '../modules/activity/ActivityTransactionConfig'
+import {
+  ERC20MulticallCodec,
+  NativeAssetMulticallCodec,
+} from '../peripherals/multicall/codecs'
 import { MulticallConfigEntry } from '../peripherals/multicall/types'
 import { ResolvedFeatureFlag } from './FeatureFlags'
 import { FinalityProjectConfig } from './features/finality'
@@ -89,8 +93,6 @@ export interface Tvl2Config {
   readonly amounts: AmountConfigEntry[]
   readonly chains: ChainTvlConfig[]
   readonly coingeckoApiKey: string | undefined
-  // TODO: remove this after initial local testing
-  readonly ethereum: ChainTvlConfig
 }
 
 export interface TrackedTxsConfig {
@@ -142,7 +144,12 @@ export interface ChainTvlConfig {
     readonly blockNumberProviderConfig:
       | EtherscanChainConfig
       | BlockscoutChainConfig
-    readonly multicallConfig: MulticallConfigEntry[]
+    readonly multicall: {
+      readonly config: MulticallConfigEntry[]
+      // two below are optional as only used in tvl2
+      readonly erc20Codec?: ERC20MulticallCodec
+      readonly nativeAssetCodec?: NativeAssetMulticallCodec
+    }
   }
 }
 

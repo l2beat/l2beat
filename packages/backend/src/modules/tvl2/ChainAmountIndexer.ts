@@ -16,7 +16,7 @@ import { SyncOptimizer } from './SyncOptimizer'
 
 type AmountType = EscrowEntry | TotalSupplyEntry
 
-export interface ChainIndexerDependencies
+export interface ChainAmountIndexerDeps
   extends ManagedMultiIndexerOptions<AmountType> {
   amountService: AmountService
   amountRepository: AmountRepository
@@ -24,9 +24,18 @@ export interface ChainIndexerDependencies
   syncOptimizer: SyncOptimizer
 }
 
-export class ChainIndexer extends ManagedMultiIndexer<AmountType> {
-  constructor(private readonly $: ChainIndexerDependencies) {
+export class ChainAmountIndexer extends ManagedMultiIndexer<AmountType> {
+  private readonly chain: string
+  indexerId: string
+  constructor(private readonly $: ChainAmountIndexerDeps) {
     super($)
+    this.chain = $.configurations[0].properties.chain
+    assert(this.chain, 'No chain found')
+    assert(
+      $.configurations.every((x) => x.properties.chain === this.chain),
+      'Configurations chain mismatch',
+    )
+    this.indexerId = $.id
   }
 
   override async multiUpdate(
@@ -48,10 +57,9 @@ export class ChainIndexer extends ManagedMultiIndexer<AmountType> {
 
     const blockNumber =
       await this.$.blockTimestampsRepository.findByChainAndTimestamp(
-        'ethereum', //TODO
+        this.chain,
         timestamp,
       )
-
     assert(blockNumber, 'Block number not found')
 
     const amounts = await this.$.amountService.fetchAmounts(

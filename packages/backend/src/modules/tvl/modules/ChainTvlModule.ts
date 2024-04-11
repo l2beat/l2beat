@@ -72,7 +72,7 @@ export function chainTvlModule(
   })
   const multicallClient = new MulticallClient(
     ethereumClient,
-    config.multicallConfig,
+    config.multicall.config,
   )
 
   const totalSupplyProvider = new TotalSupplyProvider(

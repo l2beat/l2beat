@@ -113,12 +113,7 @@ export function makeConfig(
       }),
       modules: tvlModules,
     },
-    tvl2: flags.isEnabled('tvl2') && {
-      ...tvl2Config,
-      ethereum: getChainTvlConfig(flags, env, 'ethereum', {
-        minTimestamp: minBlockTimestamp,
-      }),
-    },
+    tvl2: flags.isEnabled('tvl2') && tvl2Config,
     trackedTxsConfig: flags.isEnabled('tracked-txs') && {
       bigQuery: {
         clientEmail: env.string('BIGQUERY_CLIENT_EMAIL'),
