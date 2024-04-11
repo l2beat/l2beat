@@ -10,6 +10,7 @@ import { ProjectDetailsCharts } from '../../../../utils/project/getCharts'
 import { getContractSection } from '../../../../utils/project/getContractSection'
 import { getDiagramImage } from '../../../../utils/project/getDiagramImage'
 import { getPermissionsSection } from '../../../../utils/project/getPermissionsSection'
+import { getRiskSection } from '../../../../utils/project/getRiskSection'
 import {
   getProjectEditLink,
   getProjectIssueLink,
@@ -32,7 +33,6 @@ import {
   ProjectDetailsUpcomingDisclaimer,
   ProjectDetailsUpgradesAndGovernanceSection,
 } from '../../../types'
-import { getRiskSection } from './getRiskSection'
 import { getTechnologyOverview } from './getTechnologyOverview'
 
 export function getProjectDetails(

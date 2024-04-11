@@ -1,12 +1,12 @@
-import { CONTRACTS, Layer2, ScalingProjectRisk } from '@l2beat/config'
+import { CONTRACTS, Layer2, Layer3, ScalingProjectRisk } from '@l2beat/config'
 import { VerificationStatus } from '@l2beat/shared-pure'
 import isArray from 'lodash/isArray'
 
-import { RiskSectionProps } from '../../../../components/project/RiskSection'
-import { groupRisks } from '../../../../utils/project/groupRisks'
+import { RiskSectionProps } from '../../components/project/RiskSection'
+import { groupRisks } from './groupRisks'
 
 export function getRiskSection(
-  project: Layer2,
+  project: Layer2 | Layer3,
   verificationStatus: VerificationStatus,
 ): Omit<RiskSectionProps, 'sectionOrder'> {
   const sections = [
