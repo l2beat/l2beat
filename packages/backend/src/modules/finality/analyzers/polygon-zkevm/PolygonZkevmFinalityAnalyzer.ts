@@ -25,7 +25,7 @@ export class PolygonZkEvmFinalityAnalyzer extends BaseAnalyzer {
   }
 
   override getTrackedTxSubtype(): TrackedTxsConfigSubtype {
-    return 'stateUpdates'
+    return 'batchSubmissions'
   }
 
   async getFinality(transaction: {
