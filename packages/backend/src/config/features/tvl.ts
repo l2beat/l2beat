@@ -86,7 +86,7 @@ export function getChainTvlConfig(
             },
       minBlockTimestamp:
         options?.minTimestamp ?? chainConfig.minTimestampForTvl,
-      multicall: (chainConfig.multicallContracts ?? []).map(
+      multicallConfig: (chainConfig.multicallContracts ?? []).map(
         toMulticallConfigEntry,
       ),
     },

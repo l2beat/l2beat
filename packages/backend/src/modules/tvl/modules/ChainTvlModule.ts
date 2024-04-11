@@ -70,7 +70,10 @@ export function chainTvlModule(
     url: config.providerUrl,
     callsPerMinute: config.providerCallsPerMinute,
   })
-  const multicallClient = new MulticallClient(ethereumClient, config.multicall)
+  const multicallClient = new MulticallClient(
+    ethereumClient,
+    config.multicallConfig,
+  )
 
   const totalSupplyProvider = new TotalSupplyProvider(
     multicallClient,

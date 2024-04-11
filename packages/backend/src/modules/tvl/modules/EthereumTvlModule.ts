@@ -53,7 +53,7 @@ export function createEthereumTvlModule(
   })
   const multicallClient = new MulticallClient(
     ethereumClient,
-    tvlConfig.multicall,
+    tvlConfig.multicallConfig,
   )
 
   const balanceProvider = new BalanceProvider(

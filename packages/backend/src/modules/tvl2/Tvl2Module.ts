@@ -212,7 +212,10 @@ function getChainAmountIndexers(
       })
       const amountService = new AmountService({
         rpcClient: rpcClient,
-        multicallClient: new MulticallClient(rpcClient, chain.config.multicall),
+        multicallClient: new MulticallClient(
+          rpcClient,
+          chain.config.multicallConfig,
+        ),
         logger: logger.tag(chain.chain),
       })
 

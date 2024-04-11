@@ -140,7 +140,7 @@ export interface ChainTvlConfig {
     readonly blockNumberProviderConfig:
       | EtherscanChainConfig
       | BlockscoutChainConfig
-    readonly multicall: MulticallConfigEntry[]
+    readonly multicallConfig: MulticallConfigEntry[]
   }
 }
 
