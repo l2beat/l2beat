@@ -41,6 +41,7 @@ export function getProjectDetails(
     verificationStatus,
     manuallyVerifiedContracts,
   )
+  const riskSection = getRiskSection(bridge, verificationStatus)
 
   const items: BridgeDetailsItem[] = []
 
@@ -100,7 +101,6 @@ export function getProjectDetails(
     })
   }
 
-  const riskSection = getRiskSection(bridge, verificationStatus)
   if (riskSection.riskGroups.length > 0) {
     items.push({
       type: 'RiskSection',

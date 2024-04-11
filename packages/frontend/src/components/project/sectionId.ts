@@ -5,6 +5,7 @@ export type ProjectSectionId =
   | 'detailed-description'
   | 'milestones'
   | 'knowledge-nuggets'
+  | 'risk-summary'
   | 'risk-analysis'
   | 'technology'
   | 'state-derivation'
