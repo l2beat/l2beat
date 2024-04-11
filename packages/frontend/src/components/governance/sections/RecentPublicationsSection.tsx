@@ -4,11 +4,7 @@ import { GovernancePublicationEntry } from '../../../pages/governance/index/prop
 import { Button } from '../../Button'
 import { LinkWithThumbnail } from '../../LinkWithThumbnail'
 import { GovernanceCard, GovernanceCardHeader } from '../GovernanceCard'
-import {
-  formatDate,
-  formatDateToArticleFormat,
-  formatTimestamp,
-} from '../../../utils'
+import { formatDateToArticleFormat } from '../../../utils'
 
 interface Props {
   publications: GovernancePublicationEntry[]
