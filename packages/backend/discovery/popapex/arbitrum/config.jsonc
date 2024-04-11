@@ -16,11 +16,11 @@
     "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF": "ValidatorWalletCreator",
     "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56": "RollupOwnerMultisig"
   },
-   "overrides": {
+  "overrides": {
     "ValidatorWalletCreator": {
       "ignoreInWatchMode": ["template"]
     },
-     "RollupProxy": {
+    "RollupProxy": {
       "ignoreMethods": [
         // Execution reverted
         "proxiableUUID"
@@ -119,6 +119,6 @@
     },
     "ChallengeManager": {
       "ignoreMethods": ["challenges"]
-    },
-   }
+    }
+  }
 }

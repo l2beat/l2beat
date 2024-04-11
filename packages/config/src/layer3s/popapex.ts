@@ -1,8 +1,8 @@
-import { ProjectId, assert } from '@l2beat/shared-pure'
+import { assert,ProjectId } from '@l2beat/shared-pure'
 
-import { Layer3 } from './types'
-import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
+import { orbitStackL3 } from '../layer2s/templates/orbitStack'
+import { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('popapex', 'arbitrum')
 
