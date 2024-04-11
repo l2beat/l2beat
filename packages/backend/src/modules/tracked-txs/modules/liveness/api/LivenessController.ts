@@ -151,20 +151,21 @@ export class LivenessController {
 
       const { anomalies, ...subtypeData } = withAnomalies
 
-      const withSyncedUntil = TrackedTxsConfigSubtypeValues.reduce(
-        (obj, subtype) => {
-          const syncedUntil = getSyncedUntil(
-            configurations.filter((c) => c.subtype === subtype),
-          )
-          if (!syncedUntil) return obj
-          obj[subtype] = {
-            ...subtypeData[subtype],
-            syncedUntil,
-          }
-          return obj
-        },
-        {} as LivenessApiProject,
-      )
+      const withSyncedUntil =
+        TrackedTxsConfigSubtypeValues.reduce<LivenessApiProject>(
+          (obj, subtype) => {
+            const syncedUntil = getSyncedUntil(
+              configurations.filter((c) => c.subtype === subtype),
+            )
+            if (!syncedUntil) return obj
+            obj[subtype] = {
+              ...subtypeData[subtype],
+              syncedUntil,
+            }
+            return obj
+          },
+          {},
+        )
 
       projects[project.projectId.toString()] = {
         ...withSyncedUntil,
