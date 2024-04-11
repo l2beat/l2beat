@@ -30,12 +30,8 @@ export function makeConfig(
     env.string('FEATURES', isLocal ? '' : '*'),
   ).append('status')
   const minBlockTimestamp = minTimestampOverride ?? getEthereumMinTimestamp()
-  const tvlModules = getChainsWithTokens(tokenList, chains).map((x) =>
-    getChainTvlConfig(flags, env, x, {
-      minTimestamp: minTimestampOverride,
-    }),
-  )
-  const tvl2Config = getTvl2Config(tvlModules, env)
+
+  const tvl2Config = getTvl2Config(flags, env, minBlockTimestamp)
 
   return {
     name,
@@ -108,10 +104,19 @@ export function makeConfig(
         'COINGECKO_API_KEY_FOR_TVL',
         'COINGECKO_API_KEY',
       ]),
-      ethereum: getChainTvlConfig(flags, env, 'ethereum', {
-        minTimestamp: minBlockTimestamp,
-      }),
-      modules: tvlModules,
+      ethereum: getChainTvlConfig(
+        flags.isEnabled('tvl', 'ethereum'),
+        env,
+        'ethereum',
+        {
+          minTimestamp: minBlockTimestamp,
+        },
+      ),
+      modules: getChainsWithTokens(tokenList, chains).map((chain) =>
+        getChainTvlConfig(flags.isEnabled('tvl', chain), env, chain, {
+          minTimestamp: minTimestampOverride,
+        }),
+      ),
     },
     tvl2: flags.isEnabled('tvl2') && tvl2Config,
     trackedTxsConfig: flags.isEnabled('tracked-txs') && {
