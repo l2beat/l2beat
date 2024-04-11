@@ -2,6 +2,7 @@ import {
   CollectionEntry,
   getCollectionEntry,
 } from '../../../../content/getCollection'
+import { formatPublicationDate } from '../../../../utils'
 import {
   getGovernanceAuthorEntry,
   GovernanceAuthorEntry,
@@ -15,7 +16,7 @@ export interface GovernancePublicationEntry {
   excerpt: string
   readTimeInMinutes: number
   author: GovernanceAuthorEntry
-  publishedOn: Date
+  publishedOn: string
   content: string
 }
 
@@ -32,7 +33,7 @@ export function getGovernancePublicationEntry(
     description: post.data.description,
     excerpt: post.excerpt,
     readTimeInMinutes: post.readTimeInMinutes,
-    publishedOn: post.data.publishedOn,
+    publishedOn: formatPublicationDate(post.data.publishedOn),
     author: getGovernanceAuthorEntry(author),
   }
 }

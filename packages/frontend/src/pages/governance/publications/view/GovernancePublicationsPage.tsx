@@ -9,7 +9,6 @@ import {
 import { FullPageHeader } from '../../../../components/FullPageHeader'
 import { LinkWithThumbnail } from '../../../../components/LinkWithThumbnail'
 import { PageContent } from '../../../../components/PageContent'
-import { formatDateToArticleFormat } from '../../../../utils'
 import { GovernancePublicationEntry } from '../../index/props/getGovernancePublicationEntry'
 
 export interface GovernancePublicationsPageProps {
@@ -53,7 +52,7 @@ function PublicationCard({
       topAccessory={
         <p className="text-2xs font-semibold uppercase text-purple-100 dark:text-pink-200">
           {publication.readTimeInMinutes} min read • Published on{' '}
-          {formatDateToArticleFormat(publication.publishedOn)}
+          {publication.publishedOn}
         </p>
       }
       description={publication.description ?? publication.excerpt}

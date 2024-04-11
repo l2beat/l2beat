@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { GovernancePublicationEntry } from '../../../pages/governance/index/props/getGovernancePublicationEntry'
-import { formatDateToArticleFormat } from '../../../utils'
 import { Button } from '../../Button'
 import { LinkWithThumbnail } from '../../LinkWithThumbnail'
 import { GovernanceCard, GovernanceCardHeader } from '../GovernanceCard'
@@ -53,7 +52,7 @@ function Publication({ publication }: PublicationProps) {
       href={`/governance/publications/${publication.id}`}
       topAccessory={
         <p className="text-2xs font-semibold uppercase text-purple-100 dark:text-pink-200">
-          {formatDateToArticleFormat(publication.publishedOn)}
+          {publication.publishedOn}
         </p>
       }
       title={publication.shortTitle ?? publication.title}
