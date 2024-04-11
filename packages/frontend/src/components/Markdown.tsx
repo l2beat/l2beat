@@ -17,9 +17,12 @@ const markdown = MarkdownIt({
 
 export function Markdown(props: MarkdownProps) {
   const Comp = props.inline ? 'span' : 'div'
+
+  const children = props.children.replace(/(^|\n)(?:\t|\s{4})(.+)/g, '$1$2')
+
   const rendered = props.inline
-    ? markdown.renderInline(props.children)
-    : markdown.render(props.children)
+    ? markdown.renderInline(children)
+    : markdown.render(children)
 
   return (
     <Comp
