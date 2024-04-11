@@ -10,7 +10,7 @@ export function GlossarySideNavigation(props: { entries: GlossaryEntry[] }) {
       data-role="glossary-side-nav"
       className="sticky top-[145px] hidden max-h-[70vh] w-[246px] min-w-[246px] lg:block"
     >
-      <div className="relative h-full">
+      <div className="custom-scrollbar relative h-full">
         <ul className="flex h-full flex-col gap-4 overflow-y-scroll pb-8 pr-6">
           {props.entries.map((entry) => (
             <li key={entry.id}>

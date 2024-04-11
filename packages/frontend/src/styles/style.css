@@ -20,23 +20,23 @@ body {
   scrollbar-width: none; /* Firefox */
 }
 
-::-webkit-scrollbar {
+.custom-scrollbar ::-webkit-scrollbar {
   width: 4px;
 }
 
-::-webkit-scrollbar-track {
+.custom-scrollbar ::-webkit-scrollbar-track {
   @apply rounded-full bg-gray-200;
 }
 
-.dark ::-webkit-scrollbar-track {
+.dark .custom-scrollbar ::-webkit-scrollbar-track {
   @apply rounded-full bg-zinc-800;
 }
 
-::-webkit-scrollbar-thumb {
+.custom-scrollbar ::-webkit-scrollbar-thumb {
   @apply rounded-full bg-gray-50;
 }
 
-.dark ::-webkit-scrollbar-thumb {
+.dark .custom-scrollbar ::-webkit-scrollbar-thumb {
   @apply rounded-full bg-zinc-500;
 }
 /* Please use https://gwfh.mranftl.com/fonts/roboto-serif?subsets=latin */
