@@ -129,7 +129,7 @@ describe(AmountService.name, () => {
     })
 
     const mockErc20BalanceEncode = mockFn(
-      (_: { holder: EthereumAddress; token: EthereumAddress }) =>
+      (_holder: EthereumAddress, _token: EthereumAddress) =>
         mockObject<MulticallRequest>(),
     )
 
@@ -167,10 +167,10 @@ describe(AmountService.name, () => {
     expect(mockErc20TotalSupplyEncode).toHaveBeenOnlyCalledWith(
       erc20TotalSupplyConfig.address,
     )
-    expect(mockErc20BalanceEncode).toHaveBeenOnlyCalledWith({
-      token: erc20BalanceConfig.address as EthereumAddress,
-      holder: erc20BalanceConfig.escrowAddress,
-    })
+    expect(mockErc20BalanceEncode).toHaveBeenOnlyCalledWith(
+      erc20BalanceConfig.escrowAddress,
+      erc20BalanceConfig.address as EthereumAddress,
+    )
   })
 
   it('works with complex example', async () => {

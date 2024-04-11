@@ -154,10 +154,10 @@ function encodeForMulticall(
         )
         return nativeAssetCodec.balance.encode(properties.escrowAddress)
       }
-      return erc20Codec.balance.encode({
-        holder: properties.escrowAddress,
-        token: properties.address,
-      })
+      return erc20Codec.balance.encode(
+        properties.escrowAddress,
+        properties.address,
+      )
     default:
       assertUnreachable(properties)
   }
@@ -174,16 +174,16 @@ function decodeForMulticall(
   }
   switch (properties.type) {
     case 'totalSupply':
-      return erc20Codec.totalSupply.decode(response)
+      return erc20Codec.totalSupply.decode(response.data)
     case 'escrow':
       if (properties.address === 'native') {
         assert(
           nativeAssetCodec,
           `Programmer error: native codec should be defined`,
         )
-        return nativeAssetCodec.balance.decode(response)
+        return nativeAssetCodec.balance.decode(response.data)
       }
-      return erc20Codec.balance.decode(response)
+      return erc20Codec.balance.decode(response.data)
     default:
       assertUnreachable(properties)
   }

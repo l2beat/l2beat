@@ -89,6 +89,8 @@ export interface Tvl2Config {
   readonly amounts: AmountConfigEntry[]
   readonly chains: ChainTvlConfig[]
   readonly coingeckoApiKey: string | undefined
+  // TODO: remove this after initial local testing
+  readonly ethereum: ChainTvlConfig
 }
 
 export interface TrackedTxsConfig {

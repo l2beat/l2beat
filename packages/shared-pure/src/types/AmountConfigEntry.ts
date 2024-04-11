@@ -6,8 +6,10 @@ import { UnixTime } from './UnixTime'
 export type AmountConfigEntry = AmountConfigIdentifiable & {
   source: 'canonical' | 'external' | 'native'
   sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
   includeInTotal: boolean
 }
+
 export type AmountConfigIdentifiable =
   | TotalSupplyEntry
   | CirculatingSupplyEntry

@@ -1,10 +1,7 @@
-import {
-  AmountConfigIdentifiable,
-  assertUnreachable,
-} from '@l2beat/shared-pure'
+import { AmountConfigEntry, assertUnreachable } from '@l2beat/shared-pure'
 import { createHash } from 'crypto'
 
-export function createAmountId(amountConfig: AmountConfigIdentifiable): string {
+export function createAmountId(amountConfig: AmountConfigEntry): string {
   let typeSpecificPart: string
   switch (amountConfig.type) {
     case 'totalSupply':
