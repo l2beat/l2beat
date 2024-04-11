@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.47.0
+
+### Minor Changes
+
+- Use fast-solidity-parser
+
 ## 0.46.11
 
 ### Patch Changes

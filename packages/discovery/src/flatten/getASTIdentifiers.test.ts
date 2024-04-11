@@ -1,4 +1,4 @@
-import { parse } from '@solidity-parser/parser'
+import { parse } from '@mradomski/fast-solidity-parser'
 import { expect } from 'earl'
 
 import { getASTIdentifiers } from './getASTIdentifiers'

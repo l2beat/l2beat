@@ -63,6 +63,7 @@ describe(flattenStartingFrom.name, () => {
 
   const ROOT_PARSED_FILE: Omit<ParsedFile, 'rootASTNode'> = {
     path: 'path',
+    normalizedPath: 'path',
     content: ROOT_FILE_SOURCE,
     topLevelDeclarations: [ROOT_CONTRACT, LIBRARY_CONTRACT],
     importDirectives: [],

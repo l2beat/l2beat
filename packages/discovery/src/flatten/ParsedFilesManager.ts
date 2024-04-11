@@ -1,7 +1,6 @@
 import { assert } from '@l2beat/backend-tools'
-import { parse } from '@solidity-parser/parser'
-// eslint-disable-next-line import/no-unresolved
-import type * as AST from '@solidity-parser/parser/dist/src/ast-types'
+import type * as AST from '@mradomski/fast-solidity-parser'
+import { parse } from '@mradomski/fast-solidity-parser'
 import * as posix from 'path'
 
 import { getASTIdentifiers } from './getASTIdentifiers'
@@ -67,6 +66,7 @@ export interface Remapping {
 }
 
 export interface ParsedFile extends FileContent {
+  normalizedPath: string
   rootASTNode: ParseResult
 
   topLevelDeclarations: TopLevelDeclaration[]
@@ -88,13 +88,17 @@ export class ParsedFilesManager {
     const result = new ParsedFilesManager()
     const remappings = decodeRemappings(remappingStrings)
 
-    result.files = files.map(({ path, content }) => ({
-      path: resolveRemappings(path, remappings),
-      content,
-      rootASTNode: parse(content, { range: true }),
-      topLevelDeclarations: [],
-      importDirectives: [],
-    }))
+    result.files = files.map(({ path, content }) => {
+      const remappedPath = resolveRemappings(path, remappings)
+      return {
+        path: remappedPath,
+        normalizedPath: posix.normalize(remappedPath),
+        content,
+        rootASTNode: parse(content, { range: true }),
+        topLevelDeclarations: [],
+        importDirectives: [],
+      }
+    })
 
     // Pass 1: Find all contract declarations
     for (const file of result.files) {
@@ -402,9 +406,10 @@ export class ParsedFilesManager {
         ? posix.join(posix.dirname(fromFile.path), importPath)
         : importPath
 
+    const normalizedPath = posix.normalize(resolvedPath)
     const matchingFile = findOne(
       this.files,
-      (f) => posix.normalize(f.path) === posix.normalize(resolvedPath),
+      (f) => f.normalizedPath === normalizedPath,
     )
     assert(
       matchingFile !== undefined,
