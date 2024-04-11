@@ -204,6 +204,11 @@ export const rhinofi: Layer2 = {
       description:
         'Allowed to update the state of the system. When the Operator is down the state cannot be updated.',
     },
+    discovery.contractAsPermissioned(
+      // this multisig does not get recognized as such (because of the old proxy?)
+      discovery.getContract('DeversiFiTreasuryMultisig'),
+      'Can add addresses to a blocklist in the bridge, blocking their withdrawal of funds to L1.',
+    ),
   ],
   milestones: [
     {
