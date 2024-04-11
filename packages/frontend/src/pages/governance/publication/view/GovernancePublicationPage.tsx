@@ -9,8 +9,8 @@ import {
 import { Article } from '../../../../components/Article'
 import { FullPageHeader } from '../../../../components/FullPageHeader'
 import { PageContent } from '../../../../components/PageContent'
-import { GovernancePublicationEntry } from '../../index/props/getGovernancePublicationEntry'
 import { formatDateToArticleFormat } from '../../../../utils'
+import { GovernancePublicationEntry } from '../../index/props/getGovernancePublicationEntry'
 
 export interface GovernancePublicationPageProps {
   publication: GovernancePublicationEntry

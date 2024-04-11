@@ -15,7 +15,7 @@ export interface GovernancePublicationEntry {
   excerpt: string
   readTimeInMinutes: number
   author: GovernanceAuthorEntry
-  publishedOn: Date,
+  publishedOn: Date
   content: string
 }
 
