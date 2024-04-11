@@ -12,7 +12,7 @@ import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
 import { createAmountId } from '../utils/createAmountId'
 
-interface Tvl2Project {
+export interface Tvl2Project {
   id: ProjectId
   minTimestamp: UnixTime
   indexers: { get safeHeight(): number }[]

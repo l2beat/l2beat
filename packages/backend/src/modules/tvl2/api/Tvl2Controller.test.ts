@@ -5,13 +5,13 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
+import { expect, mockFn, mockObject } from 'earl'
 
 import { Tvl2Config } from '../../../config/Config'
 import { PriceIndexer } from '../PriceIndexer'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
-import { Tvl2Controller } from './Tvl2Controller'
+import { Tvl2Controller, Tvl2Project } from './Tvl2Controller'
 
 describe(Tvl2Controller.name, () => {
   describe(Tvl2Controller.prototype.getProjectTvl.name, () => {
@@ -67,6 +67,124 @@ describe(Tvl2Controller.name, () => {
         canonical: 246,
         external: 0,
         native: 0,
+      })
+    })
+  })
+
+  const projectConfig: Tvl2Project = {
+    minTimestamp: new UnixTime(0),
+    indexers: [{ safeHeight: 100 }],
+    id: ProjectId('test-project'),
+  }
+
+  const amountConfig = mockObject<AmountConfigEntry>({
+    project: projectConfig.id,
+    type: 'totalSupply',
+    address: EthereumAddress.random(),
+    chain: 'ethereum',
+  })
+  const priceConfig = mockObject<PriceConfigEntry>({
+    chain: amountConfig.chain,
+    address: amountConfig.address,
+    decimals: 6,
+  })
+
+  describe(Tvl2Controller.prototype.getTvlAt.name, () => {
+    describe('calls getProjectTvl with the correct timestamp', () => {
+      it('when the timestamp is before the safe height', async () => {
+        const timestamp = new UnixTime(50)
+
+        const controller = new Tvl2Controller(
+          mockObject<AmountRepository>(),
+          mockObject<PriceRepository>(),
+          { safeHeight: 100 },
+          [projectConfig],
+          mockObject<Tvl2Config>({
+            amounts: [amountConfig],
+            prices: [priceConfig],
+          }),
+        )
+        const mockGetProjectTvl = mockFn(
+          async (_: ProjectId, __: UnixTime) => ({
+            canonical: 0,
+            external: 0,
+            native: 0,
+          }),
+        )
+        controller.getProjectTvl = mockGetProjectTvl
+
+        await controller.getTvlAt(timestamp)
+        expect(mockGetProjectTvl).toHaveBeenOnlyCalledWith(
+          projectConfig.id,
+          timestamp,
+        )
+      })
+
+      it('when the timestamp is after the safe height', async () => {
+        const timestamp = new UnixTime(150)
+
+        const controller = new Tvl2Controller(
+          mockObject<AmountRepository>(),
+          mockObject<PriceRepository>(),
+          { safeHeight: 100 },
+          [projectConfig],
+          mockObject<Tvl2Config>({
+            amounts: [amountConfig],
+            prices: [priceConfig],
+          }),
+        )
+        const mockGetProjectTvl = mockFn(
+          async (_: ProjectId, __: UnixTime) => ({
+            canonical: 0,
+            external: 0,
+            native: 0,
+          }),
+        )
+        controller.getProjectTvl = mockGetProjectTvl
+
+        await controller.getTvlAt(timestamp)
+        expect(mockGetProjectTvl).not.toHaveBeenCalled()
+      })
+    })
+  })
+
+  describe(Tvl2Controller.prototype.getTvl.name, () => {
+    it('calls getTvlAt for each full day', async () => {
+      const start = projectConfig.minTimestamp
+
+      const safeHeight = start.add(3, 'days').toNumber()
+
+      const controller = new Tvl2Controller(
+        mockObject<AmountRepository>(),
+        mockObject<PriceRepository>(),
+        { safeHeight },
+        [{ ...projectConfig, indexers: [{ safeHeight }] }],
+        mockObject<Tvl2Config>({
+          amounts: [amountConfig],
+          prices: [priceConfig],
+        }),
+      )
+      const mockGetTvlAt = mockFn(async (_: UnixTime) => ({
+        timestamp: _.toNumber(),
+        projects: {},
+      }))
+      controller.getTvlAt = mockGetTvlAt
+
+      const result = await controller.getTvl()
+
+      expect(mockGetTvlAt).toHaveBeenCalledTimes(4)
+      expect(mockGetTvlAt).toHaveBeenNthCalledWith(1, start)
+      expect(mockGetTvlAt).toHaveBeenNthCalledWith(2, start.add(1, 'days'))
+      expect(mockGetTvlAt).toHaveBeenNthCalledWith(3, start.add(2, 'days'))
+      expect(mockGetTvlAt).toHaveBeenNthCalledWith(4, start.add(3, 'days'))
+
+      expect(result).toEqual({
+        daily: [
+          { timestamp: start.toNumber(), projects: {} },
+          { timestamp: start.add(1, 'days').toNumber(), projects: {} },
+          { timestamp: start.add(2, 'days').toNumber(), projects: {} },
+          { timestamp: start.add(3, 'days').toNumber(), projects: {} },
+        ],
       })
     })
   })
