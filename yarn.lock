@@ -2441,14 +2441,14 @@
   dependencies:
     zod "^3.22.2"
 
-"@l2beat/discovery@0.46.11":
-  version "0.46.11"
-  resolved "https://registry.yarnpkg.com/@l2beat/discovery/-/discovery-0.46.11.tgz#f7af6d9fd5447e7d9d3a85950104e2f8446cc414"
-  integrity sha512-SyNiHHRPVdEiP/UbEHeAz/nNOl+yrZ5wmE6ZrkN6Q6NE0qJGzj2ngQeon3zcLQaxfhgjG+vuuvGN7TzHzHsG9g==
+"@l2beat/discovery@0.47.1":
+  version "0.47.1"
+  resolved "https://registry.yarnpkg.com/@l2beat/discovery/-/discovery-0.47.1.tgz#e130269cafb47e223b304c0bfb5c1c315915246d"
+  integrity sha512-Ps8VNfC2l/HmkHdpHLYqKj9D3LCetXjVJ8W3rmLarIFlEYrBf2PiTlc9XjpGWiXx5h6NmIDJ+G+rRn8Zn22XLg==
   dependencies:
     "@l2beat/backend-tools" "^0.5.1"
     "@l2beat/discovery-types" "^0.8.1"
-    "@solidity-parser/parser" "^0.18.0"
+    "@mradomski/fast-solidity-parser" "0.1.1"
     chalk "^4.1.2"
     deep-diff "^1.0.2"
     dotenv "^16.0.3"
@@ -2476,6 +2476,11 @@
   dependencies:
     "@types/mdx" "^2.0.0"
     "@types/react" ">=16"
+
+"@mradomski/fast-solidity-parser@0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@mradomski/fast-solidity-parser/-/fast-solidity-parser-0.1.1.tgz#9c38003731bec09c473f54d2677a82e548a00c0b"
+  integrity sha512-BnX+UKswinYed/yFgH9zwYNNBvUXJu32vJkxwnkZuPcV/YR9TDzMgjAOhiq8Vj77wDcfHHhyA0/MdIMhkd92PQ==
 
 "@ndelangen/get-tarball@^3.0.7":
   version "3.0.9"
@@ -2883,11 +2888,6 @@
   integrity sha512-V4BG07kuYSUkTCSBHG8G8TNhM+F19jXFWnQtzj+we8DrkpSBCee9Z3Ms8yiGer/dlmhe35/Xdgyo3/0rQKg7YA==
   dependencies:
     "@sinonjs/commons" "^3.0.0"
-
-"@solidity-parser/parser@^0.18.0":
-  version "0.18.0"
-  resolved "https://registry.yarnpkg.com/@solidity-parser/parser/-/parser-0.18.0.tgz#8e77a02a09ecce957255a2f48c9a7178ec191908"
-  integrity sha512-yfORGUIPgLck41qyN7nbwJRAx17/jAIXCTanHOJZhB6PJ1iAk/84b/xlsVKFSyNyLXIj0dhppoE0+CRws7wlzA==
 
 "@storybook/addon-actions@7.0.9":
   version "7.0.9"
