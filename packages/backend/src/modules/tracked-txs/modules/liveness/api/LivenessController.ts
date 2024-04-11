@@ -1,10 +1,12 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   cacheAsyncFunction,
+  LivenessApiProject,
   LivenessApiResponse,
   notUndefined,
   ProjectId,
   TrackedTxsConfigSubtype,
+  TrackedTxsConfigSubtypeValues,
   UnixTime,
 } from '@l2beat/shared-pure'
 
@@ -147,27 +149,26 @@ export class LivenessController {
         }
       }
 
+      const { anomalies, ...subtypeData } = withAnomalies
+
+      const withSyncedUntil = TrackedTxsConfigSubtypeValues.reduce(
+        (obj, subtype) => {
+          const syncedUntil = getSyncedUntil(
+            configurations.filter((c) => c.subtype === subtype),
+          )
+          if (!syncedUntil) return obj
+          obj[subtype] = {
+            ...subtypeData[subtype],
+            syncedUntil,
+          }
+          return obj
+        },
+        {} as LivenessApiProject,
+      )
+
       projects[project.projectId.toString()] = {
-        ...withAnomalies,
-        stateUpdates: {
-          ...withAnomalies.stateUpdates,
-          syncedUntil: getSyncedUntil(
-            configurations.filter((c) => c.subtype === 'stateUpdates'),
-          ),
-        },
-        batchSubmissions: {
-          ...withAnomalies.batchSubmissions,
-          syncedUntil: getSyncedUntil(
-            configurations.filter((c) => c.subtype === 'batchSubmissions'),
-          ),
-        },
-        proofSubmissions: {
-          ...withAnomalies.proofSubmissions,
-          syncedUntil: getSyncedUntil(
-            configurations.filter((c) => c.subtype === 'proofSubmissions'),
-          ),
-        },
-        anomalies: withAnomalies.anomalies,
+        ...withSyncedUntil,
+        anomalies,
       }
     }
 
