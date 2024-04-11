@@ -4,9 +4,10 @@ interface HighlightCurrentSectionOpts {
   onHighlight: (item: HTMLAnchorElement) => void
   topItem?: HTMLAnchorElement
   projectNavigationItemQuerySelector?: (sectionId: string) => string
+  threshold?: number
 }
 
-const OFFSET_RATIO = 0.15
+const DEFAULT_THRESHOLD = 0.15
 
 export function highlightCurrentSection({
   navigationList,
@@ -14,6 +15,7 @@ export function highlightCurrentSection({
   onHighlight,
   topItem,
   projectNavigationItemQuerySelector,
+  threshold = DEFAULT_THRESHOLD,
 }: HighlightCurrentSectionOpts) {
   function getItemSelector(sectionId: string) {
     return (
@@ -44,7 +46,7 @@ export function highlightCurrentSection({
     const sectionBottom = sectionTop + sectionHeight
     const viewportHeight = window.innerHeight
 
-    const scrollPos = window.scrollY + viewportHeight * OFFSET_RATIO
+    const scrollPos = window.scrollY + viewportHeight * threshold
     const isCurrentSection =
       scrollPos >= sectionTop && scrollPos < sectionBottom
 

@@ -53,6 +53,7 @@ export function configureGlossarySideNav() {
         highlightItem(item)
         scrollToItem(item)
       },
+      threshold: 0.14,
     })
   })
 }

@@ -68,6 +68,7 @@ function configureAlphabetSelector(alphabetSelector: HTMLElement) {
         const char = getCharFromSectionId(sectionId)
         return `a[data-char="${char}"]`
       },
+      threshold: 0.14,
     })
   })
 }
