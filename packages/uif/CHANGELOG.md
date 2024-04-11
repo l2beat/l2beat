@@ -1,5 +1,11 @@
 # @l2beat/uif
 
+## 0.5.0
+
+### Minor Changes
+
+- cd6d192: Removed `MultiIndexer`
+
 ## 0.4.0
 
 ### Minor Changes
