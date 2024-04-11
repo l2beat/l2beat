@@ -17,7 +17,7 @@ export const popapex: Layer3 = orbitStackL3({
     shortName: 'Apex',
     slug: 'popapex',
     description:
-      'Proof of Play Apex is a gaming-focused L3 settling on Arbitrum using orbitstack and AnyTrust DA.',
+      'Proof of Play Apex is a gaming-focused L3 settling on Arbitrum using the Orbit Stack and AnyTrust DA.',
     purposes: ['Gaming', 'NFT'],
     links: {
       websites: ['https://proofofplay.gg'],
