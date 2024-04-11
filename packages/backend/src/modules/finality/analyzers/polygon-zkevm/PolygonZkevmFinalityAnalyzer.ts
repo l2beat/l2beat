@@ -58,9 +58,7 @@ export class PolygonZkEvmFinalityAnalyzer extends BaseAnalyzer {
       this.l2Provider.getBlock(maxBlockNumber),
     ])
 
-    return blocks
-      .map((block) => block.timestamp)
-      .map((l2Timestamp) => l1Timestamp.toNumber() - l2Timestamp)
+    return blocks.map((block) => l1Timestamp.toNumber() - block.timestamp)
   }
 }
 
