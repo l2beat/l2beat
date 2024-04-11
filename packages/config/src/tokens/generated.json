@@ -2716,6 +2716,21 @@
       "formula": "locked"
     },
     {
+      "id": "puff-puff",
+      "name": "Puff",
+      "coingeckoId": "puff-the-dragon",
+      "address": "0x18fA05ee5e478EED8925946abb41d09AEc5d34D6",
+      "symbol": "Puff",
+      "decimals": 18,
+      "deploymentTimestamp": 1707929531,
+      "coingeckoListingTimestamp": 1710201600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35950/large/photo_2024-03-11_10.18.27.jpeg?1710240090",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "pundix-pundi-x-token",
       "name": "Pundi X Token",
       "coingeckoId": "pundi-x-2",
@@ -4175,6 +4190,44 @@
       "bridgedUsing": {
         "bridge": "Socket",
         "slug": "socket"
+      }
+    },
+    {
+      "id": "mantle:susde-staked-usde",
+      "name": "Staked USDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "symbol": "sUSDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1709929437,
+      "coingeckoListingTimestamp": 1710892800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33669/large/photo_2023-12-14_17-00-20.jpg?1702696035",
+      "chainId": 5000,
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
+      "id": "mantle:usde-usde",
+      "name": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "symbol": "USDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1709926643,
+      "coingeckoListingTimestamp": 1702512000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33613/large/3466ef_3c088c66c7d941e8856339d0bddf33cc_mv2.png?1702514458",
+      "chainId": 5000,
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
       }
     },
     {

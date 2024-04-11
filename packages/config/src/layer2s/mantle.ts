@@ -102,6 +102,25 @@ export const mantle: Layer2 = opStackL2({
     GUARDIAN: 'Guardian',
     CHALLENGER: 'Challenger',
   },
+  chainConfig: {
+    name: 'mantle',
+    chainId: 5000,
+    explorerUrl: 'https://explorer.mantle.xyz/',
+    explorerApi: {
+      url: 'https://explorer.mantle.xyz/api',
+      type: 'blockscout',
+    },
+    minTimestampForTvl: new UnixTime(1688314886),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 304717,
+        version: '3',
+      },
+    ],
+    coingeckoPlatform: 'mantle',
+  },
   nonTemplateContracts: [
     discovery.getContractDetails('DataLayrServiceManager', {
       description:
