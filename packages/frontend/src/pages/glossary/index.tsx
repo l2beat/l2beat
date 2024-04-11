@@ -10,7 +10,7 @@ export function getGlossaryPage(config: Config) {
   return {
     slug: '/glossary',
     page: (
-      <PageWrapper {...wrapper} htmlClassName="md:scroll-pt-36 scroll-pt-32">
+      <PageWrapper {...wrapper} htmlClassName="md:scroll-pt-36 scroll-pt-28">
         <GlossaryPage {...props} />
       </PageWrapper>
     ),

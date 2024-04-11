@@ -53,7 +53,7 @@ export function GlossaryPage(props: GlossaryPageProps) {
           ))}
         </main>
       </PageContent>
-      <ScrollToTopButton />
+      <ScrollToTopButton desktopThreshold={325} mobileThreshold={525} />
       <Footer {...props.footer} />
     </>
   )

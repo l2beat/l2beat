@@ -1,10 +1,17 @@
+import { isMobile } from './isMobile'
+
+interface Threshold {
+  desktop?: number
+  mobile?: number
+}
+
 interface HighlightCurrentSectionOpts {
   navigationList: Element
   sections: HTMLElement[]
   onHighlight: (item: HTMLAnchorElement) => void
   topItem?: HTMLAnchorElement
   projectNavigationItemQuerySelector?: (sectionId: string) => string
-  threshold?: number
+  threshold?: Threshold
 }
 
 const DEFAULT_THRESHOLD = 0.15
@@ -15,8 +22,12 @@ export function highlightCurrentSection({
   onHighlight,
   topItem,
   projectNavigationItemQuerySelector,
-  threshold = DEFAULT_THRESHOLD,
+  threshold,
 }: HighlightCurrentSectionOpts) {
+  const desktopThreshold = threshold?.desktop ?? DEFAULT_THRESHOLD
+  const mobileThreshold = threshold?.mobile ?? DEFAULT_THRESHOLD
+  const thresholdValue = isMobile() ? mobileThreshold : desktopThreshold
+
   function getItemSelector(sectionId: string) {
     return (
       projectNavigationItemQuerySelector?.(sectionId) ??
@@ -46,7 +57,7 @@ export function highlightCurrentSection({
     const sectionBottom = sectionTop + sectionHeight
     const viewportHeight = window.innerHeight
 
-    const scrollPos = window.scrollY + viewportHeight * threshold
+    const scrollPos = window.scrollY + viewportHeight * thresholdValue
     const isCurrentSection =
       scrollPos >= sectionTop && scrollPos < sectionBottom
 
