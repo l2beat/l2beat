@@ -1,24 +1,23 @@
+import { setActiveTooltipContent } from './configureTooltips'
 import { makeQuery } from './query'
 import { copyStringToClipboard } from './utils/copyToClipboard'
 
 export function configureCopyButtons() {
   const { $$ } = makeQuery()
 
-  const copyButtonWrappers = $$('[data-role="copy-button-wrapper"]')
-  copyButtonWrappers.forEach(configureCopyButton)
+  const copyButtons = $$('[data-role="copy-button"]')
+  copyButtons.forEach(configureCopyButton)
 }
 
-function configureCopyButton(wrapper: HTMLElement) {
-  const { $ } = makeQuery(wrapper)
-
-  const button = $('[data-role="copy-button"]')
+function configureCopyButton(button: HTMLElement) {
   const toCopy = button.getAttribute('data-to-copy')
   if (!toCopy) throw new Error('data-to-copy attribute is required')
 
   button.addEventListener('click', () => {
     copyStringToClipboard(toCopy)
 
-    wrapper.setAttribute('data-copied', 'true')
-    setTimeout(() => wrapper.removeAttribute('data-copied'), 1000)
+    button.setAttribute('data-copied', 'true')
+    setActiveTooltipContent('Copied!')
+    setTimeout(() => button.removeAttribute('data-copied'), 1000)
   })
 }

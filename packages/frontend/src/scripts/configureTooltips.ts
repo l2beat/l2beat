@@ -2,15 +2,14 @@ import { clamp } from '../utils'
 import { makeQuery } from './query'
 import { isMobile } from './utils/isMobile'
 
-export function configureTooltips() {
-  const { $, $$ } = makeQuery()
+let activeElement: HTMLElement | undefined
 
-  const tooltip = $('[data-role=tooltip-popup]')
-  const tooltipContent = $('[data-role=tooltip-popup] span')
-  const tooltipTriangle = $('[data-role=tooltip-popup-triangle]')
+export function configureTooltips() {
+  const { $$ } = makeQuery()
+
+  const { tooltip } = getTooltip()
   const elements = $$('[data-role=tooltip]')
 
-  let activeElement: HTMLElement | undefined
   let visible = false
 
   function show(
@@ -22,45 +21,7 @@ export function configureTooltips() {
     if ((isDisabledOnMobile && isMobile()) || !content.innerHTML) return
     visible = true
     activeElement = element
-    tooltip.classList.toggle('max-w-[300px]', !element.dataset.tooltipBig)
-    const rect = trigger.getBoundingClientRect()
-    tooltipContent.innerHTML = content.innerHTML
-    const prefferedPosition = content.getAttribute('data-preffered-position')
-    tooltip.style.display = 'block'
-    const tooltipHeight = tooltip.getBoundingClientRect().height
-    const tooltipWidth = tooltip.getBoundingClientRect().width
-    const left = clamp(
-      rect.left + rect.width / 2 - tooltipWidth / 2,
-      10,
-      window.innerWidth - 10 - tooltipWidth,
-    )
-    tooltip.style.left = `${left}px`
-    const isOverflowingOnBottom =
-      rect.y + rect.height + 7 + tooltipHeight >= window.innerHeight
-    const isOverflowingOnTop = rect.top - tooltipHeight <= 7
-
-    if (
-      (prefferedPosition === 'top' && !isOverflowingOnTop) ||
-      isOverflowingOnBottom
-    ) {
-      tooltip.style.top = `${rect.top - 7 - tooltipHeight}px`
-      tooltipTriangle.style.top = `${rect.top - 7}px`
-      tooltipTriangle.classList.add('rotate-180')
-    } else {
-      tooltip.style.top = `${rect.bottom + 7}px`
-      tooltipTriangle.style.top = `${rect.bottom}px`
-      tooltipTriangle.classList.remove('rotate-180')
-    }
-
-    tooltip.style.textAlign =
-      element.dataset.tooltipAlign === 'right' ? 'right' : 'left'
-
-    const triangleLeft = clamp(
-      rect.left + rect.width / 2 - 8,
-      10,
-      window.innerWidth - 10 - 16,
-    )
-    tooltipTriangle.style.left = `${triangleLeft}px`
+    setContent(element, trigger, content)
   }
 
   function hide() {
@@ -99,8 +60,8 @@ export function configureTooltips() {
     const isDisabledOnMobile = Boolean(
       element.getAttribute('data-tooltip-mobile-disabled'),
     )
-    const isOnClickHideDisabled = Boolean(
-      trigger.getAttribute('data-on-click-hide-disabled'),
+    const doNotHideOnClick = Boolean(
+      trigger.getAttribute('data-do-not-hide-on-click'),
     )
 
     let mouseEnteredAt = Date.now()
@@ -122,7 +83,7 @@ export function configureTooltips() {
       }
       if (activeElement === element) {
         // only hide if immediately preceded by mouse enter
-        if (Date.now() - mouseEnteredAt > 50 && !isOnClickHideDisabled) {
+        if (Date.now() - mouseEnteredAt > 50 && !doNotHideOnClick) {
           hide()
         }
       } else {
@@ -130,4 +91,73 @@ export function configureTooltips() {
       }
     })
   }
+}
+
+function getTooltip() {
+  const { $ } = makeQuery()
+  const tooltip = $('[data-role=tooltip-popup]')
+  const tooltipContent = $('[data-role=tooltip-popup] span')
+  const tooltipTriangle = $('[data-role=tooltip-popup-triangle]')
+
+  return { tooltip, tooltipContent, tooltipTriangle }
+}
+
+function setContent(
+  element: HTMLElement,
+  triggerElement: Element,
+  contentElement: Element,
+  content?: string,
+) {
+  const { tooltip, tooltipContent, tooltipTriangle } = getTooltip()
+
+  tooltip.classList.toggle('max-w-[300px]', !element.dataset.tooltipBig)
+  const rect = triggerElement.getBoundingClientRect()
+  tooltipContent.innerHTML = content ?? contentElement.innerHTML
+  const prefferedPosition = contentElement.getAttribute(
+    'data-preffered-position',
+  )
+  tooltip.style.display = 'block'
+  const tooltipHeight = tooltip.getBoundingClientRect().height
+  const tooltipWidth = tooltip.getBoundingClientRect().width
+  const left = clamp(
+    rect.left + rect.width / 2 - tooltipWidth / 2,
+    10,
+    window.innerWidth - 10 - tooltipWidth,
+  )
+  tooltip.style.left = `${left}px`
+  const isOverflowingOnBottom =
+    rect.y + rect.height + 7 + tooltipHeight >= window.innerHeight
+  const isOverflowingOnTop = rect.top - tooltipHeight <= 7
+
+  if (
+    (prefferedPosition === 'top' && !isOverflowingOnTop) ||
+    isOverflowingOnBottom
+  ) {
+    tooltip.style.top = `${rect.top - 7 - tooltipHeight}px`
+    tooltipTriangle.style.top = `${rect.top - 7}px`
+    tooltipTriangle.classList.add('rotate-180')
+  } else {
+    tooltip.style.top = `${rect.bottom + 7}px`
+    tooltipTriangle.style.top = `${rect.bottom}px`
+    tooltipTriangle.classList.remove('rotate-180')
+  }
+
+  tooltip.style.textAlign =
+    element.dataset.tooltipAlign === 'right' ? 'right' : 'left'
+
+  const triangleLeft = clamp(
+    rect.left + rect.width / 2 - 8,
+    10,
+    window.innerWidth - 10 - 16,
+  )
+  tooltipTriangle.style.left = `${triangleLeft}px`
+}
+
+export function setActiveTooltipContent(content: string) {
+  if (!activeElement) return
+  const triggerElement = activeElement.children.item(0)
+  const contentElement = activeElement.children.item(1)
+  if (!triggerElement || !contentElement) return
+
+  setContent(activeElement, triggerElement, contentElement, content)
 }
