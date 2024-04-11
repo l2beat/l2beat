@@ -11,22 +11,25 @@ Generated with discovered.json: 0x40ee005b1b236066f02ef1c4a0f5dfd9252b45d3
 ### New deploys
 
 OneStepProofEntry, OneStepProverHostIo, OneStepProverMath, OneStepProver0, OneStepProverMemory are redeployed and Reader4844 is added to to be compatible with EIP-4844.
+
 - OneStepProverHostIo: Compatibility with EIP-4844, most updates are KZG-related in funtion `executeReadPreImage()`; new function `modExp256()`
 - Reader4844.sol: New unverified contract with the functions `getBlobBaseFee()`, `getDataHashes()` for reading blob data (hashes) (info from its interface)
 
 ### SequencerInbox
 
-- Batch data flag-based decoding addded: `DATA_AUTHENTICATED_FLAG`, `BROTLI_MESSAGE_HEADER_FLAG`, `DAS_MESSAGE_HEADER_FLAG`, `DATA_BLOB_HEADER_FLAG`, `TREE_DAS_MESSAGE_HEADER_FLAG`, `ZERO_HEAVY_MESSAGE_HEADER_FLAG`
-- new `batchPosterManager()` functions and role: Can change the batch poster addresses. (allows key rotation of batch posters)
+In general most updates are EIP-4844 related, also the new role `batchPosterManager` is added and there are new checks regarding native tokens.
+
+- Batch data flag-based decoding refined for blobs: `DATA_AUTHENTICATED_FLAG`, `BROTLI_MESSAGE_HEADER_FLAG`, `DAS_MESSAGE_HEADER_FLAG`, `DATA_BLOB_HEADER_FLAG`, `TREE_DAS_MESSAGE_HEADER_FLAG`, `ZERO_HEAVY_MESSAGE_HEADER_FLAG`
+- new `batchPosterManager` functions and role: Can change the Sequencer addresses. (allows key rotation of batch posters)
 - new `addSequencerL2BatchFromOrigin()` (with added `prevMessageCount, newMessageCount` in sig, old signature without them is now deprecated), `addSequencerL2BatchFromBlobs()`
-- gas refunds fetch blob price from Reader4844
-- rollup owner can update rollup address
+- Gas refunds fetch blob price from Reader4844
+- Rollup owner can update rollup address
 - SequencerInbox contructor reverts if host chain is Arbitrum because blobs are not supported there
-  - checks for fee token usage and revert if the native token is not ETH
-- maxTimeVariation format changes
-- forceInclusion() now does not change the sequencer message count
-
-
+  - Checks for fee token usage and reverts if the native token is not ETH
+- `forceInclusion()` now does not change the sequencer message count
+- IBridge interface is introduced to use the vars TimeBounds and BatchDataLocation
+- Hashing functions for blobs vs. calldata
+- Time variation boundaries for batch posting vs. force inclusion -> format change
 
 ### Changed wasmModuleRoot
 

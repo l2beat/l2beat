@@ -1,0 +1,10 @@
+{
+  "name": "eigenda",
+  "chain": "ethereum",
+  "blockNumber": 199834213,
+  "configHash": "0x5a2065a47b5aa9636d4d42ba5824cb467b9e7d070014aaf3c28bca5ee03a71b8",
+  "version": 3,
+  "contracts": [],
+  "eoas": ["0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"],
+  "abis": {}
+}
