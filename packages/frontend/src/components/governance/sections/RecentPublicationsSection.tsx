@@ -1,10 +1,10 @@
 import React from 'react'
 
 import { GovernancePublicationEntry } from '../../../pages/governance/index/props/getGovernancePublicationEntry'
+import { formatDateToArticleFormat } from '../../../utils'
 import { Button } from '../../Button'
 import { LinkWithThumbnail } from '../../LinkWithThumbnail'
 import { GovernanceCard, GovernanceCardHeader } from '../GovernanceCard'
-import { formatDateToArticleFormat } from '../../../utils'
 
 interface Props {
   publications: GovernancePublicationEntry[]
