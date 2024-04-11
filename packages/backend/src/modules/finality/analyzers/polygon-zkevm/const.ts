@@ -1,10 +1,14 @@
-export const constants = {
-  double: 2,
+export { constants }
+
+const constants = {
+  // Markers
+  changeL2Block: 0x0b, // 11, marks block start
+
+  // Sig/Chain ID - EIP155
   ether155V: 27,
   etherPre155V: 35,
-  // MaxEffectivePercentage is the maximum value that can be used as effective percentage
-  MaxEffectivePercentage: 255,
-  // Decoding constants
+
+  // Encoding/Decoding
   headerByteLength: 1,
   sLength: 32,
   rLength: 32,
@@ -13,6 +17,5 @@ export const constants = {
   ff: 255, // max value of rlp header
   shortRlp: 55, // length of the short rlp codification
   f7: 247, // 192 + 55 = c0 + shortRlp
-  // EfficiencyPercentageByteLength is the length of the effective percentage in bytes
-  EfficiencyPercentageByteLength: 1,
+  efficiencyPercentageByteLength: 1, // length of the effective percentage in bytes
 }

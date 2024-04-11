@@ -1,13 +1,28 @@
-import { TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
+import {
+  ProjectId,
+  TrackedTxsConfigSubtype,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { BigNumber, utils } from 'ethers'
 import { z } from 'zod'
 
+import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
+import { LivenessRepository } from '../../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { byteArrFromHexStr } from '../opStack/utils'
 import { BaseAnalyzer } from '../types/BaseAnalyzer'
-import { decodeBatchV2 } from './batch-decoder'
-import { getTransactionHash } from './getTransactionHash'
+import { decodeBatch } from './batch'
+import { toTransactionHash } from './hash'
 
-export class StarknetFinalityAnalyzer extends BaseAnalyzer {
+export class PolygonZkEvmFinalityAnalyzer extends BaseAnalyzer {
+  constructor(
+    provider: RpcClient,
+    livenessRepository: LivenessRepository,
+    projectId: ProjectId,
+    private readonly l2Provider: RpcClient,
+  ) {
+    super(provider, livenessRepository, projectId)
+  }
+
   override getTrackedTxSubtype(): TrackedTxsConfigSubtype {
     return 'stateUpdates'
   }
@@ -19,33 +34,11 @@ export class StarknetFinalityAnalyzer extends BaseAnalyzer {
     const tx = await this.provider.getTransaction(transaction.txHash)
     const l1Timestamp = transaction.timestamp
 
-    const decodedBatches = decodeTransaction(tx.data)
+    const hashes = extractTransactionData(tx.data)
       .map(byteArrFromHexStr)
-      .map(decodeBatchV2)
-      .flat()
-
-    const decodedTransactions = decodedBatches.flatMap(
-      (batch) => batch.transactions,
-    )
-
-    const hashes = decodedTransactions.map((tx) =>
-      getTransactionHash(
-        {
-          nonce: tx.nonce,
-          gasPrice: tx.gasPrice,
-          gasLimit: tx.gas,
-          to: tx.to,
-          value: tx.value,
-          data: tx.data,
-          chainId: 1101, // ZKEVM chain ID
-        },
-        {
-          v: tx.v.toNumber(),
-          r: tx.r.toHexString(),
-          s: tx.s.toHexString(),
-        },
-      ),
-    )
+      .flatMap(decodeBatch)
+      .flatMap((block) => block.transactions)
+      .map(toTransactionHash)
 
     // TODO: Call rpc
     // TODO: Get blocks
@@ -76,7 +69,7 @@ const NewAPI = z.object({
 })
 type NewAPI = z.infer<typeof NewAPI>
 
-function decodeTransaction(data: string): string[] {
+function extractTransactionData(data: string): string[] {
   const decodedInput = iface.decodeFunctionData(signature, data)
 
   const batches = decodedInput.batches as SingleBatch[]
