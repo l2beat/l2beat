@@ -39,7 +39,7 @@ export function GlossaryPage(props: GlossaryPageProps) {
         </div>
       </FullPageHeader>
       <FullPageHeader
-        className="sticky top-0 py-8 lg:pt-14"
+        className="sticky top-0 z-10 py-8 lg:pt-14"
         pageContentClassName="block"
         as="div"
       >

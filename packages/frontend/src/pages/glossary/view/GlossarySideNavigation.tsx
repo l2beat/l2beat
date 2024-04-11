@@ -8,7 +8,7 @@ export function GlossarySideNavigation(props: { entries: GlossaryEntry[] }) {
   return (
     <nav
       data-role="glossary-side-nav"
-      className="sticky top-[145px] hidden max-h-[70vh] w-[246px] min-w-[246px] lg:block"
+      className="sticky top-[145px] hidden max-h-[calc(70vh-122px)] w-[246px] min-w-[246px] lg:block"
     >
       <div className="custom-scrollbar relative h-full">
         <ul className="flex h-full flex-col gap-4 overflow-y-scroll pb-8 pr-6">
