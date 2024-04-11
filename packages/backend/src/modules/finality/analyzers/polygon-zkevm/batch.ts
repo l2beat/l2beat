@@ -142,7 +142,11 @@ function rlpToTransaction(
     rawChainId,
   ] = fields
 
-  const nonce = BigNumber.from(rawNonce)
+  function zeroIfEmpty(arr?: Uint8Array) {
+    return arr?.length === 0 ? new Uint8Array([0]) : arr
+  }
+
+  const nonce = BigNumber.from(zeroIfEmpty(rawNonce))
   const gasPrice = BigNumber.from(rawGasPrice)
   const gasLimit = BigNumber.from(rawGasLimit)
   let to: string | undefined = undefined
@@ -151,15 +155,14 @@ function rlpToTransaction(
     to = ethers.utils.getAddress(ethers.utils.hexlify(rawTo))
   }
 
-  const value = BigNumber.from(rawValue?.length === 0 ? 0 : rawValue)
+  const value = BigNumber.from(zeroIfEmpty(rawValue))
   const data = `0x${Buffer.from(rawData ?? []).toString('hex')}`
-  const chainId = BigNumber.from(rawChainId)
 
   const currentV = BigNumber.from(rawV)
 
   const v =
     fields.length >= fieldsSizeWithChainID
-      ? coerceVParam(chainId, currentV)
+      ? coerceVParam(BigNumber.from(rawChainId), currentV)
       : currentV
 
   const r = BigNumber.from(rawR)
@@ -172,7 +175,10 @@ function rlpToTransaction(
     to,
     value,
     data,
-    chainId,
+    chainId:
+      fields.length >= fieldsSizeWithChainID
+        ? BigNumber.from(rawChainId)
+        : undefined,
 
     v,
     r,
