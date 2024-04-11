@@ -4,7 +4,7 @@ import {
   TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { BigNumber, utils } from 'ethers'
+import { utils } from 'ethers'
 import { z } from 'zod'
 
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
@@ -58,22 +58,12 @@ export class PolygonZkEvmFinalityAnalyzer extends BaseAnalyzer {
 const signature = `sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint64 maxSequenceTimestamp, uint64 initSequencedBatch, address l2Coinbase)`
 const iface = new utils.Interface([`function ${signature}`])
 
-const ZBigNumber = z.instanceof(BigNumber).transform((n) => n.toBigInt())
-
 const SingleBatch = z.object({
   transactions: z.string(),
   forcedGlobalExitRoot: z.string(),
   forcedBlockHashL1: z.string(),
 })
 type SingleBatch = z.infer<typeof SingleBatch>
-
-const NewAPI = z.object({
-  batches: z.array(SingleBatch),
-  maxSequenceTimestamp: ZBigNumber,
-  initSequencedBatch: ZBigNumber,
-  l2Coinbase: z.string(),
-})
-type NewAPI = z.infer<typeof NewAPI>
 
 function extractTransactionData(data: string): string[] {
   const decodedInput = iface.decodeFunctionData(signature, data)
