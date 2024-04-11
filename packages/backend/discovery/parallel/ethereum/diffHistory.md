@@ -1,16 +1,65 @@
-Generated with discovered.json: 0x1f50a129759f08f46e0fdf3cef9ee0472619aa51
+Generated with discovered.json: 0x40ee005b1b236066f02ef1c4a0f5dfd9252b45d3
 
-# Diff at Wed, 10 Apr 2024 12:14:43 GMT:
+# Diff at Thu, 11 Apr 2024 06:24:39 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
-- comparing to: main@8d6361da46756940fee1e580763c5716ffc574d4 block: 19532058
-- current block number: 19625158
+- comparing to: main@379d5924e19a3a6dfc1858baca3e1ce1c43bfe6f block: 19532058
+- current block number: 19630573
 
 ## Description
+
+### New deploys
+
+OneStepProofEntry, OneStepProverHostIo, OneStepProverMath, OneStepProver0, OneStepProverMemory are redeployed and Reader4844 is added to to be compatible with EIP-4844.
+- OneStepProverHostIo: Compatibility with EIP-4844, most updates are KZG-related in funtion `executeReadPreImage()`; new function `modExp256()`
+- Reader4844.sol: New unverified contract with the functions `getBlobBaseFee()`, `getDataHashes()` for reading blob data (hashes) (info from its interface)
+
+### SequencerInbox
+
+- Batch data flag-based decoding addded: `DATA_AUTHENTICATED_FLAG`, `BROTLI_MESSAGE_HEADER_FLAG`, `DAS_MESSAGE_HEADER_FLAG`, `DATA_BLOB_HEADER_FLAG`, `TREE_DAS_MESSAGE_HEADER_FLAG`, `ZERO_HEAVY_MESSAGE_HEADER_FLAG`
+- new `batchPosterManager()` functions and role: Can change the batch poster addresses. (allows key rotation of batch posters)
+- new `addSequencerL2BatchFromOrigin()` (with added `prevMessageCount, newMessageCount` in sig, old signature without them is now deprecated), `addSequencerL2BatchFromBlobs()`
+- gas refunds fetch blob price from Reader4844
+- rollup owner can update rollup address
+- SequencerInbox contructor reverts if host chain is Arbitrum because blobs are not supported there
+  - checks for fee token usage and revert if the native token is not ETH
+- maxTimeVariation format changes
+- forceInclusion() now does not change the sequencer message count
+
+
+
+### Changed wasmModuleRoot
 
 Upgrade L2 system to [ArbOS Version 20 "Atlas"](https://forum.arbitrum.foundation/t/aip-arbos-version-20-atlas/20957)
 
 ## Watched changes
+
+```diff
+-   Status: DELETED
+    contract OneStepProofEntry (0x09824fe72BFF474d16D9c2774432E381BBD60662)
+    +++ description: None
+```
+
+```diff
+    contract ChallengeManager (0x28c32059d7e6147cf5257DFC127f7258beA1cdf4) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754"
++        "0x1D901DD7A5eFE421C3C437B147040E5AF22E6A43"
+      implementations.0:
+-        "0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754"
++        "0x1D901DD7A5eFE421C3C437B147040E5AF22E6A43"
+      values.osp:
+-        "0x09824fe72BFF474d16D9c2774432E381BBD60662"
++        "0x57EA090Ac0554d174AE0e2855B460e84A1A7C221"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMemory (0x4811500e0d376Fa8d2EA3CCb7c61E0afB4F5A7f1)
+    +++ description: None
+```
 
 ```diff
     contract RollupProxy (0x6594085ca55a2B3a5fAD1C57A270D060eEa99877) {
@@ -19,6 +68,133 @@ Upgrade L2 system to [ArbOS Version 20 "Atlas"](https://forum.arbitrum.foundatio
 -        "0x0754e09320c381566cc0449904c377a52bd34a6b9404432e80afd573b67f7b17"
 +        "0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4"
     }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMath (0x89AF7C4C2198c426cFe6E86de0680A0850503e06)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverHostIo (0x99a2A31300816C1FA3f40818AC9280fe7271F878)
+    +++ description: None
+```
+
+```diff
+    contract SequencerInbox (0xb4795A0edae98d7820C37F06f6b858e7acb51DF8) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x873484Ba63353C8b71210ce123B465512d408B27"
++        "0x383f16fB2809a56fC639c1eE2c93Ad2aa7Ee130A"
+      implementations.0:
+-        "0x873484Ba63353C8b71210ce123B465512d408B27"
++        "0x383f16fB2809a56fC639c1eE2c93Ad2aa7Ee130A"
+      values.batchPosterManager:
++        "0x0000000000000000000000000000000000000000"
+      values.BROTLI_MESSAGE_HEADER_FLAG:
++        "0x00"
+      values.DAS_MESSAGE_HEADER_FLAG:
++        "0x80"
+      values.DATA_BLOB_HEADER_FLAG:
++        "0x50"
+      values.isUsingFeeToken:
++        true
+      values.reader4844:
++        "0x7Deda2425eC2d4EA0DF689A78de2fBF002075576"
+      values.TREE_DAS_MESSAGE_HEADER_FLAG:
++        "0x08"
+      values.ZERO_HEAVY_MESSAGE_HEADER_FLAG:
++        "0x20"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProver0 (0xDf94F0474F205D086dbc2e66D69a856FCf520622)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverHostIo (0x17e7F68ce50A77e55C7834ddF31AEf86403B8010)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProofEntry (0x57EA090Ac0554d174AE0e2855B460e84A1A7C221)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProver0 (0x72B166070781a552D7b95a907eF59ca05d3D5a62)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x7Deda2425eC2d4EA0DF689A78de2fBF002075576)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMemory (0x8b73Ef238ADaB31EBC7c05423d243c345241a22f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMath (0x90eC62De2EB7C7512a22bD2D55926AD6bA609F38)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../meta.txt                                       |   0
+ .../meta.txt                                       |   2 +
+ .../ChallengeManager/implementation/meta.txt       |   2 +-
+ .../implementation/src/bridge/IBridge.sol          |  22 +
+ .../implementation/src/bridge/ISequencerInbox.sol  |  91 +++-
+ .../src/challenge/ChallengeManager.sol             |   6 +
+ .../implementation/src/libraries/Error.sol         |  27 +-
+ .../implementation/src/libraries/IGasRefunder.sol  |  25 -
+ .../OneStepProofEntry/meta.txt                     |   2 +-
+ .../OneStepProofEntry/src/bridge/IBridge.sol       |  22 +
+ .../src/bridge/ISequencerInbox.sol                 |  91 +++-
+ .../src/libraries/IGasRefunder.sol                 |  25 -
+ .../OneStepProver0/meta.txt                        |   2 +-
+ .../OneStepProver0/src/bridge/IBridge.sol          |  22 +
+ .../OneStepProver0/src/bridge/ISequencerInbox.sol  |  91 +++-
+ .../OneStepProver0/src/libraries/IGasRefunder.sol  |  25 -
+ .../OneStepProverHostIo/meta.txt                   |   2 +-
+ .../OneStepProverHostIo/src/bridge/IBridge.sol     |  22 +
+ .../src/bridge/ISequencerInbox.sol                 |  91 +++-
+ .../src/libraries/IGasRefunder.sol                 |  25 -
+ .../src/osp/OneStepProverHostIo.sol                | 107 +++-
+ .../OneStepProverMath/meta.txt                     |   2 +-
+ .../OneStepProverMath/src/bridge/IBridge.sol       |  22 +
+ .../src/bridge/ISequencerInbox.sol                 |  91 +++-
+ .../src/libraries/IGasRefunder.sol                 |  25 -
+ .../OneStepProverMemory/meta.txt                   |   2 +-
+ .../OneStepProverMemory/src/bridge/IBridge.sol     |  22 +
+ .../src/bridge/ISequencerInbox.sol                 |  91 +++-
+ .../src/libraries/IGasRefunder.sol                 |  25 -
+ .../SequencerInbox/implementation/meta.txt         |   2 +-
+ .../implementation/src/bridge/IBridge.sol          |  22 +
+ .../implementation/src/bridge/IERC20Bridge.sol     |  37 ++
+ .../implementation/src/bridge/ISequencerInbox.sol  |  91 +++-
+ .../implementation/src/bridge/SequencerInbox.sol   | 578 ++++++++++++++++-----
+ .../implementation/src/libraries/Error.sol         |  27 +-
+ .../src/libraries/GasRefundEnabled.sol             |  52 ++
+ .../implementation/src/libraries/IGasRefunder.sol  |  25 -
+ .../implementation/src/libraries/IReader4844.sol   |  13 +
+ .../implementation/src/precompiles/ArbGasInfo.sol  |  20 +
+ 39 files changed, 1358 insertions(+), 491 deletions(-)
 ```
 
 Generated with discovered.json: 0x3234178d91d403e54fbe5caf0f912f14a404a51e
