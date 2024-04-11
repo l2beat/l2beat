@@ -55,9 +55,6 @@ export class PolygonZkEvmFinalityAnalyzer extends BaseAnalyzer {
   }
 }
 
-const signature = `sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint64 maxSequenceTimestamp, uint64 initSequencedBatch, address l2Coinbase)`
-const iface = new utils.Interface([`function ${signature}`])
-
 const SingleBatch = z.object({
   transactions: z.string(),
   forcedGlobalExitRoot: z.string(),
@@ -66,9 +63,42 @@ const SingleBatch = z.object({
 type SingleBatch = z.infer<typeof SingleBatch>
 
 function extractTransactionData(data: string): string[] {
-  const decodedInput = iface.decodeFunctionData(signature, data)
+  const decodedInput = decodeData(data)
 
   const batches = decodedInput.batches as SingleBatch[]
 
   return batches.map((batch) => batch.transactions)
+}
+
+const oldMethod = {
+  name: 'sequenceBatches',
+  signature: `function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, address l2Coinbase)`,
+  id: '0xecef3f99',
+}
+
+const newMethod = {
+  name: 'sequenceBatches',
+  signature: `function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint64 maxSequenceTimestamp, uint64 initSequencedBatch, address l2Coinbase)`,
+  id: '0xdef57e54',
+}
+
+const oldIface = new utils.Interface([oldMethod.signature])
+const newIface = new utils.Interface([newMethod.signature])
+
+/**
+ * Transaction batches are compatible across both APIs.
+ */
+function decodeData(data: string) {
+  const txSig = data.slice(0, 10)
+
+  if (txSig === oldMethod.id) {
+    return oldIface.decodeFunctionData(oldMethod.name, data)
+  }
+
+  if (txSig === newMethod.id) {
+    return newIface.decodeFunctionData(newMethod.name, data)
+  }
+  throw new Error(
+    `Programmer error: can't recognize function signature: ${txSig}`,
+  )
 }
