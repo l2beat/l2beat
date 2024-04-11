@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x89400dca91a7d0ef56df44dae3bda28049f2ef91
+
+# Diff at Thu, 11 Apr 2024 10:44:49 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@4b6ab939705ef1b9fdc0ffd8813b4869519e6547 block: 19574841
+- current block number: 19631863
+
+## Description
+
+Config related.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19574841 (main branch discovery), not current.
+
+```diff
+    contract EmergencyProposalExecutor (0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a) {
+    +++ description: None
+      upgradeability.threshold:
++        "2 of 4 (50%)"
+    }
+```
+
+```diff
+    contract GnosisSafe (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      upgradeability.threshold:
++        "4 of 8 (50%)"
+    }
+```
+
+```diff
+    contract HubPool Multisig (0xB524735356985D2f267FA010D681f061DfF03715) {
+    +++ description: None
+      upgradeability.threshold:
++        "3 of 5 (60%)"
+    }
+```
+
 Generated with discovered.json: 0x71164dd68d40c603ad2f2be8190d8e65dd9a7765
 
 # Diff at Wed, 03 Apr 2024 11:07:55 GMT:

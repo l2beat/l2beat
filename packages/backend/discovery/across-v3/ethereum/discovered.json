@@ -1,7 +1,7 @@
 {
   "name": "across-v3",
   "chain": "ethereum",
-  "blockNumber": 19574841,
+  "blockNumber": 19631863,
   "configHash": "0xf40a817d561025df488d14ed84f8445fafcb380d53fb9b50f02804d1c8d47867",
   "version": 3,
   "contracts": [
@@ -17,7 +17,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "118525010520029001817385213",
+        "totalSupply": "118669961299531809149238157",
         "totalSupplyAt": []
       },
       "derivedName": "VotingToken"
@@ -152,7 +152,7 @@
       "values": {
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1712142455,
+        "getCurrentTime": 1712832239,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -195,11 +195,11 @@
         "EMPTY_RELAYER": "0x0000000000000000000000000000000000000000",
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 28800,
-        "getCurrentTime": 1712142455,
+        "getCurrentTime": 1712832239,
         "hubPool": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "INFINITE_FILL_DEADLINE": 4294967295,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 1219401,
+        "numberOfDeposits": 1239439,
         "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
@@ -218,13 +218,13 @@
       "sinceTimestamp": 1677230459,
       "values": {
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1712142455,
+        "getCurrentTime": 1712832239,
         "getMember": [
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
           "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
         ],
-        "numProposals": 201
+        "numProposals": 202
       },
       "derivedName": "GovernorV2"
     },
@@ -256,7 +256,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": []
+        "modules": [],
+        "threshold": "2 of 4 (50%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1597806870,
@@ -270,7 +271,7 @@
           "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
         ],
         "getThreshold": 2,
-        "nonce": 585,
+        "nonce": 597,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -312,7 +313,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": ["0xF24f1DC519d88246809B660eb56D94048575d083"]
+        "modules": ["0xF24f1DC519d88246809B660eb56D94048575d083"],
+        "threshold": "4 of 8 (50%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1689149759,
@@ -344,7 +346,7 @@
       "values": {
         "emergencyProposals": [],
         "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1712142455,
+        "getCurrentTime": 1712832239,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -397,7 +399,8 @@
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": ["0x8692B776d1Ff0664177c90465038056Dc64f8991"]
+        "modules": ["0x8692B776d1Ff0664177c90465038056Dc64f8991"],
+        "threshold": "3 of 5 (60%)"
       },
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1636157803,
@@ -487,13 +490,13 @@
         "protocolFeeCaptureAddress": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": [
-          "0xc7d88fa6e54554867bf4bc4e6d9e7fd8031bd32ab19a5a3b058a408455df64fc",
-          "0xa397fe5768743e93bf9e4553c009ab16a2cbebaffc7dc7d4d2acad9ec39a21cf",
+          "0xaf3056d00db69ae7e42fda43d16ab15991d17fc29665bfeabce0e974b8c88b26",
+          "0xb2d80109624492304c553c0ae55ded5e03d8f0c0a8c913340730c6cc3ab7267e",
           "0x0000000000000000000000000000000000000000000000000000000000000000",
-          127,
-          "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
           0,
-          1712141375
+          "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
+          7,
+          1712835803
         ],
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
