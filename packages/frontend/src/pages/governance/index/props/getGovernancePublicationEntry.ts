@@ -15,6 +15,7 @@ export interface GovernancePublicationEntry {
   excerpt: string
   readTimeInMinutes: number
   author: GovernanceAuthorEntry
+  publishedOn: Date,
   content: string
 }
 
@@ -31,6 +32,7 @@ export function getGovernancePublicationEntry(
     description: post.data.description,
     excerpt: post.excerpt,
     readTimeInMinutes: post.readTimeInMinutes,
+    publishedOn: post.data.publishedOn,
     author: getGovernanceAuthorEntry(author),
   }
 }

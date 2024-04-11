@@ -10,6 +10,7 @@ import { Article } from '../../../../components/Article'
 import { FullPageHeader } from '../../../../components/FullPageHeader'
 import { PageContent } from '../../../../components/PageContent'
 import { GovernancePublicationEntry } from '../../index/props/getGovernancePublicationEntry'
+import { formatDateToArticleFormat } from '../../../../utils'
 
 export interface GovernancePublicationPageProps {
   publication: GovernancePublicationEntry
@@ -46,7 +47,8 @@ function Header({ publication }: { publication: GovernancePublicationEntry }) {
   return (
     <FullPageHeader pageContentClassName="flex-col items-start gap-6">
       <p className="text-2xs font-semibold uppercase text-purple-100 dark:text-pink-200">
-        {publication.readTimeInMinutes} min read
+        {publication.readTimeInMinutes} min read • Published on{' '}
+        {formatDateToArticleFormat(publication.publishedOn)}
       </p>
       <h1 className="text-2xl font-bold md:text-3xl lg:text-[44px] lg:leading-[1.2]">
         {publication.title}

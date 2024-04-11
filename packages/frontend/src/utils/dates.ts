@@ -148,3 +148,6 @@ export function getNextDateForDayOfWeek(
 
   return currentDate
 }
+
+export const formatDateToArticleFormat = (date: Date) =>
+  `${date.getDay()} ${MONTHS[String(date.getMonth() + 1).padStart(2, '0')].shortName} ${date.getFullYear()}`

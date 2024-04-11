@@ -4,6 +4,11 @@ import { GovernancePublicationEntry } from '../../../pages/governance/index/prop
 import { Button } from '../../Button'
 import { LinkWithThumbnail } from '../../LinkWithThumbnail'
 import { GovernanceCard, GovernanceCardHeader } from '../GovernanceCard'
+import {
+  formatDate,
+  formatDateToArticleFormat,
+  formatTimestamp,
+} from '../../../utils'
 
 interface Props {
   publications: GovernancePublicationEntry[]
@@ -50,6 +55,11 @@ function Publication({ publication }: PublicationProps) {
     <LinkWithThumbnail
       src={`/meta-images/governance/publications/${publication.id}.png`}
       href={`/governance/publications/${publication.id}`}
+      topAccessory={
+        <p className="text-2xs font-semibold uppercase text-purple-100 dark:text-pink-200">
+          {formatDateToArticleFormat(publication.publishedOn)}
+        </p>
+      }
       title={publication.shortTitle ?? publication.title}
       description={publication.description ?? publication.excerpt}
     />
