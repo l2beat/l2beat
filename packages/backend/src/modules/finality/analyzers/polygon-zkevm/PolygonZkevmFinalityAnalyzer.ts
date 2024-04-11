@@ -1,4 +1,5 @@
 import {
+  notUndefined,
   ProjectId,
   TrackedTxsConfigSubtype,
   UnixTime,
@@ -40,12 +41,17 @@ export class PolygonZkEvmFinalityAnalyzer extends BaseAnalyzer {
       .flatMap((block) => block.transactions)
       .map(toTransactionHash)
 
-    // TODO: Call rpc
-    // TODO: Get blocks
-    // TODO: Get max and min blocks timestamps
-    // TODO: Return timestamps
+    //TODO: poor stuff given the batch can contain ~250 txs, either make sure its rate limited or pick at random a few txs
+    const blocks = await Promise.all(
+      hashes.map((hash) => this.l2Provider.getTransaction(hash)),
+    )
 
-    return [l1Timestamp.toNumber()]
+    const timestamps = blocks
+      .map((block) => block.timestamp)
+      .filter(notUndefined)
+      .map((l2Timestamp) => l1Timestamp.toNumber() - l2Timestamp)
+
+    return timestamps
   }
 }
 
