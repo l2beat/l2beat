@@ -15,7 +15,7 @@ function toTransactionHash(transaction: PolygonZkEvmTransaction): string {
       to: transaction.to,
       value: transaction.value,
       data: transaction.data,
-      chainId: transaction.chainId.toNumber(),
+      chainId: transaction.chainId ? transaction.chainId.toNumber() : undefined,
     },
     {
       v: transaction.v.toNumber(),

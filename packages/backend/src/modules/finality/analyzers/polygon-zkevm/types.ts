@@ -20,7 +20,7 @@ export interface PolygonZkEvmTransaction {
   to?: string
   value: BigNumber
   data: BytesLike
-  chainId: BigNumber
+  chainId?: BigNumber
 
   v: BigNumber
   r: BigNumber
