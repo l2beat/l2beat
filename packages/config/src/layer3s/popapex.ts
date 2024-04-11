@@ -1,19 +1,24 @@
 import { ProjectId } from '@l2beat/shared-pure'
 
-import { underReviewL3 } from '../layer2s/templates/underReview'
 import { Layer3 } from './types'
+import { orbitStackL3 } from '../layer2s/templates/orbitStack'
+import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 
-export const popapex: Layer3 = underReviewL3({
-  id: 'popapex',
+const discovery = new ProjectDiscovery('popapex', 'arbitrum')
+
+export const popapex: Layer3 = orbitStackL3({
+  discovery,
   hostChain: ProjectId('arbitrum'),
+  bridge: discovery.getContract('Bridge'),
+  rollupProxy: discovery.getContract('RollupProxy'),
+  sequencerInbox: discovery.getContract('SequencerInbox'),
   display: {
     name: 'Proof of Play Apex',
+    shortName: 'Apex',
     slug: 'popapex',
-    category: 'Optimium',
     description:
       'Proof of Play Apex is a gaming-focused L3 settling on Arbitrum using Conduit and the AnyTrust Orbit stack flavour.',
     purposes: ['Gaming', 'NFT'],
-    provider: 'Arbitrum Orbit',
     links: {
       websites: ['https://proofofplay.gg'],
       apps: [
@@ -29,5 +34,7 @@ export const popapex: Layer3 = underReviewL3({
         'https://piratenation.medium.com/',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
   },
+  rpcUrl: 'https://rpc.apex.proofofplay.com' // chainid 70700
 })
