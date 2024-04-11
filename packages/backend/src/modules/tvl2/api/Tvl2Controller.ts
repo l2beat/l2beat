@@ -40,7 +40,7 @@ type AmountConfigMap = Map<
 
 export class Tvl2Controller {
   private readonly amountConfig: AmountConfigMap
-  private readonly priceConfig: Map<string, number>
+  private readonly assetConfig: Map<string, { decimals: number }>
 
   constructor(
     private readonly amountRepository: AmountRepository,
@@ -49,24 +49,27 @@ export class Tvl2Controller {
     private readonly projects: Tvl2Project[],
     config: Tvl2Config,
   ) {
+    // We're calculating the configIds on startup to avoid doing it on every request.
     this.amountConfig = getAmountConfigMap(config)
-    this.priceConfig = new Map(
-      config.prices.map((x) => [createAssetId(x), x.decimals]),
+    this.assetConfig = new Map(
+      config.prices.map((x) => [createAssetId(x), { decimals: x.decimals }]),
     )
   }
 
   async getTvl(): Promise<Tvl2Result> {
+    // TODO: What should be the min and max timestamp?
     const minTimestamp = this.projects
       .map((x) => x.minTimestamp)
       .reduce((a, b) => UnixTime.min(a, b))
       .toEndOf('day')
 
-    const maxTimestamp = this.projects
-      .flatMap((x) => x.indexers)
-      .map((x) => new UnixTime(x.safeHeight))
-      .concat(new UnixTime(this.priceIndexer.safeHeight))
-      .reduce((a, b) => UnixTime.min(a, b))
-      .toStartOf('day')
+    const maxTimestamp = new UnixTime(
+      this.projects
+        .flatMap((x) => x.indexers)
+        .concat(this.priceIndexer)
+        .map((x) => x.safeHeight)
+        .reduce((a, b) => Math.min(a, b)),
+    ).toStartOf('day')
 
     const result: Tvl2Result = {
       daily: [],
@@ -82,8 +85,8 @@ export class Tvl2Controller {
     const results: Record<string, Tvl2ProjectResult> = {}
     for (const project of this.projects) {
       const maxTimestamp = project.indexers
+        .concat(this.priceIndexer)
         .map((x) => x.safeHeight)
-        .concat(this.priceIndexer.safeHeight)
         .reduce((a, b) => Math.min(a, b))
 
       if (
@@ -107,14 +110,13 @@ export class Tvl2Controller {
     timestamp: UnixTime,
   ): Promise<Tvl2ProjectResult> {
     const projectConfigs = this.amountConfig.get(project)
-    assert(projectConfigs, 'Config not found')
+    assert(projectConfigs, 'Config not found: ' + project.toString())
 
     const configIds = projectConfigs.map((x) => x.configId)
     const records = await this.amountRepository.getByConfigIdsAndTimestamp(
       configIds,
       timestamp,
     )
-    assert(records.length === configIds.length, 'Records and config mismatch')
 
     const prices = await this.priceRepository.getByTimestamp(timestamp)
 
@@ -124,10 +126,11 @@ export class Tvl2Controller {
       native: 0,
     }
 
-    for (let i = 0; i < records.length; i++) {
-      const record = records[i]
-      const amountConfig = projectConfigs[i]
-      assert(amountConfig.configId === record.configId, 'Config mismatch')
+    for (const record of records) {
+      const amountConfig = projectConfigs.find(
+        (x) => x.configId === record.configId,
+      )
+      assert(amountConfig, 'Config not found')
 
       const assetId = createAssetId({
         address: amountConfig.address,
@@ -136,11 +139,11 @@ export class Tvl2Controller {
       const price = prices.find((x) => createAssetId(x) === assetId)
       assert(price, 'Price not found')
 
-      const decimals = this.priceConfig.get(assetId)
-      assert(decimals, 'Decimals not found')
+      const assetConfig = this.assetConfig.get(assetId)
+      assert(assetConfig, 'Asset config not found')
 
       results[amountConfig.source] +=
-        (Number(record.amount) * price.priceUsd) / decimals
+        (Number(record.amount) * price.priceUsd) / 10 ** assetConfig.decimals
     }
     return results
   }
@@ -148,15 +151,12 @@ export class Tvl2Controller {
 
 function getAmountConfigMap(config: Tvl2Config) {
   const groupedEntries = Object.entries(groupBy(config.amounts, 'project'))
-  const amountConfigEntries = groupedEntries.map(
-    ([k, v]) =>
-      [
-        ProjectId(k),
-        v
-          .map((x) => ({ ...x, configId: createAmountId(x) }))
-          .sort((a, b) => a.configId.localeCompare(b.configId)),
-      ] as const,
-  )
+  const amountConfigEntries = groupedEntries.map(([k, v]) => {
+    const projectId = ProjectId(k)
+    const amountWithIds = v.map((x) => ({ ...x, configId: createAmountId(x) }))
+
+    return [projectId, amountWithIds] as const
+  })
 
   return new Map(amountConfigEntries)
 }
