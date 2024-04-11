@@ -13,7 +13,8 @@
     "0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2": "Outbox",
     "0xaF57dD96a0c0E8757329D55C56De6eC50Aac73Ea": "ChallengeManager",
     "0x3d0b021E1d2A8747411E3724d5165716B35448f3": "UpgradeExecutor",
-    "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF": "ValidatorWalletCreator"
+    "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF": "ValidatorWalletCreator",
+    "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56": "RollupOwnerMultisig"
   },
    "overrides": {
     "ValidatorWalletCreator": {

@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xa8afe5331d4ae43770442fbdd68bbfb8791ef4ae
+Generated with discovered.json: 0xc8bdd9d5a8b9a251fa26c0122e498b07cbe5f933
 
-# Diff at Thu, 11 Apr 2024 13:58:34 GMT:
+# Diff at Thu, 11 Apr 2024 14:11:27 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
-- current block number: 199926406
+- current block number: 199929429
 
 ## Description
 
@@ -61,7 +61,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafeL2 (0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56)
+    contract RollupOwnerMultisig (0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56)
     +++ description: None
 ```
 

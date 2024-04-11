@@ -1,8 +1,8 @@
 {
   "name": "popapex",
   "chain": "arbitrum",
-  "blockNumber": 199926406,
-  "configHash": "0x2ea769146cde79d00701d1b23d2bc9ad73463434e8434c9e55f4ca0986b7c963",
+  "blockNumber": 199929429,
+  "configHash": "0x28d12e215482d9860d84c465411ae8350147016a4d7c2692fca65d44907cfcb2",
   "version": 3,
   "contracts": [
     {
@@ -22,11 +22,11 @@
           "0x7b18A3073774e00C072DeBd390ed6fE4251493A7"
         ],
         "allowedOutboxList": ["0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2"],
-        "delayedMessageCount": 6742,
+        "delayedMessageCount": 6744,
         "rollup": "0x65AD139061B3f6DDb16170a07b925337ddf42407",
         "sequencerInbox": "0xa58F38102579dAE7C584850780dDA55744f67DF1",
-        "sequencerMessageCount": 6664,
-        "sequencerReportedSubMessageCount": 3934481
+        "sequencerMessageCount": 6666,
+        "sequencerReportedSubMessageCount": 3935654
       },
       "derivedName": "Bridge"
     },
@@ -141,7 +141,7 @@
         "isERC20Enabled": false,
         "lastStakeBlock": 19278432,
         "latestConfirmed": 897,
-        "latestNodeCreated": 1031,
+        "latestNodeCreated": 1032,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2",
@@ -175,7 +175,7 @@
       "sinceTimestamp": 1700037477
     },
     {
-      "name": "GnosisSafeL2",
+      "name": "RollupOwnerMultisig",
       "address": "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56",
       "upgradeability": {
         "type": "gnosis safe",
@@ -197,7 +197,8 @@
         "getThreshold": 2,
         "nonce": 20,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafeL2"
     },
     {
       "name": "RollupEventInbox",
@@ -256,7 +257,7 @@
       "implementations": ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"],
       "sinceTimestamp": 1708543048,
       "values": {
-        "batchCount": 6664,
+        "batchCount": 6666,
         "batchPosters": ["0x139aC582825DD6A9b9D6A6a64f1bE149C84e0d03"],
         "bridge": "0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6",
         "dacKeyset": {
@@ -272,7 +273,7 @@
         "rollup": "0x65AD139061B3f6DDb16170a07b925337ddf42407",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 6741
+        "totalDelayedMessagesRead": 6743
       },
       "derivedName": "SequencerInbox"
     },
