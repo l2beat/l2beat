@@ -1,0 +1,5077 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "ACL",
+      "values": {
+        "ANY_ENTITY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "BURN_ENTITY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "CREATE_PERMISSIONS_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EMPTY_PARAM_HASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "NO_PERMISSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "appId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getEVMScriptRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getInitializationBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRecoveryVault": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasInitialized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isDepositable": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isPetrified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "kernel": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "AETH_R21",
+      "values": {
+        "MAX_THRESHOLD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "_RATIO_THRESHOLD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "bondsToShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isRebasing": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ratio": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharesToBonds": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "AVSDirectory",
+      "values": {
+        "DOMAIN_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OPERATOR_AVS_REGISTRATION_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delegation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "AccessControlManager",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DepositManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "NodeOperatorRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PLATFORM_ADMIN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SwellTreasury": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "botMethodsPaused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "coreMethodsPaused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "operatorMethodsPaused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "swETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "swEXIT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "withdrawalsPaused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "AccountingOracle",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EXTRA_DATA_FORMAT_EMPTY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EXTRA_DATA_FORMAT_LIST": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EXTRA_DATA_TYPE_EXITED_VALIDATORS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EXTRA_DATA_TYPE_STUCK_VALIDATORS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "GENESIS_TIME": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "LEGACY_ORACLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "LIDO": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "LOCATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MANAGE_CONSENSUS_CONTRACT_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MANAGE_CONSENSUS_VERSION_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SECONDS_PER_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SUBMIT_DATA_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getConsensusContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getConsensusReport": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getConsensusVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getContractVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLastProcessingRefSlot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getProcessingState": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxy__getAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxy__getImplementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxy__getIsOssified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Agent",
+      "values": {
+        "ADD_PRESIGNED_HASH_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ADD_PROTECTED_TOKEN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DESIGNATE_SIGNER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ERC1271_INTERFACE_ID": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ERC1271_RETURN_INVALID_SIGNATURE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ERC1271_RETURN_VALID_SIGNATURE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EXECUTE_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROTECTED_TOKENS_CAP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REMOVE_PROTECTED_TOKEN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RUN_SCRIPT_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SAFE_EXECUTE_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TRANSFER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "appId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "designatedSigner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getEVMScriptRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getInitializationBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getProtectedTokensLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRecoveryVault": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasInitialized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isDepositable": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isForwarder": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isPetrified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "kernel": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "protectedTokens": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "AllowlistV1",
+      "values": {
+        "getAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getAllower": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPendingAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "BLSApkRegistry",
+      "values": {
+        "registryCoordinator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CoverageFundV1",
+      "values": {}
+    },
+    {
+      "name": "DelegationManager",
+      "values": {
+        "DELEGATION_APPROVAL_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DOMAIN_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_STAKER_OPT_OUT_WINDOW_BLOCKS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_WITHDRAWAL_DELAY_BLOCKS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "STAKER_DELEGATION_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "beaconChainETHStrategy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eigenPodManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minWithdrawalDelayBlocks": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "slasher": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "strategyManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "DepositContract",
+      "values": {
+        "get_deposit_count": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "get_deposit_root": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "EIP712StETH",
+      "values": {}
+    },
+    {
+      "name": "ELFeeRecipientV1",
+      "values": {}
+    },
+    {
+      "name": "ETHx",
+      "values": {
+        "BURNER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MINTER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "staderConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "EVMScriptRegistry",
+      "values": {
+        "REGISTRY_ADD_EXECUTOR_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REGISTRY_MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "appId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "executors": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getEVMScriptRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getInitializationBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRecoveryVault": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasInitialized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isDepositable": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isPetrified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "kernel": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "EigenLayerBeaconOracle",
+      "values": {
+        "GENESIS_BLOCK_TIMESTAMP": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "timestampToBlockRoot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "EigenPod",
+      "values": {
+        "GENESIS_TIME": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_RESTAKED_BALANCE_GWEI_PER_VALIDATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delayedWithdrawalRouter": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eigenPodManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ethPOS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasRestaked": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mostRecentWithdrawalTimestamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonBeaconChainETHBalanceWei": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "podOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sumOfPartialWithdrawalsClaimedGwei": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "withdrawableRestakedExecutionLayerGwei": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "EigenPodManager",
+      "values": {
+        "beaconChainETHStrategy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "beaconChainOracle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delegationManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "denebForkTimestamp": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eigenPodBeacon": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ethPOS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "numPods": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "slasher": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "strategyManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ExchangeRateUpdater",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "tokenContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ExchangeRateUpdater",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "tokenContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Firewall",
+      "values": {
+        "destination": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "executor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPendingAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Firewall",
+      "values": {
+        "destination": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "executor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPendingAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Firewall",
+      "values": {
+        "destination": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "executor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPendingAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Firewall",
+      "values": {
+        "destination": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "executor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPendingAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Firewall",
+      "values": {
+        "destination": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "executor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPendingAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GnosisSafe",
+      "values": {
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getChainId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOwners": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "IndexRegistry",
+      "values": {
+        "OPERATOR_DOES_NOT_EXIST_ID": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "registryCoordinator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Kernel",
+      "values": {
+        "APP_ADDR_NAMESPACE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "APP_BASES_NAMESPACE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "APP_MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "CORE_NAMESPACE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ACL_APP_ID": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "KERNEL_APP_ID": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "acl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getInitializationBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRecoveryVault": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasInitialized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isDepositable": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isPetrified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "recoveryVaultAppId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "LegacyOracle",
+      "values": {
+        "appId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getAccountingOracle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getBeaconSpec": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getContractVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getCurrentEpochId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getCurrentFrame": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getEVMScriptRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getInitializationBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLastCompletedEpochId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLastCompletedReportDelta": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLido": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRecoveryVault": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasInitialized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isDepositable": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isPetrified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "kernel": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Lido",
+      "values": {
+        "DOMAIN_SEPARATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAUSE_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RESUME_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "STAKING_CONTROL_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "STAKING_PAUSE_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "UNSAFE_CHANGE_DEPOSITED_VALIDATORS_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "appId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "canDeposit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eip712Domain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getBeaconStat": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getBufferedEther": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getContractVersion": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getCurrentStakeLimit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getDepositableEther": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getEIP712StETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getEVMScriptRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getFee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getFeeDistribution": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getInitializationBlock": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLidoLocator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOracle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPooledEthByShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRecoveryVault": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getSharesByPooledEth": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStakeLimitFullInfo": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalELRewardsCollected": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalPooledEther": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTreasury": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getWithdrawalCredentials": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasInitialized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isDepositable": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isPetrified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isStakingPaused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isStopped": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "kernel": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxyType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "LidoLocator",
+      "values": {
+        "accountingOracle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "burner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "coreComponents": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "depositSecurityModule": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "elRewardsVault": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "legacyOracle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lido": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "oracleDaemonConfig": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "oracleReportComponentsForLido": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "oracleReportSanityChecker": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "postTokenRebaseReceiver": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxy__getAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxy__getImplementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxy__getIsOssified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stakingRouter": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "treasury": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "validatorsExitBusOracle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "withdrawalQueue": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "withdrawalVault": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "METH",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DOMAIN_SEPARATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eip712Domain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stakingContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "unstakeRequestsManagerContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OETH",
+      "values": {
+        "_totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "admin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isGovernor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nonRebasingSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rebasingCredits": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rebasingCreditsHighres": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rebasingCreditsPerToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rebasingCreditsPerTokenHighres": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "vaultAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OETHVaultCore",
+      "values": {
+        "admin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "autoAllocateThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "calculateRedeemOutputs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "capitalPaused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getAllAssets": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getAllStrategies": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getAssetCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStrategyCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "governor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isGovernor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxSupplyDiff": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "netOusdMintForStrategyThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "netOusdMintedForStrategy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ousdMetaStrategy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "priceProvider": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rebasePaused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rebaseThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "redeemFeeBps": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "strategistAddr": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalValue": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "trusteeAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "trusteeFeeBps": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "vaultBuffer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "weth": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OperatorsRegistryV1",
+      "values": {
+        "getAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getCurrentValidatorExitsDemand": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOperator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOperatorCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOperatorStoppedValidatorCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPendingAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRiver": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStoppedAndRequestedExitCounts": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStoppedValidatorCountPerOperator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalStoppedValidatorCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalValidatorExitsRequested": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "listActiveOperators": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OracleV1",
+      "values": {
+        "getAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getGlobalReportStatus": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLastReportedEpochId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOracleMembers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPendingAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getQuorum": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getReportVariantDetails": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getReportVariantsCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRiver": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "OsToken",
+      "values": {
+        "DOMAIN_SEPARATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eip712Domain": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "PauserRegistry",
+      "values": {
+        "unpauser": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "RedeemManagerV1",
+      "values": {
+        "getBufferedExceedingEth": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRedeemDemand": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRedeemRequestCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRiver": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getWithdrawalEventCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "RegistryCoordinator",
+      "values": {
+        "OPERATOR_CHURN_APPROVAL_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PUBKEY_REGISTRATION_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "blsApkRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "churnApprover": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ejector": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "indexRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "numRegistries": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "quorumCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "registries": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "serviceManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stakeRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "RiverV1",
+      "values": {
+        "DEPOSIT_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PUBLIC_KEY_LENGTH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SIGNATURE_LENGTH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "_DEPOSIT_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getAllowlist": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getBalanceToDeposit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getBalanceToRedeem": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getCLSpec": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getCLValidatorCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getCLValidatorTotalBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getCollector": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getCommittedBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getCoverageFund": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getCurrentEpochId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getCurrentFrame": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getDailyCommittableLimits": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getDepositedValidatorCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getELFeeRecipient": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getExpectedEpochId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getFrameFirstEpochId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getGlobalFee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLastCompletedEpochId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLastConsensusLayerReport": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getMetadataURI": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOperatorsRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOracle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPendingAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRedeemManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getReportBounds": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTime": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getWithdrawalCredentials": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isValidEpoch": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharesFromUnderlyingBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalUnderlyingSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingBalanceFromShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "RocketTokenRETH",
+      "values": {
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getCollateralRate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getEthValue": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getExchangeRate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRethValue": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalCollateral": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Slasher",
+      "values": {
+        "delegation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "strategyManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "StaderConfig",
+      "values": {
+        "ADMIN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "AUCTION_CONTRACT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DECIMALS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ETHX_SUPPLY_POR_FEED": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ETH_BALANCE_POR_FEED": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ETH_DEPOSIT_CONTRACT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ETH_PER_NODE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ETHx": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FULL_DEPOSIT_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MANAGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_DEPOSIT_AMOUNT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_WITHDRAW_AMOUNT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_BLOCK_DELAY_TO_FINALIZE_WITHDRAW_REQUEST": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_DEPOSIT_AMOUNT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_WITHDRAW_AMOUNT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "NODE_EL_REWARD_VAULT_IMPLEMENTATION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OPERATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OPERATOR_MAX_NAME_LENGTH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OPERATOR_REWARD_COLLECTOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PENALTY_CONTRACT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PERMISSIONED_NODE_REGISTRY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PERMISSIONED_POOL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PERMISSIONED_SOCIALIZING_POOL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PERMISSIONLESS_NODE_REGISTRY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PERMISSIONLESS_POOL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PERMISSIONLESS_SOCIALIZING_POOL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "POOL_SELECTOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "POOL_UTILS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PRE_DEPOSIT_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REWARD_THRESHOLD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SD_COLLATERAL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SD_INCENTIVE_CONTROLLER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SD_UTILITY_POOL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SOCIALIZING_POOL_CYCLE_DURATION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SOCIALIZING_POOL_OPT_IN_COOLING_PERIOD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "STADER_INSURANCE_FUND": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "STADER_ORACLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "STADER_TREASURY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "STAKE_POOL_MANAGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TOTAL_FEE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "USER_WITHDRAW_MANAGER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VALIDATOR_WITHDRAWAL_VAULT_IMPLEMENTATION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VAULT_FACTORY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "WITHDRAWN_KEYS_BATCH_SIZE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getAuctionContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getDecimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getETHBalancePORFeedProxy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getETHDepositContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getETHXSupplyPORFeedProxy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getETHxToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getFullDepositSize": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getMaxDepositAmount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getMaxWithdrawAmount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getMinBlockDelayToFinalizeWithdrawRequest": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getMinDepositAmount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getMinWithdrawAmount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getNodeELRewardVaultImplementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOperatorMaxNameLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOperatorRewardsCollector": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPenaltyContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPermissionedNodeRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPermissionedPool": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPermissionedSocializingPool": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPermissionlessNodeRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPermissionlessPool": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPermissionlessSocializingPool": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPoolSelector": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPoolUtils": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPreDepositSize": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRewardsThreshold": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getSDCollateral": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getSDIncentiveController": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getSDUtilityPool": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getSocializingPoolCycleDuration": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getSocializingPoolOptInCoolingPeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStaderInsuranceFund": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStaderOracle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStaderToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStaderTreasury": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStakePoolManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getStakedEthPerNode": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalFee": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getUserWithdrawManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getValidatorWithdrawalVaultImplementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getVaultFactory": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getWithdrawnKeyBatchSize": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "StakeRegistry",
+      "values": {
+        "MAX_WEIGHING_FUNCTION_LENGTH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "WEIGHTING_DIVISOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delegation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "registryCoordinator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "StakedTokenV1",
+      "values": {
+        "CANCEL_AUTHORIZATION_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DOMAIN_SEPARATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PERMIT_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "admin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "blacklister": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "currency": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "exchangeRate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "masterMinter": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "oracle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauser": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rescuer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Staking",
+      "values": {
+        "ALLOCATOR_SERVICE_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "INITIATOR_SERVICE_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "STAKING_ALLOWLIST_MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "STAKING_ALLOWLIST_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "STAKING_MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TOP_UP_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "allocatedETHForDeposits": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "depositContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ethToMETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "exchangeAdjustmentRate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "initializationBlockNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isStakingAllowlist": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mETHToETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maximumDepositAmount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maximumMETHSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minimumDepositAmount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minimumStakeBound": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minimumUnstakeBound": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "numInitiatedValidators": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "oracle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauser": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "returnsAggregator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalControlled": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalDepositedInValidators": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "unallocatedETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "unstakeRequestInfo": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "unstakeRequestsManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "withdrawalWallet": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "StrategyBaseTVLLimits",
+      "values": {
+        "explanation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTVLLimits": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxPerDeposit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxTotalDeposits": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharesToUnderlying": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharesToUnderlyingView": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "strategyManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToSharesView": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "StrategyBaseTVLLimits",
+      "values": {
+        "explanation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTVLLimits": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxPerDeposit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxTotalDeposits": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharesToUnderlying": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharesToUnderlyingView": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "strategyManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToSharesView": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "StrategyBaseTVLLimits",
+      "values": {
+        "explanation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTVLLimits": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxPerDeposit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxTotalDeposits": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharesToUnderlying": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharesToUnderlyingView": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "strategyManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToSharesView": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "StrategyBaseTVLLimits",
+      "values": {
+        "explanation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTVLLimits": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxPerDeposit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxTotalDeposits": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharesToUnderlying": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharesToUnderlyingView": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "strategyManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToSharesView": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "StrategyBaseTVLLimits",
+      "values": {
+        "explanation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTVLLimits": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxPerDeposit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxTotalDeposits": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharesToUnderlying": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharesToUnderlyingView": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "strategyManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToSharesView": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "StrategyBaseTVLLimits",
+      "values": {
+        "explanation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTVLLimits": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxPerDeposit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxTotalDeposits": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharesToUnderlying": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharesToUnderlyingView": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "strategyManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToSharesView": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "StrategyBaseTVLLimits",
+      "values": {
+        "explanation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTVLLimits": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxPerDeposit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxTotalDeposits": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharesToUnderlying": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharesToUnderlyingView": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "strategyManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToSharesView": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "StrategyBaseTVLLimits",
+      "values": {
+        "explanation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTVLLimits": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxPerDeposit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxTotalDeposits": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharesToUnderlying": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharesToUnderlyingView": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "strategyManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToSharesView": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "StrategyBaseTVLLimits",
+      "values": {
+        "explanation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTVLLimits": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxPerDeposit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxTotalDeposits": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharesToUnderlying": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharesToUnderlyingView": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "strategyManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToSharesView": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "StrategyBaseTVLLimits",
+      "values": {
+        "explanation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTVLLimits": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxPerDeposit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxTotalDeposits": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharesToUnderlying": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharesToUnderlyingView": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "strategyManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToSharesView": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "StrategyBaseTVLLimits",
+      "values": {
+        "explanation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTVLLimits": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxPerDeposit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxTotalDeposits": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharesToUnderlying": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharesToUnderlyingView": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "strategyManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToSharesView": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "StrategyBaseTVLLimits",
+      "values": {
+        "explanation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTVLLimits": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxPerDeposit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maxTotalDeposits": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharesToUnderlying": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "sharesToUnderlyingView": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "strategyManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToSharesView": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "underlyingToken": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "StrategyManager",
+      "values": {
+        "DEPOSIT_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DOMAIN_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delegation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "domainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "eigenPodManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "slasher": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "strategyWhitelister": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Timelock",
+      "values": {
+        "CANCELLER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EXECUTOR_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROPOSER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TIMELOCK_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getMinDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Timelock",
+      "values": {
+        "GRACE_PERIOD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAXIMUM_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MINIMUM_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "admin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "TimelockController",
+      "values": {
+        "CANCELLER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EXECUTOR_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROPOSER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TIMELOCK_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getMinDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "UnstakeRequestsManager",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MANAGER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REQUEST_CANCELLER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "allocatedETHDeficit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "allocatedETHForClaims": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "allocatedETHSurplus": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "balance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestCumulativeETHRequested": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "mETH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nextRequestId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "numberOfBlocksToFinalize": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "oracle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "requestByID": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "requestInfo": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stakingContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalClaimed": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "UnwrapTokenV1ETH",
+      "values": {
+        "MAX_LOOP_NUM": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MIN_LOCK_TIME": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "WBETH_TOKEN_ADDRESS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "admin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "availableAllocateAmount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "blacklister": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ethBackAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ethStaked": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getNeedRechargeEthAmount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getWithdrawRequests": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lockTime": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "needEthAmount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nextIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "operatorAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauser": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rechargeAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "startAllocatedEthIndex": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "UpgradeableBeacon",
+      "values": {
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "WrapTokenV2ETH",
+      "values": {
+        "CANCEL_AUTHORIZATION_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DOMAIN_SEPARATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PERMIT_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "_EXCHANGE_RATE_UNIT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "_UNWRAP_ETH_ADDRESS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "admin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "blacklister": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "currency": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ethReceiver": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "exchangeRate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "masterMinter": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "operator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "oracle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauser": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rescuer": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "version": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "eigenDAProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "eigenDAServiceManager",
+      "values": {
+        "BLOCK_STALE_MEASURE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "STORE_DURATION_BLOCKS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "THRESHOLD_DENOMINATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "avsDirectory": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "batchId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "blsApkRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "delegation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRestakeableStrategies": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "paused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pauserRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "quorumAdversaryThresholdPercentages": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "quorumConfirmationThresholdPercentages": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "quorumNumbersRequired": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "registryCoordinator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "stakeRegistry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "staleStakesForbidden": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "taskNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "frxETH",
+      "values": {
+        "DOMAIN_SEPARATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minters_array": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nominatedOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "timelock_address": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "sfrxETH",
+      "values": {
+        "DOMAIN_SEPARATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "asset": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "convertToAssets": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "convertToShares": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lastRewardAmount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lastSync": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "previewDeposit": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "previewMint": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "previewRedeem": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "previewWithdraw": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pricePerShare": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rewardsCycleEnd": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "rewardsCycleLength": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalAssets": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "swETH",
+      "values": {
+        "AccessControlManager": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ethToSwETHRate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lastRepriceETHReserves": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lastRepriceUNIX": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maximumRepriceDifferencePercentage": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "maximumRepriceswETHDifferencePercentage": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "minimumRepriceTime": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "nodeOperatorRewardPercentage": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "swETHToETHRate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "swellTreasuryRewardPercentage": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalETHDeposited": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "whitelistEnabled": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}
