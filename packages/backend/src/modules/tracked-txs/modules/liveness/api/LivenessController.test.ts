@@ -209,7 +209,6 @@ describe(LivenessController.name, () => {
       if (result.type === 'success') {
         const project1 = result.data.projects.project1
         expect(project1?.batchSubmissions).toEqual(expected)
-        expect(project1?.syncedUntil).toEqual(syncedUntil)
         expect(result.data.projects.project2).toEqual(undefined)
       }
     })

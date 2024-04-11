@@ -35,7 +35,6 @@ export const LivenessApiProject = z.object({
   stateUpdates: LivenessDetails,
   proofSubmissions: LivenessDetails,
   anomalies: z.array(LivenessAnomaly).or(z.undefined()),
-  syncedUntil: branded(z.number(), (n) => new UnixTime(n)),
 })
 
 export type LivenessApiProject = z.infer<typeof LivenessApiProject>

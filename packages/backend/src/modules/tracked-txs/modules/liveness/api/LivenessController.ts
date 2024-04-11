@@ -124,6 +124,7 @@ export class LivenessController {
         )
 
       const syncedUntil = getSyncedUntil(configurations)
+
       if (!syncedUntil) {
         continue
       }
@@ -167,7 +168,6 @@ export class LivenessController {
           ),
         },
         anomalies: withAnomalies.anomalies,
-        syncedUntil,
       }
     }
 
