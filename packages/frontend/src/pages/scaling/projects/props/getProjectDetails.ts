@@ -110,6 +110,13 @@ export function getProjectDetails(
     })
   }
 
+  if (riskSection.riskGroups.length > 0) {
+    items.push({
+      type: 'RiskSection',
+      props: riskSection,
+    })
+  }
+
   if (!isUpcoming) {
     items.push({
       type: 'RiskAnalysisSection',
@@ -136,13 +143,6 @@ export function getProjectDetails(
           title: 'Rollup stage',
           isUnderReview: project.isUnderReview,
         },
-      })
-    }
-
-    if (riskSection.riskGroups.length > 0) {
-      items.push({
-        type: 'RiskSection',
-        props: riskSection,
       })
     }
 
