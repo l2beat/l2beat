@@ -49,7 +49,8 @@ export function configureGlossarySideNav() {
         scrollToItem(item)
       },
       threshold: {
-        mobile: 0.2,
+        desktop: '164px',
+        mobile: '132px',
       },
     })
   })

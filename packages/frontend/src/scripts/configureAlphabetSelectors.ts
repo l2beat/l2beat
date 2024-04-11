@@ -61,7 +61,8 @@ function configureAlphabetSelector(alphabetSelector: HTMLElement) {
         return `a[data-char="${char}"]`
       },
       threshold: {
-        mobile: 0.2,
+        desktop: '164px',
+        mobile: '132px',
       },
     })
   })

@@ -1,8 +1,10 @@
 import { isMobile } from './isMobile'
 
+type ThresholdValue = `${number}%` | `${number}px`
+
 interface Threshold {
-  desktop?: number
-  mobile?: number
+  desktop?: ThresholdValue
+  mobile?: ThresholdValue
 }
 
 interface HighlightCurrentSectionOpts {
@@ -14,7 +16,7 @@ interface HighlightCurrentSectionOpts {
   threshold?: Threshold
 }
 
-const DEFAULT_THRESHOLD = 0.15
+const DEFAULT_THRESHOLD = `15%`
 
 export function highlightCurrentSection({
   navigationList,
@@ -24,9 +26,7 @@ export function highlightCurrentSection({
   projectNavigationItemQuerySelector,
   threshold,
 }: HighlightCurrentSectionOpts) {
-  const desktopThreshold = threshold?.desktop ?? DEFAULT_THRESHOLD
-  const mobileThreshold = threshold?.mobile ?? DEFAULT_THRESHOLD
-  const thresholdValue = isMobile() ? mobileThreshold : desktopThreshold
+  const viewportHeightOffset = getViewportHeightOffset(threshold)
 
   function getItemSelector(sectionId: string) {
     return (
@@ -55,9 +55,8 @@ export function highlightCurrentSection({
     const sectionTop = section.offsetTop
     const sectionHeight = section.offsetHeight
     const sectionBottom = sectionTop + sectionHeight
-    const viewportHeight = window.innerHeight
 
-    const scrollPos = window.scrollY + viewportHeight * thresholdValue
+    const scrollPos = window.scrollY + viewportHeightOffset
     const isCurrentSection =
       scrollPos >= sectionTop && scrollPos < sectionBottom
 
@@ -73,6 +72,18 @@ export function highlightCurrentSection({
       onHighlight(projectNavigationItem)
     }
   })
+}
+
+function getViewportHeightOffset(threshold: Threshold | undefined) {
+  const desktopThreshold = threshold?.desktop ?? DEFAULT_THRESHOLD
+  const mobileThreshold = threshold?.mobile ?? DEFAULT_THRESHOLD
+  const thresholdValue = isMobile() ? mobileThreshold : desktopThreshold
+
+  if (thresholdValue.endsWith('%')) {
+    return (window.innerHeight * Number(thresholdValue.slice(0, -1))) / 100
+  }
+
+  return Number(thresholdValue.slice(0, -2))
 }
 
 function isScrolledToBottom() {
