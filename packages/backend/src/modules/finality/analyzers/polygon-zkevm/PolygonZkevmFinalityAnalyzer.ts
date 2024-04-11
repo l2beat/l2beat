@@ -37,6 +37,7 @@ export class PolygonZkEvmFinalityAnalyzer extends BaseAnalyzer {
 
     const hashes = extractTransactionData(tx.data)
       .map(byteArrFromHexStr)
+      // Might be memory intensive - if so, consider batching/sequential processing
       .flatMap(decodeBatch)
       .flatMap((block) => block.transactions)
       .map(toTransactionHash)
