@@ -11,7 +11,6 @@ export function configureGlossarySideNav() {
   if (!navList) return
 
   const sections = document$$('section')
-  let destinationItem: HTMLAnchorElement | null = null
 
   const { $, $$ } = makeQuery(navList)
   const overflowingContainer = $('ul')
@@ -32,7 +31,7 @@ export function configureGlossarySideNav() {
 
   const scrollToItem = debounce(
     (item: HTMLAnchorElement) =>
-      scrollVerticallyToItem({ item, overflowingContainer, destinationItem }),
+      scrollVerticallyToItem({ item, overflowingContainer }),
     50,
   )
 
@@ -40,10 +39,6 @@ export function configureGlossarySideNav() {
     highlightItem(selectedNavItem)
     scrollToItem(selectedNavItem)
   }
-
-  navItems.forEach((navItem) =>
-    navItem.addEventListener('click', () => (destinationItem = navItem)),
-  )
 
   window.addEventListener('scroll', () => {
     highlightCurrentSection({

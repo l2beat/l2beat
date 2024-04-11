@@ -23,7 +23,6 @@ function configureAlphabetSelector(alphabetSelector: HTMLElement) {
   const sections = document$$('section')
   const hash = window.location.hash
 
-  let destinationItem: HTMLAnchorElement | null = null
   let selectedAlphabetSelectorItem = alphabetSelectorItems.find(
     (item) =>
       isItemCharEqualToHash(item, hash) &&
@@ -37,24 +36,17 @@ function configureAlphabetSelector(alphabetSelector: HTMLElement) {
     selectedAlphabetSelectorItem = item
   }
 
-  const scrollToItem = debounce(
-    (item: HTMLAnchorElement) =>
-      scrollHorizontallyToItem({
-        item,
-        destinationItem,
-        overflowingContainer: overflowingList,
-      }),
-    50,
-  )
+  const scrollToItem = debounce((item: HTMLAnchorElement) => {
+    scrollHorizontallyToItem({
+      item,
+      overflowingContainer: overflowingList,
+    })
+  }, 50)
 
   if (selectedAlphabetSelectorItem) {
     highlightItem(selectedAlphabetSelectorItem)
     scrollToItem(selectedAlphabetSelectorItem)
   }
-
-  alphabetSelectorItems.forEach((item) =>
-    item.addEventListener('click', () => (destinationItem = item)),
-  )
 
   window.addEventListener('scroll', () => {
     highlightCurrentSection({

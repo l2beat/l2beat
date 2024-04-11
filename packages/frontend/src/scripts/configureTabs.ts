@@ -43,7 +43,6 @@ function configureTabsNavigation(tabNavigation: HTMLElement) {
   const scrollToItem = (item: HTMLAnchorElement) =>
     scrollHorizontallyToItem({
       item,
-      destinationItem: null,
       overflowingContainer: overflowingTabsContainer,
     })
 

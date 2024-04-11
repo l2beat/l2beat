@@ -14,15 +14,16 @@ export function configureMobileProjectNavigation() {
   let previouslyHighlightedItem: Element | null = null
   let destinationItem: HTMLAnchorElement | null = null
 
-  const scrollToItem = debounce(
-    (item: HTMLAnchorElement) =>
-      scrollHorizontallyToItem({
-        item,
-        destinationItem,
-        overflowingContainer: content,
-      }),
-    50,
-  )
+  const scrollToItem = debounce((item: HTMLAnchorElement) => {
+    if (destinationItem && destinationItem !== item) {
+      return
+    }
+    scrollHorizontallyToItem({
+      item,
+      overflowingContainer: content,
+    })
+    destinationItem = null
+  }, 50)
 
   const highlightItem = (item: Element | HTMLAnchorElement) => {
     previouslyHighlightedItem?.removeAttribute('data-selected')

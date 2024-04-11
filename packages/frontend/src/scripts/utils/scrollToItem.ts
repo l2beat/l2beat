@@ -1,17 +1,12 @@
 interface ScrollToItemOptions {
   item: HTMLAnchorElement
-  destinationItem: HTMLAnchorElement | null
   overflowingContainer: HTMLElement
 }
 
 export function scrollHorizontallyToItem({
   item,
-  destinationItem,
   overflowingContainer,
 }: ScrollToItemOptions) {
-  if (destinationItem && destinationItem !== item) {
-    return
-  }
   const scrollPosition =
     item.offsetLeft -
     overflowingContainer.getBoundingClientRect().width / 2 +
@@ -20,17 +15,12 @@ export function scrollHorizontallyToItem({
     left: scrollPosition,
     behavior: 'smooth',
   })
-  destinationItem = null
 }
 
 export function scrollVerticallyToItem({
   item,
   overflowingContainer,
-  destinationItem,
 }: ScrollToItemOptions) {
-  if (destinationItem && destinationItem !== item) {
-    return
-  }
   const scrollPosition =
     item.offsetTop -
     overflowingContainer.getBoundingClientRect().height / 2 +
@@ -39,5 +29,4 @@ export function scrollVerticallyToItem({
     top: scrollPosition,
     behavior: 'smooth',
   })
-  destinationItem = null
 }
