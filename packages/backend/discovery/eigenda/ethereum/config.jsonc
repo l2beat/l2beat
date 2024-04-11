@@ -1,29 +1,28 @@
 {
-    "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
-    "chain": "ethereum",
-    "name": "eigenda",
-    "initialAddresses": ["0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"],
-    "names": {
-      "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0": "eigenDAServiceManager",
-      "0x8247EF5705d3345516286B72bFE6D690197C2E99": "eigenDAProxyAdmin",
-      "0x343907185b71aDF0eBa9567538314396aa985442": "EigenLayerBeaconOracle",
-      "0x00000000219ab540356cBB839Cbe05303d7705Fa": "DepositContract",
-      "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338": "EigenPodManager",
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "chain": "ethereum",
+  "name": "eigenda",
+  "initialAddresses": ["0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"],
+  "names": {
+    "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0": "eigenDAServiceManager",
+    "0x8247EF5705d3345516286B72bFE6D690197C2E99": "eigenDAProxyAdmin",
+    "0x343907185b71aDF0eBa9567538314396aa985442": "EigenLayerBeaconOracle",
+    "0x00000000219ab540356cBB839Cbe05303d7705Fa": "DepositContract",
+    "0x91E677b07F7AF907ec9a428aafA9fc14a0d3A338": "EigenPodManager"
+  },
+  "overrides": {
+    "eigenDAServiceManager": {
+      "ignoreRelatives": ["getRestakeableStrategies"], // strategies are already tracked in eigenLayer
+      "ignoreInWatchMode": ["batchId", "taskNumber"]
     },
-    "overrides": {
-      "eigenDAServiceManager":{
-        "ignoreRelatives": ["getRestakeableStrategies"],   // strategies are already tracked in eigenLayer
-        "ignoreInWatchMode": ["batchId","taskNumber"]
-      },
-      "EigenLayerBeaconOracle":{
-        "ignoreMethods": ["timestampToBlockRoot"]
-      }, 
-      "DepositContract": {
-        "ignoreDiscovery": true
-      },
-      "EigenPodManager": {
-        "ignoreInWatchMode": ["numPods"]
-      }
+    "EigenLayerBeaconOracle": {
+      "ignoreMethods": ["timestampToBlockRoot"]
+    },
+    "DepositContract": {
+      "ignoreDiscovery": true
+    },
+    "EigenPodManager": {
+      "ignoreInWatchMode": ["numPods"]
     }
   }
-  
+}
