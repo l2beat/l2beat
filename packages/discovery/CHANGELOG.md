@@ -1,5 +1,11 @@
 # @l2beat/discovery
 
+## 0.47.1
+
+### Patch Changes
+
+- Check for values smaller than MIN_SAFE_INTEGER
+
 ## 0.47.0
 
 ### Minor Changes

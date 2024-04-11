@@ -13,7 +13,10 @@ export function toContractValue(value: unknown): ContractValue {
     return value
   }
   if (BigNumber.isBigNumber(value)) {
-    if (value.gt(Number.MAX_SAFE_INTEGER.toString())) {
+    if (
+      value.gt(Number.MAX_SAFE_INTEGER.toString()) ||
+      value.lt(Number.MIN_SAFE_INTEGER.toString())
+    ) {
       return value.toString()
     } else {
       return value.toNumber()
