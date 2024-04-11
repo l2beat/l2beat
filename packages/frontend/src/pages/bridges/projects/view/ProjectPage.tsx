@@ -10,6 +10,7 @@ import { BridgesMvpWarning } from '../../../../components/BridgesMvpWarning'
 import { PageContent } from '../../../../components/PageContent'
 import { DesktopProjectNavigation } from '../../../../components/project/navigation/DesktopProjectNavigation'
 import { MobileProjectNavigation } from '../../../../components/project/navigation/MobileProjectNavigation'
+import { ScrollToTopButton } from '../../../../components/ScrollToTopButton'
 import { BridgeDetailsSection } from '../props/getProjectDetails'
 import { ProjectDetails, ProjectDetailsProps } from './ProjectDetails'
 import { ProjectHeader, ProjectHeaderProps } from './ProjectHeader'
@@ -53,6 +54,7 @@ export function ProjectPage(props: ProjectPageProps) {
           </div>
         </div>
       </PageContent>
+      <ScrollToTopButton />
       <Footer narrow {...props.footer} />
     </>
   )
