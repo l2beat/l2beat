@@ -42,16 +42,25 @@ export class PolygonZkEvmFinalityAnalyzer extends BaseAnalyzer {
       .map(toTransactionHash)
 
     //TODO: poor stuff given the batch can contain ~250 txs, either make sure its rate limited or pick at random a few txs
-    const blocks = await Promise.all(
+    const transactionsFromNode = await Promise.all(
       hashes.map((hash) => this.l2Provider.getTransaction(hash)),
     )
 
-    const timestamps = blocks
-      .map((block) => block.timestamp)
+    const blockNumbers = transactionsFromNode
+      .map((tx) => tx.blockNumber)
       .filter(notUndefined)
-      .map((l2Timestamp) => l1Timestamp.toNumber() - l2Timestamp)
 
-    return timestamps
+    const maxBlockNumber = Math.max(...blockNumbers)
+    const minBlockNumber = Math.min(...blockNumbers)
+
+    const blocks = await Promise.all([
+      this.l2Provider.getBlock(minBlockNumber),
+      this.l2Provider.getBlock(maxBlockNumber),
+    ])
+
+    return blocks
+      .map((block) => block.timestamp)
+      .map((l2Timestamp) => l1Timestamp.toNumber() - l2Timestamp)
   }
 }
 
