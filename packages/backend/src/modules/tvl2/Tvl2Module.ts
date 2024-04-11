@@ -290,6 +290,7 @@ function encode(value: EscrowEntry | TotalSupplyEntry): string {
   }
 }
 
+// TODO: validate the config with zod
 function decode(value: string): EscrowEntry | TotalSupplyEntry {
   const obj = JSON.parse(value) as {
     type: string

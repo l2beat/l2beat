@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   AmountConfigBase,
-  Bytes,
   EscrowEntry,
   EthereumAddress,
   ProjectId,
