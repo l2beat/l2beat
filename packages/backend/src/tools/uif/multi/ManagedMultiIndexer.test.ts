@@ -1,9 +1,4 @@
 import { Logger } from '@l2beat/backend-tools'
-import {
-  RemovalConfiguration,
-  SavedConfiguration,
-  UpdateConfiguration,
-} from '@l2beat/uif'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { describeDatabase } from '../../../test/database'
@@ -16,7 +11,12 @@ import {
   ManagedMultiIndexerOptions,
 } from './ManagedMultiIndexer'
 import { MultiIndexer } from './MultiIndexer'
-import { Configuration } from './types'
+import {
+  Configuration,
+  RemovalConfiguration,
+  SavedConfiguration,
+  UpdateConfiguration,
+} from './types'
 
 describe(ManagedMultiIndexer.name, () => {
   afterEach(() => {

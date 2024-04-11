@@ -5,7 +5,6 @@ import {
   TotalSupplyEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { Configuration } from '@l2beat/uif'
 import { partition } from 'lodash'
 
 import {
@@ -18,6 +17,7 @@ import {
   MulticallResponse,
 } from '../../peripherals/multicall/types'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
+import { Configuration } from '../../tools/uif/multi/types'
 import { AmountRecord } from './repositories/AmountRepository'
 
 export type AmountConfiguration = EscrowEntry | TotalSupplyEntry
