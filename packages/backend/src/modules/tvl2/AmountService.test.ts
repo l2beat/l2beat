@@ -13,7 +13,7 @@ import { BigNumber } from 'ethers'
 
 import { MulticallClient } from '../../peripherals/multicall/MulticallClient'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
-import { AmountConfiguration, AmountService } from './AmountService'
+import { AmountService, ChainAmountConfig } from './AmountService'
 
 describe(AmountService.name, () => {
   const NATIVE_CODEC_SINCE_BLOCK = 1_111
@@ -36,7 +36,7 @@ describe(AmountService.name, () => {
     })
 
     const escrowNativeConfig = mockEscrowConfig({ address: 'native' })
-    const configurations: Configuration<AmountConfiguration>[] = [
+    const configurations: Configuration<ChainAmountConfig>[] = [
       mockUifConfig(escrowNativeConfig),
     ]
 
@@ -67,7 +67,7 @@ describe(AmountService.name, () => {
     const escrowNativeConfig = mockUifConfig(
       mockEscrowConfig({ address: 'native' }),
     )
-    const configurations: Configuration<AmountConfiguration>[] = [
+    const configurations: Configuration<ChainAmountConfig>[] = [
       escrowNativeConfig,
     ]
 
@@ -90,7 +90,7 @@ describe(AmountService.name, () => {
 
     const erc20TotalSupplyConfig = mockTotalSupplyConfig()
     const erc20BalanceConfig = mockEscrowConfig()
-    const configurations: Configuration<AmountConfiguration>[] = [
+    const configurations: Configuration<ChainAmountConfig>[] = [
       mockUifConfig(erc20TotalSupplyConfig),
       mockUifConfig(erc20BalanceConfig),
     ]

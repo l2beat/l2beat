@@ -26,7 +26,7 @@ import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import { Configuration } from '../../tools/uif/multi/types'
 import { ApplicationModule } from '../ApplicationModule'
 import { HourlyIndexer } from '../tracked-txs/HourlyIndexer'
-import { AmountService } from './AmountService'
+import { AmountService, ChainAmountConfig } from './AmountService'
 import { createTvl2StatusRouter } from './api/Tvl2StatusRouter'
 import {
   BlockTimestampIndexer,
@@ -223,13 +223,17 @@ function getChainAmountIndexers(
         (indexer) =>
           indexer.indexerId === `block_timestamp_indexer_${chain.chain}`,
       )
-      assert(blockTimestampIndexer)
+      assert(
+        blockTimestampIndexer,
+        'Block timestamp indexer not found for: ' + chain.chain,
+      )
 
-      const escrowsAndTotalSupplies = config.amounts.filter(
-        (a) =>
-          (a.type === 'escrow' || a.type === 'totalSupply') &&
-          a.chain === chain.chain,
-      ) as (EscrowEntry | TotalSupplyEntry)[]
+      const escrowsAndTotalSupplies = config.amounts
+        .filter((a) => a.chain === chain.chain)
+        .filter(
+          (a): a is ChainAmountConfig =>
+            a.type === 'escrow' || a.type === 'totalSupply',
+        )
 
       const chainMinTimestamp = chain.config.minBlockTimestamp
 

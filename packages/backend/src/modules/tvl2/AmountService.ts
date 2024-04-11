@@ -20,7 +20,7 @@ import {
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { AmountRecord } from './repositories/AmountRepository'
 
-export type AmountConfiguration = EscrowEntry | TotalSupplyEntry
+export type ChainAmountConfig = EscrowEntry | TotalSupplyEntry
 
 export interface AmountServiceDependencies {
   readonly rpcClient: RpcClient
@@ -39,7 +39,7 @@ export class AmountService {
   }
 
   public async fetchAmounts(
-    configurations: Configuration<AmountConfiguration>[],
+    configurations: Configuration<ChainAmountConfig>[],
     blockNumber: number,
     timestamp: UnixTime,
   ): Promise<AmountRecord[]> {
@@ -82,7 +82,7 @@ export class AmountService {
   }
 
   private async fetchWithMulticall(
-    configurations: Configuration<AmountConfiguration>[],
+    configurations: Configuration<ChainAmountConfig>[],
     blockNumber: number,
   ): Promise<Amount[]> {
     if (configurations.length === 0) {
@@ -121,7 +121,7 @@ export class AmountService {
 
   encodeForMulticall({
     properties,
-  }: Configuration<AmountConfiguration>): MulticallRequest {
+  }: Configuration<ChainAmountConfig>): MulticallRequest {
     switch (properties.type) {
       case 'totalSupply':
         return erc20Codec.totalSupply.encode(properties.address)
@@ -139,7 +139,7 @@ export class AmountService {
   }
 
   decodeForMulticall(
-    { properties }: Configuration<AmountConfiguration>,
+    { properties }: Configuration<ChainAmountConfig>,
     response: MulticallResponse,
   ) {
     if (!response.success) {
@@ -160,7 +160,7 @@ export class AmountService {
 }
 
 function isNotSupportedByMulticall(
-  configuration: Configuration<AmountConfiguration>,
+  configuration: Configuration<ChainAmountConfig>,
   multicallClient: MulticallClient,
   blockNumber: number,
 ): configuration is Configuration<EscrowEntry> {

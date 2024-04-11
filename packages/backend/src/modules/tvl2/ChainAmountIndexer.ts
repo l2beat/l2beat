@@ -1,5 +1,5 @@
 import { assert } from '@l2beat/backend-tools'
-import { EscrowEntry, TotalSupplyEntry, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 
 import {
   ManagedMultiIndexer,
@@ -9,15 +9,13 @@ import {
   RemovalConfiguration,
   UpdateConfiguration,
 } from '../../tools/uif/multi/types'
-import { AmountService } from './AmountService'
+import { AmountService, ChainAmountConfig } from './AmountService'
 import { AmountRepository } from './repositories/AmountRepository'
 import { BlockTimestampRepository } from './repositories/BlockTimestampRepository'
 import { SyncOptimizer } from './SyncOptimizer'
 
-type AmountType = EscrowEntry | TotalSupplyEntry
-
 export interface ChainAmountIndexerDeps
-  extends ManagedMultiIndexerOptions<AmountType> {
+  extends ManagedMultiIndexerOptions<ChainAmountConfig> {
   amountService: AmountService
   amountRepository: AmountRepository
   blockTimestampsRepository: BlockTimestampRepository
@@ -25,7 +23,7 @@ export interface ChainAmountIndexerDeps
   chain: string
 }
 
-export class ChainAmountIndexer extends ManagedMultiIndexer<AmountType> {
+export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
   indexerId: string
   constructor(private readonly $: ChainAmountIndexerDeps) {
     super($)
@@ -35,7 +33,7 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<AmountType> {
   override async multiUpdate(
     from: number,
     to: number,
-    configurations: UpdateConfiguration<AmountType>[],
+    configurations: UpdateConfiguration<ChainAmountConfig>[],
   ): Promise<number> {
     const timestamp = this.$.syncOptimizer.getTimestampToSync(
       new UnixTime(from),
@@ -73,7 +71,7 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<AmountType> {
   }
 
   override async removeData(
-    configurations: RemovalConfiguration<AmountType>[],
+    configurations: RemovalConfiguration<ChainAmountConfig>[],
   ): Promise<void> {
     for (const configuration of configurations) {
       await this.$.amountRepository.deleteByConfigInTimeRange(
