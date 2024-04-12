@@ -4,10 +4,10 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
 import { Knex } from 'knex'
 
-import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
-import { HourlyIndexer } from '../tracked-txs/HourlyIndexer'
-import { BlockTimestampRepository } from './repositories/BlockTimestampRepository'
-import { SyncOptimizer } from './SyncOptimizer'
+import { IndexerStateRepository } from '../../../tools/uif/IndexerStateRepository'
+import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
+import { BlockTimestampRepository } from '../repositories/BlockTimestampRepository'
+import { SyncOptimizer } from '../utils/SyncOptimizer'
 
 export type BlockTimestampProvider = EtherscanClient | BlockscoutClient
 

@@ -12,11 +12,11 @@ import {
 import { expect, mockFn, mockObject } from 'earl'
 import { Knex } from 'knex'
 
-import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
-import { HourlyIndexer } from '../tracked-txs/HourlyIndexer'
+import { IndexerStateRepository } from '../../../tools/uif/IndexerStateRepository'
+import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
+import { PriceRepository } from '../repositories/PriceRepository'
+import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { PriceIndexer } from './PriceIndexer'
-import { PriceRepository } from './repositories/PriceRepository'
-import { SyncOptimizer } from './SyncOptimizer'
 
 describe(PriceIndexer.name, () => {
   describe(PriceIndexer.prototype.update.name, () => {

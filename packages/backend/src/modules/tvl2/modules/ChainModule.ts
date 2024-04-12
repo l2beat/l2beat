@@ -11,24 +11,24 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { ChainTvlConfig, Tvl2Config } from '../../config/Config'
-import { MulticallClient } from '../../peripherals/multicall/MulticallClient'
-import { Peripherals } from '../../peripherals/Peripherals'
-import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
-import { IndexerService } from '../../tools/uif/IndexerService'
-import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
-import { Configuration } from '../../tools/uif/multi/types'
-import { HourlyIndexer } from '../tracked-txs/HourlyIndexer'
-import { AmountService, ChainAmountConfig } from './AmountService'
+import { ChainTvlConfig, Tvl2Config } from '../../../config/Config'
+import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
+import { Peripherals } from '../../../peripherals/Peripherals'
+import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
+import { IndexerService } from '../../../tools/uif/IndexerService'
+import { IndexerStateRepository } from '../../../tools/uif/IndexerStateRepository'
+import { Configuration } from '../../../tools/uif/multi/types'
+import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
 import {
   BlockTimestampIndexer,
   BlockTimestampProvider,
-} from './BlockTimestampIndexer'
-import { ChainAmountIndexer } from './ChainAmountIndexer'
-import { AmountRepository } from './repositories/AmountRepository'
-import { BlockTimestampRepository } from './repositories/BlockTimestampRepository'
-import { SyncOptimizer } from './SyncOptimizer'
-import { createAmountId } from './utils/createAmountId'
+} from '../indexers/BlockTimestampIndexer'
+import { ChainAmountIndexer } from '../indexers/ChainAmountIndexer'
+import { AmountRepository } from '../repositories/AmountRepository'
+import { BlockTimestampRepository } from '../repositories/BlockTimestampRepository'
+import { AmountService, ChainAmountConfig } from '../services/AmountService'
+import { createAmountId } from '../utils/createAmountId'
+import { SyncOptimizer } from '../utils/SyncOptimizer'
 
 export interface ChainModule {
   indexers: [BlockTimestampIndexer, ChainAmountIndexer]

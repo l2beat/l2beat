@@ -4,15 +4,15 @@ import { UnixTime } from '@l2beat/shared-pure'
 import {
   ManagedMultiIndexer,
   ManagedMultiIndexerOptions,
-} from '../../tools/uif/multi/ManagedMultiIndexer'
+} from '../../../tools/uif/multi/ManagedMultiIndexer'
 import {
   RemovalConfiguration,
   UpdateConfiguration,
-} from '../../tools/uif/multi/types'
-import { AmountService, ChainAmountConfig } from './AmountService'
-import { AmountRepository } from './repositories/AmountRepository'
-import { BlockTimestampRepository } from './repositories/BlockTimestampRepository'
-import { SyncOptimizer } from './SyncOptimizer'
+} from '../../../tools/uif/multi/types'
+import { AmountRepository } from '../repositories/AmountRepository'
+import { BlockTimestampRepository } from '../repositories/BlockTimestampRepository'
+import { AmountService, ChainAmountConfig } from '../services/AmountService'
+import { SyncOptimizer } from '../utils/SyncOptimizer'
 
 export interface ChainAmountIndexerDeps
   extends ManagedMultiIndexerOptions<ChainAmountConfig> {
