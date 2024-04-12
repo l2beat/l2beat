@@ -11,6 +11,7 @@ import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
 import { createTvl2StatusRouter } from '../api/Tvl2StatusRouter'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { createChainModules } from './ChainModule'
+import { createCirculatingSupplyModule } from './CirculatingSupplyModule'
 import { createPriceModule } from './PriceModule'
 
 export function createTvl2Module(
@@ -54,6 +55,14 @@ export function createTvl2Module(
       config.tvl2,
       peripherals,
       logger,
+      hourlyIndexer,
+      syncOptimizer,
+      indexerService,
+    ),
+    createCirculatingSupplyModule(
+      config.tvl2,
+      logger,
+      peripherals,
       hourlyIndexer,
       syncOptimizer,
       indexerService,
