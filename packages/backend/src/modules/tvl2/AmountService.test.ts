@@ -7,12 +7,12 @@ import {
   TotalSupplyEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { Configuration } from '@l2beat/uif'
 import { expect, mockFn, mockObject } from 'earl'
 import { BigNumber } from 'ethers'
 
 import { MulticallClient } from '../../peripherals/multicall/MulticallClient'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
+import { Configuration } from '../../tools/uif/multi/types'
 import { AmountService, ChainAmountConfig } from './AmountService'
 
 describe(AmountService.name, () => {
