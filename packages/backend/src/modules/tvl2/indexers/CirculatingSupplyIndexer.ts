@@ -34,8 +34,9 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
     const to = this.getAdjustedTo(from, _to)
 
     const amounts = await this.fetchAndOptimizeCirculatingSupplies(from, to)
+    const nonZeroAmounts = amounts.filter((a) => a.amount > 0n)
 
-    await this.$.amountRepository.addMany(amounts)
+    await this.$.amountRepository.addMany(nonZeroAmounts)
 
     return to.toNumber()
   }
