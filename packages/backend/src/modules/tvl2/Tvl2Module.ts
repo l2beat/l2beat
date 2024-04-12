@@ -12,7 +12,7 @@ import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import { ApplicationModule } from '../ApplicationModule'
 import { HourlyIndexer } from '../tracked-txs/HourlyIndexer'
 import { createTvl2StatusRouter } from './api/Tvl2StatusRouter'
-import { createChainIndexers } from './ChainModule'
+import { createChainModules } from './ChainModule'
 import { PriceIndexer } from './PriceIndexer'
 import { PriceRepository } from './repositories/PriceRepository'
 import { SyncOptimizer } from './SyncOptimizer'
@@ -60,7 +60,7 @@ export function createTvl2Module(
     syncOptimizer,
   )
 
-  const chainIndexers = createChainIndexers(
+  const chainModules = createChainModules(
     config.tvl2,
     peripherals,
     logger,
@@ -71,7 +71,7 @@ export function createTvl2Module(
 
   const statusRouter = createTvl2StatusRouter(
     config.tvl2,
-    [...priceIndexers, ...chainIndexers],
+    [...priceIndexers, ...chainModules.map((m) => m.indexers).flat()],
     clock,
   )
 
@@ -84,7 +84,7 @@ export function createTvl2Module(
       await priceIndexer.start()
     }
 
-    for (const chainModule of chainIndexers) {
+    for (const chainModule of chainModules) {
       await chainModule.start()
     }
 

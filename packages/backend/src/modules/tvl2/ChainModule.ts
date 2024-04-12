@@ -30,14 +30,19 @@ import { BlockTimestampRepository } from './repositories/BlockTimestampRepositor
 import { SyncOptimizer } from './SyncOptimizer'
 import { createAmountId } from './utils/createAmountId'
 
-export function createChainIndexers(
+export interface ChainModule {
+  indexers: [BlockTimestampIndexer, ChainAmountIndexer]
+  start: () => Promise<void> | void
+}
+
+export function createChainModules(
   config: Tvl2Config,
   peripherals: Peripherals,
   logger: Logger,
   hourlyIndexer: HourlyIndexer,
   syncOptimizer: SyncOptimizer,
   indexerService: IndexerService,
-) {
+): ChainModule[] {
   return config.chains
     .map((chain) =>
       createChainModule(
@@ -62,7 +67,7 @@ function createChainModule(
   hourlyIndexer: HourlyIndexer,
   syncOptimizer: SyncOptimizer,
   indexerService: IndexerService,
-) {
+): ChainModule | undefined {
   const name = `${capitalizeFirstLetter(chainConfig.chain)}TvlModule`
   if (!chainConfig.config) {
     logger.info(`${name} disabled`)
@@ -144,7 +149,17 @@ function createChainModule(
     chain: chainConfig.chain,
   })
 
-  return [blockTimestampIndexer, chainAmountIndexer]
+  return {
+    start: async () => {
+      logger.info('Starting...')
+
+      await blockTimestampIndexer.start()
+      await chainAmountIndexer.start()
+
+      logger.info('Started')
+    },
+    indexers: [blockTimestampIndexer, chainAmountIndexer],
+  }
 }
 
 function encode(value: EscrowEntry | TotalSupplyEntry): string {
