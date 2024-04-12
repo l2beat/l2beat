@@ -78,6 +78,22 @@ export const parallel: Layer2 = orbitStackL2({
     },
     {
       uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress(
+          '0xb4795A0edae98d7820C37F06f6b858e7acb51DF8',
+        ),
+        selector: '0x3e5aa082',
+        functionSignature:
+          'function addSequencerL2BatchFromBlobs(uint256 sequenceNumber,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+        sinceTimestampInclusive: new UnixTime(1712861435),
+      },
+    },
+    {
+      uses: [
         { type: 'liveness', subtype: 'stateUpdates' },
         { type: 'l2costs', subtype: 'stateUpdates' },
       ],
