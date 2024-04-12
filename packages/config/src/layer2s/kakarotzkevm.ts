@@ -19,7 +19,7 @@ export const kakarotzkevm: Layer2 = upcomingL2({
       socialMedia: [
         'https://twitter.com/KakarotZkEvm',
         'https://t.me/KakarotZkEvm',
-        'https://discord.gg/x53uKnGA',
+        'https://discord.gg/kakarotzkevm',
       ],
     },
   },
