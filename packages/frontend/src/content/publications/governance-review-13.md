@@ -15,7 +15,7 @@ The [Agora vote](https://vote.optimism.io/proposals/6375876229229300895441493341
 
 ### **On Chain Vote - Season 5: Intents Budget Proposal #2**
 
-Gonna, the Grants Council lead, [submitted a proposal](https://gov.optimism.io/t/season-5-intents-budget-proposal-2/7937) that proposes using the 1.040.000 OP intended to return to the Gov Fund and to allocate it to 7 mission requests. Additionally, the proposal seeks to get approval for the GC to allocate an additional 1M OP, which has already been approved by Token House, to 4 mission requests
+Gonna, the Grants Council lead, [submitted a proposal](https://gov.optimism.io/t/season-5-intents-budget-proposal-2/7937) that proposes using the 1.040.000 OP intended to return to the Gov Fund and to allocate it to 7 mission requests. Additionally, the proposal seeks to get approval for the GC to allocate an additional 1M OP, which has already been approved by Token House, to 4 mission requests.
 
 The [Agora vote](https://vote.optimism.io/proposals/79153197521552675573175103134699879266644135524341625272698131484806349525411) ends on April 17 2024 at 8:43 pm UTC.
 
@@ -143,7 +143,7 @@ You can find us to discuss all the above and more during our [Starknet Office Ho
 
 [This proposal](https://forum.connext.network/t/rfc-extend-current-security-council-and-upgrade-the-election-process/1125) by MinstroDolar proposes an extension of 3 months to the initial Security Council given that the 6-month bootstrapping phase has ended on March 5, 2024, and we need to first agree on the details of the next election before we begin the process.
 
-The [Snapshot vote](https://snapshot.org/#/dao.connext.eth/proposal/0x49b1a9a5d95c05da403660b677bfee498793dc243b3bd7e5554e7fda636c3b22) ends on April 14 2024 at 11:20 pm UTC
+The [Snapshot vote](https://snapshot.org/#/dao.connext.eth/proposal/0x49b1a9a5d95c05da403660b677bfee498793dc243b3bd7e5554e7fda636c3b22) ends on April 14 2024 at 11:20 pm UTC.
 
 ### **[RFC] Research and Comparative Analysis Report of the ERC-7281 (xERC-20) Standard**
 
