@@ -29,9 +29,7 @@ export function makeConfig(
   const flags = new FeatureFlags(
     env.string('FEATURES', isLocal ? '' : '*'),
   ).append('status')
-  const minBlockTimestamp = minTimestampOverride ?? getEthereumMinTimestamp()
-
-  const tvl2Config = getTvl2Config(flags, env, minBlockTimestamp)
+  const tvl2Config = getTvl2Config(flags, env, minTimestampOverride)
 
   return {
     name,
@@ -51,7 +49,7 @@ export function makeConfig(
           throttleTimeMs: 20000,
         },
     clock: {
-      minBlockTimestamp,
+      minBlockTimestamp: minTimestampOverride ?? getEthereumMinTimestamp(),
       safeTimeOffsetSeconds: 60 * 60,
     },
     database: isLocal
@@ -108,9 +106,7 @@ export function makeConfig(
         flags.isEnabled('tvl', 'ethereum'),
         env,
         'ethereum',
-        {
-          minTimestamp: minBlockTimestamp,
-        },
+        { minTimestamp: minTimestampOverride },
       ),
       modules: getChainsWithTokens(tokenList, chains).map((chain) =>
         getChainTvlConfig(flags.isEnabled('tvl', chain), env, chain, {
