@@ -14,6 +14,7 @@ import { IndexerService } from '../../../tools/uif/IndexerService'
 import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
 import { PriceIndexer } from '../indexers/PriceIndexer'
 import { PriceRepository } from '../repositories/PriceRepository'
+import { createPriceId } from '../utils/createPriceId'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
 export interface PriceModule {
@@ -51,7 +52,7 @@ export function createPriceModule(
           properties: price,
           minHeight: price.sinceTimestamp.toNumber(),
           maxHeight: price.untilTimestamp?.toNumber() ?? null,
-          id: 'a', //TODO
+          id: createPriceId(price),
         })),
         encode,
         decode,
