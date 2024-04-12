@@ -55,13 +55,17 @@ function generateMockData(): LivenessApiProject {
       last30Days: generateDataPoint(),
       last90Days: generateDataPoint(),
       allTime: generateDataPoint(),
-      syncedUntil: UnixTime.now(),
+      syncedUntil: UnixTime.now()
+        .toStartOf('hour')
+        .add(-(Math.random() < 0.75 ? 1 : 2), 'hours'),
     },
     stateUpdates: {
       last30Days: generateDataPoint(),
       last90Days: generateDataPoint(),
       allTime: generateDataPoint(),
-      syncedUntil: UnixTime.now(),
+      syncedUntil: UnixTime.now()
+        .toStartOf('hour')
+        .add(-(Math.random() < 0.75 ? 1 : 2), 'hours'),
     },
     anomalies: generateAnomalies(),
   }

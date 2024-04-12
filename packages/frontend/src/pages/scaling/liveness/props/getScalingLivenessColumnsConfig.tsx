@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { AnomalyIndicator } from '../../../../components/AnomalyIndicator'
-import { Badge } from '../../../../components/badge/Badge'
 import { InfoIcon } from '../../../../components/icons'
 import { getProjectWithIndexColumns } from '../../../../components/table/props/getProjectWithIndexColumns'
 import {
@@ -34,31 +33,21 @@ export function getScalingLivenessColumnsConfig() {
         {
           name: 'Tx data\nsubmissions',
           tooltip: 'How often transaction batches are submitted to the L1',
-          colSpan: (project) => (!project.isSynced ? 3 : undefined),
-          getValue: (project) =>
-            project.isSynced ? (
-              <LivenessDurationTimeRangeCell
-                data={project.batchSubmissions}
-                project={project}
-                dataType="batchSubmissions"
-              />
-            ) : (
-              <Badge type="gray" className="mr-0 w-full text-center lg:mr-4">
-                COMING SOON
-              </Badge>
-            ),
+          getValue: (project) => (
+            <LivenessDurationTimeRangeCell
+              data={project.data?.batchSubmissions}
+              project={project}
+              dataType="batchSubmissions"
+            />
+          ),
           sorting: {
             getOrderValue: (project) => {
-              if (!project.isSynced)
-                return {
-                  '30D': undefined,
-                  '90D': undefined,
-                  MAX: undefined,
-                }
               return {
-                '30D': project.batchSubmissions?.last30Days?.averageInSeconds,
-                '90D': project.batchSubmissions?.last90Days?.averageInSeconds,
-                MAX: project.batchSubmissions?.allTime?.averageInSeconds,
+                '30D':
+                  project.data?.batchSubmissions?.last30Days?.averageInSeconds,
+                '90D':
+                  project.data?.batchSubmissions?.last90Days?.averageInSeconds,
+                MAX: project.data?.batchSubmissions?.allTime?.averageInSeconds,
               }
             },
             defaultOrderKey: '30D',
@@ -68,27 +57,22 @@ export function getScalingLivenessColumnsConfig() {
         {
           name: 'Proof\nsubmissions',
           tooltip: 'How often validity proofs are submitted to the L1',
-          getValue: (project) =>
-            project.isSynced ? (
-              <LivenessDurationTimeRangeCell
-                data={project.proofSubmissions}
-                project={project}
-                dataType="proofSubmissions"
-              />
-            ) : undefined,
+          getValue: (project) => (
+            <LivenessDurationTimeRangeCell
+              data={project.data?.proofSubmissions}
+              project={project}
+              dataType="proofSubmissions"
+            />
+          ),
           removeCellOnFalsyValue: true,
           sorting: {
             getOrderValue: (project) => {
-              if (!project.isSynced)
-                return {
-                  '30D': undefined,
-                  '90D': undefined,
-                  MAX: undefined,
-                }
               return {
-                '30D': project.proofSubmissions?.last30Days?.averageInSeconds,
-                '90D': project.proofSubmissions?.last90Days?.averageInSeconds,
-                MAX: project.proofSubmissions?.allTime?.averageInSeconds,
+                '30D':
+                  project.data?.proofSubmissions?.last30Days?.averageInSeconds,
+                '90D':
+                  project.data?.proofSubmissions?.last90Days?.averageInSeconds,
+                MAX: project.data?.proofSubmissions?.allTime?.averageInSeconds,
               }
             },
             defaultOrderKey: '30D',
@@ -98,27 +82,20 @@ export function getScalingLivenessColumnsConfig() {
         {
           name: 'State\nupdates',
           tooltip: 'How often state roots are submitted to the L1',
-          getValue: (project) =>
-            project.isSynced ? (
-              <LivenessDurationTimeRangeCell
-                data={project.stateUpdates}
-                project={project}
-                dataType="stateUpdates"
-              />
-            ) : undefined,
+          getValue: (project) => (
+            <LivenessDurationTimeRangeCell
+              data={project.data?.stateUpdates}
+              project={project}
+              dataType="stateUpdates"
+            />
+          ),
           removeCellOnFalsyValue: true,
           sorting: {
             getOrderValue: (project) => {
-              if (!project.isSynced)
-                return {
-                  '30D': undefined,
-                  '90D': undefined,
-                  MAX: undefined,
-                }
               return {
-                '30D': project.stateUpdates?.last30Days?.averageInSeconds,
-                '90D': project.stateUpdates?.last90Days?.averageInSeconds,
-                MAX: project.stateUpdates?.allTime?.averageInSeconds,
+                '30D': project.data?.stateUpdates?.last30Days?.averageInSeconds,
+                '90D': project.data?.stateUpdates?.last90Days?.averageInSeconds,
+                MAX: project.data?.stateUpdates?.allTime?.averageInSeconds,
               }
             },
             defaultOrderKey: '30D',
@@ -148,9 +125,11 @@ export function getScalingLivenessColumnsConfig() {
       align: 'center',
       getValue: (project) => (
         <AnomalyIndicator
-          anomalyEntries={project.isSynced ? project.anomalyEntries : []}
+          anomalyEntries={
+            project.data?.syncStatus.isSynced ? project.anomalyEntries : []
+          }
           showComingSoon={
-            !project.isSynced ||
+            !project.data?.syncStatus.isSynced ||
             project.slug === 'linea' ||
             project.slug === 'starknet'
           }

@@ -11,6 +11,8 @@ import {
   LivenessDetails,
   TvlApiResponse,
 } from '@l2beat/shared-pure'
+
+import { SyncStatus } from '../../types'
 export interface LivenessPagesData {
   tvlApiResponse: TvlApiResponse
   livenessApiResponse: LivenessApiResponse
@@ -30,11 +32,15 @@ export interface ScalingLivenessViewEntry {
   purposes: ScalingProjectPurpose[]
   stage: StageConfig
   explanation: string | undefined
+  data: ScalingLivenessViewEntryData | undefined
+  anomalyEntries: AnomalyIndicatorEntry[]
+}
+
+export interface ScalingLivenessViewEntryData {
   batchSubmissions: LivenessDetailsWithWarning | undefined
   stateUpdates: LivenessDetailsWithWarning | undefined
   proofSubmissions: LivenessDetailsWithWarning | undefined
-  anomalyEntries: AnomalyIndicatorEntry[]
-  isSynced: boolean
+  syncStatus: SyncStatus
 }
 
 export type LivenessDetailsWithWarning = LivenessDetails & {

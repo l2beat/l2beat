@@ -1,7 +1,8 @@
-import { LivenessApiProject } from '@l2beat/shared-pure'
+import { LivenessApiProject, UnixTime } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { ScalingLivenessViewEntry } from '../../pages/scaling/liveness/types'
+import { formatTimestamp } from '../../utils'
 import { Badge } from '../badge/Badge'
 import { UpcomingBadge } from '../badge/UpcomingBadge'
 import { RoundedWarningIcon } from '../icons'
@@ -20,6 +21,7 @@ export function LivenessDurationCell(props: {
   project?: ScalingLivenessViewEntry
   tooltipContent?: TooltipContentType
   warning?: string
+  syncedUntil?: UnixTime
 }) {
   if (
     !props.durationInSeconds &&
@@ -51,15 +53,30 @@ export function LivenessDurationCell(props: {
     )
   }
 
+  const syncTarget = UnixTime.now().add(-1, 'hours').toStartOf('hour')
+  const notSynced = props.syncedUntil?.lt(syncTarget) ?? false
+
   return (
     <Tooltip>
       <TooltipTrigger className="flex items-center gap-1">
-        <DurationCell durationInSeconds={props.durationInSeconds} />
+        <DurationCell
+          durationInSeconds={props.durationInSeconds}
+          grayedOut={notSynced}
+        />
         {props.warning && (
           <RoundedWarningIcon className="size-5" sentiment="warning" />
         )}
       </TooltipTrigger>
       <TooltipContent>
+        {notSynced &&
+          props.syncedUntil &&
+          `The data is not synced until ${formatTimestamp(
+            props.syncedUntil?.toNumber(),
+            {
+              mode: 'datetime',
+              longMonthName: true,
+            },
+          )}.`}
         {props.tooltipContent}
         {props.warning && (
           <WarningBar

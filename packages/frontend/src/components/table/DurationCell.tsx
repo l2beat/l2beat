@@ -1,7 +1,10 @@
 import { pluralize } from '@l2beat/shared-pure'
 import React from 'react'
 
-export function DurationCell(props: { durationInSeconds: number }) {
+export function DurationCell(props: {
+  durationInSeconds: number
+  grayedOut?: boolean
+}) {
   const seconds = props.durationInSeconds
   const minutes = Math.floor(props.durationInSeconds / 60)
   const hours = Math.floor(minutes / 60)
@@ -18,7 +21,11 @@ export function DurationCell(props: { durationInSeconds: number }) {
 
   const colorClassName = getDurationColorClassName(seconds)
 
-  return <span className={colorClassName}>{durationText}</span>
+  return (
+    <span className={!props.grayedOut ? colorClassName : 'text-[#737373]'}>
+      {durationText}
+    </span>
+  )
 }
 
 function getDurationColorClassName(durationInSeconds: number) {

@@ -4,6 +4,7 @@ import {
   ImplementationChangeReportApiResponse,
   LivenessApiProject,
   LivenessApiResponse,
+  TrackedTxsConfigSubtypeValues,
   UnixTime,
 } from '@l2beat/shared-pure'
 
@@ -12,6 +13,7 @@ import {
   AnomalyIndicatorEntry,
   LivenessPagesData,
   ScalingLivenessViewEntry,
+  ScalingLivenessViewEntryData,
 } from '../types'
 import { ScalingLivenessViewProps } from '../view/ScalingLivenessView'
 
@@ -45,10 +47,6 @@ function getScalingLivenessViewEntry(
     )
   }
 
-  // TODO: remove this when liveness is fixed
-  // const isSynced = UnixTime.now().add(-12, 'hours').lte(liveness.syncedUntil)
-  const isSynced = true
-
   return {
     name: project.display.name,
     shortName: project.display.shortName,
@@ -62,6 +60,27 @@ function getScalingLivenessViewEntry(
     provider: project.display.provider,
     stage: project.stage,
     explanation: project.display.liveness?.explanation,
+    anomalyEntries: getAnomalyEntries(liveness.anomalies),
+    data: getLivenessData(liveness, project),
+  }
+}
+
+function getLivenessData(
+  liveness: LivenessApiResponse['projects'][string],
+  project: Layer2,
+): ScalingLivenessViewEntryData | undefined {
+  if (!liveness) return undefined
+
+  let isSynced = true
+
+  const syncTarget = UnixTime.now().add(-1, 'hours').toStartOf('hour')
+  TrackedTxsConfigSubtypeValues.forEach((subtype) => {
+    if (liveness[subtype]?.syncedUntil.lt(syncTarget)) {
+      isSynced = false
+    }
+  })
+
+  return {
     stateUpdates: liveness.stateUpdates && {
       ...liveness.stateUpdates,
       warning: project.display.liveness?.warnings?.stateUpdates,
@@ -74,8 +93,9 @@ function getScalingLivenessViewEntry(
       ...liveness.proofSubmissions,
       warning: project.display.liveness?.warnings?.proofSubmissions,
     },
-    anomalyEntries: getAnomalyEntries(liveness.anomalies),
-    isSynced,
+    syncStatus: {
+      isSynced,
+    },
   }
 }
 
