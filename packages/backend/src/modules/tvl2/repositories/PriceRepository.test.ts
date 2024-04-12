@@ -39,7 +39,7 @@ describeDatabase(PriceRepository.name, (database) => {
     })
   })
 
-  describe(PriceRepository.prototype.deleteAfterExclusive.name, () => {
+  describe(PriceRepository.prototype.deleteByConfigInTimeRange.name, () => {
     it('deletes records after the given timestamp', async () => {
       await repository.addMany([
         saved('a', new UnixTime(1), 1),
@@ -47,7 +47,11 @@ describeDatabase(PriceRepository.name, (database) => {
         saved('a', new UnixTime(3), 3),
       ])
 
-      await repository.deleteAfterExclusive('a'.repeat(12), new UnixTime(1))
+      await repository.deleteByConfigInTimeRange(
+        'a'.repeat(12),
+        new UnixTime(2),
+        new UnixTime(3),
+      )
 
       const results = await repository.getAll()
       expect(results).toEqual([saved('a', new UnixTime(1), 1)])
@@ -59,7 +63,11 @@ describeDatabase(PriceRepository.name, (database) => {
         saved('b', new UnixTime(1), 1),
       ])
 
-      await repository.deleteAfterExclusive('a'.repeat(12), new UnixTime(0))
+      await repository.deleteByConfigInTimeRange(
+        'a'.repeat(12),
+        new UnixTime(0),
+        new UnixTime(1),
+      )
 
       const results = await repository.getAll()
       expect(results).toEqual([saved('b', new UnixTime(1), 1)])

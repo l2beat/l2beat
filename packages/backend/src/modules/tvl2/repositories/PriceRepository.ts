@@ -32,11 +32,16 @@ export class PriceRepository extends BaseRepository {
     return rows.length
   }
 
-  async deleteAfterExclusive(configId: string, timestamp: UnixTime) {
+  async deleteByConfigInTimeRange(
+    configId: string,
+    fromInclusive: UnixTime,
+    toInclusive: UnixTime,
+  ) {
     const knex = await this.knex()
     return knex('prices')
       .where('configuration_id', configId)
-      .where('timestamp', '>', timestamp.toDate())
+      .where('timestamp', '>=', fromInclusive.toDate())
+      .where('timestamp', '<=', toInclusive.toDate())
       .delete()
   }
 

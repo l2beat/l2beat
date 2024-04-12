@@ -8,6 +8,7 @@ interface PriceConfigBase {
   address: EthereumAddress | 'native'
   chain: string
   sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
 }
 
 export interface CoingeckoPriceConfigEntry extends PriceConfigBase {
