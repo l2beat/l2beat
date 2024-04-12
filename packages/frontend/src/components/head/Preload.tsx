@@ -8,7 +8,13 @@ export function Preload(props: Props) {
   return (
     <>
       {props.preloadApis?.map((api) => (
-        <link rel="preload" key={api} href={api} as="fetch" />
+        <link
+          rel="preload"
+          key={api}
+          href={api}
+          as="fetch"
+          crossOrigin="anonymous"
+        />
       ))}
       <link
         rel="preload"
