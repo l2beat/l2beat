@@ -43,6 +43,7 @@ export interface OrbitStackConfigCommon {
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
   trackedTxs?: Layer2TxConfig[]
+  postsBlobs?: boolean
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -54,7 +55,6 @@ export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
   display: Omit<Layer2Display, 'provider' | 'category' | 'dataAvailabilityMode'>
   nativeToken?: string
-  postsBlobs?: boolean
 }
 
 export function orbitStackCommon(
@@ -138,7 +138,9 @@ export function orbitStackCommon(
               })
             })()
           : {
-              ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
+              ...(templateVars.postsBlobs
+                ? TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA
+                : TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL),
               references: [
                 {
                   text: 'Sequencing followed by deterministic execution - Arbitrum documentation',
