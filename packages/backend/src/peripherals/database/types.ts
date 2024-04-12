@@ -66,7 +66,6 @@ declare module 'knex/types/tables' {
     latest: number
     synced_once: boolean
     updated_at: Date
-    synced_once: boolean
   }
 
   interface ZksyncTransactionRow {

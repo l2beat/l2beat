@@ -16,6 +16,7 @@ export function postprocessCounts(
   processedAll: boolean,
   now: UnixTime,
 ): DailyTransactionCount[] {
+  console.log(counts)
   if (counts.length === 0) return []
 
   const today = now.toStartOf('day')
@@ -36,6 +37,7 @@ export function postprocessCounts(
     : filledBefore
 
   const lastFull = lteYesterday[lteYesterday.length - 1]
+
   // we have data up til yesterday
   if (lastFull.timestamp.equals(yesterday)) {
     return lteYesterday

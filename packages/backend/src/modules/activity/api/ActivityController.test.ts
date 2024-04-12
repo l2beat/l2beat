@@ -5,6 +5,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
+import { range } from 'lodash'
 
 import { Clock } from '../../../tools/Clock'
 import {
@@ -113,10 +114,14 @@ describe(ActivityController.name, () => {
 
       expect(await controller.getActivity()).toEqual(
         formatActivity({
-          combined: [
-            [TODAY.add(-2, 'days'), 2, 2137],
-            [TODAY.add(-1, 'days'), 1, 420],
-          ],
+          combined: {
+            data: [
+              [TODAY.add(-2, 'days'), 2, 2137],
+              [TODAY.add(-1, 'days'), 1, 420],
+            ],
+            estimatedImpact: 0,
+            estimatedSince: TODAY.add(-1, 'days'),
+          },
           projects: {
             'project-a': [
               [TODAY.add(-2, 'days'), 2, 2137],
@@ -189,10 +194,14 @@ describe(ActivityController.name, () => {
 
       expect(await controller.getActivity()).toEqual(
         formatActivity({
-          combined: [
-            [TODAY.add(-2, 'days'), 1339, 2137],
-            [TODAY.add(-1, 'days'), 70, 420],
-          ],
+          combined: {
+            data: [
+              [TODAY.add(-2, 'days'), 1339, 2137],
+              [TODAY.add(-1, 'days'), 70, 420],
+            ],
+            estimatedImpact: 0,
+            estimatedSince: TODAY.add(-1, 'days'),
+          },
           projects: {
             [PROJECT_A.toString()]: [
               [TODAY.add(-2, 'days'), 2, 2137],
@@ -206,6 +215,175 @@ describe(ActivityController.name, () => {
         }),
       )
     })
+
+    it('excludes data for projects that have not synced once', async () => {
+      const includedIds: ProjectId[] = [
+        PROJECT_A,
+        PROJECT_B,
+        ProjectId.ETHEREUM,
+      ]
+      const processors: SequenceProcessor[] = [
+        mockProcessor({
+          projectId: PROJECT_A,
+          hasProcessedAll: true,
+        }),
+        mockProcessor({
+          projectId: PROJECT_B,
+          hasProcessedAll: false,
+          syncedOnce: false,
+        }),
+        mockProcessor({
+          projectId: ProjectId.ETHEREUM,
+          hasProcessedAll: true,
+        }),
+      ]
+
+      const controller = new ActivityController(
+        includedIds,
+        processors,
+        mockRepository([
+          {
+            projectId: ProjectId.ETHEREUM,
+            timestamp: TODAY.add(-2, 'days'),
+            count: 2137,
+          },
+          {
+            projectId: ProjectId.ETHEREUM,
+            timestamp: TODAY.add(-1, 'days'),
+            count: 420,
+          },
+          { projectId: ProjectId.ETHEREUM, timestamp: TODAY, count: 100 },
+          {
+            projectId: PROJECT_A,
+            timestamp: TODAY.add(-2, 'days'),
+            count: 2,
+          },
+          {
+            projectId: PROJECT_A,
+            timestamp: TODAY.add(-1, 'days'),
+            count: 1,
+          },
+          {
+            projectId: PROJECT_B,
+            timestamp: TODAY.add(-2, 'days'),
+            count: 1337,
+          },
+        ]),
+        mockObject<Clock>({ getLastHour: () => NOW }),
+      )
+
+      expect(await controller.getActivity()).toEqual(
+        formatActivity({
+          combined: {
+            data: [
+              [TODAY.add(-2, 'days'), 2, 2137],
+              [TODAY.add(-1, 'days'), 1, 420],
+            ],
+            estimatedImpact: 0,
+            estimatedSince: TODAY.add(-1, 'days'),
+          },
+          projects: {
+            [PROJECT_A.toString()]: [
+              [TODAY.add(-2, 'days'), 2, 2137],
+              [TODAY.add(-1, 'days'), 1, 420],
+            ],
+          },
+        }),
+      )
+    })
+
+    it('makes correct estimations for combined', async () => {
+      const fullySyncedProjectIds = range(1, 4).map((i) =>
+        ProjectId(`project-synced-${i.toString()}`),
+      )
+      const notSyncedProjectIds = range(1, 4).map((i) =>
+        ProjectId(`project-not-synced-${i.toString()}`),
+      )
+
+      const includedIds: ProjectId[] = [
+        ...fullySyncedProjectIds,
+        ...notSyncedProjectIds,
+        ProjectId.ETHEREUM,
+      ]
+      const processors: SequenceProcessor[] = [
+        mockProcessor({
+          projectId: ProjectId.ETHEREUM,
+          hasProcessedAll: true,
+        }),
+        ...fullySyncedProjectIds.map((projectId) =>
+          mockProcessor({
+            projectId,
+            hasProcessedAll: true,
+          }),
+        ),
+        ...notSyncedProjectIds.map((projectId) =>
+          mockProcessor({
+            projectId,
+            hasProcessedAll: false,
+          }),
+        ),
+      ]
+
+      const txPerDay = {
+        eth: 100,
+        synced: 4,
+        notSynced: 1,
+      } as const
+
+      const data = [
+        ...range(0, 5)
+          .map((i) => [
+            {
+              projectId: ProjectId.ETHEREUM,
+              timestamp: TODAY.add(-i, 'days'),
+              count: txPerDay.eth,
+            },
+            ...fullySyncedProjectIds.map((projectId) => ({
+              projectId,
+              timestamp: TODAY.add(-i, 'days'),
+              count: txPerDay.synced,
+            })),
+          ])
+          .flat(),
+        ...range(3, 5)
+          .map((i) =>
+            notSyncedProjectIds.map((projectId) => ({
+              projectId,
+              timestamp: TODAY.add(-i, 'days'),
+              count: txPerDay.notSynced,
+            })),
+          )
+          .flat(),
+      ].sort((a, b) => a.timestamp.toNumber() - b.timestamp.toNumber())
+
+      const controller = new ActivityController(
+        includedIds,
+        processors,
+        mockRepository(data),
+        mockObject<Clock>({ getLastHour: () => NOW }),
+      )
+
+      expect(await controller.getActivity()).toEqual(
+        formatActivity({
+          combined: {
+            data: [
+              [TODAY.add(-4, 'days'), 15, txPerDay.eth],
+              [TODAY.add(-3, 'days'), 15, txPerDay.eth],
+              [TODAY.add(-2, 'days'), 15, txPerDay.eth],
+              [TODAY.add(-1, 'days'), 15, txPerDay.eth],
+            ],
+            estimatedImpact: 0.2,
+            estimatedSince: TODAY.add(-4, 'days'),
+          },
+          projects: {
+            [PROJECT_A.toString()]: [
+              [TODAY.add(-2, 'days'), 2, 2137],
+              [TODAY.add(-1, 'days'), 1, 420],
+            ],
+          },
+        }),
+      )
+    })
   })
 })
 
@@ -213,15 +391,21 @@ function formatActivity({
   combined,
   projects,
 }: {
-  combined: ActivityApiChartPoint[]
+  combined: {
+    data: ActivityApiChartPoint[]
+    estimatedSince: UnixTime
+    estimatedImpact: number
+  }
   projects: Record<string, ActivityApiChartPoint[]>
 }): ActivityApiResponse {
   return {
     combined: {
       daily: {
         types: ['timestamp', 'transactions', 'ethereumTransactions'],
-        data: combined,
+        data: combined.data,
       },
+      estimatedImpact: combined.estimatedImpact,
+      estimatedSince: combined.estimatedSince,
     },
     projects: Object.entries(projects).reduce((acc, cur) => {
       return {
@@ -240,12 +424,20 @@ function formatActivity({
 function mockProcessor({
   hasProcessedAll,
   projectId,
+  syncedOnce,
 }: {
   hasProcessedAll: boolean
   projectId: ProjectId
+  syncedOnce?: boolean
 }) {
   return mockObject<SequenceProcessor>({
     hasProcessedAll: () => hasProcessedAll,
+    getStatus: () => ({
+      latest: 5,
+      lastProcessed: hasProcessedAll ? 5 : 4,
+      syncedOnce: syncedOnce ?? true,
+      isProcessing: false,
+    }),
     projectId,
   })
 }
