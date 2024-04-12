@@ -136,6 +136,7 @@ export const layer2s: Layer2[] = [
   hychain,
   hypr,
   immutablex,
+  kakarotzkevm,
   karak,
   kinto,
   kroma,
