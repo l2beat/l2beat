@@ -44,21 +44,21 @@ export function createTvl2Module(
   const hourlyIndexer = new HourlyIndexer(logger, clock)
 
   const modules = [
-    createPriceModule(
-      config.tvl2,
-      logger,
-      peripherals,
-      hourlyIndexer,
-      syncOptimizer,
-    ),
-    ...createChainModules(
-      config.tvl2,
-      peripherals,
-      logger,
-      hourlyIndexer,
-      syncOptimizer,
-      indexerService,
-    ),
+    // createPriceModule(
+    //   config.tvl2,
+    //   logger,
+    //   peripherals,
+    //   hourlyIndexer,
+    //   syncOptimizer,
+    // ),
+    // ...createChainModules(
+    //   config.tvl2,
+    //   peripherals,
+    //   logger,
+    //   hourlyIndexer,
+    //   syncOptimizer,
+    //   indexerService,
+    // ),
     createCirculatingSupplyModule(
       config.tvl2,
       logger,
@@ -76,15 +76,11 @@ export function createTvl2Module(
   )
 
   const start = async () => {
-    logger = logger.for('Tvl2Module')
-
     await hourlyIndexer.start()
 
     for (const module of modules) {
       await module.start()
     }
-
-    logger.info('Started')
   }
 
   return {
