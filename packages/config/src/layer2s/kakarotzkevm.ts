@@ -11,7 +11,7 @@ export const kakarotzkevm: Layer2 = upcomingL2({
     purposes: ['Universal'],
     category: 'ZK Rollup',
     links: {
-      websites: ['https://www.kakarot.org/'],
+      websites: ['https://kakarot.org/'],
       apps: [],
       documentation: ['https://docs.kakarot.org/'],
       explorers: [],
