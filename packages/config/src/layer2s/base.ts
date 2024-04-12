@@ -81,6 +81,12 @@ export const base: Layer2 = opStackL2({
   isNodeAvailable: true,
   milestones: [
     {
+      name: 'Base starts using blobs',
+      link: 'https://twitter.com/Optimism/status/1768235284494450922',
+      date: '2024-03-14T00:00:00Z',
+      description: 'Base starts publishing data to blobs.',
+    },
+    {
       name: 'Base Mainnet Launch',
       link: 'https://base.mirror.xyz/hwNwqXHVoLlO8s4DZppog4DfGvM34tigaDjOWuEJQfY',
       date: '2023-07-13T00:00:00.00Z',

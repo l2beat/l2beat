@@ -557,7 +557,7 @@ A \`Governance\` smart contract is set up as the *Governor* role of the diamond.
     {
       name: 'zkSync Era starts using blobs',
       link: 'https://twitter.com/zksync/status/1767983026443579448',
-      date: '2024-03-13T15:00:00Z',
+      date: '2024-03-13T00:00:00Z',
       description: 'zkSync Era starts publishing data to blobs.',
     },
     {

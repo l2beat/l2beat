@@ -102,6 +102,12 @@ export const optimism: Layer2 = opStackL2({
     //   description: 'Superchain enables L1 contracts to be upgraded atomically across multiple chains in a single transaction.',
     // },
     {
+      name: 'OP Mainnet starts using blobs',
+      link: 'https://twitter.com/Optimism/status/1768235284494450922',
+      date: '2024-03-14T00:00:00Z',
+      description: 'OP Mainnet starts publishing data to blobs.',
+    },
+    {
       name: 'Network Upgrade #5: Ecotone',
       link: 'https://vote.optimism.io/proposals/95119698597711750186734377984697814101707190887694311194110013874163880701970',
       date: '2024-03-14T00:00:00Z',
