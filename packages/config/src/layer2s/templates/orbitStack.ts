@@ -43,6 +43,7 @@ export interface OrbitStackConfigCommon {
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
   trackedTxs?: Layer2TxConfig[]
+  postsBlobs?: boolean
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -137,7 +138,9 @@ export function orbitStackCommon(
               })
             })()
           : {
-              ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
+              ...(templateVars.postsBlobs
+                ? TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA
+                : TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL),
               references: [
                 {
                   text: 'Sequencing followed by deterministic execution - Arbitrum documentation',
@@ -282,7 +285,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
       ...templateVars.display,
       warning:
         'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
-      provider: 'Arbitrum Orbit',
+      provider: 'Arbitrum',
       category: postsToExternalDA ? 'Optimium' : 'Optimistic Rollup',
     },
     riskView: makeBridgeCompatible({
@@ -422,7 +425,11 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           })
         })()
       : addSentimentToDataAvailability({
-          layers: ['Ethereum (calldata)'],
+          layers: [
+            templateVars.postsBlobs
+              ? 'Ethereum (blobs or calldata)'
+              : 'Ethereum (calldata)',
+          ],
           bridge: { type: 'Enshrined' },
           mode: 'Transactions data (compressed)',
         }),

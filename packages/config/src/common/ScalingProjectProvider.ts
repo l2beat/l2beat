@@ -1,17 +1,17 @@
+type ScalingProviderBase = 'OP Stack' | 'Arbitrum'
+
 export type Layer2Provider =
+  | ScalingProviderBase
   | 'StarkEx'
-  | 'OP Stack'
   | 'zkSync Lite'
   | 'ZK Stack'
   | 'Loopring'
-  | 'Arbitrum'
   | 'Polygon'
   | 'OVM'
   | 'Starknet'
 
 export type Layer3Provider =
-  | 'Arbitrum Orbit'
+  | ScalingProviderBase
   | 'Cartesi Rollups'
   | 'zkLink Nexus'
   | 'Taiko'
-  | 'OP Stack'

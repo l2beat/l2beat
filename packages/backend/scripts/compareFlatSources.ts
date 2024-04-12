@@ -10,7 +10,6 @@ type ShortStackKey =
   | 'arbitrum'
   | 'loopring'
   | 'opstack'
-  | 'orbit'
   | 'ovm'
   | 'polygon'
   | 'starkex'
@@ -25,7 +24,6 @@ const shortStackToFullName: Record<
   arbitrum: 'Arbitrum',
   loopring: 'Loopring',
   opstack: 'OP Stack',
-  orbit: 'Arbitrum Orbit',
   ovm: 'OVM',
   polygon: 'Polygon',
   starkex: 'StarkEx',
