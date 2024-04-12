@@ -1,0 +1,150 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "chain": "ethereum",
+  "name": "edgeless",
+  "initialAddresses": [
+    "0x7E0bc314535f430122caFEF18eAbd508d62934bf",
+    "0x6a1B2ea25c3099CAFcbd4E60a3Ae251E52B69e78",
+    "0x99790790B030CF116efed1c7577e2262072EfCc9"
+  ],
+  "names": {
+    "0x7E0bc314535f430122caFEF18eAbd508d62934bf": "EdgelessDeposit",
+    "0x1e6d08769be5Dc83d38C64C5776305Ad6F01c227": "StakingManager",
+    "0xbD95aa0f68B95e6C01d02F1a36D8fde29C6C8e7b": "EthStrategy",
+    "0xf51551afD112a50Fc5EDa0454111078fE6E6096E": "Inbox",
+    "0x99790790B030CF116efed1c7577e2262072EfCc9": "L1CustomGateway",
+    "0x6a1B2ea25c3099CAFcbd4E60a3Ae251E52B69e78": "L1ERC20Gateway",
+    "0x890025891508a463A636f81D2f532a97210240de": "RollupProxy",
+    "0x5e8749760c5051fF80b73319cCf4d05ef9959563": "Outbox",
+    "0x6B595398152999bBc759D5D8ed8169793F915488": "Bridge",
+    "0xFfbf2b49524e09B1F1fBcA707B830e79c68c2086": "SequencerInbox",
+    "0xc213d433802ea473e23623476b26FB12e9B4eFe6": "UpgradeExecutor",
+    "0x893057442A952E3254CA53d007AD6BBB502f557e": "ChallengeManager"
+  },
+  "overrides": {
+    "StakingManager": {
+      "ignoreMethods": ["proxiableUUID"],
+      "fields": {
+        "strategies": {
+          "type": "arrayFromTwoEvents",
+          "addEvent": "AddStrategy",
+          "addKey": "strategy",
+          "removeEvent": "RemoveStrategy",
+          "removeKey": "strategy"
+        },
+        "activeStrategiesIndex": {
+          "type": "stateFromEvent",
+          "event": "SetActiveStrategy",
+          "returnParams": ["asset", "index"],
+          "groupBy": "asset",
+          "onlyValue": true
+        }
+      }
+    },
+    "EdgelessDeposit": {
+      "ignoreMethods": ["proxiableUUID"]
+    },
+    "EthStrategy": {
+      "ignoreMethods": ["proxiableUUID"]
+    },
+    "ChallengeManager": {
+      "ignoreMethods": ["challenges"]
+    },
+    "RollupProxy": {
+      "ignoreMethods": [
+        // Execution reverted
+        "proxiableUUID"
+      ],
+      "ignoreInWatchMode": [
+        "firstUnresolvedNode",
+        "latestConfirmed",
+        "latestNodeCreated"
+      ],
+      "fields": {
+        // when this changes, it means the validators have changed
+        "setValidatorCount": {
+          "type": "eventCount",
+          "topics": [
+            // event OwnerFunctionCalled(uint256 indexed id);
+            "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
+            // id == 6 is emitted inside setValidator()
+            "0x0000000000000000000000000000000000000000000000000000000000000006"
+          ]
+        },
+        "challenges": {
+          "type": "stateFromEvent",
+          "event": "RollupChallengeStarted",
+          "returnParams": [
+            "challengeIndex",
+            "asserter",
+            "challenger",
+            "challengedNode"
+          ]
+        },
+        "validators": {
+          "type": "arbitrumActors",
+          "actorType": "validator"
+        }
+      }
+    },
+    "Outbox": {
+      "ignoreMethods": ["spent", "isSpent"]
+    },
+    "Bridge": {
+      "ignoreMethods": ["sequencerInboxAccs", "delayedInboxAccs"],
+      "ignoreInWatchMode": [
+        "delayedMessageCount",
+        "sequencerMessageCount",
+        "sequencerReportedSubMessageCount"
+      ]
+    },
+    "SequencerInbox": {
+      "ignoreMethods": ["inboxAccs"],
+      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
+      "fields": {
+        // getting sequencers from the contract is too complex at the moment
+        // so we hardcode it in config .ts
+        // this field will notify us in case of changes
+        "IS_HARDCODED_SEQUENCER_BATCH_POSTER": {
+          "type": "call",
+          "method": "function isBatchPoster(address) external view returns (bool)",
+          "args": ["0x02c903F5c76F3f00c1F659702Bd76DF30470bBEE"]
+        },
+        "sequencerVersion": {
+          "type": "arbitrumSequencerVersion"
+        },
+        "dacKeyset": {
+          "type": "arbitrumDACKeyset"
+        },
+        // when this changes, it means the sequencers have changed
+        "setIsBatchPosterCount": {
+          "type": "eventCount",
+          "topics": [
+            // event OwnerFunctionCalled(uint256 indexed id);
+            "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
+            // id == 6 is emitted inside setValidator()
+            "0x0000000000000000000000000000000000000000000000000000000000000001"
+          ]
+        },
+        "batchPosters": {
+          "type": "arbitrumActors",
+          "actorType": "batchPoster"
+        },
+        "keySetUpdates": {
+          "type": "eventCount",
+          "topics": [
+            // SetValidKeyset(bytes32,bytes)
+            "0xabca9b7986bc22ad0160eb0cb88ae75411eacfba4052af0b457a9335ef655722"
+          ]
+        }
+      }
+    },
+    "UpgradeExecutor": {
+      "fields": {
+        "accessControl": {
+          "type": "accessControl"
+        }
+      }
+    }
+  }
+}
