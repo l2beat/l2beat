@@ -30,7 +30,9 @@ export const ActivityApiChartsWithEstimation = z.object({
   estimatedSince: branded(z.number(), (n) => new UnixTime(n)),
   estimatedImpact: z.number(),
 })
-export type ActivityApiChartsWithEstimation = z.infer<typeof ActivityApiChartsWithEstimation>
+export type ActivityApiChartsWithEstimation = z.infer<
+  typeof ActivityApiChartsWithEstimation
+>
 
 export const ActivityApiResponse = z.object({
   combined: ActivityApiChartsWithEstimation,
