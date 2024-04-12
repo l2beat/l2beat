@@ -27,8 +27,21 @@ export class AmountRepository extends BaseRepository {
   async addMany(records: AmountRecord[]) {
     const rows: AmountRow[] = records.map(toRow)
     const knex = await this.knex()
-    await knex.batchInsert('amounts', rows, 10_000)
+    await knex.batchInsert('amounts', rows, 1_000)
     return rows.length
+  }
+
+  async deleteByConfigInTimeRange(
+    configId: string,
+    fromInclusive: UnixTime,
+    toInclusive: UnixTime,
+  ) {
+    const knex = await this.knex()
+    return knex('amounts')
+      .where('configuration_id', configId)
+      .where('timestamp', '>=', fromInclusive.toDate())
+      .where('timestamp', '<=', toInclusive.toDate())
+      .delete()
   }
 
   // #region methods used only in tests

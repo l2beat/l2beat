@@ -4,7 +4,6 @@ import { ChainId, ProjectId, Token, UnixTime } from '@l2beat/shared-pure'
 
 import { toMulticallConfigEntry } from '../../peripherals/multicall/MulticallConfig'
 import { ChainTvlConfig } from '../Config'
-import { FeatureFlags } from '../FeatureFlags'
 
 export function getChainsWithTokens(tokenList: Token[], chains: ChainConfig[]) {
   const results = new Set<string>()
@@ -20,7 +19,7 @@ export function getChainsWithTokens(tokenList: Token[], chains: ChainConfig[]) {
 const DEFAULT_RPC_CALLS_PER_MINUTE = 60
 
 export function getChainTvlConfig(
-  flags: FeatureFlags,
+  isEnabled: boolean,
   env: Env,
   chain: string,
   options?: {
@@ -48,8 +47,7 @@ export function getChainTvlConfig(
     throw new Error('Missing explorerApi for chain: ' + chain)
   }
 
-  const enabled = flags.isEnabled('tvl', chain)
-  if (!enabled) {
+  if (!isEnabled) {
     return { chain }
   }
 

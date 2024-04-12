@@ -1,26 +1,19 @@
-import { assert, Logger } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import { tokenList } from '@l2beat/config'
-import {
-  BlockscoutClient,
-  CoingeckoClient,
-  CoingeckoQueryService,
-  EtherscanClient,
-} from '@l2beat/shared'
+import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
 
 import { Config } from '../../config'
 import { Tvl2Config } from '../../config/Config'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { Clock } from '../../tools/Clock'
+import { IndexerConfigurationRepository } from '../../tools/uif/IndexerConfigurationRepository'
+import { IndexerService } from '../../tools/uif/IndexerService'
 import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import { ApplicationModule } from '../ApplicationModule'
 import { HourlyIndexer } from '../tracked-txs/HourlyIndexer'
 import { createTvl2StatusRouter } from './api/Tvl2StatusRouter'
-import {
-  BlockTimestampIndexer,
-  BlockTimestampProvider,
-} from './BlockTimestampIndexer'
+import { createChainModules } from './ChainModule'
 import { PriceIndexer } from './PriceIndexer'
-import { BlockTimestampRepository } from './repositories/BlockTimestampRepository'
 import { PriceRepository } from './repositories/PriceRepository'
 import { SyncOptimizer } from './SyncOptimizer'
 
@@ -40,12 +33,23 @@ export function createTvl2Module(
   })
   const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
 
-  const hourlyIndexer = new HourlyIndexer(logger, clock)
-
   const syncOptimizer = new SyncOptimizer(clock, {
     removeHourlyAfterDays: 10,
     removeSixHourlyAfterDays: 93,
   })
+
+  const indexerStateRepository = peripherals.getRepository(
+    IndexerStateRepository,
+  )
+  const configurationsRepository = peripherals.getRepository(
+    IndexerConfigurationRepository,
+  )
+  const indexerService = new IndexerService(
+    indexerStateRepository,
+    configurationsRepository,
+  )
+
+  const hourlyIndexer = new HourlyIndexer(logger, clock)
 
   const priceIndexers = getPriceIndexers(
     config.tvl2,
@@ -56,25 +60,32 @@ export function createTvl2Module(
     syncOptimizer,
   )
 
-  const blockTimestampIndexers = getBlockTimestampIndexers(
+  const chainModules = createChainModules(
     config.tvl2,
     peripherals,
     logger,
     hourlyIndexer,
     syncOptimizer,
+    indexerService,
   )
 
-  const indexers = [...blockTimestampIndexers, ...priceIndexers]
-
-  const statusRouter = createTvl2StatusRouter(config.tvl2, indexers, clock)
+  const statusRouter = createTvl2StatusRouter(
+    config.tvl2,
+    [...priceIndexers, ...chainModules.map((m) => m.indexers).flat()],
+    clock,
+  )
 
   const start = async () => {
     logger = logger.for('Tvl2Module')
 
     await hourlyIndexer.start()
 
-    for (const indexer of indexers) {
-      await indexer.start()
+    for (const priceIndexer of priceIndexers) {
+      await priceIndexer.start()
+    }
+
+    for (const chainModule of chainModules) {
+      await chainModule.start()
     }
 
     logger.info('Started')
@@ -112,43 +123,4 @@ function getPriceIndexers(
         syncOptimizer,
       ),
   )
-}
-
-function getBlockTimestampIndexers(
-  config: Tvl2Config,
-  peripherals: Peripherals,
-  logger: Logger,
-  hourlyIndexer: HourlyIndexer,
-  syncOptimizer: SyncOptimizer,
-): BlockTimestampIndexer[] {
-  return config.chains
-    .filter((c) => c.config !== undefined)
-    .map((chain) => {
-      assert(chain.config !== undefined, 'Chain config is required')
-
-      const provider: BlockTimestampProvider =
-        chain.config.blockNumberProviderConfig.type === 'etherscan'
-          ? peripherals.getClient(EtherscanClient, {
-              apiKey: chain.config.blockNumberProviderConfig.etherscanApiKey,
-              url: chain.config.blockNumberProviderConfig.etherscanApiUrl,
-              minTimestamp: chain.config.minBlockTimestamp,
-              chainId: chain.config.chainId,
-            })
-          : peripherals.getClient(BlockscoutClient, {
-              url: chain.config.blockNumberProviderConfig.blockscoutApiUrl,
-              minTimestamp: chain.config.minBlockTimestamp,
-              chainId: chain.config.chainId,
-            })
-
-      return new BlockTimestampIndexer(
-        logger.tag(`${chain.chain}`),
-        hourlyIndexer,
-        provider,
-        peripherals.getRepository(IndexerStateRepository),
-        peripherals.getRepository(BlockTimestampRepository),
-        chain.chain,
-        chain.config.minBlockTimestamp,
-        syncOptimizer,
-      )
-    })
 }
