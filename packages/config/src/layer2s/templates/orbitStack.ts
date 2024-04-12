@@ -54,6 +54,7 @@ export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
   display: Omit<Layer2Display, 'provider' | 'category' | 'dataAvailabilityMode'>
   nativeToken?: string
+  postsBlobs: boolean
 }
 
 export function orbitStackCommon(
@@ -422,7 +423,11 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           })
         })()
       : addSentimentToDataAvailability({
-          layers: ['Ethereum (calldata)'],
+          layers: [
+            templateVars.postsBlobs
+              ? 'Ethereum (blobs or calldata)'
+              : 'Ethereum (calldata)',
+          ],
           bridge: { type: 'Enshrined' },
           mode: 'Transactions data (compressed)',
         }),
