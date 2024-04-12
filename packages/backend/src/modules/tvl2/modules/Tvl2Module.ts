@@ -1,9 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
-import { tokenList } from '@l2beat/config'
-import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
 
 import { Config } from '../../../config'
-import { Tvl2Config } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { Clock } from '../../../tools/Clock'
 import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
@@ -12,10 +9,9 @@ import { IndexerStateRepository } from '../../../tools/uif/IndexerStateRepositor
 import { ApplicationModule } from '../../ApplicationModule'
 import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
 import { createTvl2StatusRouter } from '../api/Tvl2StatusRouter'
-import { PriceIndexer } from '../indexers/PriceIndexer'
-import { PriceRepository } from '../repositories/PriceRepository'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { createChainModules } from './ChainModule'
+import { createPriceModule } from './PriceModule'
 
 export function createTvl2Module(
   config: Config,
@@ -28,16 +24,6 @@ export function createTvl2Module(
     return
   }
 
-  const coingeckoClient = peripherals.getClient(CoingeckoClient, {
-    apiKey: config.tvl2.coingeckoApiKey,
-  })
-  const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
-
-  const syncOptimizer = new SyncOptimizer(clock, {
-    removeHourlyAfterDays: 10,
-    removeSixHourlyAfterDays: 93,
-  })
-
   const indexerStateRepository = peripherals.getRepository(
     IndexerStateRepository,
   )
@@ -49,29 +35,34 @@ export function createTvl2Module(
     configurationsRepository,
   )
 
+  const syncOptimizer = new SyncOptimizer(clock, {
+    removeHourlyAfterDays: 10,
+    removeSixHourlyAfterDays: 93,
+  })
+
   const hourlyIndexer = new HourlyIndexer(logger, clock)
 
-  const priceIndexers = getPriceIndexers(
-    config.tvl2,
-    logger,
-    hourlyIndexer,
-    coingeckoQueryService,
-    peripherals,
-    syncOptimizer,
-  )
-
-  const chainModules = createChainModules(
-    config.tvl2,
-    peripherals,
-    logger,
-    hourlyIndexer,
-    syncOptimizer,
-    indexerService,
-  )
+  const modules = [
+    createPriceModule(
+      config.tvl2,
+      logger,
+      peripherals,
+      hourlyIndexer,
+      syncOptimizer,
+    ),
+    ...createChainModules(
+      config.tvl2,
+      peripherals,
+      logger,
+      hourlyIndexer,
+      syncOptimizer,
+      indexerService,
+    ),
+  ]
 
   const statusRouter = createTvl2StatusRouter(
     config.tvl2,
-    [...priceIndexers, ...chainModules.map((m) => m.indexers).flat()],
+    modules.map((m) => m.indexers).flat(),
     clock,
   )
 
@@ -80,12 +71,8 @@ export function createTvl2Module(
 
     await hourlyIndexer.start()
 
-    for (const priceIndexer of priceIndexers) {
-      await priceIndexer.start()
-    }
-
-    for (const chainModule of chainModules) {
-      await chainModule.start()
+    for (const module of modules) {
+      await module.start()
     }
 
     logger.info('Started')
@@ -95,32 +82,4 @@ export function createTvl2Module(
     routers: [statusRouter],
     start,
   }
-}
-
-function getPriceIndexers(
-  config: Tvl2Config,
-  logger: Logger,
-  hourlyIndexer: HourlyIndexer,
-  coingeckoQueryService: CoingeckoQueryService,
-  peripherals: Peripherals,
-  syncOptimizer: SyncOptimizer,
-): PriceIndexer[] {
-  return config.prices.map(
-    (price) =>
-      new PriceIndexer(
-        // TODO: write it correctly
-        logger.tag(
-          `${price.chain}:${
-            tokenList.find((t) => t.address === price.address)?.symbol ??
-            'native'
-          }`,
-        ),
-        hourlyIndexer,
-        coingeckoQueryService,
-        peripherals.getRepository(IndexerStateRepository),
-        peripherals.getRepository(PriceRepository),
-        price,
-        syncOptimizer,
-      ),
-  )
 }
