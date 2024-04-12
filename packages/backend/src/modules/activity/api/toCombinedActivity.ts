@@ -49,5 +49,9 @@ export function toCombinedActivity(
   const estimatedImpact =
     (lastDaily?.includesEstimated ?? 0) / (lastDaily?.count ?? 1)
 
-  return { daily: dailyData, estimatedSince: cutoffTime, estimatedImpact }
+  return {
+    daily: dailyData,
+    estimatedSince: cutoffTime.add(1, 'days'),
+    estimatedImpact,
+  }
 }
