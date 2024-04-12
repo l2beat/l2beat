@@ -429,7 +429,7 @@ export const starknet: Layer2 = {
             '2479841346739966073527450029179698923866252973805981504232089731754042431018',
           ],
         },
-        _hackCostMultiplier: 0.65,
+        _hackCostMultiplier: 0.7,
       },
       {
         uses: [
