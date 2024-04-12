@@ -18,7 +18,7 @@ import { getChainsWithTokens, getChainTvlConfig } from './tvl'
 export function getTvl2Config(
   flags: FeatureFlags,
   env: Env,
-  minTimestampOverride: UnixTime,
+  minTimestampOverride?: UnixTime,
 ): Tvl2Config {
   const projects = layer2s
     .map(layer2ToProject)
