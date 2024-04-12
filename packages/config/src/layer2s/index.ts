@@ -34,6 +34,7 @@ import { honeypot } from './honeypot'
 import { hychain } from './hychain'
 import { hypr } from './hypr'
 import { immutablex } from './immutablex'
+import { kakarotzkevm } from './kakarotzkevm'
 import { karak } from './karak'
 import { kinto } from './kinto'
 import { kroma } from './kroma'
@@ -135,6 +136,7 @@ export const layer2s: Layer2[] = [
   hychain,
   hypr,
   immutablex,
+  kakarotzkevm,
   karak,
   kinto,
   kroma,
