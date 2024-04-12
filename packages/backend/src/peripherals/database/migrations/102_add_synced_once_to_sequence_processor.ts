@@ -17,6 +17,7 @@ export async function up(knex: Knex) {
   await knex.schema.alterTable('sequence_processor', function (table) {
     table.boolean('synced_once').notNullable().defaultTo(false)
   })
+  await knex('sequence_processor').update({ synced_once: true })
 }
 
 export async function down(knex: Knex) {

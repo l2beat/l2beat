@@ -164,6 +164,7 @@ describe(L2CostsController.name, () => {
       const results = await controller.makeTransactionCalculations(
         getMockL2CostRecords(),
         [START_OF_HOUR.add(-1, 'hours'), START_OF_HOUR.add(-2, 'hours')],
+        [],
       )
 
       const TX1_GAS_PRICE_ETH = getGasPriceETH(41_000_000_000)
@@ -173,7 +174,7 @@ describe(L2CostsController.name, () => {
           timestamp: START_OF_HOUR.add(-1, 'hours'),
           calldataGasUsed: 2700,
           computeGasUsed: 400_000 - 2700 - 21_000,
-          overheadGasUsed: 21000 as const,
+          overheadGasUsed: 21000,
           totalGas: 400_000,
           gasCost: 400_000 * TX1_GAS_PRICE_ETH,
           calldataGasCost: 2700 * TX1_GAS_PRICE_ETH,
@@ -212,6 +213,87 @@ describe(L2CostsController.name, () => {
         },
       ]
       expect(results).toEqualUnsorted(expected)
+    })
+
+    it('calculates transaction costs with costMultiplier', async () => {
+      const controller = getMockL2CostsController({})
+
+      const costMultiplier = 0.6
+
+      const results = await controller.makeTransactionCalculations(
+        getMockL2CostRecords(),
+        [START_OF_HOUR.add(-1, 'hours'), START_OF_HOUR.add(-2, 'hours')],
+        [{ id: TrackedTxId.unsafe('aaa'), costMultiplier }],
+      )
+
+      const TX1_GAS_PRICE_ETH = getGasPriceETH(41_000_000_000)
+      const TX2_GAS_PRICE_ETH = getGasPriceETH(29_000_000_000)
+      const expected = [
+        {
+          timestamp: START_OF_HOUR.add(-1, 'hours'),
+          calldataGasUsed: 2700 * costMultiplier,
+          computeGasUsed:
+            400_000 * costMultiplier -
+            2700 * costMultiplier -
+            21_000 * costMultiplier,
+          overheadGasUsed: 21000 * costMultiplier,
+          totalGas: 400_000 * costMultiplier,
+          gasCost: 400_000 * costMultiplier * TX1_GAS_PRICE_ETH,
+          calldataGasCost: 2700 * costMultiplier * TX1_GAS_PRICE_ETH,
+          computeGasCost:
+            (400_000 * costMultiplier -
+              2700 * costMultiplier -
+              21_000 * costMultiplier) *
+            TX1_GAS_PRICE_ETH,
+          totalGasCost: 400_000 * costMultiplier * TX1_GAS_PRICE_ETH,
+          totalOverheadGasCost: 21000 * costMultiplier * TX1_GAS_PRICE_ETH,
+          gasCostUsd: 400_000 * costMultiplier * TX1_GAS_PRICE_ETH * 3000,
+          totalGasCostUsd: 400_000 * costMultiplier * TX1_GAS_PRICE_ETH * 3000,
+          calldataGasCostUsd: 2700 * costMultiplier * TX1_GAS_PRICE_ETH * 3000,
+          computeGasCostUsd:
+            (400_000 * costMultiplier -
+              2700 * costMultiplier -
+              21_000 * costMultiplier) *
+            TX1_GAS_PRICE_ETH *
+            3000,
+          totalOverheadGasCostUsd:
+            21000 * costMultiplier * TX1_GAS_PRICE_ETH * 3000,
+          type: 2 as const,
+        },
+        {
+          timestamp: START_OF_HOUR.add(-2, 'hours'),
+          calldataGasUsed: 0,
+          computeGasUsed: 0,
+          overheadGasUsed: 21000 as const,
+          totalGas: 21000 + 780_000,
+          gasCost: 21000 * TX2_GAS_PRICE_ETH,
+          calldataGasCost: 0,
+          computeGasCost: 0,
+          totalGasCost: 21000 * TX2_GAS_PRICE_ETH + getGasPriceETH(1) * 780_000,
+          totalOverheadGasCost: 21000 * TX2_GAS_PRICE_ETH,
+          gasCostUsd: 21000 * TX2_GAS_PRICE_ETH * 3100,
+          totalGasCostUsd:
+            (21000 * TX2_GAS_PRICE_ETH + getGasPriceETH(1) * 780_000) * 3100,
+          calldataGasCostUsd: 0,
+          computeGasCostUsd: 0,
+          totalOverheadGasCostUsd: 21000 * TX2_GAS_PRICE_ETH * 3100,
+          type: 3 as const,
+          blobGasCost: getGasPriceETH(1) * 780_000,
+          blobGasUsed: 780_000,
+          blobGasCostUsd: getGasPriceETH(1) * 780_000 * 3100,
+        },
+      ]
+      expect(results).toEqualUnsorted(expected)
+    })
+  })
+
+  describe(L2CostsController.prototype.findConfigsWithMultiplier.name, () => {
+    it('finds configs with costMultiplier', async () => {
+      const controller = getMockL2CostsController({})
+      const result = controller.findConfigsWithMultiplier(
+        MOCK_PROJECTS[1].trackedTxsConfig!,
+      )
+      expect(result[0].costMultiplier).toEqual(0.6)
     })
   })
 
@@ -354,6 +436,7 @@ describe(L2CostsController.name, () => {
                 subtype: 'batchSubmissions',
               },
             ],
+            costMultiplier: 0.6,
           },
         ],
       },
@@ -427,7 +510,7 @@ describe(L2CostsController.name, () => {
         totalGasCost: 1,
         gasCostUsd: 1,
         totalGasCostUsd: 1,
-        overheadGasUsed: 21_000 as const,
+        overheadGasUsed: 21_000,
         totalOverheadGasCost: 1,
         totalOverheadGasCostUsd: 1,
         type: 2 as const,

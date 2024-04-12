@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
 import React from 'react'
 
-import { formatLargeNumber } from '../../utils'
+import { formatNumber } from '../../utils'
 import { TypeCell } from '../table/TypeCell'
 import { DetailsHeader as DetailsHeaderComponent } from './DetailsHeader'
 import { StatWithChange } from './stats/StatWithChange'
@@ -31,7 +31,7 @@ const meta: Meta<typeof DetailsHeaderComponent> = {
         },
         {
           title: '30D tx count',
-          value: formatLargeNumber(800321),
+          value: formatNumber(800321),
         },
         {
           title: 'Purpose',

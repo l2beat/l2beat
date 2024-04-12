@@ -102,6 +102,7 @@ function toBackendTrackedTxsConfig(
           address: SHARP_SUBMISSION_ADDRESS,
           selector: SHARP_SUBMISSION_SELECTOR,
           uses: getTrackedTxsConfigUses(config),
+          costMultiplier: config._hackCostMultiplier,
           ...query,
         }
       }
@@ -110,6 +111,7 @@ function toBackendTrackedTxsConfig(
         projectId,
         ...query,
         uses: getTrackedTxsConfigUses(config),
+        costMultiplier: config._hackCostMultiplier,
       }
     }),
   }

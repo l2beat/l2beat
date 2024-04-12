@@ -94,6 +94,7 @@ describe(LivenessController.name, () => {
             mockObject<TrackedTxsConfigRecord>({
               untilTimestampExclusive: undefined,
               lastSyncedTimestamp: UnixTime.now(),
+              subtype: 'batchSubmissions',
             }),
           ]),
         }),
@@ -174,6 +175,7 @@ describe(LivenessController.name, () => {
               mockObject<TrackedTxsConfigRecord>({
                 untilTimestampExclusive: undefined,
                 lastSyncedTimestamp: syncedUntil,
+                subtype: 'batchSubmissions',
               }),
             ])
             .resolvesTo([]),
@@ -200,13 +202,13 @@ describe(LivenessController.name, () => {
         last30Days,
         last90Days,
         allTime,
+        syncedUntil,
       }
 
       const result = await livenessController.getLiveness()
       if (result.type === 'success') {
         const project1 = result.data.projects.project1
         expect(project1?.batchSubmissions).toEqual(expected)
-        expect(project1?.syncedUntil).toEqual(syncedUntil)
         expect(result.data.projects.project2).toEqual(undefined)
       }
     })

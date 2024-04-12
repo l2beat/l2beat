@@ -1,0 +1,1527 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "CairoBootloaderProgram",
+      "values": {
+        "getCompiledProgram": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ChainlinkAdapter",
+      "values": {
+        "CHAINLINK_TOKEN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "JOB_ID": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MERKLE_DISTRIBUTOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ORACLE_CONTRACT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ORACLE_EXTERNAL_ADAPTER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ClaimsProxy",
+      "values": {
+        "LIQUIDITY_STAKING": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MERKLE_DISTRIBUTOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REWARDS_TREASURY_VESTER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SAFETY_MODULE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "Committee",
+      "values": {
+        "constructorArgs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasRegisteredFact": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "identify": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "signaturesRequired": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CpuConstraintPoly",
+      "values": {}
+    },
+    {
+      "name": "CpuFrilessVerifier",
+      "values": {}
+    },
+    {
+      "name": "CpuFrilessVerifier",
+      "values": {}
+    },
+    {
+      "name": "CpuFrilessVerifier",
+      "values": {
+        "constructorArgs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "CpuOods",
+      "values": {}
+    },
+    {
+      "name": "DydxGovernor",
+      "values": {
+        "ADD_EXECUTOR_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DOMAIN_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EIP712_DOMAIN_NAME": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EXECUTORS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OWNER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VOTE_EMITTED_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getGovernanceStrategy": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getProposalsCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getVotingDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "DydxToken",
+      "values": {
+        "DELEGATE_BY_TYPE_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DELEGATE_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DOMAIN_SEPARATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EIP712_DOMAIN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EIP712_VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "INITIAL_SUPPLY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MINT_MAX_PERCENT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MINT_MIN_INTERVAL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PERMIT_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TRANSFER_RESTRICTION_LIFTED_NO_LATER_THAN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "_mintingRestrictedBefore": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "_totalSupplySnapshotsCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "_transfersRestrictedBefore": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "EcdsaPointsXColumn",
+      "values": {}
+    },
+    {
+      "name": "EcdsaPointsYColumn",
+      "values": {}
+    },
+    {
+      "name": "FinalizableGpsFactAdapter",
+      "values": {
+        "gpsContract": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasRegisteredFact": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "identify": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isFinalized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "programHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "FriStatementContract",
+      "values": {
+        "hasRegisteredFact": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GovernanceStrategyV2",
+      "values": {
+        "DYDX_TOKEN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "STAKED_DYDX_TOKEN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "WRAPPED_ETHEREUM_DYDX_TOKEN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "GpsStatementVerifier",
+      "values": {
+        "constructorArgs": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasRegisteredFact": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "identify": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "LiquidityStaking",
+      "values": {
+        "BORROWERS_LIST": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "BORROWER_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "CLAIM_OPERATOR_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEBT_OPERATOR_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DISTRIBUTION_END": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DISTRIBUTION_START": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EPOCH_PARAMETERS_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OWNER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REWARDS_RATE_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REWARDS_TOKEN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REWARDS_TREASURY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "STAKED_TOKEN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "STAKE_OPERATOR_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TOTAL_ALLOCATION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getBlackoutWindow": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getContractBalanceAvailableToBorrow": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getContractBalanceAvailableToWithdraw": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getCurrentEpoch": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getEpochParameters": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRewardsPerSecond": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getShortfall": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getShortfallCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTimeRemainingInCurrentEpoch": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalActiveBalanceCurrentEpoch": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalActiveBalanceNextEpoch": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalBorrowedBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalBorrowerDebtBalance": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalDebtAvailableToWithdraw": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalInactiveBalanceCurrentEpoch": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTotalInactiveBalanceNextEpoch": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasEpochZeroStarted": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "inBlackoutWindow": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "LiquidityStakingProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "LongTimelockExecutor",
+      "values": {
+        "GRACE_PERIOD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAXIMUM_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MINIMUM_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MINIMUM_QUORUM": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ONE_HUNDRED_WITH_PRECISION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROPOSITION_THRESHOLD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VOTE_DIFFERENTIAL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VOTING_DURATION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPendingAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "MemoryPageFactRegistry",
+      "values": {
+        "hasRegisteredFact": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "MerkleDistributor",
+      "values": {
+        "CLAIM_OPERATOR_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "CONFIG_UPDATER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OWNER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PAUSER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REWARDS_TOKEN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REWARDS_TREASURY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TRADER_SCORE_ALPHA_BASE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "UNPAUSER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "WAITING_PERIOD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "canUpdateRoot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getAreRootUpdatesPaused": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getCurrentEpoch": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getEpochParameters": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getIpfsEpoch": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getIpfsUpdatePeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getIpnsName": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRewardsOracle": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getWaitingPeriodEnd": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasPendingRoot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "MerkleDistributorProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "MerklePauserExecutor",
+      "values": {
+        "GRACE_PERIOD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAXIMUM_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MINIMUM_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MINIMUM_QUORUM": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ONE_HUNDRED_WITH_PRECISION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROPOSITION_THRESHOLD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VOTE_DIFFERENTIAL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VOTING_DURATION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPendingAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "MerkleStatementContract",
+      "values": {
+        "hasRegisteredFact": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "PedersenHashPointsXColumn",
+      "values": {}
+    },
+    {
+      "name": "PedersenHashPointsYColumn",
+      "values": {}
+    },
+    {
+      "name": "PerpetualEscapeVerifier",
+      "values": {
+        "hasRegisteredFact": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "identify": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "PriorityExecutor",
+      "values": {
+        "GRACE_PERIOD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAXIMUM_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MINIMUM_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MINIMUM_QUORUM": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ONE_HUNDRED_WITH_PRECISION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PRIORITY_CONTROLLERS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROPOSITION_THRESHOLD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VOTE_DIFFERENTIAL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VOTING_DURATION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPendingAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPriorityPeriod": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SafetyModule",
+      "values": {
+        "CLAIM_OPERATOR_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DELEGATE_BY_TYPE_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DELEGATE_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DISTRIBUTION_END": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DISTRIBUTION_START": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EIP712_DOMAIN_NAME": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EIP712_DOMAIN_SCHEMA_HASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EIP712_DOMAIN_VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EPOCH_PARAMETERS_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EXCHANGE_RATE_BASE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EXCHANGE_RATE_MAY_OVERFLOW": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_EXCHANGE_RATE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_SLASH_DENOMINATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_SLASH_NUMERATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_UNDERLYING_BALANCE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OWNER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PERMIT_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REWARDS_RATE_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REWARDS_TOKEN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REWARDS_TREASURY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "SLASHER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "STAKED_TOKEN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "STAKE_AMOUNT_MAY_OVERFLOW": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "STAKE_OPERATOR_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "accessControl": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getBlackoutWindow": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getDomainSeparator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getExchangeRate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getExchangeRateSnapshotCount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRewardsPerSecond": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "hasEpochZeroStarted": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "inBlackoutWindow": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "slashings": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SafetyModuleProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "ShortTimelockExecutor",
+      "values": {
+        "GRACE_PERIOD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAXIMUM_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MINIMUM_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MINIMUM_QUORUM": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "ONE_HUNDRED_WITH_PRECISION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROPOSITION_THRESHOLD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VOTE_DIFFERENTIAL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VOTING_DURATION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getPendingAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "StarkExRemoverGovernorV2",
+      "values": {
+        "MAIN_GOVERNORS_TO_REMOVE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROXY_GOVERNORS_TO_REMOVE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "STARK_PERPETUAL": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "numMainGovernorsToRemove": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "numProxyGovernorsToRemove": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "StarkPerpetual",
+      "values": {
+        "DEPOSIT_CANCEL_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "FREEZE_GRACE_PERIOD": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAIN_DISPATCHER_SAFEGUARD_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAIN_GOVERNANCE_INFO_TAG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_FORCED_ACTIONS_REQS_PER_BLOCK": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "MAX_VERIFIER_COUNT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "OPERATORS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PROXY_GOVERNANCE_TAG": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "UNFREEZE_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "UPGRADE_DELAY_SLOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERIFIER_REMOVAL_DELAY": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "configurationDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "escapeVerifier": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getAssetInfo": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getEthKey": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getLastBatchId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOrderRoot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getOrderTreeHeight": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRegisteredAvailabilityVerifiers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRegisteredVerifiers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getSequenceNumber": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getSystemAssetType": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getUpgradeActivationDelay": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getVaultRoot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getVaultTreeHeight": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "globalConfigurationHash": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "implementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "initializerSize": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isFrozen": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isNotFinalized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "TreasuryBridge",
+      "values": {
+        "BRIDGE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "BURN_ADDRESS": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "REVISION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "TREASURY_VESTER": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "TreasuryProxyAdmin",
+      "values": {
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "TreasuryVester",
+      "values": {
+        "dydx": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "lastUpdate": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "recipient": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "vestingAmount": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "vestingBegin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "vestingCliff": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "vestingEnd": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "WrappedEthereumDydxToken",
+      "values": {
+        "DELEGATE_BY_TYPE_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DELEGATE_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DOMAIN_SEPARATOR": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DYDX_TOKEN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EIP712_DOMAIN": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "EIP712_VERSION": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "PERMIT_TYPEHASH": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "_nextAvailableBridgeId": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "decimals": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "name": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "symbol": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "totalSupply": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-import { formatLargeNumber, formatTimestamp } from '../../../../utils'
+import { formatNumber, formatTimestamp } from '../../../../utils'
 import { formatCurrency } from '../../../../utils/format'
 import { RenderParams } from '../../renderer/ChartRenderer'
 import { SeriesStyle } from '../../styles'
@@ -34,8 +34,8 @@ export function getCostsRenderParams(
 
     const formatYAxisLabel = (value: number) =>
       state.unit === 'GAS'
-        ? formatLargeNumber(value)
-        : formatCurrency(value, state.unit)
+        ? formatNumber(value)
+        : formatCurrency(value, state.unit, { showLessThanMinimum: false })
 
     const seriesStyle: SeriesStyle[] = [
       {
@@ -156,11 +156,11 @@ function getData(
     case 'GAS':
       return {
         date,
-        total: formatLargeNumber(totalGas),
-        calldata: formatLargeNumber(calldataGas),
-        blobs: isPostDencun ? formatLargeNumber(blobsGas) : undefined,
-        compute: formatLargeNumber(computeGas),
-        overhead: formatLargeNumber(overheadGas),
+        total: formatNumber(totalGas),
+        calldata: formatNumber(calldataGas),
+        blobs: isPostDencun ? formatNumber(blobsGas) : undefined,
+        compute: formatNumber(computeGas),
+        overhead: formatNumber(overheadGas),
       }
   }
 }

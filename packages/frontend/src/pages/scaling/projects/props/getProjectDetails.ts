@@ -10,6 +10,7 @@ import { ProjectDetailsCharts } from '../../../../utils/project/getCharts'
 import { getContractSection } from '../../../../utils/project/getContractSection'
 import { getDiagramImage } from '../../../../utils/project/getDiagramImage'
 import { getPermissionsSection } from '../../../../utils/project/getPermissionsSection'
+import { getRiskSection } from '../../../../utils/project/getRiskSection'
 import {
   getProjectEditLink,
   getProjectIssueLink,
@@ -23,6 +24,7 @@ import {
   ProjectDetailsMilestonesSection,
   ProjectDetailsPermissionsSection,
   ProjectDetailsRiskAnalysisSection,
+  ProjectDetailsRiskSection,
   ProjectDetailsStageSection,
   ProjectDetailsStateDerivationSection,
   ProjectDetailsStateValidationSection,
@@ -48,6 +50,8 @@ export function getProjectDetails(
     verificationStatus,
     manuallyVerifiedContracts,
   )
+  const riskSection = getRiskSection(project, verificationStatus)
+
   const items: ScalingDetailsItem[] = []
 
   if (charts.tvl) {
@@ -103,6 +107,13 @@ export function getProjectDetails(
         description: project.display.description,
         detailedDescription: project.display.detailedDescription,
       },
+    })
+  }
+
+  if (riskSection.riskGroups.length > 0) {
+    items.push({
+      type: 'RiskSection',
+      props: riskSection,
     })
   }
 
@@ -272,6 +283,7 @@ export type ScalingDetailsSection =
   | ProjectDetailsMilestonesSection
   | ProjectDetailsKnowledgeNuggetsSection
   | ProjectDetailsRiskAnalysisSection
+  | ProjectDetailsRiskSection
   | ProjectDetailsTechnologySection
   | ProjectDetailsStateDerivationSection
   | ProjectDetailsStateValidationSection
