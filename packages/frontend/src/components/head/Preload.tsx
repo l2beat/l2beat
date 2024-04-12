@@ -15,21 +15,21 @@ export function Preload(props: Props) {
         href="/fonts/roboto/roboto-v30-latin-regular.woff2"
         as="font"
         type="font/woff2"
-        crossOrigin="use-credentials"
+        crossOrigin=""
       />
       <link
         rel="preload"
         href="/fonts/roboto/roboto-v30-latin-500.woff2"
         as="font"
         type="font/woff2"
-        crossOrigin="use-credentials"
+        crossOrigin=""
       />
       <link
         rel="preload"
         href="/fonts/roboto/roboto-v30-latin-700.woff2"
         as="font"
         type="font/woff2"
-        crossOrigin="use-credentials"
+        crossOrigin=""
       />
     </>
   )
