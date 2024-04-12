@@ -3,14 +3,14 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { Knex } from 'knex'
 
-import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
-import { HourlyIndexer } from '../tracked-txs/HourlyIndexer'
+import { IndexerStateRepository } from '../../../tools/uif/IndexerStateRepository'
+import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
+import { BlockTimestampRepository } from '../repositories/BlockTimestampRepository'
+import { SyncOptimizer } from '../utils/SyncOptimizer'
 import {
   BlockTimestampIndexer,
   BlockTimestampProvider,
 } from './BlockTimestampIndexer'
-import { BlockTimestampRepository } from './repositories/BlockTimestampRepository'
-import { SyncOptimizer } from './SyncOptimizer'
 
 describe(BlockTimestampIndexer.name, () => {
   describe(BlockTimestampIndexer.prototype.update.name, () => {

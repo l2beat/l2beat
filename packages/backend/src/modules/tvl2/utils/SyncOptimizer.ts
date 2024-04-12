@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
-import { Clock } from '../../tools/Clock'
+import { Clock } from '../../../tools/Clock'
 
 interface SyncOptimizerOptions {
   removeHourlyAfterDays: number

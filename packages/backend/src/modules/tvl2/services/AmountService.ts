@@ -10,15 +10,15 @@ import { partition } from 'lodash'
 import {
   erc20Codec,
   nativeAssetCodec,
-} from '../../peripherals/multicall/codecs'
-import { MulticallClient } from '../../peripherals/multicall/MulticallClient'
+} from '../../../peripherals/multicall/codecs'
+import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import {
   MulticallRequest,
   MulticallResponse,
-} from '../../peripherals/multicall/types'
-import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
-import { Configuration } from '../../tools/uif/multi/types'
-import { AmountRecord } from './repositories/AmountRepository'
+} from '../../../peripherals/multicall/types'
+import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
+import { Configuration } from '../../../tools/uif/multi/types'
+import { AmountRecord } from '../repositories/AmountRepository'
 
 export type ChainAmountConfig = EscrowEntry | TotalSupplyEntry
 

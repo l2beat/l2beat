@@ -4,10 +4,10 @@ import { PriceConfigEntry, UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
 import { Knex } from 'knex'
 
-import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
-import { HourlyIndexer } from '../tracked-txs/HourlyIndexer'
-import { PriceRecord, PriceRepository } from './repositories/PriceRepository'
-import { SyncOptimizer } from './SyncOptimizer'
+import { IndexerStateRepository } from '../../../tools/uif/IndexerStateRepository'
+import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
+import { PriceRecord, PriceRepository } from '../repositories/PriceRepository'
+import { SyncOptimizer } from '../utils/SyncOptimizer'
 
 export class PriceIndexer extends ChildIndexer {
   indexerId: string
