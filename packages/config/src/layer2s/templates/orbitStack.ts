@@ -54,7 +54,7 @@ export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
   display: Omit<Layer2Display, 'provider' | 'category' | 'dataAvailabilityMode'>
   nativeToken?: string
-  postsBlobs: boolean
+  postsBlobs?: boolean
 }
 
 export function orbitStackCommon(
