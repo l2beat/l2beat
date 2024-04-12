@@ -5,6 +5,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { ChildIndexer } from '@l2beat/uif'
 import { groupBy } from 'lodash'
 
 import { Tvl2Config } from '../../../config/Config'
@@ -14,7 +15,6 @@ import { createAmountId } from '../utils/createAmountId'
 
 export interface Tvl2Project {
   id: ProjectId
-  minTimestamp: UnixTime
   indexers: { get safeHeight(): number }[]
 }
 
@@ -40,13 +40,19 @@ type AmountConfigMap = Map<
 
 export class Tvl2Controller {
   private readonly amountConfig: AmountConfigMap
+  private readonly projects: {
+    id: ProjectId
+    minTimestamp: UnixTime
+  }[]
   private readonly assetConfig: Map<string, { decimals: number }>
+  private readonly minTimestamp: UnixTime
+  private readonly maxTimestamp: () => UnixTime
 
   constructor(
     private readonly amountRepository: AmountRepository,
     private readonly priceRepository: PriceRepository,
-    private readonly priceIndexer: { get safeHeight(): number },
-    private readonly projects: Tvl2Project[],
+    indexers: ChildIndexer[],
+    projects: ProjectId[],
     config: Tvl2Config,
   ) {
     // We're calculating the configIds on startup to avoid doing it on every request.
@@ -54,28 +60,39 @@ export class Tvl2Controller {
     this.assetConfig = new Map(
       config.prices.map((x) => [createAssetId(x), { decimals: x.decimals }]),
     )
-  }
-
-  async getTvl(): Promise<Tvl2Result> {
-    // TODO: What should be the min and max timestamp?
-    const minTimestamp = this.projects
+    this.projects = projects.flatMap((id) => {
+      const config = this.amountConfig.get(id)
+      if (!config) {
+        return []
+      }
+      assert(config, 'Config not found: ' + id.toString())
+      const minTimestamp = config
+        .map((x) => x.sinceTimestamp)
+        .reduce((a, b) => UnixTime.min(a, b))
+      return { id, minTimestamp }
+    })
+    this.minTimestamp = this.projects
       .map((x) => x.minTimestamp)
       .reduce((a, b) => UnixTime.min(a, b))
       .toEndOf('day')
+    this.maxTimestamp = () => {
+      const safeHeights = indexers.map((i) => i.safeHeight)
+      return new UnixTime(Math.min(...safeHeights))
+    }
+  }
 
-    const maxTimestamp = new UnixTime(
-      this.projects
-        .flatMap((x) => x.indexers)
-        .concat(this.priceIndexer)
-        .map((x) => x.safeHeight)
-        .reduce((a, b) => Math.min(a, b)),
-    ).toStartOf('day')
+  async getTvl(): Promise<Tvl2Result> {
+    // TODO: We could calculate the max timestamp based on the indexer heights.
+    // The tricky part is that we need to consider which indexers are used for each project.
+    // This probably should be done based on the configs.
+    const maxTimestamp = this.maxTimestamp()
 
+    // TODO: we should return daily, sixHourly and hourly results.
     const result: Tvl2Result = {
       daily: [],
     }
 
-    for (let t = minTimestamp; t.lte(maxTimestamp); t = t.add(1, 'days')) {
+    for (let t = this.minTimestamp; t.lte(maxTimestamp); t = t.add(1, 'days')) {
       result.daily.push(await this.getTvlAt(t))
     }
     return result
@@ -84,15 +101,10 @@ export class Tvl2Controller {
   async getTvlAt(timestamp: UnixTime): Promise<Tvl2TimestampedResult> {
     const results: Record<string, Tvl2ProjectResult> = {}
     for (const project of this.projects) {
-      const maxTimestamp = project.indexers
-        .concat(this.priceIndexer)
-        .map((x) => x.safeHeight)
-        .reduce((a, b) => Math.min(a, b))
+      // TODO: As above, we should know what's the max timestamp based on the indexers that are relevant for this project.
+      // Skipping this idea for now.
 
-      if (
-        timestamp.gte(project.minTimestamp) &&
-        timestamp.toNumber() <= maxTimestamp
-      ) {
+      if (timestamp.gte(project.minTimestamp)) {
         results[project.id.toString()] = await this.getProjectTvl(
           project.id,
           timestamp,

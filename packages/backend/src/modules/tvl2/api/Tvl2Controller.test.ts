@@ -5,13 +5,13 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { ChildIndexer } from '@l2beat/uif'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { Tvl2Config } from '../../../config/Config'
-import { PriceIndexer } from '../PriceIndexer'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { PriceRepository } from '../repositories/PriceRepository'
-import { Tvl2Controller, Tvl2Project } from './Tvl2Controller'
+import { Tvl2Controller } from './Tvl2Controller'
 
 describe(Tvl2Controller.name, () => {
   describe(Tvl2Controller.prototype.getProjectTvl.name, () => {
@@ -22,6 +22,7 @@ describe(Tvl2Controller.name, () => {
         address: EthereumAddress.random(),
         chain: 'ethereum',
         source: 'canonical',
+        sinceTimestamp: new UnixTime(100),
       })
 
       const priceConfig = mockObject<PriceConfigEntry>({
@@ -50,8 +51,8 @@ describe(Tvl2Controller.name, () => {
             },
           ],
         }),
-        mockObject<PriceIndexer>(),
-        [],
+        [mockObject<ChildIndexer>({ safeHeight: 1000 })],
+        [amountConfig.project],
         mockObject<Tvl2Config>({
           amounts: [amountConfig],
           prices: [priceConfig],
@@ -71,17 +72,14 @@ describe(Tvl2Controller.name, () => {
     })
   })
 
-  const projectConfig: Tvl2Project = {
-    minTimestamp: new UnixTime(0),
-    indexers: [{ safeHeight: 100 }],
-    id: ProjectId('test-project'),
-  }
+  const projectId = ProjectId('test-project')
 
   const amountConfig = mockObject<AmountConfigEntry>({
-    project: projectConfig.id,
+    project: projectId,
     type: 'totalSupply',
     address: EthereumAddress.random(),
     chain: 'ethereum',
+    sinceTimestamp: new UnixTime(100),
   })
   const priceConfig = mockObject<PriceConfigEntry>({
     chain: amountConfig.chain,
@@ -91,43 +89,34 @@ describe(Tvl2Controller.name, () => {
 
   describe(Tvl2Controller.prototype.getTvlAt.name, () => {
     describe('calls getProjectTvl with the correct timestamp', () => {
-      it('when the timestamp is before the safe height', async () => {
+      it('when the timestamp is before the configuration since timestamp', async () => {
         const timestamp = new UnixTime(50)
 
         const controller = new Tvl2Controller(
           mockObject<AmountRepository>(),
           mockObject<PriceRepository>(),
-          { safeHeight: 100 },
-          [projectConfig],
+          [mockObject<ChildIndexer>({ safeHeight: 1000 })],
+          [projectId],
           mockObject<Tvl2Config>({
             amounts: [amountConfig],
             prices: [priceConfig],
           }),
         )
-        const mockGetProjectTvl = mockFn(
-          async (_: ProjectId, __: UnixTime) => ({
-            canonical: 0,
-            external: 0,
-            native: 0,
-          }),
-        )
+        const mockGetProjectTvl = mockFn(controller.getProjectTvl)
         controller.getProjectTvl = mockGetProjectTvl
 
         await controller.getTvlAt(timestamp)
-        expect(mockGetProjectTvl).toHaveBeenOnlyCalledWith(
-          projectConfig.id,
-          timestamp,
-        )
+        expect(mockGetProjectTvl).not.toHaveBeenCalled()
       })
 
-      it('when the timestamp is after the safe height', async () => {
+      it('when the timestamp is after the configuration since timestamp', async () => {
         const timestamp = new UnixTime(150)
 
         const controller = new Tvl2Controller(
           mockObject<AmountRepository>(),
           mockObject<PriceRepository>(),
-          { safeHeight: 100 },
-          [projectConfig],
+          [mockObject<ChildIndexer>({ safeHeight: 1000 })],
+          [projectId],
           mockObject<Tvl2Config>({
             amounts: [amountConfig],
             prices: [priceConfig],
@@ -143,22 +132,21 @@ describe(Tvl2Controller.name, () => {
         controller.getProjectTvl = mockGetProjectTvl
 
         await controller.getTvlAt(timestamp)
-        expect(mockGetProjectTvl).not.toHaveBeenCalled()
+        expect(mockGetProjectTvl).toHaveBeenOnlyCalledWith(projectId, timestamp)
       })
     })
   })
 
   describe(Tvl2Controller.prototype.getTvl.name, () => {
     it('calls getTvlAt for each full day', async () => {
-      const start = projectConfig.minTimestamp
-
-      const safeHeight = start.add(3, 'days').toNumber()
+      const start = amountConfig.sinceTimestamp.toEndOf('day')
+      const end = start.add(3, 'days')
 
       const controller = new Tvl2Controller(
         mockObject<AmountRepository>(),
         mockObject<PriceRepository>(),
-        { safeHeight },
-        [{ ...projectConfig, indexers: [{ safeHeight }] }],
+        [mockObject<ChildIndexer>({ safeHeight: end.toNumber() })],
+        [projectId],
         mockObject<Tvl2Config>({
           amounts: [amountConfig],
           prices: [priceConfig],

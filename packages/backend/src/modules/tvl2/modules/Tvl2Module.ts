@@ -1,5 +1,4 @@
 import { Logger } from '@l2beat/backend-tools'
-import { UnixTime } from '@l2beat/shared-pure'
 
 import { Config } from '../../../config'
 import { Peripherals } from '../../../peripherals/Peripherals'
@@ -79,23 +78,8 @@ export function createTvl2Module(
   const tvlController = new Tvl2Controller(
     peripherals.getRepository(AmountRepository),
     peripherals.getRepository(PriceRepository),
-    {
-      get safeHeight() {
-        return Math.min(...priceModule.indexers.map((i) => i.safeHeight))
-      },
-    },
-    // this is tricky. We need to answer the question: what is the min and max timestamp.
-    // minTimestamp:
-    config.projects.map((p) => ({
-      id: p.projectId,
-      // TODO: we should have a minTimestamp for each project calculated. It should be a part of the project config.
-      minTimestamp: p.escrows
-        .map((e) => e.sinceTimestamp)
-        .reduce((a, b) => UnixTime.min(a, b)),
-      // TODO: we should know the associated indexers for each project.
-      // i.e. Optimism is not interested in ChainAmountIndexer:arbitrum (or is it?)
-      indexers: modules.map((m) => m.indexers).flat(),
-    })),
+    modules.map((m) => m.indexers).flat(),
+    config.projects.map((p) => p.projectId),
     config.tvl2,
   )
   const statusRouter = createTvl2StatusRouter(
