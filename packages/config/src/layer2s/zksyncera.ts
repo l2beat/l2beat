@@ -555,6 +555,12 @@ A \`Governance\` smart contract is set up as the *Governor* role of the diamond.
   ],
   milestones: [
     {
+      name: 'zkSync Era starts using blobs',
+      link: 'https://twitter.com/zksync/status/1767983026443579448',
+      date: '2024-03-13T15:00:00Z',
+      description: 'zkSync Era starts publishing data to blobs.',
+    },
+    {
       name: 'Introduction of Boojum prover',
       link: 'https://zksync.mirror.xyz/HJ2Pj45EJkRdt5Pau-ZXwkV2ctPx8qFL19STM5jdYhc',
       date: '2023-07-17T00:00:00Z',
