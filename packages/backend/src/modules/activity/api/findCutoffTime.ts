@@ -8,11 +8,13 @@ const CUTOFF_TRESHOLD = 0.8
  * @returns The cutoff time, which is the timestamp of the last element of the array at the 80% position.
  */
 export function findCutoffTime(
-  projects: {timestamp: UnixTime}[][],
+  projects: { timestamp: UnixTime }[][],
 ): UnixTime {
   const lasts = projects
     .map((counts) => counts.at(-1)?.timestamp.toNumber())
     .filter((t): t is number => t !== undefined)
     .sort((a, b) => b - a)
-  return lasts.length > 0 ? new UnixTime(lasts[Math.floor(CUTOFF_TRESHOLD * lasts.length)]) : UnixTime.now()
+  return lasts.length > 0
+    ? new UnixTime(lasts[Math.floor(CUTOFF_TRESHOLD * lasts.length)])
+    : UnixTime.now()
 }

@@ -54,7 +54,7 @@ export function createActivityModule(
   const start = async () => {
     logger = logger.for('ActivityModule')
     logger.info('Starting')
-    //await Promise.all(processors.map((p) => p.start()))
+    await Promise.all(processors.map((p) => p.start()))
     viewRefresher.start()
     logger.info('Started')
   }
