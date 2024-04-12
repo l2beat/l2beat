@@ -120,7 +120,7 @@ describe(ActivityController.name, () => {
               [TODAY.add(-1, 'days'), 1, 420],
             ],
             estimatedImpact: 0,
-            estimatedSince: TODAY.add(-1, 'days'),
+            estimatedSince: TODAY,
           },
           projects: {
             'project-a': [
@@ -200,7 +200,7 @@ describe(ActivityController.name, () => {
               [TODAY.add(-1, 'days'), 70, 420],
             ],
             estimatedImpact: 0,
-            estimatedSince: TODAY.add(-1, 'days'),
+            estimatedSince: TODAY,
           },
           projects: {
             [PROJECT_A.toString()]: [
@@ -280,7 +280,7 @@ describe(ActivityController.name, () => {
               [TODAY.add(-1, 'days'), 1, 420],
             ],
             estimatedImpact: 0,
-            estimatedSince: TODAY.add(-1, 'days'),
+            estimatedSince: TODAY,
           },
           projects: {
             [PROJECT_A.toString()]: [
@@ -293,11 +293,13 @@ describe(ActivityController.name, () => {
     })
 
     it('makes correct estimations for combined', async () => {
-      const fullySyncedProjectIds = range(1, 4).map((i) =>
-        ProjectId(`project-synced-${i.toString()}`),
+      const fullySyncedProjectsCount = 3
+
+      const fullySyncedProjectIds = range(fullySyncedProjectsCount).map((i) =>
+        ProjectId(`synced-${i.toString()}`),
       )
-      const notSyncedProjectIds = range(1, 4).map((i) =>
-        ProjectId(`project-not-synced-${i.toString()}`),
+      const notSyncedProjectIds = range(fullySyncedProjectsCount).map((i) =>
+        ProjectId(`not-synced-${i.toString()}`),
       )
 
       const includedIds: ProjectId[] = [
@@ -373,13 +375,30 @@ describe(ActivityController.name, () => {
               [TODAY.add(-1, 'days'), 15, txPerDay.eth],
             ],
             estimatedImpact: 0.2,
-            estimatedSince: TODAY.add(-4, 'days'),
+            estimatedSince: TODAY.add(-3, 'days'),
           },
           projects: {
-            [PROJECT_A.toString()]: [
-              [TODAY.add(-2, 'days'), 2, 2137],
-              [TODAY.add(-1, 'days'), 1, 420],
+            'synced-0': [
+              [TODAY.add(-4, 'days'), 4, txPerDay.eth],
+              [TODAY.add(-3, 'days'), 4, txPerDay.eth],
+              [TODAY.add(-2, 'days'), 4, txPerDay.eth],
+              [TODAY.add(-1, 'days'), 4, txPerDay.eth],
             ],
+            'synced-1': [
+              [TODAY.add(-4, 'days'), 4, txPerDay.eth],
+              [TODAY.add(-3, 'days'), 4, txPerDay.eth],
+              [TODAY.add(-2, 'days'), 4, txPerDay.eth],
+              [TODAY.add(-1, 'days'), 4, txPerDay.eth],
+            ],
+            'synced-2': [
+              [TODAY.add(-4, 'days'), 4, txPerDay.eth],
+              [TODAY.add(-3, 'days'), 4, txPerDay.eth],
+              [TODAY.add(-2, 'days'), 4, txPerDay.eth],
+              [TODAY.add(-1, 'days'), 4, txPerDay.eth],
+            ],
+            'not-synced-0': [[TODAY.add(-4, 'days'), 1, txPerDay.eth]],
+            'not-synced-1': [[TODAY.add(-4, 'days'), 1, txPerDay.eth]],
+            'not-synced-2': [[TODAY.add(-4, 'days'), 1, txPerDay.eth]],
           },
         }),
       )
