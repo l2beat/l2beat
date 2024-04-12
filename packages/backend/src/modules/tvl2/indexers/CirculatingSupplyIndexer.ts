@@ -9,21 +9,24 @@ import {
   AmountRecord,
   AmountRepository,
 } from '../repositories/AmountRepository'
+import { createAmountId } from '../utils/createAmountId'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
 export interface ChainAmountIndexerDeps extends ManagedChildIndexerOptions {
   coingeckoQueryService: CoingeckoQueryService
   amountRepository: AmountRepository
   syncOptimizer: SyncOptimizer
-  circulatingSupplyEntry: CirculatingSupplyEntry
+  config: CirculatingSupplyEntry
 }
 
 export class CirculatingSupplyIndexer extends ManagedChildIndexer {
   indexerId: string
+  configId: string
 
   constructor(private readonly $: ChainAmountIndexerDeps) {
     super($)
-    this.indexerId = `circulating_supply_indexer_${$.circulatingSupplyEntry.coingeckoId.toString()}`
+    this.indexerId = $.id
+    this.configId = createAmountId($.config)
   }
 
   async update(_from: number, _to: number): Promise<number> {
@@ -54,7 +57,7 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
   ): Promise<AmountRecord[]> {
     const circulatingSupplies =
       await this.$.coingeckoQueryService.getCirculatingSupplies(
-        this.$.circulatingSupplyEntry.coingeckoId,
+        this.$.config.coingeckoId,
         { from, to },
         undefined,
       )
@@ -62,16 +65,18 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
     return circulatingSupplies
       .filter((p) => this.$.syncOptimizer.shouldTimestampBeSynced(p.timestamp))
       .map((circulatingSupply) => ({
-        configId: 'id', //TODO
+        configId: this.configId,
         timestamp: circulatingSupply.timestamp,
-        amount: BigInt(circulatingSupply.value), //TODO with decimals
+        amount:
+          BigInt(circulatingSupply.value) *
+          10n ** BigInt(this.$.config.decimals),
       }))
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
     await this.$.amountRepository.deleteByConfigInTimeRange(
-      'id', //TODO
-      this.$.circulatingSupplyEntry.sinceTimestamp,
+      this.configId,
+      this.$.config.sinceTimestamp,
       new UnixTime(targetHeight),
     )
 

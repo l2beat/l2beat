@@ -17,7 +17,9 @@ export interface CirculatingSupplyEntry extends AmountConfigBase {
   type: 'circulatingSupply'
   address: EthereumAddress | 'native'
   coingeckoId: CoingeckoId
+  decimals: number
 }
+
 export interface EscrowEntry extends AmountConfigBase {
   type: 'escrow'
   address: EthereumAddress | 'native'
