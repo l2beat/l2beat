@@ -487,6 +487,17 @@ export const bobanetwork: Layer2 = {
       description: 'BOBA token launched by OMG Foundation.',
     },
   ],
+  chainConfig: {
+    name: 'bobanetwork',
+    chainId: 288,
+    explorerUrl: 'https://eth.bobascan.com/',
+    explorerApi: {
+      url: 'https://api.routescan.io/v2/network/mainnet/evm/288/etherscan/api',
+      type: 'etherscan',
+    },
+    // ~ Timestamp of block number 1
+    minTimestampForTvl: UnixTime.fromDate(new Date('2021-10-28T03:57:19Z')),
+  },
   knowledgeNuggets: [
     {
       title: 'What is Hybrid Compute?',
