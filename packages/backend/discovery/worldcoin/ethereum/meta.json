@@ -1,0 +1,158 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/meta.schema.json",
+  "contracts": [
+    {
+      "name": "DeleteIdentitiesVerifierLookupTable",
+      "values": {
+        "additionalBatchSizes": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "additionalVerifiers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getVerifierFor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "initialVerifiers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "RegisterIdentitiesVerifierLookupTable",
+      "values": {
+        "additionalBatchSizes": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "additionalVerifiers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getVerifierFor": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "initialVerifiers": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
+      "name": "SemaphoreVerifier",
+      "values": {}
+    },
+    {
+      "name": "Verifier",
+      "values": {}
+    },
+    {
+      "name": "Verifier",
+      "values": {}
+    },
+    {
+      "name": "Verifier",
+      "values": {}
+    },
+    {
+      "name": "Verifier",
+      "values": {}
+    },
+    {
+      "name": "Verifier",
+      "values": {}
+    },
+    {
+      "name": "Verifier",
+      "values": {}
+    },
+    {
+      "name": "WorldIdIdentityManager2",
+      "values": {
+        "NO_SUCH_ROOT": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getDeleteIdentitiesVerifierLookupTableAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRegisterIdentitiesVerifierLookupTableAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getRootHistoryExpiry": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getSemaphoreVerifierAddress": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "getTreeDepth": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "identityOperator": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "latestRoot": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "owner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "pendingOwner": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    }
+  ]
+}
