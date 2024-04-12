@@ -150,4 +150,4 @@ export function getNextDateForDayOfWeek(
 }
 
 export const formatPublicationDate = (date: Date) =>
-  `${date.getDay()} ${MONTHS[String(date.getMonth() + 1).padStart(2, '0')].shortName} ${date.getFullYear()}`
+  `${date.getDate()} ${MONTHS[String(date.getMonth() + 1).padStart(2, '0')].shortName} ${date.getFullYear()}`
