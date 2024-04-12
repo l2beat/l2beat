@@ -58,6 +58,12 @@ export const zora: Layer2 = opStackL2({
   isNodeAvailable: true,
   milestones: [
     {
+      name: 'Zora starts using blobs',
+      link: 'https://twitter.com/Optimism/status/1768235284494450922',
+      date: '2024-03-14T00:00:00Z',
+      description: 'Zora starts publishing data to blobs.',
+    },
+    {
       name: 'Zora Network Launch',
       link: 'https://twitter.com/ourZORA/status/1671602234994622464',
       date: '2023-06-21T00:00:00Z',

@@ -888,6 +888,12 @@ At present, the StarkNet Foundation hosts voting for STRK token holders (or thei
   ],
   milestones: [
     {
+      name: 'Starknet starts using blobs',
+      link: 'https://twitter.com/Starknet/status/1767915153700290839',
+      date: '2024-03-13T00:00:00Z',
+      description: 'Starknet starts publishing data to blobs.',
+    },
+    {
       name: 'Starknet Provisions',
       link: 'https://www.starknet.io/en/content/starknet-provisions-program',
       date: '2024-02-14T00:00:00Z',
