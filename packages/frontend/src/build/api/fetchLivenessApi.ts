@@ -44,7 +44,6 @@ function getMockLivenessApiResponse(): LivenessApiResponse {
       ...projects,
       polygonzkevm: {
         ...projects.polygonzkevm,
-        syncedUntil: UnixTime.now().add(-1, 'days'),
       },
     },
   }
@@ -56,14 +55,15 @@ function generateMockData(): LivenessApiProject {
       last30Days: generateDataPoint(),
       last90Days: generateDataPoint(),
       allTime: generateDataPoint(),
+      syncedUntil: UnixTime.now(),
     },
     stateUpdates: {
       last30Days: generateDataPoint(),
       last90Days: generateDataPoint(),
       allTime: generateDataPoint(),
+      syncedUntil: UnixTime.now(),
     },
     anomalies: generateAnomalies(),
-    syncedUntil: UnixTime.now(),
   }
 }
 

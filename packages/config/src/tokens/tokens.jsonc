@@ -733,6 +733,10 @@
       "address": "0xfB5c6815cA3AC72Ce9F5006869AE67f18bF77006"
     },
     {
+      "symbol": "Puff",
+      "address": "0x18fA05ee5e478EED8925946abb41d09AEc5d34D6"
+    },
+    {
       "symbol": "PUNDIX",
       "address": "0x0FD10b9899882a6f2fcb5c371E17e70FdEe00C38"
     },
@@ -1308,8 +1312,20 @@
       "formula": "circulatingSupply"
     },
     {
+      "symbol": "BRETT",
+      "address": "0x532f27101965dd16442E59d40670FaF5eBB142E4",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
       "symbol": "DEGEN",
       "address": "0x4ed4e862860bed51a9570b96d89af5e1b0efefed",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "MOCHI",
+      "address": "0xF6e932Ca12afa26665dC4dDE7e27be02A7c02e50",
       "type": "NMV",
       "formula": "circulatingSupply"
     },
@@ -1326,6 +1342,12 @@
     {
       "symbol": "SEAM",
       "address": "0x1c7a460413dd4e964f96d8dfc56e7223ce88cd85",
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "symbol": "TOSHI",
+      "address": "0xAC1Bd2486aAf3B5C0fc3Fd868558b082a531B2B4",
       "type": "NMV",
       "formula": "circulatingSupply"
     },
@@ -1383,6 +1405,30 @@
         "bridge": "Hyperlane Nexus"
       },
       "coingeckoId": "celestia"
+    }
+  ],
+  "mantle": [
+    {
+      "symbol": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
+      "symbol": "sUSDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
     }
   ],
   "linea": [

@@ -50,6 +50,11 @@ function Publication({ publication }: PublicationProps) {
     <LinkWithThumbnail
       src={`/meta-images/governance/publications/${publication.id}.png`}
       href={`/governance/publications/${publication.id}`}
+      topAccessory={
+        <p className="text-2xs font-semibold uppercase text-purple-100 dark:text-pink-200">
+          {publication.publishedOn}
+        </p>
+      }
       title={publication.shortTitle ?? publication.title}
       description={publication.description ?? publication.excerpt}
     />

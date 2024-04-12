@@ -12,11 +12,6 @@ const upgradeability = {
   upgradeDelay: 'No delay',
 }
 
-const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
-  'L2OutputOracle',
-  'FINALIZATION_PERIOD_SECONDS',
-)
-
 export const mode: Layer2 = opStackL2({
   discovery,
   display: {
@@ -41,9 +36,6 @@ export const mode: Layer2 = opStackL2({
       ],
     },
     activityDataSource: 'Blockchain RPC',
-    finality: {
-      finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
-    },
   },
   associatedTokens: [],
   upgradeability,

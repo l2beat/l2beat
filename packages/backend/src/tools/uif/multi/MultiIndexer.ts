@@ -14,7 +14,7 @@ import {
 export abstract class MultiIndexer<T> extends ChildIndexer {
   private ranges: ConfigurationRange<T>[] = []
   private configurations: Configuration<T>[] = []
-  private saved: SavedConfiguration<T>[] = []
+  private saved = new Map<string, SavedConfiguration<T>>()
 
   constructor(
     logger: Logger,
@@ -104,8 +104,13 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
    * indexer should save the returned configurations and ensure that no other
    * configurations are persisted.
    */
-  abstract saveConfigurations(
+  abstract setSavedConfigurations(
     configurations: SavedConfiguration<T>[],
+  ): Promise<void>
+
+  abstract updateCurrentHeight(
+    configurationIds: string[],
+    currentHeight: number,
   ): Promise<void>
 
   /**
@@ -131,11 +136,11 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
     )
     const oldSafeHeight = (await this.getSafeHeight()) ?? safeHeight
 
-    this.saved = toSave
+    this.saved = new Map(toSave.map((c) => [c.id, c]))
     if (toRemove.length > 0) {
       await this.removeData(toRemove)
     }
-    await this.saveConfigurations(toSave)
+    await this.setSavedConfigurations(toSave)
 
     return Math.min(safeHeight, oldSafeHeight)
   }
@@ -166,8 +171,13 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
     }
 
     if (newHeight > from) {
-      this.updateSavedConfigurations(configurations, newHeight)
-      await this.saveConfigurations(this.saved)
+      const updatedIds = this.updateSavedConfigurations(
+        configurations,
+        newHeight,
+      )
+      if (updatedIds.length > 0) {
+        await this.updateCurrentHeight(updatedIds, newHeight)
+      }
     }
 
     return newHeight
@@ -176,16 +186,19 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
   private updateSavedConfigurations(
     updatedConfigurations: UpdateConfiguration<T>[],
     newHeight: number,
-  ): void {
+  ): string[] {
+    const touched: string[] = []
     for (const updated of updatedConfigurations) {
-      const saved = this.saved.find((c) => c.id === updated.id)
+      const saved = this.saved.get(updated.id)
       if (!saved) {
         throw new Error('Programmer error, saved configuration not found')
       }
       if (saved.currentHeight === null || saved.currentHeight < newHeight) {
         saved.currentHeight = newHeight
+        touched.push(saved.id)
       }
     }
+    return touched
   }
 
   async invalidate(targetHeight: number): Promise<number> {
@@ -206,15 +219,14 @@ function findRange<T>(
 
 function getConfigurationsInRange<T>(
   range: ConfigurationRange<T>,
-  savedConfigurations: SavedConfiguration<T>[],
+  savedConfigurations: Map<string, SavedConfiguration<T>>,
   currentHeight: number,
 ): { configurations: UpdateConfiguration<T>[]; minCurrentHeight: number } {
   let minCurrentHeight = Infinity
   const configurations = range.configurations.map(
     (configuration): UpdateConfiguration<T> => {
-      const saved = savedConfigurations.find((c) => c.id === configuration.id)
+      const saved = savedConfigurations.get(configuration.id)
       if (
-        // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
         saved &&
         saved.currentHeight !== null &&
         saved.currentHeight > currentHeight

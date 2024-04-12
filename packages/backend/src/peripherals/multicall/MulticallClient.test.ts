@@ -31,6 +31,7 @@ describe(MulticallClient.name, () => {
       address: ADDRESS_V2,
       encodeBatch: encodeMulticallV2,
       decodeBatch: decodeMulticallV2,
+      isNativeBalanceSupported: true,
     },
     {
       sinceBlock: MULTICALL_V1_BLOCK,
@@ -38,6 +39,7 @@ describe(MulticallClient.name, () => {
       address: ADDRESS_V1,
       encodeBatch: encodeMulticallV1,
       decodeBatch: decodeMulticallV1,
+      isNativeBalanceSupported: true,
     },
   ]
 

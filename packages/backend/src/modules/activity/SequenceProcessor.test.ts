@@ -113,6 +113,7 @@ describeDatabase(SequenceProcessor.name, (database) => {
         id: PROCESSOR_ID,
         lastProcessed: 5,
         latest: 5,
+        syncedOnce: true,
       })
     })
 
@@ -135,6 +136,7 @@ describeDatabase(SequenceProcessor.name, (database) => {
         id: PROCESSOR_ID,
         lastProcessed: 5,
         latest: 5,
+        syncedOnce: true,
       })
     })
 
@@ -157,6 +159,7 @@ describeDatabase(SequenceProcessor.name, (database) => {
         id: PROCESSOR_ID,
         lastProcessed: 4,
         latest: 4,
+        syncedOnce: true,
       })
     })
 
@@ -190,6 +193,7 @@ describeDatabase(SequenceProcessor.name, (database) => {
         id: PROCESSOR_ID,
         lastProcessed: 2,
         latest: 2,
+        syncedOnce: true,
       })
     })
 
@@ -219,6 +223,7 @@ describeDatabase(SequenceProcessor.name, (database) => {
         id: PROCESSOR_ID,
         lastProcessed: 2,
         latest: 2,
+        syncedOnce: true,
       })
     })
 
@@ -284,6 +289,7 @@ describeDatabase(SequenceProcessor.name, (database) => {
         id: PROCESSOR_ID,
         lastProcessed: latest,
         latest,
+        syncedOnce: true,
       }
       await repository.addOrUpdate(initialState)
       sequenceProcessor = createSequenceProcessor({
@@ -334,6 +340,7 @@ describeDatabase(SequenceProcessor.name, (database) => {
         id: PROCESSOR_ID,
         lastProcessed: 7,
         latest: 7,
+        syncedOnce: true,
       })
     })
   })
@@ -374,6 +381,7 @@ describeDatabase(SequenceProcessor.name, (database) => {
         id: PROCESSOR_ID,
         lastProcessed: 2,
         latest: 2,
+        syncedOnce: true,
       })
     })
 
@@ -421,6 +429,7 @@ describeDatabase(SequenceProcessor.name, (database) => {
         id: PROCESSOR_ID,
         lastProcessed: 5,
         latest: 5,
+        syncedOnce: true,
       })
     })
   })
@@ -445,6 +454,7 @@ describeDatabase(SequenceProcessor.name, (database) => {
         id: PROCESSOR_ID,
         lastProcessed: latest,
         latest: latest,
+        syncedOnce: true,
       })
       sequenceProcessor = createSequenceProcessor({
         startFrom: 0,
@@ -456,6 +466,35 @@ describeDatabase(SequenceProcessor.name, (database) => {
       await sequenceProcessor.start()
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
+    })
+  })
+
+  describe('syncedOnce flag', () => {
+    it('sets syncedOnce to true after first full sync', async () => {
+      const latest = 5
+      await repository.addOrUpdate({
+        id: PROCESSOR_ID,
+        lastProcessed: 1,
+        latest: latest,
+        syncedOnce: false,
+      })
+
+      sequenceProcessor = createSequenceProcessor({
+        startFrom: 0,
+        batchSize: 1,
+        getLatest: mockFn(() => latest),
+        processRange: mockFn(async () => {}),
+      })
+
+      await sequenceProcessor.start()
+      await once(sequenceProcessor, ALL_PROCESSED_EVENT)
+
+      expect(sequenceProcessor.getStatus()).toEqual({
+        isProcessing: true,
+        lastProcessed: 5,
+        latest: 5,
+        syncedOnce: true,
+      })
     })
   })
 })

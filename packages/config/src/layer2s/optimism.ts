@@ -1,10 +1,8 @@
-import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION, MILESTONES, NUGGETS } from '../common'
 import { subtractOneAfterBlockInclusive } from '../common/assessCount'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { HARDCODED } from '../discovery/values/hardcoded'
-import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('optimism')
@@ -13,11 +11,6 @@ const upgradeability = {
   upgradableBy: ['ProxyAdmin'],
   upgradeDelay: 'No delay',
 }
-
-const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
-  'L2OutputOracle',
-  'FINALIZATION_PERIOD_SECONDS',
-)
 
 export const optimism: Layer2 = opStackL2({
   discovery,
@@ -49,19 +42,6 @@ export const optimism: Layer2 = opStackL2({
       rollupCodes: 'https://rollup.codes/optimism',
     },
     activityDataSource: 'Blockchain RPC',
-    liveness: {
-      warnings: {
-        stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
-      },
-      explanation: `Optimism is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
-        HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
-      )} or until it gets published. The state root gets finalized ${formatSeconds(
-        FINALIZATION_PERIOD_SECONDS,
-      )} after it has been posted.`,
-    },
-    finality: {
-      finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
-    },
   },
   associatedTokens: ['OP'],
   upgradeability,

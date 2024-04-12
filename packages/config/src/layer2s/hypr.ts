@@ -6,11 +6,6 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('hypr')
 
-const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
-  'L2OutputOracle',
-  'FINALIZATION_PERIOD_SECONDS',
-)
-
 const upgradeability = {
   upgradableBy: ['ProxyAdmin'],
   upgradeDelay: 'No delay',
@@ -36,9 +31,6 @@ export const hypr: Layer2 = opStackL2({
       ],
     },
     activityDataSource: 'Blockchain RPC',
-    finality: {
-      finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
-    },
   },
   upgradeability,
   l1StandardBridgeEscrow: EthereumAddress(

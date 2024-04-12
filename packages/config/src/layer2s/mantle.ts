@@ -93,7 +93,7 @@ export const mantle: Layer2 = opStackL2({
     '0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012',
   ),
   rpcUrl: 'https://rpc.mantle.xyz',
-  genesisTimestamp: new UnixTime(1687954103),
+  genesisTimestamp: new UnixTime(1688428800),
   l2OutputOracle: discovery.getContract('L2OutputOracle'),
   portal: discovery.getContract('OptimismPortal'),
   roleOverrides: {
@@ -101,6 +101,25 @@ export const mantle: Layer2 = opStackL2({
     PROPOSER: 'Proposer',
     GUARDIAN: 'Guardian',
     CHALLENGER: 'Challenger',
+  },
+  chainConfig: {
+    name: 'mantle',
+    chainId: 5000,
+    explorerUrl: 'https://explorer.mantle.xyz/',
+    explorerApi: {
+      url: 'https://explorer.mantle.xyz/api',
+      type: 'blockscout',
+    },
+    minTimestampForTvl: new UnixTime(1688314886),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 304717,
+        version: '3',
+      },
+    ],
+    coingeckoPlatform: 'mantle',
   },
   nonTemplateContracts: [
     discovery.getContractDetails('DataLayrServiceManager', {

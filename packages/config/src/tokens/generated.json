@@ -2716,6 +2716,21 @@
       "formula": "locked"
     },
     {
+      "id": "puff-puff",
+      "name": "Puff",
+      "coingeckoId": "puff-the-dragon",
+      "address": "0x18fA05ee5e478EED8925946abb41d09AEc5d34D6",
+      "symbol": "Puff",
+      "decimals": 18,
+      "deploymentTimestamp": 1707929531,
+      "coingeckoListingTimestamp": 1710201600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35950/large/photo_2024-03-11_10.18.27.jpeg?1710240090",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "pundix-pundi-x-token",
       "name": "Pundi X Token",
       "coingeckoId": "pundi-x-2",
@@ -4178,6 +4193,44 @@
       }
     },
     {
+      "id": "mantle:susde-staked-usde",
+      "name": "Staked USDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "symbol": "sUSDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1709929437,
+      "coingeckoListingTimestamp": 1710892800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33669/large/photo_2023-12-14_17-00-20.jpg?1702696035",
+      "chainId": 5000,
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
+      "id": "mantle:usde-usde",
+      "name": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "symbol": "USDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1709926643,
+      "coingeckoListingTimestamp": 1702512000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33613/large/3466ef_3c088c66c7d941e8856339d0bddf33cc_mv2.png?1702514458",
+      "chainId": 5000,
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
       "id": "base:aero-aerodrome",
       "name": "Aerodrome",
       "coingeckoId": "aerodrome-finance",
@@ -4208,6 +4261,21 @@
       "formula": "circulatingSupply"
     },
     {
+      "id": "base:brett-brett",
+      "name": "Brett",
+      "coingeckoId": "based-brett",
+      "address": "0x532f27101965dd16442E59d40670FaF5eBB142E4",
+      "symbol": "BRETT",
+      "decimals": 18,
+      "deploymentTimestamp": 1708757271,
+      "coingeckoListingTimestamp": 1709164800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35529/large/1000050750.png?1709031995",
+      "chainId": 8453,
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
       "id": "base:degen-degen",
       "name": "Degen",
       "coingeckoId": "degen-base",
@@ -4218,6 +4286,21 @@
       "coingeckoListingTimestamp": 1705276800,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/34515/large/android-chrome-512x512.png?1706198225",
+      "chainId": 8453,
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "id": "base:mochi-mochi",
+      "name": "Mochi",
+      "coingeckoId": "mochi-thecatcoin",
+      "address": "0xF6e932Ca12afa26665dC4dDE7e27be02A7c02e50",
+      "symbol": "MOCHI",
+      "decimals": 18,
+      "deploymentTimestamp": 1699554897,
+      "coingeckoListingTimestamp": 1700524800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33083/large/mochi200.png?1703024216",
       "chainId": 8453,
       "type": "NMV",
       "formula": "circulatingSupply"
@@ -4255,6 +4338,21 @@
         "bridge": "Wormhole",
         "slug": "portal"
       }
+    },
+    {
+      "id": "base:toshi-toshi",
+      "name": "Toshi",
+      "coingeckoId": "toshi",
+      "address": "0xAC1Bd2486aAf3B5C0fc3Fd868558b082a531B2B4",
+      "symbol": "TOSHI",
+      "decimals": 18,
+      "deploymentTimestamp": 1696863767,
+      "coingeckoListingTimestamp": 1690761600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31126/large/2023-08-11_13.21.24.png?1697025145",
+      "chainId": 8453,
+      "type": "NMV",
+      "formula": "circulatingSupply"
     },
     {
       "id": "base:usdc-usd-coin",

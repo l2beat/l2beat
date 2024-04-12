@@ -1,3 +1,42 @@
+Generated with discovered.json: 0xca1dcfc893f3259ddea0aa19ddc937f9e0d76fa1
+
+# Diff at Wed, 10 Apr 2024 09:31:38 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@6bb1fb9faf46a5960ef8903031fd713f6bd1234a block: 19610745
+- current block number: 19624352
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract FflonkVerifier (0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8)
+    +++ description: None
+```
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      values.rollupsData.1.1:
+-        "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"
++        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
+    }
+```
+
+## Source code changes
+
+```diff
+.../contracts/verifiers/FflonkVerifier.sol         |    0
+ .../FflonkVerifier}/meta.txt                       |    0
+ .../verifiers/FflonkVerifier.sol => /dev/null      | 1244 --------------------
+ .../meta.txt => /dev/null                          |    2 -
+ 4 files changed, 1246 deletions(-)
+```
+
 Generated with discovered.json: 0x84208cfb3134802fcfbb77b6a1e6a6a4aa4c8419
 
 # Diff at Mon, 08 Apr 2024 11:47:10 GMT:
