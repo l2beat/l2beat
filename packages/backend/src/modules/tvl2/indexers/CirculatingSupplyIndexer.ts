@@ -33,9 +33,9 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
     const from = this.$.syncOptimizer.getTimestampToSync(new UnixTime(_from))
     const to = this.getAdjustedTo(from, _to)
 
-    const prices = await this.fetchAndOptimizeCirculatingSupplies(from, to)
+    const amounts = await this.fetchAndOptimizeCirculatingSupplies(from, to)
 
-    await this.$.amountRepository.addMany(prices)
+    await this.$.amountRepository.addMany(amounts)
 
     return to.toNumber()
   }
