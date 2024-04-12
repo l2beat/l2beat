@@ -32,6 +32,7 @@ export const parallel: Layer2 = orbitStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
+  postsBlobs: true,
   trackedTxs: [
     {
       uses: [
