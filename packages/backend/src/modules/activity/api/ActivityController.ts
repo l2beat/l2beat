@@ -43,12 +43,10 @@ export class ActivityController {
     }
     assert(ethereumCounts, 'Ethereum missing in daily transaction count')
 
-    const { daily: combinedDaily, ...estimationInfo } = toCombinedActivity(projectCounts)
+    const { daily: combinedDaily, ...estimationInfo } =
+      toCombinedActivity(projectCounts)
 
-    const combinedChartPoints = alignActivityData(
-      combinedDaily,
-      ethereumCounts,
-    )
+    const combinedChartPoints = alignActivityData(combinedDaily, ethereumCounts)
 
     const projects: ActivityApiResponse['projects'] = {}
     for (const [projectId, counts] of projectCounts.entries()) {
@@ -58,7 +56,10 @@ export class ActivityController {
     }
 
     return {
-      combined: { ...formatActivityChart(combinedChartPoints), ...estimationInfo },
+      combined: {
+        ...formatActivityChart(combinedChartPoints),
+        ...estimationInfo,
+      },
       projects,
     }
   }
@@ -103,8 +104,8 @@ export class ActivityController {
     const now = this.clock.getLastHour()
     for (const processor of this.processors) {
       // Exclude projects that have not been fully synced yet
-      if(!processor.getStatus().syncedOnce) continue
-      
+      if (!processor.getStatus().syncedOnce) continue
+
       const projectId = processor.projectId
       if (!this.projectIds.includes(projectId)) continue
       const projectCounts = counts.filter((c) => c.projectId === projectId)
