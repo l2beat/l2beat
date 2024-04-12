@@ -7,7 +7,7 @@ export const kakarotzkevm: Layer2 = upcomingL2({
     name: 'Kakarot zkEVM',
     slug: 'kakarotzkevm',
     description:
-      'Kakarot zkEVM is an EVM-Compatible Zk Rollup written in Cairo.',
+      'Kakarot is an EVM-compatible zkRollup that leverages Cairo to spearhead innovations on Ethereum.',
     purposes: ['Universal'],
     category: 'ZK Rollup',
     links: {
