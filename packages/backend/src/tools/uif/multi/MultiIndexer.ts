@@ -14,7 +14,7 @@ import {
 export abstract class MultiIndexer<T> extends ChildIndexer {
   private ranges: ConfigurationRange<T>[] = []
   private configurations: Configuration<T>[] = []
-  private saved: SavedConfiguration<T>[] = []
+  private saved = new Map<string, SavedConfiguration<T>>()
 
   constructor(
     logger: Logger,
@@ -136,7 +136,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
     )
     const oldSafeHeight = (await this.getSafeHeight()) ?? safeHeight
 
-    this.saved = toSave
+    this.saved = new Map(toSave.map((c) => [c.id, c]))
     if (toRemove.length > 0) {
       await this.removeData(toRemove)
     }
@@ -189,7 +189,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
   ): string[] {
     const touched: string[] = []
     for (const updated of updatedConfigurations) {
-      const saved = this.saved.find((c) => c.id === updated.id)
+      const saved = this.saved.get(updated.id)
       if (!saved) {
         throw new Error('Programmer error, saved configuration not found')
       }
@@ -219,15 +219,14 @@ function findRange<T>(
 
 function getConfigurationsInRange<T>(
   range: ConfigurationRange<T>,
-  savedConfigurations: SavedConfiguration<T>[],
+  savedConfigurations: Map<string, SavedConfiguration<T>>,
   currentHeight: number,
 ): { configurations: UpdateConfiguration<T>[]; minCurrentHeight: number } {
   let minCurrentHeight = Infinity
   const configurations = range.configurations.map(
     (configuration): UpdateConfiguration<T> => {
-      const saved = savedConfigurations.find((c) => c.id === configuration.id)
+      const saved = savedConfigurations.get(configuration.id)
       if (
-        // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
         saved &&
         saved.currentHeight !== null &&
         saved.currentHeight > currentHeight
