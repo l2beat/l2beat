@@ -59,6 +59,7 @@
   "hypr": true,
   "immutablex": true,
   "immutablezkevm": true,
+  "kakarotzkevm": true,
   "karak": true,
   "kinto": true,
   "kroma": true,
