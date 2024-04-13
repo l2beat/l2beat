@@ -194,7 +194,7 @@ const BLOCKLIST_CENSORS_WITHDRAWAL: ScalingProjectRisk = {
 const STARKEX_BLOCKLIST: ScalingProjectTechnologyChoice = {
   name: 'Blocklist',
   description:
-    "The BlockAdmin (see Permissions section) can add addresses to a Blocklist, preventing the finalization of their withdrawal on L1. This effectively locks the blocked party's funds in the bridge escrow on L1 if the withdrawal had already been initiated on L2.",
+    "The BlockAdmin (see Permissions section) can add addresses to a Blocklist, preventing the finalization of their withdrawal on L1. This effectively locks the blocked party's funds in the bridge escrow on L1 if the withdrawal had already been initiated on L2. The Blocklist is also effective on forced withdrawals.",
   risks: [BLOCKLIST_CENSORS_WITHDRAWAL],
   references: [
     {
