@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x974e62bf43d63138b2affa57c5fa942528d1f434
+
+# Diff at Sat, 13 Apr 2024 08:40:52 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@ce9ed778ed3251d8c0182e8225fd576d18383215 block: 19631863
+- current block number: 19645524
+
+## Description
+
+Multisig transaction:
+- `Bridge.setReserved(tokenaddress)` for sUSDe, USDe, uniETH: Set the three tokens as 'reserved' meaning they cannot be bridged to Linea. (`bridgeToken()` reverts on reserved tokens)
+- This can only be set for tokens not locked in the bridge, meaning no funds are locked by it.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      values.nonce:
+-        41
++        42
+    }
+```
+
 Generated with discovered.json: 0x89400dca91a7d0ef56df44dae3bda28049f2ef91
 
 # Diff at Thu, 11 Apr 2024 10:44:49 GMT:
