@@ -167,7 +167,7 @@ export const rhinofi: Layer2 = {
     dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.STARKEX_OFF_CHAIN,
     operator: OPERATOR.STARKEX_OPERATOR,
     forceTransactions: FORCE_TRANSACTIONS.STARKEX_SPOT_WITHDRAW(),
-    exitMechanisms: EXITS.STARKEX_PERPETUAL,
+    exitMechanisms: [...EXITS.STARKEX_PERPETUAL, EXITS.STARKEX_BLOCKLIST],
   },
   contracts: {
     addresses: [
@@ -207,7 +207,7 @@ export const rhinofi: Layer2 = {
     discovery.contractAsPermissioned(
       // this multisig does not get recognized as such (because of the old proxy?)
       discovery.getContract('DeversiFiTreasuryMultisig'),
-      'Can add addresses to a blocklist in the bridge, blocking their withdrawal of funds to L1.',
+      'Is the BlockAdmin: Can add addresses to a blocklist in the bridge, blocking the finalization of their withdrawals on L1.',
     ),
   ],
   milestones: [
