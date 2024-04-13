@@ -9,6 +9,7 @@ Generated with discovered.json: 0x5c90684b94ec67ec0205143a888b5085c83eecf9
 ## Description
 
 Tidy up config.jsonc:
+
 - no onchain changes
 - scope of discovery config stays the same (+Linea adapter added)
 
