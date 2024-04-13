@@ -2,7 +2,6 @@ import { formatSeconds } from '@l2beat/shared-pure'
 
 import { ScalingProjectRisk } from './ScalingProjectRisk'
 import { ScalingProjectTechnologyChoice } from './ScalingProjectTechnologyChoice'
-import { text } from 'stream/consumers'
 
 function REGULAR(
   type: 'zk' | 'optimistic',
