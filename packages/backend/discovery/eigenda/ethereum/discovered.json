@@ -1,8 +1,8 @@
 {
   "name": "eigenda",
   "chain": "ethereum",
-  "blockNumber": 19632640,
-  "configHash": "0x4fdcbdc5bbd768649356d59a39e33da34064473105e042bc269e48d382d2cc28",
+  "blockNumber": 19654821,
+  "configHash": "0x45460968f0b4928803eb73c8502d019e52a4571baebffac7f5e62bf89a810e9d",
   "version": 3,
   "contracts": [
     {
@@ -53,6 +53,7 @@
         "indexRegistry": "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030",
         "numRegistries": 3,
         "OPERATOR_CHURN_APPROVAL_TYPEHASH": "0x4d404e3276e7ac2163d8ee476afa6a41d1f68fb71f2d8b6546b24e55ce01b72a",
+        "operatorSetParams": [200, 11000, 50],
         "owner": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
@@ -65,7 +66,8 @@
         ],
         "serviceManager": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
         "stakeRegistry": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D"
-      }
+      },
+      "derivedName": "RegistryCoordinator"
     },
     {
       "name": "PauserRegistry",
@@ -238,7 +240,7 @@
       "sinceTimestamp": 1712353787,
       "values": {
         "avsDirectory": "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
-        "batchId": 232,
+        "batchId": 679,
         "BLOCK_STALE_MEASURE": 150,
         "blsApkRegistry": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
@@ -267,7 +269,7 @@
         "stakeRegistry": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
         "staleStakesForbidden": false,
         "STORE_DURATION_BLOCKS": 100800,
-        "taskNumber": 232,
+        "taskNumber": 679,
         "THRESHOLD_DENOMINATOR": 100
       },
       "derivedName": "EigenDAServiceManager"
@@ -321,7 +323,7 @@
         "denebForkTimestamp": 1710338135,
         "eigenPodBeacon": "0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
         "ethPOS": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
-        "numPods": 29996,
+        "numPods": 30097,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",

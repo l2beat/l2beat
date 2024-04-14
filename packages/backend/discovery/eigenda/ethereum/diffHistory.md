@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x082a661a25c9ceef906249d76db7902c494c28bf
+
+# Diff at Sun, 14 Apr 2024 16:01:13 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@c88e9917cce55305c9e770ab2f0db5a43854522c block: 19632640
+- current block number: 19654821
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19632640 (main branch discovery), not current.
+
+```diff
+    contract RegistryCoordinator (0x0BAAc79acD45A023E19345c352d8a7a83C4e5656) {
+    +++ description: None
+      values.operatorSetParams:
++        [200,11000,50]
+    }
+```
+
 Generated with discovered.json: 0xf05c5798cc9c79512ff31687f00faf8f51d5bd1a
 
 # Diff at Thu, 11 Apr 2024 13:21:37 GMT:

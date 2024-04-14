@@ -474,6 +474,11 @@
           "severity": null,
           "type": null
         },
+        "operatorSetParams": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
         "owner": {
           "description": null,
           "severity": null,
@@ -490,9 +495,9 @@
           "type": null
         },
         "quorumCount": {
-          "description": null,
-          "severity": null,
-          "type": null
+          "description": "if quorum count changes, makes sure the new quorum parameters are tracked in the config",
+          "severity": "HIGH",
+          "type": "RISK_PARAMETER"
         },
         "registries": {
           "description": null,
