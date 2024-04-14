@@ -25,12 +25,12 @@
     "EigenPodManager": {
       "ignoreInWatchMode": ["numPods"]
     },
-    "RegistryCoordinator" :{
+    "RegistryCoordinator": {
       "fields": {
-        "operatorSetParams":{
+        "operatorSetParams": {
           "type": "call",
           "method": "getOperatorSetParams",
-          "args": [0],
+          "args": [0]
         }
       }
     }
