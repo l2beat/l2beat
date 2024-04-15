@@ -92,6 +92,9 @@ export class Application {
       await apiServer.start()
       await database.start()
       for (const module of modules) {
+        if (module?.syncDisabled) {
+          continue
+        }
         await module?.start?.()
       }
     }

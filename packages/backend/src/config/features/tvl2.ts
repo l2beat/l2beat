@@ -36,6 +36,7 @@ export function getTvl2Config(
   )
 
   const tvl2Config = {
+    syncDisabled: !flags.isEnabled('tvl2', 'sync-disabled'),
     amounts: getAmountsConfig(
       projects,
       tokenList,

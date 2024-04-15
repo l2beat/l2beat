@@ -6,6 +6,7 @@ import { TxUpdaterInterface } from './tracked-txs/types/TxUpdaterInterface'
 export interface ApplicationModule {
   routers?: Router[]
   start?: () => Promise<void> | void
+  syncDisabled?: boolean
 }
 
 export interface ApplicationModuleWithIndexer<T extends ChildIndexer>

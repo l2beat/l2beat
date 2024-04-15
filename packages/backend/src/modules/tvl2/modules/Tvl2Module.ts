@@ -81,5 +81,6 @@ export function createTvl2Module(
   return {
     routers: [statusRouter],
     start,
+    syncDisabled: config.tvl2.syncDisabled,
   }
 }

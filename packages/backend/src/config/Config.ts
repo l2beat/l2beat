@@ -85,6 +85,7 @@ export interface TvlConfig {
 }
 
 export interface Tvl2Config {
+  readonly syncDisabled: boolean
   readonly prices: PriceConfigEntry[]
   readonly amounts: AmountConfigEntry[]
   readonly chains: ChainTvlConfig[]
