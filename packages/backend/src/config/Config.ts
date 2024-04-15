@@ -70,6 +70,7 @@ export interface DatabaseConfig {
     min: number
     max: number
   }
+  readonly isReadonly: boolean
 }
 
 export interface ClockConfig {

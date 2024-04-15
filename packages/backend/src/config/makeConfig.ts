@@ -31,9 +31,10 @@ export function makeConfig(
   ).append('status')
   const tvl2Config = getTvl2Config(flags, env, minTimestampOverride)
 
+  const isReadonly = env.boolean('READONLY', false)
   return {
     name,
-    isReadonly: env.boolean('READONLY', false),
+    isReadonly,
     projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
     tokens: tokenList,
     logger: {
@@ -55,7 +56,12 @@ export function makeConfig(
     },
     database: isLocal
       ? {
-          connection: env.string('LOCAL_DB_URL'),
+          connection: env.string('LOCAL_DB_URL').includes('localhost')
+            ? env.string('LOCAL_DB_URL')
+            : {
+                connectionString: env.string('LOCAL_DB_URL'),
+                ssl: { rejectUnauthorized: false },
+              },
           freshStart: env.boolean('FRESH_START', false),
           enableQueryLogging: env.boolean('ENABLE_QUERY_LOGGING', false),
           connectionPoolSize: {
@@ -63,6 +69,7 @@ export function makeConfig(
             min: 2,
             max: 10,
           },
+          isReadonly,
         }
       : {
           freshStart: false,
@@ -76,6 +83,7 @@ export function makeConfig(
             min: 20,
             max: 200,
           },
+          isReadonly,
         },
     api: {
       port: env.integer('PORT', isLocal ? 3000 : undefined),
