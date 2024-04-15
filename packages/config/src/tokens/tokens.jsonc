@@ -1552,6 +1552,69 @@
         "slug": "connext"
       }
     },
+ {
+      "symbol": "rsETH",
+      "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
+      "coingeckoId": "kelp-dao-restaked-eth",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Stargate",
+        "slug": "stargate"
+      }
+    },
+ {
+      "symbol": "pxETH",
+      "address": "0x9E0d7D79735e1c63333128149c7b616a0dC0bBDb",
+      "coingeckoId": "dinero-staked-eth",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Stargate",
+        "slug": "stargate"
+      }
+    },
+ {
+      "symbol": "sUSDe",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "coingeckoId": "ethena-staked-usde",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Stargate",
+        "slug": "stargate"
+      }
+    },
+ {
+      "symbol": "USDe",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "coingeckoId": "ethena-usde",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Stargate",
+        "slug": "stargate"
+      }
+    },
+ {
+      "symbol": "ENA",
+      "address": "0x58538e6A46E07434d7E7375Bc268D3cb839C0133",
+      "coingeckoId": "ethena",
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Stargate",
+        "slug": "stargate"
+      }
+    },
+ {
+      "symbol": "wrsETH",
+      "address": "0xe7903B1F75C534Dd8159b313d92cDCfbC62cB3Cd",
+      "coingeckoId": "kelp-dao-restaked-eth",
+      "type": "NMV",
+      "formula": "totalSupply",
+      }
+    },
     {
       "symbol": "STONE",
       "address": "0x80137510979822322193FC997d400D5A6C747bf7",
