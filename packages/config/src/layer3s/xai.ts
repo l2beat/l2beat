@@ -93,7 +93,16 @@ export const xai: Layer3 = orbitStackL3({
     discovery.getContractDetails('SentryReferee', {
       description:
         'The referree contract allows to create new challenges (state root reports) from the permissioned challenger, collects assertions from sentry nodes, and distributes esXAI rewards for operating a sentry node. \
-        The referee contract is also a whitelisted address in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers.',
+        The referee contract is also a whitelisted address in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. Additional staking through this contract is disabled. Stakers can continue to get staking rewards here or withdraw their assets.',
+    }),
+    discovery.getContractDetails('PoolFactory', {
+      description: (() => {
+        const stakingEnabled = <boolean>(
+          discovery.getContractValue('PoolFactory', 'stakingEnabled')
+        )
+        const description = `The PoolFactory allows creating and managing staking pools for V2 staking. Users can stake esXAI (and / or Sentry Keys) in pools. This contract's address is whitelisted in the esXAI token contract, which allows it to initiate arbitrary esXAI token transfers. V2 staking through this contract is currently ${stakingEnabled ? 'enabled' : 'disabled'}.`
+        return description
+      })(),
     }),
     discovery.getContractDetails('NodeLicenseRegistry', {
       description:

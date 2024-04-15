@@ -4,7 +4,8 @@
   "name": "xai",
   "initialAddresses": [
     "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
-    "0xb591cE747CF19cF30e11d656EB94134F523A9e77"
+    "0xb591cE747CF19cF30e11d656EB94134F523A9e77",
+    "0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5"
   ],
   "names": {
     "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9": "Inbox",
@@ -21,7 +22,9 @@
     "0x22CCA5Dc96a4Ac1EC32c9c7C5ad4D66254a24C35": "L1GatewayRouter",
     "0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E": "ExecutorMultisig",
     "0xfD41041180571C5D371BEA3D9550E55653671198": "SentryReferee",
-    "0xbc14d8563b248B79689ECbc43bBa53290e0b6b66": "NodeLicenseRegistry"
+    "0xbc14d8563b248B79689ECbc43bBa53290e0b6b66": "NodeLicenseRegistry",
+    "0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5": "PoolFactory",
+    "0x599C8489256Fb17b66d499d907F30b8022a29443": "StakingPool"
   },
   "overrides": {
     "ChallengeManager": {
@@ -142,13 +145,23 @@
         "getChallenge",
         "getMaxStakeAmount",
         "getKycWalletAtIndex",
-        "getCombinedTotalSupply"
+        "getCombinedTotalSupply",
+        "assignedKeyToPool",
+        "getBoostFactorForKeyId"
       ],
       "ignoreInWatchMode": ["challengeCounter", "getKycWalletCount"]
     },
     "NodeLicenseRegistry": {
       "ignoreMethods": ["getPricingTier", "tokenByIndex"],
       "ignoreInWatchMode": ["totalSupply"]
+    },
+    "StakingPool": {
+      "ignoreMethods": [
+        "getPoolInfo",
+        "getStakedKeysCount",
+        "keyIdIndex",
+        "stakedKeysIndices"
+      ]
     }
   }
 }

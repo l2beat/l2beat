@@ -769,11 +769,6 @@
           "severity": null,
           "type": null
         },
-        "getBoostFactorForKeyId": {
-          "description": null,
-          "severity": null,
-          "type": null
-        },
         "getKycWalletCount": {
           "description": null,
           "severity": null,
