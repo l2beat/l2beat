@@ -83,14 +83,6 @@ export class BlockTimestampIndexer extends ChildIndexer {
       return safeHeight
     }
 
-    // We prevent updating the minimum timestamp of the indexer.
-    // This functionality can be added in the future if needed.
-    assert(
-      indexerState.minTimestamp &&
-        this.minTimestamp.equals(indexerState.minTimestamp),
-      'Minimum timestamp of this indexer cannot be updated',
-    )
-
     this.logger.debug('Initialized')
 
     return indexerState.safeHeight
