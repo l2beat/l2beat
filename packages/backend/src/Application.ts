@@ -77,23 +77,27 @@ export class Application {
       getErrorReportingMiddleware(),
     )
 
-    this.start = async () => {
-      logger.for(this).info('Starting', { features: config.flags })
-      const unusedFlags = Object.values(config.flags)
-        .filter((x) => !x.used)
-        .map((x) => x.feature)
-      if (unusedFlags.length > 0) {
-        logger
-          .for(this)
-          .warn('Some feature flags are not used', { unusedFlags })
-      }
-      logger.for(this).info('Log level', config.logger.logLevel)
+    this.start = config.isReadonly
+      ? async () => {
+          await apiServer.start()
+        }
+      : async () => {
+          logger.for(this).info('Starting', { features: config.flags })
+          const unusedFlags = Object.values(config.flags)
+            .filter((x) => !x.used)
+            .map((x) => x.feature)
+          if (unusedFlags.length > 0) {
+            logger
+              .for(this)
+              .warn('Some feature flags are not used', { unusedFlags })
+          }
+          logger.for(this).info('Log level', config.logger.logLevel)
 
-      await apiServer.start()
-      await database.start()
-      for (const module of modules) {
-        await module?.start?.()
-      }
-    }
+          await apiServer.start()
+          await database.start()
+          for (const module of modules) {
+            await module?.start?.()
+          }
+        }
   }
 }

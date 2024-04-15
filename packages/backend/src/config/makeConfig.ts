@@ -33,6 +33,7 @@ export function makeConfig(
 
   return {
     name,
+    isReadonly: env.boolean('READONLY', false),
     projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
     tokens: tokenList,
     logger: {
