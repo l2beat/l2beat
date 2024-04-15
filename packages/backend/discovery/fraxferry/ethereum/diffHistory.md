@@ -1,3 +1,97 @@
+Generated with discovered.json: 0x26a1cf6926ad6177aed37b5d7137c132e16081a7
+
+# Diff at Sun, 14 Apr 2024 15:51:18 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@c88e9917cce55305c9e770ab2f0db5a43854522c block: 19609246
+- current block number: 19654781
+
+## Description
+
+### Fee change on Fraxtal FPI bridge
+
+The fees of the FPI bridge to / from Fraxtal are lowered. The 0.1% fee is removed and the flat fee is reduced to 1 token (FPI). Other fraxferry bridges and (inlcuding other FPI bridges) have their fees unchanged.
+
+## Watched changes
+
+```diff
+    contract fpiFerryBridgeFraxtal (0x9A576A3d39c589A861B46864C253288bcA428a6c) {
+    +++ description: None
+      values.FEE_MAX:
+-        "100000000000000000000"
++        "1000000000000000000"
+      values.FEE_MIN:
+-        "5000000000000000000"
++        "1000000000000000000"
+      values.FEE_RATE:
+-        10
++        0
+      values.MIN_WAIT_PERIOD_EXECUTE:
+-        79200
++        39600
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19609246 (main branch discovery), not current.
+
+```diff
+    contract sfraxFerryBridgeArbitrum (0x2b4864c2F2A2C275C6C66B90a2ae6BE9fA9cbE47) {
+    +++ description: None
+      name:
+-        "sfraxFerryBridgeArbitrum"
++        "sfraxFerryBridgeFraxtal"
+    }
+```
+
+```diff
+    contract fxsFerryBridgeArbitrum (0x4A6d155df9Ec9A1BB3639e6B7B99E46Fb68D42f6) {
+    +++ description: None
+      name:
+-        "fxsFerryBridgeArbitrum"
++        "fxsFerryBridgeFraxtal"
+    }
+```
+
+```diff
+    contract sfrxFerryBridgeArbitrum (0x5c5f05cF8528FFe925A2264743bFfEdbAB2b0FE3) {
+    +++ description: None
+      name:
+-        "sfrxFerryBridgeArbitrum"
++        "sfrxFerryBridgeFraxtal"
+    }
+```
+
+```diff
+    contract fraxFerryBridgeArbitrum (0x5e1D94021484642863Ea8E7Cb4F0188e56B18FEE) {
+    +++ description: None
+      name:
+-        "fraxFerryBridgeArbitrum"
++        "fraxFerryBridgeFraxtal"
+    }
+```
+
+```diff
+    contract fpisFerryBridgeArbitrum (0x958815f476cD07354c0BC034EE5077B20fD93003) {
+    +++ description: None
+      name:
+-        "fpisFerryBridgeArbitrum"
++        "fpisFerryBridgeFraxtal"
+    }
+```
+
+```diff
+    contract fpiFerryBridgeArbitrum (0x9A576A3d39c589A861B46864C253288bcA428a6c) {
+    +++ description: None
+      name:
+-        "fpiFerryBridgeArbitrum"
++        "fpiFerryBridgeFraxtal"
+    }
+```
+
 Generated with discovered.json: 0xf59b292e8d18dbff6b5fb428a682d89a9b877a6b
 
 # Diff at Mon, 08 Apr 2024 06:44:20 GMT:
