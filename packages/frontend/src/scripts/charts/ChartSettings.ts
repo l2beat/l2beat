@@ -93,7 +93,7 @@ export class ChartSettingsManager {
         return {
           useLogScale: false,
           unit: 'USD',
-          timeRangeInDays: 7,
+          timeRangeInDays: 30,
           showEthereumTransactions: true,
         }
     }
