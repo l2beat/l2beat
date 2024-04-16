@@ -1,8 +1,8 @@
 {
-  "name": "zksync2",
+  "name": "zksyncera",
   "chain": "ethereum",
-  "blockNumber": 19624206,
-  "configHash": "0xdebda2622e909305444df68be16124cd8d8c5d3ce63bb6151ef03b837a5e1209",
+  "blockNumber": 19668267,
+  "configHash": "0x92d867b126c89b9e558c00619642aacc26f139b6c914e913ef5332f33e6647d5",
   "version": 3,
   "contracts": [
     {
@@ -117,7 +117,7 @@
             ["0x701f58c5", "0xc3d93e7c", "0x7f61885c", "0x97c09d34"]
           ]
         ],
-        "getFirstUnprocessedPriorityTx": 3116165,
+        "getFirstUnprocessedPriorityTx": 3129322,
         "getGovernor": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61",
         "getL2BootloaderBytecodeHash": "0x010007ede999d096c84553fb514d3d6ca76fbf39789dda76bfeda9f3ae06236e",
         "getL2DefaultAccountBytecodeHash": "0x0100055b041eb28aff6e3a6e0f37c31fd053fc9ef142683b05e5f0aee6934066",
@@ -125,16 +125,16 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingGovernor": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 1387,
+        "getPriorityQueueSize": 3076,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 22,
-        "getTotalBatchesCommitted": 471846,
-        "getTotalBatchesExecuted": 471587,
-        "getTotalBatchesVerified": 471795,
-        "getTotalBlocksCommitted": 471846,
-        "getTotalBlocksExecuted": 471587,
-        "getTotalBlocksVerified": 471795,
-        "getTotalPriorityTxs": 3117552,
+        "getTotalBatchesCommitted": 473595,
+        "getTotalBatchesExecuted": 473314,
+        "getTotalBatchesVerified": 473552,
+        "getTotalBlocksCommitted": 473595,
+        "getTotalBlocksExecuted": 473314,
+        "getTotalBlocksVerified": 473552,
+        "getTotalPriorityTxs": 3132398,
         "getVerifier": "0xdd9C826196cf3510B040A8784D85aE36674c7Ed2",
         "getVerifierParams": [
           "0x5a3ef282b21e12fe1f4438e5bb158fc5060b160559c5158c6389d62d9fe3d080",
@@ -143,8 +143,8 @@
         ],
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": [
-          "0xae2fa7dc2ebd388db39cbf654b8ab1cfe30fc5c4dd28264a0d468a2505ec7b5d",
-          1712659367,
+          "0x744d8e1a0cc312268a6805879e0792065524327c96584923a6cea8e5854776ca",
+          1713189011,
           0
         ],
         "validators": ["0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD"]

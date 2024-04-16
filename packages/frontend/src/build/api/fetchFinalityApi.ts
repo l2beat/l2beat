@@ -29,7 +29,6 @@ function getMockFinalityApiResponse(): FinalityApiResponse {
     'fuelv1',
     'kroma',
     'mode',
-    'zksync2',
     'zora',
   ].reduce<Record<string, FinalityProjectData>>((acc, cur) => {
     acc[cur] = {

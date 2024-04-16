@@ -150,6 +150,6 @@
   "zkswap": false,
   "zkswap2": false,
   "zksync": true,
-  "zksync2": true,
+  "zksyncera": true,
   "zora": true
 }

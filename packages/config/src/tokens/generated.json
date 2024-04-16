@@ -4121,7 +4121,7 @@
       }
     },
     {
-      "id": "zksync2:usdc-usdc",
+      "id": "zksyncera:usdc-usdc",
       "name": "USDC",
       "coingeckoId": "usd-coin",
       "address": "0x1d17CBcF0D6D143135aE902365D2E5e2A16538D4",

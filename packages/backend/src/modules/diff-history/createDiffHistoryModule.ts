@@ -54,7 +54,7 @@ export function createDiffHistoryModule(
         { name: 'arbitrum', minTimestamp: new UnixTime(1622243340) },
         { name: 'optimism', minTimestamp: new UnixTime(1636665360) },
         { name: 'base', minTimestamp: new UnixTime(1686789300) },
-        { name: 'zksync2', minTimestamp: new UnixTime(1676388120) },
+        { name: 'zksyncera', minTimestamp: new UnixTime(1676388120) },
         { name: 'dydx', minTimestamp: getDYDXMinTimestamp() },
         { name: 'linea', minTimestamp: new UnixTime(1688656500) },
         { name: 'starknet', minTimestamp: new UnixTime(1637076240) },

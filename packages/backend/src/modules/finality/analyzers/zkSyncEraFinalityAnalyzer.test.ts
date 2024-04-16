@@ -17,7 +17,7 @@ describe(zkSyncEraFinalityAnalyzer.name, () => {
       const calculator = new zkSyncEraFinalityAnalyzer(
         provider,
         mockRepo,
-        ProjectId('zksync2'),
+        ProjectId('zksyncera'),
       )
       const results = await calculator.getFinality({
         txHash: '0x121',

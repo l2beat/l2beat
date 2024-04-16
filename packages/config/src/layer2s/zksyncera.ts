@@ -22,7 +22,7 @@ import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
-const discovery = new ProjectDiscovery('zksync2')
+const discovery = new ProjectDiscovery('zksyncera')
 
 const executionDelay = discovery.getContractValue<number>(
   'ValidatorTimelock',
@@ -61,10 +61,10 @@ const validators = constructorArgs._validators
 
 export const zksyncera: Layer2 = {
   type: 'layer2',
-  id: ProjectId('zksync2'),
+  id: ProjectId('zksyncera'),
   display: {
     name: 'zkSync Era',
-    slug: 'zksync-era',
+    slug: 'zksyncera',
     warning: delay
       ? `Withdrawals are delayed by ${delay}. The length of the delay can be arbitrarily set by a MultiSig.`
       : undefined,
@@ -273,7 +273,7 @@ export const zksyncera: Layer2 = {
     },
   },
   chainConfig: {
-    name: 'zksync2',
+    name: 'zksyncera',
     chainId: 324,
     explorerUrl: 'https://explorer.zksync.io/',
     explorerApi: {

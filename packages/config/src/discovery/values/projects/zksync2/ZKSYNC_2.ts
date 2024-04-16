@@ -2,7 +2,7 @@ import { ScalingProjectRiskViewEntry } from '../../../../common'
 import { RISK_VIEW } from '../../../../common/riskView'
 import { ProjectDiscovery } from '../../../ProjectDiscovery'
 
-const discovery = new ProjectDiscovery('zksync2')
+const discovery = new ProjectDiscovery('zksyncera')
 const governor = discovery
   .getAddressFromValue('zkSync', 'getGovernor')
   .toString()
