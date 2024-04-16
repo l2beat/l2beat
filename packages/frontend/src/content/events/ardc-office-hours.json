@@ -1,0 +1,18 @@
+{
+  "type": "recurring",
+  "title": "Office Hours",
+  "subtitle": "Arbitrum Research and Development Commitee (ARDC)",
+  "sinceDate": "2023-08-01",
+  "futureEventsCount": 3,
+  "dayOfWeek": 1,
+  "startDate": {
+    "hour": 12,
+    "minute": 0
+  },
+  "endDate": {
+    "hour": 13,
+    "minute": 0
+  },
+  "location": "Online",
+  "link": "https://forum.arbitrum.foundation/t/ardc-dao-advocate-communication-thread/22865"
+}
