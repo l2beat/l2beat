@@ -22,7 +22,7 @@ import { HARDCODED } from '../discovery/values/hardcoded'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
-const discovery = new ProjectDiscovery('zksync')
+const discovery = new ProjectDiscovery('zksynclite')
 
 const upgradeDelay = discovery.getContractValue<number>(
   'ZkSync',
@@ -53,10 +53,10 @@ const forcedWithdrawalDelay = HARDCODED.ZKSYNC.PRIORITY_EXPIRATION_PERIOD
 
 export const zksynclite: Layer2 = {
   type: 'layer2',
-  id: ProjectId('zksync'),
+  id: ProjectId('zksynclite'),
   display: {
     name: 'zkSync Lite',
-    slug: 'zksync-lite',
+    slug: 'zksynclite',
     description:
       'zkSync Lite (formerly zkSync) is a ZK Rollup platform that supports payments, token swaps and NFT minting.',
     purposes: ['Payments'],

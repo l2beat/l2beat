@@ -1,8 +1,8 @@
 {
-  "name": "zksync",
+  "name": "zksynclite",
   "chain": "ethereum",
-  "blockNumber": 19532310,
-  "configHash": "0x611f9d2f2b7db1f5c6bd32aab22e069746c7e6f04f4cdf23979d2ba0841bb141",
+  "blockNumber": 19668408,
+  "configHash": "0x2be4d77956dd206761846084648b162f8b4aba804c39ec93ede309ddd334c7c5",
   "version": 3,
   "contracts": [
     {
@@ -166,7 +166,7 @@
         "baseURI": "",
         "name": "zkSync NFT Factory Contract",
         "symbol": "ZKNFT",
-        "totalSupply": 18409
+        "totalSupply": 18457
       },
       "derivedName": "ZkSyncNFTFactory"
     },

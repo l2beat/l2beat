@@ -46,11 +46,6 @@
       "permanent": true
     },
     {
-      "source": "/scaling/projects/zksync",
-      "destination": "/scaling/projects/zksync-lite",
-      "permanent": true
-    },
-    {
       "source": "/project/:name",
       "destination": "/scaling/projects/:name",
       "permanent": true
