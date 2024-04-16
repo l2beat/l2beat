@@ -1,3 +1,4 @@
+import { assert } from '@l2beat/backend-tools'
 import {
   notUndefined,
   ProjectId,
@@ -42,10 +43,22 @@ export class PolygonZkEvmFinalityAnalyzer extends BaseAnalyzer {
       .flatMap((block) => block.transactions)
       .map(toTransactionHash)
 
-    //TODO: poor stuff given the batch can contain ~250 txs, either make sure its rate limited or pick at random a few txs
-    const transactionsFromNode = await Promise.all(
-      hashes.map((hash) => this.l2Provider.getTransaction(hash)),
-    )
+    if (hashes.length === 0) {
+      return []
+    }
+
+    const firstTransaction = hashes.at(0)
+    const lastTransaction = hashes.at(-1)
+
+    // TODO: ???
+    assert(firstTransaction, 'First transaction not found')
+    assert(lastTransaction, 'Last transaction not found')
+
+    // TODO: sequential assumption
+    const transactionsFromNode = await Promise.all([
+      this.l2Provider.getTransaction(firstTransaction),
+      this.l2Provider.getTransaction(firstTransaction),
+    ])
 
     const blockNumbers = transactionsFromNode
       .map((tx) => tx.blockNumber)
