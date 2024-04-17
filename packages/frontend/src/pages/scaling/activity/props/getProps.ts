@@ -23,7 +23,7 @@ export function getProps(
     },
     wrapper: {
       metadata: getDefaultPageMetadata({
-        image: 'https://l2beat.com/meta-images/overview-scaling-activity.png',
+        image: 'https://l2beat.com/meta-images/pages/og-scaling-activity.png',
         url: 'https://l2beat.com/scaling/activity',
       }),
       preloadApis: [getChartUrl({ type: 'scaling-activity' })],
