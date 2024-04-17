@@ -2,19 +2,17 @@ import { assert } from '@l2beat/backend-tools'
 import { CoingeckoQueryService } from '@l2beat/shared'
 import { CoingeckoId, L2FeesApiResponse, UnixTime } from '@l2beat/shared-pure'
 
-import { Project } from '../../../model/Project'
+import { ChainTvlConfigWithGasPriceType } from '../../../config/Config'
 import { GasPriceRepository } from '../repositories/GasPriceRepository'
 
 export class FeeController {
   public constructor(
     private readonly gasPriceRepository: GasPriceRepository,
     private readonly priceService: CoingeckoQueryService,
-
-    private readonly projects: Project[],
+    private readonly chains: ChainTvlConfigWithGasPriceType[],
   ) {}
 
   async getFees(): Promise<L2FeesApiResponse> {
-    const projects = this.projects.filter((p) => !p.isArchived)
     const now = UnixTime.now()
     const from = now.add(-14, 'days')
     const ethPrices = await this.priceService.getUsdPriceHistoryHourly(
@@ -23,9 +21,9 @@ export class FeeController {
       now,
     )
 
-    const promises = projects.map(async (project) => {
+    const promises = this.chains.map(async (project) => {
       const gasPrices = await this.gasPriceRepository.findByProject(
-        project.projectId,
+        project.chain,
       )
 
       const remappedPrices = gasPrices.map((price) => {

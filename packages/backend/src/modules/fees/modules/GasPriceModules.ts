@@ -93,7 +93,7 @@ export function createGasPriceModule(
   const controller = new FeeController(
     peripherals.getRepository(GasPriceRepository),
     coingeckoQueryService,
-    config.projects,
+    config.gasPrice.chains,
   )
 
   const router = createFeeRouter(controller)

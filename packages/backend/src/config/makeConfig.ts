@@ -1,7 +1,7 @@
 import { Env, LoggerOptions } from '@l2beat/backend-tools'
 import { bridges, chains, layer2s, tokenList } from '@l2beat/config'
 import { ConfigReader } from '@l2beat/discovery'
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { bridgeToProject, layer2ToProject } from '../model/Project'
 import { Config, DiscordConfig } from './Config'
@@ -214,66 +214,77 @@ export function makeConfig(
     gasPrice: flags.isEnabled('gasPrice') && {
       chains: [
         {
+          projectId: ProjectId('ethereum'),
           type: 'evm',
           ...getChainTvlConfig(true, env, 'ethereum', {
             minTimestamp: minTimestampOverride,
           }),
         },
         {
+          projectId: ProjectId('arbitrum'),
           type: 'arbitrum',
           ...getChainTvlConfig(true, env, 'arbitrum', {
             minTimestamp: minTimestampOverride,
           }),
         },
         {
+          projectId: ProjectId('optimism'),
           type: 'evm',
           ...getChainTvlConfig(true, env, 'optimism', {
             minTimestamp: minTimestampOverride,
           }),
         },
         {
+          projectId: ProjectId('linea'),
           type: 'evm',
           ...getChainTvlConfig(true, env, 'linea', {
             minTimestamp: minTimestampOverride,
           }),
         },
         {
+          projectId: ProjectId('zksync2'),
           type: 'evm',
           ...getChainTvlConfig(true, env, 'zksync2', {
             minTimestamp: minTimestampOverride,
           }),
         },
         {
+          projectId: ProjectId('blast'),
           type: 'evm',
           ...getChainTvlConfig(true, env, 'blast', {
             minTimestamp: minTimestampOverride,
           }),
         },
         {
+          projectId: ProjectId('mantle'),
           type: 'evm',
           ...getChainTvlConfig(true, env, 'mantle', {
             minTimestamp: minTimestampOverride,
           }),
         },
         {
+          projectId: ProjectId('mantapacific'),
           type: 'evm',
           ...getChainTvlConfig(true, env, 'mantapacific', {
             minTimestamp: minTimestampOverride,
           }),
         },
         {
+          projectId: ProjectId('mode'),
           type: 'evm',
           ...getChainTvlConfig(true, env, 'mode', {
             minTimestamp: minTimestampOverride,
           }),
         },
         {
+          projectId: ProjectId('scroll'),
           type: 'evm',
           ...getChainTvlConfig(true, env, 'scroll', {
             minTimestamp: minTimestampOverride,
           }),
         },
         {
+          projectId: ProjectId('polygonzkevm'),
           type: 'evm',
           ...getChainTvlConfig(true, env, 'polygonzkevm', {
             minTimestamp: minTimestampOverride,

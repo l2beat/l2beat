@@ -92,8 +92,9 @@ export interface Tvl2Config {
   readonly coingeckoApiKey: string | undefined
 }
 
-interface ChainTvlConfigWithGasPriceType extends ChainTvlConfig {
+export interface ChainTvlConfigWithGasPriceType extends ChainTvlConfig {
   type: 'evm' | 'arbitrum'
+  projectId: ProjectId
 }
 export interface GasPriceConfig {
   readonly chains: ChainTvlConfigWithGasPriceType[]
