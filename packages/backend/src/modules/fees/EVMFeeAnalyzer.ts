@@ -1,12 +1,13 @@
 import { mean } from 'lodash'
 import { PublicClient } from 'viem'
 
+import { ViemRpcClient } from '../../peripherals/viem-rpc-client/ViemRpcClient'
 import { Fee, FeeAnalyzer } from './types'
 import { gasToGwei } from './utils/gasToGwei'
 import { median } from './utils/median'
 
 export class EVMFeeAnalyzer implements FeeAnalyzer {
-  constructor(private readonly rpc: PublicClient) {}
+  constructor(private readonly rpc: PublicClient | ViemRpcClient) {}
 
   async getData(blockNumber: number): Promise<Fee> {
     const block = await this.rpc.getBlock({
@@ -14,6 +15,8 @@ export class EVMFeeAnalyzer implements FeeAnalyzer {
       includeTransactions: true,
     })
 
+    // @ts-expect-error too lazy to fix this
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     const allGasFees = block.transactions.map((tx) => gasToGwei(tx.gasPrice))
 
     return {

@@ -211,6 +211,17 @@ export function makeConfig(
     ),
     chains: chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
     tvlCleanerEnabled: flags.isEnabled('tvlCleaner'),
+    gasPrice: flags.isEnabled('gasPrice') && {
+      chains: [
+        getChainTvlConfig(true, env, 'ethereum', {
+          minTimestamp: minTimestampOverride,
+        }),
+      ],
+      coingeckoApiKey: env.optionalString([
+        'COINGECKO_API_KEY_FOR_GAS_PRICE',
+        'COINGECKO_API_KEY',
+      ]),
+    },
 
     // Must be last
     flags: flags.getResolved(),

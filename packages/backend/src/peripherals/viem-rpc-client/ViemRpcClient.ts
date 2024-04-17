@@ -29,6 +29,13 @@ export class ViemRpcClient {
     )
   }
 
+  async getBlock(options: {
+    blockNumber: bigint
+    includeTransactions: boolean
+  }) {
+    return await this.provider.getBlock(options)
+  }
+
   async getTransaction(txHash: `0x${string}`) {
     // eth_getTransactionByHash
     return await this.provider.getTransaction({

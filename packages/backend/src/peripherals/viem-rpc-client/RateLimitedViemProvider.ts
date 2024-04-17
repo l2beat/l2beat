@@ -5,6 +5,7 @@ export class RateLimitedViemProvider {
   private readonly rateLimiter: RateLimiter
   getTransaction: PublicClient['getTransaction']
   getTransactionReceipt: PublicClient['getTransactionReceipt']
+  getBlock: PublicClient['getBlock']
 
   constructor(private readonly provider: PublicClient, callsPerMinute: number) {
     this.rateLimiter = new RateLimiter({ callsPerMinute })
@@ -13,6 +14,9 @@ export class RateLimitedViemProvider {
     )
     this.getTransactionReceipt = this.rateLimiter.wrap(
       this.provider.getTransactionReceipt.bind(this.provider),
+    )
+    this.getBlock = this.rateLimiter.wrap(
+      this.provider.getBlock.bind(this.provider),
     )
   }
 }

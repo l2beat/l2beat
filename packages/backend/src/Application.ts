@@ -7,6 +7,7 @@ import { createActivityModule } from './modules/activity/ActivityModule'
 import { ApplicationModule } from './modules/ApplicationModule'
 import { createDiffHistoryModule } from './modules/diff-history/createDiffHistoryModule'
 import { createFeaturesModule } from './modules/features/FeaturesModule'
+import { createGasPriceModule } from './modules/fees/modules/GasPriceModules'
 import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createHealthModule } from './modules/health/HealthModule'
 import { createImplementationChangeModule } from './modules/implementation-change-report/createImplementationChangeModule'
@@ -68,6 +69,7 @@ export class Application {
       createLzOAppsModule(config, logger),
       createTvl2Module(config, logger, peripherals, clock),
       createFeaturesModule(config),
+      createGasPriceModule(config, logger, peripherals, clock),
     ]
 
     const apiServer = new ApiServer(

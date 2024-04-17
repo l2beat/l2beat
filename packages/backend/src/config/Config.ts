@@ -40,6 +40,7 @@ export interface Config {
   readonly chains: { name: string; chainId: ChainId }[]
   readonly flags: ResolvedFeatureFlag[]
   readonly tvlCleanerEnabled: boolean
+  readonly gasPrice: GasPriceConfig | false
 }
 
 export type LoggerConfig = Pick<LoggerOptions, 'logLevel' | 'format'> &
@@ -87,6 +88,11 @@ export interface TvlConfig {
 export interface Tvl2Config {
   readonly prices: PriceConfigEntry[]
   readonly amounts: AmountConfigEntry[]
+  readonly chains: ChainTvlConfig[]
+  readonly coingeckoApiKey: string | undefined
+}
+
+export interface GasPriceConfig {
   readonly chains: ChainTvlConfig[]
   readonly coingeckoApiKey: string | undefined
 }

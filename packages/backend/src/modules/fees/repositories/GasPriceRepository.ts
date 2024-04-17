@@ -32,6 +32,20 @@ export class GasPriceRepository extends BaseRepository {
     await knex.batchInsert('gas_prices', rows, 2_000)
     return records.length
   }
+
+  async deleteInTimeRange(
+    project: string,
+    from: UnixTime,
+    to: UnixTime,
+    trx?: Knex.Transaction,
+  ) {
+    const knex = await this.knex(trx)
+    return knex('gas_prices')
+      .where('project', project)
+      .where('timestamp', '>=', from.toDate())
+      .where('timestamp', '<=', to.toDate())
+      .delete()
+  }
 }
 
 function toRow(record: GasPriceRecord): GasPriceRow {
