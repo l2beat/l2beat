@@ -2,9 +2,11 @@ import { assert } from '@l2beat/backend-tools'
 import { Layer2, layer2s, Layer3, layer3s } from '@l2beat/config'
 import chalk from 'chalk'
 import { readdir, readFile } from 'fs/promises'
-import { resolve } from 'path'
+import path, { resolve } from 'path'
+import { keyInYN } from 'readline-sync'
 
 import { printAsciiTable } from '../src/tools/printAsciiTable'
+import { powerdiff } from './powerdiffCore'
 
 type ShortStackKey =
   | 'arbitrum'
@@ -17,10 +19,11 @@ type ShortStackKey =
   | 'zks'
   | 'zksync'
 
-const shortStackToFullName: Record<
-  ShortStackKey,
-  Layer2['display']['provider'] | Layer3['display']['provider']
-> = {
+type LongStackKey =
+  | Layer2['display']['provider']
+  | Layer3['display']['provider']
+
+const shortStackToFullName: Record<ShortStackKey, LongStackKey> = {
   arbitrum: 'Arbitrum',
   loopring: 'Loopring',
   opstack: 'OP Stack',
@@ -33,14 +36,34 @@ const shortStackToFullName: Record<
 }
 
 const allShortStacks = Object.keys(shortStackToFullName)
+const ALL_CONFIGS = [...layer2s, ...layer3s]
 
-interface Config {
-  subcommand: 'project' | 'all' | 'help'
-  stack?: ShortStackKey
-  firstProjectPath?: string
-  secondProjectPath?: string
-  forceTable?: boolean
+interface AllConfig {
+  subcommand: 'all'
+  stack: ShortStackKey
+  forceTable: boolean
 }
+
+interface SimilarConfig {
+  subcommand: 'similar'
+  projectPath: string
+  forceTable: boolean
+}
+
+interface ProjectConfig {
+  subcommand: 'project'
+  firstProjectPath: string
+  secondProjectPath: string
+  forceTable: boolean
+}
+
+type ForceTableConfig = AllConfig | SimilarConfig | ProjectConfig
+
+interface HelpConfig {
+  subcommand: 'help'
+}
+
+type Config = ForceTableConfig | HelpConfig
 
 interface HashedFileContent {
   path: string
@@ -50,6 +73,7 @@ interface HashedFileContent {
 
 interface Project {
   name: string
+  chain: string
   concatenatedSource: HashedFileContent
   sources: HashedFileContent[]
 }
@@ -74,6 +98,9 @@ async function main() {
     case 'help':
       printUsage()
       break
+    case 'similar':
+      await findMostSimilarProject(config)
+      break
     case 'project':
       await compareTwoProjects(config)
       break
@@ -91,22 +118,7 @@ function parseCliParameters(): Config {
   }
 
   const mode = args.shift()
-  if (mode === 'project') {
-    const firstProjectPath = args.shift()
-    const secondProjectPath = args.shift()
-
-    let forceTable = false
-    if (args.includes('--force-table')) {
-      forceTable = true
-    }
-
-    return {
-      subcommand: 'project',
-      firstProjectPath,
-      secondProjectPath,
-      forceTable,
-    }
-  } else if (mode === 'all') {
+  if (mode === 'all') {
     const stack = args.shift()
     needsToBe(
       stack !== undefined,
@@ -127,6 +139,46 @@ function parseCliParameters(): Config {
       forceTable,
       stack: stack as ShortStackKey,
     }
+  } else if (mode === 'similar') {
+    const projectPath = args.shift()
+    needsToBe(
+      projectPath !== undefined,
+      'You need to provide a project path in the format chain:name',
+    )
+
+    let forceTable = false
+    if (args.includes('--force-table')) {
+      forceTable = true
+    }
+
+    return {
+      subcommand: 'similar',
+      forceTable,
+      projectPath,
+    }
+  } else if (mode === 'project') {
+    const firstProjectPath = args.shift()
+    const secondProjectPath = args.shift()
+    needsToBe(
+      firstProjectPath !== undefined,
+      'You need to provide the first project path in the format chain:name',
+    )
+    needsToBe(
+      secondProjectPath !== undefined,
+      'You need to provide the second project path in the format chain:name',
+    )
+
+    let forceTable = false
+    if (args.includes('--force-table')) {
+      forceTable = true
+    }
+
+    return {
+      subcommand: 'project',
+      firstProjectPath,
+      secondProjectPath,
+      forceTable,
+    }
   } else {
     console.log('Invalid mode, expected "project" or "all"')
     return { subcommand: 'help' }
@@ -135,69 +187,25 @@ function parseCliParameters(): Config {
 
 function printUsage(): void {
   console.log(
-    'Usage: yarn compare-flat-sources <chain:projectName> <chain:projectName> --force-table',
+    [
+      'yarn compare-flat-sources all <stackType> ........................... Compare all projects of a given stack',
+      'yarn compare-flat-sources similar <chain:project> ................... Compare project, find the most similar and diff it with powerdiff',
+      'yarn compare-flat-sources project <chain:project> <chain:project> ... Compare two projects, file by file',
+      'yarn compare-flat-sources help ...................................... Print this usage',
+    ]
+      .map((s) => chalk.yellow(s))
+      .join('\n'),
   )
 }
 
-async function compareAllProjects(config: Config): Promise<void> {
+async function compareAllProjects(config: AllConfig): Promise<void> {
   const stack = config.stack
   assert(stack !== undefined, 'stack is required')
 
-  const allConfigs = [...layer2s, ...layer3s]
-
-  const configs = allConfigs.filter(
-    (config) =>
-      config.display.provider === shortStackToFullName[stack] &&
-      ('isArchived' in config ? !config.isArchived : true) &&
-      ('hostChain' in config ? config.hostChain !== 'Multiple' : true) &&
-      !config.isUpcoming,
+  const { matrix, projects } = await computeStackSimilarity(
+    shortStackToFullName[stack],
   )
-
-  console.log(`= ${'Reading projects...'} `.padEnd(36, '='))
-  const stackProject = await Promise.all(
-    configs.map((config) =>
-      readProject(
-        config.id.toString(),
-        'hostChain' in config ? config.hostChain : 'ethereum',
-      ),
-    ),
-  )
-  const projects = stackProject.filter((p) => p !== undefined) as Project[]
-
-  const matrix: Record<string, Record<string, string>> = {}
-  const mostSimilar: Record<
-    string,
-    {
-      name: string
-      similarity: number
-    }
-  > = {}
-
-  for (const p1 of projects) {
-    const c1Object: Record<string, string> = {}
-
-    for (const p2 of projects) {
-      const similarity = estimateSimilarity(
-        p1.concatenatedSource,
-        p2.concatenatedSource,
-      )
-      c1Object[p2.name] = colorMap(similarity)
-
-      if (p1.name !== p2.name) {
-        if (
-          mostSimilar[p1.name] === undefined ||
-          similarity > mostSimilar[p1.name].similarity
-        ) {
-          mostSimilar[p1.name] = {
-            name: p2.name,
-            similarity,
-          }
-        }
-      }
-    }
-
-    matrix[p1.name] = c1Object
-  }
+  const mostSimilar = getMostSimilar(matrix)
 
   const table = formatTable(
     config,
@@ -207,11 +215,11 @@ async function compareAllProjects(config: Config): Promise<void> {
   )
 
   if (table) {
-    console.log(`\n= ${'Comparison matrix:'} `.padEnd(36, '='))
+    console.log(formatHeader('Comparison matrix'))
     console.log(table)
   }
 
-  console.log(`\n= ${'Most similar projects:'} `.padEnd(36, '='))
+  console.log(formatHeader('Most similar projects'))
   const longestName = Math.max(
     ...Object.keys(mostSimilar).map((name) => name.length),
   )
@@ -226,40 +234,181 @@ async function compareAllProjects(config: Config): Promise<void> {
   }
 }
 
-async function compareTwoProjects(config: Config): Promise<void> {
-  assert(config.firstProjectPath, 'project1 is required')
-  assert(config.secondProjectPath, 'project2 is required')
+async function computeStackSimilarity(stack: LongStackKey): Promise<{
+  matrix: Record<string, Record<string, number>>
+  projects: Project[]
+}> {
+  const configs = ALL_CONFIGS.filter(
+    (config) =>
+      config.display.provider === stack &&
+      ('isArchived' in config ? !config.isArchived : true) &&
+      ('hostChain' in config ? config.hostChain !== 'Multiple' : true) &&
+      !config.isUpcoming,
+  )
+
+  console.log(formatHeader('Reading projects'))
+  const stackProject = await Promise.all(
+    configs.map((config) =>
+      readProject(
+        config.id.toString(),
+        'hostChain' in config ? config.hostChain : 'ethereum',
+      ),
+    ),
+  )
+  const projects = stackProject.filter((p) => p !== undefined) as Project[]
+
+  const matrix: Record<string, Record<string, number>> = {}
+
+  for (const p1 of projects) {
+    const c1Object: Record<string, number> = {}
+
+    for (const p2 of projects) {
+      const similarity = estimateSimilarity(
+        p1.concatenatedSource,
+        p2.concatenatedSource,
+      )
+      c1Object[encodeProjectPath(p2.name, p2.chain)] = similarity
+    }
+
+    matrix[encodeProjectPath(p1.name, p1.chain)] = c1Object
+  }
+
+  return { matrix, projects }
+}
+
+interface Similarity {
+  name: string
+  chain: string
+  similarity: number
+}
+
+function getMostSimilar(
+  matrix: Record<string, Record<string, number>>,
+): Record<string, Similarity> {
+  const mostSimilar: Record<string, Similarity> = {}
+
+  for (const [p1Path, row] of Object.entries(matrix)) {
+    for (const [p2Path, similarity] of Object.entries(row)) {
+      if (p1Path !== p2Path) {
+        const { name: p1Name } = decodeProjectPath(p1Path)
+        if (
+          mostSimilar[p1Name] === undefined ||
+          similarity > mostSimilar[p1Name].similarity
+        ) {
+          const { name: p2Name, chain: p2Chain } = decodeProjectPath(p2Path)
+          mostSimilar[p1Name] = {
+            name: p2Name,
+            chain: p2Chain,
+            similarity,
+          }
+        }
+      }
+    }
+  }
+
+  return mostSimilar
+}
+
+async function findMostSimilarProject(config: SimilarConfig): Promise<void> {
+  const { name, chain } = decodeProjectPath(config.projectPath)
+
+  const projects = ALL_CONFIGS.filter((p) => p.id.toString() === name)
+  needsToBe(
+    projects.length <= 1,
+    `More than one project found matching ${
+      config.projectPath
+    } ${projects.toString()}`,
+  )
+  needsToBe(
+    projects.length === 1,
+    `No project found matching ${config.projectPath}`,
+  )
+  const project = projects[0]
+
+  const { matrix: perProjectMatrix } = await computeStackSimilarity(
+    project.display.provider,
+  )
+  const mostSimilar = getMostSimilar(perProjectMatrix)
+
+  const {
+    name: otherName,
+    chain: otherChain,
+    similarity,
+  } = mostSimilar[project.id.toString()]
+  const { matrix, firstProject, secondProject } =
+    await computeComparisonBetweenProjects(
+      config.projectPath,
+      `${otherChain}:${otherName}`,
+    )
+
+  printComparisonBetweenProjects(matrix, firstProject, secondProject, config)
+  console.log(formatHeader('Most similar to:'))
+  console.log(`${otherName} => ${name} @ ${colorMap(similarity)}`)
+
+  if(similarity === 1) {
+    console.log('No need to run powerdiff, projects are identical')
+    return
+  }
+
+  if (keyInYN('Run powerdiff?')) {
+    const path1 = path.join('discovery', name, chain, '.flat')
+    const path2 = path.join('discovery', otherName, otherChain, '.flat')
+    powerdiff(path1, path2)
+  }
+}
+
+async function compareTwoProjects(config: ProjectConfig): Promise<void> {
+  const { matrix, firstProject, secondProject } =
+    await computeComparisonBetweenProjects(
+      config.firstProjectPath,
+      config.secondProjectPath,
+    )
+
+  printComparisonBetweenProjects(matrix, firstProject, secondProject, config)
+}
+
+async function computeComparisonBetweenProjects(
+  firstProjectPath: string,
+  secondProjectPath: string,
+): Promise<{
+  matrix: Record<string, Record<string, number>>
+  firstProject: Project
+  secondProject: Project
+}> {
   const { name: firstProjectName, chain: firstProjectChain } =
-    decodeProjectPath(config.firstProjectPath)
+    decodeProjectPath(firstProjectPath)
   const { name: secondProjectName, chain: secondProjectChain } =
-    decodeProjectPath(config.secondProjectPath)
+    decodeProjectPath(secondProjectPath)
 
   const firstProject = await readProject(firstProjectName, firstProjectChain)
   const secondProject = await readProject(secondProjectName, secondProjectChain)
-  assert(firstProject, `Project ${config.firstProjectPath} not found`)
-  assert(secondProject, `Project ${config.secondProjectPath} not found`)
+  assert(firstProject, `Project ${firstProjectPath} not found`)
+  assert(secondProject, `Project ${secondProjectPath} not found`)
 
-  const matrix: Record<string, Record<string, string>> = {}
+  const matrix: Record<string, Record<string, number>> = {}
 
   for (const c1 of firstProject.sources) {
-    const c1Object: Record<string, string> = {}
+    const c1Object: Record<string, number> = {}
 
     for (const c2 of secondProject.sources) {
-      const similarity = estimateSimilarity(c1, c2)
-      c1Object[c2.path] = colorMap(similarity)
+      c1Object[c2.path] = estimateSimilarity(c1, c2)
     }
 
     matrix[c1.path] = c1Object
   }
 
-  printTwoProjectComparisonResult(config, firstProject, secondProject, matrix)
+  return {
+    matrix,
+    firstProject,
+    secondProject,
+  }
 }
 
-function printTwoProjectComparisonResult(
-  config: Config,
+function printComparisonBetweenProjects(
+  matrix: Record<string, Record<string, number>>,
   firstProject: Project,
   secondProject: Project,
-  matrix: Record<string, Record<string, string>>,
+  config: ForceTableConfig,
 ): void {
   const aIds = removeCommonPath(
     firstProject.sources.map((source, i) => ({
@@ -282,9 +431,9 @@ function printTwoProjectComparisonResult(
   )
 
   if (table) {
-    console.log(`= ${firstProject.name} `.padEnd(36, '='))
+    console.log(formatHeader(firstProject.name))
     console.log(aIds.map((e) => `${e.id} - ${e.path}`).join('\n'))
-    console.log(`= ${secondProject.name} `.padEnd(36, '='))
+    console.log(formatHeader(secondProject.name))
     console.log(bIds.map((e) => `${e.id} - ${e.path}`).join('\n'))
     console.log('====================================\n')
     console.log(table)
@@ -301,11 +450,15 @@ function printTwoProjectComparisonResult(
   )
 }
 
+function formatHeader(title: string): string {
+  return `= ${title} `.padEnd(36, '=')
+}
+
 function formatTable(
-  config: Config,
+  config: ForceTableConfig,
   aIDs: string[],
   bIDs: string[],
-  matrix: Record<string, Record<string, string>>,
+  matrix: Record<string, Record<string, number>>,
 ): string | undefined {
   const terminalWidth = process.stdout.columns
 
@@ -325,7 +478,9 @@ function formatTable(
 
   const shouldTranspose = widths[0] < widths[1]
   const header = ['IDs', ...(shouldTranspose ? aIDs : bIDs)]
-  let rows = Object.values(matrix).map((row) => Object.values(row))
+  let rows = Object.values(matrix).map((row) =>
+    Object.values(row).map(colorMap),
+  )
 
   if (shouldTranspose) {
     rows = transpose(rows)
@@ -384,6 +539,7 @@ async function readProject(
     console.log(`[ OK ] Reading ${projectName}`)
     return {
       name: projectName,
+      chain,
       concatenatedSource: {
         path: `virtualPath.sol`,
         hashChunks: concatenatedSourceHashChunks,
@@ -616,11 +772,17 @@ function needsToBe(expression: boolean, message: string): asserts expression {
   }
 }
 
+function encodeProjectPath(name: string, chain: string): string {
+  return `${chain}:${name}`
+}
+
 function decodeProjectPath(projectPath: string): {
   name: string
   chain: string
 } {
-  assert(projectPath.includes(':'), 'Invalid project path')
+  if (!projectPath.includes(':')) {
+    return { name: projectPath, chain: 'ethereum' }
+  }
 
   const [chain, name] = projectPath.split(':')
   return { name, chain }
