@@ -225,6 +225,60 @@ export function makeConfig(
             minTimestamp: minTimestampOverride,
           }),
         },
+        {
+          type: 'evm',
+          ...getChainTvlConfig(true, env, 'optimism', {
+            minTimestamp: minTimestampOverride,
+          }),
+        },
+        {
+          type: 'evm',
+          ...getChainTvlConfig(true, env, 'linea', {
+            minTimestamp: minTimestampOverride,
+          }),
+        },
+        {
+          type: 'evm',
+          ...getChainTvlConfig(true, env, 'zksync2', {
+            minTimestamp: minTimestampOverride,
+          }),
+        },
+        {
+          type: 'evm',
+          ...getChainTvlConfig(true, env, 'blast', {
+            minTimestamp: minTimestampOverride,
+          }),
+        },
+        {
+          type: 'evm',
+          ...getChainTvlConfig(true, env, 'mantle', {
+            minTimestamp: minTimestampOverride,
+          }),
+        },
+        {
+          type: 'evm',
+          ...getChainTvlConfig(true, env, 'mantapacific', {
+            minTimestamp: minTimestampOverride,
+          }),
+        },
+        {
+          type: 'evm',
+          ...getChainTvlConfig(true, env, 'mode', {
+            minTimestamp: minTimestampOverride,
+          }),
+        },
+        // {
+        //   type: 'scroll',
+        //   ...getChainTvlConfig(true, env, 'mode', {
+        //     minTimestamp: minTimestampOverride,
+        //   }),
+        // },
+        // {
+        //   type: 'evm',
+        //   ...getChainTvlConfig(true, env, 'polygonzkevm', {
+        //     minTimestamp: minTimestampOverride,
+        //   }),
+        // },
       ],
       coingeckoApiKey: env.optionalString([
         'COINGECKO_API_KEY_FOR_GAS_PRICE',

@@ -1,5 +1,6 @@
 import { assert, Logger } from '@l2beat/backend-tools'
 import {
+  BlockscoutClient,
   CoingeckoClient,
   CoingeckoQueryService,
   EtherscanClient,
@@ -57,14 +58,19 @@ export function createGasPriceModule(
       callsPerMinute: chain.config.providerCallsPerMinute,
     })
 
-    assert(chain.config.blockNumberProviderConfig.type === 'etherscan')
-
-    const blockTimestampClient = peripherals.getClient(EtherscanClient, {
-      apiKey: chain.config.blockNumberProviderConfig.etherscanApiKey,
-      url: chain.config.blockNumberProviderConfig.etherscanApiUrl,
-      minTimestamp: chain.config.minBlockTimestamp,
-      chainId: chain.config.chainId,
-    })
+    const blockTimestampClient =
+      chain.config.blockNumberProviderConfig.type === 'etherscan'
+        ? peripherals.getClient(EtherscanClient, {
+            apiKey: chain.config.blockNumberProviderConfig.etherscanApiKey,
+            url: chain.config.blockNumberProviderConfig.etherscanApiUrl,
+            minTimestamp: chain.config.minBlockTimestamp,
+            chainId: chain.config.chainId,
+          })
+        : peripherals.getClient(BlockscoutClient, {
+            url: chain.config.blockNumberProviderConfig.blockscoutApiUrl,
+            minTimestamp: chain.config.minBlockTimestamp,
+            chainId: chain.config.chainId,
+          })
 
     const analyzer = getAnalyzerForConfig(chain.type, rpc)
 

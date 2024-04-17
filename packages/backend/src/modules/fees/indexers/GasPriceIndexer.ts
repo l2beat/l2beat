@@ -66,7 +66,6 @@ export class GasPriceIndexer extends ManagedChildIndexer {
       i < toBlock;
       i += Math.floor(blockDiff / granularity)
     ) {
-      console.log('Getting gas price for block', i)
       const dd = await this.$.analyzer.getData(i)
       d.push(dd)
     }
