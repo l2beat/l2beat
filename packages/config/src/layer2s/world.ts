@@ -7,7 +7,7 @@ export const world: Layer2 = upcomingL2({
     name: 'World Chain',
     slug: 'world',
     description:
-      'World Chain is a new OP Stack L2 that will leverage World ID\'s Proof of Personhood',
+      "World Chain is a new OP Stack L2 that will leverage World ID's Proof of Personhood",
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
@@ -22,7 +22,7 @@ export const world: Layer2 = upcomingL2({
         'https://discord.com/invite/worldcoin',
         'https://t.me/worldcoin',
         'https://www.linkedin.com/company/worldcoinproject/',
-        'https://www.youtube.com/@worldcoinofficial'
+        'https://www.youtube.com/@worldcoinofficial',
       ],
     },
   },
