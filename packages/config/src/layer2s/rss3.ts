@@ -40,7 +40,6 @@ export const rss3: Layer2 = opStackL2({
     activityDataSource: 'Blockchain RPC',
   },
   upgradeability,
-  l1StandardBridgeEscrow: discovery.getContract('L1StandardBridge').address,
   rpcUrl: 'https://rpc.rss3.io/',
   chainConfig: {
     name: 'rss3',
@@ -65,8 +64,6 @@ export const rss3: Layer2 = opStackL2({
     lag: 0,
   },
   genesisTimestamp: new UnixTime(1709858519),
-  l2OutputOracle: discovery.getContract('L2OutputOracle'),
-  portal: discovery.getContract('OptimismPortal'),
   nonTemplatePermissions: [
     {
       name: 'SystemConfig Owner.',
@@ -89,7 +86,6 @@ export const rss3: Layer2 = opStackL2({
         'Contract that stores the Guardian address and allows it to pause the system.',
     }),
   ],
-  nonTemplateEscrows: [],
   l1StandardBridgeTokens: ['RSS3'],
   isNodeAvailable: false,
   milestones: [
@@ -100,11 +96,4 @@ export const rss3: Layer2 = opStackL2({
       description: 'RSS3 Network Mainnet Alpha is live.',
     },
   ],
-  roleOverrides: {
-    batcherHash: 'Sequencer',
-    PROPOSER: 'Proposer',
-    GUARDIAN: 'Guardian',
-    CHALLENGER: 'Challenger',
-  },
-  knowledgeNuggets: [],
 })
