@@ -19,21 +19,44 @@ export function getScalingFeesView(
   const includedProjects = getIncludedProjects(projects, l2FeesApiResponse)
 
   return {
-    items: includedProjects
-      .map((project) => {
-        const l2FeesProjectData =
-          l2FeesApiResponse.projects[project.id.toString()]
+    items: [
+      ...includedProjects
+        .map((project) => {
+          const l2FeesProjectData =
+            l2FeesApiResponse.projects[project.id.toString()]
 
-        const hasImplementationChanged =
-          !!implementationChange?.projects[project.id.toString()]
+          const hasImplementationChanged =
+            !!implementationChange?.projects[project.id.toString()]
 
-        return getScalingFeesViewEntry(
-          project,
-          l2FeesProjectData,
-          hasImplementationChanged,
-        )
-      })
-      .filter(notUndefined),
+          return getScalingFeesViewEntry(
+            project,
+            l2FeesProjectData,
+            hasImplementationChanged,
+          )
+        })
+        .filter(notUndefined),
+      getEthereumFeesViewEntry(l2FeesApiResponse),
+    ],
+  }
+}
+
+function getEthereumFeesViewEntry(
+  l2FeesApiResponse: L2FeesApiResponse,
+): ScalingFeesViewEntry {
+  const l2FeesProjectData = l2FeesApiResponse.projects['ethereum']
+  return {
+    name: 'Ethereum',
+    shortName: undefined,
+    slug: 'ethereum',
+    showProjectUnderReview: false,
+    hasImplementationChanged: false,
+    warning: undefined,
+    redWarning: undefined,
+    category: undefined,
+    provider: undefined,
+    purposes: undefined,
+    stage: undefined,
+    data: l2FeesProjectData ? getFeesData(l2FeesProjectData) : undefined,
   }
 }
 
@@ -84,8 +107,6 @@ function getIncludedProjects(
       (l2FeesApiResponse.projects[p.id.toString()] !== undefined ||
         UPCOMING_PROJECTS.includes(p.id.toString())) &&
       !p.isArchived &&
-      !p.isUpcoming &&
-      (p.display.category === 'Optimistic Rollup' ||
-        p.display.category === 'ZK Rollup'),
+      !p.isUpcoming,
   )
 }

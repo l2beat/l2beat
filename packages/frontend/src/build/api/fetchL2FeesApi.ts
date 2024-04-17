@@ -28,6 +28,7 @@ const TYPES: L2FeesApiChart['types'] = [
 
 function getMockL2FeesApiResponse(): L2FeesApiResponse {
   const projects = [
+    'ethereum',
     'arbitrum',
     'optimism',
     'apex',

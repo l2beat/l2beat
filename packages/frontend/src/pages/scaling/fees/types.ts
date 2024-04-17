@@ -22,10 +22,10 @@ export interface ScalingFeesViewEntry {
   hasImplementationChanged: boolean
   warning: string | undefined
   redWarning: string | undefined
-  category: ScalingProjectCategory
+  category: ScalingProjectCategory | undefined
   provider: Layer2Provider | undefined
-  purposes: ScalingProjectPurpose[]
-  stage: StageConfig
+  purposes: ScalingProjectPurpose[] | undefined
+  stage: StageConfig | undefined
   data: FeesData | undefined
 }
 
