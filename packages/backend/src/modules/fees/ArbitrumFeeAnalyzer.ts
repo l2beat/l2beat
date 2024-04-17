@@ -1,12 +1,12 @@
 import { mean } from 'lodash'
-import { PublicClient } from 'viem'
 
+import { ViemRpcClient } from '../../peripherals/viem-rpc-client/ViemRpcClient'
 import { Fee, FeeAnalyzer } from './types'
 import { gasToGwei } from './utils/gasToGwei'
 import { median } from './utils/median'
 
 export class ArbitrumFeeAnalyzer implements FeeAnalyzer {
-  constructor(private readonly rpc: PublicClient) {}
+  constructor(private readonly rpc: ViemRpcClient) {}
 
   async getData(blockNumber: number): Promise<Fee> {
     const block = await this.rpc.getBlock({
@@ -15,9 +15,10 @@ export class ArbitrumFeeAnalyzer implements FeeAnalyzer {
     })
 
     const txPromises: Promise<number>[] = block.transactions.map(async (tx) => {
-      const txReceipt = await this.rpc.getTransactionReceipt({
-        hash: tx.hash,
-      })
+      const txReceipt = await this.rpc.getTransactionReceipt(
+        tx as `0x${string}`,
+      )
+
       return gasToGwei(txReceipt.effectiveGasPrice)
     })
 

@@ -2,21 +2,20 @@ import { CoingeckoQueryService, EtherscanClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { mean } from 'lodash'
 
-import { ViemRpcClient } from '../../../peripherals/viem-rpc-client/ViemRpcClient'
 import {
   ManagedChildIndexer,
   ManagedChildIndexerOptions,
 } from '../../../tools/uif/ManagedChildIndexer'
-import { EVMFeeAnalyzer } from '../EVMFeeAnalyzer'
 import { GasPriceRepository } from '../repositories/GasPriceRepository'
-import { Fee } from '../types'
+import { Fee, FeeAnalyzer } from '../types'
 
 export interface GasPriceIndexerDeps extends ManagedChildIndexerOptions {
   coingeckoQueryService: CoingeckoQueryService
   gasPriceRepository: GasPriceRepository
   project: string
-  rpc: ViemRpcClient
   blockTimestampClient: EtherscanClient
+
+  analyzer: FeeAnalyzer
 }
 
 export class GasPriceIndexer extends ManagedChildIndexer {
@@ -63,15 +62,13 @@ export class GasPriceIndexer extends ManagedChildIndexer {
 
     const d: Fee[] = []
 
-    const feeAnalyzer = new EVMFeeAnalyzer(this.$.rpc)
-
     for (
       let i = fromBlock;
       i < toBlock;
       i += Math.floor(blockDiff / granularity)
     ) {
       console.log('Getting gas price for block', i)
-      const dd = await feeAnalyzer.getData(i)
+      const dd = await this.$.analyzer.getData(i)
       d.push(dd)
     }
 

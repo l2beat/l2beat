@@ -4,6 +4,7 @@ import {
   CoingeckoQueryService,
   EtherscanClient,
 } from '@l2beat/shared'
+import { assertUnreachable } from '@l2beat/shared-pure'
 
 import { Config } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
@@ -14,8 +15,11 @@ import { IndexerService } from '../../../tools/uif/IndexerService'
 import { IndexerStateRepository } from '../../../tools/uif/IndexerStateRepository'
 import { ApplicationModule } from '../../ApplicationModule'
 import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
+import { ArbitrumFeeAnalyzer } from '../ArbitrumFeeAnalyzer'
+import { EVMFeeAnalyzer } from '../EVMFeeAnalyzer'
 import { GasPriceIndexer } from '../indexers/GasPriceIndexer'
 import { GasPriceRepository } from '../repositories/GasPriceRepository'
+import { AnalyzerType } from '../types'
 
 export function createGasPriceModule(
   config: Config,
@@ -62,6 +66,8 @@ export function createGasPriceModule(
       chainId: chain.config.chainId,
     })
 
+    const analyzer = getAnalyzerForConfig('evm', rpc)
+
     return new GasPriceIndexer({
       logger: logger.tag(chain.chain),
       parents: [hourlyIndexer],
@@ -70,7 +76,7 @@ export function createGasPriceModule(
       id: `gas_price_${chain.chain}`,
       minHeight: chain.config.minBlockTimestamp.toNumber(),
       gasPriceRepository: peripherals.getRepository(GasPriceRepository),
-      rpc,
+      analyzer,
       indexerService,
       blockTimestampClient,
     })
@@ -83,5 +89,16 @@ export function createGasPriceModule(
         await indexer.start()
       }
     },
+  }
+}
+
+function getAnalyzerForConfig(type: AnalyzerType, rpc: ViemRpcClient) {
+  switch (type) {
+    case 'evm':
+      return new EVMFeeAnalyzer(rpc)
+    case 'arbitrum':
+      return new ArbitrumFeeAnalyzer(rpc)
+    default:
+      assertUnreachable(type)
   }
 }

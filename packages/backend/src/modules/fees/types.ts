@@ -1,4 +1,6 @@
+import { BlockscoutClient, EtherscanClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
+import { PublicClient } from 'viem'
 
 export interface Fee {
   blockNumber: number
@@ -19,4 +21,13 @@ export interface FeeDataPoint {
 
 export interface FeeAnalyzer {
   getData: (blockNumber: number) => Promise<Fee>
+}
+
+export type AnalyzerType = 'evm' | 'arbitrum'
+
+export interface FeeAnalyzerConfig {
+  name: string
+  rpc: PublicClient
+  blockTimestampClient: EtherscanClient | BlockscoutClient
+  type: AnalyzerType
 }
