@@ -1,8 +1,6 @@
 import { CompareProjectsCommand } from './cli'
-import {
-  computeComparisonBetweenProjects,
-  printComparisonBetweenProjects,
-} from './common'
+import { computeComparisonBetweenProjects } from './common'
+import { printComparisonBetweenProjects } from './output'
 
 export async function executeCompareProjects(
   command: CompareProjectsCommand,
