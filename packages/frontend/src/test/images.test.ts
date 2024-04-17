@@ -4,8 +4,21 @@ import { expect } from 'earl'
 import { existsSync, readFileSync } from 'fs'
 import path from 'path'
 
+const projects = [...layer2s, ...bridges, ...layer3s]
+
+describe('meta images', () => {
+  for (const project of projects) {
+    it(`${project.display.name} has a meta image`, () => {
+      const iconPath = path.join(
+        __dirname,
+        `../static/icons/${project.display.slug}.png`,
+      )
+      expect(existsSync(iconPath)).toEqual(true)
+    })
+  }
+})
+
 describe('icons', () => {
-  const projects = [...layer2s, ...bridges, ...layer3s]
   for (const project of projects) {
     it(`${project.display.name} has an associated icon`, () => {
       const iconPath = path.join(
@@ -43,7 +56,10 @@ describe('icons', () => {
 })
 
 function getTinifiedLogos() {
-  const tinifiedLogosFile = path.join(__dirname, '../../cli/tinifiedLogos.json')
+  const tinifiedLogosFile = path.join(
+    __dirname,
+    '../../scripts/logos/tinifiedLogos.json',
+  )
 
   const tinifiedLogos = readFileSync(tinifiedLogosFile, 'utf-8')
   return JSON.parse(tinifiedLogos) as Record<string, string>
