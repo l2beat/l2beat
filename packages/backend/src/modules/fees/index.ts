@@ -1,7 +1,7 @@
 import { createPublicClient, http } from 'viem'
 
-import { EVMFeenalyzer } from './EVMFeenalyzer'
-import { Feenalyzer } from './types'
+import { EVMFeeAnalyzer } from './EVMFeenalyzer'
+import { FeeAnalyzer } from './types'
 
 // node -r esbuild-register src/modules/fees/index.ts
 
@@ -11,9 +11,9 @@ async function main() {
       'https://mainnet.infura.io/v3/812678bb4cf24e038a16f2549a678837',
     ),
   })
-  const feenalyzers: Feenalyzer[] = [new EVMFeenalyzer(publicClient)]
+  const feeAnalyzers: FeeAnalyzer[] = [new EVMFeeAnalyzer(publicClient)]
 
-  for (const f of feenalyzers) {
+  for (const f of feeAnalyzers) {
     const data = await f.getData(19674100)
     console.log(data)
   }

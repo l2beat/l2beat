@@ -9,6 +9,6 @@ export interface Fee {
   //   baseFee?: number
 }
 
-export interface Feenalyzer {
+export interface FeeAnalyzer {
   getData: (blockNumber: number) => Promise<Fee>
 }

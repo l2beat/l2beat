@@ -1,11 +1,11 @@
 import { mean } from 'lodash'
 import { PublicClient } from 'viem'
 
-import { Fee, Feenalyzer } from './types'
+import { Fee, FeeAnalyzer } from './types'
 import { gasToGwei } from './utils/gasToGwei'
 import { median } from './utils/median'
 
-export class EVMFeenalyzer implements Feenalyzer {
+export class EVMFeeAnalyzer implements FeeAnalyzer {
   constructor(private readonly rpc: PublicClient) {}
 
   async getData(blockNumber: number): Promise<Fee> {
