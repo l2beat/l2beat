@@ -47,11 +47,14 @@ export class FeeController {
       })
 
       return {
-        [project.projectId]: remappedPrices.map((rp) => [
-          rp.timestamp,
-          rp.gasPriceGwei,
-          rp.gasPriceUsd,
-        ]),
+        [project.projectId]: {
+          types: ['timestamp', 'gasPriceUsd', 'gasPriceEth'],
+          data: remappedPrices.map((rp) => [
+            rp.timestamp,
+            rp.gasPriceGwei,
+            rp.gasPriceUsd,
+          ]),
+        },
       }
     })
 
