@@ -33,6 +33,14 @@ export class GasPriceRepository extends BaseRepository {
     return records.length
   }
 
+  async findByProject(project: string) {
+    const knex = await this.knex()
+    const rows = await knex('gas_prices')
+      .where('project', project)
+      .orderBy('timestamp', 'desc')
+    return rows.map(toRecord)
+  }
+
   async deleteAfter(
     project: string,
     targetHeight: UnixTime,

@@ -18,6 +18,8 @@ import { ApplicationModule } from '../../ApplicationModule'
 import { HourlyIndexer } from '../../tracked-txs/HourlyIndexer'
 import { ArbitrumFeeAnalyzer } from '../ArbitrumFeeAnalyzer'
 import { EVMFeeAnalyzer } from '../EVMFeeAnalyzer'
+import { FeeController } from '../http/FeeController'
+import { createFeeRouter } from '../http/FeeRouter'
 import { GasPriceIndexer } from '../indexers/GasPriceIndexer'
 import { GasPriceRepository } from '../repositories/GasPriceRepository'
 import { AnalyzerType } from '../types'
@@ -88,6 +90,14 @@ export function createGasPriceModule(
     })
   })
 
+  const controller = new FeeController(
+    peripherals.getRepository(GasPriceRepository),
+    coingeckoQueryService,
+    config.projects,
+  )
+
+  const router = createFeeRouter(controller)
+
   return {
     start: async () => {
       await hourlyIndexer.start()
@@ -95,6 +105,7 @@ export function createGasPriceModule(
         await indexer.start()
       }
     },
+    routers: [router],
   }
 }
 

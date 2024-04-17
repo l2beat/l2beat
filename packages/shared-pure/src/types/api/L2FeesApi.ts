@@ -6,11 +6,16 @@ import { UnixTime } from '../UnixTime'
 const L2FeesApiChartPoint = z.tuple([
   branded(z.number(), (n) => new UnixTime(n)),
   z.number(),
+  z.number(),
 ])
 export type L2FeesApiChartPoint = z.infer<typeof L2FeesApiChartPoint>
 
 const L2FeesApiChart = z.object({
-  types: z.tuple([z.literal('timestamp'), z.literal('gasPrice')]),
+  types: z.tuple([
+    z.literal('timestamp'),
+    z.literal('gasPriceUsd'),
+    z.literal('gasPriceEth'),
+  ]),
   data: z.array(L2FeesApiChartPoint),
 })
 export type L2FeesApiChart = z.infer<typeof L2FeesApiChart>
