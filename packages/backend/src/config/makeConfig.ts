@@ -267,12 +267,12 @@ export function makeConfig(
             minTimestamp: minTimestampOverride,
           }),
         },
-        // {
-        //   type: 'scroll',
-        //   ...getChainTvlConfig(true, env, 'mode', {
-        //     minTimestamp: minTimestampOverride,
-        //   }),
-        // },
+        {
+          type: 'evm',
+          ...getChainTvlConfig(true, env, 'scroll', {
+            minTimestamp: minTimestampOverride,
+          }),
+        },
         // {
         //   type: 'evm',
         //   ...getChainTvlConfig(true, env, 'polygonzkevm', {

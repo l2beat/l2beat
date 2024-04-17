@@ -149,6 +149,7 @@ export const scroll: Layer2 = {
       defaultCallsPerMinute: 120,
       startBlock: 1,
     },
+
     trackedTxs: [
       {
         uses: [
@@ -201,6 +202,16 @@ export const scroll: Layer2 = {
       // Scroll L1 Chain Proxy deployment
       minTimestamp: new UnixTime(1696775129),
     },
+  },
+  chainConfig: {
+    name: 'scroll',
+    chainId: 66666,
+    explorerApi: {
+      url: 'https://api.scrollscan.com/api',
+      type: 'etherscan',
+    },
+    minTimestampForTvl: UnixTime.now().add(-14, 'days'),
+    multicallContracts: [],
   },
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (calldata)'],
