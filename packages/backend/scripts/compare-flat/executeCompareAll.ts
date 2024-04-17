@@ -1,6 +1,6 @@
 import { CompareAllCommand } from './cli'
 import { computeStackSimilarity, getMostSimilar } from './common'
-import { colorMap, formatHeader,formatTable } from './output'
+import { colorMap, formatHeader, formatTable } from './output'
 
 export async function executeCompareAll(
   command: CompareAllCommand,

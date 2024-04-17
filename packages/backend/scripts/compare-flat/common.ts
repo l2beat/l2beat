@@ -9,8 +9,6 @@ import chalk from 'chalk'
 import { readdir, readFile } from 'fs/promises'
 import { resolve } from 'path'
 
-import { formatHeader } from './output'
-
 export const ALL_CONFIGS = [...layer2s, ...layer3s]
 
 interface HashedFileContent {
@@ -60,7 +58,6 @@ export async function computeStackSimilarity(
       !config.isUpcoming,
   )
 
-  console.log(formatHeader('Reading projects'))
   const stackProject = await Promise.all(
     configs.map((config) =>
       readProject(
