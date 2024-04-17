@@ -58,9 +58,8 @@ export class FeeController {
     const awaited = await Promise.all(promises)
 
     return {
-      // FIX This shit
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      projects: awaited as unknown as any,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
+      projects: awaited.reduce((acc, cur) => ({ ...acc, ...cur }), {}) as any,
     }
   }
 }
