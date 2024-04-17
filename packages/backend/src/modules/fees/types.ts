@@ -1,3 +1,5 @@
+import { UnixTime } from '@l2beat/shared-pure'
+
 export interface Fee {
   blockNumber: number
   minFeePerGas: number
@@ -7,6 +9,11 @@ export interface Fee {
   //   totalGasSpent: number
   //   totalGasCost: number
   //   baseFee?: number
+}
+
+export interface FeeDataPoint {
+  timestamp: UnixTime
+  gasPriceUsd: number
 }
 
 export interface FeeAnalyzer {

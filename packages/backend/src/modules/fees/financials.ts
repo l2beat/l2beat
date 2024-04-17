@@ -7,13 +7,13 @@ import {
   HttpClient,
 } from '@l2beat/shared'
 import { ChainId, CoingeckoId, UnixTime } from '@l2beat/shared-pure'
-import { writeFileSync } from 'fs'
 import { mean } from 'lodash'
 import { createPublicClient, http, PublicClient } from 'viem'
 import { mainnet } from 'viem/chains'
 
 import { EVMFeeAnalyzer } from './EVMFeeAnalyzer'
-import { Fee } from './types'
+import { outputCsv } from './output/outputCsv'
+import { Fee, FeeDataPoint } from './types'
 import { gweiToEth } from './utils/gasToGwei'
 
 interface Config {
@@ -55,16 +55,10 @@ async function main() {
     },
   ]
 
-  type E = {
-    gasPriceUsd: number
-    timestamp: UnixTime
-  }
-
   for (const c of config) {
-    const points: E[] = []
+    const points: FeeDataPoint[] = []
 
     console.log(c.name)
-    // ??? xd
     let timestamp = from.toStartOf('hour')
 
     while (timestamp.lte(to)) {
@@ -92,13 +86,7 @@ async function main() {
       timestamp = timestamp.add(1, 'hours')
     }
 
-    const delimiter = ','
-    const headers = ['price', 'timestamp'].join(delimiter)
-    const body = points
-      .map((point) => [point.gasPriceUsd, +point.timestamp].join(delimiter))
-      .join('\n')
-
-    writeFileSync(`./${c.name}.csv`, [headers, body].join('\n'))
+    await outputCsv(points, c.name)
   }
 
   main().catch((e: unknown) => {
