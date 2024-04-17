@@ -6,6 +6,7 @@ import {
   FinalityApiResponse,
   ImplementationChangeReportApiResponse,
   L2CostsApiResponse,
+  L2FeesApiResponse,
   LivenessApiResponse,
   ProjectAssetsBreakdownApiResponse,
 } from '@l2beat/shared-pure'
@@ -19,6 +20,7 @@ import { fetchFeaturesApi } from './api/fetchFeaturesApi'
 import { fetchFinalityApi } from './api/fetchFinalityApi'
 import { fetchImplementationChangeReport } from './api/fetchImplementationChangeReport'
 import { fetchL2CostsApi } from './api/fetchL2CostsApi'
+import { fetchL2FeesApi } from './api/fetchL2FeesApi'
 import { fetchLivenessApi } from './api/fetchLivenessApi'
 import { fetchTvlApi } from './api/fetchTvlApi'
 import { fetchTvlBreakdownApi } from './api/fetchTvlBreakdownApi'
@@ -130,6 +132,13 @@ async function main() {
       console.timeEnd('[L2 COSTS]')
     }
 
+    let l2FeesApiResponse: L2FeesApiResponse | undefined
+    if (config.features.feesPage) {
+      console.time('[L2 FEES]')
+      l2FeesApiResponse = await fetchL2FeesApi(config.backend, http)
+      console.timeEnd('[L2 FEES]')
+    }
+
     createApi(config, tvlApiResponse, activityApiResponse, l2CostsApiResponse)
 
     const supportedChains = getChainNames(config)
@@ -148,6 +157,7 @@ async function main() {
       l2CostsApiResponse,
       diffHistory,
       implementationChange,
+      l2FeesApiResponse,
     }
 
     await renderPages(config, pagesData)

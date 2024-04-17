@@ -33,6 +33,7 @@ export interface ConfigFeatures {
   buildAllProjectPages: boolean
   governancePage: boolean
   costsPage: boolean
+  feesPage: boolean
 }
 
 export interface ConfigBackend {

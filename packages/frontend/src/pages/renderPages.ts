@@ -17,6 +17,7 @@ import { getActivityPage } from './scaling/activity'
 import { getCostsPage } from './scaling/costs'
 import { getScalingDataAvailabilityPage } from './scaling/data-availability'
 import { getDiffHistoryPages } from './scaling/diff-history'
+import { getFeesPage } from './scaling/fees'
 import { getFinalityPage } from './scaling/finality'
 import { getLivenessPage } from './scaling/liveness'
 import { getProjectPages } from './scaling/projects'
@@ -38,6 +39,7 @@ export async function renderPages(config: Config, pagesData: PagesData) {
     l2CostsApiResponse,
     diffHistory,
     implementationChange,
+    l2FeesApiResponse,
   } = pagesData
 
   pages.push(getRiskPage(config, pagesData))
@@ -122,6 +124,10 @@ export async function renderPages(config: Config, pagesData: PagesData) {
         implementationChange,
       }),
     )
+  }
+
+  if (config.features.feesPage && l2FeesApiResponse) {
+    pages.push(getFeesPage(config, { l2FeesApiResponse, implementationChange }))
   }
 
   outputPages(pages)

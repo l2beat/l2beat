@@ -29,6 +29,7 @@ export const common: Omit<Config, 'backend'> = {
     buildAllProjectPages: false,
     governancePage: true,
     costsPage: true,
+    feesPage: true,
   },
   layer2s,
   layer3s,

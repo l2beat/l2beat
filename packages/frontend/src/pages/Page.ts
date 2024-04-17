@@ -4,6 +4,7 @@ import {
   FinalityApiResponse,
   ImplementationChangeReportApiResponse,
   L2CostsApiResponse,
+  L2FeesApiResponse,
   LivenessApiResponse,
   ManuallyVerifiedContracts,
   ProjectAssetsBreakdownApiResponse,
@@ -46,5 +47,6 @@ export interface PagesData {
   finalityApiResponse: FinalityApiResponse | undefined
   diffHistory: DiffHistoryApiResponse | undefined
   l2CostsApiResponse: L2CostsApiResponse | undefined
+  l2FeesApiResponse: L2FeesApiResponse | undefined
   implementationChange: ImplementationChangeReportApiResponse | undefined
 }

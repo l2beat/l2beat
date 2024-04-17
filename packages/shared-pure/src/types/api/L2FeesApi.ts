@@ -13,8 +13,8 @@ export type L2FeesApiChartPoint = z.infer<typeof L2FeesApiChartPoint>
 const L2FeesApiChart = z.object({
   types: z.tuple([
     z.literal('timestamp'),
+    z.literal('gasPriceGwei'),
     z.literal('gasPriceUsd'),
-    z.literal('gasPriceEth'),
   ]),
   data: z.array(L2FeesApiChartPoint),
 })
