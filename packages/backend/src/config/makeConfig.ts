@@ -31,7 +31,11 @@ export function makeConfig(
   ).append('status')
   const tvl2Config = getTvl2Config(flags, env, minTimestampOverride)
 
-  const isReadonly = env.boolean('READONLY', false)
+  const isReadonly = env.boolean(
+    'READONLY',
+    // if we connect locally to production db, we want to be readonly!
+    isLocal && env.string('LOCAL_DB_URL').includes('localhost'),
+  )
   return {
     name,
     isReadonly,
