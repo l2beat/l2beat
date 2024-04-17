@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Badge } from '../../../../components/badge/Badge'
 import { DetailedValueWithDisplayValue } from '../../../../components/DetailedValueWithDisplayValue'
-import { LONG_HYPHEN } from '../../../../utils/constants'
+import { EM_DASH } from '../../../../utils/constants'
 import { ValueWithDisplayValue } from '../../../types'
 import { CostsData, CostsDataDetails } from '../types'
 import { CostsControlsWrapper } from './CostsControlsWrapper'
@@ -99,7 +99,7 @@ function Cell({ details, className, type }: CellProps) {
 
 function Value({ children }: { children: ValueWithDisplayValue | undefined }) {
   if (!children) {
-    return LONG_HYPHEN
+    return EM_DASH
   }
   return (
     <DetailedValueWithDisplayValue>{children}</DetailedValueWithDisplayValue>

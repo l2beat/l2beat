@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { LONG_HYPHEN } from '../../utils/constants'
+import { EM_DASH } from '../../utils/constants'
 import { CloseIcon } from '../icons/CloseIcon'
 
 export function FloatingBanner() {
@@ -22,7 +22,7 @@ export function FloatingBanner() {
           Gitcoin Grants 20
         </div>
         <div className="mb-3 text-xs font-bold">
-          April 23 {LONG_HYPHEN} May 7, 2024
+          April 23 {EM_DASH} May 7, 2024
         </div>
         <a
           className="w-full rounded-md bg-pink-900 py-[8px] text-center text-base font-bold text-white transition-all hover:bg-pink-800 dark:bg-pink-200 dark:text-black dark:hover:bg-pink-200/90"
