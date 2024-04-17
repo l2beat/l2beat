@@ -1,9 +1,9 @@
 export interface Fee {
   blockNumber: number
-  minFeePerGas: bigint
-  maxFeePerGas: bigint
-  avgFeePerGas: bigint
-  medianFeePerGas: bigint
+  minFeePerGas: number
+  maxFeePerGas: number
+  avgFeePerGas: number
+  medianFeePerGas: number
   //   totalGasSpent: number
   //   totalGasCost: number
   //   baseFee?: number
