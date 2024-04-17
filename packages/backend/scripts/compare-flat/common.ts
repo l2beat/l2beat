@@ -1,69 +1,17 @@
 import { assert } from '@l2beat/backend-tools'
-import { Layer2, layer2s, Layer3, layer3s } from '@l2beat/config'
+import {
+  Layer2Provider,
+  layer2s,
+  Layer3Provider,
+  layer3s,
+} from '@l2beat/config'
 import chalk from 'chalk'
 import { readdir, readFile } from 'fs/promises'
-import path, { resolve } from 'path'
-import { keyInYN } from 'readline-sync'
+import { resolve } from 'path'
 
-import { printAsciiTable } from '../src/tools/printAsciiTable'
-import { powerdiff } from './powerdiffCore'
+import { printAsciiTable } from '../../src/tools/printAsciiTable'
 
-type ShortStackKey =
-  | 'arbitrum'
-  | 'loopring'
-  | 'opstack'
-  | 'ovm'
-  | 'polygon'
-  | 'starkex'
-  | 'starknet'
-  | 'zks'
-  | 'zksync'
-
-type LongStackKey =
-  | Layer2['display']['provider']
-  | Layer3['display']['provider']
-
-const shortStackToFullName: Record<ShortStackKey, LongStackKey> = {
-  arbitrum: 'Arbitrum',
-  loopring: 'Loopring',
-  opstack: 'OP Stack',
-  ovm: 'OVM',
-  polygon: 'Polygon',
-  starkex: 'StarkEx',
-  starknet: 'Starknet',
-  zks: 'ZK Stack',
-  zksync: 'zkSync Lite',
-}
-
-const allShortStacks = Object.keys(shortStackToFullName)
-const ALL_CONFIGS = [...layer2s, ...layer3s]
-
-interface AllConfig {
-  subcommand: 'all'
-  stack: ShortStackKey
-  forceTable: boolean
-}
-
-interface SimilarConfig {
-  subcommand: 'similar'
-  projectPath: string
-  forceTable: boolean
-}
-
-interface ProjectConfig {
-  subcommand: 'project'
-  firstProjectPath: string
-  secondProjectPath: string
-  forceTable: boolean
-}
-
-type ForceTableConfig = AllConfig | SimilarConfig | ProjectConfig
-
-interface HelpConfig {
-  subcommand: 'help'
-}
-
-type Config = ForceTableConfig | HelpConfig
+export const ALL_CONFIGS = [...layer2s, ...layer3s]
 
 interface HashedFileContent {
   path: string
@@ -88,153 +36,18 @@ interface FileId {
   path: string
 }
 
-void main().catch((e) => {
-  console.log(e)
-})
-
-async function main() {
-  const config = parseCliParameters()
-  switch (config.subcommand) {
-    case 'help':
-      printUsage()
-      break
-    case 'similar':
-      await findMostSimilarProject(config)
-      break
-    case 'project':
-      await compareTwoProjects(config)
-      break
-    case 'all':
-      await compareAllProjects(config)
-      break
+export function needsToBe(
+  expression: boolean,
+  message: string,
+): asserts expression {
+  if (!expression) {
+    console.log(`${chalk.red('ERROR')}: ${message}`)
+    process.exit(1)
   }
 }
-
-function parseCliParameters(): Config {
-  const args = process.argv.slice(2)
-
-  if (args.includes('--help') || args.includes('-h')) {
-    return { subcommand: 'help' }
-  }
-
-  const mode = args.shift()
-  if (mode === 'all') {
-    const stack = args.shift()
-    needsToBe(
-      stack !== undefined,
-      `You need to provide a stack, choose from ${allShortStacks.join(', ')}`,
-    )
-    needsToBe(
-      stack in shortStackToFullName,
-      'Invalid stack chosen, choose from ' + allShortStacks.join(', '),
-    )
-
-    let forceTable = false
-    if (args.includes('--force-table')) {
-      forceTable = true
-    }
-
-    return {
-      subcommand: 'all',
-      forceTable,
-      stack: stack as ShortStackKey,
-    }
-  } else if (mode === 'similar') {
-    const projectPath = args.shift()
-    needsToBe(
-      projectPath !== undefined,
-      'You need to provide a project path in the format chain:name',
-    )
-
-    let forceTable = false
-    if (args.includes('--force-table')) {
-      forceTable = true
-    }
-
-    return {
-      subcommand: 'similar',
-      forceTable,
-      projectPath,
-    }
-  } else if (mode === 'project') {
-    const firstProjectPath = args.shift()
-    const secondProjectPath = args.shift()
-    needsToBe(
-      firstProjectPath !== undefined,
-      'You need to provide the first project path in the format chain:name',
-    )
-    needsToBe(
-      secondProjectPath !== undefined,
-      'You need to provide the second project path in the format chain:name',
-    )
-
-    let forceTable = false
-    if (args.includes('--force-table')) {
-      forceTable = true
-    }
-
-    return {
-      subcommand: 'project',
-      firstProjectPath,
-      secondProjectPath,
-      forceTable,
-    }
-  } else {
-    console.log('Invalid mode, expected "project" or "all"')
-    return { subcommand: 'help' }
-  }
-}
-
-function printUsage(): void {
-  console.log(
-    [
-      'yarn compare-flat-sources all <stackType> ........................... Compare all projects of a given stack',
-      'yarn compare-flat-sources similar <chain:project> ................... Compare project, find the most similar and diff it with powerdiff',
-      'yarn compare-flat-sources project <chain:project> <chain:project> ... Compare two projects, file by file',
-      'yarn compare-flat-sources help ...................................... Print this usage',
-    ]
-      .map((s) => chalk.yellow(s))
-      .join('\n'),
-  )
-}
-
-async function compareAllProjects(config: AllConfig): Promise<void> {
-  const stack = config.stack
-  assert(stack !== undefined, 'stack is required')
-
-  const { matrix, projects } = await computeStackSimilarity(
-    shortStackToFullName[stack],
-  )
-  const mostSimilar = getMostSimilar(matrix)
-
-  const table = formatTable(
-    config,
-    projects.map((p) => p.name),
-    projects.map((p) => p.name),
-    matrix,
-  )
-
-  if (table) {
-    console.log(formatHeader('Comparison matrix'))
-    console.log(table)
-  }
-
-  console.log(formatHeader('Most similar projects'))
-  const longestName = Math.max(
-    ...Object.keys(mostSimilar).map((name) => name.length),
-  )
-  for (const [name, { name: similarName, similarity }] of Object.entries(
-    mostSimilar,
-  )) {
-    console.log(
-      `${name.padStart(longestName)} => ${similarName.padEnd(
-        longestName,
-      )} @ ${colorMap(similarity)}`,
-    )
-  }
-}
-
-async function computeStackSimilarity(stack: LongStackKey): Promise<{
+export async function computeStackSimilarity(
+  stack: Layer2Provider | Layer3Provider,
+): Promise<{
   matrix: Record<string, Record<string, number>>
   projects: Project[]
 }> {
@@ -282,7 +95,7 @@ interface Similarity {
   similarity: number
 }
 
-function getMostSimilar(
+export function getMostSimilar(
   matrix: Record<string, Record<string, number>>,
 ): Record<string, Similarity> {
   const mostSimilar: Record<string, Similarity> = {}
@@ -309,65 +122,7 @@ function getMostSimilar(
   return mostSimilar
 }
 
-async function findMostSimilarProject(config: SimilarConfig): Promise<void> {
-  const { name, chain } = decodeProjectPath(config.projectPath)
-
-  const projects = ALL_CONFIGS.filter((p) => p.id.toString() === name)
-  needsToBe(
-    projects.length <= 1,
-    `More than one project found matching ${
-      config.projectPath
-    } ${projects.toString()}`,
-  )
-  needsToBe(
-    projects.length === 1,
-    `No project found matching ${config.projectPath}`,
-  )
-  const project = projects[0]
-
-  const { matrix: perProjectMatrix } = await computeStackSimilarity(
-    project.display.provider,
-  )
-  const mostSimilar = getMostSimilar(perProjectMatrix)
-
-  const {
-    name: otherName,
-    chain: otherChain,
-    similarity,
-  } = mostSimilar[project.id.toString()]
-  const { matrix, firstProject, secondProject } =
-    await computeComparisonBetweenProjects(
-      config.projectPath,
-      `${otherChain}:${otherName}`,
-    )
-
-  printComparisonBetweenProjects(matrix, firstProject, secondProject, config)
-  console.log(formatHeader('Most similar to:'))
-  console.log(`${otherName} => ${name} @ ${colorMap(similarity)}`)
-
-  if(similarity === 1) {
-    console.log('No need to run powerdiff, projects are identical')
-    return
-  }
-
-  if (keyInYN('Run powerdiff?')) {
-    const path1 = path.join('discovery', name, chain, '.flat')
-    const path2 = path.join('discovery', otherName, otherChain, '.flat')
-    powerdiff(path1, path2)
-  }
-}
-
-async function compareTwoProjects(config: ProjectConfig): Promise<void> {
-  const { matrix, firstProject, secondProject } =
-    await computeComparisonBetweenProjects(
-      config.firstProjectPath,
-      config.secondProjectPath,
-    )
-
-  printComparisonBetweenProjects(matrix, firstProject, secondProject, config)
-}
-
-async function computeComparisonBetweenProjects(
+export async function computeComparisonBetweenProjects(
   firstProjectPath: string,
   secondProjectPath: string,
 ): Promise<{
@@ -404,11 +159,11 @@ async function computeComparisonBetweenProjects(
   }
 }
 
-function printComparisonBetweenProjects(
+export function printComparisonBetweenProjects(
   matrix: Record<string, Record<string, number>>,
   firstProject: Project,
   secondProject: Project,
-  config: ForceTableConfig,
+  options?: { forceTable?: boolean },
 ): void {
   const aIds = removeCommonPath(
     firstProject.sources.map((source, i) => ({
@@ -424,10 +179,10 @@ function printComparisonBetweenProjects(
   )
 
   const table = formatTable(
-    config,
     aIds.map((a) => a.id),
     bIds.map((a) => a.id),
     matrix,
+    options,
   )
 
   if (table) {
@@ -450,22 +205,22 @@ function printComparisonBetweenProjects(
   )
 }
 
-function formatHeader(title: string): string {
+export function formatHeader(title: string): string {
   return `= ${title} `.padEnd(36, '=')
 }
 
-function formatTable(
-  config: ForceTableConfig,
+export function formatTable(
   aIDs: string[],
   bIDs: string[],
   matrix: Record<string, Record<string, number>>,
+  options?: { forceTable?: boolean },
 ): string | undefined {
   const terminalWidth = process.stdout.columns
 
   const widths = [computeTableWidth(aIDs), computeTableWidth(bIDs)]
   const minTableWidth = Math.min(...widths)
 
-  if (minTableWidth > terminalWidth && !config.forceTable) {
+  if (minTableWidth > terminalWidth && !options?.forceTable) {
     console.log(
       [
         `${chalk.yellow('WARNING')}: Table is too wide to fit in the terminal`,
@@ -743,7 +498,7 @@ function splitLineKeepingNewlines(input: string): string[] {
   return lines
 }
 
-function colorMap(value: number): string {
+export function colorMap(value: number): string {
   const valueString = value.toFixed(2)
 
   if (value < 0.125) {
@@ -765,18 +520,11 @@ function colorMap(value: number): string {
   }
 }
 
-function needsToBe(expression: boolean, message: string): asserts expression {
-  if (!expression) {
-    console.log(`${chalk.red('ERROR')}: ${message}`)
-    process.exit(1)
-  }
-}
-
 function encodeProjectPath(name: string, chain: string): string {
   return `${chain}:${name}`
 }
 
-function decodeProjectPath(projectPath: string): {
+export function decodeProjectPath(projectPath: string): {
   name: string
   chain: string
 } {
