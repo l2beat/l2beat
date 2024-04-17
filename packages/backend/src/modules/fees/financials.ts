@@ -10,7 +10,7 @@ import { mean } from 'lodash'
 import { createPublicClient, http, PublicClient } from 'viem'
 import { mainnet } from 'viem/chains'
 
-import { EVMFeeAnalyzer } from './EVMFeenalyzer'
+import { EVMFeeAnalyzer } from './EVMFeeAnalyzer'
 import { getBlockByTimestamp } from './getBlockByTimestamp'
 import { Fee } from './types'
 import { gweiToEth } from './utils/gasToGwei'

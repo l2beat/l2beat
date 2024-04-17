@@ -1,6 +1,6 @@
 import { createPublicClient, http } from 'viem'
 
-import { EVMFeeAnalyzer } from './EVMFeenalyzer'
+import { EVMFeeAnalyzer } from './EVMFeeAnalyzer'
 import { FeeAnalyzer } from './types'
 
 // node -r esbuild-register src/modules/fees/index.ts
