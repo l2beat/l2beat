@@ -2,7 +2,7 @@
   "type": "recurring",
   "title": "Office Hours",
   "subtitle": "Arbitrum Research and Development Commitee (ARDC)",
-  "sinceDate": "2023-08-01",
+  "sinceDate": "2024-03-15",
   "futureEventsCount": 3,
   "dayOfWeek": 1,
   "startDate": {
