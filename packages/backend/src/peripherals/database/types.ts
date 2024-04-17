@@ -1,3 +1,4 @@
+import { GasPriceRow } from '../../modules/fees/repositories/GasPriceRepository'
 import { TransactionData } from '../../modules/tracked-txs/modules/l2-costs/types/TransactionData'
 import { AmountRow } from '../../modules/tvl2/repositories/AmountRepository'
 
@@ -238,6 +239,7 @@ declare module 'knex/types/tables' {
     block_timestamps: BlockTimestampRow
     amounts: AmountRow
     indexer_configurations: IndexerConfigurationRow
+    gas_prices: GasPriceRow
   }
 }
 
