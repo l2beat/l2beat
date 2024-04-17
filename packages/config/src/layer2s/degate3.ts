@@ -141,7 +141,11 @@ export const degate3: Layer2 = {
         to: 'proofSubmissions',
       },
     },
-    finality: 'coming soon',
+    finality: {
+      type: 'Degate',
+      minTimestamp: new UnixTime(1699747007),
+      lag: 0,
+    },
   },
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (calldata)'],

@@ -27,18 +27,14 @@ import {
   ScalingProjectStateDerivation,
   ScalingProjectTechnology,
   ScalingProjectTechnologyChoice,
+  ScalingProjectTransactionApi,
   SEQUENCER_NO_MECHANISM,
   STATE_CORRECTNESS,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getStage } from '../common/stages/getStage'
-import {
-  Layer2,
-  Layer2Display,
-  Layer2TransactionApi,
-  Layer2TxConfig,
-} from '../types'
+import { Layer2, Layer2Display, Layer2TxConfig } from '../types'
 
 export interface DAProvider {
   name: DataAvailabilityLayer
@@ -53,7 +49,7 @@ export interface PolygonCDKStackConfig {
   discovery: ProjectDiscovery
   display: Omit<Layer2Display, 'provider' | 'category' | 'dataAvailabilityMode'>
   rpcUrl?: string
-  transactionApi?: Layer2TransactionApi
+  transactionApi?: ScalingProjectTransactionApi
   chainConfig?: ChainConfig
   stateDerivation?: ScalingProjectStateDerivation
   nonTemplatePermissions?: ScalingProjectPermission[]

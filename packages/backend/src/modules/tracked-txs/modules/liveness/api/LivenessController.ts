@@ -1,17 +1,19 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   cacheAsyncFunction,
+  LivenessApiProject,
   LivenessApiResponse,
   notUndefined,
   ProjectId,
   TrackedTxsConfigSubtype,
+  TrackedTxsConfigSubtypeValues,
   UnixTime,
 } from '@l2beat/shared-pure'
 
 import { Project } from '../../../../../model/Project'
-import { IndexerStateRepository } from '../../../../../peripherals/database/repositories/IndexerStateRepository'
 import { Clock } from '../../../../../tools/Clock'
 import { TaskQueue } from '../../../../../tools/queue/TaskQueue'
+import { IndexerStateRepository } from '../../../../../tools/uif/IndexerStateRepository'
 import { TrackedTxsConfigsRepository } from '../../../repositories/TrackedTxsConfigsRepository'
 import { TrackedTxsConfig } from '../../../types/TrackedTxsConfig'
 import { getSyncedUntil } from '../../utils/getSyncedUntil'
@@ -124,6 +126,7 @@ export class LivenessController {
         )
 
       const syncedUntil = getSyncedUntil(configurations)
+
       if (!syncedUntil) {
         continue
       }
@@ -146,9 +149,27 @@ export class LivenessController {
         }
       }
 
+      const { anomalies, ...subtypeData } = withAnomalies
+
+      const withSyncedUntil =
+        TrackedTxsConfigSubtypeValues.reduce<LivenessApiProject>(
+          (obj, subtype) => {
+            const syncedUntil = getSyncedUntil(
+              configurations.filter((c) => c.subtype === subtype),
+            )
+            if (!syncedUntil) return obj
+            obj[subtype] = {
+              ...subtypeData[subtype],
+              syncedUntil,
+            }
+            return obj
+          },
+          {},
+        )
+
       projects[project.projectId.toString()] = {
-        ...withAnomalies,
-        syncedUntil,
+        ...withSyncedUntil,
+        anomalies,
       }
     }
 
@@ -192,11 +213,7 @@ export class LivenessController {
 
     const projects: Record<
       string,
-      {
-        batchSubmissions: LivenessTransactionsDetail[]
-        stateUpdates: LivenessTransactionsDetail[]
-        proofSubmissions: LivenessTransactionsDetail[]
-      }
+      Record<TrackedTxsConfigSubtype, LivenessTransactionsDetail[]>
     > = {}
     const last30Days = UnixTime.now().add(-30, 'days')
 

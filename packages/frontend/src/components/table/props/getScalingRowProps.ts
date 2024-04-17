@@ -21,6 +21,7 @@ type ScalingRowType =
   | 'liveness'
   | 'finality'
   | 'data-availability'
+  | 'costs'
 
 export function getScalingRowProps(
   entry: ScalingTableEntry,
@@ -54,7 +55,9 @@ function getHref(slug: ScalingTableEntry['slug'], type: ScalingRowType) {
     case 'tvl':
       return base + '/tvl-breakdown'
     case 'activity':
-      return base + `?selectedChart=${type}`
+      return base + `#activity`
+    case 'costs':
+      return base + `#costs`
     case 'risks':
       return base + '#risk-analysis'
     default:

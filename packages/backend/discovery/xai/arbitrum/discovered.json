@@ -1,7 +1,7 @@
 {
   "name": "xai",
   "chain": "arbitrum",
-  "blockNumber": 195077564,
+  "blockNumber": 198866013,
   "configHash": "0xd3b02d71f1ecd037a09b049cef41fb4a3ef31bc3690c624ed85bf2293dd7633f",
   "version": 3,
   "contracts": [
@@ -251,7 +251,7 @@
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
         "name": "esXai",
         "symbol": "esXAI",
-        "totalSupply": "156031454999205530145451426",
+        "totalSupply": "171738220336383467704225157",
         "xai": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66"
       },
       "derivedName": "esXai2"
@@ -274,7 +274,7 @@
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
         "name": "Xai",
         "symbol": "XAI",
-        "totalSupply": "1002726419000577182093365697"
+        "totalSupply": "1005621310582447215422237057"
       },
       "derivedName": "Xai"
     },
@@ -303,12 +303,12 @@
           "0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8"
         ],
         "allowedOutboxList": ["0x1E400568AD4840dbE50FB32f306B842e9ddeF726"],
-        "delayedMessageCount": 13669,
+        "delayedMessageCount": 14832,
         "nativeToken": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66",
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerInbox": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
-        "sequencerMessageCount": 7650,
-        "sequencerReportedSubMessageCount": 3524579
+        "sequencerMessageCount": 8701,
+        "sequencerReportedSubMessageCount": 4239946
       },
       "derivedName": "ERC20Bridge"
     },
@@ -355,7 +355,7 @@
       "implementations": ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"],
       "sinceTimestamp": 1704309371,
       "values": {
-        "batchCount": 7650,
+        "batchCount": 8701,
         "batchPosters": ["0x7F68dba68E72a250004812fe04F1123Fca89aBa9"],
         "bridge": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
         "dacKeyset": {
@@ -371,7 +371,7 @@
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 13668
+        "totalDelayedMessagesRead": 14831
       },
       "derivedName": "SequencerInbox"
     },
@@ -454,7 +454,7 @@
         "referralRewardPercentage": 15,
         "symbol": "SNL",
         "tokenURI": [],
-        "totalSupply": 35055
+        "totalSupply": 35087
       },
       "derivedName": "NodeLicense5"
     },
@@ -481,12 +481,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 1748,
+        "firstUnresolvedNode": 2011,
         "inbox": "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
         "isERC20Enabled": false,
         "lastStakeBlock": 18944658,
-        "latestConfirmed": 1747,
-        "latestNodeCreated": 1901,
+        "latestConfirmed": 2010,
+        "latestNodeCreated": 2163,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x1E400568AD4840dbE50FB32f306B842e9ddeF726",
@@ -571,14 +571,14 @@
           "71347031963470319634703",
           "1250000000000000000000000000"
         ],
-        "challengeCounter": 2645,
+        "challengeCounter": 2907,
         "CHALLENGER_ROLE": "0xe752add323323eb13e36c71ee508dfd16d74e9e4c4fd78786ba97989e5e13818",
         "challengerPublicKey": "0x977f9fe1d570ba7e48ea76566718023b260ed56eba368ff20dca06e99e650804126663c1a5febdb065ef139a0156a9ad",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "esXaiAddress": "0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c",
         "gasSubsidyRecipient": "0x94F4aBC83eae00b693286B6eDCa09e1D76183C97",
         "getBoostFactorForKeyId": [],
-        "getKycWalletCount": 6401,
+        "getKycWalletCount": 6423,
         "isCheckingAssertions": true,
         "KYC_ADMIN_ROLE": "0x811427a0fa4932aef534bba16bc34e9b7b2d7d2a79c475fca1765f6cc1faebea",
         "maxStakeAmountPerLicense": "25000000000000000000000",

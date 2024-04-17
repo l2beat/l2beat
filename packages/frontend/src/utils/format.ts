@@ -1,14 +1,38 @@
-import { formatLargeNumber } from './formatLargeNumber'
+import round from 'lodash/round'
 
-export function formatCurrency(value: number, currency: string) {
-  const num = formatLargeNumber(value)
-  if (currency === 'usd') {
-    return `$${num}`
-  } else if (currency === 'eth') {
-    return `Ξ${num}`
-  } else {
-    return `${num} ${currency.toUpperCase()}`
+import { formatNumber } from './formatNumber'
+
+const currencyToSymbol: Record<string, string> = {
+  usd: '$',
+  eth: 'Ξ',
+}
+
+interface FormatCurrencyOptions {
+  decimals?: number
+  showLessThanMinimum?: boolean
+}
+
+export function formatCurrency(
+  value: number,
+  currency: string,
+  opts?: FormatCurrencyOptions,
+) {
+  const symbol = currencyToSymbol[currency.toLowerCase()]
+
+  const decimals = opts?.decimals ?? 2
+  const showLessThanMinimum = opts?.showLessThanMinimum ?? true
+
+  if (showLessThanMinimum) {
+    const minimum = round(Math.pow(10, -decimals), decimals)
+    if (value < minimum) {
+      return symbol
+        ? `<${symbol}${minimum}`
+        : `<${minimum} ${currency.toUpperCase()}`
+    }
   }
+
+  const num = formatNumber(value, decimals)
+  return symbol ? `${symbol}${num}` : `${num} ${currency.toUpperCase()}`
 }
 
 export function formatCurrencyExactValue(value: number, currency: string) {
@@ -19,11 +43,6 @@ export function formatCurrencyExactValue(value: number, currency: string) {
   const [integer, decimal = ''] = string.split('.')
   const formatted = formatInteger(integer)
   return formatted + (decimal && `.${decimal}`)
-}
-
-export function formatCurrencyExact(value: number, currency: string) {
-  const formatted = formatCurrencyExactValue(value, currency)
-  return `${formatted} ${currency.toUpperCase()}`
 }
 
 function formatCrypto(value: number) {

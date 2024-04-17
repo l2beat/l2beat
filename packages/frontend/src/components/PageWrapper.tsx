@@ -2,8 +2,8 @@ import React, { ReactNode } from 'react'
 
 import { WrapperProps } from '../pages/Page'
 import { cn } from '../utils/cn'
+import { FloatingBanner } from './gitcoin/FloatingBanner'
 import { Head } from './head'
-import { FloatingBanner } from './l2warsaw/FloatingBanner'
 import { TooltipProvider } from './tooltip/TooltipProvider'
 
 export interface PageWrapperProps extends WrapperProps {
@@ -19,7 +19,7 @@ export function PageWrapper(props: PageWrapperProps) {
         props.htmlClassName,
       )}
     >
-      <Head {...props.metadata} preloadApi={props.preloadApi} />
+      <Head {...props.metadata} preloadApis={props.preloadApis} />
       <body className={props.bodyClassName}>
         <script src="/scripts/prerender.js" />
         {props.children}

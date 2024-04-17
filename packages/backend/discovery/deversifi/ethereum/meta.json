@@ -27,6 +27,10 @@
       }
     },
     {
+      "name": "DeversiFiTreasuryMultisig",
+      "values": {}
+    },
+    {
       "name": "GovernanceMultisig",
       "description": "This Multisig itself is one of the two Governors, the other being an EOA, both equally permissioned to upgrade the bridge.",
       "values": {

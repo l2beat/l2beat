@@ -1,3 +1,178 @@
+Generated with discovered.json: 0x865fbe50de0f059c5957fa7a2f254f1f5adbaf16
+
+# Diff at Wed, 10 Apr 2024 10:20:14 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@6bb1fb9faf46a5960ef8903031fd713f6bd1234a block: 19610741
+- current block number: 19624593
+
+## Description
+
+Migration of rollup contract Etrog and added related verifier.
+Rollup contract changes:
+
+- added timestamp range to check on sequenced batched, batches with timestamp outside range will be invalidated by circuit.
+- added possibility to migrate data availability protocol.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract FflonkVerifier (0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8)
+    +++ description: None
+```
+
+```diff
+    contract AstarValidiumEtrog (0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30"
++        "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"
+      implementations.0:
+-        "0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30"
++        "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"
+      values.TIMESTAMP_RANGE:
++        36
+      derivedName:
+-        "PolygonValidiumEtrog"
++        "PolygonValidiumStorageMigration"
+    }
+```
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: Contains important info such as the etrog and verifier address, the rollup type and chain id
++++ type: CODE_CHANGE
++++ severity: HIGH
+      values.rollupData.4:
+-        1
++        4
++++ description: Contains important info such as the etrog and verifier address, the rollup type and chain id
++++ type: CODE_CHANGE
++++ severity: HIGH
+      values.rollupData.3:
+-        7
++        9
++++ description: Contains important info such as the etrog and verifier address, the rollup type and chain id
++++ type: CODE_CHANGE
++++ severity: HIGH
+      values.rollupData.2:
+-        "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"
++        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract AstarVerifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../migration/PolygonRollupBaseEtrogNoGap.sol      | 945 +++++++++++++++++++++
+ .../migration/PolygonValidiumStorageMigration.sol} |  84 +-
+ .../v2/interfaces/IPolygonZkEVMVEtrogErrors.sol    |  10 +
+ .../contracts/v2/lib/PolygonRollupBaseEtrog.sol    |  34 +-
+ .../AstarValidiumEtrog/implementation/meta.txt     |   4 +-
+ .../contracts/verifiers/FflonkVerifier.sol         |   4 +-
+ .../ethereum/.code/AstarVerifier/meta.txt          |   2 +
+ .../FflonkVerifier/meta.txt => /dev/null           |   2 -
+ 8 files changed, 1068 insertions(+), 17 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19610741 (main branch discovery), not current.
+
+```diff
+    contract AstarVerifier (0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8) {
+    +++ description: None
+      name:
+-        "AstarVerifier"
++        "FflonkVerifier"
+    }
+```
+
+Generated with discovered.json: 0xfef9baadda4970faf426f8f3f466cd74a3fe021c
+
+# Diff at Mon, 08 Apr 2024 11:46:25 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@786d5557d38c508087b24a36535c329c2bdbb5ab block: 19567776
+- current block number: 19610741
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19567776 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Permit2 (0x000000000022D473030F116dDEE9F6B43aC78BA3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PolygonDataCommittee (0x05652Ec92366F3C2255991a265c499E01Ba58e6a)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x1e37EA18e9515db29b3E94A00eD31484A3130204)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PolygonValidiumStorageMigration (0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract POL (0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6)
+    +++ description: None
+```
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      values.rollupsData:
+-        [["0x519E42c24163192Dca44CD3fBDCEBF6be9130987","0x0775e11309d75aA6b0967917fB0213C5673eDf81"],["0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80","0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"],["0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507","0x0775e11309d75aA6b0967917fB0213C5673eDf81"]]
+      values.rollupTypes:
+-        [["0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30","0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"],["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71","0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be"],["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71","0x0775e11309d75aA6b0967917fB0213C5673eDf81"],["0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C","0x0775e11309d75aA6b0967917fB0213C5673eDf81"]]
++++ description: Contains important info such as the etrog and verifier address, the rollup type and chain id
++++ type: CODE_CHANGE
++++ severity: HIGH
+      values.rollupData:
++        ["0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",3776,"0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8",7,1,0]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PolygonZkEVMGlobalExitRootV2 (0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OKBImplementation (0x75231F58b43240C9718Dd58B4967c5114342a86c)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x7256084bd40282d48d13d1d9f843a405770a177a
 
 # Diff at Tue, 02 Apr 2024 11:19:52 GMT:

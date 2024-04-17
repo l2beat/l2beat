@@ -188,7 +188,13 @@ export const arbitrum: Layer2 = {
       assessCount: subtractOneAfterBlockInclusive(22207818),
       startBlock: 1,
     },
-    finality: 'coming soon',
+    finality: {
+      type: 'Arbitrum',
+      // First blob tx from arbitrum
+      // https://etherscan.io/tx/0x5969e9d520e138e6eeb5c020a75635fd2fdc15803f707dce7909c1bf062b32d0
+      minTimestamp: new UnixTime(1710427823),
+      lag: 0,
+    },
     trackedTxs: [
       {
         uses: [
@@ -612,6 +618,12 @@ export const arbitrum: Layer2 = {
     ],
   },
   milestones: [
+    {
+      name: 'Arbitrum starts using blobs',
+      link: 'https://twitter.com/arbitrum/status/1768306107318178061',
+      date: '2024-03-14T00:00:00Z',
+      description: 'Arbitrum starts publishing data to blobs.',
+    },
     {
       name: 'ARB token airdrop',
       link: 'https://twitter.com/arbitrum/status/1638888588443111425',

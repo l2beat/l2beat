@@ -1,5 +1,5 @@
 {
-  "$schema": "../../config.schema.json",
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
   "chain": "ethereum",
   "name": "fraxferry",
   "initialAddresses": [
@@ -11,46 +11,22 @@
     "0x2b4864c2F2A2C275C6C66B90a2ae6BE9fA9cbE47"
   ],
   "names": {
-    "0x5e1D94021484642863Ea8E7Cb4F0188e56B18FEE": "fraxFerryBridgeArbitrum",
-    "0x4A6d155df9Ec9A1BB3639e6B7B99E46Fb68D42f6": "fxsFerryBridgeArbitrum",
-    "0x9A576A3d39c589A861B46864C253288bcA428a6c": "fpiFerryBridgeArbitrum",
-    "0x958815f476cD07354c0BC034EE5077B20fD93003": "fpisFerryBridgeArbitrum",
-    "0x5c5f05cF8528FFe925A2264743bFfEdbAB2b0FE3": "sfrxFerryBridgeArbitrum",
-    "0x2b4864c2F2A2C275C6C66B90a2ae6BE9fA9cbE47": "sfraxFerryBridgeArbitrum",
-    "0xA663B02CF0a4b149d2aD41910CB81e23e1c41c32": "StakedFrax",
-    "0x853d955aCEf822Db058eb8505911ED77F175b99e": "FRAXStablecoin",
-    "0xac3E018457B222d93114458476f3E3416Abbe38F": "sfrxETH",
-    "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "USDC",
-    "0x5Ca135cB8527d76e932f34B5145575F9d8cbE08E": "FPI",
-    "0xbAFA44EFE7901E04E39Dad13167D089C559c1138": "frxETHMinter",
-    "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f": "UniswapV2Factory",
-    "0xecBa967D84fCF0405F6b32Bc45F4d36BfDBB2E81": "UniswapV2Pair",
-    "0x8E870D67F660D95d5be530380D0eC0bd388289E1": "USDP",
-    "0x00000000219ab540356cBB839Cbe05303d7705Fa": "DepositContract",
-    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9",
-    "0xBa6C6EaC41a24F9D39032513f66D738B3559f15a": "ChainlinkETHUSDPriceConsumer",
-    "0x8306300ffd616049FD7e4b0354a64Da835c1A81C": "frxETHMultisig",
-    "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27": "TimelockMultisig",
-    "0x5E8422345238F34275888049021821E8E08CAa1f": "frxETH",
-    "0x2A6ddD9401B14d0443d0738B8a78fd5B99829A80": "FRAXOracleWrapper",
-    "0x66B7DFF2Ac66dc4d6FBB3Db1CB627BBb01fF3146": "CPITrackerOracle",
-    "0xd79886841026a39cFF99321140B3c4D31314782B": "FraxswapPair",
-    "0x31351Bf3fba544863FBff44DDC27bA880916A199": "FraxswapPair2",
-    "0xF14766a7C44EFb7F71441B7114d5Dd295B637175": "FraxswapPair3",
-    "0x03B59Bd1c8B9F6C265bA0c3421923B93f15036Fa": "FraxswapPair4",
-    "0x56695c26b3Cdb528815cd22fF7B47510ab821EFd": "FraxswapPair5",
-    "0xB9E1E3A9feFf48998E45Fa90847ed4D467E8BcfD": "EACAggregatorProxy",
-    "0x049Bd8C3adC3fE7d3Fc2a44541d955A537c2A484": "FiewsOracle",
-    "0x43eC799eAdd63848443E2347C49f5f52e8Fe0F6f": "FraxswapFactory",
-    "0x61eB091ea16A32ea5B880d0b3D09d518c340D750": "AccessControlledOffchainAggregator",
-    "0x90503D86E120B3B309CEBf00C2CA013aB3624736": "BokkyPooBahsDateTimeContract"
+    "0x5e1D94021484642863Ea8E7Cb4F0188e56B18FEE": "fraxFerryBridgeFraxtal",
+    "0x4A6d155df9Ec9A1BB3639e6B7B99E46Fb68D42f6": "fxsFerryBridgeFraxtal",
+    "0x9A576A3d39c589A861B46864C253288bcA428a6c": "fpiFerryBridgeFraxtal",
+    "0x958815f476cD07354c0BC034EE5077B20fD93003": "fpisFerryBridgeFraxtal",
+    "0x5c5f05cF8528FFe925A2264743bFfEdbAB2b0FE3": "sfrxFerryBridgeFraxtal",
+    "0x2b4864c2F2A2C275C6C66B90a2ae6BE9fA9cbE47": "sfraxFerryBridgeFraxtal",
+    "0x6A7efa964Cf6D9Ab3BC3c47eBdDB853A8853C502": "FPI Multisig",
+    "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27": "Frax Finance Multisig"
   },
   "overrides": {
-    "sfraxFerryBridgeArbitrum": {
+    "sfraxFerryBridgeFraxtal": {
       "ignoreMethods": ["cancelled", "batches", "transactions"], // too many values
-      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"]
+      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"],
+      "ignoreRelatives": ["token", "targetToken"]
     },
-    "fraxFerryBridgeArbitrum": {
+    "fraxFerryBridgeFraxtal": {
       "ignoreMethods": ["cancelled", "batches", "transactions"], // too many values
       "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"],
       "fields": {
@@ -60,173 +36,34 @@
           "valueKey": "crewmember",
           "flagKey": "set"
         }
-      }
+      },
+      "ignoreRelatives": ["token", "targetToken"]
     },
-    "fxsFerryBridgeArbitrum": {
+    "fxsFerryBridgeFraxtal": {
       "ignoreMethods": ["cancelled", "batches", "transactions"], // too many values
-      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"]
+      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"],
+      "ignoreRelatives": ["token", "targetToken"]
     },
-    "sfrxFerryBridgeArbitrum": {
+    "sfrxFerryBridgeFraxtal": {
       "ignoreMethods": ["cancelled", "batches", "transactions"], // too many values
-      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"]
+      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"],
+      "ignoreRelatives": ["token", "targetToken"]
     },
-    "fpisFerryBridgeArbitrum": {
+    "fpisFerryBridgeFraxtal": {
       "ignoreMethods": ["cancelled", "batches", "transactions"], // too many values
-      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"]
+      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"],
+      "ignoreRelatives": ["token", "targetToken"]
     },
-    "fpiFerryBridgeArbitrum": {
+    "fpiFerryBridgeFraxtal": {
       "ignoreMethods": ["cancelled", "batches", "transactions"], // too many values
-      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"]
+      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"],
+      "ignoreRelatives": ["token", "targetToken"]
     },
-    "StakedFrax": {
-      "ignoreMethods": [
-        "convertToAssets",
-        "convertToShares",
-        "previewDeposit",
-        "previewMint",
-        "previewRedeem",
-        "previewWithdraw",
-        "lastRewardsDistribution",
-        "previewDistributeRewards",
-        "pricePerShare",
-        "storedTotalAssets",
-        "totalAssets",
-        "totalSupply"
-      ]
-    },
-    "FRAXStablecoin": {
-      "ignoreMethods": [
-        "frax_info",
-        "fxs_price",
-        "frax_pools_array",
-        "eth_usd_price",
-        "frax_price"
-      ]
-    },
-    "FiewsOracle": {
-      "ignoreMethods": ["withdrawable"]
-    },
-    "FraxswapFactory": {
-      "ignoreMethods": ["allPairs"]
-    },
-    "sfrxETH": {
-      "ignoreMethods": [
-        "convertToAssets",
-        "convertToShares",
-        "previewDeposit",
-        "previewMint",
-        "previewRedeem",
-        "previewWithdraw"
-      ],
-      "ignoreInWatchMode": [
-        "lastRewardAmount",
-        "lastSync",
-        "pricePerShare",
-        "rewardsCycleEnd",
-        "totalAssets",
-        "totalSupply"
-      ]
-    },
-    "frxETH": {
-      "ignoreInWatchMode": ["totalSupply"]
-    },
-    "frxETHMinter": {
-      "ignoreMethods": [
-        "getValidator", // too many values
-        "currentWithheldETH"
-      ]
-    },
-    "FPI": {
-      "ignoreMethods": ["minters_array"]
-    },
-    "UniswapV2Factory": {
-      "ignoreMethods": ["allPairs", "allPairsLength"]
-    },
-    "UniswapV2Pair": {
-      "ignoreMethods": [
-        "getReserves",
-        "price0CumulativeLast",
-        "price1CumulativeLast"
-      ]
-    },
-    "DepositContract": {
-      "ignoreInWatchMode": ["get_deposit_count", "get_deposit_root"]
-    },
-    "FRAXOracleWrapper": {
-      "ignoreInWatchMode": ["getFRAXPrice"]
-    },
-    "TimelockMultisig": {
+    "FPI Multisig": {
       "ignoreInWatchMode": ["nonce"]
     },
-    "frxETHMultisig": {
+    "Frax Finance Multisig": {
       "ignoreInWatchMode": ["nonce"]
-    },
-    "CPITrackerOracle": {
-      "ignoreMethods": ["cpi_observations,month_names"]
-    },
-    "EACAggregatorProxy": {
-      "ignoreMethods": ["proposedLatestRoundData", "getAnswer", "getTimestamp"]
-    },
-    "AccessControlledOffchainAggregator": {
-      "ignoreMethods": [
-        "description",
-        "latestAnswer",
-        "latestRound",
-        "latestRoundData",
-        "latestTimestamp",
-        "latestTransmissionDetails",
-        "getAnswer",
-        "getTimestamp"
-      ]
-    },
-    "BokkyPooBahsDateTimeContract": {
-      "ignoreDiscovery": true
-    },
-    "FraxswapPair": {
-      "ignoreMethods": [
-        "getTwammRewardFactor,getTwammSalesRateEnding",
-        "TWAPObservationHistory"
-      ]
-    },
-    "FraxswapPair2": {
-      "ignoreMethods": [
-        "getTwammOrder",
-        "getTwammRewardFactor,getTwammSalesRateEnding",
-        "TWAPObservationHistory"
-      ]
-    },
-    "FraxswapPair3": {
-      "ignoreMethods": [
-        "getTwammOrder",
-        "getTwammRewardFactor,getTwammSalesRateEnding",
-        "TWAPObservationHistory"
-      ]
-    },
-    "FraxswapPair4": {
-      "ignoreMethods": [
-        "getTwammOrder",
-        "getTwammRewardFactor,getTwammSalesRateEnding",
-        "TWAPObservationHistory"
-      ]
-    },
-    "FraxswapPair5": {
-      "ignoreMethods": [
-        "getTwammOrder",
-        "getTwammRewardFactor,getTwammSalesRateEnding",
-        "TWAPObservationHistory"
-      ]
-    },
-    "WETH9": {
-      "ignoreDiscovery": true
-    },
-    "ChainlinkETHUSDPriceConsumer": {
-      "ignoreDiscovery": true
-    },
-    "USDP": {
-      "ignoreDiscovery": true
-    },
-    "USDC": {
-      "ignoreDiscovery": true
     }
   }
 }

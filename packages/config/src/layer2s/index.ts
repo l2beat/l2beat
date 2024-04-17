@@ -16,6 +16,7 @@ import { canvasconnect } from './canvasconnect'
 import { capx } from './capx'
 import { coti } from './coti'
 import { cronos } from './cronos'
+import { cyberconnect } from './cyber'
 import { debank } from './debank'
 import { degate } from './degate'
 import { degate2 } from './degate2'
@@ -34,6 +35,7 @@ import { honeypot } from './honeypot'
 import { hychain } from './hychain'
 import { hypr } from './hypr'
 import { immutablex } from './immutablex'
+import { kakarotzkevm } from './kakarotzkevm'
 import { karak } from './karak'
 import { kinto } from './kinto'
 import { kroma } from './kroma'
@@ -76,6 +78,7 @@ import { sorare } from './sorare'
 import { specular } from './specular'
 import { starknet } from './starknet'
 import { stealthchain } from './stealthchain'
+import { swell } from './swell'
 import { taiko } from './taiko'
 import { tanx } from './tanx'
 import { ten } from './ten'
@@ -86,6 +89,7 @@ import { world } from './world'
 import { x1 } from './x1'
 import { xchain } from './xchain'
 import { zentachain } from './zentachain'
+import { zircuit } from './zircuit'
 import { zkcandy } from './zkcandy'
 import { zkfair } from './zkfair'
 import { zklighter } from './zklighter'
@@ -113,6 +117,7 @@ export const layer2s: Layer2[] = [
   bobanetwork,
   canto,
   capx,
+  cyberconnect,
   canvasconnect,
   coti,
   cronos,
@@ -134,6 +139,7 @@ export const layer2s: Layer2[] = [
   hychain,
   hypr,
   immutablex,
+  kakarotzkevm,
   karak,
   kinto,
   kroma,
@@ -176,6 +182,7 @@ export const layer2s: Layer2[] = [
   specular,
   starknet,
   stealthchain,
+  swell,
   taiko,
   tanx,
   ten,
@@ -185,6 +192,7 @@ export const layer2s: Layer2[] = [
   x1,
   xchain,
   zentachain,
+  zircuit,
   zkcandy,
   zkfair,
   zklighter,

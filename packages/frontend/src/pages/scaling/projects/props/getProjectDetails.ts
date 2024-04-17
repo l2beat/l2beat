@@ -6,10 +6,11 @@ import {
 } from '@l2beat/shared-pure'
 import isEmpty from 'lodash/isEmpty'
 
-import { ChartProps } from '../../../../components'
+import { ProjectDetailsCharts } from '../../../../utils/project/getCharts'
 import { getContractSection } from '../../../../utils/project/getContractSection'
 import { getDiagramImage } from '../../../../utils/project/getDiagramImage'
 import { getPermissionsSection } from '../../../../utils/project/getPermissionsSection'
+import { getRiskSection } from '../../../../utils/project/getRiskSection'
 import {
   getProjectEditLink,
   getProjectIssueLink,
@@ -23,6 +24,7 @@ import {
   ProjectDetailsMilestonesSection,
   ProjectDetailsPermissionsSection,
   ProjectDetailsRiskAnalysisSection,
+  ProjectDetailsRiskSection,
   ProjectDetailsStageSection,
   ProjectDetailsStateDerivationSection,
   ProjectDetailsStateValidationSection,
@@ -38,7 +40,7 @@ export function getProjectDetails(
   verificationStatus: VerificationStatus,
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
   implementationChange: ImplementationChangeReportApiResponse | undefined,
-  chart: ChartProps,
+  charts: ProjectDetailsCharts,
 ) {
   const isUpcoming = project.isUpcoming
   const { incomplete, sections: technologySections } =
@@ -48,16 +50,42 @@ export function getProjectDetails(
     verificationStatus,
     manuallyVerifiedContracts,
   )
+  const riskSection = getRiskSection(project, verificationStatus)
+
   const items: ScalingDetailsItem[] = []
 
-  items.push({
-    type: 'ChartSection',
-    props: {
-      ...chart,
-      id: 'chart',
-      title: 'Chart',
-    },
-  })
+  if (charts.tvl) {
+    items.push({
+      type: 'ChartSection',
+      props: {
+        ...charts.tvl,
+        id: 'tvl',
+        title: 'Value Locked',
+      },
+    })
+  }
+
+  if (charts.activity) {
+    items.push({
+      type: 'ChartSection',
+      props: {
+        ...charts.activity,
+        id: 'activity',
+        title: 'Activity',
+      },
+    })
+  }
+
+  if (charts.costs) {
+    items.push({
+      type: 'ChartSection',
+      props: {
+        ...charts.costs,
+        id: 'costs',
+        title: 'Costs',
+      },
+    })
+  }
 
   if (!isUpcoming && project.milestones && !isEmpty(project.milestones)) {
     items.push({
@@ -79,6 +107,13 @@ export function getProjectDetails(
         description: project.display.description,
         detailedDescription: project.display.detailedDescription,
       },
+    })
+  }
+
+  if (riskSection.riskGroups.length > 0) {
+    items.push({
+      type: 'RiskSection',
+      props: riskSection,
     })
   }
 
@@ -248,6 +283,7 @@ export type ScalingDetailsSection =
   | ProjectDetailsMilestonesSection
   | ProjectDetailsKnowledgeNuggetsSection
   | ProjectDetailsRiskAnalysisSection
+  | ProjectDetailsRiskSection
   | ProjectDetailsTechnologySection
   | ProjectDetailsStateDerivationSection
   | ProjectDetailsStateValidationSection

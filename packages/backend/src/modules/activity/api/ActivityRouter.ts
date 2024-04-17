@@ -1,15 +1,11 @@
 import Router from '@koa/router'
+import { Layer2, layer2s, Layer3, layer3s } from '@l2beat/config'
 import { z } from 'zod'
 
 import { withTypedContext } from '../../../api/types'
-import { Config } from '../../../config'
-import { Project } from '../../../model/Project'
 import { ActivityController } from './ActivityController'
 
-export function createActivityRouter(
-  activityController: ActivityController,
-  config: Config,
-) {
+export function createActivityRouter(activityController: ActivityController) {
   const router = new Router()
 
   router.get('/api/activity', async (ctx) => {
@@ -38,10 +34,12 @@ export function createActivityRouter(
           .split(',')
           .map((slug) => slug.trim())
 
-        const projects: Project[] = []
+        const projects: (Layer2 | Layer3)[] = []
 
         for (const s of slugs) {
-          const project = config.projects.find((project) => project.slug === s)
+          const project = [...layer2s, ...layer3s].find(
+            (project) => project.display.slug === s,
+          )
 
           if (!project) {
             ctx.body = {
@@ -54,7 +52,7 @@ export function createActivityRouter(
           projects.push(project)
         }
 
-        if (!projects.some((p) => p.transactionApi)) {
+        if (!projects.some((p) => p.config.transactionApi)) {
           ctx.body = {
             result: 'error',
             error: 'NO_TRANSACTION_API',
@@ -63,7 +61,7 @@ export function createActivityRouter(
         }
 
         const data = await activityController.getAggregatedActivity(
-          projects.map((p) => p.projectId),
+          projects.map((p) => p.id),
         )
         ctx.body = data
       },

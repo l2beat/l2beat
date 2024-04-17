@@ -1,8 +1,6 @@
-import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { HARDCODED } from '../discovery/values/hardcoded'
-import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
@@ -12,18 +10,15 @@ const upgradeability = {
   upgradableBy: ['ProxyAdmin'],
   upgradeDelay: 'No delay',
 }
-const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
-  'L2OutputOracle',
-  'FINALIZATION_PERIOD_SECONDS',
-)
 
 export const rss3: Layer2 = opStackL2({
   discovery,
   display: {
-    name: 'RSS3',
+    shortName: 'RSS3',
+    name: 'RSS3 Value Sublayer',
     slug: 'rss3',
     description:
-      'The RSS3 Value Sublayer (VSL) as part of the RSS3 Network, is an Ethereum Layer2 built with OP Stack and Celestia DA, handling the value and ownership of AI and Open Information.',
+      'The RSS3 Value Sublayer (VSL) as part of the RSS3 Network, is an Ethereum Layer2 built with OP Stack, handling the value and ownership of AI and Open Information.',
     purposes: ['AI', 'Information'],
     links: {
       websites: ['https://rss3.io'],
@@ -43,19 +38,6 @@ export const rss3: Layer2 = opStackL2({
       ],
     },
     activityDataSource: 'Blockchain RPC',
-    liveness: {
-      warnings: {
-        stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
-      },
-      explanation: `RSS3 VSL is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
-        HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
-      )} or until it gets published. The state root gets finalized ${formatSeconds(
-        FINALIZATION_PERIOD_SECONDS,
-      )} after it has been posted.`,
-    },
-    finality: {
-      finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
-    },
   },
   upgradeability,
   l1StandardBridgeEscrow: discovery.getContract('L1StandardBridge').address,
@@ -112,10 +94,10 @@ export const rss3: Layer2 = opStackL2({
   isNodeAvailable: false,
   milestones: [
     {
-      name: 'RSS3 Mainnet Launch',
+      name: 'RSS3 Mainnet Alpha Launch',
       link: 'https://x.com/rss3_/status/1767370007275851789',
       date: '2024-03-12T00:00:00Z',
-      description: 'RSS3 Network mainnet is live.',
+      description: 'RSS3 Network Mainnet Alpha is live.',
     },
   ],
   roleOverrides: {

@@ -12,11 +12,6 @@ const upgradeability = {
   upgradeDelay: 'No delay',
 }
 
-const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
-  'L2OutputOracle',
-  'FINALIZATION_PERIOD_SECONDS',
-)
-
 export const mode: Layer2 = opStackL2({
   discovery,
   display: {
@@ -41,9 +36,6 @@ export const mode: Layer2 = opStackL2({
       ],
     },
     activityDataSource: 'Blockchain RPC',
-    finality: {
-      finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
-    },
   },
   associatedTokens: [],
   upgradeability,
@@ -58,6 +50,12 @@ export const mode: Layer2 = opStackL2({
   stateDerivation: DERIVATION.OPSTACK('MODE'),
   isNodeAvailable: true,
   milestones: [
+    {
+      name: 'Mode starts using blobs',
+      link: 'https://twitter.com/Optimism/status/1768235284494450922',
+      date: '2024-03-14T00:00:00Z',
+      description: 'Mode starts publishing data to blobs.',
+    },
     {
       name: 'Mode Network Mainnet Launch',
       link: 'https://twitter.com/modenetwork/status/1752760726907760933',

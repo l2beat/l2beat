@@ -186,6 +186,24 @@ const STARKNET_EMERGENCY: ScalingProjectTechnologyChoice = {
   references: [],
 }
 
+const BLOCKLIST_CENSORS_WITHDRAWAL: ScalingProjectRisk = {
+  category: 'Users can be censored if',
+  text: 'their address gets added to the Blocklist by the BlockAdmin.',
+}
+
+const STARKEX_BLOCKLIST: ScalingProjectTechnologyChoice = {
+  name: 'Blocklist',
+  description:
+    "The BlockAdmin (see Permissions section) can add addresses to a Blocklist, preventing the finalization of their withdrawal on L1. This effectively locks the blocked party's funds in the bridge escrow on L1 if the withdrawal had already been initiated on L2. The Blocklist is also effective on forced withdrawals.",
+  risks: [BLOCKLIST_CENSORS_WITHDRAWAL],
+  references: [
+    {
+      text: 'Blocklist - Implementation on etherscan',
+      href: 'https://etherscan.io/address/0x654cEF88e1EDD4B5a6d10815439768c60ca109a1#code#F4#L27',
+    },
+  ],
+}
+
 const PLASMA: ScalingProjectTechnologyChoice = {
   name: 'Regular exit',
   description:
@@ -231,6 +249,7 @@ export const EXITS = {
     STARKEX_FORCED_PERPETUAL,
     STARKEX_EMERGENCY_PERPETUAL,
   ],
+  STARKEX_BLOCKLIST,
   STARKEX_SPOT: [
     STARKEX_REGULAR_SPOT,
     STARKEX_FORCED_SPOT,
@@ -242,4 +261,5 @@ export const EXITS = {
   RISK_REHYPOTHECATED_ASSETS,
   RISK_LACK_OF_LIQUIDITY,
   OPERATOR_CENSORS_WITHDRAWAL,
+  BLOCKLIST_CENSORS_WITHDRAWAL,
 }

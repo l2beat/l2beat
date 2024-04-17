@@ -1,0 +1,124 @@
+{
+  "$schema": "https://raw.githubusercontent.com/l2beat/tools/main/schemas/config.schema.json",
+  "chain": "arbitrum",
+  "name": "popapex",
+  "initialAddresses": [
+    "0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1" // Inbox
+  ],
+  "names": {
+    "0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1": "Inbox",
+    "0x65AD139061B3f6DDb16170a07b925337ddf42407": "RollupProxy",
+    "0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6": "Bridge",
+    "0xa58F38102579dAE7C584850780dDA55744f67DF1": "SequencerInbox",
+    "0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2": "Outbox",
+    "0xaF57dD96a0c0E8757329D55C56De6eC50Aac73Ea": "ChallengeManager",
+    "0x3d0b021E1d2A8747411E3724d5165716B35448f3": "UpgradeExecutor",
+    "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF": "ValidatorWalletCreator",
+    "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56": "RollupOwnerMultisig"
+  },
+  "overrides": {
+    "ValidatorWalletCreator": {
+      "ignoreInWatchMode": ["template"]
+    },
+    "RollupProxy": {
+      "ignoreMethods": [
+        // Execution reverted
+        "proxiableUUID"
+      ],
+      "ignoreInWatchMode": [
+        "firstUnresolvedNode",
+        "latestConfirmed",
+        "latestNodeCreated"
+      ],
+      "fields": {
+        // when this changes, it means the validators have changed
+        "setValidatorCount": {
+          "type": "eventCount",
+          "topics": [
+            // event OwnerFunctionCalled(uint256 indexed id);
+            "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
+            // id == 6 is emitted inside setValidator()
+            "0x0000000000000000000000000000000000000000000000000000000000000006"
+          ]
+        },
+        "challenges": {
+          "type": "stateFromEvent",
+          "event": "RollupChallengeStarted",
+          "returnParams": [
+            "challengeIndex",
+            "asserter",
+            "challenger",
+            "challengedNode"
+          ]
+        },
+        "validators": {
+          "type": "arbitrumActors",
+          "actorType": "validator"
+        }
+      }
+    },
+    "UpgradeExecutor": {
+      "fields": {
+        "accessControl": {
+          "type": "accessControl"
+        }
+      }
+    },
+    "Outbox": {
+      "ignoreMethods": ["spent", "isSpent"]
+    },
+    "Bridge": {
+      "ignoreMethods": ["sequencerInboxAccs", "delayedInboxAccs"],
+      "ignoreInWatchMode": [
+        "delayedMessageCount",
+        "sequencerMessageCount",
+        "sequencerReportedSubMessageCount"
+      ],
+      "ignoreRelatives": ["nativeToken"]
+    },
+    "SequencerInbox": {
+      "ignoreMethods": ["inboxAccs"],
+      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
+      "fields": {
+        // getting sequencers from the contract is too complex at the moment
+        // so we hardcode it in config .ts
+        // this field will notify us in case of changes
+        "IS_HARDCODED_SEQUENCER_BATCH_POSTER": {
+          "type": "call",
+          "method": "function isBatchPoster(address) external view returns (bool)",
+          "args": ["0x02c903F5c76F3f00c1F659702Bd76DF30470bBEE"]
+        },
+        "sequencerVersion": {
+          "type": "arbitrumSequencerVersion"
+        },
+        "dacKeyset": {
+          "type": "arbitrumDACKeyset"
+        },
+        // when this changes, it means the sequencers have changed
+        "setIsBatchPosterCount": {
+          "type": "eventCount",
+          "topics": [
+            // event OwnerFunctionCalled(uint256 indexed id);
+            "0xea8787f128d10b2cc0317b0c3960f9ad447f7f6c1ed189db1083ccffd20f456e",
+            // id == 6 is emitted inside setValidator()
+            "0x0000000000000000000000000000000000000000000000000000000000000001"
+          ]
+        },
+        "batchPosters": {
+          "type": "arbitrumActors",
+          "actorType": "batchPoster"
+        },
+        "keySetUpdates": {
+          "type": "eventCount",
+          "topics": [
+            // SetValidKeyset(bytes32,bytes)
+            "0xabca9b7986bc22ad0160eb0cb88ae75411eacfba4052af0b457a9335ef655722"
+          ]
+        }
+      }
+    },
+    "ChallengeManager": {
+      "ignoreMethods": ["challenges"]
+    }
+  }
+}

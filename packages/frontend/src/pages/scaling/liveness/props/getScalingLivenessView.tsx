@@ -62,15 +62,15 @@ function getScalingLivenessViewEntry(
     provider: project.display.provider,
     stage: project.stage,
     explanation: project.display.liveness?.explanation,
-    stateUpdates: {
+    stateUpdates: liveness.stateUpdates && {
       ...liveness.stateUpdates,
       warning: project.display.liveness?.warnings?.stateUpdates,
     },
-    batchSubmissions: {
+    batchSubmissions: liveness.batchSubmissions && {
       ...liveness.batchSubmissions,
       warning: project.display.liveness?.warnings?.batchSubmissions,
     },
-    proofSubmissions: {
+    proofSubmissions: liveness.proofSubmissions && {
       ...liveness.proofSubmissions,
       warning: project.display.liveness?.warnings?.proofSubmissions,
     },

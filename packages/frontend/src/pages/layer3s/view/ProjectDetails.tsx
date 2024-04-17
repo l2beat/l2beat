@@ -8,6 +8,7 @@ import { KnowledgeNuggetsSection } from '../../../components/project/KnowledgeNu
 import { MilestonesSection } from '../../../components/project/MilestonesSection'
 import { PermissionsSection } from '../../../components/project/PermissionsSection'
 import { RiskAnalysis } from '../../../components/project/RiskAnalysis'
+import { RiskSection } from '../../../components/project/RiskSection'
 import { StateDerivationSection } from '../../../components/project/StateDerivationSection'
 import { StateValidationSection } from '../../../components/project/StateValidationSection'
 import {
@@ -68,6 +69,14 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           case 'RiskAnalysisSection':
             return (
               <RiskAnalysis
+                key={item.props.id}
+                sectionOrder={sectionOrder}
+                {...item.props}
+              />
+            )
+          case 'RiskSection':
+            return (
+              <RiskSection
                 key={item.props.id}
                 sectionOrder={sectionOrder}
                 {...item.props}

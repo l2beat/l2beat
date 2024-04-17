@@ -1,8 +1,11 @@
 export type ProjectSectionId =
-  | 'chart'
+  | 'tvl'
+  | 'activity'
+  | 'costs'
   | 'detailed-description'
   | 'milestones'
   | 'knowledge-nuggets'
+  | 'risk-summary'
   | 'risk-analysis'
   | 'technology'
   | 'state-derivation'
