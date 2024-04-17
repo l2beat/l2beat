@@ -273,12 +273,12 @@ export function makeConfig(
             minTimestamp: minTimestampOverride,
           }),
         },
-        // {
-        //   type: 'evm',
-        //   ...getChainTvlConfig(true, env, 'polygonzkevm', {
-        //     minTimestamp: minTimestampOverride,
-        //   }),
-        // },
+        {
+          type: 'evm',
+          ...getChainTvlConfig(true, env, 'polygonzkevm', {
+            minTimestamp: minTimestampOverride,
+          }),
+        },
       ],
       coingeckoApiKey: env.optionalString([
         'COINGECKO_API_KEY_FOR_GAS_PRICE',
