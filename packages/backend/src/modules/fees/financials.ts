@@ -1,23 +1,25 @@
 import { assert, getEnv } from '@l2beat/backend-tools'
 import {
+  BlockscoutClient,
   CoingeckoClient,
   CoingeckoQueryService,
+  EtherscanClient,
   HttpClient,
 } from '@l2beat/shared'
-import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
+import { ChainId, CoingeckoId, UnixTime } from '@l2beat/shared-pure'
 import { writeFileSync } from 'fs'
 import { mean } from 'lodash'
 import { createPublicClient, http, PublicClient } from 'viem'
 import { mainnet } from 'viem/chains'
 
 import { EVMFeeAnalyzer } from './EVMFeeAnalyzer'
-import { getBlockByTimestamp } from './getBlockByTimestamp'
 import { Fee } from './types'
 import { gweiToEth } from './utils/gasToGwei'
 
 interface Config {
   name: string
   rpc: PublicClient
+  blockTimestampClient: EtherscanClient | BlockscoutClient
 }
 
 async function main() {
@@ -43,6 +45,13 @@ async function main() {
         chain: mainnet,
         transport: http(),
       }),
+      blockTimestampClient: new EtherscanClient(
+        new HttpClient(),
+        'https://api.etherscan.io/api',
+        'UYB2JK8Q8ZVGVXRZS22DKH8TKQ3ZF1XN94',
+        UnixTime.ZERO,
+        ChainId(1),
+      ),
     },
   ]
 
@@ -59,7 +68,11 @@ async function main() {
     let timestamp = from.toStartOf('hour')
 
     while (timestamp.lte(to)) {
-      const gasPriceInGwei = await getGasPriceForTimestamp(c.rpc, timestamp)
+      const gasPriceInGwei = await getGasPriceForTimestamp(
+        c.rpc,
+        c.blockTimestampClient,
+        timestamp,
+      )
       console.log('\nTimestamp', timestamp.toDate().toISOString())
       console.log('Aggregate:', gasPriceInGwei)
 
@@ -94,12 +107,15 @@ async function main() {
 
   async function getGasPriceForTimestamp(
     rpc: PublicClient,
+    blockTimestampClient: EtherscanClient | BlockscoutClient,
     timestamp: UnixTime,
   ) {
-    console.log('Getting first block number (this may take a while)...')
-    const fromBlock = await getBlockByTimestamp(rpc, timestamp)
-    console.log('Getting last block number (this may take a while)...')
-    const toBlock = await getBlockByTimestamp(rpc, timestamp.add(1, 'hours'))
+    const fromBlock = await blockTimestampClient.getBlockNumberAtOrBefore(
+      timestamp,
+    )
+    const toBlock = await blockTimestampClient.getBlockNumberAtOrBefore(
+      timestamp.add(1, 'hours'),
+    )
 
     const blockDiff = toBlock - fromBlock
     const granularity = 6
