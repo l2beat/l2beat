@@ -2,7 +2,7 @@ import { bridges, layer2s, layer3s, milestonesLayer2s } from '@l2beat/config'
 
 import { Config } from './Config'
 
-const GITCOIN_20_END = new Date('2024-04-29T23:59:59Z')
+// const GITCOIN_20_END = new Date('2024-05-07T23:59:59Z')
 
 export const common: Omit<Config, 'backend'> = {
   links: {
@@ -17,7 +17,7 @@ export const common: Omit<Config, 'backend'> = {
       'https://drive.google.com/file/d/182ycEW8C2wk5tGd3X1tG8oQfUy9WmSJk/view',
   },
   features: {
-    banner: new Date() <= GITCOIN_20_END,
+    banner: false,
     gitcoinOption: false,
     liveness: true,
     finality: true,
