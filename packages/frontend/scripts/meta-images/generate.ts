@@ -2,6 +2,7 @@ import { bridges, layer2s, layer3s } from '@l2beat/config'
 import express from 'express'
 import { readFileSync } from 'fs'
 import { join } from 'path'
+import tinify from 'tinify'
 import puppeteer from 'puppeteer'
 
 const STATIC_DIR = join(__dirname, '../../src/static')
@@ -21,6 +22,7 @@ async function main() {
   }
 
   await screenshot(project.display.slug, project.display.name)
+  await optimize(project.display.slug)
 }
 
 async function screenshot(slug: string, name: string) {
@@ -53,4 +55,21 @@ async function screenshot(slug: string, name: string) {
   await new Promise<void>((resolve, reject) =>
     server.close((err) => (err ? reject(err) : resolve())),
   )
+}
+
+async function optimize(slug: string) {
+  /*
+    Default API key is associated with burner email.
+    If the limit is reached (500 contributions), create a new one for yourself at https://tinypng.com/developers.
+  */
+  const apiKey =
+    process.env.TINIFY_API_KEY ?? 'yVNSp71vjB7Hn0zmCpRVTl2Z1dznT1Gw'
+
+  if (!apiKey) {
+    throw new Error('Missing TINIFY_API_KEY')
+  }
+  tinify.key = apiKey
+
+  const path = join(OUTPUT_DIR, `${slug}.png`)
+  await tinify.fromFile(path).toFile(path)
 }
