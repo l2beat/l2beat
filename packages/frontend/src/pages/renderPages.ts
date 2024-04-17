@@ -9,7 +9,6 @@ import { getGovernancePublicationPages } from './governance/publication'
 import { getGovernancePublicationsPage } from './governance/publications'
 import { getL2DaysPage } from './l2days'
 import { getL3sProjectPages } from './layer3s'
-import { getMetaImagePages } from './meta-images'
 import { getMultisigReportDownloadPage } from './multisig-report'
 import { outputPages } from './output'
 import { Page, PagesData } from './Page'
@@ -47,7 +46,6 @@ export async function renderPages(config: Config, pagesData: PagesData) {
   pages.push(await getDonatePage(config))
   pages.push(...getProjectPages(config, pagesData))
   pages.push(...getL3sProjectPages(config, pagesData))
-  pages.push(...getMetaImagePages(config, tvlApiResponse, activityApiResponse))
 
   pages.push(getBridgesSummaryPage(config, pagesData))
   pages.push(getBridgesRiskPage(config, pagesData))
