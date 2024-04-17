@@ -7,7 +7,6 @@ import { getFaqPage } from './faq'
 import { getGovernancePage } from './governance/index'
 import { getGovernancePublicationPages } from './governance/publication'
 import { getGovernancePublicationsPage } from './governance/publications'
-import { getL2DaysPage } from './l2days'
 import { getL3sProjectPages } from './layer3s'
 import { getMultisigReportDownloadPage } from './multisig-report'
 import { outputPages } from './output'
@@ -42,7 +41,6 @@ export async function renderPages(config: Config, pagesData: PagesData) {
   pages.push(getRiskPage(config, pagesData))
   pages.push(getSummaryPage(config, pagesData))
   pages.push(getFaqPage(config))
-  pages.push(getL2DaysPage())
   pages.push(await getDonatePage(config))
   pages.push(...getProjectPages(config, pagesData))
   pages.push(...getL3sProjectPages(config, pagesData))
