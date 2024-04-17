@@ -6,20 +6,38 @@ import {
   EtherscanClient,
   HttpClient,
 } from '@l2beat/shared'
+<<<<<<< Updated upstream
 import { ChainId, CoingeckoId, UnixTime } from '@l2beat/shared-pure'
+=======
+import {
+  assertUnreachable,
+  ChainId,
+  CoingeckoId,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import { writeFileSync } from 'fs'
+>>>>>>> Stashed changes
 import { mean } from 'lodash'
 import { createPublicClient, http, PublicClient } from 'viem'
-import { mainnet } from 'viem/chains'
+import { arbitrum, mainnet } from 'viem/chains'
 
+import { ArbitrumFeeAnalyzer } from './ArbitrumFeeAnalyzer'
 import { EVMFeeAnalyzer } from './EVMFeeAnalyzer'
+<<<<<<< Updated upstream
 import { outputCsv } from './output/outputCsv'
 import { Fee, FeeDataPoint } from './types'
+=======
+import { Fee, FeeAnalyzer } from './types'
+>>>>>>> Stashed changes
 import { gweiToEth } from './utils/gasToGwei'
+
+type AnalyzerType = 'evm' | 'arbitrum'
 
 interface Config {
   name: string
   rpc: PublicClient
   blockTimestampClient: EtherscanClient | BlockscoutClient
+  type: AnalyzerType
 }
 
 async function main() {
@@ -52,6 +70,22 @@ async function main() {
         UnixTime.ZERO,
         ChainId(1),
       ),
+      type: 'evm',
+    },
+    {
+      name: 'arbitrum',
+      rpc: createPublicClient({
+        chain: arbitrum,
+        transport: http(),
+      }),
+      blockTimestampClient: new EtherscanClient(
+        new HttpClient(),
+        'https://api.arbiscan.io/api',
+        'TFUJ31KSJ68DJKDFQ1ZHRPNTS1XKCFADHW',
+        UnixTime.ZERO,
+        ChainId.ARBITRUM,
+      ),
+      type: 'arbitrum',
     },
   ]
 
@@ -66,6 +100,7 @@ async function main() {
         c.rpc,
         c.blockTimestampClient,
         timestamp,
+        c.type,
       )
       console.log('\nTimestamp', timestamp.toDate().toISOString())
       console.log('Aggregate:', gasPriceInGwei)
@@ -98,6 +133,7 @@ async function main() {
     rpc: PublicClient,
     blockTimestampClient: EtherscanClient | BlockscoutClient,
     timestamp: UnixTime,
+    type: AnalyzerType,
   ) {
     const fromBlock = await blockTimestampClient.getBlockNumberAtOrBefore(
       timestamp,
@@ -111,7 +147,18 @@ async function main() {
 
     const d: Fee[] = []
 
-    const feeAnalyzer = new EVMFeeAnalyzer(rpc)
+    let feeAnalyzer: FeeAnalyzer
+
+    switch (type) {
+      case 'evm':
+        feeAnalyzer = new EVMFeeAnalyzer(rpc)
+        break
+      case 'arbitrum':
+        feeAnalyzer = new ArbitrumFeeAnalyzer(rpc)
+        break
+      default:
+        assertUnreachable(type)
+    }
 
     for (
       let i = fromBlock;
