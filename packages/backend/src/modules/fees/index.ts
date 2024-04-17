@@ -1,22 +1,21 @@
-import { writeFileSync } from 'fs'
+import { createPublicClient, http } from 'viem'
 
-import { Fee, Feenalyzer } from './types'
+import { EVMFeenalyzer } from './EVMFeenalyzer'
+import { Feenalyzer } from './types'
 
 // node -r esbuild-register src/modules/fees/index.ts
 
 async function main() {
-  const feenalyzers: Feenalyzer[] = []
+  const publicClient = createPublicClient({
+    transport: http(
+      'https://mainnet.infura.io/v3/812678bb4cf24e038a16f2549a678837',
+    ),
+  })
+  const feenalyzers: Feenalyzer[] = [new EVMFeenalyzer(publicClient)]
 
   for (const f of feenalyzers) {
-    const data: Fee[] = []
-    for (let i = f.fromBlock; i <= f.toBlock; i++) {
-      const fee = await f.getData(i)
-      data.push(fee)
-    }
-    writeFileSync(
-      `./src/modules/fees/${f.name}.csv`,
-      data.map((d) => Object.values(d).join(';')).join('\n'),
-    )
+    const data = await f.getData(19674100)
+    console.log(data)
   }
 }
 

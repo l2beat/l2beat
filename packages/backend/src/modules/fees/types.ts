@@ -10,8 +10,5 @@ export interface Fee {
 }
 
 export interface Feenalyzer {
-  name: string
-  fromBlock: number
-  toBlock: number
   getData: (blockNumber: number) => Promise<Fee>
 }
