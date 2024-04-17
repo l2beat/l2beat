@@ -15,12 +15,12 @@ export class FeeController {
 
   async getFees(): Promise<L2FeesApiResponse> {
     const projects = this.projects.filter((p) => !p.isArchived)
-    const priceFrom = UnixTime.now()
-    const priceTo = priceFrom.add(-14, 'days')
+    const now = UnixTime.now()
+    const from = now.add(-14, 'days')
     const ethPrices = await this.priceService.getUsdPriceHistoryHourly(
       CoingeckoId('ethereum'),
-      priceFrom,
-      priceTo,
+      from,
+      now,
     )
 
     const promises = projects.map(async (project) => {
@@ -29,8 +29,8 @@ export class FeeController {
       )
 
       const remappedPrices = gasPrices.map((price) => {
-        const ethPrice = ethPrices.find(
-          (ep) => ep.timestamp === price.timestamp,
+        const ethPrice = ethPrices.find((ep) =>
+          ep.timestamp.equals(price.timestamp),
         )
 
         assert(ethPrice, `Missing eth price for ${+price.timestamp}`)
