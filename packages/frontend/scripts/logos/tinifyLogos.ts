@@ -11,6 +11,8 @@ dotenv.config()
 const tinifiedLogosFile = path.join(__dirname, 'tinifiedLogos.json')
 const tinifiedLogos = getTinifiedLogos()
 
+const iconDirectory = path.join(__dirname, '../../src/static/icons')
+
 main().catch((e) => console.error(e))
 
 async function main() {
@@ -26,9 +28,9 @@ async function main() {
   }
   tinify.key = apiKey
 
-  const logos = readdirSync(
-    path.join(__dirname, '..', 'src', 'static', 'icons'),
-  ).filter((fileName) => fileName.endsWith('.png'))
+  const logos = readdirSync(iconDirectory).filter((fileName) =>
+    fileName.endsWith('.png'),
+  )
 
   let tinifiedLogosCount = 0
   for (const logo of logos) {
@@ -45,7 +47,7 @@ async function main() {
 
 async function tinifyLogo(fileName: string) {
   console.time(`Tinifying ${fileName}`)
-  const logoPath = path.join(__dirname, `../src/static/icons/${fileName}`)
+  const logoPath = path.join(iconDirectory, fileName)
 
   const source = tinify.fromFile(logoPath)
 
@@ -74,7 +76,7 @@ async function tinifyLogo(fileName: string) {
     height: 128,
   })
 
-  await tinified.toFile(path.join(__dirname, `../src/static/icons/${fileName}`))
+  await tinified.toFile(path.join(iconDirectory, fileName))
 
   const tinifiedBuffer = readFileSync(logoPath)
   saveToJson(fileName, tinifiedBuffer)
