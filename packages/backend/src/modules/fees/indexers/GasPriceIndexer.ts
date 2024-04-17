@@ -14,7 +14,6 @@ export interface GasPriceIndexerDeps extends ManagedChildIndexerOptions {
   gasPriceRepository: GasPriceRepository
   project: string
   blockTimestampClient: EtherscanClient
-
   analyzer: FeeAnalyzer
 }
 

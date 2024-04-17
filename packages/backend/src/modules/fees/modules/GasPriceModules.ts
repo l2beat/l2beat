@@ -66,7 +66,7 @@ export function createGasPriceModule(
       chainId: chain.config.chainId,
     })
 
-    const analyzer = getAnalyzerForConfig('evm', rpc)
+    const analyzer = getAnalyzerForConfig(chain.type, rpc)
 
     return new GasPriceIndexer({
       logger: logger.tag(chain.chain),

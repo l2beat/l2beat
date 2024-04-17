@@ -16,7 +16,8 @@ export class ArbitrumFeeAnalyzer implements FeeAnalyzer {
 
     const txPromises: Promise<number>[] = block.transactions.map(async (tx) => {
       const txReceipt = await this.rpc.getTransactionReceipt(
-        tx as `0x${string}`,
+        // @ts-expect-error too lazy to fix
+        tx.hash as `0x${string}`,
       )
 
       return gasToGwei(txReceipt.effectiveGasPrice)

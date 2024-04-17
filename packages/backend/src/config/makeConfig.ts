@@ -213,9 +213,18 @@ export function makeConfig(
     tvlCleanerEnabled: flags.isEnabled('tvlCleaner'),
     gasPrice: flags.isEnabled('gasPrice') && {
       chains: [
-        getChainTvlConfig(true, env, 'ethereum', {
-          minTimestamp: minTimestampOverride,
-        }),
+        {
+          type: 'evm',
+          ...getChainTvlConfig(true, env, 'ethereum', {
+            minTimestamp: minTimestampOverride,
+          }),
+        },
+        {
+          type: 'arbitrum',
+          ...getChainTvlConfig(true, env, 'arbitrum', {
+            minTimestamp: minTimestampOverride,
+          }),
+        },
       ],
       coingeckoApiKey: env.optionalString([
         'COINGECKO_API_KEY_FOR_GAS_PRICE',
