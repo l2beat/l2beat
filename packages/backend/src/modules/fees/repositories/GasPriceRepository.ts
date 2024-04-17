@@ -33,17 +33,15 @@ export class GasPriceRepository extends BaseRepository {
     return records.length
   }
 
-  async deleteInTimeRange(
+  async deleteAfter(
     project: string,
-    from: UnixTime,
-    to: UnixTime,
+    targetHeight: UnixTime,
     trx?: Knex.Transaction,
   ) {
     const knex = await this.knex(trx)
     return knex('gas_prices')
       .where('project', project)
-      .where('timestamp', '>=', from.toDate())
-      .where('timestamp', '<=', to.toDate())
+      .where('timestamp', '>', targetHeight.toDate())
       .delete()
   }
 }

@@ -43,9 +43,8 @@ export class GasPriceIndexer extends ManagedChildIndexer {
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
-    await this.$.gasPriceRepository.deleteInTimeRange(
+    await this.$.gasPriceRepository.deleteAfter(
       this.$.project,
-      new UnixTime(this.$.minHeight),
       new UnixTime(targetHeight),
     )
 
