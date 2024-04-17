@@ -79,6 +79,7 @@ async function main() {
       const gasPriceUsd = gasPriceInEth * price.value
 
       points.push({
+        gasPriceGwei: gasPriceInGwei,
         gasPriceUsd,
         timestamp,
       })

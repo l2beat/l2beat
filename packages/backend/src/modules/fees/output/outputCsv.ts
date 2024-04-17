@@ -8,7 +8,7 @@ async function outputCsv(points: FeeDataPoint[], name: string) {
   const delimiter = ','
   const headers = ['timestamp', 'gasPriceUsd'].join(delimiter)
   const body = points.map((point) =>
-    [point.timestamp, point.gasPriceUsd].join(delimiter),
+    [point.timestamp, point.gasPriceUsd, point.gasPriceGwei].join(delimiter),
   )
 
   return writeFile(`./${name}.csv`, [headers, body].join('\n'))

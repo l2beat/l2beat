@@ -13,6 +13,7 @@ export interface Fee {
 
 export interface FeeDataPoint {
   timestamp: UnixTime
+  gasPriceGwei: number
   gasPriceUsd: number
 }
 
