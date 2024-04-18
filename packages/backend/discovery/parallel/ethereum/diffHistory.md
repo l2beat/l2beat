@@ -10,7 +10,7 @@ Generated with discovered.json: 0x40ee005b1b236066f02ef1c4a0f5dfd9252b45d3
 
 ### New deploys
 
-OneStepProofEntry, OneStepProverHostIo, OneStepProverMath, OneStepProver0, OneStepProverMemory are redeployed and Reader4844 is added to to be compatible with EIP-4844.
+OneStepProofEntry, OneStepProverHostIo, OneStepProverMath, OneStepProver0, OneStepProverMemory are redeployed and Reader4844 is added to be compatible with EIP-4844.
 
 - OneStepProverHostIo: Compatibility with EIP-4844, most updates are KZG-related in funtion `executeReadPreImage()`; new function `modExp256()`
 - Reader4844.sol: New unverified contract with the functions `getBlobBaseFee()`, `getDataHashes()` for reading blob data (hashes) (info from its interface)
