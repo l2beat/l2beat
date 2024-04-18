@@ -150,9 +150,8 @@ export function BigRosette({
   isUnderReview,
 }: BigRosetteProps) {
   isUnderReview =
-    Object.values(risks).every(
-      ({ sentiment }) => sentiment === 'UnderReview',
-    ) ?? isUnderReview
+    isUnderReview ??
+    Object.values(risks).every(({ sentiment }) => sentiment === 'UnderReview')
   const riskSentiments = getRiskSentiments(risks, isUnderReview)
 
   return (
