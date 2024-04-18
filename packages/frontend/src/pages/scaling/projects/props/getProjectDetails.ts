@@ -11,10 +11,6 @@ import { getContractSection } from '../../../../utils/project/getContractSection
 import { getDiagramImage } from '../../../../utils/project/getDiagramImage'
 import { getPermissionsSection } from '../../../../utils/project/getPermissionsSection'
 import { getRiskSection } from '../../../../utils/project/getRiskSection'
-import {
-  getProjectEditLink,
-  getProjectIssueLink,
-} from '../../../../utils/project/links'
 import { getRiskValues } from '../../../../utils/risks/values'
 import {
   ProjectDetailsChartSection,
@@ -28,7 +24,6 @@ import {
   ProjectDetailsStageSection,
   ProjectDetailsStateDerivationSection,
   ProjectDetailsStateValidationSection,
-  ProjectDetailsTechnologyIncompleteNote,
   ProjectDetailsTechnologySection,
   ProjectDetailsUpcomingDisclaimer,
   ProjectDetailsUpgradesAndGovernanceSection,
@@ -43,7 +38,7 @@ export function getProjectDetails(
   charts: ProjectDetailsCharts,
 ) {
   const isUpcoming = project.isUpcoming
-  const { incomplete, sections: technologySections } =
+  const technologySections =
     getTechnologyOverview(project)
   const permissionsSection = getPermissionsSection(
     project,
@@ -143,14 +138,6 @@ export function getProjectDetails(
           title: 'Rollup stage',
           isUnderReview: project.isUnderReview,
         },
-      })
-    }
-
-    if (incomplete) {
-      items.push({
-        type: 'TechnologyIncompleteNote',
-        excludeFromNavigation: true,
-        props: incomplete,
       })
     }
 
@@ -261,9 +248,6 @@ export function getProjectDetails(
 
   return {
     items,
-    editLink: getProjectEditLink(project),
-    issueLink: getProjectIssueLink(project),
-    incomplete,
     isUpcoming,
   }
 }
@@ -273,9 +257,7 @@ export type ScalingDetailsItem = { excludeFromNavigation?: boolean } & (
   | ProjectDetailsNonSectionElement
 )
 
-type ProjectDetailsNonSectionElement =
-  | ProjectDetailsTechnologyIncompleteNote
-  | ProjectDetailsUpcomingDisclaimer
+type ProjectDetailsNonSectionElement = ProjectDetailsUpcomingDisclaimer
 
 export type ScalingDetailsSection =
   | ProjectDetailsChartSection

@@ -11,21 +11,13 @@ import { RiskAnalysis } from '../../../components/project/RiskAnalysis'
 import { RiskSection } from '../../../components/project/RiskSection'
 import { StateDerivationSection } from '../../../components/project/StateDerivationSection'
 import { StateValidationSection } from '../../../components/project/StateValidationSection'
-import {
-  TechnologyIncomplete,
-  TechnologyIncompleteProps,
-} from '../../../components/project/TechnologyIncomplete'
 import { TechnologySection } from '../../../components/project/TechnologySection'
 import { UpcomingDisclaimer } from '../../../components/project/UpcomingDisclaimer'
-import { WrongResearchCTA } from '../../../components/project/WrongInformationCTA'
 import { ScalingDetailsItem } from '../props/getProjectDetails'
 
 export interface ProjectDetailsProps {
   items: ScalingDetailsItem[]
-  issueLink: string
-  editLink: string
   isUpcoming?: boolean
-  incomplete?: TechnologyIncompleteProps
 }
 
 export function ProjectDetails(props: ProjectDetailsProps) {
@@ -82,13 +74,6 @@ export function ProjectDetails(props: ProjectDetailsProps) {
                 {...item.props}
               />
             )
-          case 'TechnologyIncompleteNote':
-            return (
-              <TechnologyIncomplete
-                key={`${item.type}${index}`}
-                {...item.props}
-              />
-            )
           case 'TechnologySection':
             return (
               <TechnologySection
@@ -140,7 +125,6 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             assertUnreachable(item)
         }
       })}
-      <WrongResearchCTA issueLink={props.issueLink} editLink={props.editLink} />
     </div>
   )
 }

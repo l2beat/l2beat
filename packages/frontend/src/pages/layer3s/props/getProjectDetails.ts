@@ -11,10 +11,6 @@ import { getContractSection } from '../../../utils/project/getContractSection'
 import { getDiagramImage } from '../../../utils/project/getDiagramImage'
 import { getPermissionsSection } from '../../../utils/project/getPermissionsSection'
 import { getRiskSection } from '../../../utils/project/getRiskSection'
-import {
-  getProjectEditLink,
-  getProjectIssueLink,
-} from '../../../utils/project/links'
 import { getRiskValues } from '../../../utils/risks/values'
 import {
   ProjectDetailsChartSection,
@@ -27,7 +23,6 @@ import {
   ProjectDetailsRiskSection,
   ProjectDetailsStateDerivationSection,
   ProjectDetailsStateValidationSection,
-  ProjectDetailsTechnologyIncompleteNote,
   ProjectDetailsTechnologySection,
   ProjectDetailsUpcomingDisclaimer,
 } from '../../types'
@@ -42,8 +37,7 @@ export function getProjectDetails(
 ) {
   const isUpcoming = project.isUpcoming
 
-  const { incomplete, sections: technologySections } =
-    getTechnologyOverview(project)
+  const technologySections = getTechnologyOverview(project)
   const permissionsSection = getPermissionsSection(
     project,
     verificationStatus,
@@ -128,14 +122,6 @@ export function getProjectDetails(
         isVerified: verificationStatus.projects[project.id.toString()],
       },
     })
-
-    if (incomplete) {
-      items.push({
-        type: 'TechnologyIncompleteNote',
-        excludeFromNavigation: true,
-        props: incomplete,
-      })
-    }
 
     /* We want state derivation to be after technology section
        so we split the technology sections into two arrays
@@ -230,22 +216,15 @@ export function getProjectDetails(
   }
 
   return {
-    incomplete,
     items,
-    editLink: getProjectEditLink(project),
-    issueLink: getProjectIssueLink(project),
     isUpcoming,
   }
 }
 
 export type ScalingDetailsItem = { excludeFromNavigation?: boolean } & (
   | ScalingDetailsSection
-  | ProjectDetailsNonSectionElement
-)
-
-type ProjectDetailsNonSectionElement =
-  | ProjectDetailsTechnologyIncompleteNote
   | ProjectDetailsUpcomingDisclaimer
+)
 
 export type ScalingDetailsSection =
   | ProjectDetailsChartSection

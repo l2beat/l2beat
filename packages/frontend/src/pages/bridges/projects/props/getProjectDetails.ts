@@ -10,10 +10,6 @@ import { ProjectDetailsCharts } from '../../../../utils/project/getCharts'
 import { getContractSection } from '../../../../utils/project/getContractSection'
 import { getPermissionsSection } from '../../../../utils/project/getPermissionsSection'
 import {
-  getProjectEditLink,
-  getProjectIssueLink,
-} from '../../../../utils/project/links'
-import {
   ProjectDetailsChartSection,
   ProjectDetailsContractsSection,
   ProjectDetailsDetailedDescriptionSection,
@@ -21,7 +17,6 @@ import {
   ProjectDetailsMilestonesSection,
   ProjectDetailsPermissionsSection,
   ProjectDetailsRiskSection,
-  ProjectDetailsTechnologyIncompleteNote,
   ProjectDetailsTechnologySection,
 } from '../../../types'
 import { getRiskSection } from './getRiskSection'
@@ -34,8 +29,7 @@ export function getProjectDetails(
   implementationChange: ImplementationChangeReportApiResponse | undefined,
   charts: ProjectDetailsCharts,
 ) {
-  const { incomplete, sections: technologySections } =
-    getTechnologyOverview(bridge)
+  const technologySections = getTechnologyOverview(bridge)
   const permissionsSection = getPermissionsSection(
     bridge,
     verificationStatus,
@@ -108,14 +102,6 @@ export function getProjectDetails(
     })
   }
 
-  if (incomplete) {
-    items.push({
-      type: 'TechnologyIncompleteNote',
-      excludeFromNavigation: true,
-      props: incomplete,
-    })
-  }
-
   technologySections.forEach((section) =>
     items.push({
       type: 'TechnologySection',
@@ -160,18 +146,12 @@ export function getProjectDetails(
     })
   }
 
-  return {
-    items,
-    editLink: getProjectEditLink(bridge),
-    issueLink: getProjectIssueLink(bridge),
-    incomplete,
-  }
+  return items
 }
 
-export type BridgeDetailsItem = { excludeFromNavigation?: boolean } & (
-  | BridgeDetailsSection
-  | NonSectionElement
-)
+export type BridgeDetailsItem = {
+  excludeFromNavigation?: boolean
+} & BridgeDetailsSection
 
 export type BridgeDetailsSection =
   | ProjectDetailsChartSection
@@ -182,5 +162,3 @@ export type BridgeDetailsSection =
   | ProjectDetailsTechnologySection
   | ProjectDetailsPermissionsSection
   | ProjectDetailsContractsSection
-
-type NonSectionElement = ProjectDetailsTechnologyIncompleteNote

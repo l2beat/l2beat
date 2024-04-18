@@ -9,7 +9,6 @@ import { RiskSectionProps } from '../components/project/RiskSection'
 import { StageSectionProps } from '../components/project/StageSection'
 import { StateDerivationSectionProps } from '../components/project/StateDerivationSection'
 import { StateValidationSectionProps } from '../components/project/StateValidationSection'
-import { TechnologyIncompleteProps } from '../components/project/TechnologyIncomplete'
 import { TechnologySectionProps } from '../components/project/TechnologySection'
 import { UpgradesAndGovernanceSectionProps } from '../components/project/UpgradesAndGovernanceSection'
 
@@ -59,10 +58,6 @@ export interface ProjectDetailsStageSection {
   props: ProjectDetailsProps<StageSectionProps>
 }
 
-export interface ProjectDetailsTechnologyIncompleteNote {
-  type: 'TechnologyIncompleteNote'
-  props: ProjectDetailsProps<TechnologyIncompleteProps>
-}
 export interface ProjectDetailsTechnologySection {
   type: 'TechnologySection'
   props: ProjectDetailsProps<TechnologySectionProps>

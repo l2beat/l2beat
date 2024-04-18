@@ -33,13 +33,15 @@ export function getProps(
         tvlApiResponse,
         implementationChange,
       ),
-      projectDetails: getProjectDetails(
-        bridge,
-        verificationStatus,
-        manuallyVerifiedContracts,
-        implementationChange,
-        charts,
-      ),
+      projectDetails: {
+        items: getProjectDetails(
+          bridge,
+          verificationStatus,
+          manuallyVerifiedContracts,
+          implementationChange,
+          charts,
+        ),
+      },
       footer: getFooterProps(config),
     },
     wrapper: {

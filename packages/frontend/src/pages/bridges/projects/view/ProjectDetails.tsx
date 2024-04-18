@@ -8,18 +8,11 @@ import { KnowledgeNuggetsSection } from '../../../../components/project/Knowledg
 import { MilestonesSection } from '../../../../components/project/MilestonesSection'
 import { PermissionsSection } from '../../../../components/project/PermissionsSection'
 import { RiskSection } from '../../../../components/project/RiskSection'
-import {
-  TechnologyIncomplete,
-  TechnologyIncompleteProps,
-} from '../../../../components/project/TechnologyIncomplete'
 import { TechnologySection } from '../../../../components/project/TechnologySection'
-import { WrongResearchCTA } from '../../../../components/project/WrongInformationCTA'
 import { BridgeDetailsItem } from '../props/getProjectDetails'
+
 export interface ProjectDetailsProps {
   items: BridgeDetailsItem[]
-  issueLink: string
-  editLink: string
-  incomplete?: TechnologyIncompleteProps
 }
 
 export function ProjectDetails(props: ProjectDetailsProps) {
@@ -61,13 +54,6 @@ export function ProjectDetails(props: ProjectDetailsProps) {
                 {...item.props}
               />
             )
-          case 'TechnologyIncompleteNote':
-            return (
-              <TechnologyIncomplete
-                key={`${item.type}${index}`}
-                {...item.props}
-              />
-            )
           case 'TechnologySection':
             return (
               <TechnologySection
@@ -104,7 +90,6 @@ export function ProjectDetails(props: ProjectDetailsProps) {
             assertUnreachable(item)
         }
       })}
-      <WrongResearchCTA issueLink={props.issueLink} editLink={props.editLink} />
     </div>
   )
 }
