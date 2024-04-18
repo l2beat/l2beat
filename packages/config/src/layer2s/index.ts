@@ -16,6 +16,7 @@ import { canvasconnect } from './canvasconnect'
 import { capx } from './capx'
 import { coti } from './coti'
 import { cronos } from './cronos'
+import { cyberconnect } from './cyber'
 import { debank } from './debank'
 import { degate } from './degate'
 import { degate2 } from './degate2'
@@ -34,6 +35,7 @@ import { honeypot } from './honeypot'
 import { hychain } from './hychain'
 import { hypr } from './hypr'
 import { immutablex } from './immutablex'
+import { kakarotzkevm } from './kakarotzkevm'
 import { karak } from './karak'
 import { kinto } from './kinto'
 import { kroma } from './kroma'
@@ -114,6 +116,7 @@ export const layer2s: Layer2[] = [
   bobanetwork,
   canto,
   capx,
+  cyberconnect,
   canvasconnect,
   coti,
   cronos,
@@ -135,6 +138,7 @@ export const layer2s: Layer2[] = [
   hychain,
   hypr,
   immutablex,
+  kakarotzkevm,
   karak,
   kinto,
   kroma,

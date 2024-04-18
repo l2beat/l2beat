@@ -62,6 +62,21 @@
       "formula": "locked"
     },
     {
+      "id": "acx-across-protocol-token",
+      "name": "Across Protocol Token",
+      "coingeckoId": "across-protocol",
+      "address": "0x44108f0223A3C3028F5Fe7AEC7f9bb2E66beF82F",
+      "symbol": "ACX",
+      "decimals": 18,
+      "deploymentTimestamp": 1666277447,
+      "coingeckoListingTimestamp": 1669593600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/28161/large/across-200x200.png?1696527165",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "alusd-alchemix-usd",
       "name": "Alchemix USD",
       "coingeckoId": "alchemix-usd",
@@ -1606,6 +1621,21 @@
       "formula": "locked"
     },
     {
+      "id": "gog-guild-of-guardians",
+      "name": "Guild of Guardians",
+      "coingeckoId": "guild-of-guardians",
+      "address": "0x9AB7bb7FdC60f4357ECFef43986818A2A3569c62",
+      "symbol": "GOG",
+      "decimals": 18,
+      "deploymentTimestamp": 1635310797,
+      "coingeckoListingTimestamp": 1640131200,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/17362/large/V2QDNoLg_400x400.jpg?1696516913",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
       "id": "hegic-hegic",
       "name": "Hegic",
       "coingeckoId": "hegic",
@@ -1676,21 +1706,6 @@
       "coingeckoListingTimestamp": 1639353600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/21273/large/h_logo_1x.png?1696520644",
-      "chainId": 1,
-      "type": "CBV",
-      "formula": "locked"
-    },
-    {
-      "id": "hbtc-huobi-btc",
-      "name": "Huobi BTC",
-      "coingeckoId": "huobi-btc",
-      "address": "0x0316EB71485b0Ab14103307bf65a021042c6d380",
-      "symbol": "HBTC",
-      "decimals": 18,
-      "deploymentTimestamp": 1575874126,
-      "coingeckoListingTimestamp": 1602460800,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/12407/large/hbtc.png?1696512229",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"
@@ -2696,6 +2711,21 @@
       "coingeckoListingTimestamp": 1675382400,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/23952/large/TLOS.png?1705598803",
+      "chainId": 1,
+      "type": "CBV",
+      "formula": "locked"
+    },
+    {
+      "id": "puff-puff",
+      "name": "Puff",
+      "coingeckoId": "puff-the-dragon",
+      "address": "0x18fA05ee5e478EED8925946abb41d09AEc5d34D6",
+      "symbol": "Puff",
+      "decimals": 18,
+      "deploymentTimestamp": 1707929531,
+      "coingeckoListingTimestamp": 1710201600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35950/large/photo_2024-03-11_10.18.27.jpeg?1710240090",
       "chainId": 1,
       "type": "CBV",
       "formula": "locked"
@@ -4091,6 +4121,21 @@
       }
     },
     {
+      "id": "zksync2:usdc-usdc",
+      "name": "USDC",
+      "coingeckoId": "usd-coin",
+      "address": "0x1d17CBcF0D6D143135aE902365D2E5e2A16538D4",
+      "symbol": "USDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1706644361,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "chainId": 324,
+      "type": "NMV",
+      "formula": "totalSupply"
+    },
+    {
       "id": "lyra:usdc-usd-coin",
       "name": "USD Coin",
       "coingeckoId": "usd-coin",
@@ -4148,6 +4193,44 @@
       }
     },
     {
+      "id": "mantle:susde-staked-usde",
+      "name": "Staked USDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      "symbol": "sUSDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1709929437,
+      "coingeckoListingTimestamp": 1710892800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33669/large/photo_2023-12-14_17-00-20.jpg?1702696035",
+      "chainId": 5000,
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
+      "id": "mantle:usde-usde",
+      "name": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      "symbol": "USDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1709926643,
+      "coingeckoListingTimestamp": 1702512000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33613/large/3466ef_3c088c66c7d941e8856339d0bddf33cc_mv2.png?1702514458",
+      "chainId": 5000,
+      "type": "NMV",
+      "formula": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
       "id": "base:aero-aerodrome",
       "name": "Aerodrome",
       "coingeckoId": "aerodrome-finance",
@@ -4178,6 +4261,21 @@
       "formula": "circulatingSupply"
     },
     {
+      "id": "base:brett-brett",
+      "name": "Brett",
+      "coingeckoId": "based-brett",
+      "address": "0x532f27101965dd16442E59d40670FaF5eBB142E4",
+      "symbol": "BRETT",
+      "decimals": 18,
+      "deploymentTimestamp": 1708757271,
+      "coingeckoListingTimestamp": 1709164800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35529/large/1000050750.png?1709031995",
+      "chainId": 8453,
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
       "id": "base:degen-degen",
       "name": "Degen",
       "coingeckoId": "degen-base",
@@ -4188,6 +4286,21 @@
       "coingeckoListingTimestamp": 1705276800,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/34515/large/android-chrome-512x512.png?1706198225",
+      "chainId": 8453,
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "id": "base:mochi-mochi",
+      "name": "Mochi",
+      "coingeckoId": "mochi-thecatcoin",
+      "address": "0xF6e932Ca12afa26665dC4dDE7e27be02A7c02e50",
+      "symbol": "MOCHI",
+      "decimals": 18,
+      "deploymentTimestamp": 1699554897,
+      "coingeckoListingTimestamp": 1700524800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33083/large/mochi200.png?1703024216",
       "chainId": 8453,
       "type": "NMV",
       "formula": "circulatingSupply"
@@ -4225,6 +4338,21 @@
         "bridge": "Wormhole",
         "slug": "portal"
       }
+    },
+    {
+      "id": "base:toshi-toshi",
+      "name": "Toshi",
+      "coingeckoId": "toshi",
+      "address": "0xAC1Bd2486aAf3B5C0fc3Fd868558b082a531B2B4",
+      "symbol": "TOSHI",
+      "decimals": 18,
+      "deploymentTimestamp": 1696863767,
+      "coingeckoListingTimestamp": 1690761600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31126/large/2023-08-11_13.21.24.png?1697025145",
+      "chainId": 8453,
+      "type": "NMV",
+      "formula": "circulatingSupply"
     },
     {
       "id": "base:usdc-usd-coin",
@@ -4652,6 +4780,51 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/34288/large/r8A3J3kf_400x400.jpg?1704455147",
       "chainId": 42766,
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "id": "linea:lube-lube",
+      "name": "LUBE",
+      "coingeckoId": "lube",
+      "address": "0x1bE3735Dd0C0Eb229fB11094B6c277192349EBbf",
+      "symbol": "LUBE",
+      "decimals": 18,
+      "deploymentTimestamp": 1700142479,
+      "coingeckoListingTimestamp": 1700524800,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33070/large/Lube2-icon-200x200.png?1708581050",
+      "chainId": 59144,
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "id": "linea:lynx-lynex",
+      "name": "Lynex",
+      "coingeckoId": "lynex",
+      "address": "0x1a51b19CE03dbE0Cb44C1528E34a7EDD7771E9Af",
+      "symbol": "LYNX",
+      "decimals": 18,
+      "deploymentTimestamp": 1707341769,
+      "coingeckoListingTimestamp": 1708041600,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/34874/large/LogoCircular_200x200.png?1706462851",
+      "chainId": 59144,
+      "type": "NMV",
+      "formula": "circulatingSupply"
+    },
+    {
+      "id": "linea:mendi-mendi-finance",
+      "name": "Mendi Finance",
+      "coingeckoId": "mendi-finance",
+      "address": "0x43E8809ea748EFf3204ee01F08872F063e44065f",
+      "symbol": "MENDI",
+      "decimals": 18,
+      "deploymentTimestamp": 1691664658,
+      "coingeckoListingTimestamp": 1701216000,
+      "category": "other",
+      "iconUrl": "https://assets.coingecko.com/coins/images/31418/large/mendi_finance_token_logo_v1.png?1696530233",
+      "chainId": 59144,
       "type": "NMV",
       "formula": "circulatingSupply"
     },

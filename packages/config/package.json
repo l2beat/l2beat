@@ -27,7 +27,7 @@
     "@l2beat/discovery-types": "^0.8.1",
     "@l2beat/shared": "*",
     "@l2beat/shared-pure": "*",
-    "@l2beat/discovery": "0.46.8",
+    "@l2beat/discovery": "0.47.1",
     "chalk": "^4.1.2",
     "cheerio": "^1.0.0-rc.11",
     "ethers": "^5.7.2",

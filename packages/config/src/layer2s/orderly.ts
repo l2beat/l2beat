@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
@@ -40,14 +40,8 @@ export const orderly: Layer2 = opStackL2({
     activityDataSource: 'Blockchain RPC',
   },
   upgradeability,
-  l1StandardBridgeEscrow: EthereumAddress(
-    '0xe07eA0436100918F157DF35D01dCE5c11b16D1F1',
-  ),
   rpcUrl: 'https://rpc.orderly.network',
   genesisTimestamp: new UnixTime(1696566432),
-
-  l2OutputOracle: discovery.getContract('L2OutputOracle'),
-  portal: discovery.getContract('OptimismPortal'),
   isNodeAvailable: false,
   milestones: [
     {
@@ -57,13 +51,6 @@ export const orderly: Layer2 = opStackL2({
       description: 'Orderly Network is live on mainnet.',
     },
   ],
-  knowledgeNuggets: [],
-  roleOverrides: {
-    batcherHash: 'Sequencer',
-    PROPOSER: 'Proposer',
-    GUARDIAN: 'Guardian',
-    CHALLENGER: 'Challenger',
-  },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'OrderlyMultisig',
@@ -77,5 +64,4 @@ export const orderly: Layer2 = opStackL2({
       ...upgradeability,
     }),
   ],
-  nonTemplateEscrows: [],
 })

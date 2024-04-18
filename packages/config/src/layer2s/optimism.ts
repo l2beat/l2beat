@@ -1,10 +1,8 @@
-import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION, MILESTONES, NUGGETS } from '../common'
 import { subtractOneAfterBlockInclusive } from '../common/assessCount'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { HARDCODED } from '../discovery/values/hardcoded'
-import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('optimism')
@@ -13,11 +11,6 @@ const upgradeability = {
   upgradableBy: ['ProxyAdmin'],
   upgradeDelay: 'No delay',
 }
-
-const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
-  'L2OutputOracle',
-  'FINALIZATION_PERIOD_SECONDS',
-)
 
 export const optimism: Layer2 = opStackL2({
   discovery,
@@ -49,25 +42,9 @@ export const optimism: Layer2 = opStackL2({
       rollupCodes: 'https://rollup.codes/optimism',
     },
     activityDataSource: 'Blockchain RPC',
-    liveness: {
-      warnings: {
-        stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
-      },
-      explanation: `Optimism is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
-        HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
-      )} or until it gets published. The state root gets finalized ${formatSeconds(
-        FINALIZATION_PERIOD_SECONDS,
-      )} after it has been posted.`,
-    },
-    finality: {
-      finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
-    },
   },
   associatedTokens: ['OP'],
   upgradeability,
-  l1StandardBridgeEscrow: EthereumAddress(
-    '0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1',
-  ),
   transactionApi: {
     type: 'rpc',
     defaultUrl: 'https://mainnet.optimism.io/',
@@ -83,15 +60,13 @@ export const optimism: Layer2 = opStackL2({
     genesisTimestamp: new UnixTime(1686068903),
     lag: 0,
   },
-  l2OutputOracle: discovery.getContract('L2OutputOracle'),
-  portal: discovery.getContract('OptimismPortal'),
   stateDerivation: {
     ...DERIVATION.OPSTACK('OP_MAINNET'),
     genesisState:
       'Since OP Mainnet has migrated from the OVM to Bedrock, a node must be synced using a data directory that can be found [here](https://community.optimism.io/docs/useful-tools/networks/#links). To reproduce the migration itself, see this [guide](https://blog.oplabs.co/reproduce-bedrock-migration/).',
   },
   upgradesAndGovernance:
-    'All contracts are upgradable by the `ProxyAdmin` which is controlled by a 2/2 multisig composed by the Optimism Foundation and a Security Council. Currently, the Guardian, the Proposer and the Challenger roles are assigned to single actors and are immutable, meaning that an implementation upgrade is required to update them. \n\nThe `FoundationMultisig_2` controls both the Guardian and Challenger role. `FoundationMultisig_2` controls the `SuperchainConfig` Superchain-wide pause mechanism that can pause `L1CrossDomainMessenger` messages relay, as well as ERC-20 and ERC-721 withdrawals. The single Sequencer actor can be modified by the `FoundationMultisig_2` via the `SystemConfig` contract. \n\nAt the moment, for regular upgrades, the DAO signals its intent by voting on upgrade proposals, but has no direct control over the upgrade process.',
+    'All contracts are upgradable by the `ProxyAdmin` which is controlled by a 2/2 multisig composed by the Optimism Foundation and a Security Council. Currently, the Guardian, the Proposer and the Challenger roles are assigned to single actors and an implementation upgrade is required to update them. \n\nThe `FoundationMultisig_2` controls both the Guardian and Challenger role. `FoundationMultisig_2` controls the `SuperchainConfig` Superchain-wide pause mechanism that can pause `L1CrossDomainMessenger` messages relay, as well as ERC-20 and ERC-721 withdrawals. The single Sequencer actor can be modified by the `FoundationMultisig_2` via the `SystemConfig` contract. \n\nAt the moment, for regular upgrades, the DAO signals its intent by voting on upgrade proposals, but has no direct control over the upgrade process.',
   isNodeAvailable: true,
   hasProperSecurityCouncil: false,
   milestones: [
@@ -101,6 +76,12 @@ export const optimism: Layer2 = opStackL2({
     //   date: 'upcoming',
     //   description: 'Superchain enables L1 contracts to be upgraded atomically across multiple chains in a single transaction.',
     // },
+    {
+      name: 'OP Mainnet starts using blobs',
+      link: 'https://twitter.com/Optimism/status/1768235284494450922',
+      date: '2024-03-14T00:00:00Z',
+      description: 'OP Mainnet starts publishing data to blobs.',
+    },
     {
       name: 'Network Upgrade #5: Ecotone',
       link: 'https://vote.optimism.io/proposals/95119698597711750186734377984697814101707190887694311194110013874163880701970',
@@ -202,12 +183,6 @@ export const optimism: Layer2 = opStackL2({
         'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
     }),
   ],
-  roleOverrides: {
-    batcherHash: 'Sequencer',
-    PROPOSER: 'Proposer',
-    GUARDIAN: 'Guardian',
-    CHALLENGER: 'Challenger',
-  },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'ProxyAdminOwner',
@@ -236,6 +211,11 @@ export const optimism: Layer2 = opStackL2({
     discovery.getContractDetails('SuperchainConfig', {
       description:
         'The SuperchainConfig contract is used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.',
+      ...upgradeability,
+    }),
+    discovery.getContractDetails('L1ERC721Bridge', {
+      description:
+        'The L1ERC721Bridge contract is used to bridge ERC-721 tokens from L1 to L2.',
       ...upgradeability,
     }),
   ],

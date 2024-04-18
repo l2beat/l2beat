@@ -49,10 +49,6 @@ function watchContent() {
   return gulp.watch(['src/**/*.{ts,tsx,md,json}'], buildContent)
 }
 
-function generateMetaImages() {
-  return exec('node -r esbuild-register src/build/buildMetaImages.ts')
-}
-
 const proxyUrls = [
   '/api/projects',
   '/api/tvl/aggregate',
@@ -95,7 +91,6 @@ function serve() {
 const build = gulp.series(
   clean,
   gulp.parallel(buildScripts, buildStyles, buildContent, copyStatic),
-  ...(process.env.GENERATE_METAIMAGES ? [generateMetaImages] : []),
 )
 
 const watch = gulp.series(

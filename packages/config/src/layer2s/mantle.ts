@@ -6,11 +6,6 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('mantle')
 
-const upgradeability = {
-  upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
-
 const regularUpgrades = {
   upgradableBy: ['OwnerMultisig'],
   upgradeDelay: 'No delay',
@@ -88,19 +83,26 @@ export const mantle: Layer2 = opStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  upgradeability,
-  l1StandardBridgeEscrow: EthereumAddress(
-    '0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012',
-  ),
   rpcUrl: 'https://rpc.mantle.xyz',
-  genesisTimestamp: new UnixTime(1687954103),
-  l2OutputOracle: discovery.getContract('L2OutputOracle'),
-  portal: discovery.getContract('OptimismPortal'),
-  roleOverrides: {
-    batcherHash: 'Sequencer',
-    PROPOSER: 'Proposer',
-    GUARDIAN: 'Guardian',
-    CHALLENGER: 'Challenger',
+  genesisTimestamp: new UnixTime(1688428800),
+  chainConfig: {
+    name: 'mantle',
+    chainId: 5000,
+    explorerUrl: 'https://explorer.mantle.xyz/',
+    explorerApi: {
+      url: 'https://explorer.mantle.xyz/api',
+      type: 'blockscout',
+    },
+    minTimestampForTvl: new UnixTime(1688314886),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 304717,
+        version: '3',
+      },
+    ],
+    coingeckoPlatform: 'mantle',
   },
   nonTemplateContracts: [
     discovery.getContractDetails('DataLayrServiceManager', {
@@ -160,7 +162,5 @@ export const mantle: Layer2 = opStackL2({
       description: 'Mantle completes Mainnet v2 Tectonic Upgrade.',
     },
   ],
-  knowledgeNuggets: [],
-  nonTemplateEscrows: [],
   nonTemplateOptimismPortalEscrowTokens: ['MNT'],
 })

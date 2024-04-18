@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x0897868b5ad3b9ac30e7422485e3646f39522831
+
+# Diff at Wed, 10 Apr 2024 10:21:54 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@d472f6526a98fb96aa82ff01c0dbb2a9ad638c0e block: 19531406
+- current block number: 19624596
+
+## Description
+
+The OptimisticGovernors bond is reduced from 5 to 2 ETH. This bond has to be posted with each proposal.
+
+## Watched changes
+
+```diff
+    contract OptimisticGovernor (0x172fB6b07D6aB708dd67392a09e1c40d16dA0460) {
+    +++ description: None
+      values.bondAmount:
+-        "5000000000000000000"
++        "2000000000000000000"
+      values.getProposalBond:
+-        "5000000000000000000"
++        "2000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0xe3a1c5468421a3a6936776e8fd06dd4be298a474
 
 # Diff at Thu, 28 Mar 2024 08:27:00 GMT:

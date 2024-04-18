@@ -64,6 +64,7 @@ declare module 'knex/types/tables' {
     id: string
     last_processed: number
     latest: number
+    synced_once: boolean
     updated_at: Date
   }
 

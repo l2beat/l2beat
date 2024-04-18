@@ -109,7 +109,7 @@ export const zksynclite: Layer2 = {
           ),
           selector: '0x45269298',
           functionSignature:
-            'function commitBlocks((uint32,uint64,bytes32,uint256,bytes32,bytes32), (bytes32,bytes,uint256,tuple[],uint32,uint32)[])',
+            'function commitBlocks((uint32,uint64,bytes32,uint256,bytes32,bytes32), (bytes32,bytes,uint256,(bytes,uint32)[],uint32,uint32)[])',
           sinceTimestampInclusive: new UnixTime(1612885558),
         },
       },

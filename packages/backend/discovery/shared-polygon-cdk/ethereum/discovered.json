@@ -1,7 +1,7 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 19610745,
+  "blockNumber": 19631886,
   "configHash": "0x71290ff26c25629038a873aef85bc85cc2e38a8515afecd7c77b3f06880ed619",
   "version": 3,
   "contracts": [
@@ -65,14 +65,6 @@
       "derivedName": "ProxyAdmin"
     },
     {
-      "name": "FflonkVerifier",
-      "address": "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1706364923
-    },
-    {
       "name": "ProxyAdmin",
       "address": "0x1e37EA18e9515db29b3E94A00eD31484A3130204",
       "upgradeability": {
@@ -122,7 +114,7 @@
         "gasTokenAddress": "0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
-        "getRoot": "0xe56ec48a5865fc1c3422cbe98f94b298fe2990acee3b1122d9f1906ba21f45df",
+        "getRoot": "0x6521a2988a98840ce78ba3bcc93c33321d05c682976d6ee7074758b33256e732",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
@@ -162,7 +154,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0x5c023582a1fa2f90099dacb97ef1491d199b34410ce950ae74f0f7192150cba1",
+        "lastAccInputHash": "0x221e8142de16d29a7ecf037406f102d06997bbe5fb1420e6082e95cc85d48102",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "X Layer",
@@ -317,10 +309,10 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0xaf30d3aa850ca83e57e5781ee46898a455a2d04acd112cf9a730c045a82caa33",
+        "getRollupExitRoot": "0xb90d2e97769d58ad8abe510965a7690f810e5b6ecee0af0dbac1a96d8db06b50",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
-        "lastAggregationTimestamp": 1712574983,
+        "lastAggregationTimestamp": 1712832275,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "nondeterministicPendingState": [],
         "pendingStateTimeout": 432000,
@@ -333,7 +325,7 @@
           ],
           [
             "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
-            "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"
+            "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
           ],
           [
             "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
@@ -359,8 +351,8 @@
             "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
           ]
         ],
-        "totalSequencedBatches": 44119,
-        "totalVerifiedBatches": 40046,
+        "totalSequencedBatches": 45955,
+        "totalVerifiedBatches": 45360,
         "trustedAggregatorTimeout": 432000,
         "verifyBatchTimeTarget": 1800
       },
@@ -378,8 +370,8 @@
       "sinceTimestamp": 1679653151,
       "values": {
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 7945,
-        "getRoot": "0xfb7491a123a61c0180f0ab25a33320015dfffeb3e22c329e9b17f4eed4966b86",
+        "depositCount": 8399,
+        "getRoot": "0x344576ff17d812ef88a1fd9f848eae2ca6d26f6276f0bd8ad50c281b6c23f00d",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "derivedName": "PolygonZkEVMGlobalExitRootV2"
@@ -796,9 +788,6 @@
       "function transferAdminRole(address newPendingAdmin)",
       "function trustedSequencer() view returns (address)",
       "function trustedSequencerURL() view returns (string)"
-    ],
-    "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8": [
-      "function verifyProof(bytes32[24] proof, uint256[1] pubSignals) view returns (bool)"
     ],
     "0x1e37EA18e9515db29b3E94A00eD31484A3130204": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",

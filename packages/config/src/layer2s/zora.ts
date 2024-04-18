@@ -1,18 +1,11 @@
-import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { HARDCODED } from '../discovery/values/hardcoded'
-import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zora')
-
-const FINALIZATION_PERIOD_SECONDS = discovery.getContractValue<number>(
-  'L2OutputOracle',
-  'FINALIZATION_PERIOD_SECONDS',
-)
 
 const upgradeability = {
   upgradableBy: ['ProxyAdmin'],
@@ -45,24 +38,8 @@ export const zora: Layer2 = opStackL2({
       ],
     },
     activityDataSource: 'Blockchain RPC',
-    liveness: {
-      warnings: {
-        stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
-      },
-      explanation: `Zora is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
-        HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
-      )} or until it gets published. The state root gets finalized ${formatSeconds(
-        FINALIZATION_PERIOD_SECONDS,
-      )} after it has been posted.`,
-    },
-    finality: {
-      finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
-    },
   },
   upgradeability,
-  l1StandardBridgeEscrow: EthereumAddress(
-    '0x3e2Ea9B92B7E48A52296fD261dc26fd995284631',
-  ),
   rpcUrl: 'https://rpc.zora.co',
   finality: {
     type: 'OPStack-blob',
@@ -72,11 +49,15 @@ export const zora: Layer2 = opStackL2({
     lag: 0,
   },
   genesisTimestamp: new UnixTime(1686695915),
-  l2OutputOracle: discovery.getContract('L2OutputOracle'),
-  portal: discovery.getContract('OptimismPortal'),
   stateDerivation: DERIVATION.OPSTACK('ZORA'),
   isNodeAvailable: true,
   milestones: [
+    {
+      name: 'Zora starts using blobs',
+      link: 'https://twitter.com/Optimism/status/1768235284494450922',
+      date: '2024-03-14T00:00:00Z',
+      description: 'Zora starts publishing data to blobs.',
+    },
     {
       name: 'Zora Network Launch',
       link: 'https://twitter.com/ourZORA/status/1671602234994622464',
@@ -85,12 +66,6 @@ export const zora: Layer2 = opStackL2({
     },
   ],
   knowledgeNuggets: [],
-  roleOverrides: {
-    batcherHash: 'Sequencer',
-    PROPOSER: 'Proposer',
-    GUARDIAN: 'Guardian',
-    CHALLENGER: 'Challenger',
-  },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'ZoraMultisig',
@@ -108,6 +83,5 @@ export const zora: Layer2 = opStackL2({
       ...upgradeability,
     }),
   ],
-  nonTemplateEscrows: [],
   usesBlobs: true,
 })

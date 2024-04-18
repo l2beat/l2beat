@@ -1,17 +1,10 @@
-import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { HARDCODED } from '../discovery/values/hardcoded'
-import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('karak')
-
-const FINALIZATION_PERIOD_SECONDS = discovery.getContractValue<number>(
-  'L2OutputOracle',
-  'FINALIZATION_PERIOD_SECONDS',
-)
 
 const upgradeability = {
   upgradableBy: ['ProxyAdmin'],
@@ -42,32 +35,14 @@ export const karak: Layer2 = opStackL2({
       ],
     },
     activityDataSource: 'Blockchain RPC',
-    liveness: {
-      warnings: {
-        stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
-      },
-      explanation: `Karak is an Optimium that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
-        HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
-      )} or until it gets published. The state root gets finalized ${formatSeconds(
-        FINALIZATION_PERIOD_SECONDS,
-      )} after it has been posted.`,
-    },
-    finality: {
-      finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
-    },
   },
   upgradeability,
-  l1StandardBridgeEscrow: EthereumAddress(
-    '0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3',
-  ),
   rpcUrl: 'https://rpc.karak.network/',
   finality: {
     type: 'OPStack',
     lag: 0,
   },
   genesisTimestamp: new UnixTime(1703226695), //First sequencer transaction
-  l2OutputOracle: discovery.getContract('L2OutputOracle'),
-  portal: discovery.getContract('OptimismPortal'),
   isNodeAvailable: true,
   milestones: [
     {
@@ -77,13 +52,6 @@ export const karak: Layer2 = opStackL2({
       description: 'Karak Network is live on mainnet.',
     },
   ],
-  knowledgeNuggets: [],
-  roleOverrides: {
-    batcherHash: 'Sequencer',
-    PROPOSER: 'Proposer',
-    GUARDIAN: 'Guardian',
-    CHALLENGER: 'Challenger',
-  },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'KarakMultisig',
@@ -97,5 +65,4 @@ export const karak: Layer2 = opStackL2({
       ...upgradeability,
     }),
   ],
-  nonTemplateEscrows: [],
 })

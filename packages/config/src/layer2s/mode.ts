@@ -12,11 +12,6 @@ const upgradeability = {
   upgradeDelay: 'No delay',
 }
 
-const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
-  'L2OutputOracle',
-  'FINALIZATION_PERIOD_SECONDS',
-)
-
 export const mode: Layer2 = opStackL2({
   discovery,
   display: {
@@ -41,23 +36,19 @@ export const mode: Layer2 = opStackL2({
       ],
     },
     activityDataSource: 'Blockchain RPC',
-    finality: {
-      finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
-    },
   },
-  associatedTokens: [],
   upgradeability,
-  l1StandardBridgeEscrow: EthereumAddress(
-    '0x735aDBbE72226BD52e818E7181953f42E3b0FF21',
-  ),
   rpcUrl: 'https://mainnet.mode.network/',
   genesisTimestamp: new UnixTime(1700125343),
-
-  l2OutputOracle: discovery.getContract('L2OutputOracle'),
-  portal: discovery.getContract('OptimismPortal'),
   stateDerivation: DERIVATION.OPSTACK('MODE'),
   isNodeAvailable: true,
   milestones: [
+    {
+      name: 'Mode starts using blobs',
+      link: 'https://twitter.com/Optimism/status/1768235284494450922',
+      date: '2024-03-14T00:00:00Z',
+      description: 'Mode starts publishing data to blobs.',
+    },
     {
       name: 'Mode Network Mainnet Launch',
       link: 'https://twitter.com/modenetwork/status/1752760726907760933',
@@ -71,13 +62,6 @@ export const mode: Layer2 = opStackL2({
     minTimestamp: new UnixTime(1710386375),
     genesisTimestamp: new UnixTime(1700167583),
     lag: 0,
-  },
-  knowledgeNuggets: [],
-  roleOverrides: {
-    batcherHash: 'Sequencer',
-    PROPOSER: 'Proposer',
-    GUARDIAN: 'Guardian',
-    CHALLENGER: 'Challenger',
   },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
@@ -96,7 +80,6 @@ export const mode: Layer2 = opStackL2({
       ...upgradeability,
     }),
   ],
-  nonTemplateEscrows: [],
   chainConfig: {
     name: 'mode',
     chainId: 34443,

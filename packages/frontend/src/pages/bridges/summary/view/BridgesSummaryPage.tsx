@@ -1,16 +1,9 @@
 import React from 'react'
 
-import {
-  Chart,
-  Footer,
-  FooterProps,
-  Navbar,
-  NavbarProps,
-} from '../../../../components'
-import { About } from '../../../../components/About'
+import { Chart, FooterProps, NavbarProps } from '../../../../components'
 import { BridgesMvpWarning } from '../../../../components/BridgesMvpWarning'
 import { BridgesNavigationTabs } from '../../../../components/navigation-tabs/BridgesNavigationTabs'
-import { PageContent } from '../../../../components/PageContent'
+import { DashboardLayout } from '../../../../layouts/DashboardLayout'
 import {
   BridgesSummaryView,
   BridgesSummaryViewProps,
@@ -24,22 +17,19 @@ export interface BridgesSummaryPageProps {
 
 export function BridgesSummaryPage(props: BridgesSummaryPageProps) {
   return (
-    <>
-      <Navbar {...props.navbar} />
-      <PageContent>
-        <BridgesNavigationTabs selected="summary" />
-        <main className="mt-4 md:mt-12">
-          <BridgesMvpWarning />
-          <Chart
-            settingsId="bridges-tvl"
-            initialType={{ type: 'bridges-tvl', includeCanonical: false }}
-            header="tvl"
-          />
-          <BridgesSummaryView {...props.tvlView} />
-          <About />
-        </main>
-      </PageContent>
-      <Footer {...props.footer} />
-    </>
+    <DashboardLayout
+      navbar={props.navbar}
+      footer={props.footer}
+      hideOtherSites
+      tabs={<BridgesNavigationTabs selected="summary" />}
+    >
+      <BridgesMvpWarning />
+      <Chart
+        settingsId="bridges-tvl"
+        initialType={{ type: 'bridges-tvl', includeCanonical: false }}
+        header="tvl"
+      />
+      <BridgesSummaryView {...props.tvlView} />
+    </DashboardLayout>
   )
 }

@@ -21,7 +21,7 @@ const LOCAL_STORAGE_PREFIX = 'l2beat'
 
 const LocalStorageKeySchemas = {
   theme: z.enum(['light', 'dark']),
-  'gg-19-floating-banner-closed': strictBoolean,
+  'gg-20-floating-banner-closed': strictBoolean,
   'combined-bridges-checked': strictBoolean,
   'rollups-only-checked': strictBoolean,
   'top-bar-variant-data': stringAsObjectOrUndefined(TopBarVariantData),

@@ -28,6 +28,11 @@
           "description": null,
           "severity": null,
           "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
         }
       }
     },
@@ -58,11 +63,16 @@
           "description": null,
           "severity": null,
           "type": null
+        },
+        "nonce": {
+          "description": null,
+          "severity": null,
+          "type": null
         }
       }
     },
     {
-      "name": "fpiFerryBridgeArbitrum",
+      "name": "fpiFerryBridgeFraxtal",
       "values": {
         "FEE_MAX": {
           "description": null,
@@ -157,7 +167,7 @@
       }
     },
     {
-      "name": "fpisFerryBridgeArbitrum",
+      "name": "fpisFerryBridgeFraxtal",
       "values": {
         "FEE_MAX": {
           "description": null,
@@ -252,7 +262,7 @@
       }
     },
     {
-      "name": "fraxFerryBridgeArbitrum",
+      "name": "fraxFerryBridgeFraxtal",
       "values": {
         "FEE_MAX": {
           "description": null,
@@ -352,7 +362,7 @@
       }
     },
     {
-      "name": "fxsFerryBridgeArbitrum",
+      "name": "fxsFerryBridgeFraxtal",
       "values": {
         "FEE_MAX": {
           "description": null,
@@ -447,7 +457,7 @@
       }
     },
     {
-      "name": "sfraxFerryBridgeArbitrum",
+      "name": "sfraxFerryBridgeFraxtal",
       "values": {
         "FEE_MAX": {
           "description": null,
@@ -542,7 +552,7 @@
       }
     },
     {
-      "name": "sfrxFerryBridgeArbitrum",
+      "name": "sfrxFerryBridgeFraxtal",
       "values": {
         "FEE_MAX": {
           "description": null,

@@ -21,7 +21,8 @@ export function getProps(
     },
     wrapper: {
       metadata: getDefaultPageMetadata({
-        image: 'https://l2beat.com/meta-images/overview-detailed-scaling.png',
+        image:
+          'https://l2beat.com/meta-images/pages/og-scaling-data-availability.png',
         url: 'https://l2beat.com/scaling/data-availability',
       }),
       banner: config.features.banner,

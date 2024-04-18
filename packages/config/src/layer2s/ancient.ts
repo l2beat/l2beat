@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
@@ -10,11 +10,6 @@ const upgradeability = {
   upgradableBy: ['ProxyAdmin'],
   upgradeDelay: 'No delay',
 }
-
-const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
-  'L2OutputOracle',
-  'FINALIZATION_PERIOD_SECONDS',
-)
 
 export const ancient: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
@@ -41,19 +36,10 @@ export const ancient: Layer2 = opStackL2({
       ],
     },
     activityDataSource: 'Blockchain RPC',
-    finality: {
-      finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
-    },
   },
   upgradeability,
-  l1StandardBridgeEscrow: EthereumAddress(
-    '0x12d4E64E1B46d27A00fe392653A894C1dd36fb80',
-  ),
   rpcUrl: 'https://rpc.ancient8.gg/',
   genesisTimestamp: new UnixTime(1705985147),
-
-  l2OutputOracle: discovery.getContract('L2OutputOracle'),
-  portal: discovery.getContract('OptimismPortal'),
   isNodeAvailable: 'UnderReview',
   milestones: [
     {
@@ -63,13 +49,6 @@ export const ancient: Layer2 = opStackL2({
       description: 'Ancient8 Chain is live on mainnet.',
     },
   ],
-  knowledgeNuggets: [],
-  roleOverrides: {
-    batcherHash: 'Sequencer',
-    PROPOSER: 'Proposer',
-    GUARDIAN: 'Guardian',
-    CHALLENGER: 'Challenger',
-  },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'Ancient8Multisig',
@@ -87,5 +66,4 @@ export const ancient: Layer2 = opStackL2({
       ...upgradeability,
     }),
   ],
-  nonTemplateEscrows: [],
 })

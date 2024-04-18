@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { Meta, StoryObj } from '@storybook/react'
 import { userEvent, waitFor, within } from '@storybook/testing-library'
 import React, { useEffect } from 'react'
@@ -128,6 +129,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
             minimumInSeconds: 2379,
             maximumInSeconds: 306,
           },
+          syncedUntil: new UnixTime(1706738434),
           warning:
             'Please note, for Optimistic rollups the state is not finalized until the challenge period passes.',
         },
@@ -147,9 +149,13 @@ const meta: Meta<typeof ScalingLivenessView> = {
             minimumInSeconds: 145,
             maximumInSeconds: 2705,
           },
+          syncedUntil: new UnixTime(1706738434),
           warning: undefined,
         },
-        proofSubmissions: { warning: undefined },
+        proofSubmissions: {
+          syncedUntil: new UnixTime(1706738434),
+          warning: undefined,
+        },
         anomalyEntries: [
           { isAnomaly: false },
           {
@@ -320,6 +326,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
             minimumInSeconds: 2429,
             maximumInSeconds: 1338,
           },
+          syncedUntil: new UnixTime(1706738434),
           warning:
             'Please note, for Optimistic rollups the state is not finalized until the challenge period passes.',
         },
@@ -339,9 +346,13 @@ const meta: Meta<typeof ScalingLivenessView> = {
             minimumInSeconds: 44991,
             maximumInSeconds: 27634,
           },
+          syncedUntil: new UnixTime(1706738434),
           warning: undefined,
         },
-        proofSubmissions: { warning: undefined },
+        proofSubmissions: {
+          syncedUntil: new UnixTime(1706738434),
+          warning: undefined,
+        },
         anomalyEntries: [
           { isAnomaly: false },
           { isAnomaly: false },
@@ -588,6 +599,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
             minimumInSeconds: 932,
             maximumInSeconds: 2401,
           },
+          syncedUntil: new UnixTime(1706738434),
           warning: undefined,
         },
         batchSubmissions: {
@@ -602,9 +614,13 @@ const meta: Meta<typeof ScalingLivenessView> = {
             minimumInSeconds: 14489,
             maximumInSeconds: 57670,
           },
+          syncedUntil: new UnixTime(1706738434),
           warning: undefined,
         },
-        proofSubmissions: { warning: undefined },
+        proofSubmissions: {
+          syncedUntil: new UnixTime(1706738434),
+          warning: undefined,
+        },
         anomalyEntries: [
           { isAnomaly: false },
           { isAnomaly: false },
@@ -756,6 +772,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
             minimumInSeconds: 7208,
             maximumInSeconds: 52341,
           },
+          syncedUntil: new UnixTime(1706738434),
           warning: undefined,
         },
         batchSubmissions: {
@@ -774,9 +791,13 @@ const meta: Meta<typeof ScalingLivenessView> = {
             minimumInSeconds: 54908,
             maximumInSeconds: 88067,
           },
+          syncedUntil: new UnixTime(1706738434),
           warning: undefined,
         },
-        proofSubmissions: { warning: undefined },
+        proofSubmissions: {
+          syncedUntil: new UnixTime(1706738434),
+          warning: undefined,
+        },
         anomalyEntries: [
           { isAnomaly: false },
           { isAnomaly: false },
@@ -911,6 +932,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
             minimumInSeconds: 1164,
             maximumInSeconds: 80046,
           },
+          syncedUntil: new UnixTime(1706738434),
           warning:
             'Please note, for Optimistic rollups the state is not finalized until the challenge period passes.',
         },
@@ -926,9 +948,13 @@ const meta: Meta<typeof ScalingLivenessView> = {
             maximumInSeconds: 2129,
           },
           allTime: undefined,
+          syncedUntil: new UnixTime(1706738434),
           warning: undefined,
         },
-        proofSubmissions: { warning: undefined },
+        proofSubmissions: {
+          syncedUntil: new UnixTime(1706738434),
+          warning: undefined,
+        },
         anomalyEntries: [
           { isAnomaly: false },
           { isAnomaly: false },
@@ -1077,6 +1103,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
             minimumInSeconds: 3054,
             maximumInSeconds: 180,
           },
+          syncedUntil: new UnixTime(1706738434),
           warning: undefined,
         },
         batchSubmissions: {
@@ -1095,9 +1122,13 @@ const meta: Meta<typeof ScalingLivenessView> = {
             minimumInSeconds: 23144,
             maximumInSeconds: 2380,
           },
+          syncedUntil: new UnixTime(1706738434),
           warning: undefined,
         },
-        proofSubmissions: { warning: undefined },
+        proofSubmissions: {
+          syncedUntil: new UnixTime(1706738434),
+          warning: undefined,
+        },
         anomalyEntries: [
           { isAnomaly: false },
           {

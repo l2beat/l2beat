@@ -1,7 +1,6 @@
-import { SavedConfiguration } from '@l2beat/uif'
-
 import { IndexerConfigurationRepository } from './IndexerConfigurationRepository'
 import { IndexerStateRepository } from './IndexerStateRepository'
+import { SavedConfiguration } from './multi/types'
 
 export class IndexerService {
   constructor(

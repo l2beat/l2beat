@@ -47,6 +47,86 @@
       }
     },
     {
+      "name": "L1ERC20Bridge_wstETH",
+      "values": {
+        "DEFAULT_ADMIN_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEPOSITS_DISABLER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "DEPOSITS_ENABLER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "WITHDRAWALS_DISABLER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "WITHDRAWALS_ENABLER_ROLE": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isDepositsEnabled": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isInitialized": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "isWithdrawalsEnabled": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l1Token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2Bridge": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "l2Token": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxy__getAdmin": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxy__getImplementation": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "proxy__getIsOssified": {
+          "description": null,
+          "severity": null,
+          "type": null
+        },
+        "zkSync": {
+          "description": null,
+          "severity": null,
+          "type": null
+        }
+      }
+    },
+    {
       "name": "Matter Labs Multisig",
       "description": "Can instantly upgrade all contracts and roles in the zksync Era contracts",
       "values": {

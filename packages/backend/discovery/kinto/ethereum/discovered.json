@@ -1,8 +1,8 @@
 {
   "name": "kinto",
   "chain": "ethereum",
-  "blockNumber": 19575719,
-  "configHash": "0xa9927fee02caa362c2df0359946881216e74dd59b8ca1a371390ee5f308bc614",
+  "blockNumber": 19624549,
+  "configHash": "0xc17405c0d1b97c56ff475aead2ecc07b275399110fc6495b58e8cf183e85d18d",
   "version": 3,
   "contracts": [
     {
@@ -123,12 +123,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1292,
+        "firstUnresolvedNode": 1321,
         "inbox": "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
         "isERC20Enabled": false,
         "lastStakeBlock": 18788889,
-        "latestConfirmed": 1291,
-        "latestNodeCreated": 1318,
+        "latestConfirmed": 1320,
+        "latestNodeCreated": 1345,
         "loserStakeEscrow": "0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5",
         "minimumAssertionPeriod": 75,
         "outbox": "0x655761AD5FC251F414D6993A73184B0669F278c8",
@@ -289,11 +289,11 @@
           "0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F"
         ],
         "allowedOutboxList": ["0x655761AD5FC251F414D6993A73184B0669F278c8"],
-        "delayedMessageCount": 1722,
+        "delayedMessageCount": 1878,
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerInbox": "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
-        "sequencerMessageCount": 1631,
-        "sequencerReportedSubMessageCount": 125938
+        "sequencerMessageCount": 1786,
+        "sequencerReportedSubMessageCount": 127294
       },
       "derivedName": "Bridge"
     },
@@ -397,7 +397,7 @@
           "0xc31C4549356d46c37021393EeEb6f704B38061eC"
         ],
         "getThreshold": 3,
-        "nonce": 71,
+        "nonce": 73,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -413,7 +413,7 @@
       "implementations": ["0x873484Ba63353C8b71210ce123B465512d408B27"],
       "sinceTimestamp": 1702607855,
       "values": {
-        "batchCount": 1631,
+        "batchCount": 1786,
         "batchPosters": ["0xe27f3f6db6824def1738b2aACe2672aC59046a39"],
         "bridge": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
         "DATA_AUTHENTICATED_FLAG": "0x40",
@@ -425,7 +425,7 @@
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 1721
+        "totalDelayedMessagesRead": 1877
       },
       "derivedName": "SequencerInbox"
     }

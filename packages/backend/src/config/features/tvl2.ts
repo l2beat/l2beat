@@ -6,15 +6,19 @@ import {
   PriceConfigEntry,
   ProjectId,
   Token,
+  UnixTime,
 } from '@l2beat/shared-pure'
 
 import { bridgeToProject, layer2ToProject, Project } from '../../model/Project'
 import { ChainConverter } from '../../tools/ChainConverter'
-import { ChainTvlConfig, Tvl2Config } from '../Config'
+import { Tvl2Config } from '../Config'
+import { FeatureFlags } from '../FeatureFlags'
+import { getChainsWithTokens, getChainTvlConfig } from './tvl'
 
 export function getTvl2Config(
-  chainConfigs: ChainTvlConfig[],
+  flags: FeatureFlags,
   env: Env,
+  minTimestampOverride?: UnixTime,
 ): Tvl2Config {
   const projects = layer2s
     .map(layer2ToProject)
@@ -24,6 +28,12 @@ export function getTvl2Config(
     chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
   )
   const chainToProject = getChainToProjectMapping(layer2s, chainConverter)
+
+  const chainConfigs = getChainsWithTokens(tokenList, chains).map((chain) =>
+    getChainTvlConfig(flags.isEnabled('tvl2', chain), env, chain, {
+      minTimestamp: minTimestampOverride,
+    }),
+  )
 
   const tvl2Config = {
     amounts: getAmountsConfig(

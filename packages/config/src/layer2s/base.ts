@@ -1,9 +1,7 @@
-import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
-import { HARDCODED } from '../discovery/values/hardcoded'
-import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
@@ -13,11 +11,6 @@ const upgradeability = {
   upgradableBy: ['ProxyAdmin'],
   upgradeDelay: 'No delay',
 }
-
-const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
-  'L2OutputOracle',
-  'FINALIZATION_PERIOD_SECONDS',
-)
 
 export const base: Layer2 = opStackL2({
   discovery,
@@ -48,24 +41,8 @@ export const base: Layer2 = opStackL2({
       rollupCodes: 'https://rollup.codes/base',
     },
     activityDataSource: 'Blockchain RPC',
-    liveness: {
-      warnings: {
-        stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
-      },
-      explanation: `Base is an Optimistic rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted within a tx batch on L1 that links to a previous finalized batch. If the previous batch is missing, transaction finalization can be delayed up to ${formatSeconds(
-        HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
-      )} or until it gets published. The state root gets finalized ${formatSeconds(
-        FINALIZATION_PERIOD_SECONDS,
-      )} after it has been posted.`,
-    },
-    finality: {
-      finalizationPeriod: FINALIZATION_PERIOD_SECONDS,
-    },
   },
   upgradeability,
-  l1StandardBridgeEscrow: EthereumAddress(
-    '0x3154Cf16ccdb4C6d922629664174b904d80F2C35',
-  ),
   rpcUrl: 'https://developer-access-mainnet.base.org',
   finality: {
     type: 'OPStack-blob',
@@ -75,11 +52,15 @@ export const base: Layer2 = opStackL2({
     lag: 0,
   },
   genesisTimestamp: new UnixTime(1686796655),
-  l2OutputOracle: discovery.getContract('L2OutputOracle'),
-  portal: discovery.getContract('OptimismPortal'),
   stateDerivation: DERIVATION.OPSTACK('BASE'),
   isNodeAvailable: true,
   milestones: [
+    {
+      name: 'Base starts using blobs',
+      link: 'https://twitter.com/Optimism/status/1768235284494450922',
+      date: '2024-03-14T00:00:00Z',
+      description: 'Base starts publishing data to blobs.',
+    },
     {
       name: 'Base Mainnet Launch',
       link: 'https://base.mirror.xyz/hwNwqXHVoLlO8s4DZppog4DfGvM34tigaDjOWuEJQfY',
@@ -87,13 +68,6 @@ export const base: Layer2 = opStackL2({
       description: 'Base is live on mainnet.',
     },
   ],
-  knowledgeNuggets: [],
-  roleOverrides: {
-    batcherHash: 'Sequencer',
-    PROPOSER: 'Proposer',
-    GUARDIAN: 'Guardian',
-    CHALLENGER: 'Challenger',
-  },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0x9de443AdC5A411E83F1878Ef24C3F52C61571e72'),

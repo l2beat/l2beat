@@ -3,6 +3,7 @@ import { ProjectId } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
   ScalingProjectEscrow,
+  ScalingProjectTransactionApi,
   TECHNOLOGY,
   UNDER_REVIEW_RISK_VIEW,
 } from '../../common'
@@ -11,6 +12,7 @@ import { type Layer2, type Layer2Display } from '../types'
 
 export interface UnderReviewConfigCommon {
   id: string
+  transactionApi?: ScalingProjectTransactionApi
 }
 
 export interface UnderReviewConfigL2 extends UnderReviewConfigCommon {
@@ -37,6 +39,7 @@ export function underReviewL2(templateVars: UnderReviewConfigL2): Layer2 {
     },
     config: {
       escrows: templateVars.escrows,
+      transactionApi: templateVars.transactionApi,
     },
     riskView: UNDER_REVIEW_RISK_VIEW,
     technology: TECHNOLOGY.UNDER_REVIEW,
@@ -56,6 +59,7 @@ export function underReviewL3(templateVars: UnderReviewConfigL3): Layer3 {
     },
     config: {
       escrows: [],
+      transactionApi: templateVars.transactionApi,
     },
     riskView: UNDER_REVIEW_RISK_VIEW,
     technology: TECHNOLOGY.UNDER_REVIEW,
