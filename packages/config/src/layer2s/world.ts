@@ -15,7 +15,7 @@ export const world: Layer2 = upcomingL2({
       websites: ['https://worldcoin.org/world-chain'],
       apps: ['https://worldcoin.org/download-app'],
       documentation: ['https://docs.worldcoin.org/'],
-      explorers: [''],
+      explorers: [],
       repositories: ['https://github.com/worldcoin'],
       socialMedia: [
         'https://twitter.com/worldcoin',
