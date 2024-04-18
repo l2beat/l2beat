@@ -1,6 +1,6 @@
 import { ScalingProjectStateDerivation } from './ScalingProjectStateDerivation'
 
-type SupportedOPStackChains = 'OP_MAINNET' | 'BASE' | 'ZORA' | 'PGN' | 'MODE'
+type SupportedOPStackChains = 'OP_MAINNET' | 'BASE' | 'ZORA' | 'PGN' | 'MODE' | 'BOBA'
 type OPStackInfo = [string, string] // [config, genesis file]
 
 const OPStackInfos: Record<SupportedOPStackChains, OPStackInfo> = {
@@ -24,6 +24,10 @@ const OPStackInfos: Record<SupportedOPStackChains, OPStackInfo> = {
     'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/mode.yaml',
     'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/extra/genesis/mainnet/mode.json.gz',
   ],
+  BOBA: [
+    'https://github.com/bobanetwork/superchain-registry/blob/0964797/superchain/configs/mainnet/boba.yaml',
+    'https://docs.boba.network/developer/node-operators/snapshot-downloads',
+  ]
 }
 
 function OPSTACK(chain: SupportedOPStackChains): ScalingProjectStateDerivation {
