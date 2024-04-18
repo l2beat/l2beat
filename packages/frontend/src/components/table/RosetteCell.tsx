@@ -8,10 +8,21 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 export interface RosetteCellProps {
   riskValues: RiskValues
   isUpcoming?: boolean
+  isUnderReview?: boolean
 }
 
-export function RosetteCell({ riskValues, isUpcoming }: RosetteCellProps) {
-  const riskSentiments = getRiskSentiments(riskValues)
+export function RosetteCell({
+  riskValues,
+  isUpcoming,
+  isUnderReview,
+}: RosetteCellProps) {
+  isUnderReview =
+    isUnderReview ??
+    Object.values(riskValues).every(
+      ({ sentiment }) => sentiment === 'UnderReview',
+    )
+  const riskSentiments = getRiskSentiments(riskValues, isUnderReview)
+
   return (
     <Tooltip big>
       <TooltipTrigger>
@@ -19,6 +30,7 @@ export function RosetteCell({ riskValues, isUpcoming }: RosetteCellProps) {
           risks={riskSentiments}
           className="size-6 md:size-8"
           isUpcoming={isUpcoming}
+          isUnderReview={isUnderReview}
         />
       </TooltipTrigger>
       <TooltipContent>
