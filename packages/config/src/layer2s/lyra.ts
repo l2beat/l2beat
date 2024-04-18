@@ -34,17 +34,12 @@ export const lyra: Layer2 = opStackL2({
     activityDataSource: 'Blockchain RPC',
   },
   upgradeability,
-  l1StandardBridgeEscrow: EthereumAddress(
-    '0x61E44dC0dae6888B5a301887732217d5725B0bFf',
-  ),
   rpcUrl: 'https://rpc.lyra.finance',
   finality: {
     type: 'OPStack',
     lag: 0,
   },
   genesisTimestamp: new UnixTime(1700022479),
-  l2OutputOracle: discovery.getContract('L2OutputOracle'),
-  portal: discovery.getContract('OptimismPortal'),
   // stateDerivation: DERIVATION.OPSTACK('LYRA'),
   isNodeAvailable: 'UnderReview',
   milestones: [
@@ -60,13 +55,6 @@ export const lyra: Layer2 = opStackL2({
       date: '2024-01-16T00:00:00.00Z',
     },
   ],
-  knowledgeNuggets: [],
-  roleOverrides: {
-    batcherHash: 'Sequencer',
-    PROPOSER: 'Proposer',
-    GUARDIAN: 'Guardian',
-    CHALLENGER: 'Challenger',
-  },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'LyraMultisig',
@@ -84,7 +72,6 @@ export const lyra: Layer2 = opStackL2({
       ...upgradeability,
     }),
   ],
-  nonTemplateEscrows: [],
   chainConfig: {
     name: 'lyra',
     chainId: 957,

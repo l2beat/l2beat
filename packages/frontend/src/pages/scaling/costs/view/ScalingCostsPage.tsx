@@ -1,17 +1,9 @@
 import { Milestone } from '@l2beat/config'
 import React from 'react'
 
-import {
-  Chart,
-  Footer,
-  FooterProps,
-  Navbar,
-  NavbarProps,
-} from '../../../../components'
-import { About } from '../../../../components/About'
+import { Chart, FooterProps, NavbarProps } from '../../../../components'
 import { ScalingNavigationTabs } from '../../../../components/navigation-tabs/ScalingNavigationTabs'
-import { OtherSites } from '../../../../components/other-sites/OtherSites'
-import { PageContent } from '../../../../components/PageContent'
+import { DashboardLayout } from '../../../../layouts/DashboardLayout'
 import { ScalingCostsView, ScalingCostsViewProps } from './ScalingCostsView'
 
 export interface ScalingCostsPageProps {
@@ -23,26 +15,23 @@ export interface ScalingCostsPageProps {
 
 export function ScalingCostsPage(props: ScalingCostsPageProps) {
   return (
-    <>
-      <Navbar {...props.navbar} />
-      <PageContent>
+    <DashboardLayout
+      navbar={props.navbar}
+      footer={props.footer}
+      tabs={
         <ScalingNavigationTabs
           features={props.navbar.features}
           selected="costs"
         />
-        <main className="mt-4 md:mt-12">
-          <Chart
-            settingsId="scaling-costs"
-            initialType={{ type: 'scaling-costs' }}
-            milestones={props.milestones}
-            header="costs"
-          />
-          <ScalingCostsView {...props.costsView} />
-          <OtherSites />
-          <About />
-        </main>
-      </PageContent>
-      <Footer {...props.footer} />
-    </>
+      }
+    >
+      <Chart
+        settingsId="scaling-costs"
+        initialType={{ type: 'scaling-costs' }}
+        milestones={props.milestones}
+        header="costs"
+      />
+      <ScalingCostsView {...props.costsView} />
+    </DashboardLayout>
   )
 }

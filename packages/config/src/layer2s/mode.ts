@@ -37,16 +37,9 @@ export const mode: Layer2 = opStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  associatedTokens: [],
   upgradeability,
-  l1StandardBridgeEscrow: EthereumAddress(
-    '0x735aDBbE72226BD52e818E7181953f42E3b0FF21',
-  ),
   rpcUrl: 'https://mainnet.mode.network/',
   genesisTimestamp: new UnixTime(1700125343),
-
-  l2OutputOracle: discovery.getContract('L2OutputOracle'),
-  portal: discovery.getContract('OptimismPortal'),
   stateDerivation: DERIVATION.OPSTACK('MODE'),
   isNodeAvailable: true,
   milestones: [
@@ -70,13 +63,6 @@ export const mode: Layer2 = opStackL2({
     genesisTimestamp: new UnixTime(1700167583),
     lag: 0,
   },
-  knowledgeNuggets: [],
-  roleOverrides: {
-    batcherHash: 'Sequencer',
-    PROPOSER: 'Proposer',
-    GUARDIAN: 'Guardian',
-    CHALLENGER: 'Challenger',
-  },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'ModeMultisig',
@@ -94,7 +80,6 @@ export const mode: Layer2 = opStackL2({
       ...upgradeability,
     }),
   ],
-  nonTemplateEscrows: [],
   chainConfig: {
     name: 'mode',
     chainId: 34443,

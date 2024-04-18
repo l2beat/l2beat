@@ -43,9 +43,6 @@ export const base: Layer2 = opStackL2({
     activityDataSource: 'Blockchain RPC',
   },
   upgradeability,
-  l1StandardBridgeEscrow: EthereumAddress(
-    '0x3154Cf16ccdb4C6d922629664174b904d80F2C35',
-  ),
   rpcUrl: 'https://developer-access-mainnet.base.org',
   finality: {
     type: 'OPStack-blob',
@@ -55,8 +52,6 @@ export const base: Layer2 = opStackL2({
     lag: 0,
   },
   genesisTimestamp: new UnixTime(1686796655),
-  l2OutputOracle: discovery.getContract('L2OutputOracle'),
-  portal: discovery.getContract('OptimismPortal'),
   stateDerivation: DERIVATION.OPSTACK('BASE'),
   isNodeAvailable: true,
   milestones: [
@@ -73,13 +68,6 @@ export const base: Layer2 = opStackL2({
       description: 'Base is live on mainnet.',
     },
   ],
-  knowledgeNuggets: [],
-  roleOverrides: {
-    batcherHash: 'Sequencer',
-    PROPOSER: 'Proposer',
-    GUARDIAN: 'Guardian',
-    CHALLENGER: 'Challenger',
-  },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0x9de443AdC5A411E83F1878Ef24C3F52C61571e72'),
