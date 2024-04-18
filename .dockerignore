@@ -1,0 +1,12 @@
+# Git
+.git
+.gitignore
+
+# build system cache
+node_modules
+.turbo
+
+# IDEs
+.vscode
+.idea
+.*.swp
