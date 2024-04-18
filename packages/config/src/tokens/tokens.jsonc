@@ -1616,7 +1616,7 @@
       }
     },
  {
-      "symbol": "mBTC",
+      "symbol": "m-BTC",
       "address": "0x59889b7021243dB5B1e065385F918316cD90D46c",
       "coingeckoId": "merlin-s-seal-btc",
       "type": "NMV",
