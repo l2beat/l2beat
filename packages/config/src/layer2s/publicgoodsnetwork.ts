@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION } from '../common'
 import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
@@ -6,11 +6,6 @@ import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('publicgoodsnetwork')
-
-const upgradeability = {
-  upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
 
 export const publicgoodsnetwork: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
@@ -40,18 +35,12 @@ export const publicgoodsnetwork: Layer2 = opStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  upgradeability,
-  l1StandardBridgeEscrow: EthereumAddress(
-    '0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b',
-  ),
   rpcUrl: 'https://rpc.publicgoods.network',
   finality: {
     type: 'OPStack',
     lag: 0,
   },
   genesisTimestamp: new UnixTime(1689108083),
-  l2OutputOracle: discovery.getContract('L2OutputOracle'),
-  portal: discovery.getContract('OptimismPortal'),
   stateDerivation: DERIVATION.OPSTACK('PGN'),
   isNodeAvailable: true,
   milestones: [
@@ -67,13 +56,6 @@ export const publicgoodsnetwork: Layer2 = opStackL2({
       date: '2024-01-26T00:00:00.00Z',
     },
   ],
-  knowledgeNuggets: [],
-  roleOverrides: {
-    batcherHash: 'Sequencer',
-    PROPOSER: 'Proposer',
-    GUARDIAN: 'Guardian',
-    CHALLENGER: 'Challenger',
-  },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'PGNMultisig',
@@ -84,5 +66,4 @@ export const publicgoodsnetwork: Layer2 = opStackL2({
       'This address is the permissioned challenger of the system. It can delete non finalized roots without going through the fault proof process. It is also designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals.',
     ),
   ],
-  nonTemplateEscrows: [],
 })

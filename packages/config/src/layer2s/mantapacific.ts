@@ -7,11 +7,6 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('mantapacific')
 
-const upgradeability = {
-  upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
-
 export const mantapacific: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
   discovery,
@@ -37,10 +32,6 @@ export const mantapacific: Layer2 = opStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  upgradeability,
-  l1StandardBridgeEscrow: EthereumAddress(
-    '0x3B95bC951EE0f553ba487327278cAc44f29715E5',
-  ),
   rpcUrl: 'https://pacific-rpc.manta.network/http',
   transactionApi: {
     type: 'rpc',
@@ -73,16 +64,7 @@ export const mantapacific: Layer2 = opStackL2({
     coingeckoPlatform: 'manta-pacific',
   },
   genesisTimestamp: new UnixTime(1679202395),
-  l2OutputOracle: discovery.getContract('L2OutputOracle'),
-  portal: discovery.getContract('OptimismPortal'),
   isNodeAvailable: false,
-
-  roleOverrides: {
-    batcherHash: 'Sequencer',
-    PROPOSER: 'Proposer',
-    GUARDIAN: 'Guardian',
-    CHALLENGER: 'Challenger',
-  },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'AdminMultisig',
@@ -95,9 +77,6 @@ export const mantapacific: Layer2 = opStackL2({
         'Owner of the SystemConfig and configured as the Challenger and Guardian of the system.',
     },
   ],
-  nonTemplateContracts: [],
-  nonTemplateEscrows: [],
-
   milestones: [
     {
       name: 'Manta Pacific Network Launch',
@@ -106,5 +85,4 @@ export const mantapacific: Layer2 = opStackL2({
       description: 'Manta Pacific is live on mainnet.',
     },
   ],
-  knowledgeNuggets: [],
 })

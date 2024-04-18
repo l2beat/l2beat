@@ -45,9 +45,6 @@ export const optimism: Layer2 = opStackL2({
   },
   associatedTokens: ['OP'],
   upgradeability,
-  l1StandardBridgeEscrow: EthereumAddress(
-    '0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1',
-  ),
   transactionApi: {
     type: 'rpc',
     defaultUrl: 'https://mainnet.optimism.io/',
@@ -63,8 +60,6 @@ export const optimism: Layer2 = opStackL2({
     genesisTimestamp: new UnixTime(1686068903),
     lag: 0,
   },
-  l2OutputOracle: discovery.getContract('L2OutputOracle'),
-  portal: discovery.getContract('OptimismPortal'),
   stateDerivation: {
     ...DERIVATION.OPSTACK('OP_MAINNET'),
     genesisState:
@@ -188,12 +183,6 @@ export const optimism: Layer2 = opStackL2({
         'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
     }),
   ],
-  roleOverrides: {
-    batcherHash: 'Sequencer',
-    PROPOSER: 'Proposer',
-    GUARDIAN: 'Guardian',
-    CHALLENGER: 'Challenger',
-  },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'ProxyAdminOwner',

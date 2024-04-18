@@ -1711,21 +1711,6 @@
       "formula": "locked"
     },
     {
-      "id": "hbtc-huobi-btc",
-      "name": "Huobi BTC",
-      "coingeckoId": "huobi-btc",
-      "address": "0x0316EB71485b0Ab14103307bf65a021042c6d380",
-      "symbol": "HBTC",
-      "decimals": 18,
-      "deploymentTimestamp": 1575874126,
-      "coingeckoListingTimestamp": 1602460800,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/12407/large/hbtc.png?1696512229",
-      "chainId": 1,
-      "type": "CBV",
-      "formula": "locked"
-    },
-    {
       "id": "ht-huobitoken",
       "name": "HuobiToken",
       "coingeckoId": "huobi-token",
