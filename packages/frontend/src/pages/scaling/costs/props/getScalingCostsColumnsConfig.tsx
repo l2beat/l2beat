@@ -117,7 +117,7 @@ export function getScalingCostsColumnsConfig() {
       align: 'right',
       sorting: {
         getOrderValue: (project) => ({
-          '24H': project.data?.last24h.txCount?.value,
+          '1D': project.data?.last24h.txCount?.value,
           '7D': project.data?.last7d.txCount?.value,
           '30D': project.data?.last30d.txCount?.value,
           '90D': project.data?.last90d.txCount?.value,
