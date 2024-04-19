@@ -1,17 +1,10 @@
 import React from 'react'
 
 import { UnderReviewIcon } from '../../../../components/icons'
-import { cn } from '../../../../utils/cn'
 
-export function UnderReviewBar({ className }: { className?: string }) {
+export function UnderReviewBar() {
   return (
-    <div
-      className={cn(
-        'flex w-full justify-center py-2.5 md:px-0',
-        'rounded-lg bg-yellow-700/20',
-        className,
-      )}
-    >
+    <div className="flex w-full justify-center rounded-lg bg-yellow-700/20 py-2.5 md:px-0">
       <span className="flex flex-row">
         <span className="flex items-center">
           <UnderReviewIcon />

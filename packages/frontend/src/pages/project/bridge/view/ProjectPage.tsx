@@ -9,11 +9,11 @@ import {
 import { BridgesMvpWarning } from '../../../../components/BridgesMvpWarning'
 import { PageContent } from '../../../../components/PageContent'
 import { DesktopProjectNavigation } from '../../components/DesktopProjectNavigation'
+import { MobileProjectNavigation } from '../../components/MobileProjectNavigation'
 import {
   ProjectDetails,
   ProjectDetailsProps,
-} from '../../components/header/ProjectDetails'
-import { MobileProjectNavigation } from '../../components/MobileProjectNavigation'
+} from '../../components/ProjectDetails'
 import { ProjectHeader, ProjectHeaderProps } from './ProjectHeader'
 
 export interface ProjectPageProps {

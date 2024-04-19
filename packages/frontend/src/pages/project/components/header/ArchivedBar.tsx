@@ -1,17 +1,10 @@
 import React from 'react'
 
 import { ArchivedIcon } from '../../../../components/icons/symbols/ArchivedIcon'
-import { cn } from '../../../../utils/cn'
 
-export function ArchivedBar({ className }: { className?: string }) {
+export function ArchivedBar() {
   return (
-    <div
-      className={cn(
-        'flex w-full justify-center py-2.5',
-        'rounded-lg bg-gray-200 dark:bg-zinc-700',
-        className,
-      )}
-    >
+    <div className="flex w-full justify-center rounded-lg bg-gray-200 py-2.5 dark:bg-zinc-700">
       <span className="flex flex-row">
         <span className="flex items-center">
           <ArchivedIcon />

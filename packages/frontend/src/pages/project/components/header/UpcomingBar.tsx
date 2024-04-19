@@ -1,17 +1,10 @@
 import React from 'react'
 
 import { UpcomingIcon } from '../../../../components/icons/symbols/UpcomingIcon'
-import { cn } from '../../../../utils/cn'
 
-export function UpcomingBar({ className }: { className?: string }) {
+export function UpcomingBar() {
   return (
-    <div
-      className={cn(
-        'flex w-full justify-center py-2.5 md:px-0',
-        'rounded-lg bg-purple-100 text-white dark:bg-purple-100',
-        className,
-      )}
-    >
+    <div className="flex w-full justify-center rounded-lg bg-purple-100 py-2.5 text-white dark:bg-purple-100 md:px-0">
       <span className="flex flex-row">
         <span className="flex items-center">
           <UpcomingIcon />

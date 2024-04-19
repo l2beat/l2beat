@@ -9,14 +9,14 @@ import {
 import { PageContent } from '../../../../components/PageContent'
 import { DesktopProjectNavigation } from '../../components/DesktopProjectNavigation'
 import {
-  ProjectDetails,
-  ProjectDetailsProps,
-} from '../../components/header/ProjectDetails'
-import {
   ProjectHeader,
   ProjectHeaderProps,
 } from '../../components/header/ProjectHeader'
 import { MobileProjectNavigation } from '../../components/MobileProjectNavigation'
+import {
+  ProjectDetails,
+  ProjectDetailsProps,
+} from '../../components/ProjectDetails'
 
 export interface ProjectPageProps {
   navbar: NavbarProps
