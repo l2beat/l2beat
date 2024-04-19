@@ -1,15 +1,15 @@
 import React from 'react'
 
-import { RiskValue, RiskValues } from '../../utils/risks/types'
-import { UnderReviewBadge } from '../badge/UnderReviewBadge'
-import { RoundedWarningIcon, ShieldIcon } from '../icons'
-import { UnverifiedIcon } from '../icons/symbols/UnverifiedIcon'
-import { Markdown } from '../Markdown'
-import { BigRosette } from '../rosette'
-import { SentimentText } from '../table/SentimentText'
-import { ProjectDetailsSection } from './ProjectDetailsSection'
-import { ProjectSectionId } from './sectionId'
-import { WarningBar } from './WarningBar'
+import { UnderReviewBadge } from '../../../components/badge/UnderReviewBadge'
+import { RoundedWarningIcon, ShieldIcon } from '../../../components/icons'
+import { UnverifiedIcon } from '../../../components/icons/symbols/UnverifiedIcon'
+import { Markdown } from '../../../components/Markdown'
+import { ProjectSectionId } from '../../../components/project/sectionId'
+import { WarningBar } from '../../../components/project/WarningBar'
+import { BigRosette } from '../../../components/rosette'
+import { SentimentText } from '../../../components/table/SentimentText'
+import { RiskValue, RiskValues } from '../../../utils/risks/types'
+import { Section } from './Section'
 
 export interface RiskAnalysisProps {
   id: ProjectSectionId
@@ -38,7 +38,7 @@ export function RiskAnalysis({
       ({ sentiment }) => sentiment === 'UnderReview',
     )
   return (
-    <ProjectDetailsSection
+    <Section
       title={title}
       id={id}
       sectionOrder={sectionOrder}
@@ -87,7 +87,7 @@ export function RiskAnalysis({
         name="Proposer failure"
         riskValue={riskValues.proposerFailure}
       />
-    </ProjectDetailsSection>
+    </Section>
   )
 }
 

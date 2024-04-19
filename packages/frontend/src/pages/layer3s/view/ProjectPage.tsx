@@ -4,8 +4,10 @@ import { Footer, FooterProps, Navbar, NavbarProps } from '../../../components'
 import { PageContent } from '../../../components/PageContent'
 import { DesktopProjectNavigation } from '../../../components/project/navigation/DesktopProjectNavigation'
 import { MobileProjectNavigation } from '../../../components/project/navigation/MobileProjectNavigation'
-import { ScalingDetailsSection } from '../props/getProjectDetails'
-import { ProjectDetails, ProjectDetailsProps } from './ProjectDetails'
+import {
+  ProjectDetails,
+  ProjectDetailsProps,
+} from '../../project/components/ProjectDetails'
 import { ProjectHeader, ProjectHeaderProps } from './ProjectHeader'
 
 export interface ProjectPageProps {
@@ -16,14 +18,11 @@ export interface ProjectPageProps {
 }
 
 export function ProjectPage(props: ProjectPageProps) {
-  const sections = props.projectDetails.items.filter(
-    (i): i is ScalingDetailsSection => !i.excludeFromNavigation,
-  )
   return (
     <>
       <Navbar {...props.navbar} />
       <div className="sticky top-0 z-100 md:hidden">
-        <MobileProjectNavigation sections={sections} />
+        <MobileProjectNavigation sections={props.projectDetails.items} />
       </div>
       <PageContent mobileFull className="mb-20">
         <ProjectHeader {...props.projectHeader} />
@@ -36,7 +35,7 @@ export function ProjectPage(props: ProjectPageProps) {
                 showProjectUnderReview:
                   props.projectHeader.showProjectUnderReview,
               }}
-              sections={sections}
+              sections={props.projectDetails.items}
             />
           </div>
           <div className="w-full">

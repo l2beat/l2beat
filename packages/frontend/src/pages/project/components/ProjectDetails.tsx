@@ -1,24 +1,24 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import React from 'react'
 
-import { ChartSection } from '../../../../components/project/ChartSection'
-import { ContractsSection } from '../../../../components/project/ContractsSection'
-import { DetailedDescriptionSection } from '../../../../components/project/DetailedDescriptionSection'
-import { KnowledgeNuggetsSection } from '../../../../components/project/KnowledgeNuggetsSection'
-import { MilestonesSection } from '../../../../components/project/MilestonesSection'
-import { PermissionsSection } from '../../../../components/project/PermissionsSection'
-import { RiskAnalysis } from '../../../../components/project/RiskAnalysis'
-import { RiskSection } from '../../../../components/project/RiskSection'
-import { StageSection } from '../../../../components/project/StageSection'
-import { StateDerivationSection } from '../../../../components/project/StateDerivationSection'
-import { StateValidationSection } from '../../../../components/project/StateValidationSection'
-import { TechnologySection } from '../../../../components/project/TechnologySection'
-import { UpcomingDisclaimer } from '../../../../components/project/UpcomingDisclaimer'
-import { UpgradesAndGovernanceSection } from '../../../../components/project/UpgradesAndGovernanceSection'
-import { ScalingDetailsItem } from '../props/getProjectDetails'
+import { ProjectDetailsSection } from '../types'
+import { ChartSection } from './ChartSection'
+import { ContractsSection } from './ContractsSection'
+import { DetailedDescriptionSection } from './DetailedDescriptionSection'
+import { KnowledgeNuggetsSection } from './KnowledgeNuggetsSection'
+import { MilestonesSection } from './MilestonesSection'
+import { PermissionsSection } from './PermissionsSection'
+import { RiskAnalysis } from './RiskAnalysis'
+import { RiskSection } from './RiskSection'
+import { StageSection } from './StageSection'
+import { StateDerivationSection } from './StateDerivationSection'
+import { StateValidationSection } from './StateValidationSection'
+import { TechnologySection } from './TechnologySection'
+import { UpcomingDisclaimer } from './UpcomingDisclaimer'
+import { UpgradesAndGovernanceSection } from './UpgradesAndGovernanceSection'
 
 export interface ProjectDetailsProps {
-  items: ScalingDetailsItem[]
+  items: ProjectDetailsSection[]
   isUpcoming?: boolean
 }
 
@@ -134,12 +134,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
               />
             )
           case 'UpcomingDisclaimer':
-            return (
-              <UpcomingDisclaimer
-                key={`${item.type}${index}`}
-                className="mt-6"
-              />
-            )
+            return <UpcomingDisclaimer key={`${item.type}${index}`} />
           default:
             assertUnreachable(item)
         }

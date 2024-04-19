@@ -1,10 +1,10 @@
 import { KnowledgeNugget } from '@l2beat/config'
 import React from 'react'
 
-import { getKnowledgeNuggetThumbnail } from '../../utils/project/getKnowledgeNuggetThumbnail'
-import { LinkWithThumbnail } from '../LinkWithThumbnail'
-import { ProjectDetailsSection } from './ProjectDetailsSection'
-import { ProjectSectionId } from './sectionId'
+import { LinkWithThumbnail } from '../../../components/LinkWithThumbnail'
+import { ProjectSectionId } from '../../../components/project/sectionId'
+import { getKnowledgeNuggetThumbnail } from '../../../utils/project/getKnowledgeNuggetThumbnail'
+import { Section } from './Section'
 
 export interface KnowledgeNuggetsProps {
   title: string
@@ -20,7 +20,7 @@ export function KnowledgeNuggetsSection({
   knowledgeNuggets,
 }: KnowledgeNuggetsProps) {
   return (
-    <ProjectDetailsSection title={title} id={id} sectionOrder={sectionOrder}>
+    <Section title={title} id={id} sectionOrder={sectionOrder}>
       <div className="flex flex-col gap-4">
         {knowledgeNuggets.map((nugget) => (
           <LinkWithThumbnail
@@ -31,6 +31,6 @@ export function KnowledgeNuggetsSection({
           />
         ))}
       </div>
-    </ProjectDetailsSection>
+    </Section>
   )
 }

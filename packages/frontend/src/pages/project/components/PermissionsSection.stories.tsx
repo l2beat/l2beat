@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 
-import { TechnologyContract } from './ContractEntry'
+import { TechnologyContract } from '../../../components/project/ContractEntry'
 import { PermissionsSection as PermissionsSectionComponent } from './PermissionsSection'
 
 const meta: Meta<typeof PermissionsSectionComponent> = {

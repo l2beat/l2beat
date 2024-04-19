@@ -1,12 +1,15 @@
 import React from 'react'
 
-import { Markdown } from '../Markdown'
-import { ProjectDetailsSection } from './ProjectDetailsSection'
-import { ReferenceList, TechnologyReference } from './ReferenceList'
-import { RiskList, TechnologyRisk } from './RiskList'
-import { ProjectSectionId } from './sectionId'
-import { TechnologyIncompleteShort } from './TechnologyIncomplete'
-import { UnderReviewCallout } from './UnderReviewCallout'
+import { Markdown } from '../../../components/Markdown'
+import {
+  ReferenceList,
+  TechnologyReference,
+} from '../../../components/project/ReferenceList'
+import { RiskList, TechnologyRisk } from '../../../components/project/RiskList'
+import { ProjectSectionId } from '../../../components/project/sectionId'
+import { TechnologyIncompleteShort } from '../../../components/project/TechnologyIncomplete'
+import { UnderReviewCallout } from '../../../components/project/UnderReviewCallout'
+import { Section } from './Section'
 
 export interface TechnologySectionProps {
   id: ProjectSectionId
@@ -34,7 +37,7 @@ export function TechnologySection({
   isUnderReview,
 }: TechnologySectionProps) {
   return (
-    <ProjectDetailsSection
+    <Section
       title={title}
       id={id}
       sectionOrder={sectionOrder}
@@ -59,6 +62,6 @@ export function TechnologySection({
           )}
         </div>
       ))}
-    </ProjectDetailsSection>
+    </Section>
   )
 }

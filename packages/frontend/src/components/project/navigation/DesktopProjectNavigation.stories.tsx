@@ -3,11 +3,11 @@ import range from 'lodash/range'
 import React, { useEffect } from 'react'
 
 import { onlyDesktopModes } from '../../../../.storybook/modes'
-import { ScalingDetailsSection } from '../../../pages/scaling/projects/props/getProjectDetails'
+import { ProjectDetailsSection } from '../../../pages/project/types'
 import { configureDesktopProjectNavigation } from '../../../scripts/section-navigation/configureDesktopProjectNavigation'
 import { DesktopProjectNavigation } from './DesktopProjectNavigation'
 
-const sections: ScalingDetailsSection[] = range(10).map(() => ({
+const sections: ProjectDetailsSection[] = range(10).map(() => ({
   type: 'DetailedDescriptionSection',
   props: {
     id: 'detailed-description',

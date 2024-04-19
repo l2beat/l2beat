@@ -1,8 +1,8 @@
 import { Bridge, CONTRACTS, ScalingProjectRisk } from '@l2beat/config'
 import { VerificationStatus } from '@l2beat/shared-pure'
 
-import { RiskSectionProps } from '../../../../components/project/RiskSection'
 import { groupRisks } from '../../../../utils/project/groupRisks'
+import { RiskSectionProps } from '../../../project/components/RiskSection'
 
 export function getRiskSection(
   project: Bridge,

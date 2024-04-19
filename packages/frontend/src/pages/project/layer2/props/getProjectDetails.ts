@@ -12,22 +12,7 @@ import { getDiagramImage } from '../../../../utils/project/getDiagramImage'
 import { getPermissionsSection } from '../../../../utils/project/getPermissionsSection'
 import { getRiskSection } from '../../../../utils/project/getRiskSection'
 import { getRiskValues } from '../../../../utils/risks/values'
-import {
-  ProjectDetailsChartSection,
-  ProjectDetailsContractsSection,
-  ProjectDetailsDetailedDescriptionSection,
-  ProjectDetailsKnowledgeNuggetsSection,
-  ProjectDetailsMilestonesSection,
-  ProjectDetailsPermissionsSection,
-  ProjectDetailsRiskAnalysisSection,
-  ProjectDetailsRiskSection,
-  ProjectDetailsStageSection,
-  ProjectDetailsStateDerivationSection,
-  ProjectDetailsStateValidationSection,
-  ProjectDetailsTechnologySection,
-  ProjectDetailsUpcomingDisclaimer,
-  ProjectDetailsUpgradesAndGovernanceSection,
-} from '../../../types'
+import { ProjectDetailsSection } from '../../types'
 import { getTechnologyOverview } from './getTechnologyOverview'
 
 export function getProjectDetails(
@@ -38,8 +23,7 @@ export function getProjectDetails(
   charts: ProjectDetailsCharts,
 ) {
   const isUpcoming = project.isUpcoming
-  const technologySections =
-    getTechnologyOverview(project)
+  const technologySections = getTechnologyOverview(project)
   const permissionsSection = getPermissionsSection(
     project,
     verificationStatus,
@@ -47,7 +31,7 @@ export function getProjectDetails(
   )
   const riskSection = getRiskSection(project, verificationStatus)
 
-  const items: ScalingDetailsItem[] = []
+  const items: ProjectDetailsSection[] = []
 
   if (charts.tvl) {
     items.push({
@@ -251,25 +235,3 @@ export function getProjectDetails(
     isUpcoming,
   }
 }
-
-export type ScalingDetailsItem = { excludeFromNavigation?: boolean } & (
-  | ScalingDetailsSection
-  | ProjectDetailsNonSectionElement
-)
-
-type ProjectDetailsNonSectionElement = ProjectDetailsUpcomingDisclaimer
-
-export type ScalingDetailsSection =
-  | ProjectDetailsChartSection
-  | ProjectDetailsDetailedDescriptionSection
-  | ProjectDetailsMilestonesSection
-  | ProjectDetailsKnowledgeNuggetsSection
-  | ProjectDetailsRiskAnalysisSection
-  | ProjectDetailsRiskSection
-  | ProjectDetailsTechnologySection
-  | ProjectDetailsStateDerivationSection
-  | ProjectDetailsStateValidationSection
-  | ProjectDetailsPermissionsSection
-  | ProjectDetailsContractsSection
-  | ProjectDetailsStageSection
-  | ProjectDetailsUpgradesAndGovernanceSection

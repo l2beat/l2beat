@@ -10,7 +10,7 @@ import {
 } from '@l2beat/shared-pure'
 
 import { TechnologyContract } from '../../components/project/ContractEntry'
-import { ProjectDetailsPermissionsSection } from '../../pages/types'
+import { ProjectDetailsPermissionsSection } from '../../pages/project/types'
 import { getExplorerUrl } from '../getExplorerUrl'
 
 export function getPermissionsSection(

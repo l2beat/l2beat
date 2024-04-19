@@ -9,16 +9,7 @@ import isEmpty from 'lodash/isEmpty'
 import { ProjectDetailsCharts } from '../../../../utils/project/getCharts'
 import { getContractSection } from '../../../../utils/project/getContractSection'
 import { getPermissionsSection } from '../../../../utils/project/getPermissionsSection'
-import {
-  ProjectDetailsChartSection,
-  ProjectDetailsContractsSection,
-  ProjectDetailsDetailedDescriptionSection,
-  ProjectDetailsKnowledgeNuggetsSection,
-  ProjectDetailsMilestonesSection,
-  ProjectDetailsPermissionsSection,
-  ProjectDetailsRiskSection,
-  ProjectDetailsTechnologySection,
-} from '../../../types'
+import { ProjectDetailsSection } from '../../../project/types'
 import { getRiskSection } from './getRiskSection'
 import { getTechnologyOverview } from './getTechnologyOverview'
 
@@ -37,7 +28,7 @@ export function getProjectDetails(
   )
   const riskSection = getRiskSection(bridge, verificationStatus)
 
-  const items: BridgeDetailsItem[] = []
+  const items: ProjectDetailsSection[] = []
 
   if (charts.tvl) {
     items.push({
@@ -148,17 +139,3 @@ export function getProjectDetails(
 
   return items
 }
-
-export type BridgeDetailsItem = {
-  excludeFromNavigation?: boolean
-} & BridgeDetailsSection
-
-export type BridgeDetailsSection =
-  | ProjectDetailsChartSection
-  | ProjectDetailsDetailedDescriptionSection
-  | ProjectDetailsMilestonesSection
-  | ProjectDetailsKnowledgeNuggetsSection
-  | ProjectDetailsRiskSection
-  | ProjectDetailsTechnologySection
-  | ProjectDetailsPermissionsSection
-  | ProjectDetailsContractsSection

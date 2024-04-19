@@ -3,11 +3,11 @@ import range from 'lodash/range'
 import React, { useEffect } from 'react'
 
 import { onlyMobileModes } from '../../../../.storybook/modes'
-import { ScalingDetailsSection } from '../../../pages/scaling/projects/props/getProjectDetails'
+import { ProjectDetailsSection } from '../../../pages/project/types'
 import { configureMobileProjectNavigation } from '../../../scripts/section-navigation/configureMobileProjectNavigation'
 import { MobileProjectNavigation } from './MobileProjectNavigation'
 
-const sections: ScalingDetailsSection[] = range(10).map(() => ({
+const sections: ProjectDetailsSection[] = range(10).map(() => ({
   type: 'DetailedDescriptionSection',
   props: {
     id: 'detailed-description',

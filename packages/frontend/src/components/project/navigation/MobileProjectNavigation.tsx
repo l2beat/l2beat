@@ -1,11 +1,10 @@
 import React from 'react'
 
-import { BridgeDetailsSection } from '../../../pages/bridges/projects/props/getProjectDetails'
-import { ScalingDetailsSection } from '../../../pages/scaling/projects/props/getProjectDetails'
+import { ProjectDetailsSection } from '../../../pages/project/types'
 import { OverflowWrapper } from '../../OverflowWrapper'
 
 interface Props {
-  sections: (ScalingDetailsSection | BridgeDetailsSection)[]
+  sections: ProjectDetailsSection[]
 }
 
 export function MobileProjectNavigation({ sections }: Props) {
@@ -34,6 +33,9 @@ function ProjectNavigationList({ sections }: Pick<Props, 'sections'>) {
   return (
     <>
       {sections.map((section) => {
+        if (section.excludeFromNavigation) {
+          return null
+        }
         return (
           <a
             key={section.props.id}

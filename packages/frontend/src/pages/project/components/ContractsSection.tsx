@@ -5,13 +5,19 @@ import {
 import partition from 'lodash/partition'
 import React from 'react'
 
-import { ContractEntry, TechnologyContract } from './ContractEntry'
-import { ContractsUpdated } from './ContractsUpdated'
-import { ProjectDetailsSection } from './ProjectDetailsSection'
-import { ReferenceList, TechnologyReference } from './ReferenceList'
-import { RiskList, TechnologyRisk } from './RiskList'
-import { ProjectSectionId } from './sectionId'
-import { TechnologyIncompleteShort } from './TechnologyIncomplete'
+import {
+  ContractEntry,
+  TechnologyContract,
+} from '../../../components/project/ContractEntry'
+import { ContractsUpdated } from '../../../components/project/ContractsUpdated'
+import {
+  ReferenceList,
+  TechnologyReference,
+} from '../../../components/project/ReferenceList'
+import { RiskList, TechnologyRisk } from '../../../components/project/RiskList'
+import { ProjectSectionId } from '../../../components/project/sectionId'
+import { TechnologyIncompleteShort } from '../../../components/project/TechnologyIncomplete'
+import { Section } from './Section'
 
 export interface ContractsSectionProps {
   id: ProjectSectionId
@@ -51,7 +57,7 @@ export function ContractsSection(props: ContractsSectionProps) {
   )
 
   return (
-    <ProjectDetailsSection
+    <Section
       title={props.title}
       id={props.id}
       sectionOrder={props.sectionOrder}
@@ -135,7 +141,7 @@ export function ContractsSection(props: ContractsSectionProps) {
         </>
       )}
       <ReferenceList references={props.references} />
-    </ProjectDetailsSection>
+    </Section>
   )
 }
 

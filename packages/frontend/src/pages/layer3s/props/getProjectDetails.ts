@@ -25,7 +25,7 @@ import {
   ProjectDetailsStateValidationSection,
   ProjectDetailsTechnologySection,
   ProjectDetailsUpcomingDisclaimer,
-} from '../../types'
+} from '../../project/types'
 import { getTechnologyOverview } from './getTechnologyOverview'
 
 export function getProjectDetails(

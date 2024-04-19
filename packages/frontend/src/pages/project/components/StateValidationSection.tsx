@@ -1,11 +1,11 @@
 import { ScalingProjectStateValidation } from '@l2beat/config'
 import React from 'react'
 
-import { HorizontalSeparator } from '../HorizontalSeparator'
-import { Markdown } from '../Markdown'
-import { ProjectDetailsSection } from './ProjectDetailsSection'
-import { RiskList } from './RiskList'
-import { ProjectSectionId } from './sectionId'
+import { HorizontalSeparator } from '../../../components/HorizontalSeparator'
+import { Markdown } from '../../../components/Markdown'
+import { RiskList } from '../../../components/project/RiskList'
+import { ProjectSectionId } from '../../../components/project/sectionId'
+import { Section } from './Section'
 
 export interface StateValidationSectionProps {
   id: ProjectSectionId
@@ -18,7 +18,7 @@ export interface StateValidationSectionProps {
 
 export function StateValidationSection(props: StateValidationSectionProps) {
   return (
-    <ProjectDetailsSection
+    <Section
       title={props.title}
       id={props.id}
       sectionOrder={props.sectionOrder}
@@ -48,7 +48,7 @@ export function StateValidationSection(props: StateValidationSectionProps) {
           />
         ))}
       </div>
-    </ProjectDetailsSection>
+    </Section>
   )
 }
 

@@ -7,14 +7,14 @@ import {
   RoundedWarningIcon,
   SatisfiedIcon,
   UnderReviewIcon,
-} from '../icons'
-import { Link } from '../Link'
-import { Markdown } from '../Markdown'
-import { StageBadge } from '../stages/StageBadge'
-import { StageDisclaimer } from '../stages/StageDisclaimer'
-import { ProjectDetailsSection } from './ProjectDetailsSection'
-import { ProjectSectionId } from './sectionId'
-import { WarningBar } from './WarningBar'
+} from '../../../components/icons'
+import { Link } from '../../../components/Link'
+import { Markdown } from '../../../components/Markdown'
+import { ProjectSectionId } from '../../../components/project/sectionId'
+import { WarningBar } from '../../../components/project/WarningBar'
+import { StageBadge } from '../../../components/stages/StageBadge'
+import { StageDisclaimer } from '../../../components/stages/StageDisclaimer'
+import { Section } from './Section'
 
 export interface StageSectionProps {
   title: string
@@ -30,7 +30,7 @@ export interface StageSectionProps {
 export function StageSection(props: StageSectionProps) {
   if (props.stageConfig.stage === 'UnderReview' || props.isUnderReview) {
     return (
-      <ProjectDetailsSection
+      <Section
         title={props.title}
         id={props.id}
         sectionOrder={props.sectionOrder}
@@ -51,7 +51,7 @@ export function StageSection(props: StageSectionProps) {
           />
           for stage assignment.
         </div>
-      </ProjectDetailsSection>
+      </Section>
     )
   }
 
@@ -61,7 +61,7 @@ export function StageSection(props: StageSectionProps) {
       : UnderReviewIcon
 
   return (
-    <ProjectDetailsSection
+    <Section
       title={props.title}
       id={props.id}
       sectionOrder={props.sectionOrder}
@@ -184,7 +184,7 @@ export function StageSection(props: StageSectionProps) {
         className="mt-6 leading-snug"
         text="Please keep in mind that these stages do not reflect rollup security, this is an opinionated assessment of rollup maturity based on subjective criteria, created with a goal of incentivizing projects to push toward better decentralization. Each team may have taken different paths to achieve this goal."
       />
-    </ProjectDetailsSection>
+    </Section>
   )
 }
 

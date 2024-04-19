@@ -1,8 +1,8 @@
 import React from 'react'
 
-import { Markdown } from '../Markdown'
-import { ProjectDetailsSection } from './ProjectDetailsSection'
-import { ProjectSectionId } from './sectionId'
+import { Markdown } from '../../../components/Markdown'
+import { ProjectSectionId } from '../../../components/project/sectionId'
+import { Section } from './Section'
 
 export interface UpgradesAndGovernanceSectionProps {
   id: ProjectSectionId
@@ -17,7 +17,7 @@ export function UpgradesAndGovernanceSection(
   props: UpgradesAndGovernanceSectionProps,
 ) {
   return (
-    <ProjectDetailsSection
+    <Section
       id={props.id}
       title={props.title}
       sectionOrder={props.sectionOrder}
@@ -39,6 +39,6 @@ export function UpgradesAndGovernanceSection(
       <Markdown className="leading-snug text-gray-850 dark:text-gray-400 md:text-lg">
         {props.content}
       </Markdown>
-    </ProjectDetailsSection>
+    </Section>
   )
 }

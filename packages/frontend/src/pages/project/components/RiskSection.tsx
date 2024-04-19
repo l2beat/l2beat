@@ -1,11 +1,11 @@
 import { ScalingProjectRiskCategory } from '@l2beat/config'
 import React from 'react'
 
-import { ShieldIcon } from '../icons'
-import { UnverifiedIcon } from '../icons/symbols/UnverifiedIcon'
-import { ProjectDetailsSection } from './ProjectDetailsSection'
-import { ProjectSectionId } from './sectionId'
-import { WarningBar } from './WarningBar'
+import { ShieldIcon } from '../../../components/icons'
+import { UnverifiedIcon } from '../../../components/icons/symbols/UnverifiedIcon'
+import { ProjectSectionId } from '../../../components/project/sectionId'
+import { WarningBar } from '../../../components/project/WarningBar'
+import { Section } from './Section'
 
 export interface RiskSectionProps {
   title: string
@@ -42,7 +42,7 @@ export function RiskSection({
     return null
   }
   return (
-    <ProjectDetailsSection title={title} id={id} sectionOrder={sectionOrder}>
+    <Section title={title} id={id} sectionOrder={sectionOrder}>
       {isVerified === false && (
         <WarningBar
           text="This project includes unverified contracts."
@@ -96,6 +96,6 @@ export function RiskSection({
           </ol>
         </div>
       ))}
-    </ProjectDetailsSection>
+    </Section>
   )
 }

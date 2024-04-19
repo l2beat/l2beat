@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react'
 
-import { cn } from '../../utils/cn'
-import { ProjectSectionId } from './sectionId'
-import { UnderReviewCallout } from './UnderReviewCallout'
+import { ProjectSectionId } from '../../../components/project/sectionId'
+import { UnderReviewCallout } from '../../../components/project/UnderReviewCallout'
+import { cn } from '../../../utils/cn'
 
 interface Props {
   title: string
@@ -14,7 +14,7 @@ interface Props {
   includeChildrenIfUnderReview?: boolean
 }
 
-export function ProjectDetailsSection(props: Props) {
+export function Section(props: Props) {
   return (
     <section
       id={props.id}

@@ -5,9 +5,12 @@ import {
 } from '@l2beat/shared-pure'
 import React from 'react'
 
-import { ContractEntry, TechnologyContract } from './ContractEntry'
-import { ProjectDetailsSection } from './ProjectDetailsSection'
-import { ProjectSectionId } from './sectionId'
+import {
+  ContractEntry,
+  TechnologyContract,
+} from '../../../components/project/ContractEntry'
+import { ProjectSectionId } from '../../../components/project/sectionId'
+import { Section } from './Section'
 
 export interface PermissionsSectionProps {
   id: ProjectSectionId
@@ -30,7 +33,7 @@ export function PermissionsSection({
   isUnderReview,
 }: PermissionsSectionProps) {
   return (
-    <ProjectDetailsSection
+    <Section
       title={title}
       id={id}
       isUnderReview={isUnderReview}
@@ -51,6 +54,6 @@ export function PermissionsSection({
           />
         ))}
       </div>
-    </ProjectDetailsSection>
+    </Section>
   )
 }

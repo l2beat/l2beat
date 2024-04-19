@@ -1,18 +1,13 @@
 import React from 'react'
 
-import { cn } from '../../utils/cn'
-import { InfoIcon } from '../icons'
-import { Link } from '../Link'
-import { Callout } from './Callout'
+import { InfoIcon } from '../../../components/icons'
+import { Link } from '../../../components/Link'
+import { Callout } from '../../../components/project/Callout'
 
-export interface UpcomingDisclaimerProps {
-  className?: string
-}
-
-export function UpcomingDisclaimer({ className }: UpcomingDisclaimerProps) {
+export function UpcomingDisclaimer() {
   return (
     <Callout
-      className={cn('bg-blue-600/20 p-4', className)}
+      className="mt-6 bg-blue-600/20 p-4"
       icon={<InfoIcon className="mt-1 fill-blue-500" />}
       body={
         <>
