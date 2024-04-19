@@ -9,13 +9,13 @@ import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionU
 import { getTvlWithChange } from '../../../../utils/tvl/getTvlWithChange'
 import { formatUSD } from '../../../../utils/utils'
 import { getLinks } from '../../common/getLinks'
-import { ProjectHeaderProps } from '../view/ProjectHeader'
+import { BridgeProjectHeaderProps } from '../view/BridgeProjectHeader'
 
 export function getProjectHeader(
   project: Bridge,
   tvlApiResponse: TvlApiResponse,
   implementationChange: ImplementationChangeReportApiResponse | undefined,
-): ProjectHeaderProps {
+): BridgeProjectHeaderProps {
   const charts = tvlApiResponse.projects[project.id.toString()]?.charts
   const { tvl, tvlWeeklyChange } = getTvlWithChange(charts)
   const hasImplementationChanged =

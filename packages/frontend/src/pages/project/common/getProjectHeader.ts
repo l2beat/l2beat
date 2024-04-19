@@ -16,7 +16,7 @@ import { getRiskValues } from '../../../utils/risks/values'
 import { getTvlBreakdown } from '../../../utils/tvl/getTVLBreakdown'
 import { unifyTokensResponse } from '../../../utils/tvl/getTvlStats'
 import { getDetailedTvlWithChange } from '../../../utils/tvl/getTvlWithChange'
-import { ProjectHeaderProps } from '../components/header/ProjectHeader'
+import { ScalingProjectHeaderProps } from '../components/ScalingProjectHeader'
 import { getLinks } from './getLinks'
 
 export function getProjectHeader(
@@ -25,7 +25,7 @@ export function getProjectHeader(
   tvlApiResponse: TvlApiResponse,
   implementationChange?: ImplementationChangeReportApiResponse | undefined,
   activityApiResponse?: ActivityApiResponse,
-): ProjectHeaderProps {
+): ScalingProjectHeaderProps {
   const apiProject = tvlApiResponse.projects[project.id.toString()]
   const implementationChangeForProject =
     implementationChange?.projects[project.id.toString()]

@@ -8,7 +8,7 @@ import { RiskCell } from '../../../../components/table/RiskCell'
 import { DetailsHeader } from '../../components/header/DetailsHeader'
 import { ProjectLink } from '../../types'
 
-export interface ProjectHeaderProps {
+export interface BridgeProjectHeaderProps {
   title: string
   titleClassName?: string
   description: string | undefined
@@ -27,7 +27,7 @@ export interface ProjectHeaderProps {
   warning?: string
 }
 
-export function ProjectHeader(props: ProjectHeaderProps) {
+export function BridgeProjectHeader(props: BridgeProjectHeaderProps) {
   const stats: ProjectSummaryStat[] = [
     {
       title: 'Total value locked',

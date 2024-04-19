@@ -14,11 +14,14 @@ import {
   ProjectDetails,
   ProjectDetailsProps,
 } from '../../components/ProjectDetails'
-import { ProjectHeader, ProjectHeaderProps } from './ProjectHeader'
+import {
+  BridgeProjectHeader,
+  BridgeProjectHeaderProps,
+} from './BridgeProjectHeader'
 
 export interface ProjectPageProps {
   navbar: NavbarProps
-  projectHeader: ProjectHeaderProps
+  projectHeader: BridgeProjectHeaderProps
   projectDetails: ProjectDetailsProps
   footer: FooterProps
 }
@@ -32,7 +35,7 @@ export function ProjectPage(props: ProjectPageProps) {
       </div>
       <PageContent mobileFull>
         <BridgesMvpWarning />
-        <ProjectHeader {...props.projectHeader} />
+        <BridgeProjectHeader {...props.projectHeader} />
 
         <div className="gap-x-12 md:flex">
           <div className="mt-16 hidden w-[230px] shrink-0 md:block">

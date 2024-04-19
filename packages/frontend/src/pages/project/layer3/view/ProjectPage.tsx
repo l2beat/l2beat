@@ -8,19 +8,19 @@ import {
 } from '../../../../components'
 import { PageContent } from '../../../../components/PageContent'
 import { DesktopProjectNavigation } from '../../components/DesktopProjectNavigation'
-import {
-  ProjectHeader,
-  ProjectHeaderProps,
-} from '../../components/header/ProjectHeader'
 import { MobileProjectNavigation } from '../../components/MobileProjectNavigation'
 import {
   ProjectDetails,
   ProjectDetailsProps,
 } from '../../components/ProjectDetails'
+import {
+  ScalingProjectHeader,
+  ScalingProjectHeaderProps,
+} from '../../components/ScalingProjectHeader'
 
 export interface ProjectPageProps {
   navbar: NavbarProps
-  projectHeader: ProjectHeaderProps
+  projectHeader: ScalingProjectHeaderProps
   projectDetails: ProjectDetailsProps
   footer: FooterProps
 }
@@ -33,7 +33,7 @@ export function ProjectPage(props: ProjectPageProps) {
         <MobileProjectNavigation sections={props.projectDetails.items} />
       </div>
       <PageContent mobileFull className="mb-20">
-        <ProjectHeader {...props.projectHeader} />
+        <ScalingProjectHeader {...props.projectHeader} />
         <div className="gap-x-12 md:flex">
           <div className="mt-16 hidden w-[230px] shrink-0 md:block">
             <DesktopProjectNavigation
