@@ -13,7 +13,9 @@ export function getDiagramImage(
   _fs = { existsSync: fs.existsSync },
 ): string | undefined {
   const filePath = `/images/${type}/${fileName}.png`
-  const exists = _fs.existsSync(path.join(__dirname, '../../static', filePath))
+  const exists = _fs.existsSync(
+    path.join(__dirname, '../../../static', filePath),
+  )
 
   return exists ? filePath : undefined
 }
