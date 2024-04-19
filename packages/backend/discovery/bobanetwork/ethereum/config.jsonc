@@ -17,7 +17,12 @@
     "0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089": "AddressManager",
     "0xdc1664458d2f0B6090bEa60A8793A4E66c2F1c00": "L1StandardBridge",
     "0xdE7355C971A5B733fe2133753Abd7e5441d441Ec": "StateCommitmentChain",
-    "0xfBd2541e316948B259264c02f370eD088E04c3Db": "CanonicalTransactionChain"
+    "0xfBd2541e316948B259264c02f370eD088E04c3Db": "CanonicalTransactionChain",
+    "0x7B02D13904D8e6E0f0Efaf756aB14Cb0FF21eE7e": "OptimismPortal",
+    "0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB": "SystemConfig",
+    "0xbB7aD3f9CCbC94085b7F7B1D5258e59F5F068741": "L2OutputOracle",
+    "0x996ffD627901f10C80A7d4B72A12316D2e77c076": "SuperchainConfig",
+    "0x56121a8612474C3eB65D69a3b871f284705b9bC4": "BobaMultisig"
   },
   "overrides": {
     "L1CrossDomainMessengerFast": {
@@ -173,6 +178,48 @@
           "args": ["ChainStorageContainer-SCC-batches"]
         }
       }
+    },
+    "L2OutputOracle": {
+      "ignoreMethods": [
+        "getL2OutputAfter",
+        "getL2OutputIndexAfter",
+        "getL2Output"
+      ],
+      "ignoreInWatchMode": [
+        "nextBlockNumber",
+        "nextOutputIndex",
+        "latestBlockNumber",
+        "latestOutputIndex"
+      ],
+      "fields": {
+        "deletedOutputs": {
+          "type": "stateFromEvent",
+          "event": "OutputsDeleted",
+          "returnParams": ["prevNextOutputIndex", "newNextOutputIndex"]
+        }
+      }
+    },
+    "OptimismPortal": {
+      "ignoreMethods": ["isOutputFinalized"],
+      "ignoreInWatchMode": ["params"]
+    },
+    "SystemConfig": {
+      "fields": {
+        "batcherHash": {
+          "type": "call",
+          "method": "function batcherHash() view returns (address)",
+          "args": []
+        },
+        "opStackDA": {
+          "type": "opStackDA",
+          "sequencerAddress": "{{ batcherHash }}"
+        },
+        "sequencerInbox": {
+          "type": "opStackSequencerInbox",
+          "sequencerAddress": "{{ batcherHash }}"
+        }
+      },
+      "ignoreInWatchMode": ["scalar"]
     }
   }
 }
