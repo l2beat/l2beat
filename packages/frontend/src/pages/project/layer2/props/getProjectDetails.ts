@@ -12,7 +12,7 @@ import { getDiagramImage } from '../../../../utils/project/getDiagramImage'
 import { getPermissionsSection } from '../../../../utils/project/getPermissionsSection'
 import { getRiskSection } from '../../../../utils/project/getRiskSection'
 import { getRiskValues } from '../../../../utils/risks/values'
-import { ProjectDetailsSection } from '../../types'
+import { ProjectDetailsSection } from '../../components/sections/types'
 import { getTechnologyOverview } from './getTechnologyOverview'
 
 export function getProjectDetails(

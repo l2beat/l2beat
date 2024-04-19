@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { ShieldIcon } from '../icons'
+import { ShieldIcon } from '../../../../../components/icons'
 
 export interface RiskList {
   risks: TechnologyRisk[]

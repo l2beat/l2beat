@@ -1,8 +1,12 @@
 import React from 'react'
 
-import { cn } from '../../utils/cn'
-import { UnverifiedIcon } from '../icons/symbols/UnverifiedIcon'
-import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
+import { UnverifiedIcon } from '../../../../../components/icons/symbols/UnverifiedIcon'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '../../../../../components/tooltip/Tooltip'
+import { cn } from '../../../../../utils/cn'
 
 export interface UnverifiedContractsWarningProps {
   tooltip: string

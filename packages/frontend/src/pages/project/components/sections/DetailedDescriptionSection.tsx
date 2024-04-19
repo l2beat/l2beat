@@ -1,8 +1,8 @@
 import React from 'react'
 
-import { Markdown } from '../../../components/Markdown'
-import { ProjectSectionId } from '../../../components/project/sectionId'
-import { Section } from './Section'
+import { Markdown } from '../../../../components/Markdown'
+import { Section } from './common/Section'
+import { ProjectSectionId } from './common/sectionId'
 
 export interface DetailedDescriptionSectionProps {
   id: ProjectSectionId

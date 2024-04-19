@@ -1,10 +1,10 @@
 import { KnowledgeNugget } from '@l2beat/config'
 import React from 'react'
 
-import { LinkWithThumbnail } from '../../../components/LinkWithThumbnail'
-import { ProjectSectionId } from '../../../components/project/sectionId'
-import { getKnowledgeNuggetThumbnail } from '../../../utils/project/getKnowledgeNuggetThumbnail'
-import { Section } from './Section'
+import { LinkWithThumbnail } from '../../../../components/LinkWithThumbnail'
+import { getKnowledgeNuggetThumbnail } from '../../../../utils/project/getKnowledgeNuggetThumbnail'
+import { Section } from './common/Section'
+import { ProjectSectionId } from './common/sectionId'
 
 export interface KnowledgeNuggetsProps {
   title: string

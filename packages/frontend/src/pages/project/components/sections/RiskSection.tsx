@@ -1,11 +1,11 @@
 import { ScalingProjectRiskCategory } from '@l2beat/config'
 import React from 'react'
 
-import { ShieldIcon } from '../../../components/icons'
-import { UnverifiedIcon } from '../../../components/icons/symbols/UnverifiedIcon'
-import { ProjectSectionId } from '../../../components/project/sectionId'
-import { WarningBar } from '../../../components/project/WarningBar'
-import { Section } from './Section'
+import { ShieldIcon } from '../../../../components/icons'
+import { UnverifiedIcon } from '../../../../components/icons/symbols/UnverifiedIcon'
+import { WarningBar } from '../../../../components/project/WarningBar'
+import { Section } from './common/Section'
+import { ProjectSectionId } from './common/sectionId'
 
 export interface RiskSectionProps {
   title: string

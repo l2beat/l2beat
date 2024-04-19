@@ -1,7 +1,7 @@
 import React, { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from 'react'
 import { z } from 'zod'
 
-import { ProjectSectionId } from '../project/sectionId'
+import { ProjectSectionId } from '../../pages/project/components/sections/common/sectionId'
 
 export interface RowConfig<T> {
   getProps: (

@@ -20,8 +20,8 @@ import {
 import {
   TechnologyContract,
   TechnologyContractLinks,
-} from '../../components/project/ContractEntry'
-import { ContractsSectionProps } from '../../pages/project/components/ContractsSection'
+} from '../../pages/project/components/sections/ContractsSection/ContractEntry'
+import { ContractsSectionProps } from '../../pages/project/components/sections/ContractsSection/ContractsSection'
 import { getExplorerUrl } from '../getExplorerUrl'
 import { languageJoin } from '../utils'
 import { getDiagramImage } from './getDiagramImage'

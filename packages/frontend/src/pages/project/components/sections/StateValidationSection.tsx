@@ -1,11 +1,11 @@
 import { ScalingProjectStateValidation } from '@l2beat/config'
 import React from 'react'
 
-import { HorizontalSeparator } from '../../../components/HorizontalSeparator'
-import { Markdown } from '../../../components/Markdown'
-import { RiskList } from '../../../components/project/RiskList'
-import { ProjectSectionId } from '../../../components/project/sectionId'
-import { Section } from './Section'
+import { HorizontalSeparator } from '../../../../components/HorizontalSeparator'
+import { Markdown } from '../../../../components/Markdown'
+import { RiskList } from './common/RiskList'
+import { Section } from './common/Section'
+import { ProjectSectionId } from './common/sectionId'
 
 export interface StateValidationSectionProps {
   id: ProjectSectionId

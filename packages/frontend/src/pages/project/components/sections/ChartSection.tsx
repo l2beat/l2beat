@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { Chart, ChartProps } from '../../../components/chart/Chart'
-import { ProjectSectionId } from '../../../components/project/sectionId'
+import { Chart, ChartProps } from '../../../../components/chart/Chart'
+import { ProjectSectionId } from './common/sectionId'
 
 export interface ChartSectionProps extends ChartProps {
   id: ProjectSectionId

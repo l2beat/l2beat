@@ -1,6 +1,6 @@
 import { ScalingProjectTechnologyChoice } from '@l2beat/config'
 
-import { TechnologyChoice } from '../../pages/project/components/TechnologySection'
+import { TechnologyChoice } from '../../pages/project/components/sections/TechnologySection'
 
 export function makeTechnologyChoice(
   id: string,

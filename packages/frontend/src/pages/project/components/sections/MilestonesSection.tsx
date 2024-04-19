@@ -1,12 +1,12 @@
 import { Milestone } from '@l2beat/config'
 import React from 'react'
 
-import { ExpandableContainer } from '../../../components/ExpandableContainer'
-import { MilestoneIcon } from '../../../components/icons/symbols/MilestoneIcon'
-import { Link } from '../../../components/Link'
-import { Markdown } from '../../../components/Markdown'
-import { ProjectSectionId } from '../../../components/project/sectionId'
-import { Section } from './Section'
+import { ExpandableContainer } from '../../../../components/ExpandableContainer'
+import { MilestoneIcon } from '../../../../components/icons/symbols/MilestoneIcon'
+import { Link } from '../../../../components/Link'
+import { Markdown } from '../../../../components/Markdown'
+import { Section } from './common/Section'
+import { ProjectSectionId } from './common/sectionId'
 
 export interface MilestonesSectionProps {
   title: string

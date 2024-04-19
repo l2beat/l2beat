@@ -1,8 +1,8 @@
 import React from 'react'
 
-import { cn } from '../../utils/cn'
-import { ShieldIcon } from '../icons'
-import { Callout } from './Callout'
+import { ShieldIcon } from '../../../../../components/icons'
+import { Callout } from '../../../../../components/project/Callout'
+import { cn } from '../../../../../utils/cn'
 
 export function ContractsUpdated() {
   return (

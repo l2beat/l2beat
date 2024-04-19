@@ -1,15 +1,15 @@
 import React from 'react'
 
-import { UnderReviewBadge } from '../../../components/badge/UnderReviewBadge'
-import { RoundedWarningIcon, ShieldIcon } from '../../../components/icons'
-import { UnverifiedIcon } from '../../../components/icons/symbols/UnverifiedIcon'
-import { Markdown } from '../../../components/Markdown'
-import { ProjectSectionId } from '../../../components/project/sectionId'
-import { WarningBar } from '../../../components/project/WarningBar'
-import { BigRosette } from '../../../components/rosette'
-import { SentimentText } from '../../../components/table/SentimentText'
-import { RiskValue, RiskValues } from '../../../utils/risks/types'
-import { Section } from './Section'
+import { UnderReviewBadge } from '../../../../components/badge/UnderReviewBadge'
+import { RoundedWarningIcon, ShieldIcon } from '../../../../components/icons'
+import { UnverifiedIcon } from '../../../../components/icons/symbols/UnverifiedIcon'
+import { Markdown } from '../../../../components/Markdown'
+import { WarningBar } from '../../../../components/project/WarningBar'
+import { BigRosette } from '../../../../components/rosette'
+import { SentimentText } from '../../../../components/table/SentimentText'
+import { RiskValue, RiskValues } from '../../../../utils/risks/types'
+import { Section } from './common/Section'
+import { ProjectSectionId } from './common/sectionId'
 
 export interface RiskAnalysisProps {
   id: ProjectSectionId

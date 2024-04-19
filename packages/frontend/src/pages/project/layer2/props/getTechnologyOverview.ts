@@ -2,7 +2,7 @@ import { Layer2 } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 
 import { makeTechnologyChoice } from '../../../../utils/project/makeTechnologyChoice'
-import { ProjectDetailsTechnologySection } from '../../types'
+import { ProjectDetailsTechnologySection } from '../../components/sections/types'
 
 export function getTechnologyOverview(
   project: Layer2,

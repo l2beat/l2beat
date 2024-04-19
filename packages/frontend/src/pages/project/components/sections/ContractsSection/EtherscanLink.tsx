@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react'
 
-import { Link } from '../Link'
+import { Link } from '../../../../../components/Link'
 
 interface EtherscanLinkProps {
   address: string

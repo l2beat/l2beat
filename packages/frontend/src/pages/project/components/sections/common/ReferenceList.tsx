@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { cn } from '../../utils/cn'
-import { Link } from '../Link'
+import { Link } from '../../../../../components/Link'
+import { cn } from '../../../../../utils/cn'
 
 export interface ReferenceListProps {
   references: TechnologyReference[]

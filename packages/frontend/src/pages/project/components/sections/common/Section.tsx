@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react'
 
-import { ProjectSectionId } from '../../../components/project/sectionId'
-import { UnderReviewCallout } from '../../../components/project/UnderReviewCallout'
-import { cn } from '../../../utils/cn'
+import { UnderReviewCallout } from '../../../../../components/project/UnderReviewCallout'
+import { cn } from '../../../../../utils/cn'
+import { ProjectSectionId } from './sectionId'
 
 interface Props {
   title: string

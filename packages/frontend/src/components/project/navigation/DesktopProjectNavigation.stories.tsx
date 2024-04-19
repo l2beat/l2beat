@@ -3,7 +3,7 @@ import range from 'lodash/range'
 import React, { useEffect } from 'react'
 
 import { onlyDesktopModes } from '../../../../.storybook/modes'
-import { ProjectDetailsSection } from '../../../pages/project/types'
+import { ProjectDetailsSection } from '../../../pages/project/components/sections/types'
 import { configureDesktopProjectNavigation } from '../../../scripts/section-navigation/configureDesktopProjectNavigation'
 import { DesktopProjectNavigation } from './DesktopProjectNavigation'
 

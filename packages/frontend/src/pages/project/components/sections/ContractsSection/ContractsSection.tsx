@@ -5,19 +5,13 @@ import {
 import partition from 'lodash/partition'
 import React from 'react'
 
-import {
-  ContractEntry,
-  TechnologyContract,
-} from '../../../components/project/ContractEntry'
-import { ContractsUpdated } from '../../../components/project/ContractsUpdated'
-import {
-  ReferenceList,
-  TechnologyReference,
-} from '../../../components/project/ReferenceList'
-import { RiskList, TechnologyRisk } from '../../../components/project/RiskList'
-import { ProjectSectionId } from '../../../components/project/sectionId'
-import { TechnologyIncompleteShort } from '../../../components/project/TechnologyIncomplete'
-import { Section } from './Section'
+import { ReferenceList, TechnologyReference } from '../common/ReferenceList'
+import { RiskList, TechnologyRisk } from '../common/RiskList'
+import { Section } from '../common/Section'
+import { ProjectSectionId } from '../common/sectionId'
+import { TechnologyIncompleteShort } from '../common/TechnologyIncomplete'
+import { ContractEntry, TechnologyContract } from './ContractEntry'
+import { ContractsUpdated } from './ContractsUpdated'
 
 export interface ContractsSectionProps {
   id: ProjectSectionId

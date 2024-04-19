@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { ProjectDetailsSection } from '../../../pages/project/types'
+import { ProjectDetailsSection } from '../../../pages/project/components/sections/types'
 import { OverflowWrapper } from '../../OverflowWrapper'
 
 interface Props {
