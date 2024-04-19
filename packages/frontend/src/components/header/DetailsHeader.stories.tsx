@@ -110,12 +110,12 @@ export const Upcoming: Story = {
 
 export const UnderReview: Story = {
   args: {
-    showProjectUnderReview: true,
+    isUnderReview: true,
   },
 }
 
 export const ImplementationChanged: Story = {
   args: {
-    implementationHasChanged: true,
+    isImplementationUnderReview: true,
   },
 }

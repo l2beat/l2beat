@@ -40,8 +40,7 @@ export function ProjectPage(props: ProjectPageProps) {
               project={{
                 title: props.projectHeader.title,
                 icon: props.projectHeader.icon,
-                showProjectUnderReview:
-                  props.projectHeader.showProjectUnderReview,
+                showProjectUnderReview: props.projectHeader.isUnderReview,
               }}
               sections={props.projectDetails.items}
             />

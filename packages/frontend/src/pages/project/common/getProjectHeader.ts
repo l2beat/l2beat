@@ -97,9 +97,9 @@ export function getProjectHeader(
     risks: getRiskValues(project.riskView),
     isArchived: project.type === 'layer2' && project.isArchived,
     isUpcoming: project.isUpcoming,
-    isUnderReview: project.isUnderReview,
-    implementationHasChanged: implementationHasChanged,
-    showProjectUnderReview: isAnySectionUnderReview(project),
+    isRiskRosetteUnderReview: project.isUnderReview,
+    isImplementationUnderReview: implementationHasChanged,
+    isUnderReview: isAnySectionUnderReview(project),
     warning: project.display.headerWarning,
     hostChain:
       project.type === 'layer3'

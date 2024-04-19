@@ -18,22 +18,21 @@ import { TvlStats, TvlSummary } from './TvlSummary'
 
 export interface HeaderProps {
   title: string
-  titleClassName?: string
   description: string | undefined
   icon?: string
   stats: FullSummaryStats
-  isArchived?: boolean
-  isUpcoming?: boolean
-  isUnderReview?: boolean
   tvlBreakdownHref?: string
   tvlWarning?: WarningWithSentiment
   showTvlBreakdown?: boolean
-  showProjectUnderReview?: boolean
-  implementationHasChanged?: boolean
   risks?: RiskValues
   links: ProjectLink[]
   type: 'bridge' | 'layer2' | 'layer3'
   warning?: string | { text: string; href: string }
+  isArchived?: boolean
+  isUpcoming?: boolean
+  isRiskRosetteUnderReview?: boolean
+  isUnderReview?: boolean
+  isImplementationUnderReview?: boolean
 }
 
 export interface FullSummaryStats {
@@ -56,13 +55,7 @@ export function DetailsHeader(props: HeaderProps) {
       <header className="flex flex-row justify-end gap-3 bg-gray-100 pt-6 dark:bg-zinc-900 md:gap-0 md:bg-transparent md:dark:bg-transparent">
         <div className="flex w-full flex-wrap divide-y divide-gray-200 dark:divide-gray-850 md:gap-4 md:divide-y-0">
           <div className="mb-4 flex w-full flex-col gap-2 px-4 md:mb-0 md:px-0">
-            <h1
-              className={cn(
-                'relative mb-0 flex items-center justify-start gap-3',
-                'whitespace-pre text-3xl font-bold md:text-4xl',
-                props.titleClassName,
-              )}
-            >
+            <h1 className="relative mb-0 flex items-center justify-start gap-3 whitespace-pre text-3xl font-bold md:text-4xl">
               {props.icon && (
                 <img
                   className="size-8 md:size-10"
@@ -77,8 +70,10 @@ export function DetailsHeader(props: HeaderProps) {
             )}
             {props.isArchived && <ArchivedBar />}
             {props.isUpcoming && <UpcomingBar />}
-            {props.showProjectUnderReview && <UnderReviewBar />}
-            {props.implementationHasChanged && <ImplementationUnderReviewBar />}
+            {props.isUnderReview && <UnderReviewBar />}
+            {props.isImplementationUnderReview && (
+              <ImplementationUnderReviewBar />
+            )}
             {props.warning && (
               <WarningBar
                 text={
@@ -132,7 +127,7 @@ export function DetailsHeader(props: HeaderProps) {
             <BigRosette
               risks={props.risks}
               isUpcoming={props.isUpcoming ?? areAllRisksUpcoming}
-              isUnderReview={props.isUnderReview}
+              isUnderReview={props.isRiskRosetteUnderReview}
             />
           </div>
         )}

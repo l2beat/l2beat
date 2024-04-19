@@ -64,8 +64,8 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       links={props.links}
       stats={{ summary: stats }}
       isArchived={props.isArchived}
-      showProjectUnderReview={props.showProjectUnderReview}
-      implementationHasChanged={props.hasImplementationChanged}
+      isUnderReview={props.showProjectUnderReview}
+      isImplementationUnderReview={props.hasImplementationChanged}
       warning={props.warning}
     />
   )

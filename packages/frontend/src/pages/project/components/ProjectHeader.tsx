@@ -48,9 +48,9 @@ export interface ProjectHeaderProps {
   isArchived?: boolean
   isUpcoming?: boolean
   isLayer3?: boolean
+  isRiskRosetteUnderReview?: boolean
+  isImplementationUnderReview: boolean
   isUnderReview?: boolean
-  implementationHasChanged: boolean
-  showProjectUnderReview?: boolean
   warning?: string | { text: string; href: string }
   hostChain?: string
 }
@@ -132,11 +132,6 @@ export function ProjectHeader(props: ProjectHeaderProps) {
       stats={{ summary, l2Tvl: props.tvlStats }}
       risks={props.risks}
       links={props.links}
-      isUpcoming={props.isUpcoming}
-      isUnderReview={props.isUnderReview}
-      isArchived={props.isArchived}
-      implementationHasChanged={props.implementationHasChanged}
-      showProjectUnderReview={props.showProjectUnderReview}
       warning={props.warning}
       tvlBreakdownHref={props.tvlBreakdownHref}
       tvlWarning={props.tvlWarning}
@@ -146,6 +141,11 @@ export function ProjectHeader(props: ProjectHeaderProps) {
         props.tvlBreakdown &&
         !props.tvlBreakdown.empty
       }
+      isUpcoming={props.isUpcoming}
+      isArchived={props.isArchived}
+      isUnderReview={props.isUnderReview}
+      isImplementationUnderReview={props.isImplementationUnderReview}
+      isRiskRosetteUnderReview={props.isRiskRosetteUnderReview}
     />
   )
 }
