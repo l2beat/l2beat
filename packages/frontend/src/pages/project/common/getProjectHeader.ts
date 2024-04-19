@@ -11,13 +11,13 @@ import { formatNumber } from '../../../utils'
 import { getTpsDaily } from '../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../utils/activity/getTpsWeeklyChange'
 import { getTransactionCount } from '../../../utils/activity/getTransactionCount'
-import { isAnySectionUnderReview } from '../../../utils/project/isAnySectionUnderReview'
 import { getRiskValues } from '../../../utils/risks/values'
 import { getTvlBreakdown } from '../../../utils/tvl/getTVLBreakdown'
 import { unifyTokensResponse } from '../../../utils/tvl/getTvlStats'
 import { getDetailedTvlWithChange } from '../../../utils/tvl/getTvlWithChange'
 import { ScalingProjectHeaderProps } from '../components/ScalingProjectHeader'
 import { getLinks } from './getLinks'
+import { isAnySectionUnderReview } from './isAnySectionUnderReview'
 
 export function getProjectHeader(
   project: Layer2 | Layer3,

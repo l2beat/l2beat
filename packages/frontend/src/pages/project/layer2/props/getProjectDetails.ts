@@ -6,12 +6,12 @@ import {
 } from '@l2beat/shared-pure'
 import isEmpty from 'lodash/isEmpty'
 
-import { ProjectDetailsCharts } from '../../../../utils/project/getCharts'
-import { getContractSection } from '../../../../utils/project/getContractSection'
-import { getDiagramImage } from '../../../../utils/project/getDiagramImage'
-import { getPermissionsSection } from '../../../../utils/project/getPermissionsSection'
-import { getRiskSection } from '../../../../utils/project/getRiskSection'
 import { getRiskValues } from '../../../../utils/risks/values'
+import { ProjectDetailsCharts } from '../../common/getCharts'
+import { getContractSection } from '../../common/getContractSection'
+import { getDiagramImage } from '../../common/getDiagramImage'
+import { getPermissionsSection } from '../../common/getPermissionsSection'
+import { getRiskSection } from '../../common/getRiskSection'
 import { ProjectDetailsSection } from '../../components/sections/types'
 import { getTechnologyOverview } from './getTechnologyOverview'
 

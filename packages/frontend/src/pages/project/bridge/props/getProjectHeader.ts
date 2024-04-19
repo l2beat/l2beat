@@ -5,10 +5,10 @@ import {
 } from '@l2beat/shared-pure'
 
 import { getDestination } from '../../../../utils/getDestination'
-import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
 import { getTvlWithChange } from '../../../../utils/tvl/getTvlWithChange'
 import { formatUSD } from '../../../../utils/utils'
 import { getLinks } from '../../common/getLinks'
+import { isAnySectionUnderReview } from '../../common/isAnySectionUnderReview'
 import { BridgeProjectHeaderProps } from '../view/BridgeProjectHeader'
 
 export function getProjectHeader(

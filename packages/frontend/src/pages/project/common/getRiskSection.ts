@@ -2,7 +2,7 @@ import { CONTRACTS, Layer2, Layer3, ScalingProjectRisk } from '@l2beat/config'
 import { VerificationStatus } from '@l2beat/shared-pure'
 import isArray from 'lodash/isArray'
 
-import { RiskSectionProps } from '../../pages/project/components/sections/RiskSection'
+import { RiskSectionProps } from '../components/sections/RiskSection'
 import { groupRisks } from './groupRisks'
 
 export function getRiskSection(

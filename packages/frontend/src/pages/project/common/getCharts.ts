@@ -9,11 +9,11 @@ import {
   TvlApiResponse,
 } from '@l2beat/shared-pure'
 
-import { Config } from '../../build/config'
-import { ChartProps } from '../../components'
-import { TokenControl } from '../../components/chart/TokenControls'
-import { TokenInfo } from '../../scripts/charts/types'
-import { unifyTokensResponse } from '../tvl/getTvlStats'
+import { Config } from '../../../build/config'
+import { ChartProps } from '../../../components'
+import { TokenControl } from '../../../components/chart/TokenControls'
+import { TokenInfo } from '../../../scripts/charts/types'
+import { unifyTokensResponse } from '../../../utils/tvl/getTvlStats'
 
 export interface ProjectDetailsCharts {
   tvl: ChartProps | undefined

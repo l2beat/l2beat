@@ -1,7 +1,7 @@
 import { Layer2, tokenList } from '@l2beat/config'
 import { AssetType, ChainId } from '@l2beat/shared-pure'
 
-import { languageJoin } from '../utils'
+import { languageJoin } from '../../../utils/utils'
 
 export function getProjectTvlTooltipText(
   config: Layer2['config'],

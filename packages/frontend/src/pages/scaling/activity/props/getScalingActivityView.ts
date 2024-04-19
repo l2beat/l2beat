@@ -10,7 +10,7 @@ import { getMaxTps } from '../../../../utils/activity/getMaxTps'
 import { getTpsDaily } from '../../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../../utils/activity/getTpsWeeklyChange'
 import { getTransactionCount } from '../../../../utils/activity/getTransactionCount'
-import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
+import { isAnySectionUnderReview } from '../../../project/common/isAnySectionUnderReview'
 import {
   ActivityPagesData,
   ActivityViewEntry,

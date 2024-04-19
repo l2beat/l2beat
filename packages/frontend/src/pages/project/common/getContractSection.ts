@@ -17,13 +17,13 @@ import {
   VerificationStatus,
 } from '@l2beat/shared-pure'
 
+import { getExplorerUrl } from '../../../utils/getExplorerUrl'
+import { languageJoin } from '../../../utils/utils'
 import {
   TechnologyContract,
   TechnologyContractLinks,
-} from '../../pages/project/components/sections/common/ContractEntry'
-import { ContractsSectionProps } from '../../pages/project/components/sections/ContractsSection/ContractsSection'
-import { getExplorerUrl } from '../getExplorerUrl'
-import { languageJoin } from '../utils'
+} from '../components/sections/common/ContractEntry'
+import { ContractsSectionProps } from '../components/sections/ContractsSection/ContractsSection'
 import { getDiagramImage } from './getDiagramImage'
 
 export function getContractSection(

@@ -3,7 +3,7 @@ import { VerificationStatus } from '@l2beat/shared-pure'
 
 import { getDestination } from '../../../../utils/getDestination'
 import { orderByTvl } from '../../../../utils/orderByTvl'
-import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
+import { isAnySectionUnderReview } from '../../../project/common/isAnySectionUnderReview'
 import { BridgesPagesData } from '../../types'
 import { BridgesRiskViewProps } from '../view/BridgesRiskView'
 

@@ -6,9 +6,9 @@ import {
 } from '@l2beat/shared-pure'
 import isEmpty from 'lodash/isEmpty'
 
-import { ProjectDetailsCharts } from '../../../../utils/project/getCharts'
-import { getContractSection } from '../../../../utils/project/getContractSection'
-import { getPermissionsSection } from '../../../../utils/project/getPermissionsSection'
+import { ProjectDetailsCharts } from '../../common/getCharts'
+import { getContractSection } from '../../common/getContractSection'
+import { getPermissionsSection } from '../../common/getPermissionsSection'
 import { ProjectDetailsSection } from '../../components/sections/types'
 import { getRiskSection } from './getRiskSection'
 import { getTechnologyOverview } from './getTechnologyOverview'

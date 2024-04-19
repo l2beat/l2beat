@@ -9,9 +9,9 @@ import {
   VerificationStatus,
 } from '@l2beat/shared-pure'
 
-import { TechnologyContract } from '../../pages/project/components/sections/common/ContractEntry'
-import { ProjectDetailsPermissionsSection } from '../../pages/project/components/sections/types'
-import { getExplorerUrl } from '../getExplorerUrl'
+import { getExplorerUrl } from '../../../utils/getExplorerUrl'
+import { TechnologyContract } from '../components/sections/common/ContractEntry'
+import { ProjectDetailsPermissionsSection } from '../components/sections/types'
 
 export function getPermissionsSection(
   project: Layer2 | Layer3 | Bridge,

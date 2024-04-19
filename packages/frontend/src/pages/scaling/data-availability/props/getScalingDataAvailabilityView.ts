@@ -2,7 +2,7 @@ import { Layer2 } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 
 import { orderByTvl } from '../../../../utils/orderByTvl'
-import { isAnySectionUnderReview } from '../../../../utils/project/isAnySectionUnderReview'
+import { isAnySectionUnderReview } from '../../../project/common/isAnySectionUnderReview'
 import {
   DataAvailabilityPagesData,
   ScalingDataAvailabilityViewEntry,
